@@ -41,8 +41,6 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const THUMBS_SEPARATOR = 'mini_';
-
 	const GALLERY_VERSION = '2.0';	
 
 
