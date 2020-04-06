@@ -34,9 +34,10 @@ class common {
 
 	// Miniatures de la gallery
 	const THUMBS_SEPARATOR = 'mini_';
+	const THUMBS_WIDTH = 320;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.056';
+	const ZWII_VERSION = '10.0.057';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -806,7 +807,8 @@ class common {
 				/* copy source image at a resized size */
 				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
 				/* create the physical thumbnail image to its destination */
-				imagejpeg($virtual_image, $dest);
+				return (imagejpeg($virtual_image, $dest));
+				
 			}
 		}
 		if ( mime_content_type($src) === 'image/png' )  {
@@ -821,7 +823,7 @@ class common {
 				/* copy source image at a resized size */
 				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
 				/* create the physical thumbnail image to its destination */
-				imagepng($virtual_image, $dest);
+				return (imagepng($virtual_image, $dest));
 			}
 		}
 	}
@@ -1200,13 +1202,13 @@ class common {
 			}	
 			//----------------------------------------
 			// Mise à jour de la taille des miniatures
-			$iterator = new DirectoryIterator('site/file/source');
-			foreach($iterator as $fileInfos) {
-				if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
+			$iterator = new RecursiveDirectoryIterator('site/file/source/');
+			foreach(new RecursiveIteratorIterator($iterator) as $fileInfos) {
+				if($fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
 					if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
 						$this->makeThumb($fileInfos->getPathname(),
 										str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-										640);
+										self::THUMBS_WIDTH);
 					}
 				}
 			}
