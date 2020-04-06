@@ -274,8 +274,7 @@ class gallery extends common {
 							template::text('legend[' . $fileInfos->getFilename() . ']', [
 								'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'legend', str_replace('.','',$fileInfos->getFilename())])
 							]),
-							'<img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '">'
-
+							'<a href="'. $directory . '/' . $fileInfos->getFilename() .'"   data-lity><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
 						];
 					}
 				}
