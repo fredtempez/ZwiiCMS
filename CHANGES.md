@@ -19,6 +19,7 @@
     - Fonction d'import des données provenant d'autres version de ZwiiCMS, avec option de préservation des données utilisateurs.
     - Nouveau masque dédié à la sauvegarde automatique, à l'import et à l'export des données de site.
 - Modification :
+    - Module gallery optimisé, tri dynamique.
     - Chargement paresseux des images.
     
 ## version 9.2.27
