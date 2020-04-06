@@ -36,7 +36,7 @@ class common {
 	const THUMBS_SEPARATOR = 'mini_';
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.053';
+	const ZWII_VERSION = '10.0.054';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -794,35 +794,34 @@ class common {
 
 	function makeThumb($src, $dest, $desired_width) {
 
-		$png = $jpg = false;
-		if (strpos($src,'jpg') > 0 ||
-			strpos($src,'jpeg') > 0 ) {
-				$jpg = true;
-		}
-		if (strpos($src,'png') > 0 )  {
-				$png = true;
-		}		
-		if ($png || $jpg ) {
-			/* read the source image */
-			$source_image = $jpg ? imagecreatefromjpeg($src) : imagecreatefrompng($src);
-			$width = imagesx($source_image);
-			$height = imagesy($source_image);
-		
-			/* find the "desired height" of this thumbnail, relative to the desired width  */
-			$desired_height = floor($height * ($desired_width / $width));
-		
-			/* create a new, "virtual" image */
-			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-		
-			/* copy source image at a resized size */
-			imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
-		
-			/* create the physical thumbnail image to its destination */
-			if ($png) {
-				imagepng($virtual_image, $dest);
-			}
-			if ($jpg) {
+
+		if (mime_content_type($src) === 'image/jpeg' ) {
+			if ($source_image =  imagecreatefromjpeg($src)) {
+				$width = imagesx($source_image);
+				$height = imagesy($source_image);		
+				/* find the "desired height" of this thumbnail, relative to the desired width  */
+				$desired_height = floor($height * ($desired_width / $width));		
+				/* create a new, "virtual" image */
+				$virtual_image = imagecreatetruecolor($desired_width, $desired_height);		
+				/* copy source image at a resized size */
+				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
+				/* create the physical thumbnail image to its destination */
 				imagejpeg($virtual_image, $dest);
+			}
+		}
+		if ( mime_content_type($src) === 'image/png' )  {
+			/* read the source image */
+			if ($source_image = imagecreatefrompng($src)) {;
+				$width = imagesx($source_image);
+				$height = imagesy($source_image);		
+				/* find the "desired height" of this thumbnail, relative to the desired width  */
+				$desired_height = floor($height * ($desired_width / $width));		
+				/* create a new, "virtual" image */
+				$virtual_image = imagecreatetruecolor($desired_width, $desired_height);		
+				/* copy source image at a resized size */
+				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
+				/* create the physical thumbnail image to its destination */
+				imagepng($virtual_image, $dest);
 			}
 		}
 	}
@@ -1196,23 +1195,21 @@ class common {
 								}
 							}
 						}	
-						// Mise à jour de la taille des miniatures
-						$iterator = new DirectoryIterator($this->getdata(['module',$parent,$galleryKey,'config','directory']));
-						foreach($iterator as $fileInfos) {
-							if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
-								if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-									$this->makeThumb($fileInfos->getPathname(),
-													str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-													640);
-								}
-							}
-						}
 					}			
 				}
 			}	
-			// Mettre à jour les données des galeries
 			//----------------------------------------
-
+			// Mise à jour de la taille des miniatures
+			$iterator = new DirectoryIterator('site/file/source');
+			foreach($iterator as $fileInfos) {
+				if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
+					if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+						$this->makeThumb($fileInfos->getPathname(),
+										str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
+										640);
+					}
+				}
+			}
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
 	}
