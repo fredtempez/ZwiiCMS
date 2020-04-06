@@ -36,7 +36,7 @@ class common {
 	const THUMBS_SEPARATOR = 'mini_';
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.055';
+	const ZWII_VERSION = '10.0.056';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
