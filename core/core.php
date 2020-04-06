@@ -33,7 +33,7 @@ class common {
 	const TEMP_DIR = 'site/tmp/';
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.051';
+	const ZWII_VERSION = '10.0.052';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
