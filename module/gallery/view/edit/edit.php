@@ -44,7 +44,26 @@
 			</div>
 		</div>
 	</div>
+<?php echo template::formClose(); ?>	
+<?php echo template::formOpen('galleryEditFilterForm'); ?>
 	<?php if($module::$pictures): ?>
-		<?php echo template::table([4, 1, 6, 1], $module::$pictures, ['Image', 'Couverture','Légende','']); ?>
+		<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
+		<?php echo template::hidden('galleryEditFilterResponse'); ?>
+		<?php echo template::hidden('galleryEditFilterSubmit',[
+					'value' => false
+				]); ?>
+	<?php else: ?>
+		<?php echo template::speech('Aucune galerie.'); ?>
 	<?php endif; ?>
+	<div class="row">
+		<div class="col2 offset10">
+			<?php echo template::submit('galleryEditFilterSubmit', [
+				'value' => 'Trier',
+				'disabled' => true
+			]); ?>
+		</div>
+	</div>
 <?php echo template::formClose(); ?>
+<div class="moduleVersion">Version n°
+	<?php echo $module::GALLERY_VERSION; ?>
+</div>

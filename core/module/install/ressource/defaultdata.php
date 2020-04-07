@@ -546,6 +546,11 @@ class init extends common {
 						'desertjpg' => 'Un désert',
 						'icebergjpg' => 'Un iceberg',
 						'meadowjpg' => 'Une prairie'
+					],
+					'postion' => [
+						'desertjpg' => 3,
+						'icebergjpg' => 1,
+						'meadowjpg' => 2
 					]
 				],
 				'espace' => [
@@ -560,6 +565,11 @@ class init extends common {
 						'earthjpg' => 'La Terre et la Lune',
 						'cosmosjpg' => 'Le cosmos',
 						'nebulajpg' => 'Une nébuleuse'
+					],
+					'postion' => [
+						'earthjpg' => 1,
+						'cosmosjpg' => 3,
+						'nebulajpg' => 2
 					]
 				]
 			],
