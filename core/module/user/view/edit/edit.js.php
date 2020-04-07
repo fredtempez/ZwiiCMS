@@ -16,4 +16,9 @@
 $("#userEditGroup").on("change", function() {
 	$(".userEditGroupDescription").hide();
 	$("#userEditGroupDescription" + $(this).val()).show();
+	if ($("#userEditGroup option:selected").val() < 0) {
+		$("#userEditLabelAuth").css("display","none");
+	} else {
+		$("#userEditLabelAuth").css("display","inline-block");
+	}
 }).trigger("change");
