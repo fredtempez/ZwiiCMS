@@ -1202,6 +1202,7 @@ class common {
 			}	
 			//----------------------------------------
 			// Mise à jour de la taille des miniatures
+			/*
 			$iterator = new RecursiveDirectoryIterator('site/file/source/');
 			foreach(new RecursiveIteratorIterator($iterator) as $fileInfos) {
 				if($fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
@@ -1211,7 +1212,7 @@ class common {
 										self::THUMBS_WIDTH);
 					}
 				}
-			}
+			}*/
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
 	}
