@@ -301,20 +301,22 @@ class user extends common {
 		$userIdsFirstnames = helper::arrayCollumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
 		foreach($userIdsFirstnames as $userId => $userFirstname) {
-			self::$users[] = [
-				$userId,
-				$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-				self::$groups[$this->getData(['user', $userId, 'group'])],
-				template::button('userEdit' . $userId, [
-					'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/'. $_SESSION['csrf'],
-					'value' => template::ico('pencil')
-				]),
-				template::button('userDelete' . $userId, [
-					'class' => 'userDelete buttonRed',
-					'href' => helper::baseUrl() . 'user/delete/' . $userId. '/' . $_SESSION['csrf'],
-					'value' => template::ico('cancel')
-				])
-			];
+			if ($this->getData(['user', $userId, 'group'])) {
+				self::$users[] = [
+					$userId,
+					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
+					self::$groups[$this->getData(['user', $userId, 'group'])],
+					template::button('userEdit' . $userId, [
+						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/'. $_SESSION['csrf'],
+						'value' => template::ico('pencil')
+					]),
+					template::button('userDelete' . $userId, [
+						'class' => 'userDelete buttonRed',
+						'href' => helper::baseUrl() . 'user/delete/' . $userId. '/' . $_SESSION['csrf'],
+						'value' => template::ico('cancel')
+					])
+				];
+		}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
