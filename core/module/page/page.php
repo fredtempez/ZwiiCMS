@@ -317,9 +317,7 @@ class page extends common {
 				}
 			}
 			// Liste des modules
-			$moduleIds = [
-				'' => 'Aucun'
-			];
+			$moduleIds = [];
 			$iterator = new DirectoryIterator('module/');
 			foreach($iterator as $fileInfos) {
 				if(is_file($fileInfos->getPathname() . '/' . $fileInfos->getFilename() . '.php')) {
@@ -332,6 +330,7 @@ class page extends common {
 			}			
 			self::$moduleIds = 	$moduleIds;
 			asort(self::$moduleIds);
+			self::$moduleIds = array_merge( ['' => 'Aucun'] , self::$moduleIds);
 			// Pages sans parent
 			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if($parentPageId !== $this->getUrl(2)) {
