@@ -4,8 +4,20 @@
 			<?php foreach($module::$articles as $articleId => $article): ?>					
 				<div class="row">
 					<div class="col3">
+					<?php 
+						// Déterminer le nom de la miniature
+						$parts = explode('/',$article['picture']);
+						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $article['picture']);
+						// Créer la miniature si manquante
+						if (!file_exists( self::FILE_DIR . 'thumb/' . $thumb) ) {
+							$this->makeThumb(  self::FILE_DIR . 'source/' . $article['picture'],
+											  self::FILE_DIR . 'thumb/' . $thumb,
+											  self::THUMBS_WIDTH);
+						}
+
+					?>
 						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
-							<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'thumb/' . $article['picture']; ?>" alt="<?php echo $article['picture']; ?>">
+							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $article['picture']; ?>">
 						</a>
 					</div>
 					<div class="col9">
