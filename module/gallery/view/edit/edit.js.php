@@ -61,15 +61,8 @@ $('.homePicture').click(function(){
 $( document ).ready(function() {
 	$("#galleryTable").tableDnD({		
 		onDrop: function(table, row) {
-			$("#galleryEditFilterResponse").val($.tableDnD.serialize());
+			$("#galleryEditFormResponse").val($.tableDnD.serialize());
 		},
 		serializeRegexp:  "[^\_]*$"
 	});
-});
-
-// Activer le bouton de tri uniquement après un tri
-$("#galleryTable").click(function() {
-	if ($("#galleryEditResponse").val() != "") {
-		$(":input[type='submit']").prop('disabled', false);
-	}
 });

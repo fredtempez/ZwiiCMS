@@ -26,7 +26,7 @@ $( document ).ready(function() {
 
 // Activer le bouton de tri uniquement après un tri
 $("#galleryTable").click(function() {
-	if ($("#galleryConfigFilterResponse").val() != "") {
+	if ($("#galleryEditFilterResponse").val() != "") {
 		$(":input[type='submit']").prop('disabled', false);
 	}
 });
