@@ -44,31 +44,6 @@ class gallery extends common {
 
 	const GALLERY_VERSION = '2.1';	
 
-	/** 
-	 * Tri des galeries 
-	*/
-	private function sortGallery() {
-	// Traitement du tri
-		$data = explode('&',($this->getInput('galleryConfigFilterResponse')));
-		$data = str_replace('galleryTable%5B%5D=','',$data);
-		for($i=0;$i<count($data);$i++) {
-			$this->setData(['module', $this->getUrl(0), $data[$i], [
-				'config' => [
-					'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
-					'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
-					'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
-					'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
-					'position' => $i
-				],
-				'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
-			]]);
-		}		
-		$this->saveData();
-		// Valeurs en sortie
-		// Recharge la page
-		header('Refresh: 0;url='. helper::baseUrl() . $this->getUrl() );	
-	}
-
 
 	/**
 	 * Configuration
@@ -115,10 +90,32 @@ class gallery extends common {
 			}
 		}
 		// Soumission du formulaire
-
 		if($this->isPost()) {
+			// Tri de la galerie
 			if ($this->getInput('galleryConfigFilterResponse')) {
-				self::sortGallery();
+				$data = explode('&',($this->getInput('galleryConfigFilterResponse')));
+				$data = str_replace('galleryTable%5B%5D=','',$data);
+				for($i=0;$i<count($data);$i++) {
+					$this->setData(['module', $this->getUrl(0), $data[$i], [
+						'config' => [
+							'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
+							'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
+							'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
+							'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
+							'position' => $i
+						],
+						'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
+					]]);
+				}		
+				$this->saveData();
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => 'Configuration du module',
+					'view' => 'config',
+					'vendor' => [
+						'tablednd'
+					]
+				]);
 			} else {
 				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0)]));
 				// La première image est celle de la couverture de l'album
