@@ -22,7 +22,16 @@ $( document ).ready(function() {
 		},
 		serializeRegexp:  "[^\_]*$"
 	});
+	
+	/*
+	var href = window.location.href;
+	if(href.indexOf("#") > 0){
+		href = href.split("#")[0] + href.split("#")[1];
+		window.location.href = href;
+	}*/
 });
+
+
 
 // Activer le bouton de tri uniquement après un tri
 $("#galleryTable").click(function() {
@@ -82,4 +91,3 @@ setInterval(function() {
 directoryDOM.on("change", function() {
 	directoryOldDOM.val($(this).val());
 });
-

@@ -49,7 +49,37 @@ class gallery extends common {
 	 * Configuration
 	 */
 	public function config() {
-		// Tri des galeries 
+
+		/*
+		* Le traitement du tri s'effectue en début de fonction 
+		*/
+		// Soumission du formulaire
+		if($this->isPost()) {
+			if ($this->getInput('galleryConfigFilterResponse')) {
+				$data = explode('&',($this->getInput('galleryConfigFilterResponse')));
+				$data = str_replace('galleryTable%5B%5D=','',$data);
+				for($i=0;$i<count($data);$i++) {
+					$this->setData(['module', $this->getUrl(0), $data[$i], [
+						'config' => [
+							'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
+							'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
+							'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
+							'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
+							'position' => $i
+						],
+						'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
+					]]);
+				}	
+			}	
+			// Valeurs en sortie
+			//header('Refresh: 0;url='. helper::baseUrl() . $this->getUrl() . '#galleryConfigFilterForm' );
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl() . '#galleryConfigFilterForm',
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
+		}
+		// Tri pour l'affichage de la galerie
 		$g = $this->getData(['module', $this->getUrl(0)]);
 		$p = helper::arrayCollumn(helper::arrayCollumn($g,'config'),'position');
 		asort($p,SORT_NUMERIC);		
@@ -89,36 +119,10 @@ class gallery extends common {
 				self::$galleriesId[] = $galleryId;
 			}
 		}
-		// Soumission du formulaire
+		// Soumission du formulaire d'ajouter d'une galerie
 		if($this->isPost()) {
-			// Tri de la galerie
-			if ($this->getInput('galleryConfigFilterResponse')) {
-				$data = explode('&',($this->getInput('galleryConfigFilterResponse')));
-				$data = str_replace('galleryTable%5B%5D=','',$data);
-				for($i=0;$i<count($data);$i++) {
-					$this->setData(['module', $this->getUrl(0), $data[$i], [
-						'config' => [
-							'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
-							'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
-							'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
-							'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
-							'position' => $i
-						],
-						'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
-					]]);
-				}		
-				$this->saveData();
-				// Valeurs en sortie
-				$this->addOutput([
-					'title' => 'Configuration du module',
-					'view' => 'config',
-					'vendor' => [
-						'tablednd'
-					]
-				]);
-			} else {
-				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0)]));
-				// La première image est celle de la couverture de l'album
+			if (!$this->getInput('galleryConfigFilterResponse')) {
+				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0)]));				
 				$directory = $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true);
 				$iterator = new DirectoryIterator($directory);				
 				foreach($iterator as $fileInfos) {
@@ -149,7 +153,7 @@ class gallery extends common {
 				]]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(),					
+					'redirect' => helper::baseUrl() . $this->getUrl(). '#galleryConfigForm',
 					'notification' => 'Modifications enregistrées',
 					'state' => true
 				]);
@@ -269,8 +273,7 @@ class gallery extends common {
 				]]);
 				// Valeurs en sortie
 				$this->addOutput([
-					//'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(2)  . '/' . $_SESSION['csrf'],
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(2)  . '/' . $_SESSION['csrf'] ,
 					'notification' => 'Modifications enregistrées',
 					'state' => true
 				]);
@@ -304,8 +307,7 @@ class gallery extends common {
 						self::$picturesId [] = str_replace('.','',$fileInfos->getFilename());
 					}
 				}
-				// Tri des images par ordre alphabétique
-		
+				// Tri des images 		
 				switch ($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort'])) {
 					case 'SORT_HAND':
 						$positions = $this->getdata(['module',$this->getUrl(0), $this->getUrl(2),'position']);
@@ -326,7 +328,6 @@ class gallery extends common {
 						krsort(self::$pictures,SORT_NATURAL);
 						rsort(self::$picturesId,SORT_NATURAL);
 						break;													
-
 				}	
 			}
 			// Valeurs en sortie

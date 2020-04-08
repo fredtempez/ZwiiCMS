@@ -37,7 +37,8 @@
 					<div class="col1 verticalAlignBottom">
 						<?php echo template::submit('galleryConfigSubmit', [
 							'ico' => '',
-							'value' => template::ico('plus')
+							'value' => template::ico('plus'),
+							'class' => 'gallerySubmit'
 						]); ?>
 					</div>
 				</div>
@@ -52,7 +53,9 @@
 			<h4>Galeries installées</h4>
 				<div class="col2 offset10">
 					<?php echo template::submit('galleryConfigFilterSubmit', [
-						'disabled' => true
+						'value' => 'Trier',
+						'disabled' => true,
+						'class' => 'gallerySubmit'
 					]); ?>
 				</div>
 				<?php if($module::$galleries): ?>
