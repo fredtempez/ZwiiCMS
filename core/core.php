@@ -1172,7 +1172,7 @@ class common {
 					$pageList [] = $childKey;
 				}
 			}	
-			// Parcourir toutes les pages
+			// Mise à jour des données pour la galerie v2
 			foreach ($pageList as $parentKey => $parent) {
 				//La page a une galerie
 				if ($this->getData(['page',$parent,'moduleId']) === 'gallery' ) {
@@ -1180,12 +1180,19 @@ class common {
 					$tempData =  $this->getData(['module', $parent]);	
 					$i = 1;
 					foreach ($tempData as $galleryKey => $galleryItem) {
+						// Ordre de tri des galeries
 						if ( $this->getdata(['module',$parent,$galleryKey,'config','sort']) === NULL)  {
 							$this->setdata(['module',$parent,$galleryKey,'config','sort','SORT_ASC']);
 						}
+						// Position de la galerie, tri manuel
 						if ( $this->getdata(['module',$parent,$galleryKey,'config','position']) === NULL) {
 							$this->setdata(['module',$parent,$galleryKey,'config','position',$i++]);
 						}						
+						// Positions des images, tri manuel
+						if ( $this->getdata(['module',$parent,$galleryKey,'position']) === NULL) {
+							$c = count($this->getdata(['module',$parent,$galleryKey,'legend']));
+							$this->setdata(['module',$parent,$galleryKey,'position', range(0,$c-1) ]);
+						}
 						// Image de couverture
 						if ( $this->getdata(['module',$parent,$galleryKey,'config','homePicture']) === NULL)  {
 							$iterator = new DirectoryIterator($this->getdata(['module',$parent,$galleryKey,'config','directory']));
@@ -1199,20 +1206,7 @@ class common {
 						}	
 					}			
 				}
-			}	
-			//----------------------------------------
-			// Mise à jour de la taille des miniatures
-			/*
-			$iterator = new RecursiveDirectoryIterator('site/file/source/');
-			foreach(new RecursiveIteratorIterator($iterator) as $fileInfos) {
-				if($fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {									
-					if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-						$this->makeThumb($fileInfos->getPathname(),
-										str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-										self::THUMBS_WIDTH);
-					}
-				}
-			}*/
+			}				
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
 	}

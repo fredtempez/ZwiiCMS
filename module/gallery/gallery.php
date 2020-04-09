@@ -23,9 +23,9 @@ class gallery extends common {
 	];
 
 	public static $sort = [
-		'SORT_ASC' => 'Alphabétique ',
-		'SORT_DSC' => 'Alphabétique inversé',
 		'SORT_HAND' => 'Tri manuel',
+		'SORT_ASC' => 'Alphabétique ',
+		'SORT_DSC' => 'Alphabétique inversé'
 	];
 
 	public static $directories = [];

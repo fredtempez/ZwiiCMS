@@ -58,7 +58,9 @@ $('.homePicture').click(function(){
 /**
  * Tri dynamique de la galerie
  */
+
 $( document ).ready(function() {
+
 	$("#galleryTable").tableDnD({		
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
@@ -66,3 +68,15 @@ $( document ).ready(function() {
 		serializeRegexp:  "[^\_]*$"
 	});
 });
+
+$("#galleryEditSort").change(function() {
+	if ($("#galleryEditSort").val() !==  "SORT_HAND") {
+		$("#galleryTable > tbody > tr").addClass("nodrag");
+		$("#galleryTable").tableDnDUpdate();
+	} else {
+		$("#galleryTable > tbody > tr").removeClass("nodrag");
+		$("#galleryTable").tableDnDUpdate();
+	}
+});
+
+
