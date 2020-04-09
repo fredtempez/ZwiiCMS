@@ -43,7 +43,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.1';	
+	const GALLERY_VERSION = '2.2';	
 
 
 	/**
