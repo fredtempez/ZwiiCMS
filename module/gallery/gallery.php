@@ -49,10 +49,8 @@ class gallery extends common {
 	 * Configuration
 	 */
 	public function config() {
-
-		/*
-		* Le traitement du tri s'effectue en début de fonction 
-		*/
+		
+		// Le traitement du tri s'effectue en début de fonction 
 		// Soumission du formulaire
 		if($this->isPost()) {
 			if ($this->getInput('galleryConfigFilterResponse')) {

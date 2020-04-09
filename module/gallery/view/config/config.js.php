@@ -12,54 +12,38 @@
  * @link http://zwiicms.com/
  */
 
-/**
- * Tri dynamique de la galerie
- */
+
 $( document ).ready(function() {
+
+	/**
+	 * Tri dynamique de la galerie
+	 */	
 	$("#galleryTable").tableDnD({		
 		onDrop: function(table, row) {
+			// Stocke dans un champ caché l'ordre de tri modifié
 			$("#galleryConfigFilterResponse").val($.tableDnD.serialize());
 		},
+		onDragStop : function(table, row) {
+			// Affiche le bouton de tri après un déplacement
+			$(":input[type='submit']").prop('disabled', false);
+		},
+		// Supprime le tiret des séparateurs
 		serializeRegexp:  "[^\_]*$"
 	});
 	
+	
 
-});
-
-
-/**
- * Scroll virer les ancres de l'URL
- */
-/*
-$( document ).scroll(function() {
-	var href = window.location.href;
-	if(href.indexOf("#") > 0){
-		href = href.split("#")[0];
-		window.location.hash = href;
-	}
-});
-*/
-
-
-
-// Activer le bouton de tri uniquement après un tri
-$("#galleryTable").click(function() {
-	if ($("#galleryConfigFilterResponse").val() != "") {
-		$(":input[type='submit']").prop('disabled', false);
-	}
-});
-
-/**
- * Confirmation de suppression
- */
-$(".galleryConfigDelete").on("click", function() {
-	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cette galerie ?", function() {
-		$(location).attr("href", _this.attr("href"));
+	/**
+	 * Confirmation de suppression
+	 */
+	$(".galleryConfigDelete").on("click", function() {
+		var _this = $(this);
+		return core.confirm("Êtes-vous sûr de vouloir supprimer cette galerie ?", function() {
+			$(location).attr("href", _this.attr("href"));
+		});
 	});
+
 });
-
-
 
 /**
  * Liste des dossiers
