@@ -15,7 +15,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Informations générales</h4>
+				<h4>Paramètre des images</h4>
 				<div class="row">
 					<div class="col5">
 						<?php echo template::text('galleryEditName', [
@@ -37,25 +37,29 @@
 						<?php echo template::select('galleryEditSort', $module::$sort, [
 							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort']),
 							'label' => 'Tri des images',
-							'help' => 'Les images sont triées par nom de fichier grâce à la méthode naturelle qui donne de meilleurs résultats lorsque les images sont numérotées.'
+							'help' => 'Les images sont triées par nom de fichier grâce à la méthode naturelle qui donne de meilleurs résultats lorsque les images sont numérotées.<br>
+										N\'oubliez pas d\'enregistrer pour sauvegarder le tri manuel des images'
 						]); ?>	
 					</div>				
+				</div>
+				<div class="row">
+					<div class="col12">
+						<?php if($module::$pictures): ?>
+							<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
+							<?php echo template::hidden('galleryEditFormResponse'); ?>
+							<?php echo template::hidden('galleryEditSubmit',[
+										'value' => false
+									]); ?>
+						<?php else: ?>
+							<?php echo template::speech('Aucune galerie.'); ?>
+						<?php endif; ?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<?php if($module::$pictures): ?>
-		<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
-		<?php echo template::hidden('galleryEditFormResponse'); ?>
-		<?php echo template::hidden('galleryEditSubmit',[
-					'value' => false
-				]); ?>
-	<?php else: ?>
-		<?php echo template::speech('Aucune galerie.'); ?>
-	<?php endif; ?>
+
 		<div class="moduleVersion">Version n°
 			<?php echo $module::GALLERY_VERSION; ?>
 		</div>
-	</div>
 <?php echo template::formClose(); ?>
