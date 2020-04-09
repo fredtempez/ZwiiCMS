@@ -23,13 +23,22 @@ $( document ).ready(function() {
 		serializeRegexp:  "[^\_]*$"
 	});
 	
-	/*
+
+});
+
+
+/**
+ * Scroll virer les ancres de l'URL
+ */
+/*
+$( document ).scroll(function() {
 	var href = window.location.href;
 	if(href.indexOf("#") > 0){
-		href = href.split("#")[0] + href.split("#")[1];
-		window.location.href = href;
-	}*/
+		href = href.split("#")[0];
+		window.location.hash = href;
+	}
 });
+*/
 
 
 

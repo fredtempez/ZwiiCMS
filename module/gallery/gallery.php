@@ -74,7 +74,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			//header('Refresh: 0;url='. helper::baseUrl() . $this->getUrl() . '#galleryConfigFilterForm' );
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl() . '#galleryConfigFilterForm',
+				'redirect' => helper::baseUrl() . $this->getUrl() /* . '#galleryConfigFilterForm'*/,
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);
@@ -153,7 +153,7 @@ class gallery extends common {
 				]]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(). '#galleryConfigForm',
+					'redirect' => helper::baseUrl() . $this->getUrl() /*. '#galleryConfigForm'*/,
 					'notification' => 'Modifications enregistrées',
 					'state' => true
 				]);
