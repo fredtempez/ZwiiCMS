@@ -12,26 +12,27 @@
  * @link http://zwiicms.com/
  */
 
-
 $( document ).ready(function() {
 
+
 	/**
-	 * Tri dynamique de la galerie
+	 * Tri de la galerie avec drag and drop
 	 */	
-	$("#galleryTable").tableDnD({		
-		onDrop: function(table, row) {
-			// Stocke dans un champ caché l'ordre de tri modifié
+	$("#galleryTable").tableDnD({	
+		onDrop: function(table, row) {			
 			$("#galleryConfigFilterResponse").val($.tableDnD.serialize());
 		},
 		onDragStop : function(table, row) {
 			// Affiche le bouton de tri après un déplacement
 			$(":input[type='submit']").prop('disabled', false);
+			// Sauvegarde le tri
+			sort();
 		},
 		// Supprime le tiret des séparateurs
 		serializeRegexp:  "[^\_]*$"
 	});
 	
-	
+
 
 	/**
 	 * Confirmation de suppression
@@ -84,3 +85,20 @@ setInterval(function() {
 directoryDOM.on("change", function() {
 	directoryOldDOM.val($(this).val());
 });
+
+
+/**
+ * Tri dynamique des galeries
+ */
+
+function sort() {
+	var url = "<?php echo helper::baseUrl() . $this->getUrl(0) . '/sort'; ?>";
+	var data = $("#galleryConfigFilterResponse").val();			
+	$.ajax({
+		type: "POST",
+		url: url ,
+		data: {
+			response : data
+		}
+	});
+}

@@ -18,6 +18,7 @@ class gallery extends common {
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'dirs' => self::GROUP_MODERATOR,
+		'sort' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR		
 	];
@@ -46,38 +47,33 @@ class gallery extends common {
 
 
 	/**
+	 * Tri sans bouton
+	 */
+	public function sort () {
+		if($_POST['response']) {
+			$data = explode('&',$_POST['response']);
+			$data = str_replace('galleryTable%5B%5D=','',$data);
+			for($i=0;$i<count($data);$i++) {
+				$this->setData(['module', $this->getUrl(0), $data[$i], [
+					'config' => [
+						'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
+						'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
+						'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
+						'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
+						'position' => $i
+					],
+					'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
+				]]);
+			}	
+		}
+	}
+
+
+	/**
 	 * Configuration
 	 */
 	public function config() {
-		
-		// Le traitement du tri s'effectue en début de fonction 
-		// Soumission du formulaire
-		if($this->isPost()) {
-			if ($this->getInput('galleryConfigFilterResponse')) {
-				$data = explode('&',($this->getInput('galleryConfigFilterResponse')));
-				$data = str_replace('galleryTable%5B%5D=','',$data);
-				for($i=0;$i<count($data);$i++) {
-					$this->setData(['module', $this->getUrl(0), $data[$i], [
-						'config' => [
-							'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
-							'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
-							'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
-							'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
-							'position' => $i
-						],
-						'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
-					]]);
-				}	
-			}	
-			// Valeurs en sortie
-			//header('Refresh: 0;url='. helper::baseUrl() . $this->getUrl() . '#galleryConfigFilterForm' );
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl() /* . '#galleryConfigFilterForm'*/,
-				'notification' => 'Modifications enregistrées',
-				'state' => true
-			]);
-		}
-		// Tri pour l'affichage de la galerie
+		//Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0)]);
 		$p = helper::arrayCollumn(helper::arrayCollumn($g,'config'),'position');
 		asort($p,SORT_NUMERIC);		
