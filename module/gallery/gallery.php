@@ -267,7 +267,7 @@ class gallery extends common {
 				]]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(2)  . '/' . $_SESSION['csrf'] ,
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
 					'notification' => 'Modifications enregistrées',
 					'state' => true
 				]);
