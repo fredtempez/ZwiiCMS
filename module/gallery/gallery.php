@@ -434,8 +434,8 @@ class gallery extends common {
 							}	
 							// Définir l'image de couverture
 							self::$firstPictures[$galleryId] = file_exists( str_replace('source','thumb',$gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR  . strtolower($gallery['config']['homePicture'])) 
-								? str_replace('source','thumb',$gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR .  strtolower($gallery['config']['homePicture'])
-								: str_replace('source','thumb',$gallery['config']['directory']) . '/' .  strtolower($gallery['config']['homePicture']);
+								? str_replace('source','thumb',$gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR .  strtolower($gallery['config']['homePicture'])							
+								: str_replace('source','thumb',$gallery['config']['directory']) . '/' . strtolower($fileInfos->getFilename());
 							continue(2);
 						}
 					}
