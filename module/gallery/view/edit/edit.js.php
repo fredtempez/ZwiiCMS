@@ -71,10 +71,10 @@ $( document ).ready(function() {
 
 $("#galleryEditSort").change(function() {
 	if ($("#galleryEditSort").val() !==  "SORT_HAND") {
-		$("#galleryTable > tbody > tr").addClass("nodrag");
+		$("#galleryTable tr").addClass("nodrag nodrop");
 		$("#galleryTable").tableDnDUpdate();
 	} else {
-		$("#galleryTable > tbody > tr").removeClass("nodrag");
+		$("#galleryTable tr").removeClass("nodrag nodrop");
 		$("#galleryTable").tableDnDUpdate();
 	}
 });
