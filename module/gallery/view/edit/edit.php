@@ -51,7 +51,7 @@
 										'value' => false
 									]); ?>
 						<?php else: ?>
-							<?php echo template::speech('Aucune galerie.'); ?>
+							<?php echo template::speech('Aucune image.'); ?>
 						<?php endif; ?>
 					</div>
 				</div>
