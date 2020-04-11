@@ -794,8 +794,12 @@ class common {
 	*/
 
 	function makeThumb($src, $dest, $desired_width) {
-
-
+		// Vérifier l'existence du dossier de destination.
+		$path = pathinfo($dest);
+		if (!is_dir($path['dirname'])) {
+			mkdir($path['dirname']);
+		}
+		// Image jpeg
 		if (mime_content_type($src) === 'image/jpeg' ) {
 			if ($source_image =  imagecreatefromjpeg($src)) {
 				$width = imagesx($source_image);
@@ -811,6 +815,7 @@ class common {
 				
 			}
 		}
+		// image png
 		if ( mime_content_type($src) === 'image/png' )  {
 			/* read the source image */
 			if ($source_image = imagecreatefrompng($src)) {;
