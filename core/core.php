@@ -792,14 +792,13 @@ class common {
 	* @param string $dets image destination
 	* @param integer $desired_width largeur demandée
 	*/
-
 	function makeThumb($src, $dest, $desired_width) {
 		// Vérifier l'existence du dossier de destination.
 		$path = pathinfo($dest);
 		if (!is_dir($path['dirname'])) {
 			mkdir($path['dirname']);
 		}
-
+		// Type d'image
 		switch(mime_content_type($src) ) {
 			case 'image/jpeg':
 			case 'image/jpg':
@@ -812,7 +811,7 @@ class common {
 				$source_image = imagecreatefromgif($src);
 				break;
 		}
-
+		// Image valide
 		if ($source_image) {
 			$width = imagesx($source_image);
 			$height = imagesy($source_image);		
@@ -833,8 +832,9 @@ class common {
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
 					break;
-			}
-			
+			}			
+		} else {
+			return (false);
 		}
 	}
 
