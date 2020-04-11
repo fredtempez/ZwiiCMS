@@ -37,7 +37,7 @@ class common {
 	const THUMBS_WIDTH = 320;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.059';
+	const ZWII_VERSION = '10.0.060';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -799,37 +799,42 @@ class common {
 		if (!is_dir($path['dirname'])) {
 			mkdir($path['dirname']);
 		}
-		// Image jpeg
-		if (mime_content_type($src) === 'image/jpeg' ) {
-			if ($source_image =  imagecreatefromjpeg($src)) {
-				$width = imagesx($source_image);
-				$height = imagesy($source_image);		
-				/* find the "desired height" of this thumbnail, relative to the desired width  */
-				$desired_height = floor($height * ($desired_width / $width));		
-				/* create a new, "virtual" image */
-				$virtual_image = imagecreatetruecolor($desired_width, $desired_height);		
-				/* copy source image at a resized size */
-				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
-				/* create the physical thumbnail image to its destination */
-				return (imagejpeg($virtual_image, $dest));
-				
-			}
+
+		switch(mime_content_type($src) ) {
+			case 'image/jpeg':
+			case 'image/jpg':
+				$source_image = imagecreatefromjpeg($src);
+				break;
+			case 'image/png':
+				$source_image = imagecreatefrompng($src);
+				break;
+			case 'image/gif':
+				$source_image = imagecreatefromgif($src);
+				break;
 		}
-		// image png
-		if ( mime_content_type($src) === 'image/png' )  {
-			/* read the source image */
-			if ($source_image = imagecreatefrompng($src)) {;
-				$width = imagesx($source_image);
-				$height = imagesy($source_image);		
-				/* find the "desired height" of this thumbnail, relative to the desired width  */
-				$desired_height = floor($height * ($desired_width / $width));		
-				/* create a new, "virtual" image */
-				$virtual_image = imagecreatetruecolor($desired_width, $desired_height);		
-				/* copy source image at a resized size */
-				imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
-				/* create the physical thumbnail image to its destination */
-				return (imagepng($virtual_image, $dest));
+
+		if ($source_image) {
+			$width = imagesx($source_image);
+			$height = imagesy($source_image);		
+			/* find the "desired height" of this thumbnail, relative to the desired width  */
+			$desired_height = floor($height * ($desired_width / $width));		
+			/* create a new, "virtual" image */
+			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);		
+			/* copy source image at a resized size */
+			imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);		
+			switch(mime_content_type($src) ) {
+				case 'image/jpeg':
+				case 'image/jpg':
+					return (imagejpeg($virtual_image, $dest));
+					break;
+				case 'image/png':
+					return (imagepng($virtual_image, $dest));
+					break;
+				case 'image/gif':
+					return (imagegif($virtual_image, $dest));
+					break;
 			}
+			
 		}
 	}
 
