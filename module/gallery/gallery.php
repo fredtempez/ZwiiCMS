@@ -299,7 +299,7 @@ class gallery extends common {
 							template::text('legend[' . $fileInfos->getFilename() . ']', [
 								'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'legend', str_replace('.','',$fileInfos->getFilename())])
 							]),
-							'<a href="'. str_replace('source','thumb',$directory)  . '/mini_' . $fileInfos->getFilename() .'" rel="data-lity" data-lity=""><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
+							'<a href="' .  $fileInfos->getPathname() .'" rel="data-lity" data-lity=""><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
 						];
 						self::$picturesId [] = str_replace('.','',$fileInfos->getFilename());
 					}
