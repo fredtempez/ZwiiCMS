@@ -243,7 +243,7 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture[0],
 						'sort' => $this->getInput('galleryEditSort'),
-						'position' => count($this->getData(['module',$this->getUrl(0)]))
+						'position' => empty($this->getData(['module', $this->getUrl(0), $galleryId,'config','position']))  ? count($this->getData(['module',$this->getUrl(0)])) : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position'])
 					],
 					'legend' => $legends,
 					'position' => empty($picturesPosition) ? $this->getData(['module', $this->getUrl(0),  $this->getUrl(2),'position']) : $picturesPosition
