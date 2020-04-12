@@ -67,14 +67,27 @@ $( document ).ready(function() {
 		},
 		serializeRegexp:  "[^\_]*$"
 	});
+
+	if ($("#galleryEditSort").val() !==  "SORT_HAND") {
+		$("#galleryTable tr").addClass("nodrag nodrop");
+		$(".zwiico-sort").hide();
+		$("#galleryTable").tableDnDUpdate();
+	} else {
+		$("#galleryTable tr").removeClass("nodrag nodrop");
+		$(".zwiico-sort").show();
+		$("#galleryTable").tableDnDUpdate();
+	}
+
 });
 
 $("#galleryEditSort").change(function() {
 	if ($("#galleryEditSort").val() !==  "SORT_HAND") {
 		$("#galleryTable tr").addClass("nodrag nodrop");
+		$(".zwiico-sort").hide();
 		$("#galleryTable").tableDnDUpdate();
 	} else {
 		$("#galleryTable tr").removeClass("nodrag nodrop");
+		$(".zwiico-sort").show();
 		$("#galleryTable").tableDnDUpdate();
 	}
 });
