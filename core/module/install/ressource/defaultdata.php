@@ -99,7 +99,7 @@ class init extends common {
 				'displayVersion' => true,
 				'displaySiteMap' => true,
 				'displayCopyright' => false,
-				'displayLegal' => true,
+				'displayLegal' => false,
 				'displaySearch' => false,
 				'template' => '3'
 			],
