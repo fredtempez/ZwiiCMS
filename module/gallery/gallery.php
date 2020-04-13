@@ -14,6 +14,10 @@
 
 class gallery extends common {
 
+	const SORT_ASC = 'SORT_ASC';
+	const SORT_DSC = 'SORT_DSC';
+	const SORT_HAND = 'SORT_HAND';
+
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
@@ -24,9 +28,9 @@ class gallery extends common {
 	];
 
 	public static $sort = [
-		'SORT_ASC' => 'Alphabétique ',
-		'SORT_DSC' => 'Alphabétique inversé',
-		'SORT_HAND' => 'Tri manuel'
+		self::SORT_ASC  => 'Alphabétique ',
+		self::SORT_DSC  => 'Alphabétique inversé',
+		self::SORT_HAND => 'Tri manuel'
 	];
 
 	public static $directories = [];
@@ -140,7 +144,7 @@ class gallery extends common {
 						'name' => $this->getInput('galleryConfigName'),
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
-						'sort' => $this->getInput('galleryConfigSort'),
+						'sort' => self::SORT_ASC,
 						'position' => count($this->getData(['module',$this->getUrl(0)])) + 1
 					],
 					'legend' => [],
@@ -235,7 +239,7 @@ class gallery extends common {
 				 */
 				$picturesPosition = [];
 				if ($this->getInput('galleryEditFormResponse') &&
-					$this->getInput('galleryEditSort') === 'SORT_HAND') {
+					$this->getInput('galleryEditSort') === self::SORT_HAND) {
 					// Tri des images si valeur de retour et choix manuel
 					$picturesPosition = explode('&',($this->getInput('galleryEditFormResponse')));
 					$picturesPosition = str_replace('galleryTable%5B%5D=','',$picturesPosition);	
@@ -306,7 +310,7 @@ class gallery extends common {
 				}
 				// Tri des images 		
 				switch ($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort'])) {
-					case 'SORT_HAND':
+					case self::SORT_HAND:
 						$positions = $this->getdata(['module',$this->getUrl(0), $this->getUrl(2),'position']);
 						if ($positions) {
 							foreach ($positions as $position => $name) {
@@ -317,11 +321,11 @@ class gallery extends common {
 							self::$picturesId  = $tempPicturesId;
 						}
 						break;
-					case 'SORT_ASC':
+					case self::SORT_ASC:
 						ksort(self::$pictures,SORT_NATURAL);
 						sort(self::$picturesId,SORT_NATURAL);
 						break;						
-					case 'SORT_DSC':
+					case self::SORT_DSC:
 						krsort(self::$pictures,SORT_NATURAL);
 						rsort(self::$picturesId,SORT_NATURAL);
 						break;													
@@ -375,7 +379,7 @@ class gallery extends common {
 					}
 					// Tri des images par ordre alphabétique
 					switch ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'sort'])) {
-						case 'SORT_HAND':
+						case self::SORT_HAND:
 							asort($picturesSort);
 							if ($picturesSort) {
 								foreach ($picturesSort as $name => $position) {
@@ -384,10 +388,10 @@ class gallery extends common {
 								self::$pictures = $temp;
 								break;
 							}
-						case 'SORT_DSC':
+						case self::SORT_DSC:
 							krsort(self::$pictures,SORT_NATURAL);
 							break;													
-						case 'SORT_ASC':
+						case self::SORT_ASC:
 						default:
 							ksort(self::$pictures,SORT_NATURAL);
 							break;
