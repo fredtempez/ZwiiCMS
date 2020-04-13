@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.4';	
+	const GALLERY_VERSION = '2.5';	
 
 
 	/**
@@ -287,11 +287,11 @@ class gallery extends common {
 				
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-						// Créer la miniature si manquante
-						if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+						// Créer la miniature RFM si manquante
+						if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . strtolower($fileInfos->getFilename()))) {
 							$this->makeThumb($fileInfos->getPathname(),
-											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-											self::THUMBS_WIDTH);
+											str_replace('source','thumb',$fileInfos->getPath()) .  '/' .  strtolower($fileInfos->getFilename()),
+											122);
 						}
 						self::$pictures[str_replace('.','',$fileInfos->getFilename())] = [								
 							template::ico('sort'),
