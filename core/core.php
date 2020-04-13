@@ -794,7 +794,7 @@ class common {
 		// Vérifier l'existence du dossier de destination.
 		$path = pathinfo($dest);
 		if (!is_dir($path['dirname'])) {
-			mkdir($path['dirname']);
+			mkdir($path['dirname'],755,true);
 		}
 		// Type d'image
 		switch(mime_content_type($src) ) {
