@@ -172,14 +172,6 @@ echo template::formOpen('pageEditForm');
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('pageEditTargetLity', true, 'Popup Intégrée', [
-							'checked' => $this->getData(['page', $this->getUrl(2), 'targetLity'])
-						]); ?>
-					</div>
-										
-				</div>
-				<div class="row">		
-					<div class="col6">
 						<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
 							'disabled' => (bool) ($this->getdata(['config','homePageId']) === $this->getUrl(2)) ? true : false,
 							'checked' => (bool) ($this->getdata(['config','homePageId']) === $this->getUrl(2)) ? false : $this->getData(['page', $this->getUrl(2), 'disable']),	

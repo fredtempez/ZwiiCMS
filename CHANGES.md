@@ -18,10 +18,10 @@
     - L'importation des données est possible uniquement à partir d'une version 9.
     - Fonction d'import des données provenant d'autres version de ZwiiCMS, avec option de préservation des données utilisateurs.
     - Nouveau masque dédié à la sauvegarde automatique, à l'import et à l'export des données de site.
-- Modification :
+- Modifications :
     - Module gallery optimisé, tri dynamique.
     - Chargement paresseux des images.
-    
+    - Edtion de page : suppression de l'option d'ouverture dans une lity.
 ## version 9.2.27
 - Corrections :
     - Pages d'administration, thème spécifique

@@ -209,23 +209,6 @@ $( document ).ready(function() {
 });
 
 
-/**
- * Empêche la double sélection Blank et Lity
- */
-var pageEditTargetBlankDOM = $("#pageEditTargetBlank");
-pageEditTargetBlankDOM.on("change", function() {
-	if ($(this).is(':checked')  &&
-	 $("#pageEditTargetLity").is(':checked') ) {
-		$("#pageEditTargetLity").prop("checked", false);	
-	}
-});
-var pageEditTargetLityDOM = $("#pageEditTargetLity");
-pageEditTargetLityDOM.on("change", function() {
-	if ($(this).is(':checked')  &&
-	 $("#pageEditTargetBlank").is(':checked') ) {
-		$("#pageEditTargetBlank").prop("checked", false);	
-	}
-});
 
 /**
  * Cache le l'option "ne pas afficher les pages enfants dans le menu horizontal" lorsque la page est désactivée

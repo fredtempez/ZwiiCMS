@@ -20,7 +20,6 @@ class common {
 	const DISPLAY_LAYOUT_BLANK = 2;
 	const DISPLAY_LAYOUT_MAIN = 3;
 	const DISPLAY_LAYOUT_LIGHT = 4;
-	const DISPLAY_LAYOUT_POPUP = 5;
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
@@ -37,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 320;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.062';
+	const ZWII_VERSION = '10.0.063';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -84,7 +83,6 @@ class common {
 		'notification' => '',
 		'redirect' => '',
 		'script' => '',
-		'targetLity' => false,
 		'showBarEditButton' => false,
 		'showPageContent' => false,
 		'state' => false,
@@ -1519,7 +1517,6 @@ class core extends common {
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
-				'targetLity' => is_null($this->getData(['page', $this->getUrl(0), 'targetLity'])) ? false : $this->getData(['page', $this->getUrl(0), 'targetLity'])
 			]);
 		}
 		// Importe le module
@@ -1536,8 +1533,7 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
-					'targetLity' => is_null($this->getData(['page', $this->getUrl(0), 'targetLity'])) ? false : $this->getData(['page', $this->getUrl(0), 'targetLity'])
+					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
 			}
@@ -1743,40 +1739,30 @@ class core extends common {
 				'metaDescription' => $this->getData(['config', 'metaDescription'])
 			]);
 		}
-		// Traitement de la popup hors connexion.
-		if( $this->output['targetLity'] &&
-		 	$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-		)  {
-			$this->output['display'] = self::DISPLAY_LAYOUT_POPUP;
-		}
 				
-		switch($this->output['display']) {
-			// Layout vide
-			case self::DISPLAY_LAYOUT_BLANK:
-				require 'core/layout/blank.php';
-				break;
-			// Affichage en JSON
-			case self::DISPLAY_JSON:
-				header('Content-Type: application/json');
-				echo json_encode($this->output['content']);
-				break;
-			// Layout alléger
-			case self::DISPLAY_LAYOUT_LIGHT:
-				require 'core/layout/light.php';
-				break;
-			// Layout principal
-			case self::DISPLAY_LAYOUT_MAIN:
-				require 'core/layout/main.php';
-				break;
-			// Layout poup lity
-			case self::DISPLAY_LAYOUT_POPUP:
-				require 'core/layout/popup.php';
-				break;								
-			// Layout brut
-			case self::DISPLAY_RAW:
-				echo $this->output['content'];
-				break;
-		}		
+	switch($this->output['display']) {
+		// Layout vide
+		case self::DISPLAY_LAYOUT_BLANK:
+			require 'core/layout/blank.php';
+			break;
+		// Affichage en JSON
+		case self::DISPLAY_JSON:
+			header('Content-Type: application/json');
+			echo json_encode($this->output['content']);
+			break;
+		// Layout alléger
+		case self::DISPLAY_LAYOUT_LIGHT:
+			require 'core/layout/light.php';
+			break;
+		// Layout principal
+		case self::DISPLAY_LAYOUT_MAIN:
+			require 'core/layout/main.php';
+			break;							
+		// Layout brut
+		case self::DISPLAY_RAW:
+			echo $this->output['content'];
+			break;				
+		}
 	}
 
 }
@@ -2026,7 +2012,6 @@ class layout extends common {
 			// Propriétés de l'item
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
-			$targetLity = ($this->getData(['page', $parentPageId, 'targetLity'])  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) ? ' rel="data-lity"' : '';	
 			// Mise en page de l'item
 			$items .= '<li>';
 			
@@ -2035,7 +2020,7 @@ class layout extends common {
 
 					{$items .= '<a href="'.$this->getUrl(1).'">';
 			} else {
-					$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . $targetLity . '>';	
+					$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';	
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2082,15 +2067,14 @@ class layout extends common {
 			foreach($childrenPageIds as $childKey) {			
 				// Propriétés de l'item
 				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
-				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-				$targetLity = ($this->getData(['page', $childKey, 'targetLity'])  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) ? ' rel="data-lity"' : '';		
+				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';				
 				// Mise en page du sous-item
 				$items .= '<li>';
 				if ( $this->getData(['page',$childKey,'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-					$items .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  . $targetLity . '>';			
+					$items .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';			
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
@@ -2183,7 +2167,6 @@ class layout extends common {
 			// Propriétés de l'item
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
-			$targetLity = ($this->getData(['page', $parentPageId, 'targetLity'])  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) ? ' rel="data-lity"' : '';	
 			// Mise en page de l'item;
 			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
 			if ($onlyChildren === false) {
@@ -2192,7 +2175,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-						$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . $targetLity . '>';	
+						$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';	
 				}
 				$items .= $this->getData(['page', $parentPageId, 'title']);
 				$items .= '</a>';
@@ -2206,8 +2189,7 @@ class layout extends common {
 				
 				// Propriétés de l'item
 				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
-				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-				$targetLity = ($this->getData(['page', $childKey, 'targetLity'])  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) ? ' rel="data-lity"' : '';	
+				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';				
 				// Mise en page du sous-item
 				$itemsChildren .= '<li class="menuSideChild">';
 
@@ -2215,7 +2197,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$itemsChildren .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank . $targetLity . '>';
+					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank . '>';
 				}
 
 				$itemsChildren .= $this->getData(['page', $childKey, 'title']);					
