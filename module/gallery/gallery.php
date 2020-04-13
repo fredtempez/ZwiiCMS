@@ -43,7 +43,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.3';	
+	const GALLERY_VERSION = '2.4';	
 
 
 	/**
@@ -430,9 +430,9 @@ class gallery extends common {
 						if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
 							self::$galleries[$galleryId] = $gallery;
 							// Créer la miniature si manquante
-							if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-								$this->makeThumb($fileInfos->getPathname(),
-												str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
+							if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($gallery['config']['homePicture']))) {
+								$this->makeThumb($gallery['config']['directory'] . '/' . str_replace(self::THUMBS_SEPARATOR ,'',$gallery['config']['homePicture']),
+												str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($gallery['config']['homePicture']),
 												self::THUMBS_WIDTH);
 							}	
 							// Définir l'image de couverture
