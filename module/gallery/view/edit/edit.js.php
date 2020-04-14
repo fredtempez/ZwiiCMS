@@ -65,7 +65,7 @@ $( document ).ready(function() {
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
 		},
-		serializeRegexp:  "[^\_]*$"
+		serializeRegexp:  "[^\]*$"
 	});
 
 	if ($("#galleryEditSort").val() !==  "SORT_HAND") {

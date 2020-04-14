@@ -29,7 +29,7 @@ $( document ).ready(function() {
 			sort();
 		},
 		// Supprime le tiret des séparateurs
-		serializeRegexp:  "[^\_]*$"
+		serializeRegexp:  "[^\]*$"
 	});
 	
 
