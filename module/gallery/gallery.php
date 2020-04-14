@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.07';	
+	const GALLERY_VERSION = '2.08';	
 
 
 	/**
@@ -278,7 +278,7 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						// pas de positions, on active le tri alpha
-						'sort' =>  empty($picturesPosition) ? self::SORT_ASC : $this->getInput('galleryEditSort'),
+						'sort' =>  (empty($picturesPosition) && $this->getInput('galleryEditSort') === self::SORT_HAND) ? self::SORT_ASC : $this->getInput('galleryEditSort'),
 						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position'])
 					],
 					'legend' => $legends,
