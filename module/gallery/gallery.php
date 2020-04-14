@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.05';	
+	const GALLERY_VERSION = '2.06';	
 
 
 	/**
@@ -133,9 +133,7 @@ class gallery extends common {
 											self::THUMBS_WIDTH);
 						}
 						// Miniatures 
-						$homePicture = file_exists( str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename())) 
-							?  self::THUMBS_SEPARATOR .  strtolower($fileInfos->getFilename())
-							:  strtolower($fileInfos->getFilename());
+						$homePicture = strtolower($fileInfos->getFilename());
 					break;
 					}
 				}
@@ -256,17 +254,23 @@ class gallery extends common {
 				// légendes
 				$legends = [];
 				foreach((array) $this->getInput('legend', null) as $file => $legend) {
+					// Image de couverure par défaut si non définie
+					$homePicture = $file;
 					$file = str_replace('.','',$file);
 					$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
+
 				}
-				// Photo de la page de garde de l'album
-				$homePicture = array_keys($this->getInput('homePicture', null));
+				// Photo de la page de garde de l'album définie dans form
+				if (is_array($this->getInput('homePicture', null)) ) {
+					$d = array_keys($this->getInput('homePicture', null));
+					$homePicture = $d[0];
+				}
 				// Sauvegarder
 				$this->setData(['module', $this->getUrl(0), $galleryId, [
 					'config' => [
 						'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
 						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture[0] === null ? $this->getData(['module', $this->getUrl(0), $galleryId,'config','homePicture']) : $homePicture[0] ,
+						'homePicture' => $homePicture,
 						'sort' =>  $this->getInput('galleryEditSort'),
 						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position'])
 					],
