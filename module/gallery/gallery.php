@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.06';	
+	const GALLERY_VERSION = '2.07';	
 
 
 	/**
@@ -243,6 +243,12 @@ class gallery extends common {
 					$picturesPosition = str_replace('galleryTable%5B%5D=','',$picturesPosition);	
 					$picturesPosition = array_flip($picturesPosition);				
 				}
+				// Tri manuel sélectionné mais de déplacement, reprendre la config sauvegardée
+				if ($this->getInput('galleryEditSort') === self::SORT_HAND &&
+				   empty($picturesPosition)) {
+					$picturesPosition  = $this->getdata(['module', $this->getUrl(0), $this->getUrl(2), 'position']);
+					// Si la position sauvegardée est vide, on activera le tri alpha
+				}
 				// Si l'id a changée
 				$galleryId = $this->getInput('galleryEditName', helper::FILTER_ID, true);
 				if($galleryId !== $this->getUrl(2)) {
@@ -271,7 +277,8 @@ class gallery extends common {
 						'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
 						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
-						'sort' =>  $this->getInput('galleryEditSort'),
+						// pas de positions, on active le tri alpha
+						'sort' =>  empty($picturesPosition) ? self::SORT_ASC : $this->getInput('galleryEditSort'),
 						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position'])
 					],
 					'legend' => $legends,
