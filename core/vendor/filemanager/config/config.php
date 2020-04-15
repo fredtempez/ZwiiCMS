@@ -515,8 +515,8 @@ $config = array(
 	'fixed_path_from_filemanager'             => array( '../../../site/file/thumb/' ), //fixed path of the image folder from the current position on upload folder
 	'fixed_image_creation_name_to_prepend'    => array( 'mini_' ), //name to prepend on filename
 	'fixed_image_creation_to_append'          => array( '' ), //name to appendon filename
-	'fixed_image_creation_width'              => array( 320 ), //width of image
-	'fixed_image_creation_height'             => array( 240), //height of image
+	'fixed_image_creation_width'              => array( 640 ), //width of image
+	'fixed_image_creation_height'             => array( 480 ), //height of image
 	/*
 	#             $option:     0 / exact = defined size;
 	#                          1 / portrait = keep aspect set height;

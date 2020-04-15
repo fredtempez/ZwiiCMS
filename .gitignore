@@ -12,8 +12,8 @@ site/data/fr/*.json
 
 
 # Fichiers uploadés
-site/file/source/*
-site/file/thumb/*
+site/file/source/
+site/file/thumb/
 
 # Dossiers vides dans GitHub
 !.gitkeep

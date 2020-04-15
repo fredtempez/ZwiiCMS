@@ -29,8 +29,8 @@ class gallery extends common {
 
 	public static $sort = [
 		self::SORT_ASC  => 'Alphabétique ',
-		self::SORT_DSC  => 'Alphabétique inversé',
-		self::SORT_HAND => 'Tri manuel'
+		self::SORT_DSC  => 'Alphabétique inverse',
+		self::SORT_HAND => 'Manuel'
 	];
 
 	public static $directories = [];
@@ -314,7 +314,7 @@ class gallery extends common {
 							template::text('legend[' . $fileInfos->getFilename() . ']', [
 								'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'legend', str_replace('.','',$fileInfos->getFilename())])
 							]),
-							'<a href="' .  $fileInfos->getPathname() .'" rel="data-lity" data-lity=""><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
+							'<a href="' . str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR . $fileInfos->getFilename() .'" rel="data-lity" data-lity=""><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
 						];
 						self::$picturesId [] = str_replace('.','',$fileInfos->getFilename());
 					}

@@ -33,10 +33,10 @@ class common {
 
 	// Miniatures de la gallery
 	const THUMBS_SEPARATOR = 'mini_';
-	const THUMBS_WIDTH = 320;
+	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.064';
+	const ZWII_VERSION = '10.0.065';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
