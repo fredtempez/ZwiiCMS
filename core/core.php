@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.065';
+	const ZWII_VERSION = '10.0.066';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -792,20 +792,20 @@ class common {
 	*/
 	function makeThumb($src, $dest, $desired_width) {
 		// Vérifier l'existence du dossier de destination.
-		$path = pathinfo($dest);
-		if (!is_dir($path['dirname'])) {
-			mkdir($path['dirname'],755,true);
+		$fileInfo = pathinfo($dest);
+		if (!is_dir($fileInfo['dirname'])) {
+			mkdir($fileInfo['dirname'],755,true);
 		}
 		// Type d'image
-		switch(mime_content_type($src) ) {
-			case 'image/jpeg':
-			case 'image/jpg':
+		switch(	$fileInfo['extension']) {
+			case 'jpeg':
+			case 'jpg':
 				$source_image = imagecreatefromjpeg($src);
 				break;
-			case 'image/png':
+			case 'png':
 				$source_image = imagecreatefrompng($src);
 				break;
-			case 'image/gif':
+			case 'gif':
 				$source_image = imagecreatefromgif($src);
 				break;
 		}
