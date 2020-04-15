@@ -1,8 +1,0 @@
-
-# ZWII CONFIG ---------
-User-agent: *
-Allow: /site/file/
-Disallow: /site/
-Sitemap: http://localhost/ZwiiCMS/sitemap.xml
-Sitemap: http://localhost/ZwiiCMS/sitemap.xml.gz
-# ZWII CONFIG  ---------
