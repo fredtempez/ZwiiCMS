@@ -53,14 +53,14 @@ class install extends common {
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
 				// Bannière par défaut
 				// Créer les dossiers
-				if (!is_dir(self::FILE_DIR.'source/banner/')) {
-					mkdir(self::FILE_DIR.'source/banner/');}
-				if (!is_dir(self::FILE_DIR.'thumb/banner/')) {					
-					mkdir(self::FILE_DIR.'thumb/banner/');
+				if (!is_dir(self::FILE_DIR.'source/banniere/')) {
+					mkdir(self::FILE_DIR.'source/banniere/');}
+				if (!is_dir(self::FILE_DIR.'thumb/banniere/')) {					
+					mkdir(self::FILE_DIR.'thumb/banniere/');
 					}
 				// Copier les fichiers
-				copy('core/module/install/ressource/file/source/banner960.jpg',self::FILE_DIR.'source/banner/banner960.jpg');
-				copy('core/module/install/ressource/file/thumb/banner960.jpg',self::FILE_DIR.'thumb/banner/banner960.jpg');
+				copy('core/module/install/ressource/file/source/banniere960.jpg',self::FILE_DIR.'source/banniere/banniere960.jpg');
+				copy('core/module/install/ressource/file/thumb/banniere960.jpg',self::FILE_DIR.'thumb/banniere/banniere960.jpg');
 				// Copie des icônes
 				copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico'); 
 				copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico'); 
