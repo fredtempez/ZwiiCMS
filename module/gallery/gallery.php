@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.10';	
+	const GALLERY_VERSION = '2.11';	
 
 
 	/**
@@ -233,7 +233,7 @@ class gallery extends common {
 			// Soumission du formulaire
 			if($this->isPost()) {
 				/**
-				 * $picturesPosition contien un tableau avec les images triées
+				 * $picturesPosition contient un tableau avec les images triées
 				 */
 				$picturesPosition = [];
 				if ($this->getInput('galleryEditFormResponse') &&
@@ -324,10 +324,19 @@ class gallery extends common {
 					case self::SORT_HAND:
 						$positions = $this->getdata(['module',$this->getUrl(0), $this->getUrl(2),'position']);
 						if ($positions) {
-							foreach ($positions as $position => $name) {
-								$tempPictures [] = self::$pictures[$position];							
-								$tempPicturesId [] = $position;																
-							}							
+							foreach ($positions as $key => $value) {
+								if (array_key_exists($key,self::$pictures)) {
+									$tempPictures[$key] = self::$pictures[$key];
+									$tempPicturesId [] = $key;
+								}
+							}	
+							// Images ayant été ajoutées dans le dossier mais non triées
+							foreach (self::$pictures as $key => $value) {
+								if (!array_key_exists($key,$tempPictures)) {
+									$tempPictures[$key] = self::$pictures[$key];
+									$tempPicturesId [] = $key;
+								}
+							}
 							self::$pictures = $tempPictures;
 							self::$picturesId  = $tempPicturesId;
 						}
