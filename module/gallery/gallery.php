@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.09';	
+	const GALLERY_VERSION = '2.10';	
 
 
 	/**
@@ -127,7 +127,7 @@ class gallery extends common {
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {						
 						// Créer la miniature si manquante
-						if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
 							$this->makeThumb($fileInfos->getPathname(),
 											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
 											self::THUMBS_WIDTH);
@@ -299,7 +299,7 @@ class gallery extends common {
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
 						// Créer la miniature RFM si manquante
-						if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . strtolower($fileInfos->getFilename()))) {
+						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . strtolower($fileInfos->getFilename()))) {
 							$this->makeThumb($fileInfos->getPathname(),
 											str_replace('source','thumb',$fileInfos->getPath()) .  '/' .  strtolower($fileInfos->getFilename()),
 											122);
@@ -377,7 +377,7 @@ class gallery extends common {
 							self::$pictures[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'legend', str_replace('.','',$fileInfos->getFilename())]);							
 							$picturesSort[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'position', str_replace('.','',$fileInfos->getFilename())]);
 							// Créer la miniature si manquante
-							if (!file_exists( str_replace('source','thumb',$fileInfos->getPathname()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+							if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
 								$this->makeThumb($fileInfos->getPathname(),
 												str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
 												self::THUMBS_WIDTH);
