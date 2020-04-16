@@ -8,6 +8,8 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.com/
  */
@@ -47,7 +49,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.13';	
+	const GALLERY_VERSION = '2.14';	
 
 
 	/**
@@ -64,9 +66,12 @@ class gallery extends common {
 						'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
 						'homePicture' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','homePicture']),
 						'sort' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','sort']),
-						'position' => $i
+						'position' => $i,
+						'fullScreen' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','fullScreen'])
+
 					],
-					'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend'])
+					'legend' => $this->getData(['module',$this->getUrl(0),$data[$i],'legend']),
+					'position' => $this->getData(['module',$this->getUrl(0),$data[$i],'position'])
 				]]);
 			}	
 		}
@@ -143,7 +148,8 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						'sort' => self::SORT_ASC,
-						'position' => count($this->getData(['module',$this->getUrl(0)])) + 1
+						'position' => count($this->getData(['module',$this->getUrl(0)])) + 1,
+						'fullScreen' => false
 					],
 					'legend' => [],
 					'position' => []
@@ -279,7 +285,9 @@ class gallery extends common {
 						'homePicture' => $homePicture,
 						// pas de positions, on active le tri alpha
 						'sort' =>  (empty($picturesPosition) && $this->getInput('galleryEditSort') === self::SORT_HAND) ? self::SORT_ASC : $this->getInput('galleryEditSort'),
-						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position'])
+						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
+						'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
+
 					],
 					'legend' => $legends,
 					'position' => $picturesPosition

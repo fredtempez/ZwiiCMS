@@ -39,7 +39,14 @@
 							'label' => 'Tri des images',
 							'help' => 'Les tris alphabétiques conviennent également aux images numérotées.<br>Cliquez sur \'Enregistrer\' pour valider le tri.'
 						]); ?>	
-					</div>				
+					</div>
+				<div clas="row">
+					<div class="col12">
+                        <?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
+								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'fullScreen']),
+								'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
+                            ]); ?>  
+					</div>		
 				</div>
 				<div class="row">
 					<div class="col12">
