@@ -1,7 +1,7 @@
 .galleryPicture {
 	display: block;
 	border: 1px solid #DDD;
-	height: 200px;
+	height: 150px;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -17,8 +17,27 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	padding: 10px;
+	padding: 6px;
 	background: rgba(0, 0, 0, .6);
 	color: #FFF;
 	text-align: center;
 }
+.galleryRow {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.colPicture {
+   width : 16em;
+   max-width: 50%;
+   margin: 0.5em;
+ }
+
+ @media (max-width: 432px) {
+	.colPicture {
+		width: 90%;
+		max-width: 90%;
+		margin: 0.5em;
+	  }
+ }
