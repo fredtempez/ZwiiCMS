@@ -47,7 +47,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.12';	
+	const GALLERY_VERSION = '2.13';	
 
 
 	/**
@@ -452,6 +452,7 @@ class gallery extends common {
 					$iterator = new DirectoryIterator($gallery['config']['directory']);
 					foreach($iterator as $fileInfos) {
 						if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
+							
 							self::$galleries[$galleryId] = $gallery;
 							// L'image de couverture est-elle supprimée ?
 							if (file_exists( $gallery['config']['directory'] . '/' . $gallery['config']['homePicture'])) {
@@ -476,7 +477,7 @@ class gallery extends common {
 																	: str_replace('source','thumb',$fileInfos->getPath()) . '/' .  strtolower($fileInfos->getFilename());
 							}
 						} 
-						continue(2);
+						continue(1);
 					}
 				}
 			}
