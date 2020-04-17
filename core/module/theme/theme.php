@@ -73,13 +73,13 @@ class theme extends common {
 			'center' => 'Affiché' ], 
 		2 => [
 			'hide' => 'Masqué',
-			'left' => 'A gauche',
-			'right' => 'A droite' ],
+			'left' => 'À gauche',
+			'right' => 'À droite' ],
 		3 => [
 			'hide' => 'Masqué',
-			'left' => 'A gauche',
+			'left' => 'À gauche',
 			'center' => 'Au centre',
-			'right' => 'A droite' ],
+			'right' => 'À droite' ],
 		4 => [
 			'hide' => 'Masqué',
 			'left' => 'En haut',
