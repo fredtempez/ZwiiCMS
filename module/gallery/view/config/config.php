@@ -8,6 +8,12 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
+		<div class="col2 offset8">
+			<?php echo template::button('galleryConfigBack', [
+				//'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
+				'value' => 'Thème'
+			]); ?>
+		</div>		
 	</div>
 	<div class="row">
 		<div class="col12">

@@ -26,6 +26,7 @@ class gallery extends common {
 		'dirs' => self::GROUP_MODERATOR,
 		'sort' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
+		'theme' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR		
 	];
 
@@ -33,6 +34,56 @@ class gallery extends common {
 		self::SORT_ASC  => 'Alphabétique ',
 		self::SORT_DSC  => 'Alphabétique inverse',
 		self::SORT_HAND => 'Manuel'
+	];
+
+	public static $galleryThemeAlign = [
+		'left' => 'À gauche',
+		'center' => 'Au centre',
+		'right' => 'À droite'
+	];
+
+	public static $galleryThemeSize = [
+		'8em'  => 'Très petite (8em)',
+		'10em' => 'Petite (10em)',
+		'12em' => '(12em)',
+		'14em' => 'Moyenne (14em)',
+		'16em' => '(16em)',
+		'18em' => 'Grande (18em)',
+		'20em' => 'Très grande (20em)'
+	];
+
+	public static $galleryThemeLegendHeight = [
+		'2em'  => 'Très petite (2em)',
+		'4em'  => 'Petite (4em)',
+		'6em'  => 'Moyenne (6em)',
+		'8em'  => 'Grande (8em)',
+		'10em' => 'Très grande (10em)'
+	];
+
+	public static $galleryThemeBorder = [
+		'0em' => 'Aucune',
+		'1em' => 'Très petite (1em)',
+		'2em' => 'Petite (2em)',
+		'3em'  => 'Moyenne (3em)',
+		'4em' => 'Grande (4em)',
+		'5em'  => 'Très grande (5em)'
+	];
+
+	public static $galleryThemeOpacity = [
+		'1'   => 'Aucun ',
+		'.9'  => 'Faible (.9)',
+		'.8'  => 'Moyen (0.8)',		
+		'.7'  => 'Fort(0.7)',
+		'.6'  => 'Très fort (0.6)'
+	];
+
+	public static $galleryThemeMargin = [
+		'0em'    => 'Aucune',
+		'.2em'   => 'Très petite (.2em)',
+		'.4em'   => 'Petite (.4em)',
+		'.6em'   => 'Moyenne (.6em)',
+		'.8em'  => 'Grande (.8em)',
+		'1em'  => 'Très grande (1em)'
 	];
 
 	public static $directories = [];
@@ -49,7 +100,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.15';	
+	const GALLERY_VERSION = '2.16';	
 
 
 	/**
@@ -496,6 +547,47 @@ class gallery extends common {
 				'view' => 'index'
 			]);
 		}
+	}
+
+	/**
+	 * Thème de la galerie
+	 */
+	public function theme() {
+		// Jeton incorrect
+		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+				'notification' => 'Action  non autorisée'
+			]);
+		}	
+		// Soumission du formulaire
+		if($this->isPost()) {
+			$this->setData(['module', $this->getUrl(0), $this->getUrl(1), [
+				'config' => [
+					'name' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','name']),
+					'directory' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','directory']),
+					'homePicture' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','homePicture']),
+					'sort' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','sort']),
+					'position' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','position']),
+					'fullScreen' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','fullScreen'])
+
+				],
+				'legend' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'legend']),
+				'position' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'position']),
+				'theme' => [
+
+				]
+			]]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => "Thème du module",
+			'view' => 'theme',
+			'vendor' => [
+				'tinycolorpicker'
+			]
+		]);
 	}
 
 }
