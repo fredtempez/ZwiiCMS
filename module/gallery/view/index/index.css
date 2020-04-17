@@ -1,7 +1,7 @@
 .galleryPicture {
 	display: block;
-	border: 1px solid #000;
-	height: 8em;
+	border: 1px solid #DDD;
+	height: 14em;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -29,9 +29,9 @@
 }
 
 .colPicture {
-   width : 8em;
+   width : 16em;
    max-width: 50%;
-   margin: 1.1em;
+   margin: 0.5em;
  }
 
  @media (max-width: 432px) {
