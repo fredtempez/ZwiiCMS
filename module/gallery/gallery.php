@@ -49,7 +49,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.14';	
+	const GALLERY_VERSION = '2.15';	
 
 
 	/**
@@ -148,7 +148,7 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						'sort' => self::SORT_ASC,
-						'position' => count($this->getData(['module',$this->getUrl(0)])) + 1,
+						'position' => $this->getData(['module',$this->getUrl(0)]) !== null ? count($this->getData(['module',$this->getUrl(0)])) + 1 : 0,
 						'fullScreen' => false
 					],
 					'legend' => [],
