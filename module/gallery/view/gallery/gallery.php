@@ -13,6 +13,8 @@
 	<div class="colPicture">
 		<a
 			href="<?php echo helper::baseUrl(false) . $picture; ?>"
+			<?php if ( stristr($picture,$this->getdata(['module',$this->getUrl(0),$this->getUrl(1),'config','homePicture'])) ) {
+							echo 'id="homePicture"'; }	?>
 			class="galleryGalleryPicture"
 			style="background-image:url('<?php echo helper::baseUrl(false) . $module::$thumbs[$picture]; ?>')"
 			data-caption="<?php echo $legend; ?>"

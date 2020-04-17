@@ -28,6 +28,6 @@ $( document ).ready(function() {
 	var fullscreen = <?php echo json_encode($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'fullScreen'])); ?>;
 	console.log(fullscreen);
 	if ( fullscreen === true) {
-		$('a.galleryGalleryPicture:first')[0].click();
+		$('a#homePicture')[0].click();
 	}
  });
