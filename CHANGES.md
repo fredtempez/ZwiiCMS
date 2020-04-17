@@ -4,6 +4,7 @@
 ## version 10.0.00
 - Mise à jour :
     - SimpleLightBox v2.1.4
+    - TinyMCE v4.9.9
 - Architecture de stockage des données.
     - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
     - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut.

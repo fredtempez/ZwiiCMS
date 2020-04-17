@@ -18,9 +18,16 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor codesample",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor codesample emoticons ",
 	// Contenu de la barre d'outils
-	toolbar: "restoredraft | undo redo |  formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | table template code | image media link | fullscreen",
+	toolbar: "restoredraft | undo redo |  formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
+	// Emoticons
+	emoticons_append: {
+		custom_mind_explode: {
+		  keywords: ["brain", "mind", "explode", "blown"],
+		  char: "🤯"
+		}
+	},
 	// CodeMirror
 	codemirror: {
 		indentOnInit: true, // Whether or not to indent code on init.
