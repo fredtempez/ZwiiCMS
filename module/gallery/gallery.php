@@ -111,9 +111,10 @@ class gallery extends common {
 
 
 	/**
-	 * Tri sans bouton
+	 * Tri de la liste des galeries
+	 *
 	 */
-	public function sort () {
+	private function sort () {
 		if($_POST['response']) {
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
