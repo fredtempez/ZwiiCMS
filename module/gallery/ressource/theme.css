@@ -1,27 +1,3 @@
-.galleryRow {
-	--thumbAlign: center;
-}
-.colPicture {
-	--thumbWidth: 18em;
-	--thumbMargin: .6em;
-}
-.galleryPicture,
-.galleryGalleryPicture {
-	--thumbHeight: 15em;
-	--thumbBorder: .1em;
-	--thumbBorderColor: rgba(221, 221, 221, 1);
-}
-.galleryName,
-.galleryGalleryName {
-	--legendHeight: .375em;
-	--legendAlign: center;
-	--legendTextColor: rgba(255, 255, 255, 1);
-	--legendBgColor: rgba(0, 0, 0, .6);
-}	
-.galleryPicture:hover,
-.galleryGalleryPicture:hover {
-	--thumbOpacity: .7;
-}
 .galleryPicture,
 .galleryGalleryPicture {
 	display: block;

@@ -1,0 +1,24 @@
+.galleryRow {
+	--thumbAlign: #thumbAlign#;
+}
+.colPicture {
+	--thumbWidth: #thumbWidth#;
+	--thumbMargin: #thumbMargin#;
+}
+.galleryPicture,
+.galleryGalleryPicture {
+	--thumbHeight: #thumbHeight#;
+	--thumbBorder: #thumbBorder#;
+	--thumbBorderColor: #thumbBorderColor#;
+}
+.galleryName,
+.galleryGalleryName {
+	--legendHeight: #legendHeight#;
+	--legendAlign: #legendAlign#;
+	--legendTextColor: #legendTextColor#;
+	--legendBgColor: #legendBgColor#;
+}	
+.galleryPicture:hover,
+.galleryGalleryPicture:hover {
+	--thumbOpacity: #thumbOpacity#;
+}

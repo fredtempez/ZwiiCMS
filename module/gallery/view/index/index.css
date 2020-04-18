@@ -1,7 +1,32 @@
-.galleryPicture {
+.galleryRow {
+	--thumbAlign: center;
+}
+.colPicture {
+	--thumbWidth: 18em;
+	--thumbMargin: .6em;
+}
+.galleryPicture,
+.galleryGalleryPicture {
+	--thumbHeight: 15em;
+	--thumbBorder: .1em;
+	--thumbBorderColor: rgba(221, 221, 221, 1);
+}
+.galleryName,
+.galleryGalleryName {
+	--legendHeight: .375em;
+	--legendAlign: center;
+	--legendTextColor: rgba(255, 255, 255, 1);
+	--legendBgColor: rgba(0, 0, 0, .6);
+}	
+.galleryPicture:hover,
+.galleryGalleryPicture:hover {
+	--thumbOpacity: .7;
+}
+.galleryPicture,
+.galleryGalleryPicture {
 	display: block;
-	border: 1px solid #DDD;
-	height: 14em;
+	border: var(--thumbBorder) solid var(--thumbBorderColor);
+	height: var(--thumbHeight);
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -9,29 +34,32 @@
 	-webkit-transition: opacity .3s ease-out;
 	transition: opacity .3s ease-out;
 }
-.galleryPicture:hover {
-	opacity: .7;
+.galleryPicture:hover,
+.galleryGalleryPicture:hover {
+	opacity: var(--thumbOpacity);
 }
-.galleryName {
+.galleryName,
+.galleryGalleryName {
 	position: absolute;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	padding: 8px;
-	background: rgba(0, 0, 0, .6);
-	color: #FFF;
-	text-align: center;
+	padding: var(--legendHeight);
+	background: var(--legendBgColor);
+	color: var(--legendTextColor);
+	text-align: var(--legendAlign);
 }
+
 .galleryRow {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: var(--thumbAlign);
 }
 
 .colPicture {
-   width : 16em;
+   width :  var(--thumbWidth);
    max-width: 50%;
-   margin: 0.5em;
+   margin: var(--thumbMargin);
  }
 
  @media (max-width: 432px) {

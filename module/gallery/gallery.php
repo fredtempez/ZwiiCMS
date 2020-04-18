@@ -36,6 +36,14 @@ class gallery extends common {
 		self::SORT_HAND => 'Manuel'
 	];
 
+	public static $galleryThemeFlexAlign = [
+		'flex-start' => 'À gauche',
+		'center' => 'Au centre',
+		'flex-end' => 'À droite',
+		'space-around' => 'Distribué avec marges',
+		'space-between' => 'Distribué sans marge',
+	];
+
 	public static $galleryThemeAlign = [
 		'left' => 'À gauche',
 		'center' => 'Au centre',
@@ -43,47 +51,46 @@ class gallery extends common {
 	];
 
 	public static $galleryThemeSize = [
-		'8em'  => 'Très petite (8em)',
-		'10em' => 'Petite (10em)',
-		'12em' => '(12em)',
-		'14em' => 'Moyenne (14em)',
-		'16em' => '(16em)',
+		'9em'  => 'Très petite (9em)',
+		'12em' => 'Petite (12em)',
+		'15em' => 'Moyenne (15em)',
 		'18em' => 'Grande (18em)',
-		'20em' => 'Très grande (20em)'
+		'21em' => 'Très grande (21em)'
 	];
 
 	public static $galleryThemeLegendHeight = [
-		'2em'  => 'Très petite (2em)',
-		'4em'  => 'Petite (4em)',
-		'6em'  => 'Moyenne (6em)',
-		'8em'  => 'Grande (8em)',
-		'10em' => 'Très grande (10em)'
+		'.125em'  => 'Très petite (.125 em)',
+		'.25em'  => 'Petite (.25em)',
+		'.375em'  => 'Moyenne (.375em)',
+		'.5em'  => 'Grande (.5em)',
+		'.625em' => 'Très grande (.625em)'
 	];
 
 	public static $galleryThemeBorder = [
 		'0em' => 'Aucune',
-		'1em' => 'Très petite (1em)',
-		'2em' => 'Petite (2em)',
-		'3em'  => 'Moyenne (3em)',
-		'4em' => 'Grande (4em)',
-		'5em'  => 'Très grande (5em)'
+		'.1em' => 'Très petite (.1em)',
+		'.4em' => 'Petite (.2em)',
+		'.5em'  => 'Moyenne (.5em)',
+		'.8em' => 'Grande (.8em)',
+		'1.2em'  => 'Très grande (1.2em)'
 	];
 
 	public static $galleryThemeOpacity = [
 		'1'   => 'Aucun ',
-		'.9'  => 'Faible (.9)',
-		'.8'  => 'Moyen (0.8)',		
-		'.7'  => 'Fort(0.7)',
-		'.6'  => 'Très fort (0.6)'
+		'.9'  => 'Très Discrète (.9)',
+		'.8'  => 'Discrète (0.8)',		
+		'.7'  => 'Moyenne (0.7)',
+		'.6'  => 'Forte (0.6)',
+		'.5'  => 'Très forte (0.5)'
 	];
 
 	public static $galleryThemeMargin = [
 		'0em'    => 'Aucune',
-		'.2em'   => 'Très petite (.2em)',
-		'.4em'   => 'Petite (.4em)',
+		'.1em'   => 'Très petite (.1em)',
+		'.3em'   => 'Petite (.3em)',
 		'.6em'   => 'Moyenne (.6em)',
-		'.8em'  => 'Grande (.8em)',
-		'1em'  => 'Très grande (1em)'
+		'.9em'  => 'Grande (.9em)',
+		'1.2em'  => 'Très grande (1.2em)'
 	];
 
 	public static $directories = [];
@@ -100,7 +107,7 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
-	const GALLERY_VERSION = '2.16';	
+	const GALLERY_VERSION = '2.17';	
 
 
 	/**
@@ -560,25 +567,47 @@ class gallery extends common {
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => 'Action  non autorisée'
 			]);
-		}	
+		}
+		// Initialisation des données de thème de la galerie dasn theme.json
+		// Création des valeur par défaut absentes
+		if ( $this->getData(['theme', $this->getUrl(0)]) === null ) {
+			require_once('module/gallery/ressource/defaultdata.php'); 
+			$this->setData(['theme', $this->getUrl(0), theme::$defaultData]);
+		}
 		// Soumission du formulaire
+
 		if($this->isPost()) {
-			$this->setData(['module', $this->getUrl(0), $this->getUrl(1), [
-				'config' => [
-					'name' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','name']),
-					'directory' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','directory']),
-					'homePicture' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','homePicture']),
-					'sort' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','sort']),
-					'position' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','position']),
-					'fullScreen' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'config','fullScreen'])
-
-				],
-				'legend' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'legend']),
-				'position' => $this->getData(['module',$this->getUrl(0),$this->getUrl(1),'position']),
-				'theme' => [
-
+			$this->setData(['theme', $this->getUrl(0), [
+					'thumbAlign' 	 => $this->getinput('galleryThemeThumbAlign'),
+					'thumbWidth' 	 => $this->getinput('galleryThemeThumbWidth'),
+					'thumbHeight'	 => $this->getinput('galleryThemeThumbHeight'),
+					'thumbMargin'	 => $this->getinput('galleryThemeThumbMargin'),
+					'thumbBorder'	 => $this->getinput('galleryThemeThumbBorder'),
+					'ThumbBorderColor'	 => $this->getinput('galleryThemeThumbBorderColor'),
+					'thumbOpacity'	 => $this->getinput('galleryThemeThumbOpacity'),
+					'legendHeight'	 => $this->getinput('galleryThemeLegendHeight'),
+					'legendAlign'	 => $this->getinput('galleryThemeLegendAlign'),
+					'legendTextColor'=> $this->getinput('galleryThemeLegendTextColor'),
+					'legendBgColor'	 => $this->getinput('galleryThemeLegendBgColor')
 				]
-			]]);
+			]);
+			// Création des fichiers CSS
+			$content = file_get_contents('module/gallery/ressource/vartheme.css');
+			$themeCss = file_get_contents('module/gallery/ressource/theme.css');
+			// Injection des variables			
+			$content = str_replace('#thumbAlign#',$this->getinput('galleryThemeThumbAlign'),$content );			
+			$content = str_replace('#thumbWidth#',$this->getinput('galleryThemeThumbWidth'),$content );
+			$content = str_replace('#thumbHeight#',$this->getinput('galleryThemeThumbHeight'),$content );
+			$content = str_replace('#thumbMargin#',$this->getinput('galleryThemeThumbMargin'),$content );
+			$content = str_replace('#thumbBorder#',$this->getinput('galleryThemeThumbBorder'),$content );
+			$content = str_replace('#thumbBorderColor#',$this->getinput('galleryThemeThumbBorderColor'),$content );
+			$content = str_replace('#thumbOpacity#',$this->getinput('galleryThemeThumbOpacity'),$content );
+			$content = str_replace('#legendAlign#',$this->getinput('galleryThemeLegendAlign'),$content );			
+			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
+			$content = str_replace('#legendTextColor#',$this->getinput('galleryThemeLegendTextColor'),$content );
+			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
+			file_put_contents('module/gallery/view/index/index.css',$content . $themeCss);
+			file_put_contents('module/gallery/view/gallery/gallery.css',$content . $themeCss);
 		}
 		// Valeurs en sortie
 		$this->addOutput([

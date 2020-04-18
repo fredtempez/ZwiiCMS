@@ -15,44 +15,52 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-            <h4>Vignettes</h4>
+            <h4>Configuration des vignettes</h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::select('galleryThemeThumbAlign', $module::$galleryThemeAlign, [
+                        <?php echo template::select('galleryThemeThumbAlign', $module::$galleryThemeFlexAlign, [
 							'label' => 'Alignement des vignettes sur la page :',
-							'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','thumbAlign'])
+							'selected' => $this->getData(['theme', $this->getUrl(0),'thumbAlign'])
 						]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbWidth', $module::$galleryThemeSize, [
                             'label' => 'Largeur des vignettes :',
-                            'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','thumbWidth'])
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbWidth'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbHeight', $module::$galleryThemeSize, [
                             'label' => 'Hauteur des vignettes :',
-                            'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendHeight'])
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbHeight'])
                         ]); ?>
                     </div>                  
                 </div>
                 <div class="row">
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::select('galleryThemeThumbMargin', $module::$galleryThemeMargin, [
                             'label' => 'Marges autour des vignettes :',
-                            'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','thumbMargin'])
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbMargin'])
                         ]); ?>
                     </div>
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::select('galleryThemeThumbBorder', $module::$galleryThemeBorder, [
                             'label' => 'Epaisseur des bordures',
-                            'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','thumbBorder'])
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbBorder'])
                         ]); ?>
                     </div>
-                    <div class="col4">
+                    <div class="col3">
+                        <?php echo template::text('galleryThemeThumbBorderColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',							
+                            'label' => 'Couleur de la bordure',
+                            'value' => $this->getData(['theme', $this->getUrl(0),'ThumbBorderColor'])
+                        ]); ?>
+                    </div>            
+                    <div class="col3">
                         <?php echo template::select('galleryThemeThumbOpacity', $module::$galleryThemeOpacity, [
-                            'label' => 'Effet d\'opacité au survol',
-                            'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','thumbOpacity'])
+                            'label' => 'Opacité au survol',
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbOpacity'])
                         ]); ?>
                     </div>
                 </div>
@@ -62,44 +70,38 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-            <h4>Légendes</h4>
+            <h4>Configuration des légendes</h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('galleryThemelegendHeight', $module::$galleryThemeLegendHeight, [
+                    <?php echo template::select('galleryThemeLegendHeight', $module::$galleryThemeLegendHeight, [
                         'label' => 'Hauteur des légendes :',
-                        'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendHeight'])
+                        'selected' => $this->getData(['theme', $this->getUrl(0),'legendHeight'])
                     ]); ?>
                 </div>
                 <div class="col6">
-                        <?php echo template::select('galleryThemeThumbAlign', $module::$galleryThemeAlign, [
+                        <?php echo template::select('galleryThemeLegendAlign', $module::$galleryThemeAlign, [
 							'label' => 'Alignement des légendes dans les vignettes :',
-							'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendAlign'])
+							'selected' => $this->getData(['theme', $this->getUrl(0),'legendAlign'])
 						]); ?>
                 </div>
             </div>
             <div class="row">
-                <div class="col4">
-                    <?php echo template::text('galleryThemelegendTextcolor', [
+                <div class="col6">
+                    <?php echo template::text('galleryThemeLegendTextColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',							
                         'label' => 'Couleur du texte de légende',
-                        'value' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendTextColor'])
+                        'value' => $this->getData(['theme', $this->getUrl(0),'legendTextColor'])
                     ]); ?>	
                 </div>
-                <div class="col4">
-                    <?php echo template::text('galleryThemelegendBgcolor', [
+                <div class="col6">
+                    <?php echo template::text('galleryThemeLegendBgColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',							
                         'label' => 'Couleur du fond de la légende',
-                        'value' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendBgColor'])
+                        'value' => $this->getData(['theme', $this->getUrl(0),'legendBgColor'])
                     ]); ?>	
                 </div>
-                <div class="col4">
-                    <?php echo template::select('galleryThemelegendOpacity', $module::$galleryThemeOpacity, [
-                        'label' => 'Opacité du fond des légendes :',
-                        'selected' => $this->getData(['module', $this->getUrl(0),$this->getUrl(1),'theme','legendOpacity'])
-                    ]); ?>
-                </div>                
             </div>
         </div>
     </div>
