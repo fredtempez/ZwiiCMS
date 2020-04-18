@@ -10,6 +10,8 @@
 	--thumbHeight: #thumbHeight#;
 	--thumbBorder: #thumbBorder#;
 	--thumbBorderColor: #thumbBorderColor#;
+	--thumbRadius: #thumbRadius#;
+	--thumbShadows: #thumbShadows#;
 }
 .galleryName,
 .galleryGalleryName {

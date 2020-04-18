@@ -10,6 +10,8 @@
 	--thumbHeight: 15em;
 	--thumbBorder: .1em;
 	--thumbBorderColor: rgba(221, 221, 221, 1);
+	--thumbRadius: 5px;
+	--thumbShadows: 1px 1px 5px;
 }
 .galleryName,
 .galleryGalleryName {
@@ -33,6 +35,8 @@
 	position: relative;
 	-webkit-transition: opacity .3s ease-out;
 	transition: opacity .3s ease-out;
+	border-radius: var(--thumbRadius);
+	box-shadow: var(--thumbShadows) ;
 }
 .galleryPicture:hover,
 .galleryGalleryPicture:hover {
@@ -59,7 +63,7 @@
 .colPicture {
    width :  var(--thumbWidth);
    max-width: 50%;
-   margin: var(--thumbMargin);
+   padding: var(--thumbMargin);
  }
 
  @media (max-width: 432px) {
