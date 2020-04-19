@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-            <h4>Recherche</h4>
+            <h3>Rechercher</h3>
                 <div class="row">
                     <div class="col10 verticalAlignBottom">
                         <?php echo template::text('searchMotphraseclef', [
@@ -17,9 +17,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <?php echo template::checkbox('searchMotentier', true, 'Mot entier uniquement', [
-                        'checked' => false
-                    ]); ?>
+                    <div class="col12">
+                        <?php echo template::checkbox('searchMotentier', true, 'Mot entier uniquement', [
+                            'checked' => false
+                        ]); ?>
+                    </div>
                 </div>
 			</div>
 		</div>
