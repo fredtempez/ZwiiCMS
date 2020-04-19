@@ -83,11 +83,11 @@ class gallery extends common {
 
 	public static $galleryThemeBorder = [
 		'0em' => 'Aucune',
-		'.1em' => 'Très petite',
-		'.4em' => 'Petite',
-		'.5em'  => 'Moyenne',
-		'.8em' => 'Grande',
-		'1.2em'  => 'Très grande'
+		'.1em' => 'Très fine',
+		'.2em' => 'Fine',
+		'.4em'  => 'Moyenne',
+		'.8em' => 'Epaisse',
+		'1em'  => 'Epaisse'
 	];
 
 	public static $galleryThemeOpacity = [
@@ -102,19 +102,19 @@ class gallery extends common {
 	public static $galleryThemeMargin = [
 		'0em'    => 'Aucune',
 		'.1em'   => 'Très petite',
-		'.3em'   => 'Petite',
+		'.4em'   => 'Petite',
 		'.6em'   => 'Moyenne',
-		'.9em'  => 'Grande',
-		'1.2em'  => 'Très grande'
+		'1em'  => 'Grande',
+		'2.5em'  => 'Très grande'
 	];
 
 	public static $galleryThemeRadius = [
-		'0px' => 'Aucun',
-		'5px' => 'Très léger',
-		'10px' => 'Léger',
-		'15px' => 'Moyen',
-		'25px' => 'Important',
-		'50px' => 'Très important'
+		'0em' => 'Aucun',
+		'.3em' => 'Très léger',
+		'.6em' => 'Léger',
+		'.9em' => 'Moyen',
+		'1.2' => 'Important',
+		'2.em' => 'Très important'
 	];
 
 	public static $galleryThemeShadows = [
@@ -627,13 +627,13 @@ class gallery extends common {
 			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
 			$content = str_replace('#legendTextColor#',$this->getinput('galleryThemeLegendTextColor'),$content );
 			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
-			file_put_contents('module/gallery/view/index/index.css',$content . $themeCss);
-			file_put_contents('module/gallery/view/gallery/gallery.css',$content . $themeCss);
+			$success = file_put_contents('module/gallery/view/index/index.css',$content . $themeCss);
+			$success = $success && file_put_contents('module/gallery/view/gallery/gallery.css',$content . $themeCss);
 			// Valeurs en sortie				
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
-				'notification' => 'Modifications enregistrées',
-				'state' => true
+				'notification' => $succes ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'state' => $success
 			]);
 		}
 		// Valeurs en sortie

@@ -10,12 +10,12 @@
 	--thumbHeight: 15em;
 	--thumbBorder: .1em;
 	--thumbBorderColor: rgba(221, 221, 221, 1);
-	--thumbRadius: 5px;
+	--thumbRadius: .6em;
 	--thumbShadows: 1px 1px 5px;
 }
 .galleryName,
 .galleryGalleryName {
-	--legendHeight: .375em;
+	--legendHeight: .25em;
 	--legendAlign: center;
 	--legendTextColor: rgba(255, 255, 255, 1);
 	--legendBgColor: rgba(0, 0, 0, .6);
@@ -48,6 +48,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
+	border-radius: 0 0 calc(var(--thumbRadius)/2) calc(var(--thumbRadius)/2);
 	padding: var(--legendHeight);
 	background: var(--legendBgColor);
 	color: var(--legendTextColor);
