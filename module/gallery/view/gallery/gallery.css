@@ -1,17 +1,18 @@
 .galleryRow {
-	--thumbAlign: center;
+	--thumbAlign: space-around;
 }
 .colPicture {
-	--thumbWidth: 18em;
-	--thumbMargin: .6em;
+	--thumbWidth: 21em;
+	--thumbMargin: .9em;
 }
 .galleryPicture,
 .galleryGalleryPicture {
-	--thumbHeight: 15em;
+	--thumbHeight: 12em;
 	--thumbBorder: .1em;
-	--thumbBorderColor: rgba(221, 221, 221, 1);
-	--thumbRadius: .6em;
-	--thumbShadows: 1px 1px 5px;
+	--thumbBorderColor: rgba(251, 1, 1, 0.48);
+	--thumbRadius: 0em;
+	--thumbShadows: 1px 1px 25px;
+	--thumbShadowsColor: rgba(253, 16, 16, 0.37);
 }
 .galleryName,
 .galleryGalleryName {
@@ -36,7 +37,9 @@
 	-webkit-transition: opacity .3s ease-out;
 	transition: opacity .3s ease-out;
 	border-radius: var(--thumbRadius);
-	box-shadow: var(--thumbShadows) ;
+	box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-webkit-box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-moz-box-shadow:  var(--thumbShadows) var(--thumbShadowsColor);
 }
 .galleryPicture:hover,
 .galleryGalleryPicture:hover {

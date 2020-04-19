@@ -37,7 +37,7 @@
                     </div>
                     <div class="col2">
                         <?php echo template::select('galleryThemeThumbMargin', $module::$galleryThemeMargin, [
-                            'label' => 'Marges',
+                            'label' => 'Marge',
                             'selected' => $this->getData(['theme', $this->getUrl(0),'thumbMargin'])
                         ]); ?>
                     </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbBorder', $module::$galleryThemeBorder, [
-                            'label' => 'Bordures',
+                            'label' => 'Bordure',
                             'selected' => $this->getData(['theme', $this->getUrl(0),'thumbBorder'])
                         ]); ?>
                     </div>                   
@@ -59,24 +59,32 @@
                     </div> 
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbRadius', $module::$galleryThemeRadius, [
-                            'label' => 'Bords arrondis',
+                            'label' => 'Arrondi des angles',
                             'selected' => $this->getData(['theme', $this->getUrl(0),'thumbRadius'])
                         ]); ?>
                     </div>
                 </div>
                 <div class="row">   
-                    <div class="col5 offset1">
+                    <div class="col4">
+                        <?php echo template::select('galleryThemeThumbShadows', $module::$galleryThemeShadows, [
+                            'label' => 'Ombre',
+                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbShadows'])
+                        ]); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::text('galleryThemeThumbShadowsColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',							
+                            'label' => 'Couleur de l\'ombre',
+                            'value' => $this->getData(['theme', $this->getUrl(0),'thumbShadowsColor'])
+                        ]); ?>
+                    </div>                                        
+                    <div class="col4">
                         <?php echo template::select('galleryThemeThumbOpacity', $module::$galleryThemeOpacity, [
                             'label' => 'Opacité au survol',
                             'selected' => $this->getData(['theme', $this->getUrl(0),'thumbOpacity'])
                         ]); ?>
-                    </div>                
-                    <div class="col5">
-                        <?php echo template::select('galleryThemeThumbShadows', $module::$galleryThemeShadows, [
-                            'label' => 'Ombres',
-                            'selected' => $this->getData(['theme', $this->getUrl(0),'thumbShadows'])
-                        ]); ?>
-                    </div>                     
+                    </div>                                  
                 </div>
             </div>           
         </div>        
@@ -110,7 +118,7 @@
                 </div>
                 <div class="col3">
                     <?php echo template::select('galleryThemeLegendAlign', $module::$galleryThemeAlign, [
-                        'label' => 'Alignement:',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', $this->getUrl(0),'legendAlign'])
                     ]); ?>
                 </div>

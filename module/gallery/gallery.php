@@ -84,10 +84,10 @@ class gallery extends common {
 	public static $galleryThemeBorder = [
 		'0em' => 'Aucune',
 		'.1em' => 'Très fine',
-		'.2em' => 'Fine',
-		'.4em'  => 'Moyenne',
-		'.8em' => 'Epaisse',
-		'1em'  => 'Epaisse'
+		'.3em' => 'Fine',
+		'.5em'  => 'Moyenne',
+		'.7em' => 'Epaisse',
+		'.9em'  => 'Epaisse'
 	];
 
 	public static $galleryThemeOpacity = [
@@ -102,10 +102,10 @@ class gallery extends common {
 	public static $galleryThemeMargin = [
 		'0em'    => 'Aucune',
 		'.1em'   => 'Très petite',
-		'.4em'   => 'Petite',
-		'.6em'   => 'Moyenne',
-		'1em'  => 'Grande',
-		'2.5em'  => 'Très grande'
+		'.3em'   => 'Petite',
+		'.5em'   => 'Moyenne',
+		'.7em'  => 'Grande',
+		'.9em'  => 'Très grande'
 	];
 
 	public static $galleryThemeRadius = [
@@ -595,19 +595,20 @@ class gallery extends common {
 
 		if($this->isPost()) {
 			$this->setData(['theme', $this->getUrl(0), [
-					'thumbAlign' 	  => $this->getinput('galleryThemeThumbAlign'),
-					'thumbWidth' 	  => $this->getinput('galleryThemeThumbWidth'),
-					'thumbHeight'	  => $this->getinput('galleryThemeThumbHeight'),
-					'thumbMargin'	  => $this->getinput('galleryThemeThumbMargin'),
-					'thumbBorder'	  => $this->getinput('galleryThemeThumbBorder'),
-					'thumbBorderColor'=> $this->getinput('galleryThemeThumbBorderColor'),
-					'thumbOpacity'	  => $this->getinput('galleryThemeThumbOpacity'),
-					'thumbShadows'    => $this->getinput('galleryThemeThumbShadows'),
-					'thumbRadius'	  => $this->getinput('galleryThemeThumbRadius'),
-					'legendHeight'	  => $this->getinput('galleryThemeLegendHeight'),
-					'legendAlign'	  => $this->getinput('galleryThemeLegendAlign'),
-					'legendTextColor' => $this->getinput('galleryThemeLegendTextColor'),
-					'legendBgColor'	  => $this->getinput('galleryThemeLegendBgColor')
+					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),
+					'thumbWidth' 	    => $this->getinput('galleryThemeThumbWidth'),
+					'thumbHeight'	    => $this->getinput('galleryThemeThumbHeight'),
+					'thumbMargin'	    => $this->getinput('galleryThemeThumbMargin'),
+					'thumbBorder'	    => $this->getinput('galleryThemeThumbBorder'),
+					'thumbBorderColor'  => $this->getinput('galleryThemeThumbBorderColor'),
+					'thumbOpacity'	    => $this->getinput('galleryThemeThumbOpacity'),
+					'thumbShadows'   	=> $this->getinput('galleryThemeThumbShadows'),
+					'thumbShadowsColor' => $this->getinput('galleryThemeThumbShadowsColor'),
+					'thumbRadius'	    => $this->getinput('galleryThemeThumbRadius'),
+					'legendHeight'	    => $this->getinput('galleryThemeLegendHeight'),
+					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign'),
+					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor'),
+					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor')
 				]
 			]);
 			// Création des fichiers CSS
@@ -622,6 +623,7 @@ class gallery extends common {
 			$content = str_replace('#thumbBorderColor#',$this->getinput('galleryThemeThumbBorderColor'),$content );
 			$content = str_replace('#thumbOpacity#',$this->getinput('galleryThemeThumbOpacity'),$content );
 			$content = str_replace('#thumbShadows#',$this->getinput('galleryThemeThumbShadows'),$content );
+			$content = str_replace('#thumbShadowsColor#',$this->getinput('galleryThemeThumbShadowsColor'),$content );
 			$content = str_replace('#thumbRadius#',$this->getinput('galleryThemeThumbRadius'),$content );			
 			$content = str_replace('#legendAlign#',$this->getinput('galleryThemeLegendAlign'),$content );			
 			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
@@ -632,13 +634,13 @@ class gallery extends common {
 			// Valeurs en sortie				
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
-				'notification' => $succes ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'notification' => $success ? 'Modifications enregistrées' : 'Modifications non enregistées !',
 				'state' => $success
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => "Thème du module",
+			'title' => "Thème",
 			'view' => 'theme',
 			'vendor' => [
 				'tinycolorpicker'

@@ -10,7 +10,9 @@
 	-webkit-transition: opacity .3s ease-out;
 	transition: opacity .3s ease-out;
 	border-radius: var(--thumbRadius);
-	box-shadow: var(--thumbShadows) ;
+	box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-webkit-box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-moz-box-shadow:  var(--thumbShadows) var(--thumbShadowsColor);
 }
 .galleryPicture:hover,
 .galleryGalleryPicture:hover {
