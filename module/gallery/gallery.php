@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.18';		
+	const GALLERY_VERSION = '2.19';		
 
 	public static $directories = [];
 
@@ -629,6 +629,12 @@ class gallery extends common {
 			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
 			file_put_contents('module/gallery/view/index/index.css',$content . $themeCss);
 			file_put_contents('module/gallery/view/gallery/gallery.css',$content . $themeCss);
+			// Valeurs en sortie				
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
