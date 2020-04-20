@@ -113,8 +113,8 @@ class gallery extends common {
 		'.3em' => 'Très léger',
 		'.6em' => 'Léger',
 		'.9em' => 'Moyen',
-		'1.2' => 'Important',
-		'2.em' => 'Très important'
+		'1.2em' => 'Important',
+		'1.5em' => 'Très important'
 	];
 
 	public static $galleryThemeShadows = [
