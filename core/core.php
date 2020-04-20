@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.066';
+	const ZWII_VERSION = '10.0.067';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -794,7 +794,7 @@ class common {
 		// Vérifier l'existence du dossier de destination.
 		$fileInfo = pathinfo($dest);
 		if (!is_dir($fileInfo['dirname'])) {
-			mkdir($fileInfo['dirname'],755,true);
+			mkdir($fileInfo['dirname'],0755,true);
 		}
 		// Type d'image
 		switch(	$fileInfo['extension']) {
