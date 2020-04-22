@@ -1,22 +1,22 @@
 .galleryRow {
-	--thumbAlign: space-around;
+	--thumbAlign: center;
 }
 .colPicture {
-	--thumbWidth: 21em;
-	--thumbMargin: .9em;
+	--thumbWidth: 18em;
+	--thumbMargin: .5em;
 }
 .galleryPicture,
 .galleryGalleryPicture {
-	--thumbHeight: 12em;
+	--thumbHeight: 15em;
 	--thumbBorder: .1em;
-	--thumbBorderColor: rgba(251, 1, 1, 0.48);
-	--thumbRadius: 0em;
-	--thumbShadows: 1px 1px 25px;
-	--thumbShadowsColor: rgba(253, 16, 16, 0.37);
+	--thumbBorderColor: rgba(221, 221, 221, 1);
+	--thumbRadius: .3em;
+	--thumbShadows: 1px 1px 10px;
+	--thumbShadowsColor: rgba(125, 125, 125, 1);
 }
 .galleryName,
 .galleryGalleryName {
-	--legendHeight: .25em;
+	--legendHeight: .375em;
 	--legendAlign: center;
 	--legendTextColor: rgba(255, 255, 255, 1);
 	--legendBgColor: rgba(0, 0, 0, .6);
