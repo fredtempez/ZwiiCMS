@@ -2383,15 +2383,17 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser le thème">' . template::ico('brush') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
+				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
 				$lastAutoUpdate = mktime(0, 0, 0);		
 				if( $this->getData(['config','autoUpdate']) === true &&
-					$lastAutoUpdate >= $this->getData(['core','lastAutoUpdate']) + 86400 ) {
+					$lastAutoUpdate > $this->getData(['core','lastAutoUpdate']) + 86400 && 
+					helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
 						$this->setData(['core','updateAvailable', true]);
 						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);									
 				}
-				// Afficher le bouton	
+				// Afficher le bouton : Mise à jour détectée + activée	
 				if ( $this->getData(['core','updateAvailable']) === true &&
-					$this->getData(['config','autoUpdate']) === true ) {
+					$this->getData(['config','autoUpdate']) === true  ) {
 					$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii '. common::ZWII_VERSION .' vers '. helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) .'">' . template::ico('update colorRed') . '</a></li>';
 				}
 			}

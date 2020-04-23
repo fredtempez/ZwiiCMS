@@ -2,29 +2,34 @@
 
 
 ## version 10.0.00
-- Mise à jour :
+- Mises à jour :
     - SimpleLightBox v2.1.4
     - TinyMCE v4.9.9
-- Architecture de stockage des données.
-    - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
-    - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut.
-- Gestion des données. 
-    - Le système ne conserve plus en mémoire l'intégralité des données de site comme dans les versions précédentes.    
-    - Les données du site sont chargées à la demande au lieu d'être lues dans leur intégralité.
-    - Les mises à jour et effacement sont appliquées en direct sur le disque.
-- Installation : 
-    - Les fichiers de données manquants sont réinitialisés au cas par cas et plus dans leur globalité.
-    - Une notification est affichée quand un fichier  de données manquant a été réinstallé.
-    - La suppression de user.json entraîne le déclenchement de la procédure d'installation.
-    - Thème à l'installation, la bannière et le favicon sont livrés dans les paramètres de l'installation et copiés dans site.
-- Importation : 
-    - L'importation des données est possible uniquement à partir d'une version 9.
-    - Fonction d'import des données provenant d'autres version de ZwiiCMS, avec option de préservation des données utilisateurs.
-    - Nouveau masque dédié à la sauvegarde automatique, à l'import et à l'export des données de site.
+- Améliorations :
+    - Architecture de stockage des données.
+        - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
+        - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut.
+    - Gestion des données. 
+        - Le système ne conserve plus en mémoire l'intégralité des données de site comme dans les versions précédentes.    
+        - Les données du site sont chargées à la demande au lieu d'être lues dans leur intégralité.
+        - Les mises à jour et effacement sont appliquées en direct sur le disque.
+    - Installation : 
+        - Les fichiers de données manquants sont réinitialisés au cas par cas et plus dans leur globalité.
+        - Une notification est affichée quand un fichier  de données manquant a été réinstallé.
+        - La suppression de user.json entraîne le déclenchement de la procédure d'installation.
+        - Thème à l'installation, la bannière et le favicon sont livrés dans les paramètres de l'installation et copiés dans site.
+    - Importation : 
+        - L'importation des données est possible uniquement à partir d'une version 9.
+        - Fonction d'import des données provenant d'autres version de ZwiiCMS, avec option de préservation des données utilisateurs.
+        - Nouveau masque dédié à la sauvegarde automatique, à l'import et à l'export des données de site.
 - Modifications :
-    - Module gallery optimisé, tri dynamique.
+    - Module gallery optimisé, tri dynamique, choix du thème.
     - Chargement paresseux des images.
-    - Edtion de page : suppression de l'option d'ouverture dans une lity.
+    - Edition de page : suppression de l'option d'ouverture dans une lity.
+    - Accès concurrents, modification simultanée d'une même ressource (page, config, thème, utilisateur) interdite.
+    - Déconnexion des sessions multiples avec une seule compte.
+- Corrections de bug :
+    - Mise à jour automatique
 
 ## version 9.2.27
 - Corrections :
