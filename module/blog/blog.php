@@ -35,9 +35,23 @@ class blog extends common {
 		true => 'Publié'
 	];
 
+	public static $pictureSizes = [
+		'20' => 'Très petite',
+		'30' => 'Petite',
+		'40' => 'Grande',
+		'50' => 'Très Grande',
+		'100' => 'Pleine largeur',
+	];
+
+	public static $picturePositions = [
+		'left' => 'À gauche',		
+		'right' => 'À droite ',
+	];
+
+
 	public static $users = [];
 
-	const BLOG_VERSION = '1.9';
+	const BLOG_VERSION = '2.0';
 
 	/**
 	 * Édition
@@ -264,7 +278,9 @@ class blog extends common {
 					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
 					'content' => $this->getInput('blogEditContent', null),
 					'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
-					'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),					
+					'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
+					'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
+					'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
 					'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),

@@ -5,7 +5,9 @@
 </div>
 
 	<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
-		echo '<div class="blogArticlePicture"><img class="blogArticlePicture" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '"></div>';
+		echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picturePosition']) .
+		' pict' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . 		
+		'" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '">';
 	} ?>
 
 <?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'content']); ?>
@@ -17,14 +19,14 @@
 </p>
 <?php  if($this->getUser('group') >= self::GROUP_ADMIN): ?>
 <div class="row">
-    <div class="col3">
+    <div class="col2">
 		<?php echo template::button('blogBack', [
 					'href' => helper::baseUrl() . $this->getUrl(0),
 					'ico' => 'left',
 					'value' => 'Retour'
 		]); ?>
     </div>
-    <div class="col3 offset6">
+    <div class="col2 offset8">
  		<?php echo template::button('blogEdit', [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
 					'value' => 'Editer'

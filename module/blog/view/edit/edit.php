@@ -28,13 +28,15 @@
 			<div class="block">
 				<h4>Informations générales</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col12">
 						<?php echo template::text('blogEditTitle', [
 							'label' => 'Titre',
 							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title'])
 						]); ?>
 					</div>
-					<div class="col6">
+				</div>
+				<div class="row">
+					<div class="col4">
 						<?php echo template::file('blogEditPicture', [
 							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
 							'label' => 'Image de couverture',
@@ -42,8 +44,21 @@
 							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picture'])
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::select('blogEditPictureSize', $module::$pictureSizes, [
+							'label' => 'Largeur de l\'image',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'pictureSize'])
+						]); ?>
 					</div>
+					<div class="col4">
+						<?php echo template::select('blogEditPicturePosition', $module::$picturePositions, [
+							'label' => 'Position',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picturePosition']),
+							'help' => 'Le texte de l\'article est adapté autour de l\'image'
+						]); ?>
+					</div>					
+				</div>
+				<div class="row">
 					<div class="col6">							
 						<?php echo template::checkbox('blogEditHidePicture', true, 'Masquer l\'image dans l\'article', [
 							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'hidePicture'])

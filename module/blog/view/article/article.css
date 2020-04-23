@@ -1,11 +1,40 @@
+
+#sectionTitle {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
 .blogArticlePicture {
 	height: auto;
-	width: 100%;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center center;
-	margin-top: 15px;
+	border:1px solid lightgray;
+	box-shadow: 1px 1px 5px;
 }
+.blogArticlePictureleft {
+	float: left;
+	margin: 15px 10px 5px 0 ;
+}
+.blogArticlePictureright {
+	float: right;
+	margin: 15px 0 5px 10px ;
+}
+
+
+.pict20{
+	width: 20%;
+}
+.pict30{
+	width: 30%;
+}
+.pict40{
+	width: 40%;
+}
+.pict50{
+	width: 50%;
+}
+.pict100{
+	width: 100%;
+	margin: 15px 0 20px 0 ;
+}
+
 #blogArticleCommentShow {
 	cursor: text;
 }
@@ -16,7 +45,6 @@
 	font-size:0.8em;
 	font-style: italic;
 	color: grey;
-	margin-left: 10px;
 }
 @media (max-width: 767px) {
 	.blogArticlePicture {

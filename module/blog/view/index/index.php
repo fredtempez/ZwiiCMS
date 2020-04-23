@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php foreach($module::$articles as $articleId => $article): ?>					
-				<div class="row">
+				<div class="row rowArticle">
 					<div class="col3">
 					<?php 
 						// Déterminer le nom de la miniature
@@ -37,12 +37,11 @@
 							<?php echo utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>
 						</div>
 						<p class="blogContent">
-							<?php echo helper::subword(strip_tags($article['content']), 0, 300); ?>...
+							<?php echo helper::subword(strip_tags($article['content']), 0, 400); ?>...
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">Lire la suite</a>
 						</p>
 					</div>
 				</div>
-				<hr />
 			<?php endforeach; ?>
 		</div>
 	</div>
