@@ -131,7 +131,7 @@ class helper {
 	 * @return string
 	 */
 	public static function getOnlineVersion() {
-		return (@file_get_contents('http://zwiicms.com/update/version'));
+		return (@file_get_contents('http://zwiicms.com/update/'. common::ZWII_UPDATE_CHANNEL . '/version'));
 	}
 
 
@@ -140,6 +140,7 @@ class helper {
 	 * @return bool
 	 */
 	public static function checkNewVersion() {
+
 		if($version = helper::getOnlineVersion()) {
 			//return (trim($version) !== common::ZWII_VERSION);
 			return ((version_compare(common::ZWII_VERSION,$version)) === -1);

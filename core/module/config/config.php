@@ -470,20 +470,6 @@ class config extends common {
 		]);
 	}
 
-	/**
-	 * Mise à jour présente
-	 */
-	public function updateOnline() {
-		// Nouvelle version
-		self::$newVersion = file_get_contents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
-		// Valeurs en sortie
-		$this->addOutput([
-			'notification' => 'Version installée : '. common::ZWII_VERSION  . '<br>Version de la mise à jour en ligne : '. self::$newVersion ,
-			'redirect' => helper::baseUrl() . 'config',
-			'state' => true
-		]);
-	}
-
 }
 
 class configHelper extends helper {

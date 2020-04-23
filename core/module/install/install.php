@@ -208,6 +208,8 @@ class install extends common {
 						FILE_APPEND
 					) !== false);
 				}
+				// RAZ la mise à jour auto
+				$this->setData(['core','updateAvailable', false]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,

@@ -184,7 +184,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Gestion et sauvegarde</h4>	
+			<h4>Sauvegardes</h4>	
 			<div class="row">
 				<div class="col6">
 					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatisée quotidienne partielle', [
@@ -206,17 +206,25 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col12">				
+					<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
+					]); ?>	
+				</div>			
+			</div>		
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Mise à jour</h4>
+			<div class="row">
 				<div class="col6">
 					<?php echo template::checkbox('configAutoUpdate', true, 'Recherche de mise à jour automatisée ', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
 							'help' => 'Vérification de l\'existence d\'une mise à jour en ligne une fois par jour.'
 						]); ?>
-				</div>	
-				<div class="col3">
-					<?php echo template::button('configUpdateOnline', [
-						'href' => helper::baseUrl() . 'config/updateOnline',
-						'value' => 'Version en ligne'
-					]); ?>
 				</div>			
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
@@ -226,12 +234,12 @@
 				</div>		
 			</div>
 			<div class="row">
-				<div class="col12">				
-					<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
-						'checked' => $this->getData(['config', 'maintenance'])
-					]); ?>	
-				</div>			
-			</div>		
+				<div class="col12">
+					<?php	echo 'Vous disposez de ZwiiCMS version <strong>' . common::ZWII_VERSION . '</strong>'; 
+							echo '. La version de la mise à jour en ligne est <strong>' . file_get_contents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') . '</strong>';
+					?>						
+				</div>	
+			</div>
 		</div>
 	</div>
 </div>

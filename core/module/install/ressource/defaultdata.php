@@ -4,6 +4,7 @@ class init extends common {
 		'config' => [
 			'analyticsId' => '',
 			'autoBackup' => true,
+			'autoUpdate' => true,
 			'cookieConsent' => true,
 			'favicon' => 'favicon.ico',
 			'homePageId' => 'accueil',
@@ -31,6 +32,7 @@ class init extends common {
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
+			'updateAvailable' => false,
 			'baseUrl' => ''
 		],
 		'page' => [	
