@@ -231,7 +231,7 @@
 						<?php echo 'La version de la mise à jour en ligne est <strong>' . helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') . '</strong>' . '.';?>
 					<?php else: ?>						
 						<p>La configuration du serveur n'autorise pas la détection des mises à jour en ligne, merci d'activer l'option dans php.ini :	<code>allow_url_fopen = On </code>
-						ou <a href="<?php echo 'http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version';?>" target="_blank">cliquez sur ce lien lien</a>.</p>
+						ou <a href="<?php echo 'http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version';?>" target="_blank">cliquez sur ce lien</a>.</p>
 					<?php endif;?>					
 				</div>	
 			</div>
