@@ -219,11 +219,28 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Mise à jour</h4>
+			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php if ($error !== false) : ?>
+				<?php $error = true; ?>
+			<?php endif;?>
+			<div class="row">
+				<div class="col12">
+					<?php echo 'Vous disposez de ZwiiCMS version <strong>' . common::ZWII_VERSION . '</strong>' . '.'; ?>
+
+					<?php if ($error): ?>
+						<?php echo 'La version de la mise à jour en ligne est <strong>' . helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') . '</strong>' . '.';?>
+					<?php else: ?>						
+						<p>La configuration du serveur n'autorise pas la détection des mises à jour en ligne, merci d'activer l'option dans php.ini :	<code>allow_url_fopen = On </code>
+						ou <a href="<?php echo 'http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version';?>" target="_blank">cliquez sur ce lien lien</a>.</p>
+					<?php endif;?>					
+				</div>	
+			</div>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::checkbox('configAutoUpdate', true, 'Recherche de mise à jour automatisée ', [
-							'checked' => $this->getData(['config', 'autoUpdate']),
-							'help' => 'Vérification de l\'existence d\'une mise à jour en ligne une fois par jour.'
+							'checked' => $error ? $this->getData(['config', 'autoUpdate']) : false,
+							'help' => 'Vérification de l\'existence d\'une mise à jour en ligne une fois par jour.',
+							'disabled' => !$error
 						]); ?>
 				</div>			
 				<div class="col3">
@@ -232,13 +249,6 @@
 						'value' => 'Mise à jour forcée'
 					]); ?>
 				</div>		
-			</div>
-			<div class="row">
-				<div class="col12">
-					<?php	echo 'Vous disposez de ZwiiCMS version <strong>' . common::ZWII_VERSION . '</strong>'; 
-							echo '. La version de la mise à jour en ligne est <strong>' . file_get_contents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') . '</strong>';
-					?>						
-				</div>	
 			</div>
 		</div>
 	</div>

@@ -18,6 +18,27 @@ class helper {
 	const FILTER_URL = 11;
 
 	/**
+	 * Fonction pour récupérer le numéro de version en ligne
+	 * @param string $url à récupérer
+	 * @return mixed données récupérées
+	 */
+
+	public static function urlGetContents ($url) {
+	if(function_exists('file_get_contents') and 
+			ini_get('allow_url_fopen') ){
+			$url_get_contents_data = file_get_contents($url);
+		}elseif(function_exists('fopen') && 
+			function_exists('stream_get_contents' &&
+			ini_get('allow_url_fopen') )){
+			$handle = fopen ($url, "r");
+			$url_get_contents_data = stream_get_contents($handle);
+		}else{
+			$url_get_contents_data = false;
+		}
+	return $url_get_contents_data;
+	} 
+
+	/**
 	 * Retourne les valeurs d'une colonne du tableau de données
 	 * @param array $array Tableau cible
 	 * @param string $column Colonne à extraire
@@ -131,7 +152,7 @@ class helper {
 	 * @return string
 	 */
 	public static function getOnlineVersion() {
-		return (@file_get_contents('http://zwiicms.com/update/'. common::ZWII_UPDATE_CHANNEL . '/version'));
+		return (helper::urlGetContents('http://zwiicms.com/update/'. common::ZWII_UPDATE_CHANNEL . '/version'));
 	}
 
 
