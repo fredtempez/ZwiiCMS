@@ -246,7 +246,8 @@
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
 						'href' => helper::baseUrl() . 'install/update',
-						'value' => 'Mise à jour forcée'
+						'value' => 'Mise à jour forcée',
+						'disabled' => !$error
 					]); ?>
 				</div>		
 			</div>
