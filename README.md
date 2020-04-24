@@ -51,6 +51,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
 ```text
 [R] core                   Cœur du système
   [R] layout               Mise en page
+  [R] class                Classes
   [R] module               Modules du cœur
   [R] vendor               Librairies extérieures
   [F] core.js.php          Cœur javascript
@@ -66,10 +67,15 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
 [R] site                   Contenu du site
   [R] backup               Sauvegardes automatiques
   [R] data                 Répertoire des données
-    [F] core.json          Contenu
+    [R] fr                 Dossier localisé
+      [F] page.json        Données des pages
+      [F] module.json      Données des modules de pages
+    [F] config.json        Configuration du site
+    [F] core.json          Configuration du noyau
     [F] theme.json         Thème
+    [F] user.json          Utilisateurs
     [F] custom.css         Feuille de style de la personnalisation avancée
-    [F] theme.css          Thème compilé en CSS
+    [F] theme.css          Thème compilé en CSS    
   [R] file                 Répertoire d'upload du gestionnaire de fichiers
     [R] source             Ressources diverses
     [R] thumb              Miniatures des images
