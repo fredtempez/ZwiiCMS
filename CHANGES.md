@@ -29,7 +29,7 @@
     - Accès concurrents, modification simultanée d'une même ressource (page, config, thème, utilisateur) interdite.
     - Déconnexion des sessions multiples avec une seule compte.
 - Corrections de bug :
-    - Mise à jour automatique : procédure modifiée, déasctivée si allow_url_fopen = off sur le serveur
+    - Mise à jour automatique : procédure modifiée, désactivée si allow_url_fopen = off sur le serveur
 
 ## version 9.2.27
 - Corrections :
