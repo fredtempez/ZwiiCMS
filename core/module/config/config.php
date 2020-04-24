@@ -403,7 +403,9 @@ class config extends common {
 					'legalPageId' => $this->getInput('configLegalPageId'),
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),					
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
-					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdate' => helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') === false 
+									? false
+									: $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT)	
