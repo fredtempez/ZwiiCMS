@@ -26,7 +26,7 @@ $( document ).ready(function() {
 			// Affiche le bouton de tri après un déplacement
 			$(":input[type='submit']").prop('disabled', false);
 			// Sauvegarde le tri
-			sort();
+			sortGalleries();
 		},
 		// Supprime le tiret des séparateurs
 		serializeRegexp:  ""
@@ -91,8 +91,8 @@ directoryDOM.on("change", function() {
  * Tri dynamique des galeries
  */
 
-function sort() {
-	var url = "<?php echo helper::baseUrl() . $this->getUrl(0) . '/sort'; ?>";
+function sortGalleries() {
+	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sort";
 	var data = $("#galleryConfigFilterResponse").val();			
 	$.ajax({
 		type: "POST",

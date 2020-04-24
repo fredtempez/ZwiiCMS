@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.19';		
+	const GALLERY_VERSION = '2.20';		
 
 	public static $directories = [];
 
@@ -130,7 +130,7 @@ class gallery extends common {
 	 * Tri de la liste des galeries
 	 *
 	 */
-	private function sort () {
+	public function sort() {
 		if($_POST['response']) {
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
