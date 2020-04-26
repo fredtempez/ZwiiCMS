@@ -221,16 +221,16 @@ class helper {
 				break;
 			case self::FILTER_ID:
 				$text = mb_strtolower($text, 'UTF-8');
-				// Supprime les emojis et espaces en fin de chaine
-				$text = preg_replace('/[[:^print:]]/', '', $text);
-				$text = rtrim($text);
 				$text = strip_tags(str_replace(
 					explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", '),
 					explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-'),
 					$text
-				));
-				
+				));				
 				$text = preg_replace('/([^a-z0-9-])/', '', $text);
+				// Supprime les emoji
+				$text = preg_replace('/[[:^print:]]/', '', $text);
+				// Supprime les tirets en fin de chaine (emoji en fin de nom)
+				$text = rtrim($text,'-');
 				// Cas où un identifiant est vide
 				if (empty($text)) {
 					$text = uniqid('');
