@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.20';		
+	const GALLERY_VERSION = '2.21';		
 
 	public static $directories = [];
 
@@ -87,7 +87,7 @@ class gallery extends common {
 		'.3em' => 'Fine',
 		'.5em'  => 'Moyenne',
 		'.7em' => 'Epaisse',
-		'.9em'  => 'Epaisse'
+		'.9em'  => 'Très épaisse'
 	];
 
 	public static $galleryThemeOpacity = [
