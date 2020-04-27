@@ -1,12 +1,24 @@
-<div class="blogDate">
-	<i class="far fa-calendar-alt"></i>
-	<?php echo utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>
-		à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>		
+<div class="row">
+	<div class="col10">
+		<div class="blogDate">
+			<i class="far fa-calendar-alt"></i>
+			<?php echo utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>
+				à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>		
+		</div>
+	</div>
+	<?php  if($this->getUser('group') >= self::GROUP_ADMIN): ?>
+		<div class="col2">
+			<?php echo template::button('blogEdit', [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
+						'value' => 'Editer'
+			]); ?>
+		</div>
+	<?php endif; ?>
 </div>
-
+	<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>
 	<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
 		echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picturePosition']) .
-		' pict' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . 		
+		' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . 		
 		'" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '">';
 	} ?>
 
@@ -17,44 +29,15 @@
 	<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'lastname']); ?>
 <!-- </h4> -->
 </p>
-<?php  if($this->getUser('group') >= self::GROUP_ADMIN): ?>
-<div class="row">
-    <div class="col2">
-		<?php echo template::button('blogBack', [
-					'href' => helper::baseUrl() . $this->getUrl(0),
-					'ico' => 'left',
-					'value' => 'Retour'
-		]); ?>
-    </div>
-    <div class="col2 offset8">
- 		<?php echo template::button('blogEdit', [
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
-					'value' => 'Editer'
-		]); ?>
-    </div>
-</div>
-<?php else: ?>
-<div class="row">
-	<div class="col2">
-		<?php echo template::button('blogBack', [
-					'class' => 'buttonGrey',
-					'href' => helper::baseUrl() . $this->getUrl(0),
-					'ico' => 'left',
-					'value' => 'Retour'
-		]); ?>
-	</div>
-	<div class="col10">
-	</div>
-</div>
-<?php endif; ?>
 <div class="clearBoth"></div>
-<h3 id="comment">
-	<?php $commentsNb = count($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment'])); ?>
-	<?php echo $commentsNb . ' ' . ($commentsNb > 1 ? 'commentaires' : 'commentaire'); ?>
-</h3>
 <?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
-	<p>Les commentaires sont fermés pour cet article.</p>
+	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>
+	<h3 id="comment">
+		<?php $commentsNb = count($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment'])); ?>
+		<?php $s =  $commentsNb === 1 ? '': 's' ?>
+		<?php echo $commentsNb > 0 ? $commentsNb . ' ' .  'commentaire' . $s : 'Pas encore de commentaire'; ?>
+	</h3>
 	<?php echo template::formOpen('blogArticleForm'); ?>
 		<?php echo template::text('blogArticleCommentShow', [
 			'placeholder' => 'Rédiger un commentaire...',
@@ -116,6 +99,7 @@
 		</div>
 	<?php echo template::formClose(); ?>
 <?php endif;?>
+
 <div class="row">
 	<div class="col12">
 		<?php foreach($module::$comments as $commentId => $comment): ?>
