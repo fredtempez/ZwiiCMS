@@ -333,7 +333,7 @@ td > .col12 {
 #bar {
 	background: #212223;
 	padding-left: 5px; /* Pour éviter que le select touche le bord lorsque la fenêtre est redimensionnée */
-	/*margin: 0 -10px;*/
+	margin: 0; /*-10px;*/
 	text-align: right;
 	position: -webkit-sticky; /* Safari */
 	position: sticky;
@@ -430,7 +430,7 @@ td > .col12 {
 
 @media (min-width:769px) {
 	body > header {
-		margin: 0 -10px;
+		margin: 0 ;/*-10px;*/
 	}
 	header {
 		margin:0;
@@ -461,7 +461,7 @@ header .container {
 
 /* Menu */
 body > nav {
-	margin: 0 -10px;
+	/*margin: 0 -10px;*/
 }
 
 /* Items du menu */
@@ -632,8 +632,7 @@ section:after {
 
 /* Pied de page */
 body > footer {
-	/*margin: 0 -10px;*/
-	margin: 0;
+	margin: 0;/* -10px;*/
 }
 
 /*
