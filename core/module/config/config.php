@@ -245,7 +245,7 @@ class config extends common {
 			$site = helper::baseUrl(false);	}
 		
 		$success= false;
-		$googlePagespeedData = @file_get_contents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. $site .'&screenshot=true');
+		$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. $site .'&screenshot=true');
 		if ($googlePagespeedData  !== false) {
 			$googlePagespeedData = json_decode($googlePagespeedData, true);
 			$screenshot = $googlePagespeedData['screenshot']['data'];

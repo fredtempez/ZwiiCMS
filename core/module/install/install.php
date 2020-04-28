@@ -148,7 +148,7 @@ class install extends common {
 			// Téléchargement
 			case 2:
 				// Téléchargement depuis le serveur de Zwii
-				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', file_get_contents('https://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
@@ -227,7 +227,7 @@ class install extends common {
 	 */
 	public function update() {
 		// Nouvelle version
-		self::$newVersion = file_get_contents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
+		self::$newVersion = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
