@@ -169,6 +169,10 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Gestion et sauvegarde</h4>	
+			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php if ($error !== false) : ?>
+				<?php $error = true; ?>
+			<?php endif;?>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatisée quotidienne partielle', [
@@ -187,19 +191,22 @@
 				<div class="col6">
 					<?php echo template::checkbox('configAutoUpdate', true, 'Recherche de mise à jour automatisée ', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
-							'help' => 'Vérification de l\'existence d\'une mise à jour en ligne une fois par jour.'
+							'help' => 'Vérification de l\'existence d\'une mise à jour en ligne une fois par jour si votre configuration le permet.',
+							'disabled' => !$error
 						]); ?>
 				</div>	
 				<div class="col3">
 					<?php echo template::button('configUpdateOnline', [
 						'href' => helper::baseUrl() . 'config/updateOnline',
-						'value' => 'Version en ligne'
+						'value' => 'Affiche la version en ligne',
+						'disabled' => !$error
 					]); ?>
 				</div>			
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
 						'href' => helper::baseUrl() . 'install/update',
-						'value' => 'Mise à jour forcée'
+						'value' => 'Mise à jour forcée',
+						'disabled' => !$error
 					]); ?>
 				</div>			
 			</div>
