@@ -230,9 +230,7 @@
 					<?php if ($error): ?>
 						<?php echo 'La version de la mise à jour en ligne est <strong>' . helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') . '</strong>' . '.';?>
 					<?php else: ?>						
-						<p>Malheureusement, la configuration du serveur n'autorise pas la détection des mises à jour en ligne, merci d'activer l'option dans php.ini :	<code>allow_url_fopen = On </code> .
-						Consultez la base de connaissance de votre hébergeur, ou interrogez le support technique pour savoir comment procéder. </p><p>La mise à jour devra s'effectuer par transfert de fichiers <strong>à l'exception du dossier site</strong>.
-						<a href="https://zwiicms.com" target="_blank">Cliquez sur ce lien</a> pour connaître la version disponible en ligne.</p>
+						<p>Votre configuration interdit les mises à jour automatiques. <a href="https://zwiicms.com" target="_blank">Cliquez sur ce lien</a> pour connaître la version disponible en ligne.</p>
 					<?php endif;?>					
 				</div>	
 			</div>
