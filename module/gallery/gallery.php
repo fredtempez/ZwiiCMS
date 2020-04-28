@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.21';		
+	const GALLERY_VERSION = '2.22';		
 
 	public static $directories = [];
 
@@ -320,7 +320,7 @@ class gallery extends common {
 				if ($this->getInput('galleryEditFormResponse') &&
 					$this->getInput('galleryEditSort') === self::SORT_HAND) {
 					// Tri des images si valeur de retour et choix manuel
-					$picturesPosition = explode('&',($this->getInput('galleryEditFormResponse')));
+					$picturesPosition = explode('&',($this->getInput('galleryEditFormResponse',helper::FILTER_STRING_LONG)));
 					$picturesPosition = str_replace('galleryTable%5B%5D=','',$picturesPosition);	
 					$picturesPosition = array_flip($picturesPosition);				
 				}
