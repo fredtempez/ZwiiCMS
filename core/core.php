@@ -1543,7 +1543,7 @@ class core extends common {
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
 					'metaDescription' => $this->getData(['page',$this->getUrl(0),'moduleId']) === 'blog' && !empty($this->getUrl(1))  
-										? substr($this->getData(['module',$this->getUrl(0),$this->getUrl(1),'content']) ,0,159)
+										? strip_tags(substr($this->getData(['module',$this->getUrl(0),$this->getUrl(1),'content']) ,0,159))
 										: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
