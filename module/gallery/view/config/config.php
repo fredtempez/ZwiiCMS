@@ -52,10 +52,7 @@
 		<h4>Galeries installées</h4>
 			<?php if($module::$galleries): ?>
 			<?php echo template::table([1, 4, 5, 1, 1], $module::$galleries, ['','Nom', 'Dossier cible', '', ''], ['id' => 'galleryTable'],$module::$galleriesId); ?>
-				<?php echo template::hidden('galleryConfigFilterResponse'); ?>
-				<?php echo template::hidden('galleryConfigFilterSubmit',[
-							'value' => false
-						]); ?>
+			<?php echo template::hidden('galleryConfigFilterResponse'); ?>
 			<?php else: ?>
 				<?php echo template::speech('Aucune galerie.'); ?>
 			<?php endif; ?>

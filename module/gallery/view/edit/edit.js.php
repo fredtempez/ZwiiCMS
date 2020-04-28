@@ -65,6 +65,11 @@ $( document ).ready(function() {
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
 		},
+		onDragStop : function(table, row) {		
+			// Sauvegarde le tri
+			sortPictures();
+			$("#galleryEditFormResponse").val("");
+		},
 		serializeRegexp:  ""
 	});
 
@@ -92,4 +97,21 @@ $("#galleryEditSort").change(function() {
 	}
 });
 
+/**
+ * Tri dynamique des images
+ */
 
+function sortPictures() {
+	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortPictures";
+	var d1 = $("#galleryEditFormResponse").val();
+	var d2 = $("#galleryEditFormGalleryName").val();
+	//var data = $('#galleryEditForm').serialize();
+	$.ajax({
+		type: "POST",
+		url: url ,
+		data: {
+			response : d1,
+			gallery: d2
+		}
+	});
+}

@@ -24,7 +24,7 @@ $( document ).ready(function() {
 		},
 		onDragStop : function(table, row) {
 			// Affiche le bouton de tri après un déplacement
-			$(":input[type='submit']").prop('disabled', false);
+			//$(":input[type='submit']").prop('disabled', false);
 			// Sauvegarde le tri
 			sortGalleries();
 		},
@@ -92,7 +92,7 @@ directoryDOM.on("change", function() {
  */
 
 function sortGalleries() {
-	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sort";
+	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortGalleries";
 	var data = $("#galleryConfigFilterResponse").val();			
 	$.ajax({
 		type: "POST",

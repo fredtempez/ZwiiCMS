@@ -24,6 +24,7 @@
         - Nouveau masque dédié à la sauvegarde automatique, à l'import et à l'export des données de site.
 - Modifications :
     - Module gallery optimisé, tri dynamique, choix du thème.
+    - Module blog  présentation optimisée avec options de position de l'image, la métadescription est le contenu de l'article.
     - Chargement paresseux des images.
     - Edition de page : suppression de l'option d'ouverture dans une lity.
     - Accès concurrents, modification simultanée d'une même ressource (page, config, thème, utilisateur) interdite.

@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.22';		
+	const GALLERY_VERSION = '2.23';		
 
 	public static $directories = [];
 
@@ -36,13 +36,14 @@ class gallery extends common {
 	public static $thumbs = [];	
 
 	public static $actions = [
-		'config' => self::GROUP_MODERATOR,
-		'delete' => self::GROUP_MODERATOR,
-		'dirs' => self::GROUP_MODERATOR,
-		'sort' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR,
-		'theme' => self::GROUP_MODERATOR,
-		'index' => self::GROUP_VISITOR		
+		'config' 		=> self::GROUP_MODERATOR,
+		'delete' 		=> self::GROUP_MODERATOR,
+		'dirs' 			=> self::GROUP_MODERATOR,
+		'sortGalleries' => self::GROUP_MODERATOR,
+		'sortPictures' 	=> self::GROUP_MODERATOR,
+		'edit' 			=> self::GROUP_MODERATOR,
+		'theme' 		=> self::GROUP_MODERATOR,
+		'index' 		=> self::GROUP_VISITOR		
 	];
 
 	public static $sort = [
@@ -130,7 +131,7 @@ class gallery extends common {
 	 * Tri de la liste des galeries
 	 *
 	 */
-	public function sort() {
+	public function sortGalleries() {
 		if($_POST['response']) {
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
@@ -149,6 +150,32 @@ class gallery extends common {
 					'position' => $this->getData(['module',$this->getUrl(0),$data[$i],'position'])
 				]]);
 			}	
+		}
+	}
+
+	/**
+	 * Tri de la liste des images
+	 *
+	 */
+	public function sortPictures() {
+		if($_POST['response']) {
+			$galleryName = $_POST['gallery'];
+			$data = explode('&',$_POST['response']);
+			$data = str_replace('galleryTable%5B%5D=','',$data);
+			// Sauvegarder
+			$this->setData(['module', $this->getUrl(0), $galleryName, [
+				'config' => [
+					'name' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','name']),
+					'directory' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','directory']),
+					'homePicture' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','homePicture']),
+					'sort' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','sort']),
+					'position' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','position']),
+					'fullScreen' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','fullScreen'])
+
+				],
+				'legend' => $this->getData(['module',$this->getUrl(0),$galleryName,'legend']),
+				'position' => array_flip($data)
+			]]);
 		}
 	}
 
@@ -313,23 +340,6 @@ class gallery extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
-				/**
-				 * $picturesPosition contient un tableau avec les images triées
-				 */
-				$picturesPosition = [];
-				if ($this->getInput('galleryEditFormResponse') &&
-					$this->getInput('galleryEditSort') === self::SORT_HAND) {
-					// Tri des images si valeur de retour et choix manuel
-					$picturesPosition = explode('&',($this->getInput('galleryEditFormResponse',helper::FILTER_STRING_LONG)));
-					$picturesPosition = str_replace('galleryTable%5B%5D=','',$picturesPosition);	
-					$picturesPosition = array_flip($picturesPosition);				
-				}
-				// Tri manuel sélectionné mais de déplacement, reprendre la config sauvegardée
-				if ($this->getInput('galleryEditSort') === self::SORT_HAND &&
-				   empty($picturesPosition)) {
-					$picturesPosition  = $this->getdata(['module', $this->getUrl(0), $this->getUrl(2), 'position']);
-					// Si la position sauvegardée est vide, on activera le tri alpha
-				}
 				// Si l'id a changée
 				$galleryId = $this->getInput('galleryEditName', helper::FILTER_ID, true);
 				if($galleryId !== $this->getUrl(2)) {
@@ -359,13 +369,13 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						// pas de positions, on active le tri alpha
-						'sort' =>  (empty($picturesPosition) && $this->getInput('galleryEditSort') === self::SORT_HAND) ? self::SORT_ASC : $this->getInput('galleryEditSort'),
+						'sort' =>  $this->getInput('galleryEditSort'),
 						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
 						'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
 					],
 					'legend' => $legends,
-					'position' => $picturesPosition
+					'position' => $this->getdata(['module', $this->getUrl(0), $galleryId, 'position'])
 				]]);
 				// Valeurs en sortie				
 				$this->addOutput([
