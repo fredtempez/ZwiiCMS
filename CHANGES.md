@@ -1,5 +1,10 @@
 # Changelog
 
+## version 9.2.28
+- Corrections : 
+    - Mise à jour auto fonctionnelle
+    - Décalage du thème hors de l'écran
+    
 ## version 9.2.27
 - Corrections :
     - Pages d'administration, thème spécifique

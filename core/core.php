@@ -1099,6 +1099,16 @@ class common {
 			$this->setData(['core', 'dataVersion', 9227]);
 			$this->saveData();
 		}	
+
+		// Version 9.2.28
+		if($this->getData(['core', 'dataVersion']) < 9228) {	
+		// Contrôle des options php.ini pour la mise à jour auto
+			if (helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+				$this->setData(['config','autoUpdate',false]);
+			}
+			$this->setData(['core', 'dataVersion', 9228]);
+			$this->saveData();			
+		}
 	}
 }
 
@@ -1678,6 +1688,27 @@ class helper {
 	const FILTER_STRING_SHORT = 9;
 	const FILTER_TIMESTAMP = 10;
 	const FILTER_URL = 11;
+
+	/**
+	 * Fonction pour récupérer le numéro de version en ligne
+	 * @param string $url à récupérer
+	 * @return mixed données récupérées
+	 */
+
+	public static function urlGetContents ($url) {
+		if(function_exists('file_get_contents') and 
+				ini_get('allow_url_fopen') ){
+				$url_get_contents_data = file_get_contents($url);
+			}elseif(function_exists('fopen') && 
+				function_exists('stream_get_contents' &&
+				ini_get('allow_url_fopen') )){
+				$handle = fopen ($url, "r");
+				$url_get_contents_data = stream_get_contents($handle);
+			}else{
+				$url_get_contents_data = false;
+			}
+		return $url_get_contents_data;
+		} 
 
 	/**
 	 * Retourne les valeurs d'une colonne du tableau de données
@@ -2632,16 +2663,20 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser le thème">' . template::ico('brush') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
-				$lastAutoUpdate = mktime(0, 0, 0);			
+				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
+				$lastAutoUpdate = mktime(0, 0, 0);		
 				if( $this->getData(['config','autoUpdate']) === true &&
-					$lastAutoUpdate > $this->getData(['core','lastAutoUpdate']) + 86400 ) {	
-						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);						
-				    if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)  ) {
-						$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii '. common::ZWII_VERSION .' vers '. helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) .'">' . template::ico('update colorRed') . '</a></li>';
-					}
-					$this->saveData();
-				}	
-			}
+					$lastAutoUpdate > $this->getData(['core','lastAutoUpdate']) + 86400 && 
+					helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
+						$this->setData(['core','updateAvailable', true]);
+						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);									
+				}
+				// Afficher le bouton : Mise à jour détectée + activée	
+				if ( $this->getData(['core','updateAvailable']) === true &&
+					$this->getData(['config','autoUpdate']) === true  ) {
+					$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii '. common::ZWII_VERSION .' vers '. helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) .'">' . template::ico('update colorRed') . '</a></li>';
+				}
+			}	
 			$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
 			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Se déconnecter">' . template::ico('logout') . '</a></li>';
 			// Barre de membre 
