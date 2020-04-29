@@ -262,7 +262,7 @@ class helper {
 				$text = filter_var($text, FILTER_SANITIZE_URL);
 				break;
 		}
-		return get_magic_quotes_gpc() ? stripslashes($text) : $text;
+		return $text;
 	}
 
 	/**
