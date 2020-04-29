@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.075';
+	const ZWII_VERSION = '10.0.076';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1824,7 +1824,7 @@ class layout extends common {
 				OR $this->getData(['page', $this->getUrl(0), 'hideTitle']) === false
 			)
 		) {
-			echo '<h2 id="sectionTitle">' . $this->core->output['title'] . '</h2>';				
+			echo '<h1 id="sectionTitle">' . $this->core->output['title'] . '</h1>';
 		}
 		echo $this->core->output['content'];
 
