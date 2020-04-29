@@ -37,7 +37,7 @@
 						<?php echo template::select('galleryEditSort', $module::$sort, [
 							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort']),
 							'label' => 'Tri des images',
-							'help' => 'Les tris alphabétiques conviennent également aux images numérotées.<br>Cliquez sur \'Enregistrer\' pour valider le tri.'
+							'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
 						]); ?>	
 					</div>
 				<div clas="row">
