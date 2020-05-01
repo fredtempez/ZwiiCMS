@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.24';		
+	const GALLERY_VERSION = '2.25';		
 
 	public static $directories = [];
 
@@ -372,7 +372,7 @@ class gallery extends common {
 						'homePicture' => $homePicture,
 						// pas de positions, on active le tri alpha
 						'sort' =>  $this->getInput('galleryEditSort'),
-						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === '' ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
+						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
 						'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
 					],
