@@ -22,18 +22,29 @@ $("#pageEditDelete").on("click", function() {
 	});
 });
 
-$("#pageEditSubmit").on("click", function() {
+$("#pageEditModuleId").on("click", function() {
+	protectModule();
+});
+
+function protectModule() {
 	var oldModule = $("#pageEditModuleIdOld").val();
 	var oldModuleText =  $("#pageEditModuleIdOldText").val();
 	var newModule = $("#pageEditModuleId").val();
 	if ( oldModule !== "" && 
 		 oldModule !== newModule) {
 		var _this = $(this);
-		return core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?", function() {
-			$(location).attr("href", _this.attr("href"));
-		});
+		core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?", 
+				function() {
+					$(location).attr("href", _this.attr("href"));
+					return true;
+				},
+				function() {
+					$("#pageEditModuleId").val(oldModule);
+					return false;
+				}
+		);
 	}
-});
+}
 
 
 /** 
@@ -479,8 +490,8 @@ pageTypeMenuDOM.on("change", function() {
  * Soumission du formulaire pour éditer le module
  */
 $("#pageEditModuleConfig").on("click", function() {
-	$("#pageEditModuleRedirect").val(1);
-	$("#pageEditForm").trigger("submit");
+		$("#pageEditModuleRedirect").val(1);
+		$("#pageEditForm").trigger("submit");
 });
 
 /**
