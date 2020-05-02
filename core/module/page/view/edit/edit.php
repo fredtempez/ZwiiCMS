@@ -45,6 +45,8 @@ echo template::formOpen('pageEditForm');
 									'label' => 'Module',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'moduleId'])
 								]); ?>
+								<?php echo template::hidden('pageEditModuleIdOld',['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
+								<?php echo template::hidden('pageEditModuleIdOldText',['value' => $module::$moduleNames[$this->getData(['page', $this->getUrl(2), 'moduleId'])] ]); ?>
 							</div>
 							<div class="col3 verticalAlignBottom">
 								<?php echo template::button('pageEditModuleConfig', [

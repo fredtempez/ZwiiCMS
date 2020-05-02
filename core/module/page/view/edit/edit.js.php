@@ -17,10 +17,24 @@
  */
 $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cette page ?", function() {
+	return core.confirm("Confirmez-vous la suppression de cette page ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
+
+$("#pageEditSubmit").on("click", function() {
+	var oldModule = $("#pageEditModuleIdOld").val();
+	var oldModuleText =  $("#pageEditModuleIdOldText").val();
+	var newModule = $("#pageEditModuleId").val();
+	if ( oldModule !== "" && 
+		 oldModule !== newModule) {
+		var _this = $(this);
+		return core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?", function() {
+			$(location).attr("href", _this.attr("href"));
+		});
+	}
+});
+
 
 /** 
 * Paramètres par défaut au chargement
