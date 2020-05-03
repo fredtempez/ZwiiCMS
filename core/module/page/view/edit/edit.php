@@ -47,8 +47,8 @@ echo template::formOpen('pageEditForm');
 								]); ?>
 								<?php echo template::hidden('pageEditModuleIdOld',['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
 								<?php echo template::hidden('pageEditModuleIdOldText',[
-									'value' => $this->getData(['page', $this->getUrl(2), 'moduleId']) !== '' ? $module::$moduleNames[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ''
-									]); ?>
+									'value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])
+									]);?>
 							</div>
 							<div class="col3 verticalAlignBottom">
 								<?php echo template::button('pageEditModuleConfig', [
