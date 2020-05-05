@@ -65,21 +65,23 @@
 							</div>							
 						</div>
 					</div>
-					<div class="col4 bgPreview">
-						<div class="row">
-							<div class="col12">
-								<h1 class="headerPreview">Titre </h1>
-								<h3 class="headerPreview">Sous-Titre </h3>
-								<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-								<p><a href="#" class="urlPreview">Lorem ipsum dolor sit amet.</a></p>
+					<div class="col4 bodybackground">
+						<div class="bgPreview">			
+							<div class="row">
+								<div class="col12">
+									<h1 class="headerPreview">Titre </h1>
+									<h3 class="headerPreview">Sous-Titre </h3>
+									<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+									<p><a href="#" class="urlPreview">Lorem ipsum dolor sit amet.</a></p>
+								</div>
 							</div>
-						</div>
-						<div class="row">
-							<div class="col4 offset8">
-								<?php echo template::button('themeSiteSubmitButtonPreview', [
-									'class' => 'buttonSubmitPreview',						
-									'value' => 'Bouton'
-								]); ?>
+							<div class="row">
+								<div class="col4 offset8">
+									<?php echo template::button('themeSiteSubmitButtonPreview', [
+										'class' => 'buttonSubmitPreview',						
+										'value' => 'Bouton'
+									]); ?>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -77,7 +77,10 @@ function updateDOM() {
 		}
 		// Couleur du site, arrondi sur les coins du site et ombre sur les bords du site
 		//css += "#site{background-color:" + $("#themeSiteBackgroundColor").val() + ";border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";
-		css += "#site{border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";
+		css += "#site{border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";	
+		var backgroundImage = <?php echo json_encode(helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme','body','image'])); ?>;
+		var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;						
+		css += "div.bodybackground{background-color:" +  backgroundcolor + "; background-image: url(" + backgroundImage + ");background-size:cover;}";
 		css += "div.bgPreview{background-color:" + $("#themeSiteBackgroundColor").val() + ";}";
 
 		/**
