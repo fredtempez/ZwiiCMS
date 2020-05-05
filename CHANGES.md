@@ -5,6 +5,7 @@
 - Mises à jour :
     - SimpleLightBox v2.1.4
     - TinyMCE v4.9.9
+    - PHPMailer 6.1.5
 - Améliorations :
     - Architecture de stockage des données.
         - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
