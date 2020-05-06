@@ -26,12 +26,17 @@
 - Modifications :
     - Module gallery optimisé, tri dynamique, choix du thème.
     - Module blog  présentation optimisée avec options de position de l'image, la métadescription est le contenu de l'article.
+    - Module news, simlification de la présentation.
     - Chargement paresseux des images.
     - Edition de page : suppression de l'option d'ouverture dans une lity.
-    - Accès concurrents, modification simultanée d'une même ressource (page, config, thème, utilisateur) interdite.
-    - Déconnexion des sessions multiples avec une seule compte.
+    - Protection des données des modules en cas de changement lors de l'édition d'une page.
 - Corrections de bug :
     - Mise à jour automatique : procédure modifiée, désactivée si allow_url_fopen = off sur le serveur
+
+## version 9.2.28
+- Corrections : 
+    - Mise à jour auto fonctionnelle
+    - Décalage du thème hors de l'écran
 
 ## version 9.2.27
 - Corrections :
