@@ -4,22 +4,12 @@
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
+ * @author Rémi Jean <remi.jean@outlook.com>
+ * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.com/
  */
 
-/**
- * Modification de l'affichage de l'icône de langues
- */
-
-
-var configdisablei18nDOM = $("#configdisablei18n");
-configdisablei18nDOM.on("change", function() {
-    if ($("input[name=configdisablei18n]").is(':checked')) {
-        $(".zwiico-flag").css('display','none');
-    } else {
-        $(".zwiico-flag").css('display','block');
-    }
-});
+@import url("core/layout/admin.css");

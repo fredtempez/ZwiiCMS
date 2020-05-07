@@ -8,7 +8,7 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ *  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.com/
@@ -18,15 +18,13 @@ class config extends common {
 
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
-		'restore' => self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'updateRobots' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'updateOnline' =>  self::GROUP_ADMIN
+		'manage' => self::GROUP_ADMIN,
+		'updateBaseUrl' => self::GROUP_ADMIN
 	];
-
-	public static $newVersion;
 	
 	public static $timezones = [
 		'Pacific/Midway'		=> '(GMT-11:00) Midway Island',
@@ -150,11 +148,11 @@ class config extends common {
 		15 => '15 articles',
 		20 => '20  articles'		
 	];
-	// Type de proxy
-	public static $proxyType = [
-		'tcp://' => 'TCP',
-		'http://' => 'HTTP'
-	];
+		// Type de proxy
+		public static $proxyType = [
+			'tcp://' => 'TCP',
+			'http://' => 'HTTP'
+		];
 
 
 	public function generateFiles() {
@@ -205,6 +203,7 @@ class config extends common {
 		unlink('robots.bak');
 		return(fclose($filenew));
 	}
+
 	/**
 	 * Sauvegarde des données
 	 */
@@ -271,11 +270,11 @@ class config extends common {
 	/**
 	 * Procédure d'importation
 	 */
-	public function restore() {
+	public function manage() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			//if ($this->getInput('configrestoreImportFile'))
-			$fileZip = $this->getInput('configRestoreImportFile');
+			//if ($this->getInput('configManageImportFile'))
+			$fileZip = $this->getInput('configManageImportFile');
 			$file_parts = pathinfo($fileZip);
 			$folder = date('Y-m-d-h-i-s', time());
 			$zip = new ZipArchive();
@@ -283,7 +282,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Le fichier n\'est pas une archive valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
+					'redirect' => helper::baseUrl() . 'config/manage',
 					'state' => false
 					]);
 			}
@@ -292,7 +291,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Impossible de lire l\'archive',
-					'redirect' => helper::baseUrl() . 'config/restore',
+					'redirect' => helper::baseUrl() . 'config/manage',
 					'state' => false
 					]);
 			}
@@ -314,42 +313,48 @@ class config extends common {
 				in_array('core.json',$files) === true && 
 				in_array ('user.json', $files) === true && 
 				in_array ('config.json', $files) === true ) {
-					// V10 valide user et config
+					// V10 valide
 					$version = '10';
 					// Option active, les users sont stockées
-					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) { 
+					if ($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ) { 
 						$users = $this->getData(['user']); 
-					}						
+					}	
 			} else { // Version invalide
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
+					'redirect' => helper::baseUrl() . 'config/manage',
 					'state' => false
 				]);
 			}
-
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
 			// Positionnement d'une  variable de session lue au constructeur
 			if ($version === '9') {
 				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
 			}
 
-			// Extraire le zip
+			// Extraire le zip ou 'site/'
 			$success = $zip->extractTo( 'site/' );				
 			// Fermer l'archive	
 			$zip->close();
-
+			
 			// Restaurer les users originaux d'une v10 si option cochée
 			if (!empty($users) &&
 				$version === '10' &&
-				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) { 
-					$this->setData(['user',$users]);					
-			}		
-	
+				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) { 
+					$this->setData(['user',$users]);											
+			}
+			/*
+			if ($version === '9' ) {
+				$this->importData($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN));	
+				$this->setData(['core','dataVersion',0]);
+			}*/
+			
+			// Met à jours les URL dans les contenus de page
+					
 			// Message de notification
 			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Erreur d\'extraction'; 
-			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
+			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur	
 			$this->addOutput([
 				'notification' => $notification,
@@ -360,8 +365,8 @@ class config extends common {
 	
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Restaurer une sauvegarde',
-			'view' => 'restore'
+			'title' => 'Sauvegarder / Restaurer',
+			'view' => 'manage'
 		]);
 	}
 
@@ -378,6 +383,12 @@ class config extends common {
 				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
+			if ($this->getInput('configLegalCheck', helper::FILTER_BOOLEAN) === true ) {
+				$legalPageId = $this->getInput('configLegalPageId', helper::FILTER_ID);
+			} else {
+				$legalPageId = '';
+			}
+
 			$this->setData([
 				'config',
 				[
@@ -404,13 +415,13 @@ class config extends common {
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),					
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
 					'autoUpdate' => helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') === false 
-									? false
-									: $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+						? false
+						: $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT)	
 				]
-			]);			
+			]);
 							
 			if(self::$inputNotices === []) {
 				// Ecrire les fichiers de script
@@ -449,8 +460,8 @@ class config extends common {
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = false;
 				}
-				// Met à jour la baseUrl
-				$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
+								// Met à jour la baseUrl
+								$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
 			}
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
@@ -472,43 +483,40 @@ class config extends common {
 		]);
 	}
 
-}
-
-class configHelper extends helper {
-
-	/**
-	 * Met à jour les données de site avec l'adresse trannsmise
-	 */
-	public function updateBaseUrl () {		
-		// Supprimer l'information de redirection
-		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
-		$new = helper::baseUrl(false,false);
-		$success = false ;
-		// Boucler sur les pages			
-		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-			$content = $this->getData(['page',$parentId,'content']);			
-			$replace = str_replace( $old , $new , stripslashes($content),$count) ;			
-			if ($count > 0) {
-				$success = true;
-				$this->setData(['page',$parentId,'content', $replace ]);
-			}
-			foreach($childIds as $childId) {
-				$content = $this->getData(['page',$childId,'content']);
-				$replace = str_replace( $old , $new, stripslashes($content),$count) ;				
+			/**
+		 * Met à jour les données de site avec l'adresse trannsmise
+		 */
+		public function updateBaseUrl () {		
+			// Supprimer l'information de redirection
+			$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
+			$new = helper::baseUrl(false,false);
+			$success = false ;
+			// Boucler sur les pages			
+			foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
+				$content = $this->getData(['page',$parentId,'content']);			
+				$replace = str_replace( $old , $new , stripslashes($content),$count) ;			
 				if ($count > 0) {
 					$success = true;
-					$this->setData(['page',$childId,'content', $replace ]);
+					$this->setData(['page',$parentId,'content', $replace ]);
 				}
-			}
+				foreach($childIds as $childId) {
+					$content = $this->getData(['page',$childId,'content']);
+					$replace = str_replace( $old , $new, stripslashes($content),$count) ;				
+					if ($count > 0) {
+						$success = true;
+						$this->setData(['page',$childId,'content', $replace ]);
+					}
+				}
 		}		
-		if ($success ===  true) {
-			 $this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
+			if ($success ===  true) {
+				 $this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => $success ? 'Conversion effectuée' : 'Aucune conversion',
+				'redirect' => helper::baseUrl() . 'config/restore',
+				'state' => $success ? true : false
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'notification' => $success ? 'Conversion effectuée' : 'Aucune conversion',
-			'redirect' => helper::baseUrl() . 'config/restore',
-			'state' => $success ? true : false
-		]);
-	}
+
 }
