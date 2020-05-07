@@ -227,7 +227,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Télécharger une archive du site',
+				'title' => 'Sauvegarder',
 				'view' => 'backup'
 			]);
 		}
@@ -365,7 +365,7 @@ class config extends common {
 	
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Sauvegarder / Restaurer',
+			'title' => 'Restaurer',
 			'view' => 'manage'
 		]);
 	}
