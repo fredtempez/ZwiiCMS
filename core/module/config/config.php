@@ -329,10 +329,10 @@ class config extends common {
 			}
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
 			// Positionnement d'une  variable de session lue au constructeur
+			echo $version;
 			if ($version === '9') {
-				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
+				$_SESSION['KEEP_USERS'] = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN);
 			}
-
 			// Extraire le zip ou 'site/'
 			$success = $zip->extractTo( 'site/' );				
 			// Fermer l'archive	
@@ -510,7 +510,7 @@ class config extends common {
 					if ($c1 > 0 || $c2 > 0) {
 						$success = true;
 						$this->setData(['page',$childId,'content', $replace ]);
-						$c3 += $c1 + c2;
+						$c3 += $c1 + $c2;
 					}
 				}
 			}	
