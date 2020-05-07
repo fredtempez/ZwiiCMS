@@ -493,28 +493,30 @@ class config extends common {
 			$success = false ;
 			// Boucler sur les pages			
 			foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-				$content = $this->getData(['page',$parentId,'content']);			
-				$replace = str_replace( $old , $new , stripslashes($content),$count) ;			
-				if ($count > 0) {
+				$content = $this->getData(['page',$parentId,'content']);
+				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
+				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;			
+				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
 					$this->setData(['page',$parentId,'content', $replace ]);
 				}
 				foreach($childIds as $childId) {
 					$content = $this->getData(['page',$childId,'content']);
-					$replace = str_replace( $old , $new, stripslashes($content),$count) ;				
-					if ($count > 0) {
+					$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
+					$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;	
+					if ($c1 > 0 || $c2 > 0) {
 						$success = true;
 						$this->setData(['page',$childId,'content', $replace ]);
 					}
 				}
-		}		
+			}	
 			if ($success ===  true) {
 				 $this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
 			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => $success ? 'Conversion effectuée' : 'Aucune conversion',
-				'redirect' => helper::baseUrl() . 'config/restore',
+				'redirect' => helper::baseUrl() . 'config/manage',
 				'state' => $success ? true : false
 			]);
 		}
