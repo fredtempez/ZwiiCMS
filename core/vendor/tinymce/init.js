@@ -161,16 +161,15 @@ tinymce.init({
 			description: "Bloc de texte avec effet accordéon."
 		},
 		{
-			title: "Effet FullPage Section",
+			title: "FullPage sections",
 			url: baseUrl + "core/vendor/tinymce/templates/fullPageSections.html",
 			description: "Page organisée en sections navigable avec le module redirection."
 		},		
 		{
-			title: "Effet FullPage Slides",
+			title: "FullPage slides",
 			url: baseUrl + "core/vendor/tinymce/templates/fullPageSlides.html",
 			description: "Page organisée en slides navigable avec le module redirection."
 		},		
-
 		{
 			title: "Grille symétrique : 6 - 6",
 			url: baseUrl + "core/vendor/tinymce/templates/col6.html",

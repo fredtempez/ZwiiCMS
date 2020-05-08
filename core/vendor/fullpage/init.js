@@ -4,7 +4,6 @@ $(function() {
         autoScrolling:true,
         scrollHorizontally: true,
         verticalCentered: false,
-        animateAnchor: true,
-        paddingBottom: '100px'
+        animateAnchor: true
     });
 });
