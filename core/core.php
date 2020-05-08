@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.088';
+	const ZWII_VERSION = '10.0.089';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -81,7 +81,7 @@ class common {
 		'metaDescription' => '',
 		'metaTitle' => '',
 		'notification' => '',
-		'redirect' => '',
+		'redirect' => '',		
 		'script' => '',
 		'showBarEditButton' => false,
 		'showPageContent' => false,
@@ -101,7 +101,8 @@ class common {
 			'tippy',
 			'zwiico',
 			'imagemap',
-			'simplelightbox'
+			'simplelightbox',
+			'fullpage'
 		],
 		'view' => ''
 	];
@@ -1604,13 +1605,6 @@ class core extends common {
 						}
 						// Sinon traitement des données de sortie qui requiert qu'aucune notice ne soit présente
 						else {
-							// Enregistrement des données
-							/** 
-							* if($output['state'] !== false) {
-							* 	$this->setData([$module->getData()]);
-							*	$this->SaveData();
-							* }
-							*/
 							// Notification
 							if($output['notification']) {
 								if($output['state'] === true) {
