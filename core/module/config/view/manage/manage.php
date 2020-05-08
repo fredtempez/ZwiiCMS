@@ -41,7 +41,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Conversion des URL <?php echo template::help('Conversion des URLs des ressources multimédia après le transfert d\'une archive entre deux sites aux adresses différentes.');?></h4>
+			<h4>Conversion des URL <?php echo template::help('Conversion des URL des ressources multimédia après le transfert d\'une archive entre deux sites aux adresses différentes.');?></h4>
 			<div class="row">
 				<div class="col4 offset1">
 					<?php 
