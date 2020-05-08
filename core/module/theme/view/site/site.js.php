@@ -21,6 +21,15 @@ $( document).ready(function() {
  * Aperçu en direct
  */
 $("input, select").on("change",function() {	
+	/**
+	* Option de marge si la taille n'est pas fluide
+	*/
+	if ($('#themeSiteWidth').val() === '100%') {
+		$("#themeSiteMargin").prop("checked", true);
+		$("#themeSiteMargin").addClass("disabled");
+	} else {
+		$("#themeSiteMargin").addClass("enabled");
+	}
 	updateDOM();
 });
 
@@ -68,12 +77,12 @@ function updateDOM() {
 			css += ".button, button{font-size:1em;}";
 		}
 		// Largeur du site
+		var margin = $("#themeSiteMargin").is(":checked") ? 0 : '20px' ;
 		css += ".container{max-width:" + $("#themeSiteWidth").val() + "}";
 		if ($("#themeSiteWidth").val() === "100%") {
-			css += "#site{margin:0 auto;} body{margin:0 auto;}  #bar{margin:0 auto;} body > header{margin:0 auto;} body > nav {margin: 0 auto;} body > footer {margin:0 auto;}";
+			css += "#site{margin: 0px auto;} body{margin:0 auto;}  #bar{margin:0 auto;} body > header{margin:0 auto;} body > nav {margin: 0 auto;} body > footer {margin:0 auto;}";
 		} else {
-			css += "#site{margin:20px auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
-			
+			css += "#site{margin: " + margin + " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
 		}
 		// Couleur du site, arrondi sur les coins du site et ombre sur les bords du site
 		//css += "#site{background-color:" + $("#themeSiteBackgroundColor").val() + ";border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";

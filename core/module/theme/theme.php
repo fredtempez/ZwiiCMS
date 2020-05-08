@@ -519,7 +519,8 @@ class theme extends common {
 				'backgroundColor' => $this->getInput('themeSiteBackgroundColor'),
 				'radius' => $this->getInput('themeSiteRadius'),
 				'shadow' => $this->getInput('themeSiteShadow'),
-				'width' => $this->getInput('themeSiteWidth')
+				'width' => $this->getInput('themeSiteWidth'),
+				'margin' => $this->getInput('themeSiteMargin',helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.0.089';
+	const ZWII_VERSION = '10.0.090';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1316,9 +1316,10 @@ class core extends common {
 			$css .= 'body,.block h4{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= 'select,input[type=\'email\'],input[type=\'text\'],textarea{color:' . $this->getData(['theme', 'text', 'backgroundColor']) . '}';
 			// Couleur fixée dans admin.css
-			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
+			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';			
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
-			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': '';
+			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';			
+			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';

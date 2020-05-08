@@ -162,6 +162,13 @@
 						]); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::checkbox('themeSiteMargin',true, 'Pas de marge au-dessus et en-dessous du site', [
+							'checked' => $this->getData(['theme', 'site', 'margin'])
+						]); ?>
+					</div>					
+				</div>
 			</div>
 		</div>
 	</div>
