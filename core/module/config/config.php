@@ -344,11 +344,11 @@ class config extends common {
 				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) { 
 					$this->setData(['user',$users]);											
 			}
-			
+			/*
 			if ($version === '9' ) {
 				$this->importData($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN));	
 				$this->setData(['core','dataVersion',0]);
-			}
+			}*/
 			
 			// Met à jours les URL dans les contenus de page
 					
