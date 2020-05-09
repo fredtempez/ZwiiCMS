@@ -353,7 +353,7 @@ class config extends common {
 			// Met à jours les URL dans les contenus de page
 					
 			// Message de notification
-			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Une erreur s\est produite'; 
+			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Une erreur s\'est produite'; 
 			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur	
 			$this->addOutput([
@@ -542,6 +542,9 @@ class config extends common {
 		foreach ($array as $key => $value) {
 			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);	
 			$count += $c;
+			if ($key== 'url') {
+				echo 'key';
+			}
 		}
 		return $newArray;
 	}
