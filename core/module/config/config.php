@@ -533,6 +533,14 @@ class config extends common {
 		]);
 	}
 
+	/**
+	 * Fonction de parcours des données de module
+	 * @param string $find donnée à rechercher
+	 * @param string $replace donnée à remplacer
+	 * @param array tableau à analyser
+	 * @param int count nombres d'occurences
+	 * @return array avec les valeurs remplacées.
+	 */
 	private function recursive_array_replace ($find, $replace, $array, &$count) {	
 		if (!is_array($array)) {
 			return str_replace($find, $replace, $array, $count);			
@@ -542,9 +550,6 @@ class config extends common {
 		foreach ($array as $key => $value) {
 			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);	
 			$count += $c;
-			if ($key== 'url') {
-				echo 'key';
-			}
 		}
 		return $newArray;
 	}
