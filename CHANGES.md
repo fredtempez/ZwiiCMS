@@ -9,19 +9,18 @@
 - Améliorations :
     - Architecture de stockage des données.
         - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
-        - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut.
-    - Gestion des données. 
-        - Le système ne conserve plus en mémoire l'intégralité des données de site comme dans les versions précédentes.    
+        - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut en préaration de la version multilangues.
+    - Gestion des données :
+        - Le système ne conserve plus en mémoire l'intégralité des données de site comme dans les versions précédentes.
         - Les données du site sont chargées à la demande au lieu d'être lues dans leur intégralité.
-        - Les mises à jour sont enregistrées sur le disque directement.
+        - Les mises à jour et effacements sont appliquées en direct sur le disque.
 - Modifications :
     - Module gallery optimisé, tri dynamique, choix du thème.
-    - Module blog  présentation optimisée avec options de position de l'image, la métadescription est le contenu de l'article.
-    - Module news, simlification de la présentation.
+    - Module blog présentation optimisée avec options de position de l'image, la métadescription est le contenu de l'article.
     - Chargement paresseux des images.
     - Edition de page : suppression de l'option d'ouverture dans une lity.
     - Protection des données des modules en cas de changement lors de l'édition d'une page.
-- Corrections de bug :
+Corrections de bug :
     - Mise à jour automatique : procédure modifiée, désactivée si allow_url_fopen = off sur le serveur
 
 ## version 9.2.28
