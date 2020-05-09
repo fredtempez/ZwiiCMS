@@ -1,7 +1,7 @@
 ![](https://img.shields.io/github/last-commit/fredtempez/ZwiiCMS/master) ![](https://img.shields.io/github/release-date/fredtempez/ZwiiCMS)
 
 
-# ZwiiCMS 9.2.27
+# ZwiiCMS 9.2.28
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.
 
