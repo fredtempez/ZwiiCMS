@@ -344,16 +344,16 @@ class config extends common {
 				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) { 
 					$this->setData(['user',$users]);											
 			}
-			/*
+			
 			if ($version === '9' ) {
 				$this->importData($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN));	
 				$this->setData(['core','dataVersion',0]);
-			}*/
+			}
 			
 			// Met à jours les URL dans les contenus de page
 					
 			// Message de notification
-			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Erreur d\'extraction'; 
+			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Une erreur s\est produite'; 
 			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur	
 			$this->addOutput([
@@ -483,44 +483,67 @@ class config extends common {
 		]);
 	}
 
-			/**
-		 * Met à jour les données de site avec l'adresse trannsmise
-		 */
-		public function updateBaseUrl () {		
-			// Supprimer l'information de redirection
-			$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
-			$new = helper::baseUrl(false,false);
-			$c3 = 0;
-			$success = false ;
-			// Boucler sur les pages			
-			foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-				$content = $this->getData(['page',$parentId,'content']);
-				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
-				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;			
+	/**
+	 * Met à jour les données de site avec l'adresse trannsmise
+	 */
+	public function updateBaseUrl () {		
+		// Supprimer l'information de redirection
+		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
+		$new = helper::baseUrl(false,false);
+		$c3 = 0;
+		$success = false ;
+		// Boucler sur les pages			
+		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
+			$content = $this->getData(['page',$parentId,'content']);
+			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
+			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;			
 
+			if ($c1 > 0 || $c2 > 0) {
+				$success = true;
+				$this->setData(['page',$parentId,'content', $replace ]);
+				$c3 += $c1 + $c2;
+			}
+			foreach($childIds as $childId) {
+				$content = $this->getData(['page',$childId,'content']);
+				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
+				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;	
 				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
-					$this->setData(['page',$parentId,'content', $replace ]);
+					$this->setData(['page',$childId,'content', $replace ]);
 					$c3 += $c1 + $c2;
 				}
-				foreach($childIds as $childId) {
-					$content = $this->getData(['page',$childId,'content']);
-					$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;			
-					$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;	
-					if ($c1 > 0 || $c2 > 0) {
-						$success = true;
-						$this->setData(['page',$childId,'content', $replace ]);
-						$c3 += $c1 + $c2;
-					}
-				}
-			}	
-			$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectué' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-				'redirect' => helper::baseUrl() . 'config/manage',
-				'state' => $success ? true : false
-			]);
+			}
+		}	
+		// Traiter les modules dont la redirection
+		$content = $this->getdata(['module']);
+		$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
+		$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
+		if ($content !== $replace) {
+			$this->setdata(['module',$replace]);			
+			$c3 += $c1 + $c2;
+			$success = true;
 		}
+		// Mettre à jour la base URl
+		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
+			'redirect' => helper::baseUrl() . 'config/manage',
+			'state' => $success ? true : false
+		]);
+	}
+
+	private function recursive_array_replace ($find, $replace, $array, &$count) {	
+		if (!is_array($array)) {
+			return str_replace($find, $replace, $array, $count);			
+		}
+	
+		$newArray = [];
+		foreach ($array as $key => $value) {
+			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);	
+			$count += $c;
+		}
+		return $newArray;
+	}
 
 }
