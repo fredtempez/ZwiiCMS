@@ -7,6 +7,7 @@ class autoload {
         require_once 'core/class/SitemapGenerator.class.php';
         require_once 'core/class/phpmailer/PHPMailer.class.php';
         require_once 'core/class/phpmailer/Exception.class.php';
+        require_once 'core/class/phpmailer/SMTP.class.php';
         require_once "core/class/jsondb/Dot.class.php";
         require_once "core/class/jsondb/JsonDb.class.php";
     }

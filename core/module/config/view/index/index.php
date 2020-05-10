@@ -326,6 +326,70 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
+				<h4>Paramètres de messagerie SMTP</h4>
+				<div class="row">	
+					<div class="col12">
+						<?php echo template::checkbox('configSmtpEnable', true, 'Activer STMP', [
+								'checked' => $this->getData(['config', 'smtp','enable']),
+								'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.'
+							]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col5">
+						<?php echo template::text('configSmtpHost', [
+							'label' => 'Adresse SMTP',
+							'placeholder' => 'smtp.fr',
+							'value' => $this->getData(['config', 'smtp','host'])
+						]); ?>		
+					</div>	
+					<div class="col5">
+						<?php echo template::text('configSmtpSender', [
+							'label' => 'Mail expéditeur',
+							'value' => $this->getData(['config', 'smtp','sender'])
+						]); ?>		
+					</div>								
+					<div  class="col2">
+						<?php echo template::text('configSmtpPort', [
+								'label' => 'Port SMTP',
+								'placeholder' => '589',
+								'value' => $this->getData(['config', 'smtp','port'])
+						]); ?>		
+					</div>
+				</div>
+				<div class="row">
+					<div  class="col2">
+						<?php echo template::select('configSmtpAuth', $module::$SMTPauth, [
+							'label' => 'Authentification',
+							'selected' => $this->getData(['config', 'smtp','auth'])
+						]); ?>						
+					</div>																				
+					<div  class="col4">
+						<?php echo template::text('configSmtpUsername', [
+							'label' => 'Nom utilisateur',
+							'value' => $this->getData(['config', 'smtp','username' ])
+						]); ?>	
+					</div>
+					<div  class="col4">
+						<?php echo template::password('configSmtpPassword', [
+							'label' => 'Mot de passe',
+							'autocomplete' => 'off',
+							'value' => $this->getData(['config', 'smtp','password' ])
+						]); ?>	
+					</div>
+					<div  class="col2">
+						<?php echo template::select('configSmtpSecure', $module::$SMTPEnc	, [
+							'label' => 'Sécurité',
+							'selected' => $this->getData(['config', 'smtp','secure'])
+						]); ?>						
+					</div>					
+				</div>			
+			</div>
+		</div>
+	</div>	
+	<div class="row">
+		<div class="col12">
+			<div class="block">
 				<h4>Versions système</h4>
 				<div class="row">
 					<div  class="col2">

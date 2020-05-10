@@ -148,11 +148,22 @@ class config extends common {
 		15 => '15 articles',
 		20 => '20  articles'		
 	];
-		// Type de proxy
-		public static $proxyType = [
-			'tcp://' => 'TCP',
-			'http://' => 'HTTP'
-		];
+	// Type de proxy
+	public static $proxyType = [
+		'tcp://' => 'TCP',
+		'http://' => 'HTTP'
+	];
+	// Authentification SMTP
+	public static $SMTPauth = [
+		true => 'Oui',
+		false => 'Non'
+	];
+	// Encryptation SMTP
+	public static $SMTPEnc = [
+		'' => 'Aucune',
+		'tls' => 'START TLS',
+		'ssl' => 'SSL/TLS'
+	];
 
 
 	public function generateFiles() {
@@ -419,7 +430,17 @@ class config extends common {
 						: $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
-					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT)	
+					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
+					'smtp' => [
+						'enable' => $this->getInput('configSmtpEnable',helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('configSmtpHost',helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('configSmtpPort',helper::FILTER_INT),
+						'auth' => $this->getInput('configSmtpAuth',helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('configSmtpSecure'),
+						'username' => $this->getInput('configSmtpUsername',helper::FILTER_STRING_SHORT),
+						'password' => $this->getInput('configSmtpPassword'),
+						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
+					]
 				]
 			]);
 							
