@@ -353,7 +353,7 @@ class config extends common {
 			// Met à jours les URL dans les contenus de page
 					
 			// Message de notification
-			$notification  = $success === true ? 'Sauvegarde importée avec succès' : 'Une erreur s\'est produite'; 
+			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue'; 
 			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur	
 			$this->addOutput([
