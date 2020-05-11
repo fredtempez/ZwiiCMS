@@ -335,55 +335,57 @@
 							]); ?>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col5">
-						<?php echo template::text('configSmtpHost', [
-							'label' => 'Adresse SMTP',
-							'placeholder' => 'smtp.fr',
-							'value' => $this->getData(['config', 'smtp','host'])
-						]); ?>		
+				<div class="configSmtpParam">
+					<div class="row">
+						<div class="col5">
+							<?php echo template::text('configSmtpHost', [
+								'label' => 'Adresse SMTP',
+								'placeholder' => 'smtp.fr',
+								'value' => $this->getData(['config', 'smtp','host'])
+							]); ?>		
+						</div>	
+						<div class="col5">
+							<?php echo template::text('configSmtpSender', [
+								'label' => 'Mail expéditeur',
+								'value' => $this->getData(['config', 'smtp','sender'])
+							]); ?>		
+						</div>								
+						<div  class="col2">
+							<?php echo template::text('configSmtpPort', [
+									'label' => 'Port SMTP',
+									'placeholder' => '589',
+									'value' => $this->getData(['config', 'smtp','port'])
+							]); ?>		
+						</div>
+					</div>
+					<div class="row">
+						<div  class="col2">
+							<?php echo template::select('configSmtpAuth', $module::$SMTPauth, [
+								'label' => 'Authentification',
+								'selected' => $this->getData(['config', 'smtp','auth'])
+							]); ?>						
+						</div>																				
+						<div  class="col4">
+							<?php echo template::text('configSmtpUsername', [
+								'label' => 'Nom utilisateur',
+								'value' => $this->getData(['config', 'smtp','username' ])
+							]); ?>	
+						</div>
+						<div  class="col4">
+							<?php echo template::password('configSmtpPassword', [
+								'label' => 'Mot de passe',
+								'autocomplete' => 'off',
+								'value' => $this->getData(['config', 'smtp','password' ])
+							]); ?>	
+						</div>
+						<div  class="col2">
+							<?php echo template::select('configSmtpSecure', $module::$SMTPEnc	, [
+								'label' => 'Sécurité',
+								'selected' => $this->getData(['config', 'smtp','secure'])
+							]); ?>						
+						</div>					
 					</div>	
-					<div class="col5">
-						<?php echo template::text('configSmtpSender', [
-							'label' => 'Mail expéditeur',
-							'value' => $this->getData(['config', 'smtp','sender'])
-						]); ?>		
-					</div>								
-					<div  class="col2">
-						<?php echo template::text('configSmtpPort', [
-								'label' => 'Port SMTP',
-								'placeholder' => '589',
-								'value' => $this->getData(['config', 'smtp','port'])
-						]); ?>		
-					</div>
-				</div>
-				<div class="row">
-					<div  class="col2">
-						<?php echo template::select('configSmtpAuth', $module::$SMTPauth, [
-							'label' => 'Authentification',
-							'selected' => $this->getData(['config', 'smtp','auth'])
-						]); ?>						
-					</div>																				
-					<div  class="col4">
-						<?php echo template::text('configSmtpUsername', [
-							'label' => 'Nom utilisateur',
-							'value' => $this->getData(['config', 'smtp','username' ])
-						]); ?>	
-					</div>
-					<div  class="col4">
-						<?php echo template::password('configSmtpPassword', [
-							'label' => 'Mot de passe',
-							'autocomplete' => 'off',
-							'value' => $this->getData(['config', 'smtp','password' ])
-						]); ?>	
-					</div>
-					<div  class="col2">
-						<?php echo template::select('configSmtpSecure', $module::$SMTPEnc	, [
-							'label' => 'Sécurité',
-							'selected' => $this->getData(['config', 'smtp','secure'])
-						]); ?>						
-					</div>					
-				</div>			
+				</div>		
 			</div>
 		</div>
 	</div>	
