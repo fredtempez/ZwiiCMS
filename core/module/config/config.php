@@ -438,12 +438,12 @@ class config extends common {
 						'auth' => $this->getInput('configSmtpAuth',helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('configSmtpSecure'),
 						'username' => $this->getInput('configSmtpUsername',helper::FILTER_STRING_SHORT),
-						'password' => $this->getInput('configSmtpPassword'),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configSmtpPassword')),
 						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
 					]
 				]
 			]);
-							
+
 			if(self::$inputNotices === []) {
 				// Ecrire les fichiers de script
 				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));

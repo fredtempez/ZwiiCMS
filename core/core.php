@@ -852,34 +852,39 @@ class common {
 		ob_start();
 		include 'core/layout/mail.php';		
 		$layout = ob_get_clean();
-		$mail = new PHPMailer\PHPMailer\PHPMailer;		
+		$mail = new PHPMailer\PHPMailer\PHPMailer;
+		$mail->CharSet = 'UTF-8';					
 		// Mail
 		try{
 			// Paramètres SMTP
 			if ($this->getdata(['config','smtp','enable'])) {
-				// $mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;  
+				//$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;  
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->Host = $this->getdata(['config','smtp','host']);
 				$mail->Port = (int) $this->getdata(['config','smtp','port']);
 				if ($this->getData(['config','smtp','auth'])) {					
 					$mail->Username = $this->getData(['config','smtp','username']);
-					$mail->Password = $this->getData(['config','smtp','password']);
+					$mail->Password = helper::decrypt($this->getData(['config','smtp','username']),$this->getData(['config','smtp','password']));
 					$mail->SMTPAuth = $this->getData(['config','smtp','auth']);
 					$mail->SMTPSecure = $this->getData(['config','smtp','secure']);
-					$mail->setFrom($this->getData(['config','smtp','sender']));
+					$mail->setFrom($this->getData(['config','smtp','username']));
+					if (is_null($replyTo)) {
+						$mail->addReplyTo($this->getData(['config','smtp','username']));
+					} else {
+						$mail->addReplyTo($replyTo);
+					}
 				}
 			// Fin SMTP
 			} else {
 				$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				$mail->setFrom('no-reply@' . $host, $this->getData(['config', 'title']));			
+				$mail->setFrom('no-reply@' . $host, $this->getData(['config', 'title']));						
 				if (is_null($replyTo)) {
 					$mail->addReplyTo('no-reply@' . $host, $this->getData(['config', 'title']));
 				} else {
 					$mail->addReplyTo($replyTo);
-				}			
+				}				
 			}
-			$mail->CharSet = 'UTF-8';			
 			if(is_array($to)) {
 					foreach($to as $userMail) {
 							$mail->addAddress($userMail);
