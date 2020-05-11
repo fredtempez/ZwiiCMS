@@ -1,7 +1,12 @@
 # Changelog
 
 
-## version 10.0.00
+## version 10.0.092
+- Suppression du script fullPage.js
+- Modifications : 
+    - Configuration : changement de libellés.
+
+## version 10.0.091
 - Mises à jour :
     - SimpleLightBox v2.1.4
     - TinyMCE v4.9.9
