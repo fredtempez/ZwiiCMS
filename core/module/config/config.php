@@ -505,10 +505,10 @@ class config extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Ecrire les fichiers de script
-			if ($this->getInput('configScriptHead')) {
+			if ($this->geturl(2) === 'head') {
 				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));
 			}
-			if ($this->getInput('configScriptBody')) {
+			if ($this->geturl(2) === 'body') {
 				file_put_contents(self::DATA_DIR . 'body.inc.html',$this->getInput('configScriptBody',null));				
 			}			
 			// Valeurs en sortie
