@@ -719,7 +719,7 @@ class template {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
-            'class' => '', // editorWysiwyg et editorCss possible pour utiliser le éditeurs (il faut également instancier les librairies)
+            'class' => '', // editorWysiwyg et editor possible pour utiliser un éditeur (il faut également instancier les librairies)
             'classWrapper' => '',
             'disabled' => false,
             'noDirty' => false,

@@ -23,7 +23,8 @@ class config extends common {
 		'updateRobots' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
-		'updateBaseUrl' => self::GROUP_ADMIN
+		'updateBaseUrl' => self::GROUP_ADMIN,
+		'script' => self::GROUP_ADMIN
 	];
 	
 	public static $timezones = [
@@ -164,7 +165,6 @@ class config extends common {
 		'tls' => 'START TLS',
 		'ssl' => 'SSL/TLS'
 	];
-
 
 	public function generateFiles() {
 		// Mettre à jour le site map
@@ -445,9 +445,6 @@ class config extends common {
 			]);
 
 			if(self::$inputNotices === []) {
-				// Ecrire les fichiers de script
-				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));
-				file_put_contents(self::DATA_DIR . 'body.inc.html',$this->getInput('configScriptBody',null));				
 				// Active la réécriture d'URL
 				$rewrite = $this->getInput('rewrite', helper::FILTER_BOOLEAN);
 				if(
@@ -501,6 +498,33 @@ class config extends common {
 		$this->addOutput([
 			'title' => 'Configuration',
 			'view' => 'index'
+		]);
+	}
+
+	public function script() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Ecrire les fichiers de script
+			if ($this->getInput('configScriptHead')) {
+				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));
+			}
+			if ($this->getInput('configScriptBody')) {
+				file_put_contents(self::DATA_DIR . 'body.inc.html',$this->getInput('configScriptBody',null));				
+			}			
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Modifications enregistrées',
+				'redirect' => helper::baseUrl() . 'config/script/'. $this->geturl(2),
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)) ,
+			'vendor' => [
+				'codemirror'
+			],
+			'view' => 'script'
 		]);
 	}
 

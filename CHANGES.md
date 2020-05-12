@@ -3,7 +3,9 @@
 
 ## version 10.0.092
 - Nouveautés :
-    - Masque de configuration :  options de réglage d'un serveur SMTP
+    - Configuration :  
+        - Options de réglage d'un serveur SMTP
+        - Edition des scripts dans une fenêtre dédiée
 - Modification : 
     - Masque de configuration : changement de libellés.
 - Scripts externes: 

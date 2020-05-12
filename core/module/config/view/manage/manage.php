@@ -9,11 +9,11 @@
 		]); ?>
 	</div>
 	<div class="col2 offset8">
-					<?php echo template::submit('configManageSubmit',[
-						'value' => 'valider',
-						'ico' => 'check'
-					]); ?>
-				</div>	
+		<?php echo template::submit('configManageSubmit',[
+			'value' => 'valider',
+			'ico' => 'check'
+		]); ?>
+	</div>	
 </div>
 <div class="row">
 	<div class="col12">
