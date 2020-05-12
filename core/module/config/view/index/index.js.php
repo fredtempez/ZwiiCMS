@@ -10,16 +10,54 @@
  * @link http://zwiicms.com/
  */
 
+$( document).ready(function() {	 
+    /**
+     * Afficher et masquer options SMTP
+     */
+    if ($("input[name=configSmtpEnable]").is(':checked')) {
+        $("#configSmtpParam").addClass("disabled");
+        $("#configSmtpParam").slideDown();        
+    } else {
+        $("#configSmtpParam").removeClass("disabled");
+        $("#configSmtpParam").slideUp();        
+    }
+
+    /**
+     * Afficher et masquer options Auth
+     */
+
+    if ($("select[name=configSmtpAuth]").val() == true) {     
+        $("#configSmtpAuthParam").addClass("disabled");
+        $("#configSmtpAuthParam").slideDown();               
+    } else {  
+        $("#configSmtpAuthParam").removeClass("disabled");
+        $("#configSmtpAuthParam").slideUp();            
+    }
+});
+
 /**
- * Modification de l'affichage de l'icône de langues
+ * Afficher et masquer options SMTP
+ */
+$("input[name=configSmtpEnable]").on("change", function() {    
+    if ($("input[name=configSmtpEnable]").is(':checked')) {
+        $("#configSmtpParam").addClass("disabled");
+        $("#configSmtpParam").slideDown();        
+    } else {
+        $("#configSmtpParam").removeClass("disabled");
+        $("#configSmtpParam").slideUp();        
+    }
+});
+
+/**
+ * Afficher et masquer options Auth
  */
 
-
-var configdisablei18nDOM = $("#configdisablei18n");
-configdisablei18nDOM.on("change", function() {
-    if ($("input[name=configdisablei18n]").is(':checked')) {
-        $(".zwiico-flag").css('display','none');
-    } else {
-        $(".zwiico-flag").css('display','block');
+$("select[name=configSmtpAuth]").on("change", function() {    
+    if ($("select[name=configSmtpAuth]").val() == true) {     
+        $("#configSmtpAuthParam").addClass("disabled");
+        $("#configSmtpAuthParam").slideDown();               
+    } else {  
+        $("#configSmtpAuthParam").removeClass("disabled");
+        $("#configSmtpAuthParam").slideUp();            
     }
 });

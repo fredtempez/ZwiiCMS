@@ -30,6 +30,7 @@ setlocale (LC_TIME, 'fra_FRA', 'french');
  */
 session_start();
 // Chargement des classes
+
 require 'core/class/autoload.php';
 autoload::autoloader();
 // Chargement du coeur
