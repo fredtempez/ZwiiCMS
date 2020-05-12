@@ -142,7 +142,8 @@
 				<div class="col6">	
 					<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour automatique', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
-							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.'
+							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
+							'disabled' => !$error
 						]); ?>
 				</div>		
 				<div class="col3">
