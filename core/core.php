@@ -1222,6 +1222,20 @@ class common {
 
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
+				// Version 10.0.092
+		if($this->getData(['core', 'dataVersion']) < 10092) {
+			// Suppression du dosseir fullpage
+			if (is_dir('core/vendor/fullpage')) {
+				$dir = getcwd();
+				chdir('core/vendor/fullpage');
+				$files = glob('*');
+				foreach($files as $file) unlink($file);
+				chdir($dir);
+				rmdir ('core/vendor/fullpage/');
+			}
+			$this->setData(['core', 'dataVersion', 10092]);
+		}
+
 	}
 }
 

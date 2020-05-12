@@ -2,9 +2,13 @@
 
 
 ## version 10.0.092
-- Suppression du script fullPage.js
-- Modifications : 
-    - Configuration : changement de libellés.
+- Nouveautés :
+    - Masque de configuration :  options de réglage d'un serveur SMTP
+- Modification : 
+    - Masque de configuration : changement de libellés.
+- Scripts externes: 
+    - Suppression du script fullPage.js
+    - Ajout de l'extension SMTP de PHPMailer
 
 ## version 10.0.091
 - Mises à jour :
