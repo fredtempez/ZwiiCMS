@@ -19,11 +19,10 @@
 
 /* Mise en forme des textes */
 body, .row > div {
-    font: "Open+Sans", sans-serif;
-    font-size: 13px;
+    font: 13px "Open+Sans", sans-serif;
 }
 body h1, h2, h3, h4, h5, h6 {
-    font-family: "Oswald";
+    font-family: "Oswald", sans-serif;
     color: rgba(74, 105, 189, 1);
 }
 
@@ -46,15 +45,15 @@ span .zwiico-help,
 .button,
 input[type="checkbox"]:checked  + label::before,
 .speechBubble  {
-    background-color: rgb(44, 79, 110,1);
+    background-color: rgba(44, 79, 110, 1);
     color: white;
 }
 .speechBubble::before {
-    border-color:   rgb(44, 79, 110,1) transparent transparent transparent;
+    border-color:   rgba(44, 79, 110, 1) transparent transparent transparent;
 }
 .button:hover, 
 button[type=submit]:hover {
-    background-color: rgb(22, 57, 87,1);
+    background-color: rgba(22, 57, 87, 1);
 }
 
 
@@ -83,11 +82,11 @@ button[type=submit]:hover {
 
 /* Bouton de soumission */
 button[type=submit] {
-    background-color: rgb(57, 112, 12,1);
+    background-color: rgba(57, 112, 12, 1);
     color: white;
 }
 button[type=submit]:hover {
-    background-color: rgb(40, 78, 8, 1);
+    background-color: rgba(40, 78, 8, 1);
     
 }
 
