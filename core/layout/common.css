@@ -992,16 +992,6 @@ label {
 	background: #F6F7F8 !important;
 	color: #94A5B0 !important;
 }
-.button.buttonRed {
-	background: #E74C3C;
-	color: #FFF;
-}
-.button.buttonRed:hover {
-	background: #E53E2D;
-}
-.button.buttonRed:active {
-	background: #E3301E;
-}
 
 /* Upload de fichiers */
 .inputFile {

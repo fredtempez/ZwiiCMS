@@ -148,6 +148,7 @@
 				</div>		
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
+						'class' => 'buttonRed',						
 						'href' => helper::baseUrl() . 'install/update',
 						'value' => 'Mise à jour manuelle',
 						'disabled' => !$error
@@ -265,16 +266,16 @@
 						'value' => $this->getData(['config', 'analyticsId'])
 					]); ?>
 				</div>
-				<div class="col3 offset3 verticalAlignBottom">
+				<div class="col3 offset1 verticalAlignBottom">
 					<?php echo template::button('configHead', [
 						'href' => helper::baseUrl() . 'config/script/head',
-						'value' => 'Editer script dans head'
+						'value' => 'Script inséré dans head'
 					]); ?>
 				</div>					
-				<div class="col3 verticalAlignBottom">
+				<div class="col3 offset1 verticalAlignBottom">
 					<?php echo template::button('scriptBody', [
 						'href' => helper::baseUrl() . 'config/script/body',
-						'value' => 'Editer script dans body'
+						'value' => 'Script inséré dans body'
 				]); ?>
 				</div>
 			</div>

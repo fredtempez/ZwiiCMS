@@ -17,6 +17,17 @@
     background-color: rgba(255, 255, 255, 1);
 }
 
+/* Mise en forme des textes */
+body, .row > div {
+    font: "Open+Sans", sans-serif;
+    font-size: 13px;
+}
+body h1, h2, h3, h4, h5, h6 {
+    font-family: "Oswald";
+    color: rgba(74, 105, 189, 1);
+}
+
+/* Couleur du texte */
 body:not(.editorWysiwyg), 
 .block h4,
 input[type=email], 
@@ -31,32 +42,23 @@ span .zwiico-help,
     color: rgba(33, 34, 35, 1);    
 }
 
+/* Elements courants et boutons courants*/
 .button,
-button[type=submit],
 input[type="checkbox"]:checked  + label::before,
 .speechBubble  {
-    background-color: rgba(32, 59, 82, 1);
+    background-color: rgb(44, 79, 110,1);
     color: white;
 }
-
+.speechBubble::before {
+    border-color:   rgb(44, 79, 110,1) transparent transparent transparent;
+}
 .button:hover, 
 button[type=submit]:hover {
-    background-color: rgba(17,44,67,1);
+    background-color: rgb(22, 57, 87,1);
 }
 
-.speechBubble::before {
-    border-color:  rgba(32, 59, 82, 1) transparent transparent transparent;
-}
 
-body, .row > div {
-    font: "Open+Sans", sans-serif;
-    font-size: 13px;
-}
-body h1, h2, h3, h4, h5, h6 {
-    font-family: "Oswald";
-    color: rgba(74, 105, 189, 1);
-}
-
+/* Bouton de retour */
 .button.buttonGrey {
 	background: #ECEFF1;
 }
@@ -67,4 +69,25 @@ body h1, h2, h3, h4, h5, h6 {
 	background: #D8DFE3;
 }
 
+/* Bouton effacement */
+.button.buttonRed {
+	background: #E74C3C;
+	color: #FFF;
+}
+.button.buttonRed:hover {
+	background: #E53E2D;
+}
+.button.buttonRed:active {
+	background: #E3301E;
+}
+
+/* Bouton de soumission */
+button[type=submit] {
+    background-color: rgb(57, 112, 12,1);
+    color: white;
+}
+button[type=submit]:hover {
+    background-color: rgb(40, 78, 8, 1);
+    
+}
 
