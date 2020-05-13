@@ -148,7 +148,8 @@
 				</div>		
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
-						'class' => 'buttonRed',						
+						'class' => 'buttonRed',	
+						'ico' => 'download-cloud',
 						'href' => helper::baseUrl() . 'install/update',
 						'value' => 'Mise à jour manuelle',
 						'disabled' => !$error
@@ -232,16 +233,18 @@
 		<div class="block">
 			<h4>Référencement</h4>
 			<div class="row">
-				<div class="col5">	
+				<div class="col6">	
 					<?php echo template::button('configMetaImage', [
 					'href' => helper::baseUrl() . 'config/configMetaImage',
-					'value' => 'Rafraîchir la capture d\'écran Open Graph'
+					'value' => 'Capture Open Graph',
+					'ico' => 'pencil'
 					]); ?>
 				</div>
-				<div class="col5 offset2">
+				<div class="col6">
 					<?php echo template::button('configSiteMap', [
 						'href' => helper::baseUrl() . 'config/generateFiles',
-						'value' => 'Générer sitemap.xml et robots.txt'
+						'value' => 'sitemap.xml / robots.txt',
+						'ico' => 'pencil'
 					]); ?>
 				</div>
 			</div>
@@ -269,13 +272,15 @@
 				<div class="col3 offset1 verticalAlignBottom">
 					<?php echo template::button('configHead', [
 						'href' => helper::baseUrl() . 'config/script/head',
-						'value' => 'Script inséré dans head'
+						'value' => 'Script inséré dans head',
+						'ico' => 'pencil'
 					]); ?>
 				</div>					
 				<div class="col3 offset1 verticalAlignBottom">
 					<?php echo template::button('scriptBody', [
 						'href' => helper::baseUrl() . 'config/script/body',
-						'value' => 'Script inséré dans body'
+						'value' => 'Script inséré dans body',
+						'ico' => 'pencil'
 				]); ?>
 				</div>
 			</div>
