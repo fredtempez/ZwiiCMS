@@ -3,9 +3,12 @@
 
 ## version 10.0.092
 - Nouveautés :
+    - Compatibilité avec l'hébergeur free.fr
     - Configuration :  
-        - Options de réglage d'un serveur SMTP
-        - Edition des scripts dans une fenêtre dédiée
+        - Options de réglage d'un serveur SMTP pour l'envoi des emails.
+        - Édition des scripts pour head et body dans une fenêtre dédiée.
+    - Thème :
+        - Thème des boutons des pages d'administration.
 - Modification : 
     - Masque de configuration : changement de libellés.
 - Scripts externes: 
