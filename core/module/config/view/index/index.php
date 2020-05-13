@@ -139,7 +139,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col6">	
+				<div class="col3">	
 					<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour automatique', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
 							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
