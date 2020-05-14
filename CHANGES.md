@@ -1,5 +1,8 @@
 # Changelog
 
+## version 10.0.93
+- Mise à jour : 
+    - TinyMCE 4.9.10
 
 ## version 10.0.092
 - Nouveautés :
