@@ -1241,8 +1241,8 @@ class common {
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
 				// Version 10.0.092
-		if($this->getData(['core', 'dataVersion']) < 10092) {
-			// Suppression du dosseir fullpage
+		if ($this->getData(['core', 'dataVersion']) < 10092) {
+			// Suppression du dossier fullpage
 			if (is_dir('core/vendor/fullpage')) {
 				$dir = getcwd();
 				chdir('core/vendor/fullpage');
@@ -1251,6 +1251,10 @@ class common {
 				chdir($dir);
 				rmdir ('core/vendor/fullpage/');
 			}
+			if (file_exists('core/vendor/tinymce/templates/fullPageSections.html')) {
+				unlink ('core/vendor/tinymce/templates/fullPageSections.html'); }
+			if (file_exists('core/vendor/tinymce/templates/fullPageSlides.html')) {
+				unlink ('core/vendor/tinymce/templates/fullPageSlides.html'); }
 			$this->setData(['core', 'dataVersion', 10092]);
 		}
 
