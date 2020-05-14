@@ -152,7 +152,7 @@ class common {
 				$this->importData($keepUsers);
 				unset ($_SESSION['KEEP_USERS']);
 				// Réinstaller htaccess		
-				copy('core/module/config/ressource/.htaccess', self::DATA_DIR . '.htaccess');		
+				copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');	
 				common::$importNotices [] = "Importation réalisée avec succès" ;
 				//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
 		}
@@ -165,6 +165,10 @@ class common {
 				common::$coreNotices [] = $stageId ;
 			}
 		}
+		// Copier le thème de l'administration
+		if (!file_exists(self::DATA_DIR . 'admin.css')) {
+			copy('core/module/install/ressource/admin.css',self::DATA_DIR .'admin.css'); 	
+		}		
 
 		// Utilisateur connecté
 		if($this->user === []) {
@@ -1240,7 +1244,7 @@ class common {
 
 			$this->setData(['core', 'dataVersion', 10000]);	
 		}
-				// Version 10.0.092
+		// Version 10.0.092
 		if ($this->getData(['core', 'dataVersion']) < 10092) {
 			// Suppression du dossier fullpage
 			if (is_dir('core/vendor/fullpage')) {
@@ -1256,6 +1260,22 @@ class common {
 			if (file_exists('core/vendor/tinymce/templates/fullPageSlides.html')) {
 				unlink ('core/vendor/tinymce/templates/fullPageSlides.html'); }
 			$this->setData(['core', 'dataVersion', 10092]);
+		}
+		// Version 10.0.093
+		if ($this->getData(['core', 'dataVersion']) < 10093) {
+			// Déplacement du fichier admin.css dans data
+			if (file_exists('core/layout/admin.css')) {
+				copy('core/layout/admin.css',self::DATA_DIR.'admin.css'); 
+				unlink('core/layout/admin.css');
+			} else {
+				copy('core/module/install/ressource/admin.css',self::DATA_DIR .'admin.css'); 
+			}	
+			//Déplacement d'un fichier de ressources
+			if (file_exists('core/module/config/ressource/.htaccess'))	{
+				unlink('core/module/config/ressource/.htaccess');
+				rmdir ('core/module/config/ressource');
+			}
+			$this->setData(['core', 'dataVersion', 10093]);
 		}
 
 	}
