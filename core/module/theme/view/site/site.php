@@ -46,11 +46,11 @@
 								]); ?>
 							</div>							
 							<div class="col6">
-								<?php echo template::text('themeLinkTextColor', [
+								<?php echo template::text('themeTextLinkTextColor', [
 									'class' => 'colorPicker',
 									'help' => 'Le curseur horizontal règle le niveau de transparence.',							
 									'label' => 'Liens',
-									'value' => $this->getData(['theme', 'link', 'textColor'])
+									'value' => $this->getData(['theme',  'text', 'linkTextColor'])
 								]); ?>
 							</div>					
 						</div>

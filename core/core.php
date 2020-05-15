@@ -56,7 +56,8 @@ class common {
 		'module',			
 		'page',
 		'user',
-		'theme'
+		'theme',
+		'admin'
 	];
 	private $data = [];
 	private $hierarchy = [
@@ -164,11 +165,7 @@ class common {
 				$this->initData($stageId,'fr');
 				common::$coreNotices [] = $stageId ;
 			}
-		}
-		// Copier le thème de l'administration
-		if (!file_exists(self::DATA_DIR . 'admin.css')) {
-			copy('core/module/install/ressource/admin.css',self::DATA_DIR .'admin.css'); 	
-		}		
+		}	
 
 		// Utilisateur connecté
 		if($this->user === []) {
@@ -1267,8 +1264,6 @@ class common {
 			if (file_exists('core/layout/admin.css')) {
 				copy('core/layout/admin.css',self::DATA_DIR.'admin.css'); 
 				unlink('core/layout/admin.css');
-			} else {
-				copy('core/module/install/ressource/admin.css',self::DATA_DIR .'admin.css'); 
 			}	
 			//Déplacement d'un fichier de ressources
 			if (file_exists('core/module/config/ressource/.htaccess'))	{
@@ -1276,6 +1271,8 @@ class common {
 				rmdir ('core/module/config/ressource');
 			}
 			$this->setData(['core', 'dataVersion', 10093]);
+			// Réorganisation du thème
+			$this->setData(['theme','text','linkTextColor',$this->getData(['theme','link', 'textColor'])]);
 		}
 
 	}
@@ -1345,7 +1342,12 @@ class core extends common {
 			file_put_contents(self::DATA_DIR.'theme.css', '');
 			chmod(self::DATA_DIR.'theme.css', 0755);
 		}
-		// Check la version
+		// Crée le fichier de personnalisation de l'administration
+		if(file_exists(self::DATA_DIR.'admin.css') === false) {
+			file_put_contents(self::DATA_DIR.'admin.css', '');
+			chmod(self::DATA_DIR.'admin.css', 0755);
+		}		
+		// Check la version rafraichissement du theme
 		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'theme.css'));
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['theme'])))) {
 			// Version
@@ -1364,7 +1366,7 @@ class core extends common {
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
 			// Site
-			$colors = helper::colorVariants($this->getData(['theme', 'link', 'textColor']));
+			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkTextColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			$css .= 'a:hover{color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
@@ -1468,12 +1470,36 @@ class core extends common {
 			}
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
-			// Effacer le cache pour afin de tenir compte de la couleur de fond TinyMCE
+			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
 			header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
 			header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 			header("Cache-Control: post-check=0, pre-check=0", false);
 			header("Pragma: no-cache");
+		}
+		// Check la version rafraichissement du theme admin
+		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'admin.css'));
+		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['admin'])))) {
+			// Version
+			$css = '/*' . md5(json_encode($this->getData(['theme','admin']))) . '*/';
+			$css .= '#site{background-color:' . $this->getData(['admin','backgroundColor']) . ';}';
+			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','font'])  . '", sans-serif;}';
+			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= 'body:not(.editorWysiwyg),.block h4,input[type=email],input[type=text],input[type=password],.inputFile,select,textarea:not(.editorWysiwyg),.inputFile,span .zwiico-help,.button.buttonGrey {color:' . $this->getData(['admin','colorText']) . ';}';
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
+			$css .= '.button,input[type="checkbox"]:checked + label::before,.speechBubble{ background-color:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText']) . ';}';
+			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
+			$css .= '.button:hover, button[type=submit]:hover { background-color:' . $colors['darken'] . ';}';
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGrey']));
+			$css .= '.button.buttonGrey {background: ' . $colors['normal'] . ';}.button.buttonGrey:hover {background:' . $colors['darken'] . '}.button.buttonGrey:active {background:' . $colors['veryDarken'] . '}';
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
+			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';}.button.buttonRed:hover {background:' . $colors['darken'] . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . '}';			
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
+			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';}.button.buttonRed:hover {background:' . $colors['darken'] . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . '}';						
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
+			$css .= 'button[type=submit] {background-color: ' . $colors['normal']. ';color: ' . $this->getData(['admin','colorButtonText']) . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';}';
+			// Enregistre la personnalisation
+			file_put_contents(self::DATA_DIR.'admin.css', $css);
 		}
 	}
 	/**

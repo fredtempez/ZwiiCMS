@@ -77,9 +77,6 @@ class init extends common {
 				'toTopbackgroundColor' => 'rgba(33, 34, 35, .8)',
 				'toTopColor' => 'rgba(255, 255, 255, 1)'
 			],
-			'button' => [
-				'backgroundColor' => 'rgba(32, 59, 82, 1)'
-			],
 			'footer' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
 				'font' => 'Open+Sans',				
@@ -123,9 +120,6 @@ class init extends common {
 				'linkHomePage' => true,
 				'imageContainer' => 'auto'
 			],
-			'link' => [
-				'textColor' => 'rgba(74, 105, 189, 1)'
-			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'font' => 'Open+Sans',				
@@ -147,12 +141,13 @@ class init extends common {
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0',
 				'shadow' => '0',
-				'width' => '960px'
+				'width' => '960px'			
 			],
 			'text' => [
 				'font' => 'Open+Sans',
 				'fontSize' => '13px',
-				'textColor' => 'rgba(33, 34, 35, 1)'
+				'textColor' => 'rgba(33, 34, 35, 1)',
+				'linkTextColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
 				'font' => 'Oswald',
@@ -160,8 +155,24 @@ class init extends common {
 				'textColor' => 'rgba(74, 105, 189, 1)',
 				'textTransform' => 'none'
 			],
-			'version' => 0,
-		]
+			'button' => [
+				'backgroundColor' => 'rgba(32, 59, 82, 1)'
+			],
+			'version' => 0
+		],
+		'admin' => [
+			'backgroundColor' => 'rgba(255, 255, 255, 1)',
+			'font' => 'open+Sans',
+			'fontSize' => '13px',
+			'fontTitle' => 'Oswald',
+			'colorText' => 'rgba(33, 34, 35, 1)',
+			'colorTitle' => 'rgba(74, 105, 189, 1)',
+			'colorButtonText' => 'rgba(255, 255, 255, 1)',
+			'backgroundColorButton' => 'rgba(44, 79, 110, 1)',
+			'backgroundColorButtonGrey' => 'rgba(236, 239, 241, 1)',
+			'backgroundColorButtonRed' => 'rgba(231, 76, 60, 1)',
+			'backgroundColorButtonGreen' => 'rgba(57, 112, 12, 1)'
+		],
     ];
 
 
