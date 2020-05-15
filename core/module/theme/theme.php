@@ -462,6 +462,7 @@ class theme extends common {
 				'fixed' => $this->getInput('themeMenuFixed', helper::FILTER_BOOLEAN),
 				'activeColorAuto' => $this->getInput('themeMenuActiveColorAuto', helper::FILTER_BOOLEAN),
 				'activeColor' => $this->getInput('themeMenuActiveColor'),
+				'activeTextColor' => $this->getInput('themeMenuActiveTextColor'),
 				'radius' => $this->getInput('themeMenuRadius'),
 				'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN)
 			]]);

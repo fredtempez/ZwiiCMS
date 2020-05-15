@@ -135,7 +135,8 @@ class init extends common {
 				'textTransform' => 'none',
 				'fixed' => false,
 				'activeColorAuto' => true,
-				'activeColor' => 'rgba(255, 255, 255, 1)'
+				'activeColor' => 'rgba(255, 255, 255, 1)',
+				'activeTextColor' => 'rgba(255, 255, 255, 1)'
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',

@@ -1417,12 +1417,13 @@ class core extends common {
 			$css .= 'nav,nav a{background-color:' . $colors['normal'] . '}';
 			$css .= 'nav a,#toggle span,nav a:hover{color:' . $this->getData(['theme', 'menu', 'textColor']) . '}';
 			$css .= 'nav a:hover{background-color:' . $colors['darken'] . '}';
+			$css .= 'nav a.active{color:' . $this->getData(['theme','menu','activeTextColor']) . ';}';
 			if ($this->getData(['theme','menu','activeColorAuto']) === true) {
 				$css .= 'nav a.active{background-color:' . $colors['veryDarken'] . '}';				
 			} else {
 				$css .= 'nav a.active{background-color:' . $this->getData(['theme','menu','activeColor']) . '}';
-				$color2 = helper::colorVariants($this->getData(['theme', 'menu', 'textColor']));
-				$css .= 'nav a.active{color:' .  $color2['text'] . '}';
+				/*$color2 = helper::colorVariants($this->getData(['theme', 'menu', 'textColor']));
+				$css .= 'nav a.active{color:' .  $color2['text'] . '}';*/
 			}		
 			$css .= 'nav #burgerText{color:' .  $colors['text'] . '}';
 			$css .= 'nav .navLevel1 a.active {border-radius:' . $this->getData(['theme', 'menu', 'radius']) . '}'; 
