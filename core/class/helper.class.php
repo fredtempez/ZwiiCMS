@@ -24,12 +24,14 @@ class helper {
 	 */
 
 	public static function urlGetContents ($url) {
-	if(function_exists('file_get_contents') and 
-			ini_get('allow_url_fopen') ){
+	if(function_exists('file_get_contents') && 
+			ini_get('allow_url_fopen') && 
+			is_readable($url) ){
 			$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
 		}elseif(function_exists('fopen') && 
-			function_exists('stream_get_contents' &&
-			ini_get('allow_url_fopen') )){
+			function_exists('stream_get_contents') &&
+			ini_get('allow_url_fopen') && 
+			is_readable($url) ){
 			$handle = fopen ($url, "r");
 			$url_get_contents_data = stream_get_contents($handle);
 		}else{
