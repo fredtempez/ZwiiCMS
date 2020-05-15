@@ -322,7 +322,7 @@
 			<h4>Paramètres de messagerie SMTP</h4>
 			<div class="row">	
 				<div class="col12">
-					<?php echo template::checkbox('configSmtpEnable', true, 'Activer STMP', [
+					<?php echo template::checkbox('configSmtpEnable', true, 'Activer SMTP', [
 							'checked' => $this->getData(['config', 'smtp','enable']),
 							'help' => 'Paramètres à utiliser lorsque votre hébergeur ne propose pas la fonctionnalité d\'envoi de mail.'
 						]); ?>
