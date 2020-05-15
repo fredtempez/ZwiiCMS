@@ -26,7 +26,6 @@ class helper {
 	public static function urlGetContents ($url) {
 	if(function_exists('file_get_contents') and 
 			ini_get('allow_url_fopen') ){
-				var_dump(function_exists('file_get_contents'));
 			$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
 		}elseif(function_exists('fopen') && 
 			function_exists('stream_get_contents' &&
