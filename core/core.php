@@ -348,7 +348,7 @@ class common {
 		if (!file_exists(self::FILE_DIR.'source/screenshot.png'))
 		{ 			
 			if ( strpos(helper::baseUrl(false),'localhost') == 0 AND strpos(helper::baseUrl(false),'127.0.0.1') == 0)	{							
-				$googlePagespeedData = @file_get_contents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. helper::baseUrl(false) .'&screenshot=true');	
+				$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. helper::baseUrl(false) .'&screenshot=true');	
 				if ($googlePagespeedData  !== false) {
 					$googlePagespeedData = json_decode($googlePagespeedData, true);
 					$screenshot = $googlePagespeedData['screenshot']['data'];
