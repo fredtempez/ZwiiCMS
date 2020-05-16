@@ -1525,7 +1525,7 @@ class core extends common {
 		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'admin.css'));
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['admin'])))) {
 			// Version
-			$css = '/*' . md5(json_encode($this->getData(['theme','admin']))) . '*/';
+			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 			$css .= '#site{background-color:' . $this->getData(['admin','backgroundColor']) . ';}';
 			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','font'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';

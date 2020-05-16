@@ -24,7 +24,9 @@ class theme extends common {
 		'index' => self::GROUP_ADMIN,
 		'menu' => self::GROUP_ADMIN,
 		'reset' => self::GROUP_ADMIN,
+		'resetAdmin' => self::GROUP_ADMIN,
 		'site' => self::GROUP_ADMIN,
+		'admin' => self::GROUP_ADMIN,		
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
 		'save' => self::GROUP_ADMIN
@@ -237,6 +239,42 @@ class theme extends common {
 		'3' => 'Trois colonnes : 1/3 - 1/3 - 1/3',
 		'4' => 'Trois lignes superposées'
 	];
+
+	/**
+	 * Thème des écrans d'administration
+	 */
+	public function admin() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			$this->setData(['admin', [
+				'backgroundColor' 	=> $this->getInput('themeAdminBackgroundColor'),
+				'colorTitle' 		=> $this->getInput('themeAdmincolorTitle'),
+				'colorText'			=> $this->getInput('themeAdmincolorText'),
+				'colorButtonText' 	=> $this->getInput('themeAdmincolorButtonText'),
+				'backgroundColorButton' 	=> $this->getInput('themeAdmincolorButton'),
+				'backgroundColorButtonGrey'	=> $this->getInput('themeAdmincolorGrey'),
+				'backgroundColorButtonRed'	=> $this->getInput('themeAdmincolorRed'),
+				'backgroundColorButtonGreen'=> $this->getInput('themeAdmincolorGreen'),
+				'font' 		=> $this->getInput('themeFont'),
+				'fontSize' 	=> $this->getInput('themeTextFontSize'),
+				'fontTitle' => $this->getInput('themeFontTitle')
+			]]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Modifications enregistrées',
+				'redirect' => helper::baseUrl() . 'theme/admin',
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Administration',
+			'view' => 'admin',
+			'vendor' => [
+				'tinycolorpicker'
+			],
+		]);		
+	}
 
 	/**
 	 * Mode avancé
@@ -493,6 +531,20 @@ class theme extends common {
 		$this->addOutput([
 			'notification' => 'Personnalisation avancée réinitialisée',
 			'redirect' => helper::baseUrl() . 'theme/advanced',
+			'state' => true
+		]);
+	}
+
+	/**
+	 * Réinitialisation de la personnalisation avancée
+	 */
+	public function resetAdmin() {
+		// Supprime le fichier de personnalisation avancée
+		unlink(self::DATA_DIR.'admin.json');
+		// Valeurs en sortie
+		$this->addOutput([
+			'notification' => 'Thème réinitialisé',
+			'redirect' => helper::baseUrl() . 'theme/admin',
 			'state' => true
 		]);
 	}
