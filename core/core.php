@@ -133,6 +133,7 @@ class common {
 	public static $timezone;
 	private $url = '';
 	private $user = [];
+	private $page = '';
 
 	/**
 	 * Constructeur commun
@@ -171,6 +172,10 @@ class common {
 		if($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
+
+		// Mise ne cache des pages
+		$this->page = $this->readPageCache();
+
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
 			$pages = helper::arrayCollumn($this->getData(['page']), 'position', 'SORT_ASC');
@@ -371,6 +376,23 @@ class common {
 	public function getData($keys = []) {
 		
 		if (count($keys) >= 1) {
+			// Lecture d'une donnée de page en cache
+			if ($keys[0] === 'page') {
+				// Décent dans les niveaux de la variable $data
+				$data = $this->page;
+				foreach($keys as $key) {
+					// Si aucune donnée n'existe retourne null
+					if(isset($data[$key]) === false) {
+						return null;
+					}
+					// Sinon décent dans les niveaux
+					else {
+						$data = $data[$key];
+					}
+				}
+				// Retourne les données
+				return $data;
+			}
 			//Retourne une chaine contenant le dossier à créer
 			$folder = $this->dirData ($keys[0],'fr');
 			// Constructeur  JsonDB
@@ -405,6 +427,26 @@ class common {
 					break;
 			}
 			return $tempData;
+		}
+	}
+
+
+	/**
+	 * Lecture des fichiers de données de page et mise ne cache
+	 * @param @return string données des pages
+	 */
+	public function readPageCache() {
+		// Trois tentatives
+		for($i = 0; $i < 3; $i++) {
+			$data =json_decode(file_get_contents(self::DATA_DIR.'fr/page.json'), true);
+			if($data) {
+				return($data);
+			}
+			elseif($i === 2) {
+				exit('Unable to read data file.');
+			}
+			// Pause de 10 millisecondes
+			usleep(10000);
 		}
 	}
 
