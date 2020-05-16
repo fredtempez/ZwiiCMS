@@ -363,7 +363,7 @@
 							<?php echo template::password('configSmtpPassword', [
 								'label' => 'Mot de passe',
 								'autocomplete' => 'off',
-								'value' => $this->getData(['config','smtp','password'])
+								'value' => helper::decrypt ($this->getData(['config', 'smtp','username' ]),$this->getData(['config','smtp','password']))
 							]); ?>	
 						</div>
 						<div  class="col2">
