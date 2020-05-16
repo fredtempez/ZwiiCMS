@@ -25,13 +25,11 @@ class helper {
 
 	public static function urlGetContents ($url) {
 	if(function_exists('file_get_contents') && 
-			ini_get('allow_url_fopen') && 
-			is_readable($url) ){
+			ini_get('allow_url_fopen') ){
 			$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
 		}elseif(function_exists('fopen') && 
 			function_exists('stream_get_contents') &&
-			ini_get('allow_url_fopen') && 
-			is_readable($url) ){
+			ini_get('allow_url_fopen')){
 			$handle = fopen ($url, "r");
 			$url_get_contents_data = stream_get_contents($handle);
 		}else{
