@@ -24,7 +24,7 @@
 			<?php echo template::button('themeManage', [				
 				'ico' => 'upload',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
-				'value' => 'Importer'
+				'value' => 'Gérer'
 			]); ?>
 		</div>	
 		<div class="col2">
@@ -63,7 +63,7 @@
 			<?php echo template::button('themeManage', [				
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'ico' => 'upload',
-				'value' => 'Importer'
+				'value' => 'Gérer'
 			]); ?>
 		</div>			
 		<div class="col2">
