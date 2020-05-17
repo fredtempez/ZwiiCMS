@@ -1,6 +1,13 @@
 # Changelog
 
-## version 10.0.93
+## version 10.1.000
+- Nouveauté : 
+    - Thème des écrans d'administration modifiable (configuration, utilisateurs : etc.)
+- Corrections : 
+    - Configuration SMTP : sur-cryptage du mot de passe.
+    - Quelques corrections liées à l'hébergeur Free.
+- Modification :
+    - Optimisation des opérations de disque, mis en cache en lecture des données de pages. Aucun cache en écriture.
 - Mise à jour : 
     - TinyMCE 4.9.10
 
