@@ -247,17 +247,19 @@ class theme extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['admin', [
-				'backgroundColor' 	=> $this->getInput('themeAdminBackgroundColor'),
-				'colorTitle' 		=> $this->getInput('themeAdmincolorTitle'),
-				'colorText'			=> $this->getInput('themeAdmincolorText'),
-				'colorButtonText' 	=> $this->getInput('themeAdmincolorButtonText'),
-				'backgroundColorButton' 	=> $this->getInput('themeAdmincolorButton'),
-				'backgroundColorButtonGrey'	=> $this->getInput('themeAdmincolorGrey'),
-				'backgroundColorButtonRed'	=> $this->getInput('themeAdmincolorRed'),
-				'backgroundColorButtonGreen'=> $this->getInput('themeAdmincolorGreen'),
-				'font' 		=> $this->getInput('themeFont'),
-				'fontSize' 	=> $this->getInput('themeTextFontSize'),
-				'fontTitle' => $this->getInput('themeFontTitle')
+				'backgroundColor' 	=> $this->getInput('adminBackgroundColor'),
+				'colorTitle' 		=> $this->getInput('adminColorTitle'),
+				'colorText'			=> $this->getInput('adminColorText'),
+				'colorButtonText' 	=> $this->getInput('adminColorButtonText'),
+				'backgroundColorButton' 	=> $this->getInput('adminColorButton'),
+				'backgroundColorButtonGrey'	=> $this->getInput('adminColorGrey'),
+				'backgroundColorButtonRed'	=> $this->getInput('adminColorRed'),
+				'backgroundColorButtonGreen'=> $this->getInput('adminColorGreen'),
+				'fontText' 		=> $this->getInput('adminFontText'),
+				'fontSize' 	=> $this->getInput('adminFontTextSize'),
+				'fontTitle' => $this->getInput('adminFontTitle'),
+				'backgroundBlockColor' => $this->getInput('adminBackGroundBlockColor'),
+				'borderBlockColor' => $this->getInput('adminBorderBlockColor'),
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -540,7 +542,8 @@ class theme extends common {
 	 */
 	public function resetAdmin() {
 		// Supprime le fichier de personnalisation avancée
-		unlink(self::DATA_DIR.'admin.json');
+		//unlink(self::DATA_DIR.'admin.json');
+		$this->initData('admin');
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => 'Thème réinitialisé',

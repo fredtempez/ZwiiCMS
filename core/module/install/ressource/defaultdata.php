@@ -163,7 +163,7 @@ class init extends common {
 		],
 		'admin' => [
 			'backgroundColor' => 'rgba(255, 255, 255, 1)',
-			'font' => 'open+Sans',
+			'fontText' => 'open+Sans',
 			'fontSize' => '13px',
 			'fontTitle' => 'Oswald',
 			'colorText' => 'rgba(33, 34, 35, 1)',
@@ -172,7 +172,9 @@ class init extends common {
 			'backgroundColorButton' => 'rgba(44, 79, 110, 1)',
 			'backgroundColorButtonGrey' => 'rgba(236, 239, 241, 1)',
 			'backgroundColorButtonRed' => 'rgba(231, 76, 60, 1)',
-			'backgroundColorButtonGreen' => 'rgba(57, 112, 12, 1)'
+			'backgroundColorButtonGreen' => 'rgba(57, 112, 12, 1)',
+			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
+			'borderBlockColor' => 'rgba(236, 239, 241, 1)',
 		],
     ];
 
