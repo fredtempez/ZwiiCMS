@@ -29,7 +29,7 @@
 		</div>	
 		<div class="col2">
 			<?php echo template::button('themeAdmin', [
-				'ico' => 'pencil',
+				'ico' => 'brush',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
@@ -54,7 +54,7 @@
 		</div>
 		<div class="col2">
 			<?php echo template::button('themeAdmin', [
-				'ico' => 'pencil',
+				'ico' => 'brush',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>

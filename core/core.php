@@ -1527,7 +1527,7 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 			$css .= '#site{background-color:' . $this->getData(['admin','backgroundColor']) . ';}';
-			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','font'])  . '", sans-serif;}';
+			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 			$css .= 'body:not(.editorWysiwyg),.block h4,input[type=email],input[type=text],input[type=password],.inputFile,select,textarea:not(.editorWysiwyg),.inputFile,span .zwiico-help,.button.buttonGrey {color:' . $this->getData(['admin','colorText']) . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
@@ -1538,10 +1538,10 @@ class core extends common {
 			$css .= '.button.buttonGrey {background: ' . $colors['normal'] . ';}.button.buttonGrey:hover {background:' . $colors['darken'] . '}.button.buttonGrey:active {background:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
 			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';}.button.buttonRed:hover {background:' . $colors['darken'] . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . '}';			
-			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
-			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';}.button.buttonRed:hover {background:' . $colors['darken'] . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . '}';						
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
 			$css .= 'button[type=submit] {background-color: ' . $colors['normal']. ';color: ' . $this->getData(['admin','colorButtonText']) . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';}';
+			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
+			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background: ' . $colors['normal'] . ';color:' . $colors['text']. ';}';
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'admin.css', $css);
 		}
