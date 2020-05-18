@@ -39,14 +39,14 @@
 				<?php endforeach; ?>
 				<!-- ou articles d'un blog-->
 
-				<?php if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' ) { ?>
-				<?php
-					foreach($this->getData(['module',$parentId]) as $articleId => $article): ?>
-					<?php if($this->getData(['module',$parentId,$articleId,'state']) === true) {?>
-						<li>
-							<a href="<?php echo helper::baseUrl() .	$parentId. '/' . $articleId;?>"><?php echo $article['title']; ?></a>
-						</li>
-					<?php } ?>
+				<?php if ($this->getData(['page', $parentId, 'moduleId']) === 'blog'  &&
+				   			!empty($this->getData(['module',$parentId])) ) { ?>
+					<?php foreach($this->getData(['module',$parentId]) as $articleId => $article): ?>
+						<?php if($this->getData(['module',$parentId,$articleId,'state']) === true ): ?>
+							<li>
+								<a href="<?php echo helper::baseUrl() .	$parentId. '/' . $articleId;?>"><?php echo $article['title']; ?></a>
+							</li>
+						<?php endif; ?>
 					<?php endforeach;
 				} ?>
 			</ul>
