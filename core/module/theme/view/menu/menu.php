@@ -15,9 +15,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Couleurs</h4>
+            <h4>Couleur</h4>
             <div class="row">
-                <div class="col3">
+                <div class="col6">
                     <?php echo template::text('themeMenuTextColor', [
 							'class' => 'colorPicker',
 							'help' => 'Le curseur horizontal règle le niveau de transparence.',							
@@ -25,36 +25,43 @@
 							'value' => $this->getData(['theme', 'menu', 'textColor'])
 						]); ?>
                 </div>          
-                <div class="col3">
+                <div class="col6">
                     <?php echo template::text('themeMenuBackgroundColor', [
                             'class' => 'colorPicker',
                             'help' => 'Le curseur horizontal règle le niveau de transparence.',							
                             'label' => 'Fond',
                             'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
                         ]); ?>
-                </div>                  
-                <div class="col3">
-                        <?php echo template::text('themeMenuActiveTextColor', [
-                                'class' => 'colorPicker',
-                                'help' => 'Le curseur horizontal règle le niveau de transparence.',							
-                                'label' => 'Texte page active',
-                                'value' => $this->getData(['theme', 'menu', 'activeTextColor'])
-                            ]); ?>
-                    </div>      
-               <div class="col3 verticalAlignBottom">
-                        <?php
-                         echo template::checkbox('themeMenuActiveColorAuto', true, 'Fond automatique.', [
-                            'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
-                            'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
-                        ]); ?>
-                </div>             
+                </div>  
             </div>
-            <div class="row">
-                <div class="col3 offset9">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>Page active</h4> 
+            <div class="row">               
+                <div class="col4">
+                    <?php echo template::text('themeMenuActiveTextColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',							
+                            'label' => 'Texte',
+                            'value' => $this->getData(['theme', 'menu', 'activeTextColor'])
+                        ]); ?>
+                </div>      
+                <div class="col4 verticalAlignBottom">
+                    <?php
+                        echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur du fond automatique', [
+                        'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
+                        'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
+                    ]); ?>
+                </div>       
+                <div class="col4">
                     <?php echo template::text('themeMenuActiveColor', [
 							'class' => 'colorPicker',
 							'help' => 'Couleur de fond de la page sélectionnée dans le menu.<br>Le curseur horizontal règle le niveau de transparence.',							
-							'label' => 'Fond active',
+							'label' => 'Fond',
 							'value' => $this->getData(['theme', 'menu', 'activeColor'])
 						]); ?>
                 </div>   

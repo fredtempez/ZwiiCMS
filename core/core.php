@@ -173,8 +173,8 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		// Mise ne cache des pages
-		$this->page = $this->readPageCache();
+		// Mise en cache des pages
+		$this->page = $this->getPageCache();
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -435,7 +435,7 @@ class common {
 	 * Lecture des fichiers de données de page et mise ne cache
 	 * @param @return string données des pages
 	 */
-	public function readPageCache() {
+	public function getPageCache() {
 		// Trois tentatives
 		for($i = 0; $i < 3; $i++) {
 			$data =json_decode(file_get_contents(self::DATA_DIR.'fr/page.json'), true);
@@ -443,7 +443,7 @@ class common {
 				return($data);
 			}
 			elseif($i === 2) {
-				exit('Unable to read data file.');
+				exit('Erreur fatale : impossible d\'accéder aux pages');
 			}
 			// Pause de 10 millisecondes
 			usleep(10000);
@@ -1409,7 +1409,7 @@ class core extends common {
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
 			// Site
-			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkTextColor']));
+			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			$css .= 'a:hover{color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
@@ -1433,6 +1433,9 @@ class core extends common {
 			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';					
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
 			$css .= 'h1,h2,h3,h4,h5,h6{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'title', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
+			// Les blocs
+			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
+			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
 			// Bannière
 			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 			if($this->getData(['theme', 'header', 'margin'])) {

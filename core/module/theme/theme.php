@@ -568,18 +568,22 @@ class theme extends common {
 				'font' => $this->getInput('themeTextFont'),
 				'fontSize' => $this->getInput('themeTextFontSize'),
 				'textColor' => $this->getInput('themeTextTextColor'),
-				'linkTextColor'=> $this->getInput('themeTextLinkTextColor')
+				'linkColor'=> $this->getInput('themeTextLinkColor')
 			]]);
 			$this->setData(['theme', 'site', [
 				'backgroundColor' => $this->getInput('themeSiteBackgroundColor'),
 				'radius' => $this->getInput('themeSiteRadius'),
 				'shadow' => $this->getInput('themeSiteShadow'),
 				'width' => $this->getInput('themeSiteWidth'),
-				'margin' => $this->getInput('themeSiteMargin',helper::FILTER_BOOLEAN),
+				'margin' => $this->getInput('themeSiteMargin',helper::FILTER_BOOLEAN)
 			]]);
 			$this->setData(['theme', 'button', [			
-				'backgroundColor' => $this->getInput('themeButtonBackgroundColor'),
-			]]);				
+				'backgroundColor' => $this->getInput('themeButtonBackgroundColor')
+			]]);
+			$this->setData(['theme', 'block', [			
+				'backgroundColor' => $this->getInput('themeBlockBackgroundColor'),
+				'borderColor' => $this->getInput('themeBlockBorderColor')
+			]]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',

@@ -144,11 +144,15 @@ class init extends common {
 				'shadow' => '0',
 				'width' => '960px'			
 			],
+			'block' => [
+				'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
+				'borderColor' => 'rgba(236, 239, 241, 1)'
+			],
 			'text' => [
 				'font' => 'Open+Sans',
 				'fontSize' => '13px',
 				'textColor' => 'rgba(33, 34, 35, 1)',
-				'linkTextColor' => 'rgba(74, 105, 189, 1)'
+				'linkColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
 				'font' => 'Oswald',
@@ -174,7 +178,7 @@ class init extends common {
 			'backgroundColorButtonRed' => 'rgba(231, 76, 60, 1)',
 			'backgroundColorButtonGreen' => 'rgba(57, 112, 12, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
-			'borderBlockColor' => 'rgba(236, 239, 241, 1)',
+			'borderBlockColor' => 'rgba(236, 239, 241, 1)'
 		],
     ];
 

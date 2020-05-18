@@ -46,13 +46,31 @@
 								]); ?>
 							</div>							
 							<div class="col6">
-								<?php echo template::text('themeTextLinkTextColor', [
+								<?php echo template::text('themeTextLinkColor', [
 									'class' => 'colorPicker',
 									'help' => 'Le curseur horizontal règle le niveau de transparence.',							
 									'label' => 'Liens',
-									'value' => $this->getData(['theme',  'text', 'linkTextColor'])
+									'value' => $this->getData(['theme',  'text', 'linkColor'])
 								]); ?>
 							</div>					
+						</div>
+						<div class="row">
+							<div class="col6">
+								<?php echo template::text('themeBlockBackgroundColor', [
+									'class' => 'colorPicker',
+									'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
+									'label' => 'Arrière-plan des blocs',
+									'value' => $this->getData(['theme', 'block', 'backgroundColor'])
+								]); ?>
+							</div>
+							<div class="col6">
+								<?php echo template::text('themeBlockBorderColor', [
+									'class' => 'colorPicker',
+									'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
+									'label' => 'Bordure des blocs',
+									'value' => $this->getData(['theme', 'block', 'borderColor'])
+								]); ?>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col6 offset3">
@@ -66,21 +84,26 @@
 						</div>
 					</div>
 					<div class="col4 bodybackground">
-						<div class="bgPreview">			
+						<div class="bgPreview">	
 							<div class="row">
-								<div class="col12">
-									<h1 class="headerPreview">Titre </h1>
+								<div class="col8">
+									<h1 class="headerPreview">Aperçu </h1>
 									<h3 class="headerPreview">Sous-Titre </h3>
-									<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-									<p><a href="#" class="urlPreview">Lorem ipsum dolor sit amet.</a></p>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col4 offset8">
+								<div class="col4">
 									<?php echo template::button('themeSiteSubmitButtonPreview', [
 										'class' => 'buttonSubmitPreview',						
 										'value' => 'Bouton'
 									]); ?>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col12">
+									<div class="block preview">
+										<h4 class="preview">Block</h4>
+										<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+										<p><a href="#" class="urlPreview">Lorem ipsum dolor sit amet.</a></p>									
+									</div>									
 								</div>
 							</div>
 						</div>

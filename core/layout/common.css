@@ -829,7 +829,7 @@ footer #footerSocials .zwiico-github:hover {
 
 /* Bloc */
 .block {
-	border: 1px solid #D8DFE3;
+/*	border: 1px solid #D8DFE3;*/
 	padding: 20px 20px 10px;
 	margin: 20px 0;
 	word-wrap: break-word;
@@ -844,7 +844,7 @@ footer #footerSocials .zwiico-github:hover {
 .block h4 {
 	margin: -20px -20px 10px -20px;
 	padding: 10px;
-	background: #ECEFF1;
+/*	background: #ECEFF1;*/
 }
 
 /* Aides */

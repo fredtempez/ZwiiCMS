@@ -8,13 +8,7 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2">
-			<?php echo template::button('configHome', [
-				'href' => helper::baseUrl() ,
-				'value' => 'Accueil'
-			]); ?>		
-		</div>
-		<div class="col2 offset4">
+		<div class="col2 offset6">
 			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/resetAdmin',

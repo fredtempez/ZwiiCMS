@@ -1,13 +1,15 @@
 # Changelog
 
 ## version 10.1.000
-- Nouveauté : 
+- Nouveautés : 
     - Thème des écrans d'administration modifiable (configuration, utilisateurs : etc.)
+    - Thème du site : couleur de l'encadrement et la bordure des blocs.
+    - Thème du menu : couleur du texte de la page active
 - Corrections : 
     - Configuration SMTP : sur-cryptage du mot de passe.
     - Quelques corrections liées à l'hébergeur Free.
 - Modification :
-    - Optimisation des opérations de disque, mis en cache en lecture des données de pages. Aucun cache en écriture.
+    - Optimisation des opérations de disque, mise en cache en lecture des données de pages. Aucun cache en écriture.
 - Mise à jour : 
     - TinyMCE 4.9.10
 
