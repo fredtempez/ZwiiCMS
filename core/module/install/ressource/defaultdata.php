@@ -145,7 +145,7 @@ class init extends common {
 				'width' => '960px'			
 			],
 			'block' => [
-				'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
+				'backgroundColor' => 'rgba(236, 239, 241, 1)',
 				'borderColor' => 'rgba(236, 239, 241, 1)'
 			],
 			'text' => [
