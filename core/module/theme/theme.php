@@ -639,7 +639,7 @@ class theme extends common {
 	 */
 	public function export() {
 		// Make zip
-			$zipFilename = $this->makezip();			
+			$zipFilename = $this->makezip($this->getUrl(2));			
 			// Téléchargement du ZIP
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
@@ -657,7 +657,7 @@ class theme extends common {
 	 */
 	public function save() {
 		// Make zip
-		$zipFilename = $this->makezip();
+		$zipFilename = $this->makezip($this->getUrl(2));
 		// Téléchargement du ZIP
 		mkdir(self::FILE_DIR.'source/theme');
 		copy (self::TEMP_DIR . $zipFilename , self::FILE_DIR.'source/theme/' . $zipFilename);
@@ -673,25 +673,33 @@ class theme extends common {
 
 	/**
 	 * construction du zip
+	 * @param string $modele theme ou admin
 	 */
-	public function makezip() {
+	public function makezip($modele) {
 		// Creation du dossier
-		// $zipFilename  =  'theme-'.date('dmY').'-'.date('hm').'-'.rand(10,99).'.zip';
-		$zipFilename  =  'theme  '.date('d m Y').'  '.date('H i s ').'.zip';
+		$zipFilename  =  $modele . ' ' .date('d m Y').'  '.date('H i s ').'.zip';
 		$zip = new ZipArchive();
 		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) {
-			$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
-			$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
-			$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');	
-			if ($this->getData(['theme','body','image']) !== '' ) {
-			$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
-						self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])
-						);
-			}
-			if ($this->getData(['theme','header','image']) !== '' ) {			
-			$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
-						  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
-						);
+			switch ($modele) {
+				case 'admin':
+					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
+					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					break;
+				case 'theme':
+					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
+					$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
+					$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');	
+					if ($this->getData(['theme','body','image']) !== '' ) {
+					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
+								self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])
+								);
+					}
+					if ($this->getData(['theme','header','image']) !== '' ) {			
+					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
+								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
+								);
+					}
+					break;
 			}
 			$ret = $zip->close();
 		}
