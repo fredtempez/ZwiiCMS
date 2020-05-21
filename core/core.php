@@ -2159,9 +2159,9 @@ class layout extends common {
 			if ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	)
 
-					{$items .= '<a href="'.$this->getUrl(1).'">';
+					{$items .= '<a id="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 			} else {
-					$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';	
+					$items .= '<a id="' . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';	
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2213,9 +2213,9 @@ class layout extends common {
 				$items .= '<li>';
 				if ( $this->getData(['page',$childKey,'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$items .= '<a href="'.$this->getUrl(1).'">';
+						$items .= '<a id="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 				} else {
-					$items .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';			
+					$items .= '<a id="' . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';			
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
