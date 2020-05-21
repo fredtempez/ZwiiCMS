@@ -17,7 +17,7 @@
 		</div>	
 		<div class="col2">
 			<?php echo template::submit('configAdminSubmit',[
-				'value' => 'valider',
+				'value' => 'Valider',
 				'ico' => 'check'
 			]); ?>
 		</div>	

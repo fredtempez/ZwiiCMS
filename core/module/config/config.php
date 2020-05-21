@@ -255,21 +255,19 @@ class config extends common {
 			$site = helper::baseUrl(false);	}
 		
 		$success= false;
-		$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. $site .'&screenshot=true');
+		$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
 		if ($googlePagespeedData  !== false) {
 			$googlePagespeedData = json_decode($googlePagespeedData, true);
-			$screenshot = $googlePagespeedData['screenshot']['data'];
-			$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
-			$data = 'data:image/jpeg;base64,'.$screenshot;
-			$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));			
+			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
+			$data = str_replace('-','+',$data);
+			$img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data)); 
 			// Effacer la miniature
-			if (file_exists(self::FILE_DIR.'thumb/screenshot.png')) {
-				unlink (self::FILE_DIR.'thumb/screenshot.png');
+			if (file_exists(self::FILE_DIR.'thumb/screenshot.jpg')) {
+				unlink (self::FILE_DIR.'thumb/screenshot.jpg');
 			}
-			file_put_contents( self::FILE_DIR.'source/screenshot.png',$data);
+			file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img);
 			$success =true;
 		}
-
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success === true ? 'Image tag réinitialisée' : 'Erreur : image tag non créée',
