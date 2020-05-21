@@ -2,13 +2,17 @@
 
 ## version 10.1.000
 - Nouveautés : 
-    - Thème des écrans d'administration modifiable (configuration, utilisateurs : etc.)
-    - Thème du site : couleur de l'encadrement et la bordure des blocs.
-    - Thème du menu : couleur du texte de la page active
+    - Distinction entre le thème du site et celui de l'administration. Sauvegarde et restauration de l'un ou de  l'autre.
+    - Thème du site :     
+        - Amélioration de l'aperçu du thème du site et de body.
+        - Couleur de l'encadrement et la bordure des blocs.
+        - Couleur du texte de la page active
+    - Menu : les entrées de menu disposent d'un id
 - Corrections : 
     - Configuration SMTP : sur-cryptage du mot de passe.
+    - Warning dans la génération du sitemap en l'absence d'article.
     - Quelques corrections liées à l'hébergeur Free.
-- Modification :
+- Modifications :
     - Optimisation des opérations de disque, mise en cache en lecture des données de pages. Aucun cache en écriture.
 - Mise à jour : 
     - TinyMCE 4.9.10
