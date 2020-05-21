@@ -87,8 +87,8 @@
 						<div class="bgPreview">	
 							<div class="row">
 								<div class="col8">
-									<h1 class="headerPreview">Aperçu </h1>
-									<h3 class="headerPreview">Sous-Titre </h3>
+									<h1 class="headerPreview">Titre</h1>
+									<h1 class="headerPreview">Sous-Titre </h1>
 								</div>
 								<div class="col4">
 									<?php echo template::button('themeSiteSubmitButtonPreview', [

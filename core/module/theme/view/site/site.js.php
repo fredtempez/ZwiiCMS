@@ -13,7 +13,8 @@
  /*
  * Chargement de l'aperçu
  */
-$( document).ready(function() {	
+$(document).ready(function() {	
+
 	/**
 	* Option de marge si la taille n'est pas fluide
 	*/
@@ -23,22 +24,21 @@ $( document).ready(function() {
 	} else {
 		$("#themeSiteMargin").addClass("enabled");
 	}
-	var backgroundImage = <?php echo json_encode(helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme','body','image'])); ?>;
-	var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;						
-	css = "div.bodybackground{background-color:" +  backgroundcolor + "; background-image: url(" + backgroundImage + ");background-size:cover;}";
-	css += "div.bgPreview{padding: 5px;background-color:" + $("#themeSiteBackgroundColor").val() + ";}";
-	$("#themePreview").remove();
-	$("<style>")
-		.attr("type", "text/css")
-		.attr("id", "themePreview")
-		.text(css)
-		.appendTo("head");
+
+	// Charger l'aperçu initial
+	previewDOM();
+
 });
+
 
 /**
  * Aperçu en direct
  */
 $("input, select").on("change",function() {	
+	previewDOM();
+});
+
+function previewDOM() {
 
 	/**
 	 * Aperçu dans la boîte
@@ -113,4 +113,4 @@ $("input, select").on("change",function() {
 		.text(css)
 		.appendTo("head");
 
-});
+};
