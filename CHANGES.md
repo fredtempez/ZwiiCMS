@@ -12,6 +12,7 @@
     - Configuration SMTP : sur-cryptage du mot de passe.
     - Warning dans la génération du sitemap en l'absence d'article.
     - Quelques corrections liées à l'hébergeur Free.
+    - Configuration: sauvegarde automatique non enregistrée.
 - Modifications :
     - Optimisation des opérations de disque, mise en cache en lecture des données de pages. Aucun cache en écriture.
 - Mise à jour : 
