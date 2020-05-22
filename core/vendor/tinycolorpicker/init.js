@@ -19,8 +19,8 @@ $(function() {
 				$(element).trigger("change");
 			}
 		},
-		dark: "inherit",
-		light: "white",
+		dark: "#222",
+		light: "#DDD",
 		forceAlpha: true
 	})
 });
