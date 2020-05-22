@@ -7,14 +7,16 @@
         - Amélioration de l'aperçu du thème du site et de body.
         - Couleur de l'encadrement et la bordure des blocs.
         - Couleur du texte de la page active
-    - Menu : les entrées de menu disposent d'un id
+    - Menu : les entrées de menu disposent d'un id afin de faciliter la personnalisation CSS
 - Corrections : 
     - Configuration SMTP : sur-cryptage du mot de passe.
     - Warning dans la génération du sitemap en l'absence d'article.
     - Quelques corrections liées à l'hébergeur Free.
     - Configuration: sauvegarde automatique non enregistrée.
+    - Warning lors de la création du dossier thème
 - Modifications :
     - Optimisation des opérations de disque, mise en cache en lecture des données de pages. Aucun cache en écriture.
+    - Compatibilité des URL avec Microsoft IIS (c)
 - Mise à jour : 
     - TinyMCE 4.9.10
 
