@@ -659,7 +659,9 @@ class theme extends common {
 		// Make zip
 		$zipFilename = $this->makezip($this->getUrl(2));
 		// Téléchargement du ZIP
-		mkdir(self::FILE_DIR.'source/theme');
+		if (!is_dir(self::FILE_DIR.'source/theme')) {
+			mkdir(self::FILE_DIR.'source/theme');
+		}
 		copy (self::TEMP_DIR . $zipFilename , self::FILE_DIR.'source/theme/' . $zipFilename);
 		// Nettoyage du dossier
 		unlink (self::TEMP_DIR . $zipFilename);
