@@ -130,7 +130,7 @@ class helper {
 		else {
 			$queryString = '';
 		}
-		return $host . rtrim($pathInfo['dirname'], ' /') . '/' . $queryString;
+		return $host . rtrim($pathInfo['dirname'], ' ' . DIRECTORY_SEPARATOR) . '/' . $queryString;
 	}
 
 	/**
