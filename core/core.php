@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.1.000';
+	const ZWII_VERSION = '10.1.001.dev1';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1536,17 +1536,17 @@ class core extends common {
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $colors['text'] . ';}';
 			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select,textarea:not(.editorWysiwyg),.inputFile{color: #222;}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
-			$css .= '.button,input[type="checkbox"]:checked + label::before,.speechBubble{ background-color:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText']) . ';}';
+			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{ background-color:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText']) . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
-			$css .= '.button:hover, button[type=submit]:hover { background-color:' . $colors['darken'] . ';}';
+			$css .= '.button {background:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText'])  . ';}.button:hover {background:' . $colors['darken'] . ';color:' . $this->getData(['admin','colorButtonText'])  . ';}.button:active {background:' . $colors['veryDarken'] . ';color:' . $this->getData(['admin','colorButtonText'])  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGrey']));
-			$css .= '.button.buttonGrey {background: ' . $colors['normal'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . ';}.button.buttonGrey:hover {background:' . $colors['darken'] .';color: ' . $this->getData(['admin','colorButtonText'])  . '}.button.buttonGrey:active {background:' . $colors['veryDarken'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . '}';
+			$css .= '.button.buttonGrey {background: ' . $colors['normal'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . ';}.button.buttonGrey:hover {background:' . $colors['darken']  . '}.button.buttonGrey:active {background:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
-			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . ';}.button.buttonRed:hover {background:' . $colors['darken'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . ';color: ' . $this->getData(['admin','colorButtonText']) . '}';			
+			$css .= '.button.buttonRed {background: ' . $colors['normal'] . ';color: ' . $this->getData(['admin','colorButtonText'])  . ';}.button.buttonRed:hover {background:' . $colors['darken'] . '}.button.buttonRed:active {background:' . $colors['veryDarken'] . '}';			
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
 			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $this->getData(['admin','colorButtonText']) . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $this->getData(['admin','colorButtonText'])  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $this->getData(['admin','colorButtonText'])  .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
-			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
+			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'admin.css', $css);
 		}
