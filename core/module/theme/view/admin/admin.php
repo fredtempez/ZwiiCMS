@@ -10,6 +10,11 @@
 		</div>
 		<div class="col2 offset6">
 			<?php echo template::button('configAdminReset', [
+				'value' => 'Faux Bouton'
+			]); ?>						
+		</div>
+		<div class="col2 offset6">
+			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/resetAdmin',
 				'value' => 'Réinitialiser'

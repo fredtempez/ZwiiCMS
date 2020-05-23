@@ -25,9 +25,9 @@ $("input, select").on("change", function() {
     css += "body:not(.editorWysiwyg),span .zwiico-help {color:" + colors.text + ";}";
     css += "input[type=email],input[type=text],input[type=password],select,textarea:not(.editorWysiwyg),.inputFile{color: #222;}";
     var colors = core.colorVariants($("#adminColorButton").val());
-    css += ".button,input[type='checkbox']:checked + label::before,.speechBubble{ background-color:" + colors.normal + "; color:" + $("#adminColorButtonText").val() + ";}";    
-    css += ".speechBubble::before {border-color:" + colors.normal + " transparent transparent transparent;}";
-    css += ".button:hover, button[type=submit]:hover { background-color:" + colors.darken + ";}";
+    css += "input[type='checkbox']:checked + label::before,.speechBubble{ background-color:" + colors.normal + "; color:" + $("#adminColorButtonText").val() + ";}";       
+    css += ".speechBubble::before {border-color:" + colors.normal + " transparent transparent transparent;}";    
+    css += ".button {background:" + colors.normal + ";color:" + $("#adminColorButtonText").val() + ";}.button:hover {background:" + colors.darken + ";color:" + $("#adminColorButtonText").val() + ";}.button:active {background:" + colors.veryDarken + ";color:" + $("#adminColorButtonText").val() + ";}";
     var colors = core.colorVariants($("#adminColorGrey").val());    
     css += ".button.buttonGrey {background: " + colors.normal + ";color:" + $("#adminColorButtonText").val() + ";}.button.buttonGrey:hover {background:" + colors.darken + ";color:" + $("#adminColorButtonText").val() + "}.button.buttonGrey:active {background:" + colors.veryDarken + ";color:" + $("#adminColorButtonText").val() + ";}";
     var colors = core.colorVariants($("#adminColorRed").val());    
@@ -35,7 +35,7 @@ $("input, select").on("change", function() {
     var colors = core.colorVariants($("#adminColorGreen").val());    
     css += "button[type=submit] {background-color: " + colors.normal + ";color: " + ";color:" + $("#adminColorButtonText").val() + "}button[type=submit]:hover {background-color: " + colors.darken +  ";color:" + $("#adminColorButtonText").val() + ";}button[type=submit]:active {background:" + colors.veryDarken + ";color:" + $("#adminColorButtonText").val() + "}";
     var colors = core.colorVariants($("#adminBackGroundBlockColor").val());  
-    css += ".block {border: 1px solid " + $("#adminBorderBlockColor").val() + ";}.block h4 {background-color: "  + colors.normal + ";color:" + colors.text + ";}";
+    css += ".block {border: 1px solid " + $("#adminBorderBlockColor").val() + ";}.block h4 {background: "  + colors.normal + ";color:" + colors.text + ";}";
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
