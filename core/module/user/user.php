@@ -340,6 +340,8 @@ class user extends common {
 				$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
 				setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
 				setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+				// Accès multiples avec le m$eme compte
+				$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 				// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 				if(
 					$this->getData(['config', 'maintenance'])

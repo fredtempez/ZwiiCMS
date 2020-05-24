@@ -1,14 +1,23 @@
 # Changelog
 
+## version 10.2.000
+- Nouveautés :
+    - Gestion des accès concurrents :
+        - deux utilisateurs ne peuvent accèder en modification à la même page du site ou de configuration
+        - la connexion d'un utilisateur sur un autre poste ou navigateur déconnecte la session précédente.
+- Modifications : 
+    - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
+    - Thème de l'administration, amélioration du rendu.
+
 ## version 10.1.000
-- Nouveautés : 
+- Nouveautés :
     - Distinction entre le thème du site et celui de l'administration. Sauvegarde et restauration de l'un ou de  l'autre.
-    - Thème du site :     
+    - Thème du site :
         - Amélioration de l'aperçu du thème du site et de body.
         - Couleur de l'encadrement et la bordure des blocs.
         - Couleur du texte de la page active
     - Menu : les entrées de menu disposent d'un id afin de faciliter la personnalisation CSS
-- Corrections : 
+- Corrections :
     - Configuration SMTP : sur-cryptage du mot de passe.
     - Warning dans la génération du sitemap en l'absence d'article.
     - Quelques corrections liées à l'hébergeur Free.
@@ -17,20 +26,20 @@
 - Modifications :
     - Optimisation des opérations de disque, mise en cache en lecture des données de pages. Aucun cache en écriture.
     - Compatibilité des URL avec Microsoft IIS (c)
-- Mise à jour : 
+- Mise à jour :
     - TinyMCE 4.9.10
 
 ## version 10.0.092
 - Nouveautés :
     - Compatibilité avec l'hébergeur free.fr
-    - Configuration :  
+    - Configuration :
         - Options de réglage d'un serveur SMTP pour l'envoi des emails.
         - Édition des scripts pour head et body dans une fenêtre dédiée.
     - Thème :
         - Thème des boutons des pages d'administration.
-- Modification : 
+- Modification :
     - Masque de configuration : changement de libellés.
-- Scripts externes: 
+- Scripts externes:
     - Suppression du script fullPage.js
     - Ajout de l'extension SMTP de PHPMailer
 
@@ -57,7 +66,7 @@ Corrections de bug :
     - Mise à jour automatique : procédure modifiée, désactivée si allow_url_fopen = off sur le serveur
 
 ## version 9.2.28
-- Corrections : 
+- Corrections :
     - Mise à jour auto fonctionnelle
     - Décalage du thème hors de l'écran
 
@@ -66,7 +75,7 @@ Corrections de bug :
     - Pages d'administration, thème spécifique
         - Thème inactif lorsque la réécriture est activée.
         - Couleur du texte des boutons gris dans l'interface d'administration.
-    - TinyMCE : 
+    - TinyMCE :
         - La taille de la police et la couleur sont celles définies dans le thème du site.
         - Zone d'édition, padding de 5 px à gauche et à droite.
     - Barre, sélecteur de page : couleur et taille fixe de la police.
@@ -79,43 +88,43 @@ Corrections de bug :
     - TinymCE : Menu sticky + options de barre d'outils
 
 ## version 9.2.25
-- Corrections : 
+- Corrections :
     - Décalage du site dans SimpleLightbox.
     - Zindex du pied de page en position fixe, sous la barre de consentement aux cookies.
-- Modifications : 
+- Modifications :
     - Désactivation de l'application du thème dans les pages d'administration. Création d'un aperçu dans Thème Site.
     - Optimisation configuration simpleLightBox.
     - Syntaxe colorée dans TinyMCE Codemirror.
     - Configuration barre d'outils et menu.
-    - Module news : déplacement des styles dans common.css. Couleur de police de la signature dans custom.css- 
-    
+    - Module news : déplacement des styles dans common.css. Couleur de police de la signature dans custom.css-
+
 ## version 9.2.24
-- Corrections : 
+- Corrections :
     - Mauvaise configuration de SimpleLightBox
     - Thème : marges du menu en position en-dehors du site
 
 ## version 9.2.23
-- Nouveautés : 
+- Nouveautés :
     - Configuration du réseau : proxy http ou tcp sans authentification.
     - Menu burger remplacé pour une croix quand ouvert.
-- Corrections : 
+- Corrections :
     - Fonction magic_quotes dépréciée supprimée.
     - Mise à jour en ligne :
         - problème lors du stockage de décompte de la date de dernière vérification.
         - réinitialisation du décompte de vérification lors de l'activation de l'option.
-    - Thème, Menu : 
+    - Thème, Menu :
         - Problème avec le menu fixe en-dehors du site et la barre d'outils de TinyMCE sous le menu. Solution, en édition de page l'option de menu fixe est temporairement désactivée.
         - Alignement avec le contenu du menu dans le site incorrecte.
         - Disparition de la position et de l'alignement du menu.
-- Modifications : 
+- Modifications :
     - TinyMCE : libellé des fonctions  "Afficher dans"
     - TinyMCE : nouvelle organisation de la barre d'outils.
     - Module Form : option permettant d'ajouter le premier mail dans le formulaire au message de notification (Reply To) afin de répondre directement au message.
-    - Configuration du site : 
+    - Configuration du site :
         - bouton affichant le numéro de la version en ligne.
         - uniformisation de la position des champs de saisie.
-    - Galerie : position du champ de tri des images.    
-- Mise à jour : 
+    - Galerie : position du champ de tri des images.
+- Mise à jour :
     - SimpleLightBox passe en version 2.1.2
 
 ## version 9.2.22
@@ -123,9 +132,9 @@ Corrections de bug :
     - Aperçu de la police dans les sélecteurs.
     - Gestion du canal de mise à jour selon la version installée
     - Module Blog : position des boutons d'édition de l'article au-dessus des commentaires.
-    - Module Gallery : 
+    - Module Gallery :
         - choix de la vignette d'album
-        - Ordres de tri des images d'une galerie, ascendant, descendant ou sans 
+        - Ordres de tri des images d'une galerie, ascendant, descendant ou sans
         - Tri, ordre naturel de la galerie et des images de la galerie
 - Mises à jour :
     - Configurations Code Mirror pour TinyMCE et standalone
@@ -133,11 +142,11 @@ Corrections de bug :
 ## version 9.2.21
 - Correction :
     - Footer / Texte personnalisé : suppression des sauts de ligne et de paragraphe.
-- Modification : 
+- Modification :
     - Thème / Body, couleurs de l'icône retour en haut de page perso personnalisables.
 
 ## version 9.2.20
-- Corrections : 
+- Corrections :
     - Footer / Texte personnalisé : problème d'alignement des colonnes
     - Variable non déclarée dans main.php provoquant un warning
 
@@ -150,7 +159,7 @@ Corrections de bug :
 - Corrections :
     - Conformité balise p dans span (footer).
     - Petites corrections.
-- Modifications : 
+- Modifications :
     - Installation par défaut : livraison d'une page de mentions légales.
     - Image du fond (body), options responsive cover et contain.
     - Réseaux sociaux, icône Youtube chaîne ou utilisateur.
@@ -166,7 +175,7 @@ Corrections de bug :
     - Sauvegarde manuelle des données de site (dossiers file et data).
 - Modification :
     - Stocke la réécriture d'url dans baseUrl en cas de changement d'arborescence lors d'un transfert de site.
-- Correction : 
+- Correction :
     - Problème lors de la mise à jour de la variable dataVersion.
 
 ## version 9.2.15
@@ -174,7 +183,7 @@ Corrections de bug :
     - Sauvegarde des données de site.
     - Couleur du titre de site dans le menu réduit.
     - L'effet de couleur de fond personnalisé d'une page sélectionnée dans le menu est limité aux pages parents.
-- Améliorations : 
+- Améliorations :
     - Affichage du contenu seul d'une page du site dans une popup Lity sans menu, bannière et pied de page.
     - Editeur de texte ; effet accordéon, les accordéons peuvent être tous refermés.
     - Thème ; menu : lorsque le menu est réduit, le titre du site peut être inséré à la gauche du menu burger.
@@ -183,25 +192,25 @@ Corrections de bug :
 - Mise à jour :
     - Script d'upload du gestionnaire de fichiers
 - Modifications :
-    - Thème : optimisation des masques de saisie pour le site en largeur 750px.    
-- Corrections : 
-    - Thème : gestion d'erreur lors de l'import d'un thème issu d'une version inférieure. 
+    - Thème : optimisation des masques de saisie pour le site en largeur 750px.
+- Corrections :
+    - Thème : gestion d'erreur lors de l'import d'un thème issu d'une version inférieure.
 
 ## version 9.2.13
 - Corrections :
     - Gestionnaire de fichiers, modifications des paramètres des miniatures.
     - Filtrage du nom des pages dans la fenêtre d'édition des pages.
     - Format de date dans le module Blog
-    - Module Form : 
+    - Module Form :
         - correction des options de champ pour le type étiquette
-- Modifications : 
+- Modifications :
     - Suppression d'options inutiles dans l'édition d'une page de type de barre latérale.
-    - Module Form : 
-        - édition  : champs d’options condensés 
-        - édition : ordre des champs dans le sélecteur 
-    
+    - Module Form :
+        - édition  : champs d’options condensés
+        - édition : ordre des champs dans le sélecteur
+
 ## version 9.2.12
-- Modifications 
+- Modifications
     - TinyMCE :
         - Ajout d'un template effet accordéon.
         - Supprimer le filtrage des éléments.
@@ -215,30 +224,30 @@ Corrections de bug :
         - Effet bord arrondi, page sélectionnée
 
 ## version 9.2.11
-- Corrections : 
+- Corrections :
     - Marge du pied de page par défaut 5px
     - Installation sans site exemple : suppression des barres latérales
-    - Edition de page : 
+    - Edition de page :
         - Affichage de l'option Fil d'ariane alors que le titre est masqué.
         - Page parente, l'option "ne pas afficher les pages enfants dans le menu horizontal" est incompatible avec une page désactivée : désactivation et masquage lorsque la page est désactivée.
         - Mauvais encodage des titres de pages perturbant l'affichage des caractères spéciaux ( ex: apostrophes ).
-- Modifications : 
+- Modifications :
     - Recherche d'une mise à jour en ligne, s'effectue une fois par jour et devient optionnelle.
     - Amélioration de l'écran d'édition des pages.
     - iframe responsive
 
 ## version 9.2.10
-- Modifications préparatoires à la version 10 : 
+- Modifications préparatoires à la version 10 :
     - Lors de l'installation, stockage de l'url de base dans l'éventualité de la restauration d'un backup et de son installation dans une autre arborescence.
     - Modification des clés identifiant les légendes du module Gallery : suppression du point de séparation du nom de fichier de l'extension.
 - Modifications :
     - Thème, bannière : nouvelle option de hauteur calculée à partir de la dimension de l'image sélectionnée.
     - Thème, bannière : informations sur l'image sélectionnée (largeur et hauteur).
     - Thème, pied de page :  réactivation de l'aperçu.
-- Corrections : 
-    - Thème, bannière : problème empêchant la bannière d'être cliquable lorsque la hauteur "responsive" de la bannière était sélectionnée.   
+- Corrections :
+    - Thème, bannière : problème empêchant la bannière d'être cliquable lorsque la hauteur "responsive" de la bannière était sélectionnée.
     - Responsive File manager : erreur empêchant l'extraction d'une archive ZIP.
-- Mise à jour : 
+- Mise à jour :
     - CodeMirror 5.49.2 et modification des modules installés
 
 ## version 9.2.09
@@ -249,33 +258,33 @@ Corrections de bug :
 ## Version 9.2.08
 - Correction :
     - Edition de page : bug empêchant le paramétrage d'un module après un changement de gabarit.
-- Modification : 
+- Modification :
     - Aide de l'édition des pages
-    
+
 ## Version 9.2.07
-- Modification : 
+- Modification :
     - Balise <object> responsive
     - Placement possible de tous les modules
     - Commande de placement libre des modules et du menu latéral [MENU] et [MODULE]
 
 ## Version 9.2.06
-- Correction : 
+- Correction :
     - Validation html
-    - Syntaxe du fichier robots.txt  
+    - Syntaxe du fichier robots.txt
 
 ## Version 9.2.05
 - Correction :
     - Suppression totale de Swiper (dossier source et template Tinymce)
 
 ## Version 9.2.04
-- Correction : 
+- Correction :
     - Conserver htaccess dans le dossier temp lors du nettoyage
-- Suppression : 
+- Suppression :
     - Swiper
 
 ## Version 9.2.03
 - Corrections :
-    - Menu fixe en dehors du site : 
+    - Menu fixe en dehors du site :
         - overlay du sous-menu activé au-dessus de la page
         - impossibilité de sélectionner un élément sous un sous-menu
     - Modules : les modes de gestion s'affichent en pleine page - réécriture du code.
@@ -286,7 +295,7 @@ Corrections de bug :
     - Gestion d'erreur lors de l'installation automatisée d'une mise à jour
 
 ## Version 9.2.01
-- Corrections : 
+- Corrections :
     - Sauvegarde du thème : prise en compte du fichier custom.css
     - Edition de page : libellés
     - Thème ; footer : marges du pied de page placé hors du site
@@ -306,31 +315,31 @@ Corrections de bug :
 - Correction :
     - Menu : alignement avec le contenu, couleur de l'arrière-plan
 
-## Version 9.1.14   
+## Version 9.1.14
 - Correction :
     - Validation w3C : espace manquant
 
 ## Version 9.1.13
-- Corrections : 
+- Corrections :
     - Erreur du sitemap.xml lorsqu'un blog ne contient pas d'article.
     - OpenGraph : erreur lors de la suppression de l'imagette si absente.
 
 ## Version 9.1.12
-- Amélioration : 
+- Amélioration :
     - Contrôle d'erreur dans la gestion de l'imagette OpenGraph
-- Correction :     
+- Correction :
     - Sitemap.xml : prendre en compte les sous-pages d'une page parente masquée
 
 ## Version 9.1.11
-- Correction : 
+- Correction :
     - Générateur de sitemap.xml, correction de syntaxe.
 
 ## Version 9.1.10
-- Améliorations : 
+- Améliorations :
     - Page sitemap et sitemap.xml : les articles de blog avec le statut brouillon sont masqués.
     - Sitemap.xml : ajout de la date de publication des articles.
     - Réseau social : Github.
-- Correction : 
+- Correction :
     - Suppression du ? dans les URLs vers les fichiers sitemap  de robots.txt
 
 ## Version 9.1.09
@@ -343,56 +352,56 @@ Corrections de bug :
         - Prends en compte les articles de blog
         - Affiche les pages désactivées sans lien
         - Prends en compte les droits de l'utilisateur
-- Corrections : 
+- Corrections :
     - Déclaration de localisation manquante dans mail.php
     - Bug avec le formulaire
-    - Désactivation url upload dans RFM    
+    - Désactivation url upload dans RFM
 
 ## Version 9.1.08
-- Corrections : 
+- Corrections :
     - Validation du code html et du CSS commun
     - Réécriture activée après chaque mise à jour auto.
-- Modifications : 
+- Modifications :
     - Thème 100%  fluide sans marge
     - Ecran de smartphone (ex : iPhone 6) : adaptation de la barre d'administration : le username est masqué et la taille des icônes est augmentée
     - Chemins vers les données dans des constantes
     - Modèles de bannières de plusieurs dimensions
     - Hauteur de police par défaut 13px
-- Mises à jour : 
+- Mises à jour :
     - TinyMCE 4.9.4
     - PHPMailer 6.07
     - Jquery 3.4.1
 
 ## Version 9.1.07
-- Correction : 
+- Correction :
     - Ajout d'un utilisateur : autres contrôles avant envoi d'un mail de confirmation
 - Suppression :
     - Include de script.inc.php et head.inc.html dans main.php
 
 ## Version 9.1.06
-- Corrections : 
+- Corrections :
     - Ajout d'un utilisateur : pas d'envoi du mail de confirmation si les mots de passe ne sont pas identiques.
     - Mise à jour automatique : effacement des archives téléchargées
     - Z-index des sous-menus augmentés à 8 ; problème d'affichage avec codemirror
-- Modification : 
+- Modification :
     - Include de script.inc.php et head.inc.html dans main.php
 
 ## Version 9.1.05
-- Correction : 
+- Correction :
     - Site par défaut : lien Zwii masqué du menu horizontal
-- Modifications : 
+- Modifications :
     - Présentation de l'édition des pages
-    - Largeur dynamique du bouton envoyer dans le formulaire 
+    - Largeur dynamique du bouton envoyer dans le formulaire
     - Lien dans le footer vers le site Zwii
     - Redirection, écran de confirmation
 
 ## Version 9.1.04
-- Corrections : 
+- Corrections :
     - Edition de page : problème mise en page
     - Module Form (v1.9) : position et largeur des boutons
     - Thème Pied de page : problème d'affichage
     - Thème Site : boutons tronqués en 750px : 750px = 0.8em
-- Modification : 
+- Modification :
     - Aperçu de la bannière en mode responsive
 
 ## Version 9.1.03
@@ -406,12 +415,12 @@ Corrections de bug :
     - Suppression Include
 
 ## Version 9.1.01
-- Modifications : 
+- Modifications :
     - Amélioration de l'algorithme de gestion des barres
     - Script Google Analytics
     - Menu : effet de surimpression pages filles
     - Réorganisation de l'écran d'édition des pages
-    - Blog : notification hiérarchique lors de la rédaction d'un commentaire 
+    - Blog : notification hiérarchique lors de la rédaction d'un commentaire
     - Form : notification hiérarchique de la réception d'un message
     - Thème header : hauteur proportionnelle de la bannière (responsive)
 - Ajouts :
@@ -421,60 +430,60 @@ Corrections de bug :
     - Option de masquage des pages enfants dans le menu principal
     - Petits écrans, ordre des blocs : Page - Barre Gauche - Barre Droite
     - Intégration de la classe Swiper http://idangero.us/swiper/
-    - Intégration de l'URL canonical 
+    - Intégration de l'URL canonical
     - Icône de suppression des pages dans la barre d'administration
     - Gestion du sitemap.xml et du robots.txt
 - Corrections :
     - Form : option de redirection
 
 ## Version 9.0.21
-- Mise à jour : 
+- Mise à jour :
     - Code Mirror v5.46
-- Corrections : 
+- Corrections :
     - Liens de l'éditeur de page : impossibilité de sélectionner un lien vers une page parente
     - Export des données du site, problème lors de la création de l'arborescence.
 
 ## Version 9.0.20
-- Correction : 
+- Correction :
     - Footer : Taille de la police du numéro de version
 
 ## Version 9.0.19
-- Correction : 
-    - Alignement du menu    
-                 
+- Correction :
+    - Alignement du menu
+
 ## Version 9.0.18
-- Correction : 
-    - Etat par défaut du numéro de version mal récupéré    
+- Correction :
+    - Etat par défaut du numéro de version mal récupéré
 
 ## Version 9.0.17
 - Mises à jour :
     - simpleLightBox 1.17.0
-- Correction : 
+- Correction :
     - Marges pour les petits écrans en mode connecté
     - Ajustement CSS du pied de page
-    - Harmonisation du contenu des bulles d'aide    
-- Modifications : 
+    - Harmonisation du contenu des bulles d'aide
+- Modifications :
     - Ajout du numéro de version dans le pied de page activable dans la configuration du thème
-    - Désactivation Aviary dans Responsive FileManager   
+    - Désactivation Aviary dans Responsive FileManager
 
 ## Version 9.0.16
-- Correction : 
+- Correction :
     - Nom de page constitué de caractères filtrés empchant la création d'un Id valide.
     - Module Gallery : bouton de fermeture sous Edge
 
 ## Version 9.0.15
-- Corrections : 
+- Corrections :
     - Débordement dans le pied de page quand le copyright est à droite
-- Modifications : 
+- Modifications :
     - Petits écrans, menu d'administration icônes plus grandes
-    - Masquage de l'icône de gestion du compte 
+    - Masquage de l'icône de gestion du compte
 
 ## Version 9.0.14
-- Corrections : 
+- Corrections :
     - Débordement dans le pied de page quand le copyright est à droite
-- Modifications : 
+- Modifications :
     - Petits écrans, menu d'administration plus icônes plus grandes
-    - Masquage de l'icône de gestion du compte 
+    - Masquage de l'icône de gestion du compte
 
 ## Version 9.0.13
 - Modifications :
@@ -516,7 +525,7 @@ Corrections de bug :
     - Blog 1.3 : image en tête d'article correctement affichée avec effet responsive.
     - TinyMCE : taille des miniatures générées par défaut 480 x 320 en vue d'un affichage correct dans le module blog
     - Pied de page : correction d'un problème d'affichage sur des écrans inférieurs à 992px
-    
+
 ## Version 9.0.07
 - Correction :
     - Disparition du menu quand la bannière est masquée
@@ -526,12 +535,12 @@ Corrections de bug :
 ## Version 9.0.06
 - Correction :
     - Configuration des modes de codemirror
-- Modifications : 
+- Modifications :
     - TinyMCE : libellés fenêtre des liens
 
 ## Version 9.0.05
 - Modifications :
-    - Thème : 
+    - Thème :
         - nouvelle position du menu dans le site quand la bannière est au-dessus.
         - Simplification et ordre des libellés position du menu par rapport à la bannière
     - Editeur de texte, scrolle lorsque l'éditeur est ouvert, la barre d'outil se colle sous la barre d'administration.
@@ -541,8 +550,8 @@ Corrections de bug :
         usages : https://sorgalla.com/lity/
 
 ## Version 9.0.04
-- Corrections : 
-    - Module form 1.6 : 
+- Corrections :
+    - Module form 1.6 :
         - erreur lors de la non sélection d'un groupe
         - captcha inefficace
     - Pour les testeurs : la mise à jour automatique n'est plus proposée lors d'une régression, lorsque le numéro de version en ligne est inférieur à celui de la version installée.
@@ -550,7 +559,7 @@ Corrections de bug :
     - Redimensionnement des images map : permet d'obtenir des images map fonctionnelles lorsque les dimensions de l'image sont réduites par le thème ou la taille de l'écran.
         - La carte peut être générée par https://www.image-map.net/
         - Article (en) : https://blog.travismclarke.com/project/imagemap/
-        - Git : https://github.com/clarketm/image-map 
+        - Git : https://github.com/clarketm/image-map
 
 
 ## Version 9.0.03
@@ -565,12 +574,12 @@ Corrections de bug :
 
 
 ## Version 9.0.01
-- Modifications : 
+- Modifications :
     - Abandon de l'envoi masqué des mails du formulaire
     - Effacement Google+ des réseaux sociaux
     - Rétablissement du background du header
     - Opération sur un mauvais type affichant une notice
-- Correction : 
+- Correction :
     - La bannière hors site cliquable replacée dans le header
     - Hauteur du footer hors site non appliquée
 
@@ -585,8 +594,8 @@ Corrections de bug :
         - Nouvelle option de position fixe du menu type Facebook lorsque le menu et en haut de page et hors du site
         - Nettoyage des images effacées
     - Gabarits de pages : deux barres latérales, une à droite ou à gauche contenant des informations fixes.
-    - Libellé Modérateur devient Editeur 
-    - Editeur de texte :     
+    - Libellé Modérateur devient Editeur
+    - Editeur de texte :
         - VisualBlocks dans TinyMCE
         - CodeMirror dans TinyMCE
     - Affichage de la version proposée dans la popup de mise à jour
@@ -594,17 +603,17 @@ Corrections de bug :
         - Case à cocher dans les formulaires
         - Bouton d'export au format CSV
         - Bouton effacer toutes les données
-        - Notification d'un membre ou email libre 
+        - Notification d'un membre ou email libre
     - Edition de page :
         - masquage des options inutiles selon le module
         - nouvelle option : fil d'ariane des pages filles
     - Barre d'administration fixe
 
-Correctif : 
+Correctif :
 	- amélioration contre mesure CSRF
 	- Erreur dans la procédure d'update suite à un ancien numéro de versions sur 4 digits
 
-Mise à jour : 
+Mise à jour :
 	- TinyColoPicker
 	- PhpMailer 6.0.6
 	- Responsive FileManager version 9.14.0
@@ -616,37 +625,37 @@ Mise à jour :
 * Correction :
     - Module Form : faille CSRF gestion data
     - Problème empêchant la suppression d'une galerie
-* Modification : 
+* Modification :
     - Module Form : Bouton tout effacer
- 
+
 ## Version 8.5.8
 * Correction :
     - Erreur dans la procédure d'update suite à un ancien numéro de versions sur 4 digits
 
 ## Version 8.5.7
-* Correction : 
+* Correction :
     - Message d'erreur ecran modification du compte
 
 ## Version 8.5.6
-* Correction : 
+* Correction :
     - Destruction de la session au logout
     - Thème : aperçu de la modification de la barre de menu au-dessus du site
-* Modification : 
+* Modification :
     - Mise à jour RFM 9.14
     - Amélioration de la contre mesure CRSF
     - Libellé dans TinyMCE (gabarit)
-    - Setlocal modification des paramètres FR    
+    - Setlocal modification des paramètres FR
 
 ## Version 8.5.5
-* Correction : 
+* Correction :
     - Faille CSRF lors de l'effacement d'un membre
     - Faille CSRF lors de l'effacement d'une galerie
-    - Faille CSRF lors de l'effacement d'un article de blog    
+    - Faille CSRF lors de l'effacement d'un article de blog
     - Faille CSRF lors de l'effacement d'un article de news
     - Taille de la police dans le footer impossible à modifier
 
 ## Version 8.5.4
-* Correction : 
+* Correction :
     - Faille CSRF lors de l'effacement d'une page
 
 ## Verison 8.5.3
@@ -660,40 +669,40 @@ Mise à jour :
         - Bloc des colonnes dans et hors site :
             - \#footersiteLeft, \#footerbodyLef
             - \#footersiteCenter, \#footerbodyCenter
-            - \#footersiteRight, \#footerbodyRight   
+            - \#footersiteRight, \#footerbodyRight
 
 
 ## Version 8.5.2
-* Correction : 
+* Correction :
     - Thème menu : aperçu quand le menu est au-dessus et en-dehors du site
-    
+
 ## Version 8.5.1
 * Correction :
     - Nom de variable incorrect
 
 ## Version 8.5.0
-* Correction : 
+* Correction :
     - Suppression popup active par défaut dans le menu
     - Suppression option de titre de page dans le menu Icone + Texte
-* Modification : 
+* Modification :
     - Thème du menu : sélection de la police de caractère
 
 ## Version 8.4.9
 * Correction :
     - Adresse d'une page inactive
-* Modification : 
+* Modification :
     - Blog : masquer une image dans l'article tout en conservant la miniature dans l'index
 
-## version 8.4.8 
-* Correction : 
+## version 8.4.8
+* Correction :
     - Fautes de frappe
 
 ## Version 8.4.7
 * correction :
-    - Chaine de mise à jour des variables internes 
+    - Chaine de mise à jour des variables internes
 
 ## Version 8.4.6
-* corrections : 
+* corrections :
     - Encodage des dates dans la liste des articles news et blog
     - Variable itemsperPage stockée dans le mauvais type
 
@@ -704,11 +713,11 @@ Mise à jour :
     - Inversion de deux balises dans Socials
 
 ## Version 8.4.4
-* Correction : 
-    - Valeur par défaut et d'update des éléments du footer dans les blocks 
+* Correction :
+    - Valeur par défaut et d'update des éléments du footer dans les blocks
 
 ## Version 8.4.3
-* Correction : 
+* Correction :
     - URL incorrecte dans Metaimage
     - Erreur dans la génération du sitemap
     - Taille du texte de la bannnière maximale relative (vmax)
@@ -732,39 +741,39 @@ Mise à jour :
 	- Position des modules Galerie et Form dans une page ; haut ; bas ou libre avec les doubles crochets insérés dans l'article []
     - Prise en compte des balises OpenGraph obligatoires title , description, type et images
     - Modification de la position des boutons retour et éditer lors de l'affichage d'un article si connecté
-    - Mise en forme de la composition des articles et des news 
+    - Mise en forme de la composition des articles et des news
     - Suppression du message de l'édition des redirections
 
-* Corrections : 
+* Corrections :
     - Accès aux pages désactivées par le sitemap
     - Réduction du temps d'affichage des notifications
     - Image responsive en en-tête de l'article d'un blog
     - Mise à jour du gestionnaire de fichiers en version 9.13.1
 
 ## version 8.3.13 :
-* Modifications : 
+* Modifications :
     - Bannière "responsive", nouvelles options de positionnement
     - Bouton Edit dans Blog
     - Options de position des menus selon la position de la bannière
     - Bouton Edition dans un article du blog
     - Balise ALT dans les images du menu
     - Correction RFM
- 
+
 
 ## version 8.3.12 :
-* Modification : 
+* Modification :
     - bouton de retour dans la page d'un article de blog
 * Correction :
-    - miniatures des exemples 
+    - miniatures des exemples
 ## version 8.3.11 :
-* Modifications : 
+* Modifications :
     - Thème : menu et sous menu sous forme de texte ou d'image (avec ou sans bulle)
     - Thème : nouvelle option permettant de cliquer sur la bannière afin de revenir à la racine du site
     - Thème : le menu peut être positionné en haut et hors de site sur la largeur de l'écran
-    - Page : nouvelle option permettant désactiver une page dans le menu. Cette option permet soit  de mettre une page en maintenance tout en la laissant active dans le menu, soit de créer une entrée de menu principal sans contenu 
+    - Page : nouvelle option permettant désactiver une page dans le menu. Cette option permet soit  de mettre une page en maintenance tout en la laissant active dans le menu, soit de créer une entrée de menu principal sans contenu
     - nouvelle option :  la bannière devient cliquable et renvoie vers la page d'accueil
     - nom des dossiers des images exemples
-* Corrections : 
+* Corrections :
     - bug des commentaires non déposés quand connecté
     - bug présent depuis au moins la version 8.1 et qui faisait boucler l'édition d'une page avec un module de redirection; Après édition, un clic sur retour ou enregistrer renvoie vers la  page d'accueil en édition.
     - affichage d'une erreur 404 si le contenu d'une page est supprimé
@@ -773,7 +782,7 @@ Mise à jour :
     - nouvelles icones d'exemple pour les menus
 ## 8.2.9
 * Correction  :  filemanger : erreur dans la navigation du filemanager dans la sélection de la favicon
-* Modification : on peut effacer le contenu d'une page sans provoquer d'erreur 404 
+* Modification : on peut effacer le contenu d'une page sans provoquer d'erreur 404
 ## 8.2.8
 * Correction : filemanager problème de lecture d'une seule extension
 ## 8.2.7
