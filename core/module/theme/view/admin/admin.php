@@ -10,22 +10,17 @@
 		</div>
 		<div class="col2 offset6">
 			<?php echo template::button('configAdminReset', [
-				'value' => 'Faux Bouton'
-			]); ?>						
-		</div>
-		<div class="col2 offset6">
-			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/resetAdmin',
 				'value' => 'Réinitialiser'
-			]); ?>						
-		</div>	
+			]); ?>
+		</div>
 		<div class="col2">
 			<?php echo template::submit('configAdminSubmit',[
 				'value' => 'Valider',
 				'ico' => 'check'
 			]); ?>
-		</div>	
+		</div>
 	</div>
 	<div class="row">
 		<div class="col12">
@@ -55,7 +50,7 @@
 							'label' => 'Bordure des blocs',
 							'value' => $this->getData(['admin', 'borderBlockColor'])
 						]); ?>
-					</div>					
+					</div>
 				</div>
 				<div class="row">
 					<div class="col4">
@@ -65,7 +60,7 @@
 							'label' => 'Titres',
 							'value' => $this->getData(['admin', 'colorTitle'])
 						]); ?>
-					</div>                                        
+					</div>
 					<div class="col4">
 						<?php echo template::text('adminColorText', [
 							'class' => 'colorPicker',
@@ -81,17 +76,17 @@
 							'label' => 'Texte des boutons',
 							'value' => $this->getData(['admin', 'colorButtonText'])
 						]); ?>
-					</div>  
+					</div>
 				</div>
 				<div class="row">
-					<div class="col3">                 
+					<div class="col3">
 						<?php echo template::text('adminColorGrey', [
 							'class' => 'colorPicker',
 							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Bouton retour',
 							'value' => $this->getData(['admin', 'backgroundColorButtonGrey'])
 						]); ?>
-					</div>  					
+					</div>
 					<div class="col3">
 						<?php echo template::text('adminColorButton', [
 							'class' => 'colorPicker',
@@ -99,7 +94,7 @@
 							'label' => 'Bouton standard',
 							'value' => $this->getData(['admin', 'backgroundColorButton'])
 						]); ?>
-					</div>                      
+					</div>
 					<div class="col3">
 						<?php echo template::text('adminColorRed', [
 							'class' => 'colorPicker',
@@ -131,7 +126,7 @@
 								'selected' => $this->getData(['admin', 'fontText']),
 								'fonts' => true
 							]); ?>
-						</div>				
+						</div>
 						<div class="col4">
 							<?php echo template::select('adminFontTextSize', $module::$siteFontSizes, [
 								'label' => 'Taille',
@@ -144,10 +139,10 @@
 								'selected' => $this->getData(['admin', 'fontTitle']),
 								'fonts' => true
 							]); ?>
-						</div>						
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<?php echo template::formClose(); ?>	
+<?php echo template::formClose(); ?>
