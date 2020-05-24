@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version 
-	const ZWII_VERSION = '10.1.001.dev1';
+	const ZWII_VERSION = '10.1.001.dev2';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1635,18 +1635,6 @@ class core extends common {
 				}
 			}
 		}
-
-		// Breadcrumb
-		$title = $this->getData(['page', $this->getUrl(0), 'title']);
-		if (!empty($this->getData(['page', $this->getUrl(0), 'parentPageId'])) &&
-				$this->getData(['page', $this->getUrl(0), 'breadCrumb'])) {
-				$title = '<a href="' . helper::baseUrl() . 
-						$this->getData(['page', $this->getUrl(0), 'parentPageId']) .
-						'">' .
-						ucfirst($this->getData(['page',$this->getData(['page', $this->getUrl(0), 'parentPageId']), 'title'])) .
-						'</a> &#8250; '.
-						$this->getData(['page', $this->getUrl(0), 'title']);			
-		} 
 		
 		// Importe la page
 		if(
@@ -1654,6 +1642,18 @@ class core extends common {
 			AND $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
 			AND $access
 		) {
+			// Breadcrumb
+			$title = $this->getData(['page', $this->getUrl(0), 'title']);
+			if (!empty($this->getData(['page', $this->getUrl(0), 'parentPageId'])) &&
+					$this->getData(['page', $this->getUrl(0), 'breadCrumb'])) {
+					$title = '<a href="' . helper::baseUrl() . 
+							$this->getData(['page', $this->getUrl(0), 'parentPageId']) .
+							'">' .
+							ucfirst($this->getData(['page',$this->getData(['page', $this->getUrl(0), 'parentPageId']), 'title'])) .
+							'</a> &#8250; '.
+							$this->getData(['page', $this->getUrl(0), 'title']);			
+			} 
+			// Import de la page
 			$this->addOutput([
 				'title' => $title,
 				'content' => $this->getData(['page', $this->getUrl(0), 'content']),
