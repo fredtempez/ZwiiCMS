@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev3';
+	const ZWII_VERSION = '10.2.000.dev3';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1624,7 +1624,7 @@ class core extends common {
 		}
 		// Check l'accès à la page
 		$access = null;
-		$accessInfo['user'] = '';
+		$accessInfo['userName'] = '';
 		if($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if(
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
@@ -1644,14 +1644,14 @@ class core extends common {
 				}
 			}
 		}
-		// Controle si la page demandée est en édition oua ccès à la gestion du site
+		// Controle si la page demandée est en édition ou accès à la gestion du site
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
 				 $userId !== $this->getuser('id') &&
 				 array_intersect($t,self::$accessList)	 ) {
 					$access = false;
-					$accessInfo['user']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
 			}
 		}
 		// Accès concurrent stocke la page visitée
@@ -1876,10 +1876,10 @@ class core extends common {
 		}
 		if($access === false) {
 			http_response_code(403);
-			if ($accessInfo['user']) {
+			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech('La page demandée est ouverte par l\'utilisateur <strong>' . $accessInfo['user'] . '</strong>. Merci de patienter.')
+					'content' => template::speech('La page demandée est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
 				$this->addOutput([
