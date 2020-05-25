@@ -184,7 +184,7 @@ class helper {
 			'normal' => 'rgba(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . $rgba[3] . ')',
 			'darken' => 'rgba(' . max(0, $rgba[0] - 15) . ',' . max(0, $rgba[1] - 15) . ',' . max(0, $rgba[2] - 15) . ',' . $rgba[3] . ')',
 			'veryDarken' => 'rgba(' . max(0, $rgba[0] - 20) . ',' . max(0, $rgba[1] - 20) . ',' . max(0, $rgba[2] - 20) . ',' . $rgba[3] . ')',
-			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "inherit" : "white"
+			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "#222" : "#DDD"
 		];
 	}
 
