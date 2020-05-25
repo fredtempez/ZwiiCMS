@@ -357,7 +357,7 @@ class common {
 	 * En local, copie du site décran de ZwiiCMS
 	 */
 	public function makeImageTag () {
-		if (!file_exists(self::FILE_DIR.'source/screenshot.png'))
+		if (!file_exists(self::FILE_DIR.'source/screenshot.jpg'))
 		{
 			if ( strpos(helper::baseUrl(false),'localhost') == 0 AND strpos(helper::baseUrl(false),'127.0.0.1') == 0)	{
 				$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. helper::baseUrl(false) .'&screenshot=true');
@@ -367,7 +367,7 @@ class common {
 					$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
 					$data = 'data:image/jpeg;base64,'.$screenshot;
 					$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
-					file_put_contents( self::FILE_DIR.'source/screenshot.png',$data);
+					file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$data);
 				}
 			}
 		}
@@ -2424,7 +2424,7 @@ class layout extends common {
 	 * Affiche la meta image (site screenshot)
 	 */
 	public function showMetaImage() {
-		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.png" />';
+		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
 	}
 
 

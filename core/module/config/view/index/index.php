@@ -13,7 +13,7 @@
 					'href' => helper::baseUrl() . 'config/backup',
 					'value' => 'Sauvegarder',
 					'ico' => 'download'
-				]); ?>				
+				]); ?>
 			</div>
 	<div class="col2">
 		<?php echo template::button('configManageButton', [
@@ -21,7 +21,7 @@
 			'value' => 'Restaurer',
 			'ico' => 'upload'
 		]); ?>
-	</div>		
+	</div>
 	<div class="col2">
 		<?php echo template::submit('configSubmit'); ?>
 	</div>
@@ -32,7 +32,7 @@
 			<h4>Informations générales</h4>
 			<div class="row">
 				<div class="col4">
-				<?php 
+				<?php
 					$pages = $this->getData(['page']);
 					foreach($pages as $page => $pageId) {
 						if ($this->getData(['page',$page,'block']) === 'bar' ||
@@ -51,7 +51,7 @@
 						'value' => $this->getData(['config', 'title']),
 						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
 					]); ?>
-				</div>						
+				</div>
 			</div>
 			<?php echo template::textarea('configMetaDescription', [
 				'label' => 'Description du site',
@@ -59,7 +59,7 @@
 				'help'  => 'Elle apparaît dans les partages sur les réseaux sociaux.'
 			]); ?>
 		</div>
-	</div>		
+	</div>
 </div>
 <div class="row">
 	<div class="col12">
@@ -100,55 +100,55 @@
 						'label' => 'Fuseau horaire',
 						'selected' => $this->getData(['config', 'timezone']),
 						'help' => 'Le fuseau horaire est utile au bon référencement'
-					]); ?>	
+					]); ?>
 				</div>
 				<div class="col6">
-					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ); 
+					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
 					?>
 					<?php echo template::select('configLegalPageId', $listePageId , [
 						'label' => 'Mentions légales',
 						'selected' => $this->getData(['config', 'legalPageId']),
 						'help' => 'Les mentions légales sont obligatoires en France'
 					]); ?>
-				</div>	
-			</div>	
-			<div class="row">			
+				</div>
+			</div>
+			<div class="row">
 				<div class="col6">
 					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
-				</div>	
+				</div>
 				<div class="col6">
 					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 						'checked' => helper::checkRewrite(),
 						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
 					]); ?>
-				</div>	
-			</div>
-			<div class="row">
-				<div class="col6">	
-					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
-							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
-						]); ?>	
-				</div>				
-				<div class="col6">				
-					<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
-						'checked' => $this->getData(['config', 'maintenance'])
-					]); ?>	
 				</div>
 			</div>
 			<div class="row">
-				<div class="col3">	
+				<div class="col6">
+					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
+						]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col3">
 					<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour automatique', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
 							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
 							'disabled' => !$error
 						]); ?>
-				</div>		
+				</div>
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
-						'class' => 'buttonRed',	
+						'class' => 'buttonRed',
 						'ico' => 'download-cloud',
 						'href' => helper::baseUrl() . 'install/update',
 						'value' => 'Mise à jour manuelle',
@@ -156,7 +156,7 @@
 					]); ?>
 				</div>
 			</div>
-		</div>							
+		</div>
 	</div>
 </div>
 <div class="row">
@@ -171,14 +171,14 @@
 						'value' => $this->getData(['config', 'social', 'facebookId'])
 					]); ?>
 				</div>
-				<div class="col6">					
+				<div class="col6">
 					<?php echo template::text('configSocialInstagramId', [
 						'help' => 'Saisissez votre ID : https://www.instagram.com/[ID].',
 						'label' => 'Instagram',
 						'value' => $this->getData(['config', 'social', 'instagramId'])
 					]); ?>
 				</div>
-			</div>									
+			</div>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::text('configSocialYoutubeId', [
@@ -186,16 +186,16 @@
 						'label' => 'Chaîne Youtube',
 						'value' => $this->getData(['config', 'social', 'youtubeId'])
 					]); ?>
-				</div>					
+				</div>
 				<div class="col6">
 					<?php echo template::text('configSocialYoutubeUserId', [
 						'help' => 'Saisissez votre ID Utilisateur : https://www.youtube.com/user/[ID].',
 						'label' => 'Youtube',
 						'value' => $this->getData(['config', 'social', 'youtubeUserId'])
 					]); ?>
-				</div>	
+				</div>
 			</div>
-			<div class="row">				
+			<div class="row">
 				<div class="col6">
 						<?php echo template::text('configSocialTwitterId', [
 							'help' => 'Saisissez votre ID : https://twitter.com/[ID].',
@@ -209,21 +209,21 @@
 						'label' => 'Pinterest',
 						'value' => $this->getData(['config', 'social', 'pinterestId'])
 					]); ?>
-				</div>					
+				</div>
 				<div class="col6">
 					<?php echo template::text('configSocialLinkedinId', [
 						'help' => 'Saisissez votre ID Linkedin : https://fr.linkedin.com/in/[ID].',
 						'label' => 'Linkedin',
 						'value' => $this->getData(['config', 'social', 'linkedinId'])
 					]); ?>
-				</div>														
+				</div>
 				<div class="col6">
 						<?php echo template::text('configSocialGithubId', [
 							'help' => 'Saisissez votre ID Github : https://github.com/[ID].',
 							'label' => 'Github',
 							'value' => $this->getData(['config', 'social', 'githubId'])
 						]); ?>
-				</div>						
+				</div>
 			</div>
 		</div>
 	</div>
@@ -233,7 +233,7 @@
 		<div class="block">
 			<h4>Référencement</h4>
 			<div class="row">
-				<div class="col6">	
+				<div class="col6">
 					<?php echo template::button('configMetaImage', [
 					'href' => helper::baseUrl() . 'config/configMetaImage',
 					'value' => 'Capture Open Graph',
@@ -250,10 +250,10 @@
 			</div>
 			<div class="row">
 				<div class="col8 offset2 textAlignCenter">
-					<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.png' est effacé du gestionnaire de fichiers." />
+					<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
 				</div>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 <div class="row">
@@ -275,7 +275,7 @@
 						'value' => 'Script inséré dans head',
 						'ico' => 'pencil'
 					]); ?>
-				</div>					
+				</div>
 				<div class="col3 offset1 verticalAlignBottom">
 					<?php echo template::button('scriptBody', [
 						'href' => helper::baseUrl() . 'config/script/body',
@@ -285,19 +285,19 @@
 				</div>
 			</div>
 		</div>
-	</div>		
+	</div>
 </div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
 			<h4>Paramètres réseaux</h4>
-			<div class="row">	
+			<div class="row">
 				<div class="col2">
 				<?php echo template::select('configProxyType', $module::$proxyType, [
 					'label' => 'Type de proxy',
 					'selected' => $this->getData(['config', 'proxyType'])
 					]); ?>
-				</div>	
+				</div>
 				<div  class="col8">
 					<?php echo template::text('configProxyUrl', [
 						'label' => 'Adresse du proxy',
@@ -310,17 +310,17 @@
 						'label' => 'Port du proxy',
 						'placeholder' => '6060',
 						'value' => $this->getData(['config', 'proxyPort'])
-					]); ?>	
+					]); ?>
 				</div>
-			</div>			
+			</div>
 		</div>
 	</div>
-</div>	
+</div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
 			<h4>Paramètres de messagerie SMTP</h4>
-			<div class="row">	
+			<div class="row">
 				<div class="col12">
 					<?php echo template::checkbox('configSmtpEnable', true, 'Activer SMTP', [
 							'checked' => $this->getData(['config', 'smtp','enable']),
@@ -335,21 +335,21 @@
 							'label' => 'Adresse SMTP',
 							'placeholder' => 'smtp.fr',
 							'value' => $this->getData(['config', 'smtp','host'])
-						]); ?>		
-					</div>									
+						]); ?>
+					</div>
 					<div  class="col2">
 						<?php echo template::text('configSmtpPort', [
 								'label' => 'Port SMTP',
 								'placeholder' => '589',
 								'value' => $this->getData(['config', 'smtp','port'])
-						]); ?>		
+						]); ?>
 					</div>
 					<div  class="col2">
 						<?php echo template::select('configSmtpAuth', $module::$SMTPauth, [
 							'label' => 'Authentification',
 							'selected' => $this->getData(['config', 'smtp','auth'])
-						]); ?>						
-					</div>						
+						]); ?>
+					</div>
 				</div>
 				<div id="configSmtpAuthParam">
 					<div class="row">
@@ -357,27 +357,27 @@
 							<?php echo template::text('configSmtpUsername', [
 								'label' => 'Nom utilisateur',
 								'value' => $this->getData(['config', 'smtp','username' ])
-							]); ?>	
+							]); ?>
 						</div>
 						<div  class="col5">
 							<?php echo template::password('configSmtpPassword', [
 								'label' => 'Mot de passe',
 								'autocomplete' => 'off',
 								'value' => helper::decrypt ($this->getData(['config', 'smtp','username' ]),$this->getData(['config','smtp','password']))
-							]); ?>	
+							]); ?>
 						</div>
 						<div  class="col2">
 							<?php echo template::select('configSmtpSecure', $module::$SMTPEnc	, [
 								'label' => 'Sécurité',
 								'selected' => $this->getData(['config', 'smtp','secure'])
-							]); ?>	
-						</div>					
-					</div>	
+							]); ?>
+						</div>
+					</div>
 				</div>
-			</div>		
+			</div>
 		</div>
 	</div>
-</div>	
+</div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
@@ -388,7 +388,7 @@
 					'label' => 'ZwiiCMS',
 					'readonly' => true,
 					'value' => common::ZWII_VERSION
-				]); ?>	
+				]); ?>
 				</div>
 				<div  class="col2">
 					<?php echo template::text('moduleBlogVersion', [
@@ -424,8 +424,8 @@
 						'readonly' => true,
 						'value' => redirection::REDIRECTION_VERSION
 					]); ?>
-				</div>								
-			</div>	
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

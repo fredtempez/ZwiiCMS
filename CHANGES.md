@@ -5,9 +5,10 @@
     - Gestion des accès concurrents :
         - deux utilisateurs ne peuvent accèder en modification à la même page du site ou de configuration
         - la connexion d'un utilisateur sur un autre poste ou navigateur déconnecte la session précédente.
-- Modifications : 
+- Modifications :
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
+    - Image tag : modification de l'API Google.
 
 ## version 10.1.000
 - Nouveautés :
