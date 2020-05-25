@@ -227,8 +227,6 @@
 			</div>
 		</div>
 	</div>
-<!--</div>
-<div class="row">-->
 	<div class="col6">
 		<div class="block">
 			<h4>Référencement</h4>
@@ -248,11 +246,13 @@
 					]); ?>
 				</div>
 			</div>
+			<?php if (file_exists(self::FILE_DIR.'source/screenshot.jpg')): ?>
 			<div class="row">
 				<div class="col8 offset2 textAlignCenter">
 					<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
 				</div>
 			</div>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

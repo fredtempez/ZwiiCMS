@@ -488,10 +488,12 @@ class config extends common {
 				'state' => true
 			]);
 		}
-		// Initialisation du screen
+		// Initialisation du screen - APPEL AUTO DESACTIVE POUR EVITER UN RALENTISSEMENT
+		/*
 		if (!file_exists(self::FILE_DIR.'source/screenshot.jpg')) {
 			$this->configMetaImage();
 		}
+		*/
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration',
