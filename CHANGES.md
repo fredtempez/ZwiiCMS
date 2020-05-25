@@ -10,6 +10,10 @@
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptatations suit à la modification de l'API Google.
 
+## version 10.1.001
+- Correction : 
+    - Extension image tag.
+
 ## version 10.1.000
 - Nouveautés :
     - Distinction entre le thème du site et celui de l'administration. Sauvegarde et restauration de l'un ou de  l'autre.

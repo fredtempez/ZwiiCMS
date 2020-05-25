@@ -353,22 +353,19 @@ class common {
 
 
 	/**
-	 * Récupérer une copie d'écran du site Web pour le tag image si le fichier n'existe pas
+	 * Récupérer une copie d'écran du site Web pour le tag image
 	 * En local, copie du site décran de ZwiiCMS
 	 */
-	public function makeImageTag () {
-		if (!file_exists(self::FILE_DIR.'source/screenshot.jpg'))
-		{
-			if ( strpos(helper::baseUrl(false),'localhost') == 0 AND strpos(helper::baseUrl(false),'127.0.0.1') == 0)	{
-				$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. helper::baseUrl(false) .'&screenshot=true');
-				if ($googlePagespeedData  !== false) {
-					$googlePagespeedData = json_decode($googlePagespeedData, true);
-					$screenshot = $googlePagespeedData['screenshot']['data'];
-					$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
-					$data = 'data:image/jpeg;base64,'.$screenshot;
-					$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
-					file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$data);
-				}
+	public function makeImageTag() {
+		if ( strpos(helper::baseUrl(false),'localhost') == 0 AND strpos(helper::baseUrl(false),'127.0.0.1') == 0)	{
+			$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v2/runPagespeed?url='. helper::baseUrl(false) .'&screenshot=true');
+			if ($googlePagespeedData  !== false) {
+				$googlePagespeedData = json_decode($googlePagespeedData, true);
+				$screenshot = $googlePagespeedData['screenshot']['data'];
+				$screenshot = str_replace(array('_','-'),array('/','+'),$screenshot);
+				$data = 'data:image/jpeg;base64,'.$screenshot;
+				$data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
+				file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$data);
 			}
 		}
 	}
