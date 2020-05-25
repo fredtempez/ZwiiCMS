@@ -8,7 +8,7 @@
 - Modifications :
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
-    - Image tag : modification de l'API Google.
+    - Image tag :  adaptatations suit à la modification de l'API Google.
 
 ## version 10.1.000
 - Nouveautés :
