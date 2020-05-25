@@ -8,11 +8,17 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset4">
+			<?php echo template::button('configAdminTest', [
+				'value' => 'Bouton Standard'
+			]); ?>
+		</div>
+		<div class="col2 offset">
 			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/resetAdmin',
-				'value' => 'Réinitialiser'
+				'value' => 'Réinitialiser',
+				'ico' => 'cancel'
 			]); ?>
 		</div>
 		<div class="col2">
@@ -36,24 +42,6 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::text('adminBackGroundBlockColor', [
-							'class' => 'colorPicker',
-							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Arrière-plan des blocs',
-							'value' => $this->getData(['admin', 'backgroundBlockColor'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::text('adminBorderBlockColor', [
-							'class' => 'colorPicker',
-							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Bordure des blocs',
-							'value' => $this->getData(['admin', 'borderBlockColor'])
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col4">
 						<?php echo template::text('adminColorTitle', [
 							'class' => 'colorPicker',
 							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
@@ -67,6 +55,24 @@
 							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Texte',
 							'value' => $this->getData(['admin', 'colorText'])
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::text('adminBackGroundBlockColor', [
+							'class' => 'colorPicker',
+							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.',
+							'label' => 'Arrière-plan des champs',
+							'value' => $this->getData(['admin', 'backgroundBlockColor'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::text('adminBorderBlockColor', [
+							'class' => 'colorPicker',
+							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
+							'label' => 'Bordure des champs',
+							'value' => $this->getData(['admin', 'borderBlockColor'])
 						]); ?>
 					</div>
 					<div class="col4">
