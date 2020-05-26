@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.000.dev5';
+	const ZWII_VERSION = '10.2.000.dev6';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -65,6 +65,10 @@ class common {
 		'config',
 		'edit',
 		'config'
+	];
+	public static $accessExclude = [
+		'login',
+		'logout'
 	];
 	private $data = [];
 	private $hierarchy = [
@@ -1620,12 +1624,20 @@ class core extends common {
 				}
 			}
 		}
-		// Controle si la page demandée est en édition ou accès à la gestion du site
+
+		/**
+		 * Controle si la page demandée est en édition ou accès à la gestion du site
+		 * conditions de blocage :
+		 * - Les deux utilisateurs qui accèdent à la même page sont différents
+		 * - les URLS sont identiques
+		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
+		 */
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
-			if ( $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
-				 $userId !== $this->getuser('id') &&
-				 array_intersect($t,self::$accessList)	 ) {
+			if ( $userId !== $this->getuser('id') &&
+				 $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
+				 array_intersect($t,self::$accessList)  &&
+				 array_intersect($t,self::$accessExclude) === false	 ) {
 					$access = false;
 					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
 			}
@@ -1633,7 +1645,6 @@ class core extends common {
 		// Accès concurrent stocke la page visitée
 		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
 			$this->setData(['user',$this->getuser('id'),'accessUrl',$this->getUrl()]);
-			$this->setData(['user',$this->getuser('id'),'acessTime',time()]);
 		}
 
 		// Breadcrumb
