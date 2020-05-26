@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev7';
+	const ZWII_VERSION = '10.2.00.dev8';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1524,7 +1524,7 @@ class core extends common {
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
-			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';			
+			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
 			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{ background-color:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText']) . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
