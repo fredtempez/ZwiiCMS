@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::text('adminBackGroundBlockColor', [
 							'class' => 'colorPicker',
 							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.',
@@ -67,20 +67,12 @@
 							'value' => $this->getData(['admin', 'backgroundBlockColor'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::text('adminBorderBlockColor', [
 							'class' => 'colorPicker',
 							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Bordure des champs',
 							'value' => $this->getData(['admin', 'borderBlockColor'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::text('adminColorButtonText', [
-							'class' => 'colorPicker',
-							'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Texte des boutons',
-							'value' => $this->getData(['admin', 'colorButtonText'])
 						]); ?>
 					</div>
 				</div>
