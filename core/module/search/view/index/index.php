@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-            <h3>Rechercher</h3>
+            <h4>Rechercher</h4>
                 <div class="row">
                     <div class="col10 verticalAlignBottom">
                         <?php echo template::text('searchMotphraseclef', [
