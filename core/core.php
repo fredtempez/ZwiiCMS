@@ -36,7 +36,7 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev8';
+	const ZWII_VERSION = '10.2.00.dev9';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1537,7 +1537,7 @@ class core extends common {
 			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
 			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
-			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select,textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
+			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'admin.css', $css);
 		}

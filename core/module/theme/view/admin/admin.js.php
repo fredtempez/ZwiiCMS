@@ -35,7 +35,7 @@ $("input, select").on("change", function() {
     css += "button[type=submit] {background-color: " + colors.normal + ";color: " + ";color:" + colors.text + "}button[type=submit]:hover {background-color: " + colors.darken +  ";color:" + colors.text + ";}button[type=submit]:active {background-color:" + colors.veryDarken + ";color:" + colors.text + "}";
     var colors = core.colorVariants($("#adminBackGroundBlockColor").val());
     css += ".block {border: 1px solid " + $("#adminBorderBlockColor").val() + ";}.block h4 {background-color: "  + colors.normal + ";color:" + colors.text + ";}";
-    css += "input[type=email],input[type=text],input[type=password],select,textarea:not(.editorWysiwyg),.inputFile{background-color: "  + colors.normal + ";color:" + colors.text + ";border: 1px solid " + $("#adminBorderBlockColor").val() + ";}";
+    css += "input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: "  + colors.normal + ";color:" + colors.text + ";border: 1px solid " + $("#adminBorderBlockColor").val() + ";}";
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
