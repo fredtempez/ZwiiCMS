@@ -256,37 +256,7 @@
 		</div>
 	</div>
 </div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-			<h4>Options avancées</h4>
-			<div class="row">
-				<div class="col3">
-					<?php echo template::text('configAnalyticsId', [
-						'help' => 'Saisissez l\'ID de suivi.',
-						'label' => 'Google Analytics',
-						'placeholder' => 'UA-XXXXXXXX-X',
-						'value' => $this->getData(['config', 'analyticsId'])
-					]); ?>
-				</div>
-				<div class="col3 offset1 verticalAlignBottom">
-					<?php echo template::button('configHead', [
-						'href' => helper::baseUrl() . 'config/script/head',
-						'value' => 'Script inséré dans head',
-						'ico' => 'pencil'
-					]); ?>
-				</div>
-				<div class="col3 offset1 verticalAlignBottom">
-					<?php echo template::button('scriptBody', [
-						'href' => helper::baseUrl() . 'config/script/body',
-						'value' => 'Script inséré dans body',
-						'ico' => 'pencil'
-				]); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+
 <div class="row">
 	<div class="col12">
 		<div class="block">
@@ -363,7 +333,7 @@
 							<?php echo template::password('configSmtpPassword', [
 								'label' => 'Mot de passe',
 								'autocomplete' => 'off',
-								'value' => helper::decrypt ($this->getData(['config', 'smtp','username' ]),$this->getData(['config','smtp','password']))
+								'value' => $this->getData(['config', 'smtp','username' ]) ? helper::decrypt ($this->getData(['config', 'smtp','username' ]),$this->getData(['config','smtp','password'])) : ''
 							]); ?>
 						</div>
 						<div  class="col2">
@@ -373,6 +343,37 @@
 							]); ?>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Options avancées</h4>
+			<div class="row">
+				<div class="col3">
+					<?php echo template::text('configAnalyticsId', [
+						'help' => 'Saisissez l\'ID de suivi.',
+						'label' => 'Google Analytics',
+						'placeholder' => 'UA-XXXXXXXX-X',
+						'value' => $this->getData(['config', 'analyticsId'])
+					]); ?>
+				</div>
+				<div class="col3 offset1 verticalAlignBottom">
+					<?php echo template::button('configHead', [
+						'href' => helper::baseUrl() . 'config/script/head',
+						'value' => 'Script inséré dans head',
+						'ico' => 'pencil'
+					]); ?>
+				</div>
+				<div class="col3 offset1 verticalAlignBottom">
+					<?php echo template::button('scriptBody', [
+						'href' => helper::baseUrl() . 'config/script/body',
+						'value' => 'Script inséré dans body',
+						'ico' => 'pencil'
+				]); ?>
 				</div>
 			</div>
 		</div>
