@@ -35,8 +35,11 @@ class common {
 	const THUMBS_SEPARATOR = 'mini_';
 	const THUMBS_WIDTH = 640;
 
+	// Contrôle d'édition temps max en secondes.
+	const ACCESS_TIMER = 360;
+
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev9';
+	const ZWII_VERSION = '10.2.00.dev10';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1609,6 +1612,7 @@ class core extends common {
 		// Check l'accès à la page
 		$access = null;
 		$accessInfo['userName'] = '';
+		$accessInfo['pageId'] = '';
 		if($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if(
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
@@ -1635,20 +1639,25 @@ class core extends common {
 		 * - Les deux utilisateurs qui accèdent à la même page sont différents
 		 * - les URLS sont identiques
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
+		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $userId !== $this->getuser('id') &&
 				 $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
 				 array_intersect($t,self::$accessList)  &&
-				 array_intersect($t,self::$accessExclude) === false	 ) {
+				 array_intersect($t,self::$accessExclude) !== false	 &&
+				 time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
+			) {
 					$access = false;
 					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+					$accessInfo['pageId'] = end($t);
 			}
 		}
 		// Accès concurrent stocke la page visitée
 		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
 			$this->setData(['user',$this->getuser('id'),'accessUrl',$this->getUrl()]);
+			$this->setData(['user',$this->getuser('id'),'accessTimer',time()]);
 		}
 
 		// Breadcrumb
@@ -1870,7 +1879,7 @@ class core extends common {
 			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech('La page demandée est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
+					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
 				$this->addOutput([
