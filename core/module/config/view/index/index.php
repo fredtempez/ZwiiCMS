@@ -348,6 +348,28 @@
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Connexion</h4>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
+						'label' => 'Echecs avant blocage',
+						'selected' => $this->getData(['config', 'connect', 'attempt'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
+						'label' => 'Durée du blocage',
+						'selected' => $this->getData(['config', 'connect', 'timeout'])
+					]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 <div class="row">
 	<div class="col12">
 		<div class="block">

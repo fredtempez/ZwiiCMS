@@ -333,10 +333,10 @@ class user extends common {
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
 			// Contrôle du time out
-			if ( $this->getData(['user',$userId,'connectTimeout']) + self::CONNECT_TIMEOUT > time() &&
-				 $this->getData(['user',$userId,'connectFail']) > self::CONNECT_ATTEMPT	) {
+			if ( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time() &&
+				 $this->getData(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])	) {
 					$this->addOutput([
-						'notification' => 'Accès bloqué pour ' . self::CONNECT_TIMEOUT . ' minutes'
+						'notification' => 'Accès bloqué pour ' . $this->getData(['config', 'connect', 'timeout']) . ' minutes'
 					]);
 			}
 			// Connexion si les informations sont correctes
@@ -378,10 +378,10 @@ class user extends common {
 					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
 				}
 				// Mettre à jour le timer
-				if ( $this->getdata(['user',$userId,'connectFail']) > self::CONNECT_ATTEMPT) {
-					$notification = 'Trop de tentatives, accès bloqué durant ' . self::CONNECT_TIMEOUT / 360 . ' minutes après chaque tentative infructueuse';
+				if ( $this->getdata(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])) {
+					$notification = 'Trop de tentatives, accès bloqué durant ' . $this->getData(['config', 'connect', 'timeout']) . ' minutes.';
 					// Ne pas incrémenter le timer si actif
-					if ($this->getData(['user',$userId,'connectTimeout'])  + self::CONNECT_TIMEOUT < time() ) {
+					if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() ) {
 						$this->setData(['user',$userId,'connectTimeout', time()]);
 					}
 				} else {

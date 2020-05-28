@@ -165,7 +165,22 @@ class config extends common {
 		'tls' => 'START TLS',
 		'ssl' => 'SSL/TLS'
 	];
-
+	// Sécurité de la  connexion - tentative max avant blocage
+	public static $connectAttempt = [
+		999 => 'Aucun',
+		3 => '3 tentatives',
+		5 => '5 tentatives',
+		10=> '10 tentatives'
+	];
+	// Sécurité de la connexion - durée du blocage
+	public static $connectTimeout = [
+		0 => 'Aucun',
+		120 => '2 minutes',
+		240 => '4 minutes',
+		360 => '6 minutes',
+		480 => '8 minutes',
+		600 => '10 minutes'
+	];
 	public function generateFiles() {
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
@@ -438,6 +453,10 @@ class config extends common {
 						'username' => $this->getInput('configSmtpUsername',helper::FILTER_STRING_SHORT),
 						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configSmtpPassword')),
 						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
+					],
+					'connect' => [
+						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
+						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
 					]
 				]
 			]);

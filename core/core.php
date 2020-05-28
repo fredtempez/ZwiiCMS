@@ -35,15 +35,11 @@ class common {
 	const THUMBS_SEPARATOR = 'mini_';
 	const THUMBS_WIDTH = 640;
 
-	// Contrôle d'édition temps max en secondes.
+	// Contrôle d'édition temps max en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
-	// Nombre d'essais
-	const CONNECT_ATTEMPT = 3;
-	// Temps mort
-	const CONNECT_TIMEOUT = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev11';
+	const ZWII_VERSION = '10.2.00.dev12';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1314,6 +1310,8 @@ class common {
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
 				$this->deleteData(['admin','colorButtonText']);
+				$this->setData(['config', 'connect', 'attempt',3]);
+				$this->setData(['config', 'connect', 'timeout',10]);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
