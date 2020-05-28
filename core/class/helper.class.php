@@ -24,19 +24,23 @@ class helper {
 	 */
 
 	public static function urlGetContents ($url) {
-	if(function_exists('file_get_contents') && 
-			ini_get('allow_url_fopen') ){
-			$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
-		}elseif(function_exists('fopen') && 
-			function_exists('stream_get_contents') &&
-			ini_get('allow_url_fopen')){
-			$handle = fopen ($url, "r");
-			$url_get_contents_data = stream_get_contents($handle);
-		}else{
-			$url_get_contents_data = false;
+		// Ejecter free.fr
+		if (strpos(self::baseUrl(),'free.fr') > 0 ){
+			return false;
 		}
-	return $url_get_contents_data;
-	} 
+		if(function_exists('file_get_contents') &&
+				ini_get('allow_url_fopen') ){
+				$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
+			}elseif(function_exists('fopen') &&
+				function_exists('stream_get_contents') &&
+				ini_get('allow_url_fopen')){
+				$handle = fopen ($url, "r");
+				$url_get_contents_data = stream_get_contents($handle);
+			}else{
+				$url_get_contents_data = false;
+			}
+		return $url_get_contents_data;
+	}
 
 	/**
 	 * Retourne les valeurs d'une colonne du tableau de données
@@ -46,7 +50,7 @@ class helper {
 	 * @return array
 	 */
 	public static function arrayCollumn($array, $column, $sort = null) {
-		$newArray = [];	
+		$newArray = [];
 		if(empty($array) === false) {
 			$newArray = array_map(function($element) use($column) {
 				return $element[$column];
@@ -94,7 +98,7 @@ class helper {
 				$filePath = $file->getRealPath();
 				$relativePath = substr($filePath, strlen(realpath($directory)) + 1);
 				$zip->addFile($filePath, $relativePath);
-			} 			
+			}
 		}
 		$zip->close();
 		return ($fileName);
@@ -225,7 +229,7 @@ class helper {
 					explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", '),
 					explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-'),
 					$text
-				));				
+				));
 				$text = preg_replace('/([^a-z0-9-])/', '', $text);
 				// Supprime les emoji
 				$text = preg_replace('/[[:^print:]]/', '', $text);
@@ -238,7 +242,7 @@ class helper {
 				// Un ID ne peut pas être un entier, pour éviter les conflits avec le système de pagination
 				if(intval($text) !== 0) {
 					$text = 'i' . $text;
-				}			
+				}
 				break;
 			case self::FILTER_INT:
 				$text = (int) filter_var($text, FILTER_SANITIZE_NUMBER_INT);
@@ -446,7 +450,7 @@ class helper {
 	}
 
 	/**
-	 * Cryptation 
+	 * Cryptation
 	 * @param string $key la clé d'encryptage
 	 * @param string $payload la chaine à coder
 	 * @return string
@@ -456,13 +460,13 @@ class helper {
 		$encrypted = openssl_encrypt($payload, 'aes-256-cbc', $key, 0, $iv);
 		return base64_encode($encrypted . '::' . $iv);
 	}
-	  
+
 	/**
-	 * Décryptation 
+	 * Décryptation
 	 * @param string $key la clé d'encryptage
 	 * @param string $garble la chaine à décoder
 	 * @return string
-	 */	  
+	 */
 	public static  function decrypt($key, $garble) {
 		list($encrypted_data, $iv) = explode('::', base64_decode($garble), 2);
 		return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);

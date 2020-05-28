@@ -10,6 +10,11 @@
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptatations suit à la modification de l'API Google.
 
+## version 10.1.002
+- Corrections :
+    - free.fr : désactivation totale de la fonction de récupération de données en ligne (update, image tag, etc..)
+    - Image Tag absente : non régénérée au lancement de la configuration du site, image masquée dans si absente.
+
 ## version 10.1.001
 - Correction : 
     - Extension image tag.

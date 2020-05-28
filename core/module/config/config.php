@@ -270,7 +270,7 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => $success === true ? 'Image tag réinitialisée' : 'Erreur : image tag non créée',
+			'notification' => $success === true ? 'Image Open Graph réinitialisée' : 'Erreur : image Open Graph non créée',
 			'redirect' => helper::baseUrl() . 'config',
 			'state' => $success
 		]);
