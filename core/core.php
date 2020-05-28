@@ -36,10 +36,14 @@ class common {
 	const THUMBS_WIDTH = 640;
 
 	// Contrôle d'édition temps max en secondes.
-	const ACCESS_TIMER = 360;
+	const ACCESS_TIMER = 1800;
+	// Nombre d'essais
+	const CONNECT_ATTEMPT = 3;
+	// Temps mort
+	const CONNECT_TIMEOUT = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev10';
+	const ZWII_VERSION = '10.2.00.dev11';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];

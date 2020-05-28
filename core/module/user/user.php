@@ -43,14 +43,14 @@ class user extends common {
 			if($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 				self::$inputNotices['userAddConfirmPassword'] = 'Incorrect';
 				$check = false;
-			}		
+			}
 			// Crée l'utilisateur
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
 			// Pas de nom saisi
-			if (empty($userFirstname) || 
-				empty($userLastname)  || 
+			if (empty($userFirstname) ||
+				empty($userLastname)  ||
 				empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true)) ||
 				empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true))) {
 				$check=false;
@@ -121,7 +121,7 @@ class user extends common {
 				'redirect' => helper::baseUrl() . 'user',
 				'notification' => 'Action non autorisée'
 			]);
-		}		
+		}
 		// Bloque la suppression de son propre compte
 		elseif($this->getUser('id') === $this->getUrl(2)) {
 			// Valeurs en sortie
@@ -147,13 +147,13 @@ class user extends common {
 	 */
 	public function edit() {
 		if ($this->getUrl(3) !== $_SESSION['csrf'] &&
-			$this->getUrl(4) !== $_SESSION['csrf']) {			
+			$this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
 				'notification' => 'Action  non autorisée'
 			]);
-		}	
+		}
 		// Accès refusé
 		if(
 			// L'utilisateur n'existe pas
@@ -332,6 +332,13 @@ class user extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
+			// Contrôle du time out
+			if ( $this->getData(['user',$userId,'connectTimeout']) + self::CONNECT_TIMEOUT > time() &&
+				 $this->getData(['user',$userId,'connectFail']) > self::CONNECT_ATTEMPT	) {
+					$this->addOutput([
+						'notification' => 'Accès bloqué pour ' . self::CONNECT_TIMEOUT . ' minutes'
+					]);
+			}
 			// Connexion si les informations sont correctes
 			if(
 				password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
@@ -348,13 +355,15 @@ class user extends common {
 					AND $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
 				) {
 					$this->addOutput([
-						'notification' => 'Seul un administrateur peur se connecter lors d\'une maintenance',
+						'notification' => 'Seul un administrateur peut se connecter lors d\'une maintenance',
 						'redirect' => helper::baseUrl(),
 						'state' => false
 					]);
 				}
-				// Valeurs en sortie en cas de réussite
 				else {
+					// RAZ compteur échec connexion
+					$this->setData(['user',$userId,'connectFail',0 ]);
+					// Valeurs en sortie en cas de réussite
 					$this->addOutput([
 						'notification' => 'Connexion réussie',
 						'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
@@ -364,9 +373,23 @@ class user extends common {
 			}
 			// Sinon notification d'échec
 			else {
+				// Incrémenter le compteur d'échec de connexion si l'utilisateur existe
+				if ( is_array($this->getdata(['user',$userId])) ) {
+					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
+				}
+				// Mettre à jour le timer
+				if ( $this->getdata(['user',$userId,'connectFail']) > self::CONNECT_ATTEMPT) {
+					$notification = 'Trop de tentatives, accès bloqué durant ' . self::CONNECT_TIMEOUT / 360 . ' minutes après chaque tentative infructueuse';
+					// Ne pas incrémenter le timer si actif
+					if ($this->getData(['user',$userId,'connectTimeout'])  + self::CONNECT_TIMEOUT < time() ) {
+						$this->setData(['user',$userId,'connectTimeout', time()]);
+					}
+				} else {
+					$notification = 'Identifiant ou mot de passe incorrect';
+				}
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Identifiant ou mot de passe incorrect'
+					'notification' => $notification
 				]);
 			}
 		}
