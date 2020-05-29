@@ -5,7 +5,7 @@
 ): ?>
 	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation. Vous pouvez également afficher les zones cachées à l\'aide du bouton ci-dessous.'); ?>
 	<div class="row">
-		<div class="col2 offset1">
+		<div class="col3">
 			<?php echo template::button('themeBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl(false),
@@ -13,28 +13,30 @@
 				'value' => 'Accueil'
 			]); ?>
 		</div>
-		<div class="col2">
-			<?php echo template::button('themeAdvanced', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
-				'value' => 'Éditeur CSS'
-			]); ?>
-		</div>		
-		<div class="col2">
-			<?php echo template::button('themeManage', [				
-				'ico' => 'upload',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
-				'value' => 'Gérer'
-			]); ?>
-		</div>	
-		<div class="col2">
+		<div class="col3">
 			<?php echo template::button('themeAdmin', [
 				'ico' => 'brush',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
-		</div>		
-		<div class="col2">
+		</div>
+		<div class="col3">
+			<?php echo template::button('themeAdvanced', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
+				'value' => 'Éditeur CSS'
+			]); ?>
+		</div>
+		<div class="col3">
+			<?php echo template::button('themeManage', [
+				'ico' => 'upload',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
+				'value' => 'Gérer'
+			]); ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col3 offset5">
 			<?php echo template::button('themeShowAll', [
 				'ico' => 'eye',
 				'value' => 'Zones cachées'
@@ -44,7 +46,7 @@
 <?php else: ?>
 	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation.'); ?>
 	<div class="row">
-		<div class="col2 offset2">
+		<div class="col3">
 			<?php echo template::button('themeBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl(false),
@@ -52,21 +54,21 @@
 				'value' => 'Accueil'
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col3">
 			<?php echo template::button('themeAdmin', [
 				'ico' => 'brush',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
-		</div>			
-		<div class="col2">
-			<?php echo template::button('themeManage', [				
+		</div>
+		<div class="col3">
+			<?php echo template::button('themeManage', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'ico' => 'upload',
 				'value' => 'Gérer'
 			]); ?>
-		</div>			
-		<div class="col2">
+		</div>
+		<div class="col3">
 			<?php echo template::button('themeAdvanced', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS',
