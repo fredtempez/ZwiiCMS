@@ -1311,7 +1311,7 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
 				$this->deleteData(['admin','colorButtonText']);
 				$this->setData(['config', 'connect', 'attempt',3]);
-				$this->setData(['config', 'connect', 'timeout',10]);
+				$this->setData(['config', 'connect', 'timeout',360]);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}

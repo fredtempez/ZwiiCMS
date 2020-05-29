@@ -170,7 +170,7 @@ class config extends common {
 		999 => 'Aucun',
 		3 => '3 tentatives',
 		5 => '5 tentatives',
-		10=> '10 tentatives'
+		10 => '10 tentatives'
 	];
 	// Sécurité de la connexion - durée du blocage
 	public static $connectTimeout = [
