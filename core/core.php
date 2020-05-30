@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev16';
+	const ZWII_VERSION = '10.2.00.dev17';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1313,6 +1313,8 @@ class common {
 				$this->setData(['config', 'connect', 'attempt',3]);
 				$this->setData(['config', 'connect', 'timeout',600]);
 				$this->setData(['config', 'connect', 'log',false]);
+				// Remettre à zéro le thème pour la génération du CSS du blog
+				unlink(self::DATA_DIR . 'theme.css');
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
@@ -1411,6 +1413,8 @@ class core extends common {
 			$css .= 'a:hover{color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body,.block h4{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
+			// spécifiques au module de blog
+			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
 			$css .= 'select,input[type=\'email\'],input[type=\'text\'],textarea{color:' . $this->getData(['theme', 'text', 'backgroundColor']) . '}';
 			// Couleur fixée dans admin.css
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
