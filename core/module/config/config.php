@@ -177,11 +177,9 @@ class config extends common {
 	// Sécurité de la connexion - durée du blocage
 	public static $connectTimeout = [
 		0 => 'Aucun',
-		120 => '2 minutes',
-		240 => '4 minutes',
-		360 => '6 minutes',
-		480 => '8 minutes',
-		600 => '10 minutes'
+		300 => '5 minutes',
+		600 => '10 minutes',
+		900 => '15 minutes'
 	];
 	public function generateFiles() {
 		// Mettre à jour le site map

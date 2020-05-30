@@ -30,7 +30,7 @@ class init extends common {
 				'enable' => false,
 			],
 			"connect" => [
-				"timeout" => 360,
+				"timeout" => 600,
 				"attempt" => 3,
 				'log' => false
 			]
