@@ -1,10 +1,10 @@
 <?php if($module::$articles): ?>
 	<div class="row">
 		<div class="col12">
-			<?php foreach($module::$articles as $articleId => $article): ?>					
+			<?php foreach($module::$articles as $articleId => $article): ?>
 				<div class="row rowArticle">
 					<div class="col3">
-					<?php 
+					<?php
 						// Déterminer le nom de la miniature
 						$parts = explode('/',$article['picture']);
 						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $article['picture']);
@@ -31,7 +31,7 @@
 								<?php echo count($article['comment']); ?>
 							</a>
 							<?php echo template::ico('comment', 'left'); ?>
-						</div>						
+						</div>
 						<div class="blogDate">
 							<i class="far fa-calendar-alt"></i>
 							<?php echo utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>

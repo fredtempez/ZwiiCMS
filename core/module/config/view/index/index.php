@@ -148,7 +148,6 @@
 				</div>
 				<div class="col3">
 					<?php echo template::button('configUpdateForced', [
-						'class' => 'buttonRed',
 						'ico' => 'download-cloud',
 						'href' => helper::baseUrl() . 'install/update',
 						'value' => 'Mise à jour manuelle',
@@ -289,27 +288,6 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Connexion</h4>
-			<div class="row">
-				<div class="col4">
-					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
-						'label' => 'Echecs avant blocage',
-						'selected' => $this->getData(['config', 'connect', 'attempt'])
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
-						'label' => 'Durée du blocage',
-						'selected' => $this->getData(['config', 'connect', 'timeout'])
-					]); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
 			<h4>Paramètres de messagerie SMTP</h4>
 			<div class="row">
 				<div class="col12">
@@ -374,7 +352,21 @@
 		<div class="block">
 			<h4>Options avancées</h4>
 			<div class="row">
+				<div class="col3 offset1">
+					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
+						'label' => 'Tentatives de logins',
+						'selected' => $this->getData(['config', 'connect', 'attempt'])
+					]); ?>
+				</div>
 				<div class="col3">
+					<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
+						'label' => 'Durée du blocage',
+						'selected' => $this->getData(['config', 'connect', 'timeout'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col3  offset1">
 					<?php echo template::text('configAnalyticsId', [
 						'help' => 'Saisissez l\'ID de suivi.',
 						'label' => 'Google Analytics',
@@ -382,19 +374,41 @@
 						'value' => $this->getData(['config', 'analyticsId'])
 					]); ?>
 				</div>
-				<div class="col3 offset1 verticalAlignBottom">
-					<?php echo template::button('configHead', [
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::button('configScriptHead', [
 						'href' => helper::baseUrl() . 'config/script/head',
-						'value' => 'Script inséré dans head',
+						'value' => 'Script dans head',
 						'ico' => 'pencil'
 					]); ?>
 				</div>
-				<div class="col3 offset1 verticalAlignBottom">
-					<?php echo template::button('scriptBody', [
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::button('ConfigScriptBody', [
 						'href' => helper::baseUrl() . 'config/script/body',
-						'value' => 'Script inséré dans body',
+						'value' => 'Script dans body',
 						'ico' => 'pencil'
 				]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col3 offset1 verticalAlignBottom">
+					<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
+						'checked' => $this->getData(['config', 'connect', 'log'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::button('ConfigLogDownload', [
+						'href' => helper::baseUrl() . 'config/logDownload',
+						'value' => 'Téléchargement du journal',
+						'ico' => 'download'
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::button('ConfigLogReset', [
+						'class' => 'buttonRed',
+						'href' => helper::baseUrl() . 'config/logReset',
+						'value' => 'Réinitialisation du journal',
+						'ico' => 'cancel'
+					]); ?>
 				</div>
 			</div>
 		</div>

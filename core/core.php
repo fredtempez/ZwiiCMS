@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev14';
+	const ZWII_VERSION = '10.2.00.dev16';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1312,6 +1312,7 @@ class common {
 				$this->deleteData(['admin','colorButtonText']);
 				$this->setData(['config', 'connect', 'attempt',3]);
 				$this->setData(['config', 'connect', 'timeout',360]);
+				$this->setData(['config', 'connect', 'log',false]);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
@@ -1581,6 +1582,15 @@ class core extends common {
 			header('Location:' . helper::baseUrl() . 'install');
 			exit();
 		}
+		// Journalisation
+		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+		$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
+		$dataLog .= $this->getUser('id') . ';' ;
+		$dataLog .= $this->getUrl();
+		$dataLog .= PHP_EOL;
+		if ($this->getData(['config','connect','log'])) {
+			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+		}
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
@@ -1661,7 +1671,6 @@ class core extends common {
 			$this->setData(['user',$this->getuser('id'),'accessUrl',$this->getUrl()]);
 			$this->setData(['user',$this->getuser('id'),'accessTimer',time()]);
 		}
-
 		// Breadcrumb
 		$title = $this->getData(['page', $this->getUrl(0), 'title']);
 		if (!empty($this->getData(['page', $this->getUrl(0), 'parentPageId'])) &&

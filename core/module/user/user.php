@@ -332,22 +332,17 @@ class user extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
-			// Contrôle du time out
-			if ( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time() &&
-				 $this->getData(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])	) {
-					$this->addOutput([
-						'notification' => 'Accès bloqué pour ' . $this->getData(['config', 'connect', 'timeout']) . ' minutes'
-					]);
-			}
+			// Contrôle du time out pas de vérification du mot de passe si le temps est dépassé.
 			// Connexion si les informations sont correctes
-			if(
+			if( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time() &&
+				$this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt']) &&
 				password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
 				AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 			) {
 				$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
 				setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
 				setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
-				// Accès multiples avec le m$eme compte
+				// Accès multiples avec le même compte
 				$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 				// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 				if(
@@ -363,7 +358,7 @@ class user extends common {
 				else {
 					// RAZ compteur échec connexion
 					$this->setData(['user',$userId,'connectFail',0 ]);
-					// Valeurs en sortie en cas de réussite
+					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => 'Connexion réussie',
 						'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
@@ -377,15 +372,25 @@ class user extends common {
 				if ( is_array($this->getdata(['user',$userId])) ) {
 					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
 				}
-				// Mettre à jour le timer
+				// Mettre à jour le timer et notifier
 				if ( $this->getdata(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])) {
-					$notification = 'Trop de tentatives, accès bloqué durant ' . $this->getData(['config', 'connect', 'timeout']) . ' minutes.';
+					$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
 					// Ne pas incrémenter le timer si actif
 					if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() ) {
 						$this->setData(['user',$userId,'connectTimeout', time()]);
 					}
 				} else {
 					$notification = 'Identifiant ou mot de passe incorrect';
+				}
+				// Journalisation
+				$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+				$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
+				$dataLog .= $userId . ';' ;
+				$dataLog .= $this->getUrl() .';' ;
+				$dataLog .= 'échec de connexion' ;
+				$dataLog .= PHP_EOL;
+				if ($this->getData(['config','connect','log'])) {
+					file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 				}
 				// Valeurs en sortie
 				$this->addOutput([

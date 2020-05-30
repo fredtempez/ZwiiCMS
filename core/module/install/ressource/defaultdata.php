@@ -31,7 +31,8 @@ class init extends common {
 			],
 			"connect" => [
 				"timeout" => 360,
-				"attempt" => 3
+				"attempt" => 3,
+				'log' => false
 			]
 		],
 		'core' => [

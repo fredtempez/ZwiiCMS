@@ -24,7 +24,9 @@ class config extends common {
 		'index' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
-		'script' => self::GROUP_ADMIN
+		'script' => self::GROUP_ADMIN,
+		'logReset' => self::GROUP_ADMIN,
+		'logDownload'=> self::GROUP_ADMIN
 	];
 
 	public static $timezones = [
@@ -457,6 +459,7 @@ class config extends common {
 					'connect' => [
 						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
+						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN)
 					]
 				]
 			]);
@@ -596,6 +599,47 @@ class config extends common {
 			'state' => $success ? true : false
 		]);
 	}
+
+	/**
+	 * Vider le fichier de log
+	 */
+
+	public function logReset() {
+		unlink(self::DATA_DIR . 'journal.log');
+		// Valeurs en sortie
+			$this->addOutput([
+			'title' => 'Configuration',
+			'view' => 'index',
+			'notification' => 'Journal réinitialisé avec succès',
+			'state' => true
+		]);
+	 }
+
+
+
+	 /**
+	  * Télécharger le fichier de log
+	  */
+	public function logDownload() {
+		// Creation du ZIP
+		$fileName = self::DATA_DIR . 'journal.log';
+
+		// Téléchargement du ZIP
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $fileName . '"');
+		header('Content-Length: ' . filesize($fileName));
+		readfile( $fileName);
+		// Valeurs en sortie
+		$this->addOutput([
+			'display' => self::DISPLAY_RAW
+		]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration',
+			'view' => 'index'
+		]);
+	}
+
 
 	/**
 	 * Fonction de parcours des données de module
