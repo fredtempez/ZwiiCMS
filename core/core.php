@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev18';
+	const ZWII_VERSION = '10.2.00.dev19';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1589,7 +1589,7 @@ class core extends common {
 		// Journalisation
 		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
 		$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
-		$dataLog .= $this->getUser('id') . ';' ;
+		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'visiteur' . ';';
 		$dataLog .= $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config','connect','log'])) {

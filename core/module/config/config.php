@@ -26,7 +26,10 @@ class config extends common {
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
 		'logReset' => self::GROUP_ADMIN,
-		'logDownload'=> self::GROUP_ADMIN
+		'logDownload'=> self::GROUP_ADMIN,
+		'blacklistReset' => self::GROUP_ADMIN,
+		'blacklistDownload' => self::GROUP_ADMIN
+
 	];
 
 	public static $timezones = [
@@ -603,14 +606,25 @@ class config extends common {
 	 */
 
 	public function logReset() {
-		unlink(self::DATA_DIR . 'journal.log');
-		// Valeurs en sortie
+		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
+			unlink(self::DATA_DIR . 'journal.log');
+			// Valeurs en sortie
+				$this->addOutput([
+				'title' => 'Configuration',
+				'view' => 'index',
+				'notification' => 'Journal réinitialisé avec succès',
+				'state' => true
+			]);
+		} else { 
+			// Valeurs en sortie
 			$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index',
-			'notification' => 'Journal réinitialisé avec succès',
-			'state' => true
-		]);
+				'title' => 'Configuration',
+				'view' => 'index',
+				'notification' => 'Pas de journal à effacer',
+				'state' => false
+			]);
+		}
+
 	 }
 
 
@@ -619,10 +633,7 @@ class config extends common {
 	  * Télécharger le fichier de log
 	  */
 	public function logDownload() {
-		// Creation du ZIP
 		$fileName = self::DATA_DIR . 'journal.log';
-
-		// Téléchargement du ZIP
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: attachment; filename="' . $fileName . '"');
 		header('Content-Length: ' . filesize($fileName));
@@ -636,6 +647,58 @@ class config extends common {
 			'title' => 'Configuration',
 			'view' => 'index'
 		]);
+	}
+
+	/**
+	 * Tableau des IP blacklistés
+	 */
+	public function blacklistDownload () {
+		$d = $this->getData(['blacklist']);
+		$data = '';
+		foreach ($d as $key => $item) {
+			$data .=  $key . ';' . $item['ip'] . PHP_EOL;
+		}
+		$fileName = self::TEMP_DIR . 'blacklist.log';
+		file_put_contents($fileName,$data);
+		header('Content-Type: application/octet-stream');
+		header('Content-Disposition: attachment; filename="' . $fileName . '"');
+		header('Content-Length: ' . filesize($fileName));
+		readfile( $fileName);
+		// Valeurs en sortie
+		$this->addOutput([
+			'display' => self::DISPLAY_RAW
+		]);
+		unlink(self::TEMP_DIR . 'blacklist.tmp');
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration',
+			'view' => 'index'
+		]);
+	}
+
+	/**
+	 * Réinitialiser les ip blacklistées
+	 */
+
+	public function blacklistReset() {
+		if ( file_exists(self::DATA_DIR . 'blacklist.json') ) {
+			unlink(self::DATA_DIR . 'blacklist.json');
+			// Valeurs en sortie
+				$this->addOutput([
+				'title' => 'Configuration',
+				'view' => 'index',
+				'notification' => 'Liste noire réinitialisée avec succès',
+				'state' => true
+			]);
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Configuration',
+				'view' => 'index',
+				'notification' => 'Pas de liste à effacer',
+				'state' => false
+			]);
+		}
 	}
 
 

@@ -350,7 +350,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Options avancées</h4>
+			<h4>Sécurité</h4>
 			<div class="row">
 				<div class="col3">
 					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
@@ -364,7 +364,51 @@
 						'selected' => $this->getData(['config', 'connect', 'timeout'])
 					]); ?>
 				</div>
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::button('configConnectblacListDownload', [
+						'href' => helper::baseUrl() . 'config/blacklistDownload',
+						'value' => 'IP liste noire',
+						'ico' => 'download'
+					]); ?>
+				</div>
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::button('ConfigConnectReset', [
+						'class' => 'buttonRed',
+						'href' => helper::baseUrl() . 'config/blacklistReset',
+						'value' => 'Réinitialisation liste',
+						'ico' => 'cancel'
+					]); ?>
+				</div>
 			</div>
+			<div class="row">
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
+						'checked' => $this->getData(['config', 'connect', 'log'])
+					]); ?>
+				</div>
+				<div class="col3 offset3">
+					<?php echo template::button('ConfigLogDownload', [
+						'href' => helper::baseUrl() . 'config/logDownload',
+						'value' => 'Téléchargement du journal',
+						'ico' => 'download'
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::button('ConfigLogReset', [
+						'class' => 'buttonRed',
+						'href' => helper::baseUrl() . 'config/logReset',
+						'value' => 'Réinitialisation du journal',
+						'ico' => 'cancel'
+					]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Options de script</h4>
 			<div class="row">
 				<div class="col3">
 					<?php echo template::text('configAnalyticsId', [
@@ -387,28 +431,6 @@
 						'value' => 'Script dans body',
 						'ico' => 'pencil'
 				]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col3 verticalAlignBottom">
-					<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
-						'checked' => $this->getData(['config', 'connect', 'log'])
-					]); ?>
-				</div>
-				<div class="col3">
-					<?php echo template::button('ConfigLogDownload', [
-						'href' => helper::baseUrl() . 'config/logDownload',
-						'value' => 'Téléchargement du journal',
-						'ico' => 'download'
-					]); ?>
-				</div>
-				<div class="col3">
-					<?php echo template::button('ConfigLogReset', [
-						'class' => 'buttonRed',
-						'href' => helper::baseUrl() . 'config/logReset',
-						'value' => 'Réinitialisation du journal',
-						'ico' => 'cancel'
-					]); ?>
 				</div>
 			</div>
 		</div>

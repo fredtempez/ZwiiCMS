@@ -332,7 +332,7 @@ class user extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
-			// le userId n'existe pas
+			// le userId n'existe pas, créer une entré dans la liste noire
 			if( !$this->getData(['user', $userId])) {
 				//Stockage de l'IP
 				$this->setData([
@@ -343,15 +343,6 @@ class user extends common {
 						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) ? $this->getData(['blacklist',$userId,'connectFail']) + 1 : 1
 					]
 				]);
-				// Après les tentatives autorisées, bloquer l'IP.
-				if ( $this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt']) ||
-					array_search($_SERVER['REMOTE_ADDR'],helper::arrayCollumn($this->getData(['blacklist']), 'ip')) ) {
-						// Valeurs en sortie
-						$this->addOutput([
-							'redirect' => helper::baseUrl(),
-							'state' => false
-						]);
-				}
 			}
 			// Contrôle du timeout pas de vérification du mot de passe si le temps est dépassé.
 			// Connexion si les informations sont correctes
@@ -389,20 +380,28 @@ class user extends common {
 			}
 			// Sinon notification d'échec
 			else {
-				// Incrémenter le compteur d'échec de connexion si l'utilisateur existe
+				// L'utilisateur existe : incrémenter le compteur d'échec de connexion
 				if ( is_array($this->getdata(['user',$userId])) ) {
 					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
-				}
-				// Mettre à jour le timer et notifier
-				if ( $this->getdata(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])) {
-					$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
-					// Ne pas incrémenter le timer si actif
-					if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() ) {
-						$this->setData(['user',$userId,'connectTimeout', time()]);
+					// Mettre à jour le timer et notifier
+					if ( $this->getdata(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])) {
+						$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
+						// Ne pas incrémenter le timer si actif
+						if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() ) {
+							$this->setData(['user',$userId,'connectTimeout', time()]);
+						}
+					} else {
+						$notification = 'Identifiant ou mot de passe incorrect';
 					}
-				} else {
-					$notification = 'Identifiant ou mot de passe incorrect';
+					// L'utilisateur n'existe pas
+					// Bloquer l'IP après les tentatives autorisées,
+				} elseif (
+							$this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt']) ||
+							array_search($_SERVER['REMOTE_ADDR'],helper::arrayCollumn($this->getData(['blacklist']), 'ip'))
+						 ) {
+							$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
 				}
+
 				// Journalisation
 				$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
 				$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
