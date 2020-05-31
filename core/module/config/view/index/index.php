@@ -352,7 +352,7 @@
 		<div class="block">
 			<h4>Options avancées</h4>
 			<div class="row">
-				<div class="col3 offset1">
+				<div class="col3">
 					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
 						'label' => 'Tentatives de logins',
 						'selected' => $this->getData(['config', 'connect', 'attempt'])
@@ -366,7 +366,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col3  offset1">
+				<div class="col3">
 					<?php echo template::text('configAnalyticsId', [
 						'help' => 'Saisissez l\'ID de suivi.',
 						'label' => 'Google Analytics',
@@ -390,7 +390,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col3 offset1 verticalAlignBottom">
+				<div class="col3 verticalAlignBottom">
 					<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
 						'checked' => $this->getData(['config', 'connect', 'log'])
 					]); ?>
