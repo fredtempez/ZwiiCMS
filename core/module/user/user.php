@@ -332,7 +332,28 @@ class user extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
-			// Contrôle du time out pas de vérification du mot de passe si le temps est dépassé.
+			// le userId n'existe pas
+			if( !$this->getData(['user', $userId])) {
+				//Stockage de l'IP
+				$this->setData([
+					'blacklist',
+					$userId,
+					[
+						'ip' => $_SERVER['REMOTE_ADDR'],
+						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) ? $this->getData(['blacklist',$userId,'connectFail']) + 1 : 1
+					]
+				]);
+				// Après les tentatives autorisées, bloquer l'IP.
+				if ( $this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt']) ||
+					array_search($_SERVER['REMOTE_ADDR'],helper::arrayCollumn($this->getData(['blacklist']), 'ip')) ) {
+						// Valeurs en sortie
+						$this->addOutput([
+							'redirect' => helper::baseUrl(),
+							'state' => false
+						]);
+				}
+			}
+			// Contrôle du timeout pas de vérification du mot de passe si le temps est dépassé.
 			// Connexion si les informations sont correctes
 			if( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time() &&
 				$this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt']) &&
