@@ -368,7 +368,7 @@
 					<label id="helpBlacklist">Blocage des comptes inconnus :
 						<?php echo template::help(
 						'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
-						Après le nombre de tentatives autorisées, l\'IP et le compte sont bloquées.');
+						Après le nombre de tentatives autorisées, l\'IP et le compte sont bloqués.');
 						?>
 					</label>
 					<?php echo template::button('configConnectblacListDownload', [
