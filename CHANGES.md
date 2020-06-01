@@ -5,6 +5,8 @@
     - Gestion des accès concurrents :
         - deux utilisateurs ne peuvent accèder en modification à la même page du site ou de configuration
         - la connexion d'un utilisateur sur un autre poste ou navigateur déconnecte la session précédente.
+        - sécurisation du login
+        - journalisation de l'utilisation du site
 - Modifications :
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
