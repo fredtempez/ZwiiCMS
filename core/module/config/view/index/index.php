@@ -350,24 +350,30 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Sécurité</h4>
+			<h4>Sécurité de la connexion</h4>
 			<div class="row">
 				<div class="col3">
 					<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
-						'label' => 'Tentatives de logins',
+						'label' => 'Connexions successives',
 						'selected' => $this->getData(['config', 'connect', 'attempt'])
 					]); ?>
 				</div>
 				<div class="col3">
 					<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
-						'label' => 'Durée du blocage',
+						'label' => 'Blocage après échecs',
 						'selected' => $this->getData(['config', 'connect', 'timeout'])
 					]); ?>
 				</div>
 				<div class="col3 verticalAlignBottom">
+					<label id="helpBlacklist">Blocage des comptes inconnus :
+						<?php echo template::help(
+						'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
+						Après le nombre de tentatives autorisées, l\'IP et le compte sont bloquées.');
+						?>
+					</label>
 					<?php echo template::button('configConnectblacListDownload', [
 						'href' => helper::baseUrl() . 'config/blacklistDownload',
-						'value' => 'IP liste noire',
+						'value' => 'Télécharger liste noire',
 						'ico' => 'download'
 					]); ?>
 				</div>
@@ -375,11 +381,18 @@
 					<?php echo template::button('ConfigConnectReset', [
 						'class' => 'buttonRed',
 						'href' => helper::baseUrl() . 'config/blacklistReset',
-						'value' => 'Réinitialisation liste',
+						'value' => 'Réinitialiser liste',
 						'ico' => 'cancel'
 					]); ?>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Journalisation</h4>
 			<div class="row">
 				<div class="col3 verticalAlignBottom">
 					<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
@@ -389,7 +402,7 @@
 				<div class="col3 offset3">
 					<?php echo template::button('ConfigLogDownload', [
 						'href' => helper::baseUrl() . 'config/logDownload',
-						'value' => 'Téléchargement du journal',
+						'value' => 'Télécharger journal',
 						'ico' => 'download'
 					]); ?>
 				</div>
@@ -397,7 +410,7 @@
 					<?php echo template::button('ConfigLogReset', [
 						'class' => 'buttonRed',
 						'href' => helper::baseUrl() . 'config/logReset',
-						'value' => 'Réinitialisation du journal',
+						'value' => 'Réinitialiser journal',
 						'ico' => 'cancel'
 					]); ?>
 				</div>
@@ -418,7 +431,7 @@
 						'value' => $this->getData(['config', 'analyticsId'])
 					]); ?>
 				</div>
-				<div class="col3 verticalAlignBottom">
+				<div class="col3 offset3 verticalAlignBottom">
 					<?php echo template::button('configScriptHead', [
 						'href' => helper::baseUrl() . 'config/script/head',
 						'value' => 'Script dans head',

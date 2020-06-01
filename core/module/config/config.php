@@ -656,7 +656,7 @@ class config extends common {
 		$d = $this->getData(['blacklist']);
 		$data = '';
 		foreach ($d as $key => $item) {
-			$data .=  $key . ';' . $item['ip'] . PHP_EOL;
+			$data .= strftime('%d/%m/%y',$item['time']) . ';' . strftime('%R',$item['time']) . ';' . $key . ';' . $item['ip']  . PHP_EOL;
 		}
 		$fileName = self::TEMP_DIR . 'blacklist.log';
 		file_put_contents($fileName,$data);
@@ -668,7 +668,7 @@ class config extends common {
 		$this->addOutput([
 			'display' => self::DISPLAY_RAW
 		]);
-		unlink(self::TEMP_DIR . 'blacklist.tmp');
+		unlink(self::TEMP_DIR . 'blacklist.log');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration',
