@@ -127,6 +127,8 @@ class install extends common {
 			// Préparation
 			case 1:
 				$success = true;
+				// RAZ la mise à jour auto
+				$this->setData(['core','updateAvailable', false]);
 				// Backup du dossier Data
 				helper::autoBackup(self::BACKUP_DIR,['backup','tmp','file']);
 				// Nettoyage des fichiers d'installation précédents
@@ -208,8 +210,6 @@ class install extends common {
 						FILE_APPEND
 					) !== false);
 				}
-				// RAZ la mise à jour auto
-				$this->setData(['core','updateAvailable', false]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
