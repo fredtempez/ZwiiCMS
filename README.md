@@ -50,8 +50,8 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
 
 ```text
 [R] core                   Cœur du système
-  [R] layout               Mise en page
   [R] class                Classes
+  [R] layout               Mise en page
   [R] module               Modules du cœur
   [R] vendor               Librairies extérieures
   [F] core.js.php          Cœur javascript
@@ -70,12 +70,16 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [R] fr                 Dossier localisé
       [F] page.json        Données des pages
       [F] module.json      Données des modules de pages
+    [F] admin.css          Thème de la partie administration
+    [F] admin.json         Données de la partie administration
+    [F] blacklist.json     Données de connexion des comptes inconnus
     [F] config.json        Configuration du site
     [F] core.json          Configuration du noyau
-    [F] theme.json         Thème
-    [F] user.json          Utilisateurs
     [F] custom.css         Feuille de style de la personnalisation avancée
-    [F] theme.css          Thème compilé en CSS    
+    [F] journal.log        Journalisation des actions
+    [F] theme.css          Thème du site
+    [F] theme.json         Données du site
+    [F] user.json          Données des utilisateurs
   [R] file                 Répertoire d'upload du gestionnaire de fichiers
     [R] source             Ressources diverses
     [R] thumb              Miniatures des images
@@ -85,4 +89,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
 [F] robots.txt             Filtrage des répertoires accessibles aux robots des moteurs de recherche
 [F] sitemap.xml            Plan du site
 [F] sitemap.xml.gz         Version compressée
+
+Le fichiers .htaccess contribuent à la sécurité en filtant l'accès aux répertoires sensibles.
+
 ```
