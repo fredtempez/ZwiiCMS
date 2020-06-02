@@ -1,6 +1,6 @@
 # Changelog
 
-## version 10.2.000
+## version 10.2.00
 - Mise à jour :
     - jQuery v3.5.1
 - Nouveautés :
