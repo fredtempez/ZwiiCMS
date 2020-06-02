@@ -625,7 +625,7 @@ class common {
 
 
 	/**
-	 * Génére un fichier json avec la liste des pages
+	 * Génère un fichier json avec la liste des pages
 	 *
 	*/
     public function pages2Json() {
@@ -703,8 +703,8 @@ class common {
 	}
 
 	/**
-	 * Génére un fichier robots.txt à l'installation
-	 * Si le fichier exite déjà les commandes sont ajoutées
+	 * Génère un fichier robots.txt à l'installation
+	 * Si le fichier existe déjà les commandes sont ajoutées
 	 */
 	 public function createRobots() {
 
@@ -2389,7 +2389,7 @@ class layout extends common {
 				$itemsChildren .= $this->getData(['page', $childKey, 'title']);
 				$itemsChildren .= '</a></li>';
 			}
-			// Concaténe les items enfants
+			// Concatène les items enfants
 			if (!empty($itemsChildren)) {
 				$items .= '<ul class="menuSideChild">';
 				$items .= $itemsChildren;

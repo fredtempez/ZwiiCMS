@@ -25,7 +25,7 @@
 						<?php echo template::file('configManageImportFile', [
 							'label' => 'Sélectionnez une archive au format ZIP',
 							'type' => 2,
-							'help' => 'L\'archive a été déposée dans le gestionaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.'
+							'help' => 'L\'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.'
 						]); ?>
 					</div>
 					<div class="row">
