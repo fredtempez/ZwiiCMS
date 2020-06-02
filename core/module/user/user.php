@@ -340,8 +340,6 @@ class user extends common {
 					'blacklist',
 					$userId,
 					[
-						'time' => time(),
-						'ip' => $_SERVER['REMOTE_ADDR'],
 						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) ? $this->getData(['blacklist',$userId,'connectFail']) + 1 : 1
 					]
 				]);
@@ -406,14 +404,12 @@ class user extends common {
 				// L'utilisateur n'existe pas
 				// Bloquer l'IP après les tentatives autorisées avec ce compte,
 				} elseif (
-							$this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt']) ||
-							array_search($_SERVER['REMOTE_ADDR'],helper::arrayCollumn($this->getData(['blacklist']), 'ip'))
+							$this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])
 						 ) {
 							$notification = 'Trop de tentatives, compte verrouillé';
 				}
 				// Journalisation
 				$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
-				$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
 				$dataLog .= $userId . ';' ;
 				$dataLog .= $this->getUrl() .';' ;
 				$dataLog .= 'échec de connexion' ;

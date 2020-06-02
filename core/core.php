@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev20';
+	const ZWII_VERSION = '10.2.00.dev21';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1314,7 +1314,9 @@ class common {
 				$this->setData(['config', 'connect', 'timeout',600]);
 				$this->setData(['config', 'connect', 'log',false]);
 				// Remettre à zéro le thème pour la génération du CSS du blog
-				unlink(self::DATA_DIR . 'theme.css');
+				if (file_exists(self::DATA_DIR . 'theme.css')) {
+					unlink(self::DATA_DIR . 'theme.css');
+				}
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
@@ -1588,7 +1590,6 @@ class core extends common {
 		}
 		// Journalisation
 		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
-		$dataLog .= $_SERVER['REMOTE_ADDR'] . ';' ;
 		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'visiteur' . ';';
 		$dataLog .= $this->getUrl();
 		$dataLog .= PHP_EOL;
