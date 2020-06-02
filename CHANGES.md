@@ -1,6 +1,8 @@
 # Changelog
 
 ## version 10.2.000
+- Mise à jour :
+    - jQuery v3.5.1
 - Nouveautés :
     - Gestion des accès concurrents :
         - deux utilisateurs ne peuvent accèder en modification à la même page du site ou de configuration
