@@ -145,7 +145,8 @@ class init extends common {
 				'fixed' => false,
 				'activeColorAuto' => true,
 				'activeColor' => 'rgba(255, 255, 255, 1)',
-				'activeTextColor' => 'rgba(255, 255, 255, 1)'
+				'activeTextColor' => 'rgba(255, 255, 255, 1)',
+				'radius' => '0px'
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
