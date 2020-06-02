@@ -7,6 +7,7 @@ class init extends common {
 			'autoUpdate' => true,
 			'cookieConsent' => true,
 			'favicon' => 'favicon.ico',
+			'faviconDark' => 'faviconDark.ico',
 			'homePageId' => 'accueil',
 			'maintenance' => false,
 			'social' => [
@@ -122,7 +123,7 @@ class init extends common {
 				'margin' => false,
 				'position' => 'site',
 				'textAlign' => 'center',
-				'textColor' => 'rgba(33, 34, 35, 1)',
+				'textColor' => 'rgba(80, 80, 80, 1)',
 				'textHide' => false,
 				'textTransform' => 'none',
 				'linkHomePage' => true,

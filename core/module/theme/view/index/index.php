@@ -31,7 +31,7 @@
 			<?php echo template::button('themeManage', [
 				'ico' => 'upload',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
-				'value' => 'Gérer'
+				'value' => 'Gestion'
 			]); ?>
 		</div>
 	</div>
@@ -65,7 +65,7 @@
 			<?php echo template::button('themeManage', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'ico' => 'upload',
-				'value' => 'Gérer'
+				'value' => 'Gestion'
 			]); ?>
 		</div>
 		<div class="col3">
