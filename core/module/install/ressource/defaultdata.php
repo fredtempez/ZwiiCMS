@@ -123,7 +123,7 @@ class init extends common {
 				'margin' => false,
 				'position' => 'site',
 				'textAlign' => 'center',
-				'textColor' => 'rgba(80, 80, 80, 1)',
+				'textColor' => 'rgba(0, 17, 157, 1)',
 				'textHide' => false,
 				'textTransform' => 'none',
 				'linkHomePage' => true,
