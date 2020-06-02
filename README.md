@@ -1,7 +1,7 @@
 ![](https://img.shields.io/github/last-commit/fredtempez/ZwiiCMS/master) ![](https://img.shields.io/github/release-date/fredtempez/ZwiiCMS)
 
-
 # ZwiiCMS 10.n
+
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.
 
@@ -13,6 +13,12 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 * PHP 5.6 ou plus
 * Support de .htaccess
+
+## Téléchargement de ZwiICMS
+
+Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargemet du [site](https://zwiicms.com/telechargements)
+
+La version github est une **version de développement** qui peut encore contenir des bugs mais elle vous permet de tester les dernières nouveautés. Cette version n'est pas recommandée en production.
 
 ## Installation
 
