@@ -12,16 +12,20 @@
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptatations suit à la modification de l'API Google.
 
-## version 10.1.002
+## version 10.1.03
+- Mise à jour :
+    - Responsive File Manager : chargement impossible de certaines images JPEG.
+
+## version 10.1.02
 - Corrections :
     - free.fr : désactivation totale de la fonction de récupération de données en ligne (update, image tag, etc..)
     - Image Tag absente : non régénérée au lancement de la configuration du site, image masquée dans si absente.
 
-## version 10.1.001
+## version 10.1.01
 - Correction : 
     - Extension image tag.
 
-## version 10.1.000
+## version 10.1.00
 - Nouveautés :
     - Distinction entre le thème du site et celui de l'administration. Sauvegarde et restauration de l'un ou de  l'autre.
     - Thème du site :
