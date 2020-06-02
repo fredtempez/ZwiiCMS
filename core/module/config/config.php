@@ -610,16 +610,14 @@ class config extends common {
 			unlink(self::DATA_DIR . 'journal.log');
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
 		} else { 
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Pas de journal à effacer',
 				'state' => false
 			]);
@@ -656,7 +654,8 @@ class config extends common {
 		$d = $this->getData(['blacklist']);
 		$data = '';
 		foreach ($d as $key => $item) {
-			$data .= strftime('%d/%m/%y',$item['time']) . ';' . strftime('%R',$item['time']) . ';' . $key . ';' . $item['ip']  . PHP_EOL;
+			$data .= $key  . ';' . $item['ip'] . ';' .  strftime('%d/%m/%y',$item['lastFail']) . ';' ;
+			$data .= strftime('%R',$item['lastFail']) . ';' .  $item['connectFail']  . PHP_EOL;
 		}
 		$fileName = self::TEMP_DIR . 'blacklist.log';
 		file_put_contents($fileName,$data);
@@ -685,16 +684,14 @@ class config extends common {
 			unlink(self::DATA_DIR . 'blacklist.json');
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index',
+				'redirect' => helper::baseUrl() . 'config',					
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
 			]);

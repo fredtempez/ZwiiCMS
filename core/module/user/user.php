@@ -333,14 +333,16 @@ class user extends common {
 		if($this->isPost()) {
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
 
-			// le userId n'existe pas, créer une entrée dans la liste noire
+			// le userId n'existe pas, créer ou mettre à jour une entrée dans la liste noire
 			if( !$this->getData(['user', $userId])) {
 				//Stockage de l'IP
 				$this->setData([
 					'blacklist',
 					$userId,
 					[
-						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) ? $this->getData(['blacklist',$userId,'connectFail']) + 1 : 1
+						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) ? $this->getData(['blacklist',$userId,'connectFail']) + 1 : 1,
+						'lastFail' => time(),
+						'ip' => $_SERVER['REMOTE_ADDR']
 					]
 				]);
 				$notification = 'Identifiant ou mot de passe incorrect';
