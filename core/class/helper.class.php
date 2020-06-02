@@ -69,7 +69,7 @@ class helper {
 
 
 	/**
-	 * Génére un backup des données de site
+	 * Génère un backup des données de site
 	 * @param string $folder dossier de sauvegarde
 	 * @param array $exclude dossier exclus
 	 * @return string nom du fichier de sauvegarde
@@ -450,7 +450,7 @@ class helper {
 	}
 
 	/**
-	 * Cryptation
+	 * Cryptage
 	 * @param string $key la clé d'encryptage
 	 * @param string $payload la chaine à coder
 	 * @return string
@@ -462,7 +462,7 @@ class helper {
 	}
 
 	/**
-	 * Décryptation
+	 * Décryptage
 	 * @param string $key la clé d'encryptage
 	 * @param string $garble la chaine à décoder
 	 * @return string

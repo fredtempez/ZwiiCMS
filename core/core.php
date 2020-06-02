@@ -31,7 +31,7 @@ class common {
 	const FILE_DIR = 'site/file/';
 	const TEMP_DIR = 'site/tmp/';
 
-	// Miniatures de la gallery
+	// Miniatures de la galerie
 	const THUMBS_SEPARATOR = 'mini_';
 	const THUMBS_WIDTH = 640;
 
@@ -386,8 +386,6 @@ class common {
 			//Retourne une chaine contenant le dossier à créer
 			$folder = $this->dirData ($keys[0],'fr');
 			// Constructeur  JsonDB
-			//require_once "core/vendor/jsondb/Dot.php";
-			//require_once "core/vendor/jsondb/JsonDb.php";
 			$db = new \Prowebcraft\JsonDb([
 				'name' => $keys[0] . '.json',
 				'dir' => $folder,
@@ -491,7 +489,7 @@ class common {
 					$this->addRequiredInputNotices($key);
 				}
 				// Check de l'existence
-				// Également utile pour les checkboxs qui ne retournent rien lorsqu'elles ne sont pas cochées
+				// Également utile pour les checkbox qui ne retournent rien lorsqu'elles ne sont pas cochées
 				if(
 					array_key_exists($firstKey, $values)
 					AND array_key_exists($secondKey, $values[$firstKey])
@@ -515,7 +513,7 @@ class common {
 					$this->addRequiredInputNotices($key);
 				}
 				// Check de l'existence
-				// Également utile pour les checkboxs qui ne retournent rien lorsqu'elles ne sont pas cochées
+				// Également utile pour les checkbox qui ne retournent rien lorsqu'elles ne sont pas cochées
 				if(array_key_exists($key, $values)) {
 					// Retourne la valeur filtrée
 					if($filter) {
@@ -647,7 +645,7 @@ class common {
 				}
 				// Traitement
 				if (empty($childIds)) {
-					// Pas d'enfant, uniuement l'entrée du parent
+					// Pas d'enfant, uniquement l'entrée du parent
 					$parents [] = ['title' =>   html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES) ,
 									'value'=> $rewrite.$parentId
 					];
@@ -737,10 +735,10 @@ class common {
 
 
 	/**
-	 * Génére un fichier un fchier sitemap.xml
+	 * Génère un fichier un fichier sitemap.xml
 	 * https://github.com/icamys/php-sitemap-generator
 	 * $command valeurs possible
-	 * all : génére un site map complet
+	 * all : génère un site map complet
 	 * Sinon contient id de la page à créer
 	*/
 
@@ -948,7 +946,7 @@ class common {
 	 */
 	public function setData($keys = []) {
 
-		// Pas d'enregistrement lorsque'une notice est présente
+		// Pas d'enregistrement lorsqu'une notice est présente
 		if (!empty(self::$inputNotices)) {
 			return false;
 		}
@@ -1008,8 +1006,6 @@ class common {
 		}
 		$folder = $this->dirData ($module,$lang);
 		// Constructeur  JsonDB
-		//require_once "core/vendor/jsondb/Dot.php";
-		//require_once "core/vendor/jsondb/JsonDb.php";
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $module . '.json',
 			'dir' => $folder,

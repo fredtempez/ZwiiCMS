@@ -13,7 +13,7 @@
                 'value' => 'Valider',
                 'ico' => 'check'
             ]); ?>
-        </div>	
+        </div>
     </div>
     <?php if ($this->geturl(2) === 'head'): ?>
     <div class="row">
@@ -34,5 +34,5 @@
             ]); ?>
         </div>
     </div>
-    <?php endif ?>    
+    <?php endif ?>
 <?php echo template::formClose(); ?>

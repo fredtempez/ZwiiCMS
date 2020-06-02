@@ -6,11 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php $layout->showMetaTitle(); ?>
 	<?php $layout->showMetaDescription(); ?>
-	<?php $layout->showMetaType(); ?>	
-	<?php $layout->showMetaImage(); ?>		
+	<?php $layout->showMetaType(); ?>
+	<?php $layout->showMetaImage(); ?>
 	<?php $layout->showFavicon(); ?>
 	<?php $layout->showVendor(); ?>
-	<?php $layout->showStyle(); ?>	
+	<?php $layout->showStyle(); ?>
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/light.css">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">

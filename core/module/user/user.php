@@ -349,7 +349,7 @@ class user extends common {
 			}
 
 			/**
-			 *  Compte valide : 
+			 *  Compte valide :
 			 *  Timeout entre nombre de tentatives autorisées
 			 *  Mot de passe
 			 *  Groupe

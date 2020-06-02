@@ -19,25 +19,25 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Restauration ou transfert d'un site</h4>
-			<div class="row">		
-				<div class="col8 offset2">		
+			<div class="row">
+				<div class="col8 offset2">
 					<?php echo template::file('configRestoreImportFile', [
 						'label' => 'Sélectionnez une sauvegarde au format ZIP',
 						'type' => 2,
-						'help' => 'L\'archive a été déposée dans le gestionaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.'
+						'help' => 'L\'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.'
 					]); ?>
 				</div>
-			</div>			
+			</div>
 			<div class="row">
 				<div class="col8 offset2">
 					<?php echo template::checkbox('configRestoreImportUser', true, 'Préserver les comptes des utilisateurs', [
 						'checked' => true,
 						'help' => 'Les données des utilisateurs installés ne sont pas écrasés par la restauration quand l\'option est active.'
-					]); ?>		
-				</div>	
-			</div>			
+					]); ?>
+				</div>
+			</div>
 		</div>
-	</div>		
+	</div>
 </div>
 <div class="row">
 	<div class="col12">
@@ -45,10 +45,10 @@
 			<h4>Conversion des URL après transfert de site</h4>
 			<div class="row">
 				<div class="col5">
-					<?php 
+					<?php
 					if (is_null($this->getData(['core', 'baseUrl'])) ) {
 						$baseUrlValue = 'Pas de donnée dans la sauvegarde';
-						$buttonClass = 'disabled'; 
+						$buttonClass = 'disabled';
 					} elseif ($this->getData(['core', 'baseUrl']) === '') {
 						$baseUrlValue = '/';
 						$buttonClass = (helper::baseUrl(true,false) !== $this->getData(['core', 'baseUrl']) ) ? '' : 'disabled';
@@ -70,14 +70,14 @@
 						'readonly' => true,
 						'help'  => 'Dossier du site installé.'
 					]); ?>
-				</div>			
+				</div>
 				<div class="col2 verticalAlignBottom">
 					<?php echo template::button('configRestoreUpdateBaseURLButton', [
 						'href' => helper::baseUrl() . 'config/updateBaseUrl',
 						'class' => $buttonClass,
 						'value' => 'convertir'
-					]); ?>						
-				</div>		
+					]); ?>
+				</div>
 			</div>
 		</div>
 	</div>

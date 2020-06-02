@@ -188,7 +188,7 @@ class config extends common {
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
 
-		// Creer un fichier robots.txt
+		// Créer un fichier robots.txt
 		$successRobots=$this->updateRobots();
 		if ( $successSitemap === true &&
 			 $successRobots >= 100) {
@@ -552,7 +552,7 @@ class config extends common {
 	}
 
 	/**
-	 * Met à jour les données de site avec l'adresse trannsmise
+	 * Met à jour les données de site avec l'adresse transmise
 	 */
 	public function updateBaseUrl () {
 		// Supprimer l'information de redirection
@@ -614,7 +614,7 @@ class config extends common {
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
-		} else { 
+		} else {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -684,7 +684,7 @@ class config extends common {
 			unlink(self::DATA_DIR . 'blacklist.json');
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',					
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
@@ -704,7 +704,7 @@ class config extends common {
 	 * @param string $find donnée à rechercher
 	 * @param string $replace donnée à remplacer
 	 * @param array tableau à analyser
-	 * @param int count nombres d'occurences
+	 * @param int count nombres d'occurrences
 	 * @return array avec les valeurs remplacées.
 	 */
 	private function recursive_array_replace ($find, $replace, $array, &$count) {

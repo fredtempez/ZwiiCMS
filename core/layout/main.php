@@ -6,17 +6,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<?php $layout->showMetaTitle(); ?>
 		<?php $layout->showMetaDescription(); ?>
-		<?php $layout->showMetaType(); ?>			
-		<?php $layout->showMetaImage(); ?>		
+		<?php $layout->showMetaType(); ?>
+		<?php $layout->showMetaImage(); ?>
 		<?php $layout->showFavicon(); ?>
 		<?php $layout->showVendor(); ?>
-		<?php $layout->showAnalytics(); ?>	
+		<?php $layout->showAnalytics(); ?>
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
 		<?php $layout->showStyle(); ?>
 		<?php if (file_exists(self::DATA_DIR .'head.inc.html')) {
-			include(self::DATA_DIR .'head.inc.html'); 
+			include(self::DATA_DIR .'head.inc.html');
 		}?>
 	</head>
 	<body>
@@ -25,15 +25,15 @@
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
 			<nav
-			<?php 
+			<?php
 			// Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté
-			// 
+			//
 			if($this->getData(['theme', 'menu', 'position']) === 'top' &&
 				$this->getData(['theme', 'menu', 'fixed']) === true) {
 					if ($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD'))
 						{echo 'id="navfixedlogout"';}
-					elseif ($this->getUrl(0) !== 'theme') 
-						{echo 'id="navfixedconnected"';} 
+					elseif ($this->getUrl(0) !== 'theme')
+						{echo 'id="navfixedconnected"';}
 				}
 			?>
 			>
@@ -52,8 +52,8 @@
 		<?php endif; ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
-			<header>	
-				<?php	
+			<header>
+				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
 				<div id="headerContainer" class="container">
@@ -69,7 +69,7 @@
 				</div> <!--fin container -->
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){echo "</a>";}
-				?>	
+				?>
 			</header>
 		<?php endif; ?>
 
@@ -106,7 +106,7 @@
 				)
 			): ?>
 				<!-- Bannière dans le site -->
-				<?php	
+				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
 				<header <?php if($this->getData(['theme', 'header', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
@@ -146,7 +146,7 @@
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
-			<?php 
+			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante
 				$blocks = explode('-',$this->getData(['page',$this->getUrl(0),'block']));
@@ -154,48 +154,48 @@
 				$blockleft=$blockright="";
 				switch (sizeof($blocks)) {
 					case 1 :  // une colonne
-						$content    = 'col'. $blocks[0] ; 
-						break;			
-					case 2 :  // 2 blocks 
+						$content    = 'col'. $blocks[0] ;
+						break;
+					case 2 :  // 2 blocs
 						if ($blocks[0] < $blocks[1]) { // détermine la position de la colonne
 							$blockleft = 'col'. $blocks[0];
 							$content    = 'col'. $blocks[1] ;
 						} else {
 							$content    = 'col' . $blocks[0];
-							$blockright  = 'col' . $blocks[1];						
+							$blockright  = 'col' . $blocks[1];
 						}
 					break;
-					case 3 :  // 3 blocks
+					case 3 :  // 3 blocs
 							$blockleft  = 'col' . $blocks[0];
 							$content    = 'col' . $blocks[1];
-							$blockright = 'col' . $blocks[2];	
+							$blockright = 'col' . $blocks[2];
 				}
-				// Page pleine pour la configuration des modules et l'édition des pages sauf l'affichae d'un article de blog
+				// Page pleine pour la configuration des modules et l'édition des pages sauf l'affichage d'un article de blog
 				$pattern = ['config','edit','add','comment','data'];
-				if ((sizeof($blocks) === 1 || 
+				if ((sizeof($blocks) === 1 ||
 					in_array($this->getUrl(1),$pattern)  )
 					) { // Pleine page en mode configuration
 						$layout->showContent();
 						if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-							include( self::DATA_DIR . 'body.inc.html'); 
-						}				
+							include( self::DATA_DIR . 'body.inc.html');
+						}
 				} else {
 				?>
-				<div class="row siteContainer"> 
-					<?php 
-						if ($blockleft !== "") :?> 
-						<div class="<?php echo $blockleft; ?>" id="contentLeft"><?php 	$layout->showBarContentLeft(); ?></div> 
+				<div class="row siteContainer">
+					<?php
+						if ($blockleft !== "") :?>
+						<div class="<?php echo $blockleft; ?>" id="contentLeft"><?php 	$layout->showBarContentLeft(); ?></div>
 						<?php endif; ?>
 						<div class="<?php echo $content; ?>" id="contentSite"><?php $layout->showContent();
 							if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-								include(self::DATA_DIR . 'body.inc.html'); 
+								include(self::DATA_DIR . 'body.inc.html');
 							}
 						?>
 						</div>
-					<?php 
-						if ($blockright !== "") :?> 
+					<?php
+						if ($blockright !== "") :?>
 						<div class="<?php echo $blockright; ?>" id="contentRight"><?php $layout->showBarContentRight(); ?></div>
-						<?php endif; ?>	
+						<?php endif; ?>
 				</div>
 				<?php }
 				?>
@@ -211,7 +211,7 @@
 					$this->getData(['theme', 'footer', 'position']) === 'hide'
 					AND $this->getUrl(0) === 'theme'
 				)
-			) 	{	$position = 'site';						
+			) 	{	$position = 'site';
 			  	} else {
 					$position = 'body';
 					if ( $this->getData(['theme', 'footer', 'fixed']) === true) {
@@ -220,7 +220,7 @@
  					echo '</div>';
 			}
 			?>
-			<!-- Pied de page -->		
+			<!-- Pied de page -->
 			<footer <?php if($this->getData(['theme', 'footer', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
 				<?php
 				if ($position === 'site'): ?>

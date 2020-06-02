@@ -133,8 +133,8 @@ class search extends common {
 	}
 
 
-	// Fonction de recherche des occurences dans $contenu
-	// Renvoie le résulat sous forme de chaîne
+	// Fonction de recherche des occurrences dans $contenu
+	// Renvoie le résultat sous forme de chaîne
 	private function occurrence($url, $titre, $contenu, $motclef, $motentier)
 	{
 		// Nettoyage de $contenu : on enlève tout ce qui est inclus entre < et >
