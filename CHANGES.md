@@ -14,6 +14,10 @@
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
 
+## version 10.1.04
+- Correction :
+    - Warning après modification du thème du site.
+
 ## version 10.1.03
 - Mise à jour :
     - Responsive File Manager : chargement impossible de certaines images JPEG.
