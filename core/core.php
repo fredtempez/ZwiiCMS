@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev24';
+	const ZWII_VERSION = '10.2.00.dev25';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1313,6 +1313,9 @@ class common {
 				if (file_exists(self::DATA_DIR . 'theme.css')) {
 					unlink(self::DATA_DIR . 'theme.css');
 				}
+				// Créer les en-têtes du journal
+				$d = 'Date;Heure;Id;Action' . PHP_EOL;
+				file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
@@ -1586,7 +1589,7 @@ class core extends common {
 		}
 		// Journalisation
 		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
-		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'visiteur' . ';';
+		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
 		$dataLog .= $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config','connect','log'])) {

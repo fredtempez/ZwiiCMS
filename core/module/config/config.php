@@ -608,6 +608,9 @@ class config extends common {
 	public function logReset() {
 		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
 			unlink(self::DATA_DIR . 'journal.log');
+			// Créer les en-têtes des journaux
+			$d = 'Date;Heure;Id;Action' . PHP_EOL;
+			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -618,7 +621,7 @@ class config extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
-				'notification' => 'Pas de journal à effacer',
+				'notification' => 'Aucun journal à effacer',
 				'state' => false
 			]);
 		}
@@ -632,47 +635,67 @@ class config extends common {
 	  */
 	public function logDownload() {
 		$fileName = self::DATA_DIR . 'journal.log';
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="' . $fileName . '"');
-		header('Content-Length: ' . filesize($fileName));
-		readfile( $fileName);
-		// Valeurs en sortie
-		$this->addOutput([
-			'display' => self::DISPLAY_RAW
-		]);
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index'
-		]);
+		if (file_exists($fileName)) {
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $fileName . '"');
+			header('Content-Length: ' . filesize($fileName));
+			readfile( $fileName);
+			// Valeurs en sortie
+			$this->addOutput([
+				'display' => self::DISPLAY_RAW
+			]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Configuration',
+				'view' => 'index'
+			]);
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Aucun fichier journal à télécharger',
+				'state' => false
+			]);
+		}
 	}
 
 	/**
 	 * Tableau des IP blacklistés
 	 */
 	public function blacklistDownload () {
-		$d = $this->getData(['blacklist']);
-		$data = '';
-		foreach ($d as $key => $item) {
-			$data .= $key  . ';' . $item['ip'] . ';' .  strftime('%d/%m/%y',$item['lastFail']) . ';' ;
-			$data .= strftime('%R',$item['lastFail']) . ';' .  $item['connectFail']  . PHP_EOL;
-		}
 		$fileName = self::TEMP_DIR . 'blacklist.log';
-		file_put_contents($fileName,$data);
-		header('Content-Type: application/octet-stream');
-		header('Content-Disposition: attachment; filename="' . $fileName . '"');
-		header('Content-Length: ' . filesize($fileName));
-		readfile( $fileName);
-		// Valeurs en sortie
-		$this->addOutput([
-			'display' => self::DISPLAY_RAW
-		]);
-		unlink(self::TEMP_DIR . 'blacklist.log');
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index'
-		]);
+		$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
+		file_put_contents($fileName,$d);
+		if ( file_exists($fileName) ) {
+			$d = $this->getData(['blacklist']);
+			$data = '';
+			foreach ($d as $key => $item) {
+				$data .= strftime('%d/%m/%y',$item['lastFail']) . strftime('%R',$item['lastFail']) . ';' ;
+				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
+			}
+			file_put_contents($fileName,$data,FILE_APPEND);
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $fileName . '"');
+			header('Content-Length: ' . filesize($fileName));
+			readfile( $fileName);
+			// Valeurs en sortie
+			$this->addOutput([
+				'display' => self::DISPLAY_RAW
+			]);
+			unlink(self::TEMP_DIR . 'blacklist.log');
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Configuration',
+				'view' => 'index'
+			]);
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Aucune liste noire à télécharger',
+				'state' => false
+			]);
+		}
 	}
 
 	/**
