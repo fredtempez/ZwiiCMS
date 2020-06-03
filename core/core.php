@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev25';
+	const ZWII_VERSION = '10.2.00.dev26';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1303,11 +1303,20 @@ class common {
 			// Réorganisation du thème
 			$this->setData(['theme','text','linkTextColor',$this->getData(['theme','link', 'textColor'])]);
 		}
+		// Version 10.1.04
+		if ($this->getData(['core', 'dataVersion']) < 10104) {
+			$this->setData(['theme','text','linkColor','rgba(74, 105, 189, 1)']);
+			$this->deleteData(['theme','text','linkTextColor']);
+			$this->setdata(['theme','block','backgroundColor','rgba(236, 239, 241, 1)']);
+			$this->setdata(['theme','block','borderColor','rgba(236, 239, 241, 1)']);
+			$this->setdata(['theme','menu','radius','0px']);
+			$this->setData(['core', 'dataVersion', 10104]);
+		}		
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
 				$this->deleteData(['admin','colorButtonText']);
-				$this->setData(['config', 'connect', 'attempt',3]);
-				$this->setData(['config', 'connect', 'timeout',600]);
+				$this->setData(['config', 'connect', 'attempt',999]);
+				$this->setData(['config', 'connect', 'timeout',0]);
 				$this->setData(['config', 'connect', 'log',false]);
 				// Remettre à zéro le thème pour la génération du CSS du blog
 				if (file_exists(self::DATA_DIR . 'theme.css')) {

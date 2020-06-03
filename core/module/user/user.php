@@ -350,13 +350,12 @@ class user extends common {
 
 			/**
 			 *  Compte valide :
-			 *  Timeout entre nombre de tentatives autorisées
 			 *  Mot de passe
 			 *  Groupe
 			*/
-			if( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time() &&
-				$this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt']) &&
-				password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
+			if( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time()
+				AND $this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
+				AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
 				AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 			) {
 				$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
@@ -378,6 +377,7 @@ class user extends common {
 				else {
 					// RAZ compteur échec connexion
 					$this->setData(['user',$userId,'connectFail',0 ]);
+					$this->setData(['user',$userId,'connectTimeout',0 ]);
 					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => 'Connexion réussie',
@@ -393,10 +393,10 @@ class user extends common {
 				) {
 					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
 					// Mettre à jour le timer et notifier
-					if ( $this->getdata(['user',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])
+					if ( $this->getdata(['user',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
 					) {
 						$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
-						// Ne pas incrémenter le timer si actif
+						// Incrémenter le timer
 						if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() ) {
 							$this->setData(['user',$userId,'connectTimeout', time()]);
 						}
@@ -406,7 +406,7 @@ class user extends common {
 				// L'utilisateur n'existe pas
 				// Bloquer l'IP après les tentatives autorisées avec ce compte,
 				} elseif (
-							$this->getData(['blacklist',$userId,'connectFail']) > $this->getData(['config', 'connect', 'attempt'])
+							$this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
 						 ) {
 							$notification = 'Trop de tentatives, compte verrouillé';
 				}
