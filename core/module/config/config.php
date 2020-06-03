@@ -670,7 +670,7 @@ class config extends common {
 			$d = $this->getData(['blacklist']);
 			$data = '';
 			foreach ($d as $key => $item) {
-				$data .= strftime('%d/%m/%y',$item['lastFail']) . strftime('%R',$item['lastFail']) . ';' ;
+				$data .= strftime('%d/%m/%y',$item['lastFail']) . ';' . strftime('%R',$item['lastFail']) . ';' ;
 				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
 			}
 			file_put_contents($fileName,$data,FILE_APPEND);
