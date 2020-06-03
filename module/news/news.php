@@ -93,7 +93,7 @@ class news extends common {
 				$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'title']),
 				utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])))
 				.' à '.
-				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))),				
+				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))),
 				self::$states[$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'state'])],
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],
@@ -116,7 +116,7 @@ class news extends common {
 	/**
 	 * Suppression
 	 */
-	public function delete() {			
+	public function delete() {
 		// La news n'existe pas
 		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
@@ -131,7 +131,7 @@ class news extends common {
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
 				'notification' => 'Action non autorisée'
 			]);
-		}			
+		}
 		// Suppression
 		else {
 			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
@@ -155,7 +155,7 @@ class news extends common {
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => 'Action  non autorisée'
 			]);
-		}			
+		}
 		// La news n'existe pas
 		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
 			// Valeurs en sortie

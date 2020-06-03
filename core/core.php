@@ -1647,7 +1647,7 @@ class core extends common {
 		}
 
 		/**
-		 * Controle si la page demandée est en édition ou accès à la gestion du site
+		 * Contrôle si la page demandée est en édition ou accès à la gestion du site
 		 * conditions de blocage :
 		 * - Les deux utilisateurs qui accèdent à la même page sont différents
 		 * - les URLS sont identiques
