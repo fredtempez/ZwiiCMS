@@ -184,6 +184,10 @@ class config extends common {
 		600 => '10 minutes',
 		900 => '15 minutes'
 	];
+
+	/**
+	 * Génére les fichiers pour les crawlers
+	 */
 	public function generateFiles() {
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
@@ -208,7 +212,7 @@ class config extends common {
 	 * Met à jour un fichier robots.txt lors du changement de réécriture
 	 */
 
-	public function updateRobots() {
+	private function updateRobots() {
 		// Créer le fichier robot si absent
 		if (!file_exists('robots.txt')) {
 			$this->createRobots();
