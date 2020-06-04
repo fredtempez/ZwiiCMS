@@ -63,16 +63,25 @@ $("select[name=configSmtpAuth]").on("change", function() {
 });
 
 /**
- * Options de blocage de connexions choix aucun
+ * Options de blocage de connexions
+ * Contrôle la cohérence des sélections et interdit une seule valeur Aucune
  */
 $("select[name=configConnectAttempt]").on("change", function() {
     if ($("select[name=configConnectAttempt]").val() === "999") {
         $("select[name=configConnectTimeout]").val(0);
+    } else {
+        if ($("select[name=configConnectTimeout]").val() === "0") {
+            $("select[name=configConnectTimeout]").val(300);
+        }
     }
 });
-
 $("select[name=configConnectTimeout]").on("change", function() {
     if ($("select[name=configConnectTimeout]").val() === "0") {
         $("select[name=configConnectAttempt]").val(999);
+    } else {
+        if ($("select[name=configConnectAttempt]").val() === "999") {
+            $("select[name=configConnectAttempt]").val(3);
+        }
     }
 });
+

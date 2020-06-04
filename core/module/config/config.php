@@ -415,20 +415,7 @@ class config extends common {
 			} else {
 				$legalPageId = '';
 			}
-			// Contrôle de cohérence
-			$connectAttempt = $this->getInput('configConnectAttempt', helper::FILTER_INT);
-			$connectTimeout = $this->getInput('configConnectTimeout', helper::FILTER_INT);
-			if(
-				( $connectAttempt === 999 && $connectTimeout !== 0 )
-			) {
-				self::$inputNotices['configConnectAttempt'] = 'Valeur incorrecte';
-			}
-			if(
-				( $connectAttempt !== 999 && $connectTimeout === 0 )
-			) {
-				self::$inputNotices['configConnectTimeout'] = 'Valeur incorrecte';
-			}
-
+			// Sauvegarder
 			$this->setData([
 				'config',
 				[
