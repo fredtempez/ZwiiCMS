@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev28';
+	const ZWII_VERSION = '10.2.00.dev30';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1668,7 +1668,8 @@ class core extends common {
 		 */
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
-			if ( $userId !== $this->getuser('id') &&
+			if ( $this->getuser('id') &&
+				 $userId !== $this->getuser('id') &&
 				 $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
 				 array_intersect($t,self::$accessList)  &&
 				 array_intersect($t,self::$accessExclude) !== false	 &&

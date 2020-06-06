@@ -260,10 +260,10 @@ core.start = function() {
 		var fileName = inputFileHiddenDOM.val();
 		if(fileName === "") {
 			fileName = "Choisissez un fichier";
-			$(".inputFileDelete").addClass("disabled");
+			$(inputFileHiddenDOM).addClass("disabled");
 		}
 		else {
-			$(".inputFileDelete").removeClass("disabled");
+			$(inputFileHiddenDOM).removeClass("disabled");
 		}
 		inputFileHiddenDOM.parent().find(".inputFileLabel").text(fileName);
 	}).trigger("change");
