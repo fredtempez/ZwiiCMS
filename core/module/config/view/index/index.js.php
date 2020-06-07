@@ -42,7 +42,7 @@ $( document).ready(function() {
         $(this).find(".zwiico-plus").toggle();
         $(this).find(".zwiico-minus").toggle();
         $(this).find(".blockContainer").slideToggle();
-    }).on("click", "span > input, input, textarea, label, option, button, a", function(e) {
+    }).on("click", "span > input, input, textarea, label, option, button, a, .blockContainer", function(e) {
         // Empêcher les déclenchements dans les blocs
         e.stopPropagation();
     });
