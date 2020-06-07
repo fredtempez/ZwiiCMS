@@ -30,10 +30,10 @@ function protectModule() {
 	var oldModule = $("#pageEditModuleIdOld").val();
 	var oldModuleText =  $("#pageEditModuleIdOldText").val();
 	var newModule = $("#pageEditModuleId").val();
-	if ( oldModule !== "" && 
+	if ( oldModule !== "" &&
 		 oldModule !== newModule) {
 		var _this = $(this);
-		core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?", 
+		core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?",
 				function() {
 					$(location).attr("href", _this.attr("href"));
 					return true;
@@ -47,11 +47,25 @@ function protectModule() {
 }
 
 
-/** 
+/**
 * Paramètres par défaut au chargement
-*/ 
+*/
 $( document ).ready(function() {
-	
+
+	/**
+     * Blocs dépliants
+     */
+
+    $("div .block").click(function(e) {
+        $(this).find(".zwiico-plus").toggle();
+        $(this).find(".zwiico-minus").toggle();
+        $(this).find(".blockContainer").slideToggle();
+    }).on("click", "span > input, input, textarea, label, option, button, a, .blockContainer", function(e) {
+        // Empêcher les déclenchements dans les blocs
+        e.stopPropagation();
+    });
+
+
 	/*
 	* Enleve le menu fixe en édition de page
 	*/
@@ -63,12 +77,12 @@ $( document ).ready(function() {
 	*/
 	if($("#pageEditModuleId").val() === "") {
 		$("#pageEditModuleConfig").addClass("disabled");
-		$("#pageEditContentContainer").hide();		
+		$("#pageEditContentContainer").hide();
 	}
 	else {
 		$("#pageEditModuleConfig").removeClass("disabled");
 		$("#pageEditContentContainer").hide();
-		$("#pageEditBlock option[value='bar']").remove();		
+		$("#pageEditBlock option[value='bar']").remove();
 	}
 
 	/**
@@ -77,13 +91,13 @@ $( document ).ready(function() {
 	if( $("#pageEditModuleId").val() === "redirection" ||
 		$("#pageEditModuleId").val() === "" ) {
 		$("#configModulePositionWrapper").removeClass("disabled");
-		$("#configModulePositionWrapper").slideUp();		 	
+		$("#configModulePositionWrapper").slideUp();
 	}
 	else {
 		$("#configModulePositionWrapper").addClass("disabled");
-		$("#configModulePositionWrapper").slideDown();		
+		$("#configModulePositionWrapper").slideDown();
 	}
-	
+
 
 	/**
 	* Masquer et démasquer le contenu pour les modules code et redirection
@@ -93,7 +107,7 @@ $( document ).ready(function() {
 		$("#pageEditContentWrapper").slideUp();
 	} else {
 		$("#pageEditContentWrapper").addClass("disabled");
-		$("#pageEditContentWrapper").slideDown();		
+		$("#pageEditContentWrapper").slideDown();
 	}
 	/**
 	* Masquer et démasquer le masquage du titre pour le module redirection
@@ -102,49 +116,49 @@ $( document ).ready(function() {
 		$("#pageEditHideTitleWrapper").removeClass("disabled");
 		$("#pageEditHideTitleWrapper").hide();
 		$("#pageEditBlockLayout").removeClass("disabled");
-		$("#pageEditBlockLayout").hide();			
-		
-	} else {	
+		$("#pageEditBlockLayout").hide();
+
+	} else {
 		$("#pageEditHideTitleWrapper").addClass("disabled");
 		$("#pageEditHideTitleWrapper").show();
 		$("#pageEditBlockLayout").addClass("disabled");
-		$("#pageEditBlockLayout").show();		
+		$("#pageEditBlockLayout").show();
 	}
 	/**
-	* Masquer et démasquer la sélection des barres 
+	* Masquer et démasquer la sélection des barres
 	*/
 	switch ($("#pageEditBlock").val()) {
-		case "bar":	
+		case "bar":
 		case "12":
 			$("#pageEditBarLeftWrapper").removeClass("disabled");
 			$("#pageEditBarLeftWrapper").slideUp();
 			$("#pageEditBarRightWrapper").removeClass("disabled");
-			$("#pageEditBarRightWrapper").slideUp();	
+			$("#pageEditBarRightWrapper").slideUp();
 			break;
 		case "3-9":
 		case "4-8":
 			$("#pageEditBarLeftWrapper").addClass("disabled");
 			$("#pageEditBarLeftWrapper").slideDown();
 			$("#pageEditBarRightWrapper").removeClass("disabled");
-			$("#pageEditBarRightWrapper").slideUp();					
+			$("#pageEditBarRightWrapper").slideUp();
 			break;
 		case "9-3":
 		case "8-4":
 			$("#pageEditBarLeftWrapper").removeClass("disabled");
-			$("#pageEditBarLeftWrapper").slideUp();	
+			$("#pageEditBarLeftWrapper").slideUp();
 			$("#pageEditBarRightWrapper").addClass("disabled");
-			$("#pageEditBarRightWrapper").slideDown();				
+			$("#pageEditBarRightWrapper").slideDown();
 			break;
 		case "3-6-3":
 		case "2-7-3":
-		case "3-7-2":			
+		case "3-7-2":
 			$("#pageEditBarLeftWrapper").addClass("disabled");
 			$("#pageEditBarLeftWrapper").slideDown();
 			$("#pageEditBarRightWrapper").addClass("disabled");
-			$("#pageEditBarRightWrapper").slideDown();				
+			$("#pageEditBarRightWrapper").slideDown();
 			break;
 	};
-	if ($("#pageEditBlock").val() === "bar") {		
+	if ($("#pageEditBlock").val() === "bar") {
 			$("#pageEditMenu").removeClass("disabled");
 			$("#pageEditMenu").hide();
 			$("#pageEditHideTitleWrapper").removeClass("disabled");
@@ -154,26 +168,28 @@ $( document ).ready(function() {
 			$("#pageEditModuleIdWrapper").removeClass("disabled");
 			$("#pageEditModuleIdWrapper").slideUp();
 			$("#pageEditModuleConfig").removeClass("disabled");
-			$("#pageEditModuleConfig").slideUp();	
+			$("#pageEditModuleConfig").slideUp();
 			$("#pageEditDisplayMenuWrapper").addClass("disabled");
 			$("#pageEditDisplayMenuWrapper").slideDown();
 			$("#pageTypeMenuWrapper").removeClass("disabled");
-			$("#pageTypeMenuWrapper").slideUp();	
+			$("#pageTypeMenuWrapper").slideUp();
 			$("#pageEditSeoWrapper").removeClass("disabled");
-			$("#pageEditSeoWrapper").slideUp();		
+			$("#pageEditSeoWrapper").slideUp();
 			$("#pageEditAdvancedWrapper").removeClass("disabled");
 			$("#pageEditAdvancedWrapper").slideUp();
+			/*
 			$("#pageEditBlockLayout").removeClass("col6");
 			$("#pageEditBlockLayout").addClass("col12");
-						
+			*/
+
 	} else {
 			$("#pageEditDisplayMenuWrapper").removeClass("disabled");
-			$("#pageEditDisplayMenuWrapper").slideUp();	
+			$("#pageEditDisplayMenuWrapper").slideUp();
 	}
 
 	/**
 	* Masquer ou afficher le chemin de fer
-	* Quand le titre est masqué 
+	* Quand le titre est masqué
 	*/
 	if ($("input[name=pageEditHideTitle]").is(':checked') ||
 		  $("#pageEditParentPageId").val() === "" )  {
@@ -183,30 +199,30 @@ $( document ).ready(function() {
 	} else {
 		if ($("#pageEditParentPageId").val() !== "") {
 			$("#pageEditbreadCrumbWrapper").addClass("disabled");
-			$("#pageEditbreadCrumbWrapper").slideDown();	
-		}			
-	}				
- 
+			$("#pageEditbreadCrumbWrapper").slideDown();
+		}
+	}
+
 	/**
-	* Masquer ou afficher la sélection de l'icône 
+	* Masquer ou afficher la sélection de l'icône
 	*/
 	if ($("#pageTypeMenu").val() !== "text") {
 		$("#pageIconUrlWrapper").addClass("disabled");
 		$("#pageIconUrlWrapper").slideDown();
-	} else {	
+	} else {
 		$("#pageIconUrlWrapper").removeClass("disabled");
-		$("#pageIconUrlWrapper").slideUp();					
+		$("#pageIconUrlWrapper").slideUp();
 	}
 
-	/**	
+	/**
 	* Cache les options de masquage dans les menus quand la page n'est pas affichée.
 	*/
 	if ($("#pageEditPosition").val() === "0" ) {
 			$("#pageEditHideMenuSideWrapper").removeClass("disabled");
-			$("#pageEditHideMenuSideWrapper").slideUp();				
+			$("#pageEditHideMenuSideWrapper").slideUp();
 	} else {
 			$("#pageEditHideMenuSideWrapper").addClass("disabled");
-			$("#pageEditHideMenuSideWrapper").slideDown();								
+			$("#pageEditHideMenuSideWrapper").slideDown();
 	}
 
 	/**
@@ -225,10 +241,10 @@ $( document ).ready(function() {
  */
 	if ($("#pageEditDisable").is(':checked') ) {
 		$("#pageEditHideMenuChildrenWrapper").removeClass("disabled");
-		$("#pageEditHideMenuChildrenWrapper").slideUp();			
+		$("#pageEditHideMenuChildrenWrapper").slideUp();
 	} else {
 		$("#pageEditHideMenuChildrenWrapper").addClass("disabled");
-		$("#pageEditHideMenuChildrenWrapper").slideDown();								
+		$("#pageEditHideMenuChildrenWrapper").slideDown();
 	}
 
 });
@@ -243,25 +259,25 @@ pageEditDisableDOM.on("change", function() {
 	if ($(this).is(':checked') ) {
 		$("#pageEditHideMenuChildrenWrapper").removeClass("disabled");
 		$("#pageEditHideMenuChildrenWrapper").slideUp();
-		$("#pageEditHideMenuChildren").prop("checked", false);			
+		$("#pageEditHideMenuChildren").prop("checked", false);
 	} else {
 		$("#pageEditHideMenuChildrenWrapper").addClass("disabled");
-		$("#pageEditHideMenuChildrenWrapper").slideDown();								
+		$("#pageEditHideMenuChildrenWrapper").slideDown();
 	}
 });
 
 
-/**	
+/**
 * Cache les options de masquage dans les menus quand la page n'est pas affichée.
 */
 var pageEditPositionDOM = $("#pageEditPosition");
 pageEditPositionDOM.on("change", function() {
 	if ($(this).val()  === "0" ) {
 		$("#pageEditHideMenuSideWrapper").removeClass("disabled");
-		$("#pageEditHideMenuSideWrapper").slideUp();			
+		$("#pageEditHideMenuSideWrapper").slideUp();
 	} else {
 		$("#pageEditHideMenuSideWrapper").addClass("disabled");
-		$("#pageEditHideMenuSideWrapper").slideDown();								
+		$("#pageEditHideMenuSideWrapper").slideDown();
 	}
 });
 
@@ -274,12 +290,12 @@ pageEditModuleIdDOM.on("change", function() {
 	if($(this).val() === "") {
 		$("#pageEditModuleConfig").addClass("disabled");
 		$("#pageEditContentContainer").slideDown();
-		$("#pageEditBlock").append('<option value="bar">Barre latérale</option>');		
+		$("#pageEditBlock").append('<option value="bar">Barre latérale</option>');
 	}
 	else {
 		$("#pageEditModuleConfig").removeClass("disabled");
 		$("#pageEditContentContainer").slideUp();
-		$("#pageEditBlock option[value='bar']").remove();		
+		$("#pageEditBlock option[value='bar']").remove();
 	}
 });
 
@@ -291,14 +307,14 @@ pageEditModuleIdDOM.on("change", function() {
  * */
 var pageEditModuleIdDOM = $("#pageEditModuleId");
 pageEditModuleIdDOM.on("change", function() {
-	if( $(this).val() === "redirection" || 
+	if( $(this).val() === "redirection" ||
 		$(this).val() === "") {
 		$("#configModulePositionWrapper").removeClass("disabled");
- 		$("#configModulePositionWrapper").slideUp();		
+ 		$("#configModulePositionWrapper").slideUp();
 	}
 	else {
 		$("#configModulePositionWrapper").addClass("disabled");
-		$("#configModulePositionWrapper").slideDown();				
+		$("#configModulePositionWrapper").slideDown();
 	}
 });
 
@@ -316,7 +332,7 @@ pageEditModuleIdDOM.on("change", function() {
 	}
 	else {
 		$("#pageEditContentWrapper").addClass("disabled");
-		$("#pageEditContentWrapper").slideDown();		
+		$("#pageEditContentWrapper").slideDown();
 	}
 });
 
@@ -329,21 +345,21 @@ var pageEditModuleIdDOM = $("#pageEditModuleId");
 pageEditModuleIdDOM.on("change", function() {
 	if( $(this).val() === "redirection") {
 		$("#pageEditHideTitleWrapper").removeClass("disabled");
-		$("#pageEditHideTitleWrapper").slideUp();	
+		$("#pageEditHideTitleWrapper").slideUp();
 		$("#pageEditBlockLayout").removeClass("disabled");
 		$("#pageEditBlockLayout").slideUp();
 	}
-	else {	
+	else {
 		$("#pageEditHideTitleWrapper").addClass("disabled");
 		$("#pageEditHideTitleWrapper").slideDown();
 		$("#pageEditBlockLayout").addClass("disabled");
-		$("#pageEditBlockLayout").slideDown();				
+		$("#pageEditBlockLayout").slideDown();
 	}
 });
 
 
 /**
- * Masquer et démasquer la sélection des barres 
+ * Masquer et démasquer la sélection des barres
  */
 var pageEditBlockDOM = $("#pageEditBlock");
 pageEditBlockDOM.on("change", function() {
@@ -353,30 +369,30 @@ pageEditBlockDOM.on("change", function() {
 			$("#pageEditBarLeftWrapper").removeClass("disabled");
 			$("#pageEditBarLeftWrapper").slideUp();
 			$("#pageEditBarRightWrapper").removeClass("disabled");
-			$("#pageEditBarRightWrapper").slideUp();				
+			$("#pageEditBarRightWrapper").slideUp();
 			break;
 		case "3-9":
 		case "4-8":
 			$("#pageEditBarLeftWrapper").addClass("disabled");
 			$("#pageEditBarLeftWrapper").slideDown();
 			$("#pageEditBarRightWrapper").removeClass("disabled");
-			$("#pageEditBarRightWrapper").slideUp();					
+			$("#pageEditBarRightWrapper").slideUp();
 			break;
 		case "9-3":
 		case "8-4":
 			$("#pageEditBarLeftWrapper").removeClass("disabled");
-			$("#pageEditBarLeftWrapper").slideUp();	
+			$("#pageEditBarLeftWrapper").slideUp();
 			$("#pageEditBarRightWrapper").addClass("disabled");
-			$("#pageEditBarRightWrapper").slideDown();				
+			$("#pageEditBarRightWrapper").slideDown();
 			break;
 		case "3-6-3":
 		case "2-7-3":
-		case "3-7-2":		
+		case "3-7-2":
 			$("#pageEditBarLeftWrapper").addClass("disabled");
 			$("#pageEditBarLeftWrapper").slideDown();
 			$("#pageEditBarRightWrapper").addClass("disabled");
-			$("#pageEditBarRightWrapper").slideDown();				
-			break;	
+			$("#pageEditBarRightWrapper").slideDown();
+			break;
 	}
 	if ($(this).val() === "bar") {
 			$("#pageEditMenu").removeClass("disabled");
@@ -384,50 +400,54 @@ pageEditBlockDOM.on("change", function() {
 			$("#pageEditHideTitleWrapper").removeClass("disabled");
 			$("#pageEditHideTitleWrapper").slideUp();
 			$("#pageTypeMenuWrapper").removeClass("disabled");
-			$("#pageTypeMenuWrapper").slideUp();	
+			$("#pageTypeMenuWrapper").slideUp();
 			$("#pageEditSeoWrapper").removeClass("disabled");
-			$("#pageEditSeoWrapper").slideUp();	
+			$("#pageEditSeoWrapper").slideUp();
 			$("#pageEditAdvancedWrapper").removeClass("disabled");
-			$("#pageEditAdvancedWrapper").slideUp();								
+			$("#pageEditAdvancedWrapper").slideUp();
 			$("#pageEditbreadCrumbWrapper").removeClass("disabled");
 			$("#pageEditbreadCrumbWrapper").slideUp();
 			$("#pageEditModuleIdWrapper").removeClass("disabled");
 			$("#pageEditModuleIdWrapper").slideUp();
 			$("#pageEditModuleConfig").removeClass("disabled");
-			$("#pageEditModuleConfig").slideUp();	
+			$("#pageEditModuleConfig").slideUp();
 			$("#pageEditDisplayMenuWrapper").addClass("disabled");
-			$("#pageEditDisplayMenuWrapper").slideDown();							
+			$("#pageEditDisplayMenuWrapper").slideDown();
+			/*
 			$("#pageEditBlockLayout").removeClass("col6");
-			$("#pageEditBlockLayout").addClass("col12");																			
+			$("#pageEditBlockLayout").addClass("col12");
+			*/
 	} else {
 			$("#pageEditMenu").addClass("disabled");
-			$("#pageEditMenu").show();					
+			$("#pageEditMenu").show();
 			$("#pageEditHideTitleWrapper").addClass("disabled");
-			$("#pageEditHideTitleWrapper").slideDown();	
+			$("#pageEditHideTitleWrapper").slideDown();
 			$("#pageTypeMenuWrapper").addClass("disabled");
-			$("#pageTypeMenuWrapper").slideDown();	
+			$("#pageTypeMenuWrapper").slideDown();
 			$("#pageEditSeoWrapper").addClass("disabled");
-			$("#pageEditSeoWrapper").slideDown();		
+			$("#pageEditSeoWrapper").slideDown();
 			$("#pageEditAdvancedWrapper").addClass("disabled");
-			$("#pageEditAdvancedWrapper").slideDown();						
+			$("#pageEditAdvancedWrapper").slideDown();
 			$("#pageEditModuleIdWrapper").addClass("disabled");
-			$("#pageEditModuleIdWrapper").slideDown();	
+			$("#pageEditModuleIdWrapper").slideDown();
 			$("#pageEditModuleConfig").addClass("disabled");
-			$("#pageEditModuleConfig").slideDown();	
+			$("#pageEditModuleConfig").slideDown();
 			$("#pageEditDisplayMenuWrapper").removeClass("disabled");
-			$("#pageEditDisplayMenuWrapper").slideUp();													
+			$("#pageEditDisplayMenuWrapper").slideUp();
 			if ($("#pageEditParentPageId").val() !== "") {
 				$("#pageEditbreadCrumbWrapper").addClass("disabled");
 				$("#pageEditbreadCrumbWrapper").slideDown();
 			}
+			/*
 			$("#pageEditBlockLayout").removeClass("col12");
 			$("#pageEditBlockLayout").addClass("col6");
-	}	
+			*/
+	}
 });
 
 /**
  * Masquer ou afficher le chemin de fer
- * Quand le titre est masqué 
+ * Quand le titre est masqué
  */
 var pageEditHideTitleDOM = $("#pageEditHideTitle");
 pageEditHideTitleDOM.on("change", function() {
@@ -437,13 +457,13 @@ pageEditHideTitleDOM.on("change", function() {
 	} else {
 		if ($("#pageEditParentPageId").val() !== "") {
 			$("#pageEditbreadCrumbWrapper").addClass("disabled");
-			$("#pageEditbreadCrumbWrapper").slideDown();	
-		}			
+			$("#pageEditbreadCrumbWrapper").slideDown();
+		}
 	}
 });
 
 
-/**	
+/**
  * Masquer ou afficher le chemin de fer
  * Quand la page n'est pas mère et que le menu n'est pas masqué
  */
@@ -452,11 +472,11 @@ pageEditParentPageIdDOM.on("change", function() {
 	if ($(this).val() === "" &&
 		!$('input[name=pageEditHideTitle]').is(':checked') ) {
 			$("#pageEditbreadCrumbWrapper").removeClass("disabled");
-			$("#pageEditbreadCrumbWrapper").slideUp();	
+			$("#pageEditbreadCrumbWrapper").slideUp();
 	} else {
 			$("#pageEditbreadCrumbWrapper").addClass("disabled");
-			$("#pageEditbreadCrumbWrapper").slideDown();			
-					
+			$("#pageEditbreadCrumbWrapper").slideDown();
+
 	}
 	if ($(this).val() !== "") {
 		  $("#pageEditHideMenuChildrenWrapper").removeClass("disabled");
@@ -470,16 +490,16 @@ pageEditParentPageIdDOM.on("change", function() {
 
 
 /**
- * Masquer ou afficher la sélection de l'icône 
+ * Masquer ou afficher la sélection de l'icône
  */
 var pageTypeMenuDOM = $("#pageTypeMenu");
 pageTypeMenuDOM.on("change", function() {
 	if ($(this).val() !== "text") {
 			$("#pageIconUrlWrapper").addClass("disabled");
 			$("#pageIconUrlWrapper").slideDown();
-	} else {	
+	} else {
 			$("#pageIconUrlWrapper").removeClass("disabled");
-			$("#pageIconUrlWrapper").slideUp();					
+			$("#pageIconUrlWrapper").slideUp();
 	}
 });
 

@@ -60,7 +60,7 @@ class page extends common {
 	];
 	public static $displayMenu = [
 		'none'	=> 'Aucun',
-		'parents' 	=> 'Le menu horizontal',
+		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
 

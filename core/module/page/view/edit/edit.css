@@ -14,3 +14,21 @@
 
 
 @import url("site/data/admin.css");
+
+.blockContainer:not(#info) {
+    display : none;
+}
+
+#info .zwiico-minus {
+    display: inline;
+}
+
+.zwiico-minus,#info .zwiico-plus {
+    display: none;
+}
+
+
+.zwiico-minus,
+.zwiico-plus {
+    cursor: pointer;
+}
