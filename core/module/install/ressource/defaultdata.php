@@ -182,12 +182,12 @@ class init extends common {
 			'fontTitle' => 'Oswald',
 			'colorText' => 'rgba(33, 34, 35, 1)',
 			'colorTitle' => 'rgba(74, 105, 189, 1)',
-			'backgroundColorButton' => 'rgba(44, 79, 110, 1)',
+			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',
 			'backgroundColorButtonGrey' => 'rgba(170, 180, 188, 1)',
-			'backgroundColorButtonRed' => 'rgba(231, 76, 60, 1)',
-			'backgroundColorButtonGreen' => 'rgba(57, 112, 12, 1)',
+			'backgroundColorButtonRed' => 'rgba(217, 95, 78, 1)',
+			'backgroundColorButtonGreen' => 'rgba(162, 223, 57, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
-			'borderBlockColor' => 'rgba(236, 239, 241, 1)'
+			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
     ];
 
