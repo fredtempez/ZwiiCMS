@@ -13,6 +13,8 @@
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
+- Correction :
+    - Configuration, favicon clair et sombre : le bouton d'effacement initialise les deux champs.
 
 ## version 10.1.04
 - Correction :

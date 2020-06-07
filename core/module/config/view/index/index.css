@@ -14,30 +14,8 @@
 
 @import url("site/data/admin.css");
 
-#parameter .blockContainer,
-#social .blockContainer,
-#ceo .blockContainer,
-#network .blockContainer,
-#smtp .blockContainer,
-#login .blockContainer,
-#log .blockContainer ,
-#script .blockContainer,
 
-#parameter .zwiico-minus,
-#social .zwiico-minus,
-#ceo .zwiico-minus,
-#network .zwiico-minus,
-#smtp .zwiico-minus,
-#login .zwiico-minus,
-#log .zwiico-minus,
-#script .zwiico-minus
- {
-    display: none;
-}
-
-
-#info .zwiico-plus,
-#version .zwiico-plus {
+.zwiico-minus {
     display: none;
 }
 

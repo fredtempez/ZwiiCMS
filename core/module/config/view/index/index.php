@@ -79,11 +79,8 @@
 			 ?>Paramètres</h4>
 			<div class="blockContainer">
 				<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
-				<?php if ($error !== false) : ?>
-					<?php $error = true; ?>
-				<?php endif;?>
 				<div class="row">
-					<div class="col3">
+					<div class="col4">
 						<?php echo template::file('configFavicon', [
 							'type' => 1,
 							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
@@ -91,15 +88,15 @@
 							'value' => $this->getData(['config', 'favicon'])
 						]); ?>
 					</div>
-					<div class="col3">
-					<?php echo template::file('configFaviconDark', [
-						'type' => 1,
-						'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
-						'label' => 'Favicon thème sombre',
-						'value' => $this->getData(['config', 'faviconDark'])
-					]); ?>
-				</div>
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::file('configFaviconDark', [
+							'type' => 1,
+							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
+							'label' => 'Favicon thème sombre',
+							'value' => $this->getData(['config', 'faviconDark'])
+						]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::select('configItemsperPage', $module::$ItemsList, [
 						'label' => 'Articles par page',
 						'selected' => $this->getData(['config', 'itemsperPage']),
@@ -108,14 +105,14 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::select('configTimezone', $module::$timezones, [
 							'label' => 'Fuseau horaire',
 							'selected' => $this->getData(['config', 'timezone']),
 							'help' => 'Le fuseau horaire est utile au bon référencement'
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
 						?>
 						<?php echo template::select('configLegalPageId', $listePageId , [
@@ -124,42 +121,40 @@
 							'help' => 'Les mentions légales sont obligatoires en France'
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
+					<div class="col4 verticalAlignBottom">
 						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 							'checked' => $this->getData(['config', 'cookieConsent'])
 						]); ?>
 					</div>
-					<div class="col6">
+				</div>
+				<div class="row">
+					<div class="col4">
 						<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 							'checked' => helper::checkRewrite(),
 							'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
+							'checked' => $this->getData(['config', 'maintenance'])
+						]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
 								'checked' => $this->getData(['config', 'autoBackup']),
 								'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
 							]); ?>
 					</div>
-					<div class="col6">
-						<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
-							'checked' => $this->getData(['config', 'maintenance'])
-						]); ?>
-					</div>
 				</div>
 				<div class="row">
-					<div class="col3">
+					<div class="col4">
 						<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour automatique', [
 								'checked' => $this->getData(['config', 'autoUpdate']),
 								'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
 								'disabled' => !$error
 							]); ?>
 					</div>
-					<div class="col3">
+					<div class="col4 ">
 						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
@@ -444,12 +439,12 @@
 			?>Journalisation</h4>
 			<div class="blockContainer">
 				<div class="row">
-					<div class="col3 verticalAlignBottom">
+					<div class="col4 verticalAlignBottom">
 						<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
 							'checked' => $this->getData(['config', 'connect', 'log'])
 						]); ?>
 					</div>
-					<div class="col3 offset3">
+					<div class="col3 offset2">
 						<?php echo template::button('ConfigLogDownload', [
 							'href' => helper::baseUrl() . 'config/logDownload',
 							'value' => 'Télécharger journal',
