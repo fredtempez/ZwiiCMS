@@ -8,9 +8,11 @@
 .mce-tinymce {
 	box-shadow: none !important;
 }
+/*
 .mce-tinymce {
 	border: 1px solid #D8DFE3 !important;
  }
+ */
 #mce-modal-block {
 	background: #000 !important;
 }

@@ -85,10 +85,14 @@ echo template::formOpen('pageEditForm');
 			</div>
 		</div>
 	</div>
-	<?php echo template::textarea('pageEditContent', [
-		'class' => 'editorWysiwyg',
-		'value' => $this->getData(['page', $this->getUrl(2), 'content'])
-	]); ?>
+	<div class="row">
+		<div class="col12">
+			<?php echo template::textarea('pageEditContent', [
+				'class' => 'editorWysiwyg',
+				'value' => $this->getData(['page', $this->getUrl(2), 'content'])
+			]); ?>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col6" id="pageEditBlockLayout">
 			<div class="block" >

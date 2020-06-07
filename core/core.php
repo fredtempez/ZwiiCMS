@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev31';
+	const ZWII_VERSION = '10.2.00.dev32';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1546,7 +1546,7 @@ class core extends common {
 			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
-			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{ background-color:' . $colors['normal'] . ';color:' . $this->getData(['admin','colorButtonText']) . ';}';
+			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' .  $colors['text'] . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
 			$css .= '.button {background-color:' . $colors['normal'] . ';color:' . $colors['text']   . ';}.button:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGrey']));
@@ -1558,6 +1558,8 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
 			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
+			// Bordure du contour TinyMCE
+			$css .= '.mce-tinymce{border: 1px solid '. $this->getData(['admin','borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'admin.css', $css);
 		}
