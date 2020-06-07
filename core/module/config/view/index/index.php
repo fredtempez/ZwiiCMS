@@ -29,7 +29,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block" id="info">
-			<h4><?php 
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			 ?>Informations générales</h4>
@@ -72,11 +72,11 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="parameter">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			 ?>Options</h4>
+			 ?>Paramètres</h4>
 			<div class="blockContainer">
 				<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 				<div class="row">
@@ -170,7 +170,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block" id="social">
-			<h4><?php 
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			 ?>Réseaux sociaux</h4>
@@ -241,8 +241,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="ceo">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			 ?>Référencement</h4>
@@ -284,8 +284,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="network">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			 ?>Paramètres réseaux</h4>
@@ -318,8 +318,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="smtp">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			?>Paramètres de messagerie SMTP</h4>
@@ -385,8 +385,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="login">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			?>Sécurité de la connexion</h4>
@@ -432,8 +432,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="log">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			?>Journalisation</h4>
@@ -466,8 +466,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="script">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			?>Options de script</h4>
@@ -502,8 +502,8 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="version">
-			<h4><?php 
+		<div class="block">
+			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			?>Versions système</h4>
