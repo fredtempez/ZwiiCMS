@@ -33,7 +33,7 @@
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
 			 ?>Informations générales</h4>
-			<div class="blockContainer">
+			<div class="blockContainer" id="info">
 				<div class="row">
 					<div class="col4">
 					<?php
@@ -76,7 +76,7 @@
 			<h4><?php 
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			 ?>Paramètres</h4>
+			 ?>Options</h4>
 			<div class="blockContainer">
 				<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 				<div class="row">
