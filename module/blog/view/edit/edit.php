@@ -56,14 +56,14 @@
 							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picturePosition']),
 							'help' => 'Le texte de l\'article est adapté autour de l\'image'
 						]); ?>
-					</div>					
+					</div>
 				</div>
 				<div class="row">
-					<div class="col6">							
+					<div class="col6">
 						<?php echo template::checkbox('blogEditHidePicture', true, 'Masquer l\'image dans l\'article', [
 							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'hidePicture'])
 							]); ?>
-					</div>					
+					</div>
 				</div>
 			</div>
 		</div>
@@ -99,9 +99,9 @@
 
 				]); ?>
 				<?php echo template::select('blogEditGroupNotification', $module::$groupNews, [
-							'label' => '',
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification'])
-						]); ?>
+					'label' => '',
+					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification'])
+				]); ?>
 			</div>
 		</div>
 	</div>

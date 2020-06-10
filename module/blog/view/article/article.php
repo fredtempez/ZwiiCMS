@@ -23,13 +23,10 @@
 	} ?>
 
 <?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'content']); ?>
-<!-- <h4 class="textAlignRight"> -->
-<p class="signature">
+<p class="clearBoth signature">
     <?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'firstname']); ?>
 	<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'lastname']); ?>
-<!-- </h4> -->
 </p>
-<div class="clearBoth"></div>
 <?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
 	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>

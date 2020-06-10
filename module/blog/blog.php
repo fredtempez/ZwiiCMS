@@ -51,7 +51,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.01';
+	const BLOG_VERSION = '2.02';
 
 	/**
 	 * Édition
@@ -66,12 +66,14 @@ class blog extends common {
 			// Crée l'article
 			$this->setData(['module', $this->getUrl(0), $articleId, [
 				'closeComment' => $this->getInput('blogAddCloseComment', helper::FILTER_BOOLEAN),
-				'mailNotification'  => $this->getInput('blogEditMailNotification', helper::FILTER_BOOLEAN),
-				'groupNotification' => 	$this->getInput('blogEditGroupNotification', helper::FILTER_INT),
+				'mailNotification'  => $this->getInput('blogAddMailNotification', helper::FILTER_BOOLEAN),
+				'groupNotification' => 	$this->getInput('blogAddGroupNotification', helper::FILTER_INT),
 				'comment' => [],
 				'content' => $this->getInput('blogAddContent', null),
 				'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
 				'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
+				'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
+				'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),				
 				'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
 				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),

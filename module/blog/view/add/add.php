@@ -28,25 +28,38 @@
 			<div class="block">
 				<h4>Informations générales</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col12">
 						<?php echo template::text('blogAddTitle', [
 							'label' => 'Titre'
 						]); ?>
 					</div>
-					<div class="col6">
+				</div>
+				<div class="row">
+					<div class="col4">
 						<?php echo template::file('blogAddPicture', [
 							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
 							'label' => 'Image de couverture',
 							'type' => 1
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::select('blogAddPictureSize', $module::$pictureSizes, [
+							'label' => 'Largeur de l\'image'
+						]); ?>
 					</div>
-					<div class="col6">					
+					<div class="col4">
+						<?php echo template::select('blogAddPicturePosition', $module::$picturePositions, [
+							'label' => 'Position',
+							'help' => 'Le texte de l\'article est adapté autour de l\'image'
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col12">
 					<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image dans l\'article', [
 							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'hidePicture'])
 							]); ?>
-					</div>					
+					</div>
 				</div>
 			</div>
 		</div>
@@ -72,7 +85,13 @@
 		<div class="col6">
 			<div class="block">
 				<h4>Options avancées</h4>
-				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires'); ?>
+				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires' ); ?>
+				<?php echo template::checkbox('blogAddMailNotification', true, 'Notifier le commentaire aux groupes à partir de :', [
+					'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
+				]); ?>
+				<?php echo template::select('blogAddGroupNotification', $module::$groupNews, [
+						'label' => ''
+				]); ?>
 			</div>
 		</div>
 	</div>
