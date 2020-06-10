@@ -89,6 +89,12 @@ tinymce.init({
 	link_context_toolbar: true,	
 	// Cache la barre de statut
 	statusbar: false,
+	// Active le copié collé à partir du Web
+	paste_data_images: true,
+	/* Eviter BLOB à tester
+	images_dataimg_filter: function(img) {
+		return img.hasAttribute('internal-blob');
+	},*/
 	// Autorise tous les éléments
 	valid_elements :"*[*]",
 	valid_children : "*[*]",
