@@ -73,7 +73,7 @@ class blog extends common {
 				'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
 				'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
 				'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
-				'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),				
+				'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),
 				'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
 				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
