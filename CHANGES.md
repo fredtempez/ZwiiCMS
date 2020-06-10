@@ -13,6 +13,7 @@
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
+    - Module Blog 2.02 : homogénéisation des interfaces.
 - Correction :
     - Configuration, favicon clair et sombre : le bouton d'effacement initialise les deux champs.
 
