@@ -72,7 +72,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="setup">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -241,7 +241,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="ceo">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -284,7 +284,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="network">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -318,7 +318,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="smtp">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -385,7 +385,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="login">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -432,7 +432,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="logs">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -466,7 +466,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block">
+		<div class="block" id="script">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
@@ -501,8 +501,8 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col12">
-		<div class="block">
+	<div class="col12" >
+		<div class="block" id="system">
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');

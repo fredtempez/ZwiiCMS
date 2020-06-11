@@ -52,6 +52,27 @@ function protectModule() {
 */
 $( document ).ready(function() {
 
+    /**
+     * Initialisation des blocs
+     */
+
+    var i = ["info", "layout", "setup", "position", "advanced", "ceo" ];
+    $.each(i,function(e) {
+        if (getCookie(i[e]) === "true") {
+            $("#" + i[e]).find(".zwiico-plus").hide();
+            $("#" + i[e]).find(".zwiico-minus").show();
+            $("#" + i[e]).find(".blockContainer").show();
+        }
+	});
+
+	/**
+     * Lire un cookie s'il existe
+     */
+    function getCookie(name) {
+        var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+        return v ? v[2] : null;
+    }
+
 	/**
      * Blocs dépliants
      */
@@ -59,7 +80,12 @@ $( document ).ready(function() {
     $("div .block").click(function(e) {
         $(this).find(".zwiico-plus").toggle();
         $(this).find(".zwiico-minus").toggle();
-        $(this).find(".blockContainer").slideToggle();
+		$(this).find(".blockContainer").slideToggle();
+		/*
+        * Sauvegarder la position des blocs
+        * true = bloc déplié
+        */
+	   document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible");
     }).on("click", "span > input, input, textarea, label, option, button, a, .blockContainer", function(e) {
         // Empêcher les déclenchements dans les blocs
         e.stopPropagation();

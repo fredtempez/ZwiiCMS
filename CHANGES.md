@@ -9,6 +9,7 @@
         - la connexion d'un utilisateur sur un autre poste ou navigateur déconnecte la session précédente.
         - sécurisation du login
         - journalisation de l'utilisation du site
+    - Ecran de configuration et d'édition des pages, les blocs sont pliables et dépliables afin d'alléger l'occupation sur l'écran. Le statut des blocs (fermés ; ouverts) est persistante au cours de la session.
 - Modifications :
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.

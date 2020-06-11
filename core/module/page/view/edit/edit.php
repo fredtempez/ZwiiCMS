@@ -27,8 +27,8 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class="row">
 		<div class="col12">
-			<div class="block">
-				<h4>Informations générales</h4>
+			<div class="block" id="info">
+ 				<h4>Informations générales</h4>
 				<div class="row">
 					<div class="col8">
 						<?php echo template::text('pageEditTitle', [
@@ -95,7 +95,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class="row">
 		<div class="col12" id="pageEditBlockLayout">
-			<div class="block" >
+			<div class="block" id="layout">
 				<h4><?php
 				echo template::ico('plus','right');
 				echo template::ico('minus','right');
@@ -158,7 +158,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class="row">
 		<div class="col12"  id="pageEditMenu">
-			<div class="block">
+			<div class="block" id="position">
 				<h4><?php
 				echo template::ico('plus','right');
 				echo template::ico('minus','right');
@@ -204,7 +204,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class='row' id="pageEditAdvancedWrapper">
 		<div class="col12">
-			<div class="block">
+			<div class="block" id="advanced">
 				<h4><?php
 				echo template::ico('plus','right');
 				echo template::ico('minus','right');
@@ -230,7 +230,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class='row' id="pageEditSeoWrapper">
 		<div class="col12">
-			<div class="block">
+			<div class="block" id="ceo">
 				<h4><?php
 				echo template::ico('plus','right');
 				echo template::ico('minus','right');

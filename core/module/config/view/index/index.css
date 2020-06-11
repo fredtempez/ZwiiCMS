@@ -22,7 +22,8 @@
     display: inline;
 }
 
-.zwiico-minus,#info .zwiico-plus {
+.zwiico-minus,
+#info .zwiico-plus {
     display: none;
 }
 
