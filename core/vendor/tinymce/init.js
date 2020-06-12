@@ -18,7 +18,7 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor codesample emoticons ",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons ",
 	// Contenu de la barre d'outils
 	toolbar: "restoredraft | undo redo |  formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
 	// Emoticons
