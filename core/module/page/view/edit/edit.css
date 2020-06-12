@@ -15,15 +15,21 @@
 
 @import url("site/data/admin.css");
 
-.blockContainer:not(#info) {
-    display : none;
+#ceo > .blockContainer,
+#advanced > .blockContainer {
+    display: none;
 }
 
-#info .zwiico-minus {
+#info .zwiico-minus,
+#layout .zwiico-minus,
+#position .zwiico-minus {
     display: inline;
 }
 
-.zwiico-minus,#info .zwiico-plus {
+.zwiico-minus,
+#info .zwiico-plus,
+#layout .zwiico-plus,
+#position .zwiico-plus {
     display: none;
 }
 
