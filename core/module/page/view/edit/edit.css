@@ -22,14 +22,14 @@
 
 #info .zwiico-minus,
 #layout .zwiico-minus,
-#position .zwiico-minus {
+#location .zwiico-minus {
     display: inline;
 }
 
 .zwiico-minus,
 #info .zwiico-plus,
 #layout .zwiico-plus,
-#position .zwiico-plus {
+#location .zwiico-plus {
     display: none;
 }
 

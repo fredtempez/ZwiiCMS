@@ -158,7 +158,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class="row">
 		<div class="col12"  id="pageEditMenu">
-			<div class="block" id="position">
+			<div class="block" id="location">
 				<h4><?php
 				echo template::ico('plus','right');
 				echo template::ico('minus','right');
