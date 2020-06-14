@@ -131,11 +131,15 @@ class install extends common {
 				$this->setData(['core','updateAvailable', false]);
 				// Backup du dossier Data
 				helper::autoBackup(self::BACKUP_DIR,['backup','tmp','file']);
+				// Sauvegarde htaccess
+				if ($this->getData(['config','autoUpdateHtaccess'])) {
+					$success = copy('.htaccess', '.htaccess' . '.bak');
+				}
 				// Nettoyage des fichiers d'installation précédents
-				if(file_exists(self::TEMP_DIR.'update.tar.gz')) {
+				if(file_exists(self::TEMP_DIR.'update.tar.gz') && $success) {
 					$success = unlink(self::TEMP_DIR.'update.tar.gz');
 				}
-				if(file_exists(self::TEMP_DIR.'update.tar') && $success === true) {
+				if(file_exists(self::TEMP_DIR.'update.tar') && $success) {
 					$success = unlink(self::TEMP_DIR.'update.tar');
 				}
 				// Valeurs en sortie
@@ -209,6 +213,15 @@ class install extends common {
 						'</ifModule>',
 						FILE_APPEND
 					) !== false);
+				}
+				// Recopie htaccess
+				if ($this->getData(['config','autoUpdateHtaccess']) &&
+					$success && file_exists( '.htaccess.bak')
+				) {
+						// L'écraser avec le backup
+						$success = copy( '.htaccess.bak' ,'.htaccess' );
+						// Effacer l ebackup
+						unlink('.htaccess.bak');
 				}
 				// Valeurs en sortie
 				$this->addOutput([

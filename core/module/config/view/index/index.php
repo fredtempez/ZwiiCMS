@@ -148,9 +148,16 @@
 				</div>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour automatique', [
+						<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour en ligne', [
 								'checked' => $this->getData(['config', 'autoUpdate']),
 								'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
+								'disabled' => !$error
+							]); ?>
+					</div>
+					<div class="col4 ">
+					<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver htaccess', [
+								'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
+								'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
 								'disabled' => !$error
 							]); ?>
 					</div>
@@ -159,6 +166,7 @@
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
 							'value' => 'Mise à jour manuelle',
+							'class' => 'buttonRed',
 							'disabled' => !$error
 						]); ?>
 					</div>

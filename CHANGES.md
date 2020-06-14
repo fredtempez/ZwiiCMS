@@ -15,6 +15,7 @@
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
     - Module Blog 2.02 : homogénéisation des interfaces.
+    - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver le fichier htaccess afin de préserver les modifications nécessaires à certains hébergeurs.
 - Correction :
     - Configuration, favicon clair et sombre : le bouton d'effacement initialise les deux champs.
 

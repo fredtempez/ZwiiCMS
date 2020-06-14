@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev33';
+	const ZWII_VERSION = '10.2.00.dev34';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1325,6 +1325,8 @@ class common {
 				// Créer les en-têtes du journal
 				$d = 'Date;Heure;Id;Action' . PHP_EOL;
 				file_put_contents(self::DATA_DIR . 'journal.log',$d);
+				// Init préservation htaccess
+				$this->setData(['config','autoUpdateHtaccess',false]);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
