@@ -20,7 +20,7 @@
 /**
  * Éléments génériques
  */
- 
+
 
 html,
 body {
@@ -39,7 +39,7 @@ body {
 
 /**
 * Petits écrans inférieurs à 768px de largeur, on supprime les marges
-*/ 
+*/
 @media (max-width: 768px) {
 	body {
 		margin:0px;
@@ -60,7 +60,7 @@ body {
 
 
 
-@media (max-width: 768px) {	
+@media (max-width: 768px) {
 	.siteContainer {
 		display: flex;
 		flex-direction: column;
@@ -370,14 +370,15 @@ td > .col12 {
 #bar select {
 	width: 250px;
 	border: 0;
-	color: #111112;	
+	color: #111112;
 	font-size: 12px;
+	background-color: rgba(255, 255, 255, 1);
 }
 
 @media (min-width: 768px) {
 	#bar #barLeft {
 		float: left;
-	}	
+	}
 	#bar #barRight {
 		float: right;
 		font-size: 12px;
@@ -398,12 +399,12 @@ td > .col12 {
 		font-size: 0.6em;
 	}
 	#bar #barLeft {
-		font-size: 1.6em;	
-		float : none;	
+		font-size: 1.6em;
+		float : none;
 	}
 	#bar #barRight {
-		font-size: 1.6em;		
-	}	
+		font-size: 1.6em;
+	}
 	#bar #displayUsername {
 		display: none;
 	}
@@ -416,7 +417,7 @@ td > .col12 {
 }
 
 @media (min-width:769px) {
-	#site {	
+	#site {
 		margin: 20px auto;
 	}
 }
@@ -429,7 +430,7 @@ td > .col12 {
 	}
 	header {
 		margin:0;
-	}	
+	}
 }
 
 header {
@@ -501,7 +502,7 @@ nav li ul {
 	opacity: 0;
 	-webkit-transition: .3s ease-out;
 	transition: .3s ease-out;
-	padding-left: 10px;	
+	padding-left: 10px;
 }
 
 nav li ul li {
@@ -535,7 +536,7 @@ nav a:hover {
 	}
 	nav #toggle {
 		display: block;
-	}	
+	}
 	nav #menu {
 		display: none;
 		text-align: left;
@@ -553,14 +554,14 @@ nav a:hover {
 	/* Taille du menu hamburger */
 	nav .zwiico-menu {
 		font-size:1.5em;
-	}	
+	}
 	nav .zwiico-cancel {
 		font-size:1.5em;
 	}
 }
 
 
-/* Barre de navigation fixe quand le menu est en-dehors du site */ 
+/* Barre de navigation fixe quand le menu est en-dehors du site */
 #navfixedlogout {
 	position: -webkit-sticky; /* Safari */
 	position: sticky;
@@ -622,7 +623,7 @@ section:after {
 .moduleVersion {
 	font-size: 0.8em;
 	font-style: italic;
-	text-align: right;  
+	text-align: right;
 }
 
 /* Pied de page */
@@ -666,12 +667,12 @@ footer #footerbody > div {
 	padding:0
 }
 #footerText > p {
-	margin-top: 0; 
+	margin-top: 0;
 	margin-bottom: 0;
 }
 
-#footerLoginLink, 
-#footerDisplayCopyright, 
+#footerLoginLink,
+#footerDisplayCopyright,
 #footerDisplayVersion,
 #footerDisplaySiteMap,
 #footerDisplayLegal,
@@ -863,7 +864,7 @@ footer #footerSocials .zwiico-github:hover {
 	width: 100vw;
 	max-width: 500px;
 	padding: 20px;
-		
+
 }
 .lightbox > span {
 	color: black;
@@ -916,7 +917,7 @@ input[type='password'].notice,
 select.notice,
 textarea.notice {
 	border: 1px solid #E74C3C;
-	background: #FAD7D3;
+	/*background: #FAD7D3;*/
 }
 input[type='email'].notice:hover,
 input[type='text'].notice:hover,
@@ -978,7 +979,7 @@ label {
 	-webkit-transition: background .3s ease-out;
 	transition: background .3s ease-out;
 }
-/* Bouton redimensionnable pour le formulaire*/ 
+/* Bouton redimensionnable pour le formulaire*/
 #formSubmit {
 	width: max-content;
 	float: right;
@@ -1335,7 +1336,7 @@ th.col12 {
 
 .accordion {
 	padding: 0;
-	list-style: none; 
+	list-style: none;
 }
 .accordion-title {
 	display: block;

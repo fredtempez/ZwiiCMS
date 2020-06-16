@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev34';
+	const ZWII_VERSION = '10.2.00.dev35';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1311,7 +1311,7 @@ class common {
 			$this->setdata(['theme','block','borderColor','rgba(236, 239, 241, 1)']);
 			$this->setdata(['theme','menu','radius','0px']);
 			$this->setData(['core', 'dataVersion', 10104]);
-		}		
+		}
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
 				$this->deleteData(['admin','colorButtonText']);
@@ -1427,7 +1427,7 @@ class core extends common {
 			$css .= 'body,.block h4{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			// spécifiques au module de blog
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
-			$css .= 'select,input[type=\'email\'],input[type=\'text\'],textarea{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
+			$css .= 'select,input[type=\'email\'],input[type=\'text\'],textarea{color:' . $this->getData(['theme', 'text', 'textColor']) .';background-color:'.$this->getData(['theme', 'site', 'backgroundColor']).';}';
 			// Couleur fixée dans admin.css
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
@@ -1449,6 +1449,7 @@ class core extends common {
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
+			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 			// Bannière
 			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 			if($this->getData(['theme', 'header', 'margin'])) {
