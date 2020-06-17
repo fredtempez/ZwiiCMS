@@ -1424,7 +1424,7 @@ class core extends common {
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			$css .= 'a:hover{color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
-			$css .= 'body,.block h4{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
+			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= 'select,input[type=\'password\'],input[type=\'email\'],input[type=\'text\'],.inputFile,select,textarea{color:' . $this->getData(['theme', 'text', 'textColor']) .';background-color:'.$this->getData(['theme', 'site', 'backgroundColor']).';}';
 			// spécifiques au module de blog
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
