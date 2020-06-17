@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev36';
+	const ZWII_VERSION = '10.2.00.dev38';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -2329,6 +2329,11 @@ class layout extends common {
 			'><a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
 			'">Connexion</a></li>';
+		}
+		// Commandes pour les membres simples
+		if($this->getUser('group') == self::GROUP_MEMBER) {
+			$items .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '</a></li>';
+			$items .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
 		echo '<ul class="navLevel1">' . $items . '</ul>';

@@ -16,10 +16,13 @@
     - Image tag :  adaptations suite à la modification de l'API Google.
     - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver 
     le fichier htaccess afin de préserver les modifications nécessaires à certains hébergeurs.
+    - Suppression de la barre de membre (membres simples) et déport des options dans le menu.
     - Module Blog 2.02 : homogénéisation des interfaces.
     - Module Gallery 2.26 : largeur proportionnelle des images.
-- Correction :
+- Corrections :
     - Configuration, favicon clair et sombre : le bouton d'effacement initialise les deux champs.
+    - Amélioration de l'adaptation aux thèmes sombres.
+    - Erreur bouton Retour lors de l'édition du compte par un membre simple ou un éditeur.
 
 ## version 10.1.04
 - Correction :
