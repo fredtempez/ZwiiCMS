@@ -891,7 +891,7 @@ input[type='password'],
 select,
 textarea {
 	padding: 10px; /* -1px à cause des bordures */
-	background: #FFF;
+	/*background: #FFF;*/
 	border: 1px solid #D8DFE3;
 	width: 100%;
 	border-radius: 2px;
