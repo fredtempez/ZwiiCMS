@@ -13,7 +13,7 @@
 $(document).ready(function(){
 	// Menu fixe à afficher
 	if($("#themeMenuPosition").val() === 'top') {
-		$("#themeMenuPositionFixed").slideDown();	
+		$("#themeMenuPositionFixed").slideDown();
 	}
 	else {
 		$("#themeMenuPositionFixed").slideUp(function() {
@@ -23,7 +23,7 @@ $(document).ready(function(){
 
 	// Option de menu à afficher
 	if($("#themeMenuPosition").val() === 'site-first' || $(this).val() === 'site-second') {
-		$("#themeMenuPositionOptions").slideDown();	
+		$("#themeMenuPositionOptions").slideDown();
 	}
 	else {
 		$("#themeMenuPositionOptions").slideUp(function() {
@@ -42,7 +42,7 @@ $("input, select").on("change", function() {
 	var menuFont = $("#themeMenuFont").val();
 	var css = "@import url('https://fonts.googleapis.com/css?family=" + menuFont + "');";
 	var colors = core.colorVariants($("#themeMenuBackgroundColor").val());
-	// Couleurs du menu	
+	// Couleurs du menu
 	css += "nav,nav a{background-color:" + colors.normal + "}";
 	css += "nav a,#toggle span,nav a:hover{color:" + $("#themeMenuTextColor").val() + "}";
 	css += "nav a:hover{background-color:" + colors.darken + "}";
@@ -50,7 +50,7 @@ $("input, select").on("change", function() {
 		css += "nav a:hover{background-color:" + colors.veryDarken + ";color:" + $('#themeMenuActiveTextColor').val() + ";}";
 	} else {
 		css += "nav a:hover{background-color:" +  $("#themeMenuActiveColor").val() +  ";color:" + $('#themeMenuActiveTextColor').val() + ";}";
-	}	
+	}
 	// Taille, hauteur, épaisseur et capitalisation de caractères du menu
 	css += "#toggle span,#menu a{padding:" + $("#themeMenuHeight").val() + ";font-family:'" + menuFont.replace(/\+/g, " ")  + "',sans-serif;font-weight:" + $("#themeMenuFontWeight").val() + ";font-size:" + $("#themeMenuFontSize").val() + ";text-transform:" + $("#themeMenuTextTransform").val() + "}";
 	// Alignement du menu
@@ -105,7 +105,7 @@ $("input, select").on("change", function() {
 			$("#menu").removeClass('container-large');
 			$("nav").removeAttr('id');
 			$("#menu").addClass('container');
-			break;			
+			break;
 		case 'body-second':
 			if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'body'); ?>) {
 				$("nav").show().insertAfter("header");
@@ -123,7 +123,7 @@ $("input, select").on("change", function() {
 			break;
 		case 'site':
 			$("nav").show().prependTo("#site");
-			break;			
+			break;
 	}
 });
 //
@@ -140,7 +140,7 @@ $("#themeMenuLoginLink").on("change", function() {
 // Affiche / Cache les options de la position
 $("#themeMenuPosition").on("change", function() {
 	if($(this).val() === 'site-first' || $(this).val() === 'site-second') {
-		$("#themeMenuPositionOptions").slideDown();	
+		$("#themeMenuPositionOptions").slideDown();
 	}
 	else {
 		$("#themeMenuPositionOptions").slideUp(function() {
@@ -152,7 +152,7 @@ $("#themeMenuPosition").on("change", function() {
 // Affiche / Cache les options du menu fixe
 $("#themeMenuPosition").on("change", function() {
 	if($(this).val() === 'top') {
-		$("#themeMenuPositionFixed").slideDown();	
+		$("#themeMenuPositionFixed").slideDown();
 	}
 	else {
 		$("#themeMenuPositionFixed").slideUp(function() {
@@ -165,7 +165,7 @@ $("#themeMenuPosition").on("change", function() {
 $("#themeMenuActiveColorAuto").on("change", function() {
 	if ($(this).is(':checked') ) {
 		$("#themeMenuActiveColorWrapper").slideUp();
-	} else {			
+	} else {
 		$("#themeMenuActiveColorWrapper").slideDown();
 	}
 }).trigger("change");
