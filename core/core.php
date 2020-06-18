@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev38';
+	const ZWII_VERSION = '10.2.00.dev39';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1314,19 +1314,23 @@ class common {
 		}
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
-				$this->deleteData(['admin','colorButtonText']);
-				$this->setData(['config', 'connect', 'attempt',999]);
-				$this->setData(['config', 'connect', 'timeout',0]);
-				$this->setData(['config', 'connect', 'log',false]);
-				// Remettre à zéro le thème pour la génération du CSS du blog
-				if (file_exists(self::DATA_DIR . 'theme.css')) {
-					unlink(self::DATA_DIR . 'theme.css');
-				}
-				// Créer les en-têtes du journal
-				$d = 'Date;Heure;Id;Action' . PHP_EOL;
-				file_put_contents(self::DATA_DIR . 'journal.log',$d);
-				// Init préservation htaccess
-				$this->setData(['config','autoUpdateHtaccess',false]);
+			$this->deleteData(['admin','colorButtonText']);
+			$this->setData(['config', 'connect', 'attempt',999]);
+			$this->setData(['config', 'connect', 'timeout',0]);
+			$this->setData(['config', 'connect', 'log',false]);
+			// Remettre à zéro le thème pour la génération du CSS du blog
+			if (file_exists(self::DATA_DIR . 'theme.css')) {
+				unlink(self::DATA_DIR . 'theme.css');
+			}
+			// Créer les en-têtes du journal
+			$d = 'Date;Heure;Id;Action' . PHP_EOL;
+			file_put_contents(self::DATA_DIR . 'journal.log',$d);
+			// Init préservation htaccess
+			$this->setData(['config','autoUpdateHtaccess',false]);
+			// Options de barre de membre simple
+			$this->setData(['theme','menu','memberBar',true]);
+			$this->setData(['theme','footer','displayMemberAccount',false]);
+			$this->setData(['theme','footer','displayMemberLogout',false]);
 			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
@@ -2121,6 +2125,18 @@ class layout extends common {
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
 			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">Connexion</a></span>';
 		}
+		// Affichage de la barre de membre simple
+		if ( $this->getUser('group') === self::GROUP_MEMBER
+			 && ( $this->getData(['theme','footer','displayMemberBar']) === true
+				 || $this->getData(['theme','menu','memberBar']) === false
+			 	)
+			) {
+				$items .= '<span id="footerDisplayMemberAccount"';
+				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
+				$items .=  '><wbr>&nbsp;|<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
+				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
+				$items .= '</span>';
+		}
 		// Fermeture du bloc copyright
         $items .= '</span></div>';
         echo $items;
@@ -2331,8 +2347,10 @@ class layout extends common {
 			'">Connexion</a></li>';
 		}
 		// Commandes pour les membres simples
-		if($this->getUser('group') == self::GROUP_MEMBER) {
-			$items .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '</a></li>';
+		if($this->getUser('group') == self::GROUP_MEMBER
+			&& $this->getData(['theme','menu','memberBar']) === true
+		) {
+			$items .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
 			$items .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
