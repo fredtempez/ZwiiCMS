@@ -66,7 +66,7 @@ class user extends common {
 						'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
 						'lastname' => $userLastname,
 						'mail' => $userMail,
-						'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true)
+						'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
 					]
 				]);
 			}
@@ -220,7 +220,12 @@ class user extends common {
 						'group' => $newGroup,
 						'lastname' => $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true),
 						'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
-						'password' => $newPassword
+						'password' => $newPassword,
+						'connectFail' => $this->getData(['user',$this->getUrl(2),'connectFail']),
+						'connectTimeout' => $this->getData(['user',$this->getUrl(2),'connectTimeout']),
+						'accessUrl' => $this->getData(['user',$this->getUrl(2),'accessUrl']),
+						'accessTimer' => $this->getData(['user',$this->getUrl(2),'accessTimer']),
+						'accessCsrf' => $this->getData(['user',$this->getUrl(2),'accessCsrf'])
 					]
 				]);
 				// Redirection spécifique si l'utilisateur change son mot de passe
