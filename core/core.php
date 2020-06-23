@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev39';
+	const ZWII_VERSION = '10.2.00.dev40';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1332,6 +1332,11 @@ class common {
 			$this->setData(['theme','footer','displayMemberAccount',false]);
 			$this->setData(['theme','footer','displayMemberLogout',false]);
 			$this->setData(['core', 'dataVersion', 10200]);
+			// Thème Menu : couleur de page active non définie
+			if (!$this->getData(['theme','menu','activeTextColor']) ) {
+				$this->setData(['theme','menu','activeTextColor', $this->getData(['theme','menu','textColor']) ]);
+			}
+
 		}
 	}
 }
