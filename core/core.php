@@ -1331,12 +1331,12 @@ class common {
 			$this->setData(['theme','menu','memberBar',true]);
 			$this->setData(['theme','footer','displayMemberAccount',false]);
 			$this->setData(['theme','footer','displayMemberLogout',false]);
-			$this->setData(['core', 'dataVersion', 10200]);
 			// Thème Menu : couleur de page active non définie
 			if (!$this->getData(['theme','menu','activeTextColor']) ) {
 				$this->setData(['theme','menu','activeTextColor', $this->getData(['theme','menu','textColor']) ]);
 			}
-
+			$this->setData(['core', 'updateAvailable', false]);
+			$this->setData(['core', 'dataVersion', 10200]);
 		}
 	}
 }
@@ -2613,7 +2613,7 @@ class layout extends common {
 					helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
 						$this->setData(['core','updateAvailable', true]);
 						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);
-				}
+				} 
 				// Afficher le bouton : Mise à jour détectée + activée
 				if ( $this->getData(['core','updateAvailable']) === true &&
 					$this->getData(['config','autoUpdate']) === true  ) {
