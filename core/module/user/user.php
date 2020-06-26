@@ -341,7 +341,7 @@ class user extends common {
 			/**
 			 * Aucun compte existant
 			 */
-			if( !$this->getData(['user', $userId])) {
+			if ( !$this->getData(['user', $userId])) {
 				//Stockage de l'IP
 				$this->setData([
 					'blacklist',
@@ -361,79 +361,76 @@ class user extends common {
 				$this->addOutput([
 					'notification' => $notification
 				]);
-			}
-
 			/**
 			 * Le compte existe
 			 */
-
-			// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
-			if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() 
-				AND $this->getData(['user',$userId,'connectFail']) === $this->getData(['config', 'connect', 'attempt']) ) {
-				$this->setData(['user',$userId,'connectFail',0 ]);
-				$this->setData(['user',$userId,'connectTimeout',0 ]);
-			}
-			// Check la présence des variables et contrôle du blocage du compte si valeurs dépassées
-			// Vérification du mot de passe et du groupe
-			if (
-				( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])  ) < time()
-				AND $this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
-				AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
-				AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
-			) {
-				$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
-				setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-				setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
-				// Accès multiples avec le même compte
-				$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
-				// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
-				if(
-					$this->getData(['config', 'maintenance'])
-					AND $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
-				) {
-					$this->addOutput([
-						'notification' => 'Seul un administrateur peut se connecter lors d\'une maintenance',
-						'redirect' => helper::baseUrl(),
-						'state' => false
-					]);
+			} else 	{
+				// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
+				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() 
+					AND $this->getData(['user',$userId,'connectFail']) === $this->getData(['config', 'connect', 'attempt']) ) {
+					$this->setData(['user',$userId,'connectFail',0 ]);
+					$this->setData(['user',$userId,'connectTimeout',0 ]);
 				}
-				else {
+				// Check la présence des variables et contrôle du blocage du compte si valeurs dépassées
+				// Vérification du mot de passe et du groupe
+				if (
+					( $this->getData(['user',$userId,'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])  ) < time()
+					AND $this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
+					AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
+					AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
+				) {
+					$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
+					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
+					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+					// Accès multiples avec le même compte
+					$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
+					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
+					if(
+						$this->getData(['config', 'maintenance'])
+						AND $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
+					) {
+						$this->addOutput([
+							'notification' => 'Seul un administrateur peut se connecter lors d\'une maintenance',
+							'redirect' => helper::baseUrl(),
+							'state' => false
+						]);
+					} else {
+						// Valeurs en sortie
+						$this->addOutput([
+							'notification' => 'Connexion réussie',
+							'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+							'state' => true
+						]);
+					}
+				// Sinon notification d'échec
+				} else {
+					$notification = 'Identifiant ou mot de passe incorrect';
+					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
+					if ($this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
+						$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
+					}
+					// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
+					if ( $this->getdata(['user',$userId,'connectFail']) == $this->getData(['config', 'connect', 'attempt'])	) {
+							$this->setData(['user',$userId,'connectTimeout', time()]);
+					}
+					// Cas 3 le délai de bloquage court
+					if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time() ) {
+						$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
+					}
+					// Journalisation
+					$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+					$dataLog .= $userId . ';' ;
+					$dataLog .= $this->getUrl() .';' ;
+					$dataLog .= 'échec de connexion' ;
+					$dataLog .= PHP_EOL;
+					if ($this->getData(['config','connect','log'])) {
+						file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+					}
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => 'Connexion réussie',
-						'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
-						'state' => true
+						'notification' => $notification
 					]);
 				}
-			}
-			// Sinon notification d'échec
-			else {
-				$notification = 'Identifiant ou mot de passe incorrect';
-				// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
-				if ($this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
-					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
-				}
-				// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
-				if ( $this->getdata(['user',$userId,'connectFail']) == $this->getData(['config', 'connect', 'attempt'])	) {
-						$this->setData(['user',$userId,'connectTimeout', time()]);
-				}
-				// Cas 3 le délai de bloquage court
-				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time() ) {
-					$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
-				}
-				// Journalisation
-				$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
-				$dataLog .= $userId . ';' ;
-				$dataLog .= $this->getUrl() .';' ;
-				$dataLog .= 'échec de connexion' ;
-				$dataLog .= PHP_EOL;
-				if ($this->getData(['config','connect','log'])) {
-					file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
-				}
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => $notification
-				]);
 			}
 		}
 		// Valeurs en sortie
