@@ -1336,15 +1336,24 @@ class common {
 			// Init préservation htaccess
 			$this->setData(['config','autoUpdateHtaccess',false]);
 			// Options de barre de membre simple
-			$this->setData(['theme','menu','memberBar',true]);
-			$this->setData(['theme','footer','displayMemberAccount',false]);
-			$this->setData(['theme','footer','displayMemberLogout',false]);
+			$this->setData(['theme','menu','memberBar',true]);			
+
 			// Thème Menu : couleur de page active non définie
 			if (!$this->getData(['theme','menu','activeTextColor']) ) {
 				$this->setData(['theme','menu','activeTextColor', $this->getData(['theme','menu','textColor']) ]);
 			}
 			$this->setData(['core', 'updateAvailable', false]);
 			$this->setData(['core', 'dataVersion', 10200]);
+		}
+		// Version 10.2.01
+		if ($this->getData(['core', 'dataVersion']) < 10201) {
+			// Options de barre de membre simple
+			$this->setData(['theme','footer','displayMemberBar',false]);
+			$this->setData(['theme','menu','memberBar',true]);
+			$this->deleteData(['theme','footer','displayMemberAccount']);
+			$this->deleteData(['theme','footer','displayMemberLogout']);
+
+			$this->setData(['core', 'dataVersion', 10201]);
 		}
 	}
 }
@@ -1526,26 +1535,31 @@ class core extends common {
 
 			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'menu', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
+			
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
 			if($this->getData(['theme', 'footer', 'margin'])) {
 				$css .= 'footer{padding:0 20px;}';
 			} else {
 				$css .= 'footer{padding:0}';
 			}
+			
 			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'footer', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer{background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			
 			$css .= 'footer #footerbody > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
+			
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
 				 $this->getData(['theme', 'footer', 'position']) === 'body') {
 				$css .= "@media (min-width: 769px) { #site {margin-bottom: 100px;} }";
 				$css .= "@media (max-width: 768px) { #site {margin-bottom: 150px;} }";
 			}
+			
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
