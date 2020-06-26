@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.2.01
+- Correction :
+    - Optimisation et correction de l'algorithme de contrôle d'accès.
+
 ## version 10.2.00
 - Mise à jour :
     - jQuery v3.5.1

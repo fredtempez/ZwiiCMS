@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00';
+	const ZWII_VERSION = '10.2.01';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1314,10 +1314,18 @@ class common {
 		}
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
-			$this->deleteData(['admin','colorButtonText']);
+			// Paramètres du compte connecté
+			$this->setData(['user', $this->getUser('id'), 'connectFail',0]);
+			$this->setData(['user', $this->getUser('id'), 'connectTimeout',0]);
+			$this->setData(['user', $this->getUser('id'), 'accessTimer',0]);
+			$this->setData(['user', $this->getUser('id'), 'accessUrl','']);
+			$this->setData(['user', $this->getUser('id'), 'accessCsrf',$_SESSION['csrf']]);
+			// Paramètres de sécurité 
 			$this->setData(['config', 'connect', 'attempt',999]);
 			$this->setData(['config', 'connect', 'timeout',0]);
 			$this->setData(['config', 'connect', 'log',false]);
+			// Thème
+			$this->deleteData(['admin','colorButtonText']);
 			// Remettre à zéro le thème pour la génération du CSS du blog
 			if (file_exists(self::DATA_DIR . 'theme.css')) {
 				unlink(self::DATA_DIR . 'theme.css');
