@@ -349,18 +349,25 @@ class user extends common {
 					[
 						'connectFail' => $this->getData(['blacklist',$userId,'connectFail']) + 1,
 						'lastFail' => time(),
-						'ip' => $_SERVER['REMOTE_ADDR']
+						'ip' => helper::getIp()
 					]
 				]);
-				if ( $this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt']) ) {
-					$notification = 'Trop de tentatives, compte verrouillé';
+				// Verrouillage des IP
+				$ipBlackList = helper::arrayCollumn($this->getData(['blacklist']), 'ip');
+				if ( $this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
+				     OR in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
+					// Valeurs en sortie
+					$this->addOutput([
+						'notification' => 'Trop de tentatives, compte verrouillé',
+						'redirect' => helper::baseUrl(),
+						'state' => false
+					]);
 				} else {
-					$notification = 'Identifiant ou mot de passe incorrect';
+					// Valeurs en sortie
+					$this->addOutput([
+						'notification' => 'Identifiant ou mot de passe incorrect'
+					]);
 				}
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => $notification
-				]);
 			/**
 			 * Le compte existe
 			 */
@@ -419,6 +426,7 @@ class user extends common {
 					}
 					// Journalisation
 					$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+					$dataLog .= helper::getIp() . ';';
 					$dataLog .= $userId . ';' ;
 					$dataLog .= $this->getUrl() .';' ;
 					$dataLog .= 'échec de connexion' ;

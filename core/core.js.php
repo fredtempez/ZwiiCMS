@@ -225,7 +225,7 @@ core.start = function() {
 		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
 			$("body").append(
 				$("<div>").attr("id", "cookieConsent").append(
-					$("<span>").text("En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies."),
+					$("<span>").text("En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies et de vos données de visite."),
 					$("<span>")
 						.attr("id", "cookieConsentConfirm")
 						.text("OK")

@@ -612,7 +612,7 @@ class config extends common {
 		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
 			unlink(self::DATA_DIR . 'journal.log');
 			// Créer les en-têtes des journaux
-			$d = 'Date;Heure;Id;Action' . PHP_EOL;
+			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
