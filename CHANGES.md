@@ -1,8 +1,9 @@
 # Changelog
 
 ## version 10.2.01
-- Correction :
+- Corrections :
     - Optimisation et correction de l'algorithme de contrôle d'accès.
+    - Erreur des noms de champ barre des membres dans le pied de page.
 
 ## version 10.2.00
 - Mise à jour :
