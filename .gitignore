@@ -32,3 +32,6 @@ sitemap.xml.gz
 sitemap.xml
 robots.txt
 site/data/journal.log
+.DS_Store
+site/.DS_Store
+site/file/.DS_Store
