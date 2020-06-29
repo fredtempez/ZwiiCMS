@@ -56,7 +56,7 @@ $( document ).ready(function() {
      * Initialisation des blocs
      */
 
-    var i = ["info", "layout", "setup", "position", "advanced", "ceo" ];
+    var i = ["info", "layout", "setup", "location", "advanced", "ceo" ];
     $.each(i,function(e) {
         if (getCookie(i[e]) === "true") {
             $("#" + i[e]).find(".zwiico-plus").hide();
@@ -66,29 +66,24 @@ $( document ).ready(function() {
 	});
 
 	/**
-     * Lire un cookie s'il existe
-     */
-    function getCookie(name) {
-        var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-        return v ? v[2] : null;
-    }
-
-	/**
      * Blocs dépliants
+	 * 
+	 * Sauvegarder la position des blocs
+     * true = bloc déplié
      */
 
     $("div .block").click(function(e) {
         $(this).find(".zwiico-plus").toggle();
         $(this).find(".zwiico-minus").toggle();
-		$(this).find(".blockContainer").slideToggle();
-		/*
+        $(this).find(".blockContainer").slideToggle();
+        /* 
         * Sauvegarder la position des blocs
         * true = bloc déplié
         */
-	   document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible");
-    }).on("click", "span > input, input, textarea, label, option, button, a, .blockContainer", function(e) {
+        document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible");
+    }).on("click", "span > input, input, textarea, label, option, button, a:not(.inputFile) , .blockContainer", function(e) {
         // Empêcher les déclenchements dans les blocs
-        e.stopPropagation();
+		e.stopPropagation();
     });
 
 
@@ -262,9 +257,9 @@ $( document ).ready(function() {
 			$("#pageEditHideMenuChildrenWrapper").slideDown();
 		}
 
-/**
- * Cache le l'option "ne pas afficher les pages enfants dans le menu horizontal" lorsque la page est désactivée
- */
+	/**
+	 * Cache le l'option "ne pas afficher les pages enfants dans le menu horizontal" lorsque la page est désactivée
+	 */
 	if ($("#pageEditDisable").is(':checked') ) {
 		$("#pageEditHideMenuChildrenWrapper").removeClass("disabled");
 		$("#pageEditHideMenuChildrenWrapper").slideUp();
@@ -470,6 +465,17 @@ pageEditBlockDOM.on("change", function() {
 			*/
 	}
 });
+
+
+
+/**
+ * Lire un cookie s'il existe
+ */
+function getCookie(name) {
+	var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	return v ? v[2] : null;
+}
+
 
 /**
  * Masquer ou afficher le chemin de fer
