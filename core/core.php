@@ -1315,11 +1315,13 @@ class common {
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
 			// Paramètres du compte connecté
-			$this->setData(['user', $this->getUser('id'), 'connectFail',0]);
-			$this->setData(['user', $this->getUser('id'), 'connectTimeout',0]);
-			$this->setData(['user', $this->getUser('id'), 'accessTimer',0]);
-			$this->setData(['user', $this->getUser('id'), 'accessUrl','']);
-			$this->setData(['user', $this->getUser('id'), 'accessCsrf',$_SESSION['csrf']]);
+			if ($this->getUser('id')) {
+				$this->setData(['user', $this->getUser('id'), 'connectFail',0]);
+				$this->setData(['user', $this->getUser('id'), 'connectTimeout',0]);
+				$this->setData(['user', $this->getUser('id'), 'accessTimer',0]);
+				$this->setData(['user', $this->getUser('id'), 'accessUrl','']);
+				$this->setData(['user', $this->getUser('id'), 'accessCsrf',$_SESSION['csrf']]);
+			}
 			// Paramètres de sécurité
 			$this->setData(['config', 'connect', 'attempt',999]);
 			$this->setData(['config', 'connect', 'timeout',0]);
