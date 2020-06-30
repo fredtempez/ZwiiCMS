@@ -6,6 +6,7 @@
     - Erreur des noms de champ barre des membres dans le pied de page.
     - Génération de l'image tag, amélioration du code et du message d'erreur.
     - Edition de page, erreur lors de la sélection d'une icône de menu.
+    - Problème lors de l'installation, impossibilité d'obtenir l'écran de configuration.
 
 ## version 10.2.00
 - Mise à jour :
