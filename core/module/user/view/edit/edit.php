@@ -1,7 +1,10 @@
 <?php echo template::formOpen('userEditForm'); ?>
+	<?php 	if( $this->getUser('group') > 2): $readonly = false;
+	else: $readonly = true;
+  endif;?>
 	<div class="row">
 		<div class="col2">
-			<?php if($this->getUser('group') === self::GROUP_ADMIN): ?>
+			<?php if($this->getUrl(3)): ?>
 				<?php echo template::button('userEditBack', [
 					'class' => 'buttonGrey',
 					'href' => helper::baseUrl() . 'user',
@@ -29,6 +32,7 @@
 					<div class="col6">
 						<?php echo template::text('userEditFirstname', [
 							'autocomplete' => 'off',
+							'disabled' => $readonly,
 							'label' => 'Prénom',
 							'value' => $this->getData(['user', $this->getUrl(2), 'firstname'])
 						]); ?>
@@ -36,11 +40,21 @@
 					<div class="col6">
 						<?php echo template::text('userEditLastname', [
 							'autocomplete' => 'off',
+							'disabled' => $readonly,
 							'label' => 'Nom',
 							'value' => $this->getData(['user', $this->getUrl(2), 'lastname'])
 						]); ?>
 					</div>
 				</div>
+				<?php echo template::text('userEditPseudo', [
+					'autocomplete' => 'off',
+					'label' => 'Pseudo',
+					'value' => $this->getData(['user', $this->getUrl(2), 'pseudo'])
+				]); ?>
+				<?php echo template::select('userEditSignature', $module::$signature, [
+					'label' => 'Signature',
+					'selected' => $this->getData(['user', $this->getUrl(2), 'signature'])
+				]); ?>
 				<?php echo template::mail('userEditMail', [
 					'autocomplete' => 'off',
 					'label' => 'Adresse mail',
