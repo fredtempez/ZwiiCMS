@@ -18,6 +18,7 @@ class blog extends common {
 		'add' => self::GROUP_MODERATOR,
 		'comment' => self::GROUP_MODERATOR,
 		'commentDelete' => self::GROUP_MODERATOR,
+		'commentDeleteAll' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
@@ -26,7 +27,20 @@ class blog extends common {
 
 	public static $articles = [];
 
+	// Signature de l'article
+	public static $articleSignature = '';
+
+	// Signature du commentaire
+	public static $editCommentSignature = '';
+
 	public static $comments = [];
+
+	public static $messageComments;
+
+	public static $commentsDelete;
+
+	// Signatures des commentaires déjà saisis
+	public static $commentsSignature = [];
 
 	public static $pages;
 
@@ -48,10 +62,18 @@ class blog extends common {
 		'right' => 'À droite ',
 	];
 
+	//Paramètre longueur maximale des commentaires en nb de caractères
+	public static $longueur_comment = [
+		'500' => '500',
+		'1000' => '1000',
+		'2000' => '2000',
+		'5000' => '5000',
+		'10000' => '10000'
+	];
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.02';
+	const BLOG_VERSION = '2.04';
 
 	/**
 	 * Édition
@@ -59,6 +81,13 @@ class blog extends common {
 	public function add() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Modification de l'userId
+			if($this->getUser('group') === self::GROUP_ADMIN){
+				$newuserid = $this->getInput('blogAddUserId', helper::FILTER_STRING_SHORT, true);
+			}
+			else{
+				$newuserid = $this->getUser('id');
+			}
 			// Incrémente l'id de l'article
 			$articleId = helper::increment($this->getInput('blogAddTitle', helper::FILTER_ID), $this->getData(['page']));
 			$articleId = helper::increment($articleId, (array) $this->getData(['module', $this->getUrl(0)]));
@@ -77,7 +106,8 @@ class blog extends common {
 				'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
 				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
-				'userId' => $this->getInput('blogAddUserId', helper::FILTER_ID, true)
+				'userId' => $newuserid,
+				'maxlengthcomment' => $this->getInput('blogAddlength', null)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -108,14 +138,14 @@ class blog extends common {
 	 * Liste des commentaires
 	 */
 	public function comment() {
-		// Liste les commentaires
-		$comments = [];
-		foreach((array) $this->getData(['module', $this->getUrl(0)]) as $articleId => $article) {
-			foreach($article['comment'] as &$comment) {
-				$comment['articleId'] = $articleId;
-			}
-			$comments += $article['comment'];
-		}
+		$comments = $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'comment']);
+		self::$messageComments = '<h2>Commentaires de l\'article '. $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title']).'</h2>';
+		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
+					'class' => 'blogCommentDeleteAll buttonRed',
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2).'/' . $_SESSION['csrf'] ,
+					'ico' => 'cancel',
+					'value' => 'Tout effacer'
+		]);
 		// Ids des commentaires par ordre de création
 		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
@@ -132,7 +162,7 @@ class blog extends common {
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				template::button('blogCommentDelete' . $commentIds[$i], [
 					'class' => 'blogCommentDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/comment-delete/' . $comment['articleId'] . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => template::ico('cancel')
 				])
 			];
@@ -168,8 +198,32 @@ class blog extends common {
 			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
 				'notification' => 'Commentaire supprimé',
+				'state' => true
+			]);
+		}
+	}
+
+	/**
+	 * Suppression de tous les commentaires de l'article $this->getUrl(2)
+	 */
+	public function commentDeleteAll() {
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Suppression
+		else {
+			$this->setData(['module', $this->getUrl(0), $this->getUrl(2), 'comment',[] ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
+				'notification' => 'Commentaires supprimés',
 				'state' => true
 			]);
 		}
@@ -195,6 +249,12 @@ class blog extends common {
 				.' à '.
 				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))),
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
+				// Bouton pour afficher les commentaires de l'article
+				template::button('blogConfigComment' . $articleIds[$i], [
+					'class' => 'buttonGrey',
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i],
+					'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
+				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil')
@@ -266,6 +326,12 @@ class blog extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
+				if($this->getUser('group') === self::GROUP_ADMIN){
+					$newuserid = $this->getInput('blogEditUserId', helper::FILTER_STRING_SHORT, true);
+				}
+				else{
+					$newuserid = $this->getUser('id');
+				}
 				$articleId = $this->getInput('blogEditTitle', helper::FILTER_ID, true);
 				// Incrémente le nouvel id de l'article
 				if($articleId !== $this->getUrl(2)) {
@@ -286,7 +352,8 @@ class blog extends common {
 					'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
-					'userId' => $this->getInput('blogEditUserId', helper::FILTER_ID, true)
+					'userId' => $newuserid,
+					'maxlengthcomment' => $this->getInput('blogEditlength', null)
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
@@ -350,7 +417,7 @@ class blog extends common {
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));
 					$this->setData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, [
 						'author' => $this->getInput('blogArticleAuthor', helper::FILTER_STRING_SHORT, empty($this->getInput('blogArticleUserId')) ? TRUE : FALSE),
-						'content' => $this->getInput('blogArticleContent', helper::FILTER_STRING_SHORT, true),
+						'content' => $this->getInput('blogArticleContent', false),
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
 					]]);
@@ -370,7 +437,8 @@ class blog extends common {
 							$to,
 							'Nouveau commentaire',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>',
+							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>'.
+							$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'content']),
 							''
 						);
 						// Valeurs en sortie
@@ -398,14 +466,76 @@ class blog extends common {
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
+				// Signature de l'article
+				$userIdArticle = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']);
+				switch ($this->getData(['user', $userIdArticle, 'signature'])){
+					case 1:
+						self::$articleSignature = $userIdArticle;
+						break;
+					case 2:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'pseudo']);
+						break;
+					case 3:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']) . ' ' . $this->getData(['user', $userIdArticle, 'lastname']);
+						break;
+					case 4:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'lastname']) . ' ' . $this->getData(['user', $userIdArticle, 'firstname']);
+						break;
+					default:
+					self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']);
+				}
+				// Signature du commentaire édité
+				if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+					$useridcomment = $this->getUser('id');
+					switch ($this->getData(['user', $useridcomment, 'signature'])){
+					case 1:
+						self::$editCommentSignature = $useridcomment;
+						break;
+					case 2:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'pseudo']);
+						break;
+					case 3:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']) . ' ' . $this->getData(['user', $useridcomment, 'lastname']);
+						break;
+					case 4:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'lastname']) . ' ' . $this->getData(['user', $useridcomment, 'firstname']);
+						break;
+					default:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']);
+					}
+				}
 				// Commentaires en fonction de la pagination
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+					// Signatures des commentaires
+					$e = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'userId']);
+					if ($e) {
+						switch ($this->getData(['user', $e, 'signature'])){
+							case 1:
+								self::$commentsSignature[$commentIds[$i]] = $e;
+								break;
+							case 2:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'pseudo']);
+								break;
+							case 3:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'firstname']) . ' ' . $this->getData(['user', $e, 'lastname']);
+								break;
+							case 4:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'lastname']) . ' ' . $this->getData(['user', $e, 'firstname']);
+								break;
+						}
+					} else {
+						self::$commentsSignature[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'author']);
+					}
+					// Données du commentaire
 					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
 				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,
 					'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'title']),
+					'vendor' => [
+						'tinymce'
+					],
 					'view' => 'article'
 				]);
 			}

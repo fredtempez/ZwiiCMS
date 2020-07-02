@@ -17,27 +17,6 @@ class helper {
 	const FILTER_TIMESTAMP = 10;
 	const FILTER_URL = 11;
 
-
-
-	/** 
-	 * Récupérer l'adresse IP sans tenit compte du proxy
-	 * @return string IP adress
-	 * Cette focntion est utilisé par user
-	*/
-
-	public static function getIp() {
-		if(!empty($_SERVER['HTTP_CLIENT_IP'])){
-			$ip=$_SERVER['HTTP_CLIENT_IP'];
-		}
-		elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
-			$ip=$_SERVER['HTTP_X_FORWARDED_FOR'];
-		}
-		else{
-			$ip=$_SERVER['REMOTE_ADDR'];
-		}
-		return $ip;
-	}
-
 	/**
 	 * Fonction pour récupérer le numéro de version en ligne
 	 * @param string $url à récupérer

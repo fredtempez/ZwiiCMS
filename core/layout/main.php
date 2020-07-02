@@ -20,9 +20,7 @@
 		}?>
 	</head>
 	<body>
-		<?php if($this->getUser('group') > self::GROUP_MEMBER): ?>
-			<?php $layout->showBar(); ?>
-		<?php endif;?>
+		<?php $layout->showBar(); ?>
 		<?php $layout->showNotification(); ?>
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->

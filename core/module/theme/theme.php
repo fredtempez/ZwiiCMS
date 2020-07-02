@@ -375,8 +375,7 @@ class theme extends common {
 					'displaySiteMap' => $this->getInput('themefooterDisplaySiteMap', helper::FILTER_BOOLEAN),
 					'displayCopyright' => $this->getInput('themefooterDisplayCopyright', helper::FILTER_BOOLEAN),
 					'displayLegal' =>  $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
-					'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
-					'displayMemberBar'=> $this->getInput('themeFooterDisplayMemberBar', helper::FILTER_BOOLEAN),
+                    'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
 					'template' => $this->getInput('themeFooterTemplate')
 				]]);
 				// Valeurs en sortie
@@ -505,8 +504,7 @@ class theme extends common {
 				'activeColor' => $this->getInput('themeMenuActiveColor'),
 				'activeTextColor' => $this->getInput('themeMenuActiveTextColor'),
 				'radius' => $this->getInput('themeMenuRadius'),
-				'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN),
-				'memberBar' =>  $this->getInput('themeMenuMemberBar', helper::FILTER_BOOLEAN)
+				'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

@@ -57,12 +57,6 @@
                                     'help' => (bool) empty($this->getData(['config', 'legalPageId'])) ? 'Pour activer cette option, sélectionnez la page contenant les mentions légales dans la gestion du site' : ''
                             ]); ?>
                     </div>
-                    <div class="row">
-                        <?php echo template::checkbox('themeFooterDisplayMemberBar', true, 'Barre des membres', [
-                                'checked' =>  $this->getData(['theme', 'footer', 'displayMemberBar']),
-                                'help' => 'Affiche les icônes de gestion du compte et de déconnexion. Uniquement pour les membres simples une fois connectés.'
-                        ]); ?>
-                    </div>
                 </div>
                 <div class="col6">
                     <div class="row">
@@ -72,15 +66,18 @@
                             ]); ?>
                     </div>
                     <div class="row">
-                       <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
-                                'checked' =>  $this->getData(['theme', 'footer', 'displaySearch'])
-                            ]); ?>
-                    </div>
-                    <div class="row">
                         <?php echo template::checkbox('themeFooterLoginLink', true, 'Lien de connexion', [
                                     'checked' => $this->getData(['theme', 'footer', 'loginLink'])
                                 ]); ?>
                     </div>
+                    <div class="row">
+                       <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
+                                'checked' =>  $this->getData(['theme', 'footer', 'displaySearch']),
+                            ]); ?>
+                    </div>
+                </div>
+                <div class="col12">
+                    <em>Le paramétrage des mentions légales s'effectue dans la configuration du site.</em>
                 </div>
             </div>
         </div>
@@ -113,7 +110,7 @@
                 <div class="col3">
                     <?php echo template::select('themeFooterFontSize', $module::$footerFontSizes, [
 							'label' => 'Taille',
-							'help' => 'Proportionnelle à celle définie dans le site.',
+							'help' => 'Proportionnelle à celle définie dans le site.',							
 							'selected' => $this->getData(['theme', 'footer', 'fontSize'])
 						]); ?>
                 </div>
@@ -139,7 +136,7 @@
             <h4>Configuration</h4>
             <div class="row">
                 <div class="col4">
-
+                
                     <?php $footerBlockPosition =  is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks [$this->getData(['theme', 'footer', 'template'])] ;?>
                     <?php echo template::select('themeFooterTemplate', $module::$footerTemplate, [
                             'label' => 'Disposition',
@@ -202,13 +199,13 @@
                                 'checked' => $this->getData(['theme', 'footer', 'margin'])
                             ]); ?>
                     </div>
-                </div>
+                </div> 
                 <div class="col6">
                     <div id="themeFooterPositionFixed" class="displayNone">
                         <?php echo template::checkbox('themeFooterFixed', true, 'Pied de page fixe', [
 							'checked' => $this->getData(['theme', 'footer', 'fixed'])
 						]); ?>
-                    </div>
+                    </div>        
                 </div>
             </div>
         </div>

@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.26';
+	const GALLERY_VERSION = '2.25';
 
 	public static $directories = [];
 
@@ -66,16 +66,7 @@ class gallery extends common {
 		'right' => 'À droite'
 	];
 
-	public static $galleryThemeSizeWidth = [
-		'9em'  => 'Très petite',
-		'12em' => 'Petite',
-		'15em' => 'Moyenne',
-		'18em' => 'Grande',
-		'21em' => 'Très grande',
-		'100%' => 'Proportionnelle'
-	];
-
-	public static $galleryThemeSizeHeight = [
+	public static $galleryThemeSize = [
 		'9em'  => 'Très petite',
 		'12em' => 'Petite',
 		'15em' => 'Moyenne',

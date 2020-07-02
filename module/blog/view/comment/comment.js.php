@@ -19,3 +19,9 @@ $(".blogCommentDelete").on("click", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
+$(".blogCommentDeleteAll").on("click", function() {
+	var _this = $(this);
+	return core.confirm("Êtes-vous sûr de vouloir supprimer les "+ <?php echo count($this->getData(['module',$this->getUrl(0), $this->getUrl(2), 'comment']));?>+" commentaires de l'article sélectionné ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});

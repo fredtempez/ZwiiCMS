@@ -30,6 +30,14 @@
 						]); ?>
 					</div>
 				</div>
+				<?php echo template::text('userAddPseudo', [
+					'autocomplete' => 'off',
+					'label' => 'Pseudo'
+				]); ?>
+				<?php echo template::select('userAddSignature', $module::$signature, [
+					'label' => 'Signature',
+					'selected' => 1
+				]); ?>
 				<?php echo template::mail('userAddMail', [
 					'autocomplete' => 'off',
 					'label' => 'Adresse mail'
@@ -73,8 +81,8 @@
 					'label' => 'Confirmation'
 				]); ?>
 				<?php echo template::checkbox('userAddSendMail', true,
-				 'Prévenir l\'utilisateur par mail'); 
-				?>				
+				 'Prévenir l\'utilisateur par mail');
+				?>
 			</div>
 		</div>
 	</div>

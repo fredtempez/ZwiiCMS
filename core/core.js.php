@@ -125,7 +125,7 @@ core.end = function() {
 	// Ignore :
 	// - TinyMCE car il gère lui même le message
 	// - Les champs avec data-no-dirty
-	var inputsDOM = formDOM.find("input:not([data-no-dirty]), select:not([data-no-dirty]), textarea:not(.editorWysiwyg):not([data-no-dirty])");
+	var inputsDOM = formDOM.find("input:not([data-no-dirty]), select:not([data-no-dirty]), textarea:not(.editorWysiwyg,.editorWysiwygComment):not([data-no-dirty])");
 	var inputSerialize = inputsDOM.serialize();
 	$(window).on("beforeunload", function() {
 		if(inputsDOM.serialize() !== inputSerialize) {
@@ -225,7 +225,7 @@ core.start = function() {
 		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
 			$("body").append(
 				$("<div>").attr("id", "cookieConsent").append(
-					$("<span>").text("En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies et de vos données de visite."),
+					$("<span>").text("En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies."),
 					$("<span>")
 						.attr("id", "cookieConsentConfirm")
 						.text("OK")

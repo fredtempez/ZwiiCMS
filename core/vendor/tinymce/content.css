@@ -3,11 +3,10 @@
  */
 
 /* Fix les problèmes de couleurs et de taille de police */
-.editorWysiwyg {	
+.editorWysiwyg {
 	/*font-size: 14px !important;*/
 	background-image: none;
 }
-
 
 /* Désactive le responsive des cols sinon les cols passent les uns en dessous des autres car la largeur de l'iframe est < au media query utilisé pour le responsive */
 .col1 {

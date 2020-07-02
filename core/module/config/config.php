@@ -283,17 +283,18 @@ class config extends common {
 			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
 			$data = str_replace('-','+',$data);
 			$img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
-			$success = file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img) ;
-			// Effacer la miniature png
-			if (file_exists(self::FILE_DIR.'source/screenshot.png')) {
-				unlink (self::FILE_DIR.'source/screenshot.png');
+			// Effacer la miniature
+			if (file_exists(self::FILE_DIR.'thumb/screenshot.jpg')) {
+				unlink (self::FILE_DIR.'thumb/screenshot.jpg');
 			}
+			file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img);
+			$success =true;
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
+			'notification' => $success === true ? 'Image Open Graph réinitialisée' : 'Erreur : image Open Graph non créée',
 			'redirect' => helper::baseUrl() . 'config',
-			'state' => $success === false ? false : true
+			'state' => $success
 		]);
 	}
 
@@ -358,7 +359,8 @@ class config extends common {
 				]);
 			}
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
-			// Positionnement d'une  variable de session lue au constructeurs
+			// Positionnement d'une  variable de session lue au constructeur
+			echo $version;
 			if ($version === '9') {
 				$_SESSION['KEEP_USERS'] = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN);
 			}
@@ -610,7 +612,7 @@ class config extends common {
 		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
 			unlink(self::DATA_DIR . 'journal.log');
 			// Créer les en-têtes des journaux
-			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
+			$d = 'Date;Heure;Id;Action' . PHP_EOL;
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
