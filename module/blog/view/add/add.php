@@ -73,7 +73,8 @@
 				<h4>Options de publication</h4>
 				<?php echo template::select('blogAddUserId', $module::$users, [
 					'label' => 'Auteur',
-					'selected' => $this->getUser('id')
+					'selected' => $this->getUser('id'),
+					'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false 
 				]); ?>
 				<?php echo template::date('blogAddPublishedOn', [
 					'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
@@ -85,6 +86,11 @@
 		<div class="col6">
 			<div class="block">
 				<h4>Options avancées</h4>
+				<?php echo template::select('blogAddlength', $module::$longueur_comment,[
+					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, caractères de mise en forme html inclus.',
+					'label' => 'Nombre maximum de caractères pour chaque commentaire',
+					'selected' => '5000'
+				]); ?>
 				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires' ); ?>
 				<?php echo template::checkbox('blogAddMailNotification', true, 'Notifier le commentaire aux groupes à partir de :', [
 					'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
