@@ -3,7 +3,7 @@
 		<div class="blogDate">
 			<i class="far fa-calendar-alt"></i>
 			<?php echo utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>
-				à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>
+				à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>		
 		</div>
 	</div>
 	<?php  if($this->getUser('group') >= self::GROUP_ADMIN): ?>
@@ -18,11 +18,15 @@
 	<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>
 	<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
 		echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picturePosition']) .
-		' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) .
+		' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . 		
 		'" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '">';
 	} ?>
+
 <?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'content']); ?>
-<p class="clearBoth signature"><?php echo $module::$articleSignature;?></p>
+<p class="clearBoth signature">
+    <?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'firstname']); ?>
+	<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'lastname']); ?>
+</p>
 <?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
 	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>
@@ -37,11 +41,11 @@
 			'readonly' => true
 		]); ?>
 		<div id="blogArticleCommentWrapper" class="displayNone">
-				<?php if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')): ?>
+			<?php if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<?php echo template::text('blogArticleUserName', [
 					'label' => 'Nom',
 					'readonly' => true,
-					'value' => $module::$editCommentSignature
+					'value' => $this->getUser('firstname') . ' ' . $this->getUser('lastname')
 				]); ?>
 				<?php echo template::hidden('blogArticleUserId', [
 					'value' => $this->getUser('id')
@@ -65,11 +69,9 @@
 				</div>
 			<?php endif; ?>
 			<?php echo template::textarea('blogArticleContent', [
-					'label' => 'Commentaire avec maximum '.$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment']).' caractères',
-					'class' => 'editorWysiwygComment',
-					'maxlength' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment'])
+				'label' => 'Commentaire',
+				'maxlength' => '500'
 			]); ?>
-			<div id="blogArticleContentAlarm"> </div>
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<div class="row">
 					<div class="col4">
@@ -99,7 +101,12 @@
 	<div class="col12">
 		<?php foreach($module::$comments as $commentId => $comment): ?>
 			<div class="block">
-				<h4><?php echo $module::$commentsSignature[$commentId]; ?>
+				<h4>
+					<?php if($comment['userId']): ?>
+						<?php echo $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']); ?>
+					<?php else: ?>
+						<?php echo $comment['author']; ?>
+					<?php endif; ?>
 					le <?php echo utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])); ?>
 				</h4>
 				<?php echo $comment['content']; ?>

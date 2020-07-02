@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.00.dev34';
+	const ZWII_VERSION = '10.2.02';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1314,20 +1314,47 @@ class common {
 		}
 		// Version 10.2.00
 		if ($this->getData(['core', 'dataVersion']) < 10200) {
-				$this->deleteData(['admin','colorButtonText']);
-				$this->setData(['config', 'connect', 'attempt',999]);
-				$this->setData(['config', 'connect', 'timeout',0]);
-				$this->setData(['config', 'connect', 'log',false]);
-				// Remettre à zéro le thème pour la génération du CSS du blog
-				if (file_exists(self::DATA_DIR . 'theme.css')) {
-					unlink(self::DATA_DIR . 'theme.css');
-				}
-				// Créer les en-têtes du journal
-				$d = 'Date;Heure;Id;Action' . PHP_EOL;
-				file_put_contents(self::DATA_DIR . 'journal.log',$d);
-				// Init préservation htaccess
-				$this->setData(['config','autoUpdateHtaccess',false]);
+			// Paramètres du compte connecté
+			if ($this->getUser('id')) {
+				$this->setData(['user', $this->getUser('id'), 'connectFail',0]);
+				$this->setData(['user', $this->getUser('id'), 'connectTimeout',0]);
+				$this->setData(['user', $this->getUser('id'), 'accessTimer',0]);
+				$this->setData(['user', $this->getUser('id'), 'accessUrl','']);
+				$this->setData(['user', $this->getUser('id'), 'accessCsrf',$_SESSION['csrf']]);
+			}
+			// Paramètres de sécurité
+			$this->setData(['config', 'connect', 'attempt',999]);
+			$this->setData(['config', 'connect', 'timeout',0]);
+			$this->setData(['config', 'connect', 'log',false]);
+			// Thème
+			$this->deleteData(['admin','colorButtonText']);
+			// Remettre à zéro le thème pour la génération du CSS du blog
+			if (file_exists(self::DATA_DIR . 'theme.css')) {
+				unlink(self::DATA_DIR . 'theme.css');
+			}
+			// Créer les en-têtes du journal
+			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
+			file_put_contents(self::DATA_DIR . 'journal.log',$d);
+			// Init préservation htaccess
+			$this->setData(['config','autoUpdateHtaccess',false]);
+			// Options de barre de membre simple
+			$this->setData(['theme','menu','memberBar',true]);
+
+			// Thème Menu : couleur de page active non définie
+			if (!$this->getData(['theme','menu','activeTextColor']) ) {
+				$this->setData(['theme','menu','activeTextColor', $this->getData(['theme','menu','textColor']) ]);
+			}
+			$this->setData(['core', 'updateAvailable', false]);
 			$this->setData(['core', 'dataVersion', 10200]);
+		}
+		// Version 10.2.01
+		if ($this->getData(['core', 'dataVersion']) < 10201) {
+			// Options de barre de membre simple
+			$this->setData(['theme','footer','displayMemberBar',false]);
+			$this->setData(['theme','menu','memberBar',true]);
+			$this->deleteData(['theme','footer','displayMemberAccount']);
+			$this->deleteData(['theme','footer','displayMemberLogout']);
+			$this->setData(['core', 'dataVersion', 10201]);
 		}
 	}
 }
@@ -1425,9 +1452,9 @@ class core extends common {
 			$css .= 'a:hover{color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
+			$css .= 'select,input[type=\'password\'],input[type=\'email\'],input[type=\'text\'],.inputFile,select,textarea{color:' . $this->getData(['theme', 'text', 'textColor']) .';background-color:'.$this->getData(['theme', 'site', 'backgroundColor']).';}';
 			// spécifiques au module de blog
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
-			$css .= 'select,input[type=\'email\'],input[type=\'text\'],textarea{color:' . $this->getData(['theme', 'text', 'textColor']) .';background-color:'.$this->getData(['theme', 'site', 'backgroundColor']).';}';
 			// Couleur fixée dans admin.css
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
@@ -1436,7 +1463,6 @@ class core extends common {
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
-			$css .= '.editorWysiwygComment {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 			$css .= '.speechBubble,.button,.button:hover,button[type=\'submit\'],.pagination a,.pagination a:hover,input[type=\'checkbox\']:checked + label:before,input[type=\'radio\']:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
 			$css .= '.helpButton span{color:' . $colors['normal'] . '}';
@@ -1450,7 +1476,6 @@ class core extends common {
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
-			// Contour du bloc édition de tinymce hors administration
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 			// Bannière
 			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
@@ -1511,26 +1536,31 @@ class core extends common {
 
 			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'menu', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
+
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
 			if($this->getData(['theme', 'footer', 'margin'])) {
 				$css .= 'footer{padding:0 20px;}';
 			} else {
 				$css .= 'footer{padding:0}';
 			}
+
 			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'footer', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer{background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+
 			$css .= 'footer #footerbody > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
+
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
 				 $this->getData(['theme', 'footer', 'position']) === 'body') {
 				$css .= "@media (min-width: 769px) { #site {margin-bottom: 100px;} }";
 				$css .= "@media (max-width: 768px) { #site {margin-bottom: 150px;} }";
 			}
+
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
@@ -1549,7 +1579,7 @@ class core extends common {
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= 'body, .row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
-			$css .= 'body:not(.editorWysiwyg),body:not(.editorWysiwygComment),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
+			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
 			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' .  $colors['text'] . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
@@ -1562,7 +1592,7 @@ class core extends common {
 			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
 			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
-			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
+			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid '. $this->getData(['admin','borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation
@@ -1605,6 +1635,7 @@ class core extends common {
 		}
 		// Journalisation
 		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+		$dataLog .= helper::getIp() . ';';
 		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
 		$dataLog .= $this->getUrl();
 		$dataLog .= PHP_EOL;
@@ -2123,6 +2154,16 @@ class layout extends common {
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
 			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">Connexion</a></span>';
 		}
+		// Affichage de la barre de membre simple
+		if ( $this->getUser('group') === self::GROUP_MEMBER
+			 && $this->getData(['theme','footer','displayMemberBar']) === true
+			) {
+				$items .= '<span id="footerDisplayMemberAccount"';
+				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
+				$items .=  '><wbr>&nbsp;|<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
+				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
+				$items .= '</span>';
+		}
 		// Fermeture du bloc copyright
         $items .= '</span></div>';
         echo $items;
@@ -2331,6 +2372,15 @@ class layout extends common {
 			'><a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
 			'">Connexion</a></li>';
+		}
+		// Commandes pour les membres simples
+		if($this->getUser('group') == self::GROUP_MEMBER
+			&& ( $this->getData(['theme','menu','memberBar']) === true
+				|| $this->getData(['theme','footer','displayMemberBar']) === false
+				)
+		) {
+			$items .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
+			$items .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
 		echo '<ul class="navLevel1">' . $items . '</ul>';
@@ -2595,7 +2645,7 @@ class layout extends common {
 				}
 			}
 			$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
-			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Se déconnecter">' . template::ico('logout') . '</a></li>';
+			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 			// Barre de membre
 			echo '<div id="bar"><div class="container"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div></div>';
 		}
