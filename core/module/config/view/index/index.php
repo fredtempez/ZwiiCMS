@@ -28,43 +28,38 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="info">
-			<h4><?php
-			echo template::ico('plus','right');
-			echo template::ico('minus','right');
-			 ?>Informations générales</h4>
-			<div class="blockContainer" id="info">
-				<div class="row">
-					<div class="col4">
-					<?php
-						$pages = $this->getData(['page']);
-						foreach($pages as $page => $pageId) {
-							if ($this->getData(['page',$page,'block']) === 'bar' ||
-							$this->getData(['page',$page,'disable']) === true) {
-								unset($pages[$page]);
-							}
+		<div class="block">
+			<h4>Informations générales</h4>
+			<div class="row">
+				<div class="col4">
+				<?php
+					$pages = $this->getData(['page']);
+					foreach($pages as $page => $pageId) {
+						if ($this->getData(['page',$page,'block']) === 'bar' ||
+						$this->getData(['page',$page,'disable']) === true) {
+							unset($pages[$page]);
 						}
-						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-						'label' => 'Page d\'accueil',
-						'selected' =>$this->getData(['config', 'homePageId'])
-						]); ?>
-					</div>
-					<div class="col8">
-						<?php echo template::text('configTitle', [
-							'label' => 'Titre du site',
-							'value' => $this->getData(['config', 'title']),
-							'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
-						]); ?>
-					</div>
+					}
+					echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
+					'label' => 'Page d\'accueil',
+					'selected' =>$this->getData(['config', 'homePageId'])
+					]); ?>
 				</div>
-				<div class="row">
-					<div class="col12">
-						<?php echo template::textarea('configMetaDescription', [
-							'label' => 'Description du site',
-							'value' => $this->getData(['config', 'metaDescription']),
-							'help'  => 'Elle apparaît dans les partages sur les réseaux sociaux.'
-						]); ?>
-					</div>
+				<div class="col8">
+					<?php echo template::text('configTitle', [
+						'label' => 'Titre du site',
+						'value' => $this->getData(['config', 'title']),
+						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col12">
+					<?php echo template::textarea('configMetaDescription', [
+						'label' => 'Description du site',
+						'value' => $this->getData(['config', 'metaDescription']),
+						'help'  => 'Elle apparaît dans les partages sur les réseaux sociaux.'
+					]); ?>
 				</div>
 			</div>
 		</div>
@@ -72,104 +67,99 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="setup">
-			<h4><?php
-			echo template::ico('plus','right');
-			echo template::ico('minus','right');
-			 ?>Paramètres</h4>
-			<div class="blockContainer">
-				<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::file('configFavicon', [
-							'type' => 1,
-							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
-							'label' => 'Favicon',
-							'value' => $this->getData(['config', 'favicon'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::file('configFaviconDark', [
-							'type' => 1,
-							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
-							'label' => 'Favicon thème sombre',
-							'value' => $this->getData(['config', 'faviconDark'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::select('configItemsperPage', $module::$ItemsList, [
-						'label' => 'Articles par page',
-						'selected' => $this->getData(['config', 'itemsperPage']),
-						'help' => 'Modules Blog et News'
-						]); ?>
-					</div>
+		<div class="block">
+			<h4>Paramètres</h4>
+			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::file('configFavicon', [
+						'type' => 1,
+						'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
+						'label' => 'Favicon',
+						'value' => $this->getData(['config', 'favicon'])
+					]); ?>
 				</div>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::select('configTimezone', $module::$timezones, [
-							'label' => 'Fuseau horaire',
-							'selected' => $this->getData(['config', 'timezone']),
-							'help' => 'Le fuseau horaire est utile au bon référencement'
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
-						?>
-						<?php echo template::select('configLegalPageId', $listePageId , [
-							'label' => 'Mentions légales',
-							'selected' => $this->getData(['config', 'legalPageId']),
-							'help' => 'Les mentions légales sont obligatoires en France'
-						]); ?>
-					</div>
-					<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
-							'checked' => $this->getData(['config', 'cookieConsent'])
-						]); ?>
-					</div>
+				<div class="col4">
+					<?php echo template::file('configFaviconDark', [
+						'type' => 1,
+						'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
+						'label' => 'Favicon thème sombre',
+						'value' => $this->getData(['config', 'faviconDark'])
+					]); ?>
 				</div>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
-							'checked' => helper::checkRewrite(),
-							'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
-							'checked' => $this->getData(['config', 'maintenance'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
-								'checked' => $this->getData(['config', 'autoBackup']),
-								'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
-							]); ?>
-					</div>
+				<div class="col4">
+					<?php echo template::select('configItemsperPage', $module::$ItemsList, [
+					'label' => 'Articles par page',
+					'selected' => $this->getData(['config', 'itemsperPage']),
+					'help' => 'Modules Blog et News'
+					]); ?>
 				</div>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour en ligne', [
-								'checked' => $this->getData(['config', 'autoUpdate']),
-								'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
-								'disabled' => !$error
-							]); ?>
-					</div>
-					<div class="col4 ">
-					<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver htaccess', [
-								'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
-								'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-								'disabled' => !$error
-							]); ?>
-					</div>
-					<div class="col4 ">
-						<?php echo template::button('configUpdateForced', [
-							'ico' => 'download-cloud',
-							'href' => helper::baseUrl() . 'install/update',
-							'value' => 'Mise à jour manuelle',
-							'class' => 'buttonRed',
+			</div>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::select('configTimezone', $module::$timezones, [
+						'label' => 'Fuseau horaire',
+						'selected' => $this->getData(['config', 'timezone']),
+						'help' => 'Le fuseau horaire est utile au bon référencement'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
+					?>
+					<?php echo template::select('configLegalPageId', $listePageId , [
+						'label' => 'Mentions légales',
+						'selected' => $this->getData(['config', 'legalPageId']),
+						'help' => 'Les mentions légales sont obligatoires en France'
+					]); ?>
+				</div>
+				<div class="col4 verticalAlignBottom">
+					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
+						'checked' => $this->getData(['config', 'cookieConsent'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
+						'checked' => helper::checkRewrite(),
+						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
+						]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::checkbox('configAutoUpdate', true, 'Mise à jour en ligne', [
+							'checked' => $this->getData(['config', 'autoUpdate']),
+							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
 							'disabled' => !$error
 						]); ?>
-					</div>
+				</div>
+				<div class="col4 ">
+				<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver htaccess', [
+							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
+							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
+							'disabled' => !$error
+						]); ?>
+				</div>
+				<div class="col4 ">
+					<?php echo template::button('configUpdateForced', [
+						'ico' => 'download-cloud',
+						'href' => helper::baseUrl() . 'install/update',
+						'value' => 'Mise à jour manuelle',
+						'class' => 'buttonRed',
+						'disabled' => !$error
+					]); ?>
 				</div>
 			</div>
 		</div>

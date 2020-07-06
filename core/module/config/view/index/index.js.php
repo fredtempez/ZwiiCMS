@@ -39,7 +39,7 @@ $( document).ready(function() {
      * Initialisation des blocs
      */
 
-    var i = ["info", "setup", "social", "ceo", "network", "smtp", "login", "logs", "script", "system" ];
+    var i = [ "social", "ceo", "network", "smtp", "login", "logs", "script", "system" ];
     $.each(i,function(e) {
         if (getCookie(i[e]) === "true") {
             $("#" + i[e]).find(".zwiico-plus").hide();
@@ -62,7 +62,7 @@ $( document).ready(function() {
         * true = bloc déplié
         */
         document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible");
-    }).on("click", "span > input, input, textarea, label, option, button, a, .blockContainer", function(e) {
+    }).on("click", "span > input, input, textarea, label, option, button, a:not(.inputFile), .blockContainer", function(e) {
         // Empêcher les déclenchements dans les blocs
         e.stopPropagation();
     });
