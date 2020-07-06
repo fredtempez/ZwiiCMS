@@ -14,7 +14,7 @@
 
 @import url("site/data/admin.css");
 
-.blockContainer:not(#info) {
+.blockContainer {
     display : none;
 }
 
