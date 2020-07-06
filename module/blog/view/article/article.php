@@ -67,6 +67,7 @@
 			<?php echo template::textarea('blogArticleContent', [
 					'label' => 'Commentaire avec maximum '.$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment']).' caractères',
 					'class' => 'editorWysiwygComment',
+					'noDirty' => true,
 					'maxlength' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment'])
 			]); ?>
 			<div id="blogArticleContentAlarm"> </div>
