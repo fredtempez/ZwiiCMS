@@ -35,8 +35,6 @@ class blog extends common {
 
 	public static $comments = [];
 
-	public static $messageComments;
-
 	public static $commentsDelete;
 
 	// Signatures des commentaires déjà saisis
@@ -139,7 +137,6 @@ class blog extends common {
 	 */
 	public function comment() {
 		$comments = $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'comment']);
-		self::$messageComments = '<h2>Commentaires de l\'article '. $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title']).'</h2>';
 		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
 					'class' => 'blogCommentDeleteAll buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2).'/' . $_SESSION['csrf'] ,
@@ -169,7 +166,7 @@ class blog extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des commentaires',
+			'title' => 'Gestion des commentaires : '. $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title']),
 			'view' => 'comment'
 		]);
 	}

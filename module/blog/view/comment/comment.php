@@ -9,10 +9,7 @@
 	</div>
 
 <?php if($module::$comments): ?>
-	<div class="col6 offset2">
-		<?php echo $module::$messageComments; ?>
-	</div>
-	<div class="col2">
+	<div class="col2 offset8">
 			<?php echo $module::$commentsDelete; ?>
 	</div>
 
