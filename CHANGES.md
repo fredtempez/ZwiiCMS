@@ -1,5 +1,10 @@
 # Changelog
 
+## version 10.2.02
+- Corrections :
+    - Problème d'affichage du gestionnaire de fichier sous Safari.
+    - Configuration, favicon impossibles à sélectionner.
+
 ## version 10.2.01
 - Corrections :
     - Optimisation et correction de l'algorithme de contrôle d'accès.
