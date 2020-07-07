@@ -82,7 +82,8 @@ class install extends common {
 						'lastname' => $userLastname,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'pseudo' => $userFirstname
+						'pseudo' => $userFirstname,
+						'signature'=> 2 // Pseudo
 					]
 				]);
 				if ($success === true) { // Formulaire complété envoi du mail
