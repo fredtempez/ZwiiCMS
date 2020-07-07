@@ -1,7 +1,4 @@
 <?php echo template::formOpen('userEditForm'); ?>
-	<?php 	if( $this->getUser('group') > 2): $readonly = false;
-	else: $readonly = true;
-  endif;?>
 	<div class="row">
 		<div class="col2">
 			<?php if($this->getUrl(3)): ?>
@@ -32,7 +29,7 @@
 					<div class="col6">
 						<?php echo template::text('userEditFirstname', [
 							'autocomplete' => 'off',
-							'disabled' => $readonly,
+							'disabled' => $this->getUser('group') > 2 ? false : true,
 							'label' => 'Prénom',
 							'value' => $this->getData(['user', $this->getUrl(2), 'firstname'])
 						]); ?>
@@ -40,7 +37,7 @@
 					<div class="col6">
 						<?php echo template::text('userEditLastname', [
 							'autocomplete' => 'off',
-							'disabled' => $readonly,
+							'disabled' => $this->getUser('group') > 2 ? false : true,
 							'label' => 'Nom',
 							'value' => $this->getData(['user', $this->getUrl(2), 'lastname'])
 						]); ?>
