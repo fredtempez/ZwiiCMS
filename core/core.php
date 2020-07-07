@@ -1356,6 +1356,15 @@ class common {
 			$this->deleteData(['theme','footer','displayMemberLogout']);
 			$this->setData(['core', 'dataVersion', 10201]);
 		}
+		// Version 10.3.00
+		if ($this->getData(['core', 'dataVersion']) < 10300) {
+			// Ajouter le prénom comme pseudo et le pseudo comme signature
+			foreach($this->getData(['user']) as $userId => $userIds){
+				$this->setData(['user',$userId,'pseudo',$this->getData(['user',$userId,'firstname'])]);
+				$this->setData(['user',$userId,'signature',2]);
+			}
+			$this->setData(['core', 'dataVersion', 10300]);
+		}
 	}
 }
 
