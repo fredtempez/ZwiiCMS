@@ -174,26 +174,30 @@ echo template::formOpen('pageEditForm');
 							<?php endif; ?>
 						</div>
 					</div>
+
 					<div class="row">
-						<div class="col3">
-							<?php echo template::checkbox('pageEditTargetBlank', true, 'Nouvel onglet', [
-								'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank'])
-							]); ?>
-						</div>
-						<div class="col3">
+						<div class="col6">
 							<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
 								'checked' => $this->getData(['page', $this->getUrl(2), 'disable']),
 								'help' => 'Une page désactivée n\'est pas cliquable en mode déconnecté, les pages enfants sont visibles et accessibles. La page d\'accueil n\'est pas désactivable.'
 							]); ?>
 						</div>
-						<div class="col3">
-							<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué', [
-								'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
+						<div class="col6">
+							<?php echo template::checkbox('pageEditTargetBlank', true, 'Nouvel onglet', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank'])
 							]); ?>
 						</div>
-						<div class="col3">
+					</div>
+					<div class="row">
+						<div class="col6">
+								<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
+								]); ?>
+						</div>
+						<div class="col6">
 							<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane', [
-								'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb'])
+								'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']),
+								'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.'
 							]); ?>
 						</div>
 					</div>
