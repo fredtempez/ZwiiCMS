@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.2.03
+- Corrections :
+    - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
+
 ## version 10.2.02
 - Corrections :
     - Problème d'affichage du gestionnaire de fichier sous Safari.
