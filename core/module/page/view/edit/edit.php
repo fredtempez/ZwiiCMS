@@ -64,13 +64,13 @@ echo template::formOpen('pageEditForm');
 					<div class="col4">
 						<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
 								'help' => 'La page peut être représentée par une image de petite taille.',
-								'label' => 'Apparence dans le menu horizontal',
+								'label' => 'Aspect',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 						]); ?>
 					</div>
 					<div class="col4">
                         <?php echo template::file('pageIconUrl', [
-                            'label' => 'Icône du menu',
+                            'label' => 'Icône',
                             'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
                         ]); ?>
                     </div>
@@ -109,16 +109,6 @@ echo template::formOpen('pageEditForm');
 											'label' => 'Gabarits de page / Barre latérale',
 											'help' => 'Pour définir la page comme barre latérale, choisissez l\'option dans la liste.',
 											'selected' => $this->getData(['page', $this->getUrl(2) , 'block'])
-									]); ?>
-								</div>
-								<div class="col12">
-									<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué', [
-										'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
-									]); ?>
-								</div>
-								<div class="col12">
-									<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane', [
-										'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb'])
 									]); ?>
 								</div>
 							</div>
@@ -192,9 +182,18 @@ echo template::formOpen('pageEditForm');
 						</div>
 						<div class="col3">
 							<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
-								'disabled' => (bool) ($this->getdata(['config','homePageId']) === $this->getUrl(2)) ? true : false,
-								'checked' => (bool) ($this->getdata(['config','homePageId']) === $this->getUrl(2)) ? false : $this->getData(['page', $this->getUrl(2), 'disable']),
+								'checked' => $this->getData(['page', $this->getUrl(2), 'disable']),
 								'help' => 'Une page désactivée n\'est pas cliquable en mode déconnecté, les pages enfants sont visibles et accessibles. La page d\'accueil n\'est pas désactivable.'
+							]); ?>
+						</div>
+						<div class="col3">
+							<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
+							]); ?>
+						</div>
+						<div class="col3">
+							<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb'])
 							]); ?>
 						</div>
 					</div>
@@ -212,13 +211,12 @@ echo template::formOpen('pageEditForm');
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants du menu', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren']),
-									'help' => 'Les pages enfants ne sont pas visibles dans le menu horizontal, elles se seront dans un menu vertical. La page doit intégrer un lien vers l\'une des pages enfants sinon elles ne seront pas accessibles.'
+								<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants dans le menu horizontal', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren'])
 								]); ?>
 						</div>
 						<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page dans le menu vertical', [
+								<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale' , [
 									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']),
 									'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.'
 								]); ?>
