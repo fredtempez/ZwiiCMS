@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.02';
+	const ZWII_VERSION = '10.2.03';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -2265,9 +2265,9 @@ class layout extends common {
 			if ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	)
 
-					{$items .= '<a id="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+					{$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 			} else {
-					$items .= '<a id="' . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
+					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2319,9 +2319,9 @@ class layout extends common {
 				$items .= '<li>';
 				if ( $this->getData(['page',$childKey,'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$items .= '<a id="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+						$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 				} else {
-					$items .= '<a id="' . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';
+					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
