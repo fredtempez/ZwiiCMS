@@ -1,7 +1,7 @@
 <?php echo template::formOpen('userEditForm'); ?>
 	<div class="row">
 		<div class="col2">
-			<?php if($this->getUrl(3)): ?>
+		<?php if($this->getUser('group') === self::GROUP_ADMIN): ?>
 				<?php echo template::button('userEditBack', [
 					'class' => 'buttonGrey',
 					'href' => helper::baseUrl() . 'user',
