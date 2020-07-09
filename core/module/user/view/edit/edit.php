@@ -95,7 +95,7 @@
 					'value' => $this->getUrl(2)
 				]); ?>
 				<?php echo template::password('userEditOldPassword', [
-					'autocomplete' => 'off',
+					'autocomplete' => 'new-password', // remplace 'off' pour éviter le pré remplissage auto
 					'label' => 'Ancien mot de passe'
 				]); ?>
 				<?php echo template::password('userEditNewPassword', [
