@@ -14,6 +14,14 @@
         - Approbation des commentaires
         - Reprise de la date, bug avec Chrome
 
+## version 10.2.03
+- Corrections :
+    - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
+
+## version 10.2.02
+- Corrections :
+    - Problème d'affichage du gestionnaire de fichier sous Safari.
+    - Configuration, favicon impossibles à sélectionner.
 
 ## version 10.2.01
 - Corrections :
