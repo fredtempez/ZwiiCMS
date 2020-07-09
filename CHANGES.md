@@ -1,5 +1,20 @@
 # Changelog
 
+## version 10.3.00
+- Modifications :
+    - refonte du module Blog :
+        - Pour chaque utilisateur, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+        - Texte du commentaire enrichi.
+        - Nombre maximal de caractère par commentaire.
+        - Gestion des commentaires article par article.
+        - Suppression des commentaires en masse.
+        A réaliser
+        - Edition de l'article, afficher les signatures plutôt que les noms
+        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
+        - Approbation des commentaires
+        - Reprise de la date, bug avec Chrome
+
+
 ## version 10.2.01
 - Corrections :
     - Optimisation et correction de l'algorithme de contrôle d'accès.
@@ -22,7 +37,7 @@
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
-    - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver 
+    - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver
     le fichier htaccess afin de préserver les modifications nécessaires à certains hébergeurs.
     - Suppression de la barre de membre (membres simples) et déport des options dans le menu.
     - Module Blog 2.02 : homogénéisation des interfaces.
@@ -46,7 +61,7 @@
     - Image Tag absente : non régénérée au lancement de la configuration du site, image masquée dans si absente.
 
 ## version 10.1.01
-- Correction : 
+- Correction :
     - Extension image tag.
 
 ## version 10.1.00
