@@ -2,12 +2,14 @@
 
 ## version 10.3.00
 - Modifications :
-    - refonte du module Blog :
-        - Pour chaque utilisateur, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+    - Module User
+        - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+    - Module Blog :
         - Texte du commentaire enrichi.
         - Nombre maximal de caractère par commentaire.
         - Gestion des commentaires article par article.
         - Suppression des commentaires en masse.
+        - Empêcher le pré
         A réaliser
         - Edition de l'article, afficher les signatures plutôt que les noms
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
@@ -17,6 +19,7 @@
 ## version 10.2.03
 - Corrections :
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
+    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe
 
 ## version 10.2.02
 - Corrections :
