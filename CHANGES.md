@@ -19,7 +19,8 @@
 ## version 10.2.03
 - Corrections :
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
-    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe
+    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe.
+    - Hauteur minimale du viewport, hauteur par défaut du pied de page.
 
 ## version 10.2.02
 - Corrections :
