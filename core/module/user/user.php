@@ -26,12 +26,12 @@ class user extends common {
 	];
 	public static $users = [];
 
-	//Paramètre pour choix de la signature
+	//Paramètres pour choix de la signature
 	public static $signature = [
-		1 => 'Identifiant',
-		2 => 'Pseudo',
-		3 => 'Prénom Nom',
-		4 => 'Nom Prénom'
+		self::SIGNATURE_ID => 'Identifiant',
+		self::SIGNATURE_PSEUDO => 'Pseudo',
+		self::SIGNATURE_FIRSTLASTNAME => 'Prénom Nom',
+		self::SIGNATURE_LASTFIRSTNAME => 'Nom Prénom'
 	];
 
 
