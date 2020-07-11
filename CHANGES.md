@@ -21,6 +21,7 @@
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
     - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe.
     - Reformulation du mail de confirmation d'inscription.
+    - Champ de sélection de fichiers, suppression de la couleur des URL lors d'un survol
 - Modifications :
     - La couleur du texte des headers avec un lien est celle des titres et non des liens.
 
