@@ -21,6 +21,7 @@
 			<?php echo template::submit('blogEditSubmit', [
 				'value' => 'Publier'
 			]); ?>
+
 		</div>
 	</div>
 	<div class="row">
@@ -73,13 +74,18 @@
 		'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'content'])
 	]); ?>
 	<div class="row">
-		<div class="col6">
+		<div class="col4">
 			<div class="block">
 				<h4>Options de publication</h4>
+				<?php echo template::select('blogEditlength', $module::$longueur_comment,[
+					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
+					'label' => 'Caractères par commentaire',
+					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'maxlengthcomment'])
+				]); ?>
 				<?php echo template::select('blogEditUserId', $module::$users, [
 					'label' => 'Auteur',
 					'selected' => $this->getUser('id'),
-					'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false 
+					'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
 				]); ?>
 				<?php echo template::date('blogEditPublishedOn', [
 					'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
@@ -88,26 +94,27 @@
 				]); ?>
 			</div>
 		</div>
-		<div class="col6">
+		<div class="col8">
 			<div class="block">
-				<h4>Options avancées</h4>
-				<?php echo template::select('blogEditlength', $module::$longueur_comment,[
-					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, caractères de mise en forme html inclus.',
-					'label' => 'Nombre maximum de caractères pour chaque commentaire',
-					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'maxlengthcomment'])
-				]); ?>
+				<h4>Options des commentaires</h4>
 				<?php echo template::checkbox('blogEditCloseComment', true, 'Fermer les commentaires', [
 					'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'closeComment'])
 				]); ?>
-				<?php echo template::checkbox('blogEditMailNotification', true, 'Notifier le commentaire aux groupes à partir de :', [
-					'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'mailNotification']),
-					'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
-
-				]); ?>
-				<?php echo template::select('blogEditGroupNotification', $module::$groupNews, [
-					'label' => '',
-					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification'])
-				]); ?>
+				<div id="commentOptionsWrapper">
+					<div class="row">
+						<div class="col7">
+							<?php echo template::checkbox('blogEditMailNotification', true, 'Notification des nouveaux commentaires par mail aux groupes', [
+								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'mailNotification']),
+							]); ?>
+						</div>
+						<div class="col5">
+							<?php echo template::select('blogEditGroupNotification', $module::$groupNews, [
+								'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification']),
+								'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
+							]); ?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
