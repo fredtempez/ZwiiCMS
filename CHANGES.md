@@ -3,7 +3,10 @@
 ## version 10.2.03
 - Corrections :
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
-    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe
+    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe.
+    - Reformulation du mail de confirmation d'inscription.
+- Modifications :
+    - La couleur du texte des headers avec un lien est celle des titres et non des liens.
 
 ## version 10.2.02
 - Corrections :
@@ -32,7 +35,7 @@
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
     - Image tag :  adaptations suite à la modification de l'API Google.
-    - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver 
+    - Installation automatique d'une mise à jour en ligne : un nouvelle option de configuration permet de conserver
     le fichier htaccess afin de préserver les modifications nécessaires à certains hébergeurs.
     - Suppression de la barre de membre (membres simples) et déport des options dans le menu.
     - Module Blog 2.02 : homogénéisation des interfaces.
@@ -56,7 +59,7 @@
     - Image Tag absente : non régénérée au lancement de la configuration du site, image masquée dans si absente.
 
 ## version 10.1.01
-- Correction : 
+- Correction :
     - Extension image tag.
 
 ## version 10.1.00
