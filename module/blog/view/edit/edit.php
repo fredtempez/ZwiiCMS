@@ -74,10 +74,17 @@
 		'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'content'])
 	]); ?>
 	<div class="row">
-		<div class="col4">
+		<div class="col12">
+			<div class="block">
+			<h4>Permissions</h4>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col5">
 			<div class="block">
 				<h4>Options de publication</h4>
-				<?php echo template::select('blogEditlength', $module::$longueur_comment,[
+				<?php echo template::select('blogEditLength', $module::$longueur_comment,[
 					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 					'label' => 'Caractères par commentaire',
 					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'maxlengthcomment'])
@@ -94,13 +101,21 @@
 				]); ?>
 			</div>
 		</div>
-		<div class="col8">
+		<div class="col7">
 			<div class="block">
-				<h4>Options des commentaires</h4>
+				<h4>Commentaires</h4>
 				<?php echo template::checkbox('blogEditCloseComment', true, 'Fermer les commentaires', [
 					'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'closeComment'])
 				]); ?>
 				<div id="commentOptionsWrapper">
+					<div class="row">
+						<div class="col12">
+							<?php echo template::checkbox('blogEditCommentApprove', true, 'Approbation des commentaires', [
+								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApprove']),
+								''
+							]); ?>
+						</div>
+					</div>
 					<div class="row">
 						<div class="col7">
 							<?php echo template::checkbox('blogEditMailNotification', true, 'Notification des nouveaux commentaires par mail aux groupes', [

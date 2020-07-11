@@ -350,7 +350,8 @@ class blog extends common {
 					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'maxlengthcomment' => $this->getInput('blogEditlength', null)
+					'maxlengthcomment' => $this->getInput('blogEditLength'),
+					'commentApprove' => $this->getInput('blogEditCommentApprove')
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
