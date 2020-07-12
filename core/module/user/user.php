@@ -386,9 +386,17 @@ class user extends common {
 					AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
 					AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 				) {
+					// Protocol
+					$secure = false;
+					if(
+						(empty($_SERVER['HTTPS']) === false AND $_SERVER['HTTPS'] !== 'off')
+						OR $_SERVER['SERVER_PORT'] === 443
+					) {
+							$secure = true;
+					}
 					$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
-					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', $secure, true);
+					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', $secure, true);
 					// Accès multiples avec le même compte
 					$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur

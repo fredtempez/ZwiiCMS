@@ -219,7 +219,7 @@ class helper {
 	 */
 	public static function deleteCookie($cookieKey) {
 		unset($_COOKIE[$cookieKey]);
-		setcookie($cookieKey, '', time() - 3600, helper::baseUrl(false, false));
+		setcookie($cookieKey, '', time() - 3600, helper::baseUrl(false, false), '', false, true);
 	}
 
 	/**
