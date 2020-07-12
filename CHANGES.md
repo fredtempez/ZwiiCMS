@@ -23,6 +23,7 @@
     - Reformulation du mail de confirmation d'inscription.
     - Champ de sélection de fichiers, suppression de la couleur des URL lors d'un survol
 - Modifications :
+    - Sécurisation des deux cookies d'authentification (options httpOnly et secure).
     - La couleur du texte des headers avec un lien est celle des titres et non des liens.
 
 ## version 10.2.02
