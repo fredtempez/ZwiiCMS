@@ -14,6 +14,12 @@
 
 class blog extends common {
 
+	// Objets
+	// Propriétaire - groupe Editeur - groupe Admin
+	const EDIT_ALL          = '011'; // Groupes Editeurs et admins
+	const EDIT_OWNER_ADMIN  = '101'; // Propriétaire + groupe admin
+	const EDIT_ADMIN        = '001'; // Groupe des admin
+
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'comment' => self::GROUP_MODERATOR,
@@ -67,6 +73,13 @@ class blog extends common {
 		'2000' => '2000',
 		'5000' => '5000',
 		'10000' => '10000'
+	];
+
+	// Permission d'un article
+	public static $articlePermissions = [
+		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
+		self::EDIT_OWNER_ADMIN => 'Auteur et groupe des administrateurs',
+		self::EDIT_ADMIN       => 'Groupe des administrateurs',
 	];
 
 	public static $users = [];
