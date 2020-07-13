@@ -126,22 +126,30 @@ class helper {
 	}
 
 	/**
+	 * Retourne true si le protocole est en TLS
+	 * @return bool
+	 */
+	public static function isHttps() {
+		if(
+			(empty($_SERVER['HTTPS']) === false AND $_SERVER['HTTPS'] !== 'off')
+			OR $_SERVER['SERVER_PORT'] === 443
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+
+	/**
 	 * Retourne l'URL de base du site
 	 * @param bool $queryString Affiche ou non le point d'interrogation
 	 * @param bool $host Affiche ou non l'host
 	 * @return string
 	 */
 	public static function baseUrl($queryString = true, $host = true) {
-		// Protocol
-		if(
-			(empty($_SERVER['HTTPS']) === false AND $_SERVER['HTTPS'] !== 'off')
-			OR $_SERVER['SERVER_PORT'] === 443
-		) {
-			$protocol = 'https://';
-		}
-		else {
-			$protocol = 'http://';
-		}
+		// Protocole
+		$protocol = helper::isHttps() === true ? 'https://' : 'http://';
 		// Host
 		if($host) {
 			$host = $protocol . $_SERVER['HTTP_HOST'];
