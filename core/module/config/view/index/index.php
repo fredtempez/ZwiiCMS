@@ -286,7 +286,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			 ?>Paramètres réseaux</h4>
+			 ?>Réseau</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col2">
@@ -320,7 +320,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Paramètres de messagerie SMTP</h4>
+			?>Messagerie SMTP</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col12">
@@ -468,7 +468,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Options de script</h4>
+			?>Scripts</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col3">
@@ -504,7 +504,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Versions système</h4>
+			?>Système</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div  class="col2">
