@@ -286,7 +286,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			 ?>Paramètres réseaux</h4>
+			 ?>Réseau</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col2">
@@ -320,7 +320,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Paramètres de messagerie SMTP</h4>
+			?>Messagerie SMTP</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col12">
@@ -403,7 +403,7 @@
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">
-						<label id="helpBlacklist">Blocage des comptes inconnus
+						<label id="helpBlacklist">Comptes inexistants
 							<?php echo template::help(
 							'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
 							Après le nombre de tentatives autorisées, l\'IP et le compte sont bloqués.');
@@ -468,7 +468,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Options de script</h4>
+			?>Scripts</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col3">
@@ -504,7 +504,7 @@
 			<h4><?php
 			echo template::ico('plus','right');
 			echo template::ico('minus','right');
-			?>Versions système</h4>
+			?>Système</h4>
 			<div class="blockContainer">
 				<div class="row">
 					<div  class="col2">
