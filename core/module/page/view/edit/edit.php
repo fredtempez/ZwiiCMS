@@ -96,10 +96,14 @@ echo template::formOpen('pageEditForm');
 	<div class="row">
 		<div class="col12" id="pageEditBlockLayout">
 			<div class="block" id="layout">
-				<h4><?php
-				echo template::ico('plus','right');
-				echo template::ico('minus','right');
-				?>Mise en page</h4>
+				<h4>Mise en page
+					<div class="openClose">
+						<?php
+						echo template::ico('plus','right');
+						echo template::ico('minus','right');
+						?>
+					</div>
+				</h4>
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col6">
@@ -149,10 +153,14 @@ echo template::formOpen('pageEditForm');
 	<div class="row">
 		<div class="col12"  id="pageEditMenu">
 			<div class="block" id="location">
-				<h4><?php
-				echo template::ico('plus','right');
-				echo template::ico('minus','right');
-				?>Emplacement dans le menu</h4>
+				<h4>Emplacement dans le menu
+					<div class="openClose">
+						<?php
+						echo template::ico('plus','right');
+						echo template::ico('minus','right');
+						?>
+					</div>
+				</h4>
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col6">
@@ -208,10 +216,14 @@ echo template::formOpen('pageEditForm');
 	<div class='row' id="pageEditAdvancedWrapper">
 		<div class="col12">
 			<div class="block" id="advanced">
-				<h4><?php
-				echo template::ico('plus','right');
-				echo template::ico('minus','right');
-				?>Options avancées d'emplacement</h4>
+				<h4>Options avancées d'emplacement
+					<div class="openClose">
+						<?php
+						echo template::ico('plus','right');
+						echo template::ico('minus','right');
+						?>
+					</div>
+				</h4>
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col6">
@@ -233,10 +245,14 @@ echo template::formOpen('pageEditForm');
 	<div class='row' id="pageEditSeoWrapper">
 		<div class="col12">
 			<div class="block" id="ceo">
-				<h4><?php
-				echo template::ico('plus','right');
-				echo template::ico('minus','right');
-				?>Permission et référencement</h4>
+				<h4>Permission et référencement
+				<div class="openClose">
+						<?php
+						echo template::ico('plus','right');
+						echo template::ico('minus','right');
+						?>
+					</div>
+				</h4>
 				<div class="blockContainer">
 					<div class="row">
 						<div class='col6'>
