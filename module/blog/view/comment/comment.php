@@ -14,7 +14,7 @@
 	</div>
 
 </div>
-	<?php echo template::table([3, 6, 2, 1], $module::$comments, ['Date', 'Contenu', 'Auteur', '']); ?>
+	<?php echo template::table([3, 5, 2, 1, 1], $module::$comments, ['Date', 'Contenu', 'Auteur', '', '']); ?>
 	<?php echo $module::$pages.'<br/>'; ?>
 <?php else: ?>
 </div>

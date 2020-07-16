@@ -23,6 +23,7 @@ class blog extends common {
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'comment' => self::GROUP_MODERATOR,
+		'commentApprove' => self::GROUP_MODERATOR,
 		'commentDelete' => self::GROUP_MODERATOR,
 		'commentDeleteAll' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR,
@@ -166,10 +167,20 @@ class blog extends common {
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Met en forme le tableau
 			$comment = $comments[$commentIds[$i]];
+			// Bouton d'approbation
+			$buttonApproval = '';
+			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApprove']) === true) {
+				$buttonApproval = template::button('blogcommentApprove' . $commentIds[$i], [
+					'class' => $comment['approval'] === true ? 'blogCommentApprove' : 'blogCommentApprove buttonRed' ,
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
+					'value' => $comment['approval'] === true ? 'A' : 'R'
+				]);
+			}
 			self::$comments[] = [
 				utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
+				$buttonApproval,
 				template::button('blogCommentDelete' . $commentIds[$i], [
 					'class' => 'blogCommentDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
@@ -240,6 +251,44 @@ class blog extends common {
 	}
 
 	/**
+	 * Approbation oou désapprobation de commentaire
+	 */
+	public function commentApprove() {
+		// Le commentaire n'existe pas
+		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]) === null) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		}
+		// Jeton incorrect
+		elseif ($this->getUrl(4) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Inversion du statut
+		else {
+			$this->setData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), [
+				'author' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'author']),
+				'content' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'content']),
+				'createdOn' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'createdOn']),
+				'userId' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'userId']),
+				'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+			]]);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
+				'notification' =>  $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) === true ? 'Commentaire approuvé' : 'Commentaire rejeté',
+				'state' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+			]);
+		}
+	}
+
+	/**
 	 * Configuration
 	 */
 	public function config() {
@@ -271,8 +320,8 @@ class blog extends common {
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [
-					'class' => $toApprove == 0 ?  'buttonGrey' : 'buttonBlue' ,
-					'href' => $toApprove > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
+					'class' => ($toApprove || $approved ) > 0 ?  'buttonBlue' : 'buttonGrey' ,
+					'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
 					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
 					//'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
 				]),

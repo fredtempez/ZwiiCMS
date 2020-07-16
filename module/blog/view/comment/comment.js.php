@@ -23,6 +23,28 @@ $(".blogCommentDelete").on("click", function() {
 });
 
 /**
+ * Confirmation d'approbation
+ */
+$(".blogCommentApprove").on("click", function() {
+	var _this = $(this);
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	return core.confirm("Approuver le commentaire de l'article " + nom + " ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
+ * Confirmation de rejet
+ */
+$(".blogCommentReject").on("click", function() {
+	var _this = $(this);
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	return core.confirm("Rejeter le commentaire de l'article " + nom + " ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
  * Confirmation de suppression en masse
  */
 $(".blogCommentDeleteAll").on("click", function() {
