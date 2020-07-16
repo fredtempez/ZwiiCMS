@@ -505,21 +505,21 @@ class blog extends common {
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
+					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'Commentaire déposé en attente d\'approbation.': 'Commentaire déposé.';
 					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>'.
+							'Nouveau commentaire ' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'à approuver' : ''  .
+							'déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>'.
 							$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'content']),
 							''
 						);
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
-							//'notification' => 'Commentaire ajouté',
-							//'state' => true
-							'notification' => ($sent === true ? 'Commentaire ajouté et une notification envoyée' : 'Commentaire ajouté, erreur de notification : <br/>' . $sent),
+							'notification' => ($sent === true ? $notification . '<br/>Une notification a été envoyée.' : $notification . '<br/> Erreur de notification : ' . $sent),
 							'state' => ($sent === true ? true : null)
 						]);
 
@@ -527,7 +527,7 @@ class blog extends common {
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
-							'notification' => 'Commentaire ajouté',
+							'notification' => $notification,
 							'state' => true
 						]);
 					}
@@ -599,8 +599,10 @@ class blog extends common {
 					} else {
 						self::$commentsSignature[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'author']);
 					}
-					// Données du commentaire
-					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
+					// Données du commentaire si approuvé
+					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'approval']) === true ) {
+						self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
+					}
 				}
 				// Valeurs en sortie
 				$this->addOutput([
