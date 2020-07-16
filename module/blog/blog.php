@@ -171,7 +171,7 @@ class blog extends common {
 			$buttonApproval = '';
 			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApprove']) === true) {
 				$buttonApproval = template::button('blogcommentApprove' . $commentIds[$i], [
-					'class' => $comment['approval'] === true ? 'blogCommentApprove' : 'blogCommentApprove buttonRed' ,
+					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApprove buttonRed' ,
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => $comment['approval'] === true ? 'A' : 'R'
 				]);
