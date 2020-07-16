@@ -3,6 +3,7 @@
 ## version 10.2.04
 - Modifications :
     - Position de l'icône d'ouverture et de fermeture des blocs.
+    - Thème administration, bouton standard couleur du texte au survol.
 
 ## version 10.2.03
 - Corrections :
