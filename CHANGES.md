@@ -9,12 +9,12 @@
         - Nombre maximal de caractère par commentaire.
         - Gestion des commentaires article par article.
         - Suppression des commentaires en masse.
-        - Empêcher le pré
-        A réaliser
-        - Edition de l'article, afficher les signatures plutôt que les noms
-        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
-        - Approbation des commentaires
-        - Reprise de la date, bug avec Chrome
+        En cours :
+         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
+        A réaliser :
+          - Approbation des commentaires
+          - Edition de l'article, afficher les signatures plutôt que les noms
+          - Reprise de la date d'édition, bug avec Chrome
 
 ## version 10.2.03
 - Corrections :
