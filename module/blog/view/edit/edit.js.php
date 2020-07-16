@@ -30,7 +30,9 @@ $("#blogEditDraft").on("click", function() {
 	$("#blogEditForm").trigger("submit");
 });
 
-
+/**
+ * Options de commentaires
+ */
 $("#blogEditCloseComment").on("change", function() {
 	if ($(this).is(':checked') ) {
 		$("#commentOptionsWrapper").slideUp();

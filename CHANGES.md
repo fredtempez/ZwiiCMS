@@ -9,11 +9,9 @@
         - Nombre maximal de caractère par commentaire.
         - Gestion des commentaires article par article.
         - Suppression des commentaires en masse.
+        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
+        - Approbation des commentaires
         En cours :
-         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
-        A réaliser :
-          - Approbation des commentaires
-          - Edition de l'article, afficher les signatures plutôt que les noms
           - Reprise de la date d'édition, bug avec Chrome
 
 git ## version 10.2.04

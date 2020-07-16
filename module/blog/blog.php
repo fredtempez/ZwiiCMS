@@ -15,10 +15,10 @@
 class blog extends common {
 
 	// Objets
-	// Propriétaire - groupe Editeur - groupe Admin
-	const EDIT_ALL          = '011'; // Groupes Editeurs et admins
-	const EDIT_OWNER_ADMIN  = '101'; // Propriétaire éditeur + groupe admin
-	const EDIT_ADMIN        = '001'; // Groupe des admin
+	// Propriétaire - groupe
+	const EDIT_ALL          = '02'; // Groupes Editeurs et admins
+	const EDIT_OWNER_ADMIN  = '23'; // Propriétaire éditeur + groupe admin
+	const EDIT_ADMIN        = '03'; // Groupe des admin
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
@@ -76,11 +76,15 @@ class blog extends common {
 		'10000' => '10000'
 	];
 
-	// Permission d'un article
-	public static $articlePermissions = [
-		self::EDIT_ALL     	   => 'Editeurs et administrateurs',
-		self::EDIT_OWNER_ADMIN => 'Auteur et groupe des administrateurs',
-		self::EDIT_ADMIN       => 'Groupe des administrateurs',
+	// Permissions d'un article
+	public static $articleRightsAdmin = [
+		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
+		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs',
+		self::EDIT_ADMIN       => 'Groupe des administrateurs'
+	];
+	public static $articleRightsModerator = [
+		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
+		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs'
 	];
 
 	public static $users = [];
@@ -294,6 +298,24 @@ class blog extends common {
 	public function config() {
 		// Ids des articles par ordre de publication
 		$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC'));
+		// Gestion des droits d'accès
+		$filterData=[];
+		foreach ($articleIds as $key => $value) {
+			$rights = $this->getData(['module',  $this->getUrl(0), $value,'editRights']);
+			// Compatibilité pas de droit stocké placer droit par défaut
+			$rights = empty($rights) ? '02' : $rights;
+			// Check les droits du propriétaire 
+			// Check les droits du groupe
+			if (
+				( substr($rights,0,1) === '2'
+				AND  $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+				)
+				OR  ( $this->getUser('group') >=  substr($rights,1,1) )
+			) {
+				$filterData[] = $value;
+			}
+		}
+		$articleIds = $filterData;
 		// Pagination
 		$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 		// Liste des pages
@@ -301,15 +323,19 @@ class blog extends common {
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Nombre de commentaires à approuver et approuvés
-			if ( !empty(helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC'))) {
-				$a = array_values(helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC'));
-				$toApprove = count(array_keys($a,false));
-				$approved = count(array_keys($a,true));
-			} else {
+			$approvals = [];
+			// Compatibilité : vérifier si les données sont disponibles
+			if ( $this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ,'approval' ]) !== NULL ) {
+				$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+			}
+			if ( empty($approvals) ) {
 				$toApprove = 0;
 				$approved = count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']));
+			} else {
+				$a = array_values($approvals);
+				$toApprove = count(array_keys($a,false));
+				$approved = count(array_keys($a,true));
 			}
-
 			// Met en forme le tableau
 			self::$articles[] = [
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
@@ -426,7 +452,8 @@ class blog extends common {
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
 					'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
-					'commentApprove' => $this->getInput('blogEditCommentApprove', helper::FILTER_BOOLEAN)
+					'commentApprove' => $this->getInput('blogEditCommentApprove', helper::FILTER_BOOLEAN),
+					'editRights' => $this->getInput('blogEditRights')
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
@@ -443,7 +470,7 @@ class blog extends common {
 			self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
-				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
+				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' .  self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
 			}
 			unset($userFirstname);
 			// Valeurs en sortie

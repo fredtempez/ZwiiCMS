@@ -76,32 +76,44 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Permissions</h4>
+				<h4>Options de publication</h4>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::select('blogEditCommentMaxlength', $module::$commentLength,[
+							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
+							'label' => 'Caractères par commentaire',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('blogEditUserId', $module::$users, [
+							'label' => 'Auteur',
+							'selected' => $this->getUser('id'),
+							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::date('blogEditPublishedOn', [
+							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
+							'label' => 'Date de publication',
+							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'publishedOn'])
+						]); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col5">
+		<div class="col6">
 			<div class="block">
-				<h4>Options de publication</h4>
-				<?php echo template::select('blogEditCommentMaxlength', $module::$commentLength,[
-					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
-					'label' => 'Caractères par commentaire',
-					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
-				]); ?>
-				<?php echo template::select('blogEditUserId', $module::$users, [
-					'label' => 'Auteur',
-					'selected' => $this->getUser('id'),
-					'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
-				]); ?>
-				<?php echo template::date('blogEditPublishedOn', [
-					'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
-					'label' => 'Date de publication',
-					'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'publishedOn'])
+			<h4>Permissions</h4>
+				<?php echo template::select('blogEditRights', $this->getUser('group') === self::GROUP_ADMIN ? $module::$articleRightsAdmin : $module::$articleRightsModerator , [
+					'label' => 'Droits d\'édition et de modification',
+					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editRights'])
 				]); ?>
 			</div>
 		</div>
-		<div class="col7">
+		<div class="col6">
 			<div class="block">
 				<h4>Commentaires</h4>
 				<?php echo template::checkbox('blogEditCloseComment', true, 'Fermer les commentaires', [

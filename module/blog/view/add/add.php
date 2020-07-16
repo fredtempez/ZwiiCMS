@@ -67,37 +67,75 @@
 	<?php echo template::textarea('blogAddContent', [
 		'class' => 'editorWysiwyg'
 	]); ?>
+<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>Options de publication</h4>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::select('blogAddCommentMaxlength', $module::$commentLength,[
+							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
+							'label' => 'Caractères par commentaire',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('blogAddUserId', $module::$users, [
+							'label' => 'Auteur',
+							'selected' => $this->getUser('id'),
+							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::date('blogAddPublishedOn', [
+							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
+							'label' => 'Date de publication',
+							'value' => time()
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4>Options de publication</h4>
-				<?php echo template::select('blogAddUserId', $module::$users, [
-					'label' => 'Auteur',
-					'selected' => $this->getUser('id'),
-					'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false 
-				]); ?>
-				<?php echo template::date('blogAddPublishedOn', [
-					'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
-					'label' => 'Date de publication',
-					'value' => time()
+			<h4>Permissions</h4>
+				<?php echo template::select('blogAddRights', $this->getUser('group') === self::GROUP_ADMIN ? $module::$articleRightsAdmin : $module::$articleRightsModerator , [
+					'label' => 'Droits d\'édition et de modification',
+					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editRights'])
 				]); ?>
 			</div>
 		</div>
 		<div class="col6">
 			<div class="block">
-				<h4>Options avancées</h4>
-				<?php echo template::select('blogAddlength', $module::$commentLength,[
-					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, caractères de mise en forme html inclus.',
-					'label' => 'Nombre maximum de caractères pour chaque commentaire',
-					'selected' => '5000'
+				<h4>Commentaires</h4>
+				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires', [
+					'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'closeComment'])
 				]); ?>
-				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires' ); ?>
-				<?php echo template::checkbox('blogAddMailNotification', true, 'Notifier le commentaire aux groupes à partir de :', [
-					'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
-				]); ?>
-				<?php echo template::select('blogAddGroupNotification', $module::$groupNews, [
-						'label' => ''
-				]); ?>
+				<div id="commentOptionsWrapper">
+					<div class="row">
+						<div class="col12">
+							<?php echo template::checkbox('blogAddCommentApprove', true, 'Approbation des commentaires', [
+								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApprove']),
+								''
+							]); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col7">
+							<?php echo template::checkbox('blogAddMailNotification', true, 'Notification des nouveaux commentaires par mail aux groupes', [
+								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'mailNotification']),
+							]); ?>
+						</div>
+						<div class="col5">
+							<?php echo template::select('blogAddGroupNotification', $module::$groupNews, [
+								'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification']),
+								'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
+							]); ?>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
