@@ -86,7 +86,7 @@
 		<div class="col6">
 			<div class="block">
 				<h4>Options avancées</h4>
-				<?php echo template::select('blogAddlength', $module::$longueur_comment,[
+				<?php echo template::select('blogAddlength', $module::$commentLength,[
 					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, caractères de mise en forme html inclus.',
 					'label' => 'Nombre maximum de caractères pour chaque commentaire',
 					'selected' => '5000'

@@ -67,7 +67,7 @@ class blog extends common {
 	];
 
 	//Paramètre longueur maximale des commentaires en nb de caractères
-	public static $longueur_comment = [
+	public static $commentLength = [
 		'500' => '500',
 		'1000' => '1000',
 		'2000' => '2000',
@@ -251,6 +251,16 @@ class blog extends common {
 		self::$pages = $pagination['pages'];
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			// Nombre de commentaires à approuver et approuvés
+			if ( !empty(helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC'))) {
+				$a = array_values(helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC'));
+				$toApprove = count(array_keys($a,false));
+				$approved = count(array_keys($a,true));
+			} else {
+				$toApprove = 0;
+				$approved = count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']));
+			}
+
 			// Met en forme le tableau
 			self::$articles[] = [
 				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
@@ -261,9 +271,10 @@ class blog extends common {
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [
-					'class' => 'buttonGrey',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i],
-					'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
+					'class' => $toApprove == 0 ?  'buttonGrey' : 'buttonBlue' ,
+					'href' => $toApprove > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
+					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
+					//'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
@@ -350,7 +361,7 @@ class blog extends common {
 					$articleId = helper::increment($articleId, array_keys(self::$actions));
 				}
 				$this->setData(['module', $this->getUrl(0), $articleId, [
-					'closeComment' => $this->getInput('blogEditCloseComment'),
+					'closeComment' => $this->getInput('blogEditCloseComment', helper::FILTER_BOOLEAN),
 					'mailNotification'  => $this->getInput('blogEditMailNotification', helper::FILTER_BOOLEAN),
 					'groupNotification' => $this->getInput('blogEditGroupNotification', helper::FILTER_INT),
 					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
@@ -364,7 +375,7 @@ class blog extends common {
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
 					'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
-					'commentApprove' => $this->getInput('blogEditCommentApprove')
+					'commentApprove' => $this->getInput('blogEditCommentApprove', helper::FILTER_BOOLEAN)
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
@@ -431,8 +442,8 @@ class blog extends common {
 						'content' => $this->getInput('blogArticleContent', false),
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
+						'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) // true commentaire publié false en attente de publication
 					]]);
-
 					// Envoi d'une notification aux administrateurs
 					// Init tableau
 					$to = [];
