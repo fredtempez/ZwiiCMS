@@ -16,7 +16,7 @@
 	</div>
 </div>
 <?php if($module::$articles): ?>
-	<?php echo template::table([4, 4, 1, 1, 1, 1], $module::$articles, ['Titre', 'Date de publication', 'État', '', '','']); ?>
+	<?php echo template::table([4, 4, 1, 1, 1, 1], $module::$articles, ['Titre', 'Date de publication', 'État', 'Commentaires', '','']); ?>
 	<?php echo $module::$pages; ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun article.'); ?>

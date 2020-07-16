@@ -312,7 +312,9 @@ class blog extends common {
 
 			// Met en forme le tableau
 			self::$articles[] = [
-				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
+				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
+				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']) .
+				'</a>',
 				// date('d/m/Y H:i', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
 				utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])))
 				.' à '.
