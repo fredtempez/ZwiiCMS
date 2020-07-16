@@ -14,7 +14,9 @@
         En cours :
           - Reprise de la date d'édition, bug avec Chrome
 
-git ## version 10.2.04
+## version 10.2.04
+- Mise à jour :
+    - Flatpickr 4.6.3
 - Modifications :
     - Position de l'icône d'ouverture et de fermeture des blocs.
     - Thème administration, bouton standard couleur du texte au survol.
