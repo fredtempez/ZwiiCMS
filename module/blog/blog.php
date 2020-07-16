@@ -118,7 +118,7 @@ class blog extends common {
 				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
 				'userId' => $newuserid,
-				'maxlengthcomment' => $this->getInput('blogAddlength', null)
+				'commentMaxlength' => $this->getInput('blogAddlength', null)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -363,7 +363,7 @@ class blog extends common {
 					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'maxlengthcomment' => $this->getInput('blogEditLength'),
+					'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
 					'commentApprove' => $this->getInput('blogEditCommentApprove')
 				]]);
 				// Supprime l'ancien article

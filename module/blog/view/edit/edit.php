@@ -84,10 +84,10 @@
 		<div class="col5">
 			<div class="block">
 				<h4>Options de publication</h4>
-				<?php echo template::select('blogEditLength', $module::$longueur_comment,[
+				<?php echo template::select('blogEditCommentMaxlength', $module::$longueur_comment,[
 					'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 					'label' => 'Caractères par commentaire',
-					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'maxlengthcomment'])
+					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
 				]); ?>
 				<?php echo template::select('blogEditUserId', $module::$users, [
 					'label' => 'Auteur',

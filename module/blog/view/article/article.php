@@ -65,10 +65,10 @@
 				</div>
 			<?php endif; ?>
 			<?php echo template::textarea('blogArticleContent', [
-					'label' => 'Commentaire avec maximum '.$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment']).' caractères',
+					'label' => 'Commentaire avec maximum '.$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentMaxlength']).' caractères',
 					'class' => 'editorWysiwygComment',
 					'noDirty' => true,
-					'maxlength' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'maxlengthcomment'])
+					'maxlength' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentMaxlength'])
 			]); ?>
 			<div id="blogArticleContentAlarm"> </div>
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
