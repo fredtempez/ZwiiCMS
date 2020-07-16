@@ -16,6 +16,11 @@
           - Edition de l'article, afficher les signatures plutôt que les noms
           - Reprise de la date d'édition, bug avec Chrome
 
+git ## version 10.2.04
+- Modifications :
+    - Position de l'icône d'ouverture et de fermeture des blocs.
+    - Thème administration, bouton standard couleur du texte au survol.
+
 ## version 10.2.03
 - Corrections :
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.

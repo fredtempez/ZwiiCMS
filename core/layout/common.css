@@ -455,10 +455,11 @@ header .container {
 	font-size: 0.9em;
 }
 
-/* Menu */
+/* Menu 
 body > nav {
-	/*margin: 0 -10px;*/
+	margin: 0 -10px;
 }
+*/
 
 /* Items du menu */
 nav a > img {
@@ -846,6 +847,11 @@ footer #footerSocials .zwiico-github:hover {
 	margin: -20px -20px 10px -20px;
 	padding: 10px;
 /*	background: #ECEFF1;*/
+}
+
+.block h4 .openClose {
+	display: inline-flex ;
+	float: right;
 }
 
 /* Aides */
@@ -1295,6 +1301,7 @@ td.col12,
 th.col12 {
 	width: 100%;
 }
+
 
 /**
  * Classes rapides
