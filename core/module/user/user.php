@@ -355,7 +355,7 @@ class user extends common {
 				// Verrouillage des IP
 				$ipBlackList = helper::arrayCollumn($this->getData(['blacklist']), 'ip');
 				if ( $this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
-				     OR in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
+				     AND in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
 					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => 'Trop de tentatives, compte verrouillé',
