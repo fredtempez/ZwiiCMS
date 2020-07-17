@@ -27,7 +27,7 @@
 	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>
 	<h3 id="comment">
-		<?php $commentsNb = count($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment'])); ?>
+		<?php $commentsNb = count($module::$comments); ?>
 		<?php $s =  $commentsNb === 1 ? '': 's' ?>
 		<?php echo $commentsNb > 0 ? $commentsNb . ' ' .  'commentaire' . $s : 'Pas encore de commentaire'; ?>
 	</h3>

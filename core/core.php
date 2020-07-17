@@ -1367,6 +1367,38 @@ class common {
 				$this->setData(['user',$userId,'pseudo',$this->getData(['user',$userId,'firstname'])]);
 				$this->setData(['user',$userId,'signature',2]);
 			}
+
+			// Ajouter les champs de blog v3
+			// Liste des pages dans pageList
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Parcourir pageList et rechercher les modules de blog
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
+					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent]), 'publishedOn', 'SORT_DESC'));
+					foreach ($articleIds as $key => $article) {
+						// Droits les deux groupes
+						$this->setData(['module',  $parent, $article,'editRights','22']);
+						// Limite de taille 500
+						$this->setData(['module',  $parent, $article,'commentMaxlength', '500']);
+						// Pas d'approbation des commentaires
+						$this->setData(['module',  $parent, $article,'commentApprove', false ]);
+					}
+					// Traitement des commentaires
+					if ( is_array($this->getData(['module',  $parent, $article,'comment'])) ) {
+						foreach($this->getData(['module',  $parent, $article,'comment']) as $commentId => $comment) {
+							// Approbation
+							$this->setData(['module',  $parent, $article,'comment', $commentId, 'approval', true ]);
+						}
+					}
+				}
+			}
 			$this->setData(['core', 'dataVersion', 10300]);
 		}
 	}

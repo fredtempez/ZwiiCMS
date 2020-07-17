@@ -173,6 +173,8 @@ class blog extends common {
 			$comment = $comments[$commentIds[$i]];
 			// Bouton d'approbation
 			$buttonApproval = '';
+			// Compatibilité avec les commentaires des versions précédentes, les valider
+			$comment['approval'] = array_key_exists('approval', $comment) === false ? true : $comment['approval'] ;
 			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApprove']) === true) {
 				$buttonApproval = template::button('blogcommentApprove' . $commentIds[$i], [
 					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApprove buttonRed' ,
@@ -304,7 +306,7 @@ class blog extends common {
 			$rights = $this->getData(['module',  $this->getUrl(0), $value,'editRights']);
 			// Compatibilité pas de droit stocké placer droit par défaut
 			$rights = empty($rights) ? '02' : $rights;
-			// Check les droits du propriétaire 
+			// Check les droits du propriétaire
 			// Check les droits du groupe
 			if (
 				( substr($rights,0,1) === '2'
@@ -323,18 +325,14 @@ class blog extends common {
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Nombre de commentaires à approuver et approuvés
-			$approvals = [];
-			// Compatibilité : vérifier si les données sont disponibles
-			if ( $this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ,'approval' ]) !== NULL ) {
-				$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
-			}
-			if ( empty($approvals) ) {
-				$toApprove = 0;
-				$approved = count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']));
-			} else {
+			$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+			if ( is_array($approvals) ) {
 				$a = array_values($approvals);
 				$toApprove = count(array_keys($a,false));
 				$approved = count(array_keys($a,true));
+			} else {
+				$toApprove = 0;
+				$approved = count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']));
 			}
 			// Met en forme le tableau
 			self::$articles[] = [
