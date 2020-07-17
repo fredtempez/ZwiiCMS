@@ -398,6 +398,11 @@ class user extends common {
 					$this->getData(['config', 'maintenance'])
 					AND $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
 				) {
+				// Verrouillage des IP
+				$ipBlackList = helper::arrayCollumn($this->getData(['blacklist']), 'ip');
+				if ( $this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
+				     AND in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
+					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => 'Seul un administrateur peut se connecter lors d\'une maintenance',
 						'redirect' => helper::baseUrl(),

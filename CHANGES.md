@@ -17,6 +17,8 @@
 ## version 10.2.04
 - Mise à jour :
     - Flatpickr 4.6.3
+- Correction :
+    - Connexion avec un compte inexistant, notification incorrecte.
 - Modifications :
     - Position de l'icône d'ouverture et de fermeture des blocs.
     - Thème administration, bouton standard couleur du texte au survol.
