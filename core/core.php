@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.04';
+	const ZWII_VERSION = '10.2.05';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -109,7 +109,7 @@ class common {
 			'normalize',
 			'lity',
 			'filemanager',
-			'flatpickr',
+			//'flatpickr', Appelé par les modules désactivé par défaut
 			// 'tinycolorpicker', Désactivé par défaut
 			// 'tinymce', Désactivé par défaut
 			// 'codemirror', // Désactivé par défaut
