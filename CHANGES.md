@@ -14,6 +14,10 @@
         En cours :
           - Reprise de la date d'édition, bug avec Chrome
 
+## version 10.2.05
+- Correction :
+    - Champ date non affiché sous Chrome.
+
 ## version 10.2.04
 - Mise à jour :
     - Flatpickr 4.6.3
