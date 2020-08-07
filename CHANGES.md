@@ -11,8 +11,6 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
-        En cours :
-          - Reprise de la date d'édition, bug avec Chrome
 
 ## version 10.2.05
 - Correction :
