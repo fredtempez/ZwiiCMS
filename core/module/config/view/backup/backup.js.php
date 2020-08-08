@@ -12,7 +12,6 @@
 
 $( document).ready(function() {
     $("#configBackupForm").submit( function(e){
-        console.log('click');
         e.preventDefault();
         $("body").addClass("loading");
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
