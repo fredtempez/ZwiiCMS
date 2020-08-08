@@ -184,7 +184,12 @@ class page extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
-				$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
+				// Génére l'ID si le titre de la page a changé
+				if ( $this->getInput('pageEditTitle') !== $this->getData(['page',$this->getUrl(2),'title']) ) {
+					$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
+				} else {
+					$pageId = $this->getUrl(2);
+				}
 				// un dossier existe du même nom (erreur en cas de redirection)
 				if (file_exists($pageId)) {
 					$pageId = uniqid($pageId);
