@@ -11,15 +11,13 @@
 	<div class="col2 offset4">
 				<?php echo template::button('configManageButton', [
 					'href' => helper::baseUrl() . 'config/backup',
-					'value' => 'Sauvegarder',
-					'ico' => 'download'
+					'value' => 'Sauvegarder'
 				]); ?>
 			</div>
 	<div class="col2">
 		<?php echo template::button('configManageButton', [
 			'href' => helper::baseUrl() . 'config/manage',
-			'value' => 'Restaurer',
-			'ico' => 'upload'
+			'value' => 'Restaurer'
 		]); ?>
 	</div>
 	<div class="col2">

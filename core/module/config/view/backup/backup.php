@@ -10,8 +10,7 @@
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('configBackupSubmit',[
-			'value' => 'Sauvegarder',
-			'ico' => 'download-cloud'
+			'value' => 'Sauvegarder'
 		]); ?>
 	</div>
 	<div class="modal"><!-- Emplacement pour l'animation --></div>
