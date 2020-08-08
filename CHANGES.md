@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.2.06
+- Corrections :
+    - Dépréciation option de cookie samesite.
+
 ## version 10.2.05
 - Correction :
     - Champ date non affiché sous Chrome.
