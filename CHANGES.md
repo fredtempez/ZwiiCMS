@@ -13,7 +13,7 @@
         - Approbation des commentaires
 ## version 10.2.06
 - Corrections :
-    - Dépréciation option de cookie samesite.
+    - Anticipation de la dépréciation de l'option de cookie samesite=none.
     - Warning : absence de fichier map dans le thème TinyMCE lightgray
 
 ## version 10.2.05
