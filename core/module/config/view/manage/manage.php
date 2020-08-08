@@ -10,8 +10,8 @@
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('configManageSubmit',[
-			'value' => 'Valider',
-			'ico' => 'check'
+			'value' => 'Restaurer',
+			'ico' => 'upload'
 		]); ?>
 	</div>
 </div>
