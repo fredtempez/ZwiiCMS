@@ -20,10 +20,10 @@
 		<div class="block">
 			<h4>Paramètre</h4>
 			<div class="row">
-				<div class="col8 offset1">
+				<div class="col12 textAlignCenter">
 					<?php echo template::checkbox('configBackupOption', true, 'Inclure le contenu du gestionnaire de fichiers', [
 						'checked' => true,
-						'help' => 'Cette option n\'est pas recommandée lorsque le contenu du gestionnaire de fichiers est très volumineux.'
+						'help' => 'Lorsque le contenu du gestionnaire de fichiers est très volumineux une copie par FTP est préférable.'
 					]); ?>
 				</div>
 				<div class="col12">

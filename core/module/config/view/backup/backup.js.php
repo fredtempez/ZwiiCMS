@@ -21,8 +21,7 @@ $( document).ready(function() {
             data: $("form").serialize(),
             complete: function(r, s){
                 $("body").removeClass("loading");
-                $("body").append("<div id='notification' class='notificationSuccess'>Sauvegarde réalisée avec succès !</div>");
-                $("#notification").delay("3000").fadeOut("1000");
+                core.alert("Sauvegarde terminée avec succès !");
             }
         });
     });
