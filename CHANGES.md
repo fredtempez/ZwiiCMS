@@ -11,6 +11,10 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
+## version 10.2.06
+- Corrections :
+    - Dépréciation option de cookie samesite.
+    - Warning : absence de fichier map dans le thème TinyMCE lightgray
 
 ## version 10.2.05
 - Correction :
