@@ -71,12 +71,6 @@ class form extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Configuration
-			// Option sélectionnée sans page choisie
-			$pageId = '';
-			if ($this->getInput('formConfigPageId') !== "") {
-				// Option désactivée, réinitialiser l'id de la page sélectionnée.
-				$pageId = $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '';
-			}
 			$this->setData([
 				'module',
 				$this->getUrl(0),
@@ -87,7 +81,7 @@ class form extends common {
 					'group' => $this->getInput('formConfigGroup', helper::FILTER_INT),
 					'user' =>  self::$listUsers [$this->getInput('formConfigUser', helper::FILTER_INT)],
 					'mail' => $this->getInput('formConfigMail') ,
-					'pageId' => $pageId,
+					'pageId' => $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '',
 					'subject' => $this->getInput('formConfigSubject'),
 					'replyto' => $this->getInput('formConfigMailReplyTo', helper::FILTER_BOOLEAN)
 				]
