@@ -12,6 +12,7 @@
 
 $( document).ready(function() {
     $("#configBackupForm").submit( function(e){
+        $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         $("body").addClass("loading");
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
@@ -26,6 +27,9 @@ $( document).ready(function() {
             error: function(data){
                 $("body").removeClass("loading");
                 core.alert("Une erreur s'est produite, la sauvegarde n'a pas été générée !");
+            },
+            complete: function(){
+                $("#configBackupSubmit").removeClass("disabled").prop("disabled", false);
             }
         });
     });
