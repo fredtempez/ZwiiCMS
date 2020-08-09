@@ -15,6 +15,7 @@ $( document).ready(function() {
         $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         $("body").addClass("loading");
+        $(".modal").addClass("alertMessage");
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
         $.ajax({
             type: "POST",
@@ -30,6 +31,7 @@ $( document).ready(function() {
             },
             complete: function(){
                 $("#configBackupSubmit").removeClass("disabled").prop("disabled", false);
+                $(".modal").removeClass("alertMessage");
             }
         });
     });

@@ -13,7 +13,7 @@
 			'value' => 'Sauvegarder'
 		]); ?>
 	</div>
-	<div class="modal"><!-- Emplacement pour l'animation --></div>
+	<div class="modal">Merci de patienter, je travaille pour vous.<!-- Emplacement pour l'animation --></div>
 </div>
 <div class="row">
 	<div class="col8 offset2">
