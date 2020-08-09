@@ -19,9 +19,13 @@ $( document).ready(function() {
             type: "POST",
             url: url,
             data: $("form").serialize(),
-            complete: function(r, s){
+            success: function(data){
                 $("body").removeClass("loading");
-                core.alert("Processus terminé : la sauvegarde a été générée.");
+                core.alert("La sauvegarde a été générée avec succès.");
+            },
+            error: function(data){
+                $("body").removeClass("loading");
+                core.alert("Une erreur s'est produite, la sauvegarde n'a pas été générée !");
             }
         });
     });
