@@ -4,8 +4,10 @@
 - Correction :
     - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
     - Login : l'option "Se souvenir de moi" est fonctionnelle.
+    - Menu : déplacement de la classe "active".
 - Modifications :
-    - Configuration: sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur.
+    - Configuration : sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur.
+    - Configuration : le nom de l'archive prend le nom du sous-domaine s'il existe.
 
 ## version 10.2.06
 - Corrections :
