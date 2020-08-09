@@ -21,7 +21,7 @@ $( document).ready(function() {
             data: $("form").serialize(),
             complete: function(r, s){
                 $("body").removeClass("loading");
-                core.alert("Sauvegarde terminée avec succès !");
+                core.alert("Processus terminé : la sauvegarde a été générée.");
             }
         });
     });

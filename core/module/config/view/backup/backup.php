@@ -16,18 +16,18 @@
 	<div class="modal"><!-- Emplacement pour l'animation --></div>
 </div>
 <div class="row">
-	<div class="col12">
+	<div class="col8 offset2">
 		<div class="block">
 			<h4>Paramètre</h4>
 			<div class="row">
-				<div class="col12 textAlignCenter">
+				<div class="col12">
 					<?php echo template::checkbox('configBackupOption', true, 'Inclure le contenu du gestionnaire de fichiers', [
 						'checked' => true,
 						'help' => 'Lorsque le contenu du gestionnaire de fichiers est très volumineux une copie par FTP est préférable.'
 					]); ?>
 				</div>
 				<div class="col12">
-					<em>Le fichier de sauvegarde est généré dans <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=backup&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>le dossier Backup</a> du gestionnaire de fichiers.</em>
+					<em>L'archive est générée dans <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=backup&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>le dossier Backup</a> du gestionnaire de fichiers.</em>
 				</div>
 			</div>
 		</div>

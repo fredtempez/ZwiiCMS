@@ -30,8 +30,8 @@ display:    none;
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .2 )
-                url('core/vendor/zwiico/img/ajax-loader.gif')
+    background: rgba( 0, 0, 0, .9 )
+                url('core/vendor/zwiico/img/ajax-loader.png')
                 50% 50%
                 no-repeat;
  }
