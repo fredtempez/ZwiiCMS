@@ -6,7 +6,6 @@
     - Login : l'option "Se souvenir de moi" est fonctionnelle.
 - Modifications :
     - Configuration: sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur.
-    - Cookies d'authentification : option samesite sur Strict
 
 ## version 10.2.06
 - Corrections :
