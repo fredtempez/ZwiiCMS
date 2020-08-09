@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="col6">
 			<?php echo template::text('userLoginId', [
-				'label' => 'Identifiant'
+				'label' => 'Identifiant',
+				'value' => $module::$userId
 			]); ?>
 		</div>
 		<div class="col6">
@@ -13,9 +14,7 @@
 	</div>
 	<div class="row">
 		<div class="col6">
-			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi', [
-			'help' => 'La session est close à la fermeture du navigateur.'
-			]); ?>
+			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi'); ?>
 
 		</div>
 		<div class="col6 textAlignRight">
