@@ -3,6 +3,8 @@
 ## version 10.2.07
 - Correction :
     - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
+- Modification :
+    - Configuration: Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur.
 
 ## version 10.2.06
 - Corrections :
