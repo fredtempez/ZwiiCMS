@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.2.07
+- Correction :
+    - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
+
 ## version 10.2.06
 - Corrections :
     - Anticipation de la dépréciation de l'option de cookie samesite=none.
