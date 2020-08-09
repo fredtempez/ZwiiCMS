@@ -98,7 +98,9 @@ class helper {
 
 	public static function autoBackup($folder, $filter = ['backup','tmp'] ) {
 		// Creation du ZIP
-		$fileName = 'ZwiiCMS-backup'. date('Y-m-d-h-i-s', time()) . '.zip';
+		$baseName = str_replace('/','',helper::baseUrl(false,false));
+		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
+		$fileName =  $baseName . '-backup-' . date('Y-m-d-h-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		$directory = 'site/';
