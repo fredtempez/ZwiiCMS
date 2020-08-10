@@ -31,7 +31,7 @@
    height:     100%;
    width:      100%;
    background: rgba( 0, 0, 0, .9 )
-                url('core/vendor/zwiico/img/ajax-loader.png')
+                url('core/module/config/ressource/ajax-loader.png')
                 50% 45%
                 no-repeat;
  }
@@ -43,7 +43,7 @@
    align-items: center;
    justify-content: center;
 }
- 
+
  /* When the body has the loading class, we turn
     the scrollbar off with overflow:hidden */
  body.loading .modal .alertMessage {
