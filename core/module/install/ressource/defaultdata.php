@@ -632,7 +632,7 @@ class init extends common {
 			'contact' => [
 				'config' => [
 					'button' => '',
-					'capcha' => true,
+					'captcha' => true,
 					'group' => self::GROUP_ADMIN,
 					'pageId' => '',
 					'subject' => ''

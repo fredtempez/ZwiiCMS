@@ -75,7 +75,7 @@
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::capcha('blogArticleCapcha'); ?>
+						<?php echo template::captcha('blogArticlecaptcha'); ?>
 					</div>
 				</div>
 			<?php endif; ?>

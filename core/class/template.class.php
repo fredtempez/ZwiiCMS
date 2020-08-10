@@ -33,12 +33,12 @@ class template {
     }
 
     /**
-    * Crée un champ capcha
+    * Crée un champ captcha
     * @param string $nameId Nom et id du champ
     * @param array $attributes Attributs ($key => $value)
     * @return string
     */
-    public static function capcha($nameId, array $attributes = []) {
+    public static function captcha($nameId, array $attributes = []) {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
@@ -48,13 +48,15 @@ class template {
             'name' => $nameId,
             'value' => ''
         ], $attributes);
-        // Génère deux nombres pour le capcha
-        $firstNumber = mt_rand(1, 15);
-        $secondNumber = mt_rand(1, 15);
+        // Génère deux nombres pour le captcha
+        $numbers=array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
+        $letters=array('zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf','vingt');
+        $firstNumber=rand ( 0 , count($letters)-1 );
+        $secondNumber=rand ( 0 , count($letters)-1 );
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        $html .= self::label($attributes['id'],  $firstNumber . ' + ' . $secondNumber . ' = ?', [
+        $html .= self::label($attributes['id'],  $letters[$firstNumber] . ' + ' . $letters[$secondNumber] . ' = ? (réponse en chiffres)', [
             'help' => $attributes['help']
         ]);
         // Notice
@@ -64,7 +66,7 @@ class template {
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
-        // Capcha
+        // captcha
         $html .= sprintf(
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)

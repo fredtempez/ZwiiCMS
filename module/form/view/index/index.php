@@ -43,10 +43,10 @@
 				</h3>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'capcha'])): ?>
+		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'captcha'])): ?>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::capcha('formCapcha'); ?>
+					<?php echo template::captcha('formcaptcha'); ?>
 				</div>
 			</div>
 		<?php endif; ?>
