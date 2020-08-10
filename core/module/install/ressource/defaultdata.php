@@ -112,7 +112,7 @@ class init extends common {
 				'template' => '3'
 			],
 			'header' => [
-				'backgroundColor' => 'rgba(255, 255, 255, 1)',
+				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'font' => 'Oswald',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
@@ -123,7 +123,7 @@ class init extends common {
 				'margin' => false,
 				'position' => 'site',
 				'textAlign' => 'center',
-				'textColor' => 'rgba(0, 17, 157, 1)',
+				'textColor' => 'rgba(255, 255, 255, 1)',
 				'textHide' => false,
 				'textTransform' => 'none',
 				'linkHomePage' => true,
