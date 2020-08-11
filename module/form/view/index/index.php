@@ -45,7 +45,7 @@
 		<?php endforeach; ?>
 		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'captcha'])): ?>
 			<div class="row">
-				<div class="col4">
+				<div class="col5">
 					<?php echo template::captcha('formcaptcha'); ?>
 				</div>
 			</div>
