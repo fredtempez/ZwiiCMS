@@ -1365,4 +1365,5 @@ th.col12 {
 */
 .captchaNumber {
 	height:20px;
+	vertical-align: middle;
 }
