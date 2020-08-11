@@ -1359,3 +1359,10 @@ th.col12 {
 .accordion-content {
 	padding: 7px;
 }
+
+/* Captcha
+*  Taille des images
+*/
+.captchaNumber {
+	height:20px;
+}

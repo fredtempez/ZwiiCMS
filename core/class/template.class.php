@@ -49,16 +49,17 @@ class template {
             'value' => ''
         ], $attributes);
         // Génère deux nombres pour le captcha
-        $numbers=array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
-        $letters=array('zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf','vingt');
-        $firstNumber=rand ( 0 , count($letters)-1 );
-        $secondNumber=rand ( 0 , count($letters)-1 );
+        $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
+        $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
+        $firstNumber = rand ( 0 , count($letters)-1 );
+        $secondNumber = rand ( 0 , count($letters)-1 );
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        $html .= self::label($attributes['id'],  $letters[$firstNumber] . ' + ' . $letters[$secondNumber] . ' = ? (réponse en chiffres)', [
-            'help' => $attributes['help']
-        ]);
+        $html .= self::label($attributes['id'],
+                 '<img class="captchaNumber" src="core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png" /> + <img class="captchaNumber" src="core/vendor/zwiico/png/' . $letters[$secondNumber] . '.png" /> = ? (réponse en chiffres)', [
+                        'help' => $attributes['help']
+                ]);
         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
