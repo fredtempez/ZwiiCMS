@@ -57,7 +57,7 @@ class template {
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
-                 '<img class="captchaNumber" src="core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png" /> + <img class="captchaNumber" src="core/vendor/zwiico/png/' . $letters[$secondNumber] . '.png" /> = ? (réponse en chiffres)', [
+                 '<img class="captchaNumber" src="core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png" /> + <img class="captchaNumber" src="core/vendor/zwiico/png/' . $letters[$secondNumber] . '.png" /> =  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
         // Notice
