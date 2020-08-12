@@ -542,7 +542,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<h1 style=\"text-align: center;\">Page introuvable !<\/h1>',
+				'content' => '<h1 style="text-align: center;">Page introuvable !</h1>',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
