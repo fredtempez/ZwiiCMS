@@ -1019,6 +1019,16 @@ label {
 	text-decoration: none;
 }
 
+/* Empêche le débordement et les sauts de ligne */
+.inputWrapper {
+    display: inline;
+}
+.inputWrapper > .inputFile {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Pagination */
 .pagination {
 	padding: 10px 0;

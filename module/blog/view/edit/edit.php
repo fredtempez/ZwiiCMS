@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::file('blogEditPicture', [
 							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
 							'label' => 'Image de couverture',
@@ -44,13 +44,13 @@
 							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picture'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::select('blogEditPictureSize', $module::$pictureSizes, [
 							'label' => 'Largeur de l\'image',
 							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'pictureSize'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::select('blogEditPicturePosition', $module::$picturePositions, [
 							'label' => 'Position',
 							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picturePosition']),

@@ -11,7 +11,6 @@
 				AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			 ): ?>
 		<div class="col2">
-		<?php echo $this->getUser('group'); ?>
 			<?php echo template::button('blogEdit', [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
 						'value' => 'Editer'
