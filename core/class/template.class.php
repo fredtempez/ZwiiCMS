@@ -244,7 +244,7 @@ class template {
             'value' => $attributes['value']
         ]);
         // Champ d'upload
-        $html .= '<div class="inputWrapper">';
+        $html .= '<div class="inputFileWrapper">';
         $html .= sprintf(
             '<a
                 href="' .

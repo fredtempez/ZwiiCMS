@@ -1020,10 +1020,10 @@ label {
 }
 
 /* Empêche le débordement et les sauts de ligne */
-.inputWrapper {
+.inputFileWrapper {
     display: inline;
 }
-.inputWrapper > .inputFile {
+.inputFileWrapper > .inputFile {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
