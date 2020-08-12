@@ -41,21 +41,26 @@
 							'help' => 'Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Icône haut de page',
 							'value' => $this->getData(['theme', 'body', 'toTopColor'])
-						]); ?>					
+						]); ?>
 					</div>
 				</div>
-			</div>			
+			</div>
 		</div>
 		<div class="col6">
 			<div class="block">
 				<h4>Image</h4>
-				<?php
-				$imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
-				echo template::file('themeBodyImage', [
-					'label' => 'Fond',
-					'type' => 1,
-					'value' => $imageFile
-				]); ?>
+				<div class="row">
+					<div class="col12">
+						<?php
+						$imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
+						echo template::file('themeBodyImage', [
+							'help' => 'Sélectionner une image',
+							'label' => 'Fond',
+							'type' => 1,
+							'value' => $imageFile
+						]); ?>
+					</div>
+				</div>
 				<div id="themeBodyImageOptions" class="displayNone">
 					<div class="row">
 						<div class="col6">

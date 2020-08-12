@@ -448,12 +448,12 @@ header .container {
 	height: 100%;
 }
 
-/* Element du header */
+/* Element du header 
 
 #themeHeaderImage {
 	font-style: italic;
 	font-size: 0.9em;
-}
+}*/
 
 /* Menu
 body > nav {
@@ -1020,10 +1020,10 @@ label {
 }
 
 /* Empêche le débordement et les sauts de ligne */
-.inputFileWrapper {
+.inputFileManagerWrapper {
     display: inline;
 }
-.inputFileWrapper > .inputFile {
+.inputFileManagerWrapper > .inputFile {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
