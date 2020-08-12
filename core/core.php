@@ -1954,10 +1954,14 @@ class core extends common {
 		}
 		elseif($this->output['content'] === '') {
 			http_response_code(404);
-			$this->addOutput([
-				'title' => 'Erreur 404',
-				'content' => template::speech('Oups ! La page demandée est introuvable...')
-			]);
+			if ($this->getData(['config','page404'])) {
+				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+			} else {
+				$this->addOutput([
+					'title' => 'Erreur 404',
+					'content' => template::speech('Oups ! La page demandée est introuvable...')
+				]);
+			}
 		}
 		// Mise en forme des métas
 		if($this->output['metaTitle'] === '') {
