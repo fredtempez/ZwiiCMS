@@ -47,28 +47,36 @@
 				</div>
 			</div>
 			<div class="row">
-			<div class="col6">
-				<?php
-					$pages = $this->getData(['page']);
-					foreach($pages as $page => $pageId) {
-						if ($this->getData(['page',$page,'block']) === 'bar' ||
-						$this->getData(['page',$page,'disable']) === true) {
-							unset($pages[$page]);
+				<div class="col4">
+					<?php
+						$pages = $this->getData(['page']);
+						foreach($pages as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+							$this->getData(['page',$page,'disable']) === true) {
+								unset($pages[$page]);
+							}
 						}
-					}
-					echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-					'label' => 'Page d\'accueil',
-					'selected' =>$this->getData(['config', 'homePageId'])
+						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
+						'label' => 'Page d\'accueil',
+						'selected' =>$this->getData(['config', 'homePageId'])
 					]); ?>
 				</div>
-				<div class="col6">
-				<?php
-					echo template::select('configPage404', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-						'label' => 'Page 404',
-						'selected' =>$this->getData(['config', 'page404'])
-						]); ?>
-					</div>
-			</div
+				<div class="col4">
+					<?php
+						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+							'label' => 'Page d\'erreur 404 personnalisée',
+							'selected' =>$this->getData(['config', 'page404']),
+							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
+							]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Mentions légales',
+						'selected' => $this->getData(['config', 'legalPageId']),
+						'help' => 'Les mentions légales sont obligatoires en France.'
+					]); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -110,16 +118,7 @@
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col4">
-					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
-					?>
-					<?php echo template::select('configLegalPageId', $listePageId , [
-						'label' => 'Mentions légales',
-						'selected' => $this->getData(['config', 'legalPageId']),
-						'help' => 'Les mentions légales sont obligatoires en France'
-					]); ?>
-				</div>
-				<div class="col4 verticalAlignBottom">
+				<div class="col8 verticalAlignBottom">
 					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>

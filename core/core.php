@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.07';
+	const ZWII_VERSION = '10.3.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1356,6 +1356,12 @@ class common {
 			$this->deleteData(['theme','footer','displayMemberLogout']);
 			$this->setData(['core', 'dataVersion', 10201]);
 		}
+		// Version 10.3.00
+		if ($this->getData(['core', 'dataVersion']) < 10300) {
+			// Options de barre de membre simple
+			$this->setData(['config','page404','none']);
+			$this->setData(['core', 'dataVersion', 10300]);
+		}		
 	}
 }
 
@@ -1954,13 +1960,13 @@ class core extends common {
 		}
 		elseif($this->output['content'] === '') {
 			http_response_code(404);
-			if ($this->getData(['config','page404'])) {
-				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+			if ( $this->getData(['config','page404']) === 'none') {
+					$this->addOutput([
+						'title' => 'Erreur 404',
+						'content' => template::speech('Oups ! La page demandée est introuvable...')
+					]);
 			} else {
-				$this->addOutput([
-					'title' => 'Erreur 404',
-					'content' => template::speech('Oups ! La page demandée est introuvable...')
-				]);
+				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
 			}
 		}
 		// Mise en forme des métas

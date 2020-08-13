@@ -538,29 +538,6 @@ class init extends common {
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
 				'hideMenuChildren' => false
-			],'erreur-404'=> [
-				'typeMenu' => 'text',
-				'iconUrl' => '',
-				'disable' => false,
-				'content' => '<h1 style="text-align: center;">Page introuvable !</h1>',
-				'hideTitle' => false,
-				'breadCrumb' => false,
-				'metaDescription' => '',
-				'metaTitle' => '',
-				'moduleId' => '',
-				'modulePosition' => 'bottom',
-				'parentPageId' => '',
-				'position' => 0,
-				'group' => 0,
-				'targetBlank' => false,
-				'title' => 'Erreur 404',
-				'block' => '12',
-				'barLeft' => '',
-				'barRight' => '',
-				'displayMenu' => 'none',
-				'hideMenuSide' => false,
-				'hideMenuHead' => false,
-				'hideMenuChildren' => false
 			]
 		],
 		'module' => [

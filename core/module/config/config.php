@@ -419,12 +419,13 @@ class config extends common {
 			} else {
 				$legalPageId = '';
 			}
+			$this->getInput('configPage404');
 			// Sauvegarder
 			$this->setData([
 				'config',
 				[
 					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('configPage404', helper::FILTER_ID, true),
+					'page404' => $this->getInput('configPage404'),
 					'analyticsId' => $this->getInput('configAnalyticsId'),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
