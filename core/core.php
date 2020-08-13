@@ -1953,7 +1953,7 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				if ( $this->getData(['config','page404']) === 'none') {
+				if ( $this->getData(['config','page403']) === 'none') {
 					$this->addOutput([
 						'title' => 'Erreur 403',
 						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
