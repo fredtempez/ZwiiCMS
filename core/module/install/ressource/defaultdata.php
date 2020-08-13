@@ -9,7 +9,8 @@ class init extends common {
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
 			'homePageId' => 'accueil',
-			'page404' => 'erreur-404',
+			'page404' => 'none',
+			'page403' => 'none',
 			'maintenance' => false,
 			'social' => [
 				'facebookId' => 'facebook',
@@ -666,3 +667,4 @@ class init extends common {
 		]
     ];
 }
+

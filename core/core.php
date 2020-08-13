@@ -1360,8 +1360,9 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10300) {
 			// Options de barre de membre simple
 			$this->setData(['config','page404','none']);
+			$this->setData(['config','page403','none']);
 			$this->setData(['core', 'dataVersion', 10300]);
-		}		
+		}
 	}
 }
 
@@ -1952,10 +1953,14 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				$this->addOutput([
-					'title' => 'Erreur 403',
-					'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
-				]);
+				if ( $this->getData(['config','page404']) === 'none') {
+					$this->addOutput([
+						'title' => 'Erreur 403',
+						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
+					]);
+				} else {
+					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
+				}
 			}
 		}
 		elseif($this->output['content'] === '') {
