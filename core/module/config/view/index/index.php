@@ -54,7 +54,7 @@
 		<div class="block">
 			<h4>Pages spéciales</h4>
 			<div class="row">
-				<div class="col6">
+				<div class="col4">
 					<?php
 						$pages = $this->getData(['page']);
 						foreach($pages as $page => $pageId) {
@@ -69,11 +69,18 @@
 						'help' => 'La page par défaut, c\'est la première page vue par vos visiteurs'
 					]); ?>
 				</div>
-				<div class="col6">
+				<div class="col4">
 					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
 						'label' => 'Mentions légales',
 						'selected' => $this->getData(['config', 'legalPageId']),
 						'help' => 'Les mentions légales sont obligatoires en France. Une option du thèmz - pied de page ajoute un lien discret vers cette page.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Recherche dans le site',
+						'selected' => $this->getData(['config', 'searchPageId']),
+						'help' => 'Définir la page contenant un module de recherche permet d\'activer le lein dans le pied de page.'
 					]); ?>
 				</div>
 			</div>

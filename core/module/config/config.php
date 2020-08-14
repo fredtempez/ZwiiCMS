@@ -446,6 +446,7 @@ class config extends common {
 					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
 					'itemsperPage' => $this->getInput('configItemsperPage', helper::FILTER_INT,true),
 					'legalPageId' => $this->getInput('configLegalPageId'),
+					'searchPageId' => $this->getInput('configSearchPageId'),
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
