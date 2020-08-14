@@ -22,6 +22,7 @@ class rechercher extends common {
 	public static $actions = [
 		'index' => self::GROUP_VISITOR
 	];
+	public static $results = 0;
 
 
 	public function index() {
@@ -31,7 +32,7 @@ class rechercher extends common {
 			$result = '';
 			$notification = '';
 			$total='';
-			$this->setData(['search',$total,0]);
+			self::$results = 0;
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			$motclef=$this->getInput('searchMotphraseclef');
@@ -99,13 +100,13 @@ class rechercher extends common {
 					}
                 }
 				// Message de synthèse de la recherche
-				if ($this->getData(['search',$total])===0) 	{
+				if (self::$results === 0) 	{
 					$notification = 'Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
 					$result .='Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
-					$result .= 'Nombre d\'occurrences : '.$this->getData(['search',$total]);
-					$notification = 'Nombre d\'occurrences : '.$this->getData(['search',$total]);
+					$result .= 'Nombre d\'occurrences : '.self::$results;
+					$notification = 'Nombre d\'occurrences : '.self::$results;
 					$success = true;
 				}
 			} else {
@@ -170,8 +171,7 @@ class rechercher extends common {
 			}
 		}
 		while($occu != '');
-		$this->setData(['search',$total,$this->getData(['search',$total]) + $nboccu]);
-
+		self::$results = self::$results + $nboccu;
 
 		return $resultat;
 	}
