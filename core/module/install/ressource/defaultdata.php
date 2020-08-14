@@ -5,12 +5,13 @@ class init extends common {
 			'analyticsId' => '',
 			'autoBackup' => true,
 			'autoUpdate' => true,
+			'autoUpdateHtaccess' => false,
 			'cookieConsent' => true,
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
 			'homePageId' => 'accueil',
-			'page404' => 'none',
-			'page403' => 'none',
+			'page404' => 'erreur404',
+			'page403' => 'erreur403',
 			'maintenance' => false,
 			'social' => [
 				'facebookId' => 'facebook',
@@ -39,7 +40,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 10000,
+			'dataVersion' => 10300,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -111,6 +112,7 @@ class init extends common {
 				'displayCopyright' => false,
 				'displayLegal' => false,
 				'displaySearch' => false,
+				'displayMemberBar' => false,
 				'template' => '3'
 			],
 			'header' => [
@@ -148,7 +150,8 @@ class init extends common {
 				'activeColorAuto' => true,
 				'activeColor' => 'rgba(255, 255, 255, 1)',
 				'activeTextColor' => 'rgba(255, 255, 255, 1)',
-				'radius' => '0px'
+				'radius' => '0px',
+				'memberBar' => true
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
@@ -539,7 +542,53 @@ class init extends common {
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
 				'hideMenuChildren' => false
-			]
+			],
+			'erreur403' => [
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
+				'content' => '<h2 style="text-align: center;">Vous n\'êtes pas autorisé à accéder à cette page...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>',
+				'hideTitle' => false,
+				'breadCrumb' => false,
+				'metaDescription' => '',
+				'metaTitle' => '',
+				'moduleId' => '',
+				'modulePosition' => 'bottom',
+				'parentPageId' => '',
+				'position' => 0,
+				'group' => self::GROUP_VISITOR,
+				'targetBlank' => false,
+				'title' => 'Erreur 403',
+				'block' => '12',
+				'barLeft' => '',
+				'barRight' => '',
+				'displayMenu' => 'none',
+				'hideMenuSide' => false,
+				'hideMenuChildren' =>false
+			],
+			'erreur404' => [
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
+				'content' => '<h2 style="text-align: center;">Oups ! La page demandée est introuvable...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>',
+				'hideTitle' => false,
+				'breadCrumb' => false,
+				'metaDescription' => '',
+				'metaTitle' => '',
+				'moduleId' => '',
+				'modulePosition' => 'bottom',
+				'parentPageId' => '',
+				'position' => 0,
+				'group' => self::GROUP_VISITOR,
+				'targetBlank' => false,
+				'title' => 'Erreur 404',
+				'block' => '12',
+				'barLeft' => '',
+				'barRight' => '',
+				'displayMenu' => 'none',
+				'hideMenuSide' => false,
+				'hideMenuChildren' =>false
+			],
 		],
 		'module' => [
 			'blog' => [

@@ -1351,7 +1351,6 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10201) {
 			// Options de barre de membre simple
 			$this->setData(['theme','footer','displayMemberBar',false]);
-			$this->setData(['theme','menu','memberBar',true]);
 			$this->deleteData(['theme','footer','displayMemberAccount']);
 			$this->deleteData(['theme','footer','displayMemberLogout']);
 			$this->setData(['core', 'dataVersion', 10201]);
