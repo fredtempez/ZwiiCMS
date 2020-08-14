@@ -26,9 +26,9 @@
     </div>
     <div class="col12">
         <div class="block">
-            <h4>Résultat(s)</h4>
-            <?php if (isset($_POST['result'])) {
-                echo $_POST['result'];
+            <h4><?php echo $module::$resultTitle; ?></h4>
+            <?php if (!empty($module::$resultList)) {
+                echo $module::$resultList;
             } else {
                 echo "Rien à afficher";
             } ?>

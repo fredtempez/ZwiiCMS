@@ -22,8 +22,12 @@ class rechercher extends common {
 	public static $actions = [
 		'index' => self::GROUP_VISITOR
 	];
-	public static $results = 0;
 
+	public static $resultList = '';
+
+	public static $nbResults = 0;
+
+	public static $resultTitle = '';
 
 	public function index() {
 		if($this->isPost())  {
@@ -32,7 +36,7 @@ class rechercher extends common {
 			$result = '';
 			$notification = '';
 			$total='';
-			self::$results = 0;
+			self::$nbResults = 0;
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			$motclef=$this->getInput('searchMotphraseclef');
@@ -41,7 +45,8 @@ class rechercher extends common {
 			$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
 			//Pour affichage de l'entête du résultat
-			$result = '<h1>Recherche avec le mot clef : '.$motclef.'<br/></h1>';
+			self::$resultTitle = 'Aucun résultat';
+			$result = '';
 			if ($motclef !== "" && strlen($motclef) > 2) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
@@ -100,13 +105,14 @@ class rechercher extends common {
 					}
                 }
 				// Message de synthèse de la recherche
-				if (self::$results === 0) 	{
+				if (self::$nbResults === 0) 	{
 					$notification = 'Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
 					$result .='Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
-					$result .= 'Nombre d\'occurrences : '.self::$results;
-					$notification = 'Nombre d\'occurrences : '.self::$results;
+					$result .= 'Nombre d\'occurrences : '.self::$nbResults;
+					$notification = 'Nombre d\'occurrences : '.self::$nbResults;
+					self::$resultTitle = 'Résultat(s) : "' . $motclef . '" a été trouvé  '. self::$nbResults . ' fois';
 					$success = true;
 				}
 			} else {
@@ -115,8 +121,7 @@ class rechercher extends common {
 				$success = false;
 			}
 
-			$_POST['result'] = $result;
-			$_POST['occurence'] = $total;
+			self::$resultList = $result;
 			// Valeurs en sortie, affichage du résultat
 			$this->addOutput([
 				'title' => '',
@@ -160,7 +165,7 @@ class rechercher extends common {
 				}
 				if ($controle_entier) {
 					if ($titre !== $dejavu) {
-						$resultat = '<p><br/>Mot clef trouv&eacute; dans la page : <a href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a><br/></p>';
+						$resultat = '<p><a href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></p>';
 					}
 					$dejavu = $titre;
 					$nboccu++;
@@ -171,7 +176,7 @@ class rechercher extends common {
 			}
 		}
 		while($occu != '');
-		self::$results = self::$results + $nboccu;
+		self::$nbResults = self::$nbResults + $nboccu;
 
 		return $resultat;
 	}
