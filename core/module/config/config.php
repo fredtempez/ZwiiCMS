@@ -408,18 +408,33 @@ class config extends common {
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			$success = true;
 			// Basculement en mise à jour auto
 			// Remise à 0 du compteur
 			if ($this->getData(['config','autoUpdate']) === false &&
 				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
-			if ($this->getInput('configLegalCheck', helper::FILTER_BOOLEAN) === true ) {
-				$legalPageId = $this->getInput('configLegalPageId', helper::FILTER_ID);
+			// Empêcher la modification si défini dans footer
+			if ( $this->getData(['theme','footer','displaySearch']) === true 
+				AND $this->getInput('configSearchPageId') === '' 
+				){
+					$searchPageId = $this->getData(['config','searchPageId']);
+					self::$inputNotices['configSearchPageId'] = 'Désactiver l\'option dans le pied de page';
+					$success = false;
 			} else {
-				$legalPageId = '';
+					$searchPageId = $this->getInput('configSearchPageId');
 			}
-			$this->getInput('configPage404');
+			// Empêcher la modification si défini dans footer
+			if ( $this->getData(['theme','footer','displayLegal']) === true 
+				AND $this->getInput('configLegalPageId') === '' 
+				){
+					$legalPageId = $this->getData(['config','legalPageId']);
+					self::$inputNotices['configLegalPageId'] = 'Désactiver l\'option dans le pied de page';
+					$success = false;
+			} else {
+					$legalPageId = $this->getInput('configLegalPageId');
+			}
 			// Sauvegarder
 			$this->setData([
 				'config',
@@ -445,8 +460,8 @@ class config extends common {
 					],
 					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
 					'itemsperPage' => $this->getInput('configItemsperPage', helper::FILTER_INT,true),
-					'legalPageId' => $this->getInput('configLegalPageId'),
-					'searchPageId' => $this->getInput('configSearchPageId'),
+					'legalPageId' => $legalPageId,
+					'searchPageId' => $searchPageId,
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
@@ -515,7 +530,7 @@ class config extends common {
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'notification' => 'Modifications enregistrées',
-				'state' => true
+				'state' => $success
 			]);
 		}
 		// Initialisation du screen - APPEL AUTO DESACTIVE POUR EVITER UN RALENTISSEMENT
