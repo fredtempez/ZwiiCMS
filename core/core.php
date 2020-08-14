@@ -1360,6 +1360,20 @@ class common {
 			// Options de barre de membre simple
 			$this->setData(['config','page404','none']);
 			$this->setData(['config','page403','none']);
+			// Module de recherche
+			// Suppression du dossier search
+			if (is_dir('core/module/search')) {
+				$dir = getcwd();
+				chdir('core/module/search');
+				$files = glob('*');
+				foreach($files as $file) unlink($file);
+				chdir($dir);
+				rmdir ('core/module/search/');
+			}
+			// Désactivation de l'option dans le pied de page
+			$this->setData(['theme','footer','displaySearch',false]);
+			// Inscription des nouvelles variables
+			$this->setData(['config','searchPageId','']);
 			$this->setData(['core', 'dataVersion', 10300]);
 		}
 	}
