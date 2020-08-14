@@ -26,7 +26,7 @@
 						<?php echo template::submit('themeImportSubmit', [
 							'value' => 'Appliquer'
 						]); ?>
-					</div>	
+					</div>
 				</div>
 			</div>
 		</div>
@@ -49,6 +49,11 @@
 						]); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col12">
+						<em>Le fichier de sauvegarde est généré dans <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>le dossier Thème</a> du gestionnaire de fichiers.</em>
+					</div>
+				</div>
 			</div>
 			<div class="block">
 			<h4>Télécharger le thème</h4>
@@ -59,16 +64,16 @@
 							'ico' => 'download',
 							'value' => 'Thème site'
 						]); ?>
-					</div>		
+					</div>
 					<div class="col6">
 						<?php echo template::button('themeExport', [
 							'href' => helper::baseUrl() . 'theme/export/admin',
 							'ico' => 'download',
 							'value' => 'Thème administration'
 						]); ?>
-					</div>							
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 <?php echo template::formClose(); ?>

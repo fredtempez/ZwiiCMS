@@ -669,7 +669,7 @@ class theme extends common {
 		unlink (self::TEMP_DIR . $zipFilename);
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Archive <b>'.$zipFilename.'</b> sauvegardée dans fichiers',
+			'notification' => 'Archive <b>'.$zipFilename.'</b> sauvegardée avec succès',
 			'redirect' => helper::baseUrl() . 'theme/manage',
 			'state' => true
 		]);

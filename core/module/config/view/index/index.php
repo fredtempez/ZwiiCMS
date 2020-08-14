@@ -11,15 +11,13 @@
 	<div class="col2 offset4">
 				<?php echo template::button('configManageButton', [
 					'href' => helper::baseUrl() . 'config/backup',
-					'value' => 'Sauvegarder',
-					'ico' => 'download'
+					'value' => 'Sauvegarder'
 				]); ?>
 			</div>
 	<div class="col2">
 		<?php echo template::button('configManageButton', [
 			'href' => helper::baseUrl() . 'config/manage',
-			'value' => 'Restaurer',
-			'ico' => 'upload'
+			'value' => 'Restaurer'
 		]); ?>
 	</div>
 	<div class="col2">
@@ -31,21 +29,7 @@
 		<div class="block">
 			<h4>Informations générales</h4>
 			<div class="row">
-				<div class="col4">
-				<?php
-					$pages = $this->getData(['page']);
-					foreach($pages as $page => $pageId) {
-						if ($this->getData(['page',$page,'block']) === 'bar' ||
-						$this->getData(['page',$page,'disable']) === true) {
-							unset($pages[$page]);
-						}
-					}
-					echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-					'label' => 'Page d\'accueil',
-					'selected' =>$this->getData(['config', 'homePageId'])
-					]); ?>
-				</div>
-				<div class="col8">
+				<div class="col12">
 					<?php echo template::text('configTitle', [
 						'label' => 'Titre du site',
 						'value' => $this->getData(['config', 'title']),
@@ -58,8 +42,57 @@
 					<?php echo template::textarea('configMetaDescription', [
 						'label' => 'Description du site',
 						'value' => $this->getData(['config', 'metaDescription']),
-						'help'  => 'Elle apparaît dans les partages sur les réseaux sociaux.'
+						'help'  => 'La description participe au référence, n\'oubliez pas de personnaliser la description de chaque page sans copié collé.'
 					]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Pages spéciales</h4>
+			<div class="row">
+				<div class="col6">
+					<?php
+						$pages = $this->getData(['page']);
+						foreach($pages as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+							$this->getData(['page',$page,'disable']) === true) {
+								unset($pages[$page]);
+							}
+						}
+						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
+						'label' => 'Accueil du site',
+						'selected' =>$this->getData(['config', 'homePageId']),
+						'help' => 'La page par défaut, c\'est la première page vue par vos visiteurs'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Mentions légales',
+						'selected' => $this->getData(['config', 'legalPageId']),
+						'help' => 'Les mentions légales sont obligatoires en France. Une option du thèmz - pied de page ajoute un lien discret vers cette page.'
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php
+						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+							'label' => 'Accès interdit, erreur 403',
+							'selected' =>$this->getData(['config', 'page403']),
+							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
+						]); ?>
+				</div>
+				<div class="col6">
+					<?php
+						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+							'label' => 'Page inexistante, erreur 404 ',
+							'selected' =>$this->getData(['config', 'page404']),
+							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
+						]); ?>
 				</div>
 			</div>
 		</div>
@@ -103,16 +136,7 @@
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col4">
-					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
-					?>
-					<?php echo template::select('configLegalPageId', $listePageId , [
-						'label' => 'Mentions légales',
-						'selected' => $this->getData(['config', 'legalPageId']),
-						'help' => 'Les mentions légales sont obligatoires en France'
-					]); ?>
-				</div>
-				<div class="col4 verticalAlignBottom">
+				<div class="col8 verticalAlignBottom">
 					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>

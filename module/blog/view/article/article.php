@@ -6,7 +6,10 @@
 				à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>		
 		</div>
 	</div>
-	<?php  if($this->getUser('group') >= self::GROUP_ADMIN): ?>
+	<?php  if(
+				$this->getUser('group') >= self::GROUP_ADMIN
+				AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			 ): ?>
 		<div class="col2">
 			<?php echo template::button('blogEdit', [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
@@ -74,8 +77,8 @@
 			]); ?>
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<div class="row">
-					<div class="col4">
-						<?php echo template::capcha('blogArticleCapcha'); ?>
+					<div class="col5">
+						<?php echo template::captcha('blogArticlecaptcha'); ?>
 					</div>
 				</div>
 			<?php endif; ?>

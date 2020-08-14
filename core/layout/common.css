@@ -448,14 +448,14 @@ header .container {
 	height: 100%;
 }
 
-/* Element du header */
+/* Element du header 
 
 #themeHeaderImage {
 	font-style: italic;
 	font-size: 0.9em;
-}
+}*/
 
-/* Menu 
+/* Menu
 body > nav {
 	margin: 0 -10px;
 }
@@ -1019,6 +1019,16 @@ label {
 	text-decoration: none;
 }
 
+/* Empêche le débordement et les sauts de ligne */
+.inputFileManagerWrapper {
+    display: inline;
+}
+.inputFileManagerWrapper > .inputFile {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Pagination */
 .pagination {
 	padding: 10px 0;
@@ -1358,4 +1368,12 @@ th.col12 {
 }
 .accordion-content {
 	padding: 7px;
+}
+
+/* Captcha
+*  Taille des images
+*/
+.captchaNumber {
+	height:20px;
+	vertical-align: middle;
 }

@@ -1,5 +1,16 @@
 # Changelog
 
+## version 10.3.00
+- Corrections :
+    - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
+    - Login : l'option "Se souvenir de moi" est fonctionnelle.
+    - Menu : déplacement de la classe "active".
+- Modifications :
+    - Configuration du site :
+        - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
+        - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
+    - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
+
 ## version 10.2.06
 - Corrections :
     - Anticipation de la dépréciation de l'option de cookie samesite=none.

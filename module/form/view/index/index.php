@@ -35,7 +35,7 @@
 				]); ?>
 			<?php elseif($input['type'] === $module::TYPE_CHECKBOX): ?>
 				<?php echo template::checkbox('formInput[' . $index . ']', true, $input['name']
-				); ?>	
+				); ?>
 			<?php elseif($input['type'] === $module::TYPE_LABEL): ?>
 				<h3 class='formLabel'>
 					<?php echo $input['name']; ?>
@@ -43,10 +43,10 @@
 				</h3>
 			<?php endif; ?>
 		<?php endforeach; ?>
-		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'capcha'])): ?>
+		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'captcha'])): ?>
 			<div class="row">
-				<div class="col4">
-					<?php echo template::capcha('formCapcha'); ?>
+				<div class="col5">
+					<?php echo template::captcha('formcaptcha'); ?>
 				</div>
 			</div>
 		<?php endif; ?>

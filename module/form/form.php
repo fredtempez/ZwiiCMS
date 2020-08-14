@@ -71,23 +71,17 @@ class form extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Configuration
-			// Option sélectionnée sans page choisie
-			$pageId = '';
-			if ($this->getInput('formConfigPageId') !== "") {
-				// Option désactivée, réinitialiser l'id de la page sélectionnée.
-				$pageId = $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '';
-			}
 			$this->setData([
 				'module',
 				$this->getUrl(0),
 				'config',
 				[
 					'button' => $this->getInput('formConfigButton'),
-					'capcha' => $this->getInput('formConfigCapcha', helper::FILTER_BOOLEAN),
+					'captcha' => $this->getInput('formConfigcaptcha', helper::FILTER_BOOLEAN),
 					'group' => $this->getInput('formConfigGroup', helper::FILTER_INT),
 					'user' =>  self::$listUsers [$this->getInput('formConfigUser', helper::FILTER_INT)],
 					'mail' => $this->getInput('formConfigMail') ,
-					'pageId' => $pageId,
+					'pageId' => $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '',
 					'subject' => $this->getInput('formConfigSubject'),
 					'replyto' => $this->getInput('formConfigMailReplyTo', helper::FILTER_BOOLEAN)
 				]
@@ -285,12 +279,12 @@ class form extends common {
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Check la capcha
+			// Check la captcha
 			if(
-				$this->getData(['module', $this->getUrl(0), 'config', 'capcha'])
-				AND $this->getInput('formCapcha', helper::FILTER_INT) !== $this->getInput('formCapchaFirstNumber', helper::FILTER_INT) + $this->getInput('formCapchaSecondNumber', helper::FILTER_INT))
+				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
+				AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
 			{
-				self::$inputNotices['formCapcha'] = 'Incorrect';
+				self::$inputNotices['formcaptcha'] = 'Incorrect';
 
 			}
 			// Préparation le contenu du mail

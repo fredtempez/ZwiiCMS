@@ -8,7 +8,7 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- *  * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.com/
@@ -246,17 +246,19 @@ class config extends common {
 			// Creation du ZIP
 			$filter = $this->getInput('configBackupOption',helper::FILTER_BOOLEAN) === true ? ['backup','tmp'] : ['backup','tmp','file'];
 			$fileName = helper::autoBackup(self::TEMP_DIR,$filter);
-
-			// Téléchargement du ZIP
-			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
-			readfile(self::TEMP_DIR . $fileName);
+			// Créer le répertoire manquant
+			if (!is_dir(self::FILE_DIR.'source/backup')) {
+				mkdir(self::FILE_DIR.'source/backup');
+			}
+			// Copie dans les fichiers
+			$success = copy (self::TEMP_DIR . $fileName , self::FILE_DIR.'source/backup/' . $fileName);
+			// Détruire le temporaire
+			unlink(self::TEMP_DIR . $fileName);
 			// Valeurs en sortie
 			$this->addOutput([
-				'display' => self::DISPLAY_RAW
+				'display' => self::DISPLAY_JSON,
+				'content' => json_encode($success)
 			]);
-			unlink(self::TEMP_DIR . $fileName);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -417,11 +419,14 @@ class config extends common {
 			} else {
 				$legalPageId = '';
 			}
+			$this->getInput('configPage404');
 			// Sauvegarder
 			$this->setData([
 				'config',
 				[
 					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('configPage404'),
+					'page403' => $this->getInput('configPage403'),
 					'analyticsId' => $this->getInput('configAnalyticsId'),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),

@@ -24,7 +24,12 @@ class user extends common {
 		'logout' => self::GROUP_MEMBER,
 		'reset' => self::GROUP_VISITOR
 	];
+
 	public static $users = [];
+
+	public static $userId = '';
+
+	public static $userLongtime = false;
 
 	/**
 	 * Ajout
@@ -373,7 +378,7 @@ class user extends common {
 			 */
 			} else 	{
 				// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
-				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() 
+				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time()
 					AND $this->getData(['user',$userId,'connectFail']) === $this->getData(['config', 'connect', 'attempt']) ) {
 					$this->setData(['user',$userId,'connectFail',0 ]);
 					$this->setData(['user',$userId,'connectTimeout',0 ]);
@@ -388,8 +393,10 @@ class user extends common {
 				) {
 					// Expiration
 					$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
-					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+					$c = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? 'true' : 'false';
+					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+					setcookie('ZWII_USER_LONGTIME', $c, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 					// Accès multiples avec le même compte
 					$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
@@ -442,6 +449,12 @@ class user extends common {
 				}
 			}
 		}
+		if (!empty($_COOKIE['ZWII_USER_ID'])) {
+			self::$userId = $_COOKIE['ZWII_USER_ID'];
+		}
+		if (!empty($_COOKIE['ZWII_USER_LONGTIME'])) {
+			self::$userLongtime = $_COOKIE['ZWII_USER_LONGTIME'] == 'true' ? true : false;
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
@@ -454,7 +467,11 @@ class user extends common {
 	 * Déconnexion
 	 */
 	public function logout() {
-		helper::deleteCookie('ZWII_USER_ID');
+		// Ne pas effacer l'identifiant mais seulement le mot de passe
+		if ($_COOKIE['ZWII_USER_LONGTIME'] !== 'true' ) {
+			helper::deleteCookie('ZWII_USER_ID');
+			helper::deleteCookie('ZWII_USER_LONGTIME');
+		}
 		helper::deleteCookie('ZWII_USER_PASSWORD');
 		session_destroy();
 		// Valeurs en sortie

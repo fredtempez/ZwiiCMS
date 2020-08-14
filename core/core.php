@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.06';
+	const ZWII_VERSION = '10.3.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1351,10 +1351,16 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10201) {
 			// Options de barre de membre simple
 			$this->setData(['theme','footer','displayMemberBar',false]);
-			$this->setData(['theme','menu','memberBar',true]);
 			$this->deleteData(['theme','footer','displayMemberAccount']);
 			$this->deleteData(['theme','footer','displayMemberLogout']);
 			$this->setData(['core', 'dataVersion', 10201]);
+		}
+		// Version 10.3.00
+		if ($this->getData(['core', 'dataVersion']) < 10300) {
+			// Options de barre de membre simple
+			$this->setData(['config','page404','none']);
+			$this->setData(['config','page403','none']);
+			$this->setData(['core', 'dataVersion', 10300]);
 		}
 	}
 }
@@ -1946,18 +1952,26 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				$this->addOutput([
-					'title' => 'Erreur 403',
-					'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
-				]);
+				if ( $this->getData(['config','page403']) === 'none') {
+					$this->addOutput([
+						'title' => 'Erreur 403',
+						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
+					]);
+				} else {
+					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
+				}
 			}
 		}
 		elseif($this->output['content'] === '') {
 			http_response_code(404);
-			$this->addOutput([
-				'title' => 'Erreur 404',
-				'content' => template::speech('Oups ! La page demandée est introuvable...')
-			]);
+			if ( $this->getData(['config','page404']) === 'none') {
+					$this->addOutput([
+						'title' => 'Erreur 404',
+						'content' => template::speech('Oups ! La page demandée est introuvable...')
+					]);
+			} else {
+				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+			}
 		}
 		// Mise en forme des métas
 		if($this->output['metaTitle'] === '') {
@@ -2258,7 +2272,7 @@ class layout extends common {
 		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Passer les entrées masquées
 			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
 			$items .= '<li>';
@@ -2268,7 +2282,7 @@ class layout extends common {
 
 					{$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 			} else {
-					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2314,7 +2328,7 @@ class layout extends common {
 			$items .= '<ul class="navLevel2">';
 			foreach($childrenPageIds as $childKey) {
 				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
+				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$items .= '<li>';
@@ -2322,7 +2336,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 				} else {
-					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
@@ -2422,7 +2436,7 @@ class layout extends common {
 				continue;
 			}
 			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item;
 			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
@@ -2432,7 +2446,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-						$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
+						$items .= '<a href="' . $active . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 				}
 				$items .= $this->getData(['page', $parentPageId, 'title']);
 				$items .= '</a>';
@@ -2445,7 +2459,7 @@ class layout extends common {
 				}
 
 				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
+				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$itemsChildren .= '<li class="menuSideChild">';
@@ -2454,7 +2468,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$itemsChildren .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank . '>';
+					$itemsChildren .= '<a href="' .$active . helper::baseUrl() . $childKey . '"' . $targetBlank . '>';
 				}
 
 				$itemsChildren .= $this->getData(['page', $childKey, 'title']);

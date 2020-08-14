@@ -28,6 +28,7 @@ setlocale (LC_TIME, 'fra_FRA', 'french');
 /**
  * Initialisation de Zwii
  */
+
 session_start();
 // Chargement des classes
 require 'core/class/autoload.php';
