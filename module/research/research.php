@@ -17,7 +17,7 @@
 
 // Module de recherche d'un mot ou d'une phrase clef
 
-class rechercher extends common {
+class research extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR
@@ -28,6 +28,9 @@ class rechercher extends common {
 	public static $nbResults = 0;
 
 	public static $resultTitle = '';
+
+	const RESEARCH_VERSION = '1.1';
+
 
 	public function index() {
 		if($this->isPost())  {

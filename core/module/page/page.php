@@ -34,7 +34,8 @@ class page extends common {
 		'blog' 			=> 'Blog',
 		'form' 			=> 'Formulaire',
 		'gallery' 		=> 'Galerie',
-		'redirection' 	=> 'Redirection'
+		'redirection' 	=> 'Redirection',
+		'research'      => 'Rechercher'
 	];
 	public static $typeMenu = [
 		'text' => 'Texte',
