@@ -7,7 +7,7 @@
     - Menu : déplacement de la classe "active".
 - Modifications :
     - Configuration du site :
-        - Page 404 personnalisable
+        - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
     - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
 
