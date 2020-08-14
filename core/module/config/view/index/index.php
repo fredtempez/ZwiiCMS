@@ -85,7 +85,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col6">
+				<div class="col4 offset2">
 					<?php
 						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
 							'label' => 'Accès interdit, erreur 403',
@@ -93,7 +93,7 @@
 							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
 						]); ?>
 				</div>
-				<div class="col6">
+				<div class="col4">
 					<?php
 						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
 							'label' => 'Page inexistante, erreur 404 ',
