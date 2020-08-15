@@ -40,7 +40,7 @@ class page extends common {
 	public static $typeMenu = [
 		'text' => 'Texte',
 		'icon' => 'Icône',
-		'icontitle' => 'Icône et bulle'
+		'icontitle' => 'Icône avec bulle de texte'
 	];
 	// Position du module
 	public static $modulePosition = [

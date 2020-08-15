@@ -4,8 +4,8 @@
             <div class="row">
                 <div class="col10 verticalAlignBottom">
                     <?php echo template::text('searchMotphraseclef', [
-                        'label' => 'Votre recherche',
-                        'help'  => 'Saisir toute ou partie d\'un mot ou d\'une phrase, sans guillemets. N\'oubliez pas les accents.',
+                        'label' => 'Rechercher dans le site',
+                        'help'  => 'Saisissez toute ou partie d\'un mot ou d\'une phrase, sans guillemets. N\'oubliez pas les accents.',
                         'value' => $module::$motclef
                     ]); ?>
                 </div>

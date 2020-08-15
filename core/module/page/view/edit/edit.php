@@ -63,13 +63,13 @@ echo template::formOpen('pageEditForm');
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
-								'help' => 'La page peut être représentée par une image de petite taille.',
-								'label' => 'Aspect',
+								'label' => 'Aspect du lien',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 						]); ?>
 					</div>
 					<div class="col4">
                         <?php echo template::file('pageIconUrl', [
+							'help' => 'Sélectionnez une image ou une icône de petite dimension',
                             'label' => 'Icône',
                             'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
                         ]); ?>
@@ -77,7 +77,7 @@ echo template::formOpen('pageEditForm');
 					<div class="col4">
 					<?php echo template::select('configModulePosition', $module::$modulePosition,[
 							'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
-							'label' => 'Position du module dans la page',
+							'label' => 'Position du module',
 							'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
 						]); ?>
 					</div>
@@ -216,7 +216,7 @@ echo template::formOpen('pageEditForm');
 	<div class='row' id="pageEditAdvancedWrapper">
 		<div class="col12">
 			<div class="block" id="advanced">
-				<h4>Options avancées d'emplacement
+				<h4>Options d'emplacement avancées
 					<div class="openClose">
 						<?php
 						echo template::ico('plus','right');
