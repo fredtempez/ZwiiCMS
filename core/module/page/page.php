@@ -35,7 +35,7 @@ class page extends common {
 		'form' 			=> 'Formulaire',
 		'gallery' 		=> 'Galerie',
 		'redirection' 	=> 'Redirection',
-		'research'      => 'Rechercher'
+		'search'        => 'Recherche'
 	];
 	public static $typeMenu = [
 		'text' => 'Texte',
