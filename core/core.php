@@ -48,7 +48,6 @@ class common {
 		'install',
 		'maintenance',
 		'page',
-        'search',
 		'sitemap',
 		'theme',
 		'user'

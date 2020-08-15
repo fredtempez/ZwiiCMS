@@ -17,7 +17,7 @@
 
 // Module de recherche d'un mot ou d'une phrase clef
 
-class research extends common {
+class search extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR
@@ -29,7 +29,11 @@ class research extends common {
 
 	public static $resultTitle = '';
 
-	const RESEARCH_VERSION = '1.1';
+	public static $motclef = '';
+
+	public static $motentier = '';
+
+	const SEARCH_VERSION = '1.1';
 
 
 	public function index() {
@@ -42,15 +46,15 @@ class research extends common {
 			self::$nbResults = 0;
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
-			$motclef=$this->getInput('searchMotphraseclef');
+			self::$motclef=$this->getInput('searchMotphraseclef');
 
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
-			$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
+			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
 			//Pour affichage de l'entête du résultat
 			self::$resultTitle = 'Aucun résultat';
 			$result = '';
-			if ($motclef !== "" && strlen($motclef) > 2) {
+			if (self::$motclef !== "" && strlen(self::$motclef) > 2) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
                         $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
@@ -59,7 +63,7 @@ class research extends common {
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$contenu =  $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
-						$result .= $this->occurrence($url, $titre, $contenu, $motclef, $motentier);
+						$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 					}
 
 					foreach($childIds as $childId) {
@@ -71,7 +75,7 @@ class research extends common {
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = $this->getData(['page', $childId, 'content']);
                                     //Pages filles
-                                    $result .= $this->occurrence($url, $titre, $contenu, $motclef, $motentier);
+                                    $result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 
 							}
 
@@ -84,7 +88,7 @@ class research extends common {
 										$titre = $article['title'];
 										$contenu = $article['content'];
 										// Articles de sous-page de type blog
-										$result .= $this->occurrence($url, $titre, $contenu, $motclef, $motentier);
+										$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 
 									}
                                 }
@@ -101,7 +105,7 @@ class research extends common {
 								$titre = $article['title'];
 								$contenu = $article['content'];
 								// Articles de Blog
-								$result .= $this->occurrence($url, $titre, $contenu, $motclef, $motentier);
+								$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 
 							}
                         }
@@ -115,7 +119,7 @@ class research extends common {
 				} else  {
 					$result .= 'Nombre d\'occurrences : '.self::$nbResults;
 					$notification = 'Nombre d\'occurrences : '.self::$nbResults;
-					self::$resultTitle = 'Résultat(s) : "' . $motclef . '" a été trouvé  '. self::$nbResults . ' fois';
+					self::$resultTitle = 'Résultat(s) : "' . self::$motclef . '" a été trouvé  '. self::$nbResults . ' fois';
 					$success = true;
 				}
 			} else {

@@ -599,7 +599,7 @@ class init extends common {
 				'breadCrumb' => false,
 				'metaDescription' => '',
 				'metaTitle' => '',
-				'moduleId' => 'research',
+				'moduleId' => 'search',
 				'modulePosition' => 'bottom',
 				'parentPageId' => '',
 				'position' => 6,
