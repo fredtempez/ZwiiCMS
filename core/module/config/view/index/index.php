@@ -52,63 +52,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Pages spéciales</h4>
-			<div class="row">
-				<div class="col4">
-					<?php
-						$pages = $this->getData(['page']);
-						foreach($pages as $page => $pageId) {
-							if ($this->getData(['page',$page,'block']) === 'bar' ||
-							$this->getData(['page',$page,'disable']) === true) {
-								unset($pages[$page]);
-							}
-						}
-						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-						'label' => 'Accueil du site',
-						'selected' =>$this->getData(['config', 'homePageId']),
-						'help' => 'La page par défaut, c\'est la première page vue par vos visiteurs'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
-						'label' => 'Mentions légales',
-						'selected' => $this->getData(['config', 'legalPageId']),
-						'help' => 'Les mentions légales sont obligatoires en France. Une option du thèmz - pied de page ajoute un lien discret vers cette page.'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
-						'label' => 'Recherche dans le site',
-						'selected' => $this->getData(['config', 'searchPageId']),
-						'help' => 'Définir la page contenant un module de recherche permet d\'activer le lein dans le pied de page.'
-					]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col4 offset2">
-					<?php
-						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
-							'label' => 'Accès interdit, erreur 403',
-							'selected' =>$this->getData(['config', 'page403']),
-							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
-						]); ?>
-				</div>
-				<div class="col4">
-					<?php
-						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
-							'label' => 'Page inexistante, erreur 404 ',
-							'selected' =>$this->getData(['config', 'page404']),
-							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez puis sélectionnez une page orpheline.'
-						]); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-			<h4>Paramètres</h4>
+			<h4>Paramètres généraux</h4>
 			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
@@ -196,6 +140,63 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Pages spéciales</h4>
+			<div class="row">
+				<div class="col4">
+					<?php
+						$pages = $this->getData(['page']);
+						foreach($pages as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+							$this->getData(['page',$page,'disable']) === true) {
+								unset($pages[$page]);
+							}
+						}
+						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
+						'label' => 'Accueil du site',
+						'selected' =>$this->getData(['config', 'homePageId']),
+						'help' => 'La première page que vos visiteurs verront.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Mentions légales',
+						'selected' => $this->getData(['config', 'legalPageId']),
+						'help' => 'Les mentions légales sont obligatoires en France. Une option du pied de page ajoute un lien discret vers cette page.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Recherche dans le site',
+						'selected' => $this->getData(['config', 'searchPageId']),
+						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche" permet d\'activer un lien dans le pied de page. '
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col4 offset2">
+					<?php
+						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+							'label' => 'Accès interdit, erreur 403',
+							'selected' =>$this->getData(['config', 'page403']),
+							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez ou éditez une page orpheline.'
+						]); ?>
+				</div>
+				<div class="col4">
+					<?php
+						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+							'label' => 'Page inexistante, erreur 404 ',
+							'selected' =>$this->getData(['config', 'page404']),
+							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez ou éditez une page orpheline.'
+						]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <div class="row">
 	<div class="col12">
 		<div class="block" id="social">
