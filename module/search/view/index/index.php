@@ -4,12 +4,13 @@
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
                     <?php echo template::text('searchMotphraseclef', [
-                    'placeholder' => $this->getData(['module',$this->getUrl(0),'placeHolder']) ? $this->getData(['module',$this->getUrl(0),'placeHolder']) : 'Saisissez vos mots clés ou une phrase'
+                        'placeholder' => $this->getData(['module',$this->getUrl(0),'placeHolder']) ? $this->getData(['module',$this->getUrl(0),'placeHolder']) : $module::$defaultPlaceHolder,
+                        'value' => $module::$motclef
                     ]); ?>
                 </div>
                 <div class="col3 verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
-                        'value' => $this->getData(['module',$this->getUrl(0),'submitText']) ? $this->getData(['module',$this->getUrl(0),'submitText']) : 'Rechercher'
+                        'value' => $this->getData(['module',$this->getUrl(0),'submitText']) ? $this->getData(['module',$this->getUrl(0),'submitText']) : $module::$defaultButtonText
                     ]); ?>
                 </div>
             </div>

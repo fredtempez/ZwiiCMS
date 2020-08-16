@@ -21,15 +21,22 @@
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton de soumission',
 								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']),
-								'placeholder' => 'Rechercher'
+								'placeholder' => $module::$defaultButtonText
 							]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::text('searchPlaceHolder', [
-								'label' => 'Texte dans la zone de recherche',
+								'label' => 'Aide dans la zone de saisie',
 								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
-								'placeholder' => 'Saisissez vos mots clés ou une phrase'
+								'placeholder' => $module::$defaultPlaceHolder
 							]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col12">
+						<?php echo template::checkbox('searchResultHideContent', true, 'Résultats : masquer le contenu de la page', [
+							'checked' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
+						]); ?>
 					</div>
 				</div>
 			</div>

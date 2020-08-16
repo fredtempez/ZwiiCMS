@@ -33,6 +33,10 @@ class search extends common {
 
 	public static $motentier = '';
 
+	public static $defaultButtonText = 'Rechercher';
+
+	public static $defaultPlaceHolder = 'Un mot clé ou une phrase entière sans guillemets';
+
 	const SEARCH_VERSION = '1.1';
 
 	// Configuration vide
@@ -41,7 +45,8 @@ class search extends common {
 			// Soumission du formulaire
 			$this->setData(['module', $this->getUrl(0), [
 				'submitText' => $this->getInput('searchSubmitText'),
-				'placeHolder' => $this->getInput('searchPlaceHolder')
+				'placeHolder' => $this->getInput('searchPlaceHolder'),
+				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
@@ -156,7 +161,7 @@ class search extends common {
 				'notification' => $notification,
 				'state' => $success,
 				'showBarEditButton' => true,
-				'showPageContent' => true
+				'showPageContent' => !$this->getData(['module', $this->getUrl(0),'resultHideContent'])
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
