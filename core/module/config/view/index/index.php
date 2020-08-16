@@ -561,7 +561,7 @@
 <div class="row">
 	<div class="col12" >
 		<div class="block" id="system">
-			<h4>Système
+			<h4>Versions des modules
 				<div class="openClose">
 					<?php
 					echo template::ico('plus','right');
@@ -571,47 +571,13 @@
 			</h4>
 			<div class="blockContainer">
 				<div class="row">
-					<div  class="col2">
-						<?php echo template::text('configVersion', [
-						'label' => 'ZwiiCMS',
-						'readonly' => true,
-						'value' => common::ZWII_VERSION
-					]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleBlogVersion', [
-							'label' => 'Blog',
-							'readonly' => true,
-							'value' => blog::BLOG_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleFormVersion', [
-							'label' => 'Form',
-							'readonly' => true,
-							'value' => form::FORM_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleGalleryVersion', [
-							'label' => 'Gallery',
-							'readonly' => true,
-							'value' => gallery::GALLERY_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleNewsVersion', [
-							'label' => 'News',
-							'readonly' => true,
-							'value' => news::NEWS_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleRedirectionVersion', [
-							'label' => 'Redirection',
-							'readonly' => true,
-							'value' => redirection::REDIRECTION_VERSION
-						]); ?>
+					<div  class="col12">
+						<?php echo 'ZwiiCMS : ' 	. common::ZWII_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Blog : ' 		. blog::BLOG_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'News : ' 		. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Recherche : '   . search::SEARCH_VERSION ;?>
 					</div>
 				</div>
 			</div>
