@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col12">
                     <?php echo template::checkbox('searchMotentier', true, 'Mot entier uniquement', [
-                        'checked' => false
+                        'checked' => $module::$motentier
                     ]); ?>
                 </div>
             </div>

@@ -80,7 +80,21 @@ class search extends common {
 			//Pour affichage de l'entête du résultat
 			self::$resultTitle = 'Aucun résultat';
 			$result = '';
-			if (self::$motclef !== "" && strlen(self::$motclef) > 2) {
+			// protection des guillemets
+			// ^((("){1}([^"])*("){1})([ ]+))+$
+			//preg_match('(?:^|(?<=\s))"([^"]+)"(?:$|(?=\s))',self::$motclef,$matches);
+			//print_r($matches);
+			// Découpage de la chaîne de mots clés
+			$keywords = '/(';
+			$a = explode(' ',self::$motclef);
+			foreach ($a as $key => $value) {
+
+				$keywords .= self::$motentier === false ? $value . '|' : '\\b' . $value . '\\b|' ;
+			}
+			$keywords = substr($keywords,0,strlen($keywords) - 1);
+			$keywords .= ')/i';
+			//echo $keywords;
+			if ($keywords !== "" && strlen($keywords) > 2) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
                         $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
@@ -89,7 +103,7 @@ class search extends common {
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$contenu =  $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
-						$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+						$result .= $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
 					}
 
 					foreach($childIds as $childId) {
@@ -101,7 +115,7 @@ class search extends common {
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = $this->getData(['page', $childId, 'content']);
                                     //Pages filles
-                                    $result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+                                    $result .= $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
 
 							}
 
@@ -114,7 +128,7 @@ class search extends common {
 										$titre = $article['title'];
 										$contenu = $article['content'];
 										// Articles de sous-page de type blog
-										$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+										$result .= $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
 
 									}
                                 }
@@ -131,7 +145,7 @@ class search extends common {
 								$titre = $article['title'];
 								$contenu = $article['content'];
 								// Articles de Blog
-								$result .= $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+								$result .= $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
 
 							}
                         }
@@ -143,7 +157,7 @@ class search extends common {
 					$result .='Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
-					$result .= 'Nombre d\'occurrences : '.self::$nbResults;
+					//$result .= self::$nbResults .' occurrences ont été trouvées.';
 					$notification = 'Nombre d\'occurrences : '.self::$nbResults;
 					self::$resultTitle = 'Résultat(s) : "' . self::$motclef . '" a été trouvé  '. self::$nbResults . ' fois';
 					$success = true;
@@ -189,24 +203,24 @@ class search extends common {
 		$resultat= '';
 		// Recherche des occurrences
 		do {
-			$occu = stristr($contenu,$motclef);
-			if ($occu !== false) {
-				if ($motentier === true) {
-					$controle_entier=$this->test_motentier($contenu,$motclef);
-				} else {
-					$controle_entier=true;
+			$occu = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
+			if ($occu !== false && !empty($matches[0]) ) {
+				/*echo "<pre>";
+				print_r($matches);
+				echo "</pre>";*/
+				if ($titre !== $dejavu) {
+					$resultat = '<p><a href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></p>';
 				}
-				if ($controle_entier) {
-					if ($titre !== $dejavu) {
-						$resultat = '<p><a href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></p>';
-					}
-					$dejavu = $titre;
-					$nboccu++;
-					$resultat .= '<p>'.$nboccu.' - "...<em>'.substr($occu,0,200).'</em>..."<br/></p>';
+				$dejavu = $titre;
+				$nboccu .= count($matches[0]);
+				$contenu = preg_replace($motclef, '<span class="evidence">\1</span>', $contenu);
+				foreach ($matches[0] as $key => $value) {
+					//$resultat .= '<p>'.$nboccu.' - "...<em>'.substr($contenu,$value[1] ,200).'</em>..."<br/></p>';	# code...
+					$resultat .= '"<em>'.substr($contenu,$value[1] ,200).'</em>..."<br/></p>';	# code...
 				}
-				// Pour recherche d'une autre occurrence dans le même contenu
-				$contenu = substr($occu,10);
 			}
+			// Pour recherche d'une autre occurrence dans le même contenu
+			$contenu = substr($occu,10);
 		}
 		while($occu != '');
 		self::$nbResults = self::$nbResults + $nboccu;
@@ -228,24 +242,5 @@ class search extends common {
 		}
 		while($pos1!==false);
 		return $contenu;
-	}
-
-	// Déclaration de la fonction test_motentier(string $chaine, string $clef) : bool
-	// Vérifie si dans la string $chaine, $clef est un mot entier
-	// $clef ne doit pas être précédé ni suivi d'une lettre maj ou min
-	private function test_motentier($chaine, $clef)
-	{
-		$resultat=true;
-		$pos1=stripos($chaine,$clef);
-		$avant=ord(substr($chaine,$pos1-1, 1));
-		$apres=ord(substr($chaine,$pos1+strlen($clef),1));
-		// Traitement pour le caractère qui précède et celui qui suit
-		if (($avant>=65 && $avant<=90) ||
-            ($avant>=97 && $avant<=122) ||
-            ($apres>=65 && $apres<=90) ||
-            ($apres>=97 && $apres<=122) ) {
-        		$resultat=false;
-		}
-		  return $resultat;
 	}
 }
