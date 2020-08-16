@@ -2070,12 +2070,12 @@ class layout extends common {
 			AND (
 				$this->getData(['page', $this->getUrl(0)]) === null
 				OR $this->getData(['page', $this->getUrl(0), 'hideTitle']) === false
+				OR $this->getUrl(1) === 'config'
 			)
 		) {
 			echo '<h1 id="sectionTitle">' . $this->core->output['title'] . '</h1>';
 		}
 		echo $this->core->output['content'];
-
 	}
 
 

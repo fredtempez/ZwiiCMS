@@ -5,6 +5,7 @@
     - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
     - Login : l'option "Se souvenir de moi" est fonctionnelle.
     - Menu : déplacement de la classe "active".
+    - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
 - Modifications :
     - La recherche dans le site devient un module externe plutôt qu'un module interne ; diverses corrections dans le module.
     - Configuration du site :
