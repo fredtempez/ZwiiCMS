@@ -20,7 +20,8 @@
 class search extends common {
 
 	public static $actions = [
-		'index' => self::GROUP_VISITOR
+		'index' => self::GROUP_VISITOR,
+		'config' => self::GROUP_MODERATOR
 	];
 
 	public static $resultList = '';
@@ -35,6 +36,16 @@ class search extends common {
 
 	const SEARCH_VERSION = '1.1';
 
+	// Configuration vide
+	public function config() {
+		// Valeurs en sortie, affichage du formulaire
+		$this->addOutput([
+			'view' => 'config',
+			'showBarEditButton' => true,
+			'showPageContent' => true
+		]);
+
+	}
 
 	public function index() {
 		if($this->isPost())  {
