@@ -37,13 +37,24 @@ class search extends common {
 
 	// Configuration vide
 	public function config() {
+		if($this->isPost())  {
+			// Soumission du formulaire
+			$this->setData(['module', $this->getUrl(0), [
+				'submitText' => $this->getInput('searchSubmitText'),
+				'placeHolder' => $this->getInput('searchPlaceHolder')
+			]]);
+			// Valeurs en sortie, affichage du formulaire
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
+		}
 		// Valeurs en sortie, affichage du formulaire
 		$this->addOutput([
-			'view' => 'config',
-			'showBarEditButton' => true,
-			'showPageContent' => true
+			'title' => 'Configuration du module',
+			'view' => 'config'
 		]);
-
 	}
 
 	public function index() {
@@ -141,15 +152,15 @@ class search extends common {
 			self::$resultList = $result;
 			// Valeurs en sortie, affichage du résultat
 			$this->addOutput([
-				'title' => '',
-				'view' => 'result',
+				'view' => 'index',
 				'notification' => $notification,
-				'state' => $success
+				'state' => $success,
+				'showBarEditButton' => true,
+				'showPageContent' => true
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
-				'title' => '',
 				'view' => 'index',
 				'showBarEditButton' => true,
 				'showPageContent' => true

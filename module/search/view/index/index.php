@@ -2,14 +2,14 @@
 	<div class="row">
 		<div class="col10 offset1">
             <div class="row">
-                <div class="col10 verticalAlignBottom">
+                <div class="col9 verticalAlignMiddle">
                     <?php echo template::text('searchMotphraseclef', [
-                    'placeholder' => 'Saisissez vos mots clés ou une phrase'
+                    'placeholder' => $this->getData(['module',$this->getUrl(0),'placeHolder']) ? $this->getData(['module',$this->getUrl(0),'placeHolder']) : 'Saisissez vos mots clés ou une phrase'
                     ]); ?>
                 </div>
-                <div class="col2 verticalAlignBottom">
+                <div class="col3 verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
-                        'value' => 'Ok'
+                        'value' => $this->getData(['module',$this->getUrl(0),'submitText']) ? $this->getData(['module',$this->getUrl(0),'submitText']) : 'Rechercher'
                     ]); ?>
                 </div>
             </div>
@@ -22,4 +22,16 @@
             </div>
 		</div>
 	</div>
+    <?php if ($module::$resultTitle && $module::$resultList): ?>
+    <div class="col12">
+        <div class="block">
+            <h4><?php echo $module::$resultTitle; ?></h4>
+            <?php if (!empty($module::$resultList)) {
+                echo $module::$resultList;
+            } else {
+                echo "Rien à afficher";
+            } ?>
+        </div>
+	</div>
+    <?php endif;?>
 <?php echo template::formClose(); ?>
