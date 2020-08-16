@@ -8,14 +8,13 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Sylvain Lelièvre
  * @license GNU General Public License, version 3
  * @link http://zwiicms.com/
  *
- * Module rechercher
- * Produit par la communauté à partir d'un développement de Sylvain Lelièvre
  */
-
-// Module de recherche d'un mot ou d'une phrase clef
 
 class search extends common {
 
