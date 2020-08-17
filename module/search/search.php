@@ -216,7 +216,7 @@ class search extends common {
 					// Nettoyage caractères invalides
 					$t = preg_replace('/[^[:alnum:][:space:]]/u', '', $t);
 					// Applique une mise en évidence
-					$t = preg_replace($motclef, '<span class="evidence">\1</span>',$t,1);
+					$t = preg_replace($motclef, '<span class="evidence">\1</span>',$t);
 					// Sauver résultat
 					$resultat .='...<em>'.$t.'</em> ...</p>';
 
