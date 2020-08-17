@@ -211,8 +211,8 @@ class search extends common {
 				$nboccu .= count($matches[0]);
 				foreach ($matches[0] as $key => $value) {
 					// Mise en évidence
-					$d = $value[1] -50 < 0 ? 1 : $value[1] - 50;
-					$t = substr($contenu,(int) $d ,150);
+					$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
+					$t = substr($contenu,(int) $d ,200);
 					// Nettoyage caractères invalides
 					$t = preg_replace('/[^[:alnum:][:space:]]/u', '', $t);
 					// Applique une mise en évidence
