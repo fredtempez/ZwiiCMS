@@ -218,7 +218,7 @@ class search extends common {
 					// Applique une mise en évidence
 					$t = preg_replace($motclef, '<span class="evidence">\1</span>',$t,1);
 					// Sauver résultat
-					$resultat .='"<em>'.$t.'</em>..."</p>';
+					$resultat .='...<em>'.$t.'</em> ...</p>';
 
 				}
 			}
