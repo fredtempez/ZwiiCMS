@@ -28,7 +28,7 @@
         <div class="block">
             <h4><?php echo $module::$resultTitle; ?></h4>
             <?php if (!empty($module::$resultList)) {
-                echo $module::$resultList;
+                echo( $module::$resultList );
             } else {
                 echo "Rien à afficher";
             } ?>

@@ -35,7 +35,7 @@ class search extends common {
 
 	public static $defaultButtonText = 'Rechercher';
 
-	public static $defaultPlaceHolder = 'Un mot clé ou une phrase entière sans guillemets';
+	public static $defaultPlaceHolder = 'Que recherchez-vous ?';
 
 	const SEARCH_VERSION = '1.1';
 
@@ -153,17 +153,15 @@ class search extends common {
                 }
 				// Message de synthèse de la recherche
 				if (self::$nbResults === 0) 	{
-					$notification = 'Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
-					$result .='Mot clef non trouv&eacute;. Avez-vous pens&eacute; aux accents ?';
+
+					$result .='Aucun résultat. Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
-					//$result .= self::$nbResults .' occurrences ont été trouvées.';
-					$notification = 'Nombre d\'occurrences : '.self::$nbResults;
-					self::$resultTitle = 'Résultat(s) : "' . self::$motclef . '" a été trouvé  '. self::$nbResults . ' fois';
+					$r = self::$nbResults == 1 ? '' : '( ' .self::$nbResults . ' éléments découverts )';
+					self::$resultTitle =  ' Résultat de votre recherche  ' . $r ;
 					$success = true;
 				}
 			} else {
-				$notification = 'Trop court ! Minimum 3 caract&egrave;res';
 				$result = 'Trop court ! Minimum 3 caract&egrave;res';
 				$success = false;
 			}
@@ -172,8 +170,6 @@ class search extends common {
 			// Valeurs en sortie, affichage du résultat
 			$this->addOutput([
 				'view' => 'index',
-				'notification' => $notification,
-				'state' => $success,
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0),'resultHideContent'])
 			]);
@@ -193,7 +189,7 @@ class search extends common {
 	private function occurrence($url, $titre, $contenu, $motclef, $motentier)
 	{
 		// Nettoyage de $contenu : on enlève tout ce qui est inclus entre < et >
-		$contenu = $this->nettoyer_html($contenu);
+		$contenu = preg_replace ('/<[^>]*>/', ' ', $contenu);
 		// Accentuation
 		$contenu = html_entity_decode($contenu);
 		// Initialisations
@@ -213,34 +209,25 @@ class search extends common {
 				}
 				$dejavu = $titre;
 				$nboccu .= count($matches[0]);
-				$contenu = preg_replace($motclef, '<span class="evidence">\1</span>', $contenu);
 				foreach ($matches[0] as $key => $value) {
-					//$resultat .= '<p>'.$nboccu.' - "...<em>'.substr($contenu,$value[1] ,200).'</em>..."<br/></p>';	# code...
-					$resultat .= '"<em>'.substr($contenu,$value[1] ,200).'</em>..."<br/></p>';	# code...
+					// Mise en évidence
+					$d = $value[1] -50 < 0 ? 1 : $value[1] - 50;
+					$t = substr($contenu,(int) $d ,150);
+					// Nettoyage caractères invalides
+					$t = preg_replace('/[^[:alnum:][:space:]]/u', '', $t);
+					// Applique une mise en évidence
+					$t = preg_replace($motclef, '<span class="evidence">\1</span>',$t,1);
+					// Sauver résultat
+					$resultat .='"<em>'.$t.'</em>..."</p>';
+
 				}
 			}
 			// Pour recherche d'une autre occurrence dans le même contenu
 			$contenu = substr($occu,10);
 		}
 		while($occu != '');
-		self::$nbResults = self::$nbResults + $nboccu;
+		self::$nbResults = self::$nbResults + $nboccu; // Nombre total d'occurences
 
 		return $resultat;
-	}
-
-	// Déclaration de la fonction nettoyer(string $contenu) : string
-	// Supprime de $contenu les caractères placés entre < et >, donc les balises html comme <p> <br/> etc...
-	// Retourne $contenu nettoyée, le résultat est sensiblement différent de celui obtenu avec la fonction strip_tags()
-	private function nettoyer_html($contenu)
-	{
-		do {
-			$pos1=strpos($contenu,chr(60));
-			if($pos1!==false) {
-				$pos2=strpos($contenu,chr(62));
-				if($pos2!==false) $contenu=substr_replace($contenu," ",$pos1,($pos2 - $pos1 + 1));
-			}
-		}
-		while($pos1!==false);
-		return $contenu;
 	}
 }
