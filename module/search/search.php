@@ -94,7 +94,7 @@ class search extends common {
 			$keywords = substr($keywords,0,strlen($keywords) - 1);
 			$keywords .= ')/i';
 			//echo $keywords;
-			if ($keywords !== "" && strlen($keywords) > 2) {
+			if (self::$motclef !== "" && strlen($keywords) > 2) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
                         $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
