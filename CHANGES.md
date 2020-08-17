@@ -7,7 +7,9 @@
     - Menu : déplacement de la classe "active".
     - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
 - Modifications :
-    - La recherche dans le site devient un module externe plutôt qu'un module interne ; diverses corrections dans le module.
+    - Module recherche :
+        - La recherche dans le site devient un module externe plutôt qu'un module interne ;
+        - Diverses corrections optimisations permettant une recherche à l'aide de plusieurs mot-clés.
     - Configuration du site :
         - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
