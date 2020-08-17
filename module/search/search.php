@@ -157,8 +157,8 @@ class search extends common {
 					$result .='Aucun résultat. Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
-					$r = self::$nbResults == 1 ? '' : '( ' .self::$nbResults . ' éléments découverts )';
-					self::$resultTitle =  ' Résultat de votre recherche  ' . $r ;
+					//$r = self::$nbResults == 1 ? '' : '( ' .self::$nbResults . ' éléments découverts )';
+					self::$resultTitle =  ' Résultat de votre recherche';//  ' . $r ;
 					$success = true;
 				}
 			} else {
