@@ -2159,7 +2159,7 @@ class layout extends common {
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone"' : '';
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Rechercher</a>';
+		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';

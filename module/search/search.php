@@ -146,7 +146,6 @@ class search extends common {
 								$contenu = $article['content'];
 								// Articles de Blog
 								$result .= $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
-
 							}
                         }
 					}
@@ -154,7 +153,7 @@ class search extends common {
 				// Message de synthèse de la recherche
 				if (self::$nbResults === 0) 	{
 
-					$result .='Aucun résultat. Avez-vous pens&eacute; aux accents ?';
+					$result .='Avez-vous pens&eacute; aux accents ?';
 					$success = false;
 				} else  {
 					//$r = self::$nbResults == 1 ? '' : '( ' .self::$nbResults . ' éléments découverts )';

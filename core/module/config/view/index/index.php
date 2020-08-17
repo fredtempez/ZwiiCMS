@@ -181,7 +181,7 @@
 						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
 							'label' => 'Accès interdit, erreur 403',
 							'selected' =>$this->getData(['config', 'page403']),
-							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez ou éditez une page orpheline.'
+							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez et éditez une page orpheline.'
 						]); ?>
 				</div>
 				<div class="col4">
@@ -189,7 +189,7 @@
 						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
 							'label' => 'Page inexistante, erreur 404 ',
 							'selected' =>$this->getData(['config', 'page404']),
-							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez ou éditez une page orpheline.'
+							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez et éditez une page orpheline.'
 						]); ?>
 				</div>
 			</div>
