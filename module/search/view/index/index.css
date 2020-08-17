@@ -1,3 +1,8 @@
 .evidence {
     background: yellow;
 }
+.line {
+    font-style: italic;
+    margin: .5em;
+    margin-left: 1em;
+}
