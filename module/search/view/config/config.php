@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('searchSubmitText', [
-								'label' => 'Texte du bouton de soumission',
+								'label' => 'Texte du bouton',
 								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']),
 								'placeholder' => $module::$defaultButtonText
 							]); ?>

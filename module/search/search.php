@@ -35,7 +35,7 @@ class search extends common {
 
 	public static $defaultButtonText = 'Rechercher';
 
-	public static $defaultPlaceHolder = 'Que recherchez-vous ?';
+	public static $defaultPlaceHolder = 'Entrez un plusieurs mots-clés.';
 
 	const SEARCH_VERSION = '1.1';
 
@@ -211,37 +211,29 @@ class search extends common {
 		$dejavu = '';
 		$total = '';
 		$resultat= '';
-		// Recherche des occurrences
-		do {
-			$occu = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
-			if ($occu !== false && !empty($matches[0]) ) {
-				/*echo "<pre>";
-				print_r($matches);
-				echo "</pre>";*/
-				if ($titre !== $dejavu) {
-					$resultat = '<p><a href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></p>';
-				}
-				$dejavu = $titre;
-				$nboccu .= count($matches[0]);
-				foreach ($matches[0] as $key => $value) {
-					// Création de l'aperçu
-					// Eviter de découper avec une valeur négative
-					$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
-					// Rechercher l'espace le plus proche
-					$d = strpos($contenu,' ',$d);
-					// Découper l'aperçu
-					$t = substr($contenu,(int) $d ,200);
-					// Applique une mise en évidence
-					$t = preg_replace($motclef, '<span class="evidence">\1</span>',$t);
-					// Sauver résultat
-					$resultat .='<div class="line">...'.$t.'...</div>';
-
-				}
+		$occu = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
+		if ($occu !== false && !empty($matches[0]) ) {
+			if ($titre !== $dejavu) {
+				$resultat = '<h3><a class="searchTitle" href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></h3>';
 			}
-			// Pour recherche d'une autre occurrence dans le même contenu
-			$contenu = substr($occu,10);
+			$dejavu = $titre;
+			$nboccu .= count($matches[0]);
+			foreach ($matches[0] as $key => $value) {
+				// Création de l'aperçu
+				// Eviter de découper avec une valeur négative
+				$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
+				// Eviter de découper avec une valeur au-delà de la longueur
+				$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
+				// Rechercher l'espace le plus proche
+				$d = $d > 1 ? strpos($contenu,' ',$d) : $d;
+				// Découper l'aperçu
+				$t = substr($contenu,(int) $d ,200);
+				// Applique une mise en évidence
+				$t = preg_replace($motclef, '<span class="searchKeyword">\1</span>',$t);
+				// Sauver résultat
+				$resultat .='<div class="searchResult">'.$t.'...</div>';
+			}
 		}
-		while($occu != '');
 		self::$nbResults = self::$nbResults + $nboccu; // Nombre total d'occurences
 		return $resultat;
 	}

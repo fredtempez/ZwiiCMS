@@ -1,8 +1,9 @@
-.evidence {
+.seachTitle {
+    /* rien */
+}
+.searchKeyword {
     background: yellow;
 }
-.line {
-    font-style: italic;
-    margin: .5em;
-    margin-left: 1em;
+.searchResult {
+    margin: .8em 0 .8em 0.5em;
 }
