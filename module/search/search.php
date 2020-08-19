@@ -35,7 +35,7 @@ class search extends common {
 
 	public static $defaultButtonText = 'Rechercher';
 
-	public static $defaultPlaceHolder = 'Entrez un plusieurs mots-clés.';
+	public static $defaultPlaceHolder = 'Entrez un ou plusieurs mots-clés.';
 
 	const SEARCH_VERSION = '1.1';
 
