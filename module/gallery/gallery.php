@@ -655,8 +655,8 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
-				'notification' => $success ? 'Modifications enregistrées' : 'Modifications non enregistées !',
-				'state' => $success
+				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'state' => $success !== FALSE
 			]);
 		}
 		// Valeurs en sortie

@@ -7,7 +7,7 @@ class theme extends gallery {
             'thumbMargin'	   => '.5em',
             'thumbBorder'	   => '.1em',
             'thumbOpacity'	   => '.7',
-            'thumbBorderColor' => 'rgba(221, 221, 221, 1)',            
+            'thumbBorderColor' => 'rgba(221, 221, 221, 1)',
             'thumbRadius'      => '.3em',
             'thumbShadows'     => '1px 1px 10px',
             'thumbShadowsColor'=> 'rgba(125, 125, 125, 1)',
