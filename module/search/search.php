@@ -99,7 +99,6 @@ class search extends common {
 			$keywords = substr($keywords,0,strlen($keywords) - 1);
 			$keywords .= ')/i';
 			$keywords = str_replace ('+', ' ',$keywords);
-			echo $keywords;
 			if (self::$motclef !== '' ) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
