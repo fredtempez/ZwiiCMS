@@ -42,13 +42,12 @@ class search extends common {
 	public function config() {
 		if($this->isPost())  {
 			// Soumission du formulaire
-			$this->setData(['module', $this->getUrl(0), [
+			$this->setData(['module', 'search', [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
 				'keywordColor' => $this->getInput('searchKeywordColor')
 			]]);
-
 			// Création des fichiers CSS
 			$content = file_get_contents('module/search/ressource/vartheme.css');
 			$themeCss = file_get_contents('module/search/ressource/theme.css');

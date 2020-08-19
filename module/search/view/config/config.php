@@ -22,20 +22,20 @@
 							'class' => 'colorPicker',
 							'help' => 'Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Mot-clef en évidence',
-							'value' => $this->getData(['module', $this->getUrl(0), 'keywordColor'])
+							'value' => $this->getData(['module', 'search', 'keywordColor'])
 						]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
-								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']),
+								'value' => $this->getData(['module', 'search', 'submitText']),
 								'placeholder' => $module::$defaultButtonText
 							]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
-								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
+								'value' => $this->getData(['module', 'search', 'placeHolder']),
 								'placeholder' => $module::$defaultPlaceHolder
 							]); ?>
 					</div>
