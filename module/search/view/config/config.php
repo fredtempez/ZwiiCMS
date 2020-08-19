@@ -17,26 +17,24 @@
 			<div class="block">
 			<h4>Paramètres</h4>
 				<div class="row">
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::text('searchKeywordColor', [
 							'class' => 'colorPicker',
-							'help' => 'Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Mot-clef en évidence',
-							'value' => $this->getData(['module', 'search', 'keywordColor'])
+							'help' => ' Cette couleur est commune à tous les modules de recherche. Le curseur horizontal règle le niveau de transparence.',
+							'label' => 'Mot-clef en évidence.',
+							'value' => $this->getData(['theme', 'search', 'keywordColor'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
-								'value' => $this->getData(['module', 'search', 'submitText']),
-								'placeholder' => $module::$defaultButtonText
+								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']) ? $this->getData(['module', $this->getUrl(0), 'submitText']) : 'Rechercher'
 							]); ?>
 					</div>
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
-								'value' => $this->getData(['module', 'search', 'placeHolder']),
-								'placeholder' => $module::$defaultPlaceHolder
+								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un plusieurs mots-clés séparés par un espace ou par +'
 							]); ?>
 					</div>
 				</div>

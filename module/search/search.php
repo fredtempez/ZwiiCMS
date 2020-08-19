@@ -32,21 +32,25 @@ class search extends common {
 	public static $motclef = '';
 	public static $motentier = '';
 
-	// paramètres pas défaut
-	public static $defaultButtonText = 'Rechercher';
-	public static $defaultPlaceHolder = 'Un plusieurs mots-clés séparés par un espace ou par +';
-
 	const SEARCH_VERSION = '1.1';
 
 	// Configuration vide
 	public function config() {
+		// Initialisation des données de thème de la galerie dasn theme.json
+		// Création des valeur par défaut absentes
+		if ( $this->getData(['theme', 'search']) === null ) {
+			require_once('module/search/ressource/defaultdata.php');
+			$this->setData(['theme', 'search', theme::$defaultData]);
+		}
 		if($this->isPost())  {
 			// Soumission du formulaire
-			$this->setData(['module', 'search', [
+			$this->setData(['theme', 'search', [
+				'keywordColor' => $this->getInput('searchKeywordColor')
+			]]);
+			$this->setData(['module', $this->getUrl(0), [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
-				'keywordColor' => $this->getInput('searchKeywordColor')
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/search/ressource/vartheme.css');
