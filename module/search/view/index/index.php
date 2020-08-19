@@ -17,7 +17,8 @@
             <div class="row">
                 <div class="col12">
                     <?php echo template::checkbox('searchMotentier', true, 'Mot entier uniquement', [
-                        'checked' => $module::$motentier
+                        'checked' => $module::$motentier,
+                        'help' => 'Pour rechercher une suite de mots-clés, les séparez par le symbole + plutôt que l\'espace.'
                     ]); ?>
                 </div>
             </div>

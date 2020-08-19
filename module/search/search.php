@@ -34,7 +34,7 @@ class search extends common {
 
 	// paramètres pas défaut
 	public static $defaultButtonText = 'Rechercher';
-	public static $defaultPlaceHolder = 'Entrez un ou plusieurs mots-clés.';
+	public static $defaultPlaceHolder = 'Un plusieurs mots-clés séparés par un espace ou par +';
 
 	const SEARCH_VERSION = '1.1';
 
@@ -98,8 +98,9 @@ class search extends common {
 			}
 			$keywords = substr($keywords,0,strlen($keywords) - 1);
 			$keywords .= ')/i';
-			//echo $keywords;
-			if (self::$motclef !== "" && strlen(self::$motclef) > 2) {
+			$keywords = str_replace ('+', ' ',$keywords);
+			echo $keywords;
+			if (self::$motclef !== '' ) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
                         $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
@@ -179,9 +180,6 @@ class search extends common {
 					// Générer une chaine de caractères
 					self::$resultList= implode("", $r);
 				}
-			} else {
-				self::$resultTitle = 'Aucun résultat';
-				self::$resultError = 'Trop court ! Minimum 3 caract&egrave;res';
 			}
 
 			// Valeurs en sortie, affichage du résultat
