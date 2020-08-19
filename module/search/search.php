@@ -213,7 +213,8 @@ class search extends common {
 				$t = preg_replace($motclef, '<span class="searchKeyword">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
-				$resultat .= '<p class="searchTitle">'.count($matches[0]) . ' occurence(s)<p>';
+				$o = count($matches[0]) === 1 ? ' occurence<p>' : ' occurences<p>';
+				$resultat .= '<p class="searchTitle">'.count($matches[0]) . $o;
 				//}
 				return ([
 					'matches' => count($matches[0]),
