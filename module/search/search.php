@@ -164,7 +164,7 @@ class search extends common {
 						$r [] = $value['preview'];
 					}
 					// Générer une chaine de caractères
-					self::$resultList= implode("<br />", $r);
+					self::$resultList= implode("", $r);
 				}
 			} else {
 				self::$resultTitle = 'Aucun résultat';
