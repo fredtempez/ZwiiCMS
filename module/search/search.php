@@ -45,19 +45,32 @@ class search extends common {
 			$this->setData(['module', $this->getUrl(0), [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
-				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN)
+				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
+				'keywordColor' => $this->getInput('searchKeywordColor')
 			]]);
+
+			// Création des fichiers CSS
+			$content = file_get_contents('module/search/ressource/vartheme.css');
+			$themeCss = file_get_contents('module/search/ressource/theme.css');
+			// Injection des variables
+			$content = str_replace('#keywordColor#',$this->getinput('searchKeywordColor'),$content );
+			$success = file_put_contents('module/search/view/index/index.css',$content . $themeCss);
+
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
-				'state' => true
+				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'state' => $success !== FALSE
 			]);
+
 		}
 		// Valeurs en sortie, affichage du formulaire
 		$this->addOutput([
 			'title' => 'Configuration du module',
-			'view' => 'config'
+			'view' => 'config',
+			'vendor' => [
+				'tinycolorpicker'
+			]
 		]);
 	}
 

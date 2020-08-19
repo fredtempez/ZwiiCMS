@@ -17,14 +17,22 @@
 			<div class="block">
 			<h4>Paramètres</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::text('searchKeywordColor', [
+							'class' => 'colorPicker',
+							'help' => 'Le curseur horizontal règle le niveau de transparence.',
+							'label' => 'Mot-clef en évidence',
+							'value' => $this->getData(['module', $this->getUrl(0), 'keywordColor'])
+						]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
 								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']),
 								'placeholder' => $module::$defaultButtonText
 							]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
 								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
