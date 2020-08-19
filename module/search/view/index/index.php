@@ -26,7 +26,7 @@
     <div class="col12">
         <div class="block">
             <?php if ( $module::$resultTitle )
-                        echo $module::$resultTitle; ?></h4>
+                        echo '<h4>'.$module::$resultTitle . '</h4>'; ?>
             <?php if ($module::$resultList )
                         echo '<p>'.$module::$resultList.'</p>';
             ?>
