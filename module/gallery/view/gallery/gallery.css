@@ -2,28 +2,28 @@
 	--thumbAlign: center;
 }
 .colPicture {
-	--thumbWidth: 18em;
-	--thumbMargin: .5em;
+	--thumbWidth: 15em;
+	--thumbMargin: .3em;
 }
 .galleryPicture,
 .galleryGalleryPicture {
-	--thumbHeight: 15em;
-	--thumbBorder: .1em;
-	--thumbBorderColor: rgba(221, 221, 221, 1);
-	--thumbRadius: .3em;
-	--thumbShadows: 1px 1px 10px;
-	--thumbShadowsColor: rgba(125, 125, 125, 1);
+	--thumbHeight: 12em;
+	--thumbBorder: 0em;
+	--thumbBorderColor: rgba(121, 176, 214, 1);
+	--thumbRadius: 0em;
+	--thumbShadows: 0px;
+	--thumbShadowsColor: rgba(29, 72, 104, 1);
 }
 .galleryName,
 .galleryGalleryName {
-	--legendHeight: .375em;
+	--legendHeight: .125em;
 	--legendAlign: center;
-	--legendTextColor: rgba(255, 255, 255, 1);
-	--legendBgColor: rgba(0, 0, 0, .6);
+	--legendTextColor: rgba(4, 21, 39, 1);
+	--legendBgColor: rgba(143, 181, 184, 0.74);
 }	
 .galleryPicture:hover,
 .galleryGalleryPicture:hover {
-	--thumbOpacity: .7;
+	--thumbOpacity: 1;
 }
 .galleryPicture,
 .galleryGalleryPicture {

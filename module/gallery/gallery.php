@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.26';
+	const GALLERY_VERSION = '2.3';
 
 	public static $directories = [];
 
@@ -608,14 +608,14 @@ class gallery extends common {
 		}
 		// Initialisation des données de thème de la galerie dasn theme.json
 		// Création des valeur par défaut absentes
-		if ( $this->getData(['theme', $this->getUrl(0)]) === null ) {
+		if ( $this->getData(['theme', 'gallery']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['theme', $this->getUrl(0), theme::$defaultData]);
+			$this->setData(['theme', 'gallery', theme::$defaultData]);
 		}
 		// Soumission du formulaire
 
 		if($this->isPost()) {
-			$this->setData(['theme', $this->getUrl(0), [
+			$this->setData(['theme', 'gallery', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),
 					'thumbWidth' 	    => $this->getinput('galleryThemeThumbWidth'),
 					'thumbHeight'	    => $this->getinput('galleryThemeThumbHeight'),
