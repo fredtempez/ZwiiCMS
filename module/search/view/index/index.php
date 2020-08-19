@@ -23,16 +23,11 @@
             </div>
 		</div>
 	</div>
-    <?php if ($module::$resultTitle && $module::$resultList): ?>
     <div class="col12">
         <div class="block">
             <h4><?php echo $module::$resultTitle; ?></h4>
-            <?php if (!empty($module::$resultList)) {
-                echo( $module::$resultList );
-            } else {
-                echo "Rien à afficher";
-            } ?>
+            <p><?php  echo $module::$resultList;  ?>
+            <p><?php  echo $module::$resultError; ?>
         </div>
 	</div>
-    <?php endif;?>
 <?php echo template::formClose(); ?>

@@ -23,18 +23,17 @@ class search extends common {
 		'config' => self::GROUP_MODERATOR
 	];
 
+	// Variable pour l'affichage des résultats
 	public static $resultList = '';
-
-	public static $nbResults = 0;
-
+	public static $resultError = '';
 	public static $resultTitle = '';
 
+	public static $nbResults = 0;
 	public static $motclef = '';
-
 	public static $motentier = '';
 
+	// paramètres pas défaut
 	public static $defaultButtonText = 'Rechercher';
-
 	public static $defaultPlaceHolder = 'Entrez un ou plusieurs mots-clés.';
 
 	const SEARCH_VERSION = '1.1';
@@ -78,7 +77,6 @@ class search extends common {
 			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
 			//Pour affichage de l'entête du résultat
-			self::$resultTitle = 'Aucun résultat';
 			$keywords = '/(';
 			$a = explode(' ',self::$motclef);
 			foreach ($a as $key => $value) {
@@ -97,8 +95,9 @@ class search extends common {
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$contenu =  $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
-						if (!empty($this->occurrence($url, $titre, $contenu, $keywords, self::$motentier)) ) {
-							$result [] = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+						$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+						if (is_array($tempData) ) {
+							$result [] = $tempData;
 						}
 					}
 
@@ -111,8 +110,9 @@ class search extends common {
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = $this->getData(['page', $childId, 'content']);
                                     //Pages filles
-									if (!empty($this->occurrence($url, $titre, $contenu, $keywords, self::$motentier)) ) {
-										$result [] = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+									$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+									if (is_array($tempData) ) {
+										$result [] = $tempData;
 									}
 							}
 
@@ -125,8 +125,9 @@ class search extends common {
 										$titre = $article['title'];
 										$contenu = $article['content'];
 										// Articles de sous-page de type blog
-										if (!empty($this->occurrence($url, $titre, $contenu, $keywords, self::$motentier)) ) {
-											$result [] = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+										$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+										if (is_array($tempData) ) {
+											$result [] = $tempData;
 										}
 									}
                                 }
@@ -134,7 +135,6 @@ class search extends common {
                     }
 
 					// Articles d'un blog
-
 					if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' ) {
 						foreach($this->getData(['module',$parentId]) as $articleId => $article) {
 							if($this->getData(['module',$parentId,$articleId,'state']) === true)
@@ -143,44 +143,34 @@ class search extends common {
 								$titre = $article['title'];
 								$contenu = $article['content'];
 								// Articles de Blog
-								if (!empty($this->occurrence($url, $titre, $contenu, $keywords, self::$motentier)) ) {
-									$result [] = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+								$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+								if (is_array($tempData) ) {
+									$result [] = $tempData;
 								}
 							}
                         }
 					}
-                }
-				// Message de synthèse de la recherche
-				if (self::$nbResults === 0) 	{
+				}
 
-					$result [] ='Avez-vous pens&eacute; aux accents ?';
-					$success = false;
+				// Message de synthèse de la recherche
+				if (count($result) === 0) 	{
+					self::$resultTitle = 'Aucun résultat';
+					self::$resultError = 'Avez-vous pens&eacute; aux accents ?';
 				} else  {
-					//$r = self::$nbResults == 1 ? '' : '( ' .self::$nbResults . ' éléments découverts )';
-					self::$resultTitle =  ' Résultat de votre recherche';//  ' . $r ;
-					$success = true;
+					self::$resultError = '';
+					self::$resultTitle = ' Résultat de votre recherche';
+					rsort($result);
+					foreach ($result as $key => $value) {
+						$r [] = $value['preview'];
+					}
+					// Générer une chaine de caractères
+					self::$resultList= implode("<br />", $r);
 				}
 			} else {
-				$result [] = 'Trop court ! Minimum 3 caract&egrave;res';
-				$success = false;
+				self::$resultTitle = 'Aucun résultat';
+				self::$resultError = 'Trop court ! Minimum 3 caract&egrave;res';
 			}
-			// Calculer les longeurs des résultats dans $t
-			foreach ($result as $key => $value) {
-				$t[$key] = strlen($value);
-			}
-			// Trier $t par longueur de chaines
-			rsort($t);
-			// Affecter la nouvelle liste dans $r
-			foreach ($t as $key => $value) {
-				foreach ($result as $keyResult => $valueResult) {
-					if (strlen($result[$keyResult]) === $value) {
-						$r [] = $result[$keyResult];
-						continue;
-					}
-				}
-			}
-			// Générer une chaine de cararctères
-			self::$resultList= implode("<br />", $r);
+
 			// Valeurs en sortie, affichage du résultat
 			$this->addOutput([
 				'view' => 'index',
@@ -207,34 +197,29 @@ class search extends common {
 		// Accentuation
 		$contenu = html_entity_decode($contenu);
 		// Initialisations
-		$nboccu = 0;
-		$dejavu = '';
-		$total = '';
-		$resultat= '';
-		$occu = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
-		if ($occu !== false && !empty($matches[0]) ) {
-			if ($titre !== $dejavu) {
-				$resultat = '<h3><a class="searchTitle" href="./?'.$url.'" target="_blank" rel="noopener">'.$titre.'</a></h3>';
-			}
-			$dejavu = $titre;
-			$nboccu .= count($matches[0]);
-			foreach ($matches[0] as $key => $value) {
+
+		$valid = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
+		if ($valid > 0 ) {
+			if (($matches[0][0][1]) > 0) {
+				$resultat = '<h2><a  href="./?'.$url.'" target="_blank" rel="noopener">' . $titre .  '</a></h2>';
 				// Création de l'aperçu
 				// Eviter de découper avec une valeur négative
-				$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
-				// Eviter de découper avec une valeur au-delà de la longueur
-				$d = $value[1] - 50 < 0 ? 1 : $value[1] - 50;
+				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;
 				// Rechercher l'espace le plus proche
 				$d = $d > 1 ? strpos($contenu,' ',$d) : $d;
 				// Découper l'aperçu
-				$t = substr($contenu,(int) $d ,200);
+				$t = substr($contenu,(int) $d ,300);
 				// Applique une mise en évidence
 				$t = preg_replace($motclef, '<span class="searchKeyword">\1</span>',$t);
 				// Sauver résultat
-				$resultat .='<div class="searchResult">'.$t.'...</div>';
+				$resultat .= '<p class="searchResult">'.$t.'...</p>';
+				$resultat .= '<p class="searchTitle">'.count($matches[0]) . ' occurence(s)<p>';
+				//}
+				return ([
+					'matches' => count($matches[0]),
+					'preview' => $resultat
+				]);
 			}
 		}
-		self::$nbResults = self::$nbResults + $nboccu; // Nombre total d'occurences
-		return $resultat;
 	}
 }

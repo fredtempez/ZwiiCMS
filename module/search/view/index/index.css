@@ -1,5 +1,7 @@
-.seachTitle {
-    /* rien */
+.searchTitle {
+    font: caption;
+    font-style: italic;
+    margin-left: .5em;
 }
 .searchKeyword {
     background: yellow;
