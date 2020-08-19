@@ -22,17 +22,18 @@
                 </div>
             </div>
 		</div>
-	</div>
-    <div class="col12">
-        <div class="block">
-            <?php if ( $module::$resultTitle )
-                        echo '<h4>'.$module::$resultTitle . '</h4>'; ?>
-            <?php if ($module::$resultList )
-                        echo '<p>'.$module::$resultList.'</p>';
-            ?>
-            <?php if ($module::$resultError )
-                        echo '<p>'.$module::$resultError.'</p>';
-            ?>
+    </div>
+    <?php if ( $module::$resultTitle ): ?>
+        <div class="col12">
+            <div class="block">
+                <?php echo '<h4>'.$module::$resultTitle . '</h4>'; ?>
+                <?php if ($module::$resultList )
+                            echo '<p>'.$module::$resultList.'</p>';
+                ?>
+                <?php if ($module::$resultError )
+                            echo '<p>'.$module::$resultError.'</p>';
+                ?>
+            </div>
         </div>
-	</div>
+    <?php endif; ?>
 <?php echo template::formClose(); ?>
