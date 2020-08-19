@@ -25,12 +25,14 @@
 	</div>
     <div class="col12">
         <div class="block">
-            <h4><?php echo $module::$resultTitle; ?></h4>
-            <?php  if ($module::$resultList)
-                        echo '<p>'.$module::$resultList.'</p>';  
+            <?php if ( $module::$resultTitle )
+                        echo $module::$resultTitle; ?></h4>
+            <?php if ($module::$resultList )
+                        echo '<p>'.$module::$resultList.'</p>';
             ?>
-            <?php if ($module::$resultError)
-                        echo '<p>'.$module::$resultError.'</p>'; ?>
+            <?php if ($module::$resultError )
+                        echo '<p>'.$module::$resultError.'</p>';
+            ?>
         </div>
 	</div>
 <?php echo template::formClose(); ?>
