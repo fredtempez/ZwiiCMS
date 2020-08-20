@@ -1374,8 +1374,6 @@ class common {
 			// Inscription des nouvelles variables
 			$this->setData(['config','searchPageId','']);
 
-			// Actualisation du stockage du thème de la galerie
-						//----------------------------------------
 			// Mettre à jour les données des galeries
 			$pageList = array();
 			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
