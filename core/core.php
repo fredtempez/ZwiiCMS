@@ -1373,6 +1373,33 @@ class common {
 			$this->setData(['theme','footer','displaySearch',false]);
 			// Inscription des nouvelles variables
 			$this->setData(['config','searchPageId','']);
+
+			// Actualisation du stockage du thème de la galerie
+						//----------------------------------------
+			// Mettre à jour les données des galeries
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Mise à jour des données de thème de la galerie
+			// Les données de thème sont communes au site
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'gallery' ) {
+					foreach ( $this->getData(['module', $parent]) as $galleryKey => $galleryItem) {
+						// Transfert du theme dans une structure unique
+						if ( is_array($this->getdata(['theme',$parent])) )  {
+							$this->setdata(['theme','gallery',$this->getdata(['theme',$parent])]);
+						}
+					}
+					$this->deleteData(['theme',$parent]);
+				}
+			}
+
+			// Mise à jour du numéro de version
 			$this->setData(['core', 'dataVersion', 10300]);
 		}
 	}
