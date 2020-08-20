@@ -20,7 +20,7 @@
 					<div class="col6">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
-								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']) ? $this->getData(['module', $this->getUrl(0), 'submitText']) : 'Rechercher'
+								'value' => $this->getData(['module', $this->getUrl(0), 'submitText'])
 							]); ?>
 					</div>
 					<div class="col6">
@@ -34,11 +34,11 @@
 					<div class="col12">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
-								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un ou plusieurs mots-clés séparés par un espace ou par +'
+								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder'])
 							]); ?>
 					</div>
 					<div class="col12">
-						<?php echo template::checkbox('searchResultHideContent', true, 'Résultats : masquer le contenu de la page', [
+						<?php echo template::checkbox('searchResultHideContent', true, 'Masquer le contenu de la page dans les résultats', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
 						]); ?>
 					</div>

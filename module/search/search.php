@@ -43,11 +43,6 @@ class search extends common {
 	// Configuration vide
 	public function config() {
 		// Initialisation des données de thème de la galerie dasn theme.json
-		// Création des valeur par défaut absentes
-		if ( $this->getData(['theme', 'search']) === null ) {
-			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['theme', 'search', theme::$defaultData]);
-		}
 		if($this->isPost())  {
 			// Soumission du formulaire
 			$this->setData(['theme', 'search', [
@@ -86,6 +81,19 @@ class search extends common {
 
 	public function index() {
 		if($this->isPost())  {
+
+			// Création des valeurs de thème par défaut
+			if ( $this->getData(['theme', 'search']) === null ) {
+				require_once('module/search/ressource/defaultdata.php');
+				$this->setData(['theme', 'search', theme::$defaultData]);
+			}
+			// Création des valeurs de réglage par défaut
+			if ( $this->getData(['module', 'search']) === null ) {
+				require_once('module/search/ressource/defaultdata.php');
+				$this->setData(['module', $this->getUrl(0), data::$defaultData]);
+			}
+
+
 			//Initialisations variables
 			$success = true;
 			$result = [];
