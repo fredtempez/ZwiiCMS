@@ -23,14 +23,20 @@ class search extends common {
 		'config' => self::GROUP_MODERATOR
 	];
 
-	// Variable pour l'affichage des résultats
+	// Variables pour l'affichage des résultats
 	public static $resultList = '';
 	public static $resultError = '';
 	public static $resultTitle = '';
 
-	public static $nbResults = 0;
+	// Variables pour le dialogue avec le formulaire
 	public static $motclef = '';
 	public static $motentier = '';
+	public static $previewLength = [
+		100 => '100 caractères',
+		200 => '200 caractères',
+		300 => '300 caractères',
+		400 => '400 caractères',
+	];
 
 	const SEARCH_VERSION = '1.1';
 
@@ -51,6 +57,7 @@ class search extends common {
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
+				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT)
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/search/ressource/vartheme.css');
@@ -84,7 +91,6 @@ class search extends common {
 			$result = [];
 			$notification = '';
 			$total='';
-			self::$nbResults = 0;
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			self::$motclef=$this->getInput('searchMotphraseclef');
@@ -221,7 +227,7 @@ class search extends common {
 				// Rechercher l'espace le plus proche
 				$d = $d > 1 ? strpos($contenu,' ',$d) : $d;
 				// Découper l'aperçu
-				$t = substr($contenu,(int) $d ,300);
+				$t = substr($contenu,(int) $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
 				// Applique une mise en évidence
 				$t = preg_replace($motclef, '<span class="searchKeyword">\1</span>',$t);
 				// Sauver résultat

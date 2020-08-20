@@ -17,13 +17,21 @@
 			<div class="block">
 			<h4>Paramètres du module</h4>
 				<div class="row">
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
 								'value' => $this->getData(['module', $this->getUrl(0), 'submitText']) ? $this->getData(['module', $this->getUrl(0), 'submitText']) : 'Rechercher'
 							]); ?>
 					</div>
-					<div class="col8">
+					<div class="col6">
+						<?php echo template::select('searchPreviewLength', $module::$previewLength, [
+								'label' => 'Dimension de l\'aperçu',
+								'selected' => $this->getData(['module', $this->getUrl(0),'previewLength'])
+							]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col12">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
 								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un ou plusieurs mots-clés séparés par un espace ou par +'
