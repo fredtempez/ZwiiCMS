@@ -21,7 +21,7 @@
 						<?php echo template::text('searchKeywordColor', [
 							'class' => 'colorPicker',
 							'help' => ' Cette couleur est commune à tous les modules de recherche. Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Mot-clef en évidence.',
+							'label' => 'Surlignement',
 							'value' => $this->getData(['theme', 'search', 'keywordColor'])
 						]); ?>
 					</div>
@@ -34,7 +34,7 @@
 					<div class="col6">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
-								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un plusieurs mots-clés séparés par un espace ou par +'
+								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un ou plusieurs mots-clés séparés par un espace ou par +'
 							]); ?>
 					</div>
 				</div>
