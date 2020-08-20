@@ -10,6 +10,8 @@
     - Module recherche :
         - La recherche dans le site devient un module externe plutôt qu'un module interne ;
         - Diverses corrections optimisations permettant une recherche à l'aide de plusieurs mot-clés.
+    - Module galerie :
+        - Les données du thème de galerie sont désormais stockés de manière unique, un seul thème par site pour toutes les galeries d'un même site.
     - Configuration du site :
         - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
