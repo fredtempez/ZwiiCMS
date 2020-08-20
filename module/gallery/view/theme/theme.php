@@ -1,4 +1,5 @@
 <?php echo template::formOpen('galleryThemeForm'); ?>
+
 	<div class="row">
 		<div class="col2">
 			<?php echo template::button('galleryThemeBack', [
@@ -15,7 +16,7 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-                <h4>Configuration des vignettes</h4>
+                <h4>Vignettes</h4> <em>Thème commun à tous les modules de galerie du site</em>
                 <div class="row">
                     <div class="col3">
                         <?php echo template::select('galleryThemeThumbWidth', $module::$galleryThemeSizeWidth, [
@@ -92,7 +93,7 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-            <h4>Configuration des légendes</h4>
+            <h4>Légendes</h4><em>Thème commun à tous les modules de galerie du site</em>
             <div class="row">
                 <div class="col3">
                     <?php echo template::text('galleryThemeLegendTextColor', [
@@ -125,11 +126,12 @@
             </div>
         </div>
     </div>
+
 <?php echo template::formClose(); ?>
 <div class="row">
-	<div class="col12">
-    	<div class="moduleVersion">Version n°
-		<?php echo $module::GALLERY_VERSION; ?>
+    <div class="col12">
+        <div class="moduleVersion">Version n°
+            <?php echo $module::GALLERY_VERSION; ?>
         </div>
-	</div>
+    </div>
 </div>
