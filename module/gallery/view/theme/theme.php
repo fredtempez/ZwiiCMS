@@ -16,7 +16,11 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-                <h4>Vignettes</h4> <em>Thème commun à tous les modules de galerie du site</em>
+                <h4>Vignettes
+                    <?php 
+                        echo template::help('Les paramètres du thème sont communs aux modules du même type.'); 
+                    ?>
+                </h4>
                 <div class="row">
                     <div class="col3">
                         <?php echo template::select('galleryThemeThumbWidth', $module::$galleryThemeSizeWidth, [
@@ -93,7 +97,11 @@
     <div class="row">
         <div class="col12">
             <div class="block">
-            <h4>Légendes</h4><em>Thème commun à tous les modules de galerie du site</em>
+            <h4>Légendes
+                <?php 
+                    echo template::help('Les paramètres du thème sont communs aux modules du même type.'); 
+				?>
+            </h4>
             <div class="row">
                 <div class="col3">
                     <?php echo template::text('galleryThemeLegendTextColor', [

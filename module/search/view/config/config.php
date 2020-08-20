@@ -41,12 +41,15 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Thème</h4><em>(commun à tous les modules de recherche du site)</em>
+			<h4>Thème
+				<?php echo template::help('Les paramètres du thème sont communs aux modules du même type.'); 
+				?>
+			</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::text('searchKeywordColor', [
 							'class' => 'colorPicker',
-							'help' =>  'Le curseur horizontal règle le niveau de transparence.',
+							'help' =>  'Le curseur horizontal règle le niveau de transparence, le placer tout à la gauche pour un surlignement invisible.',
 							'label' => 'Surlignement',
 							'value' => $this->getData(['theme', 'search', 'keywordColor'])
 						]); ?>
