@@ -8,7 +8,7 @@ class data extends search {
     public static $defaultData = [
         'previewLength'      => 100,
         'resultHideContent'  => false,
-        'placeHolder'        => 'Un plusieurs mots-clés séparés par un espace ou par +',
+        'placeHolder'        => 'Un ou plusieurs mots-clés séparés par un espace ou par +',
         'submitText'         => 'Rechercher'
     ];
 }
