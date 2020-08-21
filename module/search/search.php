@@ -86,7 +86,6 @@ class search extends common {
 			$this->setData(['theme', 'search', theme::$defaultData]);
 		}
 		// Création des valeurs de réglage par défaut
-		var_dump($this->getData(['module', 'search']));
 		if ( $this->getData(['module', 'search']) === null ) {
 			require_once('module/search/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), data::$defaultData]);
