@@ -1,9 +1,13 @@
 # Changelog
 
+## version 10.2.07
+- Correction :
+    - Défaut de chargement de flatpickr dans le module formulaire qui passe en version 2.4
+
 ## version 10.2.06
 - Corrections :
     - Anticipation de la dépréciation de l'option de cookie samesite=none.
-    - Warning : absence de fichier map dans le thème TinyMCE lightgray
+    - Warning : absence de fichier map dans le thème TinyMCE lightgray.
 
 ## version 10.2.05
 - Correction :
