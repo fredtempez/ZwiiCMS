@@ -17,10 +17,14 @@
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
     - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
 
+## version 10.2.07
+- Correction :
+    - Défaut de chargement de flatpickr dans le module formulaire qui passe en version 2.4
+
 ## version 10.2.06
 - Corrections :
     - Anticipation de la dépréciation de l'option de cookie samesite=none.
-    - Warning : absence de fichier map dans le thème TinyMCE lightgray
+    - Warning : absence de fichier map dans le thème TinyMCE lightgray.
 
 ## version 10.2.05
 - Correction :
