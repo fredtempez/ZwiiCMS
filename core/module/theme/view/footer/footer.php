@@ -148,7 +148,6 @@
             <h4>Configuration des blocs</h4>
             <div class="row">
                 <div class="col4">
-
                     <?php $footerBlockPosition =  is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks [$this->getData(['theme', 'footer', 'template'])] ;?>
                     <?php echo template::select('themeFooterTemplate', $module::$footerTemplate, [
                             'label' => 'Disposition',
@@ -171,39 +170,63 @@
             <div class="row">
                 <div class="col4">
                     <p><strong>Contenu personnalisé</strong></p>
-                    <?php echo template::select('themeFooterTextPosition', $footerBlockPosition, [
-                            'label' => 'Emplacement',
-                            'selected' => $this->getData(['theme', 'footer', 'textPosition']),
-                            'class' => 'themeFooterContent'
-                        ]); ?>
-                    <?php echo template::select('themeFooterTextAlign', $module::$aligns, [
-                            'label' => 'Alignement',
-                            'selected' => $this->getData(['theme', 'footer', 'textAlign'])
-                        ]); ?>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterTextPosition', $footerBlockPosition, [
+                                    'label' => 'Emplacement',
+                                    'selected' => $this->getData(['theme', 'footer', 'textPosition']),
+                                    'class' => 'themeFooterContent'
+                                ]); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterTextAlign', $module::$aligns, [
+                                    'label' => 'Alignement',
+                                    'selected' => $this->getData(['theme', 'footer', 'textAlign'])
+                                ]); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col4">
                     <p><strong>Réseaux sociaux</strong></p>
-                    <?php echo template::select('themeFooterSocialsPosition', $footerBlockPosition, [
-                            'label' => 'Emplacement',
-                            'selected' => $this->getData(['theme', 'footer', 'socialsPosition']),
-                            'class' => 'themeFooterContent'
-                        ]); ?>
-                    <?php echo template::select('themeFooterSocialsAlign', $module::$aligns, [
-                            'label' => 'Alignement',
-                            'selected' => $this->getData(['theme', 'footer', 'socialsAlign'])
-                        ]); ?>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterSocialsPosition', $footerBlockPosition, [
+                                    'label' => 'Emplacement',
+                                    'selected' => $this->getData(['theme', 'footer', 'socialsPosition']),
+                                    'class' => 'themeFooterContent'
+                                ]); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterSocialsAlign', $module::$aligns, [
+                                    'label' => 'Alignement',
+                                    'selected' => $this->getData(['theme', 'footer', 'socialsAlign'])
+                                ]); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col4">
                     <p><strong>Informations</strong></p>
-                    <?php echo template::select('themeFooterCopyrightPosition', $footerBlockPosition, [
-                            'label' => 'Emplacement',
-                            'selected' => $this->getData(['theme', 'footer', 'copyrightPosition']),
-                            'class' => 'themeFooterContent'
-                        ]); ?>
-                    <?php echo template::select('themeFooterCopyrightAlign', $module::$aligns, [
-                            'label' => 'Alignement',
-                            'selected' => $this->getData(['theme', 'footer', 'copyrightAlign'])
-                        ]); ?>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterCopyrightPosition', $footerBlockPosition, [
+                                    'label' => 'Emplacement',
+                                    'selected' => $this->getData(['theme', 'footer', 'copyrightPosition']),
+                                    'class' => 'themeFooterContent'
+                                ]); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col12">
+                            <?php echo template::select('themeFooterCopyrightAlign', $module::$aligns, [
+                                    'label' => 'Alignement',
+                                    'selected' => $this->getData(['theme', 'footer', 'copyrightAlign'])
+                                ]); ?>
+                        </div>
+                    </div>
                 </div>
                 <div class="col6">
                     <div id="themeFooterPositionOptions">
