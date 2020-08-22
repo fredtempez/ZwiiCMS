@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.2.08
+- Correction : 
+    - Bug pageId, régression corrigée.
+
 ## version 10.2.07
 - Correction :
     - Défaut de chargement de flatpickr dans le module formulaire qui passe en version 2.4
