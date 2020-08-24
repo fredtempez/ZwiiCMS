@@ -109,7 +109,7 @@ class search extends common {
 			$a = explode(' ',self::$motclef);
 			foreach ($a as $key => $value) {
 
-				$keywords .= self::$motentier === false ? $value . '|' : '\\b' . $value . '\\b|' ;
+				$keywords .= self::$motentier === true ? $value . '|' : '\\b' . $value . '\\b\\W|' ;
 			}
 			$keywords = substr($keywords,0,strlen($keywords) - 1);
 			$keywords .= ')/i';

@@ -16,9 +16,8 @@
             </div>
             <div class="row">
                 <div class="col12">
-                    <?php echo template::checkbox('searchMotentier', true, 'Mot entier uniquement', [
-                        'checked' => $module::$motentier,
-                        'help' => 'Pour rechercher des mots-clés consécutifs, reliez-les par le symbole +.'
+                    <?php echo template::checkbox('searchMotentier', true, 'Mots clés approchants', [
+                        'checked' => $module::$motentier
                     ]); ?>
                 </div>
             </div>
