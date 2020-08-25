@@ -17,7 +17,7 @@
             <div class="row">
                 <div class="col12">
                     <?php echo template::checkbox('searchMotentier', true, 'Mots clés approchants', [
-                        'checked' => $module::$motentier
+                        'checked' => $module::$motentier,
                     ]); ?>
                 </div>
             </div>

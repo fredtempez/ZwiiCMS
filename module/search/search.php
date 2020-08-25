@@ -30,7 +30,7 @@ class search extends common {
 
 	// Variables pour le dialogue avec le formulaire
 	public static $motclef = '';
-	public static $motentier = '';
+	public static $motentier = true;
 	public static $previewLength = [
 		100 => '100 caractères',
 		200 => '200 caractères',
