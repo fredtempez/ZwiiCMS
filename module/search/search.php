@@ -104,16 +104,6 @@ class search extends common {
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
 			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
-			//Pour affichage de l'entête du résultat
-			$keywords = '/(';
-			$a = explode(' ',self::$motclef);
-			foreach ($a as $key => $value) {
-
-				$keywords .= self::$motentier === true ? $value . '|' : '\\b' . $value . '\\b\\W|' ;
-			}
-			$keywords = substr($keywords,0,strlen($keywords) - 1);
-			$keywords .= ')/i';
-			$keywords = str_replace ('+', ' ',$keywords);
 			if (self::$motclef !== '' ) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
@@ -123,7 +113,7 @@ class search extends common {
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$contenu =  $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
-						$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+						$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 						if (is_array($tempData) ) {
 							$result [] = $tempData;
 						}
@@ -138,7 +128,7 @@ class search extends common {
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = $this->getData(['page', $childId, 'content']);
                                     //Pages filles
-									$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+									$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 									if (is_array($tempData) ) {
 										$result [] = $tempData;
 									}
@@ -153,7 +143,7 @@ class search extends common {
 										$titre = $article['title'];
 										$contenu = $article['content'];
 										// Articles de sous-page de type blog
-										$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+										$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 										if (is_array($tempData) ) {
 											$result [] = $tempData;
 										}
@@ -171,7 +161,7 @@ class search extends common {
 								$titre = $article['title'];
 								$contenu = $article['content'];
 								// Articles de Blog
-								$tempData  = $this->occurrence($url, $titre, $contenu, $keywords, self::$motentier);
+								$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 								if (is_array($tempData) ) {
 									$result [] = $tempData;
 								}
@@ -221,9 +211,19 @@ class search extends common {
 		$contenu = preg_replace ('/<[^>]*>/', ' ', $contenu);
 		// Accentuation
 		$contenu = html_entity_decode($contenu);
-		// Initialisations
 
-		$valid = preg_match_all($motclef,$contenu,$matches,PREG_OFFSET_CAPTURE);
+		// Construire la clé de recherche selon options de recherche
+		$keywords = '/(';
+		$a = explode(' ',$motclef);
+		foreach ($a as $key => $value) {
+			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|' ;
+		}
+		$keywords = substr($keywords,0,strlen($keywords) - 1);
+		$keywords .= ')/i';
+		$keywords = str_replace ('+', ' ',$keywords);
+
+		// Rechercher
+		$valid = preg_match_all($keywords,$contenu,$matches,PREG_OFFSET_CAPTURE);
 		if ($valid > 0 ) {
 			if (($matches[0][0][1]) > 0) {
 				$resultat = '<h2><a  href="./?'.$url.'" target="_blank" rel="noopener">' . $titre .  '</a></h2>';
@@ -233,12 +233,12 @@ class search extends common {
 				// Rechercher l'espace le plus proche
 				$d = $d > 1 ? strpos($contenu,' ',$d) : $d;
 				// Découper l'aperçu
-				$t = substr($contenu,(int) $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
+				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
 				// Applique une mise en évidence
-				$t = preg_replace($motclef, '<span class="searchKeyword">\1</span>',$t);
+				$t = preg_replace($keywords, '<span class="searchKeyword">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
-				$resultat .= '<p class="searchTitle">'.count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');
+				$resultat .= '<p class="searchTitle">' . count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');
 				//}
 				return ([
 					'matches' => count($matches[0]),
