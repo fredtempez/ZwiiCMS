@@ -38,6 +38,10 @@ class search extends common {
 		400 => '400 caractères',
 	];
 
+	// Message par défaut
+	public static $messagePlaceHolder = 'Un ou plusieurs mots-clés entre des espaces ou des guillemets';
+	public static $messageButtontext = 'Rechercher';
+
 	const SEARCH_VERSION = '1.1';
 
 	// Configuration vide
@@ -212,9 +216,11 @@ class search extends common {
 		// Accentuation
 		$contenu = html_entity_decode($contenu);
 
+		// Découper le chaîne en tenant compte des quillemets
+		$a = str_getcsv(html_entity_decode($motclef), ' ');
+
 		// Construire la clé de recherche selon options de recherche
 		$keywords = '/(';
-		$a = explode(' ',$motclef);
 		foreach ($a as $key => $value) {
 			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|' ;
 		}

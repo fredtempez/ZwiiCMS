@@ -4,19 +4,19 @@
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
                     <?php echo template::text('searchMotphraseclef', [
-                        'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : 'Un plusieurs mots-clés séparés par un espace ou par +',
+                        'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : $module::$messagePlaceHolder,
                         'value' => $module::$motclef
                     ]); ?>
                 </div>
                 <div class="col3 verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
-                        'value' => $this->getData(['module', $this->getUrl(0), 'submitText']) ? $this->getData(['module', $this->getUrl(0), 'submitText']) : 'Rechercher'
+                        'value' => $this->getData(['module', $this->getUrl(0), 'submitText']) ? $this->getData(['module', $this->getUrl(0), 'submitText']) : $module::$messageButtontext
                     ]); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col12">
-                    <?php echo template::checkbox('searchMotentier', true, 'Mots clés approchants', [
+                    <?php echo template::checkbox('searchMotentier', true, 'Mots approchants', [
                         'checked' => $module::$motentier,
                     ]); ?>
                 </div>
