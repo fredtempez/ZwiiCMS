@@ -1374,6 +1374,8 @@ th.col12 {
 *  Taille des images
 */
 .captchaNumber {
-	height:20px;
-	vertical-align: middle;
+	height: 25px;
+	vertical-align: bottom;
+	padding-left: 5px;
+	padding-right: 5px;
 }
