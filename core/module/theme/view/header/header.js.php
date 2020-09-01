@@ -9,7 +9,7 @@
  * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 $(document).ready(function(){

@@ -10,7 +10,7 @@
  * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class common {
@@ -2169,7 +2169,7 @@ class layout extends common {
 		$items .= '>Motorisé&nbsp;par&nbsp;</span>';
 		// Toujours afficher le nom du CMS
 		$items .= '<span id="footerZwiiCMS">';
-		$items .= '<a href="http://zwiicms.com/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
+		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
 		$items .= '</span>';
 		// Affichage du numéro de version
 		$items .= '<span id="footerDisplayVersion"';
@@ -2683,13 +2683,14 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
+				$today = mktime(0, 0, 0);
 				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
-				$lastAutoUpdate = mktime(0, 0, 0);
-				if( $this->getData(['config','autoUpdate']) === true &&
-					$lastAutoUpdate > $this->getData(['core','lastAutoUpdate']) + 86400 &&
-					helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-						$this->setData(['core','updateAvailable', true]);
-						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);
+				if ( $this->getData(['config','autoUpdate']) === true
+					AND $today > $this->getData(['core','lastAutoUpdate']) + 86400 ) {
+						if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) ) {
+							$this->setData(['core','updateAvailable', true]);
+							$this->setData(['core','lastAutoUpdate',$today]);
+						}
 				}
 				// Afficher le bouton : Mise à jour détectée + activée
 				if ( $this->getData(['core','updateAvailable']) === true &&

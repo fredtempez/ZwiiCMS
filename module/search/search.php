@@ -12,7 +12,7 @@
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @copyright Sylvain Lelièvre
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  *
  */
 
