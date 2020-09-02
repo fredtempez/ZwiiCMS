@@ -186,7 +186,7 @@
 				<div class="row siteContainer">
 					<?php
 						if ($blockleft !== "") :?>
-						<div class="<?php echo $blockleft; ?>" id="contentLeft"><?php 	$layout->showBarContentLeft(); ?></div>
+						<div class="<?php echo $blockleft; ?>" id="contentLeft"><aside><?php 	$layout->showBarContentLeft(); ?></aside></div>
 						<?php endif; ?>
 						<div class="<?php echo $content; ?>" id="contentSite"><?php $layout->showContent();
 							if (file_exists(self::DATA_DIR . 'body.inc.html')) {
@@ -196,7 +196,7 @@
 						</div>
 					<?php
 						if ($blockright !== "") :?>
-						<div class="<?php echo $blockright; ?>" id="contentRight"><?php $layout->showBarContentRight(); ?></div>
+						<div class="<?php echo $blockright; ?>" id="contentRight"><aside><?php $layout->showBarContentRight(); ?></aside></div>
 						<?php endif; ?>
 				</div>
 				<?php }
