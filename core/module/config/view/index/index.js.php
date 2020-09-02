@@ -49,7 +49,7 @@ $( document).ready(function() {
     });
 
     /**
-     * 
+     *
      * Blocs dépliants
      */
 
@@ -57,11 +57,11 @@ $( document).ready(function() {
         $(this).find(".zwiico-plus").toggle();
         $(this).find(".zwiico-minus").toggle();
         $(this).find(".blockContainer").slideToggle();
-        /* 
+        /*
         * Sauvegarder la position des blocs
         * true = bloc déplié
         */
-        document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible");
+        document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible") + ";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
     }).on("click", "span > input, input, textarea, label, option, button, a:not(.inputFile), .blockContainer", function(e) {
         // Empêcher les déclenchements dans les blocs
         e.stopPropagation();

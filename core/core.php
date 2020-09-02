@@ -113,7 +113,7 @@ class common {
 			'normalize',
 			'lity',
 			'filemanager',
-			'flatpickr',
+			//'flatpickr', Appelé par les modules désactivé par défaut
 			// 'tinycolorpicker', Désactivé par défaut
 			// 'tinymce', Désactivé par défaut
 			// 'codemirror', // Désactivé par défaut

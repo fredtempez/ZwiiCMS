@@ -11,12 +11,21 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
-        En cours :
-          - Reprise de la date d'édition, bug avec Chrome
+
+## version 10.2.06
+- Corrections :
+    - Anticipation de la dépréciation de l'option de cookie samesite=none.
+    - Warning : absence de fichier map dans le thème TinyMCE lightgray
+
+## version 10.2.05
+- Correction :
+    - Champ date non affiché sous Chrome.
 
 ## version 10.2.04
 - Mise à jour :
     - Flatpickr 4.6.3
+- Correction :
+    - Connexion avec un compte inexistant, notification incorrecte.
 - Modifications :
     - Position de l'icône d'ouverture et de fermeture des blocs.
     - Thème administration, bouton standard couleur du texte au survol.
