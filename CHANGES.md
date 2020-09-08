@@ -1,7 +1,11 @@
 # Changelog
 
+## version 10.2.09
+- Correction :
+    - Sécurisation de la fonction d'enregistrement des données.
+
 ## version 10.2.08
-- Correction : 
+- Correction :
     - Bug pageId, régression corrigée.
 
 ## version 10.2.07

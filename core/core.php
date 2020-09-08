@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.2.08';
+	const ZWII_VERSION = '10.2.09';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -946,8 +946,9 @@ class common {
 	 */
 	public function setData($keys = []) {
 
-		// Pas d'enregistrement lorsqu'une notice est présente
-		if (!empty(self::$inputNotices)) {
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (!empty(self::$inputNotices
+			AND empty($keys))) {
 			return false;
 		}
 
