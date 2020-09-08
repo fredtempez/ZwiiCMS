@@ -1991,25 +1991,28 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				if ( $this->getData(['config','page403']) === 'none') {
+				if ( $this->getData(['config','page403']) !== 'none'
+					AND $this->getData(['page',$this->getData(['config','page403'])])) 
+				{
+					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
+				} else {
 					$this->addOutput([
 						'title' => 'Erreur 403',
 						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
 					]);
-				} else {
-					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
 				}
 			}
-		}
-		elseif($this->output['content'] === '') {
+		} elseif ($this->output['content'] === '') {
 			http_response_code(404);
-			if ( $this->getData(['config','page404']) === 'none') {
-					$this->addOutput([
-						'title' => 'Erreur 404',
-						'content' => template::speech('Oups ! La page demandée est introuvable...')
-					]);
-			} else {
+			if ( $this->getData(['config','page404']) !== 'none' 
+				AND $this->getData(['page',$this->getData(['config','page404'])])) 
+			{
 				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+			} else {
+				$this->addOutput([
+					'title' => 'Erreur 404',
+					'content' => template::speech('Oups ! La page demandée est introuvable...')
+				]);
 			}
 		}
 		// Mise en forme des métas
