@@ -16,9 +16,12 @@
         - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
     - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
+## version 10.2.09
+- Correction :
+    - Sécurisation de la fonction d'enregistrement des données.
 
 ## version 10.2.08
-- Correction : 
+- Correction :
     - Bug pageId, régression corrigée.
 
 ## version 10.2.07

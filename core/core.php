@@ -945,8 +945,9 @@ class common {
 	 */
 	public function setData($keys = []) {
 
-		// Pas d'enregistrement lorsqu'une notice est présente
-		if (!empty(self::$inputNotices)) {
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (!empty(self::$inputNotices
+			AND empty($keys))) {
 			return false;
 		}
 
