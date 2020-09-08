@@ -72,18 +72,27 @@ class install extends common {
 					$this->setData(['module', 'blog', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'mon-troisieme-article', 'userId', $userId]);
 				}
-				$success = $this->setData([
-					'user',
-					$userId,
-					[
-						'firstname' => $userFirstname,
-						'forgot' => 0,
-						'group' => self::GROUP_ADMIN,
-						'lastname' => $userLastname,
-						'mail' => $userMail,
-						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
-					]
-				]);
+				// Création de l'utilisateur si les données sont complétées.
+				$success = false;
+				if ( $userFirstname
+					AND $userLastname
+					AND $userMail
+					AND $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
+					AND $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)
+				){
+					$success = $this->setData([
+						'user',
+						$userId,
+						[
+							'firstname' => $userFirstname,
+							'forgot' => 0,
+							'group' => self::GROUP_ADMIN,
+							'lastname' => $userLastname,
+							'mail' => $userMail,
+							'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
+						]
+					]);
+				}
 				if ($success === true) { // Formulaire complété envoi du mail
 					// Envoie le mail
 					$sent = $this->sendMail(
@@ -102,6 +111,7 @@ class install extends common {
 					// Créer sitemap
 					$this->createSitemap();
 					// Valeurs en sortie
+					echo helper::baseUrl(false);
 					$this->addOutput([
 						'redirect' => helper::baseUrl(false),
 						'notification' => ($sent === true ? 'Installation terminée' : $sent),
