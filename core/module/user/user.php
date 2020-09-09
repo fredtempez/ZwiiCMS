@@ -37,12 +37,13 @@ class user extends common {
 	public function add() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			$check=true;
+			$check = true;
+			$sent = false;
 			// L'identifiant d'utilisateur est indisponible
 			$userId = $this->getInput('userAddId', helper::FILTER_ID, true);
 			if($this->getData(['user', $userId])) {
 				self::$inputNotices['userAddId'] = 'Identifiant déjà utilisé';
-				$check=false;
+				$check = false;
 			}
 			// Double vérification pour le mot de passe
 			if($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -54,12 +55,14 @@ class user extends common {
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
 			// Pas de nom saisi
-			if (empty($userFirstname) ||
-				empty($userLastname)  ||
-				empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true)) ||
-				empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true))) {
-				$check=false;
+			if (empty($userFirstname)
+				OR empty($userLastname)
+				OR empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true))
+				OR empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true)) )
+			{
+				$check = false;
 			}
+
 			// Si tout est ok création effective
 			if ($check === true) {
 				$this->setData([
@@ -74,20 +77,19 @@ class user extends common {
 						'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
 					]
 				]);
-			}
-			// Envoie le mail
-			$sent = true;
-			if($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
-				$sent = $this->sendMail(
-					$userMail,
-					'Compte créé sur ' . $this->getData(['config', 'title']),
-					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
-					'<strong>Mot de passe du compte :</strong> ' . $this->getInput('userAddPassword') . '<br><br>' .
-					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
-					null
-				);
+				// Envoie le mail
+				if($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
+					$sent = $this->sendMail(
+						$userMail,
+						'Compte créé sur ' . $this->getData(['config', 'title']),
+						'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
+						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+						'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
+						'<strong>Mot de passe du compte :</strong> ' . $this->getInput('userAddPassword') . '<br><br>' .
+						'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
+						null
+					);
+				}
 			}
 			// Valeurs en sortie
 			$this->addOutput([
