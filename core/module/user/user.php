@@ -58,7 +58,7 @@ class user extends common {
 				AND empty($userLastname)
 				AND empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true))
 				AND empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true))) {
-				$check=false;
+				$check = false;
 			}
 			// Si tout est ok création effective
 			if ($check === true) {
