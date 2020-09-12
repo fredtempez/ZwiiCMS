@@ -549,7 +549,8 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>',
+				'content' => '<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
+							  <div class="row"><div class="col4 offset8 textAlignCenter"><a href="?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right"></span>Administration</a></div></div>',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
