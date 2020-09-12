@@ -28,7 +28,7 @@ class maintenance extends common {
 				$this->addOutput([
 					'display' => self::DISPLAY_LAYOUT_LIGHT,
 					'title' => $this->getData(['page',$this->getData(['config','page302']),'title']),
-					'content' => $this->getdata(['page',$this->getData(['config','page302']),'content']) . '<div class="col4 offset8 textAlignCenter"><a href="http://localhost/ZwiiCMS/?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right" style="font-size:1em"><!----></span>Connexion</a></div>',
+					'content' => $this->getdata(['page',$this->getData(['config','page302']),'content']),
 					'view' => 'index'
 				]);
 		} else {
