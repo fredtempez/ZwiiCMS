@@ -442,6 +442,7 @@ class config extends common {
 					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
 					'page404' => $this->getInput('configPage404'),
 					'page403' => $this->getInput('configPage403'),
+					'page302' => $this->getInput('configPage302'),
 					'analyticsId' => $this->getInput('configAnalyticsId'),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),

@@ -1713,7 +1713,7 @@ class core extends common {
 			// Déconnexion
 			$user = new user;
 			$user->logout();
-			// Rédirection
+			// Redirection
 			http_response_code(302);
 			header('Location:' . helper::baseUrl() . 'maintenance');
 			exit();

@@ -468,7 +468,8 @@ class user extends common {
 	 */
 	public function logout() {
 		// Ne pas effacer l'identifiant mais seulement le mot de passe
-		if ($_COOKIE['ZWII_USER_LONGTIME'] !== 'true' ) {
+		if (array_key_exists('ZWII_USER_LONGTIME',$_COOKIE)
+			AND $_COOKIE['ZWII_USER_LONGTIME'] !== 'true' ) {
 			helper::deleteCookie('ZWII_USER_ID');
 			helper::deleteCookie('ZWII_USER_LONGTIME');
 		}
