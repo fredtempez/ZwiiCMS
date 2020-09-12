@@ -11,7 +11,7 @@ class init extends common {
 			'faviconDark' => 'faviconDark.ico',
 			'homePageId' => 'accueil',
 			'page302' => 'erreur302',
-			'page403' => 'erreur403',		
+			'page403' => 'erreur403',
 			'page404' => 'erreur404',
 			'maintenance' => false,
 			'social' => [
@@ -549,25 +549,27 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<h1 id=\"sectionTitle\">Maintenance en cours...<\/h1>\r\n<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.<\/p>\r\n<div class=\"row\">\r\n<div class=\"col4 offset8 textAlignCenter\"><a href=\"\/10.300\/user\/login\" id=\"maintenanceLogin\" name=\"maintenanceLogin\" class=\"button   \"><span class=\"zwiico-lock zwiico-margin-right\" style=\"font-size: 1em;\"><\/span>Administration<\/a><\/div>\r\n<\/div>\r\n<p><\/p>',
+				'content' => '<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
+							<div class="row"><div class="col4 offset8 textAlignCenter"><a href="/?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right" style="font-size => 1em;"></span>Administration</a></div></div>',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
 				'metaTitle' => '',
 				'moduleId' => '',
-				'modulePosition' => 'bottom',
+				'modulePosition' => '',
 				'parentPageId' => '',
 				'position' => 0,
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
-				'title' => 'Erreur 302',
+				'title' => 'Maintenance en cours',
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
 				'displayMenu' => 'none',
-				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
-			],
+				'hideMenuSide' => true,
+				'hideMenuHead' => true,
+				'hideMenuChildren' => true
+				],
 			'erreur403' => [
 				'typeMenu' => 'text',
 				'iconUrl' => '',
@@ -589,7 +591,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' => false
 			],
 			'erreur404' => [
 				'typeMenu' => 'text',
@@ -635,7 +637,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' => false
 			],
 		],
 		'module' => [
