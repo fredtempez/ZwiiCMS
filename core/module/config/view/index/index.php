@@ -150,8 +150,16 @@
 						$pages = $this->getData(['page']);
 						foreach($pages as $page => $pageId) {
 							if ($this->getData(['page',$page,'block']) === 'bar' ||
-							$this->getData(['page',$page,'disable']) === true) {
+								$this->getData(['page',$page,'disable']) === true) {
 								unset($pages[$page]);
+							}
+						}
+						$orphans =  $this->getData(['page']);
+						foreach($orphans as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+								$this->getData(['page',$page,'disable']) === true ||
+								$this->getdata(['page',$page, 'position']) !== 0) {
+								unset($orphans[$page]);
 							}
 						}
 						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
@@ -178,26 +186,26 @@
 			<div class="row">
 				<div class="col4">
 					<?php
-						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Accès interdit, erreur 403',
 							'selected' =>$this->getData(['config', 'page403']),
-							'help' => 'Une page 403 ne doit pas apparaître dans l\'arborescence du menu. Créez et éditez une page orpheline.'
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 						]); ?>
 				</div>
 				<div class="col4">
 					<?php
-						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Page inexistante, erreur 404',
 							'selected' =>$this->getData(['config', 'page404']),
-							'help' => 'Une page 404 ne doit pas apparaître dans l\'arborescence du menu. Créez et éditez une page orpheline.'
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 						]); ?>
 				</div>
 				<div class="col4">
 					<?php
-						echo template::select('configPage302', array_merge(['none' => 'Aucune'],helper::arrayCollumn($pages, 'title', 'SORT_ASC')), [
+						echo template::select('configPage302', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Site en maintenance',
 							'selected' =>$this->getData(['config', 'page302']),
-							'help' => 'Page de maintenance personnalisable'
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 						]); ?>
 				</div>
 			</div>
