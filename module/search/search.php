@@ -115,7 +115,7 @@ class search extends common {
                         $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
 						$url = $parentId;
 						$titre = $this->getData(['page', $parentId, 'title']);
-						$contenu =  $this->getData(['page', $parentId, 'content']);
+						$contenu =  ' ' . $titre . ' ' . $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
 						$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 						if (is_array($tempData) ) {
@@ -130,7 +130,7 @@ class search extends common {
                                 $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
                                     $url = $childId;
                                     $titre = $this->getData(['page', $childId, 'title']);
-                                    $contenu = $this->getData(['page', $childId, 'content']);
+                                    $contenu = ' ' . $titre . ' ' . $this->getData(['page', $childId, 'content']);
                                     //Pages filles
 									$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 									if (is_array($tempData) ) {
@@ -145,7 +145,7 @@ class search extends common {
 									if($this->getData(['module',$childId,$articleId,'state']) === true)  {
 										$url = $childId . '/' . $articleId;
 										$titre = $article['title'];
-										$contenu = $article['content'];
+										$contenu = ' ' . $titre . ' ' . $article['content'];
 										// Articles de sous-page de type blog
 										$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 										if (is_array($tempData) ) {
@@ -163,7 +163,7 @@ class search extends common {
 							{
 								$url = $parentId. '/' . $articleId;
 								$titre = $article['title'];
-								$contenu = $article['content'];
+								$contenu = ' ' . $titre . ' ' . $article['content'];
 								// Articles de Blog
 								$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
 								if (is_array($tempData) ) {
@@ -237,7 +237,7 @@ class search extends common {
 				// Eviter de découper avec une valeur négative
 				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;
 				// Rechercher l'espace le plus proche
-				$d = $d > 1 ? strpos($contenu,' ',$d) : $d;
+				$d = $d >= 1 ? strpos($contenu,' ',$d) : $d;
 				// Découper l'aperçu
 				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
 				// Applique une mise en évidence
