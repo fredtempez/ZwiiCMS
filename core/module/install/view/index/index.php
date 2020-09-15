@@ -39,7 +39,8 @@
 	<div class="row">
 		<div class="col12">
 			<?php echo template::checkbox('installDefaultData',true , 'Charger un exemple de site', [
-				'checked' => true
+				'checked' => true,
+				'help' => 'Permet la découverte des fonctionnalités du CMS, option recommandée aux débutants'
 			]);
 			?>
 		</div>
