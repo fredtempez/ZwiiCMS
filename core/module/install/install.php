@@ -99,7 +99,7 @@ class install extends common {
 					copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico');
 					copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico');
 					// Configure certaines données par défaut
-					if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === TRUE) {
+					if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 						$this->initData('page','fr',true);
 						$this->initData('module','fr',true);
 						$this->setData(['module', 'blog', 'mon-premier-article', 'userId', $userId]);
