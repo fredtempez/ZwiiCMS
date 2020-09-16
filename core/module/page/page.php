@@ -126,24 +126,48 @@ class page extends common {
 		elseif($url[0] === $this->getData(['config', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Impossible de supprimer la page d\'accueil'
+				'redirect' => helper::baseUrl()  . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
 			]);
 		}
 		// Impossible de supprimer la page de recherche affectée
 		elseif($url[0] === $this->getData(['config', 'searchPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Désactiver la page de recherche dans la configuration avant de la supprimer'
+				'redirect' => helper::baseUrl()  . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
 		elseif($url[0] === $this->getData(['config', 'legalPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Désactiver la page des mentions légales dans la configuration avant de la supprimer'
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page404'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page403'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page302'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
 			]);
 		}
 		// Jeton incorrect
