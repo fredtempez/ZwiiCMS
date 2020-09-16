@@ -130,6 +130,22 @@ class page extends common {
 				'notification' => 'Impossible de supprimer la page d\'accueil'
 			]);
 		}
+		// Impossible de supprimer la page de recherche affectée
+		elseif($url[0] === $this->getData(['config', 'searchPageId'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Désactiver la page de recherche dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'legalPageId'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Désactiver la page des mentions légales dans la configuration avant de la supprimer'
+			]);
+		}
 		// Jeton incorrect
 		elseif(!isset($_GET['csrf'])) {
 			// Valeurs en sortie
@@ -220,6 +236,22 @@ class page extends common {
 				// Supprime l'ancienne page si l'id a changée
 				if($pageId !== $this->getUrl(2)) {
 					$this->deleteData(['page', $this->getUrl(2)]);
+				}
+				// Traitement des pages spéciales affectées dans la config :
+				if ($this->getUrl(2) === $this->getData(['config', 'legalPageId']) ) {
+					$this->setData(['config','legalPageId', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'searchPageId']) ) {
+					$this->setData(['config','searchPageId', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page404']) ) {
+					$this->setData(['config','page404', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page403']) ) {
+					$this->setData(['config','page403', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page302']) ) {
+					$this->setData(['config','page302', $pageId]);
 				}
 				// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 				$lastPosition = 1;
