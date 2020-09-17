@@ -113,7 +113,7 @@ class init extends common {
 				'displaySiteMap' => true,
 				'displayCopyright' => false,
 				'displayLegal' => false,
-				'displaySearch' => true,
+				'displaySearch' => false,
 				'displayMemberBar' => false,
 				'template' => '3'
 			],
