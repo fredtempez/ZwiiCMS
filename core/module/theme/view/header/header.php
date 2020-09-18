@@ -42,7 +42,7 @@
         <div class="block">
             <h4>Image</h4>
             <div class="row">
-                <div class="col12">
+                <div class="col10 offset1">
                     <?php
                         $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'header', 'image'])) ?
                                 $this->getData(['theme', 'header', 'image']) : "";
