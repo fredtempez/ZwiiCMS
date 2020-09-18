@@ -101,6 +101,7 @@ class JsonDb extends \Prowebcraft\Dot
     protected function loadData($reload = false) {
         if ($this->data === null || $reload) {
             $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
+            /*
             if (!file_exists($this->db)) {
                 $templateFile = $this->config['template'];
                 if (file_exists($templateFile)) {
@@ -117,6 +118,7 @@ class JsonDb extends \Prowebcraft\Dot
                    }
                 }
             }
+            */
             $this->data = json_decode(file_get_contents($this->db), true);
             if (!$this->data === null) {
                 throw new \InvalidArgumentException('Database file ' . $this->db
