@@ -318,12 +318,9 @@ class common {
 		//Retourne une chaine contenant le dossier à créer
 		$folder = $this->dirData ($keys[0],'fr');
 		// Constructeur  JsonDB
-		//require_once "core/vendor/jsondb/Dot.php";
-		//require_once "core/vendor/jsondb/JsonDb.php";
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 		switch(count($keys)) {
 			case 1:
@@ -387,8 +384,7 @@ class common {
 			// Constructeur  JsonDB
 			$db = new \Prowebcraft\JsonDb([
 				'name' => $keys[0] . '.json',
-				'dir' => $folder,
-				'template' => self::TEMP_DIR . 'data.template.json'
+				'dir' => $folder
 			]);
 			switch(count($keys)) {
 				case 1:
@@ -956,8 +952,7 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 
 		switch(count($keys)) {
@@ -1008,8 +1003,7 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $module . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 		if ($sampleSite === true) {
 			$db->set($module,init::$siteData[$module]);
@@ -1753,11 +1747,11 @@ class core extends common {
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $this->getuser('id') &&
-				 $userId !== $this->getuser('id') &&
-				 $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
-				 array_intersect($t,self::$accessList)  &&
-				 array_intersect($t,self::$accessExclude) !== false	 &&
-				 time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
+				$userId !== $this->getuser('id') &&
+				$this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
+				array_intersect($t,self::$accessList)  &&
+				array_intersect($t,self::$accessExclude) !== false	 &&
+				time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
 			) {
 					$access = false;
 					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
