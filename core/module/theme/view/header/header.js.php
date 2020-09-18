@@ -25,7 +25,7 @@ $("input, select").on("change", function() {
 	// Récupérer la taille de l'image
 
 	var tmpImg = new Image();
-	
+
 	tmpImg.onload = function() {
 		// Informations affichées
 		$("#themeHeaderImageHeight").html(tmpImg.height + "px");
