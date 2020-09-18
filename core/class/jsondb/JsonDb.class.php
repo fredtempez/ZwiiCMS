@@ -36,7 +36,7 @@ class JsonDb extends \Prowebcraft\Dot
      *
      * @param mixed      $key   Path or array of paths and values
      * @param mixed|null $value Value to set if path is not an array
-     * @param bool $save Сохранить данные в базу
+     * @param bool      $save Save data to database
      * @return $this
      */
     public function set($key, $value = null, $save = true)
@@ -49,10 +49,10 @@ class JsonDb extends \Prowebcraft\Dot
     /**
      * Add value or array of values to path
      *
-     * @param mixed $key Path or array of paths and values
+     * @param mixed      $key Path or array of paths and values
      * @param mixed|null $value Value to set if path is not an array
-     * @param boolean $pop Helper to pop out last key if value is an array
-     * @param bool $save Сохранить данные в базу
+     * @param boolean    $pop Helper to pop out last key if value is an array
+     * @param bool       $save    Save data to database
      * @return $this
      */
     public function add($key, $value = null, $pop = false, $save = true)
@@ -65,8 +65,8 @@ class JsonDb extends \Prowebcraft\Dot
     /**
      * Delete path or array of paths
      *
-     * @param mixed $key Path or array of paths to delete
-     * @param bool $save Сохранить данные в базу
+     * @param mixed     $key Path or array of paths to delete
+     * @param bool      $save Save data to database
      * @return $this
      */
     public function delete($key, $save = true)
@@ -81,8 +81,8 @@ class JsonDb extends \Prowebcraft\Dot
      * optionally format path if it doesn't exist
      *
      * @param mixed|null $key Path or array of paths to clean
-     * @param boolean $format Format option
-     * @param bool $save Сохранить данные в базу
+     * @param boolean    $format Format option
+     * @param bool       $save Save data to database
      * @return $this
      */
     public function clear($key = null, $format = false, $save = true)
@@ -94,9 +94,8 @@ class JsonDb extends \Prowebcraft\Dot
 
 
     /**
-     * Загрузка локальной базы данных
-     * @param bool $reload
-     * Перезагрузить данные?
+     * Local database upload
+     * @param bool $reload Reboot data?
      * @return array|mixed|null
      */
     protected function loadData($reload = false) {
@@ -122,13 +121,16 @@ class JsonDb extends \Prowebcraft\Dot
             if (!$this->data === null) {
                 throw new \InvalidArgumentException('Database file ' . $this->db
                     . ' contains invalid json object. Please validate or remove file');
+
+                trigger_error ('Crash jsonDB : Database file ' . $this->db
+                . ' contains invalid json object. Please validate or remove file',E_USER_ERROR);
             }
         }
         return $this->data;
     }
 
     /**
-     * Сохранение в локальную базу
+     * Saving to local database
      */
     public function save() {
         file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
