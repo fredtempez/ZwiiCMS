@@ -23,9 +23,9 @@ class JsonDb extends \Prowebcraft\Dot
     {
         $this->config = array_merge([
             'name' => 'data.json',
-            'backup' => 5,
+           /* 'backup' => 5,*/
             'dir' => getcwd(),
-            'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
+           /* 'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'*/
         ], $config);
         $this->loadData();
         parent::__construct();
