@@ -99,8 +99,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Mise en page
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -156,8 +156,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Emplacement dans le menu
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -219,8 +219,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Options d'emplacement avancées
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -248,8 +248,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Permission et référencement
 				<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>

@@ -1379,3 +1379,12 @@ th.col12 {
 	padding-left: 5px;
 	padding-right: 5px;
 }
+
+/*
+* Couleur des icônes + et - 
+*/
+.zwiico-minus-circled,
+.zwiico-plus-circled {
+	color: #D8890B;
+	font-size: 1.2em !important;
+}

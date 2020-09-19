@@ -219,8 +219,8 @@
 			<h4>Réseaux sociaux
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -295,8 +295,8 @@
 			<h4>Référencement
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -342,8 +342,8 @@
 			<h4>Réseau
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -380,8 +380,8 @@
 			<h4>Messagerie SMTP
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -451,8 +451,8 @@
 			<h4>Sécurité de la connexion
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -502,8 +502,8 @@
 			<h4>Journalisation
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -540,8 +540,8 @@
 			<h4>Scripts
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -580,8 +580,8 @@
 			<h4>Versions des modules
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>

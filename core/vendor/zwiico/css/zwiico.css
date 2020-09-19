@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'zwiico';
-  src: url('../font/zwiico.eot?1220194');
-  src: url('../font/zwiico.eot?1220194#iefix') format('embedded-opentype'),
-       url('../font/zwiico.woff2?1220194') format('woff2'),
-       url('../font/zwiico.woff?1220194') format('woff'),
-       url('../font/zwiico.ttf?1220194') format('truetype'),
-       url('../font/zwiico.svg?1220194#zwiico') format('svg');
+  src: url('../font/zwiico.eot?19955984');
+  src: url('../font/zwiico.eot?19955984#iefix') format('embedded-opentype'),
+       url('../font/zwiico.woff2?19955984') format('woff2'),
+       url('../font/zwiico.woff?19955984') format('woff'),
+       url('../font/zwiico.ttf?19955984') format('truetype'),
+       url('../font/zwiico.svg?19955984#zwiico') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zwiico';
-    src: url('../font/zwiico.svg?1220194#zwiico') format('svg');
+    src: url('../font/zwiico.svg?19955984#zwiico') format('svg');
   }
 }
 */
@@ -24,7 +24,7 @@
   font-family: "zwiico";
   font-style: normal;
   font-weight: normal;
-  speak: none;
+  speak: never;
  
   display: inline-block;
   text-decoration: inherit;
@@ -84,8 +84,10 @@
 .zwiico-cogs:before { content: '\e81a'; } /* '' */
 .zwiico-cog-alt:before { content: '\e81b'; } /* '' */
 .zwiico-trash:before { content: '\e81c'; } /* '' */
-.zwiico-edit:before { content: '\e81d'; } /* '' */
-.zwiico-flag:before { content: '\e81e'; } /* '' */
+.zwiico-plus-circled:before { content: '\e81d'; } /* '' */
+.zwiico-minus-circled:before { content: '\e81e'; } /* '' */
+.zwiico-down-big:before { content: '\e820'; } /* '' */
+.zwiico-up-big:before { content: '\e821'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */
 .zwiico-twitter:before { content: '\f099'; } /* '' */
 .zwiico-facebook:before { content: '\f09a'; } /* '' */
@@ -94,7 +96,6 @@
 .zwiico-linkedin:before { content: '\f0e1'; } /* '' */
 .zwiico-download-cloud:before { content: '\f0ed'; } /* '' */
 .zwiico-upload-cloud:before { content: '\f0ee'; } /* '' */
-.zwiico-github:before { content: '\f113'; } /* '' */
 .zwiico-code:before { content: '\f121'; } /* '' */
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */

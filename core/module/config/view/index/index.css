@@ -18,17 +18,17 @@
     display : none;
 }
 
-#info .zwiico-minus {
+#info .zwiico-minus-circled {
     display: inline;
 }
 
-.zwiico-minus,
-#info .zwiico-plus {
+.zwiico-minus-circled,
+#info .zwiico-plus-circled {
     display: none;
 }
 
 
-.zwiico-minus,
-.zwiico-plus {
+.zwiico-minus-circled,
+.zwiico-plus-circled {
     cursor: pointer;
 }
