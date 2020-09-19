@@ -147,11 +147,8 @@ class common {
 	private $url = '';
 	// Données de site
 	private $user = [];
-	private $core = [];
-	private $config = [];
 	private $page = [];
 	private $module = [];
-	private $admin = [];
 
 
 	/**
@@ -195,10 +192,6 @@ class common {
 		// Mise en cache des pages et des modules
 		$this->page = $this->getCache('page');
 		$this->module = $this->getCache('module');
-		$this->core = $this->getCache('core');
-		$this->config = $this->getCache('config');
-		$this->theme = $this->getCache('theme');
-		$this->admin = $this->getCache('admin');
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
