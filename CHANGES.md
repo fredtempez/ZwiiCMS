@@ -7,7 +7,10 @@
     - Menu : déplacement de la classe "active".
     - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
     - Installation : bug si le masque de saisie est validé vide.
+    - Classe jsonDb, suppression de la réinitialisation de la structure de données en cas d'absence.
 - Modifications :
+    - Noyau :
+        - Mise en cache des données des modules.
     - Module recherche :
         - La recherche dans le site devient un module externe plutôt qu'un module interne ;
         - Diverses corrections optimisations permettant une recherche à l'aide de plusieurs mot-clés.
@@ -17,6 +20,8 @@
         - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur. ; le nom de l'archive prend le nom du sous-domaine s'il existe.
     - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
+- Mise à jour :
+    - Script favicon-switcher 1.2.2
 
 ## version 10.2.09
 - Correction :
