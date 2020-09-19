@@ -19,7 +19,7 @@ class install extends common {
 		'index' => self::GROUP_VISITOR,
 		'steps' => self::GROUP_ADMIN,
 		'update' => self::GROUP_ADMIN,
-		'removeAll' => self::GROUP_ADMIN,
+		'removeAll' => self::GROUP_ADMIN
 	];
 
 
