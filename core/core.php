@@ -145,8 +145,14 @@ class common {
 	];
 	public static $timezone;
 	private $url = '';
+	// Données de site
 	private $user = [];
-	private $page = '';
+	private $core = [];
+	private $config = [];
+	private $page = [];
+	private $module = [];
+	private $admin = [];
+
 
 	/**
 	 * Constructeur commun
@@ -186,8 +192,13 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		// Mise en cache des pages
-		$this->page = $this->getPageCache();
+		// Mise en cache des pages et des modules
+		$this->page = $this->getCache('page');
+		$this->module = $this->getCache('module');
+		$this->core = $this->getCache('core');
+		$this->config = $this->getCache('config');
+		$this->theme = $this->getCache('theme');
+		$this->admin = $this->getCache('admin');
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -362,10 +373,14 @@ class common {
 	public function getData($keys = []) {
 
 		if (count($keys) >= 1) {
-			// Lecture d'une donnée de page en cache
-			if ($keys[0] === 'page') {
+
+			/**
+			 * Lecture dans le cache, page et module
+			 */
+			if ($keys[0] === 'page' ||
+			    $keys[0] === 'module' ) {
 				// Décent dans les niveaux de la variable $data
-				$data = $this->page;
+				$data = array_merge ($this->page , $this->module);
 				foreach($keys as $key) {
 					// Si aucune donnée n'existe retourne null
 					if(isset($data[$key]) === false) {
@@ -379,6 +394,10 @@ class common {
 				// Retourne les données
 				return $data;
 			}
+
+			/**
+			 * Lecture directe
+			*/
 			//Retourne une chaine contenant le dossier à créer
 			$folder = $this->dirData ($keys[0],'fr');
 			// Constructeur  JsonDB
@@ -418,19 +437,15 @@ class common {
 	 * Lecture des fichiers de données de page et mise ne cache
 	 * @param @return string données des pages
 	 */
-	public function getPageCache() {
-		// Trois tentatives
-		for($i = 0; $i < 3; $i++) {
-			$data =json_decode(file_get_contents(self::DATA_DIR.'fr/page.json'), true);
-			if($data) {
-				return($data);
-			}
-			elseif($i === 2) {
-				exit('Erreur fatale : impossible d\'accéder aux pages');
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
-		}
+	public function getCache($data) {
+		$folder = $this->dirData ($data,'fr');
+		// Constructeur  JsonDB
+		$db = new \Prowebcraft\JsonDb([
+			'name' => $data . '.json',
+			'dir' => $folder
+		]);
+		$tempData = $db->get($data);
+		return [$data => $tempData];
 	}
 
 	/*
@@ -586,7 +601,7 @@ class common {
 				break;
 			}
 			elseif($i === 2) {
-				exit('Impossible de lire les données à importer.');
+                throw new \ErrorException('Import des données impossible.');
 			}
 			// Pause de 10 millisecondes
 			usleep(10000);
@@ -1986,7 +2001,7 @@ class core extends common {
 				]);
 			} else {
 				if ( $this->getData(['config','page403']) !== 'none'
-					AND $this->getData(['page',$this->getData(['config','page403'])])) 
+					AND $this->getData(['page',$this->getData(['config','page403'])]))
 				{
 					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
 				} else {
@@ -1998,8 +2013,8 @@ class core extends common {
 			}
 		} elseif ($this->output['content'] === '') {
 			http_response_code(404);
-			if ( $this->getData(['config','page404']) !== 'none' 
-				AND $this->getData(['page',$this->getData(['config','page404'])])) 
+			if ( $this->getData(['config','page404']) !== 'none'
+				AND $this->getData(['page',$this->getData(['config','page404'])]))
 			{
 				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
 			} else {

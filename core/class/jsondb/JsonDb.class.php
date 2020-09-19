@@ -22,10 +22,10 @@ class JsonDb extends \Prowebcraft\Dot
     public function __construct($config = [])
     {
         $this->config = array_merge([
-            'name' => 'data.json',
-           /* 'backup' => 5,*/
+           'name' => 'data.json',
+           'backup' => 5,
             'dir' => getcwd(),
-           /* 'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'*/
+           'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
         ], $config);
         $this->loadData();
         parent::__construct();
@@ -100,7 +100,8 @@ class JsonDb extends \Prowebcraft\Dot
      */
     protected function loadData($reload = false) {
         if ($this->data === null || $reload) {
-            $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
+            // $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
+            $this->db = $this->config['dir'] . $this->config['name'];
             /*
             if (!file_exists($this->db)) {
                 $templateFile = $this->config['template'];
@@ -123,9 +124,6 @@ class JsonDb extends \Prowebcraft\Dot
             if (!$this->data === null) {
                 throw new \InvalidArgumentException('Database file ' . $this->db
                     . ' contains invalid json object. Please validate or remove file');
-
-                trigger_error ('Crash jsonDB : Database file ' . $this->db
-                . ' contains invalid json object. Please validate or remove file',E_USER_ERROR);
             }
         }
         return $this->data;
@@ -137,6 +135,4 @@ class JsonDb extends \Prowebcraft\Dot
     public function save() {
         file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
     }
-
-
 }
