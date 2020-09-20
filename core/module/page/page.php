@@ -93,17 +93,30 @@ class page extends common {
 				'notification' => 'Suppression non autorisée'
 			]);
 		}
+		// Duplication de la page
 		$pageTitle = $this->getData(['page',$url[0],'title']);
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
 		$data = $this->getData([
 			'page',
 			$url[0]
 		]);
+		// Ecriture
 		$this->setData (['page',$pageId,$data]);
+		$notification = 'La page a été dupliquée';
+		// Duplication du module présent
+		if ($this->getData(['page',$url[0],'moduleId'])) {
+			$data = $this->getData([
+				'module',
+				$url[0]
+			]);
+			// Ecriture
+			$this->setData (['module',$pageId,$data]);
+			$notification = 'La page et son module ont été dupliqués';
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'page/edit/' . $pageId,
-			'notification' => 'Page dupliquée',
+			'notification' => $notification,
 			'state' => true
 		]);
 	}
