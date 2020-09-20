@@ -7,7 +7,7 @@
     - Menu : déplacement de la classe "active".
     - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
     - Installation : bug si le masque de saisie est validé vide.
-    - Classe jsonDb, suppression de la réinitialisation de la structure de données en cas d'absence.
+    - Classe jsonDb, suppression de la réinitialisation de la structure de données en cas d'absence du fichier.
 - Modifications :
     - Noyau :
         - Mise en cache des données des modules.
