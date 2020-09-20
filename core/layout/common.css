@@ -1387,4 +1387,17 @@ th.col12 {
 .zwiico-plus-circled {
 	color: #D8890B;
 	font-size: 1.2em !important;
-}
+	-webkit-transition: all 1s ease; /* Safari et Chrome */
+	-moz-transition: all 1s ease; /* Firefox */
+	-ms-transition: all 1s ease; /* Internet Explorer 9 */
+	-o-transition: all 1s ease; /* Opera */
+	transition: all 1s ease;
+	}
+.zwiico-minus-circled:hover,
+.zwiico-plus-circled:hover {
+	-webkit-transform:scale(1.25); /* Safari et Chrome */
+	-moz-transform:scale(1.25); /* Firefox */
+	-ms-transform:scale(1.25); /* Internet Explorer 9 */
+	-o-transform:scale(1.25); /* Opera */
+	transform:scale(1.25);
+	}
