@@ -45,3 +45,4 @@
 .zwiico-instagram { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf16d;&nbsp;'); }
 .zwiico-brush { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf1fc;&nbsp;'); }
 .zwiico-pinterest { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf231;&nbsp;'); }
+.zwiico-clone { *zoom: expression( this.runtimeStyle['zoom'] = '1', this.innerHTML = '&#xf24d;&nbsp;'); }

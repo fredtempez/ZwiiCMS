@@ -19,7 +19,8 @@ class page extends common {
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR
+		'edit' => self::GROUP_MODERATOR,
+		'duplicate' => self::GROUP_MODERATOR
 	];
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
@@ -64,6 +65,49 @@ class page extends common {
 		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
+
+	/**
+	 * Duplication
+	 */
+	public function duplicate() {
+		// Adresse sans le token
+		$url = explode('&',$this->getUrl(2));
+		// La page n'existe pas
+		if($this->getData(['page', $url[0]]) === null) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} // Jeton incorrect
+		elseif(!isset($_GET['csrf'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Jeton invalide'
+			]);
+		}
+		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Suppression non autorisée'
+			]);
+		}
+		$pageTitle = $this->getData(['page',$url[0],'title']);
+		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+		$data = $this->getData([
+			'page',
+			$url[0]
+		]);
+		$this->setData (['page',$pageId,$data]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'page/edit/' . $pageId,
+			'notification' => 'Page dupliquée',
+			'state' => true
+		]);
+	}
+
 
 	/**
 	 * Création
@@ -120,6 +164,20 @@ class page extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
+			]);
+		}		// Jeton incorrect
+		elseif(!isset($_GET['csrf'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Jeton invalide'
+			]);
+		}
+		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Suppression non autorisée'
 			]);
 		}
 		// Impossible de supprimer la page d'accueil

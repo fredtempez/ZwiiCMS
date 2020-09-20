@@ -5,7 +5,7 @@ echo template::formOpen('pageEditForm');
 	<div class="row">
 	<div class="col2">
 			<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
-      <?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
+    		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
 			<?php echo template::button('pageEditBack', [
 				'class' => 'buttonGrey',
 				'href' => $href,
@@ -13,7 +13,14 @@ echo template::formOpen('pageEditForm');
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset4">
+			<?php echo template::button('pageEditDuplicate', [
+				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
+				'value' => 'Dupliquer',
+				'ico' => 'clone'
+			]); ?>
+		</div>
+		<div class="col2">
 			<?php echo template::button('pageEditDelete', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
