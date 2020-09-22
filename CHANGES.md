@@ -8,6 +8,7 @@
     - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
     - Installation : bug si le masque de saisie est validé vide.
     - Classe jsonDb, suppression de la réinitialisation de la structure de données en cas d'absence du fichier.
+    - Module galerie : nouvelle galerie créée même si le formulaire est en erreur.
 - Modifications :
     - Noyau :
         - Mise en cache des données des modules.
