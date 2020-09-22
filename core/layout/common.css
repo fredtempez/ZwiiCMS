@@ -1369,23 +1369,3 @@ th.col12 {
 	padding-right: 5px;
 }
 
-/*
-* Couleur des icônes + et -
-*/
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-	color: #D8890B;
-	font-size: 1.3em !important;
-}
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-	transition: all 1s ease;
-	}
-.zwiico-minus-circled:hover,
-.zwiico-plus-circled:hover {
-	-webkit-transform:scale(1.25); /* Safari et Chrome */
-	-moz-transform:scale(1.25); /* Firefox */
-	-ms-transform:scale(1.25); /* Internet Explorer 9 */
-	-o-transform:scale(1.25); /* Opera */
-	transform:scale(1.25);
-	}
