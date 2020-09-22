@@ -253,7 +253,7 @@ class gallery extends common {
 					break;
 					}
 				}
-				if ( $this->getInput('galleryEditName') ) {
+				if ( $this->getInput('galleryConfigName') ) {
 					$this->setData(['module', $this->getUrl(0), $galleryId, [
 						'config' => [
 							'name' => $this->getInput('galleryConfigName'),
@@ -352,7 +352,7 @@ class gallery extends common {
 			// Soumission du formulaire
 			if($this->isPost()) {
 				// Si l'id a changée
-				$galleryId = $this->getInput('galleryEditName', helper::FILTER_ID, true);
+				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
 				if($galleryId !== $this->getUrl(2)) {
 					// Incrémente le nouvel id de la galerie
 					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0)]));
@@ -376,20 +376,22 @@ class gallery extends common {
 					$homePicture = $d[0];
 				}
 				// Sauvegarder
-				$this->setData(['module', $this->getUrl(0), $galleryId, [
-					'config' => [
-						'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
-						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture,
-						// pas de positions, on active le tri alpha
-						'sort' =>  $this->getInput('galleryEditSort'),
-						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
-						'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
+				if ($this->getInput('galleryEditName')) {
+					$this->setData(['module', $this->getUrl(0), $galleryId, [
+						'config' => [
+							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
+							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
+							'homePicture' => $homePicture,
+							// pas de positions, on active le tri alpha
+							'sort' =>  $this->getInput('galleryEditSort'),
+							'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
+							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
-					],
-					'legend' => $legends,
-					'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), $galleryId, 'positions']) : $oldPositions
-				]]);
+						],
+						'legend' => $legends,
+						'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), $galleryId, 'positions']) : $oldPositions
+					]]);
+				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
