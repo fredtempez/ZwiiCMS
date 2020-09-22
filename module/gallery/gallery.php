@@ -234,7 +234,7 @@ class gallery extends common {
 			}
 		}
 		// Soumission du formulaire d'ajout d'une galerie
-		if($this->isPost()) {
+		if( $this->isPost() ) {
 			if (!$this->getInput('galleryConfigFilterResponse')) {
 				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0)]));
 				// définir une vignette par défaut
@@ -253,18 +253,20 @@ class gallery extends common {
 					break;
 					}
 				}
-				$this->setData(['module', $this->getUrl(0), $galleryId, [
-					'config' => [
-						'name' => $this->getInput('galleryConfigName'),
-						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture,
-						'sort' => self::SORT_ASC,
-						'position' => $this->getData(['module',$this->getUrl(0)]) !== null ? count($this->getData(['module',$this->getUrl(0)])) + 1 : 0,
-						'fullScreen' => false
-					],
-					'legend' => [],
-					'positions' => []
-				]]);
+				if ( $this->getInput('galleryEditName') ) {
+					$this->setData(['module', $this->getUrl(0), $galleryId, [
+						'config' => [
+							'name' => $this->getInput('galleryConfigName'),
+							'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
+							'homePicture' => $homePicture,
+							'sort' => self::SORT_ASC,
+							'position' => $this->getData(['module',$this->getUrl(0)]) !== null ? count($this->getData(['module',$this->getUrl(0)])) + 1 : 0,
+							'fullScreen' => false
+						],
+						'legend' => [],
+						'positions' => []
+					]]);
+				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl() /*. '#galleryConfigForm'*/,
