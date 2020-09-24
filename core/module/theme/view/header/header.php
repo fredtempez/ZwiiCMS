@@ -13,24 +13,22 @@
     </div>
 </div>
 <div class="row">
-    <div class="col4">
+    <div class="col6">
         <div class="block">
             <h4>Couleurs</h4>
             <div class="row">
-                <div class="col12">
+                <div class="col6">
                     <?php echo template::text('themeHeaderBackgroundColor', [
 							'class' => 'colorPicker',
-							'help' => 'Le curseur horizontal règle le niveau de transparence.',					
+							'help' => 'Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Fond',
 							'value' => $this->getData(['theme', 'header', 'backgroundColor'])
 						]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col12">
+                <div class="col6">
                     <?php echo template::text('themeHeaderTextColor', [
 							'class' => 'colorPicker',
-							'help' => 'Le curseur horizontal règle le niveau de transparence.',							
+							'help' => 'Le curseur horizontal règle le niveau de transparence.',
 							'label' => 'Texte',
 							'value' => $this->getData(['theme', 'header', 'textColor'])
 						]); ?>
@@ -38,7 +36,7 @@
             </div>
         </div>
     </div>
-    <div class="col8">
+    <div class="col6">
         <div class="block">
             <h4>Image</h4>
             <div class="row">
@@ -47,6 +45,7 @@
                         $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'header', 'image'])) ?
                                 $this->getData(['theme', 'header', 'image']) : "";
                         echo template::file('themeHeaderImage', [
+                            'help' => 'Sélectionner une image aux dimensions recommandées ci-dessous :',
                             'label' => 'Fond',
                             'type' => 1,
                             'value' => $imageFile
@@ -77,15 +76,15 @@
                     <div id="themeHeaderShow" class="col6">
                         <?php echo template::checkbox('themeHeaderlinkHomePage', true, 'Bannière cliquable', [
                                 'checked' => $this->getData(['theme', 'header', 'linkHomePage'])
-                            ]); ?>  
-                    </div>   
+                            ]); ?>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col12 textAlignCenter">
                         <span id="themeHeaderImage">
-                            Dimensions de l'image : largeur  <span id="themeHeaderImageWidth"></span> - hauteur  <span id="themeHeaderImageHeight"></span> - ratio <span id="themeHeaderImageRatio"></span>
+                            Largeur : <span id="themeHeaderImageWidth"></span> | Hauteur : <span id="themeHeaderImageHeight"></span> | ratio : <span id="themeHeaderImageRatio"></span>
                         </span>
-                    </div>                 
+                    </div>
                 </div>
             </div>
         </div>
@@ -110,7 +109,7 @@
                                 Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
                                 Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
                         ]); ?>
-                </div>                 
+                </div>
                 <div class="col3">
                     <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
 							'label' => 'Hauteur maximale',

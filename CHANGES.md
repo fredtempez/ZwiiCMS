@@ -11,11 +11,46 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
+- Corrections :
+    - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
+    - Login : l'option "Se souvenir de moi" est fonctionnelle.
+    - Menu : déplacement de la classe "active".
+    - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
+    - Masque de saisie : formulaire validé malgré la présence d'une notice d'erreur
+    - Classe jsonDb, suppression de la réinitialisation de la structure de données en cas d'absence du fichier.
+- Modifications :
+    - Noyau :
+        - Mise en cache des données des modules.
+    - Module recherche :
+        - La recherche dans le site devient un module externe plutôt qu'un module interne ;
+        - Diverses corrections optimisations permettant une recherche à l'aide de plusieurs mot-clés.
+    - Module galerie :
+        - Les données du thème de galerie sont désormais stockées de manière unique, un seul thème par site pour toutes les galeries d'un même site.
+    - Configuration du site :
+        - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
+        - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur ; le nom de l'archive prend le nom du sous-domaine s'il existe.
+    - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
+    - Page :
+        - Duplication d'une page.
+- Mise à jour :
+    - Script favicon-switcher 1.2.2
+
+## version 10.2.09
+- Correction :
+    - Sécurisation de la fonction d'enregistrement des données.
+
+## version 10.2.08
+- Correction :
+    - Bug pageId, régression corrigée.
+
+## version 10.2.07
+- Correction :
+    - Défaut de chargement de flatpickr dans le module formulaire qui passe en version 2.4
 
 ## version 10.2.06
 - Corrections :
     - Anticipation de la dépréciation de l'option de cookie samesite=none.
-    - Warning : absence de fichier map dans le thème TinyMCE lightgray
+    - Warning : absence de fichier map dans le thème TinyMCE lightgray.
 
 ## version 10.2.05
 - Correction :

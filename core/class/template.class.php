@@ -33,12 +33,12 @@ class template {
     }
 
     /**
-    * Crée un champ capcha
+    * Crée un champ captcha
     * @param string $nameId Nom et id du champ
     * @param array $attributes Attributs ($key => $value)
     * @return string
     */
-    public static function capcha($nameId, array $attributes = []) {
+    public static function captcha($nameId, array $attributes = []) {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
@@ -48,15 +48,18 @@ class template {
             'name' => $nameId,
             'value' => ''
         ], $attributes);
-        // Génère deux nombres pour le capcha
-        $firstNumber = mt_rand(1, 15);
-        $secondNumber = mt_rand(1, 15);
+        // Génère deux nombres pour le captcha
+        $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
+        $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
+        $firstNumber = rand ( 0 , count($letters)-1 );
+        $secondNumber = rand ( 0 , count($letters)-1 );
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        $html .= self::label($attributes['id'],  $firstNumber . ' + ' . $secondNumber . ' = ?', [
-            'help' => $attributes['help']
-        ]);
+        $html .= self::label($attributes['id'],
+                 '<img class="captchaNumber" src="core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png" /> + <img class="captchaNumber" src="core/vendor/zwiico/png/' . $letters[$secondNumber] . '.png" /> =  en chiffres ?', [
+                        'help' => $attributes['help']
+                ]);
         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
@@ -64,7 +67,7 @@ class template {
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
-        // Capcha
+        // captcha
         $html .= sprintf(
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)
@@ -241,7 +244,7 @@ class template {
             'value' => $attributes['value']
         ]);
         // Champ d'upload
-        $html .= '<div>';
+        $html .= '<div class="inputFileManagerWrapper">';
         $html .= sprintf(
             '<a
                 href="' .
@@ -249,7 +252,6 @@ class template {
                     '?relative_url=1' .
                     '&field_id=' . $attributes['id'] .
                     '&type=' . $attributes['type'] .
-                    //'&akey=' . md5_file('site/data/'.'core.json') .
                     '&akey=' . md5_file(core::DATA_DIR.'core.json') .
                     ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
                 . '"

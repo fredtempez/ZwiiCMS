@@ -9,7 +9,7 @@
  * @authorFrédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 /**
@@ -59,8 +59,8 @@ $( document ).ready(function() {
     var i = ["info", "layout", "setup", "location", "advanced", "ceo" ];
     $.each(i,function(e) {
         if (getCookie(i[e]) === "true") {
-            $("#" + i[e]).find(".zwiico-plus").hide();
-            $("#" + i[e]).find(".zwiico-minus").show();
+            $("#" + i[e]).find(".zwiico-plus-circled").hide();
+            $("#" + i[e]).find(".zwiico-minus-circled").show();
             $("#" + i[e]).find(".blockContainer").show();
         }
 	});
@@ -73,8 +73,8 @@ $( document ).ready(function() {
      */
 
     $("div .block").click(function(e) {
-        $(this).find(".zwiico-plus").toggle();
-        $(this).find(".zwiico-minus").toggle();
+        $(this).find(".zwiico-plus-circled").toggle();
+        $(this).find(".zwiico-minus-circled").toggle();
         $(this).find(".blockContainer").slideToggle();
         /* 
         * Sauvegarder la position des blocs

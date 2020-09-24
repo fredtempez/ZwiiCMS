@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="col6">
 			<?php echo template::text('userLoginId', [
-				'label' => 'Identifiant'
+				'label' => 'Identifiant',
+				'value' => $module::$userId
 			]); ?>
 		</div>
 		<div class="col6">
@@ -14,9 +15,8 @@
 	<div class="row">
 		<div class="col6">
 			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi', [
-			'help' => 'La session est close à la fermeture du navigateur.'
-			]); ?>
-
+				'checked' => $module::$userLongtime
+			]);	?>
 		</div>
 		<div class="col6 textAlignRight">
 			<a href="<?php echo helper::baseUrl(); ?>user/forgot/<?php echo $this->getUrl(2); ?>">Mot de passe perdu ?</a>

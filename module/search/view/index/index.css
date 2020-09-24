@@ -1,0 +1,14 @@
+.searchKeyword {
+	--keywordColor: rgba(229, 229, 1, 1);
+}
+.searchTitle {
+    font: caption;
+    font-style: italic;
+    margin-left: 1em;
+}
+.searchKeyword {
+    background: var(--keywordColor);
+}
+.searchResult {
+    margin: .3em 0 .3em 1em;
+}

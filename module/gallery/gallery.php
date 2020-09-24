@@ -11,7 +11,7 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class gallery extends common {
@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.26';
+	const GALLERY_VERSION = '2.4';
 
 	public static $directories = [];
 
@@ -350,7 +350,7 @@ class gallery extends common {
 			// Soumission du formulaire
 			if($this->isPost()) {
 				// Si l'id a changée
-				$galleryId = $this->getInput('galleryEditName', helper::FILTER_ID, true);
+				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
 				if($galleryId !== $this->getUrl(2)) {
 					// Incrémente le nouvel id de la galerie
 					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0)]));
@@ -374,20 +374,22 @@ class gallery extends common {
 					$homePicture = $d[0];
 				}
 				// Sauvegarder
-				$this->setData(['module', $this->getUrl(0), $galleryId, [
-					'config' => [
-						'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
-						'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture,
-						// pas de positions, on active le tri alpha
-						'sort' =>  $this->getInput('galleryEditSort'),
-						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
-						'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
+				if ($this->getInput('galleryEditName')) {
+					$this->setData(['module', $this->getUrl(0), $galleryId, [
+						'config' => [
+							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
+							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
+							'homePicture' => $homePicture,
+							// pas de positions, on active le tri alpha
+							'sort' =>  $this->getInput('galleryEditSort'),
+							'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
+							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
-					],
-					'legend' => $legends,
-					'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), $galleryId, 'positions']) : $oldPositions
-				]]);
+						],
+						'legend' => $legends,
+						'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), $galleryId, 'positions']) : $oldPositions
+					]]);
+				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
@@ -608,14 +610,14 @@ class gallery extends common {
 		}
 		// Initialisation des données de thème de la galerie dasn theme.json
 		// Création des valeur par défaut absentes
-		if ( $this->getData(['theme', $this->getUrl(0)]) === null ) {
+		if ( $this->getData(['theme', 'gallery']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['theme', $this->getUrl(0), theme::$defaultData]);
+			$this->setData(['theme', 'gallery', theme::$defaultData]);
 		}
 		// Soumission du formulaire
 
 		if($this->isPost()) {
-			$this->setData(['theme', $this->getUrl(0), [
+			$this->setData(['theme', 'gallery', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),
 					'thumbWidth' 	    => $this->getinput('galleryThemeThumbWidth'),
 					'thumbHeight'	    => $this->getinput('galleryThemeThumbHeight'),
@@ -655,8 +657,8 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
-				'notification' => $success ? 'Modifications enregistrées' : 'Modifications non enregistées !',
-				'state' => $success
+				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'state' => $success !== FALSE
 			]);
 		}
 		// Valeurs en sortie

@@ -9,7 +9,7 @@
  * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 $(document).ready(function(){
@@ -25,7 +25,7 @@ $("input, select").on("change", function() {
 	// Récupérer la taille de l'image
 
 	var tmpImg = new Image();
-	
+
 	tmpImg.onload = function() {
 		// Informations affichées
 		$("#themeHeaderImageHeight").html(tmpImg.height + "px");

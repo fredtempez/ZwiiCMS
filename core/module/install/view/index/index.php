@@ -20,7 +20,7 @@
 	</div>
 	<?php echo template::mail('installMail', [
 		'autocomplete' => 'off',
-		'label' => 'Adresse mail'		
+		'label' => 'Adresse mail'
 	]); ?>
 	<div class="row">
 		<div class="col6">
@@ -38,10 +38,10 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<?php echo template::checkbox('installDefaultData',true , 'Charger un exemple de site', [
-				'checked' => true
+			<?php echo template::checkbox('installDefaultData',true , 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [
+				'checked' => false
 			]);
-			?> 
+			?>
 		</div>
 	</div>
 	<div class="row">

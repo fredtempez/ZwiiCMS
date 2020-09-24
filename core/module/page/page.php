@@ -11,7 +11,7 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class page extends common {
@@ -19,7 +19,8 @@ class page extends common {
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR
+		'edit' => self::GROUP_MODERATOR,
+		'duplicate' => self::GROUP_MODERATOR
 	];
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
@@ -34,12 +35,13 @@ class page extends common {
 		'blog' 			=> 'Blog',
 		'form' 			=> 'Formulaire',
 		'gallery' 		=> 'Galerie',
-		'redirection' 	=> 'Redirection'
+		'redirection' 	=> 'Redirection',
+		'search'        => 'Recherche'
 	];
 	public static $typeMenu = [
 		'text' => 'Texte',
 		'icon' => 'Icône',
-		'icontitle' => 'Icône et bulle'
+		'icontitle' => 'Icône avec bulle de texte'
 	];
 	// Position du module
 	public static $modulePosition = [
@@ -63,6 +65,62 @@ class page extends common {
 		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
+
+	/**
+	 * Duplication
+	 */
+	public function duplicate() {
+		// Adresse sans le token
+		$url = explode('&',$this->getUrl(2));
+		// La page n'existe pas
+		if($this->getData(['page', $url[0]]) === null) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} // Jeton incorrect
+		elseif(!isset($_GET['csrf'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Jeton invalide'
+			]);
+		}
+		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Suppression non autorisée'
+			]);
+		}
+		// Duplication de la page
+		$pageTitle = $this->getData(['page',$url[0],'title']);
+		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+		$data = $this->getData([
+			'page',
+			$url[0]
+		]);
+		// Ecriture
+		$this->setData (['page',$pageId,$data]);
+		$notification = 'La page a été dupliquée';
+		// Duplication du module présent
+		if ($this->getData(['page',$url[0],'moduleId'])) {
+			$data = $this->getData([
+				'module',
+				$url[0]
+			]);
+			// Ecriture
+			$this->setData (['module',$pageId,$data]);
+			$notification = 'La page et son module ont été dupliqués';
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'page/edit/' . $pageId,
+			'notification' => $notification,
+			'state' => true
+		]);
+	}
+
 
 	/**
 	 * Création
@@ -120,13 +178,67 @@ class page extends common {
 			$this->addOutput([
 				'access' => false
 			]);
+		}		// Jeton incorrect
+		elseif(!isset($_GET['csrf'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Jeton invalide'
+			]);
+		}
+		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'notification' => 'Suppression non autorisée'
+			]);
 		}
 		// Impossible de supprimer la page d'accueil
 		elseif($url[0] === $this->getData(['config', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Impossible de supprimer la page d\'accueil'
+				'redirect' => helper::baseUrl()  . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page de recherche affectée
+		elseif($url[0] === $this->getData(['config', 'searchPageId'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'legalPageId'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page404'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page403'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+			]);
+		}
+		// Impossible de supprimer la page des mentions légales affectée
+		elseif($url[0] === $this->getData(['config', 'page302'])) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
 			]);
 		}
 		// Jeton incorrect
@@ -184,7 +296,12 @@ class page extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
-				$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
+				// Génére l'ID si le titre de la page a changé
+				if ( $this->getInput('pageEditTitle') !== $this->getData(['page',$this->getUrl(2),'title']) ) {
+					$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
+				} else {
+					$pageId = $this->getUrl(2);
+				}
 				// un dossier existe du même nom (erreur en cas de redirection)
 				if (file_exists($pageId)) {
 					$pageId = uniqid($pageId);
@@ -214,6 +331,22 @@ class page extends common {
 				// Supprime l'ancienne page si l'id a changée
 				if($pageId !== $this->getUrl(2)) {
 					$this->deleteData(['page', $this->getUrl(2)]);
+				}
+				// Traitement des pages spéciales affectées dans la config :
+				if ($this->getUrl(2) === $this->getData(['config', 'legalPageId']) ) {
+					$this->setData(['config','legalPageId', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'searchPageId']) ) {
+					$this->setData(['config','searchPageId', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page404']) ) {
+					$this->setData(['config','page404', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page403']) ) {
+					$this->setData(['config','page403', $pageId]);
+				}
+				if ($this->getUrl(2) === $this->getData(['config', 'page302']) ) {
+					$this->setData(['config','page302', $pageId]);
 				}
 				// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 				$lastPosition = 1;

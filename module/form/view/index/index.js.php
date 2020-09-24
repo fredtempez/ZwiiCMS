@@ -7,7 +7,7 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2008-2018, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 /**

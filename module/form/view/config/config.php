@@ -37,13 +37,13 @@
 			<?php echo template::label('formConfigLabel', 'Aucune option pour une étiquette', [
 					'class' => 'displayNone formConfigLabelWrapper'
 				]); ?>
-		</div>		
+		</div>
 		<div class="formConfigMore displayNone">
 			<?php echo template::text('formConfigValues[]', [
 				'placeholder' => 'Liste des valeurs séparées par des virgules (valeur1,valeur2,...)',
 				'class' => 'formConfigValues',
 				'classWrapper' => 'displayNone formConfigValuesWrapper'
-			]); ?>			
+			]); ?>
 			<?php echo template::checkbox('formConfigRequired[]', true, 'Champ obligatoire'); ?>
 		</div>
 	</div>
@@ -82,8 +82,8 @@
 										!empty($this->getData(['module', $this->getUrl(0), 'config', 'user'])) ||
 										!empty($this->getData(['module', $this->getUrl(0), 'config', 'mail'])),
 					'help' => 'Sélectionnez au moins un groupe, un utilisateur ou saississez un email. Votre serveur doit autoriser les envois de mail.'
-				]); ?>						
-				<div id="formConfigMailOptions" class="displayNone">					
+				]); ?>
+				<div id="formConfigMailOptions" class="displayNone">
 					<div class="row">
 						<div class="col11 offset1">
 							<?php echo template::text('formConfigSubject', [
@@ -92,10 +92,10 @@
 								'value' => $this->getData(['module', $this->getUrl(0), 'config', 'subject'])
 							]); ?>
 						</div>
-					</div>				
-					<?php 
+					</div>
+					<?php
 						// Element 0 quand aucun membre a été sélectionné
-						$groupMembers = [''] + $module::$groupNews; 
+						$groupMembers = [''] + $module::$groupNews;
 					?>
 					<div class="row">
 						<div class="col3 offset1">
@@ -110,7 +110,7 @@
 								'label' => 'A un membre',
 								'selected' => array_search($this->getData(['module', $this->getUrl(0), 'config', 'user']),$module::$listUsers)
 							]); ?>
-						</div>							
+						</div>
 						<div class="col4">
 							<?php echo template::text('formConfigMail', [
 								'label' => 'A une adresse email',
@@ -124,7 +124,7 @@
 							<?php echo template::checkbox('formConfigMailReplyTo', true, 'Répondre à l\'expéditeur depuis le mail de notification', [
 									'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'replyto']),
 									'help' => 'Cette option permet de réponse drectement à l\'expéditeur du message si celui-ci a indiqué un email valide.'
-								]); ?>		
+								]); ?>
 						</div>
 					</div>
 				</div>
@@ -141,9 +141,9 @@
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'pageId'])
 						]); ?>
 					</div>
-				</div>	
-				<?php echo template::checkbox('formConfigCapcha', true, 'Valider un capcha afin de soumettre le formulaire.', [
-					'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'capcha'])
+				</div>
+				<?php echo template::checkbox('formConfigcaptcha', true, 'Valider un captcha afin de soumettre le formulaire.', [
+					'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
 				]); ?>
 			</div>
 			<div class="block">

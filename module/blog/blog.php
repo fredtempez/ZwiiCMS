@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class blog extends common {
@@ -504,12 +504,12 @@ class blog extends common {
 			else {
 				// Soumission du formulaire
 				if($this->isPost()) {
-					// Check la capcha
+					// Check la captcha
 					if(
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getInput('blogArticleCapcha', helper::FILTER_INT) !== $this->getInput('blogArticleCapchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticleCapchaSecondNumber', helper::FILTER_INT))
+						AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
 					{
-						self::$inputNotices['blogArticleCapcha'] = 'Incorrect';
+						self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
 					}
 					// Crée le commentaire
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));

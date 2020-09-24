@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 
@@ -19,7 +19,7 @@ class install extends common {
 		'index' => self::GROUP_VISITOR,
 		'steps' => self::GROUP_ADMIN,
 		'update' => self::GROUP_ADMIN,
-		'removeAll' => self::GROUP_ADMIN,
+		'removeAll' => self::GROUP_ADMIN
 	];
 
 
@@ -41,17 +41,44 @@ class install extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
-				//$sent = $success = false;
+				$success = true;
 				// Double vérification pour le mot de passe
 				if($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
+					$success = false;
 				}
-				// Crée l'utilisateur
+				// Utilisateur
 				$userFirstname = $this->getInput('installFirstname', helper::FILTER_STRING_SHORT, true);
 				$userLastname = $this->getInput('installLastname', helper::FILTER_STRING_SHORT, true);
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
-				// Bannière par défaut
+				// Création de l'utilisateur si les données sont complétées.
+				// success retour de l'enregistrement des données
+				$success = $this->setData([
+					'user',
+					$userId,
+					[
+						'firstname' => $userFirstname,
+						'forgot' => 0,
+						'group' => self::GROUP_ADMIN,
+						'lastname' => $userLastname,
+						'mail' => $userMail,
+						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
+					]
+				]);
+				// Compte créé, envoi du mail et création des données du site
+				if ($success) { // Formulaire complété envoi du mail
+				// Envoie le mail
+				// Sent contient true si réussite sinon code erreur d'envoi en clair
+				$sent = $this->sendMail(
+					$userMail,
+					'Installation de votre site',
+					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
+					'Voici les détails de votre installation.<br><br>' .
+					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+					null
+				);
 				// Créer les dossiers
 				if (!is_dir(self::FILE_DIR.'source/banniere/')) {
 					mkdir(self::FILE_DIR.'source/banniere/');}
@@ -65,50 +92,25 @@ class install extends common {
 				copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico');
 				copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico');
 				// Configure certaines données par défaut
-				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === TRUE) {
+				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page','fr',true);
 					$this->initData('module','fr',true);
 					$this->setData(['module', 'blog', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'mon-troisieme-article', 'userId', $userId]);
 				}
-				$success = $this->setData([
-					'user',
-					$userId,
-					[
-						'firstname' => $userFirstname,
-						'forgot' => 0,
-						'group' => self::GROUP_ADMIN,
-						'lastname' => $userLastname,
-						'mail' => $userMail,
-						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'pseudo' => $userFirstname,
-						'signature'=> self::SIGNATURE_PSEUDO
-					]
+				// Stocker le dossier d'installation
+				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
+				// Générer un fichier  robots.txt
+				$this->createRobots();
+				// Créer sitemap
+				$this->createSitemap();
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl(false),
+					'notification' => ($sent === true ? 'Installation terminée' : $sent),
+					'state' => ($sent === true ? true : null)
 				]);
-				if ($success === true) { // Formulaire complété envoi du mail
-					// Envoie le mail
-					$sent = $this->sendMail(
-						$userMail,
-						'Installation de votre site',
-						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-						'Voici les détails de votre installation.<br><br>' .
-						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-						null
-					);
-					// Stocker le dossier d'installation
-					$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-					// Générer un fichier  robots.txt
-					$this->createRobots();
-					// Créer sitemap
-					$this->createSitemap();
-					// Valeurs en sortie
-					$this->addOutput([
-						'redirect' => helper::baseUrl(false),
-						'notification' => ($sent === true ? 'Installation terminée' : $sent),
-						'state' => ($sent === true ? true : null)
-					]);
 				}
 			}
 

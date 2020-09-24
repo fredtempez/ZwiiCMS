@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class user extends common {
@@ -24,6 +24,7 @@ class user extends common {
 		'logout' => self::GROUP_MEMBER,
 		'reset' => self::GROUP_VISITOR
 	];
+
 	public static $users = [];
 
 	//Paramètres pour choix de la signature
@@ -34,6 +35,9 @@ class user extends common {
 		self::SIGNATURE_LASTFIRSTNAME => 'Nom Prénom'
 	];
 
+	public static $userId = '';
+
+	public static $userLongtime = false;
 
 	/**
 	 * Ajout
@@ -57,33 +61,21 @@ class user extends common {
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			$userPseudo = $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true);
-			$usersignature = $this->getInput('userAddSignature', helper::FILTER_STRING_SHORT, true);
-			// Pas de nom saisi
-			if (empty($userFirstname) ||
-				empty($userLastname)  ||
-				empty($userPseudo) ||
-				empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true)) ||
-				empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true))) {
-				$check=false;
-			}
-			// Si tout est ok création effective
-			if ($check === true) {
-				$this->setData([
-					'user',
-					$userId,
-					[
-						'firstname' => $userFirstname,
-						'forgot' => 0,
-						'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
-						'lastname' => $userLastname,
-						'pseudo' => $userPseudo,
-						'signature' => $usersignature,
-						'mail' => $userMail,
-						'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true)
-					]
-				]);
-			}
+
+			// Stockage des données
+			$this->setData([
+				'user',
+				$userId,
+				[
+					'firstname' => $userFirstname,
+					'forgot' => 0,
+					'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
+					'lastname' => $userLastname,
+					'mail' => $userMail,
+					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
+				]
+			]);
+
 			// Envoie le mail
 			$sent = true;
 			if($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
@@ -398,7 +390,7 @@ class user extends common {
 			 */
 			} else 	{
 				// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
-				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time() 
+				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time()
 					AND $this->getData(['user',$userId,'connectFail']) === $this->getData(['config', 'connect', 'attempt']) ) {
 					$this->setData(['user',$userId,'connectFail',0 ]);
 					$this->setData(['user',$userId,'connectTimeout',0 ]);
@@ -413,8 +405,10 @@ class user extends common {
 				) {
 					// Expiration
 					$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
-					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+					$c = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? 'true' : 'false';
+					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+					setcookie('ZWII_USER_LONGTIME', $c, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 					// Accès multiples avec le même compte
 					$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
@@ -467,6 +461,12 @@ class user extends common {
 				}
 			}
 		}
+		if (!empty($_COOKIE['ZWII_USER_ID'])) {
+			self::$userId = $_COOKIE['ZWII_USER_ID'];
+		}
+		if (!empty($_COOKIE['ZWII_USER_LONGTIME'])) {
+			self::$userLongtime = $_COOKIE['ZWII_USER_LONGTIME'] == 'true' ? true : false;
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
@@ -479,7 +479,12 @@ class user extends common {
 	 * Déconnexion
 	 */
 	public function logout() {
-		helper::deleteCookie('ZWII_USER_ID');
+		// Ne pas effacer l'identifiant mais seulement le mot de passe
+		if (array_key_exists('ZWII_USER_LONGTIME',$_COOKIE)
+			AND $_COOKIE['ZWII_USER_LONGTIME'] !== 'true' ) {
+			helper::deleteCookie('ZWII_USER_ID');
+			helper::deleteCookie('ZWII_USER_LONGTIME');
+		}
 		helper::deleteCookie('ZWII_USER_PASSWORD');
 		session_destroy();
 		// Valeurs en sortie

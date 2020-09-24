@@ -9,7 +9,7 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 @import url("site/data/admin.css");
@@ -18,17 +18,17 @@
     display : none;
 }
 
-#info .zwiico-minus {
+#info .zwiico-minus-circled {
     display: inline;
 }
 
-.zwiico-minus,
-#info .zwiico-plus {
+.zwiico-minus-circled,
+#info .zwiico-plus-circled {
     display: none;
 }
 
 
-.zwiico-minus,
-.zwiico-plus {
+.zwiico-minus-circled,
+.zwiico-plus-circled {
     cursor: pointer;
 }

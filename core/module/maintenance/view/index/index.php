@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col4 offset8 textAlignCenter">
 		<?php echo template::button('maintenanceLogin', [
-			'value' => 'Administration',
+			'value' => 'Connexion',
 			'href' => helper::baseUrl() . 'user/login',
 			'ico' => 'lock'
 		]); ?>

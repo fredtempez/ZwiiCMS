@@ -7,7 +7,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 var core = {};
@@ -346,8 +346,8 @@ core.start = function() {
 			var ratio = width / height;
 			if ( ($(window).width() / ratio) <= height) {
 				$("header").height( $(window).width() / ratio );
-				$("header").css("line-height", $(window).width() / ratio + "px"); 
-			}						
+				$("header").css("line-height", $(window).width() / ratio + "px");
+			}
 		}
 	}).trigger("resize");
 
@@ -389,7 +389,7 @@ core.relativeLuminanceW3C = function(rgba) {
 
 $(document).ready(function(){
 	/**
-	 * Affiche le sous-menu quand il est sticky 
+	 * Affiche le sous-menu quand il est sticky
 	 */
 	$("nav").mouseenter(function(){
 		$("#navfixedlogout .navLevel2").css({ 'pointer-events' : 'auto' });
@@ -414,7 +414,7 @@ $(document).ready(function(){
 		// on récupère la valeur data-speed si elle existe
 		var toggleSpeed = accordion.attr('data-speed') || 100;
 
-		// fonction pour afficher un élément   
+		// fonction pour afficher un élément
 		function open(item, speed) {
 			// on récupère tous les éléments, on enlève l'élément actif de ce résultat, et on les cache
 			accordion.find('.accordion-item').not(item).removeClass('active')
@@ -428,31 +428,31 @@ $(document).ready(function(){
 				.find('.accordion-content').slideUp(speed);
 		}
 
-		// on initialise l'accordéon, sans animation 
+		// on initialise l'accordéon, sans animation
 		open(accordion.find('.active:first'), 0);
 
 		// au clic sur un titre...
 		accordion.on('click', '.accordion-title', function(ev) {
-			ev.preventDefault();		
+			ev.preventDefault();
 			// Masquer l'élément déjà actif
 			if ($(this).closest('.accordion-item').hasClass('active')) {
 				close($(this).closest('.accordion-item'), toggleSpeed);
 			} else {
-				// ...on lance l'affichage de l'élément, avec animation	
-				open($(this).closest('.accordion-item'), toggleSpeed);	
+				// ...on lance l'affichage de l'élément, avec animation
+				open($(this).closest('.accordion-item'), toggleSpeed);
 			}
 		});
 	});
 
 	/**
-	 * Icône du Menu Burger 
+	 * Icône du Menu Burger
 	 */
-	$("#toggle").click(function() {	
+	$("#toggle").click(function() {
 		var changeIcon = $('#toggle').children("span");
 		if ( $(changeIcon).hasClass('zwiico-menu') ) {
 			$(changeIcon).removeClass('zwiico-menu').addClass('zwiico-cancel');
 		}
-		else {							
+		else {
 			$(changeIcon).addClass('zwiico-menu');
 		};
 	});

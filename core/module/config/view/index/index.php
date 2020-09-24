@@ -11,15 +11,13 @@
 	<div class="col2 offset4">
 				<?php echo template::button('configManageButton', [
 					'href' => helper::baseUrl() . 'config/backup',
-					'value' => 'Sauvegarder',
-					'ico' => 'download'
+					'value' => 'Sauvegarder'
 				]); ?>
 			</div>
 	<div class="col2">
 		<?php echo template::button('configManageButton', [
 			'href' => helper::baseUrl() . 'config/manage',
-			'value' => 'Restaurer',
-			'ico' => 'upload'
+			'value' => 'Restaurer'
 		]); ?>
 	</div>
 	<div class="col2">
@@ -31,21 +29,7 @@
 		<div class="block">
 			<h4>Informations générales</h4>
 			<div class="row">
-				<div class="col4">
-				<?php
-					$pages = $this->getData(['page']);
-					foreach($pages as $page => $pageId) {
-						if ($this->getData(['page',$page,'block']) === 'bar' ||
-						$this->getData(['page',$page,'disable']) === true) {
-							unset($pages[$page]);
-						}
-					}
-					echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
-					'label' => 'Page d\'accueil',
-					'selected' =>$this->getData(['config', 'homePageId'])
-					]); ?>
-				</div>
-				<div class="col8">
+				<div class="col12">
 					<?php echo template::text('configTitle', [
 						'label' => 'Titre du site',
 						'value' => $this->getData(['config', 'title']),
@@ -58,7 +42,7 @@
 					<?php echo template::textarea('configMetaDescription', [
 						'label' => 'Description du site',
 						'value' => $this->getData(['config', 'metaDescription']),
-						'help'  => 'Elle apparaît dans les partages sur les réseaux sociaux.'
+						'help'  => 'La description participe au référence, n\'oubliez pas de personnaliser la description de chaque page sans copié collé.'
 					]); ?>
 				</div>
 			</div>
@@ -68,7 +52,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Paramètres</h4>
+			<h4>Paramètres généraux</h4>
 			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
@@ -103,16 +87,7 @@
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col4">
-					<?php  $listePageId =  array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') );
-					?>
-					<?php echo template::select('configLegalPageId', $listePageId , [
-						'label' => 'Mentions légales',
-						'selected' => $this->getData(['config', 'legalPageId']),
-						'help' => 'Les mentions légales sont obligatoires en France'
-					]); ?>
-				</div>
-				<div class="col4 verticalAlignBottom">
+				<div class="col8 verticalAlignBottom">
 					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
@@ -167,12 +142,85 @@
 </div>
 <div class="row">
 	<div class="col12">
+		<div class="block">
+			<h4>Pages spéciales</h4>
+			<div class="row">
+				<div class="col4">
+					<?php
+						$pages = $this->getData(['page']);
+						foreach($pages as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+								$this->getData(['page',$page,'disable']) === true) {
+								unset($pages[$page]);
+							}
+						}
+						$orphans =  $this->getData(['page']);
+						foreach($orphans as $page => $pageId) {
+							if ($this->getData(['page',$page,'block']) === 'bar' ||
+								$this->getData(['page',$page,'disable']) === true ||
+								$this->getdata(['page',$page, 'position']) !== 0) {
+								unset($orphans[$page]);
+							}
+						}
+						echo template::select('configHomePageId', helper::arrayCollumn($pages, 'title', 'SORT_ASC'), [
+						'label' => 'Accueil du site',
+						'selected' =>$this->getData(['config', 'homePageId']),
+						'help' => 'La première page que vos visiteurs verront.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Mentions légales',
+						'selected' => $this->getData(['config', 'legalPageId']),
+						'help' => 'Les mentions légales sont obligatoires en France. Une option du pied de page ajoute un lien discret vers cette page.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+						'label' => 'Recherche dans le site',
+						'selected' => $this->getData(['config', 'searchPageId']),
+						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche" permet d\'activer un lien dans le pied de page. '
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col4">
+					<?php
+						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+							'label' => 'Accès interdit, erreur 403',
+							'selected' =>$this->getData(['config', 'page403']),
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
+						]); ?>
+				</div>
+				<div class="col4">
+					<?php
+						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+							'label' => 'Page inexistante, erreur 404',
+							'selected' =>$this->getData(['config', 'page404']),
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
+						]); ?>
+				</div>
+				<div class="col4">
+					<?php
+						echo template::select('configPage302', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+							'label' => 'Site en maintenance',
+							'selected' =>$this->getData(['config', 'page302']),
+							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
+						]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col12">
 		<div class="block" id="social">
 			<h4>Réseaux sociaux
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -247,8 +295,8 @@
 			<h4>Référencement
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -294,8 +342,8 @@
 			<h4>Réseau
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -332,8 +380,8 @@
 			<h4>Messagerie SMTP
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -403,8 +451,8 @@
 			<h4>Sécurité de la connexion
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -454,8 +502,8 @@
 			<h4>Journalisation
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -492,8 +540,8 @@
 			<h4>Scripts
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
@@ -529,57 +577,23 @@
 <div class="row">
 	<div class="col12" >
 		<div class="block" id="system">
-			<h4>Système
+			<h4>Versions des modules
 				<div class="openClose">
 					<?php
-					echo template::ico('plus','right');
-					echo template::ico('minus','right');
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
 					?>
 				</div>
 			</h4>
 			<div class="blockContainer">
 				<div class="row">
-					<div  class="col2">
-						<?php echo template::text('configVersion', [
-						'label' => 'ZwiiCMS',
-						'readonly' => true,
-						'value' => common::ZWII_VERSION
-					]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleBlogVersion', [
-							'label' => 'Blog',
-							'readonly' => true,
-							'value' => blog::BLOG_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleFormVersion', [
-							'label' => 'Form',
-							'readonly' => true,
-							'value' => form::FORM_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleGalleryVersion', [
-							'label' => 'Gallery',
-							'readonly' => true,
-							'value' => gallery::GALLERY_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleNewsVersion', [
-							'label' => 'News',
-							'readonly' => true,
-							'value' => news::NEWS_VERSION
-						]); ?>
-					</div>
-					<div  class="col2">
-						<?php echo template::text('moduleRedirectionVersion', [
-							'label' => 'Redirection',
-							'readonly' => true,
-							'value' => redirection::REDIRECTION_VERSION
-						]); ?>
+					<div  class="col12">
+						<?php echo 'ZwiiCMS : ' 	. common::ZWII_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Blog : ' 		. blog::BLOG_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'News : ' 		. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Recherche : '   . search::SEARCH_VERSION ;?>
 					</div>
 				</div>
 			</div>

@@ -10,7 +10,7 @@
  * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class common {
@@ -43,7 +43,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.00';
+	const ZWII_VERSION = '10.4.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -52,7 +52,6 @@ class common {
 		'install',
 		'maintenance',
 		'page',
-        'search',
 		'sitemap',
 		'theme',
 		'user'
@@ -150,8 +149,11 @@ class common {
 	];
 	public static $timezone;
 	private $url = '';
+	// Données de site
 	private $user = [];
-	private $page = '';
+	private $page = [];
+	private $module = [];
+
 
 	/**
 	 * Constructeur commun
@@ -191,8 +193,9 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		// Mise en cache des pages
-		$this->page = $this->getPageCache();
+		// Mise en cache des pages et des modules
+		$this->page = $this->getCache('page');
+		$this->module = $this->getCache('module');
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -323,12 +326,9 @@ class common {
 		//Retourne une chaine contenant le dossier à créer
 		$folder = $this->dirData ($keys[0],'fr');
 		// Constructeur  JsonDB
-		//require_once "core/vendor/jsondb/Dot.php";
-		//require_once "core/vendor/jsondb/JsonDb.php";
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 		switch(count($keys)) {
 			case 1:
@@ -370,10 +370,14 @@ class common {
 	public function getData($keys = []) {
 
 		if (count($keys) >= 1) {
-			// Lecture d'une donnée de page en cache
-			if ($keys[0] === 'page') {
+
+			/**
+			 * Lecture dans le cache, page et module
+			 */
+			if ($keys[0] === 'page' ||
+			    $keys[0] === 'module' ) {
 				// Décent dans les niveaux de la variable $data
-				$data = $this->page;
+				$data = array_merge ($this->page , $this->module);
 				foreach($keys as $key) {
 					// Si aucune donnée n'existe retourne null
 					if(isset($data[$key]) === false) {
@@ -387,13 +391,16 @@ class common {
 				// Retourne les données
 				return $data;
 			}
+
+			/**
+			 * Lecture directe
+			*/
 			//Retourne une chaine contenant le dossier à créer
 			$folder = $this->dirData ($keys[0],'fr');
 			// Constructeur  JsonDB
 			$db = new \Prowebcraft\JsonDb([
 				'name' => $keys[0] . '.json',
-				'dir' => $folder,
-				'template' => self::TEMP_DIR . 'data.template.json'
+				'dir' => $folder
 			]);
 			switch(count($keys)) {
 				case 1:
@@ -427,19 +434,15 @@ class common {
 	 * Lecture des fichiers de données de page et mise ne cache
 	 * @param @return string données des pages
 	 */
-	public function getPageCache() {
-		// Trois tentatives
-		for($i = 0; $i < 3; $i++) {
-			$data =json_decode(file_get_contents(self::DATA_DIR.'fr/page.json'), true);
-			if($data) {
-				return($data);
-			}
-			elseif($i === 2) {
-				exit('Erreur fatale : impossible d\'accéder aux pages');
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
-		}
+	public function getCache($data) {
+		$folder = $this->dirData ($data,'fr');
+		// Constructeur  JsonDB
+		$db = new \Prowebcraft\JsonDb([
+			'name' => $data . '.json',
+			'dir' => $folder
+		]);
+		$tempData = $db->get($data);
+		return [$data => $tempData];
 	}
 
 	/*
@@ -595,7 +598,7 @@ class common {
 				break;
 			}
 			elseif($i === 2) {
-				exit('Impossible de lire les données à importer.');
+                throw new \ErrorException('Import des données impossible.');
 			}
 			// Pause de 10 millisecondes
 			usleep(10000);
@@ -950,8 +953,9 @@ class common {
 	 */
 	public function setData($keys = []) {
 
-		// Pas d'enregistrement lorsqu'une notice est présente
-		if (!empty(self::$inputNotices)) {
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (!empty(self::$inputNotices
+			OR empty($keys))) {
 			return false;
 		}
 
@@ -960,8 +964,7 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 
 		switch(count($keys)) {
@@ -1012,8 +1015,7 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $module . '.json',
-			'dir' => $folder,
-			'template' => self::TEMP_DIR . 'data.template.json'
+			'dir' => $folder
 		]);
 		if ($sampleSite === true) {
 			$db->set($module,init::$siteData[$module]);
@@ -1355,12 +1357,57 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10201) {
 			// Options de barre de membre simple
 			$this->setData(['theme','footer','displayMemberBar',false]);
-			$this->setData(['theme','menu','memberBar',true]);
 			$this->deleteData(['theme','footer','displayMemberAccount']);
 			$this->deleteData(['theme','footer','displayMemberLogout']);
 			$this->setData(['core', 'dataVersion', 10201]);
 		}
 		// Version 10.3.00
+		if ($this->getData(['core', 'dataVersion']) < 10300) {
+			// Options de barre de membre simple
+			$this->setData(['config','page404','none']);
+			$this->setData(['config','page403','none']);
+			// Module de recherche
+			// Suppression du dossier search
+			if (is_dir('core/module/search')) {
+				$dir = getcwd();
+				chdir('core/module/search');
+				$files = glob('*');
+				foreach($files as $file) unlink($file);
+				chdir($dir);
+				rmdir ('core/module/search/');
+			}
+			// Désactivation de l'option dans le pied de page
+			$this->setData(['theme','footer','displaySearch',false]);
+			// Inscription des nouvelles variables
+			$this->setData(['config','searchPageId','']);
+
+			// Mettre à jour les données des galeries
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Mise à jour des données de thème de la galerie
+			// Les données de thème sont communes au site
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'gallery' ) {
+					foreach ( $this->getData(['module', $parent]) as $galleryKey => $galleryItem) {
+						// Transfert du theme dans une structure unique
+						if ( is_array($this->getdata(['theme',$parent])) )  {
+							$this->setdata(['theme','gallery',$this->getdata(['theme',$parent])]);
+						}
+					}
+					$this->deleteData(['theme',$parent]);
+				}
+			}
+
+			// Mise à jour du numéro de version
+			$this->setData(['core', 'dataVersion', 10300]);
+		}
+		// Version 10.4.00
 		if ($this->getData(['core', 'dataVersion']) < 10300) {
 			// Ajouter le prénom comme pseudo et le pseudo comme signature
 			foreach($this->getData(['user']) as $userId => $userIds){
@@ -1399,7 +1446,7 @@ class common {
 					}
 				}
 			}
-			$this->setData(['core', 'dataVersion', 10300]);
+			$this->setData(['core', 'dataVersion', 10400]);
 		}
 	}
 }
@@ -1713,7 +1760,7 @@ class core extends common {
 			// Déconnexion
 			$user = new user;
 			$user->logout();
-			// Rédirection
+			// Redirection
 			http_response_code(302);
 			header('Location:' . helper::baseUrl() . 'maintenance');
 			exit();
@@ -1753,11 +1800,11 @@ class core extends common {
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $this->getuser('id') &&
-				 $userId !== $this->getuser('id') &&
-				 $this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
-				 array_intersect($t,self::$accessList)  &&
-				 array_intersect($t,self::$accessExclude) !== false	 &&
-				 time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
+				$userId !== $this->getuser('id') &&
+				$this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
+				array_intersect($t,self::$accessList)  &&
+				array_intersect($t,self::$accessExclude) !== false	 &&
+				time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
 			) {
 					$access = false;
 					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
@@ -1991,18 +2038,29 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
+				if ( $this->getData(['config','page403']) !== 'none'
+					AND $this->getData(['page',$this->getData(['config','page403'])]))
+				{
+					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
+				} else {
+					$this->addOutput([
+						'title' => 'Erreur 403',
+						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
+					]);
+				}
+			}
+		} elseif ($this->output['content'] === '') {
+			http_response_code(404);
+			if ( $this->getData(['config','page404']) !== 'none'
+				AND $this->getData(['page',$this->getData(['config','page404'])]))
+			{
+				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+			} else {
 				$this->addOutput([
-					'title' => 'Erreur 403',
-					'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
+					'title' => 'Erreur 404',
+					'content' => template::speech('Oups ! La page demandée est introuvable...')
 				]);
 			}
-		}
-		elseif($this->output['content'] === '') {
-			http_response_code(404);
-			$this->addOutput([
-				'title' => 'Erreur 404',
-				'content' => template::speech('Oups ! La page demandée est introuvable...')
-			]);
 		}
 		// Mise en forme des métas
 		if($this->output['metaTitle'] === '') {
@@ -2088,12 +2146,12 @@ class layout extends common {
 			AND (
 				$this->getData(['page', $this->getUrl(0)]) === null
 				OR $this->getData(['page', $this->getUrl(0), 'hideTitle']) === false
+				OR $this->getUrl(1) === 'config'
 			)
 		) {
 			echo '<h1 id="sectionTitle">' . $this->core->output['title'] . '</h1>';
 		}
 		echo $this->core->output['content'];
-
 	}
 
 
@@ -2162,7 +2220,7 @@ class layout extends common {
 		$items .= '>Motorisé&nbsp;par&nbsp;</span>';
 		// Toujours afficher le nom du CMS
 		$items .= '<span id="footerZwiiCMS">';
-		$items .= '<a href="http://zwiicms.com/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
+		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
 		$items .= '</span>';
 		// Affichage du numéro de version
 		$items .= '<span id="footerDisplayVersion"';
@@ -2177,7 +2235,7 @@ class layout extends common {
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone"' : '';
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'search" data-tippy-content="Rechercher dans le site" >Rechercher</a>';
+		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
@@ -2288,7 +2346,8 @@ class layout extends common {
 		file_exists(self::FILE_DIR.'source/' . $faviconDark)
 		) {
 			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $faviconDark . '">';
-			echo '<script src="https://unpkg.com/favicon-switcher@1.2.0/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
+			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
+			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous" type="application/javascript"></script>';
 		}
 	}
 
@@ -2303,7 +2362,7 @@ class layout extends common {
 		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Passer les entrées masquées
 			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
 			$items .= '<li>';
@@ -2313,7 +2372,7 @@ class layout extends common {
 
 					{$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 			} else {
-					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2359,7 +2418,7 @@ class layout extends common {
 			$items .= '<ul class="navLevel2">';
 			foreach($childrenPageIds as $childKey) {
 				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
+				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$items .= '<li>';
@@ -2367,7 +2426,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 				} else {
-					$items .= '<a class="' . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank  .  '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
@@ -2467,7 +2526,7 @@ class layout extends common {
 				continue;
 			}
 			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item;
 			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
@@ -2477,7 +2536,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-						$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $active . $targetBlank . '>';
+						$items .= '<a href="' . $active . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 				}
 				$items .= $this->getData(['page', $parentPageId, 'title']);
 				$items .= '</a>';
@@ -2490,7 +2549,7 @@ class layout extends common {
 				}
 
 				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
+				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$itemsChildren .= '<li class="menuSideChild">';
@@ -2499,7 +2558,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$itemsChildren .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $active . $targetBlank . '>';
+					$itemsChildren .= '<a href="' .$active . helper::baseUrl() . $childKey . '"' . $targetBlank . '>';
 				}
 
 				$itemsChildren .= $this->getData(['page', $childKey, 'title']);
@@ -2663,6 +2722,7 @@ class layout extends common {
 					if ($this->getData(['page', $this->getUrl(0),'moduleId'])) {
 						$leftItems .= '<li><a href="' . helper::baseUrl() . $this->getUrl(0) . '/config' . '" data-tippy-content="Configurer le module">' . template::ico('gear') . '</a></li>';
 					}
+					$leftItems .= '<li><a id="pageDuplicate" href="' . helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Dupliquer la page">' . template::ico('clone') . '</a></li>';
 					$leftItems .= '<li><a id="pageDelete" href="' . helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Effacer la page">' . template::ico('trash') . '</a></li>';
 				}
 			}
@@ -2676,13 +2736,14 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
+				$today = mktime(0, 0, 0);
 				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
-				$lastAutoUpdate = mktime(0, 0, 0);
-				if( $this->getData(['config','autoUpdate']) === true &&
-					$lastAutoUpdate > $this->getData(['core','lastAutoUpdate']) + 86400 &&
-					helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-						$this->setData(['core','updateAvailable', true]);
-						$this->setData(['core','lastAutoUpdate',$lastAutoUpdate]);
+				if ( $this->getData(['config','autoUpdate']) === true
+					AND $today > $this->getData(['core','lastAutoUpdate']) + 86400 ) {
+						if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) ) {
+							$this->setData(['core','updateAvailable', true]);
+							$this->setData(['core','lastAutoUpdate',$today]);
+						}
 				}
 				// Afficher le bouton : Mise à jour détectée + activée
 				if ( $this->getData(['core','updateAvailable']) === true &&

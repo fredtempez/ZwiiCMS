@@ -98,7 +98,9 @@ class helper {
 
 	public static function autoBackup($folder, $filter = ['backup','tmp'] ) {
 		// Creation du ZIP
-		$fileName = 'ZwiiCMS-backup'. date('Y-m-d-h-i-s', time()) . '.zip';
+		$baseName = str_replace('/','',helper::baseUrl(false,false));
+		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
+		$fileName =  $baseName . '-backup-' . date('Y-m-d-h-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		$directory = 'site/';
@@ -185,7 +187,7 @@ class helper {
 	 * @return string
 	 */
 	public static function getOnlineVersion() {
-		return (helper::urlGetContents('http://zwiicms.com/update/'. common::ZWII_UPDATE_CHANNEL . '/version'));
+		return (helper::urlGetContents('http://zwiicms.fr/update/'. common::ZWII_UPDATE_CHANNEL . '/version'));
 	}
 
 

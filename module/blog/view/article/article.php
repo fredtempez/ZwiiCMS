@@ -93,6 +93,31 @@
 						]); ?>
 					</div>
 				</div>
+			<?php endif; ?>
+			<?php echo template::textarea('blogArticleContent', [
+				'label' => 'Commentaire',
+				'maxlength' => '500'
+			]); ?>
+			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
+				<div class="row">
+					<div class="col5">
+						<?php echo template::captcha('blogArticlecaptcha'); ?>
+					</div>
+				</div>
+			<?php endif; ?>
+			<div class="row">
+				<div class="col2 offset8">
+					<?php echo template::button('blogArticleCommentHide', [
+						'class' => 'buttonGrey',
+						'value' => 'Annuler'
+					]); ?>
+				</div>
+				<div class="col2">
+					<?php echo template::submit('blogArticleSubmit', [
+						'value' => 'Envoyer',
+						'ico' => ''
+					]); ?>
+				</div>
 			</div>
 		<?php echo template::formClose(); ?>
 	<?php endif;?>

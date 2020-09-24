@@ -5,7 +5,7 @@ echo template::formOpen('pageEditForm');
 	<div class="row">
 	<div class="col2">
 			<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
-      <?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
+    		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
 			<?php echo template::button('pageEditBack', [
 				'class' => 'buttonGrey',
 				'href' => $href,
@@ -13,7 +13,14 @@ echo template::formOpen('pageEditForm');
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset4">
+			<?php echo template::button('pageEditDuplicate', [
+				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
+				'value' => 'Dupliquer',
+				'ico' => 'clone'
+			]); ?>
+		</div>
+		<div class="col2">
 			<?php echo template::button('pageEditDelete', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
@@ -63,13 +70,13 @@ echo template::formOpen('pageEditForm');
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
-								'help' => 'La page peut être représentée par une image de petite taille.',
-								'label' => 'Aspect',
+								'label' => 'Aspect du lien',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 						]); ?>
 					</div>
 					<div class="col4">
                         <?php echo template::file('pageIconUrl', [
+							'help' => 'Sélectionnez une image ou une icône de petite dimension',
                             'label' => 'Icône',
                             'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
                         ]); ?>
@@ -77,7 +84,7 @@ echo template::formOpen('pageEditForm');
 					<div class="col4">
 					<?php echo template::select('configModulePosition', $module::$modulePosition,[
 							'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
-							'label' => 'Position du module dans la page',
+							'label' => 'Position du module',
 							'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
 						]); ?>
 					</div>
@@ -99,8 +106,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Mise en page
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -156,8 +163,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Emplacement dans le menu
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -216,11 +223,11 @@ echo template::formOpen('pageEditForm');
 	<div class='row' id="pageEditAdvancedWrapper">
 		<div class="col12">
 			<div class="block" id="advanced">
-				<h4>Options avancées d'emplacement
+				<h4>Options d'emplacement avancées
 					<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>
@@ -248,8 +255,8 @@ echo template::formOpen('pageEditForm');
 				<h4>Permission et référencement
 				<div class="openClose">
 						<?php
-						echo template::ico('plus','right');
-						echo template::ico('minus','right');
+						echo template::ico('plus-circled','right');
+						echo template::ico('minus-circled','right');
 						?>
 					</div>
 				</h4>

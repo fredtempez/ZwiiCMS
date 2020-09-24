@@ -8,10 +8,10 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- *  * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2020, Frédéric Tempez
  * @license GNU General Public License, version 3
- * @link http://zwiicms.com/
+ * @link http://zwiicms.fr/
  */
 
 class config extends common {
@@ -246,17 +246,19 @@ class config extends common {
 			// Creation du ZIP
 			$filter = $this->getInput('configBackupOption',helper::FILTER_BOOLEAN) === true ? ['backup','tmp'] : ['backup','tmp','file'];
 			$fileName = helper::autoBackup(self::TEMP_DIR,$filter);
-
-			// Téléchargement du ZIP
-			header('Content-Type: application/zip');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
-			readfile(self::TEMP_DIR . $fileName);
+			// Créer le répertoire manquant
+			if (!is_dir(self::FILE_DIR.'source/backup')) {
+				mkdir(self::FILE_DIR.'source/backup');
+			}
+			// Copie dans les fichiers
+			$success = copy (self::TEMP_DIR . $fileName , self::FILE_DIR.'source/backup/' . $fileName);
+			// Détruire le temporaire
+			unlink(self::TEMP_DIR . $fileName);
 			// Valeurs en sortie
 			$this->addOutput([
-				'display' => self::DISPLAY_RAW
+				'display' => self::DISPLAY_JSON,
+				'content' => json_encode($success)
 			]);
-			unlink(self::TEMP_DIR . $fileName);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -406,22 +408,41 @@ class config extends common {
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			$success = true;
 			// Basculement en mise à jour auto
 			// Remise à 0 du compteur
 			if ($this->getData(['config','autoUpdate']) === false &&
 				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
-			if ($this->getInput('configLegalCheck', helper::FILTER_BOOLEAN) === true ) {
-				$legalPageId = $this->getInput('configLegalPageId', helper::FILTER_ID);
+			// Empêcher la modification si défini dans footer
+			if ( $this->getData(['theme','footer','displaySearch']) === true 
+				AND $this->getInput('configSearchPageId') === '' 
+				){
+					$searchPageId = $this->getData(['config','searchPageId']);
+					self::$inputNotices['configSearchPageId'] = 'Désactiver l\'option dans le pied de page';
+					$success = false;
 			} else {
-				$legalPageId = '';
+					$searchPageId = $this->getInput('configSearchPageId');
+			}
+			// Empêcher la modification si défini dans footer
+			if ( $this->getData(['theme','footer','displayLegal']) === true 
+				AND $this->getInput('configLegalPageId') === '' 
+				){
+					$legalPageId = $this->getData(['config','legalPageId']);
+					self::$inputNotices['configLegalPageId'] = 'Désactiver l\'option dans le pied de page';
+					$success = false;
+			} else {
+					$legalPageId = $this->getInput('configLegalPageId');
 			}
 			// Sauvegarder
 			$this->setData([
 				'config',
 				[
 					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('configPage404'),
+					'page403' => $this->getInput('configPage403'),
+					'page302' => $this->getInput('configPage302'),
 					'analyticsId' => $this->getInput('configAnalyticsId'),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
@@ -440,7 +461,8 @@ class config extends common {
 					],
 					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
 					'itemsperPage' => $this->getInput('configItemsperPage', helper::FILTER_INT,true),
-					'legalPageId' => $this->getInput('configLegalPageId'),
+					'legalPageId' => $legalPageId,
+					'searchPageId' => $searchPageId,
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
@@ -509,7 +531,7 @@ class config extends common {
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'notification' => 'Modifications enregistrées',
-				'state' => true
+				'state' => $success
 			]);
 		}
 		// Initialisation du screen - APPEL AUTO DESACTIVE POUR EVITER UN RALENTISSEMENT
