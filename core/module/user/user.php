@@ -53,28 +53,21 @@ class user extends common {
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			// Vérification des saisies
-			if (empty($userFirstname)
-				AND empty($userLastname)
-				AND empty($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true))
-				AND empty($this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true))) {
-				$check = false;
-			}
-			// Si tout est ok création effective
-			if ($check === true) {
-				$this->setData([
-					'user',
-					$userId,
-					[
-						'firstname' => $userFirstname,
-						'forgot' => 0,
-						'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
-						'lastname' => $userLastname,
-						'mail' => $userMail,
-						'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
-					]
-				]);
-			}
+			
+			// Stockage des données
+			$this->setData([
+				'user',
+				$userId,
+				[
+					'firstname' => $userFirstname,
+					'forgot' => 0,
+					'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
+					'lastname' => $userLastname,
+					'mail' => $userMail,
+					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
+				]
+			]);
+
 			// Envoie le mail
 			$sent = true;
 			if($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
