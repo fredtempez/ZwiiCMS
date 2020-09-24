@@ -951,7 +951,7 @@ class common {
 
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
 		if (!empty(self::$inputNotices
-			AND empty($keys))) {
+			OR empty($keys))) {
 			return false;
 		}
 

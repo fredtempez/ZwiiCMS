@@ -53,68 +53,58 @@ class install extends common {
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
 				// Création de l'utilisateur si les données sont complétées.
-				if ( $userFirstname
-					AND $userLastname
-					AND $userMail
-					AND $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
-					AND $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)
-					AND $success
-				){
-					// success retour de l'enregistrement des données
-					$success = $this->setData([
-						'user',
-						$userId,
-						[
-							'firstname' => $userFirstname,
-							'forgot' => 0,
-							'group' => self::GROUP_ADMIN,
-							'lastname' => $userLastname,
-							'mail' => $userMail,
-							'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
-						]
-					]);
+				// success retour de l'enregistrement des données
+				$success = $this->setData([
+					'user',
+					$userId,
+					[
+						'firstname' => $userFirstname,
+						'forgot' => 0,
+						'group' => self::GROUP_ADMIN,
+						'lastname' => $userLastname,
+						'mail' => $userMail,
+						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
+					]
+				]);
 				// Compte créé, envoi du mail et création des données du site
 				if ($success) { // Formulaire complété envoi du mail
-					// Envoie le mail
-					// Sent contient true si réussite sinon code erreur d'envoi en clair
-					$sent = $this->sendMail(
-						$userMail,
-						'Installation de votre site',
-						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-						'Voici les détails de votre installation.<br><br>' .
-						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-						null
-					);
-					// Créer les dossiers
-					if (!is_dir(self::FILE_DIR.'source/banniere/')) {
-						mkdir(self::FILE_DIR.'source/banniere/');}
-					if (!is_dir(self::FILE_DIR.'thumb/banniere/')) {
-						mkdir(self::FILE_DIR.'thumb/banniere/');
-						}
-					// Copier les fichiers
-					copy('core/module/install/ressource/file/source/banniere960.jpg',self::FILE_DIR.'source/banniere/banniere960.jpg');
-					copy('core/module/install/ressource/file/thumb/banniere960.jpg',self::FILE_DIR.'thumb/banniere/banniere960.jpg');
-					// Copie des icônes
-					copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico');
-					copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico');
-					// Configure certaines données par défaut
-					if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
-						$this->initData('page','fr',true);
-						$this->initData('module','fr',true);
-						$this->setData(['module', 'blog', 'mon-premier-article', 'userId', $userId]);
-						$this->setData(['module', 'blog', 'mon-deuxieme-article', 'userId', $userId]);
-						$this->setData(['module', 'blog', 'mon-troisieme-article', 'userId', $userId]);
+				// Envoie le mail
+				// Sent contient true si réussite sinon code erreur d'envoi en clair
+				$sent = $this->sendMail(
+					$userMail,
+					'Installation de votre site',
+					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
+					'Voici les détails de votre installation.<br><br>' .
+					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+					null
+				);
+				// Créer les dossiers
+				if (!is_dir(self::FILE_DIR.'source/banniere/')) {
+					mkdir(self::FILE_DIR.'source/banniere/');}
+				if (!is_dir(self::FILE_DIR.'thumb/banniere/')) {
+					mkdir(self::FILE_DIR.'thumb/banniere/');
 					}
-					// Stocker le dossier d'installation
-					$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-					// Générer un fichier  robots.txt
-					$this->createRobots();
-					// Créer sitemap
-					$this->createSitemap();
-				} else {
-					die ('Erreur fatale : impossible de stockage les données de l\utilisateur.');
+				// Copier les fichiers
+				copy('core/module/install/ressource/file/source/banniere960.jpg',self::FILE_DIR.'source/banniere/banniere960.jpg');
+				copy('core/module/install/ressource/file/thumb/banniere960.jpg',self::FILE_DIR.'thumb/banniere/banniere960.jpg');
+				// Copie des icônes
+				copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico');
+				copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico');
+				// Configure certaines données par défaut
+				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
+					$this->initData('page','fr',true);
+					$this->initData('module','fr',true);
+					$this->setData(['module', 'blog', 'mon-premier-article', 'userId', $userId]);
+					$this->setData(['module', 'blog', 'mon-deuxieme-article', 'userId', $userId]);
+					$this->setData(['module', 'blog', 'mon-troisieme-article', 'userId', $userId]);
 				}
+				// Stocker le dossier d'installation
+				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
+				// Générer un fichier  robots.txt
+				$this->createRobots();
+				// Créer sitemap
+				$this->createSitemap();
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(false),
