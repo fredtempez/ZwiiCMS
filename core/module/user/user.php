@@ -27,6 +27,14 @@ class user extends common {
 
 	public static $users = [];
 
+	//Paramètres pour choix de la signature
+	public static $signature = [
+		self::SIGNATURE_ID => 'Identifiant',
+		self::SIGNATURE_PSEUDO => 'Pseudo',
+		self::SIGNATURE_FIRSTLASTNAME => 'Prénom Nom',
+		self::SIGNATURE_LASTFIRSTNAME => 'Nom Prénom'
+	];
+
 	public static $userId = '';
 
 	public static $userLongtime = false;
@@ -53,7 +61,7 @@ class user extends common {
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			
+
 			// Stockage des données
 			$this->setData([
 				'user',
@@ -208,15 +216,26 @@ class user extends common {
 				else {
 					$newGroup = $this->getData(['user', $this->getUrl(2), 'group']);
 				}
+				// Modification de nom Prénom
+				if($this->getUser('group') === self::GROUP_ADMIN){
+					$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
+					$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
+				}
+				else{
+					$newfirstname = $this->getData(['user', $this->getUrl(2), 'firstname']);
+					$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
+				}
 				// Modifie l'utilisateur
 				$this->setData([
 					'user',
 					$this->getUrl(2),
 					[
-						'firstname' => $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true),
+						'firstname' => $newfirstname,
 						'forgot' => 0,
 						'group' => $newGroup,
-						'lastname' => $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true),
+						'lastname' => $newlastname,
+						'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
+						'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
 						'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
 						'password' => $newPassword,
 						'connectFail' => $this->getData(['user',$this->getUrl(2),'connectFail']),

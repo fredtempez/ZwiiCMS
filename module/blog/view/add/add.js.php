@@ -17,3 +17,39 @@ $("#blogAddDraft").on("click", function() {
 	$("#blogAddState").val(0);
 	$("#blogAddForm").trigger("submit");
 });
+
+/**
+ * Options de commentaires
+ */
+$("#blogAddCloseComment").on("change", function() {
+	if ($(this).is(':checked') ) {
+		$("#commentOptionsWrapper").slideUp();
+	} else {
+		$("#commentOptionsWrapper").slideDown();
+	}
+});
+
+$("#blogAddMailNotification").on("change", function() {
+	if ($(this).is(':checked') ) {
+		$("#blogAddGroupNotification").slideDown();
+	} else {
+		$("#blogAddGroupNotification").slideUp();
+	}
+});
+
+
+$( document).ready(function() {
+
+	if ($("#blogAddCloseComment").is(':checked') ) {
+		$("#commentOptionsWrapper").slideUp();
+	} else {
+		$("#commentOptionsWrapper").slideDown();
+	}
+
+	if ($("#blogAddMailNotification").is(':checked') ) {
+		$("#blogAddGroupNotification").slideDown();
+	} else {
+		$("#blogAddGroupNotification").slideUp();
+	}
+
+});

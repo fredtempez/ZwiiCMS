@@ -10,12 +10,53 @@
  * @link http://zwiicms.fr/
  */
 
+
 /**
  * Confirmation de suppression
  */
 $(".blogCommentDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer ce commentaire ?", function() {
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	return core.confirm("Supprimer le commentaire de l'article " + nom + " ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
+ * Confirmation d'approbation
+ */
+$(".blogCommentApprove").on("click", function() {
+	var _this = $(this);
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	return core.confirm("Approuver le commentaire de l'article " + nom + " ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
+ * Confirmation de rejet
+ */
+$(".blogCommentReject").on("click", function() {
+	var _this = $(this);
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	return core.confirm("Rejeter le commentaire de l'article " + nom + " ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
+ * Confirmation de suppression en masse
+ */
+$(".blogCommentDeleteAll").on("click", function() {
+	var _this = $(this);
+	var nombre = "<?php echo count($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment' ])); ?>";
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	if( nombre === "1"){
+		var message = "Supprimer le commentaire de l'article " + nom + " ?";
+	} else{
+		var message = "Supprimer les " + nombre + " commentaires de l'article " + nom + " ?";
+	}
+	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });

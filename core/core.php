@@ -25,6 +25,10 @@ class common {
 	const GROUP_MEMBER = 1;
 	const GROUP_MODERATOR = 2;
 	const GROUP_ADMIN = 3;
+	const SIGNATURE_ID = 1;
+	const SIGNATURE_PSEUDO = 2;
+	const SIGNATURE_FIRSTLASTNAME = 3;
+	const SIGNATURE_LASTFIRSTNAME = 4;
 	// Dossier de travail
 	const BACKUP_DIR = 'site/backup/';
 	const DATA_DIR = 'site/data/';
@@ -39,7 +43,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.00';
+	const ZWII_VERSION = '10.4.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1402,6 +1406,47 @@ class common {
 
 			// Mise à jour du numéro de version
 			$this->setData(['core', 'dataVersion', 10300]);
+		}
+		// Version 10.4.00
+		if ($this->getData(['core', 'dataVersion']) < 10300) {
+			// Ajouter le prénom comme pseudo et le pseudo comme signature
+			foreach($this->getData(['user']) as $userId => $userIds){
+				$this->setData(['user',$userId,'pseudo',$this->getData(['user',$userId,'firstname'])]);
+				$this->setData(['user',$userId,'signature',2]);
+			}
+
+			// Ajouter les champs de blog v3
+			// Liste des pages dans pageList
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Parcourir pageList et rechercher les modules de blog
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
+					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent]), 'publishedOn', 'SORT_DESC'));
+					foreach ($articleIds as $key => $article) {
+						// Droits les deux groupes
+						$this->setData(['module',  $parent, $article,'editRights','22']);
+						// Limite de taille 500
+						$this->setData(['module',  $parent, $article,'commentMaxlength', '500']);
+						// Pas d'approbation des commentaires
+						$this->setData(['module',  $parent, $article,'commentApprove', false ]);
+					}
+					// Traitement des commentaires
+					if ( is_array($this->getData(['module',  $parent, $article,'comment'])) ) {
+						foreach($this->getData(['module',  $parent, $article,'comment']) as $commentId => $comment) {
+							// Approbation
+							$this->setData(['module',  $parent, $article,'comment', $commentId, 'approval', true ]);
+						}
+					}
+				}
+			}
+			$this->setData(['core', 'dataVersion', 10400]);
 		}
 	}
 }

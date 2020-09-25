@@ -29,3 +29,39 @@ $("#blogEditDraft").on("click", function() {
 	$("#blogEditState").val(0);
 	$("#blogEditForm").trigger("submit");
 });
+
+/**
+ * Options de commentaires
+ */
+$("#blogEditCloseComment").on("change", function() {
+	if ($(this).is(':checked') ) {
+		$("#commentOptionsWrapper").slideUp();
+	} else {
+		$("#commentOptionsWrapper").slideDown();
+	}
+});
+
+$("#blogEditMailNotification").on("change", function() {
+	if ($(this).is(':checked') ) {
+		$("#blogEditGroupNotification").slideDown();
+	} else {
+		$("#blogEditGroupNotification").slideUp();
+	}
+});
+
+
+$( document).ready(function() {
+
+	if ($("#blogEditCloseComment").is(':checked') ) {
+		$("#commentOptionsWrapper").slideUp();
+	} else {
+		$("#commentOptionsWrapper").slideDown();
+	}
+
+	if ($("#blogEditMailNotification").is(':checked') ) {
+		$("#blogEditGroupNotification").slideDown();
+	} else {
+		$("#blogEditGroupNotification").slideUp();
+	}
+
+});

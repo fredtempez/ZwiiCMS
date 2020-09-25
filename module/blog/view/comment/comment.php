@@ -7,10 +7,16 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-</div>
+
 <?php if($module::$comments): ?>
-	<?php echo template::table([3, 6, 2, 1], $module::$comments, ['Date', 'Contenu', 'Auteur', '']); ?>
-	<?php echo $module::$pages; ?>
+	<div class="col2 offset8">
+			<?php echo $module::$commentsDelete; ?>
+	</div>
+
+</div>
+	<?php echo template::table([3, 5, 2, 1, 1], $module::$comments, ['Date', 'Contenu', 'Auteur', '', '']); ?>
+	<?php echo $module::$pages.'<br/>'; ?>
 <?php else: ?>
+</div>
 	<?php echo template::speech('Aucun commentaire.'); ?>
 <?php endif; ?>

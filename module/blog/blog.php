@@ -14,10 +14,18 @@
 
 class blog extends common {
 
+	// Objets
+	// Propriétaire - groupe
+	const EDIT_ALL          = '02'; // Groupes Editeurs et admins
+	const EDIT_OWNER_ADMIN  = '23'; // Propriétaire éditeur + groupe admin
+	const EDIT_ADMIN        = '03'; // Groupe des admin
+
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'comment' => self::GROUP_MODERATOR,
+		'commentApprove' => self::GROUP_MODERATOR,
 		'commentDelete' => self::GROUP_MODERATOR,
+		'commentDeleteAll' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
@@ -26,7 +34,18 @@ class blog extends common {
 
 	public static $articles = [];
 
+	// Signature de l'article
+	public static $articleSignature = '';
+
+	// Signature du commentaire
+	public static $editCommentSignature = '';
+
 	public static $comments = [];
+
+	public static $commentsDelete;
+
+	// Signatures des commentaires déjà saisis
+	public static $commentsSignature = [];
 
 	public static $pages;
 
@@ -48,10 +67,29 @@ class blog extends common {
 		'right' => 'À droite ',
 	];
 
+	//Paramètre longueur maximale des commentaires en nb de caractères
+	public static $commentLength = [
+		'500' => '500',
+		'1000' => '1000',
+		'2000' => '2000',
+		'5000' => '5000',
+		'10000' => '10000'
+	];
+
+	// Permissions d'un article
+	public static $articleRightsAdmin = [
+		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
+		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs',
+		self::EDIT_ADMIN       => 'Groupe des administrateurs'
+	];
+	public static $articleRightsModerator = [
+		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
+		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs'
+	];
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.02';
+	const BLOG_VERSION = '3.00.dev';
 
 	/**
 	 * Édition
@@ -59,6 +97,13 @@ class blog extends common {
 	public function add() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Modification de l'userId
+			if($this->getUser('group') === self::GROUP_ADMIN){
+				$newuserid = $this->getInput('blogAddUserId', helper::FILTER_STRING_SHORT, true);
+			}
+			else{
+				$newuserid = $this->getUser('id');
+			}
 			// Incrémente l'id de l'article
 			$articleId = helper::increment($this->getInput('blogAddTitle', helper::FILTER_ID), $this->getData(['page']));
 			$articleId = helper::increment($articleId, (array) $this->getData(['module', $this->getUrl(0)]));
@@ -77,7 +122,8 @@ class blog extends common {
 				'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
 				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
-				'userId' => $this->getInput('blogAddUserId', helper::FILTER_ID, true)
+				'userId' => $newuserid,
+				'commentMaxlength' => $this->getInput('blogAddlength', null)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -108,14 +154,13 @@ class blog extends common {
 	 * Liste des commentaires
 	 */
 	public function comment() {
-		// Liste les commentaires
-		$comments = [];
-		foreach((array) $this->getData(['module', $this->getUrl(0)]) as $articleId => $article) {
-			foreach($article['comment'] as &$comment) {
-				$comment['articleId'] = $articleId;
-			}
-			$comments += $article['comment'];
-		}
+		$comments = $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'comment']);
+		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
+					'class' => 'blogCommentDeleteAll buttonRed',
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2).'/' . $_SESSION['csrf'] ,
+					'ico' => 'cancel',
+					'value' => 'Tout effacer'
+		]);
 		// Ids des commentaires par ordre de création
 		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
@@ -126,20 +171,32 @@ class blog extends common {
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Met en forme le tableau
 			$comment = $comments[$commentIds[$i]];
+			// Bouton d'approbation
+			$buttonApproval = '';
+			// Compatibilité avec les commentaires des versions précédentes, les valider
+			$comment['approval'] = array_key_exists('approval', $comment) === false ? true : $comment['approval'] ;
+			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApprove']) === true) {
+				$buttonApproval = template::button('blogcommentApprove' . $commentIds[$i], [
+					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApprove buttonRed' ,
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
+					'value' => $comment['approval'] === true ? 'A' : 'R'
+				]);
+			}
 			self::$comments[] = [
 				utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
+				$buttonApproval,
 				template::button('blogCommentDelete' . $commentIds[$i], [
 					'class' => 'blogCommentDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/comment-delete/' . $comment['articleId'] . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => template::ico('cancel')
 				])
 			];
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des commentaires',
+			'title' => 'Gestion des commentaires : '. $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title']),
 			'view' => 'comment'
 		]);
 	}
@@ -168,9 +225,71 @@ class blog extends common {
 			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
 				'notification' => 'Commentaire supprimé',
 				'state' => true
+			]);
+		}
+	}
+
+	/**
+	 * Suppression de tous les commentaires de l'article $this->getUrl(2)
+	 */
+	public function commentDeleteAll() {
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Suppression
+		else {
+			$this->setData(['module', $this->getUrl(0), $this->getUrl(2), 'comment',[] ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
+				'notification' => 'Commentaires supprimés',
+				'state' => true
+			]);
+		}
+	}
+
+	/**
+	 * Approbation oou désapprobation de commentaire
+	 */
+	public function commentApprove() {
+		// Le commentaire n'existe pas
+		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]) === null) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		}
+		// Jeton incorrect
+		elseif ($this->getUrl(4) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Inversion du statut
+		else {
+			$this->setData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), [
+				'author' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'author']),
+				'content' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'content']),
+				'createdOn' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'createdOn']),
+				'userId' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'userId']),
+				'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+			]]);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
+				'notification' =>  $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) === true ? 'Commentaire approuvé' : 'Commentaire rejeté',
+				'state' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
 			]);
 		}
 	}
@@ -181,20 +300,57 @@ class blog extends common {
 	public function config() {
 		// Ids des articles par ordre de publication
 		$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC'));
+		// Gestion des droits d'accès
+		$filterData=[];
+		foreach ($articleIds as $key => $value) {
+			$rights = $this->getData(['module',  $this->getUrl(0), $value,'editRights']);
+			// Compatibilité pas de droit stocké placer droit par défaut
+			$rights = empty($rights) ? '02' : $rights;
+			// Check les droits du propriétaire
+			// Check les droits du groupe
+			if (
+				( substr($rights,0,1) === '2'
+				AND  $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+				)
+				OR  ( $this->getUser('group') >=  substr($rights,1,1) )
+			) {
+				$filterData[] = $value;
+			}
+		}
+		$articleIds = $filterData;
 		// Pagination
 		$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			// Nombre de commentaires à approuver et approuvés
+			$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+			if ( is_array($approvals) ) {
+				$a = array_values($approvals);
+				$toApprove = count(array_keys($a,false));
+				$approved = count(array_keys($a,true));
+			} else {
+				$toApprove = 0;
+				$approved = count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']));
+			}
 			// Met en forme le tableau
 			self::$articles[] = [
-				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
+				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
+				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']) .
+				'</a>',
 				// date('d/m/Y H:i', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
 				utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])))
 				.' à '.
 				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))),
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
+				// Bouton pour afficher les commentaires de l'article
+				template::button('blogConfigComment' . $articleIds[$i], [
+					'class' => ($toApprove || $approved ) > 0 ?  'buttonBlue' : 'buttonGrey' ,
+					'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
+					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
+					//'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
+				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil')
@@ -266,6 +422,12 @@ class blog extends common {
 		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
+				if($this->getUser('group') === self::GROUP_ADMIN){
+					$newuserid = $this->getInput('blogEditUserId', helper::FILTER_STRING_SHORT, true);
+				}
+				else{
+					$newuserid = $this->getUser('id');
+				}
 				$articleId = $this->getInput('blogEditTitle', helper::FILTER_ID, true);
 				// Incrémente le nouvel id de l'article
 				if($articleId !== $this->getUrl(2)) {
@@ -274,7 +436,7 @@ class blog extends common {
 					$articleId = helper::increment($articleId, array_keys(self::$actions));
 				}
 				$this->setData(['module', $this->getUrl(0), $articleId, [
-					'closeComment' => $this->getInput('blogEditCloseComment'),
+					'closeComment' => $this->getInput('blogEditCloseComment', helper::FILTER_BOOLEAN),
 					'mailNotification'  => $this->getInput('blogEditMailNotification', helper::FILTER_BOOLEAN),
 					'groupNotification' => $this->getInput('blogEditGroupNotification', helper::FILTER_INT),
 					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
@@ -286,7 +448,10 @@ class blog extends common {
 					'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
-					'userId' => $this->getInput('blogEditUserId', helper::FILTER_ID, true)
+					'userId' => $newuserid,
+					'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
+					'commentApprove' => $this->getInput('blogEditCommentApprove', helper::FILTER_BOOLEAN),
+					'editRights' => $this->getInput('blogEditRights')
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
@@ -303,7 +468,7 @@ class blog extends common {
 			self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
-				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
+				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' .  self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
 			}
 			unset($userFirstname);
 			// Valeurs en sortie
@@ -350,11 +515,11 @@ class blog extends common {
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));
 					$this->setData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, [
 						'author' => $this->getInput('blogArticleAuthor', helper::FILTER_STRING_SHORT, empty($this->getInput('blogArticleUserId')) ? TRUE : FALSE),
-						'content' => $this->getInput('blogArticleContent', helper::FILTER_STRING_SHORT, true),
+						'content' => $this->getInput('blogArticleContent', false),
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
+						'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) // true commentaire publié false en attente de publication
 					]]);
-
 					// Envoi d'une notification aux administrateurs
 					// Init tableau
 					$to = [];
@@ -365,20 +530,21 @@ class blog extends common {
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
+					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'Commentaire déposé en attente d\'approbation.': 'Commentaire déposé.';
 					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>',
+							'Nouveau commentaire ' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'à approuver' : ''  .
+							'déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>'.
+							$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'content']),
 							''
 						);
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
-							//'notification' => 'Commentaire ajouté',
-							//'state' => true
-							'notification' => ($sent === true ? 'Commentaire ajouté et une notification envoyée' : 'Commentaire ajouté, erreur de notification : <br/>' . $sent),
+							'notification' => ($sent === true ? $notification . '<br/>Une notification a été envoyée.' : $notification . '<br/> Erreur de notification : ' . $sent),
 							'state' => ($sent === true ? true : null)
 						]);
 
@@ -386,7 +552,7 @@ class blog extends common {
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
-							'notification' => 'Commentaire ajouté',
+							'notification' => $notification,
 							'state' => true
 						]);
 					}
@@ -398,14 +564,78 @@ class blog extends common {
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
+				// Signature de l'article
+				$userIdArticle = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']);
+				switch ($this->getData(['user', $userIdArticle, 'signature'])){
+					case 1:
+						self::$articleSignature = $userIdArticle;
+						break;
+					case 2:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'pseudo']);
+						break;
+					case 3:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']) . ' ' . $this->getData(['user', $userIdArticle, 'lastname']);
+						break;
+					case 4:
+						self::$articleSignature = $this->getData(['user', $userIdArticle, 'lastname']) . ' ' . $this->getData(['user', $userIdArticle, 'firstname']);
+						break;
+					default:
+					self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']);
+				}
+				// Signature du commentaire édité
+				if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+					$useridcomment = $this->getUser('id');
+					switch ($this->getData(['user', $useridcomment, 'signature'])){
+					case 1:
+						self::$editCommentSignature = $useridcomment;
+						break;
+					case 2:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'pseudo']);
+						break;
+					case 3:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']) . ' ' . $this->getData(['user', $useridcomment, 'lastname']);
+						break;
+					case 4:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'lastname']) . ' ' . $this->getData(['user', $useridcomment, 'firstname']);
+						break;
+					default:
+						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']);
+					}
+				}
 				// Commentaires en fonction de la pagination
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
+					// Signatures des commentaires
+					$e = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'userId']);
+					if ($e) {
+						switch ($this->getData(['user', $e, 'signature'])){
+							case 1:
+								self::$commentsSignature[$commentIds[$i]] = $e;
+								break;
+							case 2:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'pseudo']);
+								break;
+							case 3:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'firstname']) . ' ' . $this->getData(['user', $e, 'lastname']);
+								break;
+							case 4:
+								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'lastname']) . ' ' . $this->getData(['user', $e, 'firstname']);
+								break;
+						}
+					} else {
+						self::$commentsSignature[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'author']);
+					}
+					// Données du commentaire si approuvé
+					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i],'approval']) === true ) {
+						self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
+					}
 				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,
 					'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'title']),
+					'vendor' => [
+						'tinymce'
+					],
 					'view' => 'article'
 				]);
 			}
