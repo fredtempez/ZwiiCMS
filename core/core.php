@@ -1362,6 +1362,7 @@ class common {
 			// Options de barre de membre simple
 			$this->setData(['config','page404','none']);
 			$this->setData(['config','page403','none']);
+			$this->setData(['config','page302','none']);
 			// Module de recherche
 			// Suppression du dossier search
 			if (is_dir('core/module/search')) {
@@ -1402,6 +1403,17 @@ class common {
 
 			// Mise à jour du numéro de version
 			$this->setData(['core', 'dataVersion', 10300]);
+		}
+		// Version 10.3.01
+		if ($this->getData(['core', 'dataVersion']) < 10301) {
+			// Inscription des nouvelles variables
+			if ($this->getData(['config','searchPageId']) === '') {
+				$this->setData(['config','searchPageId','none']);
+			}
+			if ($this->getData(['config','legalPageId']) === '') {
+				$this->setData(['config','legalPageId','none']);
+			}
+			$this->setData(['core', 'dataVersion', 10301]);
 		}
 	}
 }
