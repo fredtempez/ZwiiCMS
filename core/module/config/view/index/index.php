@@ -590,8 +590,9 @@
 					<div  class="col12">
 						<?php echo 'ZwiiCMS : ' 	. common::ZWII_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Blog : ' 		. blog::BLOG_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Galerie : ' 	. gallery::GALLERY_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'News : ' 		. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Nouvelles : '	. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Recherche : '   . search::SEARCH_VERSION ;?>
 					</div>
