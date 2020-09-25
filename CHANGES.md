@@ -1,5 +1,10 @@
 # Changelog
 
+## version 10.3.01
+- Corrections : 
+    - Filtrage des pages affichées dans la configuration et initialisation après une mise à jour.
+    - Erreur de position du menu fixe en haut de page
+
 ## version 10.3.00
 - Corrections :
     - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.

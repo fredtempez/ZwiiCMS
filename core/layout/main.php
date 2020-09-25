@@ -32,10 +32,14 @@
 			//
 			if($this->getData(['theme', 'menu', 'position']) === 'top' &&
 				$this->getData(['theme', 'menu', 'fixed']) === true) {
-					if ($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD'))
-						{echo 'id="navfixedlogout"';}
-					elseif ($this->getUrl(0) !== 'theme')
-						{echo 'id="navfixedconnected"';}
+					if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD'))
+					{
+						echo 'id="navfixedconnected"';
+					}
+					else
+					{
+						echo 'id="navfixedlogout"';
+					}
 				}
 			?>
 			>
