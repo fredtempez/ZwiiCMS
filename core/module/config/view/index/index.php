@@ -169,14 +169,14 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Mentions légales',
 						'selected' => $this->getData(['config', 'legalPageId']),
 						'help' => 'Les mentions légales sont obligatoires en France. Une option du pied de page ajoute un lien discret vers cette page.'
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($this->getData(['page']), 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Recherche dans le site',
 						'selected' => $this->getData(['config', 'searchPageId']),
 						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche" permet d\'activer un lien dans le pied de page. '
@@ -186,7 +186,7 @@
 			<div class="row">
 				<div class="col4">
 					<?php
-						echo template::select('configPage403', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+						echo template::select('configPage403', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Accès interdit, erreur 403',
 							'selected' =>$this->getData(['config', 'page403']),
 							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
@@ -194,7 +194,7 @@
 				</div>
 				<div class="col4">
 					<?php
-						echo template::select('configPage404', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+						echo template::select('configPage404', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Page inexistante, erreur 404',
 							'selected' =>$this->getData(['config', 'page404']),
 							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
@@ -202,7 +202,7 @@
 				</div>
 				<div class="col4">
 					<?php
-						echo template::select('configPage302', array_merge(['none' => 'Aucune'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
+						echo template::select('configPage302', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($orphans, 'title', 'SORT_ASC')), [
 							'label' => 'Site en maintenance',
 							'selected' =>$this->getData(['config', 'page302']),
 							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
