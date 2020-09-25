@@ -1698,6 +1698,9 @@ class core extends common {
 		) {
 			$user = new user;
 			$user->logout();
+			// Recharge la classe
+			$core = new core;
+			$core->router();
 		}
 		// Mode maintenance
 		if(
