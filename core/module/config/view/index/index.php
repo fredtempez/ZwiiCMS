@@ -169,14 +169,14 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('configLegalPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Mentions légales',
 						'selected' => $this->getData(['config', 'legalPageId']),
 						'help' => 'Les mentions légales sont obligatoires en France. Une option du pied de page ajoute un lien discret vers cette page.'
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('configSearchPageId', array_merge(['' => 'Sélectionner'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Recherche dans le site',
 						'selected' => $this->getData(['config', 'searchPageId']),
 						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche" permet d\'activer un lien dans le pied de page. '
