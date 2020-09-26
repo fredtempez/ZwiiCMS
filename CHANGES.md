@@ -6,7 +6,9 @@
         - Filtrage des pages affichées dans la configuration et initialisation après une mise à jour.
         - Pages de recherche et des mentions vides, modification de la valeur en l'absence de choix.
         - Libellé des pages d'erreur non sélectionnées "Page par défaut"
-    - Erreur de position du menu fixe en haut de page, recharge la classe après la perte de la session.
+    - Erreur de position du menu fixe en haut de page des membres simples et dans après une déconnexion automatique
+- Modification :
+    - Extraction d'une archive : vérification du contenu avant import.
 
 ## version 10.3.00
 - Corrections :
