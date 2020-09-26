@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.00';
+	const ZWII_VERSION = '10.3.01';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -2204,7 +2204,7 @@ class layout extends common {
 		$items .= '</span>';
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
-		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone"' : '>';
+		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
 		if ($this->getData(['config','searchPageId']) !== 'none') {
 			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
 		}
