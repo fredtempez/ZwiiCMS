@@ -30,7 +30,7 @@
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
 					AND $this->getData(['theme', 'menu', 'fixed']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true) 
 					AND $this->getUser('group') > self::GROUP_MEMBER) {
 						echo '<nav id="navfixedconnected" >';
 					} else {
