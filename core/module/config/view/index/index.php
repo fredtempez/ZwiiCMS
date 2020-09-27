@@ -593,8 +593,8 @@
 						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Galerie : ' 	. gallery::GALLERY_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Nouvelles : '	. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Recherche : '   . search::SEARCH_VERSION ;?>
-						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Recherche : '   . search::SEARCH_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION; ?>
 					</div>
 				</div>
 			</div>
