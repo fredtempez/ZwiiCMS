@@ -49,7 +49,7 @@
 					<?php echo template::textarea('configMetaDescription', [
 						'label' => 'Description du site',
 						'value' => $this->getData(['config', 'metaDescription']),
-						'help'  => 'La description participe au référencement, n\'oubliez pas de personnaliser la description de chaque page sans copié collé.'
+						'help'  => 'La description participe au référencement, n\'oubliez pas de personnaliser la description de chaque page sans un copié collé.'
 					]); ?>
 				</div>
 			</div>
