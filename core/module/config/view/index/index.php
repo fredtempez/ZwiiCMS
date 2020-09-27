@@ -577,7 +577,7 @@
 <div class="row">
 	<div class="col12" >
 		<div class="block" id="system">
-			<h4>Versions des modules
+			<h4>Versions installées
 				<div class="openClose">
 					<?php
 					echo template::ico('plus-circled','right');
@@ -590,11 +590,11 @@
 					<div  class="col12">
 						<?php echo 'ZwiiCMS : ' 	. common::ZWII_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Blog : ' 		. blog::BLOG_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Galerie : ' 	. gallery::GALLERY_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
+						<?php echo 'Galerie : ' 	. gallery::GALLERY_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Nouvelles : '	. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 						<?php echo 'Recherche : '   . search::SEARCH_VERSION ;?>
+						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
 					</div>
 				</div>
 			</div>
