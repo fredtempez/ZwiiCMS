@@ -1,5 +1,16 @@
 # Changelog
 
+## version 10.3.01
+- Corrections :
+    - Configuration du site :
+        - Filtrage des pages affichées dans la configuration et initialisation après une mise à jour.
+        - Pages de recherche et des mentions vides, modification de la valeur en l'absence de choix.
+        - Libellé des pages d'erreur non sélectionnées "Page par défaut"
+    - Erreur de position du menu fixe en haut de page des membres simples et dans après une déconnexion automatique
+- Modification :
+    - Thème : import d'une archive de thème, vérification de la cohérence du contenu avant son installation.
+    - Configuration : suppression du bloc des versions, affichage de la version de ZwiiCMS dans le bloc Informations générales.
+
 ## version 10.3.00
 - Modifications :
     - Module User
@@ -27,7 +38,7 @@
     - Module galerie :
         - Les données du thème de galerie sont désormais stockées de manière unique, un seul thème par site pour toutes les galeries d'un même site.
     - Configuration du site :
-        - Pages 403 (accès interdit) et 404 (page introuvable) personnalisables
+        - Pages 403 (accès interdit), 404 (page introuvable) et site en maintenance personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur ; le nom de l'archive prend le nom du sous-domaine s'il existe.
     - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
     - Page :
