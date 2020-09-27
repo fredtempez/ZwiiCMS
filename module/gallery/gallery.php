@@ -19,7 +19,7 @@ class gallery extends common {
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.4';
+	const GALLERY_VERSION = '2.5';
 
 	public static $directories = [];
 
@@ -178,7 +178,7 @@ class gallery extends common {
 					'directory' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','directory']),
 					'homePicture' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','homePicture']),
 					'sort' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','sort']),
-					'position' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','positions']),
+					'position' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','position']),
 					'fullScreen' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','fullScreen'])
 
 				],
@@ -259,7 +259,7 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						'sort' => self::SORT_ASC,
-						'position' => $this->getData(['module',$this->getUrl(0)]) !== null ? count($this->getData(['module',$this->getUrl(0)])) + 1 : 0,
+						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
 						'fullScreen' => false
 					],
 					'legend' => [],
@@ -382,7 +382,7 @@ class gallery extends common {
 							'homePicture' => $homePicture,
 							// pas de positions, on active le tri alpha
 							'sort' =>  $this->getInput('galleryEditSort'),
-							'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']) === null ? count($this->getData(['module',$this->getUrl(0)]))-1 : $this->getData(['module', $this->getUrl(0), $galleryId,'config','positions']),
+							'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
 							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
 						],

@@ -26,19 +26,18 @@
 		<?php $layout->showNotification(); ?>
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
-			<nav
-			<?php
-			// Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté
-			//
-			if($this->getData(['theme', 'menu', 'position']) === 'top' &&
-				$this->getData(['theme', 'menu', 'fixed']) === true) {
-					if ($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD'))
-						{echo 'id="navfixedlogout"';}
-					elseif ($this->getUrl(0) !== 'theme')
-						{echo 'id="navfixedconnected"';}
-				}
-			?>
-			>
+				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
+				<?php
+				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
+					AND $this->getData(['theme', 'menu', 'fixed']) === true
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true) 
+					AND $this->getUser('group') > self::GROUP_MEMBER) {
+						echo '<nav id="navfixedconnected" >';
+					} else {
+						echo '<nav id="navfixedlogout" >';
+					}
+				?>
+				<!-- Menu Burger -->
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
 					<div id="burgerText"><?php echo $this->getData(['config','title']);?></div>
@@ -47,8 +46,7 @@
 				<div id="menu" class="
 				<?php if($this->getData(['theme', 'menu', 'position']) === 'top'){echo 'container-large';}else{echo'container';}
 				?>">
-
-					<?php $layout->showMenu(); ?>
+				<?php $layout->showMenu(); ?>
 				</div> <!--fin menu -->
 			</nav>
 		<?php endif; ?>

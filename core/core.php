@@ -1366,6 +1366,7 @@ class common {
 			// Options de barre de membre simple
 			$this->setData(['config','page404','none']);
 			$this->setData(['config','page403','none']);
+			$this->setData(['config','page302','none']);
 			// Module de recherche
 			// Suppression du dossier search
 			if (is_dir('core/module/search')) {
@@ -1406,6 +1407,17 @@ class common {
 
 			// Mise à jour du numéro de version
 			$this->setData(['core', 'dataVersion', 10300]);
+		}
+		// Version 10.3.01
+		if ($this->getData(['core', 'dataVersion']) < 10301) {
+			// Inscription des nouvelles variables
+			if ($this->getData(['config','searchPageId']) === '') {
+				$this->setData(['config','searchPageId','none']);
+			}
+			if ($this->getData(['config','legalPageId']) === '') {
+				$this->setData(['config','legalPageId','none']);
+			}
+			$this->setData(['core', 'dataVersion', 10301]);
 		}
 		// Version 10.4.00
 		if ($this->getData(['core', 'dataVersion']) < 10300) {
@@ -2234,13 +2246,15 @@ class layout extends common {
 		$items .= '</span>';
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
-		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone"' : '';
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
+		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
+		if ($this->getData(['config','searchPageId']) !== 'none') {
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
+		}
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
-		if ($this->getData(['config','legalPageId']) !== '') {
+		if ($this->getData(['config','legalPageId']) !== 'none') {
 			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','legalPageId']) . '" data-tippy-content="Mentions Légales">Mentions légales</a>';
 		}
 		$items .= '</span>';

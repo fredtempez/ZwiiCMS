@@ -416,8 +416,8 @@ class config extends common {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
 			// Empêcher la modification si défini dans footer
-			if ( $this->getData(['theme','footer','displaySearch']) === true 
-				AND $this->getInput('configSearchPageId') === '' 
+			if ( $this->getData(['theme','footer','displaySearch']) === true
+				AND $this->getInput('configSearchPageId') === 'none'
 				){
 					$searchPageId = $this->getData(['config','searchPageId']);
 					self::$inputNotices['configSearchPageId'] = 'Désactiver l\'option dans le pied de page';
@@ -426,8 +426,8 @@ class config extends common {
 					$searchPageId = $this->getInput('configSearchPageId');
 			}
 			// Empêcher la modification si défini dans footer
-			if ( $this->getData(['theme','footer','displayLegal']) === true 
-				AND $this->getInput('configLegalPageId') === '' 
+			if ( $this->getData(['theme','footer','displayLegal']) === true
+				AND $this->getInput('configLegalPageId') === 'none'
 				){
 					$legalPageId = $this->getData(['config','legalPageId']);
 					self::$inputNotices['configLegalPageId'] = 'Désactiver l\'option dans le pied de page';

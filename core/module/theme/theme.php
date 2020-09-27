@@ -610,30 +610,48 @@ class theme extends common {
 	public function manage() {
 		if($this->isPost() ) {
 			$zipFilename =	$this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
-
+			$tempFolder = uniqid();
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR.'source/'.$zipFilename) === TRUE) {
-				$zip->extractTo('.');
+				mkdir (self::TEMP_DIR . $tempFolder);
+				$zip->extractTo(self::TEMP_DIR . $tempFolder );
+				// Archive de thème ?
+				if ( file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
+					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
+					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json') ) {
+					// traiter l'archive
+					$success = $zip->extractTo('.');
+					// traitement de l'erreur
+					$notification = $success ? 'Le thème a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
+					// Supprimmer le dossier temporaire
+					$install = new install;
+					$install->removeAll(self::TEMP_DIR . $tempFolder);
+				} else {
+					// pas une archive de thème
+					$success = false;
+					$notification = 'Ce n\'est pas l\'archive d\'un thème !';
+				}
 				$zip->close();
+			} else {
+				// erreur à l'ouverture
+				$success = false;
+				$notification = 'Impossible d\'ouvrir l\'archive';
+			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'theme'
-			]);
-			} else {
-				$this->addOutput([
-					'notification' => 'Erreur avec le thème <b>'.$zipFilename.'</b>',
-					'redirect' => helper::baseUrl() . 'theme/manage'
-				]);
-			}
+				'notification' => $notification,
+				'state' => $success,
+				'title' => 'Gestion des thèmes',
+				'view' => 'manage'
+			]);;
 		}
-
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Gestion des thèmes',
 			'view' => 'manage'
 		]);
-
 	}
+
 
 
 	/**
@@ -651,7 +669,7 @@ class theme extends common {
 			readfile(self::TEMP_DIR . $zipFilename);
 			// Nettoyage du dossier
 			unlink (self::TEMP_DIR . $zipFilename);
-			die();
+			exit();
 	}
 
 	/**
@@ -679,7 +697,7 @@ class theme extends common {
 	 * construction du zip
 	 * @param string $modele theme ou admin
 	 */
-	public function makezip($modele) {
+	private function makezip($modele) {
 		// Creation du dossier
 		$zipFilename  =  $modele . ' ' .date('d m Y').'  '.date('H i s ').'.zip';
 		$zip = new ZipArchive();
@@ -709,4 +727,5 @@ class theme extends common {
 		}
 		return ($zipFilename);
 	}
+
 }
