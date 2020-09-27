@@ -7,7 +7,7 @@
         - Pages de recherche et des mentions vides, modification de la valeur en l'absence de choix.
         - Libellé des pages d'erreur non sélectionnées "Page par défaut"
     - Erreur de position du menu fixe en haut de page des membres simples et dans après une déconnexion automatique
-- Modification :
+- Modifications :
     - Thème : import d'une archive de thème, vérification de la cohérence du contenu avant son installation.
     - Configuration : suppression du bloc des versions, affichage de la version de ZwiiCMS dans le bloc Informations générales.
 
