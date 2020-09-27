@@ -8,7 +8,8 @@
         - Libellé des pages d'erreur non sélectionnées "Page par défaut"
     - Erreur de position du menu fixe en haut de page des membres simples et dans après une déconnexion automatique
 - Modification :
-    - Extraction d'une archive : vérification du contenu avant import.
+    - Thème : import d'une archive de thème, vérification de la cohérence du contenu avant son installation.
+    - Configuration : suppression du bloc des versions, affichage de la version de ZwiiCMS dans le bloc Informations générales.
 
 ## version 10.3.00
 - Corrections :

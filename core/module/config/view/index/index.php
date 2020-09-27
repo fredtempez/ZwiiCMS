@@ -29,11 +29,18 @@
 		<div class="block">
 			<h4>Informations générales</h4>
 			<div class="row">
-				<div class="col12">
+				<div class="col10">
 					<?php echo template::text('configTitle', [
 						'label' => 'Titre du site',
 						'value' => $this->getData(['config', 'title']),
 						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
+					]); ?>
+				</div>
+				<div class="col2">
+					<?php echo template::text('configVersion', [
+						'label' => 'ZwiiCMS Version',
+						'value' => common::ZWII_VERSION,
+						'readonly' => true
 					]); ?>
 				</div>
 			</div>
@@ -42,7 +49,7 @@
 					<?php echo template::textarea('configMetaDescription', [
 						'label' => 'Description du site',
 						'value' => $this->getData(['config', 'metaDescription']),
-						'help'  => 'La description participe au référence, n\'oubliez pas de personnaliser la description de chaque page sans copié collé.'
+						'help'  => 'La description participe au référence, n\'oubliez pas de personnaliser la description de chaque page sans copié collé cette description.'
 					]); ?>
 				</div>
 			</div>
@@ -568,33 +575,6 @@
 							'value' => 'Script dans body',
 							'ico' => 'pencil'
 					]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12" >
-		<div class="block" id="system">
-			<h4>Versions installées
-				<div class="openClose">
-					<?php
-					echo template::ico('plus-circled','right');
-					echo template::ico('minus-circled','right');
-					?>
-				</div>
-			</h4>
-			<div class="blockContainer">
-				<div class="row">
-					<div  class="col12">
-						<?php echo 'ZwiiCMS : ' 	. common::ZWII_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Blog : ' 		. blog::BLOG_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Formulaire : '  . form::FORM_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Galerie : ' 	. gallery::GALLERY_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Nouvelles : '	. news::NEWS_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Recherche : '   . search::SEARCH_VERSION .  '&nbsp;&nbsp;-&nbsp;&nbsp;';?>
-						<?php echo 'Redirection : ' . redirection::REDIRECTION_VERSION; ?>
 					</div>
 				</div>
 			</div>
