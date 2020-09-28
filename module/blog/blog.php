@@ -468,6 +468,10 @@ class blog extends common {
 			self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
+			// Les membres ne sont pas éditeurs, les exclure de la liste
+				if ( $this->getData(['user', $userId, 'group']) < self::GROUP_MODERATOR) {
+					unset(self::$users[$userId]);
+				}				
 				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' .  self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
 			}
 			unset($userFirstname);
