@@ -288,8 +288,8 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
-				'notification' =>  $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) === true ? 'Commentaire approuvé' : 'Commentaire rejeté',
-				'state' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+				'notification' =>  $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) === true ? 'Commentaire rejeté' : 'Commentaire approuvé',
+				'state' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
 			]);
 		}
 	}
