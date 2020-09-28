@@ -1420,7 +1420,7 @@ class common {
 			$this->setData(['core', 'dataVersion', 10301]);
 		}
 		// Version 10.4.00
-		if ($this->getData(['core', 'dataVersion']) < 10300) {
+		if ($this->getData(['core', 'dataVersion']) < 10400) {
 			// Ajouter le prénom comme pseudo et le pseudo comme signature
 			foreach($this->getData(['user']) as $userId => $userIds){
 				$this->setData(['user',$userId,'pseudo',$this->getData(['user',$userId,'firstname'])]);
