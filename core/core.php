@@ -23,7 +23,7 @@ class common {
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
-	const GROUP_MODERATOR = 2;
+	const GROUP_EDITOR = 2;
 	const GROUP_ADMIN = 3;
 	const SIGNATURE_ID = 1;
 	const SIGNATURE_PSEUDO = 2;
@@ -127,24 +127,24 @@ class common {
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupEdits = [
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupNews = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupPublics = [
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $timezone;
@@ -2678,7 +2678,7 @@ class layout extends common {
 		if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
 			// Items de gauche
 			$leftItems = '';
-			if($this->getUser('group') >= self::GROUP_MODERATOR) {
+			if($this->getUser('group') >= self::GROUP_EDITOR) {
 				$leftItems .= '<li><select id="barSelectPage">';
 				$leftItems .= '<option value="">Choisissez une page</option>';
 				$leftItems .= '<optgroup label="Pages orphelines">';
@@ -2742,7 +2742,7 @@ class layout extends common {
 			}
 			// Items de droite
 			$rightItems = '';
-			if($this->getUser('group') >= self::GROUP_MODERATOR) {
+			if($this->getUser('group') >= self::GROUP_EDITOR) {
 				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
@@ -2801,7 +2801,7 @@ class layout extends common {
 		$vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
 		if(
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			AND $this->getUser('group') >= self::GROUP_MODERATOR
+			AND $this->getUser('group') >= self::GROUP_EDITOR
 		) {
 			$vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR.'core.json')) . ';';
 		}

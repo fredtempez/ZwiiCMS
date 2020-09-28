@@ -21,14 +21,14 @@ class blog extends common {
 	const EDIT_ADMIN        = '03'; // Groupe des admin
 
 	public static $actions = [
-		'add' => self::GROUP_MODERATOR,
-		'comment' => self::GROUP_MODERATOR,
-		'commentApprove' => self::GROUP_MODERATOR,
-		'commentDelete' => self::GROUP_MODERATOR,
-		'commentDeleteAll' => self::GROUP_MODERATOR,
-		'config' => self::GROUP_MODERATOR,
-		'delete' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR,
+		'add' => self::GROUP_EDITOR,
+		'comment' => self::GROUP_EDITOR,
+		'commentApprove' => self::GROUP_EDITOR,
+		'commentDelete' => self::GROUP_EDITOR,
+		'commentDeleteAll' => self::GROUP_EDITOR,
+		'config' => self::GROUP_EDITOR,
+		'delete' => self::GROUP_EDITOR,
+		'edit' => self::GROUP_EDITOR,
 		'index' => self::GROUP_VISITOR
 	];
 
@@ -469,7 +469,7 @@ class blog extends common {
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
 			// Les membres ne sont pas éditeurs, les exclure de la liste
-				if ( $this->getData(['user', $userId, 'group']) < self::GROUP_MODERATOR) {
+				if ( $this->getData(['user', $userId, 'group']) < self::GROUP_EDITOR) {
 					unset(self::$users[$userId]);
 				}				
 				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' .  self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
