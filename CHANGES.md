@@ -1,5 +1,17 @@
 # Changelog
 
+## version 10.4.00
+- Modifications :
+    - Module User
+        - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+    - Module Blog :
+        - Texte du commentaire enrichi.
+        - Nombre maximal de caractère par commentaire.
+        - Gestion des commentaires article par article.
+        - Suppression des commentaires en masse.
+        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
+        - Approbation des commentaires
+
 ## version 10.3.01
 - Corrections :
     - Configuration du site :
@@ -12,16 +24,6 @@
     - Configuration : suppression du bloc des versions, affichage de la version de ZwiiCMS dans le bloc Informations générales.
 
 ## version 10.3.00
-- Modifications :
-    - Module User
-        - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
-    - Module Blog :
-        - Texte du commentaire enrichi.
-        - Nombre maximal de caractère par commentaire.
-        - Gestion des commentaires article par article.
-        - Suppression des commentaires en masse.
-        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
-        - Approbation des commentaires
 - Corrections :
     - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
     - Login : l'option "Se souvenir de moi" est fonctionnelle.
