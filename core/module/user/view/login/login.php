@@ -12,6 +12,13 @@
 			]); ?>
 		</div>
 	</div>
+	<?php if ($this->getData(['config', 'connect','captcha'])): ?>
+		<div class="row">
+			<div class="col6">
+				<?php echo template::captcha('userLoginCaptcha'); ?>
+			</div>
+		</div>
+	<?php endif;?>
 	<div class="row">
 		<div class="col6">
 			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi', [
@@ -25,7 +32,6 @@
 	<div class="row">
 		<div class="col3 offset6">
 			<?php echo template::button('userLoginBack', [
-				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
 				'ico' => 'left',
 				'value' => 'Annuler'

@@ -334,6 +334,14 @@ class user extends common {
 	public function login() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Check la captcha
+			if(
+				$this->getInput('userLoginCaptcha', helper::FILTER_INT) !== $this->getInput('userLoginCaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('userLoginCaptchaSecondNumber', helper::FILTER_INT))
+			{
+				self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
+			}
+
+			// Lire Id du compte
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
 
 			/**
