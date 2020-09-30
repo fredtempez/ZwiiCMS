@@ -14,7 +14,7 @@
 	</div>
 	<?php if ($this->getData(['config', 'connect','captcha'])): ?>
 		<div class="row">
-			<div class="col6">
+			<div class="col8 offset2">
 				<?php echo template::captcha('userLoginCaptcha'); ?>
 			</div>
 		</div>
