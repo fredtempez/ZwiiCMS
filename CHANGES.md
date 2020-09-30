@@ -1,5 +1,10 @@
 # Changelog
 
+## version 10.3.02
+- Modifications :
+    - Nouvelles images de captcha.
+    - Option de configuration, captcha demandé à la connexion.
+
 ## version 10.3.01
 - Corrections :
     - Configuration du site :
