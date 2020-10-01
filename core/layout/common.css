@@ -1368,8 +1368,10 @@ th.col12 {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
 #userLoginCaptcha,
-#formcaptcha {
+#formcaptcha,
+#blogArticlecaptcha {
 	width: 20%;
 	text-align: center;
 	margin: auto;

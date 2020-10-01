@@ -53,6 +53,8 @@ class template {
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
         $firstNumber = rand ( 0 , count($letters)-1 );
         $secondNumber = rand ( 0 , count($letters)-1 );
+        $result =  $firstNumber +  $secondNumber;
+        $result = password_hash($result, PASSWORD_BCRYPT);
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
@@ -72,7 +74,13 @@ class template {
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)
         );
+        // Champ résultat caché
+        $html .= self::hidden($attributes['id'] . 'Result', [
+            'value' => $result,
+            'before' => false
+        ]);        
         // Champs cachés contenant les nombres
+        /*
         $html .= self::hidden($attributes['id'] . 'FirstNumber', [
             'value' => $firstNumber,
             'before' => false
@@ -81,6 +89,7 @@ class template {
             'value' => $secondNumber,
             'before' => false
         ]);
+        */
         // Fin du wrapper
         $html .= '</div>';
         // Retourne le html

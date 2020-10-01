@@ -342,7 +342,8 @@ class blog extends common {
 					// Check la captcha
 					if(
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						//AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						AND password_verify($this->getInput('blogArticlecaptcha', helper::FILTER_INT), $this->getInput('blogArticlecaptchaResult') ) === false )
 					{
 						self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
 					}

@@ -336,7 +336,8 @@ class user extends common {
 		if($this->isPost()) {
 			// Check la captcha
 			if(
-				$this->getInput('userLoginCaptcha', helper::FILTER_INT) !== $this->getInput('userLoginCaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('userLoginCaptchaSecondNumber', helper::FILTER_INT))
+				//$this->getInput('userLoginCaptcha', helper::FILTER_INT) !== $this->getInput('userLoginCaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('userLoginCaptchaSecondNumber', helper::FILTER_INT))
+				password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
 			{
 				self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
 			}
