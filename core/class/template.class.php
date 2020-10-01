@@ -55,11 +55,16 @@ class template {
         $secondNumber = rand ( 0 , count($letters)-1 );
         $result =  $firstNumber +  $secondNumber;
         $result = password_hash($result, PASSWORD_BCRYPT);
+        $firstLetter = uniqid();
+        $secondLetter = uniqid();
+        // Masquage image source
+        copy ('core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png','site/tmp/' . $firstLetter . '.png');
+        copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png','site/tmp/' . $secondLetter . '.png');
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
-                 '<img class="captchaNumber" src="core/vendor/zwiico/png/'.$letters[$firstNumber] . '.png" /> + <img class="captchaNumber" src="core/vendor/zwiico/png/' . $letters[$secondNumber] . '.png" /> =  en chiffres ?', [
+                 '<img class="captchaNumber" src="site/tmp/' . $firstLetter . '.png" /> + <img class="captchaNumber" src="site/tmp/' . $secondLetter . '.png" /> =  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
         // Notice
@@ -78,7 +83,7 @@ class template {
         $html .= self::hidden($attributes['id'] . 'Result', [
             'value' => $result,
             'before' => false
-        ]);        
+        ]);
         // Champs cachés contenant les nombres
         /*
         $html .= self::hidden($attributes['id'] . 'FirstNumber', [
@@ -647,8 +652,8 @@ class template {
         }
 		// Début contenu
 		$j = 0;
-		foreach($body as $tr) {	
-			// Id de ligne pour les tableaux drag and drop		
+		foreach($body as $tr) {
+			// Id de ligne pour les tableaux drag and drop
 			$html .= '<tr id="' . $rowsId[$j++] . '">';
 			$i = 0;
 			foreach($tr as $td) {
