@@ -91,9 +91,9 @@ class news extends common {
 			// Met en forme le tableau
 			self::$news[] = [
 				$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'title']),
-				utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])))
+				strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))
 				.' à '.
-				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))),
+				strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])),
 				self::$states[$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'state'])],
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],

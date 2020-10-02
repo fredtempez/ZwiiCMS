@@ -2,8 +2,8 @@
 	<div class="col10">
 		<div class="blogDate">
 			<i class="far fa-calendar-alt"></i>
-			<?php echo utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>
-				à <?php echo utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))); ?>		
+			<?php echo strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])); ?>
+				à <?php echo strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])); ?>
 		</div>
 	</div>
 	<?php  if(
@@ -21,7 +21,7 @@
 	<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>
 	<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
 		echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picturePosition']) .
-		' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . 		
+		' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) .
 		'" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '">';
 	} ?>
 
@@ -110,7 +110,7 @@
 					<?php else: ?>
 						<?php echo $comment['author']; ?>
 					<?php endif; ?>
-					le <?php echo utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])); ?>
+					le <?php echo strftime('%d %B %Y - %H:%M', $comment['createdOn']); ?>
 				</h4>
 				<?php echo $comment['content']; ?>
 			</div>
