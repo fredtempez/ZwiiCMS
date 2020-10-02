@@ -2,7 +2,7 @@
 Order deny,allow
 Deny from all
 # Sauf l'accès aux images pour le captcha
-<FilesMatch ".(png)$">
-Order Deny,Allow
+<Files *.png>
+Order Allow,Deny
     Allow from all
-</FilesMatch>
+</Files>
