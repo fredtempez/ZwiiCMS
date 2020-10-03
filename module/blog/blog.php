@@ -183,7 +183,7 @@ class blog extends common {
 				]);
 			}
 			self::$comments[] = [
-				utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
+				strftime('%d %B %Y - %H:%M', $comment['createdOn']),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				$buttonApproval,
@@ -340,9 +340,9 @@ class blog extends common {
 				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']) .
 				'</a>',
 				// date('d/m/Y H:i', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
-				utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])))
+				strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
 				.' à '.
-				utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))),
+				strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [
@@ -511,7 +511,8 @@ class blog extends common {
 					// Check la captcha
 					if(
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						//AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						AND password_verify($this->getInput('blogArticlecaptcha', helper::FILTER_INT), $this->getInput('blogArticlecaptchaResult') ) === false )
 					{
 						self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
 					}

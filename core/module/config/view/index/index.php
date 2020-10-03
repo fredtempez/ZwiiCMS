@@ -94,7 +94,7 @@
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col8 verticalAlignBottom">
+				<div class="col4 verticalAlignBottom">
 					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
@@ -496,6 +496,13 @@
 							'href' => helper::baseUrl() . 'config/blacklistReset',
 							'value' => 'Réinitialiser liste',
 							'ico' => 'cancel'
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::checkbox('configConnectCaptcha', true, 'Captcha à la connexion', [
+							'checked' => $this->getData(['config', 'connect','captcha'])
 						]); ?>
 					</div>
 				</div>

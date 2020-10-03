@@ -282,7 +282,8 @@ class form extends common {
 			// Check la captcha
 			if(
 				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
-				AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
+				// AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
+				AND password_verify($this->getInput('formcaptcha', helper::FILTER_INT), $this->getInput('formcaptchaResult') ) === false ) 
 			{
 				self::$inputNotices['formcaptcha'] = 'Incorrect';
 

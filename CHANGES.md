@@ -11,6 +11,11 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
+        
+## version 10.3.02
+- Modifications :
+    - Nouvelles images de captcha.
+    - Option de configuration, captcha demandé à la connexion.
 
 ## version 10.3.01
 - Corrections :

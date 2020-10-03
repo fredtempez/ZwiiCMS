@@ -4,16 +4,16 @@
 			<?php foreach($module::$news as $newsId => $news): ?>
 				<h1 class="newsTitle">
 					<?php echo $news['title']; ?>
-				</h1>			
+				</h1>
 				<div class="newsContent">
 					<?php echo $news['content']; ?>
 				</div>
 				<div class="newsSignature">
-					<i class="far fa-calendar-alt"></i>					
-					<?php echo utf8_encode(strftime('%d %B %Y', $news['publishedOn'])); ?>
+					<i class="far fa-calendar-alt"></i>
+					<?php echo strftime('%d %B %Y', $news['publishedOn']); ?>
 					- <?php echo $this->getData(['user', $news['userId'], 'firstname']) . ' ' . $this->getData(['user', $news['userId'], 'lastname']); ?>
 				</div>
-				<div class="clearBoth"></div>				
+				<div class="clearBoth"></div>
 				<hr />
 			<?php endforeach; ?>
 		</div>

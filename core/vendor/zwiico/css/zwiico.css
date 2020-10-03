@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'zwiico';
-  src: url('../font/zwiico.eot?5225631');
-  src: url('../font/zwiico.eot?5225631#iefix') format('embedded-opentype'),
-       url('../font/zwiico.woff2?5225631') format('woff2'),
-       url('../font/zwiico.woff?5225631') format('woff'),
-       url('../font/zwiico.ttf?5225631') format('truetype'),
-       url('../font/zwiico.svg?5225631#zwiico') format('svg');
+  src: url('../font/zwiico.eot?40040077');
+  src: url('../font/zwiico.eot?40040077#iefix') format('embedded-opentype'),
+       url('../font/zwiico.woff2?40040077') format('woff2'),
+       url('../font/zwiico.woff?40040077') format('woff'),
+       url('../font/zwiico.ttf?40040077') format('truetype'),
+       url('../font/zwiico.svg?40040077#zwiico') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zwiico';
-    src: url('../font/zwiico.svg?5225631#zwiico') format('svg');
+    src: url('../font/zwiico.svg?40040077#zwiico') format('svg');
   }
 }
 */
@@ -96,6 +96,7 @@
 .zwiico-linkedin:before { content: '\f0e1'; } /* '' */
 .zwiico-download-cloud:before { content: '\f0ed'; } /* '' */
 .zwiico-upload-cloud:before { content: '\f0ee'; } /* '' */
+.zwiico-github:before { content: '\f113'; } /* '' */
 .zwiico-code:before { content: '\f121'; } /* '' */
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
