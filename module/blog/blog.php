@@ -89,7 +89,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '3.00.dev';
+	const BLOG_VERSION = '3.01.dev';
 
 	/**
 	 * Édition
@@ -511,16 +511,16 @@ class blog extends common {
 					// Check la captcha
 					if(
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						//AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
-						AND password_verify($this->getInput('blogArticleCapcha', helper::FILTER_INT), $this->getInput('blogArticleCapchaResult') ) === false )
+						AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
 					{
-						self::$inputNotices['blogArticleCapcha'] = 'Incorrect';
+						self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
 					}
 					// Crée le commentaire
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));
+					$content = $this->getInput('blogArticleContent', false);
 					$this->setData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, [
 						'author' => $this->getInput('blogArticleAuthor', helper::FILTER_STRING_SHORT, empty($this->getInput('blogArticleUserId')) ? TRUE : FALSE),
-						'content' => $this->getInput('blogArticleContent', false),
+						'content' => $content,
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
 						'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) // true commentaire publié false en attente de publication
@@ -535,15 +535,14 @@ class blog extends common {
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
-					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'Commentaire déposé en attente d\'approbation.': 'Commentaire déposé.';
+					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) === true ? 'Commentaire déposé en attente d\'approbation': 'Commentaire déposé';
 					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire',
-							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire ' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'approval']) === false ? 'à approuver' : ''  .
-							'déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>'.
-							$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, 'content']),
+							'Bonjour,'.'<br/>'. $notification.
+							' sur la page "'. $this->getData(['page', $this->getUrl(0), 'title']). '" dans l\'article "'.$this->getUrl(1) .'" :<br/>'.
+							$content,
 							''
 						);
 						// Valeurs en sortie
