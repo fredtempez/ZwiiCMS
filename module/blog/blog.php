@@ -89,7 +89,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '3.01.dev';
+	const BLOG_VERSION = '3.02.dev';
 
 	/**
 	 * Édition
@@ -563,8 +563,12 @@ class blog extends common {
 					}
 
 				}
-				// Ids des commentaires par ordre de publication
-				$commentIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']), 'createdOn', 'SORT_DESC'));
+				// Ids des commentaires approuvés par ordre de publication
+				$commentsApproved = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']);
+				foreach( $commentsApproved as $key => $value){
+					if($value['approval']===false) unset($commentsApproved[$key]);
+				}
+				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
 				// Liste des pages
