@@ -19,6 +19,7 @@ class user extends common {
 		'delete' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
+		'csvstring_to_array' => self::GROUP_ADMIN,
 		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
 		'forgot' => self::GROUP_VISITOR,
@@ -542,11 +543,42 @@ class user extends common {
 	 * Importation CSV d'utilisateurs
 	 */
 	public function import() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Lecture du CSV et construction du tableau
+			$file = helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
+			$rows   = array_map(function($row) {   return str_getcsv($row, ';'); }, file($file));
+			$header = array_shift($rows);
+			$csv    = array();
+			foreach($rows as $row) {
+				$csv[] = array_combine($header, $row);
+			}
+			// Stockage des données
+			foreach($csv as $item ) {
+				$userId = $item['id'];
+				if($this->getData(['user', $userId])) {
+					self::$inputNotices['userAddId'] = 'Identifiant déjà utilisé';
+					$check=false;
+				}
+				$this->setData([
+					'user',
+					$userId,
+					[
+						'firstname' => $item['prenom'],
+						'forgot' => 0,
+						'group' => $item['groupe'],
+						'lastname' => $item['nom'],
+						'mail' => $item['email'],
+						'password' => uniqid()
+					]
+				]);
+			}
+		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Importation d\'utilisateurs',
+			'title' => 'Importation',
 			'view' => 'import'
 		]);
-
 	}
+
 }
