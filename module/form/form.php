@@ -77,7 +77,7 @@ class form extends common {
 				'config',
 				[
 					'button' => $this->getInput('formConfigButton'),
-					'captcha' => $this->getInput('formConfigcaptcha', helper::FILTER_BOOLEAN),
+					'captcha' => $this->getInput('formConfigCaptcha', helper::FILTER_BOOLEAN),
 					'group' => $this->getInput('formConfigGroup', helper::FILTER_INT),
 					'user' =>  self::$listUsers [$this->getInput('formConfigUser', helper::FILTER_INT)],
 					'mail' => $this->getInput('formConfigMail') ,
@@ -283,9 +283,9 @@ class form extends common {
 			if(
 				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
 				// AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
-				AND password_verify($this->getInput('formcaptcha', helper::FILTER_INT), $this->getInput('formcaptchaResult') ) === false ) 
+				AND password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult') ) === false ) 
 			{
-				self::$inputNotices['formcaptcha'] = 'Incorrect';
+				self::$inputNotices['formCaptcha'] = 'Incorrect';
 
 			}
 			// Préparation le contenu du mail

@@ -13,6 +13,8 @@
         - Approbation des commentaires
         
 ## version 10.3.02
+- Correction :
+    - Icône de pied de page github manquante.
 - Modifications :
     - Nouvelles images de captcha.
     - Option de configuration, captcha demandé à la connexion.

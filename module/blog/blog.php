@@ -511,9 +511,10 @@ class blog extends common {
 					// Check la captcha
 					if(
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						//AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
+						AND password_verify($this->getInput('blogArticleCaptcha', helper::FILTER_INT), $this->getInput('blogArticleCaptchaResult') ) === false )
 					{
-						self::$inputNotices['blogArticlecaptcha'] = 'Incorrect';
+						self::$inputNotices['blogArticleCaptcha'] = 'Incorrect';
 					}
 					// Crée le commentaire
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));

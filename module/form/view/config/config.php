@@ -142,7 +142,7 @@
 						]); ?>
 					</div>
 				</div>
-				<?php echo template::checkbox('formConfigcaptcha', true, 'Valider un captcha afin de soumettre le formulaire.', [
+				<?php echo template::checkbox('formConfigCaptcha', true, 'Valider un captcha afin de soumettre le formulaire.', [
 					'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
 				]); ?>
 			</div>
