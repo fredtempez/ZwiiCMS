@@ -77,8 +77,8 @@
 			]); ?>
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<div class="row">
-					<div class="col5">
-						<?php echo template::captcha('blogArticlecaptcha'); ?>
+					<div class="col6">
+						<?php echo template::captcha('blogArticleCaptcha'); ?>
 					</div>
 				</div>
 			<?php endif; ?>
