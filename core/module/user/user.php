@@ -17,11 +17,12 @@ class user extends common {
 	public static $actions = [
 		'add' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
-		'edit' => self::GROUP_MEMBER,
-		'forgot' => self::GROUP_VISITOR,
+		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'login' => self::GROUP_VISITOR,
+		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
+		'forgot' => self::GROUP_VISITOR,
+		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR
 	];
 
@@ -535,5 +536,17 @@ class user extends common {
 				'view' => 'reset'
 			]);
 		}
+	}
+
+	/**
+	 * Importation CSV d'utilisateurs
+	 */
+	public function import() {
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Importation d\'utilisateurs',
+			'view' => 'import'
+		]);
+
 	}
 }
