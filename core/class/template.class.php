@@ -61,10 +61,10 @@ class template {
         copy ('core/vendor/zwiico/png/'.$letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
         copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
         // Début du wrapper
-        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
+        $html = '<div class="captcha" id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
-                 '<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" /> + <img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" /> =  en chiffres ?', [
+                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />' . template::ico('plus')  . '<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" /> =  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
         // Notice

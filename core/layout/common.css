@@ -1360,13 +1360,17 @@ th.col12 {
 }
 
 /* Captcha
-*  Taille des images
 */
-.captchaNumber {
+.captcha img{
 	height: 30px;
-	vertical-align: bottom;
+	vertical-align: middle;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+.captcha input[type='text']  {
+	width: 4em;
+	text-align: center;
+	margin: auto auto auto 2em;
 }
 
 /*

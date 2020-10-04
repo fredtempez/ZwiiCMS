@@ -77,7 +77,7 @@
 			]); ?>
 			<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 				<div class="row">
-					<div class="col6">
+					<div class="col12">
 						<?php echo template::captcha('blogArticleCaptcha'); ?>
 					</div>
 				</div>
@@ -85,7 +85,6 @@
 			<div class="row">
 				<div class="col2 offset8">
 					<?php echo template::button('blogArticleCommentHide', [
-						'class' => 'buttonGrey',
 						'value' => 'Annuler'
 					]); ?>
 				</div>
