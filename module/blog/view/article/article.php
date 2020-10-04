@@ -85,6 +85,7 @@
 			<div class="row">
 				<div class="col2 offset8">
 					<?php echo template::button('blogArticleCommentHide', [
+						'class' => 'buttonGrey',
 						'value' => 'Annuler'
 					]); ?>
 				</div>
