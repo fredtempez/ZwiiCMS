@@ -33,6 +33,12 @@ class user extends common {
 
 	public static $userLongtime = false;
 
+	public static $separators = [
+		';' => ';',
+		',' => ',',
+		':' => ':'
+	];
+
 	/**
 	 * Ajout
 	 */
@@ -543,41 +549,74 @@ class user extends common {
 	 * Importation CSV d'utilisateurs
 	 */
 	public function import() {
+		$notification = '';
+		$success = true;
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Lecture du CSV et construction du tableau
-			$file = helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
-			$rows   = array_map(function($row) {   return str_getcsv($row, ';'); }, file($file));
-			$header = array_shift($rows);
-			$csv    = array();
-			foreach($rows as $row) {
-				$csv[] = array_combine($header, $row);
-			}
-			// Stockage des données
-			foreach($csv as $item ) {
-				$userId = $item['id'];
-				if($this->getData(['user', $userId])) {
-					self::$inputNotices['userAddId'] = 'Identifiant déjà utilisé';
-					$check=false;
+			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
+			$filePath = helper::baseUrl(false) . self::FILE_DIR . 'source/' . $file;
+			if (file_exists ($filePath)) {
+				$rows   = array_map(function($row) {   return str_getcsv($row, $this->getInput('userImportSeparator') ); }, file($filePath));
+				$header = array_shift($rows);
+				$csv    = array();
+				foreach($rows as $row) {
+					$csv[] = array_combine($header, $row);
 				}
-				$this->setData([
-					'user',
-					$userId,
-					[
-						'firstname' => $item['prenom'],
-						'forgot' => 0,
-						'group' => $item['groupe'],
-						'lastname' => $item['nom'],
-						'mail' => $item['email'],
-						'password' => uniqid()
-					]
-				]);
+				// Stockage des données
+				foreach($csv as $item ) {
+					// Nettoyage de l'identifiant
+					$userId = helper::filter($item['id'] , self::FILTER_ID);
+					// N'insére que les utilisateurs dont l'id n'existe pas 
+					if( !$this->getData(['user', $userId]) ) {
+						// Vérifier la présence des champs
+						if ( $item['prenom']
+							AND $item['nom']
+							AND $item['groupe']
+							AND $item['email'] 
+							AND $userId ) 
+						{
+							// Enregistre le user
+							$this->setData([
+								'user',
+								$userId, [
+									'firstname' => $item['prenom'],
+									'forgot' => 0,
+									'group' => $item['groupe'],
+									'lastname' => $item['nom'],
+									'mail' => $item['email'],
+									'pseudo' => $item['prenom'],
+									'signature' => 1, // Pseudo
+									'password' => uniqid() // A modifier à la première connexion
+							]]);
+									
+							// Création du tableau de confirmation
+							self::$users[] = [
+								$userId,
+								$item['nom'],
+								$item['prenom'],
+								self::$groups[$item['groupe']],
+								$item['prenom'],
+								$item['email']
+							];
+							$notification = 'Import efectué';
+							$success = true;
+						} else {
+							$success = 3;
+						}
+					}
+				}
+			} else {
+				$notification = 'Erreur de lecture : ' . $file;
+				$success = false;
 			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Importation',
-			'view' => 'import'
+			'view' => 'import',
+			'notification' => $notification,
+			'state' => $success
 		]);
 	}
 

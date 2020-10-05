@@ -1,0 +1,8 @@
+# Bloque l'accès aux données
+Order deny,allow
+Deny from all
+# Sauf l'accès au modèle csv
+<Files template.csv>
+Order Allow,Deny
+    Allow from all
+</Files>
