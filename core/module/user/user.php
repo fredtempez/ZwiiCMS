@@ -555,7 +555,7 @@ class user extends common {
 		if($this->isPost()) {
 			// Lecture du CSV et construction du tableau
 			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
-			$filePath = helper::baseUrl(false) . self::FILE_DIR . 'source/' . $file;
+			$filePath = self::FILE_DIR . 'source/' . $file;
 			if (file_exists ($filePath)) {
 				$rows   = array_map(function($row) {   return str_getcsv($row, $this->getInput('userImportSeparator') ); }, file($filePath));
 				$header = array_shift($rows);
@@ -566,45 +566,44 @@ class user extends common {
 				// Stockage des données
 				foreach($csv as $item ) {
 					// Nettoyage de l'identifiant
-					$userId = helper::filter($item['id'] , self::FILTER_ID);
+					$userId = helper::filter($item['id'] , helper::FILTER_ID);
 					// N'insére que les utilisateurs dont l'id n'existe pas 
-					if( !$this->getData(['user', $userId]) ) {
-						// Vérifier la présence des champs
-						if ( $item['prenom']
-							AND $item['nom']
-							AND $item['groupe']
-							AND $item['email'] 
-							AND $userId ) 
-						{
-							// Enregistre le user
-							$this->setData([
-								'user',
-								$userId, [
-									'firstname' => $item['prenom'],
-									'forgot' => 0,
-									'group' => $item['groupe'],
-									'lastname' => $item['nom'],
-									'mail' => $item['email'],
-									'pseudo' => $item['prenom'],
-									'signature' => 1, // Pseudo
-									'password' => uniqid() // A modifier à la première connexion
-							]]);
-									
-							// Création du tableau de confirmation
-							self::$users[] = [
-								$userId,
-								$item['nom'],
-								$item['prenom'],
-								self::$groups[$item['groupe']],
-								$item['prenom'],
-								$item['email']
-							];
-							$notification = 'Import efectué';
-							$success = true;
-						} else {
-							$success = 3;
-						}
+					// Vérifier la présence des champs
+					if( !$this->getData(['user', $userId]) 
+						AND $item['prenom']
+						AND $item['nom']
+						AND $item['groupe']
+						AND $item['email'] 
+						AND $userId ) 
+					{
+						// Enregistre le user
+						$this->setData([
+							'user',
+							$userId, [
+								'firstname' => $item['prenom'],
+								'forgot' => 0,
+								'group' => $item['groupe'],
+								'lastname' => $item['nom'],
+								'mail' => $item['email'],
+								'pseudo' => $item['prenom'],
+								'signature' => 1, // Pseudo
+								'password' => uniqid() // A modifier à la première connexion
+						]]);
+						$item['notification'] = 'Ok';															
+					} else {
+						$item['notification'] = 'Pb';
 					}
+
+					// Création du tableau de confirmation
+					self::$users[] = [
+						$userId,
+						$item['nom'],
+						$item['prenom'],
+						self::$groups[$item['groupe']],
+						$item['prenom'],
+						$item['email'],
+						$item['notification']
+					];
 				}
 			} else {
 				$notification = 'Erreur de lecture : ' . $file;

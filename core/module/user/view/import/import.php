@@ -38,5 +38,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <?php if ($module::$users): ?>
-    <?php echo template::table([1, 3, 3, 1, 1,3], $module::$users, ['Identifiant', 'Nom', 'Prénom','Groupe', 'Pseudo', 'eMail']); ?>  
+    <?php echo template::table([1, 3, 3, 1, 1, 2, 1, 1 ], $module::$users, ['Identifiant', 'Nom', 'Prénom','Groupe', 'Pseudo', 'eMail', 'Statut']); ?>  
 <?php  endif;?>
