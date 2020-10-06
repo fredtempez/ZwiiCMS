@@ -10,7 +10,8 @@
 	<div class="col2 offset6">
 		<?php echo template::button('userImport', [
 			'href' => helper::baseUrl() . 'user/import',
-			'value' => 'Importation CSV'
+			'ico' => 'plus',
+			'value' => 'Importation'
 		]); ?>
 	</div>
 	<div class="col2">
