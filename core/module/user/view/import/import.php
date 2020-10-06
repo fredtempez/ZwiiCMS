@@ -9,7 +9,9 @@
         ]); ?>
     </div>
     <div class="col2 offset8">
-		<?php echo template::submit('userImportSubmit'); ?>
+		<?php echo template::submit('userImportSubmit', [
+				'value' => 'Importer'
+			]); ?>
 	</div>
 </div>
 <div class="row">
@@ -28,10 +30,10 @@
 					]); ?>
                 </div>
                 <div class="col5 offset1">
-                    <h5>Contenu du fichier d'import : </h5>
                     <p>Les en-têtes obligatoires sont : id, nom, prenom, email et groupe.</p>
                     <p>Groupes  1 : membre - 2 : éditeur - 3 : administrateur </p>
-                    <p>Voir ce <a href="core/module/user/ressource/template.csv">modèle</a> à renseigner avec un tableur.</p>
+                    <p>Voir ce <a href="core/module/user/ressource/template.csv">modèle</a> à compléter avec un tableur.</p>
+                    <p>Enregistrement au format CSV, séparateur ; ou , ou :
                 </div>
             </div>
         </div>
@@ -39,5 +41,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <?php if ($module::$users): ?>
-    <?php echo template::table([1, 3, 3, 1, 1, 2, 1, 1 ], $module::$users, ['Identifiant', 'Nom', 'Prénom','Groupe', 'Pseudo', 'eMail', 'Statut']); ?>  
+    <?php echo template::table([1, 3, 3, 1, 1, 2, 1, 1 ], $module::$users, ['Identifiant', 'Nom', 'Prénom','Groupe', 'Pseudo', 'eMail', 'Succès']); ?>  
 <?php  endif;?>

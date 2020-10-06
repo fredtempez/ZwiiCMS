@@ -549,8 +549,6 @@ class user extends common {
 	 * Importation CSV d'utilisateurs
 	 */
 	public function import() {
-		$notification = '';
-		$success = true;
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Lecture du CSV et construction du tableau
@@ -589,9 +587,9 @@ class user extends common {
 								'signature' => 1, // Pseudo
 								'password' => uniqid() // A modifier à la première connexion
 						]]);
-						$item['notification'] = 'Ok';															
+						$item['notification'] = template::ico('check');															
 					} else {
-						$item['notification'] = 'Pb';
+						$item['notification'] = template::ico('cancel');
 					}
 
 					// Création du tableau de confirmation
@@ -605,8 +603,10 @@ class user extends common {
 						$item['notification']
 					];
 				}
+				$notification =  'importation effectuée' ;
+				$success = true;
 			} else {
-				$notification = 'Erreur de lecture : ' . $file;
+				$notification = 'Erreur de lecture, vérifiez les permissions';
 				$success = false;
 			}
 		}
