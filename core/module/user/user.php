@@ -550,6 +550,8 @@ class user extends common {
 	 */
 	public function import() {
 		// Soumission du formulaire
+		$notification = '';
+		$success = true;
 		if($this->isPost()) {
 			// Lecture du CSV et construction du tableau
 			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
