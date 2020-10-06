@@ -27,10 +27,11 @@
 					'label' => 'Séparateur'
 					]); ?>
                 </div>
-                <div class="col6">
-                    <p>Les en-têtes obligatoires sont id, nom, prenom, email et groupe.</p>
-                    <p>Valeurs de groupe : 1 membre - 2 éditeur - 3 administrateur </p>
-                    <p><a href="core/module/user/ressource/template.csv">Modèle</a> à ouvrir avec un tableur.</p>
+                <div class="col5 offset1">
+                    <h5>Contenu du fichier d'import : </h5>
+                    <p>Les en-têtes obligatoires sont : id, nom, prenom, email et groupe.</p>
+                    <p>Groupes  1 : membre - 2 : éditeur - 3 : administrateur </p>
+                    <p>Voir ce <a href="core/module/user/ressource/template.csv">modèle</a> à renseigner avec un tableur.</p>
                 </div>
             </div>
         </div>
