@@ -72,6 +72,11 @@ class user extends common {
 					'lastname' => $userLastname,
 					'mail' => $userMail,
 					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
+					"connectFail" => null,
+					"connectTimeout" => null,
+					"accessUrl" => null,
+					"accessTimer" => null,
+					"accessCsrf" => null
 				]
 			]);
 
