@@ -1,11 +1,13 @@
 # Changelog
 
 ## version 10.3.02
-- Correction :
+- Corrections :
     - Icône de pied de page github manquante.
+    - Mauvaise redirection après changement de mot de passe d'un membre.
 - Modifications :
     - Nouvelles images de captcha.
     - Option de configuration, captcha demandé à la connexion.
+    - Module User : importation d'un liste d'utilisateur dans un fichier plat (CSV).
 
 ## version 10.3.01
 - Corrections :
