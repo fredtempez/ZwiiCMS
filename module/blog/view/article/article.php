@@ -31,8 +31,8 @@
 		<p>Cet article ne reçoit pas de commentaire.</p>
 	<?php else: ?>
 		<h3 id="comment">
-			<?php // $commentsNb = count($module::$comments); ?>
-			<?php $commentsNb = $module::$comments['nbApproved']; ?>
+			<?php  //$commentsNb = count($module::$comments); ?>
+			<?php $commentsNb = $module::$nbCommentsApproved; ?>
 			<?php $s =  $commentsNb === 1 ? '': 's' ?>
 			<?php echo $commentsNb > 0 ? $commentsNb . ' ' .  'commentaire' . $s : 'Pas encore de commentaire'; ?>
 		</h3>

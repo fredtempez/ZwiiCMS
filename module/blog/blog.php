@@ -41,6 +41,8 @@ class blog extends common {
 	public static $editCommentSignature = '';
 
 	public static $comments = [];
+	
+	public static $nbCommentsApproved = 0;
 
 	public static $commentsDelete;
 
@@ -89,7 +91,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '3.03.dev';
+	const BLOG_VERSION = '3.04.dev';
 
 	/**
 	 * Édition
@@ -569,7 +571,7 @@ class blog extends common {
 					if($value['approval']===false) unset($commentsApproved[$key]);
 				}
 				// Ligne suivante si affichage du nombre total de commentaires approuvés sous l'article
-				self::$comments['nbApproved'] = count($commentsApproved);
+				self::$nbCommentsApproved = count($commentsApproved);
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
