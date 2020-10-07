@@ -19,7 +19,6 @@ class user extends common {
 		'delete' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'csvstring_to_array' => self::GROUP_ADMIN,
 		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
 		'forgot' => self::GROUP_VISITOR,
@@ -61,7 +60,7 @@ class user extends common {
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			
+
 			// Stockage des données
 			$this->setData([
 				'user',
@@ -424,7 +423,8 @@ class user extends common {
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => 'Connexion réussie',
-							'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+							//'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+							'redirect' => helper::baseUrl(),
 							'state' => true
 						]);
 					}
@@ -540,7 +540,8 @@ class user extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Réinitialisation du mot de passe',
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
+				'title' => 'Réinitialisation de votre mot de passe',
 				'view' => 'reset'
 			]);
 		}
@@ -568,14 +569,14 @@ class user extends common {
 				foreach($csv as $item ) {
 					// Nettoyage de l'identifiant
 					$userId = helper::filter($item['id'] , helper::FILTER_ID);
-					// N'insére que les utilisateurs dont l'id n'existe pas 
+					// N'insére que les utilisateurs dont l'id n'existe pas
 					// Vérifier la présence des champs
-					if( !$this->getData(['user', $userId]) 
+					if( !$this->getData(['user', $userId])
 						AND $item['prenom']
 						AND $item['nom']
 						AND $item['groupe']
-						AND $item['email'] 
-						AND $userId ) 
+						AND $item['email']
+						AND $userId )
 					{
 						// Enregistre le user
 						$this->setData([
@@ -583,14 +584,19 @@ class user extends common {
 							$userId, [
 								'firstname' => $item['prenom'],
 								'forgot' => 0,
-								'group' => $item['groupe'],
+								'group' => (int) $item['groupe'],
 								'lastname' => $item['nom'],
 								'mail' => $item['email'],
 								'pseudo' => $item['prenom'],
 								'signature' => 1, // Pseudo
-								'password' => uniqid() // A modifier à la première connexion
+								'password' => uniqid(), // A modifier à la première connexion
+								"connectFail" => null,
+								"connectTimeout" => null,
+								"accessUrl" => null,
+								"accessTimer" => null,
+								"accessCsrf" => null
 						]]);
-						$item['notification'] = template::ico('check');															
+						$item['notification'] = template::ico('check');
 					} else {
 						$item['notification'] = template::ico('cancel');
 					}
