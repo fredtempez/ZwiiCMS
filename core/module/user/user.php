@@ -89,7 +89,6 @@ class user extends common {
 					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
 					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
-					'<strong>Mot de passe du compte :</strong> ' . $this->getInput('userAddPassword') . '<br><br>' .
 					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null
 				);
@@ -619,6 +618,17 @@ class user extends common {
 				}
 				$notification =  'importation effectuée' ;
 				$success = true;
+				// Envoi du mail
+				if ($this->getInput('userImportNotification',self::FILTER_BOOLEAN)) {
+					$this->sendMail(
+						$item['email'],
+						'Compte créé sur ' . $this->getData(['config', 'title']),
+						'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+						'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
+						'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+					);
+				}
 			} else {
 				$notification = 'Erreur de lecture, vérifiez les permissions';
 				$success = false;
