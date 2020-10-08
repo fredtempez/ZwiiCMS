@@ -427,7 +427,6 @@ class user extends common {
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => 'Connexion réussie',
-							//'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
 							'redirect' => helper::baseUrl(),
 							'state' => true
 						]);
