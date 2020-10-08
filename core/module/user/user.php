@@ -581,79 +581,90 @@ class user extends common {
 			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
 			$filePath = self::FILE_DIR . 'source/' . $file;
 			if ($file AND file_exists($filePath)) {
+				// Analyse et extraction du CSV
 				$rows   = array_map(function($row) {   return str_getcsv($row, $this->getInput('userImportSeparator') ); }, file($filePath));
 				$header = array_shift($rows);
 				$csv    = array();
 				foreach($rows as $row) {
 					$csv[] = array_combine($header, $row);
 				}
-				// Stockage des données
+				// Traitement des données
 				foreach($csv as $item ) {
-
-					// N'insére que les utilisateurs dont l'id n'existe pas
-					// Vérifier la présence des champs
+					// Données valides
 					if( array_key_exists('id', $item)
-						AND array_key_exists('prenom',$item)
-						AND array_key_exists('nom',$item)
-						AND array_key_exists('groupe',$item)
-						AND array_key_exists('email',$item)
-						AND !$this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)])
-						)
-					{
-						// Nettoyage de l'identifiant
-						$userId = helper::filter($item['id'] , helper::FILTER_ID);
-						// Enregistre le user
-						$this->setData([
-							'user',
-							$userId, [
-								'firstname' => $item['prenom'],
-								'forgot' => 0,
-								'group' => (int) $item['groupe'],
-								'lastname' => $item['nom'],
-								'mail' => $item['email'],
-								'pseudo' => $item['prenom'],
-								'signature' => 1, // Pseudo
-								'password' => uniqid(), // A modifier à la première connexion
-								"connectFail" => null,
-								"connectTimeout" => null,
-								"accessUrl" => null,
-								"accessTimer" => null,
-								"accessCsrf" => null
-						]]);
-
-						// Icône de notification
-						$item['notification'] = template::ico('check');
-						// Envoi du mail
-						if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
-							$sent = $this->sendMail(
+					AND array_key_exists('prenom',$item)
+					AND array_key_exists('nom',$item)
+					AND array_key_exists('groupe',$item)
+					AND array_key_exists('email',$item) ) {
+						// L'utilisateur existe
+						if ( $this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)]))
+						{
+							// Notification du doublon
+							$item['notification'] = template::ico('cancel');
+							// Création du tableau de confirmation
+							self::$users[] = [
+								helper::filter($item['id'] , helper::FILTER_ID),
+								$item['nom'],
+								$item['prenom'],
+								self::$groups[$item['groupe']],
+								$item['prenom'],
 								$item['email'],
-								'Compte créé sur ' . $this->getData(['config', 'title']),
-								'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-								'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-								'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-								'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
-							);
-							if ($sent === true) {
-								// Mail envoyé changement de l'icône
-								$item['notification'] = template::ico('comment') ;
-							} 
+								$item['notification']
+							];
+							// L'utilisateur n'existe pas
+						} else {
+							// Nettoyage de l'identifiant
+							$userId = helper::filter($item['id'] , helper::FILTER_ID);
+							// Enregistre le user
+							$this->setData([
+								'user',
+								$userId, [
+									'firstname' => $item['prenom'],
+									'forgot' => 0,
+									'group' => (int) $item['groupe'],
+									'lastname' => $item['nom'],
+									'mail' => $item['email'],
+									'pseudo' => $item['prenom'],
+									'signature' => 1, // Pseudo
+									'password' => uniqid(), // A modifier à la première connexion
+									"connectFail" => null,
+									"connectTimeout" => null,
+									"accessUrl" => null,
+									"accessTimer" => null,
+									"accessCsrf" => null
+							]]);
+							// Icône de notification
+							$item['notification'] = template::ico('check');
+							// Création du tableau de confirmation
+							self::$users[] = [
+								$userId,
+								$item['nom'],
+								$item['prenom'],
+								self::$groups[$item['groupe']],
+								$item['prenom'],
+								$item['email'],
+								$item['notification']
+							];
+							// Envoi du mail
+							if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
+								$sent = $this->sendMail(
+									$item['email'],
+									'Compte créé sur ' . $this->getData(['config', 'title']),
+									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
+									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+								);
+								if ($sent === true) {
+									// Mail envoyé changement de l'icône
+									$item['notification'] = template::ico('comment') ;
+								}
+							}
 						}
-					} else {
-						$item['notification'] = template::ico('cancel');
 					}
-					// Création du tableau de confirmation
-					self::$users[] = [
-						$userId,
-						$item['nom'],
-						$item['prenom'],
-						self::$groups[$item['groupe']],
-						$item['prenom'],
-						$item['email'],
-						$item['notification']
-					];
 				}
 				if (empty(self::$users)) {
-					$notification =  'Rien à importer' ;
+					$notification =  'Rien à importer, erreur de format ou fichier incorrect' ;
 					$success = false;
 				} else {
 					$notification =  'Importation effectuée' ;
