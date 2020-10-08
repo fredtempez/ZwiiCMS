@@ -17,11 +17,12 @@ class user extends common {
 	public static $actions = [
 		'add' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
-		'edit' => self::GROUP_MEMBER,
-		'forgot' => self::GROUP_VISITOR,
+		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'login' => self::GROUP_VISITOR,
+		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
+		'forgot' => self::GROUP_VISITOR,
+		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR
 	];
 
@@ -38,6 +39,12 @@ class user extends common {
 	public static $userId = '';
 
 	public static $userLongtime = false;
+
+	public static $separators = [
+		';' => ';',
+		',' => ',',
+		':' => ':'
+	];
 
 	/**
 	 * Ajout
@@ -73,6 +80,11 @@ class user extends common {
 					'lastname' => $userLastname,
 					'mail' => $userMail,
 					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
+					"connectFail" => null,
+					"connectTimeout" => null,
+					"accessUrl" => null,
+					"accessTimer" => null,
+					"accessCsrf" => null
 				]
 			]);
 
@@ -85,7 +97,6 @@ class user extends common {
 					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
 					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
-					'<strong>Mot de passe du compte :</strong> ' . $this->getInput('userAddPassword') . '<br><br>' .
 					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null
 				);
@@ -355,8 +366,9 @@ class user extends common {
 		if($this->isPost()) {
 			// Check la captcha
 			if(
+				$this->getData(['config','connect','captcha'])
 				//$this->getInput('userLoginCaptcha', helper::FILTER_INT) !== $this->getInput('userLoginCaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('userLoginCaptchaSecondNumber', helper::FILTER_INT))
-				password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
+				AND password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
 			{
 				self::$inputNotices['userLoginCaptcha'] = 'Incorrect';
 			}
@@ -434,7 +446,7 @@ class user extends common {
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => 'Connexion réussie',
-							'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+							'redirect' => helper::baseUrl(),
 							'state' => true
 						]);
 					}
@@ -550,9 +562,115 @@ class user extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Réinitialisation du mot de passe',
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
+				'title' => 'Réinitialisation de votre mot de passe',
 				'view' => 'reset'
 			]);
 		}
 	}
+
+	/**
+	 * Importation CSV d'utilisateurs
+	 */
+	public function import() {
+		// Soumission du formulaire
+		$notification = '';
+		$success = true;
+		if($this->isPost()) {
+			// Lecture du CSV et construction du tableau
+			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
+			$filePath = self::FILE_DIR . 'source/' . $file;
+			if ($file AND file_exists($filePath)) {
+				$rows   = array_map(function($row) {   return str_getcsv($row, $this->getInput('userImportSeparator') ); }, file($filePath));
+				$header = array_shift($rows);
+				$csv    = array();
+				foreach($rows as $row) {
+					$csv[] = array_combine($header, $row);
+				}
+				// Stockage des données
+				foreach($csv as $item ) {
+
+					// N'insére que les utilisateurs dont l'id n'existe pas
+					// Vérifier la présence des champs
+					if( array_key_exists('id', $item)
+						AND array_key_exists('prenom',$item)
+						AND array_key_exists('nom',$item)
+						AND array_key_exists('groupe',$item)
+						AND array_key_exists('email',$item)
+						AND !$this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)])
+						)
+					{
+						// Nettoyage de l'identifiant
+						$userId = helper::filter($item['id'] , helper::FILTER_ID);
+						// Enregistre le user
+						$this->setData([
+							'user',
+							$userId, [
+								'firstname' => $item['prenom'],
+								'forgot' => 0,
+								'group' => (int) $item['groupe'],
+								'lastname' => $item['nom'],
+								'mail' => $item['email'],
+								'pseudo' => $item['prenom'],
+								'signature' => 1, // Pseudo
+								'password' => uniqid(), // A modifier à la première connexion
+								"connectFail" => null,
+								"connectTimeout" => null,
+								"accessUrl" => null,
+								"accessTimer" => null,
+								"accessCsrf" => null
+						]]);
+
+						// Icône de notification
+						$item['notification'] = template::ico('check');
+						// Envoi du mail
+						if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
+							$sent = $this->sendMail(
+								$item['email'],
+								'Compte créé sur ' . $this->getData(['config', 'title']),
+								'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+								'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+								'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
+								'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+							);
+							if ($sent === true) {
+								// Mail envoyé changement de l'icône
+								$item['notification'] = template::ico('comment') ;
+							} 
+						}
+					} else {
+						$item['notification'] = template::ico('cancel');
+					}
+					// Création du tableau de confirmation
+					self::$users[] = [
+						$userId,
+						$item['nom'],
+						$item['prenom'],
+						self::$groups[$item['groupe']],
+						$item['prenom'],
+						$item['email'],
+						$item['notification']
+					];
+				}
+				if (empty(self::$users)) {
+					$notification =  'Rien à importer' ;
+					$success = false;
+				} else {
+					$notification =  'Importation effectuée' ;
+					$success = true;
+				}
+			} else {
+				$notification = 'Erreur de lecture, vérifiez les permissions';
+				$success = false;
+			}
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Importation',
+			'view' => 'import',
+			'notification' => $notification,
+			'state' => $success
+		]);
+	}
+
 }

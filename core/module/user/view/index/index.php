@@ -7,7 +7,14 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset6">
+		<?php echo template::button('userImport', [
+			'href' => helper::baseUrl() . 'user/import',
+			'ico' => 'plus',
+			'value' => 'Importation'
+		]); ?>
+	</div>
+	<div class="col2">
 		<?php echo template::button('userAdd', [
 			'href' => helper::baseUrl() . 'user/add',
 			'ico' => 'plus',

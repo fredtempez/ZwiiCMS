@@ -1,5 +1,5 @@
 <article>
-<div class="row">
+	<div class="row">
 		<div class="col10">
 			<div class="blogDate">
 				<i class="far fa-calendar-alt"></i>
