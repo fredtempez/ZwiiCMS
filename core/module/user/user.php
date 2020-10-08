@@ -562,7 +562,7 @@ class user extends common {
 			// Lecture du CSV et construction du tableau
 			$file = $this->getInput('userImportCSVFile',helper::FILTER_STRING_SHORT, true);
 			$filePath = self::FILE_DIR . 'source/' . $file;
-			if (file_exists ($filePath)) {
+			if ($file AND file_exists($filePath)) {
 				$rows   = array_map(function($row) {   return str_getcsv($row, $this->getInput('userImportSeparator') ); }, file($filePath));
 				$header = array_shift($rows);
 				$csv    = array();
@@ -571,17 +571,18 @@ class user extends common {
 				}
 				// Stockage des données
 				foreach($csv as $item ) {
-					// Nettoyage de l'identifiant
-					$userId = helper::filter($item['id'] , helper::FILTER_ID);
 					// N'insére que les utilisateurs dont l'id n'existe pas
 					// Vérifier la présence des champs
-					if( !$this->getData(['user', $userId])
-						AND $item['prenom']
-						AND $item['nom']
-						AND $item['groupe']
-						AND $item['email']
-						AND $userId )
+					if( array_key_exists('id', $item)
+						AND array_key_exists('prenom',$item)
+						AND array_key_exists('nom',$item)
+						AND array_key_exists('groupe',$item)
+						AND array_key_exists('email',$item)
+						AND !$this->getData(['user', $item['id']])
+						)
 					{
+						// Nettoyage de l'identifiant
+						$userId = helper::filter($item['id'] , helper::FILTER_ID);
 						// Enregistre le user
 						$this->setData([
 							'user',
@@ -600,35 +601,36 @@ class user extends common {
 								"accessTimer" => null,
 								"accessCsrf" => null
 						]]);
-						$item['notification'] = template::ico('check');
+						// Création du tableau de confirmation
+						self::$users[] = [
+							$userId,
+							$item['nom'],
+							$item['prenom'],
+							self::$groups[$item['groupe']],
+							$item['prenom'],
+							$item['email'],
+							$item['notification']
+						];
+						// Envoi du mail
+						if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
+							$sent = $this->sendMail(
+								$item['email'],
+								'Compte créé sur ' . $this->getData(['config', 'title']),
+								'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+								'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+								'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
+								'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+							);
+							$item['notification'] = $sent === true ? 'Mail' : template::ico('check') ;
+						} else {
+							$item['notification'] = template::ico('check');
+						}
 					} else {
 						$item['notification'] = template::ico('cancel');
 					}
-
-					// Création du tableau de confirmation
-					self::$users[] = [
-						$userId,
-						$item['nom'],
-						$item['prenom'],
-						self::$groups[$item['groupe']],
-						$item['prenom'],
-						$item['email'],
-						$item['notification']
-					];
 				}
 				$notification =  'importation effectuée' ;
 				$success = true;
-				// Envoi du mail
-				if ($this->getInput('userImportNotification',self::FILTER_BOOLEAN)) {
-					$this->sendMail(
-						$item['email'],
-						'Compte créé sur ' . $this->getData(['config', 'title']),
-						'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-						'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-						'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
-					);
-				}
 			} else {
 				$notification = 'Erreur de lecture, vérifiez les permissions';
 				$success = false;
