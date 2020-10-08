@@ -571,6 +571,7 @@ class user extends common {
 				}
 				// Stockage des données
 				foreach($csv as $item ) {
+
 					// N'insére que les utilisateurs dont l'id n'existe pas
 					// Vérifier la présence des champs
 					if( array_key_exists('id', $item)
@@ -578,7 +579,7 @@ class user extends common {
 						AND array_key_exists('nom',$item)
 						AND array_key_exists('groupe',$item)
 						AND array_key_exists('email',$item)
-						AND !$this->getData(['user', $item['id']])
+						AND !$this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)])
 						)
 					{
 						// Nettoyage de l'identifiant
@@ -601,16 +602,9 @@ class user extends common {
 								"accessTimer" => null,
 								"accessCsrf" => null
 						]]);
-						// Création du tableau de confirmation
-						self::$users[] = [
-							$userId,
-							$item['nom'],
-							$item['prenom'],
-							self::$groups[$item['groupe']],
-							$item['prenom'],
-							$item['email'],
-							$item['notification']
-						];
+
+						// Icône de notification
+						$item['notification'] = template::ico('check');
 						// Envoi du mail
 						if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
 							$sent = $this->sendMail(
@@ -621,16 +615,32 @@ class user extends common {
 								'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
 								'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
 							);
-							$item['notification'] = $sent === true ? 'Mail' : template::ico('check') ;
-						} else {
-							$item['notification'] = template::ico('check');
+							if ($sent === true) {
+								// Mail envoyé changement de l'icône
+								$item['notification'] = template::ico('comment') ;
+							} 
 						}
+						// Création du tableau de confirmation
+						self::$users[] = [
+							$userId,
+							$item['nom'],
+							$item['prenom'],
+							self::$groups[$item['groupe']],
+							$item['prenom'],
+							$item['email'],
+							$item['notification']
+						];
 					} else {
 						$item['notification'] = template::ico('cancel');
 					}
 				}
-				$notification =  'importation effectuée' ;
-				$success = true;
+				if (empty(self::$users)) {
+					$notification =  'Rien à importer' ;
+					$success = false;
+				} else {
+					$notification =  'Importation effectuée' ;
+					$success = true;
+				}
 			} else {
 				$notification = 'Erreur de lecture, vérifiez les permissions';
 				$success = false;
