@@ -620,19 +620,19 @@ class user extends common {
 								$item['notification'] = template::ico('comment') ;
 							} 
 						}
-						// Création du tableau de confirmation
-						self::$users[] = [
-							$userId,
-							$item['nom'],
-							$item['prenom'],
-							self::$groups[$item['groupe']],
-							$item['prenom'],
-							$item['email'],
-							$item['notification']
-						];
 					} else {
 						$item['notification'] = template::ico('cancel');
 					}
+					// Création du tableau de confirmation
+					self::$users[] = [
+						$userId,
+						$item['nom'],
+						$item['prenom'],
+						self::$groups[$item['groupe']],
+						$item['prenom'],
+						$item['email'],
+						$item['notification']
+					];
 				}
 				if (empty(self::$users)) {
 					$notification =  'Rien à importer' ;
