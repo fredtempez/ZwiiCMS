@@ -337,15 +337,12 @@ class user extends common {
 			// Check la captcha
 			if(
 				$this->getData(['config','connect','captcha'])
-
 				AND password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
 			{
 				self::$inputNotices['userLoginCaptcha'] = 'Incorrect';
 			} else {
-
 				// Lire Id du compte
 				$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
-
 				/**
 				 * Aucun compte existant
 				 */
