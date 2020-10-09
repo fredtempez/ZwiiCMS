@@ -1,6 +1,7 @@
 # Fichiers temporaires
 site/tmp/*.zip
 site/tmp/*.gz
+site/tmp/*.png
 
 # Sauvegardes
 site/backup/*
