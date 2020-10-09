@@ -374,7 +374,6 @@ class user extends common {
 			} else {
 				// Lire Id du compte
 				$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
-
 				/**
 				 * Aucun compte existant
 				 */
