@@ -367,7 +367,6 @@ class user extends common {
 			// Check la captcha
 			if(
 				$this->getData(['config','connect','captcha'])
-				//$this->getInput('userLoginCaptcha', helper::FILTER_INT) !== $this->getInput('userLoginCaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('userLoginCaptchaSecondNumber', helper::FILTER_INT))
 				AND password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
 			{
 				self::$inputNotices['userLoginCaptcha'] = 'Incorrect';
@@ -445,6 +444,7 @@ class user extends common {
 							$this->addOutput([
 								'notification' => 'Connexion réussie',
 								'redirect' => helper::baseUrl(),
+								//'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
 								'state' => true
 							]);
 						}

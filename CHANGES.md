@@ -4,6 +4,7 @@
 - Modifications :
     - Module User
         - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+        - Importation d'un liste d'utilisateur dans un fichier plat (CSV).
     - Module Blog :
         - Texte du commentaire enrichi.
         - Nombre maximal de caractère par commentaire.
@@ -11,7 +12,7 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
-        
+
 ## version 10.3.02
 - Corrections :
     - Icône de pied de page github manquante.
@@ -19,7 +20,8 @@
 - Modifications :
     - Nouvelles images de captcha.
     - Option de configuration, captcha demandé à la connexion.
-    - Module User : importation d'un liste d'utilisateur dans un fichier plat (CSV).
+
+    - Méthode d'encodage UTF8.
 
 ## version 10.3.01
 - Corrections :
