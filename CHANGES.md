@@ -6,6 +6,7 @@
 - Modifications :
     - Nouvelles images de captcha.
     - Option de configuration, captcha demandé à la connexion.
+    - Méthode d'encodage UTF8.
 
 ## version 10.3.01
 - Corrections :
