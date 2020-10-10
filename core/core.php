@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.02';
+	const ZWII_VERSION = '10.3.03';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1742,7 +1742,8 @@ class core extends common {
 		$access = null;
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
-		if($this->getData(['page', $this->getUrl(0)]) !== null) {
+		if($this->getData(['page', $this->getUrl(0)]) !== null
+			OR $this->getData(['page', $this->getUrl(2)]) !== NULL) { // Page Redirection éviter une valeur nulle
 			if(
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
 				OR (
@@ -1761,7 +1762,6 @@ class core extends common {
 				}
 			}
 		}
-
 		/**
 		 * Contrôle si la page demandée est en édition ou accès à la gestion du site
 		 * conditions de blocage :
