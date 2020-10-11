@@ -258,11 +258,11 @@ class page extends common {
 		}
 		// Suppression
 		else {
-			// Met à jour le site map
-			$this->createSitemap('all');
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
 			$this->deleteData(['module', $url[0]]);
+			// Met à jour le site map
+			$this->createSitemap('all');
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl(false),
