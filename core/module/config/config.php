@@ -484,7 +484,8 @@ class config extends common {
 						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
-						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN)
+						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
+						'captcha10' => $this->getInput('configConnectCaptcha10',helper::FILTER_BOOLEAN)
 					]
 				]
 			]);

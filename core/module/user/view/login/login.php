@@ -15,7 +15,9 @@
 	<?php if ($this->getData(['config', 'connect','captcha'])): ?>
 		<div class="row">
 			<div class="col12 textAlignCenter">
-				<?php echo template::captcha('userLoginCaptcha'); ?>
+				<?php echo template::captcha('userLoginCaptcha', [
+					'limit' => $this->getData(['config','connect','captcha10'])
+				]); ?>
 			</div>
 		</div>
 	<?php endif;?>

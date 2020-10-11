@@ -46,13 +46,15 @@ class template {
             'help' => '',
             'id' => $nameId,
             'name' => $nameId,
-            'value' => ''
+            'value' => '',
+            'limit' => false
         ], $attributes);
         // Génère deux nombres pour le captcha
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
-        $firstNumber = rand ( 0 , count($letters)-1 );
-        $secondNumber = rand ( 0 , count($letters)-1 );
+        $limit = $attributes['limit']  ? 9 : count($letters)-1 ;
+        $firstNumber = rand ( 0 , $limit );
+        $secondNumber = rand ( 0 , $limit );
         $result =  $firstNumber +  $secondNumber;
         $result = password_hash($result, PASSWORD_BCRYPT);
         $firstLetter = uniqid();

@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.02';
+	const ZWII_VERSION = '10.3.03';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1420,6 +1420,12 @@ class common {
 			// Activation par défaut du captcha à la connexion
 			$this->setData(['config', 'connect','captcha', true]);
 		$this->setData(['core', 'dataVersion', 10302]);
+		}
+		// Version 10.3.03
+		if ($this->getData(['core', 'dataVersion']) < 10303) {
+			// Activation par défaut du captcha à la connexion
+			$this->setData(['config', 'connect','captcha10', false]);
+		$this->setData(['core', 'dataVersion', 10303]);
 		}
 	}
 }
