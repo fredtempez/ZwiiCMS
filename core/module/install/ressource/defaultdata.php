@@ -665,7 +665,7 @@ class init extends common {
 					'commentApproved' => false,
 					'commentClose' => false,
 					'commentNotification'  => false,
-					'commentGroupNotification' => 1
+					'commentGroupNotification' => 3
 				],
 				'mon-deuxieme-article' => [
 					'comment' => [],
@@ -682,7 +682,7 @@ class init extends common {
 					'commentApproved' => false,
 					'commentClose' => false,
 					'commentNotification'  => false,
-					'commentGroupNotification' => 1
+					'commentGroupNotification' => 3
 				],
 				'mon-troisieme-article' => [
 					'comment' => [],
@@ -699,7 +699,7 @@ class init extends common {
 					'commentApproved' => false,
 					'commentClose' => true,
 					'commentNotification'  => false,
-					'commentGroupNotification' => 1
+					'commentGroupNotification' => 3
 				]
 			],
 			'galeries' => [
