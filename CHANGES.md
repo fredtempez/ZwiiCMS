@@ -13,6 +13,10 @@
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
 
+## version 10.3.03
+- Correction :
+    - Doublons de lignes.
+
 ## version 10.3.02
 - Corrections :
     - Icône de pied de page github manquante.
