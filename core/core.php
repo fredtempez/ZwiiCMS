@@ -1740,9 +1740,9 @@ class core extends common {
 		}
 		// Check l'accès à la page
 		$access = null;
-		$accessInfo['userName'] = '';
-		$accessInfo['pageId'] = '';
 		if($this->getData(['page', $this->getUrl(0)]) !== null
+			OR $this->getData(['page', $this->getUrl(1)]) !== null
+			OR $this->getData(['page', $this->getUrl(2)]) !== null
 			) {
 			if(
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
@@ -1754,7 +1754,10 @@ class core extends common {
 				$access = true;
 			}
 			else {
-				if($this->getUrl(0) === $this->getData(['config', 'homePageId'])) {
+				
+				if($this->getUrl(0) === 'user'
+					AND $this->getUrl(1) === 'login'
+				) {
 					$access = 'login';
 				}
 				else {
@@ -1763,7 +1766,7 @@ class core extends common {
 			}
 		}
 		var_dump($access);
-		echo $this->getUrl(0);
+		echo $this->getUrl(1);
 		/**
 		 * Contrôle si la page demandée est en édition ou accès à la gestion du site
 		 * conditions de blocage :
@@ -1772,6 +1775,8 @@ class core extends common {
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
+		$accessInfo['userName'] = '';
+		$accessInfo['pageId'] = '';
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $this->getuser('id')
@@ -1820,7 +1825,7 @@ class core extends common {
 		}
 		// Importe le module
 		else {
-			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
+			// Id du module, et valeurs en sortie de la page s'il s'agit d'un module de page
 
 			if($access AND $this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 				$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
