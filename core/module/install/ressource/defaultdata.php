@@ -643,7 +643,6 @@ class init extends common {
 		'module' => [
 			'blog' => [
 				'mon-premier-article' => [
-					'closeComment' => false,
 					'comment' => [
 						'58e11d09e5aff' => [
 							'author' => 'Rémi',
@@ -660,10 +659,15 @@ class init extends common {
 					'publishedOn' => 1548790902,
 					'state' => true,
 					'title' => 'Mon premier article',
-					'userId' => '' // Géré au moment de l'installation
+					'userId' => '', // Géré au moment de l'installation
+					'editConsent' => 'group',
+					'commentMaxlength' => '500',
+					'commentApproved' => false,
+					'commentClose' => false,
+					'commentNotification'  => false,
+					'commentGroupNotification' => 1
 				],
 				'mon-deuxieme-article' => [
-					'closeComment' => false,
 					'comment' => [],
 					'content' => '<p>Et prima post Osdroenam quam, ut dictum est, ab hac descriptione discrevimus, Commagena, nunc Euphratensis, clementer adsurgit, Hierapoli, vetere Nino et Samosata civitatibus amplis inlustris.</p><p>Ob haec et huius modi multa, quae cernebantur in paucis, omnibus timeri sunt coepta. et ne tot malis dissimulatis paulatimque serpentibus acervi crescerent aerumnarum, nobilitatis decreto legati mittuntur: Praetextatus ex urbi praefecto et ex vicario Venustus et ex consulari Minervius oraturi, ne delictis supplicia sint grandiora, neve senator quisquam inusitato et inlicito more tormentis exponeretur.</p><p>Sed ut tum ad senem senex de senectute, sic hoc libro ad amicum amicissimus scripsi de amicitia. Tum est Cato locutus, quo erat nemo fere senior temporibus illis, nemo prudentior; nunc Laelius et sapiens (sic enim est habitus) et amicitiae gloria excellens de amicitia loquetur. Tu velim a me animum parumper avertas, Laelium loqui ipsum putes. C. Fannius et Q. Mucius ad socerum veniunt post mortem Africani; ab his sermo oritur, respondet Laelius, cuius tota disputatio est de amicitia, quam legens te ipse cognosces.</p>',
 					'picture' => 'galerie/landscape/desert.jpg',
@@ -672,10 +676,15 @@ class init extends common {
 					'publishedOn' => 1550432502,
 					'state' => true,
 					'title' => 'Mon deuxième article',
-					'userId' => '' // Géré au moment de l'installation
+					'userId' => '', // Géré au moment de l'installation
+					'editConsent' => 'group',
+					'commentMaxlength' => '500',
+					'commentApproved' => false,
+					'commentClose' => false,
+					'commentNotification'  => false,
+					'commentGroupNotification' => 1
 				],
 				'mon-troisieme-article' => [
-					'closeComment' => true,
 					'comment' => [],
 					'content' => '<p>Rogatus ad ultimum admissusque in consistorium ambage nulla praegressa inconsiderate et leviter proficiscere inquit ut praeceptum est, Caesar sciens quod si cessaveris, et tuas et palatii tui auferri iubebo prope diem annonas. hocque solo contumaciter dicto subiratus abscessit nec in conspectum eius postea venit saepius arcessitus.</p><p>Proinde concepta rabie saeviore, quam desperatio incendebat et fames, amplificatis viribus ardore incohibili in excidium urbium matris Seleuciae efferebantur, quam comes tuebatur Castricius tresque legiones bellicis sudoribus induratae.</p><p>Inter has ruinarum varietates a Nisibi quam tuebatur accitus Vrsicinus, cui nos obsecuturos iunxerat imperiale praeceptum, dispicere litis exitialis certamina cogebatur abnuens et reclamans, adulatorum oblatrantibus turmis, bellicosus sane milesque semper et militum ductor sed forensibus iurgiis longe discretus, qui metu sui discriminis anxius cum accusatores quaesitoresque subditivos sibi consociatos ex isdem foveis cerneret emergentes, quae clam palamve agitabantur, occultis Constantium litteris edocebat inplorans subsidia, quorum metu tumor notissimus Caesaris exhalaret.</p>',
 					'picture' => 'galerie/landscape/iceberg.jpg',
@@ -684,7 +693,13 @@ class init extends common {
 					'publishedOn' => 1550864502,
 					'state' => true,
 					'title' => 'Mon troisième article',
-					'userId' => '' // Géré au moment de l'installation
+					'userId' => '', // Géré au moment de l'installation
+					'editConsent' => 'group',
+					'commentMaxlength' => '500',
+					'commentApproved' => false,
+					'commentClose' => true,
+					'commentNotification'  => false,
+					'commentGroupNotification' => 1
 				]
 			],
 			'galeries' => [

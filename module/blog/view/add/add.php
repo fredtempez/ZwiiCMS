@@ -67,18 +67,11 @@
 	<?php echo template::textarea('blogAddContent', [
 		'class' => 'editorWysiwyg'
 	]); ?>
-<div class="row">
+	<div class="row">
 		<div class="col12">
 			<div class="block">
 				<h4>Options de publication</h4>
 				<div class="row">
-					<div class="col4">
-						<?php echo template::select('blogAddCommentMaxlength', $module::$commentLength,[
-							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
-							'label' => 'Caractères par commentaire',
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
-						]); ?>
-					</div>
 					<div class="col4">
 						<?php echo template::select('blogAddUserId', $module::$users, [
 							'label' => 'Auteur',
@@ -93,47 +86,52 @@
 							'value' => time()
 						]); ?>
 					</div>
+					<div class="col4">
+						<?php echo template::select('blogAddConsent', $module::$articleConsent  , [
+							'label' => 'Edition /  Suppression',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editConsent']),
+							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
+						]); ?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col6">
-			<div class="block">
-			<h4>Permissions</h4>
-				<?php echo template::select('blogAddRights', $this->getUser('group') === self::GROUP_ADMIN ? $module::$articleRightsAdmin : $module::$articleRightsModerator , [
-					'label' => 'Droits d\'édition et de modification',
-					'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editRights'])
-				]); ?>
-			</div>
-		</div>
-		<div class="col6">
+		<div class="col12">
 			<div class="block">
 				<h4>Commentaires</h4>
-				<?php echo template::checkbox('blogAddCloseComment', true, 'Fermer les commentaires', [
-					'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'closeComment'])
-				]); ?>
-				<div id="commentOptionsWrapper">
-					<div class="row">
-						<div class="col12">
-							<?php echo template::checkbox('blogAddCommentApprove', true, 'Approbation des commentaires', [
-								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApprove']),
-								''
-							]); ?>
-						</div>
+				<div class="row">
+					<div class="col4 ">
+						<?php echo template::checkbox('blogAddCommentClose', true, 'Fermer les commentaires', [
+							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentClose'])
+						]); ?>
 					</div>
-					<div class="row">
-						<div class="col7">
-							<?php echo template::checkbox('blogAddMailNotification', true, 'Notification des nouveaux commentaires par mail aux groupes', [
-								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'mailNotification']),
-							]); ?>
-						</div>
-						<div class="col5">
-							<?php echo template::select('blogAddGroupNotification', $module::$groupNews, [
-								'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'groupNotification']),
-								'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
-							]); ?>
-						</div>
+					<div class="col4 commentOptionsWrapper ">
+						<?php echo template::checkbox('blogAddCommentApproved', true, 'Approbation par un modérateur', [
+							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApproved']),
+							''
+						]); ?>
+					</div>
+					<div class="col4 commentOptionsWrapper">
+						<?php echo template::select('blogAddCommentMaxlength', $module::$commentLength,[
+							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
+							'label' => 'Caractères par commentaire',
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col3 commentOptionsWrapper offset2">
+						<?php echo template::checkbox('blogAddCommentNotification', true, 'Notification par email', [
+							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentNotification']),
+						]); ?>
+					</div>
+					<div class="col4 commentOptionsWrapper">
+						<?php echo template::select('blogAddCommentGroupNotification', $module::$groupNews, [
+							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentGroupNotification']),
+							'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
+						]); ?>
 					</div>
 				</div>
 			</div>

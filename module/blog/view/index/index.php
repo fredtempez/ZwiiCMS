@@ -29,7 +29,9 @@
 						</h1>
 						<div class="blogComment">
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
-								<?php echo count($article['comment']); ?>
+								<?php if ($article['comment']): ?>
+									<?php echo count($article['comment']); ?>
+								<?php endif; ?>
 							</a>
 							<?php echo template::ico('comment', 'left'); ?>
 						</div>

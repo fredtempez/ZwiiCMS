@@ -33,19 +33,19 @@ $("#blogEditDraft").on("click", function() {
 /**
  * Options de commentaires
  */
-$("#blogEditCloseComment").on("change", function() {
+$("#blogEditCommentClose").on("change", function() {
 	if ($(this).is(':checked') ) {
-		$("#commentOptionsWrapper").slideUp();
+		$(".commentOptionsWrapper").slideUp();
 	} else {
-		$("#commentOptionsWrapper").slideDown();
+		$(".commentOptionsWrapper").slideDown();
 	}
 });
 
-$("#blogEditMailNotification").on("change", function() {
+$("#blogEditCommentNotification").on("change", function() {
 	if ($(this).is(':checked') ) {
-		$("#blogEditGroupNotification").slideDown();
+		$("#blogEditCommentGroupNotification").slideDown();
 	} else {
-		$("#blogEditGroupNotification").slideUp();
+		$("#blogEditCommentGroupNotification").slideUp();
 	}
 });
 
@@ -53,15 +53,14 @@ $("#blogEditMailNotification").on("change", function() {
 $( document).ready(function() {
 
 	if ($("#blogEditCloseComment").is(':checked') ) {
-		$("#commentOptionsWrapper").slideUp();
+		$(".commentOptionsWrapper").slideUp();
 	} else {
-		$("#commentOptionsWrapper").slideDown();
+		$(".commentOptionsWrapper").slideDown();
 	}
 
-	if ($("#blogEditMailNotification").is(':checked') ) {
-		$("#blogEditGroupNotification").slideDown();
+	if ($("#blogEditCommentNotification").is(':checked') ) {
+		$("#blogEditCommentGroupNotification").slideDown();
 	} else {
-		$("#blogEditGroupNotification").slideUp();
+		$("#blogEditCommentGroupNotification").slideUp();
 	}
-
 });

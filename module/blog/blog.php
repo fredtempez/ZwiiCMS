@@ -14,11 +14,8 @@
 
 class blog extends common {
 
-	// Objets
-	// Propriétaire - groupe
-	const EDIT_ALL          = '02'; // Groupes Editeurs et admins
-	const EDIT_OWNER_ADMIN  = '23'; // Propriétaire éditeur + groupe admin
-	const EDIT_ADMIN        = '03'; // Groupe des admin
+	const EDIT_OWNER = 'owner';
+	const EDIT_GROUP = 'group';
 
 	public static $actions = [
 		'add' => self::GROUP_EDITOR,
@@ -41,7 +38,7 @@ class blog extends common {
 	public static $editCommentSignature = '';
 
 	public static $comments = [];
-	
+
 	public static $nbCommentsApproved = 0;
 
 	public static $commentsDelete;
@@ -79,19 +76,16 @@ class blog extends common {
 	];
 
 	// Permissions d'un article
-	public static $articleRightsAdmin = [
-		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
-		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs',
-		self::EDIT_ADMIN       => 'Groupe des administrateurs'
+	public static $articleConsent = [
+		self::EDIT_GROUP       => 'Groupe du propriétaire',
+		self::EDIT_OWNER => 'Propiétaire'
 	];
-	public static $articleRightsModerator = [
-		self::EDIT_ALL     	   => 'Groupes des éditeurs et des administrateurs',
-		self::EDIT_OWNER_ADMIN => 'Editeur et groupe des administrateurs'
-	];
+
+
 
 	public static $users = [];
 
-	const BLOG_VERSION = '3.04.dev';
+	const BLOG_VERSION = '3.05.dev';
 
 	/**
 	 * Édition
@@ -111,22 +105,27 @@ class blog extends common {
 			$articleId = helper::increment($articleId, (array) $this->getData(['module', $this->getUrl(0)]));
 			$articleId = helper::increment($articleId, array_keys(self::$actions));
 			// Crée l'article
-			$this->setData(['module', $this->getUrl(0), $articleId, [
-				'closeComment' => $this->getInput('blogAddCloseComment', helper::FILTER_BOOLEAN),
-				'mailNotification'  => $this->getInput('blogAddMailNotification', helper::FILTER_BOOLEAN),
-				'groupNotification' => 	$this->getInput('blogAddGroupNotification', helper::FILTER_INT),
-				'comment' => [],
-				'content' => $this->getInput('blogAddContent', null),
-				'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
-				'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
-				'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
-				'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),
-				'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
-				'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
-				'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
-				'userId' => $newuserid,
-				'commentMaxlength' => $this->getInput('blogAddlength', null)
-			]]);
+			$this->setData(['module',
+				$this->getUrl(0),
+				$articleId, [
+					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
+					'content' => $this->getInput('blogAddContent', null),
+					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
+					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
+					'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
+					'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),
+					'publishedOn' => $this->getInput('blogAddPublishedOn', helper::FILTER_DATETIME, true),
+					'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
+					'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
+					'userId' => $newuserid,
+					'editConsent' => $this->getInput('blogAddConsent'),
+					'commentMaxlength' => $this->getInput('blogAddCommentMaxlength'),
+					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
+					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
+					'commentNotification'  => $this->getInput('blogAddCommentNotification', helper::FILTER_BOOLEAN),
+					'commentGroupNotification' => $this->getInput('blogAddCommentGroupNotification', helper::FILTER_INT)
+				]
+			]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -305,16 +304,15 @@ class blog extends common {
 		// Gestion des droits d'accès
 		$filterData=[];
 		foreach ($articleIds as $key => $value) {
-			$rights = $this->getData(['module',  $this->getUrl(0), $value,'editRights']);
-			// Compatibilité pas de droit stocké placer droit par défaut
-			$rights = empty($rights) ? '02' : $rights;
-			// Check les droits du propriétaire
-			// Check les droits du groupe
+			$consent = $this->getData(['module',  $this->getUrl(0), $value,'editConsent']);
 			if (
-				( substr($rights,0,1) === '2'
-				AND  $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+				(
+					$consent === self::EDIT_OWNER
+					AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+				) OR (
+					$consent === self::EDIT_GROUP
+					AND $this->getUser('group') >=  $this->getData(['user',$this->getUser('group'),'group'])
 				)
-				OR  ( $this->getUser('group') >=  substr($rights,1,1) )
 			) {
 				$filterData[] = $value;
 			}
@@ -437,24 +435,27 @@ class blog extends common {
 					$articleId = helper::increment($articleId, $this->getData(['module', $this->getUrl(0)]));
 					$articleId = helper::increment($articleId, array_keys(self::$actions));
 				}
-				$this->setData(['module', $this->getUrl(0), $articleId, [
-					'closeComment' => $this->getInput('blogEditCloseComment', helper::FILTER_BOOLEAN),
-					'mailNotification'  => $this->getInput('blogEditMailNotification', helper::FILTER_BOOLEAN),
-					'groupNotification' => $this->getInput('blogEditGroupNotification', helper::FILTER_INT),
-					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
-					'content' => $this->getInput('blogEditContent', null),
-					'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
-					'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
-					'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
-					'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
-					'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
-					'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
-					'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
-					'userId' => $newuserid,
-					'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
-					'commentApprove' => $this->getInput('blogEditCommentApprove', helper::FILTER_BOOLEAN),
-					'editRights' => $this->getInput('blogEditRights')
-				]]);
+				$this->setData(['module',
+					$this->getUrl(0),
+					$articleId, [
+						'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
+						'content' => $this->getInput('blogEditContent', null),
+						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
+						'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
+						'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
+						'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
+						'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
+						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
+						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
+						'userId' => $newuserid,
+						'editConsent' => $this->getInput('blogEditConsent'),
+						'commentMaxlength' => $this->getInput('blogEditCommentMaxength'),
+						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
+						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),
+						'commentNotification'  => $this->getInput('blogEditCommentNotification', helper::FILTER_BOOLEAN),
+						'commentGroupNotification' => $this->getInput('blogEditCommentGroupNotification', helper::FILTER_INT)
+					]
+				]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
 					$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
@@ -473,7 +474,7 @@ class blog extends common {
 			// Les membres ne sont pas éditeurs, les exclure de la liste
 				if ( $this->getData(['user', $userId, 'group']) < self::GROUP_EDITOR) {
 					unset(self::$users[$userId]);
-				}				
+				}
 				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' .  self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
 			}
 			unset($userFirstname);
@@ -526,19 +527,19 @@ class blog extends common {
 						'content' => $content,
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
-						'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) // true commentaire publié false en attente de publication
+						'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApproved']) // true commentaire publié false en attente de publication
 					]]);
 					// Envoi d'une notification aux administrateurs
 					// Init tableau
 					$to = [];
 					// Liste des destinataires
 					foreach($this->getData(['user']) as $userId => $user) {
-						if ($user['group'] >= $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'groupNotification']) ) {
+						if ($user['group'] >= $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentGroupNotification']) ) {
 							$to[] = $user['mail'];
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
-					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApprove']) === true ? 'Commentaire déposé en attente d\'approbation': 'Commentaire déposé';
+					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApproved']) === true ? 'Commentaire déposé en attente d\'approbation': 'Commentaire déposé';
 					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
@@ -567,11 +568,13 @@ class blog extends common {
 				}
 				// Ids des commentaires approuvés par ordre de publication
 				$commentsApproved = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']);
-				foreach( $commentsApproved as $key => $value){
-					if($value['approval']===false) unset($commentsApproved[$key]);
+				if ($commentsApproved) {
+					foreach( $commentsApproved as $key => $value){
+						if($value['approval']===false) unset($commentsApproved[$key]);
+					}
+					// Ligne suivante si affichage du nombre total de commentaires approuvés sous l'article
+					self::$nbCommentsApproved = count($commentsApproved);
 				}
-				// Ligne suivante si affichage du nombre total de commentaires approuvés sous l'article
-				self::$nbCommentsApproved = count($commentsApproved);
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
