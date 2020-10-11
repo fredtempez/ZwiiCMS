@@ -39,7 +39,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.03';
+	const ZWII_VERSION = '10.3.02';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1740,10 +1740,9 @@ class core extends common {
 		}
 		// Check l'accès à la page
 		$access = null;
-		if($this->getData(['page', $this->getUrl(0)]) !== null
-			OR $this->getData(['page', $this->getUrl(1)]) !== null
-			OR $this->getData(['page', $this->getUrl(2)]) !== null
-			) {
+		$accessInfo['userName'] = '';
+		$accessInfo['pageId'] = '';
+		if($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if(
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
 				OR (
@@ -1754,10 +1753,7 @@ class core extends common {
 				$access = true;
 			}
 			else {
-				
-				if($this->getUrl(0) === 'user'
-					AND $this->getUrl(1) === 'login'
-				) {
+				if($this->getUrl(0) === $this->getData(['config', 'homePageId'])) {
 					$access = 'login';
 				}
 				else {
@@ -1765,8 +1761,7 @@ class core extends common {
 				}
 			}
 		}
-		var_dump($access);
-		echo $this->getUrl(1);
+
 		/**
 		 * Contrôle si la page demandée est en édition ou accès à la gestion du site
 		 * conditions de blocage :
@@ -1775,16 +1770,14 @@ class core extends common {
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
-		$accessInfo['userName'] = '';
-		$accessInfo['pageId'] = '';
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
-			if ( $this->getuser('id')
-				AND $userId !== $this->getuser('id')
-				AND $this->getData(['user', $userId,'accessUrl']) === $this->getUrl()
-				AND array_intersect($t,self::$accessList)
-				AND array_intersect($t,self::$accessExclude) !== false
-				AND time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
+			if ( $this->getuser('id') &&
+				$userId !== $this->getuser('id') &&
+				$this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
+				array_intersect($t,self::$accessList)  &&
+				array_intersect($t,self::$accessExclude) !== false	 &&
+				time() < $this->getData(['user', $userId,'accessTimer']) + self::ACCESS_TIMER
 			) {
 					$access = false;
 					$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
@@ -1798,13 +1791,16 @@ class core extends common {
 		}
 		// Breadcrumb
 		$title = $this->getData(['page', $this->getUrl(0), 'title']);
-		if (!empty($this->getData(['page', $this->getUrl(0), 'parentPageId']))
-			 AND	$this->getData(['page', $this->getUrl(0), 'breadCrumb'])) {
-				$title = '<a href="' . helper::baseUrl() . 	$this->getData(['page', $this->getUrl(0), 'parentPageId']) .
-						'">' .	ucfirst($this->getData(['page',$this->getData(['page', $this->getUrl(0), 'parentPageId']), 'title'])) .
-						'</a> &#8250; '. $this->getData(['page', $this->getUrl(0), 'title']);
+		if (!empty($this->getData(['page', $this->getUrl(0), 'parentPageId'])) &&
+				$this->getData(['page', $this->getUrl(0), 'breadCrumb'])) {
+				$title = '<a href="' . helper::baseUrl() .
+						$this->getData(['page', $this->getUrl(0), 'parentPageId']) .
+						'">' .
+						ucfirst($this->getData(['page',$this->getData(['page', $this->getUrl(0), 'parentPageId']), 'title'])) .
+						'</a> &#8250; '.
+						$this->getData(['page', $this->getUrl(0), 'title']);
 		}
-		var_dump($access);
+
 		// Importe la page
 		if(
 			$this->getData(['page', $this->getUrl(0)]) !== null
@@ -1825,7 +1821,7 @@ class core extends common {
 		}
 		// Importe le module
 		else {
-			// Id du module, et valeurs en sortie de la page s'il s'agit d'un module de page
+			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
 
 			if($access AND $this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 				$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
@@ -1878,7 +1874,6 @@ class core extends common {
 							)
 						)
 						AND $output['access'] === true
-						AND $access !== false
 					) {
 						// Enregistrement du contenu de la méthode POST lorsqu'une notice est présente
 						if(common::$inputNotices) {
@@ -2002,7 +1997,6 @@ class core extends common {
 				}
 			}
 		}
-		var_dump($access);
 		// Erreurs
 		if($access === 'login') {
 			http_response_code(302);
