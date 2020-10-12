@@ -1266,7 +1266,7 @@ class common {
 				}
 			}
 			// Contrôle des options php.ini pour la mise à jour auto
-			if (helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+			if (helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
 				$this->setData(['config','autoUpdate',false]);
 			}
 

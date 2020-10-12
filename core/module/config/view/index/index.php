@@ -60,7 +60,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Paramètres généraux</h4>
-			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php $error = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::file('configFavicon', [

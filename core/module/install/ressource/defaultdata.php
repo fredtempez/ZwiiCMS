@@ -488,7 +488,7 @@ class init extends common {
 				<h2>Article 1 : Les mentions l&eacute;gales</h2>
 				<p justify="">L&rsquo;&eacute;dition et la direction de la publication du site www.site.com est assur&eacute;e par John Doe, domicili&eacute; 1 rue de Paris - 75016 PARIS.</p>
 				<p justify="">Num&eacute;ro de t&eacute;l&eacute;phone est 0102030405</p>
-				<p justify="">Adresse e-mail john.doe@zwiicms.com.</p>
+				<p justify="">Adresse e-mail john.doe@zwiicms.fr.</p>
 				<p justify="">L\'h&eacute;bergeur du site www.site.com est la soci&eacute;t&eacute; Nom de l\'h&eacute;bergeur, dont le si&egrave;ge social est situ&eacute; au 12 rue de Lyon - 69001 Lyon, avec le num&eacute;ro de t&eacute;l&eacute;phone : 0401020305.</p>
 				<h2>ARTICLE 2&nbsp;: Acc&egrave;s au site</h2>
 				<p justify="">Le site www.site.com permet &agrave; l\'Utilisateur un acc&egrave;s gratuit aux services suivants :</p>
@@ -727,7 +727,7 @@ class init extends common {
 				]
 			],
 			'site-de-zwii' => [
-				'url' => 'https://zwiicms.com/',
+				'url' => 'https://zwiicms.fr/',
 				'count' => 0
 			],
 			'contact' => [
