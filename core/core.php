@@ -1776,10 +1776,12 @@ class core extends common {
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
+		echo $this->getuser('id');
+		die();
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
-			if ( $this->getuser('id') &&
-				$userId !== $this->getuser('id') &&
+			if ( $this->getUser('id') &&
+				$userId !== $this->getUser('id') &&
 				$this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
 				array_intersect($t,self::$accessList)  &&
 				array_intersect($t,self::$accessExclude) !== false	 &&
@@ -1792,8 +1794,8 @@ class core extends common {
 		}
 		// Accès concurrent stocke la page visitée
 		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
-			$this->setData(['user',$this->getuser('id'),'accessUrl',$this->getUrl()]);
-			$this->setData(['user',$this->getuser('id'),'accessTimer',time()]);
+			$this->setData(['user',$this->getUser('id'),'accessUrl',$this->getUrl()]);
+			$this->setData(['user',$this->getUser('id'),'accessTimer',time()]);
 		}
 		// Breadcrumb
 		$title = $this->getData(['page', $this->getUrl(0), 'title']);
