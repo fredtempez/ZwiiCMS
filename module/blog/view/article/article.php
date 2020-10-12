@@ -11,8 +11,11 @@
 					$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND
 					(  // Propriétaire
-						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
-						AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
+						(
+							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
+							AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
+						) // Ou une autorité
+						OR $this->getUser('group') >  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
 					) OR (
 						// Groupe
 						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER

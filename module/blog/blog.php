@@ -306,8 +306,12 @@ class blog extends common {
 		foreach ($articleIds as $key => $value) {
 			if (
 				(  // Propriétaire
-					$this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
-					AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+					(
+					 $this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
+					 AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+					) // Ou une autorité
+					OR $this->getUser('group') >  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
+
 				) OR (
 					// Groupe
 					$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== self::EDIT_OWNER
