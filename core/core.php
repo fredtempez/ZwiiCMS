@@ -1776,8 +1776,6 @@ class core extends common {
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
-		echo $this->getuser('id');
-		die();
 		foreach($this->getData(['user']) as $userId => $userIds){
 			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
 			if ( $this->getUser('id') &&
