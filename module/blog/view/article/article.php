@@ -7,16 +7,24 @@
 					à <?php echo strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])); ?>
 			</div>
 		</div>
-		<?php  if(
-					$this->getUser('group') >= self::GROUP_ADMIN
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+		<?php if (
+					$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND
+					(  // Propriétaire
+						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
+						AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
+					) OR (
+						// Groupe
+						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
+						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
+					)
 				): ?>
-			<div class="col2">
-				<?php echo template::button('blogEdit', [
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
-							'value' => 'Editer'
-				]); ?>
-			</div>
+				<div class="col2">
+					<?php echo template::button('blogEdit', [
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
+								'value' => 'Editer'
+					]); ?>
+				</div>
 		<?php endif; ?>
 	</div>
 		<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>

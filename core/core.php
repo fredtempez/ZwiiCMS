@@ -1449,7 +1449,7 @@ class common {
 					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent]), 'publishedOn', 'SORT_DESC'));
 					foreach ($articleIds as $key => $article) {
 						// Droits les deux groupes
-						$this->setData(['module',  $parent, $article,'editConsent','group']);
+						$this->setData(['module',  $parent, $article,'editConsent', 3]);
 						// Limite de taille 500
 						$this->setData(['module',  $parent, $article,'commentMaxlength', '500']);
 						// Pas d'approbation des commentaires

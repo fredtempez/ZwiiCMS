@@ -78,7 +78,7 @@ class blog extends common {
 	// Permissions d'un article
 	public static $articleConsent = [
 		self::EDIT_GROUP       => 'Groupe du propriétaire',
-		self::EDIT_OWNER => 'Propiétaire'
+		self::EDIT_OWNER       => 'Propiétaire'
 	];
 
 
@@ -118,7 +118,7 @@ class blog extends common {
 					'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'editConsent' => $this->getInput('blogAddConsent'),
+					'editConsent' =>  $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : self::EDIT_OWNER,
 					'commentMaxlength' => $this->getInput('blogAddCommentMaxlength'),
 					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
@@ -304,14 +304,14 @@ class blog extends common {
 		// Gestion des droits d'accès
 		$filterData=[];
 		foreach ($articleIds as $key => $value) {
-			$consent = $this->getData(['module',  $this->getUrl(0), $value,'editConsent']);
 			if (
-				(
-					$consent === self::EDIT_OWNER
+				(  // Propriétaire
+					$this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
 					AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
 				) OR (
-					$consent === self::EDIT_GROUP
-					AND $this->getUser('group') >=  $this->getData(['user',$this->getUser('group'),'group'])
+					// Groupe
+					$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== self::EDIT_OWNER
+					AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
 				)
 			) {
 				$filterData[] = $value;
@@ -448,7 +448,7 @@ class blog extends common {
 						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'userId' => $newuserid,
-						'editConsent' => $this->getInput('blogEditConsent'),
+						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : self::EDIT_OWNER,
 						'commentMaxlength' => $this->getInput('blogEditCommentMaxength'),
 						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
 						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),
