@@ -30,6 +30,7 @@
 .zwiico-trash:before { content: '\e81c'; } /* '' */
 .zwiico-plus-circled:before { content: '\e81d'; } /* '' */
 .zwiico-minus-circled:before { content: '\e81e'; } /* '' */
+.zwiico-login:before { content: '\e81f'; } /* '' */
 .zwiico-down-big:before { content: '\e820'; } /* '' */
 .zwiico-up-big:before { content: '\e821'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */

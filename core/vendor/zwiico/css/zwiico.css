@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'zwiico';
-  src: url('../font/zwiico.eot?40040077');
-  src: url('../font/zwiico.eot?40040077#iefix') format('embedded-opentype'),
-       url('../font/zwiico.woff2?40040077') format('woff2'),
-       url('../font/zwiico.woff?40040077') format('woff'),
-       url('../font/zwiico.ttf?40040077') format('truetype'),
-       url('../font/zwiico.svg?40040077#zwiico') format('svg');
+  src: url('../font/zwiico.eot?21777250');
+  src: url('../font/zwiico.eot?21777250#iefix') format('embedded-opentype'),
+       url('../font/zwiico.woff2?21777250') format('woff2'),
+       url('../font/zwiico.woff?21777250') format('woff'),
+       url('../font/zwiico.ttf?21777250') format('truetype'),
+       url('../font/zwiico.svg?21777250#zwiico') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zwiico';
-    src: url('../font/zwiico.svg?40040077#zwiico') format('svg');
+    src: url('../font/zwiico.svg?21777250#zwiico') format('svg');
   }
 }
 */
@@ -86,6 +86,7 @@
 .zwiico-trash:before { content: '\e81c'; } /* '' */
 .zwiico-plus-circled:before { content: '\e81d'; } /* '' */
 .zwiico-minus-circled:before { content: '\e81e'; } /* '' */
+.zwiico-login:before { content: '\e81f'; } /* '' */
 .zwiico-down-big:before { content: '\e820'; } /* '' */
 .zwiico-up-big:before { content: '\e821'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */

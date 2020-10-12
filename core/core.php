@@ -2235,9 +2235,9 @@ class layout extends common {
         ) {
 			$items .= '<span id="footerLoginLink" ' .
 			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
+			'><wbr>&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">Connexion</a></span>';
+			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">' . template::ico('login') .'</a></span>';
 		}
 		// Affichage de la barre de membre simple
 		if ( $this->getUser('group') === self::GROUP_MEMBER
@@ -2457,7 +2457,7 @@ class layout extends common {
 			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
 			'><a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'">Connexion</a></li>';
+			'">' . template::ico('login') .'</a></li>';
 		}
 		// Commandes pour les membres simples
 		if($this->getUser('group') == self::GROUP_MEMBER
