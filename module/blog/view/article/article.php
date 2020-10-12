@@ -78,8 +78,10 @@
 				<div id="blogArticleContentAlarm"> </div>
 				<?php if($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
 					<div class="row">
-						<div class="col4">
-							<?php echo template::captcha('blogArticleCaptcha'); ?>
+						<div class="col12">
+							<?php echo template::captcha('blogArticleCaptcha', [
+								'limit' => $this->getData(['config','connect','captcha10'])
+							]); ?>
 						</div>
 					</div>
 				<?php endif; ?>

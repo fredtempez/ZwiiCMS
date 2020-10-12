@@ -1270,7 +1270,7 @@ class common {
 				}
 			}
 			// Contrôle des options php.ini pour la mise à jour auto
-			if (helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+			if (helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
 				$this->setData(['config','autoUpdate',false]);
 			}
 
@@ -1469,6 +1469,12 @@ class common {
 				}
 			}
 			$this->setData(['core', 'dataVersion', 10400]);
+		}
+		// Version 10.3.03
+		if ($this->getData(['core', 'dataVersion']) < 10303) {
+			// Activation par défaut du captcha à la connexion
+			$this->setData(['config', 'connect','captcha10', false]);
+		$this->setData(['core', 'dataVersion', 10303]);
 		}
 	}
 }

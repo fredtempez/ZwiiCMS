@@ -46,7 +46,9 @@
 		<?php if($this->getData(['module', $this->getUrl(0), 'config', 'captcha'])): ?>
 			<div class="row">
 				<div class="col5">
-					<?php echo template::captcha('formCaptcha'); ?>
+					<?php echo template::captcha('formCaptcha', [
+						'limit' => $this->getData(['config','connect','captcha10'])
+					]); ?>
 				</div>
 			</div>
 		<?php endif; ?>

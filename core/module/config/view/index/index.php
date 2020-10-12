@@ -60,7 +60,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Paramètres généraux</h4>
-			<?php $error = helper::urlGetContents('http://zwiicms.com/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php $error = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::file('configFavicon', [
@@ -345,6 +345,107 @@
 </div>
 <div class="row">
 	<div class="col12">
+		<div class="block" id="login">
+			<h4>Sécurité de la connexion
+				<div class="openClose">
+					<?php
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
+					?>
+				</div>
+			</h4>
+			<div class="blockContainer">
+				<div class="row">
+					<div class="col3">
+						<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
+							'label' => 'Connexions successives',
+							'selected' => $this->getData(['config', 'connect', 'attempt'])
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
+							'label' => 'Blocage après échecs',
+							'selected' => $this->getData(['config', 'connect', 'timeout'])
+						]); ?>
+					</div>
+					<div class="col3 verticalAlignBottom">
+						<label id="helpBlacklist">Comptes inexistants
+							<?php echo template::help(
+							'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
+							Après le nombre de tentatives autorisées, l\'IP et le compte sont bloqués.');
+							?>
+						</label>
+						<?php echo template::button('configConnectblacListDownload', [
+							'href' => helper::baseUrl() . 'config/blacklistDownload',
+							'value' => 'Télécharger liste noire',
+							'ico' => 'download'
+						]); ?>
+					</div>
+					<div class="col3 verticalAlignBottom">
+						<?php echo template::button('ConfigConnectReset', [
+							'class' => 'buttonRed',
+							'href' => helper::baseUrl() . 'config/blacklistReset',
+							'value' => 'Réinitialiser liste',
+							'ico' => 'cancel'
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col3">
+						<?php echo template::checkbox('configConnectCaptcha', true, 'Captcha à la connexion', [
+							'checked' => $this->getData(['config', 'connect','captcha'])
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::checkbox('configConnectCaptcha10', true, 'Limité à 10 chiffres', [
+							'checked' => $this->getData(['config', 'connect','captcha10'])
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block" id="logs">
+			<h4>Journalisation
+				<div class="openClose">
+					<?php
+					echo template::ico('plus-circled','right');
+					echo template::ico('minus-circled','right');
+					?>
+				</div>
+			</h4>
+			<div class="blockContainer">
+				<div class="row">
+					<div class="col4 verticalAlignBottom">
+						<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
+							'checked' => $this->getData(['config', 'connect', 'log'])
+						]); ?>
+					</div>
+					<div class="col3 offset2">
+						<?php echo template::button('ConfigLogDownload', [
+							'href' => helper::baseUrl() . 'config/logDownload',
+							'value' => 'Télécharger journal',
+							'ico' => 'download'
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::button('ConfigLogReset', [
+							'class' => 'buttonRed',
+							'href' => helper::baseUrl() . 'config/logReset',
+							'value' => 'Réinitialiser journal',
+							'ico' => 'cancel'
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
 		<div class="block" id="network">
 			<h4>Réseau
 				<div class="openClose">
@@ -446,102 +547,6 @@
 								]); ?>
 							</div>
 						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block" id="login">
-			<h4>Sécurité de la connexion
-				<div class="openClose">
-					<?php
-					echo template::ico('plus-circled','right');
-					echo template::ico('minus-circled','right');
-					?>
-				</div>
-			</h4>
-			<div class="blockContainer">
-				<div class="row">
-					<div class="col3">
-						<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
-							'label' => 'Connexions successives',
-							'selected' => $this->getData(['config', 'connect', 'attempt'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
-							'label' => 'Blocage après échecs',
-							'selected' => $this->getData(['config', 'connect', 'timeout'])
-						]); ?>
-					</div>
-					<div class="col3 verticalAlignBottom">
-						<label id="helpBlacklist">Comptes inexistants
-							<?php echo template::help(
-							'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
-							Après le nombre de tentatives autorisées, l\'IP et le compte sont bloqués.');
-							?>
-						</label>
-						<?php echo template::button('configConnectblacListDownload', [
-							'href' => helper::baseUrl() . 'config/blacklistDownload',
-							'value' => 'Télécharger liste noire',
-							'ico' => 'download'
-						]); ?>
-					</div>
-					<div class="col3 verticalAlignBottom">
-						<?php echo template::button('ConfigConnectReset', [
-							'class' => 'buttonRed',
-							'href' => helper::baseUrl() . 'config/blacklistReset',
-							'value' => 'Réinitialiser liste',
-							'ico' => 'cancel'
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::checkbox('configConnectCaptcha', true, 'Captcha à la connexion', [
-							'checked' => $this->getData(['config', 'connect','captcha'])
-						]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block" id="logs">
-			<h4>Journalisation
-				<div class="openClose">
-					<?php
-					echo template::ico('plus-circled','right');
-					echo template::ico('minus-circled','right');
-					?>
-				</div>
-			</h4>
-			<div class="blockContainer">
-				<div class="row">
-					<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configConnectLog', true, 'Activer la journalisation', [
-							'checked' => $this->getData(['config', 'connect', 'log'])
-						]); ?>
-					</div>
-					<div class="col3 offset2">
-						<?php echo template::button('ConfigLogDownload', [
-							'href' => helper::baseUrl() . 'config/logDownload',
-							'value' => 'Télécharger journal',
-							'ico' => 'download'
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::button('ConfigLogReset', [
-							'class' => 'buttonRed',
-							'href' => helper::baseUrl() . 'config/logReset',
-							'value' => 'Réinitialiser journal',
-							'ico' => 'cancel'
-						]); ?>
 					</div>
 				</div>
 			</div>

@@ -275,7 +275,7 @@ class config extends common {
 	public function configMetaImage() {
 		// fonction désactivée pour un site local
 		if ( strpos(helper::baseUrl(false),'localhost') > 0 OR strpos(helper::baseUrl(false),'127.0.0.1') > 0)	{
-			$site = 'https://zwiicms.com/'; } else {
+			$site = 'https://zwiicms.fr/'; } else {
 			$site = helper::baseUrl(false);	}
 
 		$success= false;
@@ -484,7 +484,8 @@ class config extends common {
 						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
-						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN)
+						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
+						'captcha10' => $this->getInput('configConnectCaptcha10',helper::FILTER_BOOLEAN)
 					]
 				]
 			]);

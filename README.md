@@ -6,7 +6,7 @@ Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer
 
 ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez.
 
-[Site](http://zwiicms.com/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
+[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
 
 ## Configuration recommandée
 
@@ -15,7 +15,7 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 ## Téléchargement de ZwiICMS
 
-Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargemet du [site](https://zwiicms.com/telechargements)
+Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargemet du [site](https://zwiicms.fr/telechargements)
 
 La version github est une **version de développement** qui peut encore contenir des bugs mais elle vous permet de tester les dernières nouveautés. Cette version n'est pas recommandée en production.
 
