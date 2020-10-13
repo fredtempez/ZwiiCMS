@@ -518,6 +518,26 @@ nav a {
 	transition: background .3s ease-out;
 }
 
+nav #menuLeft {
+	float: left;
+}
+nav #menuRight {
+	float: right;
+	font-size: 12px;
+}
+/* fin barre de menu */
+nav::after {
+	content: " ";
+	clear: both;
+	display: flex;
+}
+
+nav::before {
+	content: " ";
+	clear: left;
+	display: flex;
+}
+
 nav a:hover {
 	text-decoration: none;
 }
@@ -1393,3 +1413,4 @@ th.col12 {
 	-o-transform:scale(1.25); /* Opera */
 	transform:scale(1.25);
 	}
+
