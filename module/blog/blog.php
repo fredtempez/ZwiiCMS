@@ -453,7 +453,7 @@ class blog extends common {
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'userId' => $newuserid,
 						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : self::EDIT_OWNER,
-						'commentMaxlength' => $this->getInput('blogEditCommentMaxength'),
+						'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
 						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
 						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),
 						'commentNotification'  => $this->getInput('blogEditCommentNotification', helper::FILTER_BOOLEAN),

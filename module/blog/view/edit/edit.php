@@ -115,7 +115,7 @@
 					</div>
 					<div class="col4 commentOptionsWrapper ">
 						<?php echo template::checkbox('blogEditCommentApprove', true, 'Approbation par un modérateur', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApprove']),
+							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApproved']),
 							''
 						]); ?>
 					</div>
