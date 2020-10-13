@@ -523,6 +523,7 @@ nav #menuLeft {
 }
 nav #menuRight {
 	float: right;
+	font-size: 12px;
 }
 /* fin barre de menu */
 nav::after {
