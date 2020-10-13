@@ -2338,7 +2338,7 @@ class layout extends common {
 	 */
 	public function showMenu() {
 		// Met en forme les items du menu
-		$itemsLeft = '';
+		$items = '';
 		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
 		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Passer les entrées masquées
@@ -2346,36 +2346,36 @@ class layout extends common {
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
-			$itemsLeft .= '<li>';
+			$items .= '<li>';
 
 			if ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	)
 
-					{$itemsLeft .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+					{$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 			} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
 				case '' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $items .= $this->getData(['page', $parentPageId, 'title']);
 				    break;
 				case 'text' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $items .= $this->getData(['page', $parentPageId, 'title']);
 				    break;
 				case 'icon' :
 				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    $itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
+				    $items .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
 				    } else {
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $items .= $this->getData(['page', $parentPageId, 'title']);
 				    }
 				    break;
 				case 'icontitle' :
 				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    	$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
-				   	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']).'"/>';
+				    	$items .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
+				   	 	$items .= $this->getData(['page', $parentPageId, 'title']).'"/>';
 				    } else {
-				  	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				  	 	$items .= $this->getData(['page', $parentPageId, 'title']);
 				    }
 					break;
 		       }
@@ -2388,65 +2388,64 @@ class layout extends common {
 			}
 			if($childrenPageIds && $disableChild !== $totalChild  &&
 				$this->getdata(['page',$parentPageId,'hideMenuChildren']) === false) {
-				$itemsLeft .= template::ico('down', 'left');
+				$items .= template::ico('down', 'left');
 			}
 			// ------------------------------------------------
-			$itemsLeft .= '</a>';
+			$items .= '</a>';
 			if ($this->getdata(['page',$parentPageId,'hideMenuChildren']) === true ||
 				empty($childrenPageIds)) {
 				continue;
 			}
-			$itemsLeft .= '<ul class="navLevel2">';
+			$items .= '<ul class="navLevel2">';
 			foreach($childrenPageIds as $childKey) {
 				// Propriétés de l'item
 				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
-				$itemsLeft .= '<li>';
+				$items .= '<li>';
 				if ( $this->getData(['page',$childKey,'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$itemsLeft .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+						$items .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
 				} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
+					$items .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
 					case '' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$items .= $this->getData(['page', $childKey, 'title']);
 						break;
 					case 'text' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$items .= $this->getData(['page', $childKey, 'title']);
 						break;
 					case 'icon' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						$items .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
 						} else {
-						$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+						$items .= $this->getData(['page', $parentPageId, 'title']);
 						}
 						break;
 					case 'icontitle' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']).'"/>';
+						$items .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
+						$items .= $this->getData(['page', $childKey, 'title']).'"/>';
 						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$items .= $this->getData(['page', $childKey, 'title']);
 						}
 						break;
 					case 'icontext' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$items .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						$items .= $this->getData(['page', $childKey, 'title']);
 						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$items .= $this->getData(['page', $childKey, 'title']);
 						}
 						break;
 				}
-				$itemsLeft .= '</a></li>';
+				$items .= '</a></li>';
 			}
-			$itemsLeft .= '</ul>';
+			$items .= '</ul>';
 		}
 		// Lien de connexion
-		$itemsRight = '';
 		if(
 			(
 				$this->getData(['theme', 'menu', 'loginLink'])
@@ -2454,7 +2453,7 @@ class layout extends common {
 			)
 			OR $this->getUrl(0) === 'theme'
 		) {
-			$itemsRight .= '<li id="menuLoginLink" ' .
+			$items .= '<li id="menuLoginLink" ' .
 			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
 			'><a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
@@ -2466,11 +2465,11 @@ class layout extends common {
 				|| $this->getData(['theme','footer','displayMemberBar']) === false
 				)
 		) {
-			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
-			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
+			$items .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
+			$items .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
-		echo '<ul class="navLevel1" id="menuLeft">' . $itemsLeft . '</ul><ul id="menuRight">' . $itemsRight . '</ul>';
+		echo '<ul class="navLevel1">' . $items . '</ul>';
 	}
 
 	/**
