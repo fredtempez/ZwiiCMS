@@ -15,7 +15,7 @@
 						(
 							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
 							AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
-							AND $this->getUser('group') >= self::GROUP_EDITOR
+							AND $this->getUser('group') >= self::GROUP_MODERATOR
 						)
 					)  OR (
 						// Groupe

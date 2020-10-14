@@ -17,13 +17,13 @@
 class form extends common {
 
 	public static $actions = [
-		'config' => self::GROUP_EDITOR,
-		'data' => self::GROUP_EDITOR,
-		'delete' => self::GROUP_EDITOR,
-		'deleteall' => self::GROUP_EDITOR,
+		'config' => self::GROUP_MODERATOR,
+		'data' => self::GROUP_MODERATOR,
+		'delete' => self::GROUP_MODERATOR,
+		'deleteall' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'export2csv' => self::GROUP_EDITOR,
-		'output2csv' => self::GROUP_EDITOR
+		'export2csv' => self::GROUP_MODERATOR,
+		'output2csv' => self::GROUP_MODERATOR
 	];
 
 	public static $data = [];

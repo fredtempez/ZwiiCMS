@@ -15,7 +15,7 @@
 class redirection extends common {
 
 	public static $actions = [
-		'config' => self::GROUP_EDITOR,
+		'config' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR
 	];
 
@@ -49,7 +49,7 @@ class redirection extends common {
 		// Message si l'utilisateur peut éditer la page
 		if(
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			AND $this->getUser('group') >= self::GROUP_EDITOR
+			AND $this->getUser('group') >= self::GROUP_MODERATOR
 			AND $this->getUrl(1) !== 'force'
 		) {
 			// Valeurs en sortie

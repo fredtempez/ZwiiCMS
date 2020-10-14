@@ -124,7 +124,7 @@ class user extends common {
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
-			AND ($this->getUrl('group') < self::GROUP_EDITOR)
+			AND ($this->getUrl('group') < self::GROUP_MODERATOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -183,7 +183,7 @@ class user extends common {
 					AND $this->getUrl('group') <= self::GROUP_VISITOR
 				)
 				// Impossible d'éditer un autre utilisateur
-				OR ($this->getUrl('group') < self::GROUP_EDITOR)
+				OR ($this->getUrl('group') < self::GROUP_MODERATOR)
 			)
 		) {
 			// Valeurs en sortie

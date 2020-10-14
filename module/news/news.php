@@ -15,10 +15,10 @@
 class news extends common {
 
 	public static $actions = [
-		'add' => self::GROUP_EDITOR,
-		'config' => self::GROUP_EDITOR,
-		'delete' => self::GROUP_EDITOR,
-		'edit' => self::GROUP_EDITOR,
+		'add' => self::GROUP_MODERATOR,
+		'config' => self::GROUP_MODERATOR,
+		'delete' => self::GROUP_MODERATOR,
+		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR
 	];
 
