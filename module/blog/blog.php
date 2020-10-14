@@ -309,8 +309,8 @@ class blog extends common {
 					(
 					 $this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
 					 AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
-					) // Ou une autorité
-					OR $this->getUser('group') >  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
+					 AND $this->getUser('group') >= self::GROUP_EDITOR
+					)
 
 				) OR (
 					// Groupe

@@ -27,7 +27,6 @@
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
 								'value' => 'Editer'
 					]); ?>
-
 			<?php endif; ?>
 		</div>
 	</div>
