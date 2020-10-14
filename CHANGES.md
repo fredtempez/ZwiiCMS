@@ -16,6 +16,9 @@
 ## version 10.3.03
 - Correction :
     - Doublons de lignes.
+- Modifications : 
+    - Configuration des captcha. Addition simple chiffres de 0 à 9.
+    - Une icône remplace le terme Connexion dans le menu et dans le pied de page.
 
 ## version 10.3.02
 - Corrections :

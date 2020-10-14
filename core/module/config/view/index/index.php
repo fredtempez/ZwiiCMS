@@ -99,6 +99,12 @@
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
 				</div>
+				<div class="col4 verticalAlignBottom">
+						<?php echo template::checkbox('configConnectCaptcha10', true, 'Captcha simple', [
+							'checked' => $this->getData(['config', 'connect','captcha10']),
+							'help' => 'Addition limitée aux chiffres de 0 à 9. S\'applique à tous les captchas du site.'
+						]); ?>
+					</div>
 			</div>
 			<div class="row">
 				<div class="col4">
@@ -394,11 +400,6 @@
 					<div class="col3">
 						<?php echo template::checkbox('configConnectCaptcha', true, 'Captcha à la connexion', [
 							'checked' => $this->getData(['config', 'connect','captcha'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::checkbox('configConnectCaptcha10', true, 'Limité à 10 chiffres', [
-							'checked' => $this->getData(['config', 'connect','captcha10'])
 						]); ?>
 					</div>
 				</div>
