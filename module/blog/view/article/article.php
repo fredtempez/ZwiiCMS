@@ -22,6 +22,10 @@
 						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
 						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
 					)
+					OR (
+						// Tout le monde
+						$this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === $module::EDIT_ALL
+					)
 				): ?>
 					<?php echo template::button('blogEdit', [
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
