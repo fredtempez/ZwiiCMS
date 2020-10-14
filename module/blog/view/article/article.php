@@ -7,28 +7,29 @@
 					à <?php echo strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])); ?>
 			</div>
 		</div>
-		<?php if (
+			<div class="col2">
+			<?php if (
 					$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND
 					(  // Propriétaire
 						(
 							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
 							AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
-						) // Ou une autorité
-						OR $this->getUser('group') >  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
-					) OR (
+							AND $this->getUser('group') >= self::GROUP_EDITOR
+						)
+					)  OR (
 						// Groupe
 						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
 						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
 					)
 				): ?>
-				<div class="col2">
 					<?php echo template::button('blogEdit', [
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
 								'value' => 'Editer'
 					]); ?>
-				</div>
-		<?php endif; ?>
+
+			<?php endif; ?>
+		</div>
 	</div>
 		<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>
 		<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
