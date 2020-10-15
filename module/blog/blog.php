@@ -177,8 +177,8 @@ class blog extends common {
 			$buttonApproval = '';
 			// Compatibilité avec les commentaires des versions précédentes, les valider
 			$comment['approval'] = array_key_exists('approval', $comment) === false ? true : $comment['approval'] ;
-			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApprove']) === true) {
-				$buttonApproval = template::button('blogcommentApprove' . $commentIds[$i], [
+			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApproved']) === true) {
+				$buttonApproval = template::button('blogcommentApproved' . $commentIds[$i], [
 					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApprove buttonRed' ,
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => $comment['approval'] === true ? 'A' : 'R'
@@ -549,7 +549,7 @@ class blog extends common {
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
 					$notification = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentApproved']) === true ? 'Commentaire déposé en attente d\'approbation': 'Commentaire déposé';
-					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
+					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire',
