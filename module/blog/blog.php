@@ -178,8 +178,8 @@ class blog extends common {
 			// Compatibilité avec les commentaires des versions précédentes, les valider
 			$comment['approval'] = array_key_exists('approval', $comment) === false ? true : $comment['approval'] ;
 			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApproved']) === true) {
-				$buttonApproval = template::button('blogcommentApproved' . $commentIds[$i], [
-					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApprove buttonRed' ,
+				$buttonApproval = template::button('blogCommentApproved' . $commentIds[$i], [
+					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApproved buttonRed' ,
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => $comment['approval'] === true ? 'A' : 'R'
 				]);
@@ -307,21 +307,20 @@ class blog extends common {
 		foreach ($articleIds as $key => $value) {
 			if (
 				(  // Propriétaire
-					(
-					 $this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
-					 AND $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
-					 AND $this->getUser('group') >= self::GROUP_MODERATOR
-					)
+					$this->getData(['module',  $this->getUrl(0), $value,'editConsent']) === self::EDIT_OWNER
+					AND ( $this->getData(['module',  $this->getUrl(0), $value,'userId']) === $this->getUser('id')
+					OR $this->getUser('group') === self::GROUP_ADMIN )
+				)
 
 				OR (
 					// Groupe
-					$this->getData(['module',  $this->getUrl(0),  $value,'editConsent'])) !== self::EDIT_OWNER
+					$this->getData(['module',  $this->getUrl(0),  $value,'editConsent']) !== self::EDIT_OWNER
 					AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $value,'editConsent'])
-					)
+				)
 				OR (
 					// Tout le monde
 					$this->getData(['module',  $this->getUrl(0),  $value,'editConsent']) === self::EDIT_ALL
-					)
+				)
 			) {
 				$filterData[] = $value;
 			}
@@ -457,7 +456,7 @@ class blog extends common {
 						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'userId' => $newuserid,
-						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : self::EDIT_OWNER,
+						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : $this->getInput('blogEditConsent'),
 						'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
 						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
 						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),

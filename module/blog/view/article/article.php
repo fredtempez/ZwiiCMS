@@ -13,18 +13,20 @@
 					AND
 					(  // Propriétaire
 						(
-							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
-							AND $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
-							AND $this->getUser('group') >= self::GROUP_MODERATOR
-						)
-					)  OR (
-						// Groupe
-						$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
-						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
+							 $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) === $module::EDIT_OWNER
+							 AND ( $this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'userId']) === $this->getUser('id')
+							 OR $this->getUser('group') === self::GROUP_ADMIN )
 					)
 					OR (
-						// Tout le monde
-						$this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === $module::EDIT_ALL
+							// Groupe
+							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
+							AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
+					)
+					OR (
+							// Tout le monde
+							$this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === $module::EDIT_ALL
+							AND $this->getUser('group') >= $module::$action['config']
+						)
 					)
 				): ?>
 					<?php echo template::button('blogEdit', [
