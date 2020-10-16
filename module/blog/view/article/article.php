@@ -19,13 +19,14 @@
 					)
 					OR (
 							// Groupe
-							$this->getData(['module',  $this->getUrl(0), $this->getUrl(1),'editConsent']) !== $module::EDIT_OWNER
+							( $this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === self::GROUP_ADMIN
+							OR $this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === self::GROUP_MODERATOR)
 							AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), $this->getUrl(1),'editConsent'])
 					)
 					OR (
 							// Tout le monde
 							$this->getData(['module',  $this->getUrl(0),  $this->getUrl(1),'editConsent']) === $module::EDIT_ALL
-							AND $this->getUser('group') >= $module::$action['config']
+							AND $this->getUser('group') >= $module::$actions['config']
 						)
 					)
 				): ?>
@@ -44,7 +45,7 @@
 		} ?>
 	<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'content']); ?>
 	<p class="clearBoth signature"><?php echo $module::$articleSignature;?></p>
-	<?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
+	<?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'commentClose'])): ?>
 		<p>Cet article ne reçoit pas de commentaire.</p>
 	<?php else: ?>
 		<h3 id="comment">
