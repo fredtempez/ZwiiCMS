@@ -151,6 +151,8 @@ class common {
 	private $url = '';
 	// Données de site
 	private $user = [];
+	private $core = [];
+	private $config = [];
 	private $page = [];
 	private $module = [];
 
@@ -167,17 +169,24 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Mise en cache des pages et des modules
+		$this->page = $this->getCache('page');
+		$this->module = $this->getCache('module');
+		$this->config = $this->getCache('config');
+		$this->core = $this->getCache('core');
+
 		// Import version 9
 		if (file_exists(self::DATA_DIR . 'core.json') === true &&
-			$this->getData(['core','dataVersion']) < 10000) {
-				$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
-				$this->importData($keepUsers);
-				unset ($_SESSION['KEEP_USERS']);
-				// Réinstaller htaccess
-				copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
-				common::$importNotices [] = "Importation réalisée avec succès" ;
-				//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
+		$this->getData(['core','dataVersion']) < 10000) {
+			$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
+			$this->importData($keepUsers);
+			unset ($_SESSION['KEEP_USERS']);
+			// Réinstaller htaccess
+			copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
+			common::$importNotices [] = "Importation réalisée avec succès" ;
+			//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
 		}
+		
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach (self::$dataStage as $stageId) {
@@ -192,10 +201,6 @@ class common {
 		if($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
-
-		// Mise en cache des pages et des modules
-		$this->page = $this->getCache('page');
-		$this->module = $this->getCache('module');
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -375,15 +380,18 @@ class common {
 			 * Lecture dans le cache, page et module
 			 */
 			if ($keys[0] === 'page' ||
-			    $keys[0] === 'module' ) {
+				$keys[0] === 'module' ||
+				$keys[0] === 'core' ||
+				$keys[0] === 'config' ||
+				$keys[0] === 'page') {
 				// Décent dans les niveaux de la variable $data
-				$data = array_merge ($this->page , $this->module);
+				$data = array_merge ($this->page , $this->module, $this->user, $this->config, $this->core);
 				foreach($keys as $key) {
 					// Si aucune donnée n'existe retourne null
 					if(isset($data[$key]) === false) {
 						return null;
 					}
-					// Sinon décent dans les niveaux
+					// Sinon descend dans les niveaux
 					else {
 						$data = $data[$key];
 					}
