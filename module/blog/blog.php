@@ -119,7 +119,7 @@ class blog extends common {
 					'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'editConsent' =>  $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : self::EDIT_OWNER,
+					'editConsent' =>  $this->getInput('blogAddConsent') === self::EDIT_GROUP ? $this->getUser('group') : $this->getInput('blogAddConsent'),
 					'commentMaxlength' => $this->getInput('blogAddCommentMaxlength'),
 					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),

@@ -660,7 +660,7 @@ class init extends common {
 					'state' => true,
 					'title' => 'Mon premier article',
 					'userId' => '', // Géré au moment de l'installation
-					'editConsent' => 'group',
+					'editConsent' => 'all',
 					'commentMaxlength' => '500',
 					'commentApproved' => false,
 					'commentClose' => false,
@@ -677,7 +677,7 @@ class init extends common {
 					'state' => true,
 					'title' => 'Mon deuxième article',
 					'userId' => '', // Géré au moment de l'installation
-					'editConsent' => 'group',
+					'editConsent' => 'all',
 					'commentMaxlength' => '500',
 					'commentApproved' => false,
 					'commentClose' => false,
@@ -694,7 +694,7 @@ class init extends common {
 					'state' => true,
 					'title' => 'Mon troisième article',
 					'userId' => '', // Géré au moment de l'installation
-					'editConsent' => 'group',
+					'editConsent' => 'all',
 					'commentMaxlength' => '500',
 					'commentApproved' => false,
 					'commentClose' => true,
