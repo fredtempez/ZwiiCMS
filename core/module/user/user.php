@@ -615,7 +615,7 @@ class user extends common {
 							// Nettoyage de l'identifiant
 							$userId = helper::filter($item['id'] , helper::FILTER_ID);
 							// Enregistre le user
-							$this->setData([
+							$create = $this->setData([
 								'user',
 								$userId, [
 									'firstname' => $item['prenom'],
@@ -633,19 +633,10 @@ class user extends common {
 									"accessCsrf" => null
 							]]);
 							// Icône de notification
-							$item['notification'] = template::ico('check');
-							// Création du tableau de confirmation
-							self::$users[] = [
-								$userId,
-								$item['nom'],
-								$item['prenom'],
-								self::$groups[$item['groupe']],
-								$item['prenom'],
-								$item['email'],
-								$item['notification']
-							];
+							$item['notification'] = $create  ? template::ico('check') : template::ico('cancel');
 							// Envoi du mail
-							if ($this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
+							if ($create
+								AND $this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
 								$sent = $this->sendMail(
 									$item['email'],
 									'Compte créé sur ' . $this->getData(['config', 'title']),
@@ -659,6 +650,16 @@ class user extends common {
 									$item['notification'] = template::ico('comment') ;
 								}
 							}
+							// Création du tableau de confirmation
+							self::$users[] = [
+								$userId,
+								$item['nom'],
+								$item['prenom'],
+								self::$groups[$item['groupe']],
+								$item['prenom'],
+								$item['email'],
+								$item['notification']
+							];
 						}
 					}
 				}
