@@ -647,7 +647,7 @@ class user extends common {
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône
-									$item['notification'] = template::ico('comment') ;
+									$item['notification'] = template::ico('mail') ;
 								}
 							}
 							// Création du tableau de confirmation
