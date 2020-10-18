@@ -156,6 +156,21 @@ class common {
 	private $page = [];
 	private $module = [];
 
+	// Descripteur de données Entrées / Sorties
+	// Liste ici tous les fichiers de données
+	private $dataFiles = [
+		'page' => '',
+		'module' => '',
+		'core' => '',
+		'config' => '',
+		'page' => '',
+		'user' => '',
+		'theme' => '',
+		'admin' => '',
+		'blacklist' => ''
+	];
+
+
 
 	/**
 	 * Constructeur commun
@@ -169,11 +184,16 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Mise en cache des pages et des modules
-		$this->page = $this->getCache('page');
-		$this->module = $this->getCache('module');
-		$this->config = $this->getCache('config');
-		$this->core = $this->getCache('core');
+		// Instanciation de la classe des entrées / sorties
+		// Récupére les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dirData ($keys,'fr')
+			]);;
+		}
+
 
 		// Import version 9
 		if (file_exists(self::DATA_DIR . 'core.json') === true &&
@@ -186,7 +206,7 @@ class common {
 			common::$importNotices [] = "Importation réalisée avec succès" ;
 			//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
 		}
-		
+
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach (self::$dataStage as $stageId) {
@@ -328,13 +348,9 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function deleteData($keys) {
-		//Retourne une chaine contenant le dossier à créer
-		$folder = $this->dirData ($keys[0],'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $keys[0] . '.json',
-			'dir' => $folder
-		]);
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
+		// Aiguillage
 		switch(count($keys)) {
 			case 1:
 				$db->delete($keys[0]);
@@ -375,41 +391,10 @@ class common {
 	public function getData($keys = []) {
 
 		if (count($keys) >= 1) {
-
-			/**
-			 * Lecture dans le cache, page et module
-			 */
-			if ($keys[0] === 'page' ||
-				$keys[0] === 'module' ||
-				$keys[0] === 'core' ||
-				$keys[0] === 'config' ||
-				$keys[0] === 'page') {
-				// Décent dans les niveaux de la variable $data
-				$data = array_merge ($this->page , $this->module, $this->user, $this->config, $this->core);
-				foreach($keys as $key) {
-					// Si aucune donnée n'existe retourne null
-					if(isset($data[$key]) === false) {
-						return null;
-					}
-					// Sinon descend dans les niveaux
-					else {
-						$data = $data[$key];
-					}
-				}
-				// Retourne les données
-				return $data;
-			}
-
 			/**
 			 * Lecture directe
 			*/
-			//Retourne une chaine contenant le dossier à créer
-			$folder = $this->dirData ($keys[0],'fr');
-			// Constructeur  JsonDB
-			$db = new \Prowebcraft\JsonDb([
-				'name' => $keys[0] . '.json',
-				'dir' => $folder
-			]);
+			$db = $this->dataFiles[$keys[0]];
 			switch(count($keys)) {
 				case 1:
 					$tempData = $db->get($keys[0]);
@@ -435,22 +420,6 @@ class common {
 			}
 			return $tempData;
 		}
-	}
-
-
-	/**
-	 * Lecture des fichiers de données de page et mise ne cache
-	 * @param @return string données des pages
-	 */
-	public function getCache($data) {
-		$folder = $this->dirData ($data,'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $data . '.json',
-			'dir' => $folder
-		]);
-		$tempData = $db->get($data);
-		return [$data => $tempData];
 	}
 
 	/*
@@ -967,14 +936,10 @@ class common {
 			return false;
 		}
 
-		//Retourne une chaine contenant le dossier à créer
-		$folder = $this->dirData ($keys[0],'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $keys[0] . '.json',
-			'dir' => $folder
-		]);
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
 
+		// Aiguillage
 		switch(count($keys)) {
 			case 2:
 				$db->set($keys[0],$keys[1]);
@@ -1019,12 +984,7 @@ class common {
 		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
 			mkdir (self::DATA_DIR . '/' . $lang);
 		}
-		$folder = $this->dirData ($module,$lang);
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $module . '.json',
-			'dir' => $folder
-		]);
+		$db = $this->dataFiles[$module];
 		if ($sampleSite === true) {
 			$db->set($module,init::$siteData[$module]);
 		} else {
