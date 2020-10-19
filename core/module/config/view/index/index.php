@@ -100,7 +100,7 @@
 					]); ?>
 				</div>
 				<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha simple', [
+						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha renforçé', [
 							'checked' => $this->getData(['config', 'captchaStrong']),
 							'help' => 'Addition de nombres de 0 à 20.'
 						]); ?>
