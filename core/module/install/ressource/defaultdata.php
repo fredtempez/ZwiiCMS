@@ -16,7 +16,6 @@ class init extends common {
 			'legalPageId' => 'mentions-legales',
 			'searchPageId' => 'recherche',
 			'maintenance' => false,
-			'captchaStrong' => false,
 			'social' => [
 				'facebookId' => 'facebook',
 				'instagramId' => '',
