@@ -1476,6 +1476,13 @@ class common {
 			$this->setData(['config', 'connect','captcha10', false]);
 		$this->setData(['core', 'dataVersion', 10303]);
 		}
+		// Version 10.4.00
+		if ($this->getData(['core', 'dataVersion']) < 10400) {
+			// Activation par défaut du captcha à la connexion
+			$this->setData(['config', 'captchaStrong', $this->setData(['config', 'connect','captcha10'])]);
+			$this->deleteData(['config', 'connect','captcha10']);
+		$this->setData(['core', 'dataVersion', 10400]);
+		}
 	}
 }
 
