@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col5">
 					<?php echo template::captcha('formCaptcha', [
-						'limit' => $this->getData(['config','connect','captcha10'])
+						'limit' => $this->getData(['config','captchaStrong'])
 					]); ?>
 				</div>
 			</div>

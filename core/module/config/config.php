@@ -470,6 +470,7 @@ class config extends common {
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
+					'captchaStrong' => $this->getInput('configCaptchaStrong',helper::FILTER_BOOLEAN),
 					'smtp' => [
 						'enable' => $this->getInput('configSmtpEnable',helper::FILTER_BOOLEAN),
 						'host' => $this->getInput('configSmtpHost',helper::FILTER_STRING_SHORT),
@@ -485,7 +486,6 @@ class config extends common {
 						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
 						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
-						'captcha10' => $this->getInput('configConnectCaptcha10',helper::FILTER_BOOLEAN)
 					]
 				]
 			]);

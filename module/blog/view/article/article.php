@@ -80,7 +80,7 @@
 					<div class="row">
 						<div class="col12">
 							<?php echo template::captcha('blogArticleCaptcha', [
-								'limit' => $this->getData(['config','connect','captcha10'])
+								'limit' => $this->getData(['config','captchaStrong'])
 							]); ?>
 						</div>
 					</div>
