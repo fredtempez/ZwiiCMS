@@ -594,7 +594,12 @@ class user extends common {
 					AND array_key_exists('prenom',$item)
 					AND array_key_exists('nom',$item)
 					AND array_key_exists('groupe',$item)
-					AND array_key_exists('email',$item) ) {
+					AND array_key_exists('email',$item)
+					AND $item['nom'] 
+					AND $item['prenom']
+					AND $item['id']
+					AND $item['email'] 
+					AND $item['groupe']) {
 						// L'utilisateur existe
 						if ( $this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)]))
 						{
