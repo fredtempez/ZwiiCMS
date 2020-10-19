@@ -16,7 +16,7 @@
 		<div class="row">
 			<div class="col12 textAlignCenter">
 				<?php echo template::captcha('userLoginCaptcha', [
-					'limit' => $this->getData(['config','connect','captcha10'])
+					'limit' => $this->getData(['config','captchaStrong'])
 				]); ?>
 			</div>
 		</div>

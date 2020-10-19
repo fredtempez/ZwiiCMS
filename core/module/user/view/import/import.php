@@ -56,7 +56,7 @@
     <?php echo template::table([1, 3, 3, 1, 1, 2, 1, 1 ], $module::$users, ['Identifiant', 'Nom', 'Prénom','Groupe', 'Pseudo', 'eMail', 'Succès']); ?>  
     <div class="row">
         <div class="col12 textAlignCenter">
-        <?php echo template::ico('check');?> Compte créé | <?php echo template::ico('comment');?> Compte créé et notifié | <?php echo template::ico('cancel');?> Erreur
+        <?php echo template::ico('check');?> Compte créé | <?php echo template::ico('comment');?> Compte créé et notifié | <?php echo template::ico('cancel');?> ou manquant : erreur, compte non importé
         </div>
     </div>
 <?php  endif;?>

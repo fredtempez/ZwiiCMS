@@ -170,8 +170,7 @@
             <div class="row">
                 <div class="col4">
                         <?php echo template::checkbox('themeMenuLoginLink', true, 'Lien de connexion', [
-                                'checked' => $this->getData(['theme', 'menu', 'loginLink']),
-                                'help' => 'L\'activation de cette option n\'est pas recommandée'
+                                'checked' => $this->getData(['theme', 'menu', 'loginLink'])
                             ]); ?>
                 </div>
                 <div class="col4">

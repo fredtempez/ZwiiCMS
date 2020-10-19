@@ -594,7 +594,17 @@ class user extends common {
 					AND array_key_exists('prenom',$item)
 					AND array_key_exists('nom',$item)
 					AND array_key_exists('groupe',$item)
-					AND array_key_exists('email',$item) ) {
+					AND array_key_exists('email',$item)
+					AND $item['nom']
+					AND $item['prenom']
+					AND $item['id']
+					AND $item['email']
+					AND $item['groupe']
+					) {
+						// Validation du groupe
+						$item['groupe'] = (int) $item['groupe'];
+						$item['groupe'] =   ( $item['groupe'] >= self::GROUP_BANNED AND $item['groupe'] <= self::GROUP_ADMIN )
+											  ? $item['groupe'] : 1;
 						// L'utilisateur existe
 						if ( $this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)]))
 						{
@@ -620,7 +630,7 @@ class user extends common {
 								$userId, [
 									'firstname' => $item['prenom'],
 									'forgot' => 0,
-									'group' => (int) $item['groupe'],
+									'group' => $item['groupe'] ,
 									'lastname' => $item['nom'],
 									'mail' => $item['email'],
 									'pseudo' => $item['prenom'],
