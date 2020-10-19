@@ -21,7 +21,7 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
 	exit('PHP 5.6+ required.');
 }
 
-/* Set locale to French */
+/* Localisation */
 date_default_timezone_set('Europe/Paris');
 setlocale (LC_ALL, 'fr_FR.utf8','fra');
 
