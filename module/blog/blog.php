@@ -179,7 +179,7 @@ class blog extends common {
 			$comment['approval'] = array_key_exists('approval', $comment) === false ? true : $comment['approval'] ;
 			if ( $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'commentApproved']) === true) {
 				$buttonApproval = template::button('blogCommentApproved' . $commentIds[$i], [
-					'class' => $comment['approval'] === true ? 'blogCommentReject' : 'blogCommentApproved buttonRed' ,
+					'class' => $comment['approval'] === true ? 'blogCommentReject buttonGreen' : 'blogCommentApproved buttonRed' ,
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
 					'value' => $comment['approval'] === true ? 'A' : 'R'
 				]);
