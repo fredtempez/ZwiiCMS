@@ -95,14 +95,14 @@
 					]); ?>
 				</div>
 				<div class="col4 verticalAlignBottom">
-					<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
+					<?php echo template::checkbox('configCookieConsent', true, 'Consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
 				</div>
 				<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha simple', [
-							'checked' => $this->getData(['config', 'captchaStrong']),
-							'help' => 'Addition de nombres de 0 à 20.'
+						<?php echo template::checkbox('configConnectCaptcha10', true, 'Captcha simple', [
+							'checked' => $this->getData(['config', 'connect','captcha10']),
+							'help' => 'Addition limitée aux chiffres de 0 à 9. S\'applique à tous les captchas du site.'
 						]); ?>
 					</div>
 			</div>
@@ -119,7 +119,7 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne', [
+					<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde quotidienne', [
 							'checked' => $this->getData(['config', 'autoBackup']),
 							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
 						]); ?>
