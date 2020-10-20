@@ -16,9 +16,10 @@
 ## version 10.3.03
 - Correction :
     - Localisation, affichage des accents, LC_TIME devient LC_ALL
-- Modifications : 
-    - Configuration des captcha. Addition simple chiffres de 0 à 9.
-    - Une icône remplace Connexion dans le menu et dans le pied de page.
+- Modifications :
+    - Configuration des captchas. Addition simple de 0 à 9.
+    - Une icône remplace le lien Connexion dans le menu et dans le pied de page.
+    - Barre de membre déplacée à droite de la barre de menu.
 
 ## version 10.3.02
 - Corrections :
