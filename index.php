@@ -21,19 +21,26 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
 	exit('PHP 5.6+ required.');
 }
 
-/* Localisation */
+/*
+ *Localisation
+ */
 date_default_timezone_set('Europe/Paris');
 setlocale (LC_ALL, 'fr_FR.utf8','fra');
 
 /**
  * Initialisation de Zwii
  */
-
 session_start();
-// Chargement des classes
+
+/**
+ * Chargement des classes
+ */
 require 'core/class/autoload.php';
 autoload::autoloader();
-// Chargement du coeur
+
+/**
+ * Chargement du coeur
+ */
 require 'core/core.php';
 $core = new core;
 spl_autoload_register('core::autoload');
