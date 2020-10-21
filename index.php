@@ -21,7 +21,7 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
 	exit('PHP 5.6+ required.');
 }
 
-/**
+/*
  *Localisation
  */
 date_default_timezone_set('Europe/Paris');
