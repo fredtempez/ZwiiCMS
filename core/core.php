@@ -2252,7 +2252,7 @@ class layout extends common {
         ) {
 			$items .= '<span id="footerLoginLink" ' .
 			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><wbr>&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
+			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
 			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">' . template::ico('login') .'</a></span>';
 		}
@@ -2262,7 +2262,7 @@ class layout extends common {
 			) {
 				$items .= '<span id="footerDisplayMemberAccount"';
 				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
-				$items .=  '><wbr>&nbsp;|<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
+				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
 				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
 				$items .= '</span>';
 		}

@@ -100,9 +100,9 @@
 					]); ?>
 				</div>
 				<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configConnectCaptcha10', true, 'Captcha simple', [
-							'checked' => $this->getData(['config', 'connect','captcha10']),
-							'help' => 'Addition limitée aux chiffres de 0 à 9. S\'applique à tous les captchas du site.'
+						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha renforcé', [
+							'checked' => $this->getData(['config','captchaStrong']),
+							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site.'
 						]); ?>
 					</div>
 			</div>
