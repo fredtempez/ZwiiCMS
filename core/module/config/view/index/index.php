@@ -100,8 +100,8 @@
 					]); ?>
 				</div>
 				<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configConnectCaptcha10', true, 'Captcha renforcé', [
-							'checked' => $this->getData(['config', 'connect','captcha10']),
+						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha renforcé', [
+							'checked' => $this->getData(['config','captchaStrong']),
 							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site.'
 						]); ?>
 					</div>
