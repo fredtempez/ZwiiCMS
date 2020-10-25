@@ -71,7 +71,7 @@
 	<div style="display:none;font-size:1px;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;mso-hide:all;font-family: sans-serif;">
 		<?php echo $subject; ?>
 	</div>
-	<div style="max-width: 500px; margin: auto;" class="email-container">
+	<div style="max-width: 500px; margin: auto; margin-top: 30px; border: #aaa 1px solid;" class="email-container">
 		<!--[if mso]>
 			<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="500" align="center">
 				<tr>
