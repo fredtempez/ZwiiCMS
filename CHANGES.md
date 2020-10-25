@@ -13,6 +13,10 @@
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
 
+## version 10.3.04
+- Correction :
+    - Position des entrées de menu sur les écrans de smartphone.
+
 ## version 10.3.03
 - Correction :
     - Localisation, affichage des accents, LC_TIME devient LC_ALL
