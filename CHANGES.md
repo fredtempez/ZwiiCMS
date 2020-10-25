@@ -1,8 +1,10 @@
 # Changelog
 
 ## version 10.3.04
-- Correction :
+- Corrections :
     - Position des entrées de menu sur les écrans de smartphone.
+    - Thème : import d'un thème, d'administration impossible.
+    - Thème : import d'un thème, nettoyage du dossier tmp.
 
 ## version 10.3.03
 - Correction :

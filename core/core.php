@@ -1022,6 +1022,17 @@ class common {
 		$db->save;
 	}
 
+	/**
+	* Effacer un dossier non vide.
+	* @param string URL du dossier à supprimer
+	*/
+	public function removeDir ( $path ) {
+		foreach ( new DirectoryIterator($path) as $item ):
+			if ( $item->isFile() ) unlink($item->getRealPath());
+			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
+		endforeach;
+		rmdir($path);
+	}
 
 	/**
 	 * Mises à jour
