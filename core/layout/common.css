@@ -386,22 +386,22 @@ td > .col12 {
 @media (max-width: 768px) {
 	#bar {
 		text-align: center;
-		padding: 0;
-		margin: 0;
+		padding: 0 1;
+		margin: 0 1;
 	}
 	#bar ul {
 		height: auto;
 	}
 	#bar #barSelectPage {
-		width: 50% ;
-		font-size: 0.6em;
+		width: 40% ;
+		font-size: 1em;
 	}
 	#bar #barLeft {
-		font-size: 1.6em;
+		font-size: 1.2em;
 		float : none;
 	}
 	#bar #barRight {
-		font-size: 1.6em;
+		font-size: 1.4em;
 	}
 	#bar #displayUsername {
 		display: none;
@@ -552,8 +552,17 @@ nav::before {
 	body > nav {
 		margin:0;
 	}
-	nav #toggle {
+	nav #toggle,
+	nav #menuLeft  {
 		display: block;
+		float: none;
+	}
+	nav #menuLeft  {
+		flex-direction: column;
+		float: none;
+	}
+	nav #menuRight {
+		font-size: 2em;
 	}
 	nav #menu {
 		display: none;
