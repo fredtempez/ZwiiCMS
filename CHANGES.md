@@ -2,6 +2,7 @@
 
 ## version 10.4.00
 - Modifications :
+    - Captcha complexe comprenant 4 opérations arithémétiques.
     - Module User
         - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
         - Importation d'un liste d'utilisateur dans un fichier plat (CSV).

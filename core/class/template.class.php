@@ -32,7 +32,7 @@ class template {
         );
     }
 
-    /**
+   /**
     * Crée un champ captcha
     * @param string $nameId Nom et id du champ
     * @param array $attributes Attributs ($key => $value)
@@ -49,13 +49,77 @@ class template {
             'value' => '',
             'limit' => false
         ], $attributes);
-        // Génère deux nombres pour le captcha
+        // Génère deux nombres
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
-        $limit = $attributes['limit']  ? count($letters)-1 : 10 ;
-        $firstNumber = rand ( 0 , $limit );
-        $secondNumber = rand ( 0 , $limit );
-        $result =  $firstNumber +  $secondNumber;
+        $limit = $attributes['limit']  ? count($letters)-1 : 10;
+        mt_srand((float) microtime()*1000000);
+        $firstNumber = mt_rand (1, $limit);
+        mt_srand((float) microtime()*1000000);
+        $secondNumber = mt_rand (1, $limit);
+        // Choisit l'opération
+        mt_srand((float) microtime()*1000000);
+        $operator = mt_rand (0, 3);        
+        switch ($operator) {
+            case 0:
+                $operator = '+';
+                    if ($firstNumber < $secondNumber) {
+                        $temp = $firstNumber;
+                        $firstNumber = $secondNumber;
+                        $secondNumber = $temp;
+                        // [$firstNumber, $secondNumber] = [$secondNumber, $firstNumber]; // ---> A partir de PHP 7.1
+                        }
+                    $result =  $firstNumber + $secondNumber;
+                    $operator = template::ico('plus');
+                break;
+            case 1:
+                $operator = '-';
+                    if ($firstNumber < $secondNumber) {
+                        $temp = $firstNumber;
+                        $firstNumber = $secondNumber;
+                        $secondNumber = $temp;
+                        // [$firstNumber, $secondNumber] = [$secondNumber, $firstNumber]; // ---> A partir de PHP 7.1
+                        }
+                    $result =  $firstNumber - $secondNumber;
+                    $operator = template::ico('minus');
+                break;
+            case 2:
+                $operator = 'x';
+                    mt_srand((float) microtime()*1000000);
+                    $firstNumber = mt_rand (1, 10);
+                    mt_srand((float) microtime()*1000000);
+                    $secondNumber = mt_rand (1, 10);
+                    $result =  $firstNumber * $secondNumber;
+                    $operator = template::ico('cancel');
+                break;
+            case 3:
+                $operator = ':';
+                    mt_srand((float) microtime()*1000000);
+                    $firstNumber = mt_rand (1, 10);
+                    mt_srand((float) microtime()*1000000);
+                    if ($firstNumber < 3) {
+                        $secondNumber = mt_rand(1, 10);
+                    }
+                    elseif ($firstNumber = 3) {
+                        $secondNumber = mt_rand(1, 6);
+                    }
+                    elseif ($firstNumber = 4) {
+                        $secondNumber = mt_rand(1, 5);
+                    }
+                    elseif ($firstNumber = 5) {
+                        $secondNumber = mt_rand(1, 4);
+                    }
+                    elseif ($firstNumber = 6 ) {
+                        $secondNumber = mt_rand(1, 3);
+                    }
+                    elseif ($firstNumber > 6) {
+                        $secondNumber = mt_rand(1, 2);
+                    }
+                    $firstNumber =  $firstNumber * $secondNumber;
+                    $result = $firstNumber / $secondNumber;
+                    $operator = template::ico('divide');
+                break;
+        }
         $result = password_hash($result, PASSWORD_BCRYPT);
         $firstLetter = uniqid();
         $secondLetter = uniqid();
@@ -66,7 +130,7 @@ class template {
         $html = '<div class="captcha" id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
-                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />' . template::ico('plus')  . '<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
+                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
         // Notice
@@ -86,17 +150,6 @@ class template {
             'value' => $result,
             'before' => false
         ]);
-        // Champs cachés contenant les nombres
-        /*
-        $html .= self::hidden($attributes['id'] . 'FirstNumber', [
-            'value' => $firstNumber,
-            'before' => false
-        ]);
-        $html .= self::hidden($attributes['id'] . 'SecondNumber', [
-            'value' => $secondNumber,
-            'before' => false
-        ]);
-        */
         // Fin du wrapper
         $html .= '</div>';
         // Retourne le html
