@@ -56,15 +56,6 @@ class common {
 		'theme',
 		'user'
 	];
-	public static $dataStage = [
-		'config',
-		'core',
-		'module',
-		'page',
-		'user',
-		'theme',
-		'admin'
-	];
 	public static $accessList = [
 		'user',
 		'theme',
@@ -170,8 +161,6 @@ class common {
 		'blacklist' => ''
 	];
 
-
-
 	/**
 	 * Constructeur commun
 	 */
@@ -209,7 +198,7 @@ class common {
 
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
-		foreach (self::$dataStage as $stageId) {
+		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dirData ($stageId, 'fr');
 			if (file_exists($folder . $stageId .'.json') === false) {
 				$this->initData($stageId,'fr');
