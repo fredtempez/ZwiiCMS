@@ -25,7 +25,7 @@ $(".blogCommentDelete").on("click", function() {
 /**
  * Confirmation d'approbation
  */
-$(".blogCommentApprove").on("click", function() {
+$(".blogCommentApproved").on("click", function() {
 	var _this = $(this);
 	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
 	return core.confirm("Approuver le commentaire de l'article " + nom + " ?", function() {
@@ -36,7 +36,7 @@ $(".blogCommentApprove").on("click", function() {
 /**
  * Confirmation de rejet
  */
-$(".blogCommentReject").on("click", function() {
+$(".blogCommentRejected").on("click", function() {
 	var _this = $(this);
 	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
 	return core.confirm("Rejeter le commentaire de l'article " + nom + " ?", function() {
