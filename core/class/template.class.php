@@ -49,7 +49,7 @@ class template {
             'value' => '',
             'limit' => false
         ], $attributes);
-        // Génère deux nombres
+        // Génération des nombres et choix de l'opération
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
         $limit = $attributes['limit']  ? count($letters)-1 : 10;
@@ -57,43 +57,37 @@ class template {
         $firstNumber = mt_rand (1, $limit);
         mt_srand((float) microtime()*1000000);
         $secondNumber = mt_rand (1, $limit);
-        // Choisit l'opération
         mt_srand((float) microtime()*1000000);
-        $operator = mt_rand (0, 3);        
+        $operator = mt_rand (0, 3);       
         switch ($operator) {
             case 0:
-                $operator = '+';
+                $operator = template::ico('plus');
                     if ($firstNumber < $secondNumber) {
                         $temp = $firstNumber;
                         $firstNumber = $secondNumber;
                         $secondNumber = $temp;
-                        // [$firstNumber, $secondNumber] = [$secondNumber, $firstNumber]; // ---> A partir de PHP 7.1
                         }
                     $result =  $firstNumber + $secondNumber;
-                    $operator = template::ico('plus');
                 break;
             case 1:
-                $operator = '-';
+                $operator = template::ico('minus');
                     if ($firstNumber < $secondNumber) {
                         $temp = $firstNumber;
                         $firstNumber = $secondNumber;
                         $secondNumber = $temp;
-                        // [$firstNumber, $secondNumber] = [$secondNumber, $firstNumber]; // ---> A partir de PHP 7.1
                         }
                     $result =  $firstNumber - $secondNumber;
-                    $operator = template::ico('minus');
                 break;
             case 2:
-                $operator = 'x';
+                $operator = template::ico('cancel');
                     mt_srand((float) microtime()*1000000);
                     $firstNumber = mt_rand (1, 10);
                     mt_srand((float) microtime()*1000000);
                     $secondNumber = mt_rand (1, 10);
                     $result =  $firstNumber * $secondNumber;
-                    $operator = template::ico('cancel');
                 break;
             case 3:
-                $operator = ':';
+                $operator = template::ico('divide');
                     mt_srand((float) microtime()*1000000);
                     $firstNumber = mt_rand (1, 10);
                     mt_srand((float) microtime()*1000000);
@@ -117,7 +111,6 @@ class template {
                     }
                     $firstNumber =  $firstNumber * $secondNumber;
                     $result = $firstNumber / $secondNumber;
-                    $operator = template::ico('divide');
                 break;
         }
         $result = password_hash($result, PASSWORD_BCRYPT);
@@ -145,7 +138,7 @@ class template {
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)
         );
-        // Champ résultat caché
+        // Champ résultat codé
         $html .= self::hidden($attributes['id'] . 'Result', [
             'value' => $result,
             'before' => false
