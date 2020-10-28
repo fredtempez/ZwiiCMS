@@ -22,6 +22,8 @@
     - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
 - Amélioration :
     - Mise en page du corps des mails de notification.
+- Mise à jour :
+    - TinyMCE 4.9.11
 
 ## version 10.3.03
 - Correction :
