@@ -49,70 +49,62 @@ class template {
             'value' => '',
             'limit' => false
         ], $attributes);
-        // Génération des nombres et choix de l'opération
+        // Tirage de l'opération et des nombres
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
         $limit = $attributes['limit']  ? count($letters)-1 : 10;
         mt_srand((float) microtime()*1000000);
+        $operator = mt_rand (0, 3);
+        if ($operator > 1) {
+            $limit = 10;
+        }
         $firstNumber = mt_rand (1, $limit);
-        mt_srand((float) microtime()*1000000);
         $secondNumber = mt_rand (1, $limit);
-        mt_srand((float) microtime()*1000000);
-        $operator = mt_rand (0, 3);       
+
+        if (  ($operator < 2)
+            AND ($firstNumber < $secondNumber) )
+        {
+            $temp = $firstNumber;
+            $firstNumber = $secondNumber;
+            $secondNumber = $temp;
+        }
+
         switch ($operator) {
             case 0:
                 $operator = template::ico('plus');
-                    if ($firstNumber < $secondNumber) {
-                        $temp = $firstNumber;
-                        $firstNumber = $secondNumber;
-                        $secondNumber = $temp;
-                        }
-                    $result =  $firstNumber + $secondNumber;
+                $result =  $firstNumber + $secondNumber;
                 break;
             case 1:
                 $operator = template::ico('minus');
-                    if ($firstNumber < $secondNumber) {
-                        $temp = $firstNumber;
-                        $firstNumber = $secondNumber;
-                        $secondNumber = $temp;
-                        }
-                    $result =  $firstNumber - $secondNumber;
+                $result =  $firstNumber - $secondNumber;
                 break;
             case 2:
                 $operator = template::ico('cancel');
-                    mt_srand((float) microtime()*1000000);
-                    $firstNumber = mt_rand (1, 10);
-                    mt_srand((float) microtime()*1000000);
-                    $secondNumber = mt_rand (1, 10);
-                    $result =  $firstNumber * $secondNumber;
+                $result =  $firstNumber * $secondNumber;
                 break;
             case 3:
                 $operator = template::ico('divide');
-                    mt_srand((float) microtime()*1000000);
-                    $firstNumber = mt_rand (1, 10);
-                    mt_srand((float) microtime()*1000000);
-                    if ($firstNumber < 3) {
-                        $secondNumber = mt_rand(1, 10);
+                switch ($firstNumber) {
+                    case 3:
+                        $limit = 6;
+                        break;
+                    case 4:
+                        $limit = 5;
+                        break;
+                    case 5:
+                        $limit = 4;
+                        break;
+                    case 6:
+                        $limit = 3;
+                        break;
                     }
-                    elseif ($firstNumber = 3) {
-                        $secondNumber = mt_rand(1, 6);
-                    }
-                    elseif ($firstNumber = 4) {
-                        $secondNumber = mt_rand(1, 5);
-                    }
-                    elseif ($firstNumber = 5) {
-                        $secondNumber = mt_rand(1, 4);
-                    }
-                    elseif ($firstNumber = 6 ) {
-                        $secondNumber = mt_rand(1, 3);
-                    }
-                    elseif ($firstNumber > 6) {
-                        $secondNumber = mt_rand(1, 2);
-                    }
+                    if ($firstNumber > 6) $limit = 2;
+
+                    $secondNumber = mt_rand(1, $limit);
                     $firstNumber =  $firstNumber * $secondNumber;
                     $result = $firstNumber / $secondNumber;
                 break;
-        }
+          }
         $result = password_hash($result, PASSWORD_BCRYPT);
         $firstLetter = uniqid();
         $secondLetter = uniqid();
