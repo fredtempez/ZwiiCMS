@@ -18,8 +18,7 @@ class install extends common {
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
 		'steps' => self::GROUP_ADMIN,
-		'update' => self::GROUP_ADMIN,
-		'removeAll' => self::GROUP_ADMIN
+		'update' => self::GROUP_ADMIN
 	];
 
 
@@ -253,16 +252,5 @@ class install extends common {
 		]);
 	}
 
-	/**
-	* Effacer un dossier non vide.
-	*/
-	private function removeAll ( $path ) {
-		foreach ( new DirectoryIterator($path) as $item ):
-			if ( $item->isFile() ) unlink($item->getRealPath());
-			if ( !$item->isDot() && $item->isDir() ) $this->removeAll($item->getRealPath());
-		endforeach;
-
-		rmdir($path);
-	}
 
 }

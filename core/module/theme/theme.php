@@ -616,16 +616,19 @@ class theme extends common {
 				mkdir (self::TEMP_DIR . $tempFolder);
 				$zip->extractTo(self::TEMP_DIR . $tempFolder );
 				// Archive de thème ?
-				if ( file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
-					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
-					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json') ) {
+				if (( file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
+					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
+					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
+					) OR (
+						file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
+					)
+				) {
 					// traiter l'archive
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
 					// Supprimmer le dossier temporaire
-					$install = new install;
-					$install->removeAll(self::TEMP_DIR . $tempFolder);
+					$this->removeDir(self::TEMP_DIR . $tempFolder);
 				} else {
 					// pas une archive de thème
 					$success = false;

@@ -15,8 +15,13 @@
         - Approbation des commentaires
 
 ## version 10.3.04
-- Correction :
+- Corrections :
     - Position des entrées de menu sur les écrans de smartphone.
+    - Thème : import d'un thème, d'administration impossible.
+    - Thème : import d'un thème, nettoyage du dossier tmp.
+    - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
+- Amélioration :
+    - Mise en page du corps des mails de notification.
 
 ## version 10.3.03
 - Correction :

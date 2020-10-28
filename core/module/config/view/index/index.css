@@ -12,7 +12,15 @@
  * @link http://zwiicms.fr/
  */
 
-@import url("site/data/admin.css");
+/** @import url("site/data/admin.css"); */
+
+/** NE PAS EFFACER
+* admin.css
+*/ */
+
+/** NE PAS EFFACER
+* admin.css
+*/
 
 .blockContainer {
     display : none;
