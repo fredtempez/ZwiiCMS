@@ -13,4 +13,8 @@
  */
 
 /* Thème administration */
-@import url("site/data/admin.css");
+/** @import url("site/data/admin.css"); */
+
+/** NE PAS EFFACER
+* admin.css
+*/

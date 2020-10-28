@@ -1672,7 +1672,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
 			$css .= '.button.buttonRed {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonRed:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonRed:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
-			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . '}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
+			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
 			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';
@@ -2767,6 +2767,9 @@ class layout extends common {
 	public function showStyle() {
 		if($this->core->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
+			if (strpos($this->core->output['style'], 'admin.css') >= 1 ) {
+				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
+			}
 			echo '<style type="text/css">' . helper::minifyCss($this->core->output['style']) . '</style>';
 		}
 	}
