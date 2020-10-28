@@ -279,19 +279,20 @@ class blog extends common {
 		}
 		// Inversion du statut
 		else {
+			$approved = !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) ;
 			$this->setData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), [
 				'author' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'author']),
 				'content' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'content']),
 				'createdOn' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'createdOn']),
 				'userId' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'userId']),
-				'approval' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+				'approval' => $approved
 			]]);
 
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/'.$this->getUrl(2),
-				'notification' =>  $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval']) === true ? 'Commentaire rejeté' : 'Commentaire approuvé',
-				'state' => !$this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3), 'approval'])
+				'notification' =>  $approved ?  'Commentaire approuvé' : 'Commentaire rejeté',
+				'state' => $approved
 			]);
 		}
 	}
