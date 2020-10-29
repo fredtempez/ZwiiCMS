@@ -27,7 +27,7 @@ tinymce.init({
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons nonbreaking",
 	// Contenu de la barre d'outils
-	toolbar: "restoredraft | undo redo | bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
+	toolbar: "restoredraft | undo redo | formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
 	// Emoticons
 	emoticons_append: {
 		custom_mind_explode: {
@@ -265,7 +265,7 @@ tinymce.init({
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace stickytoolbar tabfocus template textcolor visualblocks emoticons",
 	// Contenu de la barre d'outils
-	toolbar: "restoredraft | undo redo | styleselect | bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | visualblocks fullscreen",
+	toolbar: "restoredraft | undo redo | formatselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | visualblocks fullscreen",
 	// Emoticons
 	emoticons_append: {
 		custom_mind_explode: {
