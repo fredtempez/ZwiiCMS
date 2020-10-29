@@ -348,7 +348,6 @@ class blog extends common {
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']) .
 				'</a>',
-				// date('d/m/Y H:i', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
 				strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
 				.' à '.
 				strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
@@ -358,7 +357,6 @@ class blog extends common {
 					'class' => ($toApprove || $approved ) > 0 ?  'buttonBlue' : 'buttonGrey' ,
 					'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
 					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
-					//'value' => count($this->getData(['module', $this->getUrl(0), $articleIds[$i],'comment']))
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
