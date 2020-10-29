@@ -49,29 +49,29 @@ class template {
             'value' => '',
             'limit' => false
         ], $attributes);
-	    
+
         // Tirage de l'opération et des nombres
 	// Correspondance tableau des images
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
-	    
+
 	// Détermination de la limitation
         $limit = $attributes['limit']  ? count($letters)-1 : 10;
         mt_srand((float) microtime()*1000000);
         $operator = mt_rand (0, 3);
-	
+
 	// Limiter les valuers si pas une addition
         if ($operator > 1) $limit = 10;
         $firstNumber = mt_rand (1, $limit);
         $secondNumber = mt_rand (1, $limit);
-       
+
 	// Ordre des valeurs selon type d'opération
         if (($operator < 2) AND ($firstNumber < $secondNumber)) {
             $temp = $firstNumber;
             $firstNumber = $secondNumber;
             $secondNumber = $temp;
-        }      
-	 
+        }
+
 	// Calcul du résultat et icône de l'opérateur
         switch ($operator) {
             case 0:
@@ -98,27 +98,27 @@ class template {
                 $result = $firstNumber / $secondNumber;
                 break;
         }
-	    
+
 	// Hashage du résultat
         $result = password_hash($result, PASSWORD_BCRYPT);
-	    
+
 	// Codage des valeurs de l'opération
         $firstLetter = uniqid();
         $secondLetter = uniqid();
-	    
-        // Masquage image source pour éviter un décodage 
+
+        // Masquage image source pour éviter un décodage
         copy ('core/vendor/zwiico/png/'.$letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
         copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
-	    
+
         // Début du wrapper
         $html = '<div class="captcha" id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
-	    
+
         // Label
         $html .= self::label($attributes['id'],
                  '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
-	    
+
         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
@@ -126,22 +126,22 @@ class template {
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
-	    
+
         // captcha
         $html .= sprintf(
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)
         );
-	    
+
         // Champ résultat codé
         $html .= self::hidden($attributes['id'] . 'Result', [
             'value' => $result,
             'before' => false
         ]);
-	    
+
         // Fin du wrapper
         $html .= '</div>';
-	    
+
         // Retourne le html
         return $html;
     }
