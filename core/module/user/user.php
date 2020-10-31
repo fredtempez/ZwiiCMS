@@ -78,6 +78,8 @@ class user extends common {
 					'forgot' => 0,
 					'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
 					'lastname' => $userLastname,
+					'pseudo' => $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true),
+					'signature' => $this->getInput('userAddSignature', helper::FILTER_INT, true),
 					'mail' => $userMail,
 					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
 					"connectFail" => null,
