@@ -61,6 +61,8 @@ class install extends common {
 						'forgot' => 0,
 						'group' => self::GROUP_ADMIN,
 						'lastname' => $userLastname,
+						'pseudo' => 'Admin',
+						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
 					]
