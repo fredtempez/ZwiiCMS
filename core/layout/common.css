@@ -523,11 +523,11 @@ nav a:hover {
 }
 
 nav #menuLeft {
-	display: flex;
-	float: left;
+	display: inline-flex;
+	/*float: left;*/
 }
 nav #menuRight {
-	display: flex;
+	display: inline-flex;
 	float: right;
 }
 /* fin barre de menu */
