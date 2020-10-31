@@ -1526,6 +1526,18 @@ th.col12 {
 	width: 100%;
 }
 
+/* Tableau sur les écrans de très petites tailles */
+@media (max-width: 480px){
+    .table tr{
+    display: block;
+    margin-bottom: 10px;
+    }
+    .table td {
+    display: block;
+    text-align: right;
+    width: auto;
+    }
+}
 
 /**
  * Classes rapides
