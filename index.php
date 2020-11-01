@@ -14,6 +14,11 @@
  * @link http://zwiicms.fr/
  */
 
+ /**
+ * Initialisation de Zwii
+ */
+session_start();
+
 /**
  * Vérification de la version de PHP
  */
@@ -25,12 +30,14 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
  *Localisation
  */
 date_default_timezone_set('Europe/Paris');
-setlocale (LC_ALL, 'fr_FR.utf8','fr_Fr');
+/*
+* Locales :
+* french : free.fr
+* fr_FR : XAMPP Macos
+* fr_FR.utf8 : la majorité
+*/
+echo setlocale (LC_ALL,'french','fr_Fr','fr_FR.utf8');
 
-/**
- * Initialisation de Zwii
- */
-session_start();
 
 /**
  * Chargement des classes
