@@ -1717,7 +1717,9 @@ class core extends common {
 			exit();
 		}
 		// Journalisation
-		$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+		$dataLog = mb_detect_encoding(strftime('%d/%m/%y',time()), 'UTF-8', true)
+					? strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';'
+					: utf8_encode(strftime('%d/%m/%y',time())) . ';' . utf8_encode(strftime('%R',time())) . ';' ;
 		$dataLog .= helper::getIp() . ';';
 		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
 		$dataLog .= $this->getUrl();

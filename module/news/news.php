@@ -89,11 +89,15 @@ class news extends common {
 		// News en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Met en forme le tableau
+			$date = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])));
+			$heure = mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])));
 			self::$news[] = [
 				$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'title']),
-				strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn']))
-				.' à '.
-				strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $newsIds[$i], 'publishedOn'])),
+				$date .' à '. $heure,
 				self::$states[$this->getData(['module', $this->getUrl(0), $newsIds[$i], 'state'])],
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],

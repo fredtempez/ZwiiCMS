@@ -34,7 +34,9 @@
 						</div>
 						<div class="blogDate">
 							<i class="far fa-calendar-alt"></i>
-							<?php echo strftime('%d %B %Y', $article['publishedOn']);  ?>
+							<?php echo mb_detect_encoding(strftime('%d %B %Y - %H:%M',  $article['publishedOn']), 'UTF-8', true)
+										? strftime('%d %B %Y', $article['publishedOn'])
+										: utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>
 						</div>
 						<p class="blogContent">
 							<?php echo helper::subword(strip_tags($article['content']), 0, 400); ?>...

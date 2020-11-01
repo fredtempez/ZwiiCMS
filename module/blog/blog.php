@@ -127,7 +127,9 @@ class blog extends common {
 			// Met en forme le tableau
 			$comment = $comments[$commentIds[$i]];
 			self::$comments[] = [
-				strftime('%d %B %Y - %H:%M', $comment['createdOn']),
+				mb_detect_encoding(strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
+				? strftime('%d %B %Y - %H:%M', $comment['createdOn'])
+				: utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				template::button('blogCommentDelete' . $commentIds[$i], [
@@ -188,12 +190,15 @@ class blog extends common {
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Met en forme le tableau
+			$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
+				: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
+			$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+			? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
+			: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
 			self::$articles[] = [
 				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
-				// date('d/m/Y H:i', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
-				strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
-				.' à '.
-				strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])),
+				$date .' à '. $heure,
 				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],

@@ -53,7 +53,7 @@ class user extends common {
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
-			
+
 			// Stockage des données
 			$this->setData([
 				'user',
@@ -433,7 +433,9 @@ class user extends common {
 							$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
 						}
 						// Journalisation
-						$dataLog = strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';' ;
+						$dataLog = mb_detect_encoding(strftime('%d/%m/%y',time()), 'UTF-8', true)
+								? strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';'
+								: utf8_encode(strftime('%d/%m/%y',time())) . ';' . utf8_encode(strftime('%R',time())) . ';' ;
 						$dataLog .= helper::getIp() . ';';
 						$dataLog .= $userId . ';' ;
 						$dataLog .= $this->getUrl() .';' ;
