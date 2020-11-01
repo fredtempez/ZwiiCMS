@@ -8,8 +8,13 @@
     - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
     - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
 - Amélioration :
+    - Thème menu : couleurs du sous menu.
     - Mise en page du corps des mails de notification.
     - Paramètres de localisation.
+- Modification :
+    - Changement de noms de classe :
+        - navLevel1 devient navMain
+        - navLevel2 devient navSub
 - Mise à jour :
     - TinyMCE 4.9.11
 

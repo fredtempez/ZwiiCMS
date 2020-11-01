@@ -392,12 +392,12 @@ $(document).ready(function(){
 	 * Affiche le sous-menu quand il est sticky
 	 */
 	$("nav").mouseenter(function(){
-		$("#navfixedlogout .navLevel2").css({ 'pointer-events' : 'auto' });
-		$("#navfixedconnected .navLevel2").css({ 'pointer-events' : 'auto' });
+		$("#navfixedlogout .navSub").css({ 'pointer-events' : 'auto' });
+		$("#navfixedconnected .navSub").css({ 'pointer-events' : 'auto' });
 	});
 	$("nav").mouseleave(function(){
-		$("#navfixedlogout .navLevel2").css({ 'pointer-events' : 'none' });
-		$("#navfixedconnected .navLevel2").css({ 'pointer-events' : 'none' });
+		$("#navfixedlogout .navSub").css({ 'pointer-events' : 'none' });
+		$("#navfixedconnected .navSub").css({ 'pointer-events' : 'none' });
 	});
 
 	/**

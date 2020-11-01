@@ -1430,13 +1430,19 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10302) {
 			// Activation par défaut du captcha à la connexion
 			$this->setData(['config', 'connect','captcha', true]);
-		$this->setData(['core', 'dataVersion', 10302]);
+			$this->setData(['core', 'dataVersion', 10302]);
 		}
 		// Version 10.3.03
 		if ($this->getData(['core', 'dataVersion']) < 10303) {
 			// Activation par défaut du captcha à la connexion
 			$this->setData(['config', 'captchaStrong', false]);
-		$this->setData(['core', 'dataVersion', 10303]);
+			$this->setData(['core', 'dataVersion', 10303]);
+		}
+		// Version 10.3.04
+		if ($this->getData(['core', 'dataVersion']) < 10304) {
+			// Couleur des sous menus
+			$this->setData(['theme', 'menu', 'backgroundColorSub', $this->getData(['theme', 'menu', 'backgroundColor']) ]);
+			$this->setData(['core', 'dataVersion', 10304]);
 		}
 	}
 }
@@ -1584,7 +1590,7 @@ class core extends common {
 			$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			// Menu
 			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));
-			$css .= 'nav,nav .navLevel2 a{background-color:' . $colors['normal'] . '}';
+			$css .= 'nav,nav.navMain a{background-color:' . $colors['normal'] . '}';
 			$css .= 'nav a,#toggle span,nav a:hover{color:' . $this->getData(['theme', 'menu', 'textColor']) . '}';
 			$css .= 'nav a:hover{background-color:' . $colors['darken'] . '}';
 			$css .= 'nav a.active{color:' . $this->getData(['theme','menu','activeTextColor']) . ';}';
@@ -1596,7 +1602,10 @@ class core extends common {
 				$css .= 'nav a.active{color:' .  $color2['text'] . '}';*/
 			}
 			$css .= 'nav #burgerText{color:' .  $colors['text'] . '}';
-			$css .= 'nav .navLevel1 a.active {border-radius:' . $this->getData(['theme', 'menu', 'radius']) . '}';
+			// Sous menu
+			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColorSub']));
+			$css .= 'nav .navSub a{background-color:' . $colors['normal'] . '}';
+			$css .= 'nav .navMain a.active {border-radius:' . $this->getData(['theme', 'menu', 'radius']) . '}';
 			$css .= '#menu{text-align:' . $this->getData(['theme', 'menu', 'textAlign']) . '}';
 			if($this->getData(['theme', 'menu', 'margin'])) {
 				if(
@@ -2409,7 +2418,7 @@ class layout extends common {
 				empty($childrenPageIds)) {
 				continue;
 			}
-			$itemsLeft .= '<ul class="navLevel2">';
+			$itemsLeft .= '<ul class="navSub">';
 			foreach($childrenPageIds as $childKey) {
 				// Propriétés de l'item
 				$active = ($childKey === $currentPageId) ? 'active ' : '';
@@ -2483,7 +2492,7 @@ class layout extends common {
 			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
-		echo '<ul class="navLevel1" id="menuLeft">' . $itemsLeft . '</ul><ul class="navLevel1" id="menuRight">' . $itemsRight . '</ul>';
+		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
 	}
 
 	/**
