@@ -522,20 +522,25 @@ nav a:hover {
 	text-decoration: none;
 }
 
-nav #menuLeft {
+
+/* Barre de menu */
+
+#menuLeft {
 	display: inline-flex;
-	/*float: left;*/
 }
-nav #menuRight {
-	display: inline-flex;
+
+#menuRight {
+	display: inline-flex ;
 	float: right;
 }
+
 /* fin barre de menu */
 nav::after {
 	content: " ";
 	clear: both;
 	display: flex;
 }
+
 nav::before {
 	content: " ";
 	clear: left;
