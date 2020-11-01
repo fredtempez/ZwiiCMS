@@ -28,15 +28,14 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
 
 /*
  *Localisation
- */
-date_default_timezone_set('Europe/Paris');
-/*
-* Locales :
-* french : free.fr
-* fr_FR : XAMPP Macos
-* fr_FR.utf8 : la majorité
+
+ * Locales :
+ * french : free.fr
+ * fr_FR : XAMPP Macos
+ * fr_FR.utf8 : la majorité
 */
-echo setlocale (LC_ALL,'french','fr_Fr','fr_FR.utf8');
+date_default_timezone_set('Europe/Paris');
+setlocale (LC_ALL,'french','fr_Fr','fr_FR.utf8');
 
 
 /**
