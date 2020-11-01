@@ -9,6 +9,7 @@
     - Thème du menu : alignement inopérant.
 - Amélioration :
     - Mise en page du corps des mails de notification.
+    - Paramètres de localisation.
 - Mise à jour :
     - TinyMCE 4.9.11
 
