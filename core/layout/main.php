@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#" lang="fr">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<?php $layout->showMetaTitle(); ?>
 		<?php $layout->showMetaDescription(); ?>
