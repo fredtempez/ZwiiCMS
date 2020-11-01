@@ -1646,7 +1646,7 @@ class core extends common {
 			}
 			$css .= 'nav #burgerText{color:' .  $colors['text'] . '}';
 			$css .= 'nav .navLevel1 a.active {border-radius:' . $this->getData(['theme', 'menu', 'radius']) . '}';
-			$css .= '#menu{text-align:' . $this->getData(['theme', 'menu', 'textAlign']) . '}';
+			$css .= '#menuLeft{float:' . $this->getData(['theme', 'menu', 'textAlign']) . '}';
 			if($this->getData(['theme', 'menu', 'margin'])) {
 				if(
 					$this->getData(['theme', 'menu', 'position']) === 'site-first'
