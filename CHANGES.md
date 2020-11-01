@@ -6,7 +6,7 @@
     - Thème : import d'un thème, d'administration impossible.
     - Thème : import d'un thème, nettoyage du dossier tmp.
     - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
-    - Thème du menu : alignement inopérant.
+    - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
 - Amélioration :
     - Mise en page du corps des mails de notification.
     - Paramètres de localisation.

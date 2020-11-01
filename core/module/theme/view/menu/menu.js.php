@@ -43,7 +43,7 @@ $("input, select").on("change", function() {
 	var css = "@import url('https://fonts.googleapis.com/css?family=" + menuFont + "');";
 	var colors = core.colorVariants($("#themeMenuBackgroundColor").val());
 	// Couleurs du menu
-	css += "nav,nav a{background-color:" + colors.normal + "}";
+	css += "nav,nav .navLevel2 a{background-color:" + colors.normal + "}";
 	css += "nav a,#toggle span,nav a:hover{color:" + $("#themeMenuTextColor").val() + "}";
 	css += "nav a:hover{background-color:" + colors.darken + "}";
 	if ($("#themeMenuActiveColorAuto").is(':checked')) {
