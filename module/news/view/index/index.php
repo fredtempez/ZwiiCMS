@@ -10,7 +10,9 @@
 				</div>
 				<div class="newsSignature">
 					<i class="far fa-calendar-alt"></i>
-					<?php echo strftime('%d %B %Y', $news['publishedOn']); ?>
+					<?php echo mb_detect_encoding(strftime('%d %B %Y', $news['publishedOn']), 'UTF-8', true)
+								? strftime('%d %B %Y', $news['publishedOn'])
+								: utf8_encode(strftime('%d %B %Y', $news['publishedOn'])); ?>
 					- <?php echo $this->getData(['user', $news['userId'], 'firstname']) . ' ' . $this->getData(['user', $news['userId'], 'lastname']); ?>
 				</div>
 				<div class="clearBoth"></div>

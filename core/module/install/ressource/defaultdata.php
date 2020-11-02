@@ -138,6 +138,7 @@ class init extends common {
 			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
+				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
 				'font' => 'Open+Sans',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
