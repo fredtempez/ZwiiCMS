@@ -37,7 +37,6 @@ if(version_compare(PHP_VERSION, '5.6.0', '<')) {
 date_default_timezone_set('Europe/Paris');
 setlocale (LC_ALL,'french','fr_Fr','fr_FR.utf8');
 
-
 /**
  * Chargement des classes
  */

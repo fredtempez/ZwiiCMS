@@ -17,7 +17,7 @@
         <div class="block">
             <h4>Couleur</h4>
             <div class="row">
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::text('themeMenuTextColor', [
 							'class' => 'colorPicker',
 							'help' => 'Le curseur horizontal règle le niveau de transparence.',
@@ -25,12 +25,20 @@
 							'value' => $this->getData(['theme', 'menu', 'textColor'])
 						]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::text('themeMenuBackgroundColor', [
                             'class' => 'colorPicker',
                             'help' => 'Le curseur horizontal règle le niveau de transparence.',
                             'label' => 'Fond',
                             'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
+                        ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::text('themeMenuBackgroundColorSub', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
+                            'label' => 'Fond du sous-menu',
+                            'value' => $this->getData(['theme', 'menu', 'backgroundColorSub'])
                         ]); ?>
                 </div>
             </div>

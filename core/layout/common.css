@@ -575,6 +575,11 @@ nav li ul li {
 	text-align: left;
 }
 
+/*
+nav .navSub a{
+	background-color:red !important;
+}*/
+
 nav li:hover ul {
 	z-index: 8;
 	opacity: 1;
@@ -589,13 +594,15 @@ nav a:hover {
 	text-decoration: none;
 }
 
-nav #menuLeft {
+
+/* Barre de menu */
+
+#menuLeft {
 	display: inline-flex;
-	/*float: left;*/
 }
 
-nav #menuRight {
-	display: inline-flex;
+#menuRight {
+	display: inline-flex ;
 	float: right;
 }
 
@@ -683,8 +690,8 @@ nav::before {
 	position: sticky;
 }
 
-#navfixedconnected .navLevel2,
-#navfixedlogout .navLevel2 {
+#navfixedconnected .navSub,
+#navfixedlogout .navSub {
 	pointer-events: none;
 }
 
