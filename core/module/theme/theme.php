@@ -407,7 +407,6 @@ class theme extends common {
 			// Si une image est positionnée, l'arrière en transparent.
 			$this->setData(['theme', 'header', [
 				'backgroundColor' => $this->getInput('themeHeaderBackgroundColor'),
-				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'font' => $this->getInput('themeHeaderFont'),
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
@@ -420,6 +419,7 @@ class theme extends common {
 				'textAlign' => $this->getInput('themeHeaderTextAlign'),
 				'textColor' => $this->getInput('themeHeaderTextColor'),
 				'textHide' => $this->getInput('themeHeaderTextHide', helper::FILTER_BOOLEAN),
+				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer')
 			]]);
@@ -436,8 +436,10 @@ class theme extends common {
 				default:
 					$position = $this->getData(['theme','menu','position']);
 			}
+
 			$this->setData(['theme', 'menu', [
 				'backgroundColor' => $this->getData(['theme', 'menu', 'backgroundColor']),
+				'backgroundColorSub' => $this->getData(['theme', 'menu', 'backgroundColorSub']),
 				'font' => $this->getData(['theme', 'menu', 'font']),
 				'fontSize' => $this->getData(['theme', 'menu', 'fontSize']),
 				'fontWeight' => $this->getData(['theme', 'menu', 'fontWeight']),
@@ -451,8 +453,9 @@ class theme extends common {
 				'fixed' => $this->getData(['theme','menu','fixed']),
 				'activeColorAuto' => $this->getData(['theme','menu','activeColorAuto']),
 				'activeColor' => $this->getData(['theme','menu','activeColor']),
+				'activeTextColor' => $this->getData(['theme','menu','activeTextColor']),
 				'radius' => $this->getData(['theme','menu','radius']),
-				'burgerTitle' => $this->getData(['theme','menu','burgerTitle'])
+				'memberBar' => $this->getData(['theme','menu','memberBar'])
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

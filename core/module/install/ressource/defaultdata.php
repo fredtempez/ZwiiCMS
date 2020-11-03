@@ -144,7 +144,6 @@ class init extends common {
 				'fontWeight' => 'normal',
 				'height' => '15px 10px',
 				'loginLink' => false,
-				'burgerTitle' => true,
 				'margin' => false,
 				'position' => 'site-second',
 				'textAlign' => 'left',
@@ -155,6 +154,7 @@ class init extends common {
 				'activeColor' => 'rgba(255, 255, 255, 1)',
 				'activeTextColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
+				'burgerTitle' => true,
 				'memberBar' => true
 			],
 			'site' => [
