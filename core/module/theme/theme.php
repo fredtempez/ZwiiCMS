@@ -29,7 +29,8 @@ class theme extends common {
 		'admin' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN
+		'save' => self::GROUP_ADMIN,
+		'checkImport' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
@@ -407,7 +408,6 @@ class theme extends common {
 			// Si une image est positionnée, l'arrière en transparent.
 			$this->setData(['theme', 'header', [
 				'backgroundColor' => $this->getInput('themeHeaderBackgroundColor'),
-				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'font' => $this->getInput('themeHeaderFont'),
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
@@ -420,6 +420,7 @@ class theme extends common {
 				'textAlign' => $this->getInput('themeHeaderTextAlign'),
 				'textColor' => $this->getInput('themeHeaderTextColor'),
 				'textHide' => $this->getInput('themeHeaderTextHide', helper::FILTER_BOOLEAN),
+				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer')
 			]]);
@@ -436,8 +437,10 @@ class theme extends common {
 				default:
 					$position = $this->getData(['theme','menu','position']);
 			}
+
 			$this->setData(['theme', 'menu', [
 				'backgroundColor' => $this->getData(['theme', 'menu', 'backgroundColor']),
+				'backgroundColorSub' => $this->getData(['theme', 'menu', 'backgroundColorSub']),
 				'font' => $this->getData(['theme', 'menu', 'font']),
 				'fontSize' => $this->getData(['theme', 'menu', 'fontSize']),
 				'fontWeight' => $this->getData(['theme', 'menu', 'fontWeight']),
@@ -451,8 +454,9 @@ class theme extends common {
 				'fixed' => $this->getData(['theme','menu','fixed']),
 				'activeColorAuto' => $this->getData(['theme','menu','activeColorAuto']),
 				'activeColor' => $this->getData(['theme','menu','activeColor']),
+				'activeTextColor' => $this->getData(['theme','menu','activeTextColor']),
 				'radius' => $this->getData(['theme','menu','radius']),
-				'burgerTitle' => $this->getData(['theme','menu','burgerTitle'])
+				'memberBar' => $this->getData(['theme','menu','memberBar'])
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -616,20 +620,31 @@ class theme extends common {
 			if ($zip->open(self::FILE_DIR.'source/'.$zipFilename) === TRUE) {
 				mkdir (self::TEMP_DIR . $tempFolder);
 				$zip->extractTo(self::TEMP_DIR . $tempFolder );
+				$modele = '';
 				// Archive de thème ?
-				if (( file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
+				if (
+					 file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
 					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
 					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
-					) OR (
-						file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
-					)
+					) {
+						$modele = 'theme';
+					}
+				if(
+					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
+					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
+				) {
+						$mode = 'admin';
+				}
+				if (!empty($modele) 
 				) {
 					// traiter l'archive
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
-					$notification = $success ? 'Le thème a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
+					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
 					// Supprimmer le dossier temporaire
 					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					// Check le thème
+					$this->checkImport($modele);
 				} else {
 					// pas une archive de thème
 					$success = false;
@@ -695,6 +710,50 @@ class theme extends common {
 			'redirect' => helper::baseUrl() . 'theme/manage',
 			'state' => true
 		]);
+	}
+
+
+	/**
+	 * Contrôle du thème
+	 * Vérifie la présence de toutes les clés par rapport au thème par défaut
+	 * les créer si elles n'existent pas.
+	 */
+	private function checkImport ($modele = 'theme') {
+		require_once('core/module/install/ressource/defaultdata.php');
+		switch ($modele) {
+			case 'theme':
+				$default['theme'] = init::$defaultData['theme'];
+				// Check le thème
+				$dataKeys = ['body','footer','header','menu','site','block','text','title','button'];
+				// Parcourir les clés principales et stocker les contenus
+				foreach($dataKeys as  $key1) {
+					$itemKeys = $default['theme'][$key1];
+					// Parcourir les clés secondaires
+					foreach ($itemKeys as $key2 => $value) {
+						// Données nulles ou vides instaurer la donnée par défaut
+						if ($this->getData(['theme',$key1,$key2]) ===  NULL
+							OR empty($this->getData(['theme',$key1,$key2]) )
+						) {
+							$this->setData(['theme',$key1,$key2,$value]);
+						}
+					}
+				}
+				break;
+			case 'admin':
+				// Check Admin
+				$default['admin'] = init::$defaultData['admin'];
+				// Pas de clé secondaire
+				$itemKeys = $default['admin'];
+				foreach ($itemKeys as $key1 => $value) {
+					// Données nulles ou vides instaurer la donnée par défaut
+					if ($this->getData(['admin',$key1]) ===  NULL
+						OR empty($this->getData(['admin',$key1]) )
+					) {
+						$this->setData(['admin',$key1,$value]);
+					}
+				}
+				break;
+		}
 	}
 
 	/**

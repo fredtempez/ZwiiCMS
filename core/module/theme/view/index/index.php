@@ -22,18 +22,18 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col3 offset3">
-			<?php echo template::button('themeAdvanced', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
-				'value' => 'Éditeur CSS'
-			]); ?>
-		</div>
-		<div class="col3">
+		<div class="col3  offset3">
 			<?php echo template::button('themeManage', [
 				'ico' => 'upload',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
+			]); ?>
+		</div>
+		<div class="col3">
+			<?php echo template::button('themeAdvanced', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
+				'value' => 'Éditeur CSS'
 			]); ?>
 		</div>
 	</div>
