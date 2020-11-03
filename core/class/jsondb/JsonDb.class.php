@@ -102,28 +102,15 @@ class JsonDb extends \Prowebcraft\Dot
         if ($this->data === null || $reload) {
             // $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
             $this->db = $this->config['dir'] . $this->config['name'];
-            /*
-            if (!file_exists($this->db)) {
-                $templateFile = $this->config['template'];
-                if (file_exists($templateFile)) {
-                    copy($templateFile, $this->db);
-                } else {
-                    file_put_contents($this->db, '{}');
-                }
-            } else {
-                if ($this->config['backup']) {
-                   try {
-                       //todo make backup of database
-                   } catch (\Exception $e) {
 
-                   }
+            if (!file_exists($this->db)) {
+                return null;
+            } else {
+                $this->data = json_decode(file_get_contents($this->db), true);
+                if (!$this->data === null) {
+                    throw new \InvalidArgumentException('Database file ' . $this->db
+                        . ' contains invalid json object. Please validate or remove file');
                 }
-            }
-            */
-            $this->data = json_decode(file_get_contents($this->db), true);
-            if (!$this->data === null) {
-                throw new \InvalidArgumentException('Database file ' . $this->db
-                    . ' contains invalid json object. Please validate or remove file');
             }
         }
         return $this->data;
