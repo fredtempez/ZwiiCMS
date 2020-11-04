@@ -15,7 +15,7 @@
     - Paramètres de localisation.
     - Maintenance terminée, redirection vers l'accueil.
     - Marge haute dans les vues en mode light.
-- Modification :
+- Modifications :
     - Changement de noms de classe :
         - navLevel1 devient navMain
         - navLevel2 devient navSub
