@@ -1442,6 +1442,10 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10304) {
 			// Couleur des sous menus
 			$this->setData(['theme', 'menu', 'backgroundColorSub', $this->getData(['theme', 'menu', 'backgroundColor']) ]);
+			// Nettoyage du fichier de thème pour forcer une régénération
+			if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
+				unlink (self::DATA_DIR . '/theme.css');
+			}
 			$this->setData(['core', 'dataVersion', 10304]);
 		}
 	}
