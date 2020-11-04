@@ -47,7 +47,7 @@ class template {
             'id' => $nameId,
             'name' => $nameId,
             'value' => '',
-            'limit' => false
+            'limit' => false // captcha simple
         ], $attributes);
 
    // Captcha quatre opérations
@@ -58,7 +58,8 @@ class template {
 
     // Tirage de l'opération
     mt_srand((float) microtime()*1000000);
-    $operator = mt_rand (1, 4);
+    // Captcha simple limité à l'addition
+    $operator = $attributes['limit'] ?  mt_rand (1, 4) : 1;
 
     // Limite si multiplication ou division
     if ($operator > 2) {

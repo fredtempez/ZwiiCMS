@@ -102,7 +102,7 @@
 				<div class="col4 verticalAlignBottom">
 						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha renforcé', [
 							'checked' => $this->getData(['config','captchaStrong']),
-							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site.'
+							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'
 						]); ?>
 					</div>
 			</div>
