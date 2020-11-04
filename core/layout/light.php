@@ -18,7 +18,7 @@
 </head>
 <body>
 <?php $layout->showNotification(); ?>
-<div id="site" class="container">
+<div id="site" class="container light">
 	<section><?php $layout->showContent(); ?></section>
 </div>
 <?php $layout->showScript(); ?>

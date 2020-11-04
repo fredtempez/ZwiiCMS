@@ -13,7 +13,7 @@
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
 				'value' => template::ico('brush','right') . 'Thème'
 			]); ?>
-		</div>		
+		</div>
 	</div>
 	<div class="row">
 		<div class="col12">
@@ -45,7 +45,7 @@
 			</div>
 		</div>
 	</div>
-<?php echo template::formClose(); ?>	
+<?php echo template::formClose(); ?>
 <div class="row">
 	<div class="col12">
 		<div class="block">

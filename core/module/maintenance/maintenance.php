@@ -22,6 +22,11 @@ class maintenance extends common {
 	 * Maintenance
 	 */
 	public function index() {
+		// Redirection vers l'accueil après rafraîchissement et que la maintenance est terminée.
+		if($this->getData(['config', 'maintenance']) == False){
+			header('Location:' . helper::baseUrl());
+			exit();
+		}
 		// Page perso définie et existante
 		if ($this->getData(['config','page302']) !== 'none'
 			AND $this->getData(['page',$this->getData(['config','page302'])]) ) {
