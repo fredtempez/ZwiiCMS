@@ -53,8 +53,9 @@ class template {
         $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
         $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
         $limit = $attributes['limit']  ? count($letters)-1 : 10 ;
-        $firstNumber = rand ( 0 , $limit );
-        $secondNumber = rand ( 0 , $limit );
+        mt_srand((float) microtime()*1000000);
+        $firstNumber = mt_rand ( 0 , $limit );
+        $secondNumber = mt_rand ( 0 , $limit );
         $result =  $firstNumber +  $secondNumber;
         $result = password_hash($result, PASSWORD_BCRYPT);
         $firstLetter = uniqid();
