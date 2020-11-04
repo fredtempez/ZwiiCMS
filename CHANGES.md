@@ -22,10 +22,13 @@
     - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
     - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
     - Supprime les warning lors d'une primo installation.
+    - Inversion des icônes + et - dans la configuration
 - Amélioration :
-    - Thème menu : couleurs du sous menu.
+    - Thème menu : couleurs du sous-menu.
     - Mise en page du corps des mails de notification.
     - Paramètres de localisation.
+    - Maintenance terminée, redirection vers l'accueil.
+    - Marge haute dans les vues en mode light.
 - Modification :
     - Changement de noms de classe :
         - navLevel1 devient navMain
