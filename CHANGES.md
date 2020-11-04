@@ -9,7 +9,7 @@
     - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
     - Supprime les warning lors d'une primo installation.
     - Inversion des icônes + et - dans la configuration
-- Amélioration :
+- Améliorations :
     - Thème menu : couleurs du sous-menu.
     - Mise en page du corps des mails de notification.
     - Paramètres de localisation.
