@@ -16,22 +16,18 @@
 
 /** NE PAS EFFACER
 * admin.css
-*/ */
-
-/** NE PAS EFFACER
-* admin.css
-*/
+*/ 
 
 .blockContainer {
     display : none;
 }
 
-#info .zwiico-minus-circled {
+#info .zwiico-plus-circled {
     display: inline;
 }
 
 .zwiico-minus-circled,
-#info .zwiico-plus-circled {
+#info .zwiico-minus-circled {
     display: none;
 }
 
