@@ -2,6 +2,7 @@
 
 ## version 10.3.04
 - Corrections :
+    - Warning lors d'une primo installation.
     - Position des entrées de menu sur les écrans de smartphone.
     - Thème : import d'un thème, d'administration impossible.
     - Thème : import d'un thème, nettoyage du dossier tmp.
