@@ -16,6 +16,7 @@
 
 ## version 10.3.04
 - Corrections :
+    - Warning lors d'une primo installation.
     - Position des entrées de menu sur les écrans de smartphone.
     - Thème : import d'un thème, d'administration impossible.
     - Thème : import d'un thème, nettoyage du dossier tmp.
@@ -23,13 +24,13 @@
     - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
     - Supprime les warning lors d'une primo installation.
     - Inversion des icônes + et - dans la configuration
-- Amélioration :
+- Améliorations :
     - Thème menu : couleurs du sous-menu.
     - Mise en page du corps des mails de notification.
     - Paramètres de localisation.
     - Maintenance terminée, redirection vers l'accueil.
     - Marge haute dans les vues en mode light.
-- Modification :
+- Modifications :
     - Changement de noms de classe :
         - navLevel1 devient navMain
         - navLevel2 devient navSub
