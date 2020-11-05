@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.3.05
+- Correction :
+    - Thème : import d'un thème d'administration impossible.
+
 ## version 10.3.04
 - Corrections :
     - Warning lors d'une primo installation.
