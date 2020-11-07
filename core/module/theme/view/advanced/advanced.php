@@ -10,7 +10,7 @@
 		</div>
 		<div class="col2 offset6">
 			<?php echo template::button('themeAdvancedReset', [
-				'href' => helper::baseUrl() . 'theme/reset',
+				'href' => helper::baseUrl() . 'theme/reset/custom',
 				'class' => 'buttonRed',
 				'ico' => 'cancel',
 				'value' => 'Réinitialiser'

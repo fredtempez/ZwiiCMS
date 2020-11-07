@@ -24,7 +24,6 @@ class theme extends common {
 		'index' => self::GROUP_ADMIN,
 		'menu' => self::GROUP_ADMIN,
 		'reset' => self::GROUP_ADMIN,
-		'resetAdmin' => self::GROUP_ADMIN,
 		'site' => self::GROUP_ADMIN,
 		'admin' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
@@ -535,29 +534,32 @@ class theme extends common {
 	 */
 	public function reset() {
 		// Supprime le fichier de personnalisation avancée
-		unlink(self::DATA_DIR.'custom.css');
+		$redirect ='';
+		switch ($this->getUrl(2)) {
+			case 'admin':
+				$this->initData('admin');
+				$redirect = helper::baseUrl() . 'theme/admin';
+				break;
+			case 'manage':
+				$this->initData('theme');
+				$redirect = helper::baseUrl() . 'theme/manage';
+				break;
+			case 'custom':
+				unlink(self::DATA_DIR.'custom.css');
+				$redirect = helper::baseUrl() . 'theme/advanced';
+				break;
+			default :
+				$redirect = helper::baseUrl() . 'theme';
+		}
+
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Personnalisation avancée réinitialisée',
-			'redirect' => helper::baseUrl() . 'theme/advanced',
+			'notification' => 'Réinitialisation effectuée',
+			'redirect' => $redirect,
 			'state' => true
 		]);
 	}
 
-	/**
-	 * Réinitialisation de la personnalisation avancée
-	 */
-	public function resetAdmin() {
-		// Supprime le fichier de personnalisation avancée
-		//unlink(self::DATA_DIR.'admin.json');
-		$this->initData('admin');
-		// Valeurs en sortie
-		$this->addOutput([
-			'notification' => 'Thème réinitialisé',
-			'redirect' => helper::baseUrl() . 'theme/admin',
-			'state' => true
-		]);
-	}
 
 	/**
 	 * Options du site
@@ -635,7 +637,7 @@ class theme extends common {
 				) {
 						$mode = 'admin';
 				}
-				if (!empty($modele) 
+				if (!empty($modele)
 				) {
 					// traiter l'archive
 					$success = $zip->extractTo('.');

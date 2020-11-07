@@ -16,7 +16,7 @@
 		<div class="col2 offset">
 			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
-				'href' => helper::baseUrl() . 'theme/resetAdmin',
+				'href' => helper::baseUrl() . 'theme/reset/admin',
 				'value' => 'Réinitialiser',
 				'ico' => 'cancel'
 			]); ?>

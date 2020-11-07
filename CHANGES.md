@@ -13,6 +13,8 @@
         - Suppression des commentaires en masse.
         - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
         - Approbation des commentaires
+    - Gestion des thèmes :
+        - Bouton de réinitialisation avec confirmation
 
 ## version 10.3.04
 - Corrections :
