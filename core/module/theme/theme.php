@@ -635,7 +635,7 @@ class theme extends common {
 					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
 					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
 				) {
-						$mode = 'admin';
+						$modele = 'admin';
 				}
 				if (!empty($modele)
 				) {
@@ -643,8 +643,6 @@ class theme extends common {
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
-					// Supprimmer le dossier temporaire
-					$this->removeDir(self::TEMP_DIR . $tempFolder);
 					// Check le thème
 					$this->checkImport($modele);
 				} else {
@@ -652,6 +650,8 @@ class theme extends common {
 					$success = false;
 					$notification = 'Ce n\'est pas l\'archive d\'un thème !';
 				}
+				// Supprimer le dossier temporaire même si le thème est invalide
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 			} else {
 				// erreur à l'ouverture
