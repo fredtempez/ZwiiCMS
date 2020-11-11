@@ -50,7 +50,8 @@ class common {
 		'page',
 		'sitemap',
 		'theme',
-		'user'
+		'user',
+		'translate'
 	];
 	public static $dataStage = [
 		'config',
@@ -115,7 +116,8 @@ class common {
 			'tippy',
 			'zwiico',
 			'imagemap',
-			'simplelightbox'
+			'simplelightbox',
+			'translation'
 		],
 		'view' => ''
 	];
@@ -192,6 +194,22 @@ class common {
 		// Mise en cache des pages et des modules
 		$this->page = $this->getCache('page');
 		$this->module = $this->getCache('module');
+
+		if ( $this->getData(['translate','active'])) {
+			// Lire la langue du navigateur
+			$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+
+			// Changer la locale
+			if ( $lan !== 'fr') {
+				setlocale (LC_TIME, $lan . '_' . strtoupper ($lan) );
+			}
+			if ($lan !== 'fr') {
+				// Charge la librairie Google Translate
+				setrawcookie("googtrans", '/fr/'. $lan, time() + 3600, helper::baseUrl());
+			} else {
+				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
+			}
+		}
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -2742,6 +2760,7 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
@@ -2806,6 +2825,12 @@ class layout extends common {
 		// Librairies
 		$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
 		foreach($this->core->output['vendor'] as $vendorName) {
+			// Librairie googtrans
+			if ( $vendorName === 'translation'
+				AND $this->getData(['translate','active']) === false
+				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
+					continue;
+			}
 			// Coeur
 			if(file_exists('core/vendor/' . $vendorName . '/inc.json')) {
 				$vendorPath = 'core/vendor/' . $vendorName . '/';
@@ -2836,5 +2861,4 @@ class layout extends common {
 			}
 		}
 	}
-
 }
