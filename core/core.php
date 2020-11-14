@@ -62,7 +62,8 @@ class common {
 		'theme',
 		'config',
 		'edit',
-		'config'
+		'config',
+		'translate'
 	];
 	public static $accessExclude = [
 		'login',
@@ -159,7 +160,8 @@ class common {
 		'user' => '',
 		'theme' => '',
 		'admin' => '',
-		'blacklist' => ''
+		'blacklist' => '',
+		'translate' => ''
 	];
 
 	/**
@@ -211,10 +213,6 @@ class common {
 		if($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
-
-		// Mise en cache des pages et des modules
-		$this->page = $this->getCache('page');
-		$this->module = $this->getCache('module');
 
 		// Auto traduction
 		if ( $this->getData(['translate','active'])) {
