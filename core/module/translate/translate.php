@@ -27,7 +27,7 @@ class translate extends common {
 		if($this->isPost()) {
 			$this->setData(['translate', [
 				'active'      => $this->getInput('translateActive', helper::FILTER_BOOLEAN),
-				'showCredits' => $this->getInput('translateCredits', helper::FILTER_BOOLEAN),
+				'showCredits' => $this->getInput('translateActive', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

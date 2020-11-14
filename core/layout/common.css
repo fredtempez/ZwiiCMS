@@ -1433,3 +1433,28 @@ th.col12 {
 	-o-transform:scale(1.25); /* Opera */
 	transform:scale(1.25);
 	}
+
+
+/* Traduction auto */
+/*
+* Supprimer Le tooltip Google
+*
+.goog-tooltip {
+    display: none !important;
+}
+.goog-tooltip:hover {
+    display: none !important;
+}
+.goog-text-highlight {
+    background-color: transparent !important;
+    border: none !important; 
+    box-shadow: none !important;
+} */
+
+/* Emplacement des conditions d'utilisation */
+#googTransLogo {
+	float: right;
+}
+#googTransLogo img {
+	width: 60%;
+}

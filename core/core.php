@@ -201,8 +201,6 @@ class common {
 			// Changer la locale
 			if ( $lan !== 'fr') {
 				setlocale (LC_TIME, $lan . '_' . strtoupper ($lan) );
-			}
-			if ($lan !== 'fr') {
 				// Charge la librairie Google Translate
 				setrawcookie("googtrans", '/fr/'. $lan, time() + 3600, helper::baseUrl());
 			} else {
@@ -2047,8 +2045,10 @@ class core extends common {
 				}
 			}
 		}
+
 		// Librairie googtrans ajouté dynamiquement
-		if ( $this->getData(['translate','active']) === true 
+		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
+			 AND $this->getData(['translate','active']) === true 
 			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
 				$this->addOutput([
 					'vendor' => array_merge($this->output['vendor'], ['i18n'])
@@ -2181,9 +2181,15 @@ class layout extends common {
 		) {
 			echo '<h1 id="sectionTitle">' . $this->core->output['title'] . '</h1>';
 		}
-		echo $this->core->output['content'];
-	}
 
+		echo $this->core->output['content'];
+		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
+			 AND $this->getData(['translate','showCredits']) === true
+			 AND $this->getData(['translate','active']) === true )
+		{
+		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
+		}
+	}
 
 	/**
 	 * Affiche le contenu de la barre gauche
