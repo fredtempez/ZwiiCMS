@@ -49,7 +49,7 @@
 					<?php echo template::textarea('configMetaDescription', [
 						'label' => 'Description du site',
 						'value' => $this->getData(['config', 'metaDescription']),
-						'help'  => 'La description participe au référencement, n\'oubliez pas de personnaliser la description de chaque page sans un copié collé.'
+						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
 					]); ?>
 				</div>
 			</div>
@@ -102,7 +102,7 @@
 				<div class="col4 verticalAlignBottom">
 						<?php echo template::checkbox('configCaptchaStrong', true, 'Captcha renforcé', [
 							'checked' => $this->getData(['config','captchaStrong']),
-							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site.'
+							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'
 						]); ?>
 					</div>
 			</div>

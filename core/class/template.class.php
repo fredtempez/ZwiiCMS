@@ -32,7 +32,7 @@ class template {
         );
     }
 
-    /**
+   /**
     * Crée un champ captcha
     * @param string $nameId Nom et id du champ
     * @param array $attributes Attributs ($key => $value)
@@ -47,29 +47,85 @@ class template {
             'id' => $nameId,
             'name' => $nameId,
             'value' => '',
-            'limit' => false
+            'limit' => false // captcha simple
         ], $attributes);
-        // Génère deux nombres pour le captcha
-        $numbers = array(0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20);
-        $letters = array('u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a');
-        $limit = $attributes['limit']  ? count($letters)-1 : 10 ;
-        mt_srand((float) microtime()*1000000);
-        $firstNumber = mt_rand ( 0 , $limit );
-        $secondNumber = mt_rand ( 0 , $limit );
-        $result =  $firstNumber +  $secondNumber;
+
+   // Captcha quatre opérations
+    // Limite addition et soustraction selon le type de captcha
+    $numbers = [0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20];
+    $letters = ['u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'];
+    $limit = $attributes['limit']  ? count($letters)-1 : 10;
+
+    // Tirage de l'opération
+    mt_srand((float) microtime()*1000000);
+    // Captcha simple limité à l'addition
+    $operator = $attributes['limit'] ?  mt_rand (1, 4) : 1;
+
+    // Limite si multiplication ou division
+    if ($operator > 2) {
+        $limit = 10;
+        }
+
+    // Tirage des nombres
+    mt_srand((float) microtime()*1000000);
+    $firstNumber = mt_rand (1, $limit);
+    mt_srand((float) microtime()*1000000);
+    $secondNumber = mt_rand (1, $limit);
+
+    // Permutation si addition ou soustraction
+    if (($operator < 3) and ($firstNumber < $secondNumber)) {
+        $temp = $firstNumber;
+        $firstNumber = $secondNumber;
+        $secondNumber = $temp;
+        }
+
+    // Icône de l'opérateur et calcul du résultat
+    switch ($operator) {
+        case 1:
+            $operator = template::ico('plus');
+            $result =  $firstNumber + $secondNumber;
+            break;
+        case 2:
+            $operator = template::ico('minus');
+            $result =  $firstNumber - $secondNumber;
+            break;
+        case 3:
+            $operator = template::ico('cancel');
+            $result =  $firstNumber * $secondNumber;
+            break;
+        case 4:
+            $operator = template::ico('divide');
+            $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
+            for ($i = 1; $i <= $firstNumber; $i++) {
+                $limit = $limit2[$i-1];
+                }
+            mt_srand((float) microtime()*1000000);
+            $secondNumber = mt_rand(1, $limit);
+            $firstNumber =  $firstNumber * $secondNumber;
+            $result = $firstNumber / $secondNumber;
+            break;
+    }
+
+	// Hashage du résultat
         $result = password_hash($result, PASSWORD_BCRYPT);
+
+	// Codage des valeurs de l'opération
         $firstLetter = uniqid();
         $secondLetter = uniqid();
-        // Masquage image source
+
+        // Masquage image source pour éviter un décodage
         copy ('core/vendor/zwiico/png/'.$letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
         copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
+
         // Début du wrapper
         $html = '<div class="captcha" id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
+
         // Label
         $html .= self::label($attributes['id'],
-                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />' . template::ico('plus')  . '<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
+                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
+
         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
@@ -77,29 +133,22 @@ class template {
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
+
         // captcha
         $html .= sprintf(
             '<input type="text" %s>',
             helper::sprintAttributes($attributes)
         );
-        // Champ résultat caché
+
+        // Champ résultat codé
         $html .= self::hidden($attributes['id'] . 'Result', [
             'value' => $result,
             'before' => false
         ]);
-        // Champs cachés contenant les nombres
-        /*
-        $html .= self::hidden($attributes['id'] . 'FirstNumber', [
-            'value' => $firstNumber,
-            'before' => false
-        ]);
-        $html .= self::hidden($attributes['id'] . 'SecondNumber', [
-            'value' => $secondNumber,
-            'before' => false
-        ]);
-        */
+
         // Fin du wrapper
         $html .= '</div>';
+
         // Retourne le html
         return $html;
     }

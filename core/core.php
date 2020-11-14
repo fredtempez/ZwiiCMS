@@ -25,6 +25,10 @@ class common {
 	const GROUP_MEMBER = 1;
 	const GROUP_MODERATOR = 2;
 	const GROUP_ADMIN = 3;
+	const SIGNATURE_ID = 1;
+	const SIGNATURE_PSEUDO = 2;
+	const SIGNATURE_FIRSTLASTNAME = 3;
+	const SIGNATURE_LASTFIRSTNAME = 4;
 	// Dossier de travail
 	const BACKUP_DIR = 'site/backup/';
 	const DATA_DIR = 'site/data/';
@@ -39,7 +43,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.06';
+	const ZWII_VERSION = '10.4.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -52,15 +56,6 @@ class common {
 		'theme',
 		'user',
 		'translate'
-	];
-	public static $dataStage = [
-		'config',
-		'core',
-		'module',
-		'page',
-		'user',
-		'theme',
-		'admin'
 	];
 	public static $accessList = [
 		'user',
@@ -148,9 +143,24 @@ class common {
 	private $url = '';
 	// Données de site
 	private $user = [];
+	private $core = [];
+	private $config = [];
 	private $page = [];
 	private $module = [];
 
+	// Descripteur de données Entrées / Sorties
+	// Liste ici tous les fichiers de données
+	private $dataFiles = [
+		'page' => '',
+		'module' => '',
+		'core' => '',
+		'config' => '',
+		'page' => '',
+		'user' => '',
+		'theme' => '',
+		'admin' => '',
+		'blacklist' => ''
+	];
 
 	/**
 	 * Constructeur commun
@@ -164,20 +174,32 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Instanciation de la classe des entrées / sorties
+		// Récupére les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dirData ($keys,'fr')
+			]);;
+		}
+
+
 		// Import version 9
 		if (file_exists(self::DATA_DIR . 'core.json') === true &&
-			$this->getData(['core','dataVersion']) < 10000) {
-				$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
-				$this->importData($keepUsers);
-				unset ($_SESSION['KEEP_USERS']);
-				// Réinstaller htaccess
-				copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
-				common::$importNotices [] = "Importation réalisée avec succès" ;
-				//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
+		$this->getData(['core','dataVersion']) < 10000) {
+			$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
+			$this->importData($keepUsers);
+			unset ($_SESSION['KEEP_USERS']);
+			// Réinstaller htaccess
+			copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
+			common::$importNotices [] = "Importation réalisée avec succès" ;
+			//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
 		}
+
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
-		foreach (self::$dataStage as $stageId) {
+		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dirData ($stageId, 'fr');
 			if (file_exists($folder . $stageId .'.json') === false) {
 				$this->initData($stageId,'fr');
@@ -194,6 +216,7 @@ class common {
 		$this->page = $this->getCache('page');
 		$this->module = $this->getCache('module');
 
+		// Auto traduction
 		if ( $this->getData(['translate','active'])) {
 			// Lire la langue du navigateur
 			$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -334,13 +357,9 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function deleteData($keys) {
-		//Retourne une chaine contenant le dossier à créer
-		$folder = $this->dirData ($keys[0],'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $keys[0] . '.json',
-			'dir' => $folder
-		]);
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
+		// Aiguillage
 		switch(count($keys)) {
 			case 1:
 				$db->delete($keys[0]);
@@ -381,38 +400,10 @@ class common {
 	public function getData($keys = []) {
 
 		if (count($keys) >= 1) {
-
-			/**
-			 * Lecture dans le cache, page et module
-			 */
-			if ($keys[0] === 'page' ||
-			    $keys[0] === 'module' ) {
-				// Décent dans les niveaux de la variable $data
-				$data = array_merge ($this->page , $this->module);
-				foreach($keys as $key) {
-					// Si aucune donnée n'existe retourne null
-					if(isset($data[$key]) === false) {
-						return null;
-					}
-					// Sinon décent dans les niveaux
-					else {
-						$data = $data[$key];
-					}
-				}
-				// Retourne les données
-				return $data;
-			}
-
 			/**
 			 * Lecture directe
 			*/
-			//Retourne une chaine contenant le dossier à créer
-			$folder = $this->dirData ($keys[0],'fr');
-			// Constructeur  JsonDB
-			$db = new \Prowebcraft\JsonDb([
-				'name' => $keys[0] . '.json',
-				'dir' => $folder
-			]);
+			$db = $this->dataFiles[$keys[0]];
 			switch(count($keys)) {
 				case 1:
 					$tempData = $db->get($keys[0]);
@@ -438,22 +429,6 @@ class common {
 			}
 			return $tempData;
 		}
-	}
-
-
-	/**
-	 * Lecture des fichiers de données de page et mise ne cache
-	 * @param @return string données des pages
-	 */
-	public function getCache($data) {
-		$folder = $this->dirData ($data,'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $data . '.json',
-			'dir' => $folder
-		]);
-		$tempData = $db->get($data);
-		return [$data => $tempData];
 	}
 
 	/*
@@ -970,14 +945,10 @@ class common {
 			return false;
 		}
 
-		//Retourne une chaine contenant le dossier à créer
-		$folder = $this->dirData ($keys[0],'fr');
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $keys[0] . '.json',
-			'dir' => $folder
-		]);
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
 
+		// Aiguillage
 		switch(count($keys)) {
 			case 2:
 				$db->set($keys[0],$keys[1]);
@@ -1022,12 +993,7 @@ class common {
 		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
 			mkdir (self::DATA_DIR . '/' . $lang);
 		}
-		$folder = $this->dirData ($module,$lang);
-		// Constructeur  JsonDB
-		$db = new \Prowebcraft\JsonDb([
-			'name' => $module . '.json',
-			'dir' => $folder
-		]);
+		$db = $this->dataFiles[$module];
 		if ($sampleSite === true) {
 			$db->set($module,init::$siteData[$module]);
 		} else {
@@ -1463,6 +1429,51 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10304]);
 		}
+		// Version 10.4.00
+		if ($this->getData(['core', 'dataVersion']) < 10400) {
+			// Ajouter le prénom comme pseudo et le pseudo comme signature
+			foreach($this->getData(['user']) as $userId => $userIds){
+				$this->setData(['user',$userId,'pseudo',$this->getData(['user',$userId,'firstname'])]);
+				$this->setData(['user',$userId,'signature',2]);
+			}
+
+			// Ajouter les champs de blog v3
+			// Liste des pages dans pageList
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Parcourir pageList et rechercher les modules de blog
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
+					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent]), 'publishedOn', 'SORT_DESC'));
+					foreach ($articleIds as $key => $article) {
+						// Droits les deux groupes
+						$this->setData(['module',  $parent, $article,'editConsent', 3]);
+						// Limite de taille 500
+						$this->setData(['module',  $parent, $article,'commentMaxlength', '500']);
+						// Pas d'approbation des commentaires
+						$this->setData(['module',  $parent, $article,'commentApproved', false ]);
+						// pas de notification
+						$this->setData(['module',  $parent, $article,'commentNotification', false ]);
+						// groupe de notification
+						$this->setData(['module',  $parent, $article,'commentGroupNotification', 3 ]);
+					}
+					// Traitement des commentaires
+					if ( is_array($this->getData(['module',  $parent, $article,'comment'])) ) {
+						foreach($this->getData(['module',  $parent, $article,'comment']) as $commentId => $comment) {
+							// Approbation
+							$this->setData(['module',  $parent, $article,'comment', $commentId, 'approval', true ]);
+						}
+					}
+				}
+			}
+			$this->setData(['core', 'dataVersion', 10400]);
+		}
 	}
 }
 
@@ -1566,7 +1577,7 @@ class core extends common {
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
-			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site.light{margin:150px auto !important;}#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site.light{margin: 100px auto !important;}#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
+			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site.light{margin:5% auto !important;}#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site.light{margin: 5% auto !important;}#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
@@ -1700,7 +1711,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
 			$css .= '.button.buttonRed {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonRed:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonRed:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
-			$css .= 'button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
+			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
 			$css .= '.block {border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}.block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin','borderBlockColor']) . ';}';

@@ -1,5 +1,21 @@
 # Changelog
 
+## version 10.4.00
+- Modifications :
+    - Captcha arithmétique, activation recommandée dans la configuration.
+    - Module User
+        - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
+        - Importation d'un liste d'utilisateur dans un fichier plat (CSV).
+    - Module Blog :
+        - Texte du commentaire enrichi.
+        - Nombre maximal de caractère par commentaire.
+        - Gestion des commentaires article par article.
+        - Suppression des commentaires en masse.
+        - Limiter l'édition des articles et des commentaires à l'id de l'éditeur
+        - Approbation des commentaires
+    - Gestion des thèmes :
+        - Bouton de réinitialisation avec confirmation
+
 ## version 10.3.06
 - Correction :
     - Edition de page avec module, le changement de mise en page désactive le bouton d'option du module.
@@ -40,11 +56,13 @@
     - Barre de membre déplacée à droite de la barre de menu.
 
 ## version 10.3.02
-- Correction :
+- Corrections :
     - Icône de pied de page github manquante.
+    - Mauvaise redirection après changement de mot de passe d'un membre.
 - Modifications :
     - Nouvelles images de captcha.
     - Option de configuration, captcha demandé à la connexion.
+
     - Méthode d'encodage UTF8.
 
 ## version 10.3.01
