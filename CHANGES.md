@@ -16,6 +16,10 @@
     - Gestion des thèmes :
         - Bouton de réinitialisation avec confirmation
 
+## version 10.3.06
+- Correction :
+    - Edition de page avec module, le changement de mise en page désactive le bouton d'option du module.
+
 ## version 10.3.05
 - Correction :
     - Thème : import d'un thème d'administration impossible.

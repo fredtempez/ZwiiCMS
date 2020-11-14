@@ -451,13 +451,17 @@ pageEditBlockDOM.on("change", function() {
 			$("#pageEditAdvancedWrapper").slideDown();
 			$("#pageEditModuleIdWrapper").addClass("disabled");
 			$("#pageEditModuleIdWrapper").slideDown();
-			$("#pageEditModuleConfig").addClass("disabled");
 			$("#pageEditModuleConfig").slideDown();
 			$("#pageEditDisplayMenuWrapper").removeClass("disabled");
 			$("#pageEditDisplayMenuWrapper").slideUp();
 			if ($("#pageEditParentPageId").val() !== "") {
 				$("#pageEditbreadCrumbWrapper").addClass("disabled");
 				$("#pageEditbreadCrumbWrapper").slideDown();
+			}
+			if ($("#pageEditModuleId").val() === "") {
+				$("#pageEditModuleConfig").addClass("disabled");	
+			} else {
+				$("#pageEditModuleConfig").removeClass("disabled");
 			}
 			/*
 			$("#pageEditBlockLayout").removeClass("col12");
