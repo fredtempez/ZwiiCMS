@@ -116,8 +116,7 @@ class common {
 			'tippy',
 			'zwiico',
 			'imagemap',
-			'simplelightbox',
-			'translation'
+			'simplelightbox'
 		],
 		'view' => ''
 	];
@@ -2028,6 +2027,7 @@ class core extends common {
 								'vendor' => array_merge($this->output['vendor'], $output['vendor'])
 							]);
 						}
+
 						if($output['title'] !== null) {
 							$this->addOutput([
 								'title' => $output['title']
@@ -2046,6 +2046,13 @@ class core extends common {
 					}
 				}
 			}
+		}
+		// Librairie googtrans ajouté dynamiquement
+		if ( $this->getData(['translate','active']) === true 
+			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
+				$this->addOutput([
+					'vendor' => array_merge($this->output['vendor'], ['i18n'])
+				]);
 		}
 		// Erreurs
 		if($access === 'login') {
@@ -2825,12 +2832,6 @@ class layout extends common {
 		// Librairies
 		$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
 		foreach($this->core->output['vendor'] as $vendorName) {
-			// Librairie googtrans
-			if ( $vendorName === 'translation'
-				AND $this->getData(['translate','active']) === false
-				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
-					continue;
-			}
 			// Coeur
 			if(file_exists('core/vendor/' . $vendorName . '/inc.json')) {
 				$vendorPath = 'core/vendor/' . $vendorName . '/';

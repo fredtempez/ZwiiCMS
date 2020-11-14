@@ -79,6 +79,10 @@ class init extends common {
 			'hideMenuChildren' =>false
 			]
 		],
+		'translate' => [
+			'active' => false,
+			'showCredits' => false
+		],
 		'module' => [],
 		'user' => [],
 		'theme' =>  [

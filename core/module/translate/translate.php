@@ -26,8 +26,8 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['translate', [
-				'active'      => $this->getInput('translateActive', helper::FILTER_URL),
-				'showCredits' => $this->getInput('translateCredits', helper::FILTER_URL),
+				'active'      => $this->getInput('translateActive', helper::FILTER_BOOLEAN),
+				'showCredits' => $this->getInput('translateCredits', helper::FILTER_BOOLEAN),
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
