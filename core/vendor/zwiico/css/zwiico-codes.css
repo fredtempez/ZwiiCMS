@@ -1,5 +1,6 @@
 
 .zwiico-plus-circled:before { content: '\2191'; } /* '↑' */
+.zwiico-flag:before { content: '\2691'; } /* '⚑' */
 .zwiico-mail:before { content: '\2709'; } /* '✉' */
 .zwiico-divide:before { content: '\e05b'; } /* '' */
 .zwiico-logout:before { content: '\e800'; } /* '' */
@@ -15,7 +16,6 @@
 .zwiico-folder:before { content: '\e80a'; } /* '' */
 .zwiico-users:before { content: '\e80b'; } /* '' */
 .zwiico-left:before { content: '\e80c'; } /* '' */
-.zwiico-mimi:before { content: '\e80d'; } /* '' */
 .zwiico-user:before { content: '\e80e'; } /* '' */
 .zwiico-update:before { content: '\e80f'; } /* '' */
 .zwiico-home:before { content: '\e810'; } /* '' */
@@ -37,6 +37,7 @@
 .zwiico-github:before { content: '\e820'; } /* '' */
 .zwiico-login:before { content: '\e821'; } /* '' */
 .zwiico-lock:before { content: '\e822'; } /* '' */
+.zwiico-mimi:before { content: '\e823'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */
 .zwiico-twitter:before { content: '\f099'; } /* '' */
 .zwiico-facebook:before { content: '\f09a'; } /* '' */
