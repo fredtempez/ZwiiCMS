@@ -1,5 +1,12 @@
 <?php if($module::$news): ?>
 	<div class="row">
+		<div class="col3 offset9 textAlignRight">
+			<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
+				<img id="rssIcon" src='module/news/ressource/feed-icon-16.gif'>
+			</a>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col12">
 			<?php foreach($module::$news as $newsId => $news): ?>
 				<h1 class="newsTitle">

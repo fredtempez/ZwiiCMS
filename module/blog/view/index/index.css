@@ -47,3 +47,7 @@
 		display: none;
 	}
 }
+
+#rssIcon {
+    text-align: right;
+}

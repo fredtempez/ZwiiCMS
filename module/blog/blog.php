@@ -21,7 +21,8 @@ class blog extends common {
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
-		'index' => self::GROUP_VISITOR
+		'index' => self::GROUP_VISITOR,
+		'rss' => self::GROUP_VISITOR
 	];
 
 	public static $articles = [];
@@ -29,6 +30,8 @@ class blog extends common {
 	public static $comments = [];
 
 	public static $pages;
+
+	public static $rssUrl;
 
 	public static $states = [
 		false => 'Brouillon',
@@ -51,7 +54,45 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.02';
+	const BLOG_VERSION = '3.00';
+
+	/**
+	 * Flux RSS
+	 */
+	public function rss() {
+		// En-tête
+		$feeds = '<?xml version="1.0" encoding="UTF-8"?>';
+		$feeds .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
+		$feeds .= '<channel>';
+		$feeds .= '<title>' . $this->getData (['page', $this->getUrl(0),'title']) . '</title>';
+		$feeds .= '<link>' . helper::baseUrl() .'</link>';
+		$feeds .= '<description>' . html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))) . '</description>';
+		$feeds .= '<language>fr-FR</language>';
+		// Articles
+		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC');
+		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'state', 'SORT_DESC');
+		foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
+			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+				$feeds .= '<item>';
+				$feeds .= '<title>' . strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'title']) ) . '</title>';
+				$feeds .= '<link>' . helper::baseUrl() .$this->getUrl(0) . '</link>';
+				$feeds .= '<description>' . html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'content']))) . '</description>';
+				//$feeds .= '<guid>' . $this->getData(['module', $this->getUrl(0), $newsId, 'publishedOn']) . '</guid>';
+				$date = new DateTime($this->getData(['module', $this->getUrl(0), $articleId, 'publishedOn']));
+				$feeds .= '<pubDate>' . $date->format(DateTime::RFC822). '</pubDate>';
+				$feeds .= '</item>';
+			}
+		}
+		// Pied
+		$feeds .= '</channel>';
+		$feeds .= '</rss>';
+		// Valeurs en sortie
+		$this->addOutput([
+			'display' => self::DISPLAY_RSS,
+			'content' => $feeds,
+			'view' => 'rss'
+		]);
+	}
 
 	/**
 	 * Édition
@@ -436,6 +477,7 @@ class blog extends common {
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				self::$articles[$articleIds[$i]] = $this->getData(['module', $this->getUrl(0), $articleIds[$i]]);
 			}
+			self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,

@@ -17,9 +17,10 @@ class common {
 
 	const DISPLAY_RAW = 0;
 	const DISPLAY_JSON = 1;
-	const DISPLAY_LAYOUT_BLANK = 2;
-	const DISPLAY_LAYOUT_MAIN = 3;
-	const DISPLAY_LAYOUT_LIGHT = 4;
+	const DISPLAY_RSS = 2;
+	const DISPLAY_LAYOUT_BLANK = 3;
+	const DISPLAY_LAYOUT_MAIN = 4;
+	const DISPLAY_LAYOUT_LIGHT = 5;
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
@@ -2096,7 +2097,12 @@ class core extends common {
 			header('Content-Type: application/json');
 			echo json_encode($this->output['content']);
 			break;
-		// Layout alléger
+		// RSS feed
+		case self::DISPLAY_RSS:
+			header('Content-type: application/rss+xml; charset=UTF-8');
+			echo $this->output['content'];
+			break;
+		// Layout allégé
 		case self::DISPLAY_LAYOUT_LIGHT:
 			require 'core/layout/light.php';
 			break;
