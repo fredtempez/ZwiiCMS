@@ -48,6 +48,15 @@
 	}
 }
 
-#rssIcon {
+/*
+* Flux RSS
+*/
+#rssFeed {
     text-align: right;
+    float: right;
+}
+#rssFeed p {
+    display: inline;
+    vertical-align: top;
+    margin-left: 5px;
 }

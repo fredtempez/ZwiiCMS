@@ -457,6 +457,7 @@ class blog extends common {
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
 				}
+				self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,

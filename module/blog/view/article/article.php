@@ -37,6 +37,13 @@
 		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'firstname']); ?>
 		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'lastname']); ?>
 	</p>
+	<?php echo template::formClose(); ?>
+	<!-- Bloc RSS-->
+	<div id="rssFeed">
+		<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
+			<img  src='module/news/ressource/feed-icon-16.gif' /><p>Syndication RSS</p>
+		</a>
+	</div>
 	<?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
 		<p>Cet article ne reçoit pas de commentaire.</p>
 	<?php else: ?>
@@ -106,9 +113,7 @@
 					</div>
 				</div>
 			</div>
-		<?php echo template::formClose(); ?>
 	<?php endif;?>
-
 	<div class="row">
 		<div class="col12">
 			<?php foreach($module::$comments as $commentId => $comment): ?>

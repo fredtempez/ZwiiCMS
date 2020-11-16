@@ -1,12 +1,5 @@
 <?php if($module::$articles): ?>
 	<div class="row">
-		<div class="col3 offset9 textAlignRight">
-			<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
-				<img id="rssIcon" src='module/news/ressource/feed-icon-16.gif'>
-			</a>
-		</div>
-	</div>
-	<div class="row">
 		<div class="col12">
 			<?php foreach($module::$articles as $articleId => $article): ?>
 				<div class="row rowArticle">
@@ -55,6 +48,11 @@
 		</div>
 	</div>
 	<?php echo $module::$pages; ?>
+	<div id="rssFeed">
+		<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
+			<img  src='module/news/ressource/feed-icon-16.gif' /><p>Syndication RSS</p>
+		</a>
+	</div>
 <?php else: ?>
 	<?php echo template::speech('Aucun article.'); ?>
 <?php endif; ?>
