@@ -230,41 +230,59 @@ class blog extends common {
 	 * Configuration
 	 */
 	public function config() {
-		// Ids des articles par ordre de publication
-		$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC'));
-		// Pagination
-		$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
-		// Liste des pages
-		self::$pages = $pagination['pages'];
-		// Articles en fonction de la pagination
-		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-			// Met en forme le tableau
-			$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
-				: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
-			$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-			? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
-			: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
-			self::$articles[] = [
-				$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
-				$date .' à '. $heure,
-				self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
-				template::button('blogConfigEdit' . $articleIds[$i], [
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('pencil')
-				]),
-				template::button('blogConfigDelete' . $articleIds[$i], [
-					'class' => 'blogConfigDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('cancel')
-				])
-			];
+		// Soumission du formulaire
+		if($this->isPost()) {
+			$this->setData(['module', $this->getUrl(0), 'config',[
+				'feeds' 	 => $this->getInput('blogConfigShowFeeds',helper::FILTER_BOOLEAN),
+				'feedsLabel' => $this->getInput('blogConfigFeedslabel',helper::FILTER_STRING_SHORT)
+				]]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
+		} else {
+			// Extraire la clé config mot clé réservé
+			$articles = $this->getData(['module', $this->getUrl(0)]);
+			unset($articles['config']);
+			// Ids des articles par ordre de publication
+			$articleIds = array_keys(helper::arrayCollumn($articles, 'publishedOn', 'SORT_DESC'));
+			// Supprimer le bloc config
+			// Pagination
+			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			// Liste des pages
+			self::$pages = $pagination['pages'];
+			// Articles en fonction de la pagination
+			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+				// Met en forme le tableau
+				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
+				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
+				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
+				self::$articles[] = [
+					$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
+					$date .' à '. $heure,
+					self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
+					template::button('blogConfigEdit' . $articleIds[$i], [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+						'value' => template::ico('pencil')
+					]),
+					template::button('blogConfigDelete' . $articleIds[$i], [
+						'class' => 'blogConfigDelete buttonRed',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+						'value' => template::ico('cancel')
+					])
+				];
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Configuration du module',
+				'view' => 'config'
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration du module',
-			'view' => 'config'
-		]);
 	}
 
 	/**
