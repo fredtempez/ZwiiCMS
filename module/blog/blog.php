@@ -60,36 +60,44 @@ class blog extends common {
 	 * Flux RSS
 	 */
 	public function rss() {
+
+
+		// Inclure les classes
+		include_once 'module/news/vendor/FeedWriter/Item.php';
+		include_once 'module/news/vendor/FeedWriter/Feed.php';
+		include_once 'module/news/vendor/FeedWriter/RSS2.php';
+		include_once 'module/news/vendor/FeedWriter/InvalidOperationException.php';
+
+		date_default_timezone_set('UTC');
+
+		$feeds = new \FeedWriter\RSS2();
+
 		// En-tête
-		$feeds = '<?xml version="1.0" encoding="UTF-8"?>';
-		$feeds .= '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">';
-		$feeds .= '<channel>';
-		$feeds .= '<title>' . $this->getData (['page', $this->getUrl(0),'title']) . '</title>';
-		$feeds .= '<link>' . helper::baseUrl() .'</link>';
-		$feeds .= '<description>' . html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))) . '</description>';
-		$feeds .= '<language>fr-FR</language>';
-		// Articles
+		$feeds->setTitle($this->getData (['page', $this->getUrl(0),'title']));
+		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
+		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
+		$feeds->setChannelElement('language', 'fr-FR');
+		$feeds->setDate(time());
+		$feeds->addGenerator();
+		// Corps des articles
 		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC');
 		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'state', 'SORT_DESC');
 		foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
-				$feeds .= '<item>';
-				$feeds .= '<title>' . strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'title']) ) . '</title>';
-				$feeds .= '<link>' . helper::baseUrl() .$this->getUrl(0) . '</link>';
-				$feeds .= '<description>' . html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'content']))) . '</description>';
-				//$feeds .= '<guid>' . $this->getData(['module', $this->getUrl(0), $newsId, 'publishedOn']) . '</guid>';
-				$date = new DateTime($this->getData(['module', $this->getUrl(0), $articleId, 'publishedOn']));
-				$feeds .= '<pubDate>' . $date->format(DateTime::RFC822). '</pubDate>';
-				$feeds .= '</item>';
+				$newsArticle = $feeds->createNewItem();
+				$newsArticle->addElementArray([
+					'title' => strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'title']) ),
+					'link' => helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
+					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'content'])))
+				]);
+				$feeds->addItem($newsArticle);
 			}
 		}
-		// Pied
-		$feeds .= '</channel>';
-		$feeds .= '</rss>';
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_RSS,
-			'content' => $feeds,
+			'content' => $feeds->generateFeed(),
 			'view' => 'rss'
 		]);
 	}
