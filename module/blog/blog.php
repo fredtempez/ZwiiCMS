@@ -54,7 +54,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '3.00';
+	const BLOG_VERSION = '2.99';
 
 	/**
 	 * Flux RSS

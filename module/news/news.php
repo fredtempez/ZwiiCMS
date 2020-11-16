@@ -35,7 +35,7 @@ class news extends common {
 		false => 'Brouillon',
 		true => 'Publié'
 	];
-	const NEWS_VERSION = '2.0';
+	const NEWS_VERSION = '1.99';
 
 	public static $users = [];
 
