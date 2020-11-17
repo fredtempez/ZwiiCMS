@@ -1451,7 +1451,7 @@ class common {
 		}
 		// Version 10.3.06
 		if ($this->getData(['core', 'dataVersion']) < 10306) {
-			// Mettre à jour les données des blogs
+			// Liste des pages
 			$pageList = array();
 			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
 				$pageList [] = $parentKey;
@@ -1459,6 +1459,7 @@ class common {
 					$pageList [] = $childKey;
 				}
 			}
+			// Mettre à jour les données des blogs les articles sont dans posts
 			foreach ($pageList as $parentKey => $parent) {
 				//La page a une galerie
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
@@ -1466,6 +1467,16 @@ class common {
 						$data = $this->getdata(['module',$parent,$blogKey]);
 						$this->deleteData(['module',$parent, $blogKey]);
 						$this->setData([ 'module', $parent, 'posts', $blogKey, $data ]);
+					}
+				}
+			}
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'news' ) {
+					foreach ( $this->getData(['module', $parent]) as $newsKey => $newsItem) {
+						$data = $this->getdata(['module',$parent,$newsKey]);
+						$this->deleteData(['module',$parent, $newsKey]);
+						$this->setData([ 'module', $parent, 'posts', $newsKey, $data ]);
 					}
 				}
 			}

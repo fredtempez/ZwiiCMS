@@ -29,14 +29,14 @@
 				<h4>Informations générales</h4>
 				<?php echo template::text('newsEditTitle', [
 					'label' => 'Titre',
-					'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title'])
+					'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'title'])
 				]); ?>
 			</div>
 		</div>
 	</div>
 	<?php echo template::textarea('newsEditContent', [
 		'class' => 'editorWysiwyg',
-		'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'content'])
+		'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'content'])
 	]); ?>
 	<div class="row">
 		<div class="col12">
@@ -53,7 +53,7 @@
 						<?php echo template::date('newsEditPublishedOn', [
 							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
 							'label' => 'Date de publication',
-							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'publishedOn'])
+							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOn'])
 						]); ?>
 					</div>
 				</div>

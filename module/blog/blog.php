@@ -77,20 +77,24 @@ class blog extends common {
 		// En-tête
 		$feeds->setTitle($this->getData (['page', $this->getUrl(0), 'posts','title']));
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'posts', 'metaDescription']))));
+		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(time());
 		$feeds->addGenerator();
 		// Corps des articles
-		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC');
-		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'state', 'SORT_DESC');
+		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'state', 'SORT_DESC');
 		foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+				// Miniature
+				$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
 				$newsArticle = $feeds->createNewItem();
 				$newsArticle->addElementArray([
 					'title' => strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']) ),
 					'link' => helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
-					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content'])))
+					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']))),
+					'addEnclosure' => helper::baseUrl() . self::FILE_DIR . $thumb
 				]);
 				$feeds->addItem($newsArticle);
 			}
