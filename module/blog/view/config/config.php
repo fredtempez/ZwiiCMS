@@ -3,7 +3,7 @@
 		<div class="col2">
 			<?php echo template::button('blogConfigBack', [
 				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
+				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0), 'posts',
 				'ico' => 'left',
 				'value' => 'Retour'
 			]); ?>
@@ -31,14 +31,14 @@
 				<h4>Paramètres du module</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('blogConfigShowFeeds', true, 'Afficher les flux RSS', [
+						<?php echo template::checkbox('blogConfigShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::text('blogConfigFeedslabel', [
-							'label' => 'Etiquette',
-							'value' => empty($this->getData(['module', $this->getUrl(0), 'config','feedsLabel'])) ? 'Syndication RSS' : $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
+							'label' => 'Texte de l\'étiquette',
+							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
 					</div>
 				</div>

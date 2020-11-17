@@ -33,6 +33,8 @@ class blog extends common {
 
 	public static $rssUrl;
 
+	public static $rssLabel;
+
 	public static $states = [
 		false => 'Brouillon',
 		true => 'Publié'
@@ -73,9 +75,9 @@ class blog extends common {
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
-		$feeds->setTitle($this->getData (['page', $this->getUrl(0),'title']));
+		$feeds->setTitle($this->getData (['page', $this->getUrl(0), 'posts','title']));
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
+		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'posts', 'metaDescription']))));
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(time());
 		$feeds->addGenerator();
@@ -86,9 +88,9 @@ class blog extends common {
 			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
 				$newsArticle = $feeds->createNewItem();
 				$newsArticle->addElementArray([
-					'title' => strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'title']) ),
+					'title' => strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']) ),
 					'link' => helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
-					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), $articleId, 'content'])))
+					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content'])))
 				]);
 				$feeds->addItem($newsArticle);
 			}
@@ -113,7 +115,7 @@ class blog extends common {
 			$articleId = helper::increment($articleId, (array) $this->getData(['module', $this->getUrl(0)]));
 			$articleId = helper::increment($articleId, array_keys(self::$actions));
 			// Crée l'article
-			$this->setData(['module', $this->getUrl(0), $articleId, [
+			$this->setData(['module', $this->getUrl(0), 'posts', $articleId, [
 				'closeComment' => $this->getInput('blogAddCloseComment', helper::FILTER_BOOLEAN),
 				'mailNotification'  => $this->getInput('blogAddMailNotification', helper::FILTER_BOOLEAN),
 				'groupNotification' => 	$this->getInput('blogAddGroupNotification', helper::FILTER_INT),
@@ -200,7 +202,7 @@ class blog extends common {
 	 */
 	public function commentDelete() {
 		// Le commentaire n'existe pas
-		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]) === null) {
+		if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment', $this->getUrl(3)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -216,7 +218,7 @@ class blog extends common {
 		}
 		// Suppression
 		else {
-			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2), 'comment', $this->getUrl(3)]);
+			$this->deleteData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment', $this->getUrl(3)]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
@@ -243,11 +245,8 @@ class blog extends common {
 				'state' => true
 			]);
 		} else {
-			// Extraire la clé config mot clé réservé
-			$articles = $this->getData(['module', $this->getUrl(0)]);
-			unset($articles['config']);
 			// Ids des articles par ordre de publication
-			$articleIds = array_keys(helper::arrayCollumn($articles, 'publishedOn', 'SORT_DESC'));
+			$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'publishedOn', 'SORT_DESC'));
 			// Supprimer le bloc config
 			// Pagination
 			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
@@ -256,16 +255,16 @@ class blog extends common {
 			// Articles en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Met en forme le tableau
-				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
-					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
-				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn']))
-				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $articleIds[$i], 'publishedOn'])));
+				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
 				self::$articles[] = [
-					$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'title']),
+					$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'title']),
 					$date .' à '. $heure,
-					self::$states[$this->getData(['module', $this->getUrl(0), $articleIds[$i], 'state'])],
+					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 					template::button('blogConfigEdit' . $articleIds[$i], [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil')
@@ -289,7 +288,7 @@ class blog extends common {
 	 * Suppression
 	 */
 	public function delete() {
-		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
+		if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -305,7 +304,7 @@ class blog extends common {
 		}
 		// Suppression
 		else {
-			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
+			$this->deleteData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -328,7 +327,7 @@ class blog extends common {
 			]);
 		}
 		// L'article n'existe pas
-		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
+		if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -345,11 +344,11 @@ class blog extends common {
 					$articleId = helper::increment($articleId, $this->getData(['module', $this->getUrl(0)]));
 					$articleId = helper::increment($articleId, array_keys(self::$actions));
 				}
-				$this->setData(['module', $this->getUrl(0), $articleId, [
+				$this->setData(['module', $this->getUrl(0), 'posts', $articleId, [
 					'closeComment' => $this->getInput('blogEditCloseComment'),
 					'mailNotification'  => $this->getInput('blogEditMailNotification', helper::FILTER_BOOLEAN),
 					'groupNotification' => $this->getInput('blogEditGroupNotification', helper::FILTER_INT),
-					'comment' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment']),
+					'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
 					'content' => $this->getInput('blogEditContent', null),
 					'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
 					'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
@@ -362,7 +361,7 @@ class blog extends common {
 				]]);
 				// Supprime l'ancien article
 				if($articleId !== $this->getUrl(2)) {
-					$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
+					$this->deleteData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]);
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -380,7 +379,7 @@ class blog extends common {
 			unset($userFirstname);
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title']),
+				'title' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title']),
 				'vendor' => [
 					'flatpickr',
 					'tinymce'
@@ -401,7 +400,7 @@ class blog extends common {
 			AND intval($this->getUrl(1)) === 0
 		) {
 			// L'article n'existe pas
-			if($this->getData(['module', $this->getUrl(0), $this->getUrl(1)]) === null) {
+			if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1)]) === null) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'access' => false
@@ -420,8 +419,8 @@ class blog extends common {
 						self::$inputNotices['blogArticleCaptcha'] = 'Incorrect';
 					}
 					// Crée le commentaire
-					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']));
-					$this->setData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentId, [
+					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment']));
+					$this->setData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment', $commentId, [
 						'author' => $this->getInput('blogArticleAuthor', helper::FILTER_STRING_SHORT, empty($this->getInput('blogArticleUserId')) ? TRUE : FALSE),
 						'content' => $this->getInput('blogArticleContent', helper::FILTER_STRING_SHORT, true),
 						'createdOn' => time(),
@@ -433,17 +432,17 @@ class blog extends common {
 					$to = [];
 					// Liste des destinataires
 					foreach($this->getData(['user']) as $userId => $user) {
-						if ($user['group'] >= $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'groupNotification']) ) {
+						if ($user['group'] >= $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'groupNotification']) ) {
 							$to[] = $user['mail'];
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
-					if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'mailNotification']) === true) {
+					if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>',
+							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'posts', 'title']) . '" :<br><br>',
 							''
 						);
 						// Valeurs en sortie
@@ -466,20 +465,21 @@ class blog extends common {
 
 				}
 				// Ids des commentaires par ordre de publication
-				$commentIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment']), 'createdOn', 'SORT_DESC'));
+				$commentIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment']), 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Commentaires en fonction de la pagination
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment', $commentIds[$i]]);
+					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment', $commentIds[$i]]);
 				}
 				self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
+				self::$rssLabel = $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']);
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,
-					'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'title']),
+					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']),
 					'view' => 'article'
 				]);
 			}
@@ -488,8 +488,8 @@ class blog extends common {
 		// Liste des articles
 		else {
 			// Ids des articles par ordre de publication
-			$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC');
-			$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'state', 'SORT_DESC');
+			$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'publishedOn', 'SORT_DESC');
+			$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 			$articleIds = [];
 			foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 				if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
@@ -502,9 +502,10 @@ class blog extends common {
 			self::$pages = $pagination['pages'];
 			// Articles en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-				self::$articles[$articleIds[$i]] = $this->getData(['module', $this->getUrl(0), $articleIds[$i]]);
+				self::$articles[$articleIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i]]);
 			}
 			self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
+			self::$rssLabel = $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']);
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,

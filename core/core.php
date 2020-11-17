@@ -1449,6 +1449,28 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10304]);
 		}
+		// Version 10.3.06
+		if ($this->getData(['core', 'dataVersion']) < 10306) {
+			// Mettre à jour les données des blogs
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
+					foreach ( $this->getData(['module', $parent]) as $blogKey => $blogItem) {
+						$data = $this->getdata(['module',$parent,$blogKey]);
+						$this->deleteData(['module',$parent, $blogKey]);
+						$this->setData([ 'module', $parent, 'posts', $blogKey, $data ]);
+					}
+				}
+			}
+			$this->setData(['core', 'dataVersion', 10306]);
+		}
 	}
 }
 

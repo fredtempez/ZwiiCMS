@@ -50,7 +50,10 @@
 	<?php echo $module::$pages; ?>
 	<div id="rssFeed">
 		<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
-			<img  src='module/news/ressource/feed-icon-16.gif' /><p>Syndication RSS</p>
+			<img  src='module/news/ressource/feed-icon-16.gif' />
+			<?php 
+				echo '<p>' . $module::$rssLabel . '</p>' ;
+			?>
 		</a>
 	</div>
 <?php else: ?>

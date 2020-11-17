@@ -3,12 +3,12 @@
 		<div class="col10">
 			<div class="blogDate">
 				<i class="far fa-calendar-alt"></i>
-				<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
-								? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))
-								: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])));
-					  $heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
-					  			? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn']))
-								:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'publishedOn'])));
+				<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
+								? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
+								: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
+					  $heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
+					  			? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
+								:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
 					  echo $date . ' à ' . $heure; 
 				?>
 			</div>
@@ -25,30 +25,33 @@
 			</div>
 		<?php endif; ?>
 	</div>
-		<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'pictureSize']); ?>
-		<?php if ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'hidePicture']) == false) {
-			echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picturePosition']) .
-			' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) .
-			'" alt="' . $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'picture']) . '">';
+		<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'pictureSize']); ?>
+		<?php if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'hidePicture']) == false) {
+			echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'picturePosition']) .
+			' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'picture']) .
+			'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'picture']) . '">';
 		} ?>
 
-	<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'content']); ?>
+	<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']); ?>
 	<p class="clearBoth signature">
-		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'firstname']); ?>
-		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'userId']), 'lastname']); ?>
+		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']), 'firstname']); ?>
+		<?php echo $this->getData(['user', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']), 'lastname']); ?>
 	</p>
 	<?php echo template::formClose(); ?>
 	<!-- Bloc RSS-->
 	<div id="rssFeed">
 		<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
-			<img  src='module/news/ressource/feed-icon-16.gif' /><p>Syndication RSS</p>
+			<img  src='module/news/ressource/feed-icon-16.gif' />
+			<?php 
+				echo '<p>' . $module::$rssLabel . '</p>' ;
+			?>
 		</a>
 	</div>
-	<?php if($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'closeComment'])): ?>
+	<?php if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'closeComment'])): ?>
 		<p>Cet article ne reçoit pas de commentaire.</p>
 	<?php else: ?>
 		<h3 id="comment">
-			<?php $commentsNb = count($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'comment'])); ?>
+			<?php $commentsNb = count($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment'])); ?>
 			<?php $s =  $commentsNb === 1 ? '': 's' ?>
 			<?php echo $commentsNb > 0 ? $commentsNb . ' ' .  'commentaire' . $s : 'Pas encore de commentaire'; ?>
 		</h3>

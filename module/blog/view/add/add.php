@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col12">
 					<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image dans l\'article', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'hidePicture'])
+							'checked' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'hidePicture'])
 							]); ?>
 					</div>
 				</div>
