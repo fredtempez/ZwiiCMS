@@ -89,6 +89,7 @@ class blog extends common {
 				// Miniature
 				$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
 				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
 				$newsArticle->addElementArray([
 					'title' => strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']) ),
