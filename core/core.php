@@ -951,8 +951,9 @@ class common {
 	public function setData($keys = []) {
 
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-		if (!empty(self::$inputNotices
-			OR empty($keys))) {
+		if (!empty(self::$inputNotices)
+			OR empty($keys)
+			OR in_array(NULL, $keys) ) {
 			return false;
 		}
 
