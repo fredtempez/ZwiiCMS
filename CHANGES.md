@@ -3,6 +3,8 @@
 ## version 10.3.06
 - Correction :
     - Edition de page avec module, le changement de mise en page désactive le bouton d'option du module.
+- Modification : 
+    - Modules News et Blog : ajout de flux RSS.
 
 ## version 10.3.05
 - Correction :

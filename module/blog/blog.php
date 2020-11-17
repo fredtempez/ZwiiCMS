@@ -56,14 +56,12 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.99';
+	const BLOG_VERSION = '2.10';
 
 	/**
 	 * Flux RSS
 	 */
 	public function rss() {
-
-
 		// Inclure les classes
 		include_once 'module/news/vendor/FeedWriter/Item.php';
 		include_once 'module/news/vendor/FeedWriter/Feed.php';
@@ -71,7 +69,6 @@ class blog extends common {
 		include_once 'module/news/vendor/FeedWriter/InvalidOperationException.php';
 
 		date_default_timezone_set('UTC');
-
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
