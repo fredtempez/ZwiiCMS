@@ -31,10 +31,6 @@ class blog extends common {
 
 	public static $pages;
 
-	public static $rssUrl;
-
-	public static $rssLabel;
-
 	public static $states = [
 		false => 'Brouillon',
 		true => 'Publié'
@@ -476,8 +472,6 @@ class blog extends common {
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 					self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment', $commentIds[$i]]);
 				}
-				self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
-				self::$rssLabel = $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']);
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,
@@ -506,8 +500,6 @@ class blog extends common {
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				self::$articles[$articleIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i]]);
 			}
-			self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
-			self::$rssLabel = $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']);
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,

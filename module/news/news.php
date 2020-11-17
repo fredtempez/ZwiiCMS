@@ -29,10 +29,6 @@ class news extends common {
 
 	public static $pages;
 
-	public static $rssUrl;
-
-	public static $rssLabel;
-
 	public static $states = [
 		false => 'Brouillon',
 		true => 'Publié'
@@ -299,8 +295,6 @@ class news extends common {
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
 		}
-		self::$rssUrl =  helper::baseUrl() . $this->getUrl(0) . '/rss';
-		self::$rssLabel = $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']);
 		// Valeurs en sortie
 		$this->addOutput([
 			'showBarEditButton' => true,

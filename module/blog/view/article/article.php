@@ -39,14 +39,16 @@
 	</p>
 	<?php echo template::formClose(); ?>
 	<!-- Bloc RSS-->
-	<div id="rssFeed">
-		<a type="application/rss+xml" href="<?php echo $module::$rssUrl ?> ">
-			<img  src='module/news/ressource/feed-icon-16.gif' />
-			<?php 
-				echo '<p>' . $module::$rssLabel . '</p>' ;
-			?>
-		</a>
-	</div>
+	<?php if ($this->getData(['module',$this->getUrl(0), 'config', 'feeds'])): ?>
+		<div id="rssFeed">
+			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?> ">
+				<img  src='module/news/ressource/feed-icon-16.gif' />
+				<?php 
+					echo '<p>' . $this->getData(['module',$this->getUrl(0), 'config', 'feedsLabel']) . '</p>' ;
+				?>
+			</a>
+		</div>
+	<?php endif; ?>
 	<?php if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'closeComment'])): ?>
 		<p>Cet article ne reçoit pas de commentaire.</p>
 	<?php else: ?>
