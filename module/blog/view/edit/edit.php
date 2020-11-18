@@ -32,7 +32,7 @@
 					<div class="col12">
 						<?php echo template::text('blogEditTitle', [
 							'label' => 'Titre',
-							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title'])
+							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title'])
 						]); ?>
 					</div>
 				</div>
@@ -42,19 +42,19 @@
 							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
 							'label' => 'Image de couverture',
 							'type' => 1,
-							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picture'])
+							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'picture'])
 						]); ?>
 					</div>
 					<div class="col3">
 						<?php echo template::select('blogEditPictureSize', $module::$pictureSizes, [
 							'label' => 'Largeur de l\'image',
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'pictureSize'])
+							'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'pictureSize'])
 						]); ?>
 					</div>
 					<div class="col3">
 						<?php echo template::select('blogEditPicturePosition', $module::$picturePositions, [
 							'label' => 'Position',
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'picturePosition']),
+							'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'picturePosition']),
 							'help' => 'Le texte de l\'article est adapté autour de l\'image'
 						]); ?>
 					</div>
@@ -62,7 +62,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('blogEditHidePicture', true, 'Masquer l\'image dans l\'article', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'hidePicture'])
+							'checked' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'hidePicture'])
 							]); ?>
 					</div>
 				</div>
@@ -71,7 +71,7 @@
 	</div>
 	<?php echo template::textarea('blogEditContent', [
 		'class' => 'editorWysiwyg',
-		'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'content'])
+		'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'content'])
 	]); ?>
 	<div class="row">
 		<div class="col12">
@@ -95,7 +95,7 @@
 					<div class="col4">
 						<?php echo template::select('blogEditConsent', $module::$articleConsent  , [
 							'label' => 'Edition /  Suppression',
-							'selected' => is_numeric($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editConsent'])) ? $module::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'editConsent']),
+							'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? $module::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'editConsent']),
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>
 					</div>
@@ -110,12 +110,12 @@
 				<div class="row">
 					<div class="col4 ">
 						<?php echo template::checkbox('blogEditCommentClose', true, 'Fermer les commentaires', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentClose'])
+							'checked' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'commentClose'])
 						]); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper ">
 						<?php echo template::checkbox('blogEditCommentApproved', true, 'Approbation par un modérateur', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentApproved']),
+							'checked' => $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'commentApproved']),
 							''
 						]); ?>
 					</div>
@@ -123,7 +123,7 @@
 						<?php echo template::select('blogEditCommentMaxlength', $module::$commentLength,[
 							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 							'label' => 'Caractères par commentaire',
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentMaxlength'])
+							'selected' => $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'commentMaxlength'])
 						]); ?>
 					</div>
 
@@ -131,12 +131,12 @@
 				<div class="row">
 					<div class="col3 commentOptionsWrapper offset2">
 						<?php echo template::checkbox('blogEditCommentNotification', true, 'Notification par email', [
-							'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentNotification']),
+							'checked' => $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'commentNotification']),
 						]); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper">
 						<?php echo template::select('blogEditCommentGroupNotification', $module::$groupNews, [
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'commentGroupNotification']),
+							'selected' => $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'commentGroupNotification']),
 							'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
 						]); ?>
 					</div>

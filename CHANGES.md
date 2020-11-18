@@ -15,10 +15,16 @@
         - Approbation des commentaires
     - Gestion des thèmes :
         - Bouton de réinitialisation avec confirmation
+        
+## Version 10.3.07
+- Petites corrections
+- Bouton format dans TinyMCE
 
 ## version 10.3.06
 - Correction :
     - Edition de page avec module, le changement de mise en page désactive le bouton d'option du module.
+- Modification : 
+    - Modules News et Blog : ajout de l'option flux RSS. L'option est activée par défaut.
 
 ## version 10.3.05
 - Correction :

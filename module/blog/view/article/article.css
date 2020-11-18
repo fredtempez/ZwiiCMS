@@ -50,4 +50,14 @@
 	.blogArticlePicture {
 	height:auto;
 	max-width: 100%;}
+  }
+
+
+#rssFeed {
+    text-align: right;
+    float: right;
+}
+#rssFeed p {
+    display: inline;
+    vertical-align: top;
 }

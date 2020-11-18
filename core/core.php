@@ -17,9 +17,10 @@ class common {
 
 	const DISPLAY_RAW = 0;
 	const DISPLAY_JSON = 1;
-	const DISPLAY_LAYOUT_BLANK = 2;
-	const DISPLAY_LAYOUT_MAIN = 3;
-	const DISPLAY_LAYOUT_LIGHT = 4;
+	const DISPLAY_RSS = 2;
+	const DISPLAY_LAYOUT_BLANK = 3;
+	const DISPLAY_LAYOUT_MAIN = 4;
+	const DISPLAY_LAYOUT_LIGHT = 5;
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
@@ -938,8 +939,9 @@ class common {
 	public function setData($keys = []) {
 
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-		if (!empty(self::$inputNotices
-			OR empty($keys))) {
+		if (!empty(self::$inputNotices)
+			OR empty($keys)
+			OR in_array(NULL, $keys) ) {
 			return false;
 		}
 
@@ -1427,6 +1429,39 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10304]);
 		}
+		// Version 10.3.06
+		if ($this->getData(['core', 'dataVersion']) < 10306) {
+			// Liste des pages
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Mettre à jour les données des blogs les articles sont dans posts
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
+					foreach ( $this->getData(['module', $parent]) as $blogKey => $blogItem) {
+						$data = $this->getdata(['module',$parent,$blogKey]);
+						$this->deleteData(['module',$parent, $blogKey]);
+						$this->setData([ 'module', $parent, 'posts', $blogKey, $data ]);
+					}
+				}
+			}
+			foreach ($pageList as $parentKey => $parent) {
+				//La page a une galerie
+				if ($this->getData(['page',$parent,'moduleId']) === 'news' ) {
+					foreach ( $this->getData(['module', $parent]) as $newsKey => $newsItem) {
+						$data = $this->getdata(['module',$parent,$newsKey]);
+						$this->deleteData(['module',$parent, $newsKey]);
+						$this->setData([ 'module', $parent, 'posts', $newsKey, $data ]);
+					}
+				}
+			}
+			$this->setData(['core', 'dataVersion', 10306]);
+		}
 		// Version 10.4.00
 		if ($this->getData(['core', 'dataVersion']) < 10400) {
 			// Ajouter le prénom comme pseudo et le pseudo comme signature
@@ -1448,24 +1483,24 @@ class common {
 			foreach ($pageList as $parentKey => $parent) {
 				//La page a une galerie
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent]), 'publishedOn', 'SORT_DESC'));
+					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent], 'posts'), 'publishedOn', 'SORT_DESC'));
 					foreach ($articleIds as $key => $article) {
 						// Droits les deux groupes
-						$this->setData(['module',  $parent, $article,'editConsent', 3]);
+						$this->setData(['module',  $parent, 'posts', $article,'editConsent', 3]);
 						// Limite de taille 500
-						$this->setData(['module',  $parent, $article,'commentMaxlength', '500']);
+						$this->setData(['module',  $parent, 'posts', $article,'commentMaxlength', '500']);
 						// Pas d'approbation des commentaires
-						$this->setData(['module',  $parent, $article,'commentApproved', false ]);
+						$this->setData(['module',  $parent, 'posts', $article,'commentApproved', false ]);
 						// pas de notification
-						$this->setData(['module',  $parent, $article,'commentNotification', false ]);
+						$this->setData(['module',  $parent, 'posts', $article,'commentNotification', false ]);
 						// groupe de notification
-						$this->setData(['module',  $parent, $article,'commentGroupNotification', 3 ]);
+						$this->setData(['module',  $parent, 'posts', $article,'commentGroupNotification', 3 ]);
 					}
 					// Traitement des commentaires
-					if ( is_array($this->getData(['module',  $parent, $article,'comment'])) ) {
-						foreach($this->getData(['module',  $parent, $article,'comment']) as $commentId => $comment) {
+					if ( is_array($this->getData(['module',  $parent, 'posts', $article,'comment'])) ) {
+						foreach($this->getData(['module',  $parent, 'posts', $article,'comment']) as $commentId => $comment) {
 							// Approbation
-							$this->setData(['module',  $parent, $article,'comment', $commentId, 'approval', true ]);
+							$this->setData(['module',  $parent, 'posts', $article,'comment', $commentId, 'approval', true ]);
 						}
 					}
 				}
@@ -1885,7 +1920,7 @@ class core extends common {
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
 					'metaDescription' => $this->getData(['page',$this->getUrl(0),'moduleId']) === 'blog' && !empty($this->getUrl(1))
-										? strip_tags(substr($this->getData(['module',$this->getUrl(0),$this->getUrl(1),'content']) ,0,159))
+										? strip_tags(substr($this->getData(['module',$this->getUrl(0),'posts',$this->getUrl(1),'content']) ,0,159))
 										: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -2130,7 +2165,12 @@ class core extends common {
 			header('Content-Type: application/json');
 			echo json_encode($this->output['content']);
 			break;
-		// Layout alléger
+		// RSS feed
+		case self::DISPLAY_RSS:
+			header('Content-type: application/rss+xml; charset=UTF-8');
+			echo $this->output['content'];
+			break;
+		// Layout allégé
 		case self::DISPLAY_LAYOUT_LIGHT:
 			require 'core/layout/light.php';
 			break;
