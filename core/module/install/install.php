@@ -94,9 +94,9 @@ class install extends common {
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page','fr',true);
 					$this->initData('module','fr',true);
-					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
-					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
-					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
+					$this->setData(['module', 'blog', 'mon-premier-article', 'userId', $userId]);
+					$this->setData(['module', 'blog', 'mon-deuxieme-article', 'userId', $userId]);
+					$this->setData(['module', 'blog', 'mon-troisieme-article', 'userId', $userId]);
 				}
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
