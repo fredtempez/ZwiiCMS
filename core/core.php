@@ -425,6 +425,9 @@ class common {
 				case 7:
 					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6]);
 					break;
+				case 8:
+					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6].'.'.$keys[7]);
+					break;
 			}
 			return $tempData;
 		}
@@ -974,6 +977,10 @@ class common {
 				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6]);
 				$db->save();
 				break;
+			case 8:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7] );
+				$db->save();
+				break;
 		}
 		return true;
 	}
@@ -1480,11 +1487,16 @@ class common {
 				}
 			}
 			// Parcourir pageList et rechercher les modules de blog
+			
 			foreach ($pageList as $parentKey => $parent) {
-				//La page a une galerie
+				//La page est un blog
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module',$parent], 'posts'), 'publishedOn', 'SORT_DESC'));
+					//echo "<pre>".$parent;
+					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
+					//var_dump($articleIds);
 					foreach ($articleIds as $key => $article) {
+						//echo $article;
+						//echo "<p>";
 						// Droits les deux groupes
 						$this->setData(['module',  $parent, 'posts', $article,'editConsent', 3]);
 						// Limite de taille 500
@@ -1496,6 +1508,7 @@ class common {
 						// groupe de notification
 						$this->setData(['module',  $parent, 'posts', $article,'commentGroupNotification', 3 ]);
 					}
+
 					// Traitement des commentaires
 					if ( is_array($this->getData(['module',  $parent, 'posts', $article,'comment'])) ) {
 						foreach($this->getData(['module',  $parent, 'posts', $article,'comment']) as $commentId => $comment) {
@@ -2092,7 +2105,7 @@ class core extends common {
 
 		// Librairie googtrans ajouté dynamiquement
 		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-			 AND $this->getData(['translate','active']) === true 
+			 AND $this->getData(['translate','active']) === true
 			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
 				$this->addOutput([
 					'vendor' => array_merge($this->output['vendor'], ['i18n'])

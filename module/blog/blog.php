@@ -89,6 +89,54 @@ class blog extends common {
 
 	const BLOG_VERSION = '3.2';
 
+		/**
+	 * Flux RSS
+	 */
+	public function rss() {
+		// Inclure les classes
+		include_once 'module/news/vendor/FeedWriter/Item.php';
+		include_once 'module/news/vendor/FeedWriter/Feed.php';
+		include_once 'module/news/vendor/FeedWriter/RSS2.php';
+		include_once 'module/news/vendor/FeedWriter/InvalidOperationException.php';
+
+		date_default_timezone_set('UTC');
+		$feeds = new \FeedWriter\RSS2();
+
+		// En-tête
+		$feeds->setTitle($this->getData (['page', $this->getUrl(0), 'posts','title']));
+		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
+		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
+		$feeds->setChannelElement('language', 'fr-FR');
+		$feeds->setDate(time());
+		$feeds->addGenerator();
+		// Corps des articles
+		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'state', 'SORT_DESC');
+		foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
+			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+				// Miniature
+				$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				// Créer les articles du flux
+				$newsArticle = $feeds->createNewItem();
+				$newsArticle->addElementArray([
+					'title' => strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']) ),
+					'link' => helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
+					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']))),
+					'addEnclosure' => helper::baseUrl() . self::FILE_DIR . $thumb
+				]);
+				$feeds->addItem($newsArticle);
+			}
+		}
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'display' => self::DISPLAY_RSS,
+			'content' => $feeds->generateFeed(),
+			'view' => 'rss'
+		]);
+	}
+
 	/**
 	 * Édition
 	 */
@@ -158,7 +206,7 @@ class blog extends common {
 	 * Liste des commentaires
 	 */
 	public function comment() {
-		$comments = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2),'comment']);
+		$comments = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2),'comment']);
 		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
 					'class' => 'blogCommentDeleteAll buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2).'/' . $_SESSION['csrf'] ,
@@ -319,7 +367,7 @@ class blog extends common {
 			]);
 		} else {
 			// Ids des articles par ordre de publication
-			$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0)]), 'publishedOn', 'SORT_DESC'));
+			$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 			// Gestion des droits d'accès
 			$filterData=[];
 			foreach ($articleIds as $key => $value) {
@@ -333,7 +381,7 @@ class blog extends common {
 					OR (
 						// Groupe
 						$this->getData(['module',  $this->getUrl(0), 'posts',  $value,'editConsent']) !== self::EDIT_OWNER
-						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0),  'posts', $value,'editConsent'])
+						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), 'posts', $value,'editConsent'])
 					)
 					OR (
 						// Tout le monde
@@ -351,28 +399,28 @@ class blog extends common {
 			// Articles en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Nombre de commentaires à approuver et approuvés
-				$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),  'posts',  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+				$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts',  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
 				if ( is_array($approvals) ) {
 					$a = array_values($approvals);
 					$toApprove = count(array_keys($a,false));
 					$approved = count(array_keys($a,true));
 				} else {
 					$toApprove = 0;
-					$approved = count($this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i],'comment']));
+					$approved = count($this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i],'comment']));
 				}
 				// Met en forme le tableau
 				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn']))
-					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])));
-				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn']))
-				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])));
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
 				self::$articles[] = [
 					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 					$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'title']) .
 					'</a>',
 					$date .' à '. $heure,
-					self::$states[$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'state'])],
+					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'article
 					template::button('blogConfigComment' . $articleIds[$i], [
 						'class' => ($toApprove || $approved ) > 0 ?  'buttonBlue' : 'buttonGrey' ,
@@ -390,6 +438,11 @@ class blog extends common {
 					])
 				];
 			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Configuration du module',
+				'view' => 'config'
+			]);
 		}
 	}
 
@@ -552,7 +605,7 @@ class blog extends common {
 						'content' => $content,
 						'createdOn' => time(),
 						'userId' => $this->getInput('blogArticleUserId'),
-						'approval' => !$this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'commentApproved']) // true commentaire publié false en attente de publication
+						'approval' => !$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentApproved']) // true commentaire publié false en attente de publication
 					]]);
 					// Envoi d'une notification aux administrateurs
 					// Init tableau
@@ -592,7 +645,7 @@ class blog extends common {
 
 				}
 				// Ids des commentaires approuvés par ordre de publication
-				$commentsApproved = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment']);
+				$commentsApproved = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment']);
 				if ($commentsApproved) {
 					foreach( $commentsApproved as $key => $value){
 						if($value['approval']===false) unset($commentsApproved[$key]);
@@ -666,8 +719,8 @@ class blog extends common {
 						self::$commentsSignature[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment', $commentIds[$i],'author']);
 					}
 					// Données du commentaire si approuvé
-					if ($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment', $commentIds[$i],'approval']) === true ) {
-						self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment', $commentIds[$i]]);
+					if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment', $commentIds[$i],'approval']) === true ) {
+						self::$comments[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment', $commentIds[$i]]);
 					}
 				}
 				// Valeurs en sortie
