@@ -40,7 +40,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.06';
+	const ZWII_VERSION = '10.3.07';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1896,7 +1896,7 @@ class core extends common {
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
 					'metaDescription' => $this->getData(['page',$this->getUrl(0),'moduleId']) === 'blog' && !empty($this->getUrl(1))
-										? strip_tags(substr($this->getData(['module',$this->getUrl(0),$this->getUrl(1),'content']) ,0,159))
+										? strip_tags(substr($this->getData(['module',$this->getUrl(0),'posts',$this->getUrl(1),'content']) ,0,159))
 										: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
