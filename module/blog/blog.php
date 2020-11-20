@@ -133,12 +133,11 @@ class blog extends common {
 				$newsArticle->setAuthor($author,'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $articleId);
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
-				if ($this->_mime_content_type(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb) !== false) {
-					$newsArticle->addEnclosure( helper::baseUrl(false) . self::FILE_DIR . 'thumb/'  . $thumb,
-												getimagesize(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' .  $thumb),
-												$this->_mime_content_type(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb)
-				  );
-				}
+				$imageData = getimagesize(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' .  $thumb);
+				$newsArticle->addEnclosure( helper::baseUrl(false) . self::FILE_DIR . 'thumb/'  . $thumb,
+											$imageData[0] * $imageData[1],
+											$imageData['mime']
+				);
 				$feeds->addItem($newsArticle);
 			}
 		}
@@ -752,16 +751,6 @@ class blog extends common {
 			default:
 				return $this->getData(['user', $userId, 'firstname']);
 		}
-	}
-
-	private function _mime_content_type($filename) {
-		$result = new finfo();
-	
-		if (is_resource($result) === true) {
-			return $result->file($filename, FILEINFO_MIME_TYPE);
-		}
-	
-		return false;
 	}
 }
 
