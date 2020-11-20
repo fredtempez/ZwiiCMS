@@ -16,6 +16,7 @@
     - Gestion des thèmes :
         - Bouton de réinitialisation avec confirmation
     - Traduction automatique dans la langue du navigateur.
+    - Amélioration de la structure du flux RSS.
 
 ## Version 10.3.07
 - Petites corrections

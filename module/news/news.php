@@ -20,8 +20,7 @@ class news extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR,
-		'signature' => self::GROUP_VISITOR
+		'rss' => self::GROUP_VISITOR
 	];
 
 	public static $news = [];
