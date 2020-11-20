@@ -72,11 +72,11 @@ class news extends common {
 				$newsArticle->addElementArray([
 					'title' 		=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'title']),
 					'link' 			=> helper::baseUrl() . $this->getUrl(0),
-					'description' 	=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'content']),
-					'setId' 		=> helper::baseUrl() .$this->getUrl(0) . '/' . $newsId,
-					'setAuthor' 	=> $author,
-					'setDate'		=> date('r', $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']))
+					'description' 	=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'content'])
 				]);
+				$newsArticle->setAuthor($author,'no@mail.com');
+				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $newsId);
+				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn'])));
 				$feeds->addItem($newsArticle);
 			}
 		}

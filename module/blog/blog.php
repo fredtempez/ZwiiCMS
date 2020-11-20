@@ -130,10 +130,10 @@ class blog extends common {
 									 . '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
 									 . '" />' .
 									 $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']),
-					'setAuthor' 	=> $author,
-					'setId' 		=> helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
-					'setDate'		=> date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']))
 				]);
+				$newsArticle->setAuthor($author,'no@mail.com');
+				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $articleId);
+				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
 				$feeds->addItem($newsArticle);
 			}
 		}
