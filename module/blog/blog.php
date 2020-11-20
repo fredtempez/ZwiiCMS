@@ -28,7 +28,8 @@ class blog extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR
+		'rss' => self::GROUP_VISITOR,
+		'signature' => self::GROUP_VISITOR
 	];
 
 	public static $articles = [];
@@ -103,11 +104,11 @@ class blog extends common {
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
-		$feeds->setTitle($this->getData (['page', $this->getUrl(0), 'posts','title']));
+		$feeds->setTitle($this->getData (['page', $this->getUrl(0), 'title']));
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
+		$feeds->setDescription($this->getData (['page', $this->getUrl(0), 'metaDescription']));
 		$feeds->setChannelElement('language', 'fr-FR');
-		$feeds->setDate(time());
+		$feeds->setDate(date('r',time()));
 		$feeds->addGenerator();
 		// Corps des articles
 		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
@@ -119,11 +120,19 @@ class blog extends common {
 				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
 				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
+				// Signature de l'article
+				$author = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $articleId, 'userId']));
 				$newsArticle->addElementArray([
-					'title' => strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']) ),
-					'link' => helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
-					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']))),
-					'addEnclosure' => helper::baseUrl() . self::FILE_DIR . $thumb
+					'title' 		=> $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']),
+					'link' 			=> helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
+					'description' 	=> '<img src="' . helper::baseUrl() . self::FILE_DIR . $thumb
+									 . '" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
+									 . '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
+									 . '" />' .
+									 $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']),
+					'setAuthor' 	=> $author,
+					'setId' 		=> helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
+					'setDate'		=> date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']))
 				]);
 				$feeds->addItem($newsArticle);
 			}
@@ -659,62 +668,17 @@ class blog extends common {
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Signature de l'article
-				$userIdArticle = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'userId']);
-				switch ($this->getData(['user', $userIdArticle, 'signature'])){
-					case 1:
-						self::$articleSignature = $userIdArticle;
-						break;
-					case 2:
-						self::$articleSignature = $this->getData(['user', $userIdArticle, 'pseudo']);
-						break;
-					case 3:
-						self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']) . ' ' . $this->getData(['user', $userIdArticle, 'lastname']);
-						break;
-					case 4:
-						self::$articleSignature = $this->getData(['user', $userIdArticle, 'lastname']) . ' ' . $this->getData(['user', $userIdArticle, 'firstname']);
-						break;
-					default:
-					self::$articleSignature = $this->getData(['user', $userIdArticle, 'firstname']);
-				}
+				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'userId']));
 				// Signature du commentaire édité
 				if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
-					$useridcomment = $this->getUser('id');
-					switch ($this->getData(['user', $useridcomment, 'signature'])){
-					case 1:
-						self::$editCommentSignature = $useridcomment;
-						break;
-					case 2:
-						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'pseudo']);
-						break;
-					case 3:
-						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']) . ' ' . $this->getData(['user', $useridcomment, 'lastname']);
-						break;
-					case 4:
-						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'lastname']) . ' ' . $this->getData(['user', $useridcomment, 'firstname']);
-						break;
-					default:
-						self::$editCommentSignature = $this->getData(['user', $useridcomment, 'firstname']);
-					}
+					self::$editCommentSignature = $this->signature($this->getUser('id'));
 				}
 				// Commentaires en fonction de la pagination
 				for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 					// Signatures des commentaires
 					$e = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment', $commentIds[$i],'userId']);
 					if ($e) {
-						switch ($this->getData(['user', $e, 'signature'])){
-							case 1:
-								self::$commentsSignature[$commentIds[$i]] = $e;
-								break;
-							case 2:
-								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'pseudo']);
-								break;
-							case 3:
-								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'firstname']) . ' ' . $this->getData(['user', $e, 'lastname']);
-								break;
-							case 4:
-								self::$commentsSignature[$commentIds[$i]] = $this->getData(['user', $e, 'lastname']) . ' ' . $this->getData(['user', $e, 'firstname']);
-								break;
-						}
+						self::$commentsSignature[$commentIds[$i]] = $this->signature($e);
 					} else {
 						self::$commentsSignature[$commentIds[$i]] = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'comment', $commentIds[$i],'author']);
 					}
@@ -760,6 +724,28 @@ class blog extends common {
 				'showPageContent' => true,
 				'view' => 'index'
 			]);
+		}
+	}
+
+	/**
+	 * Retourne la signature d'un utilisateur
+	 */
+	private function signature($userId) {
+		switch ($this->getData(['user', $userId, 'signature'])){
+			case 1:
+				return $userId;
+				break;
+			case 2:
+				return $this->getData(['user', $userId, 'pseudo']);
+				break;
+			case 3:
+				return $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']);
+				break;
+			case 4:
+				return $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+				break;
+			default:
+				return $this->getData(['user', $userId, 'firstname']);
 		}
 	}
 }

@@ -20,7 +20,8 @@ class news extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR
+		'rss' => self::GROUP_VISITOR,
+		'signature' => self::GROUP_VISITOR
 	];
 
 	public static $news = [];
@@ -53,11 +54,11 @@ class news extends common {
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
-		$feeds->setTitle($this->getData (['page', $this->getUrl(0),'posts','title']));
+		$feeds->setTitle($this->getData (['page', $this->getUrl(0),'title']));
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription(html_entity_decode(strip_tags($this->getData (['page', $this->getUrl(0), 'metaDescription']))));
+		$feeds->setDescription($this->getData (['page', $this->getUrl(0), 'metaDescription']));
 		$feeds->setChannelElement('language', 'fr-FR');
-		$feeds->setDate(time());
+		$feeds->setDate(date('r',time()));
 		$feeds->addGenerator();
 		// Corps des articles
 		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
@@ -67,10 +68,14 @@ class news extends common {
 		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
 				$newsArticle = $feeds->createNewItem();
+				$author = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsId, 'userId']));
 				$newsArticle->addElementArray([
-					'title' => strip_tags($this->getData(['module', $this->getUrl(0),'posts', $newsId, 'title']) ),
-					'link' => helper::baseUrl() . $this->getUrl(0),
-					'description' => html_entity_decode(strip_tags($this->getData(['module', $this->getUrl(0),'posts', $newsId, 'content'])))
+					'title' 		=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'title']),
+					'link' 			=> helper::baseUrl() . $this->getUrl(0),
+					'description' 	=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'content']),
+					'setId' 		=> helper::baseUrl() .$this->getUrl(0) . '/' . $newsId,
+					'setAuthor' 	=> $author,
+					'setDate'		=> date('r', $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']))
 				]);
 				$feeds->addItem($newsArticle);
 			}
@@ -301,5 +306,27 @@ class news extends common {
 			'showPageContent' => true,
 			'view' => 'index'
 		]);
+	}
+
+	/**
+	 * Retourne la signature d'un utilisateur
+	 */
+	private function signature($userId) {
+		switch ($this->getData(['user', $userId, 'signature'])){
+			case 1:
+				return $userId;
+				break;
+			case 2:
+				return $this->getData(['user', $userId, 'pseudo']);
+				break;
+			case 3:
+				return $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']);
+				break;
+			case 4:
+				return $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+				break;
+			default:
+				return $this->getData(['user', $userId, 'firstname']);
+		}
 	}
 }
