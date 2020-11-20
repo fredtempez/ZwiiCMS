@@ -15,6 +15,12 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
+		<!-- Détection RSS -->
+		<?php if (  (  $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog'
+					OR $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'news' )
+					AND $this->getData(['module', $this->getUrl(0), 'config', 'feeds']) === TRUE ): ?>
+			<link rel="alternate" type="application/rss+xml" href="'<?php echo helper::baseUrl(). $this->getUrl(0) . '/rss';?>" title="fLUX rss">
+		<?php endif; ?>
 		<?php $layout->showStyle(); ?>
 		<?php if (file_exists(self::DATA_DIR .'head.inc.html')) {
 			include(self::DATA_DIR .'head.inc.html');
