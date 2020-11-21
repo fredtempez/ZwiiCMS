@@ -695,6 +695,7 @@ nav::before {
 	pointer-events: none;
 }
 
+
 /* Menu vertical */
 
 .menuSide,
@@ -708,6 +709,29 @@ ul .menuSideChild,
 li .menuSideChild {
 	padding-left: 10px;
 }
+
+/* Container des drapeaux */
+
+#i18nContainer {
+	z-index: 100;
+	position: absolute ;
+	width: 80px;
+	height: 20px;
+	margin: 5px;
+	top: 5px;
+	right: 10px;
+}
+
+#i18nContainer ul {
+	list-style: none;
+}
+
+#i18nContainer img {
+	margin: 2px;
+}
+
+
+
 
 
 /* Corps */

@@ -31,6 +31,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<?php $layout->showBar(); ?>
 		<?php endif;?>
 		<?php $layout->showNotification(); ?>
+		<?php $layout->showi18n();?> 
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
@@ -193,7 +194,8 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 						if ($blockleft !== "") :?>
 						<div class="<?php echo $blockleft; ?>" id="contentLeft"><aside><?php 	$layout->showBarContentLeft(); ?></aside></div>
 						<?php endif; ?>
-						<div class="<?php echo $content; ?>" id="contentSite"><?php $layout->showContent();
+						<div class="<?php echo $content; ?>" id="contentSite">
+						<?php $layout->showContent();
 							if (file_exists(self::DATA_DIR . 'body.inc.html')) {
 								include(self::DATA_DIR . 'body.inc.html');
 							}

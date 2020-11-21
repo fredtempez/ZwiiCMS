@@ -141,6 +141,16 @@ class common {
 		self::GROUP_MODERATOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
+	// Langues proposées
+	public static $i18nList = [
+		'de' 	=> 'Allemand (de)',
+		'en'	=> 'Anglais (en)',
+		'es'	=> 'Espagnol (es)',
+		'fr'	=> 'Français (fr)',
+		'it'	=> 'Italien (it)',
+		'nl' 	=> 'Néerlandais (nl)',
+		'pt'	=> 'Portugais (pt)',
+	];
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -2960,6 +2970,21 @@ class layout extends common {
 						break;
 				}
 			}
+		}
+	}
+	/**
+	 * Affiche le cadre avec les drapeaux
+	 */
+	public function showi18n() {
+		if (     $this->getData(['translate','active']) === true
+			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
+				echo '<div id="i18nContainer"><ul>';
+				foreach (self::$i18nList as $key => $value) {
+					echo '<li>';
+					echo '<img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" />';
+					echo '</li>';
+				}
+				echo '</ul></div>';
 		}
 	}
 }
