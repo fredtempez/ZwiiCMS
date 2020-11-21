@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.005';
+	const ZWII_VERSION = '10.4.00.006';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1448,22 +1448,28 @@ class common {
 			}
 			// Mettre à jour les données des blogs les articles sont dans posts
 			foreach ($pageList as $parentKey => $parent) {
-				//La page a une galerie
+				//La page a un blog
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-					foreach ( $this->getData(['module', $parent]) as $blogKey => $blogItem) {
-						$data = $this->getdata(['module',$parent,$blogKey]);
-						$this->deleteData(['module',$parent, $blogKey]);
-						$this->setData([ 'module', $parent, 'posts', $blogKey, $data ]);
+					if (is_array($this->getData(['module', $parent]))) {
+						foreach ( $this->getData(['module', $parent]) as $blogKey => $blogItem) {
+							if ($blogKey === 'posts' OR $blogKey === 'config') {continue;}
+							$data = $this->getdata(['module',$parent,$blogKey]);
+							$this->deleteData(['module',$parent, $blogKey]);
+							$this->setData([ 'module', $parent, 'posts', $blogKey, $data ]);
+						}
 					}
 				}
 			}
 			foreach ($pageList as $parentKey => $parent) {
-				//La page a une galerie
+				//La page a une news
 				if ($this->getData(['page',$parent,'moduleId']) === 'news' ) {
-					foreach ( $this->getData(['module', $parent]) as $newsKey => $newsItem) {
-						$data = $this->getdata(['module',$parent,$newsKey]);
-						$this->deleteData(['module',$parent, $newsKey]);
-						$this->setData([ 'module', $parent, 'posts', $newsKey, $data ]);
+					if (is_array($this->getData(['module', $parent]))) {
+						foreach ( $this->getData(['module', $parent]) as $newsKey => $newsItem) {
+							if ($blogKey === 'posts' OR $blogKey === 'config') {continue;}
+							$data = $this->getdata(['module',$parent,$newsKey]);
+							$this->deleteData(['module',$parent, $newsKey]);
+							$this->setData([ 'module', $parent, 'posts', $newsKey, $data ]);
+						}
 					}
 				}
 			}
