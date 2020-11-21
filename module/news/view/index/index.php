@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php foreach($module::$news as $newsId => $news): ?>
-				<h1 class="newsTitle">
+				<h1 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo $news['title']; ?>
 				</h1>
 				<div class="newsContent">

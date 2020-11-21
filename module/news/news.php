@@ -70,11 +70,11 @@ class news extends common {
 				$author = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsId, 'userId']));
 				$newsArticle->addElementArray([
 					'title' 		=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'title']),
-					'link' 			=> helper::baseUrl() . $this->getUrl(0),
+					'link' 			=> helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
 					'description' 	=> $this->getData(['module', $this->getUrl(0),'posts', $newsId, 'content'])
 				]);
 				$newsArticle->setAuthor($author,'no@mail.com');
-				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $newsId);
+				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $newsId . '#' . $newsId);
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn'])));
 				$feeds->addItem($newsArticle);
 			}
