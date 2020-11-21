@@ -949,11 +949,15 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function setData($keys = []) {
-
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
 		if (!empty(self::$inputNotices)
-			OR empty($keys)
-			OR in_array(NULL, $keys) ) {
+			OR empty($keys)) {
+			return false;
+		}
+
+		// Empêcher la sauvegarde d'une donnée nulle.
+		if (gettype($keys[count($keys) -1]) === NULL) {
+			var_dump($keys);
 			return false;
 		}
 
