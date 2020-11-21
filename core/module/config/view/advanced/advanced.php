@@ -15,6 +15,32 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
+			<h4>Maintenance</h4>
+			<div class="col3">
+					<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
+					]); ?>
+				</div>
+			<div class="col3 offset1">
+				<?php echo template::button('configManageButton', [
+					'href' => helper::baseUrl() . 'config/backup',
+					'value' => 'Sauvegarder',
+					'ico' => 'download'
+				]); ?>
+			</div>
+			<div class="col3 offset1">
+				<?php echo template::button('configManageButton', [
+					'href' => helper::baseUrl() . 'config/manage',
+					'value' => 'Restaurer',
+					'ico' => 'upload'
+				]); ?>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
 			<h4>Réglages</h4>
 			<?php $error = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
@@ -67,11 +93,6 @@
 					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 						'checked' => helper::checkRewrite(),
 						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
-						'checked' => $this->getData(['config', 'maintenance'])
 					]); ?>
 				</div>
 				<div class="col4">

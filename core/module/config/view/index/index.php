@@ -8,21 +8,7 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset2">
-		<?php echo template::button('configManageButton', [
-			'href' => helper::baseUrl() . 'config/backup',
-			'value' => 'Sauvegarder',
-			'ico' => 'download'
-		]); ?>
-	</div>
-	<div class="col2">
-		<?php echo template::button('configManageButton', [
-			'href' => helper::baseUrl() . 'config/manage',
-			'value' => 'Restaurer',
-			'ico' => 'upload'
-		]); ?>
-	</div>
-	<div class="col2">
+	<div class="col2 offset6">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'config/advanced',
 			'value' => 'Avancée',
@@ -36,7 +22,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Identité du site</h4>
+			<h4>Identité</h4>
 			<div class="row">
 				<div class="col9">
 					<?php echo template::text('configTitle', [
