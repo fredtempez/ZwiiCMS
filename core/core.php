@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.006';
+	const ZWII_VERSION = '10.4.00.007';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1509,7 +1509,7 @@ class common {
 				}
 			}
 			// Parcourir pageList et rechercher les modules de blog
-			
+
 			foreach ($pageList as $parentKey => $parent) {
 				//La page est un blog
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
@@ -1540,11 +1540,7 @@ class common {
 					}
 				}
 			}
-			$this->setData(['core', 'dataVersion', 10400]);
-		}
-
-		// Version 10.4.99
-		if ($this->getData(['core', 'dataVersion']) < 10499) {
+			// Localisation
 			$this->setData(['locale','homePageId',$this->getData(['config','homePageId'])]);
 			$this->setData(['locale','page404',$this->getData(['config','page404'])]);
 			$this->setData(['locale','page403',$this->getData(['config','page403'])]);
@@ -1553,8 +1549,8 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
-			
-			$this->setData(['core', 'dataVersion', 10499]);
+
+			$this->setData(['core', 'dataVersion', 10400]);
 		}
 	}
 }
