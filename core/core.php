@@ -1492,6 +1492,12 @@ class common {
 				}
 			}
 			$this->setData(['core', 'dataVersion', 10306]);
+			// Version 10.3.08
+			if ($this->getData(['core', 'dataVersion']) < 10308) {
+				// RAZ la mise à jour auto bug 10.3.07
+				$this->setData(['core','updateAvailable', false]);
+			$this->setData(['core', 'dataVersion', 10308]);
+			}
 		}
 	}
 }
