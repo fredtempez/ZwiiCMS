@@ -940,11 +940,15 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function setData($keys = []) {
-
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
 		if (!empty(self::$inputNotices)
-			OR empty($keys)
-			OR in_array(NULL, $keys) ) {
+			OR empty($keys)) {
+			return false;
+		}
+
+		// Empêcher la sauvegarde d'une donnée nulle.
+		if (gettype($keys[count($keys) -1]) === NULL) {
+			var_dump($keys);
 			return false;
 		}
 
@@ -1475,6 +1479,14 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10306]);
 		}
+
+		// Version 10.3.08
+		if ($this->getData(['core', 'dataVersion']) < 10308) {
+			// RAZ la mise à jour auto bug 10.3.07
+			$this->setData(['core','updateAvailable', false]);
+		$this->setData(['core', 'dataVersion', 10308]);
+		}
+
 		// Version 10.4.00
 		if ($this->getData(['core', 'dataVersion']) < 10400) {
 			// Ajouter le prénom comme pseudo et le pseudo comme signature

@@ -19,8 +19,9 @@
     - Amélioration de la structure du flux RSS.
 
 ## Version 10.3.08
-Correction :
-    - Page de backup double commentaire
+Corrections :
+    - Notification de mise à jour d'update bloqué
+    - Backup  : double commentaire entraînant un bug d'affichage
 
 ## Version 10.3.07
 - Petites corrections
