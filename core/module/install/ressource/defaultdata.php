@@ -39,11 +39,12 @@ class init extends common {
 			'connect' => [
 				'timeout' => 600,
 				'attempt' => 3,
-				'log' => false
+				'log' => false,
+				'captcha' => true
 			]
 		],
 		'core' => [
-			'dataVersion' => 10300,
+			'dataVersion' => 10306,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
