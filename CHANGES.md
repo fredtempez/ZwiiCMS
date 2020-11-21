@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 10.3.08
+Correction :
+    - Page de backup double commentaire
+
 ## Version 10.3.07
 - Petites corrections
 - Bouton format dans TinyMCE
