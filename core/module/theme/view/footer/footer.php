@@ -79,16 +79,16 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
-                            'checked' => $this->getData(['config', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
-                            'disabled' => $this->getData(['config', 'legalPageId']) === 'none' ? true : false,
-                            'help' => $this->getData(['config', 'legalPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant les mentions légales dans la configuration du site' : ''
+                            'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
+                            'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
+                            'help' => $this->getData(['locale', 'legalPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant les mentions légales dans la configuration du site' : ''
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
-                            'checked' => $this->getData(['config', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
-                            'disabled' => $this->getData(['config', 'searchPageId']) === 'none' ? true : false,
-                            'help' => $this->getData(['config', 'searchPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant un module de recherche dans la configuration du site' : ''
+                            'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
+                            'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
+                            'help' => $this->getData(['locale', 'searchPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant un module de recherche dans la configuration du site' : ''
                         ]); ?>
                 </div>
             </div>

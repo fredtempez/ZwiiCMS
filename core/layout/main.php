@@ -47,7 +47,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 				<!-- Menu Burger -->
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div id="burgerText"><?php echo $this->getData(['config','title']);?></div>
+					<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="
@@ -69,7 +69,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 					// Affiche toujours le titre de la bannière pour l'édition du thème
 					OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 				): ?>
-						<span id="themeHeaderTitle"><?php echo $this->getData(['config', 'title']); ?></span>
+						<span id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 				<?php else: ?>
 						<span id="themeHeaderTitle">&nbsp;</span>
 				<?php endif; ?>
@@ -85,7 +85,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<nav>
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div id="burgerText"><?php echo $this->getData(['config','title']);?></div>
+					<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
@@ -98,7 +98,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 				<nav>
 					<div id="toggle">
 					<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div id="burgerText"><?php echo $this->getData(['config','title']);?></div>
+						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 					<?php endif; ?>
 					<?php echo template::ico('menu',null,null,'2em'); ?></div>
 					<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
@@ -123,7 +123,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 							// Affiche toujours le titre de la bannière pour l'édition du thème
 							OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 						): ?>
-							<span id="themeHeaderTitle"><?php echo $this->getData(['config', 'title']); ?></span>
+							<span id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 						<?php else: ?>
 								<span id="themeHeaderTitle">&nbsp;</span>
 						<?php endif; ?>
@@ -145,7 +145,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<nav <?php if($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div id="burgerText"><?php echo $this->getData(['config','title']);?></div>
+						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 					<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>

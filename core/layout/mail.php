@@ -83,7 +83,7 @@
 					<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 						<tr>
 							<td style="border-bottom: 1px solid #EBEEF2; padding: 20px; font-family: 'Open Sans', sans-serif; font-size: 19px; line-height: 24px; text-align: center; color: #212223;">
-								<?php echo $this->getData(['config', 'title']); ?>
+								<?php echo $this->getData(['locale', 'title']); ?>
 							</td>
 						</tr>
 					</table>
@@ -109,7 +109,7 @@
 					<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 						<tr>
 							<td style="border-top: 1px solid #EBEEF2; padding: 20px; text-align: center; font-family: 'Open Sans', sans-serif; font-size: 12px; line-height: 17px; color: #212223;">
-								<a href="<?php echo helper::baseUrl(false); ?>" target="_blank"><?php echo $this->getData(['config', 'title']); ?></a>
+								<a href="<?php echo helper::baseUrl(false); ?>" target="_blank"><?php echo $this->getData(['locale', 'title']); ?></a>
 							</td>
 						</tr>
 					</table>

@@ -95,9 +95,9 @@ class user extends common {
 			if($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
 				$sent = $this->sendMail(
 					$userMail,
-					'Compte créé sur ' . $this->getData(['config', 'title']),
+					'Compte créé sur ' . $this->getData(['locale', 'title']),
 					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
 					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null
@@ -653,9 +653,9 @@ class user extends common {
 								AND $this->getInput('userImportNotification',helper::FILTER_BOOLEAN) === true) {
 								$sent = $this->sendMail(
 									$item['email'],
-									'Compte créé sur ' . $this->getData(['config', 'title']),
+									'Compte créé sur ' . $this->getData(['locale', 'title']),
 									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
 									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
 								);

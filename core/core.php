@@ -147,8 +147,10 @@ class common {
 	private $user = [];
 	private $core = [];
 	private $config = [];
+	// Dossier localisé
 	private $page = [];
 	private $module = [];
+	private $locale = [];
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
@@ -162,7 +164,8 @@ class common {
 		'theme' => '',
 		'admin' => '',
 		'blacklist' => '',
-		'translate' => ''
+		'translate' => '',
+		'locale' => ''
 	];
 
 	/**
@@ -290,7 +293,7 @@ class common {
 				$this->url = $url;
 			}
 			else {
-				$this->url = $this->getData(['config', 'homePageId']);
+				$this->url = $this->getData(['locale', 'homePageId']);
 			}
 		}
 
@@ -689,7 +692,8 @@ class common {
 	public function dirData($id, $lang) {
 		// Sauf pour les pages et les modules
 		if ($id === 'page' ||
-			$id === 'module') {
+			$id === 'module'  ||
+			$id === 'locale' ) {
 				$folder = self::DATA_DIR . $lang . '/' ;
 		} else {
 			$folder = self::DATA_DIR;
@@ -903,9 +907,9 @@ class common {
 			// Fin SMTP
 			} else {
 				$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				$mail->setFrom('no-reply@' . $host, $this->getData(['config', 'title']));
+				$mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
 				if (is_null($replyTo)) {
-					$mail->addReplyTo('no-reply@' . $host, $this->getData(['config', 'title']));
+					$mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
 				} else {
 					$mail->addReplyTo($replyTo);
 				}
@@ -1538,6 +1542,20 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10400]);
 		}
+
+		// Version 10.4.99
+		if ($this->getData(['core', 'dataVersion']) < 10499) {
+			$this->setData(['locale','homePageId',$this->getData(['config','homePageId'])]);
+			$this->setData(['locale','page404',$this->getData(['config','page404'])]);
+			$this->setData(['locale','page403',$this->getData(['config','page403'])]);
+			$this->setData(['locale','page302',$this->getData(['config','page302'])]);
+			$this->setData(['locale','legalPageId',$this->getData(['config','legalPageId'])]);
+			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
+			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
+			$this->setData(['locale','title',$this->getData(['locale','title'])]);
+			
+			$this->setData(['core', 'dataVersion', 10499]);
+		}
 	}
 }
 
@@ -1875,7 +1893,7 @@ class core extends common {
 				$access = true;
 			}
 			else {
-				if($this->getUrl(0) === $this->getData(['config', 'homePageId'])) {
+				if($this->getUrl(0) === $this->getData(['locale', 'homePageId'])) {
 					$access = 'login';
 				}
 				else {
@@ -2143,10 +2161,10 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				if ( $this->getData(['config','page403']) !== 'none'
-					AND $this->getData(['page',$this->getData(['config','page403'])]))
+				if ( $this->getData(['locale','page403']) !== 'none'
+					AND $this->getData(['page',$this->getData(['locale','page403'])]))
 				{
-					header('Location:' . helper::baseUrl() . $this->getData(['config','page403']));
+					header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
 				} else {
 					$this->addOutput([
 						'title' => 'Erreur 403',
@@ -2156,10 +2174,10 @@ class core extends common {
 			}
 		} elseif ($this->output['content'] === '') {
 			http_response_code(404);
-			if ( $this->getData(['config','page404']) !== 'none'
-				AND $this->getData(['page',$this->getData(['config','page404'])]))
+			if ( $this->getData(['locale','page404']) !== 'none'
+				AND $this->getData(['page',$this->getData(['locale','page404'])]))
 			{
-				header('Location:' . helper::baseUrl() . $this->getData(['config','page404']));
+				header('Location:' . helper::baseUrl() . $this->getData(['locale','page404']));
 			} else {
 				$this->addOutput([
 					'title' => 'Erreur 404',
@@ -2171,18 +2189,18 @@ class core extends common {
 		if($this->output['metaTitle'] === '') {
 			if($this->output['title']) {
 				$this->addOutput([
-					'metaTitle' => strip_tags($this->output['title']) . ' - ' . $this->getData(['config', 'title'])
+					'metaTitle' => strip_tags($this->output['title']) . ' - ' . $this->getData(['locale', 'title'])
 				]);
 			}
 			else {
 				$this->addOutput([
-					'metaTitle' => $this->getData(['config', 'title'])
+					'metaTitle' => $this->getData(['locale', 'title'])
 				]);
 			}
 		}
 		if($this->output['metaDescription'] === '') {
 			$this->addOutput([
-				'metaDescription' => $this->getData(['config', 'metaDescription'])
+				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
 
@@ -2351,15 +2369,15 @@ class layout extends common {
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
-		if ($this->getData(['config','searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
+		if ($this->getData(['locale','searchPageId']) !== 'none') {
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
 		}
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
-		if ($this->getData(['config','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['config','legalPageId']) . '" data-tippy-content="Mentions Légales">Mentions légales</a>';
+		if ($this->getData(['locale','legalPageId']) !== 'none') {
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions Légales">Mentions légales</a>';
 		}
 		$items .= '</span>';
 		// Affichage du lien de connexion

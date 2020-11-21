@@ -194,7 +194,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page d'accueil
-		elseif($url[0] === $this->getData(['config', 'homePageId'])) {
+		elseif($url[0] === $this->getData(['locale', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
@@ -202,7 +202,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page de recherche affectée
-		elseif($url[0] === $this->getData(['config', 'searchPageId'])) {
+		elseif($url[0] === $this->getData(['locale', 'searchPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
@@ -210,7 +210,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['config', 'legalPageId'])) {
+		elseif($url[0] === $this->getData(['locale', 'legalPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -218,7 +218,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['config', 'page404'])) {
+		elseif($url[0] === $this->getData(['locale', 'page404'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -226,7 +226,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['config', 'page403'])) {
+		elseif($url[0] === $this->getData(['locale', 'page403'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -234,7 +234,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['config', 'page302'])) {
+		elseif($url[0] === $this->getData(['locale', 'page302'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -320,8 +320,8 @@ class page extends common {
 					$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
 					$this->deleteData(['module', $this->getUrl(2)]);
 					// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
-					if($this->getData(['config', 'homePageId']) === $this->getUrl(2)) {
-						$this->setData(['config', 'homePageId', $pageId]);
+					if($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
+						$this->setData(['locale', 'homePageId', $pageId]);
 					}
 				}
 				// Supprime les données du module en cas de changement de module
@@ -333,20 +333,20 @@ class page extends common {
 					$this->deleteData(['page', $this->getUrl(2)]);
 				}
 				// Traitement des pages spéciales affectées dans la config :
-				if ($this->getUrl(2) === $this->getData(['config', 'legalPageId']) ) {
-					$this->setData(['config','legalPageId', $pageId]);
+				if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId']) ) {
+					$this->setData(['locale','legalPageId', $pageId]);
 				}
-				if ($this->getUrl(2) === $this->getData(['config', 'searchPageId']) ) {
-					$this->setData(['config','searchPageId', $pageId]);
+				if ($this->getUrl(2) === $this->getData(['locale', 'searchPageId']) ) {
+					$this->setData(['locale','searchPageId', $pageId]);
 				}
-				if ($this->getUrl(2) === $this->getData(['config', 'page404']) ) {
-					$this->setData(['config','page404', $pageId]);
+				if ($this->getUrl(2) === $this->getData(['locale', 'page404']) ) {
+					$this->setData(['locale','page404', $pageId]);
 				}
-				if ($this->getUrl(2) === $this->getData(['config', 'page403']) ) {
-					$this->setData(['config','page403', $pageId]);
+				if ($this->getUrl(2) === $this->getData(['locale', 'page403']) ) {
+					$this->setData(['locale','page403', $pageId]);
 				}
-				if ($this->getUrl(2) === $this->getData(['config', 'page302']) ) {
-					$this->setData(['config','page302', $pageId]);
+				if ($this->getUrl(2) === $this->getData(['locale', 'page302']) ) {
+					$this->setData(['locale','page302', $pageId]);
 				}
 				// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 				$lastPosition = 1;
