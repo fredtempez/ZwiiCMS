@@ -1552,7 +1552,7 @@ class common {
 			$this->setData(['locale','legalPageId',$this->getData(['config','legalPageId'])]);
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
-			$this->setData(['locale','title',$this->getData(['locale','title'])]);
+			$this->setData(['locale','title',$this->getData(['config','title'])]);
 			
 			$this->setData(['core', 'dataVersion', 10499]);
 		}
