@@ -81,8 +81,9 @@ class init extends common {
 			]
 		],
 		'translate' => [
-			'active' => false,
-			'showCredits' => false
+			'activated' => false,
+			'showCredits' => false,
+			'autoDetect' => false
 		],
 		'module' => [],
 		'user' => [],

@@ -229,7 +229,7 @@ class common {
 		}
 
 		// Auto traduction
-		if ( $this->getData(['translate','active'])) {
+		if ( $this->getData(['translate','activated'])) {
 			// Lire la langue du navigateur
 			$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
@@ -1559,7 +1559,9 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
-
+			$this->setData(['translate','activated',false]);
+			$this->setData(['translate','showCredits',false]);
+			$this->setData(['translate','autoDetect',false]);
 			$this->setData(['core', 'dataVersion', 10400]);
 		}
 	}
@@ -2981,7 +2983,7 @@ class layout extends common {
 				echo '<div id="i18nContainer"><ul>';
 				foreach (self::$i18nList as $key => $value) {
 					echo '<li>';
-					echo '<img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" />';
+					echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 					echo '</li>';
 				}
 				echo '</ul></div>';

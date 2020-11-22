@@ -15,21 +15,37 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Configuration</h4>
+			<h4>Paramètres</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('translateActive', true, 'Traduction automatique', [
-								'checked' => $this->getData(['translate', 'active']),
-								'help'   => 'Traduction automatique du site hors connexion par le script Google Translate selon la langue du navigateur du visiteur.'
-							]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits', [
-								'checked' => $this->getData(['translate', 'showCredits']),
-								'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
+						<?php echo template::checkbox('translateActivated', true, 'Activer le mode multi-langues', [
+								'checked' => $this->getData(['translate', 'activated'])
 							]); ?>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+			<h4>Traduction automatique</h4>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de langue', [
+							'checked' => $this->getData(['translate', 'autoDetect']),
+							'help'   => 'Détecte la langue du navigateur et effectue une traduction grâce à Google Translate.'
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
+							'checked' => $this->getData(['translate', 'showCredits']),
+							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
+						]); ?>
+					</div>
+				</div>
+			</div>
+			<div class="row">
 			</div>
 		</div>
 	</div>

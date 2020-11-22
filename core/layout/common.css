@@ -715,7 +715,7 @@ li .menuSideChild {
 #i18nContainer {
 	z-index: 100;
 	position: absolute ;
-	width: 80px;
+	width: auto;
 	height: 20px;
 	margin: 5px;
 	top: 5px;

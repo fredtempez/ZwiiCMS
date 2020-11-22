@@ -16,7 +16,8 @@ class translate extends common {
 
 	public static $actions = [
 		/*'config' => self::GROUP_MODERATOR,*/
-		'index' => self::GROUP_MODERATOR
+		'index' => self::GROUP_MODERATOR,
+		'language' => self::GROUP_VISITOR
 	];
 
 	/**
@@ -26,8 +27,9 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['translate', [
-				'active'      => $this->getInput('translateActive', helper::FILTER_BOOLEAN),
-				'showCredits' => $this->getInput('translateActive', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
+				'activated'      => $this->getInput('translateActivated', helper::FILTER_BOOLEAN),
+				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
+				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -41,7 +43,28 @@ class translate extends common {
 			'title' => 'Paramètres',
 			'view' => 'index'
 		]);
-    }
-	
+	}
+
+			/*
+	* Traitement du changement de langues
+	*/
+	public function language() {
+		echo $this->getUrl(2);
+		die();
+		// Traitement du changement de langue
+		if (isset($lan)) {
+			$this->seti18n($lan);
+			// Valeurs en sortie sans post
+			$this->addOutput([
+				'redirect' 		=> 	helper::baseUrl(false),
+				'state'			=> true
+			]);
+		} else {
+			$this->addOutput([
+				'redirect' 		=> 	helper::baseUrl(false)
+			]);
+		}
+	}
+
 
 }
