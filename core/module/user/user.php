@@ -522,16 +522,21 @@ class user extends common {
 					$this->setData(['user', $this->getUrl(2), 'password', $newPassword]);
 					// Réinitialise la date de la demande
 					$this->setData(['user', $this->getUrl(2), 'forgot', 0]);
+					// Réinitialise le blocage
+					$this->setData(['user', $this->getUrl(2),'connectFail',0 ]);
+					$this->setData(['user', $this->getUrl(2),'connectTimeout',0 ]);
 					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => 'Nouveau mot de passe enregistré',
-						'redirect' => helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl()),
+						//'redirect' => helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl()),
+						'redirect' => helper::baseUrl(),
 						'state' => true
 					]);
 				}
 			}
 			// Valeurs en sortie
 			$this->addOutput([
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
 				'title' => 'Réinitialisation du mot de passe',
 				'view' => 'reset'
 			]);
