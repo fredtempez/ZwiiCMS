@@ -18,6 +18,16 @@
     - Traduction automatique dans la langue du navigateur.
     - Amélioration de la structure du flux RSS.
 
+## Version 10.3.09
+Corrections :
+    - Configuration : persistance de l'ouverture des blocs.
+    - Réinitialisation du mot de passe :
+        - Remise à zéro du timer après renouvellement du mot de passe.
+        - Affichage de le fenêtrenouveau mot de passe en mode allégé.
+        - Redirection sur la page d'accueil.
+    - Modules news et blog : transparence icône RSS.
+    - Position de l'écran de configuration
+
 ## Version 10.3.08
 Corrections :
     - Notification de mise à jour d'update bloqué
