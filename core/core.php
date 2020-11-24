@@ -233,7 +233,7 @@ class common {
 			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
 				$lan_cookie = $_COOKIE['ZWII_USER_I18N'];
 			}
-			// Lire la langue du navigateur 
+			// Lire la langue du navigateur
 			if ( $this->getData(['config','translate','autoDetect'])) {
 				$lan_browser = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 			}
@@ -2157,10 +2157,10 @@ class core extends common {
 
 		// Librairie googtrans ajouté dynamiquement
 		if ( $this->getData(['config','translate','activated']) === true
-			 AND  ( $this->getData(['config','translate','admin']) === true 
-					 OR $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+			 OR  ( $this->getData(['config','translate','admin']) === true
+					 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 			      )
-			) 
+			)
 			  {
 				$this->addOutput([
 					'vendor' => array_merge($this->output['vendor'], ['i18n'])
@@ -2300,13 +2300,23 @@ class layout extends common {
 		}
 
 		echo $this->core->output['content'];
-		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
+		if ( (
+				( $this->getData(['config','translate','activated']) === true
+				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
+		        )
+			   OR ( isset($_COOKIES['ZWII_USER_I18N'])
+				   AND array_key_exists($_COOKIES['ZWII_USER_I18N'],$this->i18nList
+				   AND $_COOKIES['ZWII_USER_I18N'] !== 'fr' )
+				)
+			 )
 			 AND $this->getData(['config','translate','showCredits']) === true
-			 AND $this->getData(['config','translate','activated']) === true )
+           )
 		{
 		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
 		}
 	}
+
+
 
 	/**
 	 * Affiche le contenu de la barre gauche
