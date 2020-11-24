@@ -5,7 +5,7 @@ Corrections :
     - Configuration : persistance de l'ouverture des blocs.
     - Réinitialisation du mot de passe :
         - Remise à zéro du timer après renouvellement du mot de passe.
-        - Affichage de le fenêtrenouveau mot de passe en mode allégé.
+        - Affichage de le fenêtre "Nouveau mot de passe" allégée.
         - Redirection sur la page d'accueil.
     - Modules news et blog : transparence icône RSS.
     - Position de l'écran de configuration
