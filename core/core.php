@@ -229,8 +229,12 @@ class common {
 
 		// Auto traduction
 		if ( $this->getData(['config','translate','activated'])) {
-			// Lire la langue du navigateur
-			$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			// Lire la langue du navigateur si pas de choix manuel
+			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
+				$lan = $_COOKIE['ZWII_USER_I18N'];
+			} else {
+				$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			}
 
 			// Changer la locale
 			if ( $lan !== 'fr') {

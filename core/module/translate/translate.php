@@ -49,22 +49,11 @@ class translate extends common {
 	* Traitement du changement de langues
 	*/
 	public function language() {
-		echo $this->getUrl(2);
-		die();
-		// Traitement du changement de langue
-		if (isset($lan)) {
-			$this->seti18n($lan);
-			// Valeurs en sortie sans post
-			$this->addOutput([
-				'redirect' 		=> 	helper::baseUrl(false),
-				'state'			=> true
-			]);
-		} else {
-			$this->addOutput([
-				'redirect' 		=> 	helper::baseUrl(false)
-			]);
-		}
+		// Transmettre le choix au noyau
+		setcookie('ZWII_USER_I18N', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+		// Valeurs en sortie sans post 
+		$this->addOutput([
+			'redirect' 		=> 	helper::baseUrl(false)
+		]);
 	}
-
-
 }

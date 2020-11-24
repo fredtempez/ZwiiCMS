@@ -714,17 +714,24 @@ li .menuSideChild {
 
 #i18nContainer {
 	z-index: 100;
-	position: absolute ;
+	position: relative ;
+	float: right;
 	width: auto;
-	height: 20px;
-	margin: 5px;
-	top: 5px;
-	right: 10px;
+	height: auto;
+	margin-top: -25px;
 }
 
 #i18nContainer ul {
 	list-style: none;
 }
+
+#i18nContainer li {
+	display: inline-block;
+	position: relative;
+}
+
+
+
 
 #i18nContainer img {
 	margin: 2px;
@@ -1689,7 +1696,7 @@ th.col12 {
 }
 .goog-text-highlight {
     background-color: transparent !important;
-    border: none !important; 
+    border: none !important;
     box-shadow: none !important;
 } */
 

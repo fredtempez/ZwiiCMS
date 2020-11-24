@@ -31,7 +31,6 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<?php $layout->showBar(); ?>
 		<?php endif;?>
 		<?php $layout->showNotification(); ?>
-		<?php $layout->showi18n();?> 
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
@@ -61,6 +60,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
 			<header>
+				<?php $layout->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
@@ -154,6 +154,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
+			<?php $layout->showi18n();?>
 			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante
