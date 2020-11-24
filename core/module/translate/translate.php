@@ -29,7 +29,15 @@ class translate extends common {
 			$this->setData(['config','translate', [
 				'activated'      => $this->getInput('translateActivated', helper::FILTER_BOOLEAN),
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
-				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN)
+				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),
+				'admin'			 => $this->getInput('translateAdmin', helper::FILTER_BOOLEAN),
+				'flagFR' 		 => $this->getInput('translateFlagFR', helper::FILTER_BOOLEAN),
+				'flagDE' 		 => $this->getInput('translateFlagDE', helper::FILTER_BOOLEAN),
+				'flagEN' 		 => $this->getInput('translateFlagEN', helper::FILTER_BOOLEAN),
+				'flagES' 		 => $this->getInput('translateFlagES', helper::FILTER_BOOLEAN),
+				'flagIT' 		 => $this->getInput('translateFlagIT', helper::FILTER_BOOLEAN),
+				'flagNL' 		 => $this->getInput('translateFlagNL', helper::FILTER_BOOLEAN),
+				'flagPT' 		 => $this->getInput('translateFlagPT', helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -53,7 +61,7 @@ class translate extends common {
 		setcookie('ZWII_USER_I18N', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 		// Valeurs en sortie sans post
 		$this->addOutput([
-			'redirect' 		=> 	helper::baseUrl(false)
+			'redirect' 		=> 	helper::baseUrl()  .  $this->getUrl(3)
 		]);
 	}
 }

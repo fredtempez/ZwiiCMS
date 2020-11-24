@@ -45,7 +45,16 @@ class init extends common {
 			'translate' => [
 				'activated' => false,
 				'showCredits' => false,
-				'autoDetect' => false
+				'autoDetect' => false,
+				'admin'	 => false,
+				'translateFlagFR' => true,
+				'translateFlagDE' => true,
+				'translateFlagEN' => true,
+				'translateFlagES' => false,
+				'translateFlagIT' => false,
+				'translateFlagNL' => false,
+				'translateFlagPT' => false
+
 			],
 		],
 		'core' => [

@@ -730,6 +730,10 @@ li .menuSideChild {
 	position: relative;
 }
 
+#i18nContainer img {
+	width: 80%;
+}
+
 
 
 

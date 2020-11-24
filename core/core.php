@@ -143,10 +143,10 @@ class common {
 	];
 	// Langues proposées
 	public static $i18nList = [
+		'fr'	=> 'Français (fr)',
 		'de' 	=> 'Allemand (de)',
 		'en'	=> 'Anglais (en)',
 		'es'	=> 'Espagnol (es)',
-		'fr'	=> 'Français (fr)',
 		'it'	=> 'Italien (it)',
 		'nl' 	=> 'Néerlandais (nl)',
 		'pt'	=> 'Portugais (pt)',
@@ -2156,9 +2156,12 @@ class core extends common {
 		}
 
 		// Librairie googtrans ajouté dynamiquement
-		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-			 AND $this->getData(['config','translate','activated']) === true
-			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
+		if ( $this->getData(['config','translate','activated']) === true
+			 AND  ( $this->getData(['config','translate','admin']) === true 
+					 OR $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+			      )
+			) 
+			  {
 				$this->addOutput([
 					'vendor' => array_merge($this->output['vendor'], ['i18n'])
 				]);
@@ -2986,13 +2989,14 @@ class layout extends common {
 	 * Affiche le cadre avec les drapeaux
 	 */
 	public function showi18n() {
-		if (     $this->getData(['config','translate','activated']) === true
-			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
+		if ( $this->getData(['config','translate','activated']) === true ) {
 				echo '<div id="i18nContainer"><ul>';
 				foreach (self::$i18nList as $key => $value) {
-					echo '<li>';
-					echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
-					echo '</li>';
+					if ($this->getData(['config','translate','flag' . strtoupper($key)]) ) {
+						echo '<li>';
+						echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+						echo '</li>';
+					}
 				}
 				echo '</ul></div>';
 		}
