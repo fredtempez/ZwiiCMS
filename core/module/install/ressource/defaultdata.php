@@ -41,7 +41,11 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
-			]
+			],
+			'translate' => [
+				'active' => false,
+				'showCredits' => false
+			],
 		],
 		'core' => [
 			'dataVersion' => 10306,
@@ -79,11 +83,6 @@ class init extends common {
 			'hideMenuSide' => false,
 			'hideMenuChildren' =>false
 			]
-		],
-		'translate' => [
-			'activated' => false,
-			'showCredits' => false,
-			'autoDetect' => false
 		],
 		'module' => [],
 		'user' => [],
@@ -652,7 +651,13 @@ class init extends common {
 			'blog' => [
 				'config' => [
 					'feeds' => true,
-					'feedsLabel' => "Syndication RSS"
+					'feedsLabel' => "Syndication RSS",
+					"editConsent" => "all",
+					"commentMaxlength" => "500",
+					"commentApproved" => false,
+					"commentClose" => false,
+					"commentNotification" => false,
+					"commentGroupNotification" => 1 
 				],
 				'posts' => [
 					'mon-premier-article' => [
@@ -662,7 +667,8 @@ class init extends common {
 								'author' => 'Rémi',
 								'content' => 'Article bien rédigé et très pertinent, bravo !',
 								'createdOn' => 1421748000,
-								'userId' => ''
+								'userId' => '',
+								'approval' => true
 							]
 						],
 						'content' => '<p>Et eodem impetu Domitianum praecipitem per scalas itidem funibus constrinxerunt, eosque coniunctos per ampla spatia civitatis acri raptavere discursu. iamque artuum et membrorum divulsa conpage superscandentes corpora mortuorum ad ultimam truncata deformitatem velut exsaturati mox abiecerunt in flumen.</p><p>Ex his quidam aeternitati se commendari posse per statuas aestimantes eas ardenter adfectant quasi plus praemii de figmentis aereis sensu carentibus adepturi, quam ex conscientia honeste recteque factorum, easque auro curant inbracteari, quod Acilio Glabrioni delatum est primo, cum consiliis armisque regem superasset Antiochum. quam autem sit pulchrum exigua haec spernentem et minima ad ascensus verae gloriae tendere longos et arduos, ut memorat vates Ascraeus, Censorius Cato monstravit. qui interrogatus quam ob rem inter multos... statuam non haberet malo inquit ambigere bonos quam ob rem id non meruerim, quam quod est gravius cur inpetraverim mussitare.</p><p>Latius iam disseminata licentia onerosus bonis omnibus Caesar nullum post haec adhibens modum orientis latera cuncta vexabat nec honoratis parcens nec urbium primatibus nec plebeiis.</p>',

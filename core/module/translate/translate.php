@@ -26,7 +26,7 @@ class translate extends common {
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			$this->setData(['translate', [
+			$this->setData(['config','translate', [
 				'activated'      => $this->getInput('translateActivated', helper::FILTER_BOOLEAN),
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN)

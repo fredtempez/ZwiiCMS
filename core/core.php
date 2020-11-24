@@ -174,7 +174,6 @@ class common {
 		'theme' => '',
 		'admin' => '',
 		'blacklist' => '',
-		'translate' => '',
 		'locale' => ''
 	];
 
@@ -229,7 +228,7 @@ class common {
 		}
 
 		// Auto traduction
-		if ( $this->getData(['translate','activated'])) {
+		if ( $this->getData(['config','translate','activated'])) {
 			// Lire la langue du navigateur
 			$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
@@ -1559,9 +1558,9 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
-			$this->setData(['translate','activated',false]);
-			$this->setData(['translate','showCredits',false]);
-			$this->setData(['translate','autoDetect',false]);
+			$this->setData(['config','translate','activated',false]);
+			$this->setData(['config','translate','showCredits',false]);
+			$this->setData(['config','translate','autoDetect',false]);
 			$this->setData(['core', 'dataVersion', 10400]);
 		}
 	}
@@ -2149,7 +2148,7 @@ class core extends common {
 
 		// Librairie googtrans ajouté dynamiquement
 		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-			 AND $this->getData(['translate','active']) === true
+			 AND $this->getData(['config','translate','active']) === true
 			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
 				$this->addOutput([
 					'vendor' => array_merge($this->output['vendor'], ['i18n'])
@@ -2290,8 +2289,8 @@ class layout extends common {
 
 		echo $this->core->output['content'];
 		if ( substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-			 AND $this->getData(['translate','showCredits']) === true
-			 AND $this->getData(['translate','active']) === true )
+			 AND $this->getData(['config','translate','showCredits']) === true
+			 AND $this->getData(['config','translate','active']) === true )
 		{
 		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
 		}
@@ -2978,7 +2977,7 @@ class layout extends common {
 	 * Affiche le cadre avec les drapeaux
 	 */
 	public function showi18n() {
-		if (     $this->getData(['translate','active']) === true
+		if (     $this->getData(['config','translate','active']) === true
 			 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')) {
 				echo '<div id="i18nContainer"><ul>';
 				foreach (self::$i18nList as $key => $value) {

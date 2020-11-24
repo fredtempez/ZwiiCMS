@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateActivated', true, 'Activer le mode multi-langues', [
-								'checked' => $this->getData(['translate', 'activated'])
+								'checked' => $this->getData(['config','translate', 'activated'])
 							]); ?>
 					</div>
 				</div>
@@ -33,13 +33,13 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de langue', [
-							'checked' => $this->getData(['translate', 'autoDetect']),
+							'checked' => $this->getData(['config','translate', 'autoDetect']),
 							'help'   => 'Détecte la langue du navigateur et effectue une traduction grâce à Google Translate.'
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['translate', 'showCredits']),
+							'checked' => $this->getData(['config','translate', 'showCredits']),
 							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
 						]); ?>
 					</div>
