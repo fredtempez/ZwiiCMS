@@ -46,7 +46,7 @@
         c._cest = gtConstEvalStartTime;
         gtConstEvalStartTime = undefined;
         c._cl = 'fr';
-        c._cuc = 'googleTranslateElementInit';
+        c._cuc = 'scriptGoogleElementInit';
         c._cac = '';
         c._cam = '';
         c._ctkk = '433074.3898829376';

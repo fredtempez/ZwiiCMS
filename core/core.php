@@ -228,7 +228,7 @@ class common {
 		}
 
 		// Traduction du site avec le script Google
-		if ( $this->getData(['config','translate','activated'])) {
+		if ( $this->getData(['config','translate','scriptGoogle'])) {
 			// Lire la langue stockée dans le cookie (choix manuel)
 			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
 				$lan_cookie = $_COOKIE['ZWII_USER_I18N'];
@@ -1567,7 +1567,7 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
-			$this->setData(['config','translate','activated',false]);
+			$this->setData(['config','translate','scriptGoogle',false]);
 			$this->setData(['config','translate','showCredits',false]);
 			$this->setData(['config','translate','autoDetect',false]);
 			$this->setData(['core', 'dataVersion', 10400]);
@@ -2157,7 +2157,7 @@ class core extends common {
 
 		// Chargement de la librairie ggogtrans
 		// Le multi langue est actif
-		if ($this->getData(['config','translate','activated']) === true ) {
+		if ($this->getData(['config','translate','scriptGoogle']) === true ) {
 			// la traduction auto est active
 			if ( $this->getData(['config','translate','autoDetect']) === true
 				// Cas  des pages d'administration
@@ -2312,7 +2312,7 @@ class layout extends common {
 		 */
 
 		if ( (
-				( $this->getData(['config','translate','activated']) === true
+				( $this->getData(['config','translate','scriptGoogle']) === true
 				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
 		        )
 			   OR ( isset($_COOKIES['ZWII_USER_I18N'])
@@ -3010,10 +3010,10 @@ class layout extends common {
 	 * Affiche le cadre avec les drapeaux
 	 */
 	public function showi18n() {
-		if ( $this->getData(['config','translate','activated']) === true ) {
+		if ( $this->getData(['config','translate','scriptGoogle']) === true ) {
 				echo '<div id="i18nContainer"><ul>';
 				foreach (self::$i18nList as $key => $value) {
-					if ($this->getData(['config','translate','flag' . strtoupper($key)]) ) {
+					if ($this->getData(['config','translate','script' . strtoupper($key)]) ) {
 						echo '<li>';
 						echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 						echo '</li>';

@@ -43,7 +43,7 @@ class init extends common {
 				'captcha' => true
 			],
 			'translate' => [
-				'activated' => false,
+				'scriptGoogle' => false,
 				'showCredits' => false,
 				'autoDetect' => false,
 				'admin'	 => false,

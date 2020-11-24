@@ -1,4 +1,4 @@
-function googleTranslateElementInit() {
+function scriptGoogleElementInit() {
 new google.translate.TranslateElement({
 pageLanguage: 'fr'
 }, 'google_translate_element');
