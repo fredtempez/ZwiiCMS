@@ -51,7 +51,7 @@ class translate extends common {
 	public function language() {
 		// Transmettre le choix au noyau
 		setcookie('ZWII_USER_I18N', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-		// Valeurs en sortie sans post 
+		// Valeurs en sortie sans post
 		$this->addOutput([
 			'redirect' 		=> 	helper::baseUrl(false)
 		]);

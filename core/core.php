@@ -227,14 +227,19 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		// Auto traduction
+		// Traduction du site avec le script Google
 		if ( $this->getData(['config','translate','activated'])) {
-			// Lire la langue du navigateur si pas de choix manuel
+			// Lire la langue stockée dans le cookie (choix manuel)
 			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
-				$lan = $_COOKIE['ZWII_USER_I18N'];
-			} else {
-				$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+				$lan_cookie = $_COOKIE['ZWII_USER_I18N'];
 			}
+			// Lire la langue du navigateur 
+			if ( $this->getData(['config','translate','autoDetect'])) {
+				$lan_browser = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+			}
+
+			// Priorité : choix manuel - navigateur - fr
+			$lan = isset($lan_cookie) ? $lan_cookie : (isset($lan_browser) ? $lan_browser : 'fr');
 
 			// Changer la locale
 			if ( $lan !== 'fr') {
