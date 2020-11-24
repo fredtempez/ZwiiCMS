@@ -1569,8 +1569,29 @@ class common {
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
 			$this->setData(['config','translate','scriptGoogle',false]);
 			$this->setData(['config','translate','showCredits',false]);
+			$this->setData(['config','translate','admin',false]);
 			$this->setData(['config','translate','autoDetect',false]);
+			$this->setData(['config','translate','scriptFR',false]);
+			$this->setData(['config','translate','scriptDE',false]);
+			$this->setData(['config','translate','scriptEN',false]);
+			$this->setData(['config','translate','scriptES',false]);
+			$this->setData(['config','translate','scriptIT',false]);
+			$this->setData(['config','translate','scriptNL',false]);
+			$this->setData(['config','translate','scriptPT',false]);
+			$this->setData(['config','translate','site',false]);
+			$this->setData(['config','translate','siteFR',false]);
+			$this->setData(['config','translate','siteDE',false]);
+			$this->setData(['config','translate','siteEN',false]);
+			$this->setData(['config','translate','siteES',false]);
+			$this->setData(['config','translate','siteIT',false]);
+			$this->setData(['config','translate','siteNL',false]);
+			$this->setData(['config','translate','sitePT',false]);
 			$this->setData(['core', 'dataVersion', 10400]);
+
+			/**
+			 *  mettre à jour defaultdata
+			 */
+
 		}
 	}
 }
