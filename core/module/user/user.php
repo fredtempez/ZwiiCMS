@@ -263,12 +263,12 @@ class user extends common {
 					$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
 				}
 				// Redirection si retour en arrière possible
-				elseif($this->getUrl(3)) {
+				elseif($this->getUser('group') === 3) {
 					$redirect = helper::baseUrl() . 'user';
 				}
 				// Redirection normale
 				else {
-					$redirect = helper::baseUrl() . $this->getUrl();
+					$redirect = helper::baseUrl();
 				}
 				// Valeurs en sortie
 				$this->addOutput([
