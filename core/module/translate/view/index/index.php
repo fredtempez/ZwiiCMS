@@ -22,11 +22,6 @@
 								'checked' => $this->getData(['config','translate', 'activated'])
 							]); ?>
 					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduire les pages d\'administration', [
-								'checked' => $this->getData(['config','translate', 'admin'])
-							]); ?>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -36,13 +31,19 @@
 			<div class="block">
 			<h4>Traduction automatique</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de langue', [
 							'checked' => $this->getData(['config','translate', 'autoDetect']),
 							'help'   => 'Détecte la langue du navigateur et effectue une traduction grâce à Google Translate.'
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::checkbox('translateAdmin', true, 'Mode connexion', [
+								'checked' => $this->getData(['config','translate', 'admin']),
+								'help' => 'Traduction automatique du site et de l\'interface du CMS'
+							]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
 							'checked' => $this->getData(['config','translate', 'showCredits']),
 							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'

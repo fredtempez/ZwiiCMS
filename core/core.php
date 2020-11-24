@@ -2155,16 +2155,20 @@ class core extends common {
 			}
 		}
 
-		// Librairie googtrans ajouté dynamiquement
-		if ( $this->getData(['config','translate','activated']) === true
-			 OR  ( $this->getData(['config','translate','admin']) === true
-					 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-			      )
-			)
-			  {
-				$this->addOutput([
-					'vendor' => array_merge($this->output['vendor'], ['i18n'])
-				]);
+		// Chargement de la librairie ggogtrans
+		// Le multi langue est actif
+		if ($this->getData(['config','translate','activated']) === true ) {
+			// la traduction auto est active
+			if ( $this->getData(['config','translate','autoDetect']) === true
+				// Cas  des pages d'administration
+				AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					    AND $this->getData(['config','translate','admin']) === true )
+				)	{
+					$this->addOutput([
+						'vendor' => array_merge($this->output['vendor'], ['i18n'])
+					]);
+			}
 		}
 		// Erreurs
 		if($access === 'login') {
@@ -2300,6 +2304,13 @@ class layout extends common {
 		}
 
 		echo $this->core->output['content'];
+
+		/**
+		 * Affiche les crédits, conditions requis :
+		 * La traduction est active et le site n'est pas en français.
+		 * La fonction est activée.
+		 */
+
 		if ( (
 				( $this->getData(['config','translate','activated']) === true
 				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
