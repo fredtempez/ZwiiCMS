@@ -19,13 +19,13 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateActive', true, 'Traduction automatique', [
-								'checked' => $this->getData(['translate', 'active']),
+								'checked' => $this->getData(['config', 'translate', 'active']),
 								'help'   => 'Traduction automatique du site hors connexion par le script Google Translate selon la langue du navigateur du visiteur.'
 							]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits', [
-								'checked' => $this->getData(['translate', 'showCredits']),
+								'checked' => $this->getData(['config', 'translate', 'showCredits']),
 								'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
 							]); ?>
 					</div>
