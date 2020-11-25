@@ -3,7 +3,7 @@
         <div class="col2">
             <?php echo template::button('configManageBack', [
                 'class' => 'buttonGrey',
-                'href' => helper::baseUrl() . 'config',
+                'href' => helper::baseUrl() . 'config/advanced',
                 'ico' => 'left',
                 'value' => 'Retour'
             ]); ?>

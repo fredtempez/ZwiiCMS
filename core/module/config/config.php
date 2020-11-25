@@ -204,7 +204,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => ($successSitemap === true && $successRobots >= 100) ? 'Création réussie' : 'Echec d\'écriture',
-			'redirect' => helper::baseUrl() . 'config',
+			'redirect' => helper::baseUrl() . 'config/advanced',
 			'state' => ($successSitemap === true && $successRobots >=100)  ? true : false
 		]);
 	}
@@ -295,7 +295,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'redirect' => helper::baseUrl() . 'config',
+			'redirect' => helper::baseUrl() . 'advanced',
 			'state' => $success === false ? false : true
 		]);
 	}
@@ -674,14 +674,14 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
 			]);
@@ -713,7 +713,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
 			]);
@@ -754,7 +754,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
 			]);
@@ -767,17 +767,17 @@ class config extends common {
 
 	public function blacklistReset() {
 		if ( file_exists(self::DATA_DIR . 'blacklist.json') ) {
-			unlink(self::DATA_DIR . 'blacklist.json');
+			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'redirect' => helper::baseUrl() . 'config/advanced',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
 			]);
