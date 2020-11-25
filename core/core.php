@@ -2939,7 +2939,7 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				//$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
