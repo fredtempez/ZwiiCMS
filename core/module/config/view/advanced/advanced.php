@@ -223,7 +223,7 @@
 						<div class="row">
 							<div class="col12">
 								<?php echo template::button('configAdvancedMetaImage', [
-								'href' => helper::baseUrl() . 'configAdvanced/configMetaImage',
+								'href' => helper::baseUrl() . 'config/configMetaImage',
 								'value' => 'Capture Open Graph',
 								'ico' => 'pencil'
 								]); ?>
@@ -232,7 +232,7 @@
 						<div class="row">
 							<div class="col12">
 								<?php echo template::button('configAdvancedSiteMap', [
-									'href' => helper::baseUrl() . 'configAdvanced/generateFiles',
+									'href' => helper::baseUrl() . 'config/generateFiles',
 									'value' => 'Sitemap.xml / Robots.txt',
 									'ico' => 'pencil'
 								]); ?>
@@ -286,7 +286,7 @@
 							?>
 						</label>
 						<?php echo template::button('configAdvancedConnectblacListDownload', [
-							'href' => helper::baseUrl() . 'configAdvanced/blacklistDownload',
+							'href' => helper::baseUrl() . 'config/blacklistDownload',
 							'value' => 'Télécharger liste noire',
 							'ico' => 'download'
 						]); ?>
@@ -294,7 +294,7 @@
 					<div class="col3 verticalAlignBottom">
 						<?php echo template::button('configAdvancedConnectReset', [
 							'class' => 'buttonRed',
-							'href' => helper::baseUrl() . 'configAdvanced/blacklistReset',
+							'href' => helper::baseUrl() . 'config/blacklistReset',
 							'value' => 'Réinitialiser liste',
 							'ico' => 'cancel'
 						]); ?>
@@ -331,7 +331,7 @@
 					</div>
 					<div class="col3 offset2">
 						<?php echo template::button('configAdvancedLogDownload', [
-							'href' => helper::baseUrl() . 'configAdvanced/logDownload',
+							'href' => helper::baseUrl() . 'config/logDownload',
 							'value' => 'Télécharger journal',
 							'ico' => 'download'
 						]); ?>
@@ -339,7 +339,7 @@
 					<div class="col3">
 						<?php echo template::button('configAdvancedLogReset', [
 							'class' => 'buttonRed',
-							'href' => helper::baseUrl() . 'configAdvanced/logReset',
+							'href' => helper::baseUrl() . 'config/logReset',
 							'value' => 'Réinitialiser journal',
 							'ico' => 'cancel'
 						]); ?>
@@ -481,14 +481,14 @@
 					</div>
 					<div class="col3 offset3 verticalAlignBottom">
 						<?php echo template::button('configAdvancedScriptHead', [
-							'href' => helper::baseUrl() . 'configAdvanced/script/head',
+							'href' => helper::baseUrl() . 'config/script/head',
 							'value' => 'Script dans head',
 							'ico' => 'pencil'
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">
 						<?php echo template::button('configAdvancedScriptBody', [
-							'href' => helper::baseUrl() . 'configAdvanced/script/body',
+							'href' => helper::baseUrl() . 'config/script/body',
 							'value' => 'Script dans body',
 							'ico' => 'pencil'
 					]); ?>
