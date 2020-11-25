@@ -2318,6 +2318,7 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
+		$this->showi18n();
 		if(
 			$this->core->output['title']
 			AND (
