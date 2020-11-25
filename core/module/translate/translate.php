@@ -19,6 +19,12 @@ class translate extends common {
 		'index' => self::GROUP_MODERATOR,
 		'language' => self::GROUP_VISITOR
 	];
+	
+	public static $typeTranslate = [
+		'none'   => 'Masqué',
+		'script' => 'Automatique',
+		'site'   => 'Rédigée'
+	];
 
 	/**
 	 * Configuration
@@ -27,17 +33,17 @@ class translate extends common {
 
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Edtion des langues
+			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
 				if ($keyi18n === 'fr') {continue;}
-				// Effacement d'une langue installée (dossier plus option désactivée précédemment)
+				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
-					AND  $this->getInput('translateSiteFlag' . strtoupper($keyi18n) , helper::FILTER_BOOLEAN) === false )
+					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'none')
 				 {
 						$this->removeDir( self::DATA_DIR . $keyi18n);
 				}
 				// Installation d'une langue
-				if ( $this->getInput('translateSiteFlag' . strtoupper($keyi18n) , helper::FILTER_BOOLEAN) === true )
+				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site')
 				{
 					// Créer le dossier
 					if (is_dir( self::DATA_DIR . $keyi18n )  === false ) {
@@ -45,7 +51,7 @@ class translate extends common {
 					}
 					// Charger les modèles
 					require_once('core/module/install/ressource/defaultdata.php');
-					// Nouvelle instance des pages, module, locale
+					// Nouvelle instance page, module, locale
 					$files = ['page','module','locale'];
 					foreach ($files as $keyFile) {
 						echo $keyFile;
@@ -65,21 +71,14 @@ class translate extends common {
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),
 				'admin'			 => $this->getInput('translateAdmin', helper::FILTER_BOOLEAN),
-				'scriptFR' 		 => $this->getInput('translateScriptFlagFR', helper::FILTER_BOOLEAN),
-				'scriptDE' 		 => $this->getInput('translateScriptFlagDE', helper::FILTER_BOOLEAN),
-				'scriptEN' 		 => $this->getInput('translateScriptFlagEN', helper::FILTER_BOOLEAN),
-				'scriptES' 		 => $this->getInput('translateScriptFlagES', helper::FILTER_BOOLEAN),
-				'scriptIT' 		 => $this->getInput('translateScriptFlagIT', helper::FILTER_BOOLEAN),
-				'scriptNL' 		 => $this->getInput('translateScriptFlagNL', helper::FILTER_BOOLEAN),
-				'scriptPT' 		 => $this->getInput('translateScriptFlagPT', helper::FILTER_BOOLEAN),
-				'site'           => $this->getInput('translateSite', helper::FILTER_BOOLEAN),
-				'siteFR' 		 => $this->getInput('translateSiteFlagFR', helper::FILTER_BOOLEAN),
-				'siteDE' 		 => $this->getInput('translateSiteFlagDE', helper::FILTER_BOOLEAN),
-				'siteEN' 		 => $this->getInput('translateSiteFlagEN', helper::FILTER_BOOLEAN),
-				'siteES' 		 => $this->getInput('translateSiteFlagES', helper::FILTER_BOOLEAN),
-				'siteIT' 		 => $this->getInput('translateSiteFlagIT', helper::FILTER_BOOLEAN),
-				'siteNL' 		 => $this->getInput('translateSiteFlagNL', helper::FILTER_BOOLEAN),
-				'sitePT' 		 => $this->getInput('translateSiteFlagPT', helper::FILTER_BOOLEAN)
+				'fr'		 => 'site',
+				'de' 		 => $this->getInput('translateDE'),
+				'en' 		 => $this->getInput('translateEN'),
+				'es' 		 => $this->getInput('translateES'),
+				'it' 		 => $this->getInput('translateIT'),
+				'nl' 		 => $this->getInput('translateNL'),
+				'pt' 		 => $this->getInput('translatePT')
+
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -100,10 +99,13 @@ class translate extends common {
 	*/
 	public function language() {
 		// Transmettre le choix au noyau
-		setcookie('ZWII_USER_I18N', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-		// Valeurs en sortie sans post
+		setcookie('ZWII_I18N_SITE', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+		if ($this->getUrl(3) === 'script') {
+			setrawcookie("googtrans", '/fr/'. $this->getUrl(2), time() + 3600, helper::baseUrl());
+		}
+		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' 		=> 	helper::baseUrl()  .  $this->getUrl(3)
+			'redirect' 		=> 	helper::baseUrl()
 		]);
 	}
 }

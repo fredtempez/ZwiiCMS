@@ -713,12 +713,12 @@ li .menuSideChild {
 /* Container des drapeaux */
 
 #i18nContainer {
-	z-index: 100;
-	position: relative ;
+	z-index: 18;
+	display: flex ;
 	float: right;
 	width: auto;
 	height: auto;
-	margin-top: -25px;
+	margin-top: 40px;
 }
 
 #i18nContainer ul {
@@ -732,17 +732,8 @@ li .menuSideChild {
 
 #i18nContainer img {
 	width: 80%;
-}
-
-
-
-
-#i18nContainer img {
 	margin: 2px;
 }
-
-
-
 
 
 /* Corps */

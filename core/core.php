@@ -152,7 +152,7 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue courante
-	public static $i18nCurrent = 'fr';
+	public static $i18nSite = 'fr';
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -191,9 +191,11 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Déterminer le dossier de langues
-		if (isset($_POST['ZWII_USER_I18N'])) {
-			self::$i18nCurrent = $_POST['ZWII_USER_I18N'];
+		// Déterminer la langue sélectionnée si traduction manuelle ('site')
+		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
+		) {
+			self::$i18nSite = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			setlocale (LC_TIME, self::$i18nSite . '_' . strtoupper (self::$i18nSite) );
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -202,7 +204,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dirData ($keys,self::$i18nCurrent)
+				'dir' => $this->dirData ($keys,self::$i18nSite)
 			]);;
 		}
 
@@ -222,9 +224,9 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dirData ($stageId, self::$i18nCurrent);
+			$folder = $this->dirData ($stageId, self::$i18nSite);
 			if (file_exists($folder . $stageId .'.json') === false) {
-				$this->initData($stageId,self::$i18nCurrent);
+				$this->initData($stageId,self::$i18nSite);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -237,8 +239,8 @@ class common {
 		// Traduction du site avec le script Google
 		if ( $this->getData(['config','translate','scriptGoogle'])) {
 			// Lire la langue stockée dans le cookie (choix manuel)
-			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
-				$lan_cookie = $_COOKIE['ZWII_USER_I18N'];
+			if ( isset($_COOKIE['ZWII_I18N_SITE']) ) {
+				$lan_cookie = $_COOKIE['ZWII_I18N_SITE'];
 			}
 			// Lire la langue du navigateur
 			if ( $this->getData(['config','translate','autoDetect'])) {
@@ -251,10 +253,6 @@ class common {
 			// Changer la locale
 			if ( $lan !== 'fr') {
 				setlocale (LC_TIME, $lan . '_' . strtoupper ($lan) );
-				// Charge la librairie Google Translate
-				setrawcookie("googtrans", '/fr/'. $lan, time() + 3600, helper::baseUrl());
-			} else {
-				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
 			}
 		}
 
@@ -2183,7 +2181,7 @@ class core extends common {
 			}
 		}
 
-		// Chargement de la librairie googtrans
+		// Chargement de la bibliothèque googtrans
 		// Le multi langue est actif
 		if ($this->getData(['config','translate','scriptGoogle']) === true ) {
 			// la traduction auto est active
@@ -2338,14 +2336,13 @@ class layout extends common {
 		 * La traduction est active et le site n'est pas en français.
 		 * La fonction est activée.
 		 */
-
 		if ( (
 				( $this->getData(['config','translate','scriptGoogle']) === true
 				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
 		        )
-			   OR ( isset($_COOKIES['ZWII_USER_I18N'])
-				   AND array_key_exists($_COOKIES['ZWII_USER_I18N'],$this->i18nList
-				   AND $_COOKIES['ZWII_USER_I18N'] !== 'fr' )
+			   OR ( isset($_COOKIES['ZWII_I18N_SITE'])
+				   AND array_key_exists($_COOKIES['ZWII_I18N_SITE'],$this->i18nList
+				   AND $_COOKIES['ZWII_I18N_SITE'] !== 'fr' )
 				)
 			 )
 			 AND $this->getData(['config','translate','showCredits']) === true
@@ -3038,16 +3035,19 @@ class layout extends common {
 	 * Affiche le cadre avec les drapeaux
 	 */
 	public function showi18n() {
-		if ( $this->getData(['config','translate','scriptGoogle']) === true ) {
-				echo '<div id="i18nContainer"><ul>';
-				foreach (self::$i18nList as $key => $value) {
-					if ($this->getData(['config','translate','script' . strtoupper($key)]) ) {
-						echo '<li>';
-						echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
-						echo '</li>';
-					}
-				}
-				echo '</ul></div>';
+		echo '<div id="i18nContainer"><ul>';
+		foreach (self::$i18nList as $key => $value) {
+			if ($this->getData(['config','translate',$key]) === 'site' 
+				OR (
+					$this->getData(['config','translate','scriptGoogle']) === true 
+					AND $this->getData(['config','translate',$key]) === 'script'
+				)
+			) {
+				echo '<li>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '/' .  $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '</li>';
+			}
 		}
+		echo '</ul></div>';
 	}
 }

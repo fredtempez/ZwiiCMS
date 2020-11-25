@@ -30,6 +30,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 		<?php if($this->getUser('group') > self::GROUP_MEMBER): ?>
 			<?php $layout->showBar(); ?>
 		<?php endif;?>
+		<?php $layout->showi18n();?>
 		<?php $layout->showNotification(); ?>
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
@@ -37,7 +38,7 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
 					AND $this->getData(['theme', 'menu', 'fixed']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true) 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true)
 					AND $this->getUser('group') > self::GROUP_MEMBER) {
 						echo '<nav id="navfixedconnected" >';
 					} else {
@@ -60,7 +61,6 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
 			<header>
-				<?php $layout->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
@@ -154,7 +154,6 @@ $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
-			<?php $layout->showi18n();?>
 			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante
