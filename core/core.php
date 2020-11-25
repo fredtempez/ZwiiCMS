@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.007';
+	const ZWII_VERSION = '10.4.00.008';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -151,6 +151,8 @@ class common {
 		'nl' 	=> 'Néerlandais (nl)',
 		'pt'	=> 'Portugais (pt)',
 	];
+	// Langue courante
+	public static $i18nCurrent = 'fr';
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -189,13 +191,18 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Déterminer le dossier de langues
+		if (isset($_POST['ZWII_USER_I18N'])) {
+			self::$i18nCurrent = $_POST['ZWII_USER_I18N'];
+		}
+
 		// Instanciation de la classe des entrées / sorties
 		// Récupére les descripteurs
 		foreach ($this->dataFiles as $keys => $value) {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dirData ($keys,'fr')
+				'dir' => $this->dirData ($keys,self::$i18nCurrent)
 			]);;
 		}
 
@@ -215,9 +222,9 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dirData ($stageId, 'fr');
+			$folder = $this->dirData ($stageId, self::$i18nCurrent);
 			if (file_exists($folder . $stageId .'.json') === false) {
-				$this->initData($stageId,'fr');
+				$this->initData($stageId,self::$i18nCurrent);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -2176,7 +2183,7 @@ class core extends common {
 			}
 		}
 
-		// Chargement de la librairie ggogtrans
+		// Chargement de la librairie googtrans
 		// Le multi langue est actif
 		if ($this->getData(['config','translate','scriptGoogle']) === true ) {
 			// la traduction auto est active
@@ -2932,7 +2939,7 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				//$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
