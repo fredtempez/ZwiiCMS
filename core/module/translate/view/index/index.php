@@ -31,39 +31,39 @@
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptFR', true, 'Français', [
+						<?php echo template::checkbox('translateScriptFlagFR', true, 'Français', [
 							'checked' => $this->getData(['config','translate', 'scriptFR'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptDE', true, 'Allemand', [
+						<?php echo template::checkbox('translateScriptFlagDE', true, 'Allemand', [
 							'checked' => $this->getData(['config','translate', 'scriptDE'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptEN', true, 'Anglais', [
+						<?php echo template::checkbox('translateScriptFlagEN', true, 'Anglais', [
 							'checked' => $this->getData(['config','translate', 'scriptEN'])
 						]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptES', true, 'Espagnol', [
+						<?php echo template::checkbox('translateScriptFlagES', true, 'Espagnol', [
 							'checked' => $this->getData(['config','translate', 'scriptES'])
 							]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptIT', true, 'Italien', [
+						<?php echo template::checkbox('translateScriptFlagIT', true, 'Italien', [
 							'checked' => $this->getData(['config','translate', 'scriptIT'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptNL', true, 'Néerlandais', [
+						<?php echo template::checkbox('translateScriptFlagNL', true, 'Néerlandais', [
 							'checked' => $this->getData(['config','translate', 'scriptNL'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagScriptPT', true, 'Portugais', [
+						<?php echo template::checkbox('translateScriptFlagPT', true, 'Portugais', [
 							'checked' => $this->getData(['config','translate', 'scriptPT'])
 						]); ?>
 					</div>
@@ -99,40 +99,40 @@
 				<b>Sélectionnez les langues à activer :</b>
 				<div class="row">
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagSiteFR', true, 'Français', [
+						<?php echo template::checkbox('translateSiteFlagFR', true, 'Français', [
 							'checked' => true,
 							'disabled' => true
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagSiteDE', true, 'Allemand', [
+						<?php echo template::checkbox('translateSiteFlagDE', true, 'Allemand', [
 							'checked' => $this->getData(['config', 'translate', 'siteDE'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagSiteEN', true, 'Anglais', [
+						<?php echo template::checkbox('translateSiteFlagEN', true, 'Anglais', [
 							'checked' => $this->getData(['config', 'translate', 'siteEN'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::checkbox('translateFlagSiteES', true, 'Espagnol', [
+						<?php echo template::checkbox('translateSiteFlagES', true, 'Espagnol', [
 							'checked' => $this->getData(['config', 'translate', 'siteES'])
 							]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::checkbox('translateFlagSiteIT', true, 'Italien', [
+						<?php echo template::checkbox('translateSiteFlagIT', true, 'Italien', [
 							'checked' => $this->getData(['config', 'translate', 'siteIT'])
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::checkbox('translateFlagSiteNL', true, 'Néerlandais', [
+						<?php echo template::checkbox('translateSiteFlagNL', true, 'Néerlandais', [
 							'checked' => $this->getData(['config', 'translate', 'siteNL'])
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::checkbox('translateFlagSitePT', true, 'Portugais', [
+						<?php echo template::checkbox('translateSiteFlagPT', true, 'Portugais', [
 							'checked' => $this->getData(['config', 'translate', 'sitePT'])
 						]); ?>
 					</div>

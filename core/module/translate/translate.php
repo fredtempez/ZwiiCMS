@@ -24,6 +24,7 @@ class translate extends common {
 	 * Configuration
 	 */
 	public function index() {
+
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['config','translate', [
@@ -31,21 +32,21 @@ class translate extends common {
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),
 				'admin'			 => $this->getInput('translateAdmin', helper::FILTER_BOOLEAN),
-				'scriptFR' 		 => $this->getInput('translateFlagScriptFR', helper::FILTER_BOOLEAN),
-				'scriptDE' 		 => $this->getInput('translateFlagScriptDE', helper::FILTER_BOOLEAN),
-				'scriptEN' 		 => $this->getInput('translateFlagScriptEN', helper::FILTER_BOOLEAN),
-				'scriptES' 		 => $this->getInput('translateFlagScriptES', helper::FILTER_BOOLEAN),
-				'scriptIT' 		 => $this->getInput('translateFlagScriptIT', helper::FILTER_BOOLEAN),
-				'scriptNL' 		 => $this->getInput('translateFlagScriptNL', helper::FILTER_BOOLEAN),
-				'scriptPT' 		 => $this->getInput('translateFlagScriptPT', helper::FILTER_BOOLEAN),
+				'scriptFR' 		 => $this->getInput('translateScriptFlagFR', helper::FILTER_BOOLEAN),
+				'scriptDE' 		 => $this->getInput('translateScriptFlagDE', helper::FILTER_BOOLEAN),
+				'scriptEN' 		 => $this->getInput('translateScriptFlagEN', helper::FILTER_BOOLEAN),
+				'scriptES' 		 => $this->getInput('translateScriptFlagES', helper::FILTER_BOOLEAN),
+				'scriptIT' 		 => $this->getInput('translateScriptFlagIT', helper::FILTER_BOOLEAN),
+				'scriptNL' 		 => $this->getInput('translateScriptFlagNL', helper::FILTER_BOOLEAN),
+				'scriptPT' 		 => $this->getInput('translateScriptFlagPT', helper::FILTER_BOOLEAN),
 				'site'           => $this->getInput('translateSite', helper::FILTER_BOOLEAN),
-				'siteFR' 		 => $this->getInput('translateFlagSiteFR', helper::FILTER_BOOLEAN),
-				'siteDE' 		 => $this->getInput('translateFlagSiteDE', helper::FILTER_BOOLEAN),
-				'siteEN' 		 => $this->getInput('translateFlagSiteEN', helper::FILTER_BOOLEAN),
-				'siteES' 		 => $this->getInput('translateFlagSiteES', helper::FILTER_BOOLEAN),
-				'siteIT' 		 => $this->getInput('translateFlagSiteIT', helper::FILTER_BOOLEAN),
-				'siteNL' 		 => $this->getInput('translateFlagSiteNL', helper::FILTER_BOOLEAN),
-				'sitePT' 		 => $this->getInput('translateFlagSitePT', helper::FILTER_BOOLEAN)
+				'siteFR' 		 => $this->getInput('translateSiteFlagFR', helper::FILTER_BOOLEAN),
+				'siteDE' 		 => $this->getInput('translateSiteFlagDE', helper::FILTER_BOOLEAN),
+				'siteEN' 		 => $this->getInput('translateSiteFlagEN', helper::FILTER_BOOLEAN),
+				'siteES' 		 => $this->getInput('translateSiteFlagES', helper::FILTER_BOOLEAN),
+				'siteIT' 		 => $this->getInput('translateSiteFlagIT', helper::FILTER_BOOLEAN),
+				'siteNL' 		 => $this->getInput('translateSiteFlagNL', helper::FILTER_BOOLEAN),
+				'sitePT' 		 => $this->getInput('translateSiteFlagPT', helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
