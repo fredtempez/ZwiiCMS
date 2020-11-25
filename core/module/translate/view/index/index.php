@@ -100,8 +100,7 @@
 				<div class="row">
 					<div class="col3">
 						<?php echo template::checkbox('translateSiteFlagFR', true, 'Français', [
-							'checked' => true,
-							'disabled' => true
+							'checked' => $this->getData(['config', 'translate', 'siteFR'])
 						]); ?>
 					</div>
 					<div class="col3">

@@ -9,12 +9,6 @@ class init extends common {
 			'cookieConsent' => true,
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
-			'homePageId' => 'accueil',
-			'page302' => 'erreur302',
-			'page403' => 'erreur403',
-			'page404' => 'erreur404',
-			'legalPageId' => 'mentions-legales',
-			'searchPageId' => 'recherche',
 			'maintenance' => false,
 			'captchaStrong' => false,
 			'social' => [
@@ -28,8 +22,6 @@ class init extends common {
 			],
 			'timezone' => 'Europe/Paris',
 			'itemsperPage' => 10,
-			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !',
 			'proxyUrl' => '',
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',
@@ -64,6 +56,16 @@ class init extends common {
 			'lastAutoUpdate' => 0,
 			'updateAvailable' => false,
 			'baseUrl' => ''
+		],
+		'locale' => [
+			'homePageId' => 'accueil',
+			'page302' => 'none',
+			'page403' => 'none',
+			'page404' => 'none',
+			'legalPageId' => 'none',
+			'searchPageId' => 'none',
+			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
+			'title' => 'Votre site en quelques clics !'
 		],
 		'page' => [
 			'accueil' => [
@@ -667,7 +669,7 @@ class init extends common {
 					"commentApproved" => false,
 					"commentClose" => false,
 					"commentNotification" => false,
-					"commentGroupNotification" => 1 
+					"commentGroupNotification" => 1
 				],
 				'posts' => [
 					'mon-premier-article' => [
@@ -792,7 +794,17 @@ class init extends common {
 						'values' => ''
 					]
 				]
-			]
+			],
+			'locale' => [
+				'homePageId' => 'accueil',
+				'page302' => 'erreur302',
+				'page403' => 'erreur403',
+				'page404' => 'erreur404',
+				'legalPageId' => 'mentions-legales',
+				'searchPageId' => 'recherche',
+				'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
+				'title' => 'Votre site en quelques clics !'
+			],
 		]
     ];
 }

@@ -27,6 +27,39 @@ class translate extends common {
 
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Edtion des langues
+			foreach (self::$i18nList as $keyi18n => $value) {
+				if ($keyi18n === 'fr') {continue;}
+				// Effacement d'une langue installée (dossier plus option désactivée précédemment)
+				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
+					AND  $this->getInput('translateSiteFlag' . strtoupper($keyi18n) , helper::FILTER_BOOLEAN) === false )
+				 {
+						$this->removeDir( self::DATA_DIR . $keyi18n);
+				}
+				// Installation d'une langue
+				if ( $this->getInput('translateSiteFlag' . strtoupper($keyi18n) , helper::FILTER_BOOLEAN) === true )
+				{
+					// Créer le dossier
+					if (is_dir( self::DATA_DIR . $keyi18n )  === false ) {
+						mkdir( self::DATA_DIR . $keyi18n);
+					}
+					// Charger les modèles
+					require_once('core/module/install/ressource/defaultdata.php');
+					// Nouvelle instance des pages, module, locale
+					$files = ['page','module','locale'];
+					foreach ($files as $keyFile) {
+						echo $keyFile;
+						$e = new \Prowebcraft\JsonDb([
+							'name' => $keyFile . '.json',
+							'dir' => $this->dirData ($keyFile,$keyi18n)
+						]);;
+						$e->set($keyFile, init::$defaultData[$keyFile]);
+						$e->save();
+					}
+				}
+			}
+
+			// Enregistrement des données
 			$this->setData(['config','translate', [
 				'scriptGoogle'      => $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN),
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
