@@ -727,8 +727,12 @@ li .menuSideChild {
 }
 
 
-#i18nContainer img {
-	width: 80%;
+#i18nFlag {
+	width: 70%;
+}
+
+#i18nFlagSelected {
+	width: 90%;
 }
 
 

@@ -239,10 +239,11 @@ class common {
 		}
 
 		// Traduction du site avec le script Google
-		// Lire la langue du navigateur
-		if ( $this->getData(['config','translate','scriptGoogle']) === true
-			 AND $this->getData(['config','translate','autoDetect']) === true) {
+		// Lire la langue du navigateur si non positionnée
 
+		if ( $this->getData(['config','translate','scriptGoogle']) === true
+			 AND $this->getData(['config','translate','autoDetect']) === true
+			 AND !isset($_COOKIE['googtrans'])) {
 			// Langue du navigateur
 			if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 				setrawcookie("googtrans", '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'], time() + 3600, helper::baseUrl());
@@ -3038,8 +3039,21 @@ class layout extends common {
 					AND $this->getData(['config','translate',$key]) === 'script'
 				)
 			) {
+				if ( 
+					(isset($_COOKIE['googtrans'] )
+					  AND substr($_COOKIE['googtrans'],4,2) === $key
+				    )
+					 OR 
+					( isset($_COOKIE['ZWII_I18N_SITE'])
+					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
+				   ) ) {
+					   $select = ' id="i18nFlagSelected" ';
+				   } else {
+					   $select = ' id="i18nFlag" ';
+				   }
+
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 				echo '</li>';
 			}
 		}
