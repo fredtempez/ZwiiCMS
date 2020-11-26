@@ -102,9 +102,9 @@ class translate extends common {
 		if ($this->getUrl(3) === 'script') {
 			setrawcookie("googtrans", '/fr/'. $this->getUrl(2), time() + 3600, helper::baseUrl());
 			helper::deleteCookie('ZWII_I18N_SITE');
-		} else {
+		} elseif ($this->getUrl(3) === 'site') {
 			setcookie('ZWII_I18N_SITE', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-			helper::deleteCookie ('googtrans');
+			setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
 		}
 		// Valeurs en sortie
 		$this->addOutput([

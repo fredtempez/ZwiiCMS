@@ -2184,20 +2184,23 @@ class core extends common {
 		}
 
 		// Chargement de la bibliothèque googtrans
-		// Le multi langue est sélectionné et la traduction n'est pas manuelle
-		if ($this->getData(['config','translate','scriptGoogle']) === true 
-			) {
-				// Cas  des pages d'administration
-				/*
-				AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					    AND $this->getData(['config','translate','admin']) === true )
-				)	{
-					*/
+		// Le multi langue est sélectionné 
+		if (  	$this->getData(['config','translate','scriptGoogle']) === true
+			AND
+				// et la traduction n'est pas manuelle
+				(   isset($_COOKIE['googtrans'])
+					AND $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+				)
+			// Cas  des pages d'administration
+			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getData(['config','translate','admin']) === true 
+				)
+			)	{
 					$this->addOutput([
 						'vendor' => array_merge($this->output['vendor'], ['i18n'])
 					]);
-			
+
 		}
 		// Erreurs
 		if($access === 'login') {
@@ -2340,17 +2343,13 @@ class layout extends common {
 		 * La traduction est active et le site n'est pas en français.
 		 * La fonction est activée.
 		 */
-		if ( (
-				( $this->getData(['config','translate','scriptGoogle']) === true
-				  AND isset($_COOKIES['googtrans'])
-				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-		        )
-			   OR ( isset($_COOKIES['ZWII_I18N_SITE'])
-				   AND array_key_exists($_COOKIES['ZWII_I18N_SITE'],$this->i18nList
-				   AND $_COOKIES['ZWII_I18N_SITE'] !== 'fr' )
-				)
-			 )
+		if ( $this->getData(['config','translate','scriptGoogle']) === true
 			 AND $this->getData(['config','translate','showCredits']) === true
+			 AND
+				// et la traduction n'est pas manuelle
+				(   isset($_COOKIE['googtrans'])
+					AND $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+				)
            )
 		{
 		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
@@ -3042,9 +3041,9 @@ class layout extends common {
 	public function showi18n() {
 		echo '<div id="i18nContainer"><ul>';
 		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config','translate',$key]) === 'site' 
+			if ($this->getData(['config','translate',$key]) === 'site'
 				OR (
-					$this->getData(['config','translate','scriptGoogle']) === true 
+					$this->getData(['config','translate','scriptGoogle']) === true
 					AND $this->getData(['config','translate',$key]) === 'script'
 				)
 			) {
