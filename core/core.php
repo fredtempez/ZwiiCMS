@@ -2324,7 +2324,6 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		$this->showi18n();
 		if(
 			$this->core->output['title']
 			AND (
@@ -2695,6 +2694,7 @@ class layout extends common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
+		echo $this->showi18n();
 	}
 
 	/**

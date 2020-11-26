@@ -713,11 +713,8 @@ li .menuSideChild {
 /* Container des drapeaux */
 
 #i18nContainer {
-	z-index: 100;
 	position: relative ;
 	float: right;
-	width: auto;
-	height: auto;
 }
 
 #i18nContainer ul {
@@ -729,9 +726,9 @@ li .menuSideChild {
 	position: relative;
 }
 
+
 #i18nContainer img {
 	width: 80%;
-	margin: 2px;
 }
 
 
