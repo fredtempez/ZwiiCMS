@@ -1556,7 +1556,7 @@ class common {
 					}
 				}
 			}
-			// Localisation
+			// Nouvelle data : Localisation
 			$this->setData(['locale','homePageId',$this->getData(['config','homePageId'])]);
 			$this->setData(['locale','page404',$this->getData(['config','page404'])]);
 			$this->setData(['locale','page403',$this->getData(['config','page403'])]);
@@ -1565,25 +1565,20 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
+
+			// Options des langues
 			$this->setData(['config','translate','scriptGoogle',false]);
 			$this->setData(['config','translate','showCredits',false]);
 			$this->setData(['config','translate','admin',false]);
 			$this->setData(['config','translate','autoDetect',false]);
-			$this->setData(['config','translate','scriptFR',false]);
-			$this->setData(['config','translate','scriptDE',false]);
-			$this->setData(['config','translate','scriptEN',false]);
-			$this->setData(['config','translate','scriptES',false]);
-			$this->setData(['config','translate','scriptIT',false]);
-			$this->setData(['config','translate','scriptNL',false]);
-			$this->setData(['config','translate','scriptPT',false]);
-			$this->setData(['config','translate','site',false]);
-			$this->setData(['config','translate','siteFR',false]);
-			$this->setData(['config','translate','siteDE',false]);
-			$this->setData(['config','translate','siteEN',false]);
-			$this->setData(['config','translate','siteES',false]);
-			$this->setData(['config','translate','siteIT',false]);
-			$this->setData(['config','translate','siteNL',false]);
-			$this->setData(['config','translate','sitePT',false]);
+			$this->setData(['config','translate','fr',false]);
+			$this->setData(['config','translate','de',false]);
+			$this->setData(['config','translate','en',false]);
+			$this->setData(['config','translate','es',false]);
+			$this->setData(['config','translate','it',false]);
+			$this->setData(['config','translate','nl',false]);
+			$this->setData(['config','translate','pt',false]);
+
 			$this->setData(['core', 'dataVersion', 10400]);
 
 			/**
