@@ -239,22 +239,13 @@ class common {
 		}
 
 		// Traduction du site avec le script Google
-		if ( $this->getData(['config','translate','scriptGoogle'])) {
-			// Lire la langue stockée dans le cookie (choix manuel)
-			if ( isset($_COOKIE['ZWII_I18N_SITE']) ) {
-				$lan_cookie = $_COOKIE['ZWII_I18N_SITE'];
-			}
-			// Lire la langue du navigateur
-			if ( $this->getData(['config','translate','autoDetect'])) {
-				$lan_browser = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-			}
+		// Lire la langue du navigateur
+		if ( $this->getData(['config','translate','scriptGoogle']) === true
+			 AND $this->getData(['config','translate','autoDetect']) === true) {
 
-			// Priorité : choix manuel - navigateur - fr
-			$lan = isset($lan_cookie) ? $lan_cookie : (isset($lan_browser) ? $lan_browser : 'fr');
-
-			// Changer la locale
-			if ( $lan !== 'fr') {
-				setlocale (LC_TIME, $lan . '_' . strtoupper ($lan) );
+			// Langue du navigateur
+			if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+				setrawcookie("googtrans", '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'], time() + 3600, helper::baseUrl());
 			}
 		}
 
@@ -2184,15 +2175,20 @@ class core extends common {
 		}
 
 		// Chargement de la bibliothèque googtrans
+
 		// Le multi langue est sélectionné 
 		if (  	$this->getData(['config','translate','scriptGoogle']) === true
 			AND
-				// et la traduction n'est pas manuelle
+				// et la traduction de la langue courante est automatique
 				(   isset($_COOKIE['googtrans'])
-					AND $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+					AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+					   // Ou traduction automatique
+						OR 	$this->getData(['config','translate','autoDetect']) === true )
 				)
 			// Cas  des pages d'administration
+			// Pas connecté
 			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getData(['config','translate','admin']) === true 
 				)
