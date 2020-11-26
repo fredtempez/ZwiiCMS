@@ -22,8 +22,8 @@ class translate extends common {
 
 	public static $typeTranslate = [
 		'none'   => 'Masqué',
-		'script' => 'Automatique',
-		'site'   => 'Rédigée'
+		'script' => 'Traduction automatique',
+		'site'   => 'Traduction rédigée'
 	];
 
 	/**
