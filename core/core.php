@@ -152,7 +152,7 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue courante
-	public static $i18nSite = 'fr';
+	public static $i18nSite;
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -196,6 +196,8 @@ class common {
 		) {
 			self::$i18nSite = $this->input['_COOKIE']['ZWII_I18N_SITE'];
 			setlocale (LC_TIME, self::$i18nSite . '_' . strtoupper (self::$i18nSite) );
+		} else  {
+			self::$i18nSite = 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -2182,19 +2184,20 @@ class core extends common {
 		}
 
 		// Chargement de la bibliothèque googtrans
-		// Le multi langue est actif
-		if ($this->getData(['config','translate','scriptGoogle']) === true ) {
-			// la traduction auto est active
-			if ( $this->getData(['config','translate','autoDetect']) === true
+		// Le multi langue est sélectionné et la traduction n'est pas manuelle
+		if ($this->getData(['config','translate','scriptGoogle']) === true 
+			) {
 				// Cas  des pages d'administration
+				/*
 				AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					    AND $this->getData(['config','translate','admin']) === true )
 				)	{
+					*/
 					$this->addOutput([
 						'vendor' => array_merge($this->output['vendor'], ['i18n'])
 					]);
-			}
+			
 		}
 		// Erreurs
 		if($access === 'login') {
@@ -2339,6 +2342,7 @@ class layout extends common {
 		 */
 		if ( (
 				( $this->getData(['config','translate','scriptGoogle']) === true
+				  AND isset($_COOKIES['googtrans'])
 				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
 		        )
 			   OR ( isset($_COOKIES['ZWII_I18N_SITE'])
@@ -3033,7 +3037,7 @@ class layout extends common {
 		}
 	}
 	/**
-	 * Affiche le cadre avec les drapeaux
+	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
 	public function showi18n() {
 		echo '<div id="i18nContainer"><ul>';
@@ -3045,7 +3049,7 @@ class layout extends common {
 				)
 			) {
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '/' .  $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 				echo '</li>';
 			}
 		}
