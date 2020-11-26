@@ -23,23 +23,23 @@
 							]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue', [
-							'checked' => $this->getData(['config','translate', 'autoDetect']),
-							'help'   => 'Détecte la langue du navigateur.'
+						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
+							'checked' => $this->getData(['config','translate', 'showCredits']),
+							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
 						]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col6">
+						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue', [
+							'checked' => $this->getData(['config','translate', 'autoDetect']),
+							'help'   => 'Détecte la langue du navigateur.'
+						]); ?>
+					</div>
+					<div class="col6">
 						<?php echo template::checkbox('translateAdmin', true, 'Traduction de l\'interface du CMS', [
 								'checked' => $this->getData(['config','translate', 'admin'])
 							]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['config','translate', 'showCredits']),
-							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
-						]); ?>
 					</div>
 				</div>
 			</div>
