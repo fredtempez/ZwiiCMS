@@ -25,7 +25,7 @@
 					<div class="col6">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
 							'checked' => $this->getData(['config','translate', 'showCredits']),
-							'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
+							'help' => 'Option recommandée dans le respect du droit d\'auteur'
 						]); ?>
 					</div>
 				</div>
@@ -37,8 +37,9 @@
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduction de l\'interface du CMS', [
-								'checked' => $this->getData(['config','translate', 'admin'])
+						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
+								'checked' => $this->getData(['config','translate', 'admin']),
+								'help'   => 'Traduit le site et l\'interface de ZwiiCMS une fois connecté'
 							]); ?>
 					</div>
 				</div>

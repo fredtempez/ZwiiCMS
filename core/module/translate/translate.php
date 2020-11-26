@@ -33,6 +33,10 @@ class translate extends common {
 
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Désactivation du script Google
+			if ($this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) {
+				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl());
+			}
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
 				if ($keyi18n === 'fr') {continue;}
@@ -68,16 +72,16 @@ class translate extends common {
 			// Enregistrement des données
 			$this->setData(['config','translate', [
 				'scriptGoogle'      => $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN),
-				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
-				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),
-				'admin'			 => $this->getInput('translateAdmin', helper::FILTER_BOOLEAN),
-				'fr'		 => $this->getInput('translateFR'),
-				'de' 		 => $this->getInput('translateDE'),
-				'en' 		 => $this->getInput('translateEN'),
-				'es' 		 => $this->getInput('translateES'),
-				'it' 		 => $this->getInput('translateIT'),
-				'nl' 		 => $this->getInput('translateNL'),
-				'pt' 		 => $this->getInput('translatePT')
+				'showCredits' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
+				'autoDetect' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN) : false,
+				'admin'			 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAdmin', helper::FILTER_BOOLEAN) : false,
+					'fr'		 	=> $this->getInput('translateFR'),
+					'de' 		 	=> ($this->getInput('translateDE') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translateDE'),
+					'en' 		 	=> ($this->getInput('translateEN') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translateEN'),
+					'es' 		 	=> ($this->getInput('translateES') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translateES'),
+					'it' 		 	=> ($this->getInput('translateIT') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translateIT'),
+					'nl' 		 	=> ($this->getInput('translateNL') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translateNL'),
+					'pt' 		 	=> ($this->getInput('translatePT') === 'script' AND $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) ? 'none' : $this->getInput('translatePT')
 
 			]]);
 			// Valeurs en sortie
