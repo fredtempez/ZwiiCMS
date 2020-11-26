@@ -50,6 +50,14 @@
 			<div class="block">
 			<h4>Drapeaux des langues supportées</h4>
 				<div class="row">
+					<div class="col4 offset4">
+						<?php echo template::select('translateFR', ['non'=>'Masqué','site'=>'Affiché'], [
+							'label' => 'Français',
+							'selected' => $this->getData(['config', 'translate' , 'fr'])
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col6">
 						<div class="col8 offset2">
 							<?php echo template::select('translateDE', $module::$typeTranslate, [

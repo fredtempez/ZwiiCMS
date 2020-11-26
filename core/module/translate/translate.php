@@ -71,7 +71,7 @@ class translate extends common {
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),
 				'admin'			 => $this->getInput('translateAdmin', helper::FILTER_BOOLEAN),
-				'fr'		 => 'site',
+				'fr'		 => $this->getInput('translateFR'),
 				'de' 		 => $this->getInput('translateDE'),
 				'en' 		 => $this->getInput('translateEN'),
 				'es' 		 => $this->getInput('translateES'),
