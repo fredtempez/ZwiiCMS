@@ -242,11 +242,11 @@ class common {
 		// Lire la langue du navigateur si non positionnée
 
 		if ( $this->getData(['config','translate','scriptGoogle']) === true
-			 AND $this->getData(['config','translate','autoDetect']) === true
-			 AND !isset($_COOKIE['googtrans'])) {
+			 AND $this->getData(['config','translate','autoDetect']) === true ) {
 			// Langue du navigateur
 			if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-				setrawcookie("googtrans", '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'], time() + 3600, helper::baseUrl());
+				setrawcookie('googtrans', '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'], time() + 3600, helper::baseUrl());
+				//$_SESSION['googtrans'] = '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 			}
 		}
 

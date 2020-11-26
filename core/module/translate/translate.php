@@ -36,6 +36,7 @@ class translate extends common {
 			// Désactivation du script Google
 			if ($this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) {
 				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl());
+				$_SESSION['googtrans'] = '/fr/fr';
 			}
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
