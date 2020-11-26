@@ -19,7 +19,7 @@ class translate extends common {
 		'index' => self::GROUP_MODERATOR,
 		'language' => self::GROUP_VISITOR
 	];
-	
+
 	public static $typeTranslate = [
 		'none'   => 'Masqué',
 		'script' => 'Automatique',
@@ -37,7 +37,7 @@ class translate extends common {
 			foreach (self::$i18nList as $keyi18n => $value) {
 				if ($keyi18n === 'fr') {continue;}
 				// Effacement d'une langue installée
-				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
+				if ( is_dir( self::DATA_DIR . $keyi18n ) === false
 					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'none')
 				 {
 						$this->removeDir( self::DATA_DIR . $keyi18n);
