@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.010';
+	const ZWII_VERSION = '10.4.00.011';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -245,7 +245,7 @@ class common {
 			 AND $this->getData(['config','translate','autoDetect']) === true ) {
 			// Langue du navigateur
 			if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-				setrawcookie('googtrans', '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'], time() + 3600, helper::baseUrl());
+				setrawcookie('googtrans', '/fr/'. substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
 				//$_SESSION['googtrans'] = '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 			}
 		}
