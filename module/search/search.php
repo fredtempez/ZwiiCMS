@@ -39,7 +39,7 @@ class search extends common {
 	];
 
 	// Message par défaut
-	public static $messagePlaceHolder = 'Un ou plusieurs mots-clés entre des espaces ou des guillemets';
+	public static $messagePlaceHolder = 'Un ou plusieurs mots-clés séparés par des espaces ou des guillemets';
 	public static $messageButtontext = 'Rechercher';
 
 	const SEARCH_VERSION = '1.1';
@@ -222,6 +222,39 @@ class search extends common {
 		// Construire la clé de recherche selon options de recherche
 		$keywords = '/(';
 		foreach ($a as $key => $value) {
+
+					// Traduction du mot clé si le script Google Trad est actif
+					// Le multi langue est sélectionné 
+					if (  	$this->getData(['config','translate','scriptGoogle']) === true
+					AND
+						// et la traduction de la langue courante est automatique
+						(   isset($_COOKIE['googtrans'])
+							AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+							// Ou traduction automatique
+								OR 	$this->getData(['config','translate','autoDetect']) === true )
+						)
+					// Cas des pages d'administration
+					// Pas connecté
+					AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+						// Ou connecté avec option active
+						OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+							AND $this->getData(['config','translate','admin']) === true 
+						)
+				)
+			{
+				// Lire le ccokie GoogTrans
+					$language['target'] = substr($_COOKIE['googtrans'],4,2);
+					$language['origin'] = substr($_COOKIE['googtrans'],1,2);
+					if ($language['target'] !== $language['origin']) {
+						echo "<pre>";
+						$d = $this->translate($language['target'],$language['origin'],$value);
+						echo $d[0][1];
+						echo "</pre>";
+					}
+					
+			}
+
+
 			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|' ;
 		}
 		$keywords = substr($keywords,0,strlen($keywords) - 1);
@@ -252,5 +285,11 @@ class search extends common {
 				]);
 			}
 		}
+	}
+
+	// Requête de traduction avec le script Google
+	private function translate($from_lan, $to_lan, $text) {
+		$arrayjson = json_decode(file_get_contents('https://translate.googleapis.com/translate_a/single?client=gtx&sl='.$from_lan.'&tl='.$to_lan.'&dt=t&q='.$text));  
+		return $arrayjson;
 	}
 }
