@@ -105,6 +105,46 @@ class search extends common {
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			self::$motclef=$this->getInput('searchMotphraseclef');
 
+
+			// Traduction du mot clé si le script Google Trad est actif
+			// Le multi langue est sélectionné 
+			if (  $this->getData(['config','translate','scriptGoogle']) === true
+			AND
+				// et la traduction de la langue courante est automatique
+				(   isset($_COOKIE['googtrans'])
+					AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+					// Ou traduction automatique
+						OR 	$this->getData(['config','translate','autoDetect']) === true )
+				)
+			// Cas des pages d'administration
+			// Pas connecté
+			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				// Ou connecté avec option active
+				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getData(['config','translate','admin']) === true 
+					)
+				)
+			{
+				// Découper la chaîne
+				$f = str_getcsv(self::$motclef, ' ');
+				$f = str_replace(' ','',$f);
+				$f = str_replace('"','',$f);
+				// Lire le cookie GoogTrans et déterminer les langues cibles
+				$language['target'] = substr($_COOKIE['googtrans'],4,2);
+				$language['origin'] = substr($_COOKIE['googtrans'],1,2);
+				if ($language['target'] !== $language['origin']) {
+					foreach ($f as $key => $value) {
+						echo $value. "<br>";
+						/*$e = $this->translate($language['target'],$language['origin'],$value);
+						self::$motclef = str_replace($value,$e[0][1],self::$motclef);*/
+					}
+					echo self::$motclef;
+				}
+
+			}
+
+
+
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
 			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
@@ -221,39 +261,8 @@ class search extends common {
 
 		// Construire la clé de recherche selon options de recherche
 		$keywords = '/(';
+
 		foreach ($a as $key => $value) {
-
-					// Traduction du mot clé si le script Google Trad est actif
-					// Le multi langue est sélectionné 
-					if (  	$this->getData(['config','translate','scriptGoogle']) === true
-					AND
-						// et la traduction de la langue courante est automatique
-						(   isset($_COOKIE['googtrans'])
-							AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
-							// Ou traduction automatique
-								OR 	$this->getData(['config','translate','autoDetect']) === true )
-						)
-					// Cas des pages d'administration
-					// Pas connecté
-					AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						// Ou connecté avec option active
-						OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-							AND $this->getData(['config','translate','admin']) === true 
-						)
-				)
-			{
-				// Lire le ccokie GoogTrans
-					$language['target'] = substr($_COOKIE['googtrans'],4,2);
-					$language['origin'] = substr($_COOKIE['googtrans'],1,2);
-					if ($language['target'] !== $language['origin']) {
-						echo "<pre>";
-						$d = $this->translate($language['target'],$language['origin'],$value);
-						echo $d[0][1];
-						echo "</pre>";
-					}
-					
-			}
-
 
 			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|' ;
 		}
