@@ -40,7 +40,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.09';
+	const ZWII_VERSION = '10.3.10';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1842,6 +1842,17 @@ class core extends common {
 				else {
 					$access = false;
 				}
+			}
+			// Empêcher l'accès aux page désactivée par URL directe
+			if ( ( $this->getData(['page', $this->getUrl(0),'disable']) === true
+					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+				) OR ( 
+				$this->getData(['page', $this->getUrl(0),'disable']) === true 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getUser('group') < self::GROUP_MODERATOR
+				)
+			){
+				$access = false;
 			}
 		}
 
