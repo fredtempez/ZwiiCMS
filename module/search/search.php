@@ -126,8 +126,8 @@ class search extends common {
 					foreach($childIds as $childId) {
 							// Sous page
 							if ($this->getData(['page', $childId, 'disable']) === false &&
-                                $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
-                                $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
+                                $this->getUser('group') >= $this->getData(['page', $childId, 'group']) &&
+                                $this->getData(['page', $childId, 'block']) !== 'bar') 	{
                                     $url = $childId;
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = ' ' . $titre . ' ' . $this->getData(['page', $childId, 'content']);
