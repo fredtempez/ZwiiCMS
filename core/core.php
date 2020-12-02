@@ -1557,7 +1557,8 @@ class common {
 					}
 				}
 			}
-			// Nouvelle data : Localisation
+
+			// Création du fichier locale.json
 			$this->setData(['locale','homePageId',$this->getData(['config','homePageId'])]);
 			$this->setData(['locale','page404',$this->getData(['config','page404'])]);
 			$this->setData(['locale','page403',$this->getData(['config','page403'])]);
