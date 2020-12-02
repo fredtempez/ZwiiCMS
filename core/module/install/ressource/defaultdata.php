@@ -34,23 +34,9 @@ class init extends common {
 				'log' => false,
 				'captcha' => true
 			],
-			'translate' => [
-				'scriptGoogle' => false,
-				'showCredits' => false,
-				'autoDetect' => false,
-				'admin'	 => false,
-				'translateFlagFR' => true,
-				'translateFlagDE' => true,
-				'translateFlagEN' => true,
-				'translateFlagES' => false,
-				'translateFlagIT' => false,
-				'translateFlagNL' => false,
-				'translateFlagPT' => false
-
-			],
 		],
 		'core' => [
-			'dataVersion' => 10306,
+			'dataVersion' => 10400,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

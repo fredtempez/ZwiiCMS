@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.008';
+	const ZWII_VERSION = '10.4.00.009';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1565,7 +1565,8 @@ class common {
 					}
 				}
 			}
-			// Localisation
+
+			// Création du fichier locale.json
 			$this->setData(['locale','homePageId',$this->getData(['config','homePageId'])]);
 			$this->setData(['locale','page404',$this->getData(['config','page404'])]);
 			$this->setData(['locale','page403',$this->getData(['config','page403'])]);
@@ -1574,25 +1575,7 @@ class common {
 			$this->setData(['locale','searchPageId',$this->getData(['config','searchPageId'])]);
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
-			$this->setData(['config','translate','scriptGoogle',false]);
-			$this->setData(['config','translate','showCredits',false]);
-			$this->setData(['config','translate','admin',false]);
-			$this->setData(['config','translate','autoDetect',false]);
-			$this->setData(['config','translate','scriptFR',false]);
-			$this->setData(['config','translate','scriptDE',false]);
-			$this->setData(['config','translate','scriptEN',false]);
-			$this->setData(['config','translate','scriptES',false]);
-			$this->setData(['config','translate','scriptIT',false]);
-			$this->setData(['config','translate','scriptNL',false]);
-			$this->setData(['config','translate','scriptPT',false]);
-			$this->setData(['config','translate','site',false]);
-			$this->setData(['config','translate','siteFR',false]);
-			$this->setData(['config','translate','siteDE',false]);
-			$this->setData(['config','translate','siteEN',false]);
-			$this->setData(['config','translate','siteES',false]);
-			$this->setData(['config','translate','siteIT',false]);
-			$this->setData(['config','translate','siteNL',false]);
-			$this->setData(['config','translate','sitePT',false]);
+
 			$this->setData(['core', 'dataVersion', 10400]);
 
 			/**
