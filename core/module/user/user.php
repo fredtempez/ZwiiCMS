@@ -611,17 +611,18 @@ class user extends common {
 					) {
 						if ( !array_key_exists('id', $item)) {
 							// Génération de l'identifiant à partir des deux premières lettres du prénom et du nom
-							$item['id'] = substr($item['prenom'],0,2) . substr($item['nom'],0,2);
+							$item['id'] = substr($item['prenom'],0,3) . substr($item['nom'],0,3);
 						}
 
 						// Validation du groupe ou groupe inexistant valant 1 (membre)
-						if (!array_key_exists('groupe',$item)) {
+						if ( !array_key_exists('groupe',$item)) {
+							// Définition du groupe (membre)
+							$item['groupe'] = 1;
+						} else {
+							
 							$item['groupe'] = (int) $item['groupe'];
 							$item['groupe'] =   ( $item['groupe'] >= self::GROUP_BANNED AND $item['groupe'] <= self::GROUP_ADMIN )
 												? $item['groupe'] : 1;
-						} else {
-							// Définition du groupe (membre)
-							$item['groupe'] = 1;
 						}
 						// Suppression d'espaces éventuels au début ou à la fin
 						$item['email']  = str_replace(' ', '', $item['email']);
