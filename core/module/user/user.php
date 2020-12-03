@@ -598,21 +598,36 @@ class user extends common {
 				// Traitement des données
 				foreach($csv as $item ) {
 					// Données valides
-					if( array_key_exists('id', $item)
-					AND array_key_exists('prenom',$item)
+					//if( array_key_exists('id', $item)
+					if( array_key_exists('prenom',$item)
 					AND array_key_exists('nom',$item)
-					AND array_key_exists('groupe',$item)
+					//AND array_key_exists('groupe',$item)
 					AND array_key_exists('email',$item)
 					AND $item['nom']
 					AND $item['prenom']
-					AND $item['id']
+					//AND $item['id']
 					AND $item['email']
-					AND $item['groupe']
+					//AND $item['groupe']
 					) {
-						// Validation du groupe
-						$item['groupe'] = (int) $item['groupe'];
-						$item['groupe'] =   ( $item['groupe'] >= self::GROUP_BANNED AND $item['groupe'] <= self::GROUP_ADMIN )
-											  ? $item['groupe'] : 1;
+						if ( !array_key_exists('id', $item)) {
+							// Génération de l'identifiant à partir des deux premières lettres du prénom et du nom
+							$item['id'] = substr($item['prenom'],0,2) . substr($item['nom'],0,2);
+						}
+
+						// Validation du groupe ou groupe inexistant valant 1 (membre)
+						if (!array_key_exists('groupe',$item)) {
+							$item['groupe'] = (int) $item['groupe'];
+							$item['groupe'] =   ( $item['groupe'] >= self::GROUP_BANNED AND $item['groupe'] <= self::GROUP_ADMIN )
+												? $item['groupe'] : 1;
+						} else {
+							// Définition du groupe (membre)
+							$item['groupe'] = 1;
+						}
+						// Suppression d'espaces éventuels au début ou à la fin
+						$item['email']  = str_replace(' ', '', $item['email']);
+						$item['id']     = str_replace(' ', '', $item['id']);
+						$item['groupe'] = str_replace(' ', '', $item['groupe']);
+
 						// L'utilisateur existe
 						if ( $this->getData(['user',helper::filter($item['id'] , helper::FILTER_ID)]))
 						{
@@ -625,7 +640,7 @@ class user extends common {
 								$item['prenom'],
 								self::$groups[$item['groupe']],
 								$item['prenom'],
-								$item['email'],
+								helper::filter($item['email'] , helper::FILTER_MAIL),
 								$item['notification']
 							];
 							// L'utilisateur n'existe pas
