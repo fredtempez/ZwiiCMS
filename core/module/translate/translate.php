@@ -21,7 +21,7 @@ class translate extends common {
 	];
 
 	public static $typeTranslate = [
-		'none'   => 'Masqué',
+		'none'   => 'Drapeau masqué',
 		'script' => 'Traduction automatique',
 		'site'   => 'Traduction rédigée'
 	];
