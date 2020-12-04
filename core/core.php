@@ -1932,6 +1932,17 @@ class core extends common {
 					$access = false;
 				}
 			}
+			// Empêcher l'accès aux page désactivée par URL directe
+			if ( ( $this->getData(['page', $this->getUrl(0),'disable']) === true
+					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+				) OR ( 
+				$this->getData(['page', $this->getUrl(0),'disable']) === true 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getUser('group') < self::GROUP_MODERATOR
+				)
+			){
+				$access = false;
+			}
 		}
 
 		/**
@@ -2564,12 +2575,17 @@ class layout extends common {
 			// Mise en page de l'item
 			$itemsLeft .= '<li>';
 
-			if ( $this->getData(['page',$parentPageId,'disable']) === true
-				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	)
-
-					{$itemsLeft .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
+				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+				 ) OR ( 
+					$this->getData(['page',$parentPageId,'disable']) === true 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getUser('group') < self::GROUP_MODERATOR
+				 )
+			){
+				$itemsLeft .= '<a class="' . $parentPageId . '" href="'. helper::baseUrl() . $this->getUrl(0).'">';
 			} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
+				$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -2619,9 +2635,15 @@ class layout extends common {
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$itemsLeft .= '<li>';
-				if ( $this->getData(['page',$childKey,'disable']) === true
-					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$itemsLeft .= '<a class="' . $parentPageId . '" href="'.$this->getUrl(1).'">';
+				if ( ( $this->getData(['page',$childKey,'disable']) === true
+						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+						) OR ( 
+						$this->getData(['page',$childKey,'disable']) === true 
+						AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						AND $this->getUser('group') < self::GROUP_MODERATOR
+						)
+				){
+					$itemsLeft .= '<a class="' . $parentPageId . '" href="'.helper::baseUrl() . $this->getUrl(0).'">';
 				} else {
 					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
 				}
