@@ -14,11 +14,11 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<div class="block">
-			<h4>Activation</h4>
+			<div class="block" id="flagsWrapper">
+			<h4>Affichage des drapeaux et sélection du mode de traduction</h4>
 				<div class="row">
 					<div class="col4 offset4">
-						<?php echo template::select('translateFR', ['non'=>'Masqué','site'=>'Affiché'], [
+						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Affiché'], [
 							'label' => 'Français',
 							'selected' => $this->getData(['config', 'translate' , 'fr'])
 						]); ?>
@@ -29,18 +29,21 @@
 						<div class="col8 offset2">
 							<?php echo template::select('translateDE', $module::$typeTranslate, [
 								'label' => 'Allemand',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'de'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateEN', $module::$typeTranslate, [
 								'label' => 'Anglais',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'en'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateES', $module::$typeTranslate, [
 								'label' => 'Espagnol',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'es'])
 							]); ?>
 						</div>
@@ -49,18 +52,21 @@
 						<div class="col8 offset2">
 							<?php echo template::select('translateIT', $module::$typeTranslate, [
 								'label' => 'Italien',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'it'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateNL', $module::$typeTranslate, [
 								'label' => 'Néerlandais',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'nl'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translatePT', $module::$typeTranslate, [
 								'label' => 'Portugais',
+								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'translate' , 'pt'])
 							]); ?>
 						</div>
@@ -83,6 +89,7 @@
 					<div class="col6">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
 							'checked' => $this->getData(['config','translate', 'showCredits']),
+							'class' => 'translateGoogleScriptOption',
 							'help' => 'Option recommandée pour le respect du droit d\'auteur'
 						]); ?>
 					</div>
@@ -91,12 +98,14 @@
 					<div class="col6">
 						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue', [
 							'checked' => $this->getData(['config','translate', 'autoDetect']),
+							'class' => 'translateGoogleScriptOption',
 							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
 								'checked' => $this->getData(['config','translate', 'admin']),
+								'class' => 'translateGoogleScriptOption',
 								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
 							]); ?>
 					</div>
