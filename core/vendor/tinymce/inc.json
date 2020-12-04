@@ -2,7 +2,5 @@
 	"tinymce.min.js",
 	"jquery.tinymce.min.js",
 	"init.js",
-	"init.css",
-	"plugins/codesample/js/prism.fr",
-	"plugins/codesample/css/prism.css"
+	"init.css"
 ]

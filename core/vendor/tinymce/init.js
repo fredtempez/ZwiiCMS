@@ -104,9 +104,6 @@ tinymce.init({
 	images_dataimg_filter: function(img) {
 		return img.hasAttribute('internal-blob');
 	},*/
-	// Autorise tous les éléments
-	valid_elements :"*[*]",
-	valid_children : "*[*]",
 	// Autorise l'ajout de script
 	// extended_valid_elements: "script[language|type|src]",
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
