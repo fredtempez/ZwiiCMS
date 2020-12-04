@@ -18,6 +18,13 @@
     - Traduction automatique dans la langue du navigateur.
     - Amélioration de la structure du flux RSS.
 
+## Version 10.3.10
+Corrections :
+    - Conflit page inactive et droit d'un membre.
+    - Module de recherche, correction dans les pages enfants.
+Modification :
+    - TinyMCE nettoyage init.js d'options non supportées.
+
 ## Version 10.3.09
 Corrections :
     - Configuration : persistance de l'ouverture des blocs.

@@ -118,8 +118,7 @@ class template {
         copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
 
         // Début du wrapper
-        $html = '<div class="captcha" id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
-
+        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="captcha inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
                  '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
