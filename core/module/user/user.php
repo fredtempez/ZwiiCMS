@@ -625,7 +625,7 @@ class user extends common {
 								$item['prenom'],
 								self::$groups[$item['groupe']],
 								$item['prenom'],
-								$item['email'],
+								helper::filter($item['email'] , helper::FILTER_MAIL),
 								$item['notification']
 							];
 							// L'utilisateur n'existe pas
