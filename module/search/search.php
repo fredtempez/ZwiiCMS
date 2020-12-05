@@ -39,7 +39,7 @@ class search extends common {
 	];
 
 	// Message par défaut
-	public static $messagePlaceHolder = 'Un ou plusieurs mots-clés séparés par des espaces ou des guillemets';
+	public static $messagePlaceHolder = '<span class="notranslate">Un ou plusieurs mots-clés séparés par des espaces ou des guillemets</span>';
 	public static $messageButtontext = 'Rechercher';
 
 	const SEARCH_VERSION = '1.1';
@@ -104,7 +104,8 @@ class search extends common {
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			self::$motclef=$this->getInput('searchMotphraseclef');
-
+			// Variable de travail, on conserve la variable globale pour l'affichage du résultat
+			$motclef = self::$motclef;
 
 			// Traduction du mot clé si le script Google Trad est actif
 			// Le multi langue est sélectionné 
@@ -126,29 +127,22 @@ class search extends common {
 				)
 			{
 				// Découper la chaîne
-				$f = str_getcsv(self::$motclef, ' ');
-				$f = str_replace(' ','',$f);
-				$f = str_replace('"','',$f);
+				$f = str_getcsv($motclef, ' ');
 				// Lire le cookie GoogTrans et déterminer les langues cibles
-				$language['target'] = substr($_COOKIE['googtrans'],4,2);
-				$language['origin'] = substr($_COOKIE['googtrans'],1,2);
+				$language['origin'] = substr($_COOKIE['googtrans'],4,2);
+				$language['target'] = substr($_COOKIE['googtrans'],1,2);
 				if ($language['target'] !== $language['origin']) {
 					foreach ($f as $key => $value) {
-						echo $value. "<br>";
-						/*$e = $this->translate($language['target'],$language['origin'],$value);
-						self::$motclef = str_replace($value,$e[0][1],self::$motclef);*/
+						$e = $this->translate($language['origin'],$language['target'],$value);
+						$motclef = str_replace($value,$e,$motclef);
 					}
-					echo self::$motclef;
 				}
-
 			}
-
-
 
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
 			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
-			if (self::$motclef !== '' ) {
+			if ($motclef !== '' ) {
 				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
 					if ($this->getData(['page', $parentId, 'disable']) === false  &&
                         $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
@@ -157,7 +151,7 @@ class search extends common {
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$contenu =  ' ' . $titre . ' ' . $this->getData(['page', $parentId, 'content']);
 						// Pages sauf pages filles et articles de blog
-						$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+						$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 						if (is_array($tempData) ) {
 							$result [] = $tempData;
 						}
@@ -172,7 +166,7 @@ class search extends common {
                                     $titre = $this->getData(['page', $childId, 'title']);
                                     $contenu = ' ' . $titre . ' ' . $this->getData(['page', $childId, 'content']);
                                     //Pages filles
-									$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+									$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 									if (is_array($tempData) ) {
 										$result [] = $tempData;
 									}
@@ -187,7 +181,7 @@ class search extends common {
 										$titre = $article['title'];
 										$contenu = ' ' . $titre . ' ' . $article['content'];
 										// Articles de sous-page de type blog
-										$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+										$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 										if (is_array($tempData) ) {
 											$result [] = $tempData;
 										}
@@ -205,7 +199,7 @@ class search extends common {
 								$titre = $article['title'];
 								$contenu = ' ' . $titre . ' ' . $article['content'];
 								// Articles de Blog
-								$tempData  = $this->occurrence($url, $titre, $contenu, self::$motclef, self::$motentier);
+								$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 								if (is_array($tempData) ) {
 									$result [] = $tempData;
 								}
@@ -298,7 +292,7 @@ class search extends common {
 
 	// Requête de traduction avec le script Google
 	private function translate($from_lan, $to_lan, $text) {
-		$arrayjson = json_decode(file_get_contents('https://translate.googleapis.com/translate_a/single?client=gtx&sl='.$from_lan.'&tl='.$to_lan.'&dt=t&q='.$text));  
-		return $arrayjson;
+		$arrayjson = json_decode(file_get_contents('https://translate.googleapis.com/translate_a/single?client=gtx&sl='.$from_lan.'&tl=fr&dt=t&q='.$text),true);
+		return $arrayjson[0][0][0];
 	}
 }

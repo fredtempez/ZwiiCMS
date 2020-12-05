@@ -3,10 +3,10 @@
 		<div class="col10 offset1">
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
-                    <?php echo template::text('searchMotphraseclef', [
-                        'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : $module::$messagePlaceHolder,
-                        'value' => $module::$motclef
-                    ]); ?>
+                        <?php echo template::text('searchMotphraseclef', [
+                            'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']) : $module::$messagePlaceHolder,
+                            'value' => $module::$motclef
+                        ]); ?>
                 </div>
                 <div class="col3 verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
