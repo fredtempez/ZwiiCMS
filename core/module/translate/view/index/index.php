@@ -18,7 +18,7 @@
 			<h4>Affichage des drapeaux et sélection du mode de traduction</h4>
 				<div class="row">
 					<div class="col4 offset4">
-						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Affiché'], [
+						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [
 							'label' => 'Français',
 							'selected' => $this->getData(['config', 'translate' , 'fr'])
 						]); ?>

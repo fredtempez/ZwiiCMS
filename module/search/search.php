@@ -128,6 +128,9 @@ class search extends common {
 			{
 				// Découper la chaîne
 				$f = str_getcsv($motclef, ' ');
+				// Supprimer les espaces et les guillemets
+				$f = str_replace(' ','',$f);
+				$f = str_replace('"','',$f);
 				// Lire le cookie GoogTrans et déterminer les langues cibles
 				$language['origin'] = substr($_COOKIE['googtrans'],4,2);
 				$language['target'] = substr($_COOKIE['googtrans'],1,2);
