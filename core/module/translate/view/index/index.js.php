@@ -14,7 +14,6 @@
  */
 
 $(document).ready(function(){
-
     /*
     * Active le script Google quand une langue est traduite automatiquement
     */

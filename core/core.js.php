@@ -456,4 +456,12 @@ $(document).ready(function(){
 			$(changeIcon).addClass('zwiico-menu');
 		};
 	});
+
+	/**
+     * Active le système d'aide interne
+     */
+    $(".helpDisplayButton").on("click",function() {
+        $(".helpDisplayContent").slideToggle();
+	});
+
 });

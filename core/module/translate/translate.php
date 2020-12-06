@@ -16,15 +16,69 @@ class translate extends common {
 
 	public static $actions = [
 		/*'config' => self::GROUP_MODERATOR,*/
-		'index' => self::GROUP_MODERATOR,
+		'index' => self::GROUP_ADMIN,
+		'advanced' => self::GROUP_ADMIN,
 		'language' => self::GROUP_VISITOR
 	];
 
-	public static $typeTranslate = [
-		'none'   => 'Drapeau masqué',
-		'script' => 'Traduction automatique',
-		'site'   => 'Traduction rédigée'
-	];
+	public static $translateOptions = [];
+
+	// Liste des langues installées
+	public static $languagesInstalled = [];
+	// Liste des langues cibles
+	public static $languagesTarget = [];
+
+	/**
+	 * Configuration avancée des langues
+	 */
+	public function advanced() {
+
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			// Initialisation
+			$success = false;
+			$copyFrom = $this->getInput('translateFormAdvancedSource');
+			$toCreate = $this->getInput('translateFormAdvancedTarget');
+			// Création du dossier
+			if (is_dir(self::DATA_DIR . $toCreate) === false ) { // Si le dossier est déjà créé
+				$success  = mkdir (self::DATA_DIR . $toCreate);
+			} else {
+				$success = true;
+			}
+			// Copier les données par défaut avec gestion des erreurs
+			$success  = (copy (self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
+			$success  = (copy (self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
+			$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;			
+			// Enregistrer la langue
+			if ($success) {
+				$this->setData(['config', 'translate', $toCreate, 'site' ]);
+				$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
+			} else {
+				$notification = "Quelque chose n\'a pas foncitionné, vérifiez les permissions.";
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification'  =>  $notification,
+				'title' 		=> 'Gestion avancée',
+				'view' 			=> 'index',
+				'state' 		=>  $success
+			]);
+		}
+		// Tableau des langues installées
+		foreach (self::$i18nList as $key => $value) {
+			if ($this->getData(['config','translate',$key]) === 'site') {
+				self::$languagesInstalled[$key] = $value;
+			}
+		}
+		// Tableau des langues cibles
+		self::$languagesTarget = array_diff (self::$i18nList,self::$languagesInstalled);
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Gestion avancée',
+			'view' => 'advanced'
+		]);
+	}
 
 	/**
 	 * Configuration
@@ -44,7 +98,7 @@ class translate extends common {
 				if ($keyi18n === 'fr') {continue;}
 				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
-					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'none')
+					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'delete')
 				 {
 						$this->removeDir( self::DATA_DIR . $keyi18n);
 				}
@@ -97,6 +151,23 @@ class translate extends common {
 				'state' => true
 			]);
 		}
+		// Modification de option de suppression de la langue installée.
+		foreach (self::$i18nList as $key => $value) {
+			if ($this->getData(['config','translate',$key]) === 'site') {
+				self::$translateOptions [$key] = [
+					'none'   => 'Drapeau masqué',
+					'script' => 'Traduction automatique',
+					'site'   => 'Traduction rédigée',
+					'delete' => 'Supprimer la traduction'
+				];
+			} else {
+				self::$translateOptions [$key] = [
+					'none'   => 'Drapeau masqué',
+					'script' => 'Traduction automatique',
+					'site'   => 'Traduction rédigée'
+				];
+			}
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Gestion des langues',
@@ -104,9 +175,11 @@ class translate extends common {
 		]);
 	}
 
-			/*
-	* Traitement du changement de langues
-	*/
+
+	/*
+	 * Traitement du changement de langue
+	 * Fonction utilisée par le noyau
+	 */
 	public function language() {
 		// Transmettre le choix au noyau
 		if ($this->getUrl(3) === 'script') {

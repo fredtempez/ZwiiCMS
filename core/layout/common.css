@@ -1702,3 +1702,23 @@ th.col12 {
 #googTransLogo img {
 	width: 60%;
 }
+
+/* Système d'aide */
+
+.helpDisplayContent {
+    display: none;
+    -webkit-box-shadow: 5px 5px 11px 0px #222222;
+    box-shadow: 5px 5px 11px 0px #222222;
+    border-radius: 5px;
+    padding: 2px 10px;
+    background-color:#333;
+    color: white;
+    position: fixed;
+    z-index: 30;
+    bottom: 5px;
+    margin: 
+}
+
+.helpDisplayButton {
+    cursor: pointer;
+}
