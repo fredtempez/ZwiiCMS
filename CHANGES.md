@@ -4,6 +4,7 @@
 Corrections : 
     - Conflit page inactive et droit d'un membre.
     - Module de recherche, correction dans les pages enfants.
+    - Module formulaire, perte des données en cas d'édition du fomulaire ou des champs.
 Modification :
     - TinyMCE nettoyage init.js d'options non supportées.
 
