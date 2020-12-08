@@ -127,8 +127,8 @@
 	<div class="col10 helpDisplayContent">
 		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée.
 		Si vous sélectionnez la traduction rédigée, seule la page d'accueil est générée, à vous de rédiger le site dans la langue sélectionnée.
-		Il est possible de copier les pages et les modules  d'une langue vers une autre en cliquant sur le bouton de gestion avancée.</p>
+		Il est cependant possible de copier les pages et les modules  d'une langue vers une autre en cliquant sur le bouton de gestion avancée.</p>
 		<p>Une traduction peut être cachée en masquant le drapeau, la suppression d'une traduction rédigée est définitive, pensez à sauvegarder.
-		Afficher le drapeau français afin de revenir à la langue d'origine du site.</p>
+		Afficher le drapeau français afin de revenir à la traduction originale.</p>
 	</div>
 <?php echo template::formClose(); ?>

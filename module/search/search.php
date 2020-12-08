@@ -39,7 +39,7 @@ class search extends common {
 	];
 
 	// Message par défaut
-	public static $messagePlaceHolder = '<span class="notranslate">Un ou plusieurs mots-clés séparés par des espaces ou des guillemets</span>';
+	public static $messagePlaceHolder = '<span class=\"notranslate\">Un ou plusieurs mots-clés séparés par des espaces ou des guillemets</span>';
 	public static $messageButtontext = 'Rechercher';
 
 	const SEARCH_VERSION = '1.1';
