@@ -44,8 +44,8 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.012';
-	const ZWII_UPDATE_CHANNEL = "v10";
+	const ZWII_VERSION = '11.0.000';
+	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
 	public static $coreModuleIds = [
