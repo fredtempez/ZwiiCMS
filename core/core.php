@@ -206,7 +206,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dirData ($keys,self::$i18nSite)
+				'dir' => $this->dataPath ($keys,self::$i18nCurrent)
 			]);;
 		}
 
@@ -226,7 +226,7 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dirData ($stageId, self::$i18nSite);
+			$folder = $this->dataPath ($stageId, self::$i18nCurrent);
 			if (file_exists($folder . $stageId .'.json') === false) {
 				$this->initData($stageId,self::$i18nSite);
 				common::$coreNotices [] = $stageId ;
@@ -706,7 +706,7 @@ class common {
 	 * @param $lang langue des pages
 	 * @return string du dossier à créer
 	 */
-	public function dirData($id, $lang) {
+	public function dataPath($id, $lang) {
 		// Sauf pour les pages et les modules
 		if ($id === 'page' ||
 			$id === 'module'  ||

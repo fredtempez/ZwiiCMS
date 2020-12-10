@@ -108,19 +108,19 @@ class translate extends common {
 					// Créer les données absentes
 					if (is_dir( self::DATA_DIR . $keyi18n )  === false ) {
 						mkdir( self::DATA_DIR . $keyi18n);
-						// Charger les modèles
-						require_once('core/module/install/ressource/defaultdata.php');
-						// Nouvelle instance page, module, locale
-						$files = ['page','module','locale'];
-						foreach ($files as $keyFile) {
-							echo $keyFile;
-							$e = new \Prowebcraft\JsonDb([
-								'name' => $keyFile . '.json',
-								'dir' => $this->dirData ($keyFile,$keyi18n)
-							]);;
-							$e->set($keyFile, init::$defaultData[$keyFile]);
-							$e->save();
-						}
+					}
+					// Charger les modèles
+					require_once('core/module/install/ressource/defaultdata.php');
+					// Nouvelle instance des pages, module, locale
+					$files = ['page','module','locale'];
+					foreach ($files as $keyFile) {
+						echo $keyFile;
+						$e = new \Prowebcraft\JsonDb([
+							'name' => $keyFile . '.json',
+							'dir' => $this->dataPath ($keyFile,$keyi18n)
+						]);;
+						$e->set($keyFile, init::$defaultData[$keyFile]);
+						$e->save();
 					}
 				}
 				// Active le script si une langue est en trad auto
