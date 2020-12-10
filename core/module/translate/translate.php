@@ -51,7 +51,7 @@ class translate extends common {
 						echo $keyFile;
 						$e = new \Prowebcraft\JsonDb([
 							'name' => $keyFile . '.json',
-							'dir' => $this->dirData ($keyFile,$keyi18n)
+							'dir' => $this->dataPath ($keyFile,$keyi18n)
 						]);;
 						$e->set($keyFile, init::$defaultData[$keyFile]);
 						$e->save();
