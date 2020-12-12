@@ -221,14 +221,18 @@ core.start = function() {
 	/**
 	 * Message sur l'utilisation des cookies
 	 */
+	var analytics = "";
+	if (<?php echo json_encode($this->getData(['config', 'analyticsId'])); ?>) {
+		 analytics = ' grâce au cookie Google Analytics'
+	}
 	if(<?php echo json_encode($this->getData(['config', 'cookieConsent'])); ?>) {
 		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
 			$("body").append(
 				$("<div>").attr("id", "cookieConsent").append(
-					$("<span>").text("En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies et de vos données de visite."),
+					$("<span>").html("<p>Ce site utilise des cookies pour assurer l'authentification, améliorer l'expérience utilisateur"+analytics+". <br/>En cliquant sur ”J’accepte”, vous acceptez l’utilisation de ces cookies.</p>"),
 					$("<span>")
 						.attr("id", "cookieConsentConfirm")
-						.text("OK")
+						.text("Accepter")
 						.on("click", function() {
 							// Créé le cookie d'acceptation
 							var expires = new Date();
@@ -237,7 +241,19 @@ core.start = function() {
 							document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires;
 							// Ferme le message
 							$(this).parents("#cookieConsent").fadeOut();
-						})
+						}),
+					$("<span>")
+					.attr("id", "cookieConsentRefuse")
+					.text("Refuser")
+					.on("click", function() {
+						// Créé le cookie d'acceptation
+						var expires = new Date();
+						expires.setFullYear(expires.getFullYear() + 1);
+						expires = "expires=" + expires.toUTCString();
+						document.cookie = "ZWII_COOKIE_CONSENT=false;" + expires;
+						// Ferme le message
+						$(this).parents("#cookieConsent").fadeOut();
+					}),
 				)
 			);
 		}
