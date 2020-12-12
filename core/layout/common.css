@@ -835,31 +835,35 @@ footer #footerSocials .zwiico-github:hover {
 	background: rgba(33, 34, 35, 1);
 }
 
-/* Message sur les cookies */
-#cookieConsent {
-	opacity: .9;
-	background: #212223;
-	position: fixed;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	color: #FFF;
-	padding: 10px;
-	z-index: 60;
-	text-align: center;
-	font-size: .9em;
-}
-#cookieConsentConfirm {
-	cursor: pointer;
-	margin-left: 10px;
-	background: #666;
-	padding: 4px 8px;
-	display: inline-block;
-	transition: background .3s ease-out;
-}
-#cookieConsentConfirm:hover {
-	background: #777;
-}
+	/* Message sur les cookies */
+	#cookieConsent {
+		width: 80%;
+		margin: auto;
+		opacity: .9;
+		background: #212223;
+		position: fixed;
+		right: 0;
+		bottom: 5%;
+		left: 0;
+		color: #FFF;
+		padding: 10px;
+		z-index: 60;
+		text-align: center;
+		font-size: 1em;
+	}
+
+	#cookieConsentConfirm, #cookieConsentRefuse {
+		cursor: pointer;
+		margin-left: 10px;
+		background: #666;
+		padding: 4px 8px;
+		display: inline-block;
+		transition: background .3s ease-out;
+	}
+
+	#cookieConsentConfirm:hover, #cookieConsentRefuse:hover {
+		background: #777;
+	}
 
 /* Bloc */
 .block {
