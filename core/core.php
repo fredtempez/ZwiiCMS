@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.009';
+	const ZWII_VERSION = '10.4.00.010';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1929,9 +1929,9 @@ class core extends common {
 			}
 			// Empêcher l'accès aux page désactivée par URL directe
 			if ( ( $this->getData(['page', $this->getUrl(0),'disable']) === true
-					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
-				) OR ( 
-				$this->getData(['page', $this->getUrl(0),'disable']) === true 
+					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				) OR (
+				$this->getData(['page', $this->getUrl(0),'disable']) === true
 					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getUser('group') < self::GROUP_MODERATOR
 				)
@@ -2297,7 +2297,7 @@ class layout extends common {
 	 * Affiche le script Google Analytics
 	 */
 	public function showAnalytics() {
-		if($code = $this->getData(['config', 'analyticsId']) 
+		if($code = $this->getData(['config', 'analyticsId'])
 		  AND $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
 			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
 				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
@@ -2567,9 +2567,9 @@ class layout extends common {
 			$itemsLeft .= '<li>';
 
 			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
-				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
-				 ) OR ( 
-					$this->getData(['page',$parentPageId,'disable']) === true 
+				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				 ) OR (
+					$this->getData(['page',$parentPageId,'disable']) === true
 					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getUser('group') < self::GROUP_MODERATOR
 				 )
@@ -2627,9 +2627,9 @@ class layout extends common {
 				// Mise en page du sous-item
 				$itemsLeft .= '<li>';
 				if ( ( $this->getData(['page',$childKey,'disable']) === true
-						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
-						) OR ( 
-						$this->getData(['page',$childKey,'disable']) === true 
+						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+						) OR (
+						$this->getData(['page',$childKey,'disable']) === true
 						AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 						AND $this->getUser('group') < self::GROUP_MODERATOR
 						)

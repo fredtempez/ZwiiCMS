@@ -18,10 +18,17 @@
     - Traduction automatique dans la langue du navigateur.
     - Amélioration de la structure du flux RSS.
 
+## Version 10.3.11
+Modification :
+    - Message sur l'utilisation des cookies
+Coorection :
+    - Recherche inopérante dans les articles des blogs.
+
 ## Version 10.3.10
 Corrections :
     - Conflit page inactive et droit d'un membre.
     - Module de recherche, correction dans les pages enfants.
+    - Module formulaire, perte des données en cas d'édition du fomulaire ou des champs.
 Modification :
     - TinyMCE nettoyage init.js d'options non supportées.
 
