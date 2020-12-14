@@ -21,7 +21,7 @@
 ## Version 10.3.11
 Modification :
     - Message sur l'utilisation des cookies
-Coorection :
+Correction :
     - Recherche inopérante dans les articles des blogs.
 
 ## Version 10.3.10
