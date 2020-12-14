@@ -178,8 +178,8 @@ class search extends common {
 							// Articles d'une sous-page blog
 							if ($this->getData(['page', $childId, 'moduleId']) === 'blog')
 							{
-								foreach($this->getData(['module',$childId]) as $articleId => $article) {
-									if($this->getData(['module',$childId,$articleId,'state']) === true)  {
+								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
+									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
 										$url = $childId . '/' . $articleId;
 										$titre = $article['title'];
 										$contenu = ' ' . $titre . ' ' . $article['content'];
@@ -195,8 +195,8 @@ class search extends common {
 
 					// Articles d'un blog
 					if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' ) {
-						foreach($this->getData(['module',$parentId]) as $articleId => $article) {
-							if($this->getData(['module',$parentId,$articleId,'state']) === true)
+						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
+							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
 							{
 								$url = $parentId. '/' . $articleId;
 								$titre = $article['title'];
