@@ -1,6 +1,10 @@
 # Changelog
 
 
+## Version 10.3.12
+Correction :
+    - Impossibilité de lister les commentaires des articles de blog dans la fenêtre de gestion.
+
 ## Version 10.3.11
 Modification :
     - Message sur l'utilisation des cookies

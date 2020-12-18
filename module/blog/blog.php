@@ -52,7 +52,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.10';
+	const BLOG_VERSION = '2.11';
 
 	/**
 	 * Flux RSS
@@ -159,7 +159,7 @@ class blog extends common {
 	public function comment() {
 		// Liste les commentaires
 		$comments = [];
-		foreach((array) $this->getData(['module', $this->getUrl(0)]) as $articleId => $article) {
+		foreach((array) $this->getData(['module', $this->getUrl(0), 'posts']) as $articleId => $article) {
 			foreach($article['comment'] as &$comment) {
 				$comment['articleId'] = $articleId;
 			}
