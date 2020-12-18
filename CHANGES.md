@@ -18,6 +18,10 @@
     - Traduction automatique dans la langue du navigateur.
     - Amélioration de la structure du flux RSS.
 
+## Version 10.3.12
+Correction :
+    - Impossibilité de lister les commentaires des articles de blog dans la fenêtre de gestion.
+
 ## Version 10.3.11
 Modification :
     - Message sur l'utilisation des cookies
