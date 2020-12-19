@@ -977,7 +977,6 @@ class common {
 
 		// Empêcher la sauvegarde d'une donnée nulle.
 		if (gettype($keys[count($keys) -1]) === NULL) {
-			var_dump($keys);
 			return false;
 		}
 
