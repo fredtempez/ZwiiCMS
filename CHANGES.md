@@ -3,6 +3,7 @@
 ## Version 10.3.13
 Modification :
     - Verouillage des fichiers de données ouverts en écriture.
+    - Google Analytics, option d'anonymisation.
 
 ## Version 10.3.12
 Correction :

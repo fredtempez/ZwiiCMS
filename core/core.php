@@ -2205,7 +2205,7 @@ class layout extends common {
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
 					gtag("js", new Date());
-					gtag("config","'. $code .'");
+					gtag("config","'. $code .'",{ "anonymize_ip": true });
 				</script>';
 		}
 	}
