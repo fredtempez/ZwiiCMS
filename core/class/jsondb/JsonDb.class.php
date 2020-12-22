@@ -108,8 +108,7 @@ class JsonDb extends \Prowebcraft\Dot
             } else {
                 $this->data = json_decode(file_get_contents($this->db), true);
                 if (!$this->data === null) {
-                    throw new \InvalidArgumentException('Database file ' . $this->db
-                        . ' contains invalid json object. Please validate or remove file');
+                    throw new \InvalidArgumentException('Erreur de lecture du fichier de données ' . $this->db);
                 }
             }
         }
@@ -120,6 +119,16 @@ class JsonDb extends \Prowebcraft\Dot
      * Saving to local database
      */
     public function save() {
-        file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+        // 3 essais
+		for($i = 0; $i < 4; $i++) {
+			if(file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
+				break;
+			}
+			// Pause de 10 millisecondes
+            usleep(10000);
+            if ($i === 4) {
+                throw new \InvalidArgumentException('Erreur d\'écriture du fichier de données ' . $this->db);
+            }
+		}
     }
 }

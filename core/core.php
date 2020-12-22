@@ -40,7 +40,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.12';
+	const ZWII_VERSION = '10.3.13';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -617,7 +617,8 @@ class common {
 		$this->setData(['theme',$tempData['theme']]);
 
 		// Import des users sauvegardés si option active
-		if ($keepUsers === false) {
+		if ($keepUsers === false 
+			AND $tempData['user'] !== NULL) {
 			$this->setData(['user',$tempData['user']]);
 		}
 
@@ -1878,7 +1879,8 @@ class core extends common {
 			}
 		}
 		// Accès concurrent stocke la page visitée
-		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			AND $this->getUser('id') ) {
 			$this->setData(['user',$this->getUser('id'),'accessUrl',$this->getUrl()]);
 			$this->setData(['user',$this->getUser('id'),'accessTimer',time()]);
 		}

@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 10.3.13
+Modification :
+    - Verouillage des fichiers de données ouverts en écriture.
 
 ## Version 10.3.12
 Correction :
