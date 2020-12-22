@@ -120,13 +120,13 @@ class JsonDb extends \Prowebcraft\Dot
      */
     public function save() {
         // 3 essais
-		for($i = 0; $i < 4; $i++) {
+		for($i = 0; $i <=3; $i++) {
 			if(file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
 				break;
 			}
 			// Pause de 10 millisecondes
             usleep(10000);
-            if ($i === 4) {
+            if ($i === 3) {
                 throw new \InvalidArgumentException('Erreur d\'écriture du fichier de données ' . $this->db);
             }
 		}
