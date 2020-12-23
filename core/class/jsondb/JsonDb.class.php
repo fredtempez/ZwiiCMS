@@ -106,9 +106,17 @@ class JsonDb extends \Prowebcraft\Dot
             if (!file_exists($this->db)) {
                 return null;
             } else {
-                $this->data = json_decode(file_get_contents($this->db), true);
+                 // 3 essais
+		        for($i = 0; $i <3; $i++) {
+                     if ($this->data = json_decode(@file_get_contents($this->db), true) ) {
+                         break;
+                    }
+           			// Pause de 10 millisecondes
+                    usleep(10000);
+                }
+                // Gestion de l'erreur
                 if (!$this->data === null) {
-                    throw new \InvalidArgumentException('Erreur de lecture du fichier de données ' . $this->db);
+                    throw new \Exception('Erreur de lecture du fichier de données ' . $this->db);
                 }
             }
         }
@@ -120,14 +128,14 @@ class JsonDb extends \Prowebcraft\Dot
      */
     public function save() {
         // 3 essais
-		for($i = 0; $i <=3; $i++) {
-			if(file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
-				break;
+		for($i = 0; $i <3; $i++) {
+			if(@file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
+                break;
 			}
 			// Pause de 10 millisecondes
             usleep(10000);
-            if ($i === 3) {
-                throw new \InvalidArgumentException('Erreur d\'écriture du fichier de données ' . $this->db);
+            if ($i === 2) {
+                throw new \Exception('Erreur d\'écriture du fichier de données ' . $this->db );
             }
 		}
     }
