@@ -206,7 +206,8 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys,self::$i18nCurrent)
+				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
+				'backup' => true
 			]);;
 		}
 
@@ -381,32 +382,25 @@ class common {
 		// Aiguillage
 		switch(count($keys)) {
 			case 1:
-				$db->delete($keys[0]);
-				$db->save();
+				$db->delete($keys[0], true);
 				break;
 			case 2:
-				$db->delete($keys[0].'.'.$keys[1]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1],true);
 				break;
 			case 3:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2], true);
 				break;
 			case 4:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3], true);
 				break;
 			case 5:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4], true);
 				break;
 			case 6:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5], true);
 				break;
 			case 7:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6], true);
 				break;
 		}
 	}
@@ -628,7 +622,8 @@ class common {
 		$this->setData(['theme',$tempData['theme']]);
 
 		// Import des users sauvegardés si option active
-		if ($keepUsers === false) {
+		if ($keepUsers === false 
+			AND $tempData['user'] !== NULL) {
 			$this->setData(['user',$tempData['user']]);
 		}
 
@@ -978,28 +973,22 @@ class common {
 		// Aiguillage
 		switch(count($keys)) {
 			case 2:
-				$db->set($keys[0],$keys[1]);
-				$db->save();
+				$db->set($keys[0],$keys[1], true);
 				break;
 			case 3:
-				$db->set($keys[0].'.'.$keys[1],$keys[2]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1],$keys[2], true);
 				break;
 			case 4:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3], true);
 				break;
 			case 5:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4], true);
 				break;
 			case 6:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5], true);
 				break;
 			case 7:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
 				break;
 			case 8:
 				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7] );
@@ -1967,7 +1956,8 @@ class core extends common {
 			}
 		}
 		// Accès concurrent stocke la page visitée
-		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			AND $this->getUser('id') ) {
 			$this->setData(['user',$this->getUser('id'),'accessUrl',$this->getUrl()]);
 			$this->setData(['user',$this->getUser('id'),'accessTimer',time()]);
 		}
@@ -2318,7 +2308,7 @@ class layout extends common {
 					window.dataLayer = window.dataLayer || [];
 					function gtag(){dataLayer.push(arguments);}
 					gtag("js", new Date());
-					gtag("config","'. $code .'");
+					gtag("config","'. $code .'",{ "anonymize_ip": true });
 				</script>';
 		}
 	}

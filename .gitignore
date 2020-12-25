@@ -10,6 +10,8 @@ site/backup/*
 site/data/*.json
 site/data/*.css
 site/data/fr/*.json
+site/data/fr/*.back
+site/data/*.back
 
 
 # Fichiers uploadés
