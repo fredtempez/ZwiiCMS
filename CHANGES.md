@@ -1,8 +1,11 @@
 # Changelog
 
 ## Version 10.3.13
-Modification :
-    - Verouillage des fichiers de données ouverts en écriture.
+Modifications :
+    - Système de données (JsonDN) :
+        - Verrouillage des fichiers de données ouverts en écriture.
+        - Message d'erreur littéral.
+        - Sauvegarde des fichiers de données après un effacement et une écriture.
     - Google Analytics, option d'anonymisation.
 
 ## Version 10.3.12
@@ -27,7 +30,7 @@ Modification :
 Corrections :
     - Configuration : persistance de l'ouverture des blocs.
     - Réinitialisation du mot de passe :
-        - Remise à zéro du timer après renouvellement du mot de passe.
+        - Remise à zéro du timer après renouvèlement du mot de passe.
         - Affichage de le fenêtre "Nouveau mot de passe" allégée.
         - Redirection sur la page d'accueil.
     - Modules news et blog : transparence icône RSS.
@@ -44,7 +47,7 @@ Corrections :
 
 ## version 10.3.06
 - Correction :
-    - Edition de page avec module, le changement de mise en page désactive le bouton d'option du module.
+    - Édition de page avec module, le changement de mise en page désactive le bouton d'option du module.
 - Modification :
     - Modules News et Blog : ajout de l'option flux RSS. L'option est activée par défaut.
 
@@ -104,7 +107,7 @@ Corrections :
 
 ## version 10.3.00
 - Corrections :
-    - Bloquage de l'incrémentation de l'id de page lorsque deux pages ont le même nom.
+    - Incrémentation de l'id de page bloquée lorsque deux pages ont le même nom.
     - Login : l'option "Se souvenir de moi" est fonctionnelle.
     - Menu : déplacement de la classe "active".
     - Le titre dans la configuration du module non affiché si le titre de la page est masqué.
@@ -121,7 +124,7 @@ Corrections :
     - Configuration du site :
         - Pages 403 (accès interdit), 404 (page introuvable) et site en maintenance personnalisables
         - Sauvegarde du site dans une archive : animation d'attente avec message de confirmation ou d'erreur ; le nom de l'archive prend le nom du sous-domaine s'il existe.
-    - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (capcha en captcha).
+    - Captcha :  addition présentée en lettres sous la forme d'images, réponse en chiffres ; correction du nom de la fonction (captcha en captcha).
     - Page :
         - Duplication d'une page.
 - Mise à jour :
@@ -160,7 +163,7 @@ Corrections :
 ## version 10.2.03
 - Corrections :
     - Les entrées de menu disposent d'une classe par groupe de parent en lieu et place des ids.
-    - Edition du compte de l'utilisateur, empêcher le préremplissage de l'ancien mot de passe.
+    - Édition du compte de l'utilisateur, empêcher le pré-remplissage de l'ancien mot de passe.
     - Reformulation du mail de confirmation d'inscription.
     - Champ de sélection de fichiers, suppression de la couleur des URL lors d'un survol
 - Modifications :
@@ -177,7 +180,7 @@ Corrections :
     - Optimisation et correction de l'algorithme de contrôle d'accès.
     - Erreur des noms de champ barre des membres dans le pied de page.
     - Génération de l'image tag, amélioration du code et du message d'erreur.
-    - Edition de page, erreur lors de la sélection d'une icône de menu.
+    - Édition de page, erreur lors de la sélection d'une icône de menu.
     - Problème lors de l'installation, impossibilité d'obtenir l'écran de configuration.
 
 ## version 10.2.00
@@ -185,11 +188,11 @@ Corrections :
     - jQuery v3.5.1
 - Nouveautés :
     - Gestion des accès concurrents :
-        - deux utilisateurs ne peuvent accèder en modification à la même page du site ou de configuration
+        - deux utilisateurs ne peuvent accéder en modification à la même page du site ou de configuration
         - la connexion d'un utilisateur sur un autre poste ou navigateur déconnecte la session précédente.
         - sécurisation du login
         - journalisation de l'utilisation du site
-    - Ecran de configuration et d'édition des pages, les blocs sont pliables et dépliables afin d'alléger l'occupation sur l'écran. Le statut des blocs (fermés ; ouverts) est persistante au cours de la session.
+    - Écran de configuration et d'édition des pages, les blocs sont pliables et dépliables afin d'alléger l'occupation sur l'écran. Le statut des blocs (fermés ; ouverts) est persistante au cours de la session.
 - Modifications :
     - Thème, les sélecteurs de couleur affiche la valeur RGBa d'une couleur différente de celle de la sélection.
     - Thème de l'administration, amélioration du rendu.
@@ -263,16 +266,16 @@ Corrections :
 - Améliorations :
     - Architecture de stockage des données.
         - Les données sont désormais stockées dans des fichiers distincts (core, config, theme, user, page et module).
-        - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut en préaration de la version multilangues.
+        - Les données relatives aux pages et aux modules sont stockées dans un dossier localisé fr par défaut en préparation de la version multi-langues.
     - Gestion des données :
         - Le système ne conserve plus en mémoire l'intégralité des données de site comme dans les versions précédentes.
         - Les données du site sont chargées à la demande au lieu d'être lues dans leur intégralité.
         - Les mises à jour et effacements sont appliquées en direct sur le disque.
 - Modifications :
     - Module gallery optimisé, tri dynamique, choix du thème.
-    - Module blog présentation optimisée avec options de position de l'image, la métadescription est le contenu de l'article.
+    - Module blog présentation optimisée avec options de position de l'image, la méta-description est le contenu de l'article.
     - Chargement paresseux des images.
-    - Edition de page : suppression de l'option d'ouverture dans une lity.
+    - Édition de page : suppression de l'option d'ouverture dans une lity.
     - Protection des données des modules en cas de changement lors de l'édition d'une page.
 Corrections de bug :
     - Mise à jour automatique : procédure modifiée, désactivée si allow_url_fopen = off sur le serveur
@@ -397,7 +400,7 @@ Corrections de bug :
     - L'effet de couleur de fond personnalisé d'une page sélectionnée dans le menu est limité aux pages parents.
 - Améliorations :
     - Affichage du contenu seul d'une page du site dans une popup Lity sans menu, bannière et pied de page.
-    - Editeur de texte ; effet accordéon, les accordéons peuvent être tous refermés.
+    - Éditeur de texte ; effet accordéon, les accordéons peuvent être tous refermés.
     - Thème ; menu : lorsque le menu est réduit, le titre du site peut être inséré à la gauche du menu burger.
 
 ## version 9.2.14
@@ -429,7 +432,7 @@ Corrections de bug :
         - Supprimer le forçage de l'affichage des médias à 100%
         - Activer le dimensionnement des médias
     - Module Form :
-        - Etiquette de séparation
+        - Étiquette de séparation
         - Checkbox retourne un astérisque plutôt que 1
     - Thème - Menu :
         - Couleur de fond de la page sélectionnée
@@ -439,7 +442,7 @@ Corrections de bug :
 - Corrections :
     - Marge du pied de page par défaut 5px
     - Installation sans site exemple : suppression des barres latérales
-    - Edition de page :
+    - Édition de page :
         - Affichage de l'option Fil d'ariane alors que le titre est masqué.
         - Page parente, l'option "ne pas afficher les pages enfants dans le menu horizontal" est incompatible avec une page désactivée : désactivation et masquage lorsque la page est désactivée.
         - Mauvais encodage des titres de pages perturbant l'affichage des caractères spéciaux ( ex: apostrophes ).
@@ -469,7 +472,7 @@ Corrections de bug :
 
 ## Version 9.2.08
 - Correction :
-    - Edition de page : bug empêchant le paramétrage d'un module après un changement de gabarit.
+    - Édition de page : bug empêchant le paramétrage d'un module après un changement de gabarit.
 - Modification :
     - Aide de l'édition des pages
 
@@ -509,7 +512,7 @@ Corrections de bug :
 ## Version 9.2.01
 - Corrections :
     - Sauvegarde du thème : prise en compte du fichier custom.css
-    - Edition de page : libellés
+    - Édition de page : libellés
     - Thème ; footer : marges du pied de page placé hors du site
     - Thème ; footer : aperçu du texte personnalisé
 
@@ -575,7 +578,7 @@ Corrections de bug :
     - Réécriture activée après chaque mise à jour auto.
 - Modifications :
     - Thème 100%  fluide sans marge
-    - Ecran de smartphone (ex : iPhone 6) : adaptation de la barre d'administration : le username est masqué et la taille des icônes est augmentée
+    - Écran de smartphone (ex : iPhone 6) : adaptation de la barre d'administration : le username est masqué et la taille des icônes est augmentée
     - Chemins vers les données dans des constantes
     - Modèles de bannières de plusieurs dimensions
     - Hauteur de police par défaut 13px
@@ -665,7 +668,7 @@ Corrections de bug :
 
 ## Version 9.0.18
 - Correction :
-    - Etat par défaut du numéro de version mal récupéré
+    - État par défaut du numéro de version mal récupéré
 
 ## Version 9.0.17
 - Mises à jour :
@@ -680,7 +683,7 @@ Corrections de bug :
 
 ## Version 9.0.16
 - Correction :
-    - Nom de page constitué de caractères filtrés empchant la création d'un Id valide.
+    - Nom de page constitué de caractères filtrés empêchant la création d'un Id valide.
     - Module Gallery : bouton de fermeture sous Edge
 
 ## Version 9.0.15
@@ -705,7 +708,7 @@ Corrections de bug :
 ## Version 9.0.12
 - Corrections :
     - Configuration de Tippy pour l'utilisation de l'argument title dans les balises a et img. Data-tippy-content reste un argument reconnu
-    - Bug de la redirection lorsqu'un dossier porte le nom d'une page, le contrôle de cohérence est déplacé dans page.
+    - Bug de la redirection lorsque un dossier porte le nom d'une page, le contrôle de cohérence est déplacé dans page.
 
 ## Version 9.0.11
 - Corrections :
@@ -755,7 +758,7 @@ Corrections de bug :
     - Thème :
         - nouvelle position du menu dans le site quand la bannière est au-dessus.
         - Simplification et ordre des libellés position du menu par rapport à la bannière
-    - Editeur de texte, scrolle lorsque l'éditeur est ouvert, la barre d'outil se colle sous la barre d'administration.
+    - Éditeur de texte, scrolle lorsque l'éditeur est ouvert, la barre d'outil se colle sous la barre d'administration.
     - TinyMCE :
         - liste des pages du site dans la fenêtre des liens
         - option lightbox pour l'affichage d'images ou de liens

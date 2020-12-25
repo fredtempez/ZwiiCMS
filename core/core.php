@@ -325,36 +325,30 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder
+			'dir' => $folder,
+			'backup' => true
 		]);
 		switch(count($keys)) {
 			case 1:
-				$db->delete($keys[0]);
-				$db->save();
+				$db->delete($keys[0], true);
 				break;
 			case 2:
-				$db->delete($keys[0].'.'.$keys[1]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1],true);
 				break;
 			case 3:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2], true);
 				break;
 			case 4:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3], true);
 				break;
 			case 5:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4], true);
 				break;
 			case 6:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5], true);
 				break;
 			case 7:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6]);
-				$db->save();
+				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6], true);
 				break;
 		}
 	}
@@ -966,33 +960,28 @@ class common {
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $keys[0] . '.json',
-			'dir' => $folder
+			'dir' => $folder,
+			'backup' => true
 		]);
 
 		switch(count($keys)) {
 			case 2:
-				$db->set($keys[0],$keys[1]);
-				$db->save();
+				$db->set($keys[0],$keys[1], true);
 				break;
 			case 3:
-				$db->set($keys[0].'.'.$keys[1],$keys[2]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1],$keys[2], true);
 				break;
 			case 4:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3], true);
 				break;
 			case 5:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4], true);
 				break;
 			case 6:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5], true);
 				break;
 			case 7:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6]);
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
 				break;
 		}
 		return true;

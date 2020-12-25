@@ -10,6 +10,8 @@ site/backup/*
 site/data/*.json
 site/data/*.css
 site/data/fr/*.json
+site/data/fr/*.back
+site/data/*.back
 
 
 # Fichiers uploadés
@@ -36,9 +38,4 @@ site/data/journal.log
 .DS_Store
 site/.DS_Store
 site/file/.DS_Store
-site/tmp/5f7f5e998762c.png
-site/tmp/5f7f5e9987628.png
-site/tmp/5f7f5ea3e983b.png
-site/tmp/5f7f5ea3e9837.png
-site/tmp/5f7f5ea20d5eb.png
-site/tmp/5f7f5ea20d5ee.png
+

@@ -22,10 +22,10 @@ class JsonDb extends \Prowebcraft\Dot
     public function __construct($config = [])
     {
         $this->config = array_merge([
-           'name' => 'data.json',
-           'backup' => 5,
-            'dir' => getcwd(),
-           'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
+            'name' => 'data.json',
+            'backup' => false,
+            'dir' => getcwd()
+           //'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
         ], $config);
         $this->loadData();
         parent::__construct();
@@ -116,7 +116,7 @@ class JsonDb extends \Prowebcraft\Dot
                 }
                 // Gestion de l'erreur
                 if (!$this->data === null) {
-                    throw new \Exception('Erreur de lecture du fichier de données ' . $this->db);
+                    exit ('JsonDB : Erreur de lecture du fichier de données ' . $this->db .'. Aucune donnée lisible, essayez dans quelques instants ou vérifiez le système de fichiers.');
                 }
             }
         }
@@ -127,16 +127,25 @@ class JsonDb extends \Prowebcraft\Dot
      * Saving to local database
      */
     public function save() {
-        // 3 essais
-		for($i = 0; $i <3; $i++) {
-			if(@file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
-                break;
-			}
-			// Pause de 10 millisecondes
-            usleep(10000);
-            if ($i === 2) {
-                throw new \Exception('Erreur d\'écriture du fichier de données ' . $this->db );
+        // Backup file
+        if ($this->config['backup']) {
+            copy ($this->db, $this->db . '.back');
+        }
+        if ( is_writable($this->db) ) {
+            // 3 essais
+            for($i = 0; $i < 3; $i++) {
+                if( @file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
+                    break;
+                }
+                // Pause de 10 millisecondes
+                usleep(10000);
+
             }
-		}
+            if ($i === 2) {
+                exit ('Jsondb : Erreur d\'écriture dans le fichier de données ' . $this->db . '. Vérifiez le système de fichiers.' );
+            }
+        } else {
+            exit ('Jsondb : Écriture interdite dans le fichier de données ' . $this->db .'. Vérifiez les permissions.' );
+        }
     }
 }
