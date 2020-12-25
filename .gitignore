@@ -10,6 +10,8 @@ site/backup/*
 site/data/*.json
 site/data/*.css
 site/data/fr/*.json
+site/data/fr/*.back
+site/data/*.back
 
 
 # Fichiers uploadés
@@ -36,12 +38,3 @@ site/data/journal.log
 .DS_Store
 site/.DS_Store
 site/file/.DS_Store
-site/data/es/locale.json
-site/data/es/module.json
-site/data/es/page.json
-site/data/en/locale.json
-site/data/en/module.json
-site/data/en/page.json
-site/data/de/locale.json
-site/data/de/module.json
-site/data/de/page.json

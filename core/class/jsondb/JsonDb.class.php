@@ -22,10 +22,10 @@ class JsonDb extends \Prowebcraft\Dot
     public function __construct($config = [])
     {
         $this->config = array_merge([
-           'name' => 'data.json',
-           'backup' => 5,
-            'dir' => getcwd(),
-           'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
+            'name' => 'data.json',
+            'backup' => false,
+            'dir' => getcwd()
+           //'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
         ], $config);
         $this->loadData();
         parent::__construct();
@@ -106,10 +106,17 @@ class JsonDb extends \Prowebcraft\Dot
             if (!file_exists($this->db)) {
                 return null;
             } else {
-                $this->data = json_decode(file_get_contents($this->db), true);
+                 // 3 essais
+		        for($i = 0; $i <3; $i++) {
+                     if ($this->data = json_decode(@file_get_contents($this->db), true) ) {
+                         break;
+                    }
+           			// Pause de 10 millisecondes
+                    usleep(10000);
+                }
+                // Gestion de l'erreur
                 if (!$this->data === null) {
-                    throw new \InvalidArgumentException('Database file ' . $this->db
-                        . ' contains invalid json object. Please validate or remove file');
+                    exit ('JsonDB : Erreur de lecture du fichier de données ' . $this->db .'. Aucune donnée lisible, essayez dans quelques instants ou vérifiez le système de fichiers.');
                 }
             }
         }
@@ -120,6 +127,25 @@ class JsonDb extends \Prowebcraft\Dot
      * Saving to local database
      */
     public function save() {
-        file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT));
+        // Backup file
+        if ($this->config['backup']) {
+            copy ($this->db, $this->db . '.back');
+        }
+        if ( is_writable($this->db) ) {
+            // 3 essais
+            for($i = 0; $i < 3; $i++) {
+                if( @file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)) !== false) {
+                    break;
+                }
+                // Pause de 10 millisecondes
+                usleep(10000);
+
+            }
+            if ($i === 2) {
+                exit ('Jsondb : Erreur d\'écriture dans le fichier de données ' . $this->db . '. Vérifiez le système de fichiers.' );
+            }
+        } else {
+            exit ('Jsondb : Écriture interdite dans le fichier de données ' . $this->db .'. Vérifiez les permissions.' );
+        }
     }
 }
