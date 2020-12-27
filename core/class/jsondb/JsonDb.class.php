@@ -127,6 +127,10 @@ class JsonDb extends \Prowebcraft\Dot
      * Saving to local database
      */
     public function save() {
+        // Fichier inexistant, le créer
+        if ( !file_exists($this->db) ) {
+            touch($this->db);
+        }
         // Backup file
         if ($this->config['backup']) {
             copy ($this->db, $this->db . '.back');
