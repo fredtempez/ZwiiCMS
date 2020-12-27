@@ -52,7 +52,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const BLOG_VERSION = '2.11';
+	const BLOG_VERSION = '2.12';
 
 	/**
 	 * Flux RSS
@@ -440,7 +440,7 @@ class blog extends common {
 							$to,
 							'Nouveau commentaire',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'posts', 'title']) . '" :<br><br>',
+							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>',
 							''
 						);
 						// Valeurs en sortie
