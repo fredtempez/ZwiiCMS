@@ -172,7 +172,7 @@ class config extends common {
 	];
 	// Sécurité de la  connexion - tentative max avant blocage
 	public static $connectAttempt = [
-		999 => 'Aucun',
+		999 => 'Aucune',
 		3 => '3 tentatives',
 		5 => '5 tentatives',
 		10 => '10 tentatives'
