@@ -25,6 +25,8 @@ Modifications :
         - Message d'erreur littéral.
         - Sauvegarde des fichiers de données après un effacement et une écriture.
     - Google Analytics, option d'anonymisation.
+Correction :
+    - Notification de commentaire, nom de la page incorrect.
 
 ## Version 10.3.12
 Correction :
