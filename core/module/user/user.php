@@ -370,7 +370,7 @@ class user extends common {
 					} else {
 						// Valeurs en sortie
 						$this->addOutput([
-							'notification' => 'Identifiant ou mot de passe incorrect'
+							'notification' => 'Identifiant ou mot de passe incorrects'
 						]);
 					}
 				/**
@@ -391,6 +391,9 @@ class user extends common {
 						AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
 						AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 					) {
+						// RAZ
+						$this->setData(['user',$userId,'connectFail',0 ]);
+						$this->setData(['user',$userId,'connectTimeout',0 ]);
 						// Expiration
 						$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
 						$c = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? 'true' : 'false';
@@ -419,7 +422,7 @@ class user extends common {
 						}
 					// Sinon notification d'échec
 					} else {
-						$notification = 'Identifiant ou mot de passe incorrect';
+						$notification = 'Identifiant ou mot de passe incorrects';
 						// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
 						if ($this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
 							$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
