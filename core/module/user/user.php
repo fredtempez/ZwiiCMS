@@ -366,15 +366,32 @@ class user extends common {
 	public function login() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Check la captcha
+			// Lire Id du compte
+			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
+			// Check le captcha
 			if(
 				$this->getData(['config','connect','captcha'])
 				AND password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult') ) === false )
 			{
-				self::$inputNotices['userLoginCaptcha'] = 'Incorrect';
+				//self::$inputNotices['userLoginCaptcha'] = 'Incorrect';
+				$notification = 'Captcha incorrect !';
+				// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
+				if ($this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
+					$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
+				}
+				// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
+				if ( $this->getdata(['user',$userId,'connectFail']) == $this->getData(['config', 'connect', 'attempt'])	) {
+						$this->setData(['user',$userId,'connectTimeout', time()]);
+				}
+				// Cas 3 le délai de bloquage court
+				if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time() ) {
+					$notification = 'Accès bloqué ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => $notification
+				]);
 			} else {
-				// Lire Id du compte
-				$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
 				/**
 				 * Aucun compte existant
 				 */
@@ -395,14 +412,14 @@ class user extends common {
 						AND in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
 						// Valeurs en sortie
 						$this->addOutput([
-							'notification' => 'Trop de tentatives, compte verrouillé',
+							'notification' => 'Compte verrouillé',
 							'redirect' => helper::baseUrl(),
 							'state' => false
 						]);
 					} else {
 						// Valeurs en sortie
 						$this->addOutput([
-							'notification' => 'Identifiant ou mot de passe incorrect'
+							'notification' => 'Identifiant ou mot de passe incorrects'
 						]);
 					}
 				/**
@@ -423,6 +440,9 @@ class user extends common {
 						AND password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
 						AND $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 					) {
+						// RAZ
+						$this->setData(['user',$userId,'connectFail',0 ]);
+						$this->setData(['user',$userId,'connectTimeout',0 ]);
 						// Expiration
 						$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
 						$c = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? 'true' : 'false';
@@ -444,15 +464,14 @@ class user extends common {
 						} else {
 							// Valeurs en sortie
 							$this->addOutput([
-								'notification' => 'Connexion réussie',
-								'redirect' => helper::baseUrl(),
-								//'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+								'notification' => 'Bienvenue ' . $this->getData(['user',$userId,'firstname']) . ' ' . $this->getData(['user',$userId,'lastname']) ,
+								'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
 								'state' => true
 							]);
 						}
 					// Sinon notification d'échec
 					} else {
-						$notification = 'Identifiant ou mot de passe incorrect';
+						$notification = 'Identifiant ou mot de passe incorrects';
 						// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
 						if ($this->getData(['user',$userId,'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
 							$this->setData(['user',$userId,'connectFail',$this->getdata(['user',$userId,'connectFail']) + 1 ]);
@@ -463,7 +482,7 @@ class user extends common {
 						}
 						// Cas 3 le délai de bloquage court
 						if ($this->getData(['user',$userId,'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time() ) {
-							$notification = 'Trop de tentatives, accès bloqué durant ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
+							$notification = 'Accès bloqué ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
 						}
 						// Journalisation
 						$dataLog = mb_detect_encoding(strftime('%d/%m/%y',time()), 'UTF-8', true)

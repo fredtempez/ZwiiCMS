@@ -83,6 +83,7 @@ class common {
 	public static $inputBefore = [];
 	public static $inputNotices = [];
 	public static $importNotices = [];
+	public static $captchaNotices = [];
 	public static $coreNotices = [];
 	public $output = [
 		'access' => true,
@@ -2842,10 +2843,6 @@ class layout extends common {
 		if (common::$coreNotices) {
 			$notification = 'Données absentes, restauration de <p> | ';
 			foreach (common::$coreNotices as $item) $notification .= $item . ' | ';
-			$notificationClass = 'notificationError';
-		}
-		if(common::$inputNotices) {
-			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
 			$notificationClass = 'notificationError';
 		}
 		elseif(empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
