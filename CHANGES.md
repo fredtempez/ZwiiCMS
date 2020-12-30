@@ -7,7 +7,7 @@ Modifications :
         - Message d'erreur littéral.
         - Sauvegarde des fichiers de données après un effacement et une écriture.
     - Google Analytics, option d'anonymisation.
-    - Procédure de connexion : les erreurs de captcha sont comptabilisées comme des échecs, allégement des messages d'information.
+    - Procédure de connexion : les erreurs de captcah sont comptabilisées comme des échecs, allégement des messages d'information.
 Correction :
     - Notification de commentaire, nom de la page incorrect.
 
