@@ -364,13 +364,13 @@
 				<div class="row">
 					<div class="col3">
 						<?php echo template::select('configConnectAttempt', $module::$connectAttempt , [
-							'label' => 'Connexions successives',
+							'label' => 'Tentatives avant blocage',
 							'selected' => $this->getData(['config', 'connect', 'attempt'])
 						]); ?>
 					</div>
 					<div class="col3">
 						<?php echo template::select('configConnectTimeout', $module::$connectTimeout , [
-							'label' => 'Blocage après échecs',
+							'label' => 'Durée du blocage',
 							'selected' => $this->getData(['config', 'connect', 'timeout'])
 						]); ?>
 					</div>
