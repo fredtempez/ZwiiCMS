@@ -20,7 +20,7 @@
 
 ## Version 10.3.13
 Modifications :
-    - Système de données (JsonDN) :
+    - Système de données (JsonDB) :
         - Verrouillage des fichiers de données ouverts en écriture.
         - Message d'erreur littéral.
         - Sauvegarde des fichiers de données après un effacement et une écriture.
