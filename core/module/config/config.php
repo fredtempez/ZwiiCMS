@@ -173,14 +173,14 @@ class config extends common {
 	];
 	// Sécurité de la  connexion - tentative max avant blocage
 	public static $connectAttempt = [
-		999 => 'Aucune',
+		999 => 'Sécurité désactivée',
 		3 => '3 tentatives',
 		5 => '5 tentatives',
 		10 => '10 tentatives'
 	];
 	// Sécurité de la connexion - durée du blocage
 	public static $connectTimeout = [
-		0 => 'Aucun',
+		0 => 'Sécurité désactivée',
 		300 => '5 minutes',
 		600 => '10 minutes',
 		900 => '15 minutes'
