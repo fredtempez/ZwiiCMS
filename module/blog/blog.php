@@ -438,9 +438,9 @@ class blog extends common {
 					if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'mailNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
-							'Nouveau commentaire',
+							'Nouveau commentaire déposé',
 							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
-							'Nouveau commentaire déposé sur la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>',
+							'L\'article <a href="' . helper::baseUrl() . $this->getUrl(0) . '/	' . $this->getUrl(1) . '">' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']) . '</a> a  reçu un nouveau commentaire.<br><br>',
 							''
 						);
 						// Valeurs en sortie
@@ -448,7 +448,7 @@ class blog extends common {
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
 							//'notification' => 'Commentaire ajouté',
 							//'state' => true
-							'notification' => ($sent === true ? 'Commentaire ajouté et une notification envoyée' : 'Commentaire ajouté, erreur de notification : <br/>' . $sent),
+							'notification' => ($sent === true ? 'Commentaire ajouté, les administrateurs ont été notifiés.' : 'Commentaire ajouté. <br/>' . $sent),
 							'state' => ($sent === true ? true : null)
 						]);
 
