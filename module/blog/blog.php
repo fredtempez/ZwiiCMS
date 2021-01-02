@@ -634,10 +634,9 @@ class blog extends common {
 					if ($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'commentNotification']) === true) {
 						$sent = $this->sendMail(
 							$to,
-							'Nouveau commentaire',
-							'Bonjour,'.'<br/>'. $notification.
-							' sur la page "'. $this->getData(['page', $this->getUrl(0), 'title']). '" dans l\'article "'.$this->getUrl(1) .'" :<br/>'.
-							$content,
+							'Nouveau commentaire déposé',
+							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
+							'L\'article <a href="' . helper::baseUrl() . $this->getUrl(0) . '/	' . $this->getUrl(1) . '">' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']) . '</a> a  reçu un nouveau commentaire.<br><br>',
 							''
 						);
 						// Valeurs en sortie
