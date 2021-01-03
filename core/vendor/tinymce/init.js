@@ -104,8 +104,12 @@ tinymce.init({
 	images_dataimg_filter: function(img) {
 		return img.hasAttribute('internal-blob');
 	},*/
+	// Autoriser tous les éléments
+	valid_elements : '*[*]',
 	// Autorise l'ajout de script
-	// extended_valid_elements: "script[language|type|src]",
+	extended_valid_elements: "script[language|type|src]",
+	// Conserver les styles
+	keep_styles: false,
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
 	media_dimensions: true,
 	// Désactiver la dimension des images
@@ -293,11 +297,6 @@ tinymce.init({
 	statusbar: false,
 	// Autorise le copié collé à partir du web
 	paste_data_images: true,
-	// Autorise tous les éléments
-	//valid_elements :"*[*]",
-	//valid_children : "*[*]",
-	// Autorise l'ajout de script
-	// extended_valid_elements: "script[language|type|src]",
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
 	media_dimensions: true,
 	// Désactiver la dimension des images
