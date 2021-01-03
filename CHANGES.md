@@ -6,8 +6,10 @@ Modifications :
         - Verrouillage des fichiers de données ouverts en écriture.
         - Message d'erreur littéral.
         - Sauvegarde des fichiers de données après un effacement et une écriture.
+        - Identifiant des noms de ressources (id de page , d'utilisateur, etc..) composés de nombres , remplacement du caractère de préfixe "i" par "_".
     - Google Analytics, option d'anonymisation.
-    - Procédure de connexion : les erreurs de captcha sont comptabilisées comme des échecs, allégement des messages d'information.
+    - Procédure de connexion : les erreurs de captcha sont comptabilisées comme des échecs, allégement des messages d'information. Echecs de connexion, informations plus précises dans le journal de connexion.
+
     - TinyMCE : ajout des scripts possibles.
 Correction :
     - Notification de commentaire, remplacement du nom de la page par le titre de l'article.
