@@ -28,6 +28,12 @@ tinymce.init({
 		  char: "🤯"
 		}
 	},
+	// Autoriser tous les éléments
+	valid_elements : '*[*]',
+	// Autorise l'ajout de script
+	extended_valid_elements: "script[language|type|src]",
+	// Conserver les styles
+	keep_styles: false,
 	// CodeMirror
 	codemirror: {
 		indentOnInit: true, // Whether or not to indent code on init.

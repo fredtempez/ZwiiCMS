@@ -8,9 +8,10 @@ Modifications :
         - Sauvegarde des fichiers de données après un effacement et une écriture.
     - Google Analytics, option d'anonymisation.
     - Procédure de connexion : les erreurs de captcha sont comptabilisées comme des échecs, allégement des messages d'information.
+    - TinyMCE : ajout des scripts possibles.
 Correction :
-    - Notification de commentaire, nom de la page incorrect.
-    - Thème : désactivation du changement de couleur du texte au survol d'un bouton standard.
+    - Notification de commentaire, remplacement du nom de la page par le titre de l'article.
+    - Thème : couleur du texte au survol d'un bouton standard.
 
 ## Version 10.3.12
 Correction :
