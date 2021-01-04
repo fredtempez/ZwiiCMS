@@ -456,7 +456,7 @@ class user extends common {
 				? strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';'
 				: utf8_encode(strftime('%d/%m/%y',time())) . ';' . utf8_encode(strftime('%R',time())) . ';' ;
 		$dataLog .= helper::getIp() . ';';
-		$dataLog .= $this->getInput('userLoginId', helper::FILTER_ID, true) . ';' ;
+		$dataLog .= $this->getInput('userLoginId', helper::FILTER_ID) . ';' ;
 		$dataLog .= $this->getUrl() .';' ;
 		$dataLog .= $logStatus ;
 		$dataLog .= PHP_EOL;
