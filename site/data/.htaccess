@@ -1,14 +1,5 @@
 # Bloque l'accès aux données
-<Files *.json>
+<FilesMatch ".(htaccess|json|log)$">
 	Order deny,allow
 	Deny from all
-</Files>
-<Files *.json.back>
-	Order deny,allow
-	Deny from all
-</Files>
-# Bloque l'accès htaccess
-<Files .htaccess>
-	Order deny,allow
-	Deny from all
-</Files>
+</FilesMatch>
