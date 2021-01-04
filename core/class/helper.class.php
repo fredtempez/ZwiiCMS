@@ -273,7 +273,7 @@ class helper {
 				}
 				// Un ID ne peut pas être un entier, pour éviter les conflits avec le système de pagination
 				if(intval($text) !== 0) {
-					$text = 'i' . $text;
+					$text = '_' . $text;
 				}
 				break;
 			case self::FILTER_INT:
