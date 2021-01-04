@@ -133,7 +133,7 @@ class JsonDb extends \Prowebcraft\Dot
         }
         // Backup file
         if ($this->config['backup']) {
-            copy ($this->db, $this->db . '.back');
+            copy ($this->db, str_replace('json' , 'back.json', $this->db));
         }
         if ( is_writable($this->db) ) {
             // 3 essais
