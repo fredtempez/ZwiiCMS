@@ -554,10 +554,10 @@ class config extends common {
 		if($this->isPost()) {
 			// Ecrire les fichiers de script
 			if ($this->geturl(2) === 'head') {
-				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));
+				file_put_contents(core::$data_dir . 'head.inc.html',$this->getInput('configScriptHead',null));
 			}
 			if ($this->geturl(2) === 'body') {
-				file_put_contents(self::DATA_DIR . 'body.inc.html',$this->getInput('configScriptBody',null));
+				file_put_contents(core::$data_dir . 'body.inc.html',$this->getInput('configScriptBody',null));
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -631,11 +631,11 @@ class config extends common {
 	 */
 
 	public function logReset() {
-		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
-			unlink(self::DATA_DIR . 'journal.log');
+		if ( file_exists(core::$data_dir . 'journal.log') ) {
+			unlink(core::$data_dir . 'journal.log');
 			// Créer les en-têtes des journaux
 			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-			file_put_contents(self::DATA_DIR . 'journal.log',$d);
+			file_put_contents(core::$data_dir . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -659,7 +659,7 @@ class config extends common {
 	  * Télécharger le fichier de log
 	  */
 	public function logDownload() {
-		$fileName = self::DATA_DIR . 'journal.log';
+		$fileName = core::$data_dir . 'journal.log';
 		if (file_exists($fileName)) {
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
@@ -730,8 +730,8 @@ class config extends common {
 	 */
 
 	public function blacklistReset() {
-		if ( file_exists(self::DATA_DIR . 'blacklist.json') ) {
-			unlink(self::DATA_DIR . 'blacklist.json');
+		if ( file_exists(core::$data_dir . 'blacklist.json') ) {
+			unlink(core::$data_dir . 'blacklist.json');
 			// Valeurs en sortie
 				$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',

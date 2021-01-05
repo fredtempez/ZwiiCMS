@@ -31,7 +31,7 @@ setlocale(LC_CTYPE, 'fr_FR'); //correct transliteration
 |
 */
 
-define('USE_ACCESS_KEYS', true); // TRUE or FALSE
+define('USE_ACCESS_KEYS', false); // TRUE or FALSE
 $privateKey = md5_file('../../../site/data/core.json');
 
 /*

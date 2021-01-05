@@ -269,7 +269,7 @@ class template {
                     '?relative_url=1' .
                     '&field_id=' . $attributes['id'] .
                     '&type=' . $attributes['type'] .
-                    '&akey=' . md5_file(core::DATA_DIR.'core.json') .
+                    '&akey=' . md5_file(core::$data_dir.'core.json') .
                     ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
                 . '"
                 class="inputFile %s %s"

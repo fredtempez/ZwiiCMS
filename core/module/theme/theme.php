@@ -286,7 +286,7 @@ class theme extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Enregistre le CSS
-			file_put_contents(self::DATA_DIR.'custom.css', $this->getInput('themeAdvancedCss', null));
+			file_put_contents(core::$data_dir.'custom.css', $this->getInput('themeAdvancedCss', null));
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',
@@ -535,7 +535,7 @@ class theme extends common {
 	 */
 	public function reset() {
 		// Supprime le fichier de personnalisation avancée
-		unlink(self::DATA_DIR.'custom.css');
+		unlink(core::$data_dir.'custom.css');
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => 'Personnalisation avancée réinitialisée',
@@ -549,7 +549,7 @@ class theme extends common {
 	 */
 	public function resetAdmin() {
 		// Supprime le fichier de personnalisation avancée
-		//unlink(self::DATA_DIR.'admin.json');
+		//unlink(core::$data_dir.'admin.json');
 		$this->initData('admin');
 		// Valeurs en sortie
 		$this->addOutput([
@@ -767,13 +767,13 @@ class theme extends common {
 		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) {
 			switch ($modele) {
 				case 'admin':
-					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
-					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					$zip->addFile(core::$data_dir.'admin.json',core::$data_dir.'admin.json');
+					$zip->addFile(core::$data_dir.'admin.css',core::$data_dir.'admin.css');
 					break;
 				case 'theme':
-					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
-					$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
-					$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');
+					$zip->addFile(core::$data_dir.'theme.json',core::$data_dir.'theme.json');
+					$zip->addFile(core::$data_dir.'theme.css',core::$data_dir.'theme.css');
+					$zip->addFile(core::$data_dir.'custom.css',core::$data_dir.'custom.css');
 					if ($this->getData(['theme','body','image']) !== '' ) {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
 								self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])

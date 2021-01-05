@@ -28,7 +28,7 @@ class common {
 	const GROUP_ADMIN = 3;
 	// Dossier de travail
 	const BACKUP_DIR = 'site/backup/';
-	const DATA_DIR = 'site/data/';
+	//const core::$data_dir = 'site/data/';
 	const FILE_DIR = 'site/file/';
 	const TEMP_DIR = 'site/tmp/';
 
@@ -40,7 +40,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.3.13';
+	const ZWII_VERSION = '10.3.13.multi';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -151,7 +151,7 @@ class common {
 	private $user = [];
 	private $page = [];
 	private $module = [];
-
+	public static $data_dir ='';
 
 	/**
 	 * Constructeur commun
@@ -164,22 +164,26 @@ class common {
 		if(isset($_COOKIE)) {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
-
+		// Dossier temporaire
+		core::$data_dir = 'site/data/' . helper::getIp() . '/';
+		if (!is_dir(core::$data_dir) ) {
+			mkdir(core::$data_dir,0755,true);
+		}
 		// Import version 9
-		if (file_exists(self::DATA_DIR . 'core.json') === true &&
+		if (file_exists(core::$data_dir . 'core.json') === true &&
 			$this->getData(['core','dataVersion']) < 10000) {
 				$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
 				$this->importData($keepUsers);
 				unset ($_SESSION['KEEP_USERS']);
 				// Réinstaller htaccess
-				copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
+				copy('core/module/install/ressource/.htaccess', core::$data_dir . '.htaccess');
 				common::$importNotices [] = "Importation réalisée avec succès" ;
 				//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
 		}
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach (self::$dataStage as $stageId) {
-			$folder = $this->dirData ($stageId, 'fr');
+			$folder =  $this->dirData ($stageId, 'fr');
 			if (file_exists($folder . $stageId .'.json') === false) {
 				$this->initData($stageId,'fr');
 				common::$coreNotices [] = $stageId ;
@@ -581,12 +585,12 @@ class common {
 	public function importData($keepUsers = false) {
 		// Trois tentatives de lecture
 		for($i = 0; $i < 3; $i++) {
-			$tempData=json_decode(file_get_contents(self::DATA_DIR.'core.json'), true);
-			$tempTheme=json_decode(file_get_contents(self::DATA_DIR.'theme.json'), true);
+			$tempData=json_decode(file_get_contents(core::$data_dir.'core.json'), true);
+			$tempTheme=json_decode(file_get_contents(core::$data_dir.'theme.json'), true);
 			if($tempData && $tempTheme) {
 				// Backup
-				rename (self::DATA_DIR.'core.json',self::DATA_DIR.'imported_core.json');
-				rename (self::DATA_DIR.'theme.json',self::DATA_DIR.'imported_theme.json');
+				rename (core::$data_dir.'core.json',core::$data_dir.'imported_core.json');
+				rename (core::$data_dir.'theme.json',core::$data_dir.'imported_theme.json');
 				break;
 			}
 			elseif($i === 2) {
@@ -597,8 +601,8 @@ class common {
 		}
 
 		// Dossier de langues
-		if (!file_exists(self::DATA_DIR . '/fr')) {
-			mkdir (self::DATA_DIR . '/fr');
+		if (!file_exists(core::$data_dir . '/fr')) {
+			mkdir (core::$data_dir . '/fr');
 		}
 
 		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
@@ -618,8 +622,8 @@ class common {
 		}
 
 		// Nettoyage du fichier de thème pour forcer une régénération
-		if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
-			unlink (self::DATA_DIR . '/theme.css');
+		if (file_exists(core::$data_dir . '/theme.css')) { // On ne sait jamais
+			unlink (core::$data_dir . '/theme.css');
 		}
 	}
 
@@ -695,9 +699,9 @@ class common {
 		// Sauf pour les pages et les modules
 		if ($id === 'page' ||
 			$id === 'module') {
-				$folder = self::DATA_DIR . $lang . '/' ;
+				$folder = core::$data_dir . $lang . '/' ;
 		} else {
-			$folder = self::DATA_DIR;
+			$folder = core::$data_dir;
 		}
 		return ($folder);
 	}
@@ -1000,10 +1004,10 @@ class common {
 
 		// Stockage dans un sous-dossier localisé
 		// Le dossier de langue existe t-il ?
-		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
-			mkdir (self::DATA_DIR . '/' . $lang);
+		if (!file_exists(core::$data_dir . '/' . $lang)) {
+			mkdir (core::$data_dir . '/' . $lang);
 		}
-		$folder = $this->dirData ($module,$lang);
+		$folder =  $this->dirData ($module,$lang);
 		// Constructeur  JsonDB
 		$db = new \Prowebcraft\JsonDb([
 			'name' => $module . '.json',
@@ -1218,8 +1222,8 @@ class common {
 		// Version 9.2.27
 		if($this->getData(['core', 'dataVersion']) < 9227) {
 			// Forcer la régénération du thème
-			if (file_exists(self::DATA_DIR.'theme.css')) {
-				unlink (self::DATA_DIR.'theme.css');
+			if (file_exists(core::$data_dir.'theme.css')) {
+				unlink (core::$data_dir.'theme.css');
 			}
 			$this->setData(['core', 'dataVersion', 9227]);
 		}
@@ -1300,7 +1304,7 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10093) {
 			// Déplacement du fichier admin.css dans data
 			if (file_exists('core/layout/admin.css')) {
-				copy('core/layout/admin.css',self::DATA_DIR.'admin.css');
+				copy('core/layout/admin.css',core::$data_dir.'admin.css');
 				unlink('core/layout/admin.css');
 			}
 			//Déplacement d'un fichier de ressources
@@ -1338,12 +1342,12 @@ class common {
 			// Thème
 			$this->deleteData(['admin','colorButtonText']);
 			// Remettre à zéro le thème pour la génération du CSS du blog
-			if (file_exists(self::DATA_DIR . 'theme.css')) {
-				unlink(self::DATA_DIR . 'theme.css');
+			if (file_exists(core::$data_dir . 'theme.css')) {
+				unlink(core::$data_dir . 'theme.css');
 			}
 			// Créer les en-têtes du journal
 			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-			file_put_contents(self::DATA_DIR . 'journal.log',$d);
+			file_put_contents(core::$data_dir . 'journal.log',$d);
 			// Init préservation htaccess
 			$this->setData(['config','autoUpdateHtaccess',false]);
 			// Options de barre de membre simple
@@ -1439,8 +1443,8 @@ class common {
 			// Couleur des sous menus
 			$this->setData(['theme', 'menu', 'backgroundColorSub', $this->getData(['theme', 'menu', 'backgroundColor']) ]);
 			// Nettoyage du fichier de thème pour forcer une régénération
-			if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
-				unlink (self::DATA_DIR . '/theme.css');
+			if (file_exists(core::$data_dir . '/theme.css')) { // On ne sait jamais
+				unlink (core::$data_dir . '/theme.css');
 			}
 			$this->setData(['core', 'dataVersion', 10304]);
 		}
@@ -1547,22 +1551,22 @@ class core extends common {
 			}
 		}
 		// Crée le fichier de personnalisation avancée
-		if(file_exists(self::DATA_DIR.'custom.css') === false) {
-			file_put_contents(self::DATA_DIR.'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
-			chmod(self::DATA_DIR.'custom.css', 0755);
+		if(file_exists(core::$data_dir.'custom.css') === false) {
+			file_put_contents(core::$data_dir.'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
+			chmod(core::$data_dir.'custom.css', 0755);
 		}
 		// Crée le fichier de personnalisation
-		if(file_exists(self::DATA_DIR.'theme.css') === false) {
-			file_put_contents(self::DATA_DIR.'theme.css', '');
-			chmod(self::DATA_DIR.'theme.css', 0755);
+		if(file_exists(core::$data_dir.'theme.css') === false) {
+			file_put_contents(core::$data_dir.'theme.css', '');
+			chmod(core::$data_dir.'theme.css', 0755);
 		}
 		// Crée le fichier de personnalisation de l'administration
-		if(file_exists(self::DATA_DIR.'admin.css') === false) {
-			file_put_contents(self::DATA_DIR.'admin.css', '');
-			chmod(self::DATA_DIR.'admin.css', 0755);
+		if(file_exists(core::$data_dir.'admin.css') === false) {
+			file_put_contents(core::$data_dir.'admin.css', '');
+			chmod(core::$data_dir.'admin.css', 0755);
 		}
 		// Check la version rafraichissement du theme
-		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'theme.css'));
+		$cssVersion = preg_split('/\*+/', file_get_contents(core::$data_dir.'theme.css'));
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['theme'])))) {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
@@ -1699,7 +1703,7 @@ class core extends common {
 			}
 
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR.'theme.css', $css);
+			file_put_contents(core::$data_dir.'theme.css', $css);
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
 			header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -1708,7 +1712,7 @@ class core extends common {
 			header("Pragma: no-cache");
 		}
 		// Check la version rafraichissement du theme admin
-		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'admin.css'));
+		$cssVersion = preg_split('/\*+/', file_get_contents(core::$data_dir.'admin.css'));
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['admin'])))) {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
@@ -1733,7 +1737,7 @@ class core extends common {
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid '. $this->getData(['admin','borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR.'admin.css', $css);
+			file_put_contents(core::$data_dir.'admin.css', $css);
 		}
 	}
 	/**
@@ -1779,7 +1783,7 @@ class core extends common {
 		$dataLog .= $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config','connect','log'])) {
-			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+			file_put_contents(core::$data_dir . 'journal.log', $dataLog, FILE_APPEND);
 		}
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
@@ -2803,7 +2807,7 @@ class layout extends common {
 			// Items de droite
 			$rightItems = '';
 			if($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(core::$data_dir.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
@@ -2849,7 +2853,7 @@ class layout extends common {
 		if($this->core->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
 			if (strpos($this->core->output['style'], 'admin.css') >= 1 ) {
-				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
+				echo '<link rel="stylesheet" href="' . core::$data_dir . 'admin.css?' . md5_file(core::$data_dir .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->core->output['style']) . '</style>';
 		}
@@ -2866,7 +2870,7 @@ class layout extends common {
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			AND $this->getUser('group') >= self::GROUP_MODERATOR
 		) {
-			$vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR.'core.json')) . ';';
+			$vars .= 'var privateKey = ' . json_encode(md5_file(core::$data_dir.'core.json')) . ';';
 		}
 		echo '<script>' . helper::minifyJs($vars) . '</script>';
 		// Librairies

@@ -23,7 +23,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php echo template::textarea('themeAdvancedCss', [
-				'value' => file_get_contents(self::DATA_DIR.'custom.css'),
+				'value' => file_get_contents(core::$data_dir.'custom.css'),
 				'class' => 'editor'
 			]); ?>
 		</div>

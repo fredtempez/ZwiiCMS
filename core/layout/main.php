@@ -12,11 +12,11 @@
 		<?php $layout->showVendor(); ?>
 		<?php $layout->showAnalytics(); ?>
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
-		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
-		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
+		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . core::$data_dir; ?>theme.css?<?php echo md5_file(core::$data_dir.'theme.css'); ?>">
+		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . core::$data_dir; ?>custom.css?<?php echo md5_file(core::$data_dir.'custom.css'); ?>">
 		<?php $layout->showStyle(); ?>
-		<?php if (file_exists(self::DATA_DIR .'head.inc.html')) {
-			include(self::DATA_DIR .'head.inc.html');
+		<?php if (file_exists(core::$data_dir .'head.inc.html')) {
+			include(core::$data_dir .'head.inc.html');
 		}?>
 	</head>
 	<body>
@@ -176,8 +176,8 @@
 					in_array($this->getUrl(1),$pattern)  )
 					) { // Pleine page en mode configuration
 						$layout->showContent();
-						if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-							include( self::DATA_DIR . 'body.inc.html');
+						if (file_exists(core::$data_dir . 'body.inc.html')) {
+							include( core::$data_dir . 'body.inc.html');
 						}
 				} else {
 				?>
@@ -187,8 +187,8 @@
 						<div class="<?php echo $blockleft; ?>" id="contentLeft"><aside><?php 	$layout->showBarContentLeft(); ?></aside></div>
 						<?php endif; ?>
 						<div class="<?php echo $content; ?>" id="contentSite"><?php $layout->showContent();
-							if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-								include(self::DATA_DIR . 'body.inc.html');
+							if (file_exists(core::$data_dir . 'body.inc.html')) {
+								include(core::$data_dir . 'body.inc.html');
 							}
 						?>
 						</div>

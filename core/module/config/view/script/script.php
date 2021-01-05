@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col12">
             <?php echo template::textarea('configScriptHead', [
-                'value' => file_exists( self::DATA_DIR . 'head.inc.html') ? file_get_contents (self::DATA_DIR . 'head.inc.html') : '' ,
+                'value' => file_exists( core::$data_dir . 'head.inc.html') ? file_get_contents (core::$data_dir . 'head.inc.html') : '' ,
                 'class' => 'editor'
             ]); ?>
         </div>
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col12">
             <?php echo template::textarea('configScriptBody', [
-                'value' => file_exists( self::DATA_DIR . 'body.inc.html') ? file_get_contents (self::DATA_DIR . 'body.inc.html') : '' ,
+                'value' => file_exists( core::$data_dir . 'body.inc.html') ? file_get_contents (core::$data_dir . 'body.inc.html') : '' ,
                 'class' => 'editor'
             ]); ?>
         </div>

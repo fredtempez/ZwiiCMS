@@ -461,7 +461,7 @@ class user extends common {
 		$dataLog .= $logStatus ;
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config','connect','log'])) {
-			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+			file_put_contents(core::$data_dir . 'journal.log', $dataLog, FILE_APPEND);
 		}
 		// Stockage des cookies
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
