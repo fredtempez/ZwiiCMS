@@ -28,7 +28,7 @@ Modifications :
     - Google Analytics, option d'anonymisation.
     - Procédure de connexion : les erreurs de captcha sont comptabilisées comme des échecs, allégement des messages d'information. Echecs de connexion, informations plus précises dans le journal de connexion.
     - TinyMCE : ajout des scripts possibles.
-Correction :
+Corrections :
     - Notification de commentaire, remplacement du nom de la page par le titre de l'article.
     - Thème : couleur du texte au survol d'un bouton standard.
 
