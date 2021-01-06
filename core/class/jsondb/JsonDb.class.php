@@ -132,8 +132,8 @@ class JsonDb extends \Prowebcraft\Dot
             touch($this->db);
         }
         // Backup file
-        if ($this->config['backup']) {
-            copy ($this->db, str_replace('json' , 'back.json', $this->db));
+        if ($this->config['backup'] === true) {
+            copy ($this->db, str_replace('json' , 'backup.json', $this->db));
         }
         if ( is_writable($this->db) ) {
             // 3 essais
