@@ -154,6 +154,7 @@ class common {
 	];
 	// Langue courante
 	public static $i18nSite;
+	public static $i18nCurrent;
 	public static $timezone;
 	private $url = '';
 	// Données de site
