@@ -101,6 +101,12 @@
 							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
 						]); ?>
 				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedFileBackup', true, 'Copie de sauvegarde', [
+							'checked' => $this->getData(['config', 'fileBackup']),
+							'help' => '<p>Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers.</p>'
+						]); ?>
+				</div>
 			</div>
 			<div class="row">
 				<div class="col4">

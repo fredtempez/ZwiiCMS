@@ -485,6 +485,7 @@ class config extends common {
 				[
 					'analyticsId' => $this->getInput('configAdvancedAnalyticsId'),
 					'autoBackup' => $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN),
+					'fileBackup' => $this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN),
 					'cookieConsent' => $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN),
 					'favicon' => $this->getInput('configAdvancedFavicon'),
@@ -525,7 +526,17 @@ class config extends common {
 					]
 				]
 			]);
-
+			// Efface les fichiers de backup lorsque l'option est désactivée
+			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+				$path = realpath('site/data');
+				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+				{
+					if (strpos($filename,'backup.json')) {
+						unlink($filename);
+					}
+				}
+			}
+			// Notice
 			if(self::$inputNotices === []) {
 				// Active la réécriture d'URL
 				$rewrite = $this->getInput('rewrite', helper::FILTER_BOOLEAN);
@@ -572,12 +583,6 @@ class config extends common {
 				'state' => $success
 			]);
 		}
-		// Initialisation du screen - APPEL AUTO DESACTIVE POUR EVITER UN RALENTISSEMENT
-		/*
-		if (!file_exists(self::FILE_DIR.'source/screenshot.jpg')) {
-			$this->configMetaImage();
-		}
-		*/
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration avancée',

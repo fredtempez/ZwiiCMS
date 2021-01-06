@@ -169,10 +169,10 @@ class common {
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
 	private $dataFiles = [
+		'config' => '',
 		'page' => '',
 		'module' => '',
 		'core' => '',
-		'config' => '',
 		'page' => '',
 		'user' => '',
 		'theme' => '',
@@ -203,13 +203,13 @@ class common {
 		}
 
 		// Instanciation de la classe des entrées / sorties
-		// Récupére les descripteurs
+		// Récupère les descripteurs
 		foreach ($this->dataFiles as $keys => $value) {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
-				'backup' => true
+				'backup' => $keys === 'config' ? true : $this->getData(['config','fileBackup'])
 			]);;
 		}
 
@@ -1570,6 +1570,18 @@ class common {
 			$this->setData(['config','translate','it',false]);
 			$this->setData(['config','translate','nl',false]);
 			$this->setData(['config','translate','pt',false]);
+			
+			// Renommer les fichier de backup
+			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+				$path = realpath('site/data');
+				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+				{
+					echo "$filename</br>";
+					if (strpos($filename,'back.json')) {
+						rename($filename, str_replace('back.json','backup.json',$filename));
+					}
+				}
+			}
 
 			$this->setData(['core', 'dataVersion', 10400]);
 
