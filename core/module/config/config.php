@@ -535,6 +535,9 @@ class config extends common {
 						unlink($filename);
 					}
 				}
+				if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+			} else {
+				touch('site/data/.backup');
 			}
 			// Notice
 			if(self::$inputNotices === []) {

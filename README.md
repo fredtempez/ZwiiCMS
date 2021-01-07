@@ -74,9 +74,9 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [R] fr                 Dossier localisé
       [F] page.json        Données des pages
       [F] module.json      Données des modules de pages
-    [F] admin.css          Thème de la partie administration
-    [F] admin.json         Données de la partie administration
-    [F] blacklist.json     Données de connexion des comptes inconnus
+    [F] admin.css          Thème des pages d'administration
+    [F] admin.json         Données de thème des pages d'administration 
+    [F] blacklist.json     Journalisation des tentatives de connexion avec des comptes inconnus
     [F] config.json        Configuration du site
     [F] core.json          Configuration du noyau
     [F] custom.css         Feuille de style de la personnalisation avancée
@@ -84,6 +84,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [F] theme.css          Thème du site
     [F] theme.json         Données du site
     [F] user.json          Données des utilisateurs
+    [F] .backup            Marqueur de la sauvegarde des fichiers si présent
   [R] file                 Répertoire d'upload du gestionnaire de fichiers
     [R] source             Ressources diverses
     [R] thumb              Miniatures des images

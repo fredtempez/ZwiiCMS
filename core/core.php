@@ -204,7 +204,7 @@ class common {
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
-				'backup' => $keys === 'config' ? true : $this->getData(['config','fileBackup'])
+				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
 
