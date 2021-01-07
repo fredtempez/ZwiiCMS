@@ -635,7 +635,7 @@ class blog extends common {
 						$sent = $this->sendMail(
 							$to,
 							'Nouveau commentaire déposé',
-							'Bonjour' . ' <strong>' . $user['firstname'] . ' ' . $user['lastname'] . '</strong>,<br><br>' .
+							'Bonjour<br><br>' .
 							'L\'article <a href="' . helper::baseUrl() . $this->getUrl(0) . '/	' . $this->getUrl(1) . '">' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']) . '</a> a  reçu un nouveau commentaire.<br><br>',
 							''
 						);
