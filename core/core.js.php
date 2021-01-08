@@ -472,4 +472,11 @@ $(document).ready(function(){
 			$(changeIcon).addClass('zwiico-menu');
 		};
 	});
+
+	/**
+	* Remove ID Facebook from URL
+	 */
+	if(/^\?fbclid=/.test(location.search))
+		location.replace(location.href.replace(/\?fbclid.+/, ""));
+
 });
