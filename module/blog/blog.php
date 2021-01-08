@@ -81,13 +81,13 @@ class blog extends common {
 	public static $articleConsent = [
 		self::EDIT_ALL 		   => 'Tous les groupes',
 		self::EDIT_GROUP       => 'Groupe du propriétaire',
-		self::EDIT_OWNER       => 'Propiétaire'
+		self::EDIT_OWNER       => 'Propriétaire'
 	];
 
 
 	public static $users = [];
 
-	const BLOG_VERSION = '4.1';
+	const BLOG_VERSION = '4.2';
 
 		/**
 	 * Flux RSS
@@ -627,22 +627,28 @@ class blog extends common {
 					foreach($this->getData(['user']) as $userId => $user) {
 						if ($user['group'] >= $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'commentGroupNotification']) ) {
 							$to[] = $user['mail'];
+							$firstname[] = $user['firstname'];
+							$lastname[] = $user['lastname'];
 						}
 					}
 					// Envoi du mail $sent code d'erreur ou de réussite
 					$notification = $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'commentApproved']) === true ? 'Commentaire déposé en attente d\'approbation': 'Commentaire déposé';
 					if ($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'commentNotification']) === true) {
-						$sent = $this->sendMail(
-							$to,
-							'Nouveau commentaire déposé',
-							'Bonjour<br><br>' .
-							'L\'article <a href="' . helper::baseUrl() . $this->getUrl(0) . '/	' . $this->getUrl(1) . '">' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']) . '</a> a  reçu un nouveau commentaire.<br><br>',
-							''
-						);
+						$error = 0;
+						foreach($to as $key => $adress){
+							$sent = $this->sendMail(
+								$adress,
+								'Nouveau commentaire déposé',
+								'Bonjour' . ' <strong>' . $firstname[$key] . ' ' . $lastname[$key] . '</strong>,<br><br>' .
+								'L\'article <a href="' . helper::baseUrl() . $this->getUrl(0) . '/	' . $this->getUrl(1) . '">' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']) . '</a> a  reçu un nouveau commentaire.<br><br>',
+								''
+							);
+							if( $sent === false) $error++;
+						}
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $this->getUrl() . '#comment',
-							'notification' => ($sent === true ? $notification . '<br/>Une notification a été envoyée.' : $notification . '<br/> Erreur de notification : ' . $sent),
+							'notification' => ($error === 0 ? $notification . '<br/>Une notification a été envoyée.' : $notification . '<br/> Erreur de notification : ' . $sent),
 							'state' => ($sent === true ? true : null)
 						]);
 
