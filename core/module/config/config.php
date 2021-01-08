@@ -485,7 +485,6 @@ class config extends common {
 				[
 					'analyticsId' => $this->getInput('configAdvancedAnalyticsId'),
 					'autoBackup' => $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN),
-					'fileBackup' => $this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN),
 					'cookieConsent' => $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN),
 					'favicon' => $this->getInput('configAdvancedFavicon'),

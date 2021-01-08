@@ -103,7 +103,7 @@
 				</div>
 				<div class="col4">
 					<?php echo template::checkbox('configAdvancedFileBackup', true, 'Copie de sauvegarde', [
-							'checked' => $this->getData(['config', 'fileBackup']),
+							'checked' => file_exists('site/data/.backup'),
 							'help' => '<p>Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers.</p>'
 						]); ?>
 				</div>
