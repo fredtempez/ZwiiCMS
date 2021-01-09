@@ -209,7 +209,7 @@ class common {
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
-				'backup' => $keys === 'config' ? true : $this->getData(['config','fileBackup'])
+				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
 
@@ -554,7 +554,16 @@ class common {
 		// Une partie de l'url
 		else {
 			$url = explode('/', $this->url);
-			return array_key_exists($key, $url) ? $url[$key] : null;
+			if (array_key_exists($key, $url) )  {
+				if (strpos($url[$key],'fbclid=')  === false) {
+					$result = $url[$key];
+				} else {
+					$result = $key === 0 ? $this->getData(['config','homePageId']) : '';
+				}
+			} else {
+				$result = null;
+			}
+			return $result;
 		}
 	}
 
@@ -1934,7 +1943,7 @@ class core extends common {
 					$access = false;
 				}
 			}
-			// Empêcher l'accès aux page désactivée par URL directe
+			// Empêcher l'accès aux pages désactivées par URL directe
 			if ( ( $this->getData(['page', $this->getUrl(0),'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				) OR (

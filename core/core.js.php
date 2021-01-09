@@ -480,4 +480,10 @@ $(document).ready(function(){
         $(".helpDisplayContent").slideToggle();
 	});
 
+	/**
+	 * Remove ID Facebook from URL
+	 */
+	if(/^\?fbclid=/.test(location.search))
+		location.replace(location.href.replace(/\?fbclid.+/, ""));
+
 });

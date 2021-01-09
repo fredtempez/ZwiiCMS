@@ -485,7 +485,6 @@ class config extends common {
 				[
 					'analyticsId' => $this->getInput('configAdvancedAnalyticsId'),
 					'autoBackup' => $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN),
-					'fileBackup' => $this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN),
 					'cookieConsent' => $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN),
 					'favicon' => $this->getInput('configAdvancedFavicon'),
@@ -535,6 +534,9 @@ class config extends common {
 						unlink($filename);
 					}
 				}
+				if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+			} else {
+				touch('site/data/.backup');
 			}
 			// Notice
 			if(self::$inputNotices === []) {
@@ -550,6 +552,8 @@ class config extends common {
 						PHP_EOL .
 						'<ifModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
+						"\tRewriteCond %{QUERY_STRING} ^(.*)&?fbclid=[^&]+&?(.*)$ [NC]". PHP_EOL .
+						"\tRewriteRule ^/?(.*)$ /$1?%1%2 [R=301,L]". PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .

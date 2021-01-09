@@ -4,7 +4,6 @@ class init extends common {
 		'config' => [
 			'analyticsId' => '',
 			'autoBackup' => true,
-			'fileBackup' => true,
 			'autoUpdate' => true,
 			'autoUpdateHtaccess' => false,
 			'cookieConsent' => true,
