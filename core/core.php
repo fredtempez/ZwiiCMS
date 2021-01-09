@@ -561,16 +561,7 @@ class common {
 		// Une partie de l'url
 		else {
 			$url = explode('/', $this->url);
-			if (array_key_exists($key, $url) )  {
-				if (strpos($url[$key],'fbclid=')  === false) {
-					$result = $url[$key];
-				} else {
-					$result = $key === 0 ? $this->getData(['config','homePageId']) : '';
-				}
-			} else {
-				$result = null;
-			}
-			return $result;
+			return array_key_exists($key, $url) ? $url[$key] : null;
 		}
 	}
 
