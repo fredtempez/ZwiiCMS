@@ -2,6 +2,7 @@
 
 ## version 10.4.00
 - Modifications :
+    - Filtrage des URL générées par facebook (FBCLID) occasionnant une erreur 404
     - Captcha arithmétique, activation recommandée dans la configuration.
     - Module User
         - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
@@ -15,8 +16,8 @@
         - Approbation des commentaires
     - Gestion des thèmes :
         - Bouton de réinitialisation avec confirmation
-    - Traduction automatique dans la langue du navigateur.
     - Amélioration de la structure du flux RSS.
+
 
 ## Version 10.3.13
 Modifications :

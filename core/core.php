@@ -1937,7 +1937,7 @@ class core extends common {
 					$access = false;
 				}
 			}
-			// Empêcher l'accès aux page désactivée par URL directe
+			// Empêcher l'accès aux pages désactivées par URL directe
 			if ( ( $this->getData(['page', $this->getUrl(0),'disable']) === true
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				) OR (
