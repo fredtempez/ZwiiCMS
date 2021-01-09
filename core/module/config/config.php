@@ -552,8 +552,6 @@ class config extends common {
 						PHP_EOL .
 						'<ifModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteCond %{QUERY_STRING} ^(.*)&?fbclid=[^&]+&?(.*)$ [NC]". PHP_EOL .
-						"\tRewriteRule ^/?(.*)$ /$1?%1%2 [R=301,L]". PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
