@@ -3,7 +3,7 @@
 		<div class="col10 offset1">
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
-                    <?php echo "<pre>"; echo isset($module::$motclef); echo "</pre>";echo template::text('searchMotphraseclef', [
+                    <?php echo template::text('searchMotphraseclef', [
                         'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
                         'value' => $module::$motclef
                     ]); ?>
