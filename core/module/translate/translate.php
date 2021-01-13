@@ -24,9 +24,7 @@ class translate extends common {
 	public static $translateOptions = [];
 
 	// Liste des langues installées
-	public static $languagesInstalled = [
-		'fr'	=> 'Français (fr)',
-	];
+	public static $languagesInstalled = [];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
 
@@ -69,11 +67,11 @@ class translate extends common {
 		// Tableau des langues installées
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','translate',$key]) === 'site') {
-				self::$languagesInstalled[$key] = $value;
+				self::$languagesTarget[$key] = $value;
 			}
 		}
-		// Tableau des langues cibles
-		self::$languagesTarget = array_diff (self::$i18nList,self::$languagesInstalled);
+		// Langues cibles fr en plus 
+		self::$languagesInstalled = array_merge(['fr'	=> 'Français (fr)'],self::$languagesTarget);
 
 		// Valeurs en sortie
 		$this->addOutput([

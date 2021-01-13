@@ -1591,11 +1591,29 @@ class common {
 
 			$this->setData(['core', 'dataVersion', 10400]);
 
-			/**
-			 *  mettre à jour defaultdata
-			 */
-
 		}
+
+		// Version 11.0.00
+		if ($this->getData(['core', 'dataVersion']) < 11000) {
+			// Mettre à jour les données de langue
+			$this->setData(['config','translate','scriptGoogle', false ]);
+			$this->setData(['config','translate','showCredits', false ]);
+			$this->setData(['config','translate','autoDetect', false ]);
+			$this->setData(['config','translate','admin', false ]);
+			$this->setData(['config','translate','fr', false ]);
+			$this->setData(['config','translate','de', false ]);
+			$this->setData(['config','translate','en', false ]);
+			$this->setData(['config','translate','es', false ]);
+			$this->setData(['config','translate','it', false ]);
+			$this->setData(['config','translate','nl', false ]);
+			$this->setData(['config','translate','pt', false ]);
+
+			$this->setData(['core', 'dataVersion', 11000]);
+		}
+
+		/**
+		 *  mettre à jour defaultdata
+		 */
 	}
 }
 
