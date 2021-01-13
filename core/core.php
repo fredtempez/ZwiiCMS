@@ -1587,6 +1587,7 @@ class common {
 				unlink('module/search/ressource/theme.css');
 			if (file_exists('module/search/ressource/vartheme.css') )
 				unlink('module/search/ressource/vartheme.css');
+			$this->deleteData(['theme','search','keywordColor']);
 
 			$this->setData(['core', 'dataVersion', 10400]);
 
