@@ -24,7 +24,9 @@ class translate extends common {
 	public static $translateOptions = [];
 
 	// Liste des langues installées
-	public static $languagesInstalled = [];
+	public static $languagesInstalled = [
+		'fr'	=> 'Français (fr)',
+	];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
 

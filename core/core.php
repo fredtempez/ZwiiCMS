@@ -623,7 +623,7 @@ class common {
 		$this->setData(['theme',$tempData['theme']]);
 
 		// Import des users sauvegardés si option active
-		if ($keepUsers === false 
+		if ($keepUsers === false
 			AND $tempData['user'] !== NULL) {
 			$this->setData(['user',$tempData['user']]);
 		}
@@ -1569,7 +1569,7 @@ class common {
 			$this->setData(['config','translate','it',false]);
 			$this->setData(['config','translate','nl',false]);
 			$this->setData(['config','translate','pt',false]);
-			
+
 			// Renommer les fichier de backup
 			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
@@ -2192,7 +2192,7 @@ class core extends common {
 
 		// Chargement de la bibliothèque googtrans
 
-		// Le multi langue est sélectionné 
+		// Le multi langue est sélectionné
 		if (  	$this->getData(['config','translate','scriptGoogle']) === true
 			AND
 				// et la traduction de la langue courante est automatique
@@ -2206,7 +2206,7 @@ class core extends common {
 			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getData(['config','translate','admin']) === true 
+					AND $this->getData(['config','translate','admin']) === true
 				)
 			)	{
 					$this->addOutput([
@@ -3067,11 +3067,11 @@ class layout extends common {
 					AND $this->getData(['config','translate',$key]) === 'script'
 				)
 			) {
-				if ( 
+				if (
 					(isset($_COOKIE['googtrans'] )
 					  AND substr($_COOKIE['googtrans'],4,2) === $key
 				    )
-					 OR 
+					 OR
 					( isset($_COOKIE['ZWII_I18N_SITE'])
 					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
 				   ) ) {
