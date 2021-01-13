@@ -154,7 +154,6 @@ class common {
 	];
 	// Langue courante
 	public static $i18nSite;
-	public static $i18nCurrent;
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -208,7 +207,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
+				'dir' => $this->dataPath ($keys,self::$i18nSite),
 				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
@@ -229,7 +228,7 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath ($stageId, self::$i18nCurrent);
+			$folder = $this->dataPath ($stageId, self::$i18nSite);
 			if (file_exists($folder . $stageId .'.json') === false) {
 				$this->initData($stageId,self::$i18nSite);
 				common::$coreNotices [] = $stageId ;
