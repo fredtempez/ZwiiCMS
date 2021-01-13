@@ -38,37 +38,31 @@ class search extends common {
 		400 => '400 caractères',
 	];
 
-	// Message par défaut
-	public static $messagePlaceHolder = '<span class=\"notranslate\">Un ou plusieurs mots-clés séparés par des espaces ou des guillemets</span>';
-	public static $messageButtontext = 'Rechercher';
-
-	const SEARCH_VERSION = '1.1';
+	const SEARCH_VERSION = '1.2';
 
 	// Configuration vide
 	public function config() {
-		// Initialisation des données de thème de la galerie dasn theme.json
+		// Création des valeurs de réglage par défaut
+		if ( $this->getData(['module', $this->getUrl(0)]) === null ) {
+			require_once('module/search/ressource/defaultdata.php');
+			$this->setData(['module', $this->getUrl(0), init::$defaultData]);
+		}
+
 		if($this->isPost())  {
 			// Soumission du formulaire
-			$this->setData(['theme', 'search', [
-				'keywordColor' => $this->getInput('searchKeywordColor')
-			]]);
 			$this->setData(['module', $this->getUrl(0), [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
-				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT)
+				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
+				'keywordColor' => $this->getInput('searchKeywordColor')
 			]]);
-			// Création des fichiers CSS
-			$content = file_get_contents('module/search/ressource/vartheme.css');
-			$themeCss = file_get_contents('module/search/ressource/theme.css');
-			// Injection des variables
-			$content = str_replace('#keywordColor#',$this->getinput('searchKeywordColor'),$content );
-			$success = file_put_contents('module/search/view/index/index.css',$content . $themeCss);
+
 
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistées !',
+				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
 				'state' => $success !== FALSE
 			]);
 
@@ -84,15 +78,11 @@ class search extends common {
 	}
 
 	public function index() {
-		// Création des valeurs de thème par défaut
-		if ( $this->getData(['theme', 'search']) === null ) {
-			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['theme', 'search', theme::$defaultData]);
-		}
+
 		// Création des valeurs de réglage par défaut
-		if ( $this->getData(['module', 'search']) === null ) {
+		if ( $this->getData(['module', $this->getUrl(0)]) === null ) {
 			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), data::$defaultData]);
+			$this->setData(['module', $this->getUrl(0), init::$defaultData]);
 		}
 
 		if($this->isPost())  {
@@ -280,7 +270,7 @@ class search extends common {
 				// Découper l'aperçu
 				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
 				// Applique une mise en évidence
-				$t = preg_replace($keywords, '<span class="searchKeyword">\1</span>',$t);
+				$t = preg_replace($keywords, '<span style="background:' . $this->getData(['module',$this->getUrl(0),'keywordColor']). ';">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
 				$resultat .= '<p class="searchTitle">' . count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');
