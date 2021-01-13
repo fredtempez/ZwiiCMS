@@ -193,9 +193,10 @@ class common {
 		}
 
 		// Déterminer le dossier de langues
+		/*
 		if (isset($_POST['ZWII_USER_I18N'])) {
 			self::$i18nCurrent = $_POST['ZWII_USER_I18N'];
-		}
+		}*/
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
