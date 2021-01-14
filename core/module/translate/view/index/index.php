@@ -21,12 +21,50 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<div class="block" id="flagsWrapper">
-			<h4>Mode de traduction et affichage des drapeaux
+			<div class="block">
+			<h4>Traduction automatique
 				<span class="helpDisplayButton">
 					<?php echo template::ico('help', 'left');?>
 				</span>
 			</h4>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
+								'checked' => $this->getData(['config','translate', 'scriptGoogle']),
+								'help' => 'Le script Google Translate assure la traduction automatique du site.'
+							]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue du navigateur', [
+							'checked' => $this->getData(['config','translate', 'autoDetect']),
+							'class' => 'translateGoogleScriptOption',
+							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
+							'checked' => $this->getData(['config','translate', 'showCredits']),
+							'class' => 'translateGoogleScriptOption',
+							'help' => 'Option recommandée pour le respect du droit d\'auteur'
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
+								'checked' => $this->getData(['config','translate', 'admin']),
+								'class' => 'translateGoogleScriptOption',
+								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
+							]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block" id="flagsWrapper">
+			<h4>Mode de traduction et affichage des drapeaux</h4>
 				<div class="row">
 					<div class="col4 offset4">
 						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [
@@ -86,49 +124,15 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-			<h4>Paramètres de la traduction automatique</h4>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
-								'checked' => $this->getData(['config','translate', 'scriptGoogle']),
-								'help' => 'Le script Google Translate assure la traduction automatique du site.'
-							]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['config','translate', 'showCredits']),
-							'class' => 'translateGoogleScriptOption',
-							'help' => 'Option recommandée pour le respect du droit d\'auteur'
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue', [
-							'checked' => $this->getData(['config','translate', 'autoDetect']),
-							'class' => 'translateGoogleScriptOption',
-							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
-						]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
-								'checked' => $this->getData(['config','translate', 'admin']),
-								'class' => 'translateGoogleScriptOption',
-								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
-							]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
 	<div class="col10 helpDisplayContent">
-		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée.
-		Si vous sélectionnez la traduction rédigée, seule la page d'accueil est générée, à vous de rédiger le site dans la langue sélectionnée.
+		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée.</p>
+		<p>La traduction automatique offre deux possibilités, la détection automatique de la langue du navigateur même celle-ci n'est pas
+		matérialisée par un drapeau. Le clic sur un drapeau forcera la traduction dans cette langue, pour cela sélectionnez le drapeau puis l'option de "Traduction automatique".
+		</p>
+		Si vous sélectionnez l'option "Traduction rédigée", seule la page d'accueil est générée, vous rédigez le site dans la langue sélectionnée.
 		Il est cependant possible de copier les pages et les modules  d'une langue vers une autre en cliquant sur le bouton de gestion avancée.</p>
-		<p>Une traduction peut être cachée en masquant le drapeau, la suppression d'une traduction rédigée est définitive, pensez à sauvegarder.
-		Afficher le drapeau français afin de revenir à la traduction originale.</p>
+		<p>Quand un drapeau est masqué, la traduction est effacée, pensez à sauvegarder.</p>
+		<p>Afficher le drapeau français  pour revenir à la traduction dans la langue originale.</p>
 	</div>
 <?php echo template::formClose(); ?>
