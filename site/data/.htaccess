@@ -1,5 +1,5 @@
 # Bloque l'accès aux données
-<FilesMatch ".(htaccess|json|log)$">
+<Files ~ "\.(htaccess|json|log)$">
 	Order deny,allow
 	Deny from all
-</FilesMatch>
+</Files>
