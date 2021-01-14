@@ -54,7 +54,7 @@ class translate extends common {
 				$this->setData(['config', 'translate', $toCreate, 'site' ]);
 				$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
 			} else {
-				$notification = "Quelque chose n\'a pas foncitionné, vérifiez les permissions.";
+				$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
 			}
 			// Valeurs en sortie
 			$this->addOutput([
