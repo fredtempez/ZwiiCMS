@@ -103,7 +103,8 @@ class translate extends common {
 						$this->removeDir( self::DATA_DIR . $keyi18n);
 				}
 				// Installation d'une langue
-				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site')
+				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site'
+					AND is_dir(self::DATA_DIR . $keyi18n) === false )
 				{
 					// Créer les données absentes
 					if (is_dir( self::DATA_DIR . $keyi18n )  === false ) {
@@ -181,7 +182,7 @@ class translate extends common {
 	 * Fonction utilisée par le noyau
 	 */
 	public function language() {
-		// Sélection et désélection de la lnague active
+		// Sélection et désélection de la langue active
 		if ( $this->getUrl(2) !== substr($_COOKIE['googtrans'],4,2))
 		{ 
 			// Transmettre le choix au noyau
