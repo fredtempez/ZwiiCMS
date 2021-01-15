@@ -240,15 +240,25 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		// Traduction du site avec le script Google
-		// Lire la langue du navigateur si non positionnée
+		/**
+		 * Traduction du site par script
+		 * Traduction par clic sur le drapeau OU
+		 * Traduction automatisée
+		 *	- Exclure la traduction manuelle
+		 *	- La mangue du navigateur est lisible
+		 *	- L'autodétection est active
+		 */
+		if ( $this->getData(['config','translate','scriptGoogle']) === true ) {
 
-		if ( $this->getData(['config','translate','scriptGoogle']) === true
-			 AND $this->getData(['config','translate','autoDetect']) === true ) {
-			// Langue du navigateur
-			if(!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+
+			if ( $this->getData(['config','translate',$this->getInput('ZWII_I18N_SITE')]) === 'script' )
+				{
+					setrawcookie('googtrans', '/fr/'. $this->getInput('ZWII_I18N_SITE'), time() + 3600, helper::baseUrl());
+				} elseif (  $this->getData(['config','translate','autoDetect']) === true
+						AND $this->getData(['config','translate',$this->getInput('ZWII_I18N_SITE')]) !== 'site'
+						AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
+				{
 				setrawcookie('googtrans', '/fr/'. substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
-				//$_SESSION['googtrans'] = '/fr/'. $_SERVER['HTTP_ACCEPT_LANGUAGE'];
 			}
 		}
 
