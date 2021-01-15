@@ -181,13 +181,25 @@ class translate extends common {
 	 * Fonction utilisée par le noyau
 	 */
 	public function language() {
-		// Transmettre le choix au noyau
-		if ($this->getUrl(3) === 'script') {
-			setrawcookie("googtrans", '/fr/'. $this->getUrl(2), time() + 3600, helper::baseUrl());
+		// Sélection et désélection de la lnague active
+		if ( $this->getUrl(2) !== substr($_COOKIE['googtrans'],4,2))
+		{ 
+			// Transmettre le choix au noyau
+			if ($this->getUrl(3) === 'script') {
+				setrawcookie("googtrans", '/fr/'. $this->getUrl(2), time() + 3600, helper::baseUrl());
+				helper::deleteCookie('ZWII_I18N_SITE');
+			} elseif ($this->getUrl(3) === 'site') {
+				setcookie('ZWII_I18N_SITE', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
+			}
+		} else { 
+			// Langue du navigateur  par défaut si dispo
 			helper::deleteCookie('ZWII_I18N_SITE');
-		} elseif ($this->getUrl(3) === 'site') {
-			setcookie('ZWII_I18N_SITE', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-			setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
+			if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ) {
+				setrawcookie("googtrans", '/fr/'. substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
+			} else {
+				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([

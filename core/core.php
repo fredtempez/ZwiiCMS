@@ -246,19 +246,24 @@ class common {
 		 * Traduction automatisée
 		 *	- Exclure la traduction manuelle
 		 *	- La mangue du navigateur est lisible
-		 *	- L'autodétection est active
+		 *	- L'auto-détection est active
 		 */
-		if ( $this->getData(['config','translate','scriptGoogle']) === true ) {
 
+		if ( $this->getData(['config','translate','scriptGoogle']) === true
+			 AND $this->getData(['config','translate','autoDetect']) === true
+			 AND $this->getInput('ZWII_I18N_SITE') === ''
+			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
+		{
+			/**
+			 * Le cookie est prioritaire sur le navigateur
+			 * la traduction est celle de la langue du drapeau
+			 * */
 
-			if ( $this->getData(['config','translate',$this->getInput('ZWII_I18N_SITE')]) === 'script' )
-				{
-					setrawcookie('googtrans', '/fr/'. $this->getInput('ZWII_I18N_SITE'), time() + 3600, helper::baseUrl());
-				} elseif (  $this->getData(['config','translate','autoDetect']) === true
-						AND $this->getData(['config','translate',$this->getInput('ZWII_I18N_SITE')]) !== 'site'
-						AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
-				{
-				setrawcookie('googtrans', '/fr/'. substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
+			if (isset($_COOKIE['googtrans'])
+				AND substr($_COOKIE['googtrans'],4,2) !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
+				setrawcookie('googtrans', '/fr/'.substr($_COOKIE['googtrans'],4,2), time() + 3600, helper::baseUrl());
+			} else {
+				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
 			}
 		}
 
