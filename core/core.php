@@ -1572,19 +1572,6 @@ class common {
 			$this->setData(['locale','metaDescription',$this->getData(['config','metaDescription'])]);
 			$this->setData(['locale','title',$this->getData(['config','title'])]);
 
-			// Options des langues
-			$this->setData(['config','translate','scriptGoogle',false]);
-			$this->setData(['config','translate','showCredits',false]);
-			$this->setData(['config','translate','admin',false]);
-			$this->setData(['config','translate','autoDetect',false]);
-			$this->setData(['config','translate','fr',false]);
-			$this->setData(['config','translate','de',false]);
-			$this->setData(['config','translate','en',false]);
-			$this->setData(['config','translate','es',false]);
-			$this->setData(['config','translate','it',false]);
-			$this->setData(['config','translate','nl',false]);
-			$this->setData(['config','translate','pt',false]);
-
 			// Renommer les fichier de backup
 			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
@@ -2237,11 +2224,13 @@ class core extends common {
 				)
 			// Cas  des pages d'administration
 			// Pas connecté
-			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+			AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+			AND $this->getUrl(1) !== 'login'
 				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getData(['config','translate','admin']) === true
 				)
+
 			)	{
 					$this->addOutput([
 						'vendor' => array_merge($this->output['vendor'], ['i18n'])
