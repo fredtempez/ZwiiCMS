@@ -192,11 +192,6 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Déterminer le dossier de langues
-		/*
-		if (isset($_POST['ZWII_USER_I18N'])) {
-			self::$i18nCurrent = $_POST['ZWII_USER_I18N'];
-		}*/
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
@@ -235,30 +230,6 @@ class common {
 		// Utilisateur connecté
 		if($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
-		}
-
-		// Traduction du site avec le script Google
-		if ( $this->getData(['config','translate','scriptGoogle'])) {
-			// Lire la langue stockée dans le cookie (choix manuel)
-			if ( isset($_COOKIE['ZWII_USER_I18N']) ) {
-				$lan_cookie = $_COOKIE['ZWII_USER_I18N'];
-			}
-			// Lire la langue du navigateur
-			if ( $this->getData(['config','translate','autoDetect'])) {
-				$lan_browser = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-			}
-
-			// Priorité : choix manuel - navigateur - fr
-			$lan = isset($lan_cookie) ? $lan_cookie : (isset($lan_browser) ? $lan_browser : 'fr');
-
-			// Changer la locale
-			if ( $lan !== 'fr') {
-				setlocale (LC_TIME, $lan . '_' . strtoupper ($lan) );
-				// Charge la librairie Google Translate
-				setrawcookie("googtrans", '/fr/'. $lan, time() + 3600, helper::baseUrl());
-			} else {
-				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
-			}
 		}
 
 		// Construit la liste des pages parents/enfants
@@ -2187,21 +2158,6 @@ class core extends common {
 			}
 		}
 
-		// Chargement de la librairie googtrans
-		// Le multi langue est actif
-		if ($this->getData(['config','translate','scriptGoogle']) === true ) {
-			// la traduction auto est active
-			if ( $this->getData(['config','translate','autoDetect']) === true
-				// Cas  des pages d'administration
-				AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					    AND $this->getData(['config','translate','admin']) === true )
-				)	{
-					$this->addOutput([
-						'vendor' => array_merge($this->output['vendor'], ['i18n'])
-					]);
-			}
-		}
 		// Erreurs
 		if($access === 'login') {
 			http_response_code(302);
@@ -2338,26 +2294,6 @@ class layout extends common {
 
 		echo $this->core->output['content'];
 
-		/**
-		 * Affiche les crédits, conditions requis :
-		 * La traduction est active et le site n'est pas en français.
-		 * La fonction est activée.
-		 */
-
-		if ( (
-				( $this->getData(['config','translate','scriptGoogle']) === true
-				  AND substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) !== 'fr'
-		        )
-			   OR ( isset($_COOKIES['ZWII_USER_I18N'])
-				   AND array_key_exists($_COOKIES['ZWII_USER_I18N'],$this->i18nList
-				   AND $_COOKIES['ZWII_USER_I18N'] !== 'fr' )
-				)
-			 )
-			 AND $this->getData(['config','translate','showCredits']) === true
-           )
-		{
-		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
-		}
 	}
 
 
@@ -3044,22 +2980,6 @@ class layout extends common {
 						break;
 				}
 			}
-		}
-	}
-	/**
-	 * Affiche le cadre avec les drapeaux
-	 */
-	public function showi18n() {
-		if ( $this->getData(['config','translate','scriptGoogle']) === true ) {
-				echo '<div id="i18nContainer"><ul>';
-				foreach (self::$i18nList as $key => $value) {
-					if ($this->getData(['config','translate','script' . strtoupper($key)]) ) {
-						echo '<li>';
-						echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getUrl(0) . '"><img class= "flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
-						echo '</li>';
-					}
-				}
-				echo '</ul></div>';
 		}
 	}
 }
