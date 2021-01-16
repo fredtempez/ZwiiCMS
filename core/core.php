@@ -153,7 +153,7 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue courante
-	public static $i18nSite;
+	public static $i18n;
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -192,13 +192,15 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Déterminer la langue sélectionnée si traduction manuelle ('site')
+		// Déterminer la langue sélectionnée pour le chargement des fichiers de données
 		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
 		) {
-			self::$i18nSite = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale (LC_TIME, self::$i18nSite . '_' . strtoupper (self::$i18nSite) );
+			self::$i18n = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			setlocale (LC_TIME, self::$i18n . '_' . strtoupper (self::$i18n) );
+
 		} else  {
-			self::$i18nSite = 'fr';
+			//setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+			self::$i18n = 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -207,7 +209,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys,self::$i18nSite),
+				'dir' => $this->dataPath ($keys,self::$i18n),
 				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
@@ -228,9 +230,9 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath ($stageId, self::$i18nSite);
+			$folder = $this->dataPath ($stageId, self::$i18n);
 			if (file_exists($folder . $stageId .'.json') === false) {
-				$this->initData($stageId,self::$i18nSite);
+				$this->initData($stageId,self::$i18n);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -258,10 +260,9 @@ class common {
 			 * Le cookie est prioritaire sur le navigateur
 			 * la traduction est celle de la langue du drapeau
 			 * */
-
-			if (isset($_COOKIE['googtrans'])
-				AND substr($_COOKIE['googtrans'],4,2) !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.substr($_COOKIE['googtrans'],4,2), time() + 3600, helper::baseUrl());
+			if ($this->getInput('ZWII_I18N_SCRIPT')
+				AND $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
+				setrawcookie('googtrans', '/fr/'.$this->getInput('ZWII_I18N_SCRIPT'), time() + 3600, helper::baseUrl());
 			} else {
 				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
 			}
@@ -530,7 +531,7 @@ class common {
 				}
 			}
 		}
-		// La clef est une chaine
+		// La clef est une chaîne
 		else {
 			foreach($this->input as $type => $values) {
 				// Champ obligatoire
@@ -2213,14 +2214,13 @@ class core extends common {
 
 		// Chargement de la bibliothèque googtrans
 
-		// Le multi langue est sélectionné
+		// Le script de traduction est sélectionné
 		if (  	$this->getData(['config','translate','scriptGoogle']) === true
 			AND
 				// et la traduction de la langue courante est automatique
-				(   isset($_COOKIE['googtrans'])
-					AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
-					   // Ou traduction automatique
-						OR 	$this->getData(['config','translate','autoDetect']) === true )
+				(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
+					// Ou traduction automatique
+					OR 	$this->getData(['config','translate','autoDetect']) === true 
 				)
 			// Cas  des pages d'administration
 			// Pas connecté
@@ -2232,6 +2232,9 @@ class core extends common {
 				)
 
 			)	{
+					// Paramètre du script
+					setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
+					// Chargement de la librairie
 					$this->addOutput([
 						'vendor' => array_merge($this->output['vendor'], ['i18n'])
 					]);
@@ -2382,8 +2385,8 @@ class layout extends common {
 			 AND $this->getData(['config','translate','showCredits']) === true
 			 AND
 				// et la traduction n'est pas manuelle
-				(   isset($_COOKIE['googtrans'])
-					AND $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+				(  $this->getInput('ZWII_I18N_SCRIPT')
+					AND $this->getData(['config','translate', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
 				)
            )
 		{
@@ -3091,12 +3094,12 @@ class layout extends common {
 				)
 			) {
 				if (
-					(isset($_COOKIE['googtrans'] )
-					  AND substr($_COOKIE['googtrans'],4,2) === $key
+					(isset($_COOKIE['ZWII_I18N_SITE'] )
+					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
 				    )
 					 OR
-					( isset($_COOKIE['ZWII_I18N_SITE'])
-					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
+					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
+					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
 				   ) ) {
 					   $select = ' id="i18nFlagSelected" ';
 				   } else {

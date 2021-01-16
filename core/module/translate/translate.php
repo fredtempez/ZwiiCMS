@@ -48,7 +48,7 @@ class translate extends common {
 			// Copier les données par défaut avec gestion des erreurs
 			$success  = (copy (self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
 			$success  = (copy (self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
-			$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;			
+			$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
 			// Enregistrer la langue
 			if ($success) {
 				$this->setData(['config', 'translate', $toCreate, 'site' ]);
@@ -70,7 +70,7 @@ class translate extends common {
 				self::$languagesTarget[$key] = $value;
 			}
 		}
-		// Langues cibles fr en plus 
+		// Langues cibles fr en plus
 		self::$languagesInstalled = array_merge(['fr'	=> 'Français (fr)'],self::$languagesTarget);
 
 		// Valeurs en sortie
@@ -89,7 +89,7 @@ class translate extends common {
 		if($this->isPost()) {
 			// Désactivation du script Google
 			if ($this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) {
-				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl());
+				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
 				$_SESSION['googtrans'] = '/fr/fr';
 			}
 			$script = $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN);
@@ -182,26 +182,20 @@ class translate extends common {
 	 * Fonction utilisée par le noyau
 	 */
 	public function language() {
-		// Sélection et désélection de la langue active
-		if ( $this->getUrl(2) !== substr($_COOKIE['googtrans'],4,2))
-		{ 
-			// Transmettre le choix au noyau
-			if ($this->getUrl(3) === 'script') {
-				setrawcookie("googtrans", '/fr/'. $this->getUrl(2), time() + 3600, helper::baseUrl());
-				helper::deleteCookie('ZWII_I18N_SITE');
-			} elseif ($this->getUrl(3) === 'site') {
-				setcookie('ZWII_I18N_SITE', $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
-			}
-		} else { 
-			// Langue du navigateur  par défaut si dispo
+
+		// Activation du drapeau 
+		if ( $this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2) ) {
+			// Nettoyer et stocker le choix de l'utilisateur
 			helper::deleteCookie('ZWII_I18N_SITE');
-			if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) ) {
-				setrawcookie("googtrans", '/fr/'. substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
-			} else {
-				setrawcookie("googtrans", '/fr/fr', time() + 3600, helper::baseUrl());
-			}
+			helper::deleteCookie('ZWII_I18N_SCRIPT');
+			// Sélectionner
+			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);	
+		// Désactivation du drapeau, langue FR par défaut
+		} else {
+			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+			helper::deleteCookie('ZWII_I18N_SCRIPT');
 		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' 		=> 	helper::baseUrl()
