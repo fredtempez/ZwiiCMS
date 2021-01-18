@@ -253,17 +253,14 @@ class common {
 
 		if ( $this->getData(['config','translate','scriptGoogle']) === true
 			 AND $this->getData(['config','translate','autoDetect']) === true
-			 AND $this->getInput('ZWII_I18N_SITE') === ''
+			 AND $this->getInput('ZWII_I18N_SITE') !== ''
 			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
-		{
+		{ 
 			/**
 			 * Le cookie est prioritaire sur le navigateur
 			 * la traduction est celle de la langue du drapeau
 			 * */
-			if ($this->getInput('ZWII_I18N_SCRIPT')
-				AND $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.$this->getInput('ZWII_I18N_SCRIPT'), time() + 3600, helper::baseUrl());
-			} else {
+			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
 				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
 			}
 		}
