@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 11.0.00
+- Modifications :
+    - Gestion multi-langues
+        - Traduction rédigée dans une langue européenne
+        - Traduction automatique dans une langue européenne
+        - Traduction selon la langue navigateur
+    - Configuration du site :
+        - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
+
 ## version 10.4.00
 - Modifications :
     - Filtrage des URL générées par facebook (FBCLID) occasionnant une erreur 404
