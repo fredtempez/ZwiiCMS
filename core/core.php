@@ -1595,6 +1595,10 @@ class common {
 
 		// Version 11.0.00
 		if ($this->getData(['core', 'dataVersion']) < 11000) {
+
+			// Option de déconnexion auto activée
+			$this->setData(['config','autoDisconnect',true]);
+
 			// Mettre à jour les données de langue
 			$this->setData(['config','translate','scriptGoogle', false ]);
 			$this->setData(['config','translate','showCredits', false ]);
@@ -1910,7 +1914,9 @@ class core extends common {
 		if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			AND ( $this->getUser('group') === self::GROUP_BANNED
-				  OR $_SESSION['csrf'] !== $this->getData(['user',$this->getUser('id'),'accessCsrf']) )
+				  OR ( $_SESSION['csrf'] !== $this->getData(['user',$this->getUser('id'),'accessCsrf'])
+					  AND $this->getData(['config','autoDisconnect']) === true)
+			    )
 		) {
 			$user = new user;
 			$user->logout();

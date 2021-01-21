@@ -44,7 +44,7 @@
 			<h4>Réglages</h4>
 			<?php $error = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
-				<div class="col4">
+				<div class="col6">
 					<?php echo template::file('configAdvancedFavicon', [
 						'type' => 1,
 						'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
@@ -52,7 +52,7 @@
 						'value' => $this->getData(['config', 'favicon'])
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col6">
 					<?php echo template::file('configAdvancedFaviconDark', [
 						'type' => 1,
 						'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
@@ -60,51 +60,63 @@
 						'value' => $this->getData(['config', 'faviconDark'])
 					]); ?>
 				</div>
-				<div class="col4">
+			</div>
+			<div class="row">
+				<div class="col6">
 					<?php echo template::select('configAdvancedItemsperPage', $module::$ItemsList, [
 					'label' => 'Articles par page',
 					'selected' => $this->getData(['config', 'itemsperPage']),
 					'help' => 'Modules Blog et News'
 					]); ?>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col4">
+				<div class="col6">
 					<?php echo template::select('configAdvancedTimezone', $module::$timezones, [
 						'label' => 'Fuseau horaire',
 						'selected' => $this->getData(['config', 'timezone']),
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col4 verticalAlignBottom">
-					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Consentement aux cookies', [
-						'checked' => $this->getData(['config', 'cookieConsent'])
-					]); ?>
-				</div>
-				<div class="col4 verticalAlignBottom">
-						<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha renforcé', [
-							'checked' => $this->getData(['config','captchaStrong']),
-							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'
-						]); ?>
-					</div>
 			</div>
 			<div class="row">
-				<div class="col4">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Consentement aux cookies', [
+						'checked' => $this->getData(['config', 'cookieConsent']),
+						'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
+					]); ?>
+				</div>
+				<div class="col6">
 					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 						'checked' => helper::checkRewrite(),
 						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
 					]); ?>
 				</div>
-				<div class="col4">
+
+			</div>
+			<div class="row">
+				<div class="col6">
 					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde quotidienne', [
 							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
+							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
 						]); ?>
 				</div>
-				<div class="col4">
+				<div class="col6">
 					<?php echo template::checkbox('configAdvancedFileBackup', true, 'Copie de sauvegarde', [
 							'checked' => file_exists('site/data/.backup'),
-							'help' => '<p>Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers.</p>'
+							'help' => 'Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers. Activation recommandée.'
+						]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha renforcé', [
+						'checked' => $this->getData(['config','captchaStrong']),
+						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedAutoDisconnect', true, 'Déconnexion automatique', [
+							'checked' => $this->getData(['config','autoDisconnect']),
+							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 						]); ?>
 				</div>
 			</div>
@@ -116,14 +128,14 @@
 							'disabled' => !$error
 						]); ?>
 				</div>
-				<div class="col4 ">
+				<div class="col4">
 				<?php echo template::checkbox('configAdvancedAutoUpdateHtaccess', true, 'Préserver htaccess', [
 							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
 							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
 							'disabled' => !$error
 						]); ?>
 				</div>
-				<div class="col4 ">
+				<div class="col4">
 					<?php echo template::button('configAdvancedUpdateForced', [
 						'ico' => 'download-cloud',
 						'href' => helper::baseUrl() . 'install/update',

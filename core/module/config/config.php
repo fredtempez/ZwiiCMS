@@ -479,6 +479,11 @@ class config extends common {
 				$this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
+			// Eviter déconnexion automatique après son activation
+			if ( $this->getData(['config','autoDisconnect']) === false
+				 AND $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
+				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
+			}
 			// Sauvegarder
 			$this->setData([
 				'config',
@@ -507,6 +512,7 @@ class config extends common {
 					'proxyUrl' => $this->getInput('configAdvancedProxyUrl'),
 					'proxyPort' => $this->getInput('configAdvancedProxyPort',helper::FILTER_INT),
 					'captchaStrong' => $this->getInput('configAdvancedCaptchaStrong',helper::FILTER_BOOLEAN),
+					'autoDisconnect' => $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN),
 					'smtp' => [
 						'enable' => $this->getInput('configAdvancedSmtpEnable',helper::FILTER_BOOLEAN),
 						'host' => $this->getInput('configAdvancedSmtpHost',helper::FILTER_STRING_SHORT),
