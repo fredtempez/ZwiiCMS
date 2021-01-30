@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.013';
+	const ZWII_VERSION = '10.4.00.014';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1499,12 +1499,8 @@ class common {
 			foreach ($pageList as $parentKey => $parent) {
 				//La page est un blog
 				if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-					//echo "<pre>".$parent;
 					$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
-					//var_dump($articleIds);
 					foreach ($articleIds as $key => $article) {
-						//echo $article;
-						//echo "<p>";
 						// Droits les deux groupes
 						$this->setData(['module',  $parent, 'posts', $article,'editConsent', 3]);
 						// Limite de taille 500
@@ -1542,7 +1538,6 @@ class common {
 				$path = realpath('site/data');
 				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
 				{
-					echo "$filename</br>";
 					if (strpos($filename,'back.json')) {
 						rename($filename, str_replace('back.json','backup.json',$filename));
 					}
@@ -1555,6 +1550,16 @@ class common {
 			if (file_exists('module/search/ressource/vartheme.css') )
 				unlink('module/search/ressource/vartheme.css');
 			$this->deleteData(['theme','search','keywordColor']);
+
+			// Nettoyer les modules avec des données null
+
+			$modules = $this->getData(['module']);
+			foreach($modules as $key => $value) {
+				if (is_null($value) ) {
+					unset($modules[$key]);
+				}
+			}
+			$this->setData (['module',$modules]);
 
 			$this->setData(['core', 'dataVersion', 10400]);
 

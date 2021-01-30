@@ -1,6 +1,9 @@
 # Changelog
 
 ## version 10.4.00
+Corrections :
+    - Bug de pages non accessibles dans le menu suite à la création d'entrées fantômes dans le fichier de données de modules.
+    - Nettoyage du fichiers des données de modules des entrées fantômes.
 - Modifications :
     - Filtrage des URL générées par facebook (FBCLID) occasionnant une erreur 404
     - Captcha arithmétique, activation recommandée dans la configuration.

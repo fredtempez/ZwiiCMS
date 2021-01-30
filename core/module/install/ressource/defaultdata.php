@@ -781,17 +781,7 @@ class init extends common {
 						'values' => ''
 					]
 				]
-			],
-			'locale' => [
-				'homePageId' => 'accueil',
-				'page302' => 'erreur302',
-				'page403' => 'erreur403',
-				'page404' => 'erreur404',
-				'legalPageId' => 'mentions-legales',
-				'searchPageId' => 'recherche',
-				'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-				'title' => 'Votre site en quelques clics !'
-			],
+			]
 		]
     ];
 }
