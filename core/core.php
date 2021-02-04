@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.00.014';
+	const ZWII_VERSION = '10.4.00.015';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1647,20 +1647,27 @@ class core extends common {
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
 			// Import des polices de caractères
 			$css .= '@import url("https://fonts.googleapis.com/css?family=' . $this->getData(['theme', 'text', 'font']) . '|' . $this->getData(['theme', 'title', 'font']) . '|' . $this->getData(['theme', 'header', 'font']) .  '|' . $this->getData(['theme', 'menu', 'font']) . '");';
-			// Fond du site
+			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
-			$css .= 'body,div.mce-edit-area{background-color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
-			// Fond TinyMCe
-			$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ' !important}';
+			// Body
+			$css .= 'body{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
-				$css .= 'body,div.mce-edit-area{background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
-				$css .= 'div.mce-edit-area{background-image:url("../file/source/' . $themeBodyImage . '") !important;background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
+				// Image dans html pour éviter les déformations.
+				$css .= 'html{background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
+				// Couleur du body transparente
+				$css .= 'body{background-color: rgba(0,0,0,0)}';
+			} else {
+				// Pas d'image couleur du body
+				$css .= 'html{background-color:' . $colors['normal'] . ';}';
 			}
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
 			// Site
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
+			// Fond TinyMCe
+			$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ' !important}';
+			$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
