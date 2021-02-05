@@ -21,6 +21,15 @@ $(document).ready(function(){
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
+
+	// Option fixe pour contain et cover
+	var themeBodyImageSize = $("#themeBodyImageSize").val();
+	
+	if(themeBodyImageSize === "cover" ||
+	   themeBodyImageSize === "contain" ) {
+		$("#themeBodyImageAttachment").val("fixed");
+	}
+
 	// Couleur du fond
 	var css = "html{background-color:" + $("#themeBodyBackgroundColor").val() + "}";
 	// Image du fond
