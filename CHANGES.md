@@ -4,6 +4,9 @@
 Corrections :
     - Bug de pages non accessibles dans le menu suite à la création d'entrées fantômes dans le fichier de données de modules.
     - Nettoyage du fichiers des données de modules des entrées fantômes.
+    - Thème : déformation des images en arrière-plan dans les modes responsives cover et contain lorsque la longueur de la page change. L'image en arrière-plan est désormais placée dans la balise html et l'option fixe s'active lorsque cover ou contain sont sélectionnés.
+    - Thème : déformation du sélecteur de fichiers dans certains formats de page.
+    - Module Form : mauvais affichage du guillemet et de l'apostrophe dans les noms des champs lors de l'édition.
 - Modifications :
     - Filtrage des URL générées par facebook (FBCLID) occasionnant une erreur 404
     - Captcha arithmétique, activation recommandée dans la configuration.
