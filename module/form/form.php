@@ -32,7 +32,7 @@ class form extends common {
 
 	public static $pagination;
 
-	const FORM_VERSION = '2.5';
+	const FORM_VERSION = '2.6';
 
 	// Objets
 	const TYPE_MAIL = 'mail';
@@ -94,7 +94,7 @@ class form extends common {
 			$inputs = [];
 			foreach($this->getInput('formConfigPosition', null) as $index => $position) {
 				$inputs[] = [
-					'name' => $this->getInput('formConfigName[' . $index . ']'),
+					'name' => htmlspecialchars_decode($this->getInput('formConfigName[' . $index . ']'),ENT_QUOTES),
 					'position' => helper::filter($position, helper::FILTER_INT),
 					'required' => $this->getInput('formConfigRequired[' . $index . ']', helper::FILTER_BOOLEAN),
 					'type' => $this->getInput('formConfigType[' . $index . ']'),

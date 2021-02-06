@@ -21,15 +21,25 @@ $(document).ready(function(){
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
+
+	// Option fixe pour contain et cover
+	var themeBodyImageSize = $("#themeBodyImageSize").val();
+	
+	if(themeBodyImageSize === "cover" ||
+	   themeBodyImageSize === "contain" ) {
+		$("#themeBodyImageAttachment").val("fixed");
+	}
+
 	// Couleur du fond
-	var css = "body{background-color:" + $("#themeBodyBackgroundColor").val() + "}";
+	var css = "html{background-color:" + $("#themeBodyBackgroundColor").val() + "}";
 	// Image du fond
 	var themeBodyImage = $("#themeBodyImage").val();
 	if(themeBodyImage) {
-		css += "body{background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + themeBodyImage + "');background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
+		css += "html{background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + themeBodyImage + "');background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
+		css += "html{background-color:rgba(0,0,0,0);}";
 	}
 	else {
-		css += "body{background-image:none}";
+		css += "html{background-image:none}";
 	}
 	css += '#backToTop {background-color:'  + $("#themeBodyToTopBackground").val() + ';color:' + $("#themeBodyToTopColor").val() + ';}';	
 
