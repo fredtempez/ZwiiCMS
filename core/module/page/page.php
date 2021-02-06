@@ -317,8 +317,10 @@ class page extends common {
 						$this->setData(['page', $childrenPageId, 'parentPageId', $pageId]);
 					}
 					// Change l'id de page dans les données des modules
-					$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
-					$this->deleteData(['module', $this->getUrl(2)]);
+					if ($this->getData(['module', $this->getUrl(2)]) !== null ) {
+						$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
+						$this->deleteData(['module', $this->getUrl(2)]);
+					}
 					// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
 					if($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
 						$this->setData(['locale', 'homePageId', $pageId]);
