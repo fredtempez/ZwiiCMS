@@ -1162,6 +1162,10 @@ label {
 	margin-bottom: 4px;
 }
 
+.captcha label {
+	display:inline-block;
+}
+
 /* Simule le padding des cols pour les inputs en dehors des cols */
 :not([class^="col"])>.inputWrapper {
 	padding: 10px 0;
