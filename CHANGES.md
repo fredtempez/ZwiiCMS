@@ -3,7 +3,7 @@
 ## version 10.4.00
 Corrections :
     - Bug de pages non accessibles dans le menu suite à la création d'entrées fantômes dans le fichier de données de modules.
-    - Nettoyage du fichiers des données de modules des entrées fantômes.
+    - Nettoyage du fichier des données de modules des entrées fantômes.
     - Thème : déformation des images en arrière-plan dans les modes responsives cover et contain lorsque la longueur de la page change. L'image en arrière-plan est désormais placée dans la balise html et l'option fixe s'active lorsque cover ou contain sont sélectionnés.
     - Thème : déformation du sélecteur de fichiers dans certains formats de page.
     - Module Form : mauvais affichage du guillemet et de l'apostrophe dans les noms des champs lors de l'édition.
@@ -13,7 +13,7 @@ Corrections :
     - Captcha arithmétique, activation recommandée dans la configuration.
     - Module User
         - Pour les articles de blog et de news, choix de la signature, nom+prenom ; nom+prenom ; id ; pseudo
-        - Importation d'un liste d'utilisateur dans un fichier plat (CSV).
+        - Importation d'une liste d'utilisateur dans un fichier plat (CSV).
     - Module Blog :
         - Texte du commentaire enrichi.
         - Nombre maximal de caractère par commentaire.
