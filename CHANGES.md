@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.4.01
+Corrections :
+    - Module form, erreur de syntaxe.
+
 ## version 10.4.00
 Corrections :
     - Bug de pages non accessibles dans le menu suite à la création d'entrées fantômes dans le fichier de données de modules.
