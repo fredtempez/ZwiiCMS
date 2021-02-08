@@ -656,7 +656,7 @@ class theme extends common {
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
 					// Check le thème
-					$this->checkImport($modele);
+					// $this->checkImport($modele);
 				} else {
 					// pas une archive de thème
 					$success = false;
