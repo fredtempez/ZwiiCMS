@@ -3,6 +3,7 @@
 ## version 10.4.01
 Corrections :
     - Module form, erreur de syntaxe.
+    - Chargement d'un thème, désactivation du contrôle des clés.
 
 ## version 10.4.00
 Corrections :
