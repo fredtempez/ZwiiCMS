@@ -604,6 +604,7 @@ class config extends common {
 	*/
 	public function modules() {
 	
+		helper::getModules();
 		// Préparation du tableau des modules installés
 		// Liste des modules installés (répertoire de module/)
 		if ($dh = opendir( 'module/' )) {
@@ -613,12 +614,12 @@ class config extends common {
 					self::$modInstal[$i][0] = $dirmodule;
 					self::$modInstal[$i][1] = page::$moduleNames[$dirmodule];	
 					// Lecture de la version pour les modules officiels et distribués
-					$blogversion = blog::BLOG_VERSION;
-					$formversion = form::FORM_VERSION;
-					$galleryversion = gallery::GALLERY_VERSION; 
-					$newsversion = news::NEWS_VERSION;
-					$redirectionversion = redirection::REDIRECTION_VERSION;
-					$searchversion = search::SEARCH_VERSION;
+					$blogversion = blog::VERSION;
+					$formversion = form::VERSION;
+					$galleryversion = gallery::VERSION; 
+					$newsversion = news::VERSION;
+					$redirectionversion = redirection::VERSION;
+					$searchversion = search::VERSION;
 					self::$str = $dirmodule.'version';
 					self::$modInstal[$i][2] = '?';
 					if( ${self::$str} !== null){

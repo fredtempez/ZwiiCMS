@@ -139,7 +139,7 @@
 <div class="row">
     <div class="col12">
         <div class="moduleVersion">Version n°
-            <?php echo $module::GALLERY_VERSION; ?>
+            <?php echo $module::VERSION; ?>
         </div>
     </div>
 </div>

@@ -127,6 +127,41 @@ class helper {
 		return ($fileName);
 	}
 
+
+
+	/** 
+	 * Retourne la liste des modules installés dans un tableau composé
+	 * du nom réel
+	 * du numéro de version
+	 */
+	public  static function getModules() {
+		$dirs = array_diff(scandir('module'), array('..', '.'));
+		foreach ($dirs as $key => $value) {
+			// Lire les constantes
+			$class_reflex = new \ReflectionClass($value);
+			$class_constants = $class_reflex->getConstants();
+			// Constante REALNAME
+			if (array_key_exists('REALNAME', $class_constants)) {
+					$realName = $value::REALNAME;
+			} else {
+					$realName = ucfirst($value);
+			}
+			// Constante VERSION
+			if (array_key_exists('VERSION', $class_constants)) {
+					$version = $value::VERSION;
+			} else {
+					$version = '0.0';
+			}
+			// Affection
+			$modules [$value]  = [
+				'realName' => $realName,
+				'version' => $version
+			];
+		}
+		return($modules);
+	}
+
+
 	/**
 	 * Retourne true si le protocole est en TLS
 	 * @return bool
