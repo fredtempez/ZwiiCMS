@@ -104,7 +104,7 @@
 								'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'group']),
 								'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
 							]); ?>
-						</div>="row">
+						</div>
 						<div class="col3">
 							<?php echo template::select('formConfigUser', $module::$listUsers, [
 								'label' => 'A un membre',

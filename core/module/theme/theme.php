@@ -533,31 +533,43 @@ class theme extends common {
 	 * Réinitialisation de la personnalisation avancée
 	 */
 	public function reset() {
-		// Supprime le fichier de personnalisation avancée
-		$redirect ='';
-		switch ($this->getUrl(2)) {
-			case 'admin':
-				$this->initData('admin');
-				$redirect = helper::baseUrl() . 'theme/admin';
-				break;
-			case 'manage':
-				$this->initData('theme');
-				$redirect = helper::baseUrl() . 'theme/manage';
-				break;
-			case 'custom':
-				unlink(self::DATA_DIR.'custom.css');
-				$redirect = helper::baseUrl() . 'theme/advanced';
-				break;
-			default :
-				$redirect = helper::baseUrl() . 'theme';
-		}
+		// $url prend l'adresse sans le token
+		$url = explode('&',$this->getUrl(2));
 
-		// Valeurs en sortie
-		$this->addOutput([
-			'notification' => 'Réinitialisation effectuée',
-			'redirect' => $redirect,
-			'state' => true
-		]);
+		if  ( isset($_GET['csrf'])
+			 AND $_GET['csrf'] === $_SESSION['csrf']
+			) {
+			// Réinitialisation
+			$redirect ='';
+			switch ($url[0]) {
+				case 'admin':
+					$this->initData('admin');
+					$redirect = helper::baseUrl() . 'theme/admin';
+					break;
+				case 'manage':
+					$this->initData('theme');
+					$redirect = helper::baseUrl() . 'theme/manage';
+					break;
+				case 'custom':
+					unlink(self::DATA_DIR.'custom.css');
+					$redirect = helper::baseUrl() . 'theme/advanced';
+					break;
+				default :
+					$redirect = helper::baseUrl() . 'theme';
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Réinitialisation effectuée',
+				'redirect' => $redirect,
+				'state' => true
+			]);
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Jeton incorrect'
+			]);
+		}
 	}
 
 
@@ -644,7 +656,7 @@ class theme extends common {
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
 					// Check le thème
-					$this->checkImport($modele);
+					// $this->checkImport($modele);
 				} else {
 					// pas une archive de thème
 					$success = false;

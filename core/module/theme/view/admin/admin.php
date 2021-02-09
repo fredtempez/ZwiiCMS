@@ -16,7 +16,7 @@
 		<div class="col2 offset">
 			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
-				'href' => helper::baseUrl() . 'theme/reset/admin',
+				'href' => helper::baseUrl() . 'theme/reset/admin' . '&csrf=' . $_SESSION['csrf'],
 				'value' => 'Réinitialiser',
 				'ico' => 'cancel'
 			]); ?>
