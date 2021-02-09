@@ -746,7 +746,6 @@ class theme extends common {
 					foreach ($itemKeys as $key2 => $value) {
 						// Données nulles ou vides instaurer la donnée par défaut
 						if ($this->getData(['theme',$key1,$key2]) ===  NULL
-							OR empty($this->getData(['theme',$key1,$key2]) )
 						) {
 							$this->setData(['theme',$key1,$key2,$value]);
 						}
@@ -761,7 +760,6 @@ class theme extends common {
 				foreach ($itemKeys as $key1 => $value) {
 					// Données nulles ou vides instaurer la donnée par défaut
 					if ($this->getData(['admin',$key1]) ===  NULL
-						OR empty($this->getData(['admin',$key1]) )
 					) {
 						$this->setData(['admin',$key1,$value]);
 					}
