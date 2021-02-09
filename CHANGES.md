@@ -1,8 +1,14 @@
 # Changelog
 
+## version 10.4.02
+- Corrections :
+    - Thème : aperçu du site amélioré.
+    - Editeur de texte : couleur de fond parasite quand une image en arrière-plan est sélectionnée.
+
 ## version 10.4.01
 Corrections :
     - Module form, erreur de syntaxe.
+    - Chargement d'un thème, désactivation du contrôle des clés.
 
 ## version 10.4.00
 Corrections :
