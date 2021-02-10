@@ -604,7 +604,6 @@ class config extends common {
 	*/
 	public function modules() {
 	
-		helper::getModules();
 		// Préparation du tableau des modules installés
 		// Liste des modules installés (répertoire de module/)
 		if ($dh = opendir( 'module/' )) {
