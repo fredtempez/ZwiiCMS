@@ -168,7 +168,7 @@ class helper {
 	/**
 	 * Scanne le contenu d'un dossier et de ses sous-dossiers
 	 * @param string $dir Dossier à scanner
-	 * @return array
+	 * @return array liste de dossiers contenus dans le répertoire cible.
 	 */
 	public static function scanSubDir($dir) {
 		$dirContent = [];
