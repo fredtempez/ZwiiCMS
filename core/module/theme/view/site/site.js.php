@@ -13,7 +13,7 @@
  /*
  * Chargement de l'aperçu
  */
-$(document).ready(function() {	
+$(document).ready(function() {
 
 	/**
 	* Option de marge si la taille n'est pas fluide
@@ -34,7 +34,7 @@ $(document).ready(function() {
 /**
  * Aperçu en direct
  */
-$("input, select").on("change",function() {	
+$("input, select").on("change",function() {
 	previewDOM();
 });
 
@@ -48,8 +48,8 @@ function previewDOM() {
 	var titleFont = $("#themeTitleFont").val();
 	var textFont = $("#themeTextFont").val();
 	var css = "@import url('https://fonts.googleapis.com/css?family=" + titleFont + "|" + textFont + "');";
-	// Couleurs des boutons		
-	var colors = core.colorVariants($("#themeButtonBackgroundColor").val());	
+	// Couleurs des boutons
+	var colors = core.colorVariants($("#themeButtonBackgroundColor").val());
 	css += ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
 	css += ".button.buttonSubmitPreview:hover{background-color:" + colors.darken + "}";
 	css += ".button.buttonSubmitPreview{color:" + colors.text + ";}";
@@ -90,16 +90,27 @@ function previewDOM() {
 	}
 	// Couleur du site, arrondi sur les coins du site et ombre sur les bords du site
 	//css += "#site{background-color:" + $("#themeSiteBackgroundColor").val() + ";border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";
-	
-	css += "#site{border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";	
+
+	css += "#site{border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";
+
+	// Couleur ou image de fond
 	var backgroundImage = <?php echo json_encode(helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme','body','image'])); ?>;
-	var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;						
-	css += "div.bodybackground{background-color:" +  backgroundcolor + "; background-image: url(" + backgroundImage + ");background-size:cover;}";
+	console.log(backgroundImage);
+	var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;
+	if(backgroundImage) {
+		css += "div.bodybackground{background-image:url(" + backgroundImage + ");background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
+		css += "div.bodybackground{background-color:rgba(0,0,0,0);}";
+	}
+	else {
+		css += "div.bodybackground{background-image:none}";
+	}
+	css += '#backToTop {background-color:'  + backgroundcolor + ';color:' + $("#themeBodyToTopColor").val() + ';}';
+
 	css += "div.bgPreview{padding: 5px;background-color:" + $("#themeSiteBackgroundColor").val() + ";}";
-	
+
 	// Les blocs
 
-	var colors = core.colorVariants($("#themeBlockBackgroundColor").val());  
+	var colors = core.colorVariants($("#themeBlockBackgroundColor").val());
 	css += ".block.preview {padding: 20px 20px 10px;margin: 20px 0;	word-wrap: break-word;border-radius: 2px;border: 1px solid " + $("#themeBlockBorderColor").val() + ";}.block.preview h4.preview {background: "  + colors.normal + ";color:" + colors.text + ";margin: -20px -20px 10px -20px; padding: 10px;}";
 
 	/**
