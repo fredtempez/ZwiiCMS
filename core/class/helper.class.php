@@ -137,28 +137,49 @@ class helper {
 	public  static function getModules() {
 		$dirs = array_diff(scandir('module'), array('..', '.'));
 		foreach ($dirs as $key => $value) {
-			// Lire les constantes
-			$class_reflex = new \ReflectionClass($value);
-			$class_constants = $class_reflex->getConstants();
-			// Constante REALNAME
-			if (array_key_exists('REALNAME', $class_constants)) {
-					$realName = $value::REALNAME;
-			} else {
-					$realName = ucfirst($value);
+			// Dossier non vide
+			if (file_exists('module/' . $value . '/' . $value . '.php')) {
+				// Lire les constantes
+				$class_reflex = new \ReflectionClass($value);
+				$class_constants = $class_reflex->getConstants();
+				// Constante REALNAME
+				if (array_key_exists('REALNAME', $class_constants)) {
+						$realName = $value::REALNAME;
+				} else {
+						$realName = ucfirst($value);
+				}
+				// Constante VERSION
+				if (array_key_exists('VERSION', $class_constants)) {
+						$version = $value::VERSION;
+				} else {
+						$version = '0.0';
+				}
+				// Affection
+				$modules [$value]  = [
+					'realName' => $realName,
+					'version' => $version
+				];
 			}
-			// Constante VERSION
-			if (array_key_exists('VERSION', $class_constants)) {
-					$version = $value::VERSION;
-			} else {
-					$version = '0.0';
-			}
-			// Affection
-			$modules [$value]  = [
-				'realName' => $realName,
-				'version' => $version
-			];
 		}
 		return($modules);
+	}
+
+	
+	/**
+	 * Scanne le contenu d'un dossier et de ses sous-dossiers
+	 * @param string $dir Dossier à scanner
+	 * @return array
+	 */
+	public static function scanSubDir($dir) {
+		$dirContent = [];
+		$iterator = new DirectoryIterator($dir);
+		foreach($iterator as $fileInfos) {
+			if($fileInfos->isDot() === false AND $fileInfos->isDir()) {
+				$dirContent[] = $dir . '/' . $fileInfos->getBasename();
+				$dirContent = array_merge($dirContent, self::scanSubDir($dir . '/' . $fileInfos->getBasename()));
+			}
+		}
+		return $dirContent;
 	}
 
 
