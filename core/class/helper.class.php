@@ -164,23 +164,6 @@ class helper {
 		return($modules);
 	}
 
-	
-	/**
-	 * Scanne le contenu d'un dossier et de ses sous-dossiers
-	 * @param string $dir Dossier à scanner
-	 * @return array liste de dossiers contenus dans le répertoire cible.
-	 */
-	public static function scanSubDir($dir) {
-		$dirContent = [];
-		$iterator = new DirectoryIterator($dir);
-		foreach($iterator as $fileInfos) {
-			if($fileInfos->isDot() === false AND $fileInfos->isDir()) {
-				$dirContent[] = $dir . '/' . $fileInfos->getBasename();
-				$dirContent = array_merge($dirContent, self::scanSubDir($dir . '/' . $fileInfos->getBasename()));
-			}
-		}
-		return $dirContent;
-	}
 
 
 	/**
