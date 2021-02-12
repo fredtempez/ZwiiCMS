@@ -28,6 +28,7 @@ class download extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'stats' => self::GROUP_MODERATOR,
+		'statsDeleteAll' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'rss' => self::GROUP_VISITOR,
 		'downloadFile' => self::GROUP_VISITOR
@@ -795,7 +796,7 @@ class download extends common {
 				$statId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats']));
 				$this->setData(['module',
 					$this->getUrl(0),
-					'items', 
+					'items',
 					$this->getUrl(2),
 					'fileStats',
 					$statId, [
@@ -832,58 +833,60 @@ class download extends common {
 	 */
 
 	 public function stats() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Jeton incorrect
-			if ($this->getUrl(3) !== $_SESSION['csrf']) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => 'Action  non autorisée'
-				]);
-			}
-			// L'item n'existe pas
-			if($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2)]) === null) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'access' => false
-				]);
-			}
-	 } else {
+
 		// Construction de la page des statistiques
-		// Ids des items par ordre de publication
+		$itemIds = array_keys($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']));
+		// Pagination
+		$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 
-			$itemIds = array_keys($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']));
-			// Pagination
-			$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		// Liste des pages
+		self::$pages = $pagination['pages'];
 
-			// Liste des pages
-			self::$pages = $pagination['pages'];
+		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 
-			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			// Format des variables
+			$date = mb_detect_encoding(strftime('%d %B %Y - %H:%M', $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'time'])), 'UTF-8', true)
+				? strftime('%d %B %Y - %H:%M',$this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'time']))
+				: utf8_encode(strftime('%d %B %Y - %H:%M', $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'time'])));
 
-				// Format des variables
-				
-				echo $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'fileDate']);
-				
-				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
-					? strftime('%d %B %Y',$this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'fileDate']))
-					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'fileDate'])));
+			// Met en forme le tableau
+			self::$items[] = [
+				$date,
+				$this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', $itemIds[$i], 'ip'])
+			];
 
-				// Met en forme le tableau
-				self::$items[] = [
-					$date,
-					$this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileStats', 'ip'])
-				];
-				
-			}
-			die();
+		}
+		$this->addOutput([
+			'title' => 'Statistiques de téléchargement',
+			'view' => 'stats'
+		]);
+	}
+
+	public function statsDeleteAll() {
+		// Validité de la page demandée
+		if($this->getData(['module', $this->getUrl(0), 'items']) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Statistiques de téléchargement',
-				'view' => 'stats'
+				'access' => false
 			]);
-
+		}
+		// Jeton incorrect
+		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0),
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Téléchargement
+		else {
+			$this->setData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats', [] ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/stats/' . $this->getUrl(2),
+				'notification' => 'Purge des statistiques',
+				'state' => true
+			]);
 		}
 	}
 }

@@ -3,20 +3,18 @@
 		<div class="col2">
 			<?php echo template::button('statsConfigBack', [
 				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0), 'items',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'ico' => 'left',
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset8">
 			<?php echo template::button('statsConfigAdd', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
-				'ico' => 'plus',
-				'value' => 'Item'
+				'class' => 'statsDeleteAll buttonRed',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/statsDeleteAll' . '/' . $this->getUrl(2) . '/'. $_SESSION['csrf'] ,
+				'ico' => 'cancel',
+				'value' => 'Tout effacer'
 			]); ?>
-		</div>
-		<div class="col2">
-			<?php echo template::submit('statsConfigSubmit'); ?>
 		</div>
 	</div>
 <?php echo template::formClose(); ?>
