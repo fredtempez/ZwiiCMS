@@ -27,6 +27,7 @@ class download extends common {
 		'config' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
+		'stats' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'rss' => self::GROUP_VISITOR,
 		'downloadFile' => self::GROUP_VISITOR
@@ -426,7 +427,6 @@ class download extends common {
 				}
 				// Nombre de téléchargements
 				$stats = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'fileStats']), 'time');
-
 				// Met en forme le tableau
 				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
 					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate']))
@@ -440,7 +440,7 @@ class download extends common {
 					'</a>',
 					$this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileVersion']),
 					$date .' à '. $heure,
-					count($stats),
+					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/stats/' . $itemIds[$i] . '" >' .	count($stats) . '</a>',
 					self::$states[$this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'item
 					template::button('downloadConfigComment' . $itemIds[$i], [
@@ -771,6 +771,7 @@ class download extends common {
 	 * Initie un téléchargement protégé
 	 */
 	public function downloadFile() {
+
 		if($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -825,5 +826,43 @@ class download extends common {
 			}
 		}
 	}
-}
 
+	/**
+	 * Ecran de consultation des données statistiques
+	 */
+
+	 public function stats() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Jeton incorrect
+			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+					'notification' => 'Action  non autorisée'
+				]);
+			}
+			// L'item n'existe pas
+			if($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2)]) === null) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'access' => false
+				]);
+			}
+	 } else {
+		// Construction de la page des statistiques
+		// Ids des items par ordre de publication
+
+			$itemIds = $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']);			
+			// Pagination
+			$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			// Liste des pages
+			self::$pages = $pagination['pages'];
+
+			for($i = $pagination['first']; $i < $pagination['last']; $i++) {			
+				
+			}
+
+		}
+	}
+}
