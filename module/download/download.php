@@ -28,7 +28,8 @@ class download extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR
+		'rss' => self::GROUP_VISITOR,
+		'downloadFile' => self::GROUP_VISITOR
 	];
 
 	public static $items = [];
@@ -179,6 +180,7 @@ class download extends common {
 					'file'	  => $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT, true),
 					'fileVersion' => $this->getInput('downloadAddFileVersion', helper::FILTER_STRING_SHORT, true),
 					'fileDate' => $this->getInput('downloadAddFileDate', helper::FILTER_DATETIME, true),
+					'fileCount' => 0,
 					'publishedOn' => $this->getInput('downloadAddPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('downloadAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('downloadAddTitle', helper::FILTER_STRING_SHORT, true),
@@ -537,6 +539,7 @@ class download extends common {
 						'file'	  => $this->getInput('downloadEditFile', helper::FILTER_STRING_SHORT, true),
 						'fileVersion' => $this->getInput('downloadEditFileVersion', helper::FILTER_STRING_SHORT, true),
 						'fileDate' => $this->getInput('downloadEditFileDate', helper::FILTER_DATETIME, true),
+						'fileCount' => $this->getData(['module',$this->getUrl(0), 'items', $itemId, 'fileCount']),
 						'publishedOn' => $this->getInput('downloadEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('downloadEditState', helper::FILTER_BOOLEAN),
 						'title' => $this->getInput('downloadEditTitle', helper::FILTER_STRING_SHORT, true),
@@ -757,6 +760,55 @@ class download extends common {
 				break;
 			default:
 				return $this->getData(['user', $userId, 'firstname']);
+		}
+	}
+
+	/**
+	 * Initie un téléchargement protégé
+	 */
+	public function downloadFile() {
+		if($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2)]) === null) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		}
+		// Jeton incorrect
+		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . $this->getUrl(0),
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Téléchargement
+		else {
+			$filePath = self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
+			$fileName = $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
+			if (file_exists($filePath)) {
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Length: ' . filesize($filePath));
+				readfile( $filePath);
+				// Incrémenter le compteur
+				$this->setData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileCount', helper::filter($this->setData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileCount']) + 1, helper::FILTER_INT) ]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'display' => self::DISPLAY_RAW
+				]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => 'Configuration',
+					'view' => 'index'
+				]);
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl()  . $this->getUrl(0),
+					'notification' => 'Aucun fichier à télécharger',
+					'state' => false
+				]);
+			}
 		}
 	}
 }

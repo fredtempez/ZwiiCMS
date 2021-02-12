@@ -57,7 +57,8 @@
 			<div class="row">
 				<div class="col12">
 					<?php echo template::button('downloadItemFile', [
-						'href' => self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1), 'file']),
+						//'href' => self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1), 'file']),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/downloadFile/' . $this->getUrl(1) . '/' . $_SESSION['csrf'],
 						'value' => 'Télécharger'
 					]); ?>
 				</div>
