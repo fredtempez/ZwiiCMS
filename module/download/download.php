@@ -180,7 +180,7 @@ class download extends common {
 					'file'	  => $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT, true),
 					'fileVersion' => $this->getInput('downloadAddFileVersion', helper::FILTER_STRING_SHORT, true),
 					'fileDate' => $this->getInput('downloadAddFileDate', helper::FILTER_DATETIME, true),
-					'fileCount' => 0,
+					'fileStats' => [],
 					'publishedOn' => $this->getInput('downloadAddPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('downloadAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('downloadAddTitle', helper::FILTER_STRING_SHORT, true),
@@ -424,6 +424,9 @@ class download extends common {
 					$toApprove = 0;
 					$approved = count($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'comment']));
 				}
+				// Nombre de téléchargements
+				$stats = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'fileStats']), 'time');
+
 				// Met en forme le tableau
 				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
 					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate']))
@@ -437,6 +440,7 @@ class download extends common {
 					'</a>',
 					$this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileVersion']),
 					$date .' à '. $heure,
+					count($stats),
 					self::$states[$this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'item
 					template::button('downloadConfigComment' . $itemIds[$i], [
@@ -539,7 +543,7 @@ class download extends common {
 						'file'	  => $this->getInput('downloadEditFile', helper::FILTER_STRING_SHORT, true),
 						'fileVersion' => $this->getInput('downloadEditFileVersion', helper::FILTER_STRING_SHORT, true),
 						'fileDate' => $this->getInput('downloadEditFileDate', helper::FILTER_DATETIME, true),
-						'fileCount' => $this->getData(['module',$this->getUrl(0), 'items', $itemId, 'fileCount']),
+						'fileStats' => $this->getData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']),
 						'publishedOn' => $this->getInput('downloadEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('downloadEditState', helper::FILTER_BOOLEAN),
 						'title' => $this->getInput('downloadEditTitle', helper::FILTER_STRING_SHORT, true),
@@ -786,12 +790,22 @@ class download extends common {
 			$filePath = self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
 			$fileName = $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
 			if (file_exists($filePath)) {
+				// Statistiques de téléchargement
+				$statId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'fileStats']));
+				$this->setData(['module',
+					$this->getUrl(0),
+					'items', 
+					$this->getUrl(2),
+					'fileStats',
+					$statId, [
+						'time' => time(),
+						'ip' =>  helper::getIp()
+				]]);
+				// Formatage http
 				header('Content-Type: application/octet-stream');
 				header('Content-Disposition: attachment; filename="' . $fileName . '"');
 				header('Content-Length: ' . filesize($filePath));
 				readfile( $filePath);
-				// Incrémenter le compteur
-				$this->setData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileCount', helper::filter($this->setData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileCount']) + 1, helper::FILTER_INT) ]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_RAW
@@ -805,7 +819,7 @@ class download extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl()  . $this->getUrl(0),
-					'notification' => 'Aucun fichier à télécharger',
+					'notification' => 'Le fichier n\'existe pas',
 					'state' => false
 				]);
 			}

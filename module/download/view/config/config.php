@@ -41,7 +41,7 @@
 	</div>
 <?php echo template::formClose(); ?>
 <?php if($module::$items): ?>
-	<?php echo template::table([4, 1, 3, 1, 1, 1, 1], $module::$items, ['Titre', 'Version', 'Du',  'État', 'Commentaires', '','']); ?>
+	<?php echo template::table([3, 1, 3, 1, 1, 1, 1, 1], $module::$items, ['Titre', 'Version', 'Du', 'Stats', 'État', 'Commentaires', '','']); ?>
 	<?php echo $module::$pages; ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun item.'); ?>
