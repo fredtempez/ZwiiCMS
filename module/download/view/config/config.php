@@ -12,7 +12,7 @@
 			<?php echo template::button('downloadConfigAdd', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
 				'ico' => 'plus',
-				'value' => 'Item'
+				'value' => 'Fichier'
 			]); ?>
 		</div>
 		<div class="col2">

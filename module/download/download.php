@@ -53,6 +53,9 @@ class download extends common {
 
 	public static $pages;
 
+	// Nombre de téléchargements
+	public static $statSum = 0;
+
 	public static $states = [
 		false => 'Brouillon',
 		true => 'Publié'
@@ -90,7 +93,7 @@ class download extends common {
 
 	public static $users = [];
 
-	const VERSION = '4.2';
+	const VERSION = '1.0';
 	const REALNAME = 'Téléchargement';
 
 		/**
@@ -426,22 +429,25 @@ class download extends common {
 					$toApprove = 0;
 					$approved = count($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'comment']));
 				}
-				// Nombre de téléchargements
-				$stats = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'fileStats']), 'time');
 				// Met en forme le tableau
 				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
 					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate']))
 					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate'])));
-				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
-				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate']))
-				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate'])));
+				$heure = mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate'])), 'UTF-8', true)
+					? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate']))
+					: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'fileDate'])));
+				$stat = count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'fileStats']), 'time') ) === 0
+					? '0'
+					: '<a href="' . helper::baseurl() . $this->getUrl(0) . '/stats/' . $itemIds[$i] . '" >' .
+					count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'fileStats']), 'time') )  .
+					'</a>';
 				self::$items[] = [
 					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $itemIds[$i] . '" target="_blank" >' .
 					$this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'title']) .
 					'</a>',
 					$this->getData(['module', $this->getUrl(0),  'items', $itemIds[$i], 'fileVersion']),
 					$date .' à '. $heure,
-					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/stats/' . $itemIds[$i] . '" >' .	count($stats) . '</a>',
+					$stat,
 					self::$states[$this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'item
 					template::button('downloadConfigComment' . $itemIds[$i], [
@@ -684,6 +690,10 @@ class download extends common {
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
+				// Nombre de téléchargements 
+				self::$statSum = count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items',$this->getUrl(1),'fileStats']), 'time') ) === 0
+				? '0'
+				: count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1),'fileStats']), 'time') ) ;
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Signature de l'item
@@ -836,6 +846,8 @@ class download extends common {
 
 		// Construction de la page des statistiques
 		$itemIds = array_keys($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']));
+		// Total des téléchargements
+		self::$statSum = count ($itemIds);
 		// Pagination
 		$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 

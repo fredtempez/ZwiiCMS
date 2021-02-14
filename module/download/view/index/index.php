@@ -3,7 +3,7 @@
 		<div class="col12">
 			<?php foreach($module::$items as $itemId => $item): ?>
 				<div class="row rowitem">
-					<div class="col3">
+					<div class="col3 downloadLeft">
 					<?php
 						// Déterminer le nom de la miniature
 						$parts = explode('/',$item['picture']);
@@ -20,13 +20,13 @@
 							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $item['picture']; ?>">
 						</a>
 					</div>
-					<div class="col9">
+					<div class="col9 downloadRight">
 						<article>
-						<h1 class="downloadTitle">
+						<h2 class="downloadTitle">
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>">
 								<?php echo $item['title']; ?>
 							</a>
-						</h1>
+						</h2>
 						<div class="downloadComment">
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>#comment">
 								<?php if ($item['comment']): ?>

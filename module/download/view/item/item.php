@@ -77,6 +77,13 @@
 				 	<?php echo ' du ' .  $date; ?>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col12 textAlignCenter">
+					<span>Téléchargements :
+					<?php echo $module::$statSum; ?>
+					</span>
+				</div>
+			</div>
 		</div>
 		<div class="col9">
 			<?php echo $this->getData(['module', $this->getUrl(0),'items', $this->getUrl(1), 'content']); ?>

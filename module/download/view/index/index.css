@@ -26,10 +26,11 @@
 	padding-right: 10px;
 	float: right;
 }
-.downloadTitle {
-	/*background-color: #ECEFF1;*/
-	padding: 0px;
+h2{
 	margin-bottom: 5px;
+	margin-top: 0px;
+	padding: 0px;
+
 }
 .downloadContent {
 	float: left;
