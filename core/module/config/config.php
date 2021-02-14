@@ -34,7 +34,7 @@ class config extends common {
 		'moduleDelete' => self::GROUP_ADMIN
 
 	];
-	
+
 	public static $modInstal = [];
 	public static $str;
 
@@ -597,13 +597,13 @@ class config extends common {
 			'view' => 'advanced'
 		]);
 	}
-	
+
 	/*
 	* Installation de modules à partir d'un zip normalisé
 	* Affichage des modules installés
 	*/
 	public function modules() {
-	
+		var_dump(helper::getModules ());
 		// Préparation du tableau des modules installés
 		// Liste des modules installés (répertoire de module/)
 		if ($dh = opendir( 'module/' )) {
@@ -611,11 +611,11 @@ class config extends common {
 			while (($dirmodule = readdir($dh)) !== false) {
 				if( $dirmodule !== '.' && $dirmodule !== '..'){
 					self::$modInstal[$i][0] = $dirmodule;
-					self::$modInstal[$i][1] = page::$moduleNames[$dirmodule];	
+					self::$modInstal[$i][1] = page::$moduleNames[$dirmodule];
 					// Lecture de la version pour les modules officiels et distribués
 					$blogversion = blog::VERSION;
 					$formversion = form::VERSION;
-					$galleryversion = gallery::VERSION; 
+					$galleryversion = gallery::VERSION;
 					$newsversion = news::VERSION;
 					$redirectionversion = redirection::VERSION;
 					$searchversion = search::VERSION;
@@ -627,7 +627,7 @@ class config extends common {
 					// Lecture de la version pour les modules non distribués
 					elseif($this->getData(['module', '_gestion_modules_' , $dirmodule, 'version' ]) !== null){
 						self::$modInstal[$i][2] = $this->getData(['module', '_gestion_modules_' , $dirmodule, 'version' ]);
-					}					
+					}
 					self::$modInstal[$i][3] = 'non';
 					self::$modInstal[$i][4] = '';
 					self::$modInstal[$i][5] = '';
@@ -652,16 +652,16 @@ class config extends common {
 			}
 			$modulesDistrib = array('blog', 'form', 'gallery', 'news', 'redirection', 'search');
 			if( self::$modInstal[$i][4] =='' && array_search( self::$modInstal[$i][0], $modulesDistrib  ) === false
-				&& $this->getData(['module', '_gestion_modules_', self::$modInstal[$i][0], 'delete' ]) === true){		
+				&& $this->getData(['module', '_gestion_modules_', self::$modInstal[$i][0], 'delete' ]) === true){
 				self::$modInstal[$i][5] =	template::button('moduleDelete' . self::$modInstal[$i][0], [
 						'class' => 'moduleDelete buttonRed',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
 						'value' => template::ico('cancel')
 					]);
-			
+
 			}
 		}
-	
+
 		// Retour du formulaire ?
 		if($this->isPost()) {
 			// Installation d'un module
@@ -681,7 +681,7 @@ class config extends common {
 					$moduleDir = self::TEMP_DIR . $tempFolder . '/module';
 					$moduleName = '';
 					if ( is_dir( $moduleDir )) {
-						// Lire le nom du module 
+						// Lire le nom du module
 						if ($dh = opendir( $moduleDir )) {
 							while (($file = readdir($dh)) !== false) {
 								$moduleName = $file;
@@ -690,7 +690,7 @@ class config extends common {
 						}
 						// Module normalisé ?
 						if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
-							
+
 							// Lecture de info.json et mémorisation des 3 paramètres  version, update et delete
 							$version = '?';
 							$update = '?';
@@ -707,7 +707,7 @@ class config extends common {
 							$this->setData(['module','_gestion_modules_',$moduleName, 'version', $version]);
 							$this->setData(['module','_gestion_modules_',$moduleName, 'update', $update]);
 							$this->setData(['module','_gestion_modules_',$moduleName, 'delete', $delete]);
-							
+
 							// Module déjà installé ?
 							$moduleInstal = false;
 							foreach( self::$modInstal as $key=>$value){
@@ -725,7 +725,7 @@ class config extends common {
 							if(is_bool($update)){
 								$validMaj = $checkValidMaj && $update;
 							}
-							
+
 							// Nouvelle installation ou mise à jour du module avec validation du concepteur et validation de l'utilisateur
 							if( ! $moduleInstal || ( $moduleInstal && $validMaj )){
 								// Copie récursive des dossiers
@@ -756,7 +756,7 @@ class config extends common {
 					$notification = 'Impossible d\'ouvrir l\'archive';
 				}
 			}
-			
+
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'notification' => $notification,
@@ -769,13 +769,13 @@ class config extends common {
 			'view' => 'modules'
 		]);
 	}
-	
+
 	/*
 	*
 	* Effacement d'un module installé et non utilisé
 	*/
 	public function moduleDelete() {
-	
+
 		// Jeton incorrect
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
@@ -805,8 +805,8 @@ class config extends common {
 			]);
 		}
 	}
-	
-	
+
+
 	public function script() {
 		// Soumission du formulaire
 		if($this->isPost()) {
@@ -1027,31 +1027,31 @@ class config extends common {
 		}
 		return $newArray;
 	}
-	
-	
+
+
 	/*
-	* Copie récursive de dossiers 
+	* Copie récursive de dossiers
 	*
 	*/
-	private function custom_copy($src, $dst) {  
-		// open the source directory 
-		$dir = opendir($src);  
-		// Make the destination directory if not exist 
-		@mkdir($dst);  
-		// Loop through the files in source directory 
-		while( $file = readdir($dir) ) {  
-			if (( $file != '.' ) && ( $file != '..' )) {  
-				if ( is_dir($src . '/' . $file) ){  
-					// Recursively calling custom copy function 
-					// for sub directory  
-					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);  
-				}  
-				else {  
-					copy($src . '/' . $file, $dst . '/' . $file);  
-				}  
-			}  
-		}  
-		closedir($dir); 
+	private function custom_copy($src, $dst) {
+		// open the source directory
+		$dir = opendir($src);
+		// Make the destination directory if not exist
+		@mkdir($dst);
+		// Loop through the files in source directory
+		while( $file = readdir($dir) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ){
+					// Recursively calling custom copy function
+					// for sub directory
+					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file, $dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
 	}
 
 	/*
@@ -1086,6 +1086,6 @@ class config extends common {
 			}
 			return true;
 		}
-	} 
+	}
 
 }

@@ -1,4 +1,5 @@
 <?php
+
 class helper {
 
 	/** Statut de la réécriture d'URL (pour éviter de lire le contenu du fichier .htaccess à chaque self::baseUrl()) */
@@ -19,7 +20,7 @@ class helper {
 
 
 
-	/** 
+	/**
 	 * Récupérer l'adresse IP sans tenit compte du proxy
 	 * @return string IP adress
 	 * Cette focntion est utilisé par user
@@ -129,41 +130,52 @@ class helper {
 
 
 
-	/** 
+	/**
 	 * Retourne la liste des modules installés dans un tableau composé
 	 * du nom réel
 	 * du numéro de version
 	 */
 	public  static function getModules($folder = 'module') {
+		$modules = array();
+		// Le dossier existe-t-il ?
+		if (is_dir($folder)) {
+			$dirs = array_diff(scandir($folder), array('..', '.'));
+			foreach ($dirs as $key => $value) {
+				// Dossier non vide
+				if (file_exists($folder . '/' . $value . '/' . $value . '.php')) {
+					// Lire les constantes en gérant les erreurs de nom de classe
+					try  {
+						// Chargement des classes externes
+						if ($folder !== 'module') {
+							include_once ($folder . '/' . $value . '/' . $value . '.php');
+							if ( class_exists($value) ) {
+								$e = new $value;
+							}
+						}
+						$class_reflex = new \ReflectionClass($value);
+						$class_constants = $class_reflex->getConstants();
+						// Constante REALNAME
+						if (array_key_exists('REALNAME', $class_constants)) {
+								$realName = $value::REALNAME;
+						} else {
+								$realName = ucfirst($value);
+						}
+						// Constante VERSION
+						if (array_key_exists('VERSION', $class_constants)) {
+								$version = $value::VERSION;
+						} else {
+								$version = '0.0';
+						}
+						// Affection
+						$modules [$value]  = [
+							'realName' => $realName,
+							'version' => $version
+						];
 
-		$dirs = array_diff(scandir($folder), array('..', '.'));
-		foreach ($dirs as $key => $value) {
-			// Dossier non vide
-			if (file_exists($folder . '/' . $value . '/' . $value . '.php')) {
-				// Lire les constantes
-				try  {
-					$class_reflex = new \ReflectionClass($value);
-					$class_constants = $class_reflex->getConstants();
-					// Constante REALNAME
-					if (array_key_exists('REALNAME', $class_constants)) {
-							$realName = $value::REALNAME;
-					} else {
-							$realName = ucfirst($value);
+					} catch (Exception $e){
+						//  on ne fait rien
 					}
-					// Constante VERSION
-					if (array_key_exists('VERSION', $class_constants)) {
-							$version = $value::VERSION;
-					} else {
-							$version = '0.0';
-					}
-					// Affection
-					$modules [$value]  = [
-						'realName' => $realName,
-						'version' => $version
-					];
-				} catch (Exception $e){
-					//  on ne fait rien
-				}	 
+				}
 			}
 		}
 		return($modules);
