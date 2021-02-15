@@ -8,14 +8,7 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset4">
-		<?php echo template::button('configModulesButton', [
-			'href' => helper::baseUrl() . 'config/modules',
-			'value' => 'Modules',
-			'ico' => 'download',
-		]); ?>
-	</div>
-	<div class="col2">
+	<div class="col2 offset6">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'config/advanced',
 			'value' => 'Avancée',
