@@ -135,46 +135,36 @@ class helper {
 	 * du nom réel
 	 * du numéro de version
 	 */
-	public  static function getModules($folder = 'module') {
+	public  static function getModules() {
 		$modules = array();
-		// Le dossier existe-t-il ?
-		if (is_dir($folder)) {
-			$dirs = array_diff(scandir($folder), array('..', '.'));
-			foreach ($dirs as $key => $value) {
-				// Dossier non vide
-				if (file_exists($folder . '/' . $value . '/' . $value . '.php')) {
-					// Lire les constantes en gérant les erreurs de nom de classe
-					try  {
-						// Chargement des classes externes
-						if ($folder !== 'module') {
-							include_once ($folder . '/' . $value . '/' . $value . '.php');
-							if ( class_exists($value) ) {
-								$e = new $value;
-							}
-						}
-						$class_reflex = new \ReflectionClass($value);
-						$class_constants = $class_reflex->getConstants();
-						// Constante REALNAME
-						if (array_key_exists('REALNAME', $class_constants)) {
-								$realName = $value::REALNAME;
-						} else {
-								$realName = ucfirst($value);
-						}
-						// Constante VERSION
-						if (array_key_exists('VERSION', $class_constants)) {
-								$version = $value::VERSION;
-						} else {
-								$version = '0.0';
-						}
-						// Affection
-						$modules [$value]  = [
-							'realName' => $realName,
-							'version' => $version
-						];
-
-					} catch (Exception $e){
-						//  on ne fait rien
+		$dirs = array_diff(scandir($folder), array('..', '.'));
+		foreach ($dirs as $key => $value) {
+			// Dossier non vide
+			if (file_exists($folder . '/' . $value . '/' . $value . '.php')) {
+				// Lire les constantes en gérant les erreurs de nom de classe
+				try  {
+					$class_reflex = new \ReflectionClass($value);
+					$class_constants = $class_reflex->getConstants();
+					// Constante REALNAME
+					if (array_key_exists('REALNAME', $class_constants)) {
+							$realName = $value::REALNAME;
+					} else {
+							$realName = ucfirst($value);
 					}
+					// Constante VERSION
+					if (array_key_exists('VERSION', $class_constants)) {
+							$version = $value::VERSION;
+					} else {
+							$version = '0.0';
+					}
+					// Affection
+					$modules [$value]  = [
+						'realName' => $realName,
+						'version' => $version
+					];
+
+				} catch (Exception $e){
+					//  on ne fait rien
 				}
 			}
 		}
