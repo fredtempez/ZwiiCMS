@@ -151,6 +151,7 @@ class addon extends common {
 							// Lecture de version en lisant la valeur des constantes directement dans le fichier nommodule.php
 							$version = '0.0';
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
+							// A FAIRE supprimer les espaces et les tab et rechercher 'constVERSION'
 							$pos1 = strpos($file, 'const VERSION');
 							if( $pos1 !== false){
 								$posdeb = strpos($file, "'", $pos1);
