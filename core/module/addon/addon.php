@@ -65,58 +65,6 @@ class addon extends common {
 	 * Gestion des modules
 	 */
 	public function index() {
-
-		$infomodule = helper::getModules();
-		// $infomodule[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
-		// Préparation du tableau des modules installés
-		// Liste des modules installés (répertoire de module/)
-		if ($dh = opendir( 'module/' )) {
-			$i=0;
-			while (($dirmodule = readdir($dh)) !== false) {
-				if( $dirmodule !== '.' && $dirmodule !== '..'){
-					self::$modInstal[$i][0] = $dirmodule; // nom du module
-					self::$modInstal[$i][1] = $infomodule[$dirmodule]['realName'];
-					self::$modInstal[$i][2] = $infomodule[$dirmodule]['version'];
-					// Initialisations
-					self::$modInstal[$i][3] = ''; // page(s)
-					self::$modInstal[$i][4] = ''; // pour button effacement
-					self::$modInstal[$i][5] = ''; // pour button download
-					$i++;
-				}
-			}
-			closedir($dh);
-		}
-		foreach( self::$modInstal as $i=>$value){
-			// Page(s)
-			foreach( $this->getData(['page']) as $keyPage=>$valuePage){
-				if( $valuePage['moduleId'] === self::$modInstal[$i][0]){
-					if(self::$modInstal[$i][3] !==''){
-						self::$modInstal[$i][3] = self::$modInstal[$i][3].'<br>'.$valuePage['title'];
-					}
-					else{
-						self::$modInstal[$i][3] = $valuePage['title'];
-					}
-				}
-			}
-			// Non utilisé et autorisation de suppression ?
-			if( self::$modInstal[$i][3] == '' && $infomodule[ self::$modInstal[$i][0] ]['delete'] === true ){
-				self::$modInstal[$i][4] =	template::button('moduleDelete' . self::$modInstal[$i][0], [
-						'class' => 'moduleDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel')
-					]);
-			}
-			// Présence de données externes à module.json ?
-			if( $infomodule[ self::$modInstal[$i][0] ]['dataDirectory'] !== '' ){
-				self::$modInstal[$i][5] =	template::button('moduleExport' . self::$modInstal[$i][0], [
-						'class' => 'buttonBlue',
-						//'href' => helper::baseUrl() . $this->getUrl(0) . '/exportData/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
-						'href' => helper::baseUrl(false).$this->exportZip( self::$modInstal[$i][0] ),
-						'value' => template::ico('upload')
-					]);
-			}
-
-		}
 		// Retour du formulaire ?
 		if($this->isPost()) {
 			// Installation d'un module
@@ -211,6 +159,57 @@ class addon extends common {
 				'notification' => $notification,
 				'state' => $success
 			]);
+		}
+		$infomodule = helper::getModules();
+		// $infomodule[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
+		// Préparation du tableau des modules installés
+		// Liste des modules installés (répertoire de module/)
+		if ($dh = opendir( 'module/' )) {
+			$i=0;
+			while (($dirmodule = readdir($dh)) !== false) {
+				if( $dirmodule !== '.' && $dirmodule !== '..'){
+					self::$modInstal[$i][0] = $dirmodule; // nom du module
+					self::$modInstal[$i][1] = $infomodule[$dirmodule]['realName'];
+					self::$modInstal[$i][2] = $infomodule[$dirmodule]['version'];
+					// Initialisations
+					self::$modInstal[$i][3] = ''; // page(s)
+					self::$modInstal[$i][4] = ''; // pour button effacement
+					self::$modInstal[$i][5] = ''; // pour button download
+					$i++;
+				}
+			}
+			closedir($dh);
+		}
+		foreach( self::$modInstal as $i=>$value){
+			// Page(s)
+			foreach( $this->getData(['page']) as $keyPage=>$valuePage){
+				if( $valuePage['moduleId'] === self::$modInstal[$i][0]){
+					if(self::$modInstal[$i][3] !==''){
+						self::$modInstal[$i][3] = self::$modInstal[$i][3].'<br>'.$valuePage['title'];
+					}
+					else{
+						self::$modInstal[$i][3] = $valuePage['title'];
+					}
+				}
+			}
+			// Non utilisé et autorisation de suppression ?
+			if( self::$modInstal[$i][3] == '' && $infomodule[ self::$modInstal[$i][0] ]['delete'] === true ){
+				self::$modInstal[$i][4] =	template::button('moduleDelete' . self::$modInstal[$i][0], [
+						'class' => 'moduleDelete buttonRed',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
+						'value' => template::ico('cancel')
+					]);
+			}
+			// Présence de données externes à module.json ?
+			if( $infomodule[ self::$modInstal[$i][0] ]['dataDirectory'] !== '' ){
+				self::$modInstal[$i][5] =	template::button('moduleExport' . self::$modInstal[$i][0], [
+						'class' => 'buttonBlue',
+						//'href' => helper::baseUrl() . $this->getUrl(0) . '/exportData/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl(false).$this->exportZip( self::$modInstal[$i][0] ),
+						'value' => template::ico('upload')
+					]);
+			}
+
 		}
 		// Valeurs en sortie
 		$this->addOutput([

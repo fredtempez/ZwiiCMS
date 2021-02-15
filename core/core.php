@@ -178,8 +178,7 @@ class common {
 		'theme' => '',
 		'admin' => '',
 		'blacklist' => '',
-		'locale' => '',
-		'addon'
+		'locale' => ''
 	];
 
 	/**
