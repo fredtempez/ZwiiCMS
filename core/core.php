@@ -56,7 +56,8 @@ class common {
 		'sitemap',
 		'theme',
 		'user',
-		'translate'
+		'translate',
+		'addon'
 	];
 	public static $accessList = [
 		'user',
@@ -177,7 +178,8 @@ class common {
 		'theme' => '',
 		'admin' => '',
 		'blacklist' => '',
-		'locale' => ''
+		'locale' => '',
+		'addon'
 	];
 
 	/**
@@ -603,7 +605,7 @@ class common {
 		$this->setData(['theme',$tempData['theme']]);
 
 		// Import des users sauvegardés si option active
-		if ($keepUsers === false 
+		if ($keepUsers === false
 			AND $tempData['user'] !== NULL) {
 			$this->setData(['user',$tempData['user']]);
 		}
@@ -2901,7 +2903,7 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
 				//$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'modules" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);

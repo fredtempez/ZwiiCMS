@@ -137,10 +137,10 @@ class helper {
 	 */
 	public  static function getModules() {
 		$modules = array();
-		$dirs = array_diff(scandir($folder), array('..', '.'));
+		$dirs = array_diff(scandir('module'), array('..', '.'));
 		foreach ($dirs as $key => $value) {
 			// Dossier non vide
-			if (file_exists($folder . '/' . $value . '/' . $value . '.php')) {
+			if (file_exists('module/' . $value . '/' . $value . '.php')) {
 				// Lire les constantes en gérant les erreurs de nom de classe
 				try  {
 					$class_reflex = new \ReflectionClass($value);
