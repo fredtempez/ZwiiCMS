@@ -157,10 +157,31 @@ class helper {
 					} else {
 							$version = '0.0';
 					}
+					// Constante UPDATE
+					if (array_key_exists('UPDATE', $class_constants)) {
+							$update = $value::UPDATE;
+					} else {
+							$update = false;
+					}
+					// Constante DELETE
+					if (array_key_exists('DELETE', $class_constants)) {
+							$delete = $value::DELETE;
+					} else {
+							$delete = false;
+					}
+					// Constante DATADIRECTORY
+					if (array_key_exists('DATADIRECTORY', $class_constants)) {
+							$dataDirectory= $value::DATADIRECTORY;
+					} else {
+							$dataDirectory = '';
+					}
 					// Affection
 					$modules [$value]  = [
-						'realName' => $realName,
-						'version' => $version
+					'realName' => $realName,
+					'version' => $version,
+					'update' => $update,
+					'delete' => $delete,
+					'dataDirectory' => $dataDirectory
 					];
 
 				} catch (Exception $e){
