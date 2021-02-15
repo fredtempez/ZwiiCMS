@@ -118,10 +118,10 @@ class addon extends common {
 							// Validation de la maj si autorisation du concepteur du module ET
 							// ( Version plus récente OU Check de forçage )
 							$valNewVersion = floatval($version);
-							$valInstalVersion = floatval( $infomodule[$moduleName]['version'] );
+							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
 							$newVersion = false;
 							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $infomodule[$moduleName]['update'] && ( $newVersion || $checkValidMaj);
+							$validMaj = $infoModules[$moduleName]['update'] && ( $newVersion || $checkValidMaj);
 
 							// Nouvelle installation ou mise à jour du module
 							if( ! $moduleInstal ||  $validMaj ){
@@ -137,8 +137,8 @@ class addon extends common {
 							}
 							else{
 								$success = false;
-								$notification = ' Version détectée '.$version.' <= à celle installée '.$infomodule[$moduleName]['version'];
-								if( $infomodule[$moduleName]['update'] === false){
+								$notification = ' Version détectée '.$version.' <= à celle installée '.$infoModules[$moduleName]['version'];
+								if( $infoModules[$moduleName]['update'] === false){
 									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
 								}
 							}
@@ -160,57 +160,39 @@ class addon extends common {
 				'state' => $success
 			]);
 		}
-		$infomodule = helper::getModules();
-		// $infomodule[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
-		// Préparation du tableau des modules installés
-		// Liste des modules installés (répertoire de module/)
-		if ($dh = opendir( 'module/' )) {
-			$i=0;
-			while (($dirmodule = readdir($dh)) !== false) {
-				if( $dirmodule !== '.' && $dirmodule !== '..'){
-					self::$modInstal[$i][0] = $dirmodule; // nom du module
-					self::$modInstal[$i][1] = $infomodule[$dirmodule]['realName'];
-					self::$modInstal[$i][2] = $infomodule[$dirmodule]['version'];
-					// Initialisations
-					self::$modInstal[$i][3] = ''; // page(s)
-					self::$modInstal[$i][4] = ''; // pour button effacement
-					self::$modInstal[$i][5] = ''; // pour button download
-					$i++;
-				}
-			}
-			closedir($dh);
-		}
-		foreach( self::$modInstal as $i=>$value){
-			// Page(s)
-			foreach( $this->getData(['page']) as $keyPage=>$valuePage){
-				if( $valuePage['moduleId'] === self::$modInstal[$i][0]){
-					if(self::$modInstal[$i][3] !==''){
-						self::$modInstal[$i][3] = self::$modInstal[$i][3].'<br>'.$valuePage['title'];
-					}
-					else{
-						self::$modInstal[$i][3] = $valuePage['title'];
-					}
-				}
-			}
-			// Non utilisé et autorisation de suppression ?
-			if( self::$modInstal[$i][3] == '' && $infomodule[ self::$modInstal[$i][0] ]['delete'] === true ){
-				self::$modInstal[$i][4] =	template::button('moduleDelete' . self::$modInstal[$i][0], [
-						'class' => 'moduleDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel')
-					]);
-			}
-			// Présence de données externes à module.json ?
-			if( $infomodule[ self::$modInstal[$i][0] ]['dataDirectory'] !== '' ){
-				self::$modInstal[$i][5] =	template::button('moduleExport' . self::$modInstal[$i][0], [
-						'class' => 'buttonBlue',
-						//'href' => helper::baseUrl() . $this->getUrl(0) . '/exportData/' . self::$modInstal[$i][0] . '/' . $_SESSION['csrf'],
-						'href' => helper::baseUrl(false).$this->exportZip( self::$modInstal[$i][0] ),
-						'value' => template::ico('upload')
-					]);
-			}
 
+		// Lister les modules
+		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
+		$infoModules = helper::getModules();
+
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+
+		// Parcourir les données des modules
+		foreach ($infoModules as $key=>$value) {
+			// Construire le tableau de sortie
+			self::$modInstal[] = [
+				$key,
+				$infoModules[$key]['realName'],
+				$infoModules[$key]['version'],
+				array_search($key,$inPages),// devrait retourner toutes les valeurs et pas la première
+				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true 
+											? template::button('moduleDelete' . $key, [
+													'class' => 'moduleDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel')
+												])
+											: '',
+				array_key_exists('update',$infoModules[$key])  && $infoModules[$key]['update'] === true 
+											? template::button('moduleDelete' . $key, [
+													'class' => 'moduleDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel')
+												])
+											: ''
+			];
 		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Gestion des modules',
@@ -313,13 +295,13 @@ class addon extends common {
 	* Export des données d'un module externes à module.json
 	*/
 	private function exportZip( $exportModule ){
-			$infomodule = helper::getModules();
+			$infoModules = helper::getModules();
 			// création du zip
 			$zip = new ZipArchive();
 			if( ! is_dir('tmp/exportDataModules')) mkdir('tmp/exportDataModules',0777, true);
 			$filename = 'tmp/exportDataModules/'.$exportModule.'dataExport.zip';
 			if( is_file( $filename )) unlink( $filename);
-			$directory = $infomodule[$exportModule]['dataDirectory'].'/';
+			$directory = $infoModules[$exportModule]['dataDirectory'].'/';
 			if($zip->open( $filename, ZipArchive::CREATE) !== TRUE){
 				exit;
 			}
