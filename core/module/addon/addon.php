@@ -175,7 +175,7 @@ class addon extends common {
 				$key,
 				$infoModules[$key]['realName'],
 				$infoModules[$key]['version'],
-				array_search($key,$inPages),// devrait retourner toutes les valeurs et pas la première
+				implode(', ',array_keys($inPages,$key)),
 				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true 
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
