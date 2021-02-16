@@ -6,7 +6,7 @@
     - Thème : rétablissement du contrôle de l'import d'une version ancienne d'un thème.
     - Éditeur de texte : couleur de fond parasite quand une image en arrière-plan est sélectionnée.
 
-## version 10.4.01 
+## version 10.4.01
 Corrections :
     - Module form, erreur de syntaxe.
     - Chargement d'un thème, désactivation du contrôle des clés.
@@ -65,7 +65,7 @@ Correction :
 Corrections :
     - Conflit page inactive et droit d'un membre.
     - Module de recherche, correction dans les pages enfants.
-    - Module formulaire, perte des données en cas d'édition du fomulaire ou des champs.
+    - Module formulaire, perte des données en cas d'édition du formulaire ou des champs.
 Modification :
     - TinyMCE nettoyage init.js d'options non supportées.
 
@@ -73,7 +73,7 @@ Modification :
 Corrections :
     - Configuration : persistance de l'ouverture des blocs.
     - Réinitialisation du mot de passe :
-        - Remise à zéro du timer après renouvèlement du mot de passe.
+        - Remise à zéro du timer après renouvellement du mot de passe.
         - Affichage de le fenêtre "Nouveau mot de passe" allégée.
         - Redirection sur la page d'accueil.
     - Modules news et blog : transparence icône RSS.
