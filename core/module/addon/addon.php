@@ -65,6 +65,42 @@ class addon extends common {
 	 * Gestion des modules
 	 */
 	public function index() {
+		// Lister les modules
+		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
+		$infoModules = helper::getModules();
+
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		$inPagesTitle = [];
+		foreach( $inPages as $key=>$value){
+			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
+		}
+
+		// Parcourir les données des modules
+		foreach ($infoModules as $key=>$value) {
+			// Construire le tableau de sortie
+			self::$modInstal[] = [
+				$key,
+				$infoModules[$key]['realName'],
+				$infoModules[$key]['version'],
+				implode(', ', array_keys($inPagesTitle,$key)),
+				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) ===''
+											? template::button('moduleDelete' . $key, [
+													'class' => 'moduleDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel')
+												])
+											: '',
+				array_key_exists('dataDirectory',$infoModules[$key])  && $infoModules[$key]['dataDirectory'] !== ''
+											? template::button('moduleExport' . $key, [
+												'class' => 'buttonBlue',
+												'href' => helper::baseUrl(false).$this->exportZip( $key ),
+												'value' => template::ico('upload')
+												])
+											: ''
+			];
+		}
+
 		// Retour du formulaire ?
 		if($this->isPost()) {
 			// Installation d'un module
@@ -96,11 +132,11 @@ class addon extends common {
 
 							// Lecture de la version du module pour validation de la mise à jour
 							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
-							// Lecture de version en lisant la valeur des constantes directement dans le fichier nommodule.php
 							$version = '0.0';
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
-							// A FAIRE supprimer les espaces et les tab et rechercher 'constVERSION'
-							$pos1 = strpos($file, 'const VERSION');
+							$file = str_replace(' ','',$file);
+							$file = str_replace("\t",'',$file);
+							$pos1 = strpos($file, 'constVERSION');
 							if( $pos1 !== false){
 								$posdeb = strpos($file, "'", $pos1);
 								$posend = strpos($file, "'", $posdeb + 1);
@@ -137,7 +173,12 @@ class addon extends common {
 							}
 							else{
 								$success = false;
-								$notification = ' Version détectée '.$version.' <= à celle installée '.$infoModules[$moduleName]['version'];
+								if( $valNewVersion == $valInstalVersion){
+									$notification = ' Version détectée '.$version.' = à celle installée '.$infoModules[$moduleName]['version'];
+								}
+								else{
+									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
+								}
 								if( $infoModules[$moduleName]['update'] === false){
 									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
 								}
@@ -159,38 +200,6 @@ class addon extends common {
 				'notification' => $notification,
 				'state' => $success
 			]);
-		}
-
-		// Lister les modules
-		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
-		$infoModules = helper::getModules();
-
-		// Clés moduleIds dans les pages
-		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-
-		// Parcourir les données des modules
-		foreach ($infoModules as $key=>$value) {
-			// Construire le tableau de sortie
-			self::$modInstal[] = [
-				$key,
-				$infoModules[$key]['realName'],
-				$infoModules[$key]['version'],
-				implode(', ',array_keys($inPages,$key)),
-				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true 
-											? template::button('moduleDelete' . $key, [
-													'class' => 'moduleDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel')
-												])
-											: '',
-				array_key_exists('update',$infoModules[$key])  && $infoModules[$key]['update'] === true 
-											? template::button('moduleDelete' . $key, [
-													'class' => 'moduleDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel')
-												])
-											: ''
-			];
 		}
 
 		// Valeurs en sortie
