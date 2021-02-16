@@ -71,7 +71,6 @@ class addon extends common {
 
 		// Clés moduleIds dans les pages
 		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-		$inPagesTitle = [];
 		foreach( $inPages as $key=>$value){
 			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
 		}
