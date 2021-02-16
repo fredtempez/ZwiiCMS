@@ -37,9 +37,8 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 <?php echo template::formClose(); ?>
-
 <?php if($module::$modInstal): ?>
 	<?php echo template::table([2, 3, 2, 3, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter']); ?>
 <?php else: ?>
