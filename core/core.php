@@ -1009,11 +1009,11 @@ class common {
 	* @param string URL du dossier à supprimer
 	*/
 	public function removeDir ( $path ) {
-		foreach ( new DirectoryIterator($path) as $item ):
-			if ( $item->isFile() ) unlink($item->getRealPath());
+		foreach ( new DirectoryIterator($path) as $item ) {
+			if ( $item->isFile() ) @unlink($item->getRealPath());
 			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
-		endforeach;
-		rmdir($path);
+		}
+		return ( rmdir($path) );
 	}
 
 	/**

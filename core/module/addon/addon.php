@@ -43,7 +43,7 @@ class addon extends common {
 		}
 		else{
 			// Suppression des dossiers
-			if( $this->delete_directory('./module/'.$this->getUrl(2)) === true){
+			if( $this->removeDir('./module/'.$this->getUrl(2) ) === true){
 				$success = true;
 				$notification = 'Module '.$this->getUrl(2) .' effacé du dossier /module/, il peut rester des données dans d\'autres dossiers';
 			}
@@ -65,6 +65,7 @@ class addon extends common {
 	 * Gestion des modules
 	 */
 	public function index() {
+
 		// Lister les modules
 		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
 		$infoModules = helper::getModules();
@@ -216,7 +217,9 @@ class addon extends common {
 		// open the source directory
 		$dir = opendir($src);
 		// Make the destination directory if not exist
-		@mkdir($dst);
+		if (!is_dir($dst)) {
+			mkdir($dst);
+		}
 		// Loop through the files in source directory
 		while( $file = readdir($dir) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
@@ -231,40 +234,6 @@ class addon extends common {
 			}
 		}
 		closedir($dir);
-	}
-
-	/*
-	*
-	* Suppression d'un dossier et de ses sous-dossiers
-	*/
-	private function delete_directory($directory, $empty = false) {
-		if(substr($directory,-1) == "/") {
-			$directory = substr($directory,0,-1);
-		}
-		if(!file_exists($directory) || !is_dir($directory)) {
-			return false;
-		} elseif(!is_readable($directory)) {
-			return false;
-		} else {
-			$directoryHandle = opendir($directory);
-			while ($contents = readdir($directoryHandle)) {
-				if($contents != '.' && $contents != '..') {
-					$path = $directory . "/" . $contents;
-					if(is_dir($path)) {
-						$this->delete_directory($path);
-					} else {
-						unlink($path);
-					}
-				}
-			}
-			closedir($directoryHandle);
-			if($empty == false) {
-				if(!rmdir($directory)) {
-					return false;
-				}
-			}
-			return true;
-		}
 	}
 
 	/*
