@@ -1,5 +1,12 @@
 # Changelog
 
+## version 10.4.03
+- Corrections :
+    - En-tête html : absence de la langue.
+    - Suppression de la balise sémantique <article>.
+    - Génération image Opengraph, mauvaise redirection.
+    - Nouvelle structure de données articles de blog dans le sitemap.
+
 ## version 10.4.02
 - Corrections :
     - Thème : aperçu du site amélioré.
