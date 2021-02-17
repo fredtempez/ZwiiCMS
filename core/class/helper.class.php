@@ -161,19 +161,19 @@ class helper {
 					if (array_key_exists('UPDATE', $class_constants)) {
 							$update = $value::UPDATE;
 					} else {
-							$update = false;
+							$update = true;
 					}
 					// Constante DELETE
 					if (array_key_exists('DELETE', $class_constants)) {
 							$delete = $value::DELETE;
 					} else {
-							$delete = false;
+							$delete = true;
 					}
 					// Constante DATADIRECTORY
 					if (array_key_exists('DATADIRECTORY', $class_constants)) {
-							$dataDirectory= $value::DATADIRECTORY;
+							$dataDirectory = $value::DATADIRECTORY;
 					} else {
-							$dataDirectory = '';
+							$dataDirectory = ['fr/module.json'];
 					}
 					// Affection
 					$modules [$value]  = [

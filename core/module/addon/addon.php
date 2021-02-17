@@ -18,7 +18,8 @@ class addon extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
-		'moduleDelete' => self::GROUP_ADMIN
+		'moduleDelete' => self::GROUP_ADMIN,
+		'exportModuleData' => self::GROUP_ADMIN,
 	];
 
 	// Gestion des modules
@@ -85,17 +86,17 @@ class addon extends common {
 				$infoModules[$key]['version'],
 				implode(', ', array_keys($inPagesTitle,$key)),
 				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
-				($infoModules[$key]['delete'] === false || $infoModules[$key]['delete'] !== false )  && implode(', ',array_keys($inPages,$key)) === ''
+				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
 													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
 													'value' => template::ico('cancel')
 												])
 											: '',
-				array_key_exists('dataDirectory',$infoModules[$key])  && $infoModules[$key]['dataDirectory'] !== ''
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(false).$this->exportZip( $key ),
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/exportModuleData/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -270,23 +271,79 @@ class addon extends common {
 	}
 
 	/*
-	* Export des données d'un module externes à module.json
+	* Export des données d'un module externes ou interne à module.json
 	*/
-	private function exportZip( $exportModule ){
+	public function exportModuleData(){
+			// Lire les données du module
 			$infoModules = helper::getModules();
+			// Créer un dossier par défaut
+			$tmpFolder = self::TEMP_DIR . uniqid();
+			//$tmpFolder = self::TEMP_DIR . 'test';
+			if (!is_dir($tmpFolder)) {
+				mkdir($tmpFolder);
+			}
+			// Clés moduleIds dans les pages
+			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			// Parcourir les pages utilisant le module
+			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+				foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
+					/**
+					 * Données module.json ?
+					 */
+					if (strpos($moduleId,'module.json')) {
+						// Création de l'arborescence des langues
+						// Pas de nom dossier de langue - dossier par défaut
+						$t = explode ('/',$moduleId);
+						if ( is_array($t)) {
+							$path = 'fr';
+						} else {
+							$path = $t[0];
+						}
+						// Créer le dossier si inexistant
+						if (!is_dir($tmpFolder . '/' . $path)) {
+							mkdir ($tmpFolder . '/' . $path);
+						}
+						// Sauvegarde si données non vides
+						$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+						if ($tmpData [$pageId] !== null) {
+							file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+						}
+					/**
+					 * Données dans un json personnalisé, le sauvegarder
+					 */
+					} else {
+						if (file_exists(self::DATA_DIR . '/' .  $moduleId) &&
+							!file_exists($tmpFolder . '/' . $moduleId ) ) {
+							copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
+						}
+					}
+				}
+			}
 			// création du zip
-			$zip = new ZipArchive();
-			if( ! is_dir('tmp/exportDataModules')) mkdir('tmp/exportDataModules',0777, true);
-			$filename = 'tmp/exportDataModules/'.$exportModule.'dataExport.zip';
-			if( is_file( $filename )) unlink( $filename);
-			$directory = $infoModules[$exportModule]['dataDirectory'].'/';
-			if($zip->open( $filename, ZipArchive::CREATE) !== TRUE){
-				exit;
+			$fileName = self::TEMP_DIR . '/' . $this->geturl(2) . 'zip';
+			$this->createZip($fileName,$tmpFolder);
+			if (file_exists($fileName)) {
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Length: ' . filesize($fileName));
+				readfile( $fileName);
+				// Valeurs en sortie
+				$this->addOutput([
+					'display' => self::DISPLAY_RAW
+				]);
+				//unlink($filename);
+				//$this->removeDir($tmpFolder);
+				// Valeurs en sortie
+
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'addon',
+					'notification' => 'Quelque chose s\'est mal passé',
+					'state' => false
+				]);
 			}
-			else{
-				$this->createZip($zip,$directory);
-				$zip->close();
-			}
-			return( $filename );
+
 	}
+
 }
