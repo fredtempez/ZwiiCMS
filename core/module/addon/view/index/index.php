@@ -44,14 +44,3 @@
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
-
-
-
-
-
-<?php
-/*	var_dump(  helper::getModules( 'module' ) );
-	echo '<br><br>';
-	var_dump( helper::getModules('site/tmp/toto/module') );*/
-?>
-
