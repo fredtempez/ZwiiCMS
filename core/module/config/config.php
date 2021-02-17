@@ -285,16 +285,20 @@ class config extends common {
 			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
 			$data = str_replace('-','+',$data);
 			$img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
-			$success = file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img) ;
-			// Effacer la miniature png
-			if (file_exists(self::FILE_DIR.'source/screenshot.png')) {
-				unlink (self::FILE_DIR.'source/screenshot.png');
+			// Effacer l'image et la miniature png
+			if (file_exists(self::FILE_DIR.'thumb/screenshot.jpg')) {
+				unlink (self::FILE_DIR.'thumb/screenshot.jpg');
 			}
+			if (file_exists(self::FILE_DIR.'source/screenshot.jpg')) {
+				unlink (self::FILE_DIR.'source/screenshot.jpg');
+			}
+			$success = file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img) ;
+
 		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'redirect' => helper::baseUrl() . 'advanced',
+			'redirect' => helper::baseUrl() . 'config/advanced',
 			'state' => $success === false ? false : true
 		]);
 	}
@@ -375,13 +379,6 @@ class config extends common {
 				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['user',$users]);
 			}
-			/*
-			if ($version === '9' ) {
-				$this->importData($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN));
-				$this->setData(['core','dataVersion',0]);
-			}*/
-
-			// Met à jours les URL dans les contenus de page
 
 			// Message de notification
 			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
@@ -452,12 +449,7 @@ class config extends common {
 				'state' => $success
 			]);
 		}
-		// Initialisation du screen - APPEL AUTO DESACTIVE POUR EVITER UN RALENTISSEMENT
-		/*
-		if (!file_exists(self::FILE_DIR.'source/screenshot.jpg')) {
-			$this->configMetaImage();
-		}
-		*/
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration',

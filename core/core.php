@@ -767,6 +767,16 @@ class common {
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true ) {
 				$sitemap->addUrl ($parentPageId,$datetime);
 			}
+			// Articles du blog
+			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
+				!empty($this->getData(['module',$parentPageId])) ) {
+				foreach($this->getData(['module',$parentPageId,'posts']) as $articleId => $article) {
+					if($this->getData(['module',$parentPageId,'posts',$articleId,'state']) === true) {
+						$date = $this->getData(['module',$parentPageId,'posts',$articleId,'publishedOn']);
+						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
+					}
+				}
+			}
 			// Sous-pages
 			foreach($childrenPageIds as $childKey) {
 				if ($this->getData(['page',$childKey,'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true)  {
@@ -777,24 +787,15 @@ class common {
 				// La sous-page est un blog
 				if ($this->getData(['page', $childKey, 'moduleId']) === 'blog' &&
 				   !empty($this->getData(['module',$childKey])) ) {
-					foreach($this->getData(['module',$childKey]) as $articleId => $article) {
-						if($this->getData(['module',$childKey,$articleId,'state']) === true) {
-							$date = $this->getData(['module',$childKey,$articleId,'publishedOn']);
+					foreach($this->getData(['module',$childKey,'posts']) as $articleId => $article) {
+						if($this->getData(['module',$childKey,'posts',$articleId,'state']) === true) {
+							$date = $this->getData(['module',$childKey,'posts',$articleId,'publishedOn']);
 							$sitemap->addUrl( $childKey . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
 						}
 					}
 				}
 			}
-			// Articles du blog
-			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
-				!empty($this->getData(['module',$parentPageId])) ) {
-				foreach($this->getData(['module',$parentPageId]) as $articleId => $article) {
-					if($this->getData(['module',$parentPageId,$articleId,'state']) === true) {
-						$date = $this->getData(['module',$parentPageId,$articleId,'publishedOn']);
-						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
-					}
-				}
-			}
+
 		}
 
 		// generating internally a sitemap

@@ -87,7 +87,7 @@ class blog extends common {
 
 	public static $users = [];
 
-	const VERSION = '4.2';
+	const VERSION = '4.3';
 	const REALNAME = 'Blog';
 
 		/**

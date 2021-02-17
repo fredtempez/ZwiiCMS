@@ -21,7 +21,6 @@
 						</a>
 					</div>
 					<div class="col9">
-						<article>
 						<h1 class="blogTitle">
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
 								<?php echo $article['title']; ?>
@@ -45,7 +44,6 @@
 							<?php echo helper::subword(strip_tags($article['content']), 0, 400); ?>...
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">Lire la suite</a>
 						</p>
-						</article>
 					</div>
 				</div>
 			<?php endforeach; ?>
