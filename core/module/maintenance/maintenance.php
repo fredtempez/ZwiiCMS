@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of Zwii. *
+ * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
