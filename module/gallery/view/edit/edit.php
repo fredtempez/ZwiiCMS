@@ -64,6 +64,6 @@
 	</div>
 
 		<div class="moduleVersion">Version n°
-			<?php echo $module::GALLERY_VERSION; ?>
+			<?php echo $module::VERSION; ?>
 		</div>
 <?php echo template::formClose(); ?>

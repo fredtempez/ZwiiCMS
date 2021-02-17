@@ -33,9 +33,11 @@ class news extends common {
 		false => 'Brouillon',
 		true => 'Publié'
 	];
-	const NEWS_VERSION = '2.0';
 
 	public static $users = [];
+
+	const VERSION = '2.0';
+	const REALNAME = 'Nouvelles';
 
 	/**
 	 * Flux RSS

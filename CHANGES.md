@@ -10,6 +10,19 @@
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
 
+## version 10.4.03
+- Corrections :
+    - En-tête html : absence de la langue.
+    - Suppression de la balise sémantique <article>.
+    - Génération image Opengraph, mauvaise redirection.
+    - Nouvelle structure de données articles de blog dans le sitemap.
+
+## version 10.4.02
+- Corrections :
+    - Thème : aperçu du site amélioré.
+    - Thème : rétablissement du contrôle de l'import d'une version ancienne d'un thème.
+    - Éditeur de texte : couleur de fond parasite quand une image en arrière-plan est sélectionnée.
+
 ## version 10.4.01
 Corrections :
     - Module form, erreur de syntaxe.
@@ -69,7 +82,7 @@ Correction :
 Corrections :
     - Conflit page inactive et droit d'un membre.
     - Module de recherche, correction dans les pages enfants.
-    - Module formulaire, perte des données en cas d'édition du fomulaire ou des champs.
+    - Module formulaire, perte des données en cas d'édition du formulaire ou des champs.
 Modification :
     - TinyMCE nettoyage init.js d'options non supportées.
 
@@ -77,7 +90,7 @@ Modification :
 Corrections :
     - Configuration : persistance de l'ouverture des blocs.
     - Réinitialisation du mot de passe :
-        - Remise à zéro du timer après renouvèlement du mot de passe.
+        - Remise à zéro du timer après renouvellement du mot de passe.
         - Affichage de le fenêtre "Nouveau mot de passe" allégée.
         - Redirection sur la page d'accueil.
     - Modules news et blog : transparence icône RSS.

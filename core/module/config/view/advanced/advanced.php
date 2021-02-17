@@ -516,4 +516,5 @@
 		</div>
 	</div>
 </div>
+
 <?php echo template::formClose(); ?>

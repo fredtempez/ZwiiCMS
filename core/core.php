@@ -56,7 +56,8 @@ class common {
 		'sitemap',
 		'theme',
 		'user',
-		'translate'
+		'translate',
+		'addon'
 	];
 	public static $accessList = [
 		'user',
@@ -799,6 +800,16 @@ class common {
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true ) {
 				$sitemap->addUrl ($parentPageId,$datetime);
 			}
+			// Articles du blog
+			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
+				!empty($this->getData(['module',$parentPageId])) ) {
+				foreach($this->getData(['module',$parentPageId,'posts']) as $articleId => $article) {
+					if($this->getData(['module',$parentPageId,'posts',$articleId,'state']) === true) {
+						$date = $this->getData(['module',$parentPageId,'posts',$articleId,'publishedOn']);
+						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
+					}
+				}
+			}
 			// Sous-pages
 			foreach($childrenPageIds as $childKey) {
 				if ($this->getData(['page',$childKey,'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true)  {
@@ -809,24 +820,15 @@ class common {
 				// La sous-page est un blog
 				if ($this->getData(['page', $childKey, 'moduleId']) === 'blog' &&
 				   !empty($this->getData(['module',$childKey])) ) {
-					foreach($this->getData(['module',$childKey]) as $articleId => $article) {
-						if($this->getData(['module',$childKey,$articleId,'state']) === true) {
-							$date = $this->getData(['module',$childKey,$articleId,'publishedOn']);
+					foreach($this->getData(['module',$childKey,'posts']) as $articleId => $article) {
+						if($this->getData(['module',$childKey,'posts',$articleId,'state']) === true) {
+							$date = $this->getData(['module',$childKey,'posts',$articleId,'publishedOn']);
 							$sitemap->addUrl( $childKey . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
 						}
 					}
 				}
 			}
-			// Articles du blog
-			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
-				!empty($this->getData(['module',$parentPageId])) ) {
-				foreach($this->getData(['module',$parentPageId]) as $articleId => $article) {
-					if($this->getData(['module',$parentPageId,$articleId,'state']) === true) {
-						$date = $this->getData(['module',$parentPageId,$articleId,'publishedOn']);
-						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
-					}
-				}
-			}
+
 		}
 
 		// generating internally a sitemap
@@ -1005,8 +1007,7 @@ class common {
 				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
 				break;
 			case 8:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7] );
-				$db->save();
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7], true );
 				break;
 		}
 		return true;
@@ -1042,11 +1043,11 @@ class common {
 	* @param string URL du dossier à supprimer
 	*/
 	public function removeDir ( $path ) {
-		foreach ( new DirectoryIterator($path) as $item ):
-			if ( $item->isFile() ) unlink($item->getRealPath());
+		foreach ( new DirectoryIterator($path) as $item ) {
+			if ( $item->isFile() ) @unlink($item->getRealPath());
 			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
-		endforeach;
-		rmdir($path);
+		}
+		return ( rmdir($path) );
 	}
 
 	/**
@@ -1714,15 +1715,18 @@ class core extends common {
 			} else {
 				// Pas d'image couleur du body
 				$css .= 'html{background-color:' . $colors['normal'] . ';}';
+				// Même couleur dans le fond de l'éditeur
+				$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ' !important}';
 			}
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
 			// Site
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
-			// Fond TinyMCe
-			$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ' !important}';
-			$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
+			// Couleurs de site dans TinyMCe
+			$css .= 'div.mce-edit-area{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
+			// Site dans TinyMCE
+			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
@@ -1736,7 +1740,6 @@ class core extends common {
 			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site.light{margin:5% auto !important;}#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site.light{margin: 5% auto !important;}#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
-			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 			$css .= '.speechBubble,.button,.button:hover,button[type=\'submit\'],.pagination a,.pagination a:hover,input[type=\'checkbox\']:checked + label:before,input[type=\'radio\']:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
 			$css .= '.helpButton span{color:' . $colors['normal'] . '}';
@@ -3002,6 +3005,7 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);

@@ -38,7 +38,8 @@ class search extends common {
 		400 => '400 caractères',
 	];
 
-	const SEARCH_VERSION = '1.2';
+	const VERSION = '1.2';
+	const REALNAME = 'Recherche';
 
 	// Configuration vide
 	public function config() {
