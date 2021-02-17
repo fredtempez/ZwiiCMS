@@ -84,7 +84,8 @@ class addon extends common {
 				$infoModules[$key]['realName'],
 				$infoModules[$key]['version'],
 				implode(', ', array_keys($inPagesTitle,$key)),
-				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) ===''
+				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
+				($infoModules[$key]['delete'] === false || $infoModules[$key]['delete'] !== false )  && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
 													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
