@@ -1,5 +1,10 @@
 # Changelog
 
+## version 10.5.00
+- Modifications : 
+    - Gestion des module dans l'interface d'administration.
+    - à compléter..
+
 ## version 10.4.03
 - Corrections :
     - En-tête html : absence de la langue.
