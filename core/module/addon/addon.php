@@ -22,6 +22,7 @@ class addon extends common {
 		'index' => self::GROUP_ADMIN,
 		'moduleDelete' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
+		'import' => self::GROUP_ADMIN
 	];
 
 	// Gestion des modules
@@ -99,6 +100,13 @@ class addon extends common {
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'value' => template::ico('download')
+												])
+											: '',
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+											? template::button('moduleExport' . $key, [
+												'class' => 'buttonBlue',
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -245,84 +253,109 @@ class addon extends common {
 	* Export des données d'un module externes ou interne à module.json
 	*/
 	public function export(){
-			// Lire les données du module
-			$infoModules = helper::getModules();
-			// Créer un dossier par défaut
-			$tmpFolder = self::TEMP_DIR . uniqid();
-			//$tmpFolder = self::TEMP_DIR . 'test';
-			if (!is_dir($tmpFolder)) {
-				mkdir($tmpFolder);
-			}
-			// Clés moduleIds dans les pages
-			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-			// Parcourir les pages utilisant le module
-			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
-				foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
-					// Export des pages hébergeant le module
-					$pageContent[$pageId] = $this->getData(['page',$pageId]);
-					/**
-					 * Données module.json ?
-					 */
-					if (strpos($moduleId,'module.json')) {
-						// Création de l'arborescence des langues
-						// Pas de nom dossier de langue - dossier par défaut
-						$t = explode ('/',$moduleId);
-						if ( is_array($t)) {
-							$lang = 'fr';
-						} else {
-							$lang = $t[0];
-						}
-						// Créer le dossier si inexistant
-						if (!is_dir($tmpFolder . '/' . $lang)) {
-							mkdir ($tmpFolder . '/' . $lang);
-						}
-						// Sauvegarde si données non vides
-						$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-						if ($tmpData [$pageId] !== null) {
-							file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
-						}
+		// Lire les données du module
+		$infoModules = helper::getModules();
+		// Créer un dossier par défaut
+		$tmpFolder = self::TEMP_DIR . uniqid();
+		//$tmpFolder = self::TEMP_DIR . 'test';
+		if (!is_dir($tmpFolder)) {
+			mkdir($tmpFolder);
+		}
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		// Parcourir les pages utilisant le module
+		foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
+				// Export des pages hébergeant le module
+				$pageContent[$pageId] = $this->getData(['page',$pageId]);
+				/**
+				 * Données module.json ?
+				 */
+				if (strpos($moduleId,'module.json')) {
+					// Création de l'arborescence des langues
+					// Pas de nom dossier de langue - dossier par défaut
+					$t = explode ('/',$moduleId);
+					if ( is_array($t)) {
+						$lang = 'fr';
 					} else {
-						/**
-						 * Données dans un json personnalisé, le sauvegarder
-						 * Dossier non localisé
-						*/
-						if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
-							&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
-								copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
-						}
+						$lang = $t[0];
+					}
+					// Créer le dossier si inexistant
+					if (!is_dir($tmpFolder . '/' . $lang)) {
+						mkdir ($tmpFolder . '/' . $lang);
+					}
+					// Sauvegarde si données non vides
+					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+					if ($tmpData [$pageId] !== null) {
+						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+					}
+				} else {
+					/**
+					 * Données dans un json personnalisé, le sauvegarder
+					 * Dossier non localisé
+					*/
+					if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
+						&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
+							$this->custom_copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
 					}
 				}
 			}
-			// Enregistrement des pages dans le dossier de langue identique à module
+		}
+		// Enregistrement des pages dans le dossier de langue identique à module
 
-			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
-				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
-			}
+		if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
+			file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
+		}
 
-			// création du zip
-			$fileName =  $this->getUrl(2) . '.zip';
-			$this->makeZip ($fileName, $tmpFolder, []);
-			if (file_exists($fileName)) {
-				header('Content-Type: application/octet-stream');
-				header('Content-Disposition: attachment; filename="' . $fileName . '"');
-				header('Content-Length: ' . filesize($fileName));
-				readfile( $fileName);
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_RAW
-				]);
-				unlink($fileName);
-				$this->removeDir($tmpFolder);
-				exit();
-			} else {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'addon',
-					'notification' => 'Quelque chose s\'est mal passé',
-					'state' => false
-				]);
-			}
-
+		// création du zip
+		$fileName =  $this->getUrl(2) . '.zip';
+		$this->makeZip ($fileName, $tmpFolder, []);
+		if (file_exists($fileName)) {
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $fileName . '"');
+			header('Content-Length: ' . filesize($fileName));
+			readfile( $fileName);
+			// Valeurs en sortie
+			$this->addOutput([
+				'display' => self::DISPLAY_RAW
+			]);
+			unlink($fileName);
+			$this->removeDir($tmpFolder);
+			exit();
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'addon',
+				'notification' => 'Quelque chose s\'est mal passé',
+				'state' => false
+			]);
+		}
 	}
 
+	/*
+	* Importer des données d'un module externes ou interne à module.json
+	*/
+	public function import(){
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Récupérer le fichier et le décompacter
+			$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
+			$tempFolder = uniqid();
+			mkdir (self::TEMP_DIR . $tempFolder);
+			echo $zipFilename;
+			$zip = new ZipArchive();
+			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
+				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
+			}
+
+			// Supprimer le dossier temporaire même si le thème est invalide
+			//$this->removeDir(self::TEMP_DIR . $tempFolder);
+			$zip->close();
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Importer des données de module',
+			'view' => 'import'
+		]);
+	}
 }
