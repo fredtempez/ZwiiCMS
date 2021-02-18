@@ -268,34 +268,37 @@ class addon extends common {
 						// Pas de nom dossier de langue - dossier par défaut
 						$t = explode ('/',$moduleId);
 						if ( is_array($t)) {
-							$path = 'fr';
+							$lang = 'fr';
 						} else {
-							$path = $t[0];
+							$lang = $t[0];
 						}
 						// Créer le dossier si inexistant
-						if (!is_dir($tmpFolder . '/' . $path)) {
-							mkdir ($tmpFolder . '/' . $path);
+						if (!is_dir($tmpFolder . '/' . $lang)) {
+							mkdir ($tmpFolder . '/' . $lang);
 						}
 						// Sauvegarde si données non vides
 						$tmpData [$pageId] = $this->getData(['module',$pageId ]);
 						if ($tmpData [$pageId] !== null) {
 							file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
 						}
-					/**
-					 * Données dans un json personnalisé, le sauvegarder
-					 */
 					} else {
-						if (file_exists(self::DATA_DIR . '/' .  $moduleId) &&
-							!file_exists($tmpFolder . '/' . $moduleId ) ) {
-							copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
+						/**
+						 * Données dans un json personnalisé, le sauvegarder
+						 * Dossier non localisé
+						*/
+						if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
+							&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
+								copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
 						}
 					}
 				}
 			}
-			// Enregistrement des pages
-			if (!file_exists($tmpFolder . '/fr/page.json')) {
-				file_put_contents($tmpFolder . '/fr/page.json', json_encode($pageContent));
+			// Enregistrement des pages dans le dossier de langue identique à module
+
+			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
+				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
 			}
+
 			// création du zip
 			$fileName =  $this->getUrl(2) . '.zip';
 			$this->makeZip ($fileName, $tmpFolder, []);
