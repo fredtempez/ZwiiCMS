@@ -258,6 +258,8 @@ class addon extends common {
 			// Parcourir les pages utilisant le module
 			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
 				foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
+					// Export des pages hébergeant le module
+					$pageContent[$pageId] = $this->getData(['page',$pageId]);
 					/**
 					 * Données module.json ?
 					 */
@@ -289,6 +291,10 @@ class addon extends common {
 						}
 					}
 				}
+			}
+			// Enregistrement des pages
+			if (!file_exists($tmpFolder . '/fr/page.json')) {
+				file_put_contents($tmpFolder . '/fr/page.json', json_encode($pageContent));
 			}
 			// création du zip
 			$fileName =  $this->getUrl(2) . '.zip';
