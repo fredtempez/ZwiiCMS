@@ -45,9 +45,6 @@ class news extends common {
 
 	public static $users = [];
 
-	const VERSION = '2.0';
-	const REALNAME = 'Nouvelles';
-
 	/**
 	 * Flux RSS
 	 */
