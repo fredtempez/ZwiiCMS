@@ -15,6 +15,14 @@
 
 class blog extends common {
 
+	const VERSION = '4.4';
+	const REALNAME = 'Blog';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = [
+		'fr/module.json'
+	];
+
 	const EDIT_OWNER = 'owner';
 	const EDIT_GROUP = 'group';
 	const EDIT_ALL = 'all';
@@ -87,9 +95,6 @@ class blog extends common {
 
 
 	public static $users = [];
-
-	const VERSION = '4.3';
-	const REALNAME = 'Blog';
 
 		/**
 	 * Flux RSS

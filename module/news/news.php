@@ -15,6 +15,14 @@
 
 class news extends common {
 
+	const VERSION = '2.1';
+	const REALNAME = 'Actualités';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = [
+		'fr/module.json'
+	];
+
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR,

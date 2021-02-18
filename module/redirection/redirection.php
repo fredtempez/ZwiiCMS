@@ -15,13 +15,19 @@
 
 class redirection extends common {
 
+	const VERSION = '1.5';
+	const REALNAME = 'Redirection';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = [
+		'fr/module.json'
+	];
+
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '1.4';
-	const REALNAME = 'Redirection';
 
 	/**
 	 * Configuration

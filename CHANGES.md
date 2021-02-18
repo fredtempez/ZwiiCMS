@@ -5,6 +5,12 @@
     - Gestion des module dans l'interface d'administration.
     - à compléter..
 
+## version 10.4.04
+- Correction :
+    - Module Blog : balise non fermée dans les commentaires.
+- Modifications : 
+    -Constantes de modules.
+
 ## version 10.4.03
 - Corrections :
     - En-tête html : absence de la langue.

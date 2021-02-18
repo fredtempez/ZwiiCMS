@@ -16,6 +16,14 @@
 
 class form extends common {
 
+	const VERSION = '2.8';
+	const REALNAME = 'Formulaire';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = [
+		'fr/module.json'
+	];
+
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
 		'data' => self::GROUP_MODERATOR,
@@ -32,8 +40,6 @@ class form extends common {
 
 	public static $pagination;
 
-	const VERSION = '2.7';
-	const REALNAME = 'Formulaire';
 
 	// Objets
 	const TYPE_MAIL = 'mail';
