@@ -322,8 +322,8 @@ class addon extends common {
 				}
 			}
 			// création du zip
-			$fileName = self::TEMP_DIR . '/' . $this->geturl(2) . 'zip';
-			$this->createZip($fileName,$tmpFolder);
+			$fileName =  $this->getUrl(2) . '.zip';
+			$this->makeZip ($fileName, $tmpFolder, []);
 			if (file_exists($fileName)) {
 				header('Content-Type: application/octet-stream');
 				header('Content-Disposition: attachment; filename="' . $fileName . '"');
@@ -333,10 +333,9 @@ class addon extends common {
 				$this->addOutput([
 					'display' => self::DISPLAY_RAW
 				]);
-				//unlink($filename);
-				//$this->removeDir($tmpFolder);
-				// Valeurs en sortie
-
+				unlink($fileName);
+				$this->removeDir($tmpFolder);
+				exit();
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([

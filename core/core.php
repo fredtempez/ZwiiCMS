@@ -1017,6 +1017,38 @@ class common {
 		return ( rmdir($path) );
 	}
 
+
+	/**
+	 * Génère une archive d'un dossier et des sous-dossiers
+	 * @param string fileName path et nom de l'archive
+	 * @param string folder path à zipper
+	 * @param array filter dossiers à exclure
+	 */
+	public function makeZip ($fileName, $folder, $filter ) {
+		$zip = new ZipArchive();
+		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		//$directory = 'site/';
+		$files =  new RecursiveIteratorIterator(
+			new RecursiveCallbackFilterIterator(
+			new RecursiveDirectoryIterator(
+				$folder,
+				RecursiveDirectoryIterator::SKIP_DOTS
+			),
+			function ($fileInfo, $key, $iterator) use ($filter) {
+				return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+			}
+			)
+		);
+		foreach ($files as $name => $file) 	{
+			if (!$file->isDir()) 	{
+				$filePath = $file->getRealPath();
+				$relativePath = substr($filePath, strlen(realpath($folder)) + 1);
+				$zip->addFile($filePath, $relativePath);
+			}
+		}
+		$zip->close();
+	}
+
 	/**
 	 * Mises à jour
 	 */
