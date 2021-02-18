@@ -21,7 +21,7 @@ class addon extends common {
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'moduleDelete' => self::GROUP_ADMIN,
-		'exportModuleData' => self::GROUP_ADMIN,
+		'export' => self::GROUP_ADMIN,
 	];
 
 	// Gestion des modules
@@ -98,7 +98,7 @@ class addon extends common {
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/exportModuleData/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -244,7 +244,7 @@ class addon extends common {
 	/*
 	* Export des données d'un module externes ou interne à module.json
 	*/
-	public function exportModuleData(){
+	public function export(){
 			// Lire les données du module
 			$infoModules = helper::getModules();
 			// Créer un dossier par défaut
