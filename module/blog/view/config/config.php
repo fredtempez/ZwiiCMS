@@ -47,6 +47,6 @@
 	<?php echo template::speech('Aucun article.'); ?>
 <?php endif; ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::BLOG_VERSION; ?>
+	<?php echo $module::VERSION; ?>
 </div>
 

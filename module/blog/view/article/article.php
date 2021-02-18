@@ -144,6 +144,7 @@
 										? strftime('%d %B %Y - %H:%M', $comment['createdOn'])
 										: utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn']));
 				?>
+				</h4>
 				<?php echo $comment['content']; ?>
 			</div>
 		<?php endforeach; ?>

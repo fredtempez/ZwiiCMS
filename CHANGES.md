@@ -1,5 +1,11 @@
 # Changelog
 
+## version 10.4.04
+- Correction :
+    - Module Blog : balise non fermée dans les commentaires.
+- Modifications : 
+    -Constantes de modules.
+
 ## version 10.4.03
 - Corrections :
     - En-tête html : absence de la langue.

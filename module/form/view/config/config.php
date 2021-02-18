@@ -164,5 +164,5 @@
 	</div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::FORM_VERSION; ?>
+	<?php echo $module::VERSION; ?>
 </div>

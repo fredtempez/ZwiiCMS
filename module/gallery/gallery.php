@@ -16,10 +16,19 @@
 
 class gallery extends common {
 
+
+	const VERSION = '2.6';
+	const REALNAME = 'Galerie';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = [
+		'fr/module.json'
+	];
+
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
 	const SORT_HAND = 'SORT_HAND';
-	const GALLERY_VERSION = '2.5';
+
 
 	public static $directories = [];
 
