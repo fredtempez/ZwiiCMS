@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of Zwii. *
+ * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -1048,6 +1048,38 @@ class common {
 			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
 		}
 		return ( rmdir($path) );
+	}
+
+
+	/**
+	 * Génère une archive d'un dossier et des sous-dossiers
+	 * @param string fileName path et nom de l'archive
+	 * @param string folder path à zipper
+	 * @param array filter dossiers à exclure
+	 */
+	public function makeZip ($fileName, $folder, $filter ) {
+		$zip = new ZipArchive();
+		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		//$directory = 'site/';
+		$files =  new RecursiveIteratorIterator(
+			new RecursiveCallbackFilterIterator(
+			new RecursiveDirectoryIterator(
+				$folder,
+				RecursiveDirectoryIterator::SKIP_DOTS
+			),
+			function ($fileInfo, $key, $iterator) use ($filter) {
+				return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+			}
+			)
+		);
+		foreach ($files as $name => $file) 	{
+			if (!$file->isDir()) 	{
+				$filePath = $file->getRealPath();
+				$relativePath = substr($filePath, strlen(realpath($folder)) + 1);
+				$zip->addFile($filePath, $relativePath);
+			}
+		}
+		$zip->close();
 	}
 
 	/**

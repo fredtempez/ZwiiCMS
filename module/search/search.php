@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @copyright Sylvain Lelièvre
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
@@ -17,6 +17,12 @@
  */
 
 class search extends common {
+
+	const VERSION = '1.3';
+	const REALNAME = 'Recherche';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
@@ -38,8 +44,6 @@ class search extends common {
 		400 => '400 caractères',
 	];
 
-	const VERSION = '1.2';
-	const REALNAME = 'Recherche';
 
 	// Configuration vide
 	public function config() {

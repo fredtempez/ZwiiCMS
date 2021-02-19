@@ -11,7 +11,7 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  * @copyright  :  Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  */
 
 class theme extends common {
@@ -692,7 +692,7 @@ class theme extends common {
 	 */
 	public function export() {
 		// Make zip
-			$zipFilename = $this->makezip($this->getUrl(2));
+			$zipFilename = $this->zipTheme($this->getUrl(2));
 			// Téléchargement du ZIP
 			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
@@ -710,7 +710,7 @@ class theme extends common {
 	 */
 	public function save() {
 		// Make zip
-		$zipFilename = $this->makezip($this->getUrl(2));
+		$zipFilename = $this->zipTheme($this->getUrl(2));
 		// Téléchargement du ZIP
 		if (!is_dir(self::FILE_DIR.'source/theme')) {
 			mkdir(self::FILE_DIR.'source/theme');
@@ -772,7 +772,7 @@ class theme extends common {
 	 * construction du zip
 	 * @param string $modele theme ou admin
 	 */
-	private function makezip($modele) {
+	private function zipTheme($modele) {
 		// Creation du dossier
 		$zipFilename  =  $modele . ' ' .date('d m Y').'  '.date('H i s ').'.zip';
 		$zip = new ZipArchive();

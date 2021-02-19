@@ -2,25 +2,30 @@
 
 /**
  * This file is part of Zwii.
- *
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
 class redirection extends common {
 
+	const VERSION = '1.5';
+	const REALNAME = 'Redirection';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
+
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '1.4';
-	const REALNAME = 'Redirection';
 
 	/**
 	 * Configuration

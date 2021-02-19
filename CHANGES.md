@@ -9,6 +9,17 @@
         - Traduction selon la langue navigateur
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
+        
+## version 10.5.00
+- Modifications : 
+    - Gestion des module dans l'interface d'administration.
+    - à compléter..
+
+## version 10.4.04
+- Correction :
+    - Module Blog : balise non fermée dans les commentaires.
+- Modifications : 
+    -Constantes de modules.
 
 ## version 10.4.03
 - Corrections :

@@ -9,7 +9,9 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @author Sylvain Lelièvre <lelievresylvain@free.fr>
+ * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -18,7 +20,9 @@ class addon extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
-		'moduleDelete' => self::GROUP_ADMIN
+		'moduleDelete' => self::GROUP_ADMIN,
+		'export' => self::GROUP_ADMIN,
+		'import' => self::GROUP_ADMIN
 	];
 
 	// Gestion des modules
@@ -43,9 +47,23 @@ class addon extends common {
 		}
 		else{
 			// Suppression des dossiers
-			if( $this->removeDir('./module/'.$this->getUrl(2) ) === true){
+			$infoModules = helper::getModules();
+			$module = $this->getUrl(2);
+			//Liste des dossiers associés au module non effacés
+			$list = '';
+			foreach( $infoModules[$module]['dataDirectory'] as $moduleId){
+				if (strpos($moduleId,'module.json') === false && strpos($moduleId,'page.json') === false) {
+					$list === '' ? $list = self::DATA_DIR.$moduleId : $list .= ', '.self::DATA_DIR. $moduleId;
+				}
+			}
+			if( $this->removeDir('./module/'.$module ) === true){
 				$success = true;
-				$notification = 'Module '.$this->getUrl(2) .' effacé du dossier /module/, il peut rester des données dans d\'autres dossiers';
+				if( $list === ''){
+					$notification = 'Module '.$module .' désinstallé';
+				}
+				else{
+					$notification = 'Module '.$module .' désinstallé, il reste des données dans '.$list;
+				}
 			}
 			else{
 				$success = false;
@@ -84,17 +102,25 @@ class addon extends common {
 				$infoModules[$key]['realName'],
 				$infoModules[$key]['version'],
 				implode(', ', array_keys($inPagesTitle,$key)),
-				array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) ===''
+				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
+				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
 													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
 													'value' => template::ico('cancel')
 												])
 											: '',
-				array_key_exists('dataDirectory',$infoModules[$key])  && $infoModules[$key]['dataDirectory'] !== ''
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(false).$this->exportZip( $key ),
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'value' => template::ico('download')
+												])
+											: '',
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+											? template::button('moduleExport' . $key, [
+												'class' => 'buttonBlue',
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -130,9 +156,10 @@ class addon extends common {
 						// Module normalisé ?
 						if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
 
-							// Lecture de la version du module pour validation de la mise à jour
+							// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
 							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
 							$version = '0.0';
+							$update = false;
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
 							$file = str_replace(' ','',$file);
 							$file = str_replace("\t",'',$file);
@@ -141,6 +168,15 @@ class addon extends common {
 								$posdeb = strpos($file, "'", $pos1);
 								$posend = strpos($file, "'", $posdeb + 1);
 								$version = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+							}
+							$pos1 = strpos($file, 'constUPDATE');
+							if( $pos1 !== false){
+								$posdeb = strpos($file, "=", $pos1);
+								$posend = strpos($file, ";", $posdeb + 1);
+								$strUpdate = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+								if( strpos( $strUpdate,"true",0) !== false){
+									$update = true;
+								}
 							}
 
 							// Module déjà installé ?
@@ -157,7 +193,7 @@ class addon extends common {
 							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
 							$newVersion = false;
 							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $infoModules[$moduleName]['update'] && ( $newVersion || $checkValidMaj);
+							$validMaj = $update && ( $newVersion || $checkValidMaj);
 
 							// Nouvelle installation ou mise à jour du module
 							if( ! $moduleInstal ||  $validMaj ){
@@ -179,7 +215,7 @@ class addon extends common {
 								else{
 									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
 								}
-								if( $infoModules[$moduleName]['update'] === false){
+								if( $update === false){
 									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
 								}
 							}
@@ -236,56 +272,114 @@ class addon extends common {
 		closedir($dir);
 	}
 
+
 	/*
-	* Création récursive d'un zip
-	* https://makitweb.com/how-to-create-and-download-a-zip-file-with-php/
+	* Export des données d'un module externes ou interne à module.json
 	*/
-	private function createZip($zip,$dir){
-		if (is_dir($dir)){
-			if ($dh = opendir($dir)){
-				while (($file = readdir($dh)) !== false){
-					// If file
-					if (is_file($dir.$file)) {
-						if($file != '' && $file != '.' && $file != '..'){
-						   $zip->addFile($dir.$file);
-						}
+	public function export(){
+		// Lire les données du module
+		$infoModules = helper::getModules();
+		// Créer un dossier par défaut
+		$tmpFolder = self::TEMP_DIR . uniqid();
+		//$tmpFolder = self::TEMP_DIR . 'test';
+		if (!is_dir($tmpFolder)) {
+			mkdir($tmpFolder);
+		}
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		// Parcourir les pages utilisant le module
+		foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
+				// Export des pages hébergeant le module
+				$pageContent[$pageId] = $this->getData(['page',$pageId]);
+				/**
+				 * Données module.json ?
+				 */
+				if (strpos($moduleId,'module.json')) {
+					// Création de l'arborescence des langues
+					// Pas de nom dossier de langue - dossier par défaut
+					$t = explode ('/',$moduleId);
+					if ( is_array($t)) {
+						$lang = 'fr';
+					} else {
+						$lang = $t[0];
 					}
-					else{
-						// If directory
-						if(is_dir($dir.$file) ){
-							if($file != '' && $file != '.' && $file != '..'){
-								// Add empty directory
-								$zip->addEmptyDir($dir.$file);
-								$folder = $dir.$file.'/';
-								// Read data of the folder
-								$this->createZip($zip,$folder);
-							}
-						}
+					// Créer le dossier si inexistant
+					if (!is_dir($tmpFolder . '/' . $lang)) {
+						mkdir ($tmpFolder . '/' . $lang);
+					}
+					// Sauvegarde si données non vides
+					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+					if ($tmpData [$pageId] !== null) {
+						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+					}
+				} else {
+					/**
+					 * Données dans un json personnalisé, le sauvegarder
+					 * Dossier non localisé
+					*/
+					if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
+						&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
+							$this->custom_copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
 					}
 				}
-				closedir($dh);
 			}
+		}
+		// Enregistrement des pages dans le dossier de langue identique à module
+
+		if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
+			file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
+		}
+
+		// création du zip
+		$fileName =  $this->getUrl(2) . '.zip';
+		$this->makeZip ($fileName, $tmpFolder, []);
+		if (file_exists($fileName)) {
+			header('Content-Type: application/octet-stream');
+			header('Content-Disposition: attachment; filename="' . $fileName . '"');
+			header('Content-Length: ' . filesize($fileName));
+			readfile( $fileName);
+			// Valeurs en sortie
+			$this->addOutput([
+				'display' => self::DISPLAY_RAW
+			]);
+			unlink($fileName);
+			$this->removeDir($tmpFolder);
+			exit();
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'addon',
+				'notification' => 'Quelque chose s\'est mal passé',
+				'state' => false
+			]);
 		}
 	}
 
 	/*
-	* Export des données d'un module externes à module.json
+	* Importer des données d'un module externes ou interne à module.json
 	*/
-	private function exportZip( $exportModule ){
-			$infoModules = helper::getModules();
-			// création du zip
+	public function import(){
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Récupérer le fichier et le décompacter
+			$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
+			$tempFolder = uniqid();
+			mkdir (self::TEMP_DIR . $tempFolder);
+			echo $zipFilename;
 			$zip = new ZipArchive();
-			if( ! is_dir('tmp/exportDataModules')) mkdir('tmp/exportDataModules',0777, true);
-			$filename = 'tmp/exportDataModules/'.$exportModule.'dataExport.zip';
-			if( is_file( $filename )) unlink( $filename);
-			$directory = $infoModules[$exportModule]['dataDirectory'].'/';
-			if($zip->open( $filename, ZipArchive::CREATE) !== TRUE){
-				exit;
+			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
+				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
 			}
-			else{
-				$this->createZip($zip,$directory);
-				$zip->close();
-			}
-			return( $filename );
+
+			// Supprimer le dossier temporaire même si le thème est invalide
+			//$this->removeDir(self::TEMP_DIR . $tempFolder);
+			$zip->close();
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Importer des données de module',
+			'view' => 'import'
+		]);
 	}
 }

@@ -9,12 +9,18 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
 class form extends common {
+
+	const VERSION = '2.8';
+	const REALNAME = 'Formulaire';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
@@ -32,8 +38,6 @@ class form extends common {
 
 	public static $pagination;
 
-	const VERSION = '2.7';
-	const REALNAME = 'Formulaire';
 
 	// Objets
 	const TYPE_MAIL = 'mail';
@@ -167,7 +171,7 @@ class form extends common {
 	/**
 	 * Export CSV
 	 * @author Frédéric Tempez <frederic.tempez@outlook.com>
- 	 * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ 	 * @copyright Copyright (C) 2018-2021, Frédéric Tempez
 	 */
 	public function export2csv() {
 		// Jeton incorrect
