@@ -40,7 +40,7 @@
 	</div>
 <?php echo template::formClose(); ?>
 <?php if($module::$modInstal): ?>
-	<?php echo template::table([2, 3, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter', 'Importer']); ?>
+	<?php echo template::table([2, 2, 2, 2, 1, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter', 'Importer']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
