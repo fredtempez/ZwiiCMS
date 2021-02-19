@@ -47,9 +47,23 @@ class addon extends common {
 		}
 		else{
 			// Suppression des dossiers
-			if( $this->removeDir('./module/'.$this->getUrl(2) ) === true){
+			$infoModules = helper::getModules();
+			$module = $this->getUrl(2);
+			//Liste des dossiers associés au module non effacés
+			$list = '';
+			foreach( $infoModules[$module]['dataDirectory'] as $moduleId){
+				if (strpos($moduleId,'module.json') === false && strpos($moduleId,'page.json') === false) {
+					$list === '' ? $list = self::DATA_DIR.$moduleId : $list .= ', '.self::DATA_DIR. $moduleId;
+				}
+			}
+			if( $this->removeDir('./module/'.$module ) === true){
 				$success = true;
-				$notification = 'Module '.$this->getUrl(2) .' effacé du dossier /module/, il peut rester des données dans d\'autres dossiers';
+				if( $list === ''){
+					$notification = 'Module '.$module .' désinstallé';
+				}
+				else{
+					$notification = 'Module '.$module .' désinstallé, il reste des données dans '.$list;
+				}
 			}
 			else{
 				$success = false;
