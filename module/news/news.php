@@ -19,9 +19,7 @@ class news extends common {
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = true;
-	const DATADIRECTORY = [
-		'fr/module.json'
-	];
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
