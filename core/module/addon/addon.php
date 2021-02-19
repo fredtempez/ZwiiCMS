@@ -11,7 +11,7 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @author Sylvain Lelièvre <lelievresylvain@free.fr>
-* @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
+ * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -142,9 +142,10 @@ class addon extends common {
 						// Module normalisé ?
 						if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
 
-							// Lecture de la version du module pour validation de la mise à jour
+							// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
 							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
 							$version = '0.0';
+							$update = false;
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
 							$file = str_replace(' ','',$file);
 							$file = str_replace("\t",'',$file);
@@ -153,6 +154,15 @@ class addon extends common {
 								$posdeb = strpos($file, "'", $pos1);
 								$posend = strpos($file, "'", $posdeb + 1);
 								$version = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+							}
+							$pos1 = strpos($file, 'constUPDATE');
+							if( $pos1 !== false){
+								$posdeb = strpos($file, "=", $pos1);
+								$posend = strpos($file, ";", $posdeb + 1);
+								$strUpdate = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+								if( strpos( $strUpdate,"true",0) !== false){
+									$update = true;
+								}
 							}
 
 							// Module déjà installé ?
@@ -169,7 +179,7 @@ class addon extends common {
 							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
 							$newVersion = false;
 							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $infoModules[$moduleName]['update'] && ( $newVersion || $checkValidMaj);
+							$validMaj = $update && ( $newVersion || $checkValidMaj);
 
 							// Nouvelle installation ou mise à jour du module
 							if( ! $moduleInstal ||  $validMaj ){
@@ -191,7 +201,7 @@ class addon extends common {
 								else{
 									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
 								}
-								if( $infoModules[$moduleName]['update'] === false){
+								if( $update === false){
 									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
 								}
 							}
