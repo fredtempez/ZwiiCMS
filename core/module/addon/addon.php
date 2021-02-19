@@ -117,7 +117,7 @@ class addon extends common {
 												'value' => template::ico('download')
 												])
 											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
@@ -366,14 +366,35 @@ class addon extends common {
 			$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
 			$tempFolder = uniqid();
 			mkdir (self::TEMP_DIR . $tempFolder);
-			echo $zipFilename;
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
 				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
 			}
+			// Import des données localisées page.json et module.json
+			// Pour chaque dossier localisé
+			$dataTarget = array();
+			$dataSource = array();
+			foreach (self::$i18nList as $key=>$value) {
+				// Les Pages et les modules
+				foreach (['page','module'] as $fileTarget)
+				if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
+					// Le dossier de langue existe
+					// faire la fusion
+					$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
+					$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
+					$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
+					file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
+					// Supprimer les fichiers importés
+					unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+					rmdir (self::TEMP_DIR . $tempFolder . '/' .$key);
+				}
+			}
 
-			// Supprimer le dossier temporaire même si le thème est invalide
-			//$this->removeDir(self::TEMP_DIR . $tempFolder);
+			// Import des fichiers placés ailleurs que dans les dossiers localisés.
+			$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
+
+			// Supprimer le dossier temporaire
+			$this->removeDir(self::TEMP_DIR . $tempFolder);
 			$zip->close();
 		}
 		// Valeurs en sortie
