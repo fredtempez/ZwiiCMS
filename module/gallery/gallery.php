@@ -21,9 +21,7 @@ class gallery extends common {
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = true;
-	const DATADIRECTORY = [
-		'fr/module.json'
-	];
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';

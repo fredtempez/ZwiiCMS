@@ -22,9 +22,7 @@ class search extends common {
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = true;
-	const DATADIRECTORY = [
-		'fr/module.json'
-	];
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
