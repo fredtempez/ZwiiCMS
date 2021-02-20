@@ -170,13 +170,13 @@ class helper {
 							$delete = true;
 					}
 					// Constante DATADIRECTORY
-					if ( array_key_exists('DATADIRECTORY', $class_constants) 
+					if ( array_key_exists('DATADIRECTORY', $class_constants)
 						 && $class_constants['DATADIRECTORY'] !== []
 					     && is_array($class_constants['DATADIRECTORY'])
 					   ) {
 							$dataDirectory = $value::DATADIRECTORY;
 					} else {
-							$dataDirectory = ['fr/module.json'];
+							$dataDirectory = [];
 					}
 					// Affection
 					$modules [$value]  = [

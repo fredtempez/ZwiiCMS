@@ -289,40 +289,33 @@ class addon extends common {
 		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 		// Parcourir les pages utilisant le module
 		foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+			// Export des pages hébergeant le module
+			$pageContent[$pageId] = $this->getData(['page',$pageId]);
+			// Export de fr/module.json
+			$moduleId = 'fr/module.json';
+			// Création de l'arborescence des langues
+			// Pas de nom dossier de langue - dossier par défaut
+			$t = explode ('/',$moduleId);
+			if ( is_array($t)) {
+				$lang = 'fr';
+			} else {
+				$lang = $t[0];
+			}
+			// Créer le dossier si inexistant
+			if (!is_dir($tmpFolder . '/' . $lang)) {
+				mkdir ($tmpFolder . '/' . $lang);
+			}
+			// Sauvegarde si données non vides
+			$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+			if ($tmpData [$pageId] !== null) {
+				file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+			}
+			// Export des données localisées dans des dossiers
 			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
-				// Export des pages hébergeant le module
-				$pageContent[$pageId] = $this->getData(['page',$pageId]);
-				/**
-				 * Données module.json ?
-				 */
-				if (strpos($moduleId,'module.json')) {
-					// Création de l'arborescence des langues
-					// Pas de nom dossier de langue - dossier par défaut
-					$t = explode ('/',$moduleId);
-					if ( is_array($t)) {
-						$lang = 'fr';
-					} else {
-						$lang = $t[0];
-					}
-					// Créer le dossier si inexistant
-					if (!is_dir($tmpFolder . '/' . $lang)) {
-						mkdir ($tmpFolder . '/' . $lang);
-					}
-					// Sauvegarde si données non vides
-					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-					if ($tmpData [$pageId] !== null) {
-						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
-					}
-				} else {
-					/**
-					 * Données dans un json personnalisé, le sauvegarder
-					 * Dossier non localisé
-					*/
 					if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
 						&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
 							$this->custom_copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
 					}
-				}
 			}
 		}
 		// Enregistrement des pages dans le dossier de langue identique à module
@@ -376,17 +369,17 @@ class addon extends common {
 			$dataSource = array();
 			foreach (self::$i18nList as $key=>$value) {
 				// Les Pages et les modules
-				foreach (['page','module'] as $fileTarget)
-				if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
-					// Le dossier de langue existe
-					// faire la fusion
-					$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
-					$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
-					$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
-					file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
-					// Supprimer les fichiers importés
-					unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
-					rmdir (self::TEMP_DIR . $tempFolder . '/' .$key);
+				foreach (['page','module'] as $fileTarget){
+					if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
+						// Le dossier de langue existe
+						// faire la fusion
+						$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
+						$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
+						$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
+						file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
+						// Supprimer les fichiers importés
+						unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+					}
 				}
 			}
 
