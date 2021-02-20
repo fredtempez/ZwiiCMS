@@ -120,7 +120,7 @@ class addon extends common {
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -311,10 +311,10 @@ class addon extends common {
 				file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
 			}
 			// Export des données localisées dans des dossiers
-			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
-					if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
-						&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
-							$this->custom_copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
+			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $dirId) {
+					if ( file_exists(self::DATA_DIR . '/' .  $dirId)
+						&& !file_exists($tmpFolder . '/' . $dirId ) ) {
+							$this->custom_copy ( self::DATA_DIR . '/' .  $dirId, $tmpFolder . '/' . $dirId );
 					}
 			}
 		}
@@ -353,47 +353,84 @@ class addon extends common {
 	* Importer des données d'un module externes ou interne à module.json
 	*/
 	public function import(){
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Récupérer le fichier et le décompacter
-			$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
-			$tempFolder = uniqid();
-			mkdir (self::TEMP_DIR . $tempFolder);
-			$zip = new ZipArchive();
-			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
-				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
-			}
-			// Import des données localisées page.json et module.json
-			// Pour chaque dossier localisé
-			$dataTarget = array();
-			$dataSource = array();
-			foreach (self::$i18nList as $key=>$value) {
-				// Les Pages et les modules
-				foreach (['page','module'] as $fileTarget){
-					if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
-						// Le dossier de langue existe
-						// faire la fusion
-						$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
-						$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
-						$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
-						file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
-						// Supprimer les fichiers importés
-						unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'addon',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		else{
+			// Soumission du formulaire
+			if($this->isPost()) {
+				// Récupérer le fichier et le décompacter
+				$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
+				$tempFolder = uniqid();
+				mkdir (self::TEMP_DIR . $tempFolder);
+				$zip = new ZipArchive();
+				if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
+					$zip->extractTo(self::TEMP_DIR  . $tempFolder );
+				}
+				// Import des données localisées page.json et module.json
+				// Pour chaque dossier localisé
+				$dataTarget = array();
+				$dataSource = array();
+				// Liste des pages de même nom dans l'archive et le site
+				$list = '';
+				foreach (self::$i18nList as $key=>$value) {
+					// Les Pages et les modules
+					foreach (['page','module'] as $fileTarget){
+						if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
+							// Le dossier de langue existe
+							// faire la fusion
+							$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
+							// Des pages de même nom que celles de l'archive existent
+							if( $fileTarget === 'page' ){
+								foreach( $dataSource as $keydataSource=>$valuedataSource ){
+									foreach( $this->getData(['page']) as $keypage=>$valuepage ){
+										if( $keydataSource === $keypage) $list .= ' '.$this->getData(['page', $keypage, 'title']);
+									}
+								}
+							}
+							$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
+							$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
+							if( $list === ''){
+								file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
+							}
+							// Supprimer les fichiers importés
+							unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+						}
 					}
 				}
+
+				// Import des fichiers placés ailleurs que dans les dossiers localisés.
+				$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
+
+				// Supprimer le dossier temporaire
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
+				if( $list !== '' ){
+					 $success = false;
+					 $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
+				}
+				else{
+					 $success = true;
+					 $notification = 'Import réussi';
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'addon',
+					'state' => $success,
+					'notification' => $notification
+				]);
 			}
-
-			// Import des fichiers placés ailleurs que dans les dossiers localisés.
-			$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
-
-			// Supprimer le dossier temporaire
-			$this->removeDir(self::TEMP_DIR . $tempFolder);
-			$zip->close();
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Importer des données de module',
+				'view' => 'import'
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Importer des données de module',
-			'view' => 'import'
-		]);
 	}
 }
