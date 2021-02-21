@@ -390,7 +390,9 @@ class addon extends common {
 							if( $fileTarget === 'page' ){
 								foreach( $dataSource as $keydataSource=>$valuedataSource ){
 									foreach( $this->getData(['page']) as $keypage=>$valuepage ){
-										if( $keydataSource === $keypage) $list .= ' '.$this->getData(['page', $keypage, 'title']);
+										if( $keydataSource === $keypage){
+											$list === '' ? $list .= ' '.$this->getData(['page', $keypage, 'title']) : $list .= ', '.$this->getData(['page', $keypage, 'title']);
+										}
 									}
 								}
 							}
@@ -413,7 +415,7 @@ class addon extends common {
 				$zip->close();
 				if( $list !== '' ){
 					 $success = false;
-					 $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
+					strpos( $list, ',') === false ? $notification = 'Import impossible la page suivante doit être renommée :'.$list : $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
 				}
 				else{
 					 $success = true;
