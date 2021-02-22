@@ -960,7 +960,7 @@ footer #footerSocials .zwiico-github:hover {
 /* Remonter en haut */
 #backToTop {
 	position: fixed;
-	z-index: 30;
+	z-index: 50;
 	right: 30px;
 	bottom: 50px;
 	padding: 13px 16px 16px;
