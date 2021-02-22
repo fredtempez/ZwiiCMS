@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.4.05
+- Mise à jour :
+    - SiteMapGenerator 4.3.1
+
 ## version 10.4.04
 - Correction :
     - Module Blog : balise non fermée dans les commentaires.
