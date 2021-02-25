@@ -161,7 +161,7 @@ class helper {
 					if (array_key_exists('UPDATE', $class_constants)) {
 							$update = $value::UPDATE;
 					} else {
-							$update = true;
+							$update = '0.0';
 					}
 					// Constante DELETE
 					if (array_key_exists('DELETE', $class_constants)) {

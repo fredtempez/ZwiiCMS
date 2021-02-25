@@ -19,7 +19,7 @@ class form extends common {
 	const VERSION = '2.8';
 	const REALNAME = 'Formulaire';
 	const DELETE = true;
-	const UPDATE = true;
+	const UPDATE = '0.0';
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
@@ -290,7 +290,7 @@ class form extends common {
 			if(
 				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
 				// AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
-				AND password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult') ) === false ) 
+				AND password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult') ) === false )
 			{
 				self::$inputNotices['formCaptcha'] = 'Incorrect';
 

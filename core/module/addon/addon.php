@@ -159,7 +159,8 @@ class addon extends common {
 							// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
 							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
 							$version = '0.0';
-							$update = false;
+							$update = '0.0';
+							$valUpdate = false;
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
 							$file = str_replace(' ','',$file);
 							$file = str_replace("\t",'',$file);
@@ -171,13 +172,12 @@ class addon extends common {
 							}
 							$pos1 = strpos($file, 'constUPDATE');
 							if( $pos1 !== false){
-								$posdeb = strpos($file, "=", $pos1);
-								$posend = strpos($file, ";", $posdeb + 1);
-								$strUpdate = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-								if( strpos( $strUpdate,"true",0) !== false){
-									$update = true;
-								}
+								$posdeb = strpos($file, "'", $pos1);
+								$posend = strpos($file, "'", $posdeb + 1);
+								$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
 							}
+							// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
+							if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
 
 							// Module déjà installé ?
 							$moduleInstal = false;
@@ -193,7 +193,7 @@ class addon extends common {
 							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
 							$newVersion = false;
 							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $update && ( $newVersion || $checkValidMaj);
+							$validMaj = $valUpdate && ( $newVersion || $checkValidMaj);
 
 							// Nouvelle installation ou mise à jour du module
 							if( ! $moduleInstal ||  $validMaj ){
@@ -215,8 +215,13 @@ class addon extends common {
 								else{
 									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
 								}
-								if( $update === false){
-									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
+								if( $valUpdate === false){
+									if( $infoModules[$moduleName]['update'] === $update ){
+										$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
+									}
+									else{
+										$notification = ' Mise à jour par ce procédé interdite, votre version est trop ancienne';
+									}
 								}
 							}
 						}

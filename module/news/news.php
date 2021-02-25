@@ -18,7 +18,7 @@ class news extends common {
 	const VERSION = '2.1';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
-	const UPDATE = true;
+	const UPDATE = '0.0';
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
