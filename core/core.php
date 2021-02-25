@@ -1784,7 +1784,8 @@ class core extends common {
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 
-			$css .= 'footer #footerbody > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			$css .= 'footer #footerbody  {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			$css .= '@media (max-width: 768px) {footer #footerbody > div { padding: 2px }}';
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
@@ -1792,8 +1793,8 @@ class core extends common {
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
 				 $this->getData(['theme', 'footer', 'position']) === 'body') {
-				$css .= "@media (min-width: 769px) { #site {margin-bottom: 100px;} }";
-				$css .= "@media (max-width: 768px) { #site {margin-bottom: 150px;} }";
+				$css .= '@media (min-width: 769px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px}}';
+				$css .= '@media (max-width: 768px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px}}';
 			}
 
 			// Enregistre la personnalisation

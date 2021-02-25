@@ -3,11 +3,14 @@
 ## version 10.4.05
 - Mise à jour :
     - SiteMapGenerator 4.3.1
+- Modifications :
+    - Bouton de remontée, position plus haute et zindex augmenté.
+    - Éviter le chevauchement du pied de age fixe au-dessus du corps de page.
 
 ## version 10.4.04
 - Correction :
     - Module Blog : balise non fermée dans les commentaires.
-- Modifications : 
+- Modifications :
     -Constantes de modules.
 
 ## version 10.4.03
@@ -23,7 +26,7 @@
     - Thème : rétablissement du contrôle de l'import d'une version ancienne d'un thème.
     - Éditeur de texte : couleur de fond parasite quand une image en arrière-plan est sélectionnée.
 
-## version 10.4.01 
+## version 10.4.01
 Corrections :
     - Module form, erreur de syntaxe.
     - Chargement d'un thème, désactivation du contrôle des clés.
