@@ -6,6 +6,8 @@
 - Modifications :
     - Bouton de remontée, position plus haute et zindex augmenté.
     - Éviter le chevauchement du pied de age fixe au-dessus du corps de page.
+- Corrections :
+    - Marges du pied de page fixe placé en dehors du site.change
 
 ## version 10.4.04
 - Correction :
