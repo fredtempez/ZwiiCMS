@@ -90,7 +90,7 @@
 					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Recherche dans le site',
 						'selected' => $this->getData(['locale', 'searchPageId']),
-						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche" permet d\'activer un lien dans le pied de page. '
+						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche". Une option du pied de page ajoute un lien discret vers cette page.'
 					]); ?>
 				</div>
 			</div>
