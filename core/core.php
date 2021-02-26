@@ -1691,8 +1691,23 @@ class core extends common {
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
-			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site.light{margin:5% auto !important;}#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site.light{margin: 5% auto !important;}#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
-			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
+			// Marge supplémentaire lorsque le pied de page est fixe
+			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
+			$this->getData(['theme', 'footer', 'position']) === 'body') {
+				//$css .= '@media (min-width: 769px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px}}';
+				//$css .= '@media (max-width: 768px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px}}';
+				$marginBottomLarge = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px';
+				$marginBottomSmall = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px';
+			} else {
+				$marginBottomSmall = $margin;
+				$marginBottomLarge = $margin;
+			}
+			$css .= $this->getData(['theme', 'site', 'width']) === '100%'
+					? '@media (min-width: 769px) {#site{margin:0 auto 0 ' . $marginBottomLarge . ' !important;}}@media (max-width: 768px) {#site{margin:0 auto 0 ' . $marginBottomSmall . ' !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
+					: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge .  ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall .  ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
+			$css .= $this->getData(['theme', 'site', 'width']) === '750px'
+					? '.button, button{font-size:0.8em;}'
+					: '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 			$css .= '.speechBubble,.button,.button:hover,button[type=\'submit\'],.pagination a,.pagination a:hover,input[type=\'checkbox\']:checked + label:before,input[type=\'radio\']:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
@@ -1780,22 +1795,15 @@ class core extends common {
 			}
 
 			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'footer', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
-			$css .= 'footer{background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
+			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 
-			$css .= 'footer #footerbody  {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			$css .= 'footer #footerbody > div  {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 			$css .= '@media (max-width: 768px) {footer #footerbody > div { padding: 2px }}';
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
-
-			// Marge supplémentaire lorsque le pied de page est fixe
-			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
-				 $this->getData(['theme', 'footer', 'position']) === 'body') {
-				$css .= '@media (min-width: 769px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px}}';
-				$css .= '@media (max-width: 768px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px}}';
-			}
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);

@@ -44,11 +44,11 @@ body {
 	body {
 		margin: 0px;
 	}
-
+/*
 	#site {
-		/*margin: 0px auto;*/
+		margin: 0px auto;
 	}
-
+*/
 	body>header {
 		margin: 0px 0px;
 	}
@@ -476,12 +476,13 @@ td>.col12 {
 #site {
 	overflow: hidden;
 }
-
+/* Dans theme.css
 @media (min-width:768px) {
 	#site {
 		margin: 20px auto;
 	}
 }
+*/
 
 /* Bannière */
 
