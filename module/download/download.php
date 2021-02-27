@@ -14,6 +14,12 @@
 
 class download extends common {
 
+	const VERSION = '1.0';
+	const REALNAME = 'Téléchargement';
+	const DELETE = true;
+	const UPDATE = true;
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
+
 	const EDIT_OWNER = 'owner';
 	const EDIT_GROUP = 'group';
 	const EDIT_ALL = 'all';
@@ -93,10 +99,7 @@ class download extends common {
 
 	public static $users = [];
 
-	const VERSION = '1.0';
-	const REALNAME = 'Téléchargement';
-
-		/**
+	/**
 	 * Flux RSS
 	 */
 	public function rss() {
