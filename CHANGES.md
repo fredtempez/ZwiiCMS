@@ -12,13 +12,23 @@
         
 ## version 10.5.00
 - Modifications : 
-    - Gestion des module dans l'interface d'administration.
-    - à compléter..
+    - Gestion des modules dans l'interface d'administration.
+
+## version 10.4.05
+- Mise à jour :
+    - SiteMapGenerator 4.3.1
+- Modifications :
+    - Bouton de remontée, position plus haute et zindex augmenté.
+    - Éviter le chevauchement du pied de age fixe au-dessus du corps de page.
+- Corrections :
+    - Marges du pied de page fixe placé en dehors du site.
+    - TinyMCE couleurs du sélecteur de paragraphe et de headers lorsque le fond est transparent.
+    - Thème administration, couleur du lien dans un bloc H4.
 
 ## version 10.4.04
 - Correction :
     - Module Blog : balise non fermée dans les commentaires.
-- Modifications : 
+- Modifications :
     -Constantes de modules.
 
 ## version 10.4.03

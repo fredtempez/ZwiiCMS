@@ -117,10 +117,10 @@ class addon extends common {
 												'value' => template::ico('download')
 												])
 											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -159,7 +159,8 @@ class addon extends common {
 							// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
 							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
 							$version = '0.0';
-							$update = false;
+							$update = '0.0';
+							$valUpdate = false;
 							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
 							$file = str_replace(' ','',$file);
 							$file = str_replace("\t",'',$file);
@@ -171,13 +172,12 @@ class addon extends common {
 							}
 							$pos1 = strpos($file, 'constUPDATE');
 							if( $pos1 !== false){
-								$posdeb = strpos($file, "=", $pos1);
-								$posend = strpos($file, ";", $posdeb + 1);
-								$strUpdate = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-								if( strpos( $strUpdate,"true",0) !== false){
-									$update = true;
-								}
+								$posdeb = strpos($file, "'", $pos1);
+								$posend = strpos($file, "'", $posdeb + 1);
+								$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
 							}
+							// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
+							if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
 
 							// Module déjà installé ?
 							$moduleInstal = false;
@@ -193,7 +193,7 @@ class addon extends common {
 							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
 							$newVersion = false;
 							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $update && ( $newVersion || $checkValidMaj);
+							$validMaj = $valUpdate && ( $newVersion || $checkValidMaj);
 
 							// Nouvelle installation ou mise à jour du module
 							if( ! $moduleInstal ||  $validMaj ){
@@ -215,8 +215,13 @@ class addon extends common {
 								else{
 									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
 								}
-								if( $update === false){
-									$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
+								if( $valUpdate === false){
+									if( $infoModules[$moduleName]['update'] === $update ){
+										$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
+									}
+									else{
+										$notification = ' Mise à jour par ce procédé interdite, votre version est trop ancienne';
+									}
 								}
 							}
 						}
@@ -289,40 +294,33 @@ class addon extends common {
 		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 		// Parcourir les pages utilisant le module
 		foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
-			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $moduleId) {
-				// Export des pages hébergeant le module
-				$pageContent[$pageId] = $this->getData(['page',$pageId]);
-				/**
-				 * Données module.json ?
-				 */
-				if (strpos($moduleId,'module.json')) {
-					// Création de l'arborescence des langues
-					// Pas de nom dossier de langue - dossier par défaut
-					$t = explode ('/',$moduleId);
-					if ( is_array($t)) {
-						$lang = 'fr';
-					} else {
-						$lang = $t[0];
+			// Export des pages hébergeant le module
+			$pageContent[$pageId] = $this->getData(['page',$pageId]);
+			// Export de fr/module.json
+			$moduleId = 'fr/module.json';
+			// Création de l'arborescence des langues
+			// Pas de nom dossier de langue - dossier par défaut
+			$t = explode ('/',$moduleId);
+			if ( is_array($t)) {
+				$lang = 'fr';
+			} else {
+				$lang = $t[0];
+			}
+			// Créer le dossier si inexistant
+			if (!is_dir($tmpFolder . '/' . $lang)) {
+				mkdir ($tmpFolder . '/' . $lang);
+			}
+			// Sauvegarde si données non vides
+			$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+			if ($tmpData [$pageId] !== null) {
+				file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+			}
+			// Export des données localisées dans des dossiers
+			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $dirId) {
+					if ( file_exists(self::DATA_DIR . '/' .  $dirId)
+						&& !file_exists($tmpFolder . '/' . $dirId ) ) {
+							$this->custom_copy ( self::DATA_DIR . '/' .  $dirId, $tmpFolder . '/' . $dirId );
 					}
-					// Créer le dossier si inexistant
-					if (!is_dir($tmpFolder . '/' . $lang)) {
-						mkdir ($tmpFolder . '/' . $lang);
-					}
-					// Sauvegarde si données non vides
-					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-					if ($tmpData [$pageId] !== null) {
-						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
-					}
-				} else {
-					/**
-					 * Données dans un json personnalisé, le sauvegarder
-					 * Dossier non localisé
-					*/
-					if ( file_exists(self::DATA_DIR . '/' .  $moduleId)
-						&& !file_exists($tmpFolder . '/' . $moduleId ) ) {
-							$this->custom_copy ( self::DATA_DIR . '/' .  $moduleId, $tmpFolder . '/' . $moduleId );
-					}
-				}
 			}
 		}
 		// Enregistrement des pages dans le dossier de langue identique à module
@@ -360,26 +358,86 @@ class addon extends common {
 	* Importer des données d'un module externes ou interne à module.json
 	*/
 	public function import(){
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Récupérer le fichier et le décompacter
-			$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
-			$tempFolder = uniqid();
-			mkdir (self::TEMP_DIR . $tempFolder);
-			echo $zipFilename;
-			$zip = new ZipArchive();
-			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
-				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
-			}
-
-			// Supprimer le dossier temporaire même si le thème est invalide
-			//$this->removeDir(self::TEMP_DIR . $tempFolder);
-			$zip->close();
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'addon',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Importer des données de module',
-			'view' => 'import'
-		]);
+		else{
+			// Soumission du formulaire
+			if($this->isPost()) {
+				// Récupérer le fichier et le décompacter
+				$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
+				$tempFolder = uniqid();
+				mkdir (self::TEMP_DIR . $tempFolder);
+				$zip = new ZipArchive();
+				if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
+					$zip->extractTo(self::TEMP_DIR  . $tempFolder );
+				}
+				// Import des données localisées page.json et module.json
+				// Pour chaque dossier localisé
+				$dataTarget = array();
+				$dataSource = array();
+				// Liste des pages de même nom dans l'archive et le site
+				$list = '';
+				foreach (self::$i18nList as $key=>$value) {
+					// Les Pages et les modules
+					foreach (['page','module'] as $fileTarget){
+						if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
+							// Le dossier de langue existe
+							// faire la fusion
+							$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
+							// Des pages de même nom que celles de l'archive existent
+							if( $fileTarget === 'page' ){
+								foreach( $dataSource as $keydataSource=>$valuedataSource ){
+									foreach( $this->getData(['page']) as $keypage=>$valuepage ){
+										if( $keydataSource === $keypage){
+											$list === '' ? $list .= ' '.$this->getData(['page', $keypage, 'title']) : $list .= ', '.$this->getData(['page', $keypage, 'title']);
+										}
+									}
+								}
+							}
+							$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
+							$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
+							if( $list === ''){
+								file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
+							}
+							// Supprimer les fichiers importés
+							unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+						}
+					}
+				}
+
+				// Import des fichiers placés ailleurs que dans les dossiers localisés.
+				$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
+
+				// Supprimer le dossier temporaire
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
+				if( $list !== '' ){
+					 $success = false;
+					strpos( $list, ',') === false ? $notification = 'Import impossible la page suivante doit être renommée :'.$list : $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
+				}
+				else{
+					 $success = true;
+					 $notification = 'Import réussi';
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'addon',
+					'state' => $success,
+					'notification' => $notification
+				]);
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Importer des données de module',
+				'view' => 'import'
+			]);
+		}
 	}
 }

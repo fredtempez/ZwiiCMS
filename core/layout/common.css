@@ -45,11 +45,11 @@ body {
 	body {
 		margin: 0px;
 	}
-
+/*
 	#site {
 		margin: 0px auto;
 	}
-
+*/
 	body>header {
 		margin: 0px 0px;
 	}
@@ -477,12 +477,13 @@ td>.col12 {
 #site {
 	overflow: hidden;
 }
-
+/* Dans theme.css
 @media (min-width:768px) {
 	#site {
 		margin: 20px auto;
 	}
 }
+*/
 
 /* Bannière */
 
@@ -952,9 +953,9 @@ footer #footerSocials .zwiico-github:hover {
 /* Remonter en haut */
 #backToTop {
 	position: fixed;
-	z-index: 30;
+	z-index: 50;
 	right: 30px;
-	bottom: 50px;
+	bottom: 100px;
 	padding: 13px 16px 16px;
 	/*
 	Paramétré dans le thème (9.2.21)

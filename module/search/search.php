@@ -21,7 +21,7 @@ class search extends common {
 	const VERSION = '1.3';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
-	const UPDATE = true;
+	const UPDATE = '0.0';
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
