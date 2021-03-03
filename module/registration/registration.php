@@ -15,7 +15,7 @@
 class registration extends common {
 
 	const VERSION = '1.0';
-	const REALNAME = 'Enregistrement';
+	const REALNAME = 'Auto-Inscription';
 	const DELETE = true;
 	const UPDATE = true;
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
