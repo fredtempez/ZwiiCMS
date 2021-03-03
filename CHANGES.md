@@ -9,9 +9,9 @@
         - Traduction selon la langue navigateur
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
-        
+
 ## version 10.5.00
-- Modifications : 
+- Modifications :
     - Gestion des modules dans l'interface d'administration.
 
 ## version 10.4.05
