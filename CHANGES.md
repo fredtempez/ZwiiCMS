@@ -5,7 +5,6 @@
     - SiteMapGenerator 4.3.1
 - Modifications :
     - Bouton de remontée, position plus haute et zindex augmenté.
-    - Éviter le chevauchement du pied de age fixe au-dessus du corps de page.
 - Corrections :
     - Marges du pied de page fixe placé en dehors du site.
     - TinyMCE couleurs du sélecteur de paragraphe et de headers lorsque le fond est transparent.
