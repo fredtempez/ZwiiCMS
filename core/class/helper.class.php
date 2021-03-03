@@ -1,4 +1,5 @@
 <?php
+
 class helper {
 
 	/** Statut de la réécriture d'URL (pour éviter de lire le contenu du fichier .htaccess à chaque self::baseUrl()) */
@@ -19,7 +20,7 @@ class helper {
 
 
 
-	/** 
+	/**
 	 * Récupérer l'adresse IP sans tenit compte du proxy
 	 * @return string IP adress
 	 * Cette focntion est utilisé par user
@@ -126,6 +127,75 @@ class helper {
 		$zip->close();
 		return ($fileName);
 	}
+
+
+
+	/**
+	 * Retourne la liste des modules installés dans un tableau composé
+	 * du nom réel
+	 * du numéro de version
+	 */
+	public  static function getModules() {
+		$modules = array();
+		$dirs = array_diff(scandir('module'), array('..', '.'));
+		foreach ($dirs as $key => $value) {
+			// Dossier non vide
+			if (file_exists('module/' . $value . '/' . $value . '.php')) {
+				// Lire les constantes en gérant les erreurs de nom de classe
+				try  {
+					$class_reflex = new \ReflectionClass($value);
+					$class_constants = $class_reflex->getConstants();
+					// Constante REALNAME
+					if (array_key_exists('REALNAME', $class_constants)) {
+							$realName = $value::REALNAME;
+					} else {
+							$realName = ucfirst($value);
+					}
+					// Constante VERSION
+					if (array_key_exists('VERSION', $class_constants)) {
+							$version = $value::VERSION;
+					} else {
+							$version = '0.0';
+					}
+					// Constante UPDATE
+					if (array_key_exists('UPDATE', $class_constants)) {
+							$update = $value::UPDATE;
+					} else {
+							$update = '0.0';
+					}
+					// Constante DELETE
+					if (array_key_exists('DELETE', $class_constants)) {
+							$delete = $value::DELETE;
+					} else {
+							$delete = true;
+					}
+					// Constante DATADIRECTORY
+					if ( array_key_exists('DATADIRECTORY', $class_constants)
+						 && $class_constants['DATADIRECTORY'] !== []
+					     && is_array($class_constants['DATADIRECTORY'])
+					   ) {
+							$dataDirectory = $value::DATADIRECTORY;
+					} else {
+							$dataDirectory = [];
+					}
+					// Affection
+					$modules [$value]  = [
+					'realName' => $realName,
+					'version' => $version,
+					'update' => $update,
+					'delete' => $delete,
+					'dataDirectory' => $dataDirectory
+					];
+
+				} catch (Exception $e){
+					//  on ne fait rien
+				}
+			}
+		}
+		return($modules);
+	}
+
+
 
 	/**
 	 * Retourne true si le protocole est en TLS

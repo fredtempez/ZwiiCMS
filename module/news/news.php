@@ -2,17 +2,24 @@
 
 /**
  * This file is part of Zwii.
- *
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
 class news extends common {
+
+	const VERSION = '2.1';
+	const REALNAME = 'Actualités';
+	const DELETE = true;
+	const UPDATE = '0.0';
+	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
@@ -33,7 +40,6 @@ class news extends common {
 		false => 'Brouillon',
 		true => 'Publié'
 	];
-	const NEWS_VERSION = '2.0';
 
 	public static $users = [];
 

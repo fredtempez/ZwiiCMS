@@ -54,7 +54,7 @@ echo template::formOpen('pageEditForm');
 								]); ?>
 								<?php echo template::hidden('pageEditModuleIdOld',['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
 								<?php echo template::hidden('pageEditModuleIdOldText',[
-									'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']),$module::$moduleNames)? $module::$moduleNames[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
+									'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']),$module::$moduleIds)? $module::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 								]); ?>
 							</div>
 							<div class="col3 verticalAlignBottom">

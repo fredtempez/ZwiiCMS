@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This file is part of Zwii. *
+ * This file is part of Zwii.
  * For full copyright and license information, please see the LICENSE
  * file that was distributed with this source code.
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.4.02';
+	const ZWII_VERSION = '10.5.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -56,7 +56,8 @@ class common {
 		'sitemap',
 		'theme',
 		'user',
-		'translate'
+		'translate',
+		'addon'
 	];
 	public static $accessList = [
 		'user',
@@ -603,7 +604,7 @@ class common {
 		$this->setData(['theme',$tempData['theme']]);
 
 		// Import des users sauvegardés si option active
-		if ($keepUsers === false 
+		if ($keepUsers === false
 			AND $tempData['user'] !== NULL) {
 			$this->setData(['user',$tempData['user']]);
 		}
@@ -740,22 +741,26 @@ class common {
 
 		$timezone = $this->getData(['config','timezone']);
 
-		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl());
+		$outputDir = getcwd();
+
+		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false),$outputDir);
 
 		// will create also compressed (gzipped) sitemap
-		$sitemap->createGZipFile = true;
+		$sitemap->enableCompression();
 
 		// determine how many urls should be put into one file
 		// according to standard protocol 50000 is maximum value (see http://www.sitemaps.org/protocol.html)
-		$sitemap->maxURLsPerSitemap = 50000;
+		$sitemap->setMaxUrlsPerSitemap(50000);
 
 		// sitemap file name
-		$sitemap->sitemapFileName = "sitemap.xml";
+		$sitemap->setSitemapFileName("sitemap.xml");
+
+		// Set the sitemap index file name
+		$sitemap->setSitemapIndexFileName("sitemap-index.xml");
 
 		$datetime = new DateTime(date('c'));
 		$datetime->format(DateTime::ATOM); // Updated ISO8601
-		// sitemap index file name
-		$sitemap->sitemapIndexFileName = "sitemap-index.xml";
+
 		foreach($this->getHierarchy(null, null, null) as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
 			if ($this->getData(['page',$parentPageId,'group']) !== 0  ||
@@ -765,6 +770,16 @@ class common {
 			// Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true ) {
 				$sitemap->addUrl ($parentPageId,$datetime);
+			}
+			// Articles du blog
+			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
+				!empty($this->getData(['module',$parentPageId])) ) {
+				foreach($this->getData(['module',$parentPageId,'posts']) as $articleId => $article) {
+					if($this->getData(['module',$parentPageId,'posts',$articleId,'state']) === true) {
+						$date = $this->getData(['module',$parentPageId,'posts',$articleId,'publishedOn']);
+						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
+					}
+				}
 			}
 			// Sous-pages
 			foreach($childrenPageIds as $childKey) {
@@ -776,31 +791,28 @@ class common {
 				// La sous-page est un blog
 				if ($this->getData(['page', $childKey, 'moduleId']) === 'blog' &&
 				   !empty($this->getData(['module',$childKey])) ) {
-					foreach($this->getData(['module',$childKey]) as $articleId => $article) {
-						if($this->getData(['module',$childKey,$articleId,'state']) === true) {
-							$date = $this->getData(['module',$childKey,$articleId,'publishedOn']);
+					foreach($this->getData(['module',$childKey,'posts']) as $articleId => $article) {
+						if($this->getData(['module',$childKey,'posts',$articleId,'state']) === true) {
+							$date = $this->getData(['module',$childKey,'posts',$articleId,'publishedOn']);
 							$sitemap->addUrl( $childKey . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
 						}
 					}
 				}
 			}
-			// Articles du blog
-			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
-				!empty($this->getData(['module',$parentPageId])) ) {
-				foreach($this->getData(['module',$parentPageId]) as $articleId => $article) {
-					if($this->getData(['module',$parentPageId,$articleId,'state']) === true) {
-						$date = $this->getData(['module',$parentPageId,$articleId,'publishedOn']);
-						$sitemap->addUrl( $parentPageId . '/' . $articleId , new DateTime("@{$date}",new DateTimeZone($timezone)));
-					}
-				}
-			}
+
 		}
 
-		// generating internally a sitemap
-		$sitemap->createSitemap();
+		// Flush all stored urls from memory to the disk and close all necessary tags.
+		$sitemap->flush();
 
-		// writing early generated sitemap to file
-		$sitemap->writeSitemap();
+		// Move flushed files to their final location. Compress if the option is enabled.
+		$sitemap->finalize();
+
+		// Update robots.txt file in output directory or create a new one
+		$sitemap->updateRobots();
+
+		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
+		$sitemap->submitSitemap();
 
 		return(file_exists('sitemap.xml'));
 
@@ -1008,11 +1020,43 @@ class common {
 	* @param string URL du dossier à supprimer
 	*/
 	public function removeDir ( $path ) {
-		foreach ( new DirectoryIterator($path) as $item ):
-			if ( $item->isFile() ) unlink($item->getRealPath());
+		foreach ( new DirectoryIterator($path) as $item ) {
+			if ( $item->isFile() ) @unlink($item->getRealPath());
 			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
-		endforeach;
-		rmdir($path);
+		}
+		return ( rmdir($path) );
+	}
+
+
+	/**
+	 * Génère une archive d'un dossier et des sous-dossiers
+	 * @param string fileName path et nom de l'archive
+	 * @param string folder path à zipper
+	 * @param array filter dossiers à exclure
+	 */
+	public function makeZip ($fileName, $folder, $filter ) {
+		$zip = new ZipArchive();
+		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		//$directory = 'site/';
+		$files =  new RecursiveIteratorIterator(
+			new RecursiveCallbackFilterIterator(
+			new RecursiveDirectoryIterator(
+				$folder,
+				RecursiveDirectoryIterator::SKIP_DOTS
+			),
+			function ($fileInfo, $key, $iterator) use ($filter) {
+				return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+			}
+			)
+		);
+		foreach ($files as $name => $file) 	{
+			if (!$file->isDir()) 	{
+				$filePath = $file->getRealPath();
+				$relativePath = substr($filePath, strlen(realpath($folder)) + 1);
+				$zip->addFile($filePath, $relativePath);
+			}
+		}
+		$zip->close();
 	}
 
 	/**
@@ -1562,10 +1606,15 @@ class common {
 
 			$this->setData(['core', 'dataVersion', 10400]);
 
-			/**
-			 *  mettre à jour defaultdata
-			 */
+		}
+		// Version 10.4.05
+		if ($this->getData(['core', 'dataVersion']) < 10405) {
 
+			// Mise à jour forcée des thèmes
+			unlink (self::DATA_DIR . 'admin.css');
+			unlink (self::DATA_DIR . 'theme.css');
+
+			$this->setData(['core', 'dataVersion', 10405]);
 		}
 	}
 }
@@ -1652,14 +1701,14 @@ class core extends common {
 			$css .= 'body{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
 				// Image dans html pour éviter les déformations.
-				$css .= 'html{background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
+				$css .= 'html, .mce-menu.mce-in.mce-animate {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
 				// Couleur du body transparente
-				$css .= 'body{background-color: rgba(0,0,0,0)}';
+				$css .= 'body, .mce-menu.mce-in.mce-animate{background-color: rgba(0,0,0,0)}';
 			} else {
 				// Pas d'image couleur du body
-				$css .= 'html{background-color:' . $colors['normal'] . ';}';
+				$css .= 'html, .mce-menu.mce-in.mce-animate{background-color:' . $colors['normal'] . ';}';
 				// Même couleur dans le fond de l'éditeur
-				$css .= 'div.mce-edit-area{background-color:' . $colors['normal'] . ' !important}';
+				$css .= 'div.mce-edit-area {background-color:' . $colors['normal'] . ' !important}';
 			}
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
@@ -1667,7 +1716,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			// Couleurs de site dans TinyMCe
-			$css .= 'div.mce-edit-area{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
+			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
@@ -1680,8 +1729,23 @@ class core extends common {
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
-			$css .= $this->getData(['theme', 'site', 'width']) === '100%' ? '#site.light{margin:5% auto !important;}#site{margin:0 auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}': "#site.light{margin: 5% auto !important;}#site{margin: " . $margin . " auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ";
-			$css .= $this->getData(['theme', 'site', 'width']) === '750px' ? '.button, button{font-size:0.8em;}' : '';
+			// Marge supplémentaire lorsque le pied de page est fixe
+			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
+			$this->getData(['theme', 'footer', 'position']) === 'body') {
+				//$css .= '@media (min-width: 769px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px}}';
+				//$css .= '@media (max-width: 768px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px}}';
+				$marginBottomLarge = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px';
+				$marginBottomSmall = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px';
+			} else {
+				$marginBottomSmall = $margin;
+				$marginBottomLarge = $margin;
+			}
+			$css .= $this->getData(['theme', 'site', 'width']) === '100%'
+					? '@media (min-width: 769px) {#site{margin:0 auto 0 ' . $marginBottomLarge . ' !important;}}@media (max-width: 768px) {#site{margin:0 auto 0 ' . $marginBottomSmall . ' !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
+					: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge .  ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall .  ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
+			$css .= $this->getData(['theme', 'site', 'width']) === '750px'
+					? '.button, button{font-size:0.8em;}'
+					: '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 			$css .= '.speechBubble,.button,.button:hover,button[type=\'submit\'],.pagination a,.pagination a:hover,input[type=\'checkbox\']:checked + label:before,input[type=\'radio\']:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
@@ -1769,21 +1833,15 @@ class core extends common {
 			}
 
 			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'footer', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
-			$css .= 'footer{background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
+			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
 
-			$css .= 'footer #footerbody > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			$css .= 'footer #footerbody > div  {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
+			$css .= '@media (max-width: 768px) {footer #footerbody > div { padding: 2px }}';
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
-
-			// Marge supplémentaire lorsque le pied de page est fixe
-			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
-				 $this->getData(['theme', 'footer', 'position']) === 'body') {
-				$css .= "@media (min-width: 769px) { #site {margin-bottom: 100px;} }";
-				$css .= "@media (max-width: 768px) { #site {margin-bottom: 150px;} }";
-			}
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
@@ -1802,7 +1860,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
-			$css .= 'body h1, h2, h3, h4, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
 			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' .  $colors['text'] . ';}';
@@ -2901,6 +2959,7 @@ class layout extends common {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
 				//$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);

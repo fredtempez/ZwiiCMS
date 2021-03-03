@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2021, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -29,15 +29,7 @@ class page extends common {
 		'' => 'Aucune'
 	];
 	public static $moduleIds = [];
-	// Nom des modules
-	public static $moduleNames = [
-		'news'			=> 'Nouvelles',
-		'blog' 			=> 'Blog',
-		'form' 			=> 'Formulaire',
-		'gallery' 		=> 'Galerie',
-		'redirection' 	=> 'Redirection',
-		'search'        => 'Recherche'
-	];
+
 	public static $typeMenu = [
 		'text' => 'Texte',
 		'icon' => 'Icône',
@@ -449,22 +441,7 @@ class page extends common {
 					]);
 				}
 			}
-			// Liste des modules
-			$moduleIds = [];
-			$iterator = new DirectoryIterator('module/');
-			foreach($iterator as $fileInfos) {
-				if(is_file($fileInfos->getPathname() . '/' . $fileInfos->getFilename() . '.php')) {
-					if (array_key_exists($fileInfos->getBasename(),self::$moduleNames)) {
-						$moduleIds[$fileInfos->getBasename()] = self::$moduleNames[$fileInfos->getBasename()];
-					} else {
-						$moduleIds[$fileInfos->getBasename()] = ucfirst($fileInfos->getBasename());
-					}
-				}
-			}
-			self::$moduleIds = 	$moduleIds;
-			asort(self::$moduleIds);
-			self::$moduleIds = array_merge( ['' => 'Aucun'] , self::$moduleIds);
-			// Pages sans parent
+			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayCollumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
 			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);

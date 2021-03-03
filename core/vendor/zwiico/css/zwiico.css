@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'zwiico';
-  src: url('../font/zwiico.eot?96515118');
-  src: url('../font/zwiico.eot?96515118#iefix') format('embedded-opentype'),
-       url('../font/zwiico.woff2?96515118') format('woff2'),
-       url('../font/zwiico.woff?96515118') format('woff'),
-       url('../font/zwiico.ttf?96515118') format('truetype'),
-       url('../font/zwiico.svg?96515118#zwiico') format('svg');
+  src: url('../font/zwiico.eot?44489499');
+  src: url('../font/zwiico.eot?44489499#iefix') format('embedded-opentype'),
+       url('../font/zwiico.woff2?44489499') format('woff2'),
+       url('../font/zwiico.woff?44489499') format('woff'),
+       url('../font/zwiico.ttf?44489499') format('truetype'),
+       url('../font/zwiico.svg?44489499#zwiico') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zwiico';
-    src: url('../font/zwiico.svg?96515118#zwiico') format('svg');
+    src: url('../font/zwiico.svg?44489499#zwiico') format('svg');
   }
 }
 */
@@ -56,9 +56,6 @@
 }
  
 .zwiico-plus-circled:before { content: '\2191'; } /* '↑' */
-.zwiico-flag:before { content: '\2691'; } /* '⚑' */
-.zwiico-mail:before { content: '\2709'; } /* '✉' */
-.zwiico-divide:before { content: '\e05b'; } /* '' */
 .zwiico-logout:before { content: '\e800'; } /* '' */
 .zwiico-plus:before { content: '\e801'; } /* '' */
 .zwiico-cancel:before { content: '\e802'; } /* '' */
@@ -72,6 +69,7 @@
 .zwiico-folder:before { content: '\e80a'; } /* '' */
 .zwiico-users:before { content: '\e80b'; } /* '' */
 .zwiico-left:before { content: '\e80c'; } /* '' */
+.zwiico-mail:before { content: '\e80d'; } /* '' */
 .zwiico-user:before { content: '\e80e'; } /* '' */
 .zwiico-update:before { content: '\e80f'; } /* '' */
 .zwiico-home:before { content: '\e810'; } /* '' */
@@ -94,6 +92,8 @@
 .zwiico-login:before { content: '\e821'; } /* '' */
 .zwiico-lock:before { content: '\e822'; } /* '' */
 .zwiico-mimi:before { content: '\e823'; } /* '' */
+.zwiico-divide:before { content: '\e824'; } /* '' */
+.zwiico-flag:before { content: '\e825'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */
 .zwiico-twitter:before { content: '\f099'; } /* '' */
 .zwiico-facebook:before { content: '\f09a'; } /* '' */
@@ -104,6 +104,7 @@
 .zwiico-download-cloud:before { content: '\f0ed'; } /* '' */
 .zwiico-upload-cloud:before { content: '\f0ee'; } /* '' */
 .zwiico-code:before { content: '\f121'; } /* '' */
+.zwiico-puzzle:before { content: '\f12e'; } /* '' */
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
 .zwiico-brush:before { content: '\f1fc'; } /* '' */

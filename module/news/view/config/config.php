@@ -48,5 +48,5 @@
 	<?php endif; ?>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::NEWS_VERSION; ?>
+	<?php echo $module::VERSION; ?>
 </div>
