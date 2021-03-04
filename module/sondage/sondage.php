@@ -20,7 +20,7 @@ class sondage extends common {
 	const VERSION = '1.0';
 	const REALNAME = 'Sondage';
 	const DELETE = true;
-	const UPDATE = true;
+	const UPDATE = '0.0';
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
