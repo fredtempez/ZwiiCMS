@@ -37,7 +37,8 @@ class download extends common {
 		'statsDeleteAll' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'rss' => self::GROUP_VISITOR,
-		'downloadFile' => self::GROUP_VISITOR
+		'downloadFile' => self::GROUP_VISITOR,
+		'list' =>self::GROUP_VISITOR
 	];
 
 	public static $items = [];
@@ -903,5 +904,26 @@ class download extends common {
 				'state' => true
 			]);
 		}
+	}
+
+	/***
+	 * Retourne une chaîne json contenant la liste des téléchargements disponibles
+	*/
+	public function list() {
+		$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'items']), 'publishedOn', 'SORT_DESC');
+		$itemIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'state', 'SORT_DESC');
+		$itemIds = [];
+		foreach($itemIdsPublishedOns as $itemId => $itemPublishedOn) {
+			if($itemPublishedOn <= time() AND $itemIdsStates[$itemId]) {
+				$itemIds[] = $itemId;
+			}
+		}
+		foreach ($itemIds as $key) {
+			self::$items[$key] = $this->getData(['module', $this->getUrl(0), 'items', $key]);
+		}
+		$this->addOutput([
+			'display' => self::DISPLAY_JSON,
+			'content' => self::$items
+		]);
 	}
 }
