@@ -1643,11 +1643,6 @@ class common {
 
 		// Version 10.4.05
 		if ($this->getData(['core', 'dataVersion']) < 10405) {
-
-			// Mise à jour forcée des thèmes
-			unlink (self::DATA_DIR . 'admin.css');
-			unlink (self::DATA_DIR . 'theme.css');
-
 			$this->setData(['core', 'dataVersion', 10405]);
 		}
 
