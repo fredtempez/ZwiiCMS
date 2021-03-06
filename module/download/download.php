@@ -919,7 +919,14 @@ class download extends common {
 			}
 		}
 		foreach ($itemIds as $key) {
-			self::$items[$key] = $this->getData(['module', $this->getUrl(0), 'items', $key]);
+			self::$items[$key] = [
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'title']),
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'content']),
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'picture']),
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'file']),
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'fileVersion']),
+				$this->getData(['module', $this->getUrl(0), 'items', $key, 'fileDate'])
+			];
 		}
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
