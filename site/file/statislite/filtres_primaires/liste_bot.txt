@@ -1,0 +1,34 @@
+/google desktop|bot|spider|crawler|yahoo|findlinks|
+search|;anonymous\.|alef\/|amagit|
+answerbus|appie |appengine-google|apple(syndication|-pubsub)|ask jeeves|
+barkrowler|berlin-fu-cow|biglotron|binlar|blog(dimension|lines)|
+book(dog|mark)|bubing|butterfly|c4pc|caretcursor|
+charlotte|csci_|ccubee|ce-preload|checker|
+covario|crawl(y| annu)|curl\/|custo |darxi|
+datacha0s|daumoa|dailyperfect|del\.icio\.us\b|depspid|
+developers\.google\.com\/\+\/web\/snippet\/|digger|earthcom|ejupiter|ets v5|
+europarchive|extractor|facebookexternalhit|fast[ mb-]|favorg|
+feed(burner|fetcher)|(\b|c)fetch(\b|p|e)|finder|fleck|flyindex|
+forvohun|funnelback|gigablastopensource|gnomit|goldfire server|
+google-site(maps|-verification)|google-structureddatatestingtool|google (web preview|favicon)|grub|gt::www\/1\.02|
+helix|heritrix|htdig|httping v2.5|httrack|
+ia_archiver|ichiro|ina dlweb|indocrew|integromedb|
+internetseer|interseek|ip\*works|jakarta|java\/|
+l\.webis|larbin|libwww-p|link(dex| check(er)?|aider|fluence)|ltx|
+lwp|mail\.ru|mama (casper|cyber)|mediapartners|metaspinner|
+microsoft data access|minirank|morfeus |\+msie\+6\.0|msnptc|
+net(sprint|vibes )|newsg8|newt activex|ng\/2|nnn\/ttt|
+nutch(-|\d)|\bodp\b|oneriot|ozelot|(page_|slurpy )verifier|
+page(bull|peeker)|panopta\.com|panscient|pflab|^php(\/| v)|
+picmole|pi-?monster|pompos|powermarks|program shareware|
+python|quantcast|qwantify|robozilla|(aide|magpie| )rss( |\/)|
+rssingbot|rtgi|sagool|sbider|scooter|
+scoutjet|scrapy|scrubby|shelob|silk|
+siteexplorer|(sky|synaptic)walker|sohu |survey|sygol|
+synapse|szukaj|t-h-u-n-d-e-r-s-t-o-n-e|tagyu|telnet0.|
+\btest(\b|_)|tfc |theophrastus|thumb|twitturl|
+unicorn|urlbase|vagabondo|validat(o|eu)r|voltron|
+voracious|voyager\/|vse|wauuu|web( ?index|cow|moni|capture|pix|copier|stripper|corp|scan|mastercoffee|-sniffer)|
+wget|wwwster|wysigot|xenu|xirq|
+yacy|yandex|yellowjacket|yeti|yoono|
+zion\/|^(dcs|mozilla\/5\.0|msie 6\.0|teoma|megaindex)$/i

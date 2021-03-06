@@ -1,0 +1,12 @@
+firefox,Firefox*
+firebird,Firebird*
+msie,Internet Explorer*
+microsoft internet explorer,Internet Explorer*
+opera,Opera*opr,Opera*
+ucbrowser,UC Browser*
+chromium,Chromium*
+chrome,Chrome*
+safari,Safari*
+edge,Edge*
+trident,Trident Internet Explorer*
+ne_rien_ecrire,dessous

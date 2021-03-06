@@ -22,7 +22,9 @@ class addon extends common {
 		'index' => self::GROUP_ADMIN,
 		'moduleDelete' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
-		'import' => self::GROUP_ADMIN
+		'import' => self::GROUP_ADMIN,
+		'store' => self::GROUP_ADMIN,
+		'upload' => self::GROUP_ADMIN
 	];
 
 	// Gestion des modules
@@ -30,6 +32,9 @@ class addon extends common {
 
 	// pour tests
 	public static $valeur = [];
+
+	// le catalogue
+	public static $storeList = '';
 
 	/*
 	* Effacement d'un module installé et non utilisé
@@ -78,56 +83,11 @@ class addon extends common {
 		}
 	}
 
-
-	/**
-	 * Gestion des modules
+	/***
+	 * Installation manuel d'un module par téléchargement
 	 */
-	public function index() {
-
-		// Lister les modules
-		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
-		$infoModules = helper::getModules();
-
-		// Clés moduleIds dans les pages
-		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-		foreach( $inPages as $key=>$value){
-			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
-		}
-
-		// Parcourir les données des modules
-		foreach ($infoModules as $key=>$value) {
-			// Construire le tableau de sortie
-			self::$modInstal[] = [
-				$key,
-				$infoModules[$key]['realName'],
-				$infoModules[$key]['version'],
-				implode(', ', array_keys($inPagesTitle,$key)),
-				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
-				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
-											? template::button('moduleDelete' . $key, [
-													'class' => 'moduleDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel')
-												])
-											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
-											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('download')
-												])
-											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
-											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('upload')
-												])
-											: ''
-			];
-		}
-
-		// Retour du formulaire ?
+	public function upload() {
+		// Soumission du formulaire
 		if($this->isPost()) {
 			// Installation d'un module
 			$success = true;
@@ -241,6 +201,73 @@ class addon extends common {
 				'notification' => $notification,
 				'state' => $success
 			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Téléverser un module',
+			'view' => 'upload'
+		]);
+	}
+
+	/**
+	 * Catalogue des modules sur le site ZwiiCMS.fr
+	 */
+	public function store() {
+		$url = 'http://zwiicms.fr/?modules-2/list';
+		self::$storeList = json_decode(helper::urlGetContents($url), true);
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Catalogue de modules',
+			'view' => 'store'
+		]);
+	}
+
+	/**
+	 * Gestion des modules
+	 */
+	public function index() {
+
+		// Lister les modules
+		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
+		$infoModules = helper::getModules();
+
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		foreach( $inPages as $key=>$value){
+			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
+		}
+
+		// Parcourir les données des modules
+		foreach ($infoModules as $key=>$value) {
+			// Construire le tableau de sortie
+			self::$modInstal[] = [
+				$key,
+				$infoModules[$key]['realName'],
+				$infoModules[$key]['version'],
+				implode(', ', array_keys($inPagesTitle,$key)),
+				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
+				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
+											? template::button('moduleDelete' . $key, [
+													'class' => 'moduleDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel')
+												])
+											: '',
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+											? template::button('moduleExport' . $key, [
+												'class' => 'buttonBlue',
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'value' => template::ico('download')
+												])
+											: '',
+				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
+											? template::button('moduleExport' . $key, [
+												'class' => 'buttonBlue',
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+												'value' => template::ico('upload')
+												])
+											: ''
+			];
 		}
 
 		// Valeurs en sortie

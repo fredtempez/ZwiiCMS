@@ -1,0 +1,12 @@
+android 4,Android 4*
+android 5,Android 5*android 6,Android 6*android 7,Android 7*android 8,Android 8*
+android 9,Android 9*android 10,Android 10*android 11,Android 11*
+android,Android*
+linux,Linux*
+cros,Chrome OS*
+windows nt 5.1,Windows XP*windows nt 5.2,Windows XP 64*windows nt 6.0,Windows Vista.1*windows nt 6.1,Windows 7*
+windows nt 6.2,Windows 8*windows nt 6.3,Windows 8.1*windows nt 10.0,Windows 10*
+win,Windows*
+ipad,Ipad Apple*iphone, Iphone Apple*mac os x,Apple Macintosh Mac OS X*
+mac,Apple Macintosh*
+ne_rien_ecrire,dessous

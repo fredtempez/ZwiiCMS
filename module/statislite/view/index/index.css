@@ -1,0 +1,120 @@
+/* css pour index de statislite */
+
+
+.stats ul { 
+	width: 80%; 
+	list-style: none; 
+	margin: 20px 20px;
+}
+
+.stats .percent {
+	display: block;
+	height: 1.5em;
+	line-height: 1.5em;
+	margin: 5px 10px;
+	padding: 0 5px;
+	text-align: right;
+	/*color: #fff;*/
+	font-weight: bold;
+	font-family: monospace;
+	-moz-border-radius: 5px;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+	cursor: default;
+}
+
+.v100 { width: 100%; }
+.v90 { width: 90%; }
+.v80 { width: 80%; }
+.v70 { width: 70%; }
+.v60 { width: 60%; }
+.v50 { width: 50%; }
+.v40 { width: 40%; }
+.v30 { width: 30%; }
+.v20 { width: 20%; }
+.v10 { width: 10%; }
+
+/* Multicolore */
+.multicolor .v100 { background-color: #970000; color : #68ffff}
+.multicolor .v90 { background-color: #ff0000; color : #00ffff}
+.multicolor .v80 { background-color: #ff6600; color : #30ffff}
+.multicolor .v70 { background-color: #ff9c00; color : #00ffff}
+.multicolor .v60 { background-color: #ffd800; color : #0027ff}
+.multicolor .v50 { background-color: #eaff00; color : #1500ff}
+.multicolor .v40 { background-color: #baff00; color : #4500ff}
+.multicolor .v30 { background-color: #78ff00; color : #8700ff}
+.multicolor .v20 { background-color: #12ff00; color : #ed00ff}
+.multicolor .v10 { background-color: #00ff60; color : #ff009f}
+
+/* Dégradé vert */
+.green_gradiant .v100 { background-color: #1d290a; color : #ffffff}
+.green_gradiant .v90 { background-color: #2b3c0f; color : #ffffff}
+.green_gradiant .v80 { background-color: #405a17; color : #ffffff}
+.green_gradiant .v70 { background-color: #52741d; color : #ffffff}
+.green_gradiant .v60 { background-color: #628a23; color : #ffffff}
+.green_gradiant .v50 { background-color: #72a128; color : #ffffff}
+.green_gradiant .v40 { background-color: #7eb22d; color : #000000}
+.green_gradiant .v30 { background-color: #8fc932; color : #000000}
+.green_gradiant .v20 { background-color: #99dd38; color : #000000}
+.green_gradiant .v10 { background-color: #aff73e; color : #000000}
+
+/* Dégradé rouge */
+.red_gradiant .v100 { background-color: #290c0c; }
+.red_gradiant .v90 { background-color: #481515; }
+.red_gradiant .v80 { background-color: #661e1e; }
+.red_gradiant .v70 { background-color: #862727; }
+.red_gradiant .v60 { background-color: #a02f2f; }
+.red_gradiant .v50 { background-color: #bd3838; }
+.red_gradiant .v40 { background-color: #d84040; }
+.red_gradiant .v30 { background-color: #eb4545; }
+.red_gradiant .v20 { background-color: #ff4b4b; }
+.red_gradiant .v10 { background-color: #ff6565; }
+
+/* Unicolore vert */
+.green_uni .percent { background-color: #83df00; }
+
+/* Dégradé gris */
+.grey_gradiant .v100 { background-color: #000000; color : #ffffff}
+.grey_gradiant .v90 { background-color: #252525; color : #ffffff}
+.grey_gradiant .v80 { background-color: #373737; color : #ffffff}
+.grey_gradiant .v70 { background-color: #505050; color : #ffffff}
+.grey_gradiant .v60 { background-color: #656565; color : #ffffff}
+.grey_gradiant .v50 { background-color: #7e7e7e; color : #000000}
+.grey_gradiant .v40 { background-color: #8f8f8f; color : #000000}
+.grey_gradiant .v30 { background-color: #a5a5a5; color : #000000}
+.grey_gradiant .v20 { background-color: #bcbcbc; color : #000000}
+.grey_gradiant .v10 { background-color: #c8c8c8; color : #000000}
+
+/*
+.block {
+	border: 1px solid #D8DFE3;
+}
+*/
+
+/* Couleur du texte h4 et de son fond*/ 
+.block h4
+{
+    color: rgba(33, 34, 35, 1);
+	background-color: #ECEFF1;    
+}
+
+.blockgraph{
+	border: 1px solid #D8DFE3;
+	margin: 10px, 10px;
+	padding: 0;
+	background-color: #ffffff;
+}
+
+.blockgraph h4{
+	margin: 0;
+	padding: 10px;
+	color: rgba(33, 34, 35, 1);
+	background-color: #ECEFF1;
+}
+
+.blockgraph li{
+	color: black;
+}
+
+
+
