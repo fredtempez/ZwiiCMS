@@ -7,13 +7,7 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
-		<?php echo template::button('configModulesUpload', [
-			'href' => helper::baseUrl() . 'addon/upload',
-			'value' => 'Téléverser'
-		]); ?>
-	</div>
-	<div class="col2">
+	<div class="col2 offset8">
 		<?php echo template::button('configModulesStore', [
 			'href' => helper::baseUrl() . 'addon/store',
 			'value' => 'Catalogue'

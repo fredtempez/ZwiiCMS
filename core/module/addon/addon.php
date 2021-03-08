@@ -24,6 +24,7 @@ class addon extends common {
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
+		'item' => self::GROUP_ADMIN,
 		'upload' => self::GROUP_ADMIN
 	];
 
@@ -34,7 +35,8 @@ class addon extends common {
 	public static $valeur = [];
 
 	// le catalogue
-	public static $storeList = '';
+	public static $storeList = [];
+	public static $storeItem = [];
 
 	/*
 	* Effacement d'un module installé et non utilisé
@@ -214,11 +216,43 @@ class addon extends common {
 	 */
 	public function store() {
 		$url = 'http://zwiicms.fr/?modules-2/list';
-		self::$storeList = json_decode(helper::urlGetContents($url), true);
+		$store = json_decode(helper::urlGetContents($url), true);
+		// Parcourir les données des modules
+		foreach ($store as $key=>$value) {
+			self::$storeList [] = [
+				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/item/' . $key . '">'.$store[$key]['title'].'</a>',
+				$store[$key]['fileVersion'],
+				mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
+				? strftime('%d %B %Y', $store[$key]['fileDate'])
+				: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
+				template::button('moduleExport' . $key, [
+					'class' => 'buttonBlue',
+					'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+					'value' => template::ico('download')
+					])
+			];
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Catalogue de modules',
 			'view' => 'store'
+		]);
+	}
+
+	/**
+	 * Détail d'un objet du catalogue
+	 */
+	public function item() {
+		$url = 'http://zwiicms.fr/?modules-2/list';
+		$store = json_decode(helper::urlGetContents($url), true);
+		self::$storeItem = $store [$this->getUrl(2)] ;
+		self::$storeItem ['fileDate'] = mb_detect_encoding(strftime('%d %B %Y',self::$storeItem ['fileDate']), 'UTF-8', true)
+										? strftime('%d %B %Y', self::$storeItem ['fileDate'])
+										: utf8_encode(strftime('%d %B %Y', self::$storeItem ['fileDate']));
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' =>self::$storeItem['title'],
+			'view' => 'item'
 		]);
 	}
 
