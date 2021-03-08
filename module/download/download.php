@@ -925,7 +925,7 @@ class download extends common {
 				'picture' => $this->getData(['module', $this->getUrl(0), 'items', $key, 'picture']),
 				'file'    =>$this->getData(['module', $this->getUrl(0), 'items', $key, 'file']),
 				'fileVersion' => $this->getData(['module', $this->getUrl(0), 'items', $key, 'fileVersion']),
-				'filetdate'   =>$this->getData(['module', $this->getUrl(0), 'items', $key, 'fileDate'])
+				'fileDate'   =>$this->getData(['module', $this->getUrl(0), 'items', $key, 'fileDate'])
 			];
 		}
 		$this->addOutput([
