@@ -217,6 +217,13 @@ class addon extends common {
 	public function store() {
 		$url = 'http://zwiicms.fr/?modules-2/list';
 		$store = json_decode(helper::urlGetContents($url), true);
+		// Modules installés
+		$infoModules = helper::getModules();
+		// Clés moduleIds dans les pages
+		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		foreach( $inPages as $key=>$value){
+			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
+		}
 		// Parcourir les données des modules
 		foreach ($store as $key=>$value) {
 			self::$storeList [] = [
@@ -225,11 +232,14 @@ class addon extends common {
 				mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 				? strftime('%d %B %Y', $store[$key]['fileDate'])
 				: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
-				template::button('moduleExport' . $key, [
-					'class' => 'buttonBlue',
-					'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-					'value' => template::ico('download')
-					])
+				implode(', ',array_keys($inPages,$key)) === ''
+					? template::button('moduleExport' . $key, [
+						'class' => 'buttonBlue',
+						'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+						'value' => template::ico('download')
+						])
+					: ''
+
 			];
 		}
 		// Valeurs en sortie
