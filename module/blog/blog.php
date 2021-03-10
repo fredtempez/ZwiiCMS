@@ -99,10 +99,10 @@ class blog extends common {
 	 */
 	public function rss() {
 		// Inclure les classes
-		include_once 'module/news/vendor/FeedWriter/Item.php';
-		include_once 'module/news/vendor/FeedWriter/Feed.php';
-		include_once 'module/news/vendor/FeedWriter/RSS2.php';
-		include_once 'module/news/vendor/FeedWriter/InvalidOperationException.php';
+		include_once 'module/blog/vendor/FeedWriter/Item.php';
+		include_once 'module/blog/vendor/FeedWriter/Feed.php';
+		include_once 'module/blog/vendor/FeedWriter/RSS2.php';
+		include_once 'module/blog/vendor/FeedWriter/InvalidOperationException.php';
 
 		date_default_timezone_set('UTC');
 		$feeds = new \FeedWriter\RSS2();
