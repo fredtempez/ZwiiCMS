@@ -64,7 +64,7 @@ class helper {
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_URL, $url);
 				$url_get_contents_data = curl_exec($ch);
-				curl_close($ch);		
+				curl_close($ch);
 			}else{
 				$url_get_contents_data = false;
 			}
