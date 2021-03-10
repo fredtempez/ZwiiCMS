@@ -19,7 +19,7 @@ class helper {
 
 
 
-	/** 
+	/**
 	 * Récupérer l'adresse IP sans tenit compte du proxy
 	 * @return string IP adress
 	 * Cette focntion est utilisé par user
@@ -57,6 +57,13 @@ class helper {
 				ini_get('allow_url_fopen')){
 				$handle = fopen ($url, "r");
 				$url_get_contents_data = stream_get_contents($handle);
+			}elseif(function_exists('curl_version')){
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_HEADER, 0);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_URL, $url);
+				$url_get_contents_data = curl_exec($ch);
+				curl_close($ch);
 			}else{
 				$url_get_contents_data = false;
 			}

@@ -740,26 +740,22 @@ class common {
 
 		$timezone = $this->getData(['config','timezone']);
 
-		$outputDir = getcwd();
-
-		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false),$outputDir);
+		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl());
 
 		// will create also compressed (gzipped) sitemap
-		$sitemap->enableCompression();
+		$sitemap->createGZipFile = true;
 
 		// determine how many urls should be put into one file
 		// according to standard protocol 50000 is maximum value (see http://www.sitemaps.org/protocol.html)
-		$sitemap->setMaxUrlsPerSitemap(50000);
+		$sitemap->maxURLsPerSitemap = 50000;
 
 		// sitemap file name
-		$sitemap->setSitemapFileName("sitemap.xml");
-
-		// Set the sitemap index file name
-		$sitemap->setSitemapIndexFileName("sitemap-index.xml");
+		$sitemap->sitemapFileName = "sitemap.xml";
 
 		$datetime = new DateTime(date('c'));
 		$datetime->format(DateTime::ATOM); // Updated ISO8601
-
+		// sitemap index file name
+		$sitemap->sitemapIndexFileName = "sitemap-index.xml";
 		foreach($this->getHierarchy(null, null, null) as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
 			if ($this->getData(['page',$parentPageId,'group']) !== 0  ||
@@ -801,21 +797,16 @@ class common {
 
 		}
 
-		// Flush all stored urls from memory to the disk and close all necessary tags.
-		$sitemap->flush();
+		// generating internally a sitemap
+		$sitemap->createSitemap();
 
-		// Move flushed files to their final location. Compress if the option is enabled.
-		$sitemap->finalize();
-
-		// Update robots.txt file in output directory or create a new one
-		$sitemap->updateRobots();
-
-		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
-		$sitemap->submitSitemap();
+		// writing early generated sitemap to file
+		$sitemap->writeSitemap();
 
 		return(file_exists('sitemap.xml'));
 
 	}
+
 
 	/*
 	* Création d'une miniature
@@ -1577,6 +1568,11 @@ class common {
 		// Version 10.4.05
 		if ($this->getData(['core', 'dataVersion']) < 10405) {
 			$this->setData(['core', 'dataVersion', 10405]);
+		}
+		// Version 10.4.06
+		if ($this->getData(['core', 'dataVersion']) < 10406) {
+			$this->removeDir ('core/class/sitemap');
+			$this->setData(['core', 'dataVersion', 10406]);
 		}
 	}
 }
