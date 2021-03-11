@@ -53,18 +53,18 @@ class helper {
 		if(function_exists('file_get_contents') &&
 				ini_get('allow_url_fopen') ){
 				$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
-			}elseif(function_exists('fopen') &&
-				function_exists('stream_get_contents') &&
-				ini_get('allow_url_fopen')){
-				$handle = fopen ($url, "r");
-				$url_get_contents_data = stream_get_contents($handle);
 			}elseif(function_exists('curl_version')){
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_HEADER, 0);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 				curl_setopt($ch, CURLOPT_URL, $url);
 				$url_get_contents_data = curl_exec($ch);
-				curl_close($ch);		
+				curl_close($ch);
+			}elseif(function_exists('fopen') &&
+				function_exists('stream_get_contents') &&
+				ini_get('allow_url_fopen')){
+				$handle = fopen ($url, "r");
+				$url_get_contents_data = stream_get_contents($handle);		
 			}else{
 				$url_get_contents_data = false;
 			}
