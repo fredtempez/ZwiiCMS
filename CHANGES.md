@@ -1,6 +1,11 @@
 # Changelog
 
 ## version 10.5.00
+A partir de cette version, les version de php inférieures à 7.2 ne sont plus supportées.
+- Corrections : 
+    - SiteMapGenerator 4.3.1
+    - La classe SiteMapGenerator prend en charge la création/modification du fichier robots.txt
+    - Si un proxy est défini le sitemap n'est pas soumis aux moteurs de recherche afin d'éviter un timeout trop important.
 - Modifications : 
     - Gestion des modules dans l'interface d'administration.
 
