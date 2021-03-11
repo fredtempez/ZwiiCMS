@@ -11,8 +11,19 @@
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
 
 ## version 10.5.00
-- Modifications :
+A partir de cette version, les version de php inférieures à 7.2 ne sont plus supportées.
+- Corrections : 
+    - SiteMapGenerator 4.3.1
+    - La classe SiteMapGenerator prend en charge la création/modification du fichier robots.txt
+    - Si un proxy est défini le sitemap n'est pas soumis aux moteurs de recherche afin d'éviter un timeout trop important.
+- Modifications : 
     - Gestion des modules dans l'interface d'administration.
+
+## version 10.4.06
+- Mise à jour :
+    - Annulation de la mise à jour SiteMapGenerator 4.3.1 et réinstallation de la version initiale.
+- Modification :
+    - Méthode Curl pour la lecture de données par Url.
 
 ## version 10.4.05
 - Mise à jour :

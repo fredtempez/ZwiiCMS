@@ -105,8 +105,6 @@ class install extends common {
 				}
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-				// Générer un fichier  robots.txt
-				$this->createRobots();
 				// Créer sitemap
 				$this->createSitemap();
 				// Valeurs en sortie

@@ -20,7 +20,6 @@ class config extends common {
 		'backup' => self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
-		'updateRobots' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'advanced' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
@@ -187,55 +186,22 @@ class config extends common {
 
 	/**
 	 * Génére les fichiers pour les crawlers
+	 * Sitemap compressé et non compressé
+	 * Robots.txt
 	 */
 	public function generateFiles() {
+
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
 
-		// Créer un fichier robots.txt
-		$successRobots=$this->updateRobots();
-		if ( $successSitemap === true &&
-			 $successRobots >= 100) {
-					$success = true;
-				} else {
-					$success = false;
-		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => ($successSitemap === true && $successRobots >= 100) ? 'Création réussie' : 'Echec d\'écriture',
+			'notification' => $successSitemap ? 'Le sitemap a été mis à jour' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'redirect' => helper::baseUrl() . 'config/advanced',
-			'state' => ($successSitemap === true && $successRobots >=100)  ? true : false
+			'state' => $successSitemap 
 		]);
 	}
 
-	/**
-	 * Met à jour un fichier robots.txt lors du changement de réécriture
-	 */
-
-	private function updateRobots() {
-		// Créer le fichier robot si absent
-		if (!file_exists('robots.txt')) {
-			$this->createRobots();
-		}
-		// backup
-		rename ('robots.txt','robots.bak');
-		$fileold = fopen('robots.bak','r');
-		$filenew = fopen('robots.txt','w');
-		while(!feof($fileold))	{
-			$data = fgets($fileold);
-			if (strpos($data,'sitemap.xml') == 0) {
-				fwrite($filenew, $data);
-			} else {
-				fwrite($filenew, 'Sitemap: ' . helper::baseUrl(false) . 'sitemap.xml' . PHP_EOL);
-				fwrite($filenew, 'Sitemap: ' . helper::baseUrl(false) . 'sitemap.xml.gz' . PHP_EOL);
-				fwrite($filenew, '# ZWII CONFIG  ---------' . PHP_EOL);
-				break;
-			}
-		}
-		fclose($fileold);
-		unlink('robots.bak');
-		return(fclose($filenew));
-	}
 
 	/**
 	 * Sauvegarde des données

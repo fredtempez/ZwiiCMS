@@ -474,6 +474,20 @@ $(document).ready(function(){
 		};
 	});
 
+  /**
+   * Active le système d'aide interne
+   *
+  */
+
+  $(".helpDisplayButton").on({
+    mouseenter: function () {
+      $(".helpDisplayContent").slideDown();
+    },
+    mouseleave: function () {
+      $(".helpDisplayContent").slideUp();
+    }
+  });
+
 	/**
      * Active le système d'aide interne
      *
