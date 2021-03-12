@@ -64,7 +64,7 @@ class helper {
 				function_exists('stream_get_contents') &&
 				ini_get('allow_url_fopen')){
 				$handle = fopen ($url, "r");
-				$url_get_contents_data = stream_get_contents($handle);		
+				$url_get_contents_data = stream_get_contents($handle);
 			}else{
 				$url_get_contents_data = false;
 			}
