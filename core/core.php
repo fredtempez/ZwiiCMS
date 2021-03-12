@@ -1569,11 +1569,6 @@ class common {
 		if ($this->getData(['core', 'dataVersion']) < 10405) {
 			$this->setData(['core', 'dataVersion', 10405]);
 		}
-		// Version 10.4.06
-		if ($this->getData(['core', 'dataVersion']) < 10406) {
-			$this->removeDir ('core/class/sitemap');
-			$this->setData(['core', 'dataVersion', 10406]);
-		}
 	}
 }
 
