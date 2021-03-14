@@ -57,6 +57,20 @@
 						]); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::text('downloadAddFileAuthor', [
+							'label' => 'Auteur',
+							'value' => $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileAuthor'])
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::select('downloadAddFileLicense', $module::$itemLicense, [
+							'label' => 'Licence',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'fileLicense'])
+						]); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
