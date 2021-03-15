@@ -45,6 +45,7 @@
 	font-size:0.8em;
 	font-style: italic;
 	color: grey;
+	height: 100%;
 }
 @media (max-width: 767px) {
 	.blogArticlePicture {

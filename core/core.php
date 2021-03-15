@@ -812,7 +812,7 @@ class common {
 		$sitemap->updateRobots();
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
-		$sitemap->submitSitemap();
+		//$sitemap->submitSitemap();
 
 		return(file_exists('sitemap.xml'));
 
