@@ -677,7 +677,13 @@ class init extends common {
 						'publishedOn' => 1548790902,
 						'state' => true,
 						'title' => 'Mon premier article',
-						'userId' => '' // Géré au moment de l'installation
+						'userId' => '', // Géré au moment de l'installation
+						'editConsent' => 'all',
+						'commentMaxlength' => '500',
+						'commentApproved' =>  false,
+						'commentClose' =>  false,
+						'commentNotification' =>  false,
+						'commentGroupNotification' =>  1
 					],
 					'mon-deuxieme-article' => [
 						'closeComment' => false,
@@ -689,7 +695,13 @@ class init extends common {
 						'publishedOn' => 1550432502,
 						'state' => true,
 						'title' => 'Mon deuxième article',
-						'userId' => '' // Géré au moment de l'installation
+						'userId' => '', // Géré au moment de l'installation
+						'editConsent' => 'all',
+						'commentMaxlength' => '500',
+						'commentApproved' =>  false,
+						'commentClose' =>  false,
+						'commentNotification' =>  false,
+						'commentGroupNotification' =>  1
 					],
 					'mon-troisieme-article' => [
 						'closeComment' => true,
@@ -701,7 +713,13 @@ class init extends common {
 						'publishedOn' => 1550864502,
 						'state' => true,
 						'title' => 'Mon troisième article',
-						'userId' => '' // Géré au moment de l'installation
+						'userId' => '', // Géré au moment de l'installation
+						'editConsent' => 'all',
+						'commentMaxlength' => '500',
+						'commentApproved' =>  false,
+						'commentClose' =>  false,
+						'commentNotification' =>  false,
+						'commentGroupNotification' =>  1
 					],
 				],
 			],
