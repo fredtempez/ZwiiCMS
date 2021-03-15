@@ -22,8 +22,8 @@ session_start();
 /**
  * Vérification de la version de PHP
  */
-if(version_compare(PHP_VERSION, '5.6.0', '<')) {
-	exit('PHP 5.6+ required.');
+if(version_compare(PHP_VERSION, '7.2.0', '<')) {
+	exit('PHP 7.2+ required.');
 }
 
 /*

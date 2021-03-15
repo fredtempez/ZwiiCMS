@@ -695,37 +695,6 @@ class common {
 		return ($folder);
 	}
 
-	/**
-	 * Génère un fichier robots.txt à l'installation
-	 * Si le fichier existe déjà les commandes sont ajoutées
-	 */
-	 public function createRobots() {
-
-		$robotValue =
-						PHP_EOL .
-						'# ZWII CONFIG ---------' . PHP_EOL .
-						'User-agent: *' . PHP_EOL .
-						'Allow: /site/file/' .PHP_EOL .
-						'Disallow: /site/' .PHP_EOL .
-						'Sitemap: ' . helper::baseUrl(false) . 'sitemap.xml' . PHP_EOL .
-						'Sitemap: ' . helper::baseUrl(false) . 'sitemap.xml.gz' . PHP_EOL .
-						'# ZWII CONFIG  ---------' . PHP_EOL ;
-
-		if (file_exists('robots.txt')) {
-			return(file_put_contents(
-				'robots.txt',
-				$robotValue,
-				FILE_APPEND
-				));
-		} else  {
-			// Sinon on crée un fichier
-			return(file_put_contents(
-				'robots.txt',
-				 $robotValue
-				));
-		}
-	 }
-
 
 	/**
 	 * Génère un fichier un fichier sitemap.xml
@@ -740,9 +709,7 @@ class common {
 		//require_once "core/vendor/sitemap/SitemapGenerator.php";
 
 		$timezone = $this->getData(['config','timezone']);
-
 		$outputDir = getcwd();
-
 		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false),$outputDir);
 
 		// will create also compressed (gzipped) sitemap
@@ -753,10 +720,11 @@ class common {
 		$sitemap->setMaxUrlsPerSitemap(50000);
 
 		// sitemap file name
-		$sitemap->setSitemapFileName("sitemap.xml");
+		$sitemap->setSitemapFileName( 'sitemap.xml') ;
+	
 
 		// Set the sitemap index file name
-		$sitemap->setSitemapIndexFileName("sitemap-index.xml");
+		$sitemap->setSitemapIndexFileName( 'sitemap-index.xml');
 
 		$datetime = new DateTime(date('c'));
 		$datetime->format(DateTime::ATOM); // Updated ISO8601
@@ -812,9 +780,11 @@ class common {
 		$sitemap->updateRobots();
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
-		//$sitemap->submitSitemap();
+		if (empty ($this->getData(['config','proxyType']) . $this->getData(['config','proxyUrl']) . ':' . $this->getData(['config','proxyPort'])) ) {
+			$sitemap->submitSitemap();
+		}
 
-		return(file_exists('sitemap.xml'));
+		return(file_exists('sitemap.xml') && file_exists('robots.txt'));
 
 	}
 
@@ -1610,6 +1580,30 @@ class common {
 		// Version 10.4.05
 		if ($this->getData(['core', 'dataVersion']) < 10405) {
 			$this->setData(['core', 'dataVersion', 10405]);
+		}
+
+		// Version 11.0.00
+		if ($this->getData(['core', 'dataVersion']) < 11000) {
+
+			// Option de déconnexion auto activée
+			$this->setData(['config','autoDisconnect',true]);
+
+			// Mettre à jour les données de langue
+			$this->setData(['config','translate','scriptGoogle', false ]);
+			$this->setData(['config','translate','showCredits', false ]);
+			$this->setData(['config','translate','autoDetect', false ]);
+			$this->setData(['config','translate','admin', false ]);
+			$this->setData(['config','translate','fr', false ]);
+			$this->setData(['config','translate','de', false ]);
+			$this->setData(['config','translate','en', false ]);
+			$this->setData(['config','translate','es', false ]);
+			$this->setData(['config','translate','it', false ]);
+			$this->setData(['config','translate','nl', false ]);
+			$this->setData(['config','translate','pt', false ]);
+
+			$this->setData(['core', 'dataVersion', 11000]);
+
+	
 		}
 	}
 }
