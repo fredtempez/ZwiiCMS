@@ -11,13 +11,15 @@
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
 
 ## version 10.5.00
-A partir de cette version, les version de php inférieures à 7.2 ne sont plus supportées.
+**A partir de cette version, les versions de php inférieures à 7.2 ne sont plus supportées.**
+- Nouveauté :
+    - Gestion des modules dans l'interface d'administration. Cette nouvelle fonctionnalité permet d'ajouter des modules en les téléchargeant et de les supprimer. Cette nouvelle fonctionnalité évite de recourir au FTP.  Les données des modules peuvent être importées ou exportées.
 - Corrections : 
-    - SiteMapGenerator 4.3.1
+    - Mise à jour de la classe SiteMapGenerator 4.3.1
     - La classe SiteMapGenerator prend en charge la création/modification du fichier robots.txt
-    - Si un proxy est défini le sitemap n'est pas soumis aux moteurs de recherche afin d'éviter un timeout trop important.
+    - Si un proxy est défini dans la configuration, le sitemap n'est pas soumis aux moteurs de recherche afin d'éviter un timeout trop important.
 - Modifications : 
-    - Gestion des modules dans l'interface d'administration.
+    - Modules blog et news, bouton d'édition des articles en mode connecté allégé.
 
 ## version 10.4.06
 - Mise à jour :
