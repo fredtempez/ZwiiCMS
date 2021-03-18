@@ -8,6 +8,7 @@ A partir de cette version, les version de php inférieures à 7.2 ne sont plus s
     - Si un proxy est défini le sitemap n'est pas soumis aux moteurs de recherche afin d'éviter un timeout trop important.
 - Modifications : 
     - Gestion des modules dans l'interface d'administration.
+    - Modules blog et news, bouton d'édition des articles en mode connecté allégé.
 
 ## version 10.4.06
 - Mise à jour :
