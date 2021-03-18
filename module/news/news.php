@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '2.1';
+	const VERSION = '2.2';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
