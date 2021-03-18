@@ -13,31 +13,31 @@
 /**
  * Affiche le bloc pour rédiger un commentaire
  */
-var commentShowDOM = $("#downloaditemCommentShow");
+var commentShowDOM = $("#downloadItemCommentShow");
 commentShowDOM.on("click focus", function() {
-	$("#downloaditemCommentShowWrapper").fadeOut(function() {
-		$("#downloaditemCommentWrapper").fadeIn();
-		$("#downloaditemCommentContent").trigger("focus");
+	$("#downloadItemCommentShowWrapper").fadeOut(function() {
+		$("#downloadItemCommentWrapper").fadeIn();
+		$("#downloadItemCommentContent").trigger("focus");
 	});
 });
-if($("#downloaditemCommentWrapper").find("textarea.notice,input.notice").length) {
+if($("#downloadItemCommentWrapper").find("textarea.notice,input.notice").length) {
 	commentShowDOM.trigger("click");
 }
 
 /**
  * Cache le bloc pour rédiger un commentaire
  */
-$("#downloaditemCommentHide").on("click focus", function() {
-	$("#downloaditemCommentWrapper").fadeOut(function() {
-		$("#downloaditemCommentShowWrapper").fadeIn();
-		$("#downloaditemCommentContent").val("");
-		$("#downloaditemCommentAuthor").val("");
+$("#downloadItemCommentHide").on("click focus", function() {
+	$("#downloadItemCommentWrapper").fadeOut(function() {
+		$("#downloadItemCommentShowWrapper").fadeIn();
+		$("#downloadItemCommentContent").val("");
+		$("#downloadItemCommentAuthor").val("");
 	});
 });
 
 /**
  * Force le scroll vers les commentaires en cas d'erreur
  */
-$("#downloaditemCommentForm").on("submit", function() {
+$("#downloadItemCommentForm").on("submit", function() {
 	$(location).attr("href", "#comment");
 });

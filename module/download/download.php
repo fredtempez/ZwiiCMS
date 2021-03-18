@@ -20,6 +20,7 @@ class download extends common {
 	const UPDATE = '0.0';
 	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
 
+	// Constantes du module
 	const EDIT_OWNER = 'owner';
 	const EDIT_GROUP = 'group';
 	const EDIT_ALL = 'all';
@@ -97,6 +98,14 @@ class download extends common {
 		self::EDIT_OWNER       => 'Propriétaire'
 	];
 
+
+	public static $itemLicense = [
+		'none'=> 'Non définie',
+		'cc'  => 'Licence libre Creative Common, partage autorisé',
+		'gnu' => 'Licence libre GNU, partage autorisé',
+		'mit' => 'Licence libre MIT, partage autorisé',
+		'owner' => 'Licence Propriétaire'
+	];
 
 	public static $users = [];
 
@@ -189,6 +198,8 @@ class download extends common {
 					'file'	  => $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT, true),
 					'fileVersion' => $this->getInput('downloadAddFileVersion', helper::FILTER_STRING_SHORT, true),
 					'fileDate' => $this->getInput('downloadAddFileDate', helper::FILTER_DATETIME, true),
+					'fileLicense' => $this->getInput('downloadAddFileLicense', helper::FILTER_STRING_SHORT, true),
+					'fileAuthor' => $this->getInput('downloadAddFileAuthor', helper::FILTER_STRING_SHORT, true),
 					'fileStats' => [],
 					'publishedOn' => $this->getInput('downloadAddPublishedOn', helper::FILTER_DATETIME, true),
 					'state' => $this->getInput('downloadAddState', helper::FILTER_BOOLEAN),
@@ -555,6 +566,8 @@ class download extends common {
 						'fileVersion' => $this->getInput('downloadEditFileVersion', helper::FILTER_STRING_SHORT, true),
 						'fileDate' => $this->getInput('downloadEditFileDate', helper::FILTER_DATETIME, true),
 						'fileStats' => $this->getData(['module',$this->getUrl(0), 'items', $this->getUrl(2), 'fileStats']),
+						'fileLicense' => $this->getInput('downloadEditFileLicense', helper::FILTER_STRING_SHORT, true),
+						'fileAuthor' => $this->getInput('downloadEditFileAuthor', helper::FILTER_STRING_SHORT, true),
 						'publishedOn' => $this->getInput('downloadEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('downloadEditState', helper::FILTER_BOOLEAN),
 						'title' => $this->getInput('downloadEditTitle', helper::FILTER_STRING_SHORT, true),
