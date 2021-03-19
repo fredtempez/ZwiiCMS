@@ -754,7 +754,7 @@ class common {
 
 		// sitemap file name
 		$sitemap->setSitemapFileName( 'sitemap.xml') ;
-	
+
 
 		// Set the sitemap index file name
 		$sitemap->setSitemapIndexFileName( 'sitemap-index.xml');
@@ -1637,7 +1637,7 @@ class common {
 
 			$this->setData(['core', 'dataVersion', 11000]);
 
-	
+
 		}
 	}
 }
@@ -1885,6 +1885,7 @@ class core extends common {
 			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
+			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:'.$this->getData(['admin','colorText']).'; color:'.$colors['normal'].';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
 			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' .  $colors['text'] . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
