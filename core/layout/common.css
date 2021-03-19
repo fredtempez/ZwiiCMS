@@ -220,8 +220,8 @@ Signature dans les articles blog et news
 }
 
 .table thead tr {
-	background: #212223;
-	color: #FFF;
+	/*background: #212223;
+	color: #FFF;*/
 	text-align: left;
 }
 
@@ -1720,4 +1720,23 @@ th.col12 {
 }
 #googTransLogo img {
 	width: 60%;
+}
+
+/* Système d'aide */
+
+.helpDisplayContent {
+    display: none;
+    -webkit-box-shadow: 5px 5px 11px 0px #222222;
+    box-shadow: 5px 5px 11px 0px #222222;
+    border-radius: 5px;
+    padding: 2px 10px;
+    background-color:#333;
+    color: white;
+    position: fixed;
+    z-index: 30;
+    bottom: 5px;
+}
+
+.helpDisplayButton {
+    cursor: pointer;
 }
