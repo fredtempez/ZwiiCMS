@@ -13,6 +13,28 @@
  */
 
 /*
+* Module news
+*/
+
+/*
+.newsTitle {
+    background-color: #ECEFF1;
+    padding:5px;
+}*/
+
+.newsContent {
+	clear: left;
+	margin-left: 10px;
+}
+
+.newsSignature {
+	margin-right: 10px;
+	float: right;
+	font-style: italic;
+	color: grey;
+}
+
+/*
 * Flux RSS
 */
 #rssFeed {
