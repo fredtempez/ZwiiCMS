@@ -117,6 +117,7 @@ class addon extends common {
 												'value' => template::ico('download')
 												])
 											: '',
+				'',
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'class' => 'buttonBlue',
