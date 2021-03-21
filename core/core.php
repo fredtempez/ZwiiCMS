@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.5.00';
+	const ZWII_VERSION = '10.5.01';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -2423,7 +2423,7 @@ class layout extends common {
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions Légales">Mentions légales</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions légales">Mentions légales</a>';
 		}
 		$items .= '</span>';
 		// Affichage du lien de connexion
@@ -3011,7 +3011,11 @@ class layout extends common {
 			foreach($vendorFiles as $vendorFile) {
 				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
 					case 'css':
-						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '">';
+						// Force le rechargement lors d'une mise à jour du jeu d'icônes
+						$reload = $vendorPath === 'core/vendor/zwiico/'
+							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
+							: '';
+						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
 						break;
 					case 'js':
 						echo '<script src="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';

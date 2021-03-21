@@ -1,6 +1,10 @@
 # Changelog
 
 ## version 10.5.00
+- Modifications : 
+    - Rechargement du fichier common.css après une mise à jour.
+
+## version 10.5.00
 **A partir de cette version, les versions de php inférieures à 7.2 ne sont plus supportées.**
 - Nouveauté :
     - Gestion des modules dans l'interface d'administration. Cette nouvelle fonctionnalité permet d'ajouter des modules en les téléchargeant et de les supprimer. Cette nouvelle fonctionnalité évite de recourir au FTP.  Les pages qui utilisent un module peuvent être exportées avec toutes leurs données, elles pourront ensuite être importées dans un site Zwii contenant ce même module.
