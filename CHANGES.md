@@ -1,7 +1,7 @@
 # Changelog
 
 ## version 10.5.01
-- Modifications : 
+- Modifications :
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
     - News 2.3 : ajout de la signature du rédacteur dans le module news (actualités, idem module blog)
 
