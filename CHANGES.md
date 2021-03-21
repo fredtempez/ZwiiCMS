@@ -2,7 +2,7 @@
 
 ## version 10.5.00
 - Modifications : 
-    - Rechargement du fichier common.css après une mise à jour.
+    - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
 
 ## version 10.5.00
 **A partir de cette version, les versions de php inférieures à 7.2 ne sont plus supportées.**
