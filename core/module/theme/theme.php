@@ -774,7 +774,7 @@ class theme extends common {
 	 */
 	private function zipTheme($modele) {
 		// Creation du dossier
-		$zipFilename  =  $modele . ' ' .date('d m Y').'  '.date('H i s ').'.zip';
+		$zipFilename  =  $modele . date('Y-m-d-H-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) {
 			switch ($modele) {
