@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '2.2';
+	const VERSION = '2.3';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -304,6 +304,7 @@ class news extends common {
 		// News en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
+			self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsIds[$i], 'userId']));
 		}
 		// Valeurs en sortie
 		$this->addOutput([
