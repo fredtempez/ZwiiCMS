@@ -104,12 +104,17 @@ $("input, select").on("change", function() {
 		css += 'header{margin:0}';
 	}
 	// Position de la bannière
-	switch($("#themeHeaderPosition").val()) {
+	var headerPosition = $("#themeHeaderPosition").val();
+	var menuPosition = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
+	console.clear();
+	console.log ("menu :" + menuPosition);
+	console.log ("header :" + headerPosition);
+	switch(headerPosition) {
 		case 'hide':
 			$("header").hide();
 			break;
 		case 'site':
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
+			if( menuPosition === 'site-first') {
 				$("header").show().insertAfter("nav");
 			}
 			else {
@@ -118,53 +123,25 @@ $("input, select").on("change", function() {
 				if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
 					css += 'nav{margin:0 20px}';
 				}
+				if (menuPosition === 'site-second') {
+					$("nav").show().prependTo("#site");
+				}
 			}
 			break;
 		case 'body':
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'body-first'); ?>) {
+			if( menuPosition === 'body-first') {
 				$("header").show().insertAfter("nav");
 			}
 			else {
 				$("header").show().insertAfter("#bar");
 			}
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'top'); ?>) {
+			if ( menuPosition === "site-second") {
+				$("nav").show().insertBefore("header");
+			}
+			if( menuPosition === 'top') {
 				$("header").show().insertAfter("nav");
 			}
 			break;
-	}
-	// Position dynamique du menu placé par rapport à la bannière
-	var menuPosition = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
-	if ( menuPosition !== 'site' ||
-		 menuPosition !== 'top') {
-		switch(menuPosition) {
-			case 'site-first':
-				$("nav").show().prependTo("#site");
-				break;
-			case 'site-second':
-				if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'site'); ?>) {
-					$("nav").show().insertAfter("header");
-				}
-				else {
-					$("nav").show().prependTo("#site");
-				}
-				break;
-			case 'body-first':
-				$("nav").show().insertAfter("#bar");
-				$("#menu").removeClass('container-large');
-				$("nav").removeAttr('id');
-				$("#menu").addClass('container');
-				break;
-			case 'body-second':
-				if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'body'); ?>) {
-					$("nav").show().insertAfter("header");
-				}
-				else {
-					$("nav").show().insertAfter("#bar");
-				}
-				$("nav").removeAttr('id');
-				break;
-		}
-
 	}
 
 	// Ajout du css au DOM
