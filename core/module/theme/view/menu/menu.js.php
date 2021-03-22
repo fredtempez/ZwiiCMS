@@ -79,15 +79,7 @@ $("input, select").on("change", function() {
 	) {
 		css += 'nav{padding:0 10px;}';
 	}
-
-	// Ajout du css au DOM
-	$("#themePreview").remove();
-	$("<style>")
-		.attr("type", "text/css")
-		.attr("id", "themePreview")
-		.text(css)
-		.appendTo("head");
-
+	
 	// Position du menu
 	switch($("#themeMenuPosition").val()) {
 		case 'hide':
@@ -129,6 +121,15 @@ $("input, select").on("change", function() {
 			$("nav").show().prependTo("#site");
 			break;
 	}
+	// Ajout du css au DOM
+	$("#themePreview").remove();
+	$("<style>")
+		.attr("type", "text/css")
+		.attr("id", "themePreview")
+		.text(css)
+		.appendTo("head");
+
+
 });
 //
 // Lien de connexion (addClass() et removeClass() au lieu de hide() et show() car ils ne conservent pas le display-inline: block; de #themeMenuLoginLink)
