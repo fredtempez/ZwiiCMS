@@ -424,17 +424,20 @@ class theme extends common {
 				'imageContainer' => $this->getInput('themeHeaderImageContainer')
 			]]);
 			// Modification de la position du menu selon la position de la bannière
-			switch ($this->getInput('themeHeaderPosition') &&
-					 $this->getData(['theme','menu','position']) !== 'site' &&
-					 $this->getData(['theme','menu','position']) !== 'top' ) {
-				case 'site' :
-					$position = str_replace ('body','site',$this->getData(['theme','menu','position']));
-				break;
-				case 'body' :
-					$position = str_replace ('site','body',$this->getData(['theme','menu','position']));
-				break;
-				default:
-					$position = $this->getData(['theme','menu','position']);
+			if  ( $this->getInput('themeHeaderPosition') &&
+					$this->getData(['theme','menu','position']) !== 'site' &&
+					$this->getData(['theme','menu','position']) !== 'top' )
+				{
+					switch ($this->getInput('themeHeaderPosition')) {
+						case 'site' :
+							$position = str_replace ('body','site',$this->getData(['theme','menu','position']));
+						break;
+						case 'body' :
+							$position = str_replace ('site','body',$this->getData(['theme','menu','position']));
+						break;
+						default:
+							$position = $this->getData(['theme','menu','position']);
+				}
 			}
 
 			$this->setData(['theme', 'menu', [
