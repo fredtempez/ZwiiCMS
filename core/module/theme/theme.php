@@ -425,8 +425,8 @@ class theme extends common {
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getInput('themeHeaderPosition') &&
-					$this->getData(['theme','menu','position']) !== 'site' &&
-					$this->getData(['theme','menu','position']) !== 'top' )
+					( $this->getData(['theme','menu','position']) !== 'site' ||
+					  $this->getData(['theme','menu','position']) !== 'top') )
 				{
 					switch ($this->getInput('themeHeaderPosition')) {
 						case 'site' :
