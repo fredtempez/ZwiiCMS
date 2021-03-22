@@ -12,7 +12,7 @@
  * @link http://zwiicms.fr/
  */
 
-$(document).ready(function(){
+ $(document).ready(function(){
 	$("header").css("line-height", "");
 	$("header").css("height", "");
 });
@@ -45,7 +45,7 @@ $("input, select").on("change", function() {
 			if ($("#themeHeaderHeight option").length === 5) {
 				// Pas d'image précédemment on ajoute l'option
 				$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
-			} 
+			}
 			// Modifier la valeur
 			$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
 			// Modifier l'option
@@ -83,14 +83,14 @@ $("input, select").on("change", function() {
 	// Taille, couleur, épaisseur et capitalisation du titre de la bannière
 	css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
 	// Cache le titre de la bannière
-	
+
 	if($("#themeHeaderTextHide").is(":checked")) {
 		$("header #themeHeaderTitle").hide();
 	}
 	else {
 		$("header #themeHeaderTitle").show();
 	}
-	
+
 	// Marge
 	if($("#themeHeaderMargin").is(":checked")) {
 		if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
@@ -104,17 +104,12 @@ $("input, select").on("change", function() {
 		css += 'header{margin:0}';
 	}
 	// Position de la bannière
-	var headerPosition = $("#themeHeaderPosition").val();
-	var menuPosition = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
-	console.clear();
-	console.log ("menu :" + menuPosition);
-	console.log ("header :" + headerPosition);
-	switch(headerPosition) {
+	switch($("#themeHeaderPosition").val()) {
 		case 'hide':
 			$("header").hide();
 			break;
 		case 'site':
-			if( menuPosition === 'site-first') {
+			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
 				$("header").show().insertAfter("nav");
 			}
 			else {
@@ -123,22 +118,16 @@ $("input, select").on("change", function() {
 				if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
 					css += 'nav{margin:0 20px}';
 				}
-				if (menuPosition === 'site-second') {
-					$("nav").show().prependTo("#site");
-				}
 			}
 			break;
 		case 'body':
-			if( menuPosition === 'body-first') {
+			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'body-first'); ?>) {
 				$("header").show().insertAfter("nav");
 			}
 			else {
 				$("header").show().insertAfter("#bar");
 			}
-			if ( menuPosition === "site-second") {
-				$("nav").show().insertBefore("header");
-			}
-			if( menuPosition === 'top') {
+			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'top'); ?>) {
 				$("header").show().insertAfter("nav");
 			}
 			break;
@@ -184,7 +173,7 @@ $("#themeHeaderPosition").on("change", function() {
 	if($(this).val() === 'hide') {
 		$("#themeHeaderShow").slideUp(function() {
 			$("#themeHeaderlinkHome").prop("checked", false).trigger("change");
-		});		
+		});
 	}
 	else {
 		$("#themeHeaderShow").slideDown();
