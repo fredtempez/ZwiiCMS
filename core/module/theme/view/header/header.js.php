@@ -132,6 +132,40 @@ $("input, select").on("change", function() {
 			}
 			break;
 	}
+	// Position dynamique du menu placé par rapport à la bannière
+	var menuPosition = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
+	if ( menuPosition !== 'site' ||
+		 menuPosition !== 'top') {
+		switch(menuPosition) {
+			case 'site-first':
+				$("nav").show().prependTo("#site");
+				break;
+			case 'site-second':
+				if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'site'); ?>) {
+					$("nav").show().insertAfter("header");
+				}
+				else {
+					$("nav").show().prependTo("#site");
+				}
+				break;
+			case 'body-first':
+				$("nav").show().insertAfter("#bar");
+				$("#menu").removeClass('container-large');
+				$("nav").removeAttr('id');
+				$("#menu").addClass('container');
+				break;
+			case 'body-second':
+				if(<?php echo json_encode($this->getData(['theme', 'header', 'position']) === 'body'); ?>) {
+					$("nav").show().insertAfter("header");
+				}
+				else {
+					$("nav").show().insertAfter("#bar");
+				}
+				$("nav").removeAttr('id');
+				break;
+		}
+
+	}
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
