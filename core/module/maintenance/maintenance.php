@@ -33,7 +33,9 @@ class maintenance extends common {
 			AND $this->getData(['page',$this->getData(['locale','page302'])]) ) {
 				$this->addOutput([
 					'display' => self::DISPLAY_LAYOUT_LIGHT,
-					'title' => $this->getData(['page',$this->getData(['locale','page302']),'title']),
+					'title' => $this->getData(['page',$this->getData(['locale','page302']),'hideTitle'])
+								? ''
+								: $this->getData(['page',$this->getData(['locale','page302']),'title']),
 					'content' => $this->getdata(['page',$this->getData(['locale','page302']),'content']),
 					'view' => 'index'
 				]);
