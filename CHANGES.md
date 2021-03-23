@@ -4,6 +4,7 @@
 - Modifications :
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
     - News 2.3 : ajout de la signature du rédacteur dans le module news (actualités, idem module blog)
+    - Les bulles d'aide de page sont désormais contenues dans la page (modules langues v11 et addon).
 Corrections : 
     - Mode maintenance, titre non masqué d'une page personnalisée.
 
