@@ -44,9 +44,9 @@
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
-<div class="col10 helpDisplayContent">
-	<p>Exporter produit une archive au nom du module contenant les pages concernées ainsi que les données et ressources utilisées par le module dans ces pages.
-	Vous pouvez vous en servir comme d'une sauvegarde partielle ou pour transférer les pages et les données du module vers un autre site.</p>
-	<p>Une fois le module installé l'import permet de restaurer les pages et les données sauvegardées. Si une page de même nom existe sur votre site vous serez invité à modifier son nom.</p>
-
+<div class="helpDisplayContent">
+	<p>Exporter produit une archive au nom du module contenant les pages concernées ainsi que les données et ressources utilisées par le module dans ces pages.</p>
+	<p>Vous pouvez vous en servir comme d'une sauvegarde partielle ou pour transférer les pages et les données du module vers un autre site.</p>
+	<p>Une fois le module installé l'import permet de restaurer les pages et les données sauvegardées.
+	Si une page de même nom existe sur votre site vous serez invité à modifier son nom.</p>
 </div>
