@@ -9,6 +9,13 @@
         - Traduction selon la langue navigateur
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
+        
+## version 10.5.01
+- Modifications :
+    - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
+    - News 2.3 : ajout de la signature du rédacteur dans le module news (actualités, idem module blog)
+Corrections : 
+    - Mode maintenance, titre non masqué d'une page personnalisée.
 
 ## version 10.5.00
 **A partir de cette version, les versions de php inférieures à 7.2 ne sont plus supportées.**

@@ -1750,7 +1750,7 @@ class core extends common {
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
 			// Couleur fixée dans admin.css
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
-			$css .= '.container{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
+			$css .= '.container, .helpDisplayContent{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
@@ -2527,7 +2527,7 @@ class layout extends common {
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions Légales">Mentions légales</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions légales">Mentions légales</a>';
 		}
 		$items .= '</span>';
 		// Affichage du lien de connexion
@@ -3116,7 +3116,11 @@ class layout extends common {
 			foreach($vendorFiles as $vendorFile) {
 				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
 					case 'css':
-						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '">';
+						// Force le rechargement lors d'une mise à jour du jeu d'icônes
+						$reload = $vendorPath === 'core/vendor/zwiico/'
+							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
+							: '';
+						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
 						break;
 					case 'js':
 						echo '<script src="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';

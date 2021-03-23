@@ -11,7 +11,7 @@
 		<?php $layout->showFavicon(); ?>
 		<?php $layout->showVendor(); ?>
 		<?php $layout->showAnalytics(); ?>
-		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
+		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css');?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
 		<!-- Détection RSS -->

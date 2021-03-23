@@ -108,7 +108,7 @@ class helper {
 		// Creation du ZIP
 		$baseName = str_replace('/','',helper::baseUrl(false,false));
 		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
-		$fileName =  $baseName . '-backup-' . date('Y-m-d-h-i-s', time()) . '.zip';
+		$fileName =  $baseName . '-backup-' . date('Y-m-d-H-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		$directory = 'site/';
