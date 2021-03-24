@@ -2406,6 +2406,7 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
+		echo $this->showi18n('Site');
 		if(
 			$this->core->output['title']
 			AND (
@@ -2787,7 +2788,7 @@ class layout extends common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		echo $this->showi18n();
+		echo $this->showi18n('Nav');
 	}
 
 	/**
@@ -3132,8 +3133,8 @@ class layout extends common {
 	/**
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
-	public function showi18n() {
-		echo '<div id="i18nContainer"><ul>';
+	public function showi18n($id) {
+		echo '<div id="i18nContainer' . $id . '"><ul>';
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','translate',$key]) === 'site'
 				OR (
