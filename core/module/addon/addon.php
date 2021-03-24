@@ -149,8 +149,10 @@ class addon extends common {
 					if ( is_dir( $moduleDir )) {
 						// Lire le nom du module
 						if ($dh = opendir( $moduleDir )) {
-							while (($file = readdir($dh)) !== false) {
-								$moduleName = $file;
+							while ( false !== ($file = readdir($dh)) ) {
+								if ($file != "." && $file != "..") {
+									$moduleName = $file;
+								}
 							}
 							closedir($dh);
 						}
