@@ -25,7 +25,8 @@ class addon extends common {
 		'import' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN,
-		'upload' => self::GROUP_ADMIN
+		'upload' => self::GROUP_ADMIN,
+		'storeDownload'=> self::GROUP_ADMIN
 	];
 
 	// Gestion des modules
@@ -220,7 +221,7 @@ class addon extends common {
 		$url = 'http://zwiicms.fr/?modules/list';
 		$store = json_decode(helper::urlGetContents($url), true);
 		if ($store) {
-				// Modules installés
+			// Modules installés
 			$infoModules = helper::getModules();
 			// Clés moduleIds dans les pages
 			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
@@ -235,15 +236,24 @@ class addon extends common {
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['fileDate'])
 					: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
-					implode(', ',array_keys($inPages,$key)) === ''
-						? template::button('moduleExport' . $key, [
-							'class' => 'buttonBlue',
-							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-							'value' => template::ico('download')
-							])
-						: ''
+					template::button('moduleExport' . $key, [
+								'class' => 'buttonBlue',
+								'href' => helper::baseUrl(). $this->getUrl(0) . '/storeDownload/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+								'value' => template::ico('download')
+								])
+					];
+					/**
+					* implode(', ',array_keys($inPages,$key)) === ''
+					*	? template::button('moduleExport' . $key, [
+					*		'class' => 'buttonBlue',
+					*		'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+					*		'value' => template::ico('download')
+					*		])
+					*	: ''
+					* ];
+					*/
 
-				];
+			
 			}	
 		}
 
@@ -321,7 +331,7 @@ class addon extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des modules',
+			'title' => 'Modules installés',
 			'view' => 'index'
 		]);
 	}
@@ -448,52 +458,7 @@ class addon extends common {
 			if($this->isPost()) {
 				// Récupérer le fichier et le décompacter
 				$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
-				$tempFolder = uniqid();
-				mkdir (self::TEMP_DIR . $tempFolder);
-				$zip = new ZipArchive();
-				if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
-					$zip->extractTo(self::TEMP_DIR  . $tempFolder );
-				}
-				// Import des données localisées page.json et module.json
-				// Pour chaque dossier localisé
-				$dataTarget = array();
-				$dataSource = array();
-				// Liste des pages de même nom dans l'archive et le site
-				$list = '';
-				foreach (self::$i18nList as $key=>$value) {
-					// Les Pages et les modules
-					foreach (['page','module'] as $fileTarget){
-						if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
-							// Le dossier de langue existe
-							// faire la fusion
-							$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
-							// Des pages de même nom que celles de l'archive existent
-							if( $fileTarget === 'page' ){
-								foreach( $dataSource as $keydataSource=>$valuedataSource ){
-									foreach( $this->getData(['page']) as $keypage=>$valuepage ){
-										if( $keydataSource === $keypage){
-											$list === '' ? $list .= ' '.$this->getData(['page', $keypage, 'title']) : $list .= ', '.$this->getData(['page', $keypage, 'title']);
-										}
-									}
-								}
-							}
-							$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
-							$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
-							if( $list === ''){
-								file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
-							}
-							// Supprimer les fichiers importés
-							unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
-						}
-					}
-				}
-
-				// Import des fichiers placés ailleurs que dans les dossiers localisés.
-				$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
-
-				// Supprimer le dossier temporaire
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
-				$zip->close();
+				$list = $this->importModule($zipFilename);
 				if( $list !== '' ){
 					 $success = false;
 					strpos( $list, ',') === false ? $notification = 'Import impossible la page suivante doit être renommée :'.$list : $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
@@ -515,5 +480,69 @@ class addon extends common {
 				'view' => 'import'
 			]);
 		}
+		
+	}
+
+
+	/**
+	 * Téléchargement d'un module à partir du store
+	 */
+	public function storeDownload() {
+		
+	}
+
+
+	/**
+	 * Installation d'un module
+	 * @param moduleName url du module à installer
+	 */
+	private function installModule($moduleName) {
+		$tempFolder = uniqid();
+		mkdir (self::TEMP_DIR . $tempFolder);
+		$zip = new ZipArchive();
+		if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
+			$zip->extractTo(self::TEMP_DIR  . $tempFolder );
+		}
+		// Import des données localisées page.json et module.json
+		// Pour chaque dossier localisé
+		$dataTarget = array();
+		$dataSource = array();
+		// Liste des pages de même nom dans l'archive et le site
+		$list = '';
+		foreach (self::$i18nList as $key=>$value) {
+			// Les Pages et les modules
+			foreach (['page','module'] as $fileTarget){
+				if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
+					// Le dossier de langue existe
+					// faire la fusion
+					$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
+					// Des pages de même nom que celles de l'archive existent
+					if( $fileTarget === 'page' ){
+						foreach( $dataSource as $keydataSource=>$valuedataSource ){
+							foreach( $this->getData(['page']) as $keypage=>$valuepage ){
+								if( $keydataSource === $keypage){
+									$list === '' ? $list .= ' '.$this->getData(['page', $keypage, 'title']) : $list .= ', '.$this->getData(['page', $keypage, 'title']);
+								}
+							}
+						}
+					}
+					$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
+					$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
+					if( $list === ''){
+						file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
+					}
+					// Supprimer les fichiers importés
+					unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+				}
+			}
+		}
+
+		// Import des fichiers placés ailleurs que dans les dossiers localisés.
+		$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
+
+		// Supprimer le dossier temporaire
+		$this->removeDir(self::TEMP_DIR . $tempFolder);
+		$zip->close();
+		return($list);
 	}
 }

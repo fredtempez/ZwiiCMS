@@ -15,7 +15,7 @@
 	</div>
 </div>
 <?php if($module::$storeList): ?>
-	<?php echo template::table([4, 3, 4, 1], $module::$storeList, ['Module', 'Version', 'Date', 'Installer']); ?>
+	<?php echo template::table([4, 3, 4, 1], $module::$storeList, ['Module', 'Version', 'Date', 'Télécharger']); ?>
 <?php else: ?>
 	<?php echo template::speech('Le catalogue est vide.'); ?>
 <?php endif; ?>
