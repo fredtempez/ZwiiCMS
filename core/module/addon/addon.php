@@ -26,7 +26,7 @@ class addon extends common {
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN,
 		'upload' => self::GROUP_ADMIN,
-		'storeDownload'=> self::GROUP_ADMIN
+		'storeUpload'=> self::GROUP_ADMIN
 	];
 
 	const URL_STORE = 'http://zwiicms.fr/?modules/list';
@@ -91,7 +91,119 @@ class addon extends common {
 	}
 
 	/***
-	 * Installation manuel d'un module par téléchargement
+	 * Installation d'un module
+	 * Fonction utilisée par upload et storeUpload
+	 */
+	private function install ($moduleName, $checkValid){
+		$tempFolder = 'datamodules';//uniqid();
+		$zip = new ZipArchive();
+		if ($zip->open($moduleName) === TRUE) {
+			$notification = 'Archive ouverte';
+			mkdir (self::TEMP_DIR . $tempFolder);
+			$zip->extractTo(self::TEMP_DIR . $tempFolder );
+			// Archive de module ?
+			$success = false;
+			$notification = 'Ce n\'est pas l\'archive d\'un module !';
+			$moduleDir = self::TEMP_DIR . $tempFolder . '/module';
+			$moduleName = '';
+			if ( is_dir( $moduleDir )) {
+				// Lire le nom du module
+				if ($dh = opendir( $moduleDir )) {
+					while ( false !== ($file = readdir($dh)) ) {
+						if ($file != "." && $file != "..") {
+							$moduleName = $file;
+						}
+					}
+					closedir($dh);
+				}
+				// Module normalisé ?
+				if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
+
+					// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
+					// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
+					$version = '0.0';
+					$update = '0.0';
+					$valUpdate = false;
+					$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
+					$file = str_replace(' ','',$file);
+					$file = str_replace("\t",'',$file);
+					$pos1 = strpos($file, 'constVERSION');
+					if( $pos1 !== false){
+						$posdeb = strpos($file, "'", $pos1);
+						$posend = strpos($file, "'", $posdeb + 1);
+						$version = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+					}
+					$pos1 = strpos($file, 'constUPDATE');
+					if( $pos1 !== false){
+						$posdeb = strpos($file, "'", $pos1);
+						$posend = strpos($file, "'", $posdeb + 1);
+						$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
+					}
+					// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
+					if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
+
+					// Module déjà installé ?
+					$moduleInstal = false;
+					foreach( self::$modInstal as $key=>$value){
+						if($moduleName === $value[0]){
+							$moduleInstal = true;
+						}
+					}
+
+					// Validation de la maj si autorisation du concepteur du module ET
+					// ( Version plus récente OU Check de forçage )
+					$valNewVersion = floatval($version);
+					$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
+					$newVersion = false;
+					if( $valNewVersion > $valInstalVersion ) $newVersion = true;
+					$validMaj = $valUpdate && ( $newVersion || $checkValid);
+
+					// Nouvelle installation ou mise à jour du module
+					if( ! $moduleInstal ||  $validMaj ){
+						// Copie récursive des dossiers
+						$this -> custom_copy( self::TEMP_DIR . $tempFolder, './' );
+						$success = true;
+						if( ! $moduleInstal ){
+							$notification = 'Module '.$moduleName.' installé';
+						}
+						else{
+							$notification = 'Module '.$moduleName.' mis à jour';
+						}
+					}
+					else{
+						$success = false;
+						if( $valNewVersion == $valInstalVersion){
+							$notification = ' Version détectée '.$version.' = à celle installée '.$infoModules[$moduleName]['version'];
+						}
+						else{
+							$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
+						}
+						if( $valUpdate === false){
+							if( $infoModules[$moduleName]['update'] === $update ){
+								$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
+							}
+							else{
+								$notification = ' Mise à jour par ce procédé interdite, votre version est trop ancienne';
+							}
+						}
+					}
+				}
+			}
+			// Supprimer le dossier temporaire même si le module est invalide
+			$this->removeDir(self::TEMP_DIR . $tempFolder);
+			$zip->close();
+		} else {
+			// erreur à l'ouverture
+			$success = false;
+			$notification = 'Impossible d\'ouvrir l\'archive';
+		}
+		return(['success' => $success,
+				'notification'=> $notification
+		]);
+	}
+
+	/***
+	 * Installation manuel d'un module à partir du gestionnaire de fichier
 	 */
 	public function upload() {
 		// Soumission du formulaire
@@ -101,120 +213,36 @@ class addon extends common {
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
 			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
 			if( $zipFilename !== ''){
-				$tempFolder = 'datamodules';//uniqid();
-				$zip = new ZipArchive();
-				if ($zip->open(self::FILE_DIR.'source/'.$zipFilename) === TRUE) {
-					$notification = 'Archive ouverte';
-					mkdir (self::TEMP_DIR . $tempFolder);
-					$zip->extractTo(self::TEMP_DIR . $tempFolder );
-					// Archive de module ?
-					$success = false;
-					$notification = 'Ce n\'est pas l\'archive d\'un module !';
-					$moduleDir = self::TEMP_DIR . $tempFolder . '/module';
-					$moduleName = '';
-					if ( is_dir( $moduleDir )) {
-						// Lire le nom du module
-						if ($dh = opendir( $moduleDir )) {
-							while ( false !== ($file = readdir($dh)) ) {
-								if ($file != "." && $file != "..") {
-									$moduleName = $file;
-								}
-							}
-							closedir($dh);
-						}
-						// Module normalisé ?
-						if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
-
-							// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
-							// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
-							$version = '0.0';
-							$update = '0.0';
-							$valUpdate = false;
-							$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
-							$file = str_replace(' ','',$file);
-							$file = str_replace("\t",'',$file);
-							$pos1 = strpos($file, 'constVERSION');
-							if( $pos1 !== false){
-								$posdeb = strpos($file, "'", $pos1);
-								$posend = strpos($file, "'", $posdeb + 1);
-								$version = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-							}
-							$pos1 = strpos($file, 'constUPDATE');
-							if( $pos1 !== false){
-								$posdeb = strpos($file, "'", $pos1);
-								$posend = strpos($file, "'", $posdeb + 1);
-								$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-							}
-							// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
-							if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
-
-							// Module déjà installé ?
-							$moduleInstal = false;
-							foreach( self::$modInstal as $key=>$value){
-								if($moduleName === $value[0]){
-									$moduleInstal = true;
-								}
-							}
-
-							// Validation de la maj si autorisation du concepteur du module ET
-							// ( Version plus récente OU Check de forçage )
-							$valNewVersion = floatval($version);
-							$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
-							$newVersion = false;
-							if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-							$validMaj = $valUpdate && ( $newVersion || $checkValidMaj);
-
-							// Nouvelle installation ou mise à jour du module
-							if( ! $moduleInstal ||  $validMaj ){
-								// Copie récursive des dossiers
-								$this -> custom_copy( self::TEMP_DIR . $tempFolder, './' );
-								$success = true;
-								if( ! $moduleInstal ){
-									$notification = 'Module '.$moduleName.' installé';
-								}
-								else{
-									$notification = 'Module '.$moduleName.' mis à jour';
-								}
-							}
-							else{
-								$success = false;
-								if( $valNewVersion == $valInstalVersion){
-									$notification = ' Version détectée '.$version.' = à celle installée '.$infoModules[$moduleName]['version'];
-								}
-								else{
-									$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
-								}
-								if( $valUpdate === false){
-									if( $infoModules[$moduleName]['update'] === $update ){
-										$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
-									}
-									else{
-										$notification = ' Mise à jour par ce procédé interdite, votre version est trop ancienne';
-									}
-								}
-							}
-						}
-					}
-					// Supprimer le dossier temporaire même si le module est invalide
-					$this->removeDir(self::TEMP_DIR . $tempFolder);
-					$zip->close();
-				} else {
-					// erreur à l'ouverture
-					$success = false;
-					$notification = 'Impossible d\'ouvrir l\'archive';
-				}
+				$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
 			}
-
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $notification,
-				'state' => $success
+				'notification' => $state['notification'],
+				'state' => $state['success']
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Téléverser un module',
 			'view' => 'upload'
+		]);
+	}
+
+	/***
+	 * Installation manuel d'un module par le catalogue
+	 */
+	public function uploadStore() {
+		// Installation d'un module
+		$success = true;
+		$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
+		$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
+		if( $zipFilename !== ''){
+			$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
+		}
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . $this->getUrl(),
+			'notification' => $state['notification'],
+			'state' => $state['success']
 		]);
 	}
 

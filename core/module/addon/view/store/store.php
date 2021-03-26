@@ -7,12 +7,6 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col3 offset7">
-		<?php echo template::button('configStoreUpload', [
-			'href' => helper::baseUrl() . 'addon/upload',
-			'value' => 'Téléverser un module'
-		]); ?>
-	</div>
 </div>
 <?php if($module::$storeList): ?>
 	<?php echo template::table([4, 2, 2, 3, 1], $module::$storeList, ['Module', 'Version', 'Date', 'Pages', 'Télécharger']); ?>
