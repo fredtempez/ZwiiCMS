@@ -21,6 +21,7 @@ class common {
 	const DISPLAY_LAYOUT_BLANK = 3;
 	const DISPLAY_LAYOUT_MAIN = 4;
 	const DISPLAY_LAYOUT_LIGHT = 5;
+	const DISPLAY_LAYOUT_LITY = 6;
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
@@ -2358,6 +2359,10 @@ class core extends common {
 		// Layout allégé
 		case self::DISPLAY_LAYOUT_LIGHT:
 			require 'core/layout/light.php';
+			break;
+		// Layout Lity
+		case self::DISPLAY_LAYOUT_LITY:
+			require 'core/layout/lity.php';
 			break;
 		// Layout principal
 		case self::DISPLAY_LAYOUT_MAIN:

@@ -351,7 +351,7 @@ class addon extends common {
 		$this->addOutput([
 			'title' =>'Module ' . self::$storeItem['title'],
 			'view' => 'item',
-			'display' => self::DISPLAY_LAYOUT_LIGHT
+			'display' => self::DISPLAY_LAYOUT_LITY
 		]);
 	}
 
