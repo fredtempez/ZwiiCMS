@@ -28,7 +28,9 @@ class addon extends common {
 		'upload' => self::GROUP_ADMIN,
 		'storeDownload'=> self::GROUP_ADMIN
 	];
+
 	const URL_STORE = 'http://zwiicms.fr/?modules/list';
+	const BASEURL_STORE = 'http://zwiicms.fr/';
 
 	// Gestion des modules
 	public static $modInstal = [];
@@ -245,7 +247,7 @@ class addon extends common {
 					$ico =  template::ico('update');
 				}
 				self::$storeList [] = [
-					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/item/' . $key . '">'.$store[$key]['title'].'</a>',
+					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/item/' . $key . '" rel="data-lity">'.$store[$key]['title'].'</a>',
 					$store[$key]['fileVersion'],
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['fileDate'])
@@ -280,8 +282,9 @@ class addon extends common {
 										: utf8_encode(strftime('%d %B %Y', self::$storeItem ['fileDate']));
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' =>self::$storeItem['title'],
-			'view' => 'item'
+			'title' =>'Module ' . self::$storeItem['title'],
+			'view' => 'item',
+			'display' => self::DISPLAY_LAYOUT_LIGHT
 		]);
 	}
 

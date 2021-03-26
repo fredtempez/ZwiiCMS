@@ -1,36 +1,41 @@
 <div class="row">
-	<div class="col2">
-		<?php echo template::button('configItemBack', [
-			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'addon/store',
-			'ico' => 'left',
-			'value' => 'Retour'
-		]); ?>
+	<div class="col9">
+		<div class="row">
+			<div class="col12">
+				<?php echo $module::$storeItem['content'];  ?>
+			</div>
+		</div>
 	</div>
-</div>
-<div class="row">
-    <div class="col9">
-        <div class="row">
-            <div class="col9">
-                <?php echo $module::$storeItem['content'];?>
-            </div>
+    <div class="row">
+        <div class="col12">
+            <?php
+                echo '<img class="downloadItemPicture" src="' . $module::BASEURL_STORE . 'site/file/source/' . $module::$storeItem['picture'] .
+                '" alt="' . $module::$storeItem['picture'] . '">';
+            ?>
         </div>
     </div>
-    <div class="col3">
-        <div class="row">
-            <div class="col12">
-                <img src="https://www.zwiicms.fr/site/file/source/<?php echo $module::$storeItem['picture'];?>"/>
-            </div>
+    <div class="row">
+        <div class="col12 textAlignCenter">
+            <?php echo 'Version n°' .  $module::$storeItem['fileVersion']; ?>
         </div>
-        <div class="row">
-            <div class="col12">
-            Version <?php echo $module::$storeItem['fileVersion'];?>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col12 textAlignCenter">
+            <?php echo ' du ' .  $module::$storeItem['fileDate']; ?>
         </div>
-        <div class="row">
-            <div class="col12"> 
-             Publié le <?php echo $module::$storeItem['fileDate'];?>
-            </div>
+    </div>
+    <div class="row">
+        <div class="col12 textAlignCenter">
+            <span>Auteur :
+            <?php echo $module::$storeItem['fileAuthor']; ?>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col12 textAlignCenter">
+            <span>Licence :
+            <?php echo $module::$storeItem['fileLicense']; ?>
+            </span>
         </div>
     </div>
 </div>
