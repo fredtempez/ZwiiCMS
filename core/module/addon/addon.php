@@ -26,7 +26,7 @@ class addon extends common {
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN,
 		'upload' => self::GROUP_ADMIN,
-		'storeUpload'=> self::GROUP_ADMIN
+		'uploadItem'=> self::GROUP_ADMIN
 	];
 
 	const URL_STORE = 'http://zwiicms.fr/?modules/list';
@@ -203,7 +203,7 @@ class addon extends common {
 	}
 
 	/***
-	 * Installation manuel d'un module à partir du gestionnaire de fichier
+	 * Installation d'un module à partir du gestionnaire de fichier
 	 */
 	public function upload() {
 		// Soumission du formulaire
@@ -229,20 +229,49 @@ class addon extends common {
 	}
 
 	/***
-	 * Installation manuel d'un module par le catalogue
+	 * Installation  d'un module par le catalogue
 	 */
-	public function uploadStore() {
-		// Installation d'un module
-		$success = true;
-		$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
-		$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
-		if( $zipFilename !== ''){
-			$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
+	public function uploadItem() {
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'store',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
+		} else {
+			// Récupérer le module en ligne
+			$moduleName = $this->getUrl(2);
+			// Informations sur les module en ligne 
+			$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
+			// Url du module à télécharger
+			$moduleFile = $store[$moduleName]['file'];
+			// Télécharger le fichier =
+			$moduleData = helper::urlGetContents(self::BASEURL_STORE . self::FILE_DIR . $moduleFile);
+			// Stocker le fichier dans un dossier local
+			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
+			if (!is_dir(self::FILE_DIR . 'source/modules')) {
+				mkdir (self::FILE_DIR . 'source/modules');
+			}
+			
+			$success = true;
+			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
+			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
+			if( $zipFilename !== ''){
+				$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
+			}
+			$this->addOutput([
+				//'redirect' => helper::baseUrl() . $this->getUrl(),
+				'notification' => $state['notification'],
+				'state' => $state['success']
+			]);
+
 		}
+		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . $this->getUrl(),
-			'notification' => $state['notification'],
-			'state' => $state['success']
+			'title' => 'Catalogue de modules',
+			'view' => 'store'
 		]);
 	}
 
@@ -283,7 +312,7 @@ class addon extends common {
 					implode(', ', array_keys($inPagesTitle,$key)),
 					template::button('moduleExport' . $key, [
 							'class' => $class,
-							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+							'href' => helper::baseUrl(). $this->getUrl(0) . '/uploadItem/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 							'value' => $ico
 							])
 					 ];
