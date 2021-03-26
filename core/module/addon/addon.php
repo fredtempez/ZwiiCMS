@@ -209,10 +209,13 @@ class addon extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Installation d'un module
-			$success = true;
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
 			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
 			if( $zipFilename !== ''){
+				$success = [
+					'success' => false,
+					'notification'=> ''
+				];
 				$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
 			}
 			$this->addOutput([
@@ -246,25 +249,32 @@ class addon extends common {
 			// Informations sur les module en ligne 
 			$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
 			// Url du module à télécharger
-			$moduleFile = $store[$moduleName]['file'];
-			// Télécharger le fichier =
-			$moduleData = helper::urlGetContents(self::BASEURL_STORE . self::FILE_DIR . $moduleFile);
-			// Stocker le fichier dans un dossier local
-			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
+			$moduleFilePath = $store[$moduleName]['file'];
+			// Télécharger le fichier
+			$moduleData = helper::urlGetContents(self::BASEURL_STORE . self::FILE_DIR . 'source/' . $moduleFilePath);
+			// Extraire de l'arborescence
+			$d = explode('/',$moduleFilePath);
+			$moduleFile = $d[count($d)-1];
+			// Créer le dossier modules
 			if (!is_dir(self::FILE_DIR . 'source/modules')) {
 				mkdir (self::FILE_DIR . 'source/modules');
 			}
+			// Sauver les données du fichiers
+			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
 			
-			$success = true;
-			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
-			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
-			if( $zipFilename !== ''){
-				$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
-			}
+			/**
+			* $if( $moduleFile !== ''){
+			*	$success = [
+			*		'success' => false,
+			*		'notification'=> ''
+			*	];
+			*	$state = $this->install(self::FILE_DIR.'source/modules/'.$moduleFile, false);
+			*}
+			*/
 			$this->addOutput([
-				//'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $state['notification'],
-				'state' => $state['success']
+				'redirect' => helper::baseUrl()  . 'addon/store',
+				'notification' => $moduleFile . ' téléchargé dans le dossier modules du gestionnaire de fichiers',
+				'state' => true
 			]);
 
 		}
