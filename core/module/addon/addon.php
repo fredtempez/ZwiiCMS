@@ -236,25 +236,29 @@ class addon extends common {
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['fileDate'])
 					: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
-					template::button('moduleExport' . $key, [
-								'class' => 'buttonBlue',
-								'href' => helper::baseUrl(). $this->getUrl(0) . '/storeDownload/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-								'value' => template::ico('download')
-								])
-					];
 					/**
-					* implode(', ',array_keys($inPages,$key)) === ''
-					*	? template::button('moduleExport' . $key, [
-					*		'class' => 'buttonBlue',
-					*		'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-					*		'value' => template::ico('download')
-					*		])
-					*	: ''
-					* ];
-					*/
+					 * 					template::button('moduleExport' . $key, [
+					 *			'class' => 'buttonBlue',
+					 *			'href' => helper::baseUrl(). $this->getUrl(0) . '/storeDownload/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+					 *			'value' => template::ico('download')
+					 *			])
+					 *];
+					 */
+					 implode(', ',array_keys($inPages,$key)) === ''
+						? template::button('moduleExport' . $key, [
+							'class' => 'buttonBlue',
+							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+							'value' => template::ico('download')
+							])
+						: template::button('moduleExport' . $key, [
+							'class' => 'buttonBlue',
+							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+							'value' => template::ico('update')
+							])
+					 ];
 
-			
-			}	
+
+			}
 		}
 
 		// Valeurs en sortie
@@ -480,7 +484,7 @@ class addon extends common {
 				'view' => 'import'
 			]);
 		}
-		
+
 	}
 
 
@@ -488,7 +492,7 @@ class addon extends common {
 	 * Téléchargement d'un module à partir du store
 	 */
 	public function storeDownload() {
-		
+
 	}
 
 
