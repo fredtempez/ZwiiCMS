@@ -28,6 +28,7 @@ class addon extends common {
 		'upload' => self::GROUP_ADMIN,
 		'storeDownload'=> self::GROUP_ADMIN
 	];
+	const URL_STORE = 'http://zwiicms.fr/?modules/list';
 
 	// Gestion des modules
 	public static $modInstal = [];
@@ -38,6 +39,7 @@ class addon extends common {
 	// le catalogue
 	public static $storeList = [];
 	public static $storeItem = [];
+
 
 	/*
 	* Effacement d'un module installé et non utilisé
@@ -218,8 +220,7 @@ class addon extends common {
 	 * Catalogue des modules sur le site ZwiiCMS.fr
 	 */
 	public function store() {
-		$url = 'http://zwiicms.fr/?modules/list';
-		$store = json_decode(helper::urlGetContents($url), true);
+		$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
@@ -272,8 +273,7 @@ class addon extends common {
 	 * Détail d'un objet du catalogue
 	 */
 	public function item() {
-		$url = 'http://zwiicms.fr/?modules-2/list';
-		$store = json_decode(helper::urlGetContents($url), true);
+		$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
 		self::$storeItem = $store [$this->getUrl(2)] ;
 		self::$storeItem ['fileDate'] = mb_detect_encoding(strftime('%d %B %Y',self::$storeItem ['fileDate']), 'UTF-8', true)
 										? strftime('%d %B %Y', self::$storeItem ['fileDate'])
