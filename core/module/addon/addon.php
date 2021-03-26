@@ -20,7 +20,7 @@ class addon extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
-		'moduleDelete' => self::GROUP_ADMIN,
+		'delete' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
@@ -46,7 +46,7 @@ class addon extends common {
 	/*
 	* Effacement d'un module installé et non utilisé
 	*/
-	public function moduleDelete() {
+	public function delete() {
 
 		// Jeton incorrect
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
@@ -315,7 +315,7 @@ class addon extends common {
 				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/moduleDelete/' . $key . '/' . $_SESSION['csrf'],
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
 													'value' => template::ico('cancel')
 												])
 											: '',
