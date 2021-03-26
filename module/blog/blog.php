@@ -441,7 +441,7 @@ class blog extends common {
 					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'article
 					template::button('blogConfigComment' . $articleIds[$i], [
-						'class' => ($toApprove || $approved ) > 0 ?  'buttonBlue' : 'buttonGrey' ,
+						'class' => ($toApprove || $approved ) > 0 ?  '' : 'buttonGrey' ,
 						'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
 						'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
 					]),

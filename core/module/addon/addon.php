@@ -112,7 +112,6 @@ class addon extends common {
 											: '',
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('download')
 												])
@@ -120,7 +119,6 @@ class addon extends common {
 				'',
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
