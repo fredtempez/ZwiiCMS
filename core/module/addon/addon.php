@@ -230,30 +230,30 @@ class addon extends common {
 			}
 			// Parcourir les données des modules
 			foreach ($store as $key=>$value) {
+				// Module non installé
+				$ico = template::ico('download');
+				$class = '';
+				// Le module est installé
+				if (array_key_exists($key,$infoModules) === true) {
+					$class = 'buttonGreen';
+					$ico = template::ico('update');
+				}
+				// Le module est installé et utilisé
+				if (in_array($key,$inPages) === true) {
+					$class = 'buttonRed';
+					$ico =  template::ico('update');
+				}
 				self::$storeList [] = [
 					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/item/' . $key . '">'.$store[$key]['title'].'</a>',
 					$store[$key]['fileVersion'],
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['fileDate'])
 					: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
-					/**
-					 * 					template::button('moduleExport' . $key, [
-					 *			'class' => 'buttonBlue',
-					 *			'href' => helper::baseUrl(). $this->getUrl(0) . '/storeDownload/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-					 *			'value' => template::ico('download')
-					 *			])
-					 *];
-					 */
-					 implode(', ',array_keys($inPages,$key)) === ''
-						? template::button('moduleExport' . $key, [
-							'class' => 'buttonBlue',
+					implode(', ', array_keys($inPagesTitle,$key)),
+					template::button('moduleExport' . $key, [
+							'class' => $class,
 							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-							'value' => template::ico('download')
-							])
-						: template::button('moduleExport' . $key, [
-							'class' => 'buttonBlue',
-							'href' => helper::baseUrl(). $this->getUrl(0) . '/installModule/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-							'value' => template::ico('update')
+							'value' => $ico
 							])
 					 ];
 
@@ -308,7 +308,7 @@ class addon extends common {
 				$infoModules[$key]['realName'],
 				$infoModules[$key]['version'],
 				implode(', ', array_keys($inPagesTitle,$key)),
-				//array_key_exists('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
+				//|| ('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
 				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
@@ -318,14 +318,12 @@ class addon extends common {
 											: '',
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('download')
 												])
 											: '',
 				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
-												'class' => 'buttonBlue',
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
