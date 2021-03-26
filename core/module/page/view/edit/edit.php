@@ -191,15 +191,22 @@ echo template::formOpen('pageEditForm');
 					</div>
 
 					<div class="row">
-						<div class="col6">
+						<div class="col4">
 							<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
 								'checked' => $this->getData(['page', $this->getUrl(2), 'disable']),
 								'help' => 'Une page désactivée n\'est pas cliquable en mode déconnecté, les pages enfants sont visibles et accessibles. La page d\'accueil n\'est pas désactivable.'
 							]); ?>
 						</div>
-						<div class="col6">
+						<div class="col4">
 							<?php echo template::checkbox('pageEditTargetBlank', true, 'Nouvel onglet', [
 								'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank'])
+							]); ?>
+						</div>
+						<div class="col4">
+							<?php echo template::checkbox('pageEditLity', true, 'Fenêtre superposée', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'lity']),
+								'help' => 'Affiche la page dans une fenêtre superposée, cette option ne s\'applique pas en mode connecté.'
+
 							]); ?>
 						</div>
 					</div>

@@ -145,7 +145,8 @@ class page extends common {
 				'displayMenu' => '0',
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'lity' => false
 			]
 		]);
 		// Met à jour le site map
@@ -400,6 +401,7 @@ class page extends common {
 						'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 						'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 						'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
+						'lity' => $this->getinput('pageEditLity', helper::FILTER_BOOLEAN)
 					]
 				]);
 				// Barre renommée : changement le nom de la barre dans les pages mères
