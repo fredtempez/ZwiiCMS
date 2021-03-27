@@ -5,8 +5,9 @@
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
     - News 2.3 : ajout de la signature du rédacteur dans le module news (actualités, idem module blog)
     - Les bulles d'aide de page sont désormais contenues dans la page (modules langues v11 et addon).
-Corrections : 
+Corrections :
     - Mode maintenance, titre non masqué d'une page personnalisée.
+    - Ajustements des formats de dates dans les fichiers de backup.
 
 ## version 10.5.00
 **A partir de cette version, les versions de php inférieures à 7.2 ne sont plus supportées.**
