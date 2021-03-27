@@ -2074,7 +2074,7 @@ class core extends common {
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
-				'display' => $this->getData(['page', $this->getUrl(0), 'lity']) === true 
+				'display' => $this->getData(['page', $this->getUrl(0), 'lity']) === true
 							&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 								? self::DISPLAY_LAYOUT_LITY 
 								: $this->output['display']
@@ -2097,7 +2097,11 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
+					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
+					'display' => $this->getData(['page', $this->getUrl(0), 'lity']) === true
+								&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+									? self::DISPLAY_LAYOUT_LITY 
+									: $this->output['display']
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
 			}
@@ -2528,16 +2532,19 @@ class layout extends common {
 		$items .= '</span>';
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
+		$targetLity = $this->getData(['page',$this->getData(['locale','searchPageId']), 'lity']) && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ? ' rel="data-lity" ' : "";
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
 		if ($this->getData(['locale','searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site"' . $targetLity . '>Recherche</a>';
 		}
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
+		// Affichage lity
+		$targetLity = $this->getData(['page',$this->getData(['locale','legalPageId']), 'lity']) && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ? ' rel="data-lity" ' : "";
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions légales">Mentions légales</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) .'" data-tippy-content="Mentions légales"' .  $targetLity .' >Mentions légales</a>';
 		}
 		$items .= '</span>';
 		// Affichage du lien de connexion

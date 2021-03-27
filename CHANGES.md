@@ -9,7 +9,8 @@
         - Traduction selon la langue navigateur
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
-        
+    - Pages : option d'affichage dans une fenêtre superposée (Lity).
+
 ## version 10.5.01
 - Modifications :
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
