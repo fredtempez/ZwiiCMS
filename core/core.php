@@ -2074,11 +2074,13 @@ class core extends common {
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
-				'display' => $this->getData(['page', $this->getUrl(0), 'lity']) === true
-							&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-								? self::DISPLAY_LAYOUT_LITY 
-								: $this->output['display']
 			]);
+			if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true
+					&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
+						$this->addOutput([
+							'display' => self::DISPLAY_LAYOUT_LITY 
+						]);
+			}
 		}
 		// Importe le module
 		else {
@@ -2100,6 +2102,12 @@ class core extends common {
 					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
+				if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true
+						&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
+							$this->addOutput([
+								'display' => self::DISPLAY_LAYOUT_LITY 
+							]);
+				}
 			}
 			else {
 				$moduleId = $this->getUrl(0);
@@ -2175,10 +2183,7 @@ class core extends common {
 						// Affichage
 						if($output['display']) {
 							$this->addOutput([
-								'display' => $this->getData(['page', $this->getUrl(0), 'lity']) === true
-											&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-												? self::DISPLAY_LAYOUT_LITY 
-												: $this->output['display']
+								'display' => $output['display']
 							]);
 						}
 						// Contenu brut
@@ -2347,8 +2352,11 @@ class core extends common {
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
-
 	switch($this->output['display']) {
+		// Layout brut
+		case self::DISPLAY_RAW:
+			echo $this->output['content'];
+			break;
 		// Layout vide
 		case self::DISPLAY_LAYOUT_BLANK:
 			require 'core/layout/blank.php';
@@ -2367,17 +2375,13 @@ class core extends common {
 		case self::DISPLAY_LAYOUT_LIGHT:
 			require 'core/layout/light.php';
 			break;
-		// Layout Lity
-		case self::DISPLAY_LAYOUT_LITY:
-			require 'core/layout/lity.php';
-			break;
 		// Layout principal
 		case self::DISPLAY_LAYOUT_MAIN:
 			require 'core/layout/main.php';
 			break;
-		// Layout brut
-		case self::DISPLAY_RAW:
-			echo $this->output['content'];
+		// Layout Lity
+		case self::DISPLAY_LAYOUT_LITY:
+			require 'core/layout/lity.php';
 			break;
 		}
 	}
