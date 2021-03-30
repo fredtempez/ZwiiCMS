@@ -2057,7 +2057,6 @@ class core extends common {
 						'</a> &#8250; '.
 						$this->getData(['page', $this->getUrl(0), 'title']);
 		}
-
 		// Importe la page
 		if(
 			$this->getData(['page', $this->getUrl(0)]) !== null
@@ -2075,12 +2074,6 @@ class core extends common {
 				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
 			]);
-			if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true
-					&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
-						$this->addOutput([
-							'display' => self::DISPLAY_LAYOUT_LITY 
-						]);
-			}
 		}
 		// Importe le module
 		else {
@@ -2102,11 +2095,13 @@ class core extends common {
 					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
+				//echo $this->output['display'];
 			}
 			else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
 			}
+
 			// Check l'existence du module
 			if(class_exists($moduleId)) {
 				/** @var common $module */
@@ -2176,13 +2171,7 @@ class core extends common {
 						}
 						// Données en sortie applicables même lorsqu'une notice est présente
 						// Affichage
-						
-						if ( $this->getData(['page', $this->getUrl(0), 'lity']) === true
-							  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
-									$this->addOutput([
-										'display' =>self::DISPLAY_LAYOUT_LITY
-									]);
-						} else {
+						if($output['display']) {
 							$this->addOutput([
 								'display' =>self::DISPLAY_LAYOUT_MAIN
 							]);
@@ -2353,7 +2342,20 @@ class core extends common {
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
-
+		// Layout Lity lorsque l'option est active.
+		if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true ) {
+			// Mode connecté pas de menu en mode connecté
+			if ( $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') ) {
+				$this->addOutput([
+					'display' => self::DISPLAY_LAYOUT_MAIN 
+				]);
+			} else {
+				$this->addOutput([
+					'display' => self::DISPLAY_LAYOUT_LITY
+				]);
+			}
+		}
+		
 	switch($this->output['display']) {
 		// Layout brut
 		case self::DISPLAY_RAW:
