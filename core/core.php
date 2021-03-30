@@ -2101,7 +2101,6 @@ class core extends common {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
 			}
-
 			// Check l'existence du module
 			if(class_exists($moduleId)) {
 				/** @var common $module */
@@ -2173,7 +2172,7 @@ class core extends common {
 						// Affichage
 						if($output['display']) {
 							$this->addOutput([
-								'display' =>self::DISPLAY_LAYOUT_MAIN
+								'display' => $output['display']
 							]);
 						}
 						// Contenu brut
@@ -2343,7 +2342,7 @@ class core extends common {
 			]);
 		}
 		// Layout Lity lorsque l'option est active.
-		if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true ) {
+		if ( $this->getData(['page', $this->getUrl(0), 'lity']) === true ) {
 			// Mode connecté pas de menu en mode connecté
 			if ( $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') ) {
 				$this->addOutput([
@@ -2355,7 +2354,6 @@ class core extends common {
 				]);
 			}
 		}
-		
 	switch($this->output['display']) {
 		// Layout brut
 		case self::DISPLAY_RAW:
