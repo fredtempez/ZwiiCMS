@@ -114,12 +114,14 @@ class search extends common {
 				)
 			// Cas des pages d'administration
 			// Pas connecté
-			AND  $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+			AND ( $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getData(['config','translate','admin']) === true 
 					)
 				)
+			AND !isset($_COOKIE['ZWII_I18N_SITE'])
+			)
 			{
 				// Découper la chaîne
 				$f = str_getcsv($motclef, ' ');
@@ -136,6 +138,15 @@ class search extends common {
 					}
 				}
 			}
+
+			// Suppression des mots < 3  caractères et des articles > 2 caractères de la chaîne $motclef 
+			$arraymotclef = explode(' ', $motclef);
+			$motclef = '';
+			foreach($arraymotclef as $key=>$value){
+				if( strlen($value)>2 && $value!=='les' && $value!=='des' && $value!=='une' && $value!=='aux') $motclef.=$value.' ';
+			}
+			// Suppression du dernier ' '
+			if($motclef !== '') $motclef = substr($motclef,0, strlen($motclef)-1);
 
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
 			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
