@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '2.3';
+	const VERSION = '2.4';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -42,7 +42,24 @@ class news extends common {
 	];
 
 	public static $users = [];
-
+	
+	// Nombre d'objets par page
+	public static $ItemsList = [
+		4 => '4 articles',
+		8 => '8 articles',
+		12 => '12 articles',
+		16 => '16 articles',
+		22 => '22  articles'
+	];
+	// Nombre de colone par page
+	public static $ListeCol = [
+		12 => '1 Colonne',
+		6 => '2 Colonnes',
+		4 => '3 Colonnes',
+		2 => '4 Colonnes'
+	];
+	public static $nbrCol = 1;
+	
 	/**
 	 * Flux RSS
 	 */
@@ -142,7 +159,9 @@ class news extends common {
 		if($this->isPost()) {
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT)
+				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
+				'listeCol' => $this->getInput('newsConfigListeCol', helper::FILTER_INT,true)
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -298,7 +317,10 @@ class news extends common {
 			}
 		}
 		// Pagination
-		$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
+		// Nombre de colonnes
+		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'listeCol']);		
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// News en fonction de la pagination

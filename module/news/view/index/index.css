@@ -12,7 +12,7 @@
  * @link http://zwiicms.fr/
  */
 
-/*
+ /*
 * Module news
 */
 
@@ -44,4 +44,25 @@
 #rssFeed p {
     display: inline;
     vertical-align: top;
+}
+@media (min-width: 769px)  
+{                          
+	.col2 {width: 20%;}    
+	.col3 {width: 24%;}    
+	.col4 {width: 32%;}    
+	.col6 {width: 49%;}    
+	.col12 {width: 100%;}  
+}
+
+@media (max-width: 768px)  
+{                          
+	.col2 {width: 49%;}
+	.col3 {width: 49%;}  
+	.col4 {width: 49%;}
+}
+@media (max-width: 480px)  
+{                          
+    .col2 {width: 100%;}
+	.col3 {width: 100%;}  
+	.col4 {width: 100%;}
 }
