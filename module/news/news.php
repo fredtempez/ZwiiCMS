@@ -27,7 +27,8 @@ class news extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR
+		'rss' => self::GROUP_VISITOR,
+		'update' => self::GROUP_MODERATOR
 	];
 
 	public static $news = [];
@@ -59,7 +60,28 @@ class news extends common {
 		2 => '4 Colonnes'
 	];
 	public static $nbrCol = 1;
-	
+
+	/**
+	 * Mise à jour du module
+	 */
+
+	public function update() {
+		// Mettre à jour la version des donnnée si inexistante
+		if ($this->getData(['module', $this->getUrl(0), 'versionData']) === NULL) {
+			$this->setData(['module', $this->getUrl(0), 'versionData','0.0']);
+		}
+		// Version 2.4
+		if ($this->getData(['module', $this->getUrl(0), 'versionData']) < self::VERSION) {
+			$this->setData(['module', $this->getUrl(0),'config', [
+				 'itemsperPage' => 16,
+				 'itemsperCol'=> 6,
+				 'feeds' 	 => $this->setData(['module', $this->getUrl(0),'config','feeds']),
+				 'feedsLabel' => $this->setData(['module', $this->getUrl(0),'config','feedsLabel']),
+				 'version' => '2.4'
+			]]);
+		}
+
+	}
 	/**
 	 * Flux RSS
 	 */
@@ -307,6 +329,8 @@ class news extends common {
 	 * Accueil
 	 */
 	public function index() {
+		// Mise à jour
+		$this->update();
 		// Ids des news par ordre de publication
 		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
 		$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
