@@ -52,9 +52,9 @@
 			]); ?>
 		</div>
 		<div class="col4">
-			<?php echo template::select('newsConfigListeCol', $module::$ListeCol, [
+			<?php echo template::select('newsConfigItemsperCol', $module::$Columns, [
 				'label' => 'Nombre de colonne',
-				'selected' => $this->getData(['module', $this->getUrl(0),'config', 'listeCol']),
+				'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']),
 				'help' => 'Nombre de colonnes par page'
 			]); ?>
 		</div>

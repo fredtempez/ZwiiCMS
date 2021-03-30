@@ -52,7 +52,7 @@ class news extends common {
 		22 => '22  articles'
 	];
 	// Nombre de colone par page
-	public static $ListeCol = [
+	public static $Columns = [
 		12 => '1 Colonne',
 		6 => '2 Colonnes',
 		4 => '3 Colonnes',
@@ -161,7 +161,7 @@ class news extends common {
 				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
-				'listeCol' => $this->getInput('newsConfigListeCol', helper::FILTER_INT,true)
+				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true)
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -320,7 +320,7 @@ class news extends common {
 		//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 		$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 		// Nombre de colonnes
-		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'listeCol']);		
+		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);		
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// News en fonction de la pagination
