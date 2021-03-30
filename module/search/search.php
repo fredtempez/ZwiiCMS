@@ -10,7 +10,8 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2021, Frédéric Tempez
- * @copyright Sylvain Lelièvre
+ * @author Sylvain Lelièvre <lelievresylvain@free.fr>
+ * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  *
@@ -103,7 +104,7 @@ class search extends common {
 			$motclef = self::$motclef;
 
 			// Traduction du mot clé si le script Google Trad est actif
-			// Le multi langue est sélectionné 
+			// Le multi langue est sélectionné
 			if (  $this->getData(['config','translate','scriptGoogle']) === true
 			AND
 				// et la traduction de la langue courante est automatique
@@ -117,7 +118,7 @@ class search extends common {
 			AND ( $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getData(['config','translate','admin']) === true 
+					AND $this->getData(['config','translate','admin']) === true
 					)
 				)
 			AND !isset($_COOKIE['ZWII_I18N_SITE'])
@@ -139,7 +140,7 @@ class search extends common {
 				}
 			}
 
-			// Suppression des mots < 3  caractères et des articles > 2 caractères de la chaîne $motclef 
+			// Suppression des mots < 3  caractères et des articles > 2 caractères de la chaîne $motclef
 			$arraymotclef = explode(' ', $motclef);
 			$motclef = '';
 			foreach($arraymotclef as $key=>$value){
