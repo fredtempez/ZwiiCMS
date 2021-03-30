@@ -49,8 +49,7 @@
 					<div class="col6">
 						<?php echo template::select('newsConfigItemsperPage', $module::$ItemsList, [
 							'label' => 'Articles par page',
-							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),
-							'help' => 'Nombre de news par page'
+							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 						]); ?>
 					</div>
 				</div>
