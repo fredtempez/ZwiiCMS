@@ -2102,12 +2102,6 @@ class core extends common {
 					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
-				if ( 	$this->getData(['page', $this->getUrl(0), 'lity']) === true
-						&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
-							$this->addOutput([
-								'display' => self::DISPLAY_LAYOUT_LITY 
-							]);
-				}
 			}
 			else {
 				$moduleId = $this->getUrl(0);
@@ -2117,6 +2111,7 @@ class core extends common {
 			if(class_exists($moduleId)) {
 				/** @var common $module */
 				$module = new $moduleId;
+
 				// Check l'existence de l'action
 				$action = '';
 				$ignore = true;
@@ -2181,9 +2176,15 @@ class core extends common {
 						}
 						// Données en sortie applicables même lorsqu'une notice est présente
 						// Affichage
-						if($output['display']) {
+						
+						if ( $this->getData(['page', $this->getUrl(0), 'lity']) === true
+							  && $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
+									$this->addOutput([
+										'display' =>self::DISPLAY_LAYOUT_LITY
+									]);
+						} else {
 							$this->addOutput([
-								'display' => $output['display']
+								'display' =>self::DISPLAY_LAYOUT_MAIN
 							]);
 						}
 						// Contenu brut
@@ -2352,6 +2353,7 @@ class core extends common {
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
+
 	switch($this->output['display']) {
 		// Layout brut
 		case self::DISPLAY_RAW:
