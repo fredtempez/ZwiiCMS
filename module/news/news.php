@@ -43,7 +43,7 @@ class news extends common {
 	];
 
 	public static $users = [];
-	
+
 	// Nombre d'objets par page
 	public static $ItemsList = [
 		4 => '4 articles',
@@ -61,32 +61,33 @@ class news extends common {
 	];
 	public static $nbrCol = 1;
 
+
 	/**
 	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
 	 */
-
 	public function update() {
-		// Mettre à jour la version des donnnée si inexistante
-		if ($this->getData(['module', $this->getUrl(0), 'versionData']) === NULL) {
-			$this->setData(['module', $this->getUrl(0), 'versionData','0.0']);
+		// Insitialisation de la version
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
 		}
 		// Version 2.4
-		if ($this->getData(['module', $this->getUrl(0), 'versionData']) < self::VERSION) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'versionData']), self::VERSION, '<') ) {
 			$this->setData(['module', $this->getUrl(0),'config', [
 				 'itemsperPage' => 16,
 				 'itemsperCol'=> 6,
-				 'feeds' 	 => $this->setData(['module', $this->getUrl(0),'config','feeds']),
-				 'feedsLabel' => $this->setData(['module', $this->getUrl(0),'config','feedsLabel']),
+				 'feeds' 	 => $this->getData(['module', $this->getUrl(0), 'config','feeds']),
+				 'feedsLabel' => $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']),
 				 'version' => '2.4'
 			]]);
 		}
-
 	}
+
+
 	/**
 	 * Flux RSS
 	 */
 	public function rss() {
-
 		// Inclure les classes
 		include_once 'module/news/vendor/FeedWriter/Item.php';
 		include_once 'module/news/vendor/FeedWriter/Feed.php';
@@ -134,7 +135,7 @@ class news extends common {
 	}
 
 	/**
-	 * Édition
+	 * Ajout d'un article
 	 */
 	public function add() {
 		// Soumission du formulaire
@@ -177,6 +178,8 @@ class news extends common {
 	 * Configuration
 	 */
 	public function config() {
+		// Mise à jour des données de module
+		$this->update();
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -344,7 +347,7 @@ class news extends common {
 		//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
 		$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 		// Nombre de colonnes
-		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);		
+		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// News en fonction de la pagination
