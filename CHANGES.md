@@ -9,7 +9,11 @@
         - Traduction selon la langue navigateur
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
+        - Suppression de l'option articles par pages.
     - Pages : option d'affichage dans une fenêtre superposée (Lity).
+    - Autonomie des modules : les mises à jour des données propres aux modules sont déportées vers le module plutôt que dans core
+    - Éléments par page : l'option devient propre aux modules et n'est plus gérées dans la configuration du CMS.
+    - Module News : présentation des articles en colonnes.
 
 ## version 10.5.01
 - Modifications :
