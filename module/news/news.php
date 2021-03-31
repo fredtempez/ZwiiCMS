@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '2.4';
+	const VERSION = '3.0';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -78,7 +78,7 @@ class news extends common {
 				 'itemsperCol'=> 6,
 				 'feeds' 	 => $this->getData(['module', $this->getUrl(0), 'config','feeds']),
 				 'feedsLabel' => $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']),
-				 'version' => '2.4'
+				 'version' => '3.0'
 			]]);
 		}
 	}
