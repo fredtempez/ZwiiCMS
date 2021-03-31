@@ -27,8 +27,7 @@ class news extends common {
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR,
-		'update' => self::GROUP_MODERATOR
+		'rss' => self::GROUP_VISITOR
 	];
 
 	public static $news = [];
@@ -66,7 +65,7 @@ class news extends common {
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
 	 */
-	public function update() {
+	private function update() {
 		// Insitialisation de la version
 		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
