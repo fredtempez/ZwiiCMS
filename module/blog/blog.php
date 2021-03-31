@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '4.5';
+	const VERSION = '5.0';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -75,6 +75,15 @@ class blog extends common {
 		'right' => 'À droite ',
 	];
 
+	// Nombre d'objets par page
+	public static $ItemsList = [
+		4 => '4 articles',
+		8 => '8 articles',
+		12 => '12 articles',
+		16 => '16 articles',
+		22 => '22  articles'
+	];
+
 	//Paramètre longueur maximale des commentaires en nb de caractères
 	public static $commentLength = [
 		'500' => '500',
@@ -94,7 +103,27 @@ class blog extends common {
 
 	public static $users = [];
 
-		/**
+
+
+	/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+		// Insitialisation de la version
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','4.5']);
+		}
+		// Version 5.0
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'versionData']), '5.0', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','5.0']);
+		}
+	}
+
+
+
+	/**
 	 * Flux RSS
 	 */
 	public function rss() {
@@ -192,7 +221,7 @@ class blog extends common {
 					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
 					'commentNotification'  => $this->getInput('blogAddCommentNotification', helper::FILTER_BOOLEAN),
-					'commentGroupNotification' => $this->getInput('blogAddCommentGroupNotification', helper::FILTER_INT)
+					'commentGroupNotification' => $this->getInput('blogAddCommentGroupNotification', helper::FILTER_INT),
 				]
 			]);
 			// Valeurs en sortie
@@ -371,11 +400,14 @@ class blog extends common {
 	 * Configuration
 	 */
 	public function config() {
+		// Mise à jour des données de module
+		$this->update();
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('blogConfigShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('blogConfigFeedslabel',helper::FILTER_STRING_SHORT)
+				'feedsLabel' => $this->getInput('blogConfigFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -411,7 +443,7 @@ class blog extends common {
 			}
 			$articleIds = $filterData;
 			// Pagination
-			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Articles en fonction de la pagination
@@ -590,6 +622,8 @@ class blog extends common {
 	 * Accueil (deux affichages en un pour éviter une url à rallonge)
 	 */
 	public function index() {
+		// Mise à jour des données de module
+		$this->update();
 		// Affichage d'un article
 		if(
 			$this->getUrl(1)
@@ -678,7 +712,7 @@ class blog extends common {
 				}
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
-				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
+				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Signature de l'article
@@ -725,7 +759,7 @@ class blog extends common {
 				}
 			}
 			// Pagination
-			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Articles en fonction de la pagination
