@@ -21,7 +21,6 @@ class init extends common {
 				'githubId' => ''
 			],
 			'timezone' => 'Europe/Paris',
-			'itemsperPage' => 10,
 			'proxyUrl' => '',
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',

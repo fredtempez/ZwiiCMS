@@ -36,6 +36,14 @@
 						]); ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col6 offset6">
+						<?php echo template::select('blogConfigItemsperPage', $module::$ItemsList, [
+							'label' => 'Articles par page',
+							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
+						]); ?>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

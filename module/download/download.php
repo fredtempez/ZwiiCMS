@@ -14,7 +14,7 @@
 
 class download extends common {
 
-	const VERSION = '1.1';
+	const VERSION = '1.2';
 	const REALNAME = 'Téléchargement';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -91,6 +91,15 @@ class download extends common {
 		'10000' => '10000'
 	];
 
+	// Nombre d'objets par page
+	public static $ItemsList = [
+		4 => '4 articles',
+		8 => '8 articles',
+		12 => '12 articles',
+		16 => '16 articles',
+		22 => '22  articles'
+	];
+
 	// Permissions d'un item
 	public static $itemConsent = [
 		self::EDIT_ALL 		   => 'Tous les groupes',
@@ -108,6 +117,22 @@ class download extends common {
 	];
 
 	public static $users = [];
+
+	/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+		// Insitialisation de la version
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
+		}
+		// Version 5.0
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '1.1', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','1.2']);
+		}
+	}
 
 	/**
 	 * Flux RSS
@@ -252,7 +277,7 @@ class download extends common {
 		// Ids des commentaires par ordre de création
 		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
-		$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// Commentaires en fonction de la pagination
@@ -389,11 +414,14 @@ class download extends common {
 	 * Configuration
 	 */
 	public function config() {
+		// Mise à jour des données de module
+		$this->update();
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('downloadConfigShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('downloadConfigFeedslabel',helper::FILTER_STRING_SHORT)
+				'feedsLabel' => $this->getInput('downloadConfigFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -429,7 +457,7 @@ class download extends common {
 			}
 			$itemIds = $filterData;
 			// Pagination
-			$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($itemIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// items en fonction de la pagination
@@ -618,6 +646,8 @@ class download extends common {
 	 * Accueil (deux affichages en un pour éviter une url à rallonge)
 	 */
 	public function index() {
+		// Mise à jour des données de module
+		$this->update();
 		// Affichage d'un item
 		if(
 			$this->getUrl(1)
@@ -706,7 +736,7 @@ class download extends common {
 				}
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
-				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']),'#comment');
+				$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
 				// Nombre de téléchargements 
 				self::$statSum = count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items',$this->getUrl(1),'fileStats']), 'time') ) === 0
 				? '0'
@@ -757,7 +787,7 @@ class download extends common {
 				}
 			}
 			// Pagination
-			$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($itemIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Items en fonction de la pagination
@@ -866,7 +896,7 @@ class download extends common {
 		// Total des téléchargements
 		self::$statSum = count ($itemIds);
 		// Pagination
-		$pagination = helper::pagination($itemIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		$pagination = helper::pagination($itemIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 
 		// Liste des pages
 		self::$pages = $pagination['pages'];
