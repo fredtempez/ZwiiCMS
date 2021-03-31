@@ -115,7 +115,7 @@ class blog extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','4.5']);
 		}
 		// Version 5.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'versionData']), '5.0', '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','5.0']);
 		}
@@ -263,7 +263,7 @@ class blog extends common {
 		// Ids des commentaires par ordre de création
 		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
-		$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+		$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 		// Liste des pages
 		self::$pages = $pagination['pages'];
 		// Commentaires en fonction de la pagination
@@ -712,7 +712,7 @@ class blog extends common {
 				}
 				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
-				$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
+				$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Signature de l'article

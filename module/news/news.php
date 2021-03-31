@@ -71,7 +71,7 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
 		}
 		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'versionData']), self::VERSION, '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), self::VERSION, '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','3.0']);
@@ -103,7 +103,7 @@ class news extends common {
 		// Corps des articles
 		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
 		// Articles de la première page uniquement
-		$newsIdsPublishedOns = array_slice($newsIdsPublishedOns, 0, $this->getData(['config', 'itemsperPage']) );
+		$newsIdsPublishedOns = array_slice($newsIdsPublishedOns, 0, $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 		$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
@@ -193,7 +193,7 @@ class news extends common {
 			// Ids des news par ordre de publication
 			$newsIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 			// Pagination
-			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// News en fonction de la pagination
