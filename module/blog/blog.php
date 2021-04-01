@@ -110,10 +110,6 @@ class blog extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		// Insitialisation de la version
-		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
-			$this->setData(['module', $this->getUrl(0), 'config', 'version','4.5']);
-		}
 		// Version 5.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
