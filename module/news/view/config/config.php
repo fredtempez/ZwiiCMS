@@ -39,17 +39,23 @@
 				</div>
 				<!-- Block ajouté pour le sélecteur -->	
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::select('newsConfigItemsperCol', $module::$Columns, [
 							'label' => 'Pagination',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']),
 							'help' => 'Nombre de colonnes par page'
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::select('newsConfigItemsperPage', $module::$ItemsList, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('newsConfigItemsHeight', $module::$ItemsHeight, [
+							'label' => 'Hauteur',
+							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight'])
 						]); ?>
 					</div>
 				</div>

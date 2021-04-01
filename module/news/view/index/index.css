@@ -21,6 +21,10 @@
     background-color: #ECEFF1;
     padding:5px;
 }*/
+.newsContent {
+	overflow: hidden; /* les dépassements seront masqués */
+}
+
 
 .newsContent {
 	clear: left;
@@ -66,3 +70,4 @@
 	.col3 {width: 100%;}
 	.col4 {width: 100%;}
 }
+

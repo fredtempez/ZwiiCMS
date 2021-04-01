@@ -1,11 +1,11 @@
 <?php if($module::$news): ?>
 	<div class="row">
 		<?php foreach($module::$news as $newsId => $news): ?>
-			<div class="col<?php echo $module::$nbrCol ;?>"  >
+			<div class="col<?php echo $module::$nbrCol ;?>" >
 				<h1 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo $news['title']; ?>
 				</h1>
-				<div class="newsContent">
+				<div class="newsContent" style="height:<?php echo $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight']); ?>;">
 					<?php echo $news['content']; ?>
 				</div>
 				<div class="newsSignature">

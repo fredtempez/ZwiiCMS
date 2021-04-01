@@ -60,6 +60,12 @@ class news extends common {
 	];
 	public static $nbrCol = 1;
 
+	public static $ItemsHeight = [
+		'200px' 	=> 'Petit',
+		'300px' 	=> 'Moyen',
+		'400px' 	=> 'Grand'
+	];
+
 
 	/**
 	 * Mise à jour du module
@@ -178,6 +184,7 @@ class news extends common {
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
+				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
 				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
 				]]);
 			// Valeurs en sortie
