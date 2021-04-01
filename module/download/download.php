@@ -128,7 +128,7 @@ class download extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
 		}
 		// Version 5.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '1.1', '<') ) {
+		if (version_compare('1.2', $this->getData(['module', $this->getUrl(0), 'config', 'version']), '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','1.2']);
 		}
