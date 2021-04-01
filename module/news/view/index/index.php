@@ -7,6 +7,7 @@
 				</h1>
 				<div class="newsContent" style="height:<?php echo $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight']); ?>;">
 					<?php echo $news['content']; ?>
+					<div class="newsBlur"></div>
 				</div>
 				<div class="newsSignature">
 					<i class="far fa-calendar-alt"></i>
