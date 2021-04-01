@@ -71,7 +71,7 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
 		}
 		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), self::VERSION, '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '3.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','3.0']);
