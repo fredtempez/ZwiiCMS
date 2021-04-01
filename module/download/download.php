@@ -422,6 +422,7 @@ class download extends common {
 				'feeds' 	 => $this->getInput('downloadConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('downloadConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
+				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([

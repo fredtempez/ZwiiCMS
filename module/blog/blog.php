@@ -407,7 +407,8 @@ class blog extends common {
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('blogConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('blogConfigFeedslabel',helper::FILTER_STRING_SHORT),
-				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true)
+				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
+				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([

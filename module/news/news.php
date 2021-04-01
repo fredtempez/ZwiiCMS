@@ -67,9 +67,9 @@ class news extends common {
 	 */
 	private function update() {
 		// Insitialisation de la version
-		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
-			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
-		}
+		//if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
+		//	$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
+		//}
 		// Version 3.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '3.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
@@ -181,7 +181,8 @@ class news extends common {
 				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
-				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true)
+				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
+				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
