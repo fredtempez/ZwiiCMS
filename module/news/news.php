@@ -66,19 +66,15 @@ class news extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		// Initialisation de la version
+		// Insitialisation de la version
 		if ($this->getData(['module', $this->getUrl(0), 'config', 'version']) === NULL) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','0.0']);
 		}
 		// Version 3.0
-		if (version_compare('3.0',$this->getData(['module', $this->getUrl(0), 'config', 'version']), '<') ) {
-			$this->setData(['module', $this->getUrl(0),'config', [
-					'itemsperPage' => 16,
-					'itemsperCol'=> 6,
-					'feeds' 	 => $this->getData(['module', $this->getUrl(0), 'config','feeds']),
-					'feedsLabel' => $this->getData(['module', $this->getUrl(0), 'config','feedsLabel']),
-					'version' => '3.0'
-			]]);
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), self::VERSION, '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'version','3.0']);
 		}
 	}
 

@@ -115,7 +115,7 @@ class blog extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','4.5']);
 		}
 		// Version 5.0
-		if (version_compare('5.0', $this->getData(['module', $this->getUrl(0), 'config', 'version']), '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'version','5.0']);
 		}
