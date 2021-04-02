@@ -2076,8 +2076,16 @@ class core extends common {
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
+				'display' => $this->getData(['page', $this->getUrl(0), 'lity']) ? self:: DISPLAY_LAYOUT_LITY : $this->output['display']
 			]);
+			// Mode connecté, désactiver lity
+			if ( $this->getData(['page', $this->getUrl(0), 'lity']) === true && $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') ) {
+				$this->addOutput([
+					'display' => self::DISPLAY_LAYOUT_MAIN 
+				]);
+			}
 		}
+
 		// Importe le module
 		else {
 			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
@@ -2095,11 +2103,11 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
+					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
+					'display' => $this->getData(['page', $this->getUrl(0), 'display']),
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
-				//echo $this->output['display'];
-			}
+			} 
 			else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
@@ -2173,10 +2181,15 @@ class core extends common {
 						}
 						// Données en sortie applicables même lorsqu'une notice est présente
 						// Affichage
-						if($output['display']) {
-							$this->addOutput([
-								'display' => $output['display']
-							]);
+						if  ( $this->getData(['page', $this->getUrl(0), 'lity']) === true 
+								&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
+								$this->addOutput(['display' => self:: DISPLAY_LAYOUT_LITY]);
+						} else  {
+							if($output['display']) {
+								$this->addOutput([
+									'display' => $output['display']
+								]);
+							}
 						}
 						// Contenu brut
 						if($output['content']) {
@@ -2343,54 +2356,40 @@ class core extends common {
 			$this->addOutput([
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
-		}
-		// Layout Lity lorsque l'option est active.
-		if ( $this->getData(['page', $this->getUrl(0), 'lity']) === true ) {
-			// Mode connecté pas de menu en mode connecté
-			if ( $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') ) {
-				$this->addOutput([
-					'display' => self::DISPLAY_LAYOUT_MAIN 
-				]);
-			} else {
-				$this->addOutput([
-					'display' => self::DISPLAY_LAYOUT_LITY
-				]);
-			}
-		}
-	switch($this->output['display']) {
-		// Layout brut
-		case self::DISPLAY_RAW:
-			echo $this->output['content'];
-			break;
-		// Layout vide
-		case self::DISPLAY_LAYOUT_BLANK:
-			require 'core/layout/blank.php';
-			break;
-		// Affichage en JSON
-		case self::DISPLAY_JSON:
-			header('Content-Type: application/json');
-			echo json_encode($this->output['content']);
-			break;
-		// RSS feed
-		case self::DISPLAY_RSS:
-			header('Content-type: application/rss+xml; charset=UTF-8');
-			echo $this->output['content'];
-			break;
-		// Layout allégé
-		case self::DISPLAY_LAYOUT_LIGHT:
-			require 'core/layout/light.php';
-			break;
-		// Layout principal
-		case self::DISPLAY_LAYOUT_MAIN:
-			require 'core/layout/main.php';
-			break;
-		// Layout Lity
-		case self::DISPLAY_LAYOUT_LITY:
-			require 'core/layout/lity.php';
-			break;
+		};
+		switch($this->output['display']) {
+			// Layout brut
+			case self::DISPLAY_RAW:
+				echo $this->output['content'];
+				break;
+			// Layout vide
+			case self::DISPLAY_LAYOUT_BLANK:
+				require 'core/layout/blank.php';
+				break;
+			// Affichage en JSON
+			case self::DISPLAY_JSON:
+				header('Content-Type: application/json');
+				echo json_encode($this->output['content']);
+				break;
+			// RSS feed
+			case self::DISPLAY_RSS:
+				header('Content-type: application/rss+xml; charset=UTF-8');
+				echo $this->output['content'];
+				break;
+			// Layout allégé
+			case self::DISPLAY_LAYOUT_LIGHT:
+				require 'core/layout/light.php';
+				break;
+			// Layout principal
+			case self::DISPLAY_LAYOUT_MAIN:
+				require 'core/layout/main.php';
+				break;
+			// Layout Lity
+			case self::DISPLAY_LAYOUT_LITY:
+				require 'core/layout/lity.php';
+				break;
 		}
 	}
-
 }
 
 class layout extends common {
