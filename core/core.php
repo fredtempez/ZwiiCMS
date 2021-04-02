@@ -2179,11 +2179,15 @@ class core extends common {
 							}
 						}
 						// Données en sortie applicables même lorsqu'une notice est présente
-						// Affichage
-						if  ( $this->getData(['page', $this->getUrl(0), 'lity']) === true 
-								&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) {
-								$this->addOutput(['display' => self:: DISPLAY_LAYOUT_LITY]);
-						} else  {
+						// Affichage changer lity en main si connexion
+						if  ( 		$this->getData(['page', $this->getUrl(0), 'lity']) === true 
+									&& $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') ) 
+							{
+									$this->addOutput([
+											'display' => self:: DISPLAY_LAYOUT_LITY
+									]);
+
+						} else {
 							if($output['display']) {
 								$this->addOutput([
 									'display' => $output['display']
