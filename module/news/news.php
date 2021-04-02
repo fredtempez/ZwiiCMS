@@ -66,6 +66,9 @@ class news extends common {
 		'400px' 	=> 'Grand'
 	];
 
+	// Signature de l'article
+	public static $articleSignature = '';
+
 
 	/**
 	 * Mise à jour du module
@@ -331,35 +334,63 @@ class news extends common {
 	 * Accueil
 	 */
 	public function index() {
-		// Mise à jour
+		// Mise à jour des données de module
 		$this->update();
-		// Ids des news par ordre de publication
-		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-		$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
-		$newsIds = [];
-		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
-			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
-				$newsIds[] = $newsId;
+		// Affichage d'un article
+		if(
+			$this->getUrl(1)
+			// Protection pour la pagination, un ID ne peut pas être un entier, une page oui
+			AND intval($this->getUrl(1)) === 0
+		) {
+			// L'article n'existe pas
+			if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1)]) === null) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'access' => false
+				]);
 			}
+			// L'article existe
+			else {
+				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'userId']));
+				// Valeurs en sortie
+				$this->addOutput([
+					'showBarEditButton' => true,
+					'title' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'title']),
+					'view' => 'article'
+				]);
+
+			}
+		} else {
+			// Affichage index
+			// Ids des news par ordre de publication
+			$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+			$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
+			$newsIds = [];
+			foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
+				if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
+					$newsIds[] = $newsId;
+				}
+			}
+			// Pagination
+			//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
+			// Nombre de colonnes
+			self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);
+			// Liste des pages
+			self::$pages = $pagination['pages'];
+			// News en fonction de la pagination
+			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+				self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
+				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsIds[$i], 'userId']));
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'showBarEditButton' => true,
+				'showPageContent' => true,
+				'view' => 'index'
+			]);
+
 		}
-		// Pagination
-		//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
-		$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
-		// Nombre de colonnes
-		self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);
-		// Liste des pages
-		self::$pages = $pagination['pages'];
-		// News en fonction de la pagination
-		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-			self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
-			self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsIds[$i], 'userId']));
-		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'showBarEditButton' => true,
-			'showPageContent' => true,
-			'view' => 'index'
-		]);
 	}
 
 	/**

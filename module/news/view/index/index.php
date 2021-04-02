@@ -3,7 +3,7 @@
 		<?php foreach($module::$news as $newsId => $news): ?>
 			<div class="col<?php echo $module::$nbrCol ;?>" >
 				<h1 class="newsTitle" id="<?php echo $newsId;?>">
-					<?php echo $news['title']; ?>
+					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 				</h1>
 				<div class="newsContent" style="height:<?php echo $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight']); ?>;">
 					<?php echo $news['content']; ?>
