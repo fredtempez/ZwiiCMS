@@ -1,8 +1,9 @@
 # Changelog
 
 ## version 10.5.02
-- Correction :
+- Corrections :
     - Erreur de positionnement de marge dans le thème du site.
+    - Erreur de syntaxe html dans les liens des flux RSS. S'ouvrent désormais dans un nouvel onglet.
 
 ## version 10.5.01
 - Modifications :

@@ -38,7 +38,7 @@
 	<?php echo $module::$pages; ?>
 	<?php if ($this->getData(['module',$this->getUrl(0), 'config', 'feeds'])): ?>
 		<div id="rssFeed">
-			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?> ">
+			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" target="_blank">
 				<img  src='module/news/ressource/feed-icon-16.gif' />
 				<?php
 					echo '<p>' . $this->getData(['module',$this->getUrl(0), 'config', 'feedsLabel']) . '</p>' ;
