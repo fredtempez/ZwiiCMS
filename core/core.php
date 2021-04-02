@@ -2103,8 +2103,7 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
-					'display' => $this->getData(['page', $this->getUrl(0), 'display']),
+					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
 			} 
