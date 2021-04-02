@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.5.01';
+	const ZWII_VERSION = '10.5.02';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -1577,9 +1577,13 @@ class common {
 			$this->setData(['core', 'dataVersion', 10400]);
 
 		}
-		// Version 10.4.05
-		if ($this->getData(['core', 'dataVersion']) < 10405) {
-			$this->setData(['core', 'dataVersion', 10405]);
+		// Version 10.5.02
+		if ($this->getData(['core', 'dataVersion']) < 10502) {
+			// Forcer la régénération du thème
+			if (file_exists(self::DATA_DIR.'theme.css')) {
+				unlink (self::DATA_DIR.'theme.css');
+			}
+			$this->setData(['core', 'dataVersion', 10502]);
 		}
 	}
 }
@@ -1706,7 +1710,7 @@ class core extends common {
 				$marginBottomLarge = $margin;
 			}
 			$css .= $this->getData(['theme', 'site', 'width']) === '100%'
-					? '@media (min-width: 769px) {#site{margin:0 auto 0 ' . $marginBottomLarge . ' !important;}}@media (max-width: 768px) {#site{margin:0 auto 0 ' . $marginBottomSmall . ' !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
+					? '@media (min-width: 769px) {#site{margin:0 auto ' . $marginBottomLarge . ' 0 !important;}}@media (max-width: 768px) {#site{margin:0 auto ' . $marginBottomSmall . ' 0 !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
 					: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge .  ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall .  ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px'
 					? '.button, button{font-size:0.8em;}'

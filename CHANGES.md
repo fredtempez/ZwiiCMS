@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.5.02
+- Correction :
+    - Erreur de positionnement de marge dans le thème du site.
+
 ## version 10.5.01
 - Modifications :
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
