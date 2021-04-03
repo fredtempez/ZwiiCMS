@@ -5,7 +5,7 @@
 				<h1 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 				</h1>
-				<div class="newsContent" style="height:<?php echo $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight']); ?>;">
+				<div class="newsContent">
 					<?php echo $news['content']; ?>
 					<div class="newsBlur"></div>
 				</div>

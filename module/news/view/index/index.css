@@ -25,6 +25,7 @@
 	overflow: hidden; /* les dépassements seront masqués */
 	position: relative;
 }
+
 .newsBlur {
 	position: absolute;
 	bottom: -5%;
@@ -39,6 +40,7 @@
 .newsContent {
 	clear: left;
 	margin-left: 10px;
+	margin-bottom: 5px;
 }
 
 .newsSignature {
