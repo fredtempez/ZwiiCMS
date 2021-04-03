@@ -12,7 +12,7 @@
         - Suppression de l'option articles par pages.
     - Pages : option d'affichage dans une fenêtre superposée (Lity).
     - Autonomie des modules : les mises à jour des données propres aux modules sont déportées vers le module plutôt que dans core
-    - Éléments par page : l'option devient propre aux modules et n'est plus gérées dans la configuration du CMS.
+    - Nombre d'éléments ou d'articles par page : l'option devient propre aux modules et n'est plus gérées dans la configuration du CMS.
     - Module News : présentation des articles en colonnes.
 
 ## version 10.5.01
