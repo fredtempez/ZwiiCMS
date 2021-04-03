@@ -25,6 +25,7 @@
 	overflow: hidden; /* les dépassements seront masqués */
 	position: relative;
 }
+
 .newsBlur {
 	position: absolute;
 	bottom: -5%;

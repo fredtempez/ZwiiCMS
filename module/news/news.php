@@ -180,15 +180,30 @@ class news extends common {
 	public function config() {
 		// Mise à jour des données de module
 		$this->update();
+
 		// Soumission du formulaire
 		if($this->isPost()) {
+
+			// Générer la feuille de CSS
+			$class = get_called_class();
+			$moduleId = $this->getUrl(0);
+			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
+			// Dossier de l'instance
+			if (!is_dir(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId)) {
+				mkdir (self::DATA_DIR . 'modules/' . $class . '/' .  $moduleId, 0775, true);
+			}
+
+			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '/style.css' , $style );
+			// Fin feuille de style
+
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
-				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
+				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version']),
+				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '/style.css' : ''
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -387,7 +402,8 @@ class news extends common {
 			$this->addOutput([
 				'showBarEditButton' => true,
 				'showPageContent' => true,
-				'view' => 'index'
+				'view' => 'index',
+				'style' => $this->getData(['module', $this->getUrl(0),'config', 'style'])
 			]);
 
 		}
