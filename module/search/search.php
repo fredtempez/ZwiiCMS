@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '1.3';
+	const VERSION = '2.0';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -46,6 +46,17 @@ class search extends common {
 	];
 
 
+		/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+		// Version 3.0
+		if (version_compare($this->getData(['module', $this->getUrl(0),  'versionData']), '2.0', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'versionData','2.0']);
+		}
+	}
+
 	// Configuration vide
 	public function config() {
 		// Création des valeurs de réglage par défaut
@@ -53,15 +64,31 @@ class search extends common {
 			require_once('module/search/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), init::$defaultData]);
 		}
+		// Mise à jour des données de module
+		$this->update();
 
 		if($this->isPost())  {
+
+			// Générer la feuille de CSS
+			$class = get_called_class();
+			$moduleId = $this->getUrl(0);
+			$style = '.searchItem {background:' . $this->getInput('searchKeywordColor') . ';}';
+			// Dossier de l'instance
+			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
+				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			}
+
+			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
+			// Fin feuille de style
+
 			// Soumission du formulaire
 			$this->setData(['module', $this->getUrl(0), [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
 				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
-				'keywordColor' => $this->getInput('searchKeywordColor')
+				'keywordColor' => $this->getInput('searchKeywordColor'),
+				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : ''
 			]]);
 
 
@@ -84,6 +111,8 @@ class search extends common {
 	}
 
 	public function index() {
+		// Mise à jour des données de module
+		$this->update();
 
 		// Création des valeurs de réglage par défaut
 		if ( $this->getData(['module', $this->getUrl(0)]) === null ) {
@@ -238,10 +267,12 @@ class search extends common {
 			$this->addOutput([
 				'view' => 'index',
 				'showBarEditButton' => true,
-				'showPageContent' => !$this->getData(['module', $this->getUrl(0),'resultHideContent'])
+				'showPageContent' => !$this->getData(['module', $this->getUrl(0),'resultHideContent']),
+				'style' => $this->getData(['module', $this->getUrl(0), 'style'])
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
+			echo $this->getData(['module', $this->getUrl(0), 'style']);
 			$this->addOutput([
 				'view' => 'index',
 				'showBarEditButton' => true,
@@ -287,7 +318,7 @@ class search extends common {
 				// Découper l'aperçu
 				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
 				// Applique une mise en évidence
-				$t = preg_replace($keywords, '<span style="background:' . $this->getData(['module',$this->getUrl(0),'keywordColor']). ';">\1</span>',$t);
+				$t = preg_replace($keywords, '<span class= "searchItem">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
 				$resultat .= '<p class="searchTitle">' . count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');
