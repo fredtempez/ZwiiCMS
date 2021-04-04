@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '2.6';
+	const VERSION = '3.0';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -143,6 +143,20 @@ class gallery extends common {
 		'1px 1px 50px' => 'Très importante'
 	];
 
+		/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
+			$data = $this->getData(['module', $this->getUrl(0)]);
+			$this->deleteData(['module', $this->getUrl(0)]);
+			$this->setData(['module', $this->getUrl(0), 'content', $data]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
+		}
+	}
+
+
 	/**
 	 * Tri de la liste des galeries
 	 *
@@ -152,7 +166,7 @@ class gallery extends common {
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
 			for($i=0;$i<count($data);$i++) {
-				$this->setData(['module', $this->getUrl(0), $data[$i], [
+				$this->setData(['module', $this->getUrl(0), 'content', $data[$i], [
 					'config' => [
 						'name' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','name']),
 						'directory' => $this->getData(['module',$this->getUrl(0),$data[$i],'config','directory']),
@@ -179,7 +193,7 @@ class gallery extends common {
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
 			// Sauvegarder
-			$this->setData(['module', $this->getUrl(0), $galleryName, [
+			$this->setData(['module', $this->getUrl(0), 'content', $galleryName, [
 				'config' => [
 					'name' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','name']),
 					'directory' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','directory']),
@@ -200,8 +214,11 @@ class gallery extends common {
 	 * Configuration
 	 */
 	public function config() {
+		// Mise à jour des données de module
+		$this->update();
+
 		//Affichage de la galerie triée
-		$g = $this->getData(['module', $this->getUrl(0)]);
+		$g = $this->getData(['module', $this->getUrl(0), 'content']);
 		$p = helper::arrayCollumn(helper::arrayCollumn($g,'config'),'position');
 		asort($p,SORT_NUMERIC);
 		$galleries = [];
@@ -243,7 +260,7 @@ class gallery extends common {
 		// Soumission du formulaire d'ajout d'une galerie
 		if($this->isPost()) {
 			if (!$this->getInput('galleryConfigFilterResponse')) {
-				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0)]));
+				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
 				// définir une vignette par défaut
 				$directory = $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true);
 				$iterator = new DirectoryIterator($directory);
@@ -260,13 +277,13 @@ class gallery extends common {
 					break;
 					}
 				}
-				$this->setData(['module', $this->getUrl(0), $galleryId, [
+				$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
 					'config' => [
 						'name' => $this->getInput('galleryConfigName'),
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						'sort' => self::SORT_ASC,
-						'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
+						'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
 						'fullScreen' => false
 					],
 					'legend' => [],
@@ -296,7 +313,7 @@ class gallery extends common {
 	public function delete() {
 		// $url prend l'adresse sans le token
 		// La galerie n'existe pas
-		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
+		if($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -312,7 +329,7 @@ class gallery extends common {
 		}
 		// Suppression
 		else {
-			$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
+			$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -346,7 +363,7 @@ class gallery extends common {
 			]);
 		}
 		// La galerie n'existe pas
-		if($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
+		if($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -360,11 +377,11 @@ class gallery extends common {
 				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
 				if($galleryId !== $this->getUrl(2)) {
 					// Incrémente le nouvel id de la galerie
-					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0)]));
+					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0), 'content']));
 					// Transférer la position des images
 					$oldPositions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
 					// Supprime l'ancienne galerie
-					$this->deleteData(['module', $this->getUrl(0), $this->getUrl(2)]);
+					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
 				}
 				// légendes
 				$legends = [];
@@ -382,19 +399,19 @@ class gallery extends common {
 				}
 				// Sauvegarder
 				if ($this->getInput('galleryEditName')) {
-					$this->setData(['module', $this->getUrl(0), $galleryId, [
+					$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
 						'config' => [
 							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
 							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
 							'homePicture' => $homePicture,
 							// pas de positions, on active le tri alpha
 							'sort' =>  $this->getInput('galleryEditSort'),
-							'position' => $this->getData(['module', $this->getUrl(0), $galleryId,'config','position']),
+							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
 							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
 
 						],
 						'legend' => $legends,
-						'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), $galleryId, 'positions']) : $oldPositions
+						'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
 					]]);
 				}
 				// Valeurs en sortie
@@ -405,7 +422,7 @@ class gallery extends common {
 				]);
 			}
 			// Met en forme le tableau
-			$directory = $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'directory']);
+			$directory = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']);
 			if(is_dir($directory)) {
 				$iterator = new DirectoryIterator($directory);
 
@@ -421,11 +438,11 @@ class gallery extends common {
 							template::ico('sort'),
 							$fileInfos->getFilename(),
 							template::checkbox( 'homePicture[' . $fileInfos->getFilename() . ']', true, '', [
-								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2),'config', 'homePicture']) === $fileInfos->getFilename() ? true : false,
+								'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config', 'homePicture']) === $fileInfos->getFilename() ? true : false,
 								'class' => 'homePicture'
 							]),
 							template::text('legend[' . $fileInfos->getFilename() . ']', [
-								'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'legend', str_replace('.','',$fileInfos->getFilename())])
+								'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'legend', str_replace('.','',$fileInfos->getFilename())])
 							]),
 							'<a href="' . str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR . $fileInfos->getFilename() .'" rel="data-lity" data-lity=""><img src="'. str_replace('source','thumb',$directory) . '/' . $fileInfos->getFilename() .  '"></a>'
 						];
@@ -433,7 +450,7 @@ class gallery extends common {
 					}
 				}
 				// Tri des images
-				switch ($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort'])) {
+				switch ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort'])) {
 					case self::SORT_HAND:
 						$positions = $this->getdata(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
 						if ($positions) {
@@ -466,7 +483,7 @@ class gallery extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'name']),
+				'title' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
 				'view' => 'edit',
 				'vendor' => [
 					'tablednd'
@@ -479,10 +496,12 @@ class gallery extends common {
 	 * Accueil (deux affichages en un pour éviter une url à rallonge)
 	 */
 	public function index() {
+		// Mise à jour des données de module
+		$this->update();
 		// Images d'une galerie
 		if($this->getUrl(1)) {
 			// La galerie n'existe pas
-			if($this->getData(['module', $this->getUrl(0), $this->getUrl(1)]) === null) {
+			if($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1)]) === null) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'access' => false
@@ -491,13 +510,13 @@ class gallery extends common {
 			// La galerie existe
 			else {
 				// Images de la galerie
-				$directory = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'directory']);
+				$directory = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'directory']);
 				if(is_dir($directory)) {
 					$iterator = new DirectoryIterator($directory);
 					foreach($iterator as $fileInfos) {
 						if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-							self::$pictures[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'legend', str_replace('.','',$fileInfos->getFilename())]);
-							$picturesSort[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'positions', str_replace('.','',$fileInfos->getFilename())]);
+							self::$pictures[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'legend', str_replace('.','',$fileInfos->getFilename())]);
+							$picturesSort[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'positions', str_replace('.','',$fileInfos->getFilename())]);
 							// Créer la miniature si manquante
 							if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
 								$this->makeThumb($fileInfos->getPathname(),
@@ -511,7 +530,7 @@ class gallery extends common {
 						}
 					}
 					// Tri des images par ordre alphabétique
-					switch ($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'sort'])) {
+					switch ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'sort'])) {
 						case self::SORT_HAND:
 							asort($picturesSort);
 							if ($picturesSort) {
@@ -535,7 +554,7 @@ class gallery extends common {
 					// Valeurs en sortie
 					$this->addOutput([
 						'showBarEditButton' => true,
-						'title' => $this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'name']),
+						'title' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'name']),
 						'view' => 'gallery'
 					]);
 				}
@@ -552,7 +571,7 @@ class gallery extends common {
 		// Liste des galeries
 		else {
 			// Tri des galeries suivant l'ordre défini
-			$g = $this->getData(['module', $this->getUrl(0)]);
+			$g = $this->getData(['module', $this->getUrl(0), 'content']);
 			$p = helper::arrayCollumn(helper::arrayCollumn($g,'config'),'position');
 			asort($p,SORT_NUMERIC);
 			$galleries = [];

@@ -46,7 +46,7 @@ class search extends common {
 	];
 
 
-		/**
+	/**
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
 	 */
