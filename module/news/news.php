@@ -189,11 +189,11 @@ class news extends common {
 			$moduleId = $this->getUrl(0);
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class . '/' .  $moduleId, 0775, true);
+			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
+				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
 			}
 
-			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '/style.css' , $style );
+			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
 			// Fin feuille de style
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -203,7 +203,7 @@ class news extends common {
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
-				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '/style.css' : ''
+				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : ''
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
