@@ -76,10 +76,10 @@ class news extends common {
 	 */
 	private function update() {
 		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '3.0', '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'version','3.0']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','3.0']);
 		}
 	}
 
@@ -202,7 +202,7 @@ class news extends common {
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
-				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version']),
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '/style.css' : ''
 				]]);
 			// Valeurs en sortie

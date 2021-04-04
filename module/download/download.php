@@ -124,9 +124,9 @@ class download extends common {
 	 */
 	private function update() {
 		// Version 5.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '1.1', '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '1.1', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'version','1.2']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','1.2']);
 		}
 	}
 
@@ -418,7 +418,7 @@ class download extends common {
 				'feeds' 	 => $this->getInput('downloadConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('downloadConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
-				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([

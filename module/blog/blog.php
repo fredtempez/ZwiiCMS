@@ -111,9 +111,9 @@ class blog extends common {
 	 */
 	private function update() {
 		// Version 5.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'version']), '5.0', '<') ) {
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'version','5.0']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','5.0']);
 		}
 	}
 
@@ -404,7 +404,7 @@ class blog extends common {
 				'feeds' 	 => $this->getInput('blogConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('blogConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('blogConfigItemsperPage', helper::FILTER_INT,true),
-				'version' => $this->getData(['module', $this->getUrl(0), 'config', 'version'])
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
