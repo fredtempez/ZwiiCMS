@@ -14,6 +14,7 @@ class theme extends gallery {
             'legendHeight'	   => '.375em',
             'legendAlign'	   => 'center',
             'legendTextColor'  => 'rgba(255, 255, 255, 1)',
-            'legendBgColor'	   => 'rgba(0, 0, 0, .6)'
+            'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
+            'versionData'      =>  '3.0'
     ];
 }
