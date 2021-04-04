@@ -51,19 +51,35 @@ class search extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0),  'versionData']), '2.0', '<') ) {
-			$this->setData(['module', $this->getUrl(0), 'versionData','2.0']);
+		// Création des valeurs de réglage par défaut
+		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
+			require_once('module/search/ressource/defaultdata.php');
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+		}
+		// Version 2.0	
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
+
+			// Distinguer la config des autres données
+			$data = $this->getData(['module', $this->getUrl(0)]);
+			$this->setData(['module', $this->getUrl(0), 'config', [
+				'submitText' => $this->getData(['module', $this->getUrl(0), 'submitText']),
+				'placeHolder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
+				'resultHideContent' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
+				'previewLength' => $this->getData(['module', $this->getUrl(0), 'previewLength']),
+				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor'])
+			]]);
+			$this->deleteData(['module', $this->getUrl(0), 'submitText']);
+			$this->deleteData(['module', $this->getUrl(0), 'placeHolder']);
+			$this->deleteData(['module', $this->getUrl(0), 'resultHideContent']);
+			$this->deleteData(['module', $this->getUrl(0), 'previewLength']);
+			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','2.0']);
 		}
 	}
 
 	// Configuration vide
 	public function config() {
-		// Création des valeurs de réglage par défaut
-		if ( $this->getData(['module', $this->getUrl(0)]) === null ) {
-			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), init::$defaultData]);
-		}
+
 		// Mise à jour des données de module
 		$this->update();
 
@@ -82,13 +98,14 @@ class search extends common {
 			// Fin feuille de style
 
 			// Soumission du formulaire
-			$this->setData(['module', $this->getUrl(0), [
+			$this->setData(['module', $this->getUrl(0), 'config',[
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
 				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
 				'keywordColor' => $this->getInput('searchKeywordColor'),
-				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : ''
+				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : '',
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 
 
@@ -113,12 +130,6 @@ class search extends common {
 	public function index() {
 		// Mise à jour des données de module
 		$this->update();
-
-		// Création des valeurs de réglage par défaut
-		if ( $this->getData(['module', $this->getUrl(0)]) === null ) {
-			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), init::$defaultData]);
-		}
 
 		if($this->isPost())  {
 			//Initialisations variables
@@ -212,7 +223,8 @@ class search extends common {
 							}
 
 							// Articles d'une sous-page blog
-							if ($this->getData(['page', $childId, 'moduleId']) === 'blog')
+							if ($this->getData(['page', $childId, 'moduleId']) === 'blog' &&
+								$this->getData(['module',$parentId,'posts']) )
 							{
 								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
 									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
@@ -230,7 +242,8 @@ class search extends common {
                     }
 
 					// Articles d'un blog
-					if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' ) {
+					if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' &&
+						$this->getData(['module',$parentId,'posts']) ) {
 						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
 							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
 							{
@@ -267,12 +280,11 @@ class search extends common {
 			$this->addOutput([
 				'view' => 'index',
 				'showBarEditButton' => true,
-				'showPageContent' => !$this->getData(['module', $this->getUrl(0),'resultHideContent']),
-				'style' => $this->getData(['module', $this->getUrl(0), 'style'])
+				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
+				'style' => $this->getData(['module', $this->getUrl(0), 'config', 'style'])
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
-			echo $this->getData(['module', $this->getUrl(0), 'style']);
 			$this->addOutput([
 				'view' => 'index',
 				'showBarEditButton' => true,
@@ -316,7 +328,7 @@ class search extends common {
 				// Rechercher l'espace le plus proche
 				$d = $d >= 1 ? strpos($contenu,' ',$d) : $d;
 				// Découper l'aperçu
-				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0),'previewLength']));
+				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0), 'config', 'previewLength']));
 				// Applique une mise en évidence
 				$t = preg_replace($keywords, '<span class= "searchItem">\1</span>',$t);
 				// Sauver résultat
