@@ -47,3 +47,4 @@ site/data/en/page.json
 site/data/de/locale.json
 site/data/de/module.json
 site/data/de/page.json
+site/data/modules/*
