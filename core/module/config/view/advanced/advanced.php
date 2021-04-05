@@ -69,25 +69,26 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col6">
+				<div class="col4">
 					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
 				</div>
-				<div class="col6">
+				<div class="col4">
 						<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha renforcé', [
 							'checked' => $this->getData(['config','captchaStrong']),
 							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'
 						]); ?>
 					</div>
-			</div>
-			<div class="row">
+
 				<div class="col4">
 					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 						'checked' => helper::checkRewrite(),
 						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
 					]); ?>
 				</div>
+			</div>
+			<div class="row">
 				<div class="col4">
 					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde quotidienne', [
 							'checked' => $this->getData(['config', 'autoBackup']),
