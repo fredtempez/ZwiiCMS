@@ -21,7 +21,6 @@ class init extends common {
 				'githubId' => ''
 			],
 			'timezone' => 'Europe/Paris',
-			'itemsperPage' => 10,
 			'proxyUrl' => '',
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',
@@ -34,9 +33,23 @@ class init extends common {
 				'log' => false,
 				'captcha' => true
 			],
+			'translate' => [
+				'scriptGoogle' => false,
+				'showCredits' => false,
+				'autoDetect' => false,
+				'admin'	 => false,
+				'fr' => true,
+				'de' => true,
+				'en' => true,
+				'es' => false,
+				'it' => false,
+				'nl' => false,
+				'pt' => false
+
+			],
 		],
 		'core' => [
-			'dataVersion' => 10400,
+			'dataVersion' => 11000,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -84,6 +97,19 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
+		'translate' => [
+			'scriptGoogle' => false,
+			'showCredits' => false,
+			'autoDetect' => false,
+			'admin' => false,
+			'fr' => 'none',
+			'de' => 'none',
+			'en' => 'none',
+			'es' => 'none',
+			'it' => 'none',
+			'nl' => 'none',
+			'pt' => 'none'
+		],
 		'theme' =>  [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
@@ -724,44 +750,64 @@ class init extends common {
 				],
 			],
 			'galeries' => [
-				'beaux-paysages' => [
-					'config' => [
-						'name' => 'Beaux paysages',
-						'directory' => self::FILE_DIR.'source/galerie/landscape',
-						'homePicture' => 'iceberg.jpg',
-						'sort' => 'SORT_ASC',
-						'position' => 1
+				'content' => [
+					'beaux-paysages' => [
+						'config' => [
+							'name' => 'Beaux paysages',
+							'directory' => self::FILE_DIR.'source/galerie/landscape',
+							'homePicture' => 'iceberg.jpg',
+							'sort' => 'SORT_ASC',
+							'position' => 1
+						],
+						'legend' => [
+							'desertjpg' => 'Un désert',
+							'icebergjpg' => 'Un iceberg',
+							'meadowjpg' => 'Une prairie'
+						],
+						'positions' => [
+							'desertjpg' => 3,
+							'icebergjpg' => 1,
+							'meadowjpg' => 2
+						]
 					],
-					'legend' => [
-						'desertjpg' => 'Un désert',
-						'icebergjpg' => 'Un iceberg',
-						'meadowjpg' => 'Une prairie'
+					'espace' => [
+						'config' => [
+							'name' => 'Espace',
+							'directory' => self::FILE_DIR.'source/galerie/space',
+							'homePicture' => 'nebula.jpg',
+							'sort' => 'SORT_ASC',
+							'position' => 2
+						],
+						'legend' => [
+							'earthjpg' => 'La Terre et la Lune',
+							'cosmosjpg' => 'Le cosmos',
+							'nebulajpg' => 'Une nébuleuse'
+						],
+						'positions' => [
+							'earthjpg' => 1,
+							'cosmosjpg' => 3,
+							'nebulajpg' => 2
+						]
 					],
-					'positions' => [
-						'desertjpg' => 3,
-						'icebergjpg' => 1,
-						'meadowjpg' => 2
-					]
 				],
-				'espace' => [
-					'config' => [
-						'name' => 'Espace',
-						'directory' => self::FILE_DIR.'source/galerie/space',
-						'homePicture' => 'nebula.jpg',
-						'sort' => 'SORT_ASC',
-						'position' => 2
-					],
-					'legend' => [
-						'earthjpg' => 'La Terre et la Lune',
-						'cosmosjpg' => 'Le cosmos',
-						'nebulajpg' => 'Une nébuleuse'
-					],
-					'positions' => [
-						'earthjpg' => 1,
-						'cosmosjpg' => 3,
-						'nebulajpg' => 2
-					]
-				]
+				'config' => [
+					'thumbAlign' 	   => 'center',
+					'thumbWidth' 	   => '18em',
+					'thumbHeight'	   => '15em',
+					'thumbMargin'	   => '.5em',
+					'thumbBorder'	   => '.1em',
+					'thumbOpacity'	   => '.7',
+					'thumbBorderColor' => 'rgba(221, 221, 221, 1)',
+					'thumbRadius'      => '.3em',
+					'thumbShadows'     => '1px 1px 10px',
+					'thumbShadowsColor'=> 'rgba(125, 125, 125, 1)',
+					'legendHeight'	   => '.375em',
+					'legendAlign'	   => 'center',
+					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
+					'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
+					'versionData'      =>  '3.0',
+					'style'            =>  'site/data/modules/gallery/galeries.css'
+				],
 			],
 			'site-de-zwii' => [
 				'url' => 'https://zwiicms.fr/',
