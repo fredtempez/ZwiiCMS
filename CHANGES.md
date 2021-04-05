@@ -15,6 +15,11 @@
     - Nombre d'éléments ou d'articles par page : l'option devient propre aux modules et n'est plus gérées dans la configuration du CMS.
     - Module News : présentation des articles en colonnes.
 
+## version 10.5.02
+- Corrections :
+    - Erreur de positionnement de marge dans le thème du site.
+    - Erreur de syntaxe html dans les liens des flux RSS. S'ouvrent désormais dans un nouvel onglet.
+
 ## version 10.5.01
 - Modifications :
     - Rechargement du fichier de style common.css et du jeu d'icônes du système après une mise à jour.
