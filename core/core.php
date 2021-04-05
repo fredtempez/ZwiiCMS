@@ -143,16 +143,6 @@ class common {
 		self::GROUP_MODERATOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
-	// Langues proposées
-	public static $i18nList = [
-		'fr'	=> 'Français (fr)',
-		'de' 	=> 'Allemand (de)',
-		'en'	=> 'Anglais (en)',
-		'es'	=> 'Espagnol (es)',
-		'it'	=> 'Italien (it)',
-		'nl' 	=> 'Néerlandais (nl)',
-		'pt'	=> 'Portugais (pt)',
-	];
 	// Langue courante
 	public static $i18nCurrent = 'fr';
 	public static $timezone;
@@ -2933,7 +2923,6 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				//$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique

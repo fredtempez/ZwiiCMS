@@ -32,21 +32,7 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
-			],
-			'translate' => [
-				'scriptGoogle' => false,
-				'showCredits' => false,
-				'autoDetect' => false,
-				'admin'	 => false,
-				'fr' => true,
-				'de' => true,
-				'en' => true,
-				'es' => false,
-				'it' => false,
-				'nl' => false,
-				'pt' => false
-
-			],
+			]
 		],
 		'core' => [
 			'dataVersion' => 11000,
