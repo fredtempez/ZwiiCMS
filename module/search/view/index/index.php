@@ -8,9 +8,11 @@
                         'value' => $module::$motclef
                     ]); ?>
                 </div>
-                <div class="col3 verticalAlignMiddle">
+                <?php $col = empty($this->getData(['module', $this->getUrl(0), 'config', 'submitText'])) ? 'col1' : 'col3';?>
+                <div class="<?php echo $col;?> verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
-                        'value' => $this->getData(['module', $this->getUrl(0), 'config', 'submitText'])
+                        'value' => $this->getData(['module', $this->getUrl(0), 'config', 'submitText']),
+                        'ico' => 'search'
                     ]); ?>
                 </div>
             </div>
