@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
                     <?php echo template::text('searchMotphraseclef', [
-                        'placeholder' => isset($_COOKIE['ZWII_I18N_SITE'] ) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']):'Un ou plusieurs mots clef séparés par un espace',
+                        'placeholder' => isset($_COOKIE['ZWII_I18N_SITE'] ) ? $this->getData(['module', $this->getUrl(0), 'config', 'placeHolder']):'Un ou plusieurs mots clef séparés par un espace',
                         'value' => $module::$motclef
                     ]); ?>
                 </div>
                 <div class="col3 verticalAlignMiddle">
                     <?php echo template::submit('pageEditSubmit', [
-                        'value' => $this->getData(['module', $this->getUrl(0), 'submitText'])
+                        'value' => $this->getData(['module', $this->getUrl(0), 'config', 'submitText'])
                     ]); ?>
                 </div>
             </div>
