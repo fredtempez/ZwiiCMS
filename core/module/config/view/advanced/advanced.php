@@ -61,27 +61,20 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('configAdvancedItemsperPage', $module::$ItemsList, [
-					'label' => 'Articles par page',
-					'selected' => $this->getData(['config', 'itemsperPage']),
-					'help' => 'Modules Blog et News'
-					]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col4">
 					<?php echo template::select('configAdvancedTimezone', $module::$timezones, [
 						'label' => 'Fuseau horaire',
 						'selected' => $this->getData(['config', 'timezone']),
 						'help' => 'Le fuseau horaire est utile au bon référencement'
 					]); ?>
 				</div>
-				<div class="col4 verticalAlignBottom">
+			</div>
+			<div class="row">
+				<div class="col6">
 					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Consentement aux cookies', [
 						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
 				</div>
-				<div class="col4 verticalAlignBottom">
+				<div class="col6">
 						<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha renforcé', [
 							'checked' => $this->getData(['config','captchaStrong']),
 							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'

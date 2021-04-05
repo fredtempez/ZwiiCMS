@@ -146,13 +146,6 @@ class config extends common {
 		'Pacific/Fiji'			=> '(GMT+12:00) Fiji',
 		'Asia/Kamchatka'		=> '(GMT+12:00) Kamchatka'
 	];
-	// Nombre d'objets par page
-	public static $ItemsList = [
-		5 => '5 articles',
-		10 => '10 articles',
-		15 => '15 articles',
-		20 => '20  articles'
-	];
 	// Type de proxy
 	public static $proxyType = [
 		'tcp://' => 'TCP',
@@ -457,7 +450,6 @@ class config extends common {
 						'githubId' => $this->getInput('configAdvancedSocialGithubId')
 					],
 					'timezone' => $this->getInput('configAdvancedTimezone', helper::FILTER_STRING_SHORT, true),
-					'itemsperPage' => $this->getInput('configAdvancedItemsperPage', helper::FILTER_INT,true),
 					'autoUpdate' => $this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN),
 					'autoUpdateHtaccess' => $this->getInput('configAdvancedAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configAdvancedProxyType'),
