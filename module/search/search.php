@@ -77,10 +77,10 @@ class search extends common {
 	}
 
 	/**
-	 * Initialisation du module
+	 * Initialisation du thème du module
 	 * Appelée par les fonctions index et config
 	 */
-	private function init(){
+	private function initCss(){
 		// Création des valeurs de réglage par défaut
 		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
 			require_once('module/search/ressource/defaultdata.php');
@@ -108,7 +108,7 @@ class search extends common {
 	public function config() {
 
 		// Initialisation d'un nouveau module
-		$this->init();
+		$this->initCss();
 
 		// Mise à jour des données de module
 		$this->update();
@@ -160,7 +160,7 @@ class search extends common {
 	public function index() {
 
 		// Initialisation d'un nouveau module
-		$this->init();
+		$this->initCss();
 
 		// Mise à jour des données de module
 		$this->update();
