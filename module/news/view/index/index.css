@@ -27,13 +27,10 @@
 }
 
 .newsBlur {
-	position: absolute;
-	bottom: -5%;
-	margin: -10px;
-	height: 20%;
-	width: 110%;
-	backdrop-filter: blur(1px);
-	-webkit-backdrop-filter: blur(1px);
+	background: linear-gradient(#333 70%,#FFF );
+	background-clip: text;
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
 }
 
 

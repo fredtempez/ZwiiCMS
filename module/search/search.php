@@ -51,34 +51,64 @@ class search extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		// Création des valeurs de réglage par défaut
-		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
-			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
-		}
-		// Version 2.0	
+
+		// Version 2.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
 
-			// Distinguer la config des autres données
+			$class = get_called_class();
+			$moduleId = $this->getUrl(0);
+			// Données de l'instance
 			$data = $this->getData(['module', $this->getUrl(0)]);
 			$this->setData(['module', $this->getUrl(0), 'config', [
 				'submitText' => $this->getData(['module', $this->getUrl(0), 'submitText']),
 				'placeHolder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
 				'resultHideContent' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
 				'previewLength' => $this->getData(['module', $this->getUrl(0), 'previewLength']),
-				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor'])
+				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor']),
+				'style' => self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css',
+				'versionData' => '2.0'
 			]]);
 			$this->deleteData(['module', $this->getUrl(0), 'submitText']);
 			$this->deleteData(['module', $this->getUrl(0), 'placeHolder']);
 			$this->deleteData(['module', $this->getUrl(0), 'resultHideContent']);
 			$this->deleteData(['module', $this->getUrl(0), 'previewLength']);
 			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','2.0']);
 		}
 	}
 
+	/**
+	 * Initialisation du thème du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function initCss(){
+		// Création des valeurs de réglage par défaut
+		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
+			require_once('module/search/ressource/defaultdata.php');
+
+			$class = get_called_class();
+			$moduleId = $this->getUrl(0);
+			// Sauver les données par défaut
+			init::$defaultData['style'] = self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css';
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+
+			$style = '.searchItem {background:' . $this->getData(['module', $this->getUrl(0), 'config', 'keywordColor']). ';}';
+
+			// Dossier de l'instance
+			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
+				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			}
+			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
+
+
+		}
+	}
+
+
 	// Configuration vide
 	public function config() {
+
+		// Initialisation d'un nouveau module
+		$this->initCss();
 
 		// Mise à jour des données de module
 		$this->update();
@@ -128,6 +158,10 @@ class search extends common {
 	}
 
 	public function index() {
+
+		// Initialisation d'un nouveau module
+		$this->initCss();
+
 		// Mise à jour des données de module
 		$this->update();
 
