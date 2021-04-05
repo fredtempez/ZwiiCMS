@@ -44,7 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.5.02';
+	const ZWII_VERSION = '10.6.00';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -2132,6 +2132,11 @@ class core extends common {
 							if(file_exists($stylePath)) {
 								$this->addOutput([
 									'style' => file_get_contents($stylePath)
+								]);
+							}
+							if ($output['style']) {
+								$this->addOutput([
+									'style' => $this->output['style'] . file_get_contents($output['style'])
 								]);
 							}
 							// JS
