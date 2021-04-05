@@ -149,10 +149,12 @@ class gallery extends common {
 	 */
 	private function update() {
 
-		// Installation des données par défaut
+		// Variables génériques
 		$class = get_called_class();
 		$moduleId = $this->getUrl(0);
-		if ( $this->getData(['module', $this->getUrl(0), 'config',]) === null ) {
+
+		// Installation des données de thème par défaut
+		if ( $this->getData(['module', $this->getUrl(0), 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', theme::$defaultData]);
 
@@ -164,10 +166,13 @@ class gallery extends common {
 			// Nom de la feuille de style
 			$fileCSS = self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' ;
 			$this->setData(['module', $this->getUrl(0), 'config', 'style', $fileCSS]);
-		}
 
-		// Générer la feuille de CSS
-		if (!file_exists(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' )) {
+			// Créer le dossier du module
+			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
+				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			}
+
+			// Générer la feuille de CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
 			$themeCss = file_get_contents('module/gallery/ressource/theme.css');
 			// Injection des variables
