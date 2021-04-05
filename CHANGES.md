@@ -11,8 +11,15 @@
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
         - Suppression de l'option articles par pages.
     - Pages : option d'affichage dans une fenêtre superposée (Lity).
-    - Autonomie des modules : les mises à jour des données propres aux modules sont déportées vers le module plutôt que dans core
-    - Nombre d'éléments ou d'articles par page : l'option devient propre aux modules et n'est plus gérées dans la configuration du CMS.
+
+
+## version 10.6.00
+Cette version apporte aux modules une autonomie complète par rapport au noyau.
+    - mise à jour interne (fonction update)
+    - feuille de style propres aux instances (fonction initCss)
+- Modifications :
+    - Nombre d'éléments ou d'articles par page : l'option est propre aux modules et n'est plus gérées dans la configuration du CMS.
+    - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
     - Module News : présentation des articles en colonnes.
 
 ## version 10.5.02
