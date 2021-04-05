@@ -1,22 +1,22 @@
-<?php echo template::formOpen('blogConfig'); ?>
+<?php echo template::formOpen('downloadConfig'); ?>
 	<div class="row">
 		<div class="col2">
-			<?php echo template::button('blogConfigBack', [
+			<?php echo template::button('downloadConfigBack', [
 				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0), 'posts',
+				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0), 'items',
 				'ico' => 'left',
 				'value' => 'Retour'
 			]); ?>
 		</div>
 		<div class="col2 offset6">
-			<?php echo template::button('blogConfigAdd', [
+			<?php echo template::button('downloadConfigAdd', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
 				'ico' => 'plus',
-				'value' => 'Article'
+				'value' => 'Fichier'
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::submit('blogConfigSubmit'); ?>
+			<?php echo template::submit('downloadConfigSubmit'); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -25,13 +25,13 @@
 				<h4>Paramètres du module</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('blogConfigShowFeeds', true, 'Lien du flux RSS', [
+						<?php echo template::checkbox('downloadConfigShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::text('blogConfigFeedslabel', [
-							'label' => 'Texte de l\'étiquette',
+						<?php echo template::text('downloadConfigFeedslabel', [
+							'label' => 'Etiquette du flux',
 							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
 					</div>
@@ -48,11 +48,11 @@
 		</div>
 	</div>
 <?php echo template::formClose(); ?>
-<?php if($module::$articles): ?>
-	<?php echo template::table([4, 4, 1, 1, 1, 1], $module::$articles, ['Titre', 'Date de publication', 'État', 'Commentaires', '','']); ?>
+<?php if($module::$items): ?>
+	<?php echo template::table([3, 1, 3, 1, 1, 1, 1, 1], $module::$items, ['Titre', 'Version', 'Du', 'Stats', 'État', 'Commentaires', '','']); ?>
 	<?php echo $module::$pages; ?>
 <?php else: ?>
-	<?php echo template::speech('Aucun article.'); ?>
+	<?php echo template::speech('Aucun item.'); ?>
 <?php endif; ?>
 <div class="moduleVersion">Version n°
 	<?php echo $module::VERSION; ?>

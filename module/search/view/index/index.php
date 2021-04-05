@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col9 verticalAlignMiddle">
                     <?php echo template::text('searchMotphraseclef', [
-                        'placeholder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
+                        'placeholder' => isset($_COOKIE['ZWII_I18N_SITE'] ) ? $this->getData(['module', $this->getUrl(0), 'placeHolder']):'Un ou plusieurs mots clef séparés par un espace',
                         'value' => $module::$motclef
                     ]); ?>
                 </div>

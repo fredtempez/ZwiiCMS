@@ -20,13 +20,13 @@
 					<div class="col6">
 						<?php echo template::text('searchSubmitText', [
 								'label' => 'Texte du bouton',
-								'value' => $this->getData(['module', $this->getUrl(0), 'submitText'])
+								'value' => $this->getData(['module', $this->getUrl(0), 'config', 'submitText'])
 							]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::select('searchPreviewLength', $module::$previewLength, [
 								'label' => 'Dimension de l\'aperçu',
-								'selected' => $this->getData(['module', $this->getUrl(0),'previewLength'])
+								'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'previewLength'])
 							]); ?>
 					</div>
 				</div>
@@ -34,12 +34,12 @@
 					<div class="col12">
 						<?php echo template::text('searchPlaceHolder', [
 								'label' => 'Aide dans la zone de saisie',
-								'value' => $this->getData(['module', $this->getUrl(0), 'placeHolder'])
+								'value' => $this->getData(['module', $this->getUrl(0), 'config', 'placeHolder'])
 							]); ?>
 					</div>
 					<div class="col12">
 						<?php echo template::checkbox('searchResultHideContent', true, 'Masquer le contenu de la page dans les résultats', [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
+							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
 						]); ?>
 					</div>
 				</div>
@@ -59,7 +59,7 @@
 							'class' => 'colorPicker',
 							'help' =>  'Le curseur horizontal règle le niveau de transparence, le placer tout à la gauche pour un surlignement invisible.',
 							'label' => 'Surlignement',
-							'value' => $this->getData(['module', $this->getUrl(0), 'keywordColor'])
+							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'keywordColor'])
 						]); ?>
 					</div>
 				</div>

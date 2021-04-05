@@ -20,12 +20,12 @@
 					<div class="col5">
 						<?php echo template::text('galleryEditName', [
 							'label' => 'Nom',
-							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'name'])
+							'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name'])
 						]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::hidden('galleryEditDirectoryOld', [
-							'value' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'directory']),
+							'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']),
 							'noDirty' => true // Désactivé à cause des modifications en ajax
 						]); ?>
 						<?php echo template::select('galleryEditDirectory', [], [
@@ -35,7 +35,7 @@
 					</div>
 					<div class="col3">
 						<?php echo template::select('galleryEditSort', $module::$sort, [
-							'selected' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'sort']),
+							'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort']),
 							'label' => 'Tri des images',
 							'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
 						]); ?>	
@@ -43,7 +43,7 @@
 				<div clas="row">
 					<div class="col12">
                         <?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
-								'checked' => $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'config', 'fullScreen']),
+								'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
 								'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
                             ]); ?>  
 					</div>		
