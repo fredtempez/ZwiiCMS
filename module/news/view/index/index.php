@@ -5,9 +5,8 @@
 				<h1 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 				</h1>
-				<div class="newsContent">
+				<div class="newsContent newsBlur">
 					<?php echo $news['content']; ?>
-					<div class="newsBlur"></div>
 				</div>
 				<div class="newsSignature">
 					<i class="far fa-calendar-alt"></i>
