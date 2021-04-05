@@ -1,5 +1,12 @@
 # Changelog
 
+## version 10.6.00
+Cette version apporte aux modules une autonomie complète par rapport au noyau.
+    - mise à jour interne (fonction update)
+    - feuille de style propres aux instances (fonction initCss)
+- Modifications :
+    - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
+
 ## version 10.5.02
 - Corrections :
     - Erreur de positionnement de marge dans le thème du site.
