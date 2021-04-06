@@ -177,13 +177,10 @@ class helper {
 							$delete = true;
 					}
 					// Constante DATADIRECTORY
-					if ( array_key_exists('DATADIRECTORY', $class_constants)
-						 && $class_constants['DATADIRECTORY'] !== []
-					     && is_array($class_constants['DATADIRECTORY'])
-					   ) {
+					if ( array_key_exists('DATADIRECTORY', $class_constants)) {
 							$dataDirectory = $value::DATADIRECTORY;
 					} else {
-							$dataDirectory = [];
+							$dataDirectory = '';
 					}
 					// Affection
 					$modules [$value]  = [

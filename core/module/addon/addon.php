@@ -62,19 +62,13 @@ class addon extends common {
 			$infoModules = helper::getModules();
 			$module = $this->getUrl(2);
 			//Liste des dossiers associés au module non effacés
-			$list = '';
-			foreach( $infoModules[$module]['dataDirectory'] as $moduleId){
-				if (strpos($moduleId,'module.json') === false && strpos($moduleId,'page.json') === false) {
-					$list === '' ? $list = self::DATA_DIR.$moduleId : $list .= ', '.self::DATA_DIR. $moduleId;
-				}
-			}
-			if( $this->removeDir('./module/'.$module ) === true){
+			if( $this->removeDir('./module/'.$module ) === true   ){
 				$success = true;
-				if( $list === ''){
-					$notification = 'Module '.$module .' désinstallé';
-				}
-				else{
-					$notification = 'Module '.$module .' désinstallé, il reste des données dans '.$list;
+				$notification = 'Module '. $module .' désinstallé';
+				if(($infoModules[$this->getUrl(2)]['dataDirectory']) ) {
+					if (!$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])){
+						$notification = 'Module '.$module .' désinstallé, il reste des données dans ' . $infoModules[$this->getUrl(2)]['dataDirectory'];
+					}
 				}
 			}
 			else{
@@ -386,15 +380,16 @@ class addon extends common {
 													'value' => template::ico('cancel')
 												])
 											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) !== ''
+				implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key,// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('download')
 												])
 											: '',
-				is_array($infoModules[$key]['dataDirectory']) && implode(', ',array_keys($inPages,$key)) === ''
+				'',
+				implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload')
 												])
 											: ''
@@ -409,106 +404,94 @@ class addon extends common {
 	}
 
 	/*
-	* Copie récursive de dossiers
-	*
-	*/
-	private function custom_copy($src, $dst) {
-		// open the source directory
-		$dir = opendir($src);
-		// Make the destination directory if not exist
-		if (!is_dir($dst)) {
-			mkdir($dst);
-		}
-		// Loop through the files in source directory
-		while( $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Recursively calling custom copy function
-					// for sub directory
-					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
-				}
-				else {
-					copy($src . '/' . $file, $dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
-	}
-
-
-	/*
 	* Export des données d'un module externes ou interne à module.json
 	*/
 	public function export(){
-		// Lire les données du module
-		$infoModules = helper::getModules();
-		// Créer un dossier par défaut
-		$tmpFolder = self::TEMP_DIR . uniqid();
-		//$tmpFolder = self::TEMP_DIR . 'test';
-		if (!is_dir($tmpFolder)) {
-			mkdir($tmpFolder);
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'addon',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
 		}
-		// Clés moduleIds dans les pages
-		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-		// Parcourir les pages utilisant le module
-		foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
-			// Export des pages hébergeant le module
-			$pageContent[$pageId] = $this->getData(['page',$pageId]);
-			// Export de fr/module.json
-			$moduleId = 'fr/module.json';
-			// Création de l'arborescence des langues
-			// Pas de nom dossier de langue - dossier par défaut
-			$t = explode ('/',$moduleId);
-			if ( is_array($t)) {
-				$lang = 'fr';
-			} else {
-				$lang = $t[0];
+		else {
+			// Lire les données du module
+			$infoModules = helper::getModules();
+			// Créer un dossier par défaut
+			$tmpFolder = self::TEMP_DIR . uniqid();
+			//$tmpFolder = self::TEMP_DIR . 'test';
+			if (!is_dir($tmpFolder)) {
+				mkdir($tmpFolder);
 			}
-			// Créer le dossier si inexistant
-			if (!is_dir($tmpFolder . '/' . $lang)) {
-				mkdir ($tmpFolder . '/' . $lang);
-			}
-			// Sauvegarde si données non vides
-			$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-			if ($tmpData [$pageId] !== null) {
-				file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
-			}
-			// Export des données localisées dans des dossiers
-			foreach ($infoModules[$this->getUrl(2)]['dataDirectory'] as $dirId) {
-					if ( file_exists(self::DATA_DIR . '/' .  $dirId)
-						&& !file_exists($tmpFolder . '/' . $dirId ) ) {
-							$this->custom_copy ( self::DATA_DIR . '/' .  $dirId, $tmpFolder . '/' . $dirId );
+			// Clés moduleIds dans les pages
+			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			// Parcourir les pages utilisant le module
+			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+				// Export des pages hébergeant le module
+				$pageContent[$pageId] = $this->getData(['page',$pageId]);
+				// Export de fr/module.json
+				$moduleId = 'fr/module.json';
+				$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);
+				// Création de l'arborescence des langues
+				// Pas de nom dossier de langue - dossier par défaut
+				$t = explode ('/',$moduleId);
+				if ( is_array($t)) {
+					$lang = 'fr';
+				} else {
+					$lang = $t[0];
+				}
+				// Créer le dossier temporaire si inexistant sinon le nettoie et le créer
+				if (!is_dir($tmpFolder . '/' . $lang)) {
+					mkdir ($tmpFolder . '/' . $lang, 0777, true);
+				} else {
+					$this->removeDir($tmpFolder . '/' . $lang);
+					mkdir ($tmpFolder . '/' . $lang, 0777, true);
+				}
+				// Créer le dossier temporaire des données du  module
+				if ($infoModules[$this->getUrl(2)]['dataDirectory']) {
+					if (!is_dir($tmpFolder . '/' . $moduleDir)) {
+						mkdir ($tmpFolder . '/' . $moduleDir, 0777, true) ;
 					}
+				}
+				// Sauvegarde si données non vides
+				$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+				if ($tmpData [$pageId] !== null) {
+					file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+				}
+				// Export des données localisées dans le dossier de données du module
+				if ($infoModules[$this->getUrl(2)]['dataDirectory'] ) {
+						$this->custom_copy ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
+				}
 			}
-		}
-		// Enregistrement des pages dans le dossier de langue identique à module
-
-		if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
-			file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
-		}
-
-		// création du zip
-		$fileName =  $this->getUrl(2) . '.zip';
-		$this->makeZip ($fileName, $tmpFolder, []);
-		if (file_exists($fileName)) {
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			header('Content-Length: ' . filesize($fileName));
-			readfile( $fileName);
-			// Valeurs en sortie
-			$this->addOutput([
-				'display' => self::DISPLAY_RAW
-			]);
-			unlink($fileName);
-			$this->removeDir($tmpFolder);
-			exit();
-		} else {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'addon',
-				'notification' => 'Quelque chose s\'est mal passé',
-				'state' => false
-			]);
+			// Enregistrement des pages dans le dossier de langue identique à module
+			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
+				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
+			}
+			// création du zip
+			$fileName =  $this->getUrl(2) . '.zip';
+			$this->makeZip ($fileName, $tmpFolder, []);
+			if (file_exists($fileName)) {
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Length: ' . filesize($fileName));
+				readfile( $fileName);
+				// Valeurs en sortie
+				$this->addOutput([
+					'display' => self::DISPLAY_RAW
+				]);
+				unlink($fileName);
+				$this->removeDir($tmpFolder);
+				exit();
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'addon',
+					'notification' => 'Quelque chose s\'est mal passé',
+					'state' => false
+				]);
+			}
 		}
 	}
 
@@ -598,4 +581,32 @@ class addon extends common {
 			]);
 		}
 	}
+
+	/*
+	* Copie récursive de dossiers
+	*
+	*/
+	private function custom_copy($src, $dst) {
+		// open the source directory
+		$dir = opendir($src);
+		// Make the destination directory if not exist
+		if (!is_dir($dst)) {
+			mkdir($dst);
+		}
+		// Loop through the files in source directory
+		while( $file = readdir($dir) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ){
+					// Recursively calling custom copy function
+					// for sub directory
+					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file, $dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
+	}
+
 }
