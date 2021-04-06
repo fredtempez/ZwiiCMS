@@ -422,7 +422,6 @@ class config extends common {
 	public function advanced() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			$success = true;
 			// Basculement en mise à jour auto
 			// Remise à 0 du compteur
 			if ($this->getData(['config','autoUpdate']) === false &&
@@ -528,11 +527,10 @@ class config extends common {
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
 			// Valeurs en sortie
-			$notification = $notification . 'Modifications enregistrées';
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $notification,
-				'state' => $success
+				'notification' => 'Modifications enregistrées',
+				'state' => true
 			]);
 		}
 		// Valeurs en sortie
