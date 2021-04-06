@@ -21,7 +21,7 @@ class gallery extends common {
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
+	const DATADIRECTORY = self::DATA_DIR . 'modules/gallery/';
 
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
@@ -149,10 +149,6 @@ class gallery extends common {
 	 */
 	private function update() {
 
-		// Variables génériques
-		$class = get_called_class();
-		$moduleId = $this->getUrl(0);
-
 
 		// Mise à jour d'une version inférieure
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
@@ -183,18 +179,17 @@ class gallery extends common {
 		if ( $this->getData(['module', $this->getUrl(0), 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', theme::$defaultData]);
-
+		}
+		if ( !file_exists(self::DATADIRECTORY  . $this->getUrl(0) . '.css')) {
 			// Variables génériques
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			if (!is_dir(self::DATADIRECTORY )) {
+				mkdir (self::DATADIRECTORY, 0777, true);
 			}
 
 			// Nom de la feuille de style
-			$fileCSS = self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' ;
+			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
 			$this->setData(['module', $this->getUrl(0), 'config', 'style', $fileCSS]);
 
 			// Générer la feuille de CSS
@@ -217,7 +212,7 @@ class gallery extends common {
 			$content = str_replace('#legendTextColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendTextColor']),$content );
 			$content = str_replace('#legendBgColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendBgColor']),$content );
 			// Ecriture de la feuille de style
-			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $content . $themeCss);
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $content . $themeCss);
 		}
 	}
 
@@ -710,14 +705,11 @@ class gallery extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Générer la feuille de CSS
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			if (!is_dir(self::DATADIRECTORY )) {
+				mkdir (self::DATADIRECTORY, 0777, true);
 			}
-			$fileCSS = self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' ;
+			$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '.css' ;
 			// Fin feuille de style
 			$this->getData(['module', $this->getUrl(0), 'config', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),

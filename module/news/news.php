@@ -19,7 +19,7 @@ class news extends common {
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
+	const DATADIRECTORY =  self::DATA_DIR . 'modules/news/';
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
@@ -185,15 +185,13 @@ class news extends common {
 		if($this->isPost()) {
 
 			// Générer la feuille de CSS
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			if (!is_dir(self::DATADIRECTORY)) {
+				mkdir (self::DATADIRECTORY, 0777, true);
 			}
 
-			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
 			// Fin feuille de style
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -203,7 +201,7 @@ class news extends common {
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
-				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : ''
+				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : ''
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
