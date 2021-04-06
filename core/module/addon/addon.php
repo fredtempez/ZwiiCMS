@@ -50,19 +50,13 @@ class addon extends common {
 			$infoModules = helper::getModules();
 			$module = $this->getUrl(2);
 			//Liste des dossiers associés au module non effacés
-			$list = '';
-			foreach( $infoModules[$module]['dataDirectory'] as $moduleId){
-				if (strpos($moduleId,'module.json') === false && strpos($moduleId,'page.json') === false) {
-					$list === '' ? $list = self::DATA_DIR . $moduleId : $list .= ', '.self::DATA_DIR. $moduleId;
-				}
-			}
-			if( $this->removeDir('./module/'.$module ) === true){
+			if( $this->removeDir('./module/'.$module ) === true   ){
 				$success = true;
-				if( $list === ''){
-					$notification = 'Module '.$module .' désinstallé';
-				}
-				else{
-					$notification = 'Module '.$module .' désinstallé, il reste des données dans '.$list;
+				$notification = 'Module '. $module .' désinstallé';
+				if(($infoModules[$this->getUrl(2)]['dataDirectory']) ) {
+					if (!$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])){
+						$notification = 'Module '.$module .' désinstallé, il reste des données dans ' . $infoModules[$this->getUrl(2)]['dataDirectory'];
+					}
 				}
 			}
 			else{
