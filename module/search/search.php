@@ -23,7 +23,7 @@ class search extends common {
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = []; // Contenu localisé inclus par défaut (page.json et module.json)
+	const DATADIRECTORY = self::DATA_DIR . 'modules/search/';
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
@@ -55,8 +55,6 @@ class search extends common {
 		// Version 2.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
 
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 			// Données de l'instance
 			$data = $this->getData(['module', $this->getUrl(0)]);
 			$this->setData(['module', $this->getUrl(0), 'config', [
@@ -65,7 +63,7 @@ class search extends common {
 				'resultHideContent' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
 				'previewLength' => $this->getData(['module', $this->getUrl(0), 'previewLength']),
 				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor']),
-				'style' => self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css',
+				'style' => self::DATADIRECTORY . $this->getUrl(0) . '.css',
 				'versionData' => '2.0'
 			]]);
 			$this->deleteData(['module', $this->getUrl(0), 'submitText']);
@@ -85,19 +83,17 @@ class search extends common {
 		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
 			require_once('module/search/ressource/defaultdata.php');
 
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 			// Sauver les données par défaut
-			init::$defaultData['style'] = self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css';
+			init::$defaultData['style'] = self::DATADIRECTORY . $this->getUrl(0) . '.css';
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 
 			$style = '.searchItem {background:' . $this->getData(['module', $this->getUrl(0), 'config', 'keywordColor']). ';}';
 
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			if (!is_dir(self::DATADIRECTORY )) {
+				mkdir (self::DATADIRECTORY , 0777, true);
 			}
-			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
 
 
 		}
@@ -116,15 +112,13 @@ class search extends common {
 		if($this->isPost())  {
 
 			// Générer la feuille de CSS
-			$class = get_called_class();
-			$moduleId = $this->getUrl(0);
 			$style = '.searchItem {background:' . $this->getInput('searchKeywordColor') . ';}';
 			// Dossier de l'instance
-			if (!is_dir(self::DATA_DIR . 'modules/' . $class)) {
-				mkdir (self::DATA_DIR . 'modules/' . $class, 0777, true);
+			if (!is_dir(self::DATADIRECTORY)) {
+				mkdir (self::DATADIRECTORY , 0777, true);
 			}
 
-			$success = file_put_contents(self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
 			// Fin feuille de style
 
 			// Soumission du formulaire
@@ -134,7 +128,7 @@ class search extends common {
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
 				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
 				'keywordColor' => $this->getInput('searchKeywordColor'),
-				'style' => $success ? self::DATA_DIR . 'modules/' . $class . '/' . $moduleId . '.css' : '',
+				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 

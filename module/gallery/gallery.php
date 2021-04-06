@@ -21,7 +21,7 @@ class gallery extends common {
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = self::DATA_DIR . 'modules/gallery';
+	const DATADIRECTORY = self::DATA_DIR . 'modules/gallery/';
 
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
@@ -180,7 +180,7 @@ class gallery extends common {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', theme::$defaultData]);
 		}
-		if ( !file_exists(self::DATADIRECTORY  . '/' . $this->getUrl(0) . '.css')) {
+		if ( !file_exists(self::DATADIRECTORY  . $this->getUrl(0) . '.css')) {
 			// Variables génériques
 
 			// Dossier de l'instance
@@ -189,7 +189,7 @@ class gallery extends common {
 			}
 
 			// Nom de la feuille de style
-			$fileCSS = self::DATADIRECTORY  . '/' . $this->getUrl(0) . '.css' ;
+			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
 			$this->setData(['module', $this->getUrl(0), 'config', 'style', $fileCSS]);
 
 			// Générer la feuille de CSS
@@ -212,7 +212,7 @@ class gallery extends common {
 			$content = str_replace('#legendTextColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendTextColor']),$content );
 			$content = str_replace('#legendBgColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendBgColor']),$content );
 			// Ecriture de la feuille de style
-			file_put_contents(self::DATADIRECTORY . '/' . $this->getUrl(0) . '.css' , $content . $themeCss);
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $content . $themeCss);
 		}
 	}
 
@@ -709,7 +709,7 @@ class gallery extends common {
 			if (!is_dir(self::DATADIRECTORY )) {
 				mkdir (self::DATADIRECTORY, 0777, true);
 			}
-			$fileCSS = self::DATADIRECTORY . '/' . $this->getUrl(0) . '.css' ;
+			$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '.css' ;
 			// Fin feuille de style
 			$this->getData(['module', $this->getUrl(0), 'config', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),
