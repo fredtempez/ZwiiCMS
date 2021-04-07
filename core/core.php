@@ -1612,9 +1612,8 @@ class common {
 					}
 				}
 			}
-
-		}
 		$this->setData(['core', 'dataVersion', 10600]);
+		}
 	}
 }
 
