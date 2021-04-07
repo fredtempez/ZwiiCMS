@@ -85,7 +85,7 @@ class search extends common {
 
 			// Sauver les données par défaut
 			init::$defaultData['style'] = self::DATADIRECTORY . $moduleId . '.css';
-			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+			$this->setData(['module', $moduleId, 'config', init::$defaultData]);
 
 			$style = '.searchItem {background:' . $this->getData(['module', $moduleId, 'config', 'keywordColor']). ';}';
 
@@ -94,8 +94,6 @@ class search extends common {
 				mkdir (self::DATADIRECTORY , 0777, true);
 			}
 			$success = file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $style );
-
-
 		}
 	}
 

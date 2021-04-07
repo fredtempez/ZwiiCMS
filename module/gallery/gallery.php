@@ -175,7 +175,9 @@ class gallery extends common {
 	 * Initialisation du thème d'un nouveau module
 	 */
 	private function initCSS($moduleId) {
+		// Variable commune
 		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+		// Check la présence de la config
 		if ( $this->getData(['module', $moduleId, 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module', $moduleId, 'config', [
@@ -197,14 +199,12 @@ class gallery extends common {
 				'versionData'      => theme::$defaultData['versionData']
 			]]);
 		}
+		// Check la présence de la feuille de style
 		if ( !file_exists(self::DATADIRECTORY  . $moduleId . '.css')) {
-			// Variables génériques
-
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY )) {
 				mkdir (self::DATADIRECTORY, 0777, true);
 			}
-
 			// Nom de la feuille de style
 			$this->setData(['module', $moduleId, 'config', 'style', $fileCSS]);
 
