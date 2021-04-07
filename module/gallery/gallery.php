@@ -149,7 +149,6 @@ class gallery extends common {
 	 */
 	private function update() {
 
-
 		// Mise à jour d'une version inférieure
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
 			// Changement de l'arborescence dans module.json
@@ -175,44 +174,61 @@ class gallery extends common {
 	/**
 	 * Initialisation du thème d'un nouveau module
 	 */
-	private function initCSS() {
-		if ( $this->getData(['module', $this->getUrl(0), 'config']) === null ) {
+	private function initCSS($moduleId) {
+		// Variable commune
+		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+		// Check la présence de la config
+		if ( $this->getData(['module', $moduleId, 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), 'config', theme::$defaultData]);
+			$this->setData(['module', $moduleId, 'config', [
+				'style' 		   => $fileCSS,
+				'thumbAlign' 	   => theme::$defaultData['thumbAlign'],
+				'thumbWidth' 	   => theme::$defaultData['thumbWidth'],
+				'thumbHeight'	   => theme::$defaultData['thumbHeight'],
+				'thumbMargin'	   => theme::$defaultData['thumbMargin'],
+				'thumbBorder'	   => theme::$defaultData['thumbBorder'],
+				'thumbOpacity'	   => theme::$defaultData['thumbOpacity'],
+				'thumbBorderColor' => theme::$defaultData['thumbBorderColor'],
+				'thumbRadius'      => theme::$defaultData['thumbRadius'],
+				'thumbShadows'     => theme::$defaultData['thumbShadows'],
+				'thumbShadowsColor'=> theme::$defaultData['thumbShadowsColor'],
+				'legendHeight'	   => theme::$defaultData['legendHeight'],
+				'legendAlign'	   => theme::$defaultData['legendAlign'],
+				'legendTextColor'  => theme::$defaultData['legendTextColor'],
+				'legendBgColor'	   => theme::$defaultData['legendBgColor'],
+				'versionData'      => theme::$defaultData['versionData']
+			]]);
 		}
-		if ( !file_exists(self::DATADIRECTORY  . $this->getUrl(0) . '.css')) {
-			// Variables génériques
-
+		// Check la présence de la feuille de style
+		if ( !file_exists(self::DATADIRECTORY  . $moduleId . '.css')) {
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY )) {
 				mkdir (self::DATADIRECTORY, 0777, true);
 			}
-
 			// Nom de la feuille de style
-			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
-			$this->setData(['module', $this->getUrl(0), 'config', 'style', $fileCSS]);
+			$this->setData(['module', $moduleId, 'config', 'style', $fileCSS]);
 
 			// Générer la feuille de CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
 			$themeCss = file_get_contents('module/gallery/ressource/theme.css');
 
 			// Injection des variables
-			$content = str_replace('#thumbAlign#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbAlign']),$content );
-			$content = str_replace('#thumbWidth#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbWidth']),$content );
-			$content = str_replace('#thumbHeight#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbHeight']),$content );
-			$content = str_replace('#thumbMargin#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbMargin']),$content );
-			$content = str_replace('#thumbBorder#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbBorder']),$content );
-			$content = str_replace('#thumbBorderColor#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbBorderColor']),$content );
-			$content = str_replace('#thumbOpacity#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbOpacity']),$content );
-			$content = str_replace('#thumbShadows#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbShadows']),$content );
-			$content = str_replace('#thumbShadowsColor#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbShadowsColor']),$content );
-			$content = str_replace('#thumbRadius#',$this->getData(['module', $this->getUrl(0), 'config', 'thumbRadius']),$content );
-			$content = str_replace('#legendAlign#',$this->getData(['module', $this->getUrl(0), 'config', 'legendAlign']),$content );
-			$content = str_replace('#legendHeight#',$this->getData(['module', $this->getUrl(0), 'config', 'legendHeight']),$content );
-			$content = str_replace('#legendTextColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendTextColor']),$content );
-			$content = str_replace('#legendBgColor#',$this->getData(['module', $this->getUrl(0), 'config', 'legendBgColor']),$content );
+			$content = str_replace('#thumbAlign#',$this->getData(['module', $moduleId, 'config', 'thumbAlign']),$content );
+			$content = str_replace('#thumbWidth#',$this->getData(['module', $moduleId, 'config', 'thumbWidth']),$content );
+			$content = str_replace('#thumbHeight#',$this->getData(['module', $moduleId, 'config', 'thumbHeight']),$content );
+			$content = str_replace('#thumbMargin#',$this->getData(['module', $moduleId, 'config', 'thumbMargin']),$content );
+			$content = str_replace('#thumbBorder#',$this->getData(['module', $moduleId, 'config', 'thumbBorder']),$content );
+			$content = str_replace('#thumbBorderColor#',$this->getData(['module', $moduleId, 'config', 'thumbBorderColor']),$content );
+			$content = str_replace('#thumbOpacity#',$this->getData(['module', $moduleId, 'config', 'thumbOpacity']),$content );
+			$content = str_replace('#thumbShadows#',$this->getData(['module', $moduleId, 'config', 'thumbShadows']),$content );
+			$content = str_replace('#thumbShadowsColor#',$this->getData(['module', $moduleId, 'config', 'thumbShadowsColor']),$content );
+			$content = str_replace('#thumbRadius#',$this->getData(['module', $moduleId, 'config', 'thumbRadius']),$content );
+			$content = str_replace('#legendAlign#',$this->getData(['module', $moduleId, 'config', 'legendAlign']),$content );
+			$content = str_replace('#legendHeight#',$this->getData(['module', $moduleId, 'config', 'legendHeight']),$content );
+			$content = str_replace('#legendTextColor#',$this->getData(['module', $moduleId, 'config', 'legendTextColor']),$content );
+			$content = str_replace('#legendBgColor#',$this->getData(['module', $moduleId, 'config', 'legendBgColor']),$content );
 			// Ecriture de la feuille de style
-			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $content . $themeCss);
+			file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $content . $themeCss);
 		}
 	}
 
@@ -276,7 +292,7 @@ class gallery extends common {
 	public function config() {
 
 		// Initialisation du thème d'un nouveau module
-		$this->initCss();
+		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();
@@ -560,8 +576,8 @@ class gallery extends common {
 	 * Accueil (deux affichages en un pour éviter une url à rallonge)
 	 */
 	public function index() {
-		// Initialisation du thème d'un nouveau module
-		$this->initCss();
+		// Initialisation du thème du nouveau module
+		$this->initCss($this->getUrl(0));
 		// Mise à jour des données de module
 		$this->update();
 		// Images d'une galerie

@@ -461,7 +461,8 @@ class addon extends common {
 					file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
 				}
 				// Export des données localisées dans le dossier de données du module
-				if ($infoModules[$this->getUrl(2)]['dataDirectory'] ) {
+				if ($infoModules[$this->getUrl(2)]['dataDirectory'] &&
+					is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])) {
 						$this->custom_copy ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
 				}
 			}

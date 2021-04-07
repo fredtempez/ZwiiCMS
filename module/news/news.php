@@ -71,20 +71,6 @@ class news extends common {
 
 
 	/**
-	 * Mise à jour du module
-	 * Appelée par les fonctions index et config
-	 */
-	private function update() {
-		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
-			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','3.0']);
-		}
-	}
-
-
-	/**
 	 * Flux RSS
 	 */
 	public function rss() {
@@ -178,6 +164,10 @@ class news extends common {
 	 * Configuration
 	 */
 	public function config() {
+
+		// Initialisation du thème du nouveau module
+		$this->initCss($this->getUrl(0));
+
 		// Mise à jour des données de module
 		$this->update();
 
@@ -347,6 +337,10 @@ class news extends common {
 	 * Accueil
 	 */
 	public function index() {
+
+		// Initialisation du thème du nouveau module
+		$this->initCss($this->getUrl(0));
+
 		// Mise à jour des données de module
 		$this->update();
 		// Affichage d'un article
@@ -426,6 +420,48 @@ class news extends common {
 				break;
 			default:
 				return $this->getData(['user', $userId, 'firstname']);
+		}
+	}
+
+	/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+		// Version 3.0
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','3.0']);
+		}
+	}
+
+	/**
+	 * Initialisation du thème d'un nouveau module
+	 */
+	private function initCSS($moduleId) {
+		// Variable commune
+		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+
+		if ( $this->getData(['module', $moduleId, 'config', 'itemsHeight']) === null ) {
+
+			$this->setData(['module', $moduleId, 'config', 'itemsHeight', '200px']);
+
+			// Générer la feuille de CSS
+			$style = '.newsContent {height: 200px;}';
+
+			// Dossier de l'instance
+			if (!is_dir(self::DATADIRECTORY)) {
+				mkdir (self::DATADIRECTORY, 0777, true);
+			}
+
+			// Sauver la feuille de style
+			$success = file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
+
+			// Nom de la feuille de style
+			$this->setData(['module', $moduleId, 'config', 'style', self::DATADIRECTORY .$moduleId]);
+			// Fin feuille de style
+
 		}
 	}
 }

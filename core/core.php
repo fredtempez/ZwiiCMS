@@ -1621,6 +1621,35 @@ class common {
 			$this->setData(['core', 'dataVersion', 10502]);
 		}
 
+		// Version 10.6.00
+		if ($this->getData(['core', 'dataVersion']) < 10600) {
+
+			// Mise à jour des données des modules autonomes
+
+			// Liste des pages dans pageList
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Parcourir pageList et rechercher les modules au CSS autonomes
+			foreach ($pageList as $parentKey => $parent) {
+				if (
+					$this->getData(['page',$parent,'moduleId']) === 'search'
+					|| $this->getData(['page',$parent,'moduleId']) === 'gallery'
+					|| $this->getData(['page',$parent,'moduleId']) === 'news'
+				){
+					if(class_exists($parent)) {
+						$module = new $moduleId;
+						$module->initCSS($parent);
+					}
+				}
+			}
+		$this->setData(['core', 'dataVersion', 10600]);
+		}
+
 		// Version 11.0.00
 		if ($this->getData(['core', 'dataVersion']) < 11000) {
 
@@ -1644,8 +1673,6 @@ class common {
 			$this->setData(['config','translate','pt', false ]);
 
 			$this->setData(['core', 'dataVersion', 11000]);
-
-
 		}
 	}
 }
