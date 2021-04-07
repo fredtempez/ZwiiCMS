@@ -1599,12 +1599,12 @@ class common {
 					$pageList [] = $childKey;
 				}
 			}
-			// Parcourir pageList et rechercher les modules au CSS autonome
+			// Parcourir pageList et rechercher les modules au CSS autonomes
 			foreach ($pageList as $parentKey => $parent) {
-				// Module search
-				echo  $parent;
 				if (
 				 $this->getData(['page',$parent,'moduleId']) === 'search'
+				 || $this->getData(['page',$parent,'moduleId']) === 'gallery'
+				 || $this->getData(['page',$parent,'moduleId']) === 'news'
 				){
 					if(class_exists($parent)) {
 						$module = new $moduleId;
@@ -1612,10 +1612,9 @@ class common {
 					}
 				}
 			}
-			
+
 		}
-		die();
-		//$this->setData(['core', 'dataVersion', 10600]);
+		$this->setData(['core', 'dataVersion', 10600]);
 	}
 }
 
