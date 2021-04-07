@@ -78,22 +78,22 @@ class search extends common {
 	 * Initialisation du thème du module
 	 * Appelée par les fonctions index et config
 	 */
-	private function initCss(){
+	private function initCss($moduleId){
 		// Création des valeurs de réglage par défaut
-		if ( !is_array($this->getData(['module', $this->getUrl(0), 'config']) ) ) {
+		if ( !is_array($this->getData(['module',$moduleId, 'config']) ) ) {
 			require_once('module/search/ressource/defaultdata.php');
 
 			// Sauver les données par défaut
-			init::$defaultData['style'] = self::DATADIRECTORY . $this->getUrl(0) . '.css';
+			init::$defaultData['style'] = self::DATADIRECTORY . $moduleId . '.css';
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 
-			$style = '.searchItem {background:' . $this->getData(['module', $this->getUrl(0), 'config', 'keywordColor']). ';}';
+			$style = '.searchItem {background:' . $this->getData(['module', $moduleId, 'config', 'keywordColor']). ';}';
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY )) {
 				mkdir (self::DATADIRECTORY , 0777, true);
 			}
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $style );
 
 
 		}
@@ -104,7 +104,7 @@ class search extends common {
 	public function config() {
 
 		// Initialisation d'un nouveau module
-		$this->initCss();
+		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();
@@ -154,7 +154,7 @@ class search extends common {
 	public function index() {
 
 		// Initialisation d'un nouveau module
-		$this->initCss();
+		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();

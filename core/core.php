@@ -1585,6 +1585,37 @@ class common {
 			}
 			$this->setData(['core', 'dataVersion', 10502]);
 		}
+
+		// Version 10.6.00
+		if ($this->getData(['core', 'dataVersion']) < 10600) {
+
+			// Mise à jour des données des modules autonomes
+
+			// Liste des pages dans pageList
+			$pageList = array();
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			// Parcourir pageList et rechercher les modules au CSS autonome
+			foreach ($pageList as $parentKey => $parent) {
+				// Module search
+				echo  $parent;
+				if (
+				 $this->getData(['page',$parent,'moduleId']) === 'search'
+				){
+					if(class_exists($parent)) {
+						$module = new $moduleId;
+						$module->initCSS($parent);
+					}
+				}
+			}
+			
+		}
+		die();
+		//$this->setData(['core', 'dataVersion', 10600]);
 	}
 }
 
