@@ -143,6 +143,16 @@ class common {
 		self::GROUP_MODERATOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
+	// Langues proposées
+	public static $i18nList = [
+		'fr'	=> 'Français (fr)',
+		'de' 	=> 'Allemand (de)',
+		'en'	=> 'Anglais (en)',
+		'es'	=> 'Espagnol (es)',
+		'it'	=> 'Italien (it)',
+		'nl' 	=> 'Néerlandais (nl)',
+		'pt'	=> 'Portugais (pt)',
+	];
 	// Langue courante
 	public static $i18nCurrent = 'fr';
 	public static $timezone;
