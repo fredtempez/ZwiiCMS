@@ -1587,7 +1587,7 @@ class common {
 		}
 
 		// Version 10.6.00
-		if ($this->getData(['core', 'dataVersion']) < 10600) {
+		if ($this->getData(['core', 'dataVersion']) < 106) {
 
 			// Mise à jour des données des modules autonomes
 
