@@ -165,9 +165,6 @@ class news extends common {
 	 */
 	public function config() {
 
-		// Initialisation du thème du nouveau module
-		$this->initCss($this->getUrl(0));
-
 		// Mise à jour des données de module
 		$this->update();
 
@@ -338,9 +335,6 @@ class news extends common {
 	 */
 	public function index() {
 
-		// Initialisation du thème du nouveau module
-		$this->initCss($this->getUrl(0));
-
 		// Mise à jour des données de module
 		$this->update();
 		// Affichage d'un article
@@ -428,11 +422,16 @@ class news extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
+
+		// Initialisation du thème du nouveau module
+		$this->initCss($this->getUrl(0));
+
 		// Version 3.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','3.0']);
+
 		}
 	}
 
@@ -443,10 +442,13 @@ class news extends common {
 		// Variable commune
 		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
 
+		// Absence des données CSS
 		if ( $this->getData(['module', $moduleId, 'config', 'itemsHeight']) === null ) {
 
 			$this->setData(['module', $moduleId, 'config', 'itemsHeight', '200px']);
-
+		}
+		// Absence de la feuille de style
+		if (!file_exists(self::DATADIRECTORY . $moduleId . '.css') ) {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height: 200px;}';
 
@@ -459,9 +461,7 @@ class news extends common {
 			$success = file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
 
 			// Nom de la feuille de style
-			$this->setData(['module', $moduleId, 'config', 'style', self::DATADIRECTORY .$moduleId]);
-			// Fin feuille de style
-
+			$this->setData(['module', $moduleId, 'config', 'style', self::DATADIRECTORY . $moduleId . '.css']);
 		}
 	}
 }
