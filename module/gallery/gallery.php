@@ -149,26 +149,32 @@ class gallery extends common {
 	 */
 	private function update() {
 
-		// Mise à jour d'une version inférieure
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
-			// Changement de l'arborescence dans module.json
-			$data = $this->getData(['module', $this->getUrl(0)]);
-			$this->deleteData(['module', $this->getUrl(0)]);
-			$this->setData(['module', $this->getUrl(0), 'content', $data]);
-			// Effacer les fichiers CSS de l'ancienne version
-			if (file_exists('module/gallery/view/index/index.css')) {
-				unlink('module/gallery/view/index/index.css');
-			}
-			if (file_exists('module/gallery/view/gallery/gallery.css')) {
-				unlink('module/gallery/view/gallery/gallery.css');
-			}
-			// Stockage des données du thème de la gallery
-			$data = $this->getData(['theme','gallery']);
-			$this->deleteData(['theme','gallery']);
-			$this->setData(['module', $this->getUrl(0), 'config', $data]);
-			// Nouvelle version
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
+		// Mise à jour d'une version inférieure, la gallerye existe
+		if ($this->getData(['module', $this->getUrl(0)]) ) {
+			if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
+				// Changement de l'arborescence dans module.json
+				$data = $this->getData(['module', $this->getUrl(0)]);
+				$this->deleteData(['module', $this->getUrl(0)]);
+				$this->setData(['module', $this->getUrl(0), 'content', $data]);
+				// Effacer les fichiers CSS de l'ancienne version
+				if (file_exists('module/gallery/view/index/index.css')) {
+					unlink('module/gallery/view/index/index.css');
+				}
+				if (file_exists('module/gallery/view/gallery/gallery.css')) {
+					unlink('module/gallery/view/gallery/gallery.css');
+				}
+				// Stockage des données du thème de la gallery
+				$data = $this->getData(['theme','gallery']);
+				$this->deleteData(['theme','gallery']);
+				$this->setData(['module', $this->getUrl(0), 'config', $data]);
+				// Nouvelle version
+				$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
+			}	
+		} else {
+			//la galerie n'existe pas, initialiser le CSS
+			$this->initCss($this->getUrl(0));
 		}
+
 	}
 
 	/**
@@ -290,9 +296,6 @@ class gallery extends common {
 	 * Configuration
 	 */
 	public function config() {
-
-		// Initialisation du thème d'un nouveau module
-		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();
@@ -576,10 +579,10 @@ class gallery extends common {
 	 * Accueil (deux affichages en un pour éviter une url à rallonge)
 	 */
 	public function index() {
-		// Initialisation du thème du nouveau module
-		$this->initCss($this->getUrl(0));
+
 		// Mise à jour des données de module
 		$this->update();
+
 		// Images d'une galerie
 		if($this->getUrl(1)) {
 			// La galerie n'existe pas
