@@ -52,6 +52,9 @@ class search extends common {
 	 */
 	private function update() {
 
+		// Initialisation d'un nouveau module
+		$this->initCss($this->getUrl(0));
+
 		// Version 2.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
 
@@ -79,30 +82,35 @@ class search extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function initCss($moduleId){
-		// Création des valeurs de réglage par défaut
-		if ( !is_array($this->getData(['module',$moduleId, 'config']) ) ) {
-			require_once('module/search/ressource/defaultdata.php');
+		// Variable commune
+		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
 
-			// Sauver les données par défaut
-			init::$defaultData['style'] = self::DATADIRECTORY . $moduleId . '.css';
-			$this->setData(['module', $moduleId, 'config', init::$defaultData]);
+		// Absence des données CSS
+		if ( $this->getData(['module', $moduleId, 'config', 'keywordColor']) === null ) {
 
-			$style = '.searchItem {background:' . $this->getData(['module', $moduleId, 'config', 'keywordColor']). ';}';
+			$this->setData(['module', $moduleId, 'config', 'keywordColor', 'rgba(229, 229, 1, 1)']);
+		}
+		// Absence de la feuille de style
+		if (!file_exists(self::DATADIRECTORY . $moduleId . '.css') ) {
+			// Générer la feuille de CSS
+			$style = '.searchItem {background: rgba(229, 229, 1, 1);}';
 
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY )) {
-				mkdir (self::DATADIRECTORY , 0777, true);
+			if (!is_dir(self::DATADIRECTORY)) {
+				mkdir (self::DATADIRECTORY, 0777, true);
 			}
-			$success = file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $style );
+
+			// Sauver la feuille de style
+			$success = file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
+
+			// Nom de la feuille de style
+			$this->setData(['module', $moduleId, 'config', 'style', self::DATADIRECTORY . $moduleId . '.css']);
 		}
 	}
 
 
 	// Configuration vide
 	public function config() {
-
-		// Initialisation d'un nouveau module
-		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();
@@ -150,9 +158,6 @@ class search extends common {
 	}
 
 	public function index() {
-
-		// Initialisation d'un nouveau module
-		$this->initCss($this->getUrl(0));
 
 		// Mise à jour des données de module
 		$this->update();
