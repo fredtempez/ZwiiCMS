@@ -23,22 +23,19 @@
 }*/
 .newsContent {
 	overflow: hidden; /* les dépassements seront masqués */
-	position: relative;
-}
-
-.newsBlur {
-	background: linear-gradient(#333 70%,#FFF );
-	background-clip: text;
-  	-webkit-background-clip: text;
-  	-webkit-text-fill-color: transparent;
-}
-
-
-.newsContent {
+	position: relative;	
 	clear: left;
 	margin-left: 10px;
 	margin-bottom: 5px;
 }
+/*
+.newsBlur {
+	background: linear-gradient(#333 90%,#FFF );
+	background-clip: text;
+  	-webkit-background-clip: text;
+  	-webkit-text-fill-color: transparent;
+}*/
+
 
 .newsSignature {
 	margin-right: 10px;

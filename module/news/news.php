@@ -44,7 +44,7 @@ class news extends common {
 	public static $users = [];
 
 	// Nombre d'objets par page
-	public static $ItemsList = [
+	public static $itemsList = [
 		4 => '4 articles',
 		8 => '8 articles',
 		12 => '12 articles',
@@ -52,7 +52,7 @@ class news extends common {
 		22 => '22  articles'
 	];
 	// Nombre de colone par page
-	public static $Columns = [
+	public static $columns = [
 		12 => '1 Colonne',
 		6 => '2 Colonnes',
 		4 => '3 Colonnes',
@@ -60,10 +60,18 @@ class news extends common {
 	];
 	public static $nbrCol = 1;
 
-	public static $ItemsHeight = [
-		'200px' 	=> 'Petit',
-		'300px' 	=> 'Moyen',
-		'400px' 	=> 'Grand'
+	public static $itemsHeight = [
+		'200px' 	=> 'Petite',
+		'300px' 	=> 'Moyenne',
+		'400px' 	=> 'Grande',
+		'auto'		=> 'Article complet'
+	];
+
+	public static $itemsBlur = [
+		'100%'		=> 'Aucun',
+		'90%' 		=> 'Petit',
+		'80%' 		=> 'Moyen',
+		'70%' 		=> 'Grand',
 	];
 
 	// Signature de l'article
@@ -176,8 +184,11 @@ class news extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Générer la feuille de CSS
+			// Générer la feuille de CSS 
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
+			$style .= '.newsBlur {background: linear-gradient(#333 ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',#FFF );';
+			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY)) {
 				mkdir (self::DATADIRECTORY, 0777, true);
@@ -189,7 +200,8 @@ class news extends common {
 
 			$this->setData(['module', $this->getUrl(0), 'theme',[
 				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
-				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT)
+				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
+				'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
 			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -405,7 +417,7 @@ class news extends common {
 				'showBarEditButton' => true,
 				'showPageContent' => true,
 				'view' => 'index',
-				'style' => $this->getData(['module', $this->getUrl(0),'config', 'style'])
+				'style' => $this->getData(['module', $this->getUrl(0),'theme', 'style'])
 			]);
 
 		}
@@ -461,6 +473,9 @@ class news extends common {
 
 		// Générer la feuille de CSS
 		$style = '.newsContent {height: ' . $this->getData([ 'module', $moduleId, 'theme', 'itemsHeight' ]) .';}';
+		$style .= '.newsBlur {background: linear-gradient(#333 ' .  $this->getData([ 'module', $moduleId, 'theme', 'itemsBlur' ]) . ',#FFF );';
+		$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+		
 		// Dossier de l'instance
 		if (!is_dir(self::DATADIRECTORY)) {
 			mkdir (self::DATADIRECTORY, 0777, true);

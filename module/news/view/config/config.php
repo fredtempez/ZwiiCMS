@@ -37,25 +37,30 @@
 						]); ?>
 					</div>
 				</div>
-				<!-- Block ajouté pour le sélecteur -->	
 				<div class="row">
-					<div class="col4">
-						<?php echo template::select('newsConfigItemsperCol', $module::$Columns, [
+					<div class="col3">
+						<?php echo template::select('newsConfigItemsperCol', $module::$columns, [
 							'label' => 'Pagination',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']),
 							'help' => 'Nombre de colonnes par page'
 						]); ?>
 					</div>
-					<div class="col4">
-						<?php echo template::select('newsConfigItemsperPage', $module::$ItemsList, [
+					<div class="col3">
+						<?php echo template::select('newsConfigItemsperPage', $module::$itemsList, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 						]); ?>
 					</div>
-					<div class="col4">
-						<?php echo template::select('newsConfigItemsHeight', $module::$ItemsHeight, [
+					<div class="col3">
+						<?php echo template::select('newsConfigItemsHeight', $module::$itemsHeight, [
 							'label' => 'Hauteur',
 							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsHeight'])
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::select('newsConfigItemsBlur', $module::$itemsBlur, [
+							'label' => 'Effet flou',
+							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsBlur'])
 						]); ?>
 					</div>
 				</div>
