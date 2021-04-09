@@ -1,6 +1,6 @@
 <?php
 class theme extends gallery {
-	public static $defaultData = [
+	public static $defaultTheme = [
             'thumbAlign' 	   => 'center',
             'thumbWidth' 	   => '18em',
             'thumbHeight'	   => '15em',
@@ -14,7 +14,9 @@ class theme extends gallery {
             'legendHeight'	   => '.375em',
             'legendAlign'	   => 'center',
             'legendTextColor'  => 'rgba(255, 255, 255, 1)',
-            'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
-            'versionData'      =>  '3.0'
+            'legendBgColor'	   => 'rgba(0, 0, 0, .6)'
+    ];
+    public static $defaultData = [
+            'versionData'      => '3.0'
     ];
 }

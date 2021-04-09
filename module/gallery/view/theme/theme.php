@@ -25,25 +25,25 @@
                     <div class="col3">
                         <?php echo template::select('galleryThemeThumbWidth', $module::$galleryThemeSizeWidth, [
                             'label' => 'Largeur',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbWidth'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbWidth'])
                         ]); ?>
                     </div>
                     <div class="col3">
                         <?php echo template::select('galleryThemeThumbHeight', $module::$galleryThemeSizeHeight, [
                             'label' => 'Hauteur',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbHeight'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbHeight'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbAlign', $module::$galleryThemeFlexAlign, [
 							'label' => 'Alignement',
-							'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbAlign'])
+							'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbAlign'])
 						]); ?>
                     </div>
                     <div class="col2">
                         <?php echo template::select('galleryThemeThumbMargin', $module::$galleryThemeMargin, [
                             'label' => 'Marge',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbMargin'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbMargin'])
                         ]); ?>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbBorder', $module::$galleryThemeBorder, [
                             'label' => 'Bordure',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbBorder'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbBorder'])
                         ]); ?>
                     </div>
                     <div class="col4">
@@ -59,13 +59,13 @@
                             'class' => 'colorPicker',
                             'help' => 'Le curseur horizontal règle le niveau de transparence.',
                             'label' => 'Couleur de la bordure',
-                            'value' => $this->getData(['module', $this->getUrl(0), 'config','thumbBorderColor'])
+                            'value' => $this->getData(['module', $this->getUrl(0), 'theme','thumbBorderColor'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbRadius', $module::$galleryThemeRadius, [
                             'label' => 'Arrondi des angles',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbRadius'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbRadius'])
                         ]); ?>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbShadows', $module::$galleryThemeShadows, [
                             'label' => 'Ombre',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbShadows'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbShadows'])
                         ]); ?>
                     </div>
                     <div class="col4">
@@ -81,13 +81,13 @@
                             'class' => 'colorPicker',
                             'help' => 'Le curseur horizontal règle le niveau de transparence.',
                             'label' => 'Couleur de l\'ombre',
-                            'value' => $this->getData(['module', $this->getUrl(0), 'config','thumbShadowsColor'])
+                            'value' => $this->getData(['module', $this->getUrl(0), 'theme','thumbShadowsColor'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('galleryThemeThumbOpacity', $module::$galleryThemeOpacity, [
                             'label' => 'Opacité au survol',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config','thumbOpacity'])
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbOpacity'])
                         ]); ?>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Texte',
-                        'value' => $this->getData(['module', $this->getUrl(0), 'config','legendTextColor'])
+                        'value' => $this->getData(['module', $this->getUrl(0), 'theme','legendTextColor'])
                     ]); ?>
                 </div>
                 <div class="col3">
@@ -116,19 +116,19 @@
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
                         'label' => 'Fond',
-                        'value' => $this->getData(['module', $this->getUrl(0), 'config','legendBgColor'])
+                        'value' => $this->getData(['module', $this->getUrl(0), 'theme','legendBgColor'])
                     ]); ?>
                 </div>
                 <div class="col3">
                     <?php echo template::select('galleryThemeLegendHeight', $module::$galleryThemeLegendHeight, [
                         'label' => 'Hauteur',
-                        'selected' => $this->getData(['module', $this->getUrl(0), 'config','legendHeight'])
+                        'selected' => $this->getData(['module', $this->getUrl(0), 'theme','legendHeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
                     <?php echo template::select('galleryThemeLegendAlign', $module::$galleryThemeAlign, [
                         'label' => 'Alignement',
-                        'selected' => $this->getData(['module', $this->getUrl(0), 'config','legendAlign'])
+                        'selected' => $this->getData(['module', $this->getUrl(0), 'theme','legendAlign'])
                     ]); ?>
                 </div>
             </div>

@@ -38,22 +38,22 @@
 							'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort']),
 							'label' => 'Tri des images',
 							'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
-						]); ?>	
+						]); ?>
 					</div>
 				<div clas="row">
 					<div class="col12">
                         <?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
 								'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
 								'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
-                            ]); ?>  
-					</div>		
+                            ]); ?>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col12">
 						<?php if($module::$pictures): ?>
 							<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
 							<?php echo template::hidden('galleryEditFormResponse'); ?>
-							<?php echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrl(2)]); ?>						
+							<?php echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrl(2)]); ?>
 						<?php else: ?>
 							<?php echo template::speech('Aucune image.'); ?>
 						<?php endif; ?>
