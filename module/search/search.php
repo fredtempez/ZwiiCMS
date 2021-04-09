@@ -51,10 +51,9 @@ class search extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		return;
-		// Version 2.0
-		// Déplacement des données de l'instance
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
+
+		// Déplacement des données d'une version ultérieure
+		if ($this->getData(['module', $this->getUrl(0), 'previewLength']) ) {
 			$data = $this->getData(['module', $this->getUrl(0)]);
 			// Feuille de style
 			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
@@ -75,7 +74,7 @@ class search extends common {
 				mkdir (self::DATADIRECTORY, 0777, true);
 			}
 			// Générer la feuille de CSS
-			$style = '.searchItem {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
+			$style = '.keywordColor {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
 			// Sauver la feuille de style
 			$success = file_put_contents( $fileCSS, $style);
 			// Nettoyage des données précédentes
@@ -84,6 +83,8 @@ class search extends common {
 			$this->deleteData(['module', $this->getUrl(0), 'resultHideContent']);
 			$this->deleteData(['module', $this->getUrl(0), 'previewLength']);
 			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
+
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.0']);
 		}
 	}
 
@@ -99,9 +100,9 @@ class search extends common {
 		$this->setData(['module', $moduleId, 'config',init::$defaultData ]);
 		// Données de thème
 		$this->setData(['module', $moduleId, 'theme',init::$defaultTheme ]);
-		// Feuille de style
+
 		// Générer la feuille de CSS
-		$style = '.searchItem {background: rgba(229, 229, 1, 1);}';
+		$style = '.keywordColor {background: ' . $this->getData([ 'module', $moduleId, 'theme', 'keywordColor'  ]) . ';}';
 
 		// Dossier de l'instance
 		if (!is_dir(self::DATADIRECTORY)) {
@@ -119,13 +120,13 @@ class search extends common {
 	// Configuration vide
 	public function config() {
 
+		// Mise à jour des données de module
+		$this->update();
+
 		// Initialisation d'un nouveau module
 		if ($this->getData(['module', $this->getUrl(0)]) === null) {
 			$this->init($this->getUrl(0));
 		}
-
-		// Mise à jour des données de module
-		$this->update();
 
 		if($this->isPost())  {
 
@@ -173,13 +174,13 @@ class search extends common {
 
 	public function index() {
 
+		// Mise à jour des données de module
+		$this->update();
+
 		// Initialisation d'un nouveau module
 		if ($this->getData(['module', $this->getUrl(0)]) === null) {
 			$this->init($this->getUrl(0));
 		}
-
-		// Mise à jour des données de module
-		$this->update();
 
 		if($this->isPost())  {
 			//Initialisations variables
