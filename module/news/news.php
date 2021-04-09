@@ -168,6 +168,11 @@ class news extends common {
 		// Mise à jour des données de module
 		$this->update();
 
+		// Initialisation d'un nouveau module
+		if ($this->getData(['module', $this->getUrl(0)]) === null) {
+			$this->init($this->getUrl(0));
+		}
+
 		// Soumission du formulaire
 		if($this->isPost()) {
 
@@ -179,17 +184,21 @@ class news extends common {
 			}
 
 			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
+
 			// Fin feuille de style
+
+			$this->setData(['module', $this->getUrl(0), 'theme',[
+				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
+				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT)
+			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
 				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
-				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
-				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : ''
-				]]);
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+			]]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -337,6 +346,13 @@ class news extends common {
 
 		// Mise à jour des données de module
 		$this->update();
+
+		// Initialisation d'un nouveau module
+		if ($this->getData(['module', $this->getUrl(0)]) === null) {
+			$this->init($this->getUrl(0));
+		}
+
+
 		// Affichage d'un article
 		if(
 			$this->getUrl(1)
@@ -423,45 +439,37 @@ class news extends common {
 	 */
 	private function update() {
 
-		// Initialisation du thème du nouveau module
-		$this->initCss($this->getUrl(0));
-
 		// Version 3.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '3.0', '<') ) {
-			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 16]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperCol', 6]);
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','3.0']);
-
+		if ($this->getData(['module', $this->getUrl(0), 'config']) === NULL ) {
+			// Données config et theme absentes du précédent module
+			$this->init($this->getUrl(0));
 		}
 	}
 
 	/**
 	 * Initialisation du thème d'un nouveau module
 	 */
-	private function initCSS($moduleId) {
+	private function init($moduleId) {
 		// Variable commune
 		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
 
-		// Absence des données CSS
-		if ( $this->getData(['module', $moduleId, 'config', 'itemsHeight']) === null ) {
+		// Données du module 
+		require_once('module/news/ressource/defaultdata.php');
+		$this->setData(['module', $moduleId, 'config',init::$defaultData ]);
+		// Données de thème
+		$this->setData(['module', $moduleId, 'theme',init::$defaultTheme ]);
 
-			$this->setData(['module', $moduleId, 'config', 'itemsHeight', '200px']);
+		// Générer la feuille de CSS
+		$style = '.newsContent {height: ' . $this->getData([ 'module', $moduleId, 'theme', 'itemsHeight' ]) .';}';
+		// Dossier de l'instance
+		if (!is_dir(self::DATADIRECTORY)) {
+			mkdir (self::DATADIRECTORY, 0777, true);
 		}
-		// Absence de la feuille de style
-		if (!file_exists(self::DATADIRECTORY . $moduleId . '.css') ) {
-			// Générer la feuille de CSS
-			$style = '.newsContent {height: 200px;}';
 
-			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY)) {
-				mkdir (self::DATADIRECTORY, 0777, true);
-			}
+		// Sauver la feuille de style
+		file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
 
-			// Sauver la feuille de style
-			$success = file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
-
-			// Nom de la feuille de style
-			$this->setData(['module', $moduleId, 'config', 'style', self::DATADIRECTORY . $moduleId . '.css']);
-		}
+		// Stocker le nom de la feuille de style
+		$this->setData(['module', $moduleId, 'theme', 'style', self::DATADIRECTORY . $moduleId . '.css']);
 	}
 }

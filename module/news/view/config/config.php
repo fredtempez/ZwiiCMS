@@ -55,7 +55,7 @@
 					<div class="col4">
 						<?php echo template::select('newsConfigItemsHeight', $module::$ItemsHeight, [
 							'label' => 'Hauteur',
-							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsHeight'])
+							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsHeight'])
 						]); ?>
 					</div>
 				</div>
