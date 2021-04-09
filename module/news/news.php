@@ -69,9 +69,9 @@ class news extends common {
 
 	public static $itemsBlur = [
 		'100%'		=> 'Aucun',
-		'90%' 		=> 'Petit',
-		'80%' 		=> 'Moyen',
-		'70%' 		=> 'Grand',
+		'90%' 		=> 'Faible',
+		'75%' 		=> 'Modéré',
+		'60%' 		=> 'Important',
 	];
 
 	// Signature de l'article

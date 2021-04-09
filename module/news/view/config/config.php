@@ -54,13 +54,15 @@
 					<div class="col3">
 						<?php echo template::select('newsConfigItemsHeight', $module::$itemsHeight, [
 							'label' => 'Hauteur',
-							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsHeight'])
+							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsHeight']),
+							'help' => 'Limite la hauteur de l\'article, cette option est utile lorsque la pagination en colonnes est activée.'
 						]); ?>
 					</div>
 					<div class="col3">
 						<?php echo template::select('newsConfigItemsBlur', $module::$itemsBlur, [
 							'label' => 'Effet flou',
-							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsBlur'])
+							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsBlur']),
+							'help' => 'Effet appliqué en bas de l\'article afin d\'éviter une coupure brutale quand la hauteur de l\'article n\'est pas définie sur Article Complet'
 						]); ?>
 					</div>
 				</div>
