@@ -8,7 +8,7 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col3 offset3">
 			<?php echo template::button('blogEditDraft', [
 				'uniqueSubmission' => true,
 				'value' => 'Enregistrer en brouillon'
@@ -21,7 +21,6 @@
 			<?php echo template::submit('blogEditSubmit', [
 				'value' => 'Publier'
 			]); ?>
-
 		</div>
 	</div>
 	<div class="row">
