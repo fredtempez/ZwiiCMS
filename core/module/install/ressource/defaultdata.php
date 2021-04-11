@@ -663,12 +663,7 @@ class init extends common {
 				'config' => [
 					'feeds' => true,
 					'feedsLabel' => "Syndication RSS",
-					"editConsent" => "all",
-					"commentMaxlength" => "500",
-					"commentApproved" => false,
-					"commentClose" => false,
-					"commentNotification" => false,
-					"commentGroupNotification" => 1
+					'itemsperPage' => 4
 				],
 				'posts' => [
 					'mon-premier-article' => [
