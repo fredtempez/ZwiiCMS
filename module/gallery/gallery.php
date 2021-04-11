@@ -149,6 +149,7 @@ class gallery extends common {
 	 */
 	private function update() {
 
+
 		// Mise à jour d'une version inférieure, la gallery existe mais pas content
 		if ($this->getData(['module', $this->getUrl(0)]) &&
 			$this->getData(['module', $this->getUrl(0), 'content']) === NULL  ) {
@@ -172,9 +173,6 @@ class gallery extends common {
 				$this->setData(['module', $this->getUrl(0), 'theme', $data]);
 				// Nom de la feuille de style
 				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY  . $moduleId . '.css']);
-			} else {
-				// Theme par défaut
-				$this->init($this->geturl(0));
 			}
 			// Nouvelle version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
@@ -301,9 +299,7 @@ class gallery extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
+		$this->init($this->getUrl(0));
 
 		//Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0), 'content']);
@@ -589,9 +585,7 @@ class gallery extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
+		$this->init($this->getUrl(0));
 
 		// Images d'une galerie
 		if($this->getUrl(1)) {

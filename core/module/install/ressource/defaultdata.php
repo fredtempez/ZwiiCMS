@@ -774,7 +774,7 @@ class init extends common {
 						]
 					],
 				],
-				'config' => [
+				'theme' => [
 					'thumbAlign' 	   => 'center',
 					'thumbWidth' 	   => '18em',
 					'thumbHeight'	   => '15em',
@@ -789,8 +789,10 @@ class init extends common {
 					'legendAlign'	   => 'center',
 					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
 					'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
-					'versionData'      =>  '3.0',
 					'style'            =>  'site/data/modules/gallery/galeries.css'
+				],
+				'config' => [
+					'versionData'      =>  '3.0'
 				],
 			],
 			'site-de-zwii' => [
