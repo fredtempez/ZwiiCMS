@@ -52,65 +52,86 @@ class search extends common {
 	 */
 	private function update() {
 
-		// Version 2.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '2.0', '<') ) {
-
-			// Données de l'instance
+		// Déplacement des données d'une version ultérieure
+		if ($this->getData(['module', $this->getUrl(0), 'previewLength']) ) {
 			$data = $this->getData(['module', $this->getUrl(0)]);
+			// Feuille de style
+			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
 			$this->setData(['module', $this->getUrl(0), 'config', [
 				'submitText' => $this->getData(['module', $this->getUrl(0), 'submitText']),
 				'placeHolder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
 				'resultHideContent' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
 				'previewLength' => $this->getData(['module', $this->getUrl(0), 'previewLength']),
-				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor']),
-				'style' => self::DATADIRECTORY . $this->getUrl(0) . '.css',
 				'versionData' => '2.0'
 			]]);
+			$this->setData(['module', $this->getUrl(0), 'theme', [
+				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor']),
+				'style' => $fileCSS
+			]]);
+
+			// Dossier de l'instance
+			if (!is_dir(self::DATADIRECTORY)) {
+				mkdir (self::DATADIRECTORY, 0777, true);
+			}
+			// Générer la feuille de CSS
+			$style = '.keywordColor {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
+			// Sauver la feuille de style
+			$success = file_put_contents( $fileCSS, $style);
+			// Nettoyage des données précédentes
 			$this->deleteData(['module', $this->getUrl(0), 'submitText']);
 			$this->deleteData(['module', $this->getUrl(0), 'placeHolder']);
 			$this->deleteData(['module', $this->getUrl(0), 'resultHideContent']);
 			$this->deleteData(['module', $this->getUrl(0), 'previewLength']);
 			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
+
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.0']);
 		}
 	}
 
 	/**
-	 * Initialisation du thème du module
-	 * Appelée par les fonctions index et config
+	 * Initialisation du module
 	 */
-	private function initCss($moduleId){
-		// Création des valeurs de réglage par défaut
-		if ( !is_array($this->getData(['module',$moduleId, 'config']) ) ) {
-			require_once('module/search/ressource/defaultdata.php');
+	private function init($moduleId){
+		// Variable commune
+		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
 
-			// Sauver les données par défaut
-			init::$defaultData['style'] = self::DATADIRECTORY . $moduleId . '.css';
-			$this->setData(['module', $moduleId, 'config', init::$defaultData]);
+		// Données du module 
+		require_once('module/search/ressource/defaultdata.php');
+		$this->setData(['module', $moduleId, 'config',init::$defaultData ]);
+		// Données de thème
+		$this->setData(['module', $moduleId, 'theme',init::$defaultTheme ]);
 
-			$style = '.searchItem {background:' . $this->getData(['module', $moduleId, 'config', 'keywordColor']). ';}';
+		// Générer la feuille de CSS
+		$style = '.keywordColor {background: ' . $this->getData([ 'module', $moduleId, 'theme', 'keywordColor'  ]) . ';}';
 
-			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY )) {
-				mkdir (self::DATADIRECTORY , 0777, true);
-			}
-			$success = file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $style );
+		// Dossier de l'instance
+		if (!is_dir(self::DATADIRECTORY)) {
+			mkdir (self::DATADIRECTORY, 0777, true);
 		}
+
+		// Sauver la feuille de style
+		file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
+
+		// Stocker le nom de la feuille de style
+		$this->setData(['module', $moduleId, 'theme', 'style', self::DATADIRECTORY . $moduleId . '.css']);
 	}
 
 
 	// Configuration vide
 	public function config() {
 
-		// Initialisation d'un nouveau module
-		$this->initCss($this->getUrl(0));
-
 		// Mise à jour des données de module
 		$this->update();
+
+		// Initialisation d'un nouveau module
+		if ($this->getData(['module', $this->getUrl(0)]) === null) {
+			$this->init($this->getUrl(0));
+		}
 
 		if($this->isPost())  {
 
 			// Générer la feuille de CSS
-			$style = '.searchItem {background:' . $this->getInput('searchKeywordColor') . ';}';
+			$style = '.keywordColor {background:' . $this->getInput('searchKeywordColor') . ';}';
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY)) {
 				mkdir (self::DATADIRECTORY , 0777, true);
@@ -125,9 +146,11 @@ class search extends common {
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
 				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
 				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+			]]);
+			$this->setData(['module', $this->getUrl(0), 'theme',[
 				'keywordColor' => $this->getInput('searchKeywordColor'),
 				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
-				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 
 
@@ -151,11 +174,13 @@ class search extends common {
 
 	public function index() {
 
-		// Initialisation d'un nouveau module
-		$this->initCss($this->getUrl(0));
-
 		// Mise à jour des données de module
 		$this->update();
+
+		// Initialisation d'un nouveau module
+		if ($this->getData(['module', $this->getUrl(0)]) === null) {
+			$this->init($this->getUrl(0));
+		}
 
 		if($this->isPost())  {
 			//Initialisations variables
@@ -307,7 +332,7 @@ class search extends common {
 				'view' => 'index',
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
-				'style' => $this->getData(['module', $this->getUrl(0), 'config', 'style'])
+				'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
@@ -356,7 +381,7 @@ class search extends common {
 				// Découper l'aperçu
 				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0), 'config', 'previewLength']));
 				// Applique une mise en évidence
-				$t = preg_replace($keywords, '<span class= "searchItem">\1</span>',$t);
+				$t = preg_replace($keywords, '<span class= "keywordColor">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
 				$resultat .= '<p class="searchTitle">' . count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');

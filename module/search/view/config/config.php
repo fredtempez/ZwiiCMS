@@ -59,7 +59,7 @@
 							'class' => 'colorPicker',
 							'help' =>  'Le curseur horizontal règle le niveau de transparence, le placer tout à la gauche pour un surlignement invisible.',
 							'label' => 'Surlignement',
-							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'keywordColor'])
+							'value' => $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor'])
 						]); ?>
 					</div>
 				</div>
