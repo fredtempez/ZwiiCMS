@@ -1608,7 +1608,7 @@ class common {
 				){
 					if(class_exists($parent)) {
 						$module = new $moduleId;
-					//	$module->update($parent);
+						$module->update($parent);
 					}
 				}
 			}
