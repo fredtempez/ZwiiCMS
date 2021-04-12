@@ -149,7 +149,6 @@ class gallery extends common {
 	 */
 	private function update() {
 
-
 		// Mise à jour d'une version inférieure, la gallery existe mais pas content
 		if ($this->getData(['module', $this->getUrl(0)]) &&
 			$this->getData(['module', $this->getUrl(0), 'content']) === NULL  ) {
@@ -172,7 +171,7 @@ class gallery extends common {
 				$this->deleteData(['theme','gallery']);
 				$this->setData(['module', $this->getUrl(0), 'theme', $data]);
 				// Nom de la feuille de style
-				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY  . $moduleId . '.css']);
+				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
 			}
 			// Nouvelle version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
@@ -185,49 +184,50 @@ class gallery extends common {
 	 * Config
 	 * Content
 	 */
-	private function init($moduleId) {
+	private function init() {
 		// Variable commune
-		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
 		// Check la présence du thème
-		if ( $this->getData(['module', $moduleId, 'theme']) === null ) {
+		if ( $this->getData(['module',  $this->getUrl(0), 'theme']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['module', $moduleId, 'theme', theme::$defaultTheme]);
+			$this->setData(['module',  $this->getUrl(0), 'theme', theme::$defaultTheme]);
+			// Nom de la feuille de style
+			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
 		// Check la présence de la feuille de style
-		if ( !file_exists(self::DATADIRECTORY  . $moduleId . '.css')) {
+		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY )) {
-				mkdir (self::DATADIRECTORY, 0777, true);
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
 			}
-			// Nom de la feuille de style
-			$this->setData(['module', $moduleId, 'theme', 'style', $fileCSS]);
-
 			// Générer la feuille de CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
 			$themeCss = file_get_contents('module/gallery/ressource/theme.css');
 
 			// Injection des variables
-			$content = str_replace('#thumbAlign#',$this->getData(['module', $moduleId, 'theme', 'thumbAlign']),$content );
-			$content = str_replace('#thumbWidth#',$this->getData(['module', $moduleId, 'theme', 'thumbWidth']),$content );
-			$content = str_replace('#thumbHeight#',$this->getData(['module', $moduleId, 'theme', 'thumbHeight']),$content );
-			$content = str_replace('#thumbMargin#',$this->getData(['module', $moduleId, 'theme', 'thumbMargin']),$content );
-			$content = str_replace('#thumbBorder#',$this->getData(['module', $moduleId, 'theme', 'thumbBorder']),$content );
-			$content = str_replace('#thumbBorderColor#',$this->getData(['module', $moduleId, 'theme', 'thumbBorderColor']),$content );
-			$content = str_replace('#thumbOpacity#',$this->getData(['module', $moduleId, 'theme', 'thumbOpacity']),$content );
-			$content = str_replace('#thumbShadows#',$this->getData(['module', $moduleId, 'theme', 'thumbShadows']),$content );
-			$content = str_replace('#thumbShadowsColor#',$this->getData(['module', $moduleId, 'theme', 'thumbShadowsColor']),$content );
-			$content = str_replace('#thumbRadius#',$this->getData(['module', $moduleId, 'theme', 'thumbRadius']),$content );
-			$content = str_replace('#legendAlign#',$this->getData(['module', $moduleId, 'theme', 'legendAlign']),$content );
-			$content = str_replace('#legendHeight#',$this->getData(['module', $moduleId, 'theme', 'legendHeight']),$content );
-			$content = str_replace('#legendTextColor#',$this->getData(['module', $moduleId, 'theme', 'legendTextColor']),$content );
-			$content = str_replace('#legendBgColor#',$this->getData(['module', $moduleId, 'theme', 'legendBgColor']),$content );
+			$content = str_replace('#thumbAlign#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbAlign']),$content );
+			$content = str_replace('#thumbWidth#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbWidth']),$content );
+			$content = str_replace('#thumbHeight#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbHeight']),$content );
+			$content = str_replace('#thumbMargin#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbMargin']),$content );
+			$content = str_replace('#thumbBorder#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbBorder']),$content );
+			$content = str_replace('#thumbBorderColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbBorderColor']),$content );
+			$content = str_replace('#thumbOpacity#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbOpacity']),$content );
+			$content = str_replace('#thumbShadows#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbShadows']),$content );
+			$content = str_replace('#thumbShadowsColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbShadowsColor']),$content );
+			$content = str_replace('#thumbRadius#',$this->getData(['module',  $this->getUrl(0), 'theme', 'thumbRadius']),$content );
+			$content = str_replace('#legendAlign#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendAlign']),$content );
+			$content = str_replace('#legendHeight#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendHeight']),$content );
+			$content = str_replace('#legendTextColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendTextColor']),$content );
+			$content = str_replace('#legendBgColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendBgColor']),$content );
 			// Ecriture de la feuille de style
-			file_put_contents(self::DATADIRECTORY . $moduleId . '.css' , $content . $themeCss);
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $content . $themeCss);
+			// Nom de la feuille de style
+			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
 		// Check Config
-		if ( $this->getData(['module', $moduleId, 'config']) === null ) {
+		if ( $this->getData(['module',  $this->getUrl(0), 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['module', $moduleId, 'config', theme::$defaultData]);
+			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultData]);
 		}
 
 		// Contenu vide de la galerie
@@ -299,7 +299,7 @@ class gallery extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		$this->init($this->getUrl(0));
+		$this->init();
 
 		//Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0), 'content']);
@@ -585,7 +585,7 @@ class gallery extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		$this->init($this->getUrl(0));
+		$this->init();
 
 		// Images d'une galerie
 		if($this->getUrl(1)) {
@@ -727,29 +727,26 @@ class gallery extends common {
 		}
 		// Soumission du formulaire
 		if($this->isPost()) {
-
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY )) {
-				mkdir (self::DATADIRECTORY, 0777, true);
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
 			}
-			$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '.css' ;
-			// Fin feuille de style
-			$this->getData(['module', $this->getUrl(0), 'theme', [
-					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign'),
-					'thumbWidth' 	    => $this->getinput('galleryThemeThumbWidth'),
-					'thumbHeight'	    => $this->getinput('galleryThemeThumbHeight'),
-					'thumbMargin'	    => $this->getinput('galleryThemeThumbMargin'),
-					'thumbBorder'	    => $this->getinput('galleryThemeThumbBorder'),
-					'thumbBorderColor'  => $this->getinput('galleryThemeThumbBorderColor'),
-					'thumbOpacity'	    => $this->getinput('galleryThemeThumbOpacity'),
-					'thumbShadows'   	=> $this->getinput('galleryThemeThumbShadows'),
-					'thumbShadowsColor' => $this->getinput('galleryThemeThumbShadowsColor'),
-					'thumbRadius'	    => $this->getinput('galleryThemeThumbRadius'),
-					'legendHeight'	    => $this->getinput('galleryThemeLegendHeight'),
-					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign'),
-					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor'),
-					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor'),
-					'style'				=> $fileCSS,
+			$this->setData(['module', $this->getUrl(0), 'theme', [
+					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign', helper::FILTER_STRING_SHORT),
+					'thumbWidth' 	    => $this->getinput('galleryThemeThumbWidth', helper::FILTER_STRING_SHORT),
+					'thumbHeight'	    => $this->getinput('galleryThemeThumbHeight', helper::FILTER_STRING_SHORT),
+					'thumbMargin'	    => $this->getinput('galleryThemeThumbMargin', helper::FILTER_STRING_SHORT),
+					'thumbBorder'	    => $this->getinput('galleryThemeThumbBorder', helper::FILTER_STRING_SHORT),
+					'thumbBorderColor'  => $this->getinput('galleryThemeThumbBorderColor', helper::FILTER_STRING_SHORT),
+					'thumbOpacity'	    => $this->getinput('galleryThemeThumbOpacity', helper::FILTER_STRING_SHORT),
+					'thumbShadows'   	=> $this->getinput('galleryThemeThumbShadows', helper::FILTER_STRING_SHORT),
+					'thumbShadowsColor' => $this->getinput('galleryThemeThumbShadowsColor', helper::FILTER_STRING_SHORT),
+					'thumbRadius'	    => $this->getinput('galleryThemeThumbRadius', helper::FILTER_STRING_SHORT),
+					'legendHeight'	    => $this->getinput('galleryThemeLegendHeight', helper::FILTER_STRING_SHORT),
+					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign', helper::FILTER_STRING_SHORT),
+					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor', helper::FILTER_STRING_SHORT),
+					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor', helper::FILTER_STRING_SHORT),
+					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css'
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
@@ -769,7 +766,7 @@ class gallery extends common {
 			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
 			$content = str_replace('#legendTextColor#',$this->getinput('galleryThemeLegendTextColor'),$content );
 			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
-			$success = file_put_contents($fileCSS, $content . $themeCss);
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $content . $themeCss);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',

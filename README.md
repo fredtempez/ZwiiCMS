@@ -60,22 +60,23 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
   [R] vendor               Librairies extérieures
   [F] core.js.php          Cœur javascript
   [F] core.php             Cœur PHP
-  
+
 [R] module                 Modules de page
   [R] blog                 Blog
   [R] form                 Gestionnaire de formulaires
   [R] gallery              Galerie
   [R] news                 Nouvelles
   [R] redirection          Redirection
-       
+
 [R] site                   Contenu du site
   [R] backup               Sauvegardes automatiques
   [R] data                 Répertoire des données
     [R] fr                 Dossier localisé
       [F] page.json        Données des pages
       [F] module.json      Données des modules de pages
+    [R] modules            Personnalisation des modules ou données propres
     [F] admin.css          Thème des pages d'administration
-    [F] admin.json         Données de thème des pages d'administration 
+    [F] admin.json         Données de thème des pages d'administration
     [F] blacklist.json     Journalisation des tentatives de connexion avec des comptes inconnus
     [F] config.json        Configuration du site
     [F] core.json          Configuration du noyau
@@ -89,7 +90,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [R] source             Ressources diverses
     [R] thumb              Miniatures des images
   [R] tmp                  Répertoire temporaire
-  
+
 [F] index.php              Fichier d'initialisation de ZwiiCMS
 [F] robots.txt             Filtrage des répertoires accessibles aux robots des moteurs de recherche
 [F] sitemap.xml            Plan du site

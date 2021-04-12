@@ -177,29 +177,27 @@ class news extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
+		$this->init();
 
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Générer la feuille de CSS 
+			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
 			$style .= '.newsBlur {background: linear-gradient(#333 ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',#FFF );';
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
-			
+
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY)) {
-				mkdir (self::DATADIRECTORY, 0777, true);
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
+				mkdir (self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', 0777, true);
 			}
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style );
 
 			// Fin feuille de style
 
 			$this->setData(['module', $this->getUrl(0), 'theme',[
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
+				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
 				'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
 			]]);
@@ -360,10 +358,7 @@ class news extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
-
+			$this->init();
 
 		// Affichage d'un article
 		if(
@@ -454,37 +449,41 @@ class news extends common {
 		// Version 3.0
 		if ($this->getData(['module', $this->getUrl(0), 'config']) === NULL ) {
 			// Données config et theme absentes du précédent module
-			$this->init($this->getUrl(0));
+			$this->init();
 		}
 	}
 
 	/**
 	 * Initialisation du thème d'un nouveau module
 	 */
-	private function init($moduleId) {
-		// Variable commune
-		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+	private function init() {
 
-		// Données du module 
-		require_once('module/news/ressource/defaultdata.php');
-		$this->setData(['module', $moduleId, 'config',init::$defaultData ]);
-		// Données de thème
-		$this->setData(['module', $moduleId, 'theme',init::$defaultTheme ]);
+		$fileCSS = self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css';
 
-		// Générer la feuille de CSS
-		$style = '.newsContent {height: ' . $this->getData([ 'module', $moduleId, 'theme', 'itemsHeight' ]) .';}';
-		$style .= '.newsBlur {background: linear-gradient(#333 ' .  $this->getData([ 'module', $moduleId, 'theme', 'itemsBlur' ]) . ',#FFF );';
-		$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
-		
-		// Dossier de l'instance
-		if (!is_dir(self::DATADIRECTORY)) {
-			mkdir (self::DATADIRECTORY, 0777, true);
+		// Données du module
+		if ($this->getData(['module', $this->getUrl(0) ]) === null) {
+			require_once('module/news/ressource/defaultdata.php');
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+			// Données de thème
+			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ]);
 		}
 
-		// Sauver la feuille de style
-		file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
+		// Dossier de l'instance
+		if (!is_dir(self::DATADIRECTORY .  $this->getUrl(0) )) {
+			mkdir (self::DATADIRECTORY .  $this->getUrl(0) , 0777, true);
+		}
 
-		// Stocker le nom de la feuille de style
-		$this->setData(['module', $moduleId, 'theme', 'style', self::DATADIRECTORY . $moduleId . '.css']);
+		// Check la présence de la feuille de style
+		if ( !file_exists(self::DATADIRECTORY .  $this->getUrl(0)  . '/theme.css')) {
+			// Générer la feuille de CSS
+			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
+			$style .= '.newsBlur {background: linear-gradient(#333 ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',#FFF );';
+			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			// Sauver la feuille de style
+			file_put_contents(self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css' , $style );
+			// Stocker le nom de la feuille de style
+			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css']);
+		}
 	}
 }

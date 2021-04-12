@@ -56,7 +56,7 @@ class search extends common {
 		if ($this->getData(['module', $this->getUrl(0), 'previewLength']) ) {
 			$data = $this->getData(['module', $this->getUrl(0)]);
 			// Feuille de style
-			$fileCSS = self::DATADIRECTORY  . $this->getUrl(0) . '.css' ;
+			$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
 			$this->setData(['module', $this->getUrl(0), 'config', [
 				'submitText' => $this->getData(['module', $this->getUrl(0), 'submitText']),
 				'placeHolder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
@@ -70,8 +70,8 @@ class search extends common {
 			]]);
 
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY)) {
-				mkdir (self::DATADIRECTORY, 0777, true);
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0)  )) {
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
 			}
 			// Générer la feuille de CSS
 			$style = '.keywordColor {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
@@ -91,29 +91,34 @@ class search extends common {
 	/**
 	 * Initialisation du module
 	 */
-	private function init($moduleId){
-		// Variable commune
-		$fileCSS = self::DATADIRECTORY  . $moduleId . '.css' ;
+	private function init(){
 
-		// Données du module 
-		require_once('module/search/ressource/defaultdata.php');
-		$this->setData(['module', $moduleId, 'config',init::$defaultData ]);
-		// Données de thème
-		$this->setData(['module', $moduleId, 'theme',init::$defaultTheme ]);
 
-		// Générer la feuille de CSS
-		$style = '.keywordColor {background: ' . $this->getData([ 'module', $moduleId, 'theme', 'keywordColor'  ]) . ';}';
+		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
 
-		// Dossier de l'instance
-		if (!is_dir(self::DATADIRECTORY)) {
-			mkdir (self::DATADIRECTORY, 0777, true);
+		if ($this->getData(['module', $this->getUrl(0)]) === null) {
+			// Données du module 
+			require_once('module/search/ressource/defaultdata.php');
+			$this->setData(['module', $this->getUrl(0), 'config',init::$defaultConfig ]);
+			// Données de thème
+			$this->setData(['module', $this->getUrl(0), 'theme',init::$defaultTheme ]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ]);
 		}
 
-		// Sauver la feuille de style
-		file_put_contents(self::DATADIRECTORY .$moduleId . '.css' , $style );
+		// Dossier de l'instance
+		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
+			mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+		}
 
-		// Stocker le nom de la feuille de style
-		$this->setData(['module', $moduleId, 'theme', 'style', self::DATADIRECTORY . $moduleId . '.css']);
+		// Check la présence de la feuille de style
+		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
+			// Générer la feuille de CSS
+			$style = '.keywordColor {background: ' . $this->getData([ 'module', $this->getUrl(0), 'theme', 'keywordColor'  ]) . ';}';
+			// Sauver la feuille de style
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style );
+			// Stocker le nom de la feuille de style
+			$this->setData(['module', $this->getUrl(0) , 'theme', 'style', $fileCSS]);
+		}
 	}
 
 
@@ -124,20 +129,15 @@ class search extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
+		$this->init();
+
 
 		if($this->isPost())  {
 
 			// Générer la feuille de CSS
 			$style = '.keywordColor {background:' . $this->getInput('searchKeywordColor') . ';}';
-			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY)) {
-				mkdir (self::DATADIRECTORY , 0777, true);
-			}
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
 			// Fin feuille de style
 
 			// Soumission du formulaire
@@ -150,7 +150,7 @@ class search extends common {
 			]]);
 			$this->setData(['module', $this->getUrl(0), 'theme',[
 				'keywordColor' => $this->getInput('searchKeywordColor'),
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '.css' : '',
+				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
 			]]);
 
 
@@ -178,9 +178,8 @@ class search extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			$this->init($this->getUrl(0));
-		}
+		$this->init();
+
 
 		if($this->isPost())  {
 			//Initialisations variables

@@ -258,6 +258,13 @@ class page extends common {
 		}
 		// Suppression
 		else {
+
+			// Effacer le dossier du module
+			$moduleId = $this->getData(['page',$url[0],'moduleId']);
+			$modulesData = helper::getModules();
+			if (is_dir($modulesData[$moduleId]['dataDirectory'])) {
+				$this->removeDir( $modulesData[$moduleId]['dataDirectory'] );
+			}
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
 			$this->deleteData(['module', $url[0]]);
@@ -312,6 +319,16 @@ class page extends common {
 					if ($this->getData(['module', $this->getUrl(2)]) !== null ) {
 						$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
 						$this->deleteData(['module', $this->getUrl(2)]);
+						// Renommer le dossier du module
+						$moduleId = $this->getData(['page',$this->getUrl(2),'moduleId']);
+						$modulesData = helper::getModules();
+						if (is_dir($modulesData[$moduleId]['dataDirectory'])) {
+							// Renommer la feuille de style
+							rename( $modulesData[$moduleId]['dataDirectory'],str_replace($this->geturl(2),$pageId, $modulesData[$moduleId]['dataDirectory']));
+							$this->removeDir($modulesData[$moduleId]['dataDirectory']);
+							// Mettre à jour le nom de la feuille de site
+							$this->setData(['module',$pageId,'theme','style',str_replace($this->geturl(2),$pageId, $modulesData[$moduleId]['dataDirectory'])]);
+						}
 					}
 					// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
 					if($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
