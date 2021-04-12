@@ -1,6 +1,6 @@
 <?php
 class init extends search {
-    public static $defaultData = [
+    public static $defaultConfig = [
         'previewLength'      => 100,
         'resultHideContent'  => false,
         'placeHolder'        => 'Un ou plusieurs mots-clés séparés par un espace ou par +',

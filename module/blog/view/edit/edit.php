@@ -21,7 +21,6 @@
 			<?php echo template::submit('blogEditSubmit', [
 				'value' => 'Publier'
 			]); ?>
-
 		</div>
 	</div>
 	<div class="row">

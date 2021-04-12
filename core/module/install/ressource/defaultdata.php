@@ -677,12 +677,7 @@ class init extends common {
 				'config' => [
 					'feeds' => true,
 					'feedsLabel' => "Syndication RSS",
-					"editConsent" => "all",
-					"commentMaxlength" => "500",
-					"commentApproved" => false,
-					"commentClose" => false,
-					"commentNotification" => false,
-					"commentGroupNotification" => 1
+					'itemsperPage' => 4
 				],
 				'posts' => [
 					'mon-premier-article' => [
@@ -700,6 +695,7 @@ class init extends common {
 						'picture' => 'galerie/landscape/meadow.jpg',
 						'hidePicture' => false,
 						'pictureSize' => 20,
+						'picturePosition' => 'left',
 						'publishedOn' => 1548790902,
 						'state' => true,
 						'title' => 'Mon premier article',
@@ -718,6 +714,7 @@ class init extends common {
 						'picture' => 'galerie/landscape/desert.jpg',
 						'hidePicture' => false,
 						'pictureSize' => 40,
+						'picturePosition' => 'right',
 						'publishedOn' => 1550432502,
 						'state' => true,
 						'title' => 'Mon deuxième article',
@@ -736,6 +733,7 @@ class init extends common {
 						'picture' => 'galerie/landscape/iceberg.jpg',
 						'hidePicture' => false,
 						'pictureSize' => 100,
+						'picturePosition' => 'left',
 						'publishedOn' => 1550864502,
 						'state' => true,
 						'title' => 'Mon troisième article',
@@ -790,7 +788,7 @@ class init extends common {
 						]
 					],
 				],
-				'config' => [
+				'theme' => [
 					'thumbAlign' 	   => 'center',
 					'thumbWidth' 	   => '18em',
 					'thumbHeight'	   => '15em',
@@ -805,8 +803,10 @@ class init extends common {
 					'legendAlign'	   => 'center',
 					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
 					'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
-					'versionData'      =>  '3.0',
 					'style'            =>  'site/data/modules/gallery/galeries.css'
+				],
+				'config' => [
+					'versionData'      =>  '3.0'
 				],
 			],
 			'site-de-zwii' => [

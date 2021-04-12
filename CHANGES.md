@@ -16,7 +16,7 @@
 ## version 10.6.00
 Cette version apporte aux modules une autonomie complète par rapport au noyau.
     - mise à jour interne (fonction update)
-    - feuille de style propres aux instances (fonction initCss)
+    - feuille de style propres aux instances (fonction init)
 - Modifications :
     - Nombre d'éléments ou d'articles par page : l'option est propre aux modules et n'est plus gérées dans la configuration du CMS.
     - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
