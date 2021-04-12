@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.5.03
+- Correction :
+    - Options de configuration SMTP invisibles.
+
 ## version 10.5.02
 - Corrections :
     - Erreur de positionnement de marge dans le thème du site.
