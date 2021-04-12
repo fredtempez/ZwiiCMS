@@ -3,7 +3,7 @@
 ## version 10.6.00
 Cette version apporte aux modules une autonomie complète par rapport au noyau.
     - mise à jour interne (fonction update)
-    - feuille de style propres aux instances (fonction initCss)
+    - feuille de style propres aux instances (fonction init)
 - Modifications :
     - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
 
