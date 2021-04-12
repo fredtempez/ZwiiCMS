@@ -5,8 +5,9 @@ Cette version apporte aux modules une autonomie complète par rapport au noyau.
     - mise à jour interne (fonction update)
     - feuille de style propres aux instances (fonction init)
 - Modifications :
-    - Module search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
-    - Modules search, news et gallery, chaque module de page dispose de réglages de thème stockés dans des feuilles de style séparés. Nouvelle structure de données distinguant configuration, données et thème.
+    - Nombre d'éléments ou d'articles par page : l'option est propre aux modules et n'est plus gérées dans la configuration du CMS.
+    - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
+    - Module News : présentation des articles en colonnes.
 
 ## version 10.5.02
 - Corrections :
