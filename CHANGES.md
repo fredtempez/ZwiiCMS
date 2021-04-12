@@ -9,6 +9,10 @@ Cette version apporte aux modules une autonomie complète par rapport au noyau.
     - Module Search : en l'absence de texte dans le bouton Rechercher, une loupe est affichée.
     - Module News : présentation des articles en colonnes.
 
+## version 10.5.03
+- Correction :
+    - Options de configuration SMTP invisibles.
+
 ## version 10.5.02
 - Corrections :
     - Erreur de positionnement de marge dans le thème du site.

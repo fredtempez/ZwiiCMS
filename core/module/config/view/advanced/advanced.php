@@ -407,7 +407,7 @@
 							]); ?>
 					</div>
 				</div>
-				<div id="configSmtpParam">
+				<div id="configAdvancedSmtpParam">
 					<div class="row">
 						<div class="col8">
 							<?php echo template::text('configAdvancedSmtpHost', [
@@ -430,7 +430,7 @@
 							]); ?>
 						</div>
 					</div>
-					<div id="configSmtpAuthParam">
+					<div id="configAdvancedSmtpAuthParam">
 						<div class="row">
 							<div  class="col5">
 								<?php echo template::text('configAdvancedSmtpUsername', [
