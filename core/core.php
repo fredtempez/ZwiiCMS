@@ -1656,9 +1656,6 @@ class common {
 			// Option de déconnexion auto activée
 			$this->setData(['config','autoDisconnect',true]);
 
-			// Suppression de l'option d'objets par page gérées par les modules
-			$this->deleteData(['config','itemsperPage']);
-
 			// Mettre à jour les données de langue
 			$this->setData(['config','translate','scriptGoogle', false ]);
 			$this->setData(['config','translate','showCredits', false ]);
