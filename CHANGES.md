@@ -3,6 +3,8 @@
 ## version 10.5.03
 - Correction :
     - Options de configuration SMTP invisibles.
+- Modification : 
+    - Libellé des erreurs 403 et 404.
 
 ## version 10.5.02
 - Corrections :
