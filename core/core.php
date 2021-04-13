@@ -1622,7 +1622,7 @@ class common {
 		}
 
 		// Version 10.6.00
-		if ($this->getData(['core', 'dataVersion']) < 10600) {
+		if ($this->getData(['core', 'dataVersion']) < 106) {
 
 			// Mise à jour des données des modules autonomes
 
@@ -1637,9 +1637,9 @@ class common {
 			// Parcourir pageList et rechercher les modules au CSS autonomes
 			foreach ($pageList as $parentKey => $parent) {
 				if (
-					$this->getData(['page',$parent,'moduleId']) === 'search'
-					|| $this->getData(['page',$parent,'moduleId']) === 'gallery'
-					|| $this->getData(['page',$parent,'moduleId']) === 'news'
+				 $this->getData(['page',$parent,'moduleId']) === 'search'
+				 || $this->getData(['page',$parent,'moduleId']) === 'gallery'
+				 || $this->getData(['page',$parent,'moduleId']) === 'news'
 				){
 					if(class_exists($parent)) {
 						$module = new $moduleId;
@@ -1647,6 +1647,9 @@ class common {
 					}
 				}
 			}
+		// Suppression de l'option d'objets par page gérées par les modules
+		$this->deleteData(['config','itemsperPage']);
+
 		$this->setData(['core', 'dataVersion', 10600]);
 		}
 
