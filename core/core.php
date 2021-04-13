@@ -2256,8 +2256,8 @@ class core extends common {
 					header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
 				} else {
 					$this->addOutput([
-						'title' => 'Erreur 403',
-						'content' => template::speech('Vous n\'êtes pas autorisé à accéder à cette page...')
+						'title' => 'Accès interdit',
+						'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
 					]);
 				}
 			}
@@ -2269,8 +2269,8 @@ class core extends common {
 				header('Location:' . helper::baseUrl() . $this->getData(['locale','page404']));
 			} else {
 				$this->addOutput([
-					'title' => 'Erreur 404',
-					'content' => template::speech('Oups ! La page demandée est introuvable...')
+					'title' => 'Page indisponible',
+					'content' => template::speech('Oups ! La page demandée n\'existe pas ou est introuvable (erreur 404)')
 				]);
 			}
 		}

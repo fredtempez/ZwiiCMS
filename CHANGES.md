@@ -12,6 +12,8 @@ Cette version apporte aux modules une autonomie complète par rapport au noyau.
 ## version 10.5.03
 - Correction :
     - Options de configuration SMTP invisibles.
+- Modification : 
+    - Libellé des erreurs 403 et 404.
 
 ## version 10.5.02
 - Corrections :
