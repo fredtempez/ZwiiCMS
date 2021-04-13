@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '2.8';
+	const VERSION = '2.9';
 	const REALNAME = 'Formulaire';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -47,6 +47,7 @@ class form extends common {
 	const TYPE_DATETIME = 'date';
 	const TYPE_CHECKBOX = 'checkbox';
 	const TYPE_LABEL = 'label';
+	const ITEMSPAGE = 10;
 
 
 	public static $types = [
@@ -61,6 +62,7 @@ class form extends common {
 
 	public static $listUsers = [
 	];
+
 
 	/**
 	 * Configuration
@@ -139,7 +141,7 @@ class form extends common {
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
 		if($data) {
 			// Pagination
-			$pagination = helper::pagination($data, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			$pagination = helper::pagination($data, $this->getUrl(),self::ITEMSPAGE);
 			// Liste des pages
 			self::$pagination = $pagination['pages'];
 			// Inverse l'ordre du tableau
