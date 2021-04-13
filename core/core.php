@@ -1612,6 +1612,9 @@ class common {
 					}
 				}
 			}
+		// Suppression de l'option d'objets par page gérées par les modules
+		$this->deleteData(['config','itemsperPage']);
+
 		$this->setData(['core', 'dataVersion', 10600]);
 		}
 	}
