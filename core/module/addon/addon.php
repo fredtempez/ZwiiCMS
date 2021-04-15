@@ -29,7 +29,7 @@ class addon extends common {
 		'uploadItem'=> self::GROUP_ADMIN
 	];
 
-	const URL_STORE = 'http://zwiicms.fr/?modules/list';
+	const URL_STORE = 'http://zwiicms.fr/?modules/';
 	const BASEURL_STORE = 'http://zwiicms.fr/';
 
 	// Gestion des modules
@@ -241,7 +241,7 @@ class addon extends common {
 			// Récupérer le module en ligne
 			$moduleName = $this->getUrl(2);
 			// Informations sur les module en ligne 
-			$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
+			$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
 			// Télécharger le fichier
@@ -283,7 +283,7 @@ class addon extends common {
 	 * Catalogue des modules sur le site ZwiiCMS.fr
 	 */
 	public function store() {
-		$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
+		$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
@@ -308,7 +308,7 @@ class addon extends common {
 					$ico =  template::ico('update');
 				}
 				self::$storeList [] = [
-					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/item/' . $key . '" rel="data-lity">'.$store[$key]['title'].'</a>',
+					'<a href="' . self::URL_STORE . $key . '" target="_blank" >'.$store[$key]['title'].'</a>',
 					$store[$key]['fileVersion'],
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['fileDate'])
@@ -327,7 +327,7 @@ class addon extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Catalogue de modules',
+			'title' => 'Catalogue de modules en ligne',
 			'view' => 'store'
 		]);
 	}
@@ -336,7 +336,7 @@ class addon extends common {
 	 * Détail d'un objet du catalogue
 	 */
 	public function item() {
-		$store = json_decode(helper::urlGetContents(self::URL_STORE), true);
+		$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
 		self::$storeItem = $store [$this->getUrl(2)] ;
 		self::$storeItem ['fileDate'] = mb_detect_encoding(strftime('%d %B %Y',self::$storeItem ['fileDate']), 'UTF-8', true)
 										? strftime('%d %B %Y', self::$storeItem ['fileDate'])
@@ -344,8 +344,7 @@ class addon extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' =>'Module ' . self::$storeItem['title'],
-			'view' => 'item',
-			'display' => self::DISPLAY_LAYOUT_LITY
+			'view' => 'item'
 		]);
 	}
 
@@ -386,7 +385,6 @@ class addon extends common {
 												'value' => template::ico('download')
 												])
 											: '',
-				'',
 				implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre

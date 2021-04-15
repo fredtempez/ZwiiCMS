@@ -21,7 +21,7 @@
 	</div>
 </div>
 <?php if($module::$modInstal): ?>
-	<?php echo template::table([2, 2, 2, 3, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter' . '<span class="helpDisplayButton">'.template::ico('help', 'left').'</span>', 'Importer']); ?>
+	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter' . '<span class="helpDisplayButton">'.template::ico('help', 'left').'</span>', 'Importer']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
