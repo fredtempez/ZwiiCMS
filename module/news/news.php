@@ -184,7 +184,7 @@ class news extends common {
 
 			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			$style .= '.newsBlur {background: linear-gradient(#333 ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',#FFF );';
+			$style .= '.newsBlur {background: linear-gradient(#333 ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 
 			// Dossier de l'instance
