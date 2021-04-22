@@ -21,9 +21,9 @@ class helper {
 
 
 	/**
-	 * Récupérer l'adresse IP sans tenit compte du proxy
+	 * Récupérer l'adresse IP sans tenir compte du proxy
 	 * @return string IP adress
-	 * Cette focntion est utilisé par user
+	 * Cette fonction est utilisée par user
 	*/
 
 	public static function getIp() {
