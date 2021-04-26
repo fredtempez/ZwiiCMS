@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '5.0';
+	const VERSION = '5.1';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';

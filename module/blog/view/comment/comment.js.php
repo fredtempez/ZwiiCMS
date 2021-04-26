@@ -17,7 +17,7 @@
  */
 $(".blogCommentDelete").on("click", function() {
 	var _this = $(this);
-	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title' ]); ?>";
 	return core.confirm("Supprimer le commentaire de l'article " + nom + " ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -28,7 +28,7 @@ $(".blogCommentDelete").on("click", function() {
  */
 $(".blogCommentApproved").on("click", function() {
 	var _this = $(this);
-	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title' ]); ?>";
 	return core.confirm("Approuver le commentaire de l'article " + nom + " ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -39,7 +39,7 @@ $(".blogCommentApproved").on("click", function() {
  */
 $(".blogCommentRejected").on("click", function() {
 	var _this = $(this);
-	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
+	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title' ]); ?>";
 	return core.confirm("Rejeter le commentaire de l'article " + nom + " ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -50,11 +50,11 @@ $(".blogCommentRejected").on("click", function() {
  */
 $(".blogCommentDeleteAll").on("click", function() {
 	var _this = $(this);
-	var nombre = "<?php echo count($this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'comment' ])); ?>";
+	var nombre = "<?php echo count($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment' ])); ?>";
 	var nom = "<?php echo $this->getData(['module', $this->getUrl(0), $this->getUrl(2), 'title' ]); ?>";
 	if( nombre === "1"){
 		var message = "Supprimer le commentaire de l'article " + nom + " ?";
-	} else{
+	} else {
 		var message = "Supprimer les " + nombre + " commentaires de l'article " + nom + " ?";
 	}
 	return core.confirm(message, function() {
