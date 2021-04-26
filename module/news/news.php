@@ -19,7 +19,7 @@ class news extends common {
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY =  self::DATA_DIR . 'modules/news/';
+	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,

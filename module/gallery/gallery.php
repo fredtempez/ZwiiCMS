@@ -21,7 +21,7 @@ class gallery extends common {
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = self::DATA_DIR . 'modules/gallery/';
+	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
