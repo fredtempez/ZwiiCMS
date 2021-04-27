@@ -23,7 +23,7 @@ class search extends common {
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = self::DATA_DIR . 'search/';
+	const DATADIRECTORY = self::DATA_DIR . 'search/pages/';
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
