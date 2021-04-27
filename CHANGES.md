@@ -1,9 +1,13 @@
 # Changelog
 
+## version 10.5.04
+- Modifications :
+    - Sitemap : tri des articles de blog selon la date de publication
+
 ## version 10.5.03
 - Correction :
     - Options de configuration SMTP invisibles.
-- Modification : 
+- Modification :
     - Libellé des erreurs 403 et 404.
 
 ## version 10.5.02
