@@ -448,9 +448,13 @@ class news extends common {
 
 		// Créer la structure de configuration si absente
 		// Il n'existait aucun paramétrage dans les version précédentes
-		if ($this->getData(['module', $this->getUrl(0), 'config']) === NULL ) {
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) === NULL ) {
 			// Données config et theme absentes du précédent module
-			$this->init();
+			require_once('module/news/ressource/defaultdata.php');
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+			// Données de thème
+			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ]);
 		}
 	}
 

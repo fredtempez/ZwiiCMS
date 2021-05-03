@@ -8,7 +8,7 @@ class init extends search {
         'versionData'        => '3.0'
     ];
     public static $defaultTheme = [
-        'itemsHeight'        => '200px',
-        'itemsBlur'         => '0%'
+        'itemsHeight'        => 'auto',
+        'itemsBlur'         => '100%'
     ];
 }
