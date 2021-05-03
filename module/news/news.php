@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.0';
+	const VERSION = '3.1';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -225,15 +225,28 @@ class news extends common {
 			// News en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Met en forme le tableau
-				$date = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+				$dateOn = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
 						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
 						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
-				$heure = mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+				$dateOn .= ' à ';
+				$dateOn .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
 						? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
 						: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
+				if ($this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])) {
+					$dateOff = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
+						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
+						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
+					$dateOff .=	' à ';
+					$dateOff .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
+						? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
+						: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
+				} else {
+					$dateOff = 'Permanent';
+				}
 				self::$news[] = [
 					$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'title']),
-					$date .' à '. $heure,
+					$dateOn,
+					$dateOff,
 					self::$states[$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'state'])],
 					template::button('newsConfigEdit' . $newsIds[$i], [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],
@@ -316,9 +329,12 @@ class news extends common {
 					// Supprime l'ancien news
 					$this->deleteData(['module', $this->getUrl(0),'posts', $this->getUrl(2)]);
 				}
+				$publishedOn = $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true);
+				$publishedOff = $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME);
 				$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 					'content' => $this->getInput('newsEditContent', null),
-					'publishedOn' => $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true),
+					'publishedOn' => $publishedOn,
+					'publishedOff' => $publishedOff < $publishedOn ? '' : $publishedOff,
 					'state' => $this->getInput('newsEditState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('newsEditTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $this->getInput('newsEditUserId', helper::FILTER_ID, true)
@@ -391,7 +407,14 @@ class news extends common {
 			$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 			$newsIds = [];
 			foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
-				if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
+				$newsIdsPublishedOff = $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOff']);
+				if(   $newsPublishedOn <= time() AND 
+				      $newsIdsStates[$newsId] AND
+					  	// date de péremption tenant des champs non définis
+						(!is_integer($newsIdsPublishedOff) OR
+							$newsIdsPublishedOff > time()
+						)
+					) {
 					$newsIds[] = $newsId;
 				}
 			}

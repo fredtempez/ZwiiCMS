@@ -70,7 +70,7 @@
 		</div>
 	</div>
 	<?php if($module::$news): ?>
-		<?php echo template::table([4, 4, 2, 1, 1], $module::$news, ['Titre', 'Date de publication', 'État', '', '']); ?>
+		<?php echo template::table([4, 2, 2, 2, 1, 1], $module::$news, ['Titre', 'Publication', 'Dépublication', 'État', '', '']); ?>
 		<?php echo $module::$pages; ?>
 	<?php else: ?>
 		<?php echo template::speech('Aucune news.'); ?>
