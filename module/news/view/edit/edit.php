@@ -43,17 +43,24 @@
 			<div class="block">
 				<h4>Options de publication</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::select('newsEditUserId', $module::$users, [
 							'label' => 'Auteur',
 							'selected' => $this->getUser('id')
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::date('newsEditPublishedOn', [
 							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
 							'label' => 'Date de publication',
 							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOn'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::date('newsEditPublishedOff', [
+							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée.',
+							'label' => 'Date de dépublication',
+							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff'])
 						]); ?>
 					</div>
 				</div>
