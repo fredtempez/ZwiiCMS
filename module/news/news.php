@@ -184,7 +184,7 @@ class news extends common {
 
 			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			$style .= '.newsBlur {background: linear-gradient(#333 ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
+			$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 
 			// Dossier de l'instance
@@ -358,7 +358,7 @@ class news extends common {
 		$this->update();
 
 		// Initialisation d'un nouveau module
-			$this->init();
+		$this->init();
 
 		// Affichage d'un article
 		if(
@@ -446,7 +446,8 @@ class news extends common {
 	 */
 	private function update() {
 
-		// Version 3.0
+		// Créer la structure de configuration si absente
+		// Il n'existait aucun paramétrage dans les version précédentes
 		if ($this->getData(['module', $this->getUrl(0), 'config']) === NULL ) {
 			// Données config et theme absentes du précédent module
 			$this->init();
@@ -458,10 +459,11 @@ class news extends common {
 	 */
 	private function init() {
 
+
 		$fileCSS = self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css';
 
-		// Données du module
-		if ($this->getData(['module', $this->getUrl(0) ]) === null) {
+		// Données du module absentes
+		if ($this->getData(['module', $this->getUrl(0), 'config' ]) === null) {
 			require_once('module/news/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 			// Données de thème
@@ -478,7 +480,7 @@ class news extends common {
 		if ( !file_exists(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
-			$style .= '.newsBlur {background: linear-gradient(#333 ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',#FFF );';
+			$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			// Sauver la feuille de style
 			file_put_contents(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css' , $style );
