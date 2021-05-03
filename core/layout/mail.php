@@ -109,7 +109,18 @@
 					<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
 						<tr>
 							<td style="border-top: 1px solid #EBEEF2; padding: 20px; text-align: center; font-family: 'Open Sans', sans-serif; font-size: 12px; line-height: 17px; color: #212223;">
-								<a href="<?php echo helper::baseUrl(false); ?>" target="_blank"><?php echo $this->getData(['locale', 'title']); ?></a>
+								<a href="<?php echo helper::baseUrl(false); ?>" target="_blank">
+								<?php
+								if($this->getData(['module', $this->getUrl(0), 'config', 'signature' ]) === 'logo' && is_file( 'site/file/source/'. $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl' ]))){
+									$imageFile = helper::baseUrl(false).'site/file/source/'. $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl' ]) ;
+									$imageBase64 = base64_encode(file_get_contents($imageFile));
+									?><img src=" data:image/<?php echo pathinfo($imageFile, PATHINFO_EXTENSION); ?>;base64,<?php echo $imageBase64; ?>" border="0" width="<?php echo $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth']) ?>%" >
+								<?php
+								}
+								else{
+									echo $this->getData(['locale', 'title']);
+								} ?>
+								</a>
 							</td>
 						</tr>
 					</table>

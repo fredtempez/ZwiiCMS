@@ -133,13 +133,13 @@ $("#formConfigInputs")
 			case  "label":
 				_this.parents(".formConfigInput").find("label[for*=formConfigRequired]").hide();
 				_this.parents(".formConfigInput").find(".formConfigLabelWrapper").slideDown();
-				_this.parents(".formConfigInput").find(".formConfigValuesWrapper").slideUp();					
+				_this.parents(".formConfigInput").find(".formConfigValuesWrapper").slideUp();
 				break;
 			default:
 				_this.parents(".formConfigInput").find("label[for*=formConfigRequired]").show();
-				_this.parents(".formConfigInput").find(".formConfigValuesWrapper").slideUp();					
-				_this.parents(".formConfigInput").find(".formConfigLabelWrapper").slideUp();	
-		}	
+				_this.parents(".formConfigInput").find(".formConfigValuesWrapper").slideUp();
+				_this.parents(".formConfigInput").find(".formConfigLabelWrapper").slideUp();
+		}
 	});
 // Simule un changement de type au chargement de la page
 $(".formConfigType").trigger("change");
@@ -174,3 +174,42 @@ $("#formConfigPageIdToggle").on("change", function() {
 		});
 	}
 }).trigger("change");
+
+/**
+* Paramètres par défaut au chargement
+*/
+$( document ).ready(function() {
+
+	/**
+	* Masquer ou afficher la sélection du logo
+	*/
+	if ($("#formConfigSignature").val() !== "text") {
+		$("#formConfigLogoWrapper").addClass("disabled");
+		$("#formConfigLogoWrapper").slideDown();
+		$("#formConfigLogoWidthWrapper").addClass("disabled");
+		$("#formConfigLogoWidthWrapper").slideDown();
+	} else {
+		$("#formConfigLogoWrapper").removeClass("disabled");
+		$("#formConfigLogoWrapper").slideUp();
+		$("#formConfigLogoWidthWrapper").removeClass("disabled");
+		$("#formConfigLogoWidthWrapper").slideUp();
+	}
+});
+
+/**
+ * Masquer ou afficher la sélection du logo
+ */
+var formConfigSignatureDOM = $("#formConfigSignature");
+formConfigSignatureDOM.on("change", function() {
+	if ($(this).val() !== "text") {
+			$("#formConfigLogoWrapper").addClass("disabled");
+			$("#formConfigLogoWrapper").slideDown();
+			$("#formConfigLogoWidthWrapper").addClass("disabled");
+			$("#formConfigLogoWidthWrapper").slideDown();
+	} else {
+			$("#formConfigLogoWrapper").removeClass("disabled");
+			$("#formConfigLogoWrapper").slideUp();
+			$("#formConfigLogoWidthWrapper").removeClass("disabled");
+			$("#formConfigLogoWidthWrapper").slideUp();
+	}
+});
