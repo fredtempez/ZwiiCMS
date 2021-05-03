@@ -129,6 +129,27 @@
 					</div>
 				</div>
 				<div class="row">
+					<div class="col4">
+						<?php echo template::select('formConfigSignature', $module::$signature, [
+							'label' => 'Sélectionner le type de signature',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'signature'])
+						]); ?>
+					</div>
+					<div class="col4">
+												<?php echo template::file('formConfigLogo', [
+							'help' => 'Sélectionnez le logo du site',
+														'label' => 'Logo',
+														'value' => $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl'])
+												]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('formConfigLogoWidth', $module::$logoWidth, [
+							'label' => 'Sélectionner la largeur du logo',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth'])
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('formConfigPageIdToggle', true, 'Redirection après soumission du formulaire', [
 							'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'pageId'])

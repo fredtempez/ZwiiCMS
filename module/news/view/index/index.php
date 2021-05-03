@@ -2,9 +2,9 @@
 	<div class="row">
 		<?php foreach($module::$news as $newsId => $news): ?>
 			<div class="col<?php echo $module::$nbrCol ;?>" >
-				<h1 class="newsTitle" id="<?php echo $newsId;?>">
+				<h2 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
-				</h1>
+				</h2>
 				<div class="newsContent newsBlur">
 					<?php echo $news['content']; ?>
 				</div>

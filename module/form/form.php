@@ -63,6 +63,17 @@ class form extends common {
 	public static $listUsers = [
 	];
 
+	public static $signature = [
+		'text' => 'Nom du site',
+		'logo' => 'Logo du site'
+	];
+
+	public static $logoWidth = [
+		'40' => '40%',
+		'60' => '60%',
+		'80' => '80%',
+		'100' => '100%'
+	];
 
 	/**
 	 * Configuration
@@ -90,7 +101,10 @@ class form extends common {
 					'mail' => $this->getInput('formConfigMail') ,
 					'pageId' => $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '',
 					'subject' => $this->getInput('formConfigSubject'),
-					'replyto' => $this->getInput('formConfigMailReplyTo', helper::FILTER_BOOLEAN)
+					'replyto' => $this->getInput('formConfigMailReplyTo', helper::FILTER_BOOLEAN),
+					'signature' => $this->getInput('formConfigSignature'),
+					'logoUrl' => $this->getInput('formConfigLogo'),
+					'logoWidth' => $this->getInput('formConfigLogoWidth')
 				]
 			]);
 			// Génération des données vides

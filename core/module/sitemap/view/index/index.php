@@ -23,13 +23,22 @@
 
 						<!-- articles d'une sous-page blog-->
 						<ul>
-						<?php if ($this->getData(['page', $childId, 'moduleId']) === 'blog') { ?>
-
-							<?php
-								foreach($this->getData(['module',$childId]) as $articleId => $article): ?>
-								<?php if($this->getData(['module',$childId,'posts',$articleId,'state']) === true) {?>
+						<?php if ($this->getData(['page', $childId, 'moduleId']) === 'blog'  &&
+				   			!empty($this->getData(['module', $childId, 'posts' ])) ) { ?>
+						<?php 
+								// Ids des articles par ordre de publication
+								$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $childId,'posts']), 'publishedOn', 'SORT_DESC');
+								$articleIdsStates = helper::arrayCollumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
+								$articleIds = [];
+								foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
+									if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+										$articleIds[] = $articleId;
+									}
+								}
+								foreach($articleIds as $articleId => $article): ?>
+								<?php if($this->getData(['module',$childId,'posts',$article,'state']) === true) {?>
 									<li>
-										<a href="<?php echo helper::baseUrl() . $childId . '/' . $articleId;?>"><?php echo $article['title']; ?></a>
+										<a href="<?php echo helper::baseUrl() . $childId . '/' . $article;?>"><?php echo $this->getData(['module',$childId,'posts',$article,'title']); ?></a>
 									</li>
 								<?php } ?>
 								<?php endforeach;
@@ -41,10 +50,20 @@
 
 				<?php if ($this->getData(['page', $parentId, 'moduleId']) === 'blog'  &&
 				   			!empty($this->getData(['module',$parentId, 'posts' ])) ) { ?>
-					<?php foreach($this->getData(['module',$parentId, 'posts' ]) as $articleId => $article): ?>
-						<?php if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true ): ?>
+					<?php
+						// Ids des articles par ordre de publication
+						$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $parentId,'posts']), 'publishedOn', 'SORT_DESC');
+						$articleIdsStates = helper::arrayCollumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
+						$articleIds = [];
+						foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
+							if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+								$articleIds[] = $articleId;
+							}
+						}
+						foreach($articleIds as $articleId => $article): ?>
+						<?php if($this->getData(['module',$parentId,'posts',$article,'state']) === true ): ?>
 							<li>
-								<a href="<?php echo helper::baseUrl() .	$parentId. '/' . $articleId;?>"><?php echo $article['title']; ?></a>
+								<a href="<?php echo helper::baseUrl() .	$parent. '/' . $article;?>"><?php echo $this->getData(['module',$parentId,'posts',$article,'title']); ?></a>
 							</li>
 						<?php endif; ?>
 					<?php endforeach;
