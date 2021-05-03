@@ -21,7 +21,7 @@ class gallery extends common {
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY = self::DATA_DIR . 'gallery/pages/';
+	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
 	const SORT_ASC = 'SORT_ASC';
 	const SORT_DSC = 'SORT_DSC';
@@ -171,7 +171,7 @@ class gallery extends common {
 				$this->deleteData(['theme','gallery']);
 				$this->setData(['module', $this->getUrl(0), 'theme', $data]);
 				// Nom de la feuille de style
-				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
+				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css']);
 			}
 			// Nouvelle version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
@@ -186,7 +186,7 @@ class gallery extends common {
 	 */
 	private function init() {
 		// Variable commune
-		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
+		$fileCSS = self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ;
 		// Check la présence du thème
 		if ( $this->getData(['module',  $this->getUrl(0), 'theme']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
@@ -195,10 +195,10 @@ class gallery extends common {
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
 		// Check la présence de la feuille de style
-		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
+		if ( !file_exists(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css')) {
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+			if (!is_dir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) )) {
+				mkdir (self::DATADIRECTORY . 'pages/' . $this->getUrl(0), 0777, true);
 			}
 			// Générer la feuille de CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
@@ -220,7 +220,7 @@ class gallery extends common {
 			$content = str_replace('#legendTextColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendTextColor']),$content );
 			$content = str_replace('#legendBgColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendBgColor']),$content );
 			// Ecriture de la feuille de style
-			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $content . $themeCss);
+			file_put_contents(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' , $content . $themeCss);
 			// Nom de la feuille de style
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
@@ -728,8 +728,8 @@ class gallery extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+			if (!is_dir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) )) {
+				mkdir (self::DATADIRECTORY . 'pages/' . $this->getUrl(0), 0777, true);
 			}
 			$this->setData(['module', $this->getUrl(0), 'theme', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign', helper::FILTER_STRING_SHORT),
@@ -746,7 +746,7 @@ class gallery extends common {
 					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign', helper::FILTER_STRING_SHORT),
 					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor', helper::FILTER_STRING_SHORT),
 					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor', helper::FILTER_STRING_SHORT),
-					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css'
+					'style'				=> self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css'
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
@@ -766,7 +766,7 @@ class gallery extends common {
 			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
 			$content = str_replace('#legendTextColor#',$this->getinput('galleryThemeLegendTextColor'),$content );
 			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $content . $themeCss);
+			$success = file_put_contents(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css', $content . $themeCss);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',

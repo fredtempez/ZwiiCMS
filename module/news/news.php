@@ -19,7 +19,7 @@ class news extends common {
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
-	const DATADIRECTORY =  self::DATA_DIR . 'news/pages/';
+	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
@@ -188,16 +188,16 @@ class news extends common {
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 
 			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', 0777, true);
+			if (!is_dir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0))) {
+				mkdir (self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css', 0777, true);
 			}
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style );
+			$success = file_put_contents(self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css', $style );
 
 			// Fin feuille de style
 
 			$this->setData(['module', $this->getUrl(0), 'theme',[
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
+				'style' => $success ? self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' : '',
 				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
 				'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
 			]]);
@@ -458,7 +458,7 @@ class news extends common {
 	 */
 	private function init() {
 
-		$fileCSS = self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css';
+		$fileCSS = self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css';
 
 		// Données du module
 		if ($this->getData(['module', $this->getUrl(0) ]) === null) {
@@ -466,24 +466,24 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 			// Données de thème
 			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ]);
 		}
 
 		// Dossier de l'instance
-		if (!is_dir(self::DATADIRECTORY .  $this->getUrl(0) )) {
-			mkdir (self::DATADIRECTORY .  $this->getUrl(0) , 0777, true);
+		if (!is_dir(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) )) {
+			mkdir (self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) , 0777, true);
 		}
 
 		// Check la présence de la feuille de style
-		if ( !file_exists(self::DATADIRECTORY .  $this->getUrl(0)  . '/theme.css')) {
+		if ( !file_exists(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
 			$style .= '.newsBlur {background: linear-gradient(#333 ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',#FFF );';
 			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			// Sauver la feuille de style
-			file_put_contents(self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css' , $style );
+			file_put_contents(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css' , $style );
 			// Stocker le nom de la feuille de style
-			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .  $this->getUrl(0) . '/theme.css']);
+			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css']);
 		}
 	}
 }
