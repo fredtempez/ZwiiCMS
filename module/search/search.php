@@ -53,6 +53,7 @@ class search extends common {
 	private function update() {
 
 		// Déplacement des données d'une version ultérieure
+		// selon la présence de previewLenght
 		if ($this->getData(['module', $this->getUrl(0), 'previewLength']) ) {
 			$data = $this->getData(['module', $this->getUrl(0)]);
 			// Feuille de style
