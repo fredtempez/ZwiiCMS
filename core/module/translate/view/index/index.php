@@ -8,10 +8,10 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col3 offset5">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'translate/advanced',
-			'value' => 'Avancée',
+			'value' => 'Gestion avancée',
 			'ico' => 'cog-alt',
 		]); ?>
 		</div>
@@ -30,13 +30,13 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
-								'checked' => $this->getData(['config','translate', 'scriptGoogle']),
+								'checked' => $this->getData(['config','i18n', 'scriptGoogle']),
 								'help' => 'Le script Google Translate assure la traduction automatique du site.'
 							]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue du navigateur', [
-							'checked' => $this->getData(['config','translate', 'autoDetect']),
+							'checked' => $this->getData(['config','i18n', 'autoDetect']),
 							'class' => 'translateGoogleScriptOption',
 							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
 						]); ?>
@@ -45,14 +45,14 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['config','translate', 'showCredits']),
+							'checked' => $this->getData(['config','i18n', 'showCredits']),
 							'class' => 'translateGoogleScriptOption',
 							'help' => 'Option recommandée pour le respect du droit d\'auteur'
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
-								'checked' => $this->getData(['config','translate', 'admin']),
+								'checked' => $this->getData(['config','i18n', 'admin']),
 								'class' => 'translateGoogleScriptOption',
 								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
 							]); ?>

@@ -252,8 +252,8 @@ class common {
 		 */
 
 		if ( $this->getData(['config', 'i18n', 'enabled']) === true
-			 AND $this->getData(['config','translate','scriptGoogle']) === true
-			 AND $this->getData(['config','translate','autoDetect']) === true
+			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
+			 AND $this->getData(['config', 'i18n','autoDetect']) === true
 			 AND $this->getInput('ZWII_I18N_SITE') !== ''
 			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
 		{
@@ -1659,17 +1659,17 @@ class common {
 			$this->setData(['config','autoDisconnect',true]);
 
 			// Mettre à jour les données de langue
-			$this->setData(['config','translate','scriptGoogle', false ]);
-			$this->setData(['config','translate','showCredits', false ]);
-			$this->setData(['config','translate','autoDetect', false ]);
-			$this->setData(['config','translate','admin', false ]);
-			$this->setData(['config','translate','fr', false ]);
-			$this->setData(['config','translate','de', false ]);
-			$this->setData(['config','translate','en', false ]);
-			$this->setData(['config','translate','es', false ]);
-			$this->setData(['config','translate','it', false ]);
-			$this->setData(['config','translate','nl', false ]);
-			$this->setData(['config','translate','pt', false ]);
+			$this->setData(['config', 'i18n','scriptGoogle', false ]);
+			$this->setData(['config', 'i18n','showCredits', false ]);
+			$this->setData(['config', 'i18n','autoDetect', false ]);
+			$this->setData(['config', 'i18n','admin', false ]);
+			$this->setData(['config', 'i18n','fr', false ]);
+			$this->setData(['config', 'i18n','de', false ]);
+			$this->setData(['config', 'i18n','en', false ]);
+			$this->setData(['config', 'i18n','es', false ]);
+			$this->setData(['config', 'i18n','it', false ]);
+			$this->setData(['config', 'i18n','nl', false ]);
+			$this->setData(['config', 'i18n','pt', false ]);
 
 			$this->setData(['core', 'dataVersion', 11000]);
 		}
@@ -2299,11 +2299,11 @@ class core extends common {
 
 		// Le script de traduction est sélectionné
 		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
-			if ( 	$this->getData(['config','translate','scriptGoogle']) === true
+			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
 					// et la traduction de la langue courante est automatique
 				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
 						// Ou traduction automatique
-						OR 	$this->getData(['config','translate','autoDetect']) === true
+						OR 	$this->getData(['config', 'i18n','autoDetect']) === true
 					)
 				// Cas  des pages d'administration
 				// Pas connecté
@@ -2311,7 +2311,7 @@ class core extends common {
 				AND $this->getUrl(1) !== 'login'
 					// Ou connecté avec option active
 					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getData(['config','translate','admin']) === true
+						AND $this->getData(['config', 'i18n','admin']) === true
 					)
 
 				)	{
@@ -2467,12 +2467,12 @@ class layout extends common {
 		 * La fonction est activée.
 		 */
 		if ( $this->getData(['config', 'i18n', 'enabled']) === true
-			 AND $this->getData(['config','translate','scriptGoogle']) === true
-			 AND $this->getData(['config','translate','showCredits']) === true
+			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
+			 AND $this->getData(['config', 'i18n','showCredits']) === true
 			 AND
 				// et la traduction n'est pas manuelle
 				(  $this->getInput('ZWII_I18N_SCRIPT')
-					AND $this->getData(['config','translate', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
+					AND $this->getData(['config', 'i18n', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
 				)
            )
 		{
@@ -3182,10 +3182,10 @@ class layout extends common {
 	public function showi18n($id) {
 		echo '<div id="i18nContainer' . $id . '"><ul>';
 		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config','translate',$key]) === 'site'
+			if ($this->getData(['config', 'i18n',$key]) === 'site'
 				OR (
-					$this->getData(['config','translate','scriptGoogle']) === true
-					AND $this->getData(['config','translate',$key]) === 'script'
+					$this->getData(['config', 'i18n','scriptGoogle']) === true
+					AND $this->getData(['config', 'i18n',$key]) === 'script'
 				)
 			) {
 				if (
@@ -3202,7 +3202,7 @@ class layout extends common {
 				   }
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config','translate',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 				echo '</li>';
 			}
 		}

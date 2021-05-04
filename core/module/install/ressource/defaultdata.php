@@ -98,19 +98,6 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
-		'translate' => [
-			'scriptGoogle' => false,
-			'showCredits' => false,
-			'autoDetect' => false,
-			'admin' => false,
-			'fr' => 'none',
-			'de' => 'none',
-			'en' => 'none',
-			'es' => 'none',
-			'it' => 'none',
-			'nl' => 'none',
-			'pt' => 'none'
-		],
 		'theme' =>  [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',

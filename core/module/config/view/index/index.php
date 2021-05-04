@@ -54,6 +54,21 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
+			<h4>Langues étrangères</h4>
+			<div class="row">
+				<div class="col12">
+					<?php echo template::checkbox('configI18n', true, 'Activer la gestion des langues étrangères', [
+							'checked' => $this->getData(['config', 'i18n', 'enabled']),
+							'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
+						]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
 			<h4>Pages spéciales</h4>
 			<div class="row">
 				<div class="col4">
@@ -120,22 +135,7 @@
 						]); ?>
 				</div>
 			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-			<h4>Langues étrangères</h4>
-				<div class="row">
-					<div class="col12">
-						<?php echo template::checkbox('configI18n', true, 'Activer la gestion des langues étrangères', [
-								'checked' => $this->getData(['config', 'i18n', 'enabled']),
-								'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
-							]); ?>
-					</div>
-				</div>
-			</div>
+			<p>Lorsque les langues étrangères sont activées, il convient d'adapter les pages spéciales.</p>
 		</div>
 	</div>
 </div>

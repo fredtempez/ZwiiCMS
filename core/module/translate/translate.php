@@ -52,7 +52,7 @@ class translate extends common {
 			$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
 			// Enregistrer la langue
 			if ($success) {
-				$this->setData(['config', 'translate', $toCreate, 'site' ]);
+				$this->setData(['config', 'i18n', $toCreate, 'site' ]);
 				$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
 			} else {
 				$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
@@ -67,7 +67,7 @@ class translate extends common {
 		}
 		// Tableau des langues installées
 		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config','translate',$key]) === 'site') {
+			if ($this->getData(['config','i18n', $key]) === 'site') {
 				self::$languagesTarget[$key] = $value;
 			}
 		}
@@ -132,7 +132,8 @@ class translate extends common {
 					}
 			}
 			// Enregistrement des données
-			$this->setData(['config','translate', [
+			$this->setData(['config','i18n', [
+				'enabled'			=> $this->getData(['config', 'i18n', 'enabled']),
 				'scriptGoogle'      => $script,
 				'showCredits' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN) : false,
@@ -155,7 +156,7 @@ class translate extends common {
 		}
 		// Modification de option de suppression de la langue installée.
 		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config','translate',$key]) === 'site') {
+			if ($this->getData(['config','i18n',$key]) === 'site') {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',
 					'script' => 'Traduction automatique',
