@@ -1,7 +1,7 @@
-<?php echo template::formOpen('configManageForm'); ?>
+<?php echo template::formOpen('configRestoreForm'); ?>
 <div class="row">
 	<div class="col2">
-		<?php echo template::button('configManageBack', [
+		<?php echo template::button('configRestoreBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'config/advanced',
 			'ico' => 'left',
@@ -9,7 +9,7 @@
 		]); ?>
 	</div>
 	<div class="col2 offset8">
-		<?php echo template::submit('configManageSubmit',[
+		<?php echo template::submit('configRestoreSubmit',[
 			'value' => 'Restaurer'
 		]); ?>
 	</div>
@@ -21,14 +21,14 @@
 			<div class="row">
 				<div class="col10 offset1">
 					<div class="row">
-						<?php echo template::file('configManageImportFile', [
+						<?php echo template::file('configRestoreImportFile', [
 							'label' => 'Sélectionnez une archive au format ZIP',
 							'type' => 2,
 							'help' => 'L\'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.'
 						]); ?>
 					</div>
 					<div class="row">
-						<?php echo template::checkbox('configManageImportUser', true, 'Préserver les comptes des utilisateurs déjà installés', [
+						<?php echo template::checkbox('configRestoreImportUser', true, 'Préserver les comptes des utilisateurs déjà installés', [
 							'checked' => true
 						]); ?>
 					</div>
@@ -54,7 +54,7 @@
 						$baseUrlValue = str_replace('?','',$this->getData(['core', 'baseUrl']));
 						$buttonClass = helper::baseUrl(false,false) !== $baseUrlValue ? '' : 'disabled';
 					}
-					echo template::text('configManageBaseURLToConvert', [
+					echo template::text('configRestoreBaseURLToConvert', [
 						'label' => 'Dossier de l\'archive' ,
 						'value' => $baseUrlValue,
 						'readonly' => true,
@@ -62,7 +62,7 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::text('configManageCurrentURL', [
+					<?php echo template::text('configRestoreCurrentURL', [
 						'label' => 'Dossier du site actuel',
 						'value' => helper::baseUrl(false,false),
 						'readonly' => true,
@@ -70,7 +70,7 @@
 					]); ?>
 				</div>
 				<div class="col2 verticalAlignMiddle">
-					<?php echo template::button('configManageUpdateBaseURLButton', [
+					<?php echo template::button('configRestoreUpdateBaseURLButton', [
 						'href' => helper::baseUrl() . 'config/updateBaseUrl',
 						'class' => $buttonClass,
 						'value' => 'convertir'

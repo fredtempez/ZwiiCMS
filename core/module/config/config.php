@@ -22,7 +22,7 @@ class config extends common {
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'advanced' => self::GROUP_ADMIN,
-		'manage' => self::GROUP_ADMIN,
+		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
 		'logReset' => self::GROUP_ADMIN,
@@ -265,11 +265,11 @@ class config extends common {
 	/**
 	 * Procédure d'importation
 	 */
-	public function manage() {
+	public function restore() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			//if ($this->getInput('configManageImportFile'))
-			$fileZip = $this->getInput('configManageImportFile');
+			//if ($this->getInput('configRestoreImportFile'))
+			$fileZip = $this->getInput('configRestoreImportFile');
 			$file_parts = pathinfo($fileZip);
 			$folder = date('Y-m-d-h-i-s', time());
 			$zip = new ZipArchive();
@@ -277,7 +277,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Le fichier n\'est pas une archive valide',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 					]);
 			}
@@ -286,7 +286,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Impossible de lire l\'archive',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 					]);
 			}
@@ -311,21 +311,21 @@ class config extends common {
 					// V10 valide
 					$version = '10';
 					// Option active, les users sont stockées
-					if ($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ) {
+					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
 						$users = $this->getData(['user']);
 					}
 			} else { // Version invalide
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 				]);
 			}
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
 			// Positionnement d'une  variable de session lue au constructeurs
 			if ($version === '9') {
-				$_SESSION['KEEP_USERS'] = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN);
+				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
 			}
 			// Extraire le zip ou 'site/'
 			$success = $zip->extractTo( 'site/' );
@@ -335,13 +335,13 @@ class config extends common {
 			// Restaurer les users originaux d'une v10 si option cochée
 			if (!empty($users) &&
 				$version === '10' &&
-				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) {
+				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['user',$users]);
 			}
 
 			// Message de notification
 			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
-			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
+			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
 				'notification' => $notification,
@@ -353,7 +353,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Restaurer',
-			'view' => 'manage'
+			'view' => 'restore'
 		]);
 	}
 
@@ -619,7 +619,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'redirect' => helper::baseUrl() . 'config/manage',
+			'redirect' => helper::baseUrl() . 'config/restore',
 			'state' => $success ? true : false
 		]);
 	}

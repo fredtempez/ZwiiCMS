@@ -29,8 +29,8 @@
 				]); ?>
 			</div>
 			<div class="col3">
-				<?php echo template::button('configManageButton', [
-					'href' => helper::baseUrl() . 'config/manage',
+				<?php echo template::button('configRestoreButton', [
+					'href' => helper::baseUrl() . 'config/restore',
 					'value' => 'Restaurer',
 					'ico' => 'upload'
 				]); ?>
