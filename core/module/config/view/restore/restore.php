@@ -17,7 +17,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Paramètres</h4>
+			<h4>Archive à restaurer</h4>
 			<div class="row">
 				<div class="col10 offset1">
 					<div class="row">
@@ -40,7 +40,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Conversion des URL <?php echo template::help('Conversion des URL des ressources multimédia après le transfert d\'une archive entre deux sites aux adresses différentes.');?></h4>
+			<h4>Conversion après la restauration<?php echo template::help('Conversion des URL des ressources multimédia entre deux sites aux arborescences différentes.');?></h4>
 			<div class="row">
 				<div class="col4 offset1">
 					<?php
@@ -58,15 +58,14 @@
 						'label' => 'Dossier de l\'archive' ,
 						'value' => $baseUrlValue,
 						'readonly' => true,
-						'help'  => 'Dossier de base du site stockée dans la sauvegarde.'
+						'help'  => 'Le dossier de base du site est stockée dans la sauvegarde.'
 					]); ?>
 				</div>
 				<div class="col4">
 					<?php echo template::text('configRestoreCurrentURL', [
 						'label' => 'Dossier du site actuel',
 						'value' => helper::baseUrl(false,false),
-						'readonly' => true,
-						'help'  => 'Dossier du base site actuel.'
+						'readonly' => true
 					]); ?>
 				</div>
 				<div class="col2 verticalAlignMiddle">

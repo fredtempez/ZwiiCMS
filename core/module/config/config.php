@@ -18,6 +18,7 @@ class config extends common {
 
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
+		'copyBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
@@ -28,7 +29,8 @@ class config extends common {
 		'logReset' => self::GROUP_ADMIN,
 		'logDownload'=> self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
-		'blacklistDownload' => self::GROUP_ADMIN
+		'blacklistDownload' => self::GROUP_ADMIN,
+
 	];
 
 	public static $timezones = [
@@ -746,6 +748,23 @@ class config extends common {
 		}
 	}
 
+	/**
+	 * Récupération des backups auto dans le gestionnaire de fichiers
+	 */
+	public function copyBackups() {
+		// Créer le répertoire manquant
+		if (!is_dir(self::FILE_DIR.'source/backup')) {
+			mkdir(self::FILE_DIR.'source/backup');
+		}
+		$this->custom_copy(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'config/advanced',
+			'notification' => 'Copie terminée',
+			'state' => true
+		]);
+	}
+
 
 	/**
 	 * Fonction de parcours des données de module
@@ -766,5 +785,32 @@ class config extends common {
 			$count += $c;
 		}
 		return $newArray;
+	}
+
+	/*
+	* Copie récursive de dossiers
+	*
+	*/
+	private function custom_copy($src, $dst) {
+		// open the source directory
+		$dir = opendir($src);
+		// Make the destination directory if not exist
+		if (!is_dir($dst)) {
+			mkdir($dst);
+		}
+		// Loop through the files in source directory
+		while( $file = readdir($dir) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ){
+					// Recursively calling custom copy function
+					// for sub directory
+					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file, $dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
 	}
 }
