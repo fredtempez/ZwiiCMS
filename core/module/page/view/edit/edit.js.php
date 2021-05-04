@@ -541,21 +541,6 @@ pageTypeMenuDOM.on("change", function() {
 
 
 /**
- * Désactive targeblank si datality et inversement
- */
-$("#pageEditLity").on("click", function() {
-	 if( $("#pageEditTargetBlank").is(':checked')){
-		$("#pageEditTargetBlank").prop('checked', false)
-	 }
-});
-$("#pageEditTargetBlank").on("click", function() {
-	if( $("#pageEditLity").is(':checked')){
-	   $("#pageEditLity").prop('checked', false)
-	}
-});
-
-
-/**
  * Soumission du formulaire pour éditer le module
  */
 $("#pageEditModuleConfig").on("click", function() {
