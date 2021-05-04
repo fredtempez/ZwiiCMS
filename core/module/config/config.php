@@ -396,9 +396,10 @@ class config extends common {
 					'legalPageId' => $legalPageId,
 					'searchPageId' => $searchPageId,
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
+					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true),
 				]
 			]);
+			$this->setData(['config', 'i18n', 'enabled', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
 			// Valeurs en sortie

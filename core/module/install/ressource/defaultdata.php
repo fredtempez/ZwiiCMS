@@ -33,7 +33,8 @@ class init extends common {
 				'log' => false,
 				'captcha' => true
 			],
-			'translate' => [
+			'i18n' => [
+				'enabled' => false,
 				'scriptGoogle' => false,
 				'showCredits' => false,
 				'autoDetect' => false,

@@ -200,7 +200,6 @@ class common {
 			setlocale (LC_TIME, self::$i18n . '_' . strtoupper (self::$i18n) );
 
 		} else  {
-			//setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 			self::$i18n = 'fr';
 		}
 
@@ -252,11 +251,12 @@ class common {
 		 *	- L'auto-détection est active
 		 */
 
-		if ( $this->getData(['config','translate','scriptGoogle']) === true
+		if ( $this->getData(['config', 'i18n', 'enabled']) === true
+			 AND $this->getData(['config','translate','scriptGoogle']) === true
 			 AND $this->getData(['config','translate','autoDetect']) === true
 			 AND $this->getInput('ZWII_I18N_SITE') !== ''
 			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
-		{ 
+		{
 			/**
 			 * Le cookie est prioritaire sur le navigateur
 			 * la traduction est celle de la langue du drapeau
@@ -2129,7 +2129,7 @@ class core extends common {
 					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
 				]);
 				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
-			} 
+			}
 			else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
@@ -2298,30 +2298,31 @@ class core extends common {
 		// Chargement de la bibliothèque googtrans
 
 		// Le script de traduction est sélectionné
-		if (  	$this->getData(['config','translate','scriptGoogle']) === true
-			AND
-				// et la traduction de la langue courante est automatique
-				(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
-					// Ou traduction automatique
-					OR 	$this->getData(['config','translate','autoDetect']) === true 
-				)
-			// Cas  des pages d'administration
-			// Pas connecté
-			AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-			AND $this->getUrl(1) !== 'login'
-				// Ou connecté avec option active
-				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getData(['config','translate','admin']) === true
-				)
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
+			if ( 	$this->getData(['config','translate','scriptGoogle']) === true
+					// et la traduction de la langue courante est automatique
+				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
+						// Ou traduction automatique
+						OR 	$this->getData(['config','translate','autoDetect']) === true
+					)
+				// Cas  des pages d'administration
+				// Pas connecté
+				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				AND $this->getUrl(1) !== 'login'
+					// Ou connecté avec option active
+					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						AND $this->getData(['config','translate','admin']) === true
+					)
 
-			)	{
-					// Paramètre du script
-					setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
-					// Chargement de la librairie
-					$this->addOutput([
-						'vendor' => array_merge($this->output['vendor'], ['i18n'])
-					]);
+				)	{
+						// Paramètre du script
+						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
+						// Chargement de la librairie
+						$this->addOutput([
+							'vendor' => array_merge($this->output['vendor'], ['i18n'])
+						]);
 
+			}
 		}
 		// Erreurs
 		if($access === 'login') {
@@ -2444,7 +2445,9 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		echo $this->showi18n('Site');
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
+			echo $this->showi18n('Site');
+		}
 		if(
 			$this->core->output['title']
 			AND (
@@ -2463,7 +2466,8 @@ class layout extends common {
 		 * La traduction est active et le site n'est pas en français.
 		 * La fonction est activée.
 		 */
-		if ( $this->getData(['config','translate','scriptGoogle']) === true
+		if ( $this->getData(['config', 'i18n', 'enabled']) === true
+			 AND $this->getData(['config','translate','scriptGoogle']) === true
 			 AND $this->getData(['config','translate','showCredits']) === true
 			 AND
 				// et la traduction n'est pas manuelle
@@ -2826,7 +2830,9 @@ class layout extends common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		echo $this->showi18n('Nav');
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
+			echo $this->showi18n('Nav');
+		}
 	}
 
 	/**
@@ -3068,7 +3074,9 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				if ($this->getData(['config', 'i18n', 'enabled']) === true) {
+					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				}
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique

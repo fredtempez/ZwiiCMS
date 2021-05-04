@@ -8,10 +8,10 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col3 offset5">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'config/advanced',
-			'value' => 'Avancée',
+			'value' => 'Configuration avancée',
 			'ico' => 'cog-alt',
 		]); ?>
 	</div>
@@ -118,6 +118,22 @@
 							'selected' =>$this->getData(['locale', 'page302']),
 							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 						]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Langues étrangères</h4>
+				<div class="row">
+					<div class="col12">
+						<?php echo template::checkbox('configI18n', true, 'Activer la gestion des langues étrangères', [
+								'checked' => $this->getData(['config', 'i18n', 'enabled']),
+								'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
+							]); ?>
+					</div>
 				</div>
 			</div>
 		</div>

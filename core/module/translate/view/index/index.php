@@ -69,7 +69,7 @@
 					<div class="col4 offset4">
 						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [
 							'label' => 'Français',
-							'selected' => $this->getData(['config', 'translate' , 'fr'])
+							'selected' => $this->getData(['config', 'i18n' , 'fr'])
 						]); ?>
 					</div>
 				</div>
@@ -79,21 +79,21 @@
 							<?php echo template::select('translateDE', $module::$translateOptions['de'], [
 								'label' => 'Allemand',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'de'])
+								'selected' => $this->getData(['config', 'i18n' , 'de'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateEN', $module::$translateOptions['en'], [
 								'label' => 'Anglais',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'en'])
+								'selected' => $this->getData(['config', 'i18n' , 'en'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateES', $module::$translateOptions['es'], [
 								'label' => 'Espagnol',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'es'])
+								'selected' => $this->getData(['config', 'i18n' , 'es'])
 							]); ?>
 						</div>
 					</div>
@@ -102,21 +102,21 @@
 							<?php echo template::select('translateIT', $module::$translateOptions['it'], [
 								'label' => 'Italien',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'it'])
+								'selected' => $this->getData(['config', 'i18n' , 'it'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translateNL', $module::$translateOptions['nl'], [
 								'label' => 'Néerlandais',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'nl'])
+								'selected' => $this->getData(['config', 'i18n' , 'nl'])
 							]); ?>
 						</div>
 						<div class="col8 offset2">
 							<?php echo template::select('translatePT', $module::$translateOptions['pt'], [
 								'label' => 'Portugais',
 								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'translate' , 'pt'])
+								'selected' => $this->getData(['config', 'i18n' , 'pt'])
 							]); ?>
 						</div>
 					</div>
