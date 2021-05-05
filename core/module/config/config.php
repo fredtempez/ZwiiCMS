@@ -482,19 +482,6 @@ class config extends common {
 					]
 				]
 			]);
-			// Efface les fichiers de backup lorsque l'option est désactivée
-			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
-				$path = realpath('site/data');
-				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-				{
-					if (strpos($filename,'backup.json')) {
-						unlink($filename);
-					}
-				}
-				if (file_exists('site/data/.backup')) unlink('site/data/.backup');
-			} else {
-				touch('site/data/.backup');
-			}
 			// Notice
 			if(self::$inputNotices === []) {
 				// Active la réécriture d'URL

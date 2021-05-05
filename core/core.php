@@ -1671,6 +1671,16 @@ class common {
 			$this->setData(['config', 'i18n','nl', false ]);
 			$this->setData(['config', 'i18n','pt', false ]);
 
+			// Supprimer les fichiers de backup 
+			if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+			$path = realpath('site/data');
+			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+			{
+				if (strpos($filename,'backup.json')) {
+					unlink($filename);
+				}
+			}
+
 			$this->setData(['core', 'dataVersion', 11000]);
 		}
 	}

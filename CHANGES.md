@@ -10,7 +10,8 @@
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
         - Suppression de l'option articles par pages.
-    - Pages : option d'affichage dans une fenêtre superposée (Lity).
+        - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
+        - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 
 
 ## version 10.6.00
