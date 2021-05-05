@@ -118,7 +118,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Mises à jour automatisée</h4>
+			<h4>Mises à jour automatisées</h4>
 			<?php $updateError = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
