@@ -481,26 +481,13 @@ $(document).ready(function(){
 
   $(".helpDisplayButton").on({
     mouseenter: function () {
-      $(".helpDisplayContent").slideDown();
-    },
-    mouseleave: function () {
-      $(".helpDisplayContent").slideUp();
+		$(".helpDisplayContent").slideToggle();
+	},
+	click: function () {
+			$(".helpDisplayContent").slideToggle();
     }
   });
 
-	/**
-     * Active le système d'aide interne
-     *
-	*/
-
-	$(".helpDisplayButton").on({
-		mouseenter: function () {
-			$(".helpDisplayContent").slideDown();
-		},
-		mouseleave: function () {
-			$(".helpDisplayContent").slideUp();
-		}
-	});	
 
 	/**
 	 * Remove ID Facebook from URL

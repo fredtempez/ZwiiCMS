@@ -39,14 +39,13 @@ class init extends common {
 				'showCredits' => false,
 				'autoDetect' => false,
 				'admin'	 => false,
-				'fr' => true,
-				'de' => true,
-				'en' => true,
+				'fr' => false,
+				'de' => false,
+				'en' => false,
 				'es' => false,
 				'it' => false,
 				'nl' => false,
 				'pt' => false
-
 			],
 		],
 		'core' => [

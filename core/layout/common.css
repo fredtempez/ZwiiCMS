@@ -1056,6 +1056,7 @@ footer #footerSocials .zwiico-github:hover {
 	user-select: none;
 }
 
+
 /* Lightbox */
 .lightbox {
 	background: #FFF;
@@ -1730,12 +1731,12 @@ th.col12 {
 	display: none;
 	position: fixed;
 	width: 100%;
-    bottom: 15px;
+    top: 60px;
 	padding: 2px 10px;
 	margin-left: -20px;
     -webkit-box-shadow: 5px 5px 11px 0px #222222;
     box-shadow: 5px 5px 11px 0px #222222;
-    border-radius: 5px;
+    border-radius: 10px;
     background-color:#333;
     color: white;
     z-index: 30;

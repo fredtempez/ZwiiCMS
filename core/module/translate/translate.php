@@ -18,7 +18,7 @@ class translate extends common {
 	public static $actions = [
 		/*'config' => self::GROUP_MODERATOR,*/
 		'index' => self::GROUP_ADMIN,
-		'advanced' => self::GROUP_ADMIN,
+		'copy' => self::GROUP_ADMIN,
 		'language' => self::GROUP_VISITOR
 	];
 
@@ -28,39 +28,46 @@ class translate extends common {
 	public static $languagesInstalled = [];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
+	// Activation du bouton de copie
+	public static $siteTranslate = true;
 
 	/**
 	 * Configuration avancée des langues
 	 */
-	public function advanced() {
+	public function copy() {
 
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Initialisation
 			$success = false;
-			$copyFrom = $this->getInput('translateFormAdvancedSource');
-			$toCreate = $this->getInput('translateFormAdvancedTarget');
-			// Création du dossier
-			if (is_dir(self::DATA_DIR . $toCreate) === false ) { // Si le dossier est déjà créé
-				$success  = mkdir (self::DATA_DIR . $toCreate);
+			$copyFrom = $this->getInput('translateFormCopySource');
+			$toCreate = $this->getInput('translateFormCopyTarget');
+			if ($copyFrom !== $toCreate) {
+				// Création du dossier
+				if (is_dir(self::DATA_DIR . $toCreate) === false ) { // Si le dossier est déjà créé
+					$success  = mkdir (self::DATA_DIR . $toCreate);
+				} else {
+					$success = true;
+				}
+				// Copier les données par défaut avec gestion des erreurs
+				$success  = (copy (self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
+				$success  = (copy (self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
+				$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
+				// Enregistrer la langue
+				if ($success) {
+					$this->setData(['config', 'i18n', $toCreate, 'site' ]);
+					$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
+				} else {
+					$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
+				}
 			} else {
-				$success = true;
-			}
-			// Copier les données par défaut avec gestion des erreurs
-			$success  = (copy (self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
-			$success  = (copy (self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
-			$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
-			// Enregistrer la langue
-			if ($success) {
-				$this->setData(['config', 'i18n', $toCreate, 'site' ]);
-				$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
-			} else {
-				$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
+				$success = false;
+				$notification = 'Les langues doivent être différentes.';
 			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification'  =>  $notification,
-				'title' 		=> 'Gestion avancée',
+				'title' 		=> 'Utilitaire de copie',
 				'view' 			=> 'index',
 				'state' 		=>  $success
 			]);
@@ -76,8 +83,8 @@ class translate extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion avancée',
-			'view' => 'advanced'
+			'title' => 'Utilitaire de copie',
+			'view' => 'copy'
 		]);
 	}
 
@@ -154,7 +161,7 @@ class translate extends common {
 				'state' => true
 			]);
 		}
-		// Modification de option de suppression de la langue installée.
+		// Modification des options de suppression de la langue installée.
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','i18n',$key]) === 'site') {
 				self::$translateOptions [$key] = [
@@ -163,6 +170,7 @@ class translate extends common {
 					'site'   => 'Traduction rédigée',
 					'delete' => 'Supprimer la traduction'
 				];
+				self::$siteTranslate = $key !== 'fr' ? false : true;
 			} else {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',

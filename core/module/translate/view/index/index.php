@@ -10,9 +10,10 @@
 		</div>
 		<div class="col3 offset5">
 		<?php echo template::button('configAdvancedButton', [
-			'href' => helper::baseUrl() . 'translate/advanced',
-			'value' => 'Gestion avancée',
+			'href' => helper::baseUrl() . 'translate/copy',
+			'value' => 'Utilitaire de copie',
 			'ico' => 'cog-alt',
+			'disabled' => $module::$siteTranslate
 		]); ?>
 		</div>
 		<div class="col2">
@@ -126,13 +127,12 @@
 	</div>
 
 	<div class="col10 helpDisplayContent">
-		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée.</p>
-		<p>La traduction automatique offre deux possibilités, la détection automatique de la langue du navigateur même celle-ci n'est pas
+		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée. La traduction automatique offre deux possibilités, la détection automatique de la langue du navigateur même celle-ci n'est pas
 		matérialisée par un drapeau. Le clic sur un drapeau forcera la traduction dans cette langue, pour cela sélectionnez le drapeau puis l'option de "Traduction automatique".
-		</p>
-		Si vous sélectionnez l'option "Traduction rédigée", seule la page d'accueil est générée, vous rédigez le site dans la langue sélectionnée.
-		Il est cependant possible de copier les pages et les modules  d'une langue vers une autre en cliquant sur le bouton de gestion avancée.</p>
-		<p>Quand un drapeau est masqué, la traduction est effacée, pensez à sauvegarder.</p>
-		<p>Afficher le drapeau français  pour revenir à la traduction dans la langue originale.</p>
+		La traduction automatique est réalisée à partir du site en version française.</p>
+		<p>Avec l'option "Traduction rédigée", une nouveau sité est généré, seule la page d'accueil est crée, il faut alors rédiger les pages dans la langue sélectionnée.
+		Il est possible de copier les pages et les modules  d'une langue vers une autre à l'aide de l'utilitaire de copie.
+		Quand un drapeau est masqué, la traduction est effacée, pensez à sauvegarder.
+		Afficher le drapeau français  pour revenir à la traduction dans la langue originale.</p>
 	</div>
 <?php echo template::formClose(); ?>
