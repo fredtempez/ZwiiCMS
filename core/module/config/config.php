@@ -743,12 +743,16 @@ class config extends common {
 		if (!is_dir(self::FILE_DIR.'source/backup')) {
 			mkdir(self::FILE_DIR.'source/backup');
 		}
-		$this->custom_copy(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		// Effacer htaccess
+		if (file_exists(self::FILE_DIR.'source/backup/.htaccess')) {
+			unlink(self::FILE_DIR.'source/backup/.htaccess');
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config/advanced',
-			'notification' => 'Copie terminée',
-			'state' => true
+			'notification' => $success ? 'Copie terminée avec succès' : 'Echec de la copie',
+			'state' => $success
 		]);
 	}
 
@@ -772,32 +776,5 @@ class config extends common {
 			$count += $c;
 		}
 		return $newArray;
-	}
-
-	/*
-	* Copie récursive de dossiers
-	*
-	*/
-	private function custom_copy($src, $dst) {
-		// open the source directory
-		$dir = opendir($src);
-		// Make the destination directory if not exist
-		if (!is_dir($dst)) {
-			mkdir($dst);
-		}
-		// Loop through the files in source directory
-		while( $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Recursively calling custom copy function
-					// for sub directory
-					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
-				}
-				else {
-					copy($src . '/' . $file, $dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
 	}
 }

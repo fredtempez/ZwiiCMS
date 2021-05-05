@@ -155,7 +155,7 @@ class addon extends common {
 					// Nouvelle installation ou mise à jour du module
 					if( ! $moduleInstal ||  $validMaj ){
 						// Copie récursive des dossiers
-						$this -> custom_copy( self::TEMP_DIR . $tempFolder, './' );
+						$this->copyDir( self::TEMP_DIR . $tempFolder, './' );
 						$success = true;
 						if( ! $moduleInstal ){
 							$notification = 'Module '.$moduleName.' installé';
@@ -461,7 +461,7 @@ class addon extends common {
 				// Export des données localisées dans le dossier de données du module
 				if ($infoModules[$this->getUrl(2)]['dataDirectory'] &&
 					is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])) {
-						$this->custom_copy ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
+						$this->copyDir ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
 				}
 			}
 			// Enregistrement des pages dans le dossier de langue identique à module
@@ -553,7 +553,7 @@ class addon extends common {
 				}
 
 				// Import des fichiers placés ailleurs que dans les dossiers localisés.
-				$this->custom_copy (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
+				$this->copyDir (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
 
 				// Supprimer le dossier temporaire
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
@@ -579,33 +579,6 @@ class addon extends common {
 				'view' => 'import'
 			]);
 		}
-	}
-
-	/*
-	* Copie récursive de dossiers
-	*
-	*/
-	private function custom_copy($src, $dst) {
-		// open the source directory
-		$dir = opendir($src);
-		// Make the destination directory if not exist
-		if (!is_dir($dst)) {
-			mkdir($dst);
-		}
-		// Loop through the files in source directory
-		while( $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Recursively calling custom copy function
-					// for sub directory
-					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
-				}
-				else {
-					copy($src . '/' . $file, $dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
 	}
 
 }

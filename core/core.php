@@ -1031,6 +1031,39 @@ class common {
 	}
 
 
+	/*
+	* Copie récursive de dossiers
+	* @param string $src dossier source
+	* @param string $dst dossier destination
+	* @return bool
+	*/
+	public function copyDir($src, $dst) {
+		// Ouvrir le dossier source
+		$dir = opendir($src);
+		// Créer le dossier de destination
+		if (!is_dir($dst))
+			$success = mkdir($dst);
+		else
+			$success = true;
+
+		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
+		while( $success 
+			   AND $file = readdir($dir) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ){
+					// Appel récursif des sous-dossiers
+					$success = $this->copyTree($src . '/' . $file, $dst . '/' . $file);
+				}
+				else {
+					$success = copy($src . '/' . $file, $dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
+		return $success;
+	}
+
+
 	/**
 	 * Génère une archive d'un dossier et des sous-dossiers
 	 * @param string fileName path et nom de l'archive
