@@ -1052,7 +1052,7 @@ class common {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ){
 					// Appel récursif des sous-dossiers
-					$success = $this->copyTree($src . '/' . $file, $dst . '/' . $file);
+					$success = $this->copyDir($src . '/' . $file, $dst . '/' . $file);
 				}
 				else {
 					$success = copy($src . '/' . $file, $dst . '/' . $file);
