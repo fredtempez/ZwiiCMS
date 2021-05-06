@@ -97,7 +97,7 @@ tinymce.init({
 	// Cache la barre de statut
 	statusbar: false,
 	// Active le copié collé à partir du Web
-	paste_data_images: true,
+	paste_data_images: false,
 	// Active le copié collé à partir du presse papier
 	paste_filter_drop: false,
 	/* Eviter BLOB à tester
@@ -296,7 +296,7 @@ tinymce.init({
 	// Cache la barre de statut
 	statusbar: false,
 	// Autorise le copié collé à partir du web
-	paste_data_images: true,
+	paste_data_images: false,
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
 	media_dimensions: true,
 	// Désactiver la dimension des images
