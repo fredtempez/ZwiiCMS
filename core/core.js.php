@@ -480,13 +480,16 @@ $(document).ready(function(){
   */
 
   $(".helpDisplayButton").on({
-    mouseenter: function () {
-      $(".helpDisplayContent").slideDown();
-    },
-    mouseleave: function () {
-      $(".helpDisplayContent").slideUp();
-    }
-  });
+		click: function () {
+			$(".helpDisplayContent").slideToggle();
+			if( $(".helpDisplayButton").css('opacity') > '0.75'){
+				$(".helpDisplayButton").css('opacity','0.5');
+			}
+			else{
+				$(".helpDisplayButton").css('opacity','1');
+			}
+		}
+	});
 
 	/**
 	* Remove ID Facebook from URL

@@ -110,7 +110,6 @@ class addon extends common {
 												'value' => template::ico('download')
 												])
 											: '',
-				'',
 				implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
