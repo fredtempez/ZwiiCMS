@@ -134,12 +134,13 @@ class addon extends common {
 						$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
 					}
 					// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
+					$infoModules = helper::getModules();
 					if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
 
 					// Module déjà installé ?
 					$moduleInstal = false;
-					foreach( self::$modInstal as $key=>$value){
-						if($moduleName === $value[0]){
+					foreach($infoModules as $key=>$value ){
+						if($moduleName === $key){
 							$moduleInstal = true;
 						}
 					}
@@ -240,7 +241,7 @@ class addon extends common {
 		} else {
 			// Récupérer le module en ligne
 			$moduleName = $this->getUrl(2);
-			// Informations sur les module en ligne 
+			// Informations sur les module en ligne
 			$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
@@ -255,7 +256,7 @@ class addon extends common {
 			}
 			// Sauver les données du fichiers
 			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
-			
+
 			/**
 			* $if( $moduleFile !== ''){
 			*	$success = [
