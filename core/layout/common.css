@@ -739,12 +739,12 @@ li .menuSideChild {
 		width: 100%;
 		padding: 5px;
 	}
-	
+
 	#i18nFlagSelected {
 		width: 130%;
 		padding:  5px;
 	}
-	
+
   }
 
 
@@ -1729,19 +1729,16 @@ th.col12 {
 
 .helpDisplayContent {
 	display: none;
-	position: fixed;
 	width: 100%;
-    top: 60px;
-	padding: 2px 10px;
-	margin-left: -20px;
+	padding: 10px 10px;
     -webkit-box-shadow: 5px 5px 11px 0px #222222;
     box-shadow: 5px 5px 11px 0px #222222;
-    border-radius: 10px;
-    background-color:#333;
-    color: white;
+    border-radius: 5px;
+    //background-color:#333;
+    //color: white;
     z-index: 30;
 }
 
 .helpDisplayButton {
-    cursor: pointer;
+	opacity: 1;
 }

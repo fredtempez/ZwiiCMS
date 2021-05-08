@@ -7,7 +7,14 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col3 offset4">
+	<div class="col2">
+		<?php echo template::button('addonIndexHelp', [
+			'class' => 'helpDisplayButton',
+			'ico' => 'help',
+			'value' => 'Aide'
+		]); ?>
+	</div>
+	<div class="col3 offset2">
 		<?php echo template::button('configStoreUpload', [
 			'href' => helper::baseUrl() . 'addon/upload',
 			'value' => 'Téléverser un module'
@@ -20,14 +27,13 @@
 		]); ?>
 	</div>
 </div>
+<!-- Aide à propos de la gestion des modules, view index -->
+<div class="helpDisplayContent">
+
+	<?php echo file_get_contents( 'core/module/addon/view/index/index.help.html') ;?>
+</div>
 <?php if($module::$modInstal): ?>
-	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter' . '<span class="helpDisplayButton">'.template::ico('help', 'left').'</span>', 'Importer']); ?>
+	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter', 'Importer']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
-<div class="helpDisplayContent">
-	<p>Exporter produit une archive au nom du module contenant les pages concernées ainsi que les données et ressources utilisées par le module dans ces pages.</p>
-	<p>Vous pouvez vous en servir comme d'une sauvegarde partielle ou pour transférer les pages et les données du module vers un autre site.</p>
-	<p>Une fois le module installé l'import permet de restaurer les pages et les données sauvegardées.
-	Si une page de même nom existe sur votre site vous serez invité à modifier son nom.</p>
-</div>

@@ -1,20 +1,31 @@
 <?php echo template::formOpen('configModulesUpload'); ?>
-    <div class="row">
-        <div class="col2">
-            <?php echo template::button('configModulesBack', [
-                'class' => 'buttonGrey',
-                'href' => helper::baseUrl()  . 'addon',
-                'ico' => 'left',
-                'value' => 'Retour'
-            ]); ?>
-        </div>
-        <div class="col2 offset8">
-            <?php echo template::submit('configModulesSubmit',[
-                'value' => 'Valider',
-                'ico' => 'check'
-            ]); ?>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col2">
+          <?php echo template::button('configModulesBack', [
+              'class' => 'buttonGrey',
+              'href' => helper::baseUrl()  . 'addon',
+              'ico' => 'left',
+              'value' => 'Retour'
+          ]); ?>
+      </div>
+      <div class="col2">
+        <?php echo template::button('addonIndexHelp', [
+          'class' => 'helpDisplayButton',
+          'ico' => 'help',
+          'value' => 'Aide'
+        ]); ?>
+      </div>
+      <div class="col2 offset6">
+          <?php echo template::submit('configModulesSubmit',[
+              'value' => 'Valider',
+              'ico' => 'check'
+          ]); ?>
+      </div>
+  </div>
+  <!-- Aide à propos de la gestion des modules, view index -->
+  <div class="helpDisplayContent">
+    <?php echo file_get_contents( 'core/module/addon/view/upload/upload.help.html') ;?>
+  </div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
