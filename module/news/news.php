@@ -139,6 +139,7 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 				'content' => $this->getInput('newsAddContent', null),
 				'publishedOn' => $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true),
+				'publishedOff' => $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME),
 				'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('newsAddTitle', helper::FILTER_STRING_SHORT, true),
 				'userId' => $this->getInput('newsAddUserId', helper::FILTER_ID, true)
