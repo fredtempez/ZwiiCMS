@@ -10,7 +10,7 @@
       </div>
       <div class="col2">
         <?php echo template::button('addonIndexHelp', [
-          'class' => 'helpDisplayButton',
+          'class' => 'buttonHelp',
           'ico' => 'help',
           'value' => 'Aide'
         ]); ?>
@@ -22,7 +22,7 @@
           ]); ?>
       </div>
   </div>
-  <!-- Aide à propos de la gestion des modules, view index -->
+  <!-- Aide à propos de la gestion des modules, view upload -->
   <div class="helpDisplayContent">
     <?php echo file_get_contents( 'core/module/addon/view/upload/upload.help.html') ;?>
   </div>

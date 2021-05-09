@@ -9,7 +9,7 @@
 	</div>
 	<div class="col2">
 		<?php echo template::button('addonIndexHelp', [
-			'class' => 'helpDisplayButton',
+			'class' => 'buttonHelp',
 			'ico' => 'help',
 			'value' => 'Aide'
 		]); ?>
@@ -29,7 +29,6 @@
 </div>
 <!-- Aide à propos de la gestion des modules, view index -->
 <div class="helpDisplayContent">
-
 	<?php echo file_get_contents( 'core/module/addon/view/index/index.help.html') ;?>
 </div>
 <?php if($module::$modInstal): ?>

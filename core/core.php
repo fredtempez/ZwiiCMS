@@ -1047,7 +1047,7 @@ class common {
 			$success = true;
 
 		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
-		while( $success 
+		while( $success
 			   AND $file = readdir($dir) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ){
@@ -1704,7 +1704,7 @@ class common {
 			$this->setData(['config', 'i18n','nl', false ]);
 			$this->setData(['config', 'i18n','pt', false ]);
 
-			// Supprimer les fichiers de backup 
+			// Supprimer les fichiers de backup
 			if (file_exists('site/data/.backup')) unlink('site/data/.backup');
 			$path = realpath('site/data');
 			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
@@ -1971,6 +1971,8 @@ class core extends common {
 			$css .= '.button.buttonGrey {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']  . ';}.button.buttonGrey:hover {background-color:' . $colors['darken']  . ';color:' . $colors['text']  .  ';}.button.buttonGrey:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonRed']));
 			$css .= '.button.buttonRed {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonRed:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonRed:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
+			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonHelp']));
+			$css .= '.button.buttonHelp {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonHelp:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonHelp:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButtonGreen']));
 			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  .';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' .$colors['text']   .';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundBlockColor']));
