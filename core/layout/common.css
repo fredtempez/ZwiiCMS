@@ -1708,11 +1708,5 @@ th.col12 {
   -webkit-box-shadow: 5px 5px 11px 0px #222222;
   box-shadow: 5px 5px 11px 0px #222222;
   border-radius: 5px;
-  background-color:#333;
-  color: white;
   z-index: 30;
-}
-
-.helpDisplayButton {
-	opacity: 1;
 }

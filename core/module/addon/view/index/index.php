@@ -10,7 +10,7 @@
         </div>
         <div class="col2">
     			<?php echo template::button('addonIndexHelp', [
-    				'class' => 'helpDisplayButton',
+    				'class' => 'buttonHelp',
     				'ico' => 'help',
     				'value' => 'Aide'
     			]); ?>

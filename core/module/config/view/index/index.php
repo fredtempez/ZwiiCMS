@@ -8,7 +8,14 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col2">
+		<?php echo template::button('addonIndexHelp', [
+			'class' => 'buttonHelp',
+			'ico' => 'help',
+			'value' => 'Aide'
+		]); ?>
+	</div>
+	<div class="col2 offset4">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'config/advanced',
 			'value' => 'Avancée',
@@ -18,6 +25,10 @@
 	<div class="col2">
 		<?php echo template::submit('configSubmit'); ?>
 	</div>
+</div>
+<!-- Aide à propos de la configuration du site, view index -->
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/config/view/index/index.help.html') ;?>
 </div>
 <div class="row">
 	<div class="col12">

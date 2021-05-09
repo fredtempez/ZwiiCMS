@@ -479,14 +479,14 @@ $(document).ready(function(){
    *
   */
 
-  $(".helpDisplayButton").on({
+  $(".buttonHelp").on({
 		click: function () {
 			$(".helpDisplayContent").slideToggle();
-			if( $(".helpDisplayButton").css('opacity') > '0.75'){
-				$(".helpDisplayButton").css('opacity','0.5');
+			if( $(".buttonHelp").css('opacity') > '0.75'){
+				$(".buttonHelp").css('opacity','0.5');
 			}
 			else{
-				$(".helpDisplayButton").css('opacity','1');
+				$(".buttonHelp").css('opacity','1');
 			}
 		}
 	});

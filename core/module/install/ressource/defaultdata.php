@@ -210,6 +210,7 @@ class init extends common {
 			'backgroundColorButtonGrey' => 'rgba(170, 180, 188, 1)',
 			'backgroundColorButtonRed' => 'rgba(217, 95, 78, 1)',
 			'backgroundColorButtonGreen' => 'rgba(162, 223, 57, 1)',
+			'backgroundColorButtonHelp' => 'rgba(255, 153, 0, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
@@ -838,4 +839,3 @@ class init extends common {
 		]
     ];
 }
-
