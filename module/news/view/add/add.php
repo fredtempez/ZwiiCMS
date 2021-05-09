@@ -56,7 +56,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::date('newsAddPublishedOff', [
-							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée.',
+							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de déplublication, sélectionnez une date antérieure à la publication.',
 							'label' => 'Date de dépublication',
 							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff'])
 						]); ?>
