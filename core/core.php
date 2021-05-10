@@ -1042,7 +1042,7 @@ class common {
 		$dir = opendir($src);
 		// Créer le dossier de destination
 		if (!is_dir($dst))
-			$success = mkdir($dst);
+			$success = mkdir($dst, 0755, true);
 		else
 			$success = true;
 
