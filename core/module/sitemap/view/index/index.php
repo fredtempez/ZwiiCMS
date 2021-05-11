@@ -63,7 +63,7 @@
 						foreach($articleIds as $articleId => $article): ?>
 						<?php if($this->getData(['module',$parentId,'posts',$article,'state']) === true ): ?>
 							<li>
-								<a href="<?php echo helper::baseUrl() .	$parent. '/' . $article;?>"><?php echo $this->getData(['module',$parentId,'posts',$article,'title']); ?></a>
+								<a href="<?php echo helper::baseUrl() .	$parentId. '/' . $article;?>"><?php echo $this->getData(['module',$parentId,'posts',$article,'title']); ?></a>
 							</li>
 						<?php endif; ?>
 					<?php endforeach;
