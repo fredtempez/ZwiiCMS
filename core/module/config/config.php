@@ -193,7 +193,7 @@ class config extends common {
 		$this->addOutput([
 			'notification' => $successSitemap ? 'Le sitemap a été mis à jour' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'redirect' => helper::baseUrl() . 'config/advanced',
-			'state' => $successSitemap 
+			'state' => $successSitemap
 		]);
 	}
 
@@ -479,6 +479,20 @@ class config extends common {
 						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
 						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
+					],
+					'i18n' => [
+						'enabled' => $this->getData(['config', 'i18n', 'enabled']),
+						'scriptGoogle' => $this->getData(['config', 'i18n', 'scriptGoogle']),
+						'showCredits' => $this->getData(['config', 'i18n', 'showCredits']),
+						'autoDetect' => $this->getData(['config', 'i18n', 'autoDetect']),
+						'admin'	=> $this->getData(['config', 'i18n', 'admin']),
+						'fr' => $this->getData(['config', 'i18n', 'fr']),
+						'de' => $this->getData(['config', 'i18n', 'de']),
+						'en' => $this->getData(['config', 'i18n', 'en']),
+						'es' => $this->getData(['config', 'i18n', 'es']),
+						'it' => $this->getData(['config', 'i18n', 'it']),
+						'nl' => $this->getData(['config', 'i18n', 'nl']),
+						'pt' => $this->getData(['config', 'i18n', 'pt']),
 					]
 				]
 			]);
