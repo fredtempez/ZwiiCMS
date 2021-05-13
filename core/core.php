@@ -3055,7 +3055,7 @@ class layout extends common {
 			foreach($vendorFiles as $vendorFile) {
 				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
 					case 'css':
-						// Force le rechargement lors d'une mise à jour du jeu d'icônes
+						// Force le rechargement lors d'une mise à jour² du jeu d'icônes
 						$reload = $vendorPath === 'core/vendor/zwiico/'
 							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
 							: '';
