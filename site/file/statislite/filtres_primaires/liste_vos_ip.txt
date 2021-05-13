@@ -1,5 +1,0 @@
-/votre_IP1|
-votre_IP2|
-exemple|
-255\.255\.255\.255|
-/
