@@ -1614,6 +1614,8 @@ class common {
 			}
 		// Suppression de l'option d'objets par page gérées par les modules
 		$this->deleteData(['config','itemsperPage']);
+		// Valeur par défaut de la couleur du bouton Help
+		$this->setData(['admin', 'backgroundColorButtonHelp', 'rgba(255, 153, 0, 1)']);
 
 		$this->setData(['core', 'dataVersion', 10600]);
 		}
