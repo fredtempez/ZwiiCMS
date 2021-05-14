@@ -7,6 +7,7 @@ site/tmp/*.png
 site/backup/*
 
 # Fichiers de données
+site/data/*
 site/data/*.json
 site/data/*.css
 site/data/fr/*.json
