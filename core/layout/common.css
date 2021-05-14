@@ -1066,7 +1066,7 @@ input[type='password'],
 .inputFile,
 select,
 textarea {
-	padding: 10px;
+	padding: 9px;
 	/* -1px à cause des bordures */
 	/*background: #FFF;*/
 	border: 1px solid #D8DFE3;
@@ -1077,7 +1077,7 @@ textarea {
 }
 
 select {
-	padding: 7px;
+	padding: 9px;
 }
 
 input[type='email']:hover,

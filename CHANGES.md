@@ -1,7 +1,8 @@
 # Changelog
 
 ## version 10.6.01
-Correction :
+Corrections :
+    - Champs de formulaire, uniformisation de la hauteur (select, input, etc) identique à celle des boutons à 9px.
     - Module search : texte d'aide dans la zone de saisie non pris en compte.
 
 ## version 10.6.00
