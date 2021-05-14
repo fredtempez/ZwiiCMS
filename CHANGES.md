@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.6.01
+Correction :
+    - Module search : texte d'aide dans la zone de saisie non pris en compte.
+
 ## version 10.6.00
 Cette version apporte aux modules une autonomie complète par rapport au noyau.
     - mise à jour interne (fonction update)
