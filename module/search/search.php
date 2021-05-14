@@ -104,6 +104,8 @@ class search extends common {
 			// Données de thème
 			$this->setData(['module', $this->getUrl(0), 'theme',init::$defaultTheme ]);
 			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ]);
+			// Recharger la page pour éviter une config vide
+			header("Refresh:0");
 		}
 
 		// Dossier de l'instance
@@ -120,6 +122,7 @@ class search extends common {
 			// Stocker le nom de la feuille de style
 			$this->setData(['module', $this->getUrl(0) , 'theme', 'style', $fileCSS]);
 		}
+
 	}
 
 
