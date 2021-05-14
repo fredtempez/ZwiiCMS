@@ -288,6 +288,10 @@ core.start = function() {
 	$(".inputFileDelete").on("click", function() {
 		$(this).parents(".inputWrapper").find(".inputFileHidden").val("").trigger("change");
 	});
+	// Suppression de la date contenu dans le champ
+	$(".inputDateDelete").on("click", function() {
+		$(this).parents(".inputWrapper").find(".datepicker").val("").trigger("change");
+	});
 	// Confirmation de mise à jour
 	$("#barUpdate").on("click", function() {
 		return core.confirm("Effectuer la mise à jour ?", function() {

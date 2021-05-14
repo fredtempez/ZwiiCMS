@@ -1188,13 +1188,13 @@ label {
 }
 
 /* Upload de fichiers */
-.inputFile {
+.inputFile, .datepicker {
 	margin: 0;
 	display: inline-block;
-	width: 88%;
+	width: 88% !important;
 }
 
-.inputFileDelete {
+.inputFileDelete, .inputDateDelete {
 	display: block;
 	width: 10%;
 	padding: 10px 0;
@@ -1209,11 +1209,11 @@ label {
 }
 
 /* Empêche le débordement et les sauts de ligne */
-.inputFileManagerWrapper {
+.inputFileManagerWrapper, .inputDateManagerWrapper {
 	display: inline;
 }
 
-.inputFileManagerWrapper>.inputFile {
+.inputFileManagerWrapper>.inputFile, .inputDateManagerWrapper>.inputFile {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
