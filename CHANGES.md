@@ -13,6 +13,9 @@
         - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
         - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 
+## version 10.6.01
+Correction :
+    - Module search : texte d'aide dans la zone de saisie non pris en compte.
 
 ## version 10.6.00
 Cette version apporte aux modules une autonomie complète par rapport au noyau.
