@@ -14,8 +14,11 @@
         - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 
 ## version 10.6.01
-Correction :
+Corrections :
+    - Champs de formulaire, uniformisation de la hauteur (select, input, etc) identique à celle des boutons à 9px.
     - Module search : texte d'aide dans la zone de saisie non pris en compte.
+Modification : 
+    - Ajout au sélecteur de date d'un bouton d'effacement identique à celui du sélecteur de fichiers.
 
 ## version 10.6.00
 Cette version apporte aux modules une autonomie complète par rapport au noyau.
