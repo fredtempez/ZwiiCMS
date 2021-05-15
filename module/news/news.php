@@ -485,6 +485,15 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
 			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ]);
 		}
+
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
+		// Mise à jour 3.2
+		if (version_compare($versionData, '3.1', '<') ) {
+			$this->setData(['module',$this->getUrl(0),'theme', 'itemsBlur', '0%' ]);
+			// Mettre à jour la verison
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.2' ]);
+		}
 	}
 
 	/**
