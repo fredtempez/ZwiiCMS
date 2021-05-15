@@ -5,7 +5,7 @@ class init extends search {
         'feedsLabel'         => '',
         'itemsperPage'       => 8,
         'itemsperCol'        => 12,
-        'versionData'        => '3.0'
+        'versionData'        => '3.2'
     ];
     public static $defaultTheme = [
         'itemsHeight'        => 'auto',
