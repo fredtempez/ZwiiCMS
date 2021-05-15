@@ -187,8 +187,10 @@ class news extends common {
 
 			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
-			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
+				$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
+				$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			}
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0))) {
@@ -510,8 +512,9 @@ class news extends common {
 		if ( !file_exists(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
-			$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
-			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			// Pas d'effet flou à l'initialisation
+			//$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
+			//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			// Sauver la feuille de style
 			file_put_contents(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css' , $style );
 			// Stocker le nom de la feuille de style
