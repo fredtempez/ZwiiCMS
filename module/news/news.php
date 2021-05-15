@@ -136,10 +136,12 @@ class news extends common {
 		if($this->isPost()) {
 			// Crée la news
 			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0)]));
+			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
+			$publishedOff = $this->getInput('newsAddPublishedOff' ) ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
 			$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 				'content' => $this->getInput('newsAddContent', null),
-				'publishedOn' => $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true),
-				'publishedOff' => $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME),
+				'publishedOn' => $publishedOn,
+				'publishedOff' => $publishedOff,
 				'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('newsAddTitle', helper::FILTER_STRING_SHORT, true),
 				'userId' => $this->getInput('newsAddUserId', helper::FILTER_ID, true)
@@ -331,7 +333,7 @@ class news extends common {
 					$this->deleteData(['module', $this->getUrl(0),'posts', $this->getUrl(2)]);
 				}
 				$publishedOn = $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true);
-				$publishedOff = $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME);
+				$publishedOff = $this->getInput('newsEditPublishedOff' ) ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
 				$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 					'content' => $this->getInput('newsEditContent', null),
 					'publishedOn' => $publishedOn,
