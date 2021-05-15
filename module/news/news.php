@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.1';
+	const VERSION = '3.2';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -68,10 +68,10 @@ class news extends common {
 	];
 
 	public static $itemsBlur = [
-		'100%'		=> 'Aucun',
-		'90%' 		=> 'Faible',
-		'75%' 		=> 'Modéré',
-		'60%' 		=> 'Important',
+		'0%'		=> 'Aucun',
+		'15%' 		=> 'Faible',
+		'30%' 		=> 'Modéré',
+		'45%' 		=> 'Important',
 	];
 
 	// Signature de l'article
@@ -188,8 +188,9 @@ class news extends common {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
 			if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
-				$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
-				$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+				$style .= '.newsBlur {height: ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ';}';
+				//$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
+				//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			}
 
 			// Dossier de l'instance

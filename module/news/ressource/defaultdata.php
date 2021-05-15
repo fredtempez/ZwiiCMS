@@ -9,6 +9,6 @@ class init extends search {
     ];
     public static $defaultTheme = [
         'itemsHeight'        => 'auto',
-        'itemsBlur'         => '100%'
+        'itemsBlur'         => '0%'
     ];
 }
