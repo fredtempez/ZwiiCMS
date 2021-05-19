@@ -473,14 +473,13 @@ class addon extends common {
 			$fileName =  $this->getUrl(2) . '.zip';
 			$this->makeZip ($fileName, $tmpFolder, []);
 			if (file_exists($fileName)) {
+				ob_start();
 				header('Content-Type: application/octet-stream');
 				header('Content-Disposition: attachment; filename="' . $fileName . '"');
 				header('Content-Length: ' . filesize($fileName));
+				ob_clean();   
+				ob_end_flush();
 				readfile( $fileName);
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_RAW
-				]);
 				unlink($fileName);
 				$this->removeDir($tmpFolder);
 				exit();

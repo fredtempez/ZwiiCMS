@@ -13,6 +13,10 @@
         - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
         - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 
+## version 10.6.02
+Correction :
+    - Bug lors du téléchargement des journaux.
+
 ## version 10.6.01
 Corrections :
     - Champs de formulaire, uniformisation de la hauteur (select, input, etc) identique à celle des boutons à 9px.
