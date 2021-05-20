@@ -8,131 +8,117 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col3 offset5">
-		<?php echo template::button('configAdvancedButton', [
-			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => 'Utilitaire de copie',
-			'ico' => 'cog-alt',
-			'disabled' => $module::$siteTranslate
-		]); ?>
-		</div>
-		<div class="col2">
+		<div class="col2 offset8">
 			<?php echo template::submit('translateFormSubmit'); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Traduction automatique
-				<span class="helpDisplayButton">
-					<?php echo template::ico('help', 'left');?>
-				</span>
-			</h4>
+			<h4>Langues supportées</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
-								'checked' => $this->getData(['config','i18n', 'scriptGoogle']),
-								'help' => 'Le script Google Translate assure la traduction automatique du site.'
-							]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue du navigateur', [
-							'checked' => $this->getData(['config','i18n', 'autoDetect']),
-							'class' => 'translateGoogleScriptOption',
-							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
+						<b>Traduction automatique :</b>
+						<div class="col12">
+						<?php echo template::checkbox('translateScriptFlagDE', true, 'Allemand', [
+							'checked' => $this->getData(['config','translate', 'scriptDE'])
 						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['config','i18n', 'showCredits']),
-							'class' => 'translateGoogleScriptOption',
-							'help' => 'Option recommandée pour le respect du droit d\'auteur'
-						]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
-								'checked' => $this->getData(['config','i18n', 'admin']),
-								'class' => 'translateGoogleScriptOption',
-								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateScriptFlagEN', true, 'Anglais', [
+								'checked' => $this->getData(['config','translate', 'scriptEN'])
 							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateScriptFlagES', true, 'Espagnol', [
+								'checked' => $this->getData(['config','translate', 'scriptES'])
+								]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateScriptFlagIT', true, 'Italien', [
+								'checked' => $this->getData(['config','translate', 'scriptIT'])
+							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateScriptFlagNL', true, 'Néerlandais', [
+								'checked' => $this->getData(['config','translate', 'scriptNL'])
+							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateScriptFlagPT', true, 'Portugais', [
+								'checked' => $this->getData(['config','translate', 'scriptPT'])
+							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique', [
+								'checked' => $this->getData(['config','translate', 'autoDetect']),
+								'help'   => 'Détecte la langue du navigateur.'
+							]); ?>
+
+						</div>
+					</div>
+					<div class="col6">
+					<b>Traduction rédigée :</b>
+						<div class="col12">
+							<?php echo template::checkbox('translateSiteFlagEN', true, 'Anglais', [
+								'checked' => $this->getData(['config', 'translate', 'siteEN'])
+							]); ?>
+						</div>
+						<div class="col12">
+								<?php echo template::checkbox('translateSiteFlagDE', true, 'Allemand', [
+									'checked' => $this->getData(['config', 'translate', 'siteDE'])
+								]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateSiteFlagES', true, 'Espagnol', [
+								'checked' => $this->getData(['config', 'translate', 'siteES'])
+								]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateSiteFlagIT', true, 'Italien', [
+								'checked' => $this->getData(['config', 'translate', 'siteIT'])
+							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateSiteFlagNL', true, 'Néerlandais', [
+								'checked' => $this->getData(['config', 'translate', 'siteNL'])
+							]); ?>
+						</div>
+						<div class="col12">
+							<?php echo template::checkbox('translateSiteFlagPT', true, 'Portugais', [
+								'checked' => $this->getData(['config', 'translate', 'sitePT'])
+							]); ?>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col12">
-			<div class="block" id="flagsWrapper">
-			<h4>Mode de traduction et affichage des drapeaux</h4>
-				<div class="row">
-					<div class="col4 offset4">
-						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [
-							'label' => 'Français',
-							'selected' => $this->getData(['config', 'i18n' , 'fr'])
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<div class="col8 offset2">
-							<?php echo template::select('translateDE', $module::$translateOptions['de'], [
-								'label' => 'Allemand',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'de'])
-							]); ?>
+			<div class="col12">
+				<div class="block">
+				<h4>Paramètres de traduction automatique</h4>
+					<div class="row">
+						<div class="col4">
+							<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
+									'checked' => $this->getData(['config','translate', 'scriptGoogle'])
+								]); ?>
 						</div>
-						<div class="col8 offset2">
-							<?php echo template::select('translateEN', $module::$translateOptions['en'], [
-								'label' => 'Anglais',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'en'])
-							]); ?>
+						<div class="col4">
+							<?php echo template::checkbox('translateAdmin', true, 'Mode connexion', [
+									'checked' => $this->getData(['config','translate', 'admin']),
+									'help' => 'Traduction automatique du site et de l\'interface du CMS'
+								]); ?>
 						</div>
-						<div class="col8 offset2">
-							<?php echo template::select('translateES', $module::$translateOptions['es'], [
-								'label' => 'Espagnol',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'es'])
-							]); ?>
-						</div>
-					</div>
-					<div class="col6">
-						<div class="col8 offset2">
-							<?php echo template::select('translateIT', $module::$translateOptions['it'], [
-								'label' => 'Italien',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'it'])
-							]); ?>
-						</div>
-						<div class="col8 offset2">
-							<?php echo template::select('translateNL', $module::$translateOptions['nl'], [
-								'label' => 'Néerlandais',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'nl'])
-							]); ?>
-						</div>
-						<div class="col8 offset2">
-							<?php echo template::select('translatePT', $module::$translateOptions['pt'], [
-								'label' => 'Portugais',
-								'class' => 'translateFlagSelect',
-								'selected' => $this->getData(['config', 'i18n' , 'pt'])
+						<div class="col4">
+							<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
+								'checked' => $this->getData(['config','translate', 'showCredits']),
+								'help' => 'Option vivement recommandée pour le respect du droit d\'auteur'
 							]); ?>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="col10 helpDisplayContent">
-		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée. La traduction automatique offre deux possibilités, la détection automatique de la langue du navigateur même celle-ci n'est pas
-		matérialisée par un drapeau. Le clic sur un drapeau forcera la traduction dans cette langue, pour cela sélectionnez le drapeau puis l'option de "Traduction automatique".
-		La traduction automatique est réalisée à partir du site en version française.</p>
-		<p>Avec l'option "Traduction rédigée", une nouveau sité est généré, seule la page d'accueil est crée, il faut alors rédiger les pages dans la langue sélectionnée.
-		Il est possible de copier les pages et les modules  d'une langue vers une autre à l'aide de l'utilitaire de copie.
-		Quand un drapeau est masqué, la traduction est effacée, pensez à sauvegarder.
-		Afficher le drapeau français  pour revenir à la traduction dans la langue originale.</p>
 	</div>
 <?php echo template::formClose(); ?>

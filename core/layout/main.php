@@ -36,7 +36,7 @@
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
 					AND $this->getData(['theme', 'menu', 'fixed']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true)
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true) 
 					AND $this->getUser('group') > self::GROUP_MEMBER) {
 						echo '<nav id="navfixedconnected" >';
 					} else {
@@ -59,6 +59,7 @@
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
 			<header>
+				<?php //$layout->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
@@ -152,6 +153,7 @@
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
+			<?php //$layout->showi18n();?>
 			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante

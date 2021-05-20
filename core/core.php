@@ -44,8 +44,8 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '11.0.000';
-	const ZWII_UPDATE_CHANNEL = "v11";
+	const ZWII_VERSION = '10.6.01';
+	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -154,7 +154,7 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue courante
-	public static $i18n;
+	public static $i18nCurrent = 'fr';
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -193,15 +193,6 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Déterminer la langue sélectionnée pour le chargement des fichiers de données
-		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
-		) {
-			self::$i18n = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale (LC_TIME, self::$i18n . '_' . strtoupper (self::$i18n) );
-
-		} else  {
-			self::$i18n = 'fr';
-		}
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
@@ -209,7 +200,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys,self::$i18n),
+				'dir' => $this->dataPath ($keys,self::$i18nCurrent),
 				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
@@ -230,9 +221,9 @@ class common {
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath ($stageId, self::$i18n);
+			$folder = $this->dataPath ($stageId, self::$i18nCurrent);
 			if (file_exists($folder . $stageId .'.json') === false) {
-				$this->initData($stageId,self::$i18n);
+				$this->initData($stageId,self::$i18nCurrent);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -240,30 +231,6 @@ class common {
 		// Utilisateur connecté
 		if($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
-		}
-
-		/**
-		 * Traduction du site par script
-		 * Traduction par clic sur le drapeau OU
-		 * Traduction automatisée
-		 *	- Exclure la traduction manuelle
-		 *	- La mangue du navigateur est lisible
-		 *	- L'auto-détection est active
-		 */
-
-		if ( $this->getData(['config', 'i18n', 'enabled']) === true
-			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
-			 AND $this->getData(['config', 'i18n','autoDetect']) === true
-			 AND $this->getInput('ZWII_I18N_SITE') !== ''
-			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
-		{
-			/**
-			 * Le cookie est prioritaire sur le navigateur
-			 * la traduction est celle de la langue du drapeau
-			 * */
-			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
-			}
 		}
 
 		// Construit la liste des pages parents/enfants
@@ -529,7 +496,7 @@ class common {
 				}
 			}
 		}
-		// La clef est une chaîne
+		// La clef est une chaine
 		else {
 			foreach($this->input as $type => $values) {
 				// Champ obligatoire
@@ -1028,39 +995,6 @@ class common {
 			if ( !$item->isDot() && $item->isDir() ) $this->removeDir($item->getRealPath());
 		}
 		return ( rmdir($path) );
-	}
-
-
-	/*
-	* Copie récursive de dossiers
-	* @param string $src dossier source
-	* @param string $dst dossier destination
-	* @return bool
-	*/
-	public function copyDir($src, $dst) {
-		// Ouvrir le dossier source
-		$dir = opendir($src);
-		// Créer le dossier de destination
-		if (!is_dir($dst))
-			$success = mkdir($dst, 0755, true);
-		else
-			$success = true;
-
-		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
-		while( $success
-			   AND $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Appel récursif des sous-dossiers
-					$success = $this->copyDir($src . '/' . $file, $dst . '/' . $file);
-				}
-				else {
-					$success = copy($src . '/' . $file, $dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
-		return $success;
 	}
 
 
@@ -1643,7 +1577,6 @@ class common {
 			$this->setData(['core', 'dataVersion', 10400]);
 
 		}
-
 		// Version 10.5.02
 		if ($this->getData(['core', 'dataVersion']) < 10502) {
 			// Forcer la régénération du thème
@@ -1681,40 +1614,10 @@ class common {
 			}
 		// Suppression de l'option d'objets par page gérées par les modules
 		$this->deleteData(['config','itemsperPage']);
+		// Valeur par défaut de la couleur du bouton Help
+		$this->setData(['admin', 'backgroundColorButtonHelp', 'rgba(255, 153, 0, 1)']);
 
 		$this->setData(['core', 'dataVersion', 10600]);
-		}
-
-		// Version 11.0.00
-		if ($this->getData(['core', 'dataVersion']) < 11000) {
-
-			// Option de déconnexion auto activée
-			$this->setData(['config','autoDisconnect',true]);
-
-			// Mettre à jour les données de langue
-			$this->setData(['config', 'i18n','scriptGoogle', false ]);
-			$this->setData(['config', 'i18n','showCredits', false ]);
-			$this->setData(['config', 'i18n','autoDetect', false ]);
-			$this->setData(['config', 'i18n','admin', false ]);
-			$this->setData(['config', 'i18n','fr', false ]);
-			$this->setData(['config', 'i18n','de', false ]);
-			$this->setData(['config', 'i18n','en', false ]);
-			$this->setData(['config', 'i18n','es', false ]);
-			$this->setData(['config', 'i18n','it', false ]);
-			$this->setData(['config', 'i18n','nl', false ]);
-			$this->setData(['config', 'i18n','pt', false ]);
-
-			// Supprimer les fichiers de backup
-			if (file_exists('site/data/.backup')) unlink('site/data/.backup');
-			$path = realpath('site/data');
-			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-			{
-				if (strpos($filename,'backup.json')) {
-					unlink($filename);
-				}
-			}
-
-			$this->setData(['core', 'dataVersion', 11000]);
 		}
 	}
 }
@@ -2033,9 +1936,7 @@ class core extends common {
 		if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			AND ( $this->getUser('group') === self::GROUP_BANNED
-				  OR ( $_SESSION['csrf'] !== $this->getData(['user',$this->getUser('id'),'accessCsrf'])
-					  AND $this->getData(['config','autoDisconnect']) === true)
-			    )
+				  OR $_SESSION['csrf'] !== $this->getData(['user',$this->getUser('id'),'accessCsrf']) )
 		) {
 			$user = new user;
 			$user->logout();
@@ -2135,6 +2036,7 @@ class core extends common {
 						'</a> &#8250; '.
 						$this->getData(['page', $this->getUrl(0), 'title']);
 		}
+
 		// Importe la page
 		if(
 			$this->getData(['page', $this->getUrl(0)]) !== null
@@ -2153,7 +2055,6 @@ class core extends common {
 				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
 			]);
 		}
-
 		// Importe le module
 		else {
 			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
@@ -2183,7 +2084,6 @@ class core extends common {
 			if(class_exists($moduleId)) {
 				/** @var common $module */
 				$module = new $moduleId;
-
 				// Check l'existence de l'action
 				$action = '';
 				$ignore = true;
@@ -2340,35 +2240,6 @@ class core extends common {
 			}
 		}
 
-		// Chargement de la bibliothèque googtrans
-
-		// Le script de traduction est sélectionné
-		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
-			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
-					// et la traduction de la langue courante est automatique
-				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
-						// Ou traduction automatique
-						OR 	$this->getData(['config', 'i18n','autoDetect']) === true
-					)
-				// Cas  des pages d'administration
-				// Pas connecté
-				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-				AND $this->getUrl(1) !== 'login'
-					// Ou connecté avec option active
-					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getData(['config', 'i18n','admin']) === true
-					)
-
-				)	{
-						// Paramètre du script
-						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
-						// Chargement de la librairie
-						$this->addOutput([
-							'vendor' => array_merge($this->output['vendor'], ['i18n'])
-						]);
-
-			}
-		}
 		// Erreurs
 		if($access === 'login') {
 			http_response_code(302);
@@ -2424,36 +2295,38 @@ class core extends common {
 			$this->addOutput([
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
-		};
-		switch($this->output['display']) {
-			// Layout brut
-			case self::DISPLAY_RAW:
-				echo $this->output['content'];
-				break;
-			// Layout vide
-			case self::DISPLAY_LAYOUT_BLANK:
-				require 'core/layout/blank.php';
-				break;
-			// Affichage en JSON
-			case self::DISPLAY_JSON:
-				header('Content-Type: application/json');
-				echo json_encode($this->output['content']);
-				break;
-			// RSS feed
-			case self::DISPLAY_RSS:
-				header('Content-type: application/rss+xml; charset=UTF-8');
-				echo $this->output['content'];
-				break;
-			// Layout allégé
-			case self::DISPLAY_LAYOUT_LIGHT:
-				require 'core/layout/light.php';
-				break;
-			// Layout principal
-			case self::DISPLAY_LAYOUT_MAIN:
-				require 'core/layout/main.php';
-				break;
+		}
+
+	switch($this->output['display']) {
+		// Layout vide
+		case self::DISPLAY_LAYOUT_BLANK:
+			require 'core/layout/blank.php';
+			break;
+		// Affichage en JSON
+		case self::DISPLAY_JSON:
+			header('Content-Type: application/json');
+			echo json_encode($this->output['content']);
+			break;
+		// RSS feed
+		case self::DISPLAY_RSS:
+			header('Content-type: application/rss+xml; charset=UTF-8');
+			echo $this->output['content'];
+			break;
+		// Layout allégé
+		case self::DISPLAY_LAYOUT_LIGHT:
+			require 'core/layout/light.php';
+			break;
+		// Layout principal
+		case self::DISPLAY_LAYOUT_MAIN:
+			require 'core/layout/main.php';
+			break;
+		// Layout brut
+		case self::DISPLAY_RAW:
+			echo $this->output['content'];
+			break;
 		}
 	}
+
 }
 
 class layout extends common {
@@ -2490,9 +2363,6 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
-			echo $this->showi18n('Site');
-		}
 		if(
 			$this->core->output['title']
 			AND (
@@ -2506,23 +2376,6 @@ class layout extends common {
 
 		echo $this->core->output['content'];
 
-		/**
-		 * Affiche les crédits, conditions requis :
-		 * La traduction est active et le site n'est pas en français.
-		 * La fonction est activée.
-		 */
-		if ( $this->getData(['config', 'i18n', 'enabled']) === true
-			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
-			 AND $this->getData(['config', 'i18n','showCredits']) === true
-			 AND
-				// et la traduction n'est pas manuelle
-				(  $this->getInput('ZWII_I18N_SCRIPT')
-					AND $this->getData(['config', 'i18n', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
-				)
-           )
-		{
-		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
-		}
 	}
 
 
@@ -2811,7 +2664,7 @@ class layout extends common {
 				){
 					$itemsLeft .= '<a class="' . $parentPageId . '" href="'.helper::baseUrl() . $this->getUrl(0).'">';
 				} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  . '>';
+					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  .  '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
@@ -2875,9 +2728,6 @@ class layout extends common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
-			echo $this->showi18n('Nav');
-		}
 	}
 
 	/**
@@ -2916,7 +2766,7 @@ class layout extends common {
 			}
 			// Propriétés de l'item
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
-			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank" ' : '';
+			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item;
 			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
 			if ($onlyChildren === false) {
@@ -2925,7 +2775,7 @@ class layout extends common {
 					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
 						$items .= '<a href="'.$this->getUrl(1).'">';
 				} else {
-						$items .= '<a href="'. helper::baseUrl() . $parentPageId . '"' . $targetBlank .  $active .'>';
+						$items .= '<a href="'. helper::baseUrl() . $parentPageId . '"' . $targetBlank . $active .'>';
 				}
 				$items .= $this->getData(['page', $parentPageId, 'title']);
 				$items .= '</a>';
@@ -3119,9 +2969,6 @@ class layout extends common {
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				if ($this->getData(['config', 'i18n', 'enabled']) === true) {
-					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
-				}
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
 				// Mise à jour automatique
@@ -3208,7 +3055,7 @@ class layout extends common {
 			foreach($vendorFiles as $vendorFile) {
 				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
 					case 'css':
-						// Force le rechargement lors d'une mise à jour du jeu d'icônes
+						// Force le rechargement lors d'une mise à jour² du jeu d'icônes
 						$reload = $vendorPath === 'core/vendor/zwiico/'
 							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
 							: '';
@@ -3220,37 +3067,5 @@ class layout extends common {
 				}
 			}
 		}
-	}
-	/**
-	 * Affiche le cadre avec les drapeaux sélectionnés
-	 */
-	public function showi18n($id) {
-		echo '<div id="i18nContainer' . $id . '"><ul>';
-		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config', 'i18n',$key]) === 'site'
-				OR (
-					$this->getData(['config', 'i18n','scriptGoogle']) === true
-					AND $this->getData(['config', 'i18n',$key]) === 'script'
-				)
-			) {
-				if (
-					(isset($_COOKIE['ZWII_I18N_SITE'] )
-					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
-				    )
-					 OR
-					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
-					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
-				   ) ) {
-					   $select = ' id="i18nFlagSelected" ';
-				   } else {
-					   $select = ' id="i18nFlag" ';
-				   }
-
-				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
-				echo '</li>';
-			}
-		}
-		echo '</ul></div>';
 	}
 }

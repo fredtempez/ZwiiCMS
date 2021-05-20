@@ -15,10 +15,10 @@
 			'value' => 'Aide'
 		]); ?>
 	</div>
-	<div class="col3 offset3">
+	<div class="col2 offset4">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'config/advanced',
-			'value' => 'Configuration avancée',
+			'value' => 'Avancée',
 			'ico' => 'cog-alt',
 		]); ?>
 	</div>
@@ -65,21 +65,6 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Langues étrangères</h4>
-			<div class="row">
-				<div class="col12">
-					<?php echo template::checkbox('configI18n', true, 'Activer la gestion des langues étrangères', [
-							'checked' => $this->getData(['config', 'i18n', 'enabled']),
-							'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
-						]); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
 			<h4>Pages spéciales</h4>
 			<div class="row">
 				<div class="col4">
@@ -116,7 +101,7 @@
 					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Recherche dans le site',
 						'selected' => $this->getData(['locale', 'searchPageId']),
-						'help' => 'Sélectionnez une page contenant le module \'Recherche\'. Une option du pied de page ajoute un lien discret vers cette page.'
+						'help' => 'Sélectionner la page "Recherche" ou une page contenant le module "Recherche". Une option du pied de page ajoute un lien discret vers cette page.'
 					]); ?>
 				</div>
 			</div>
@@ -146,7 +131,6 @@
 						]); ?>
 				</div>
 			</div>
-			<p>Lorsque les langues étrangères sont activées, il convient d'adapter les pages spéciales.</p>
 		</div>
 	</div>
 </div>

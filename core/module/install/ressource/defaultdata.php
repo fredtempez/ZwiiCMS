@@ -32,21 +32,7 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
-			],
-			'i18n' => [
-				'enabled' => false,
-				'scriptGoogle' => false,
-				'showCredits' => false,
-				'autoDetect' => false,
-				'admin'	 => false,
-				'fr' => false,
-				'de' => false,
-				'en' => false,
-				'es' => false,
-				'it' => false,
-				'nl' => false,
-				'pt' => false
-			],
+			]
 		],
 		'core' => [
 			'dataVersion' => 11000,
@@ -97,6 +83,19 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
+		'translate' => [
+			'scriptGoogle' => false,
+			'showCredits' => false,
+			'autoDetect' => false,
+			'admin' => false,
+			'fr' => 'none',
+			'de' => 'none',
+			'en' => 'none',
+			'es' => 'none',
+			'it' => 'none',
+			'nl' => 'none',
+			'pt' => 'none'
+		],
 		'theme' =>  [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',

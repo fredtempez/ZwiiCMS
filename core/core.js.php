@@ -482,6 +482,7 @@ $(document).ready(function(){
    * Active le système d'aide interne
    *
   */
+
   $(".buttonHelp").on({
 		click: function () {
 			$(".helpDisplayContent").slideToggle();
@@ -495,7 +496,7 @@ $(document).ready(function(){
 	});
 
 	/**
-	 * Remove ID Facebook from URL
+	* Remove ID Facebook from URL
 	 */
 	if(/^\?fbclid=/.test(location.search))
 		location.replace(location.href.replace(/\?fbclid.+/, ""));

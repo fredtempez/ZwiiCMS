@@ -417,7 +417,7 @@ class page extends common {
 						'displayMenu' => $this->getinput('pageEditDisplayMenu'),
 						'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 						'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
-						'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN)
+						'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 					]
 				]);
 				// Barre renommée : changement le nom de la barre dans les pages mères
