@@ -1,18 +1,6 @@
 # Changelog
 
 
-## Version 11.0.00
-- Modifications :
-    - Gestion multi-langues
-        - Traduction rédigée dans une langue européenne
-        - Traduction automatique dans une langue européenne
-        - Traduction selon la langue navigateur
-    - Configuration du site :
-        - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
-        - Suppression de l'option articles par pages.
-        - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
-        - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
-
 ## version 10.6.02
 Correction :
     - Bug lors du téléchargement des journaux.
