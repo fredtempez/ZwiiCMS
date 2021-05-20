@@ -1,10 +1,14 @@
 # Changelog
 
+## version 10.6.02
+- Correction :
+    - Débordement  lors du téléchargement des fichiers journaux.
+
 ## version 10.6.01
 Corrections :
     - Champs de formulaire, uniformisation de la hauteur (select, input, etc) identique à celle des boutons à 9px.
     - Module search : texte d'aide dans la zone de saisie non pris en compte.
-Modifications : 
+Modifications :
     - News 3.2 : ajout au sélecteur de date d'un bouton d'effacement identique à celui du sélecteur de fichiers.
     - News 3.2 : décoloration du texte, modification de l'effet blur.
 
