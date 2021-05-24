@@ -1,23 +1,5 @@
-# Fichiers temporaires
-site/tmp/*.zip
-site/tmp/*.gz
-site/tmp/*.png
-
-# Sauvegardes
-site/backup/*
-
-# Fichiers de données
-site/data/*
-site/data/*.json
-site/data/*.css
-site/data/fr/*.json
-site/data/fr/*.back
-site/data/*.back
-
-
-# Fichiers uploadés
-site/file/source/
-site/file/thumb/
+# Fichiers du site
+site/
 
 # Dossiers vides dans GitHub
 !.gitkeep
@@ -37,9 +19,3 @@ sitemap.xml
 robots.txt
 site/data/journal.log
 .DS_Store
-site/.DS_Store
-site/file/.DS_Store
-site/data/es/
-site/data/en/
-site/data/de/
-site/data/modules/*
