@@ -110,7 +110,7 @@ class install extends common {
 				}
 				// Copie des favicons
 				copy('core/module/install/ressource/favicon.ico', self::FILE_DIR . 'source/favicon.ico');
-				copy('core/module/install/ressource/faviconDark.ico', self::FILE_DIR . 'source/faviconDark.ico');
+				copy('core/module/install/ressource/faviconDark.ico', self::FILE_DIR . 'source/favicon.ico');
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
 				// Créer sitemap
@@ -167,8 +167,12 @@ class install extends common {
 				break;
 			// Téléchargement
 			case 2:
-				// Téléchargement depuis le serveur de Zwii
-				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				// Téléchargement depuis le serveur de ZwiiCMS
+				// URL de téléchargement sur le site
+				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				// URL sur le git hub
+				$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
+				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  $newVersion  . 'tar.gz')) !== false);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
