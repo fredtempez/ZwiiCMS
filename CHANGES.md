@@ -1,5 +1,9 @@
 # Changelog
 
+## version 10.6.03
+- Modification :
+    - Livraison des fichiers de thème lors d'une primo installation avec site de test dans une archive. Désormais, le dossier site ne contiendra que les fichiers de sécurité htaccess. Cette procédure permettra de ne plus différencier les archives d'installation et de mise à jour.
+
 ## version 10.6.02
 - Correction :
     - Débordement  lors du téléchargement des fichiers journaux.
