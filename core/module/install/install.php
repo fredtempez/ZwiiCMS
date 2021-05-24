@@ -172,7 +172,7 @@ class install extends common {
 				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// URL sur le git hub
 				$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
-				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  $newVersion  . 'tar.gz')) !== false);
+				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  trim($newVersion)  . '.tar.gz')) !== false);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
