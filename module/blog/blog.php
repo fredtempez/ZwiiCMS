@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '5.0';
+	const VERSION = '5.1';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -142,8 +142,8 @@ class blog extends common {
 		// Corps des articles
 		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
 		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'state', 'SORT_DESC');
-		foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
-			if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
+		foreach( $articleIdsPublishedOns as $articleId => $articlePublishedOn ) {
+			if( $articlePublishedOn <= time() AND $articleIdsStates[$articleId]			 ) {
 				// Miniature
 				$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
 				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
@@ -163,11 +163,13 @@ class blog extends common {
 				$newsArticle->setAuthor($author,'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() .$this->getUrl(0) . '/' . $articleId);
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
-				$imageData = getimagesize(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' .  $thumb);
+				if ( file_exists($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture'])) ) {
+					$imageData = getimagesize(helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' .  $thumb);
 				$newsArticle->addEnclosure( helper::baseUrl(false) . self::FILE_DIR . 'thumb/'  . $thumb,
 											$imageData[0] * $imageData[1],
 											$imageData['mime']
-				);
+					);
+				}
 				$feeds->addItem($newsArticle);
 			}
 		}
