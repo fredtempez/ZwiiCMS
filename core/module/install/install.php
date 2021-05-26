@@ -88,26 +88,26 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-					// Décompression et installation
-					try {
-						// Décompression dans le dossier de fichier temporaires
-						if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
-							unlink(self::TEMP_DIR . 'files.tar.gz');
-						}
-						if (file_exists(self::TEMP_DIR . 'files.tar')) {
-							unlink(self::TEMP_DIR . 'files.tar');
-						}
-						copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
-						$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
-						$pharData->decompress();
-						// Installation
-						$pharData->extractTo(__DIR__ . '/../../../', null, true);
-					} catch (Exception $e) {
-						$success = $e->getMessage();
-					}
-					unlink(self::TEMP_DIR . 'files.tar.gz');
-					unlink(self::TEMP_DIR . 'files.tar');
 				}
+				// Images exemples livrées dans tous les cas
+				try {
+					// Décompression dans le dossier de fichier temporaires
+					if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
+						unlink(self::TEMP_DIR . 'files.tar.gz');
+					}
+					if (file_exists(self::TEMP_DIR . 'files.tar')) {
+						unlink(self::TEMP_DIR . 'files.tar');
+					}
+					copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
+					$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
+					$pharData->decompress();
+					// Installation
+					$pharData->extractTo(__DIR__ . '/../../../', null, true);
+				} catch (Exception $e) {
+					$success = $e->getMessage();
+				}
+				unlink(self::TEMP_DIR . 'files.tar.gz');
+				unlink(self::TEMP_DIR . 'files.tar');
 				// Copie des favicons
 				copy('core/module/install/ressource/favicon.ico', self::FILE_DIR . 'source/favicon.ico');
 				copy('core/module/install/ressource/faviconDark.ico', self::FILE_DIR . 'source/favicon.ico');
@@ -169,10 +169,10 @@ class install extends common {
 			case 2:
 				// Téléchargement depuis le serveur de ZwiiCMS
 				// URL de téléchargement sur le site
-				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// URL sur le git hub
-				$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
-				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  trim($newVersion)  . '.tar.gz')) !== false);
+				//$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
+				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  trim($newVersion)  . '.tar.gz')) !== false);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
