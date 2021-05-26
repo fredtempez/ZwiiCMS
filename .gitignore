@@ -1,5 +1,5 @@
 # Fichiers du site
-site/
+site/*
 
 # Dossiers vides dans GitHub
 !.gitkeep
