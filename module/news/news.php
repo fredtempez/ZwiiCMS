@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.2';
+	const VERSION = '3.3';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -101,8 +101,6 @@ class news extends common {
 		$feeds->addGenerator();
 		// Corps des articles
 		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-		// Articles de la première page uniquement
-		$newsIdsPublishedOns = array_slice($newsIdsPublishedOns, 0, $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 		$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
