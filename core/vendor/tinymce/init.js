@@ -96,8 +96,10 @@ tinymce.init({
 	link_context_toolbar: true,
 	// Cache la barre de statut
 	statusbar: false,
-	// Active le copié collé à partir du Web
+	// Bloque le collage blob
 	paste_data_images: false,
+	// Bloque le lâché déplacé
+	paste_block_drop: true,
 	// Active le copié collé à partir du presse papier
 	paste_filter_drop: false,
 	/* Eviter BLOB à tester
