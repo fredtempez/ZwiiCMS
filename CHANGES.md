@@ -1,7 +1,6 @@
 # Changelog
 
 ## version 10.6.03
-
 - Correction :
     - Module actualités (news), version 3.3, le flux RSS affiche l'ensemble des articles plutôt que ceux de la page courante.
 - Modifications :
