@@ -119,7 +119,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Mise à jour automatisée</h4>
-			<?php $updateError = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::checkbox('configAdvancedAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
