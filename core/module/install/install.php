@@ -169,10 +169,10 @@ class install extends common {
 			case 2:
 				// Téléchargement depuis le serveur de ZwiiCMS
 				// URL de téléchargement sur le site
-				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// URL sur le git hub
 				//$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
-				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/archive/' .  trim($newVersion)  . '.tar.gz')) !== false);
+				$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
@@ -258,7 +258,7 @@ class install extends common {
 	 */
 	public function update() {
 		// Nouvelle version
-		self::$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
+		self::$newVersion = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
