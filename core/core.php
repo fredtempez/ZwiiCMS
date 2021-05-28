@@ -530,7 +530,6 @@ class common {
 		} else {
 			$db->set($module,init::$defaultData[$module]);
 		}
-
 		$db->save;
 	}
 
@@ -1715,6 +1714,25 @@ class common {
 				}
 			}
 
+			// Externaliser les contenus des pages
+			// Liste des pages dans pageList
+			$pageList = array();
+			// Creation du contenu de la page
+			if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
+				mkdir(self::DATA_DIR . self::$i18n . '/content');
+			}
+			foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+				$pageList [] = $parentKey;
+				foreach ($parentValue as $childKey) {
+					$pageList [] = $childKey;
+				}
+			}
+			foreach ($pageList as $parentKey => $parent) {
+				$content = $this->getData(['page', $parent, 'content']);
+				file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $parent . '.html', $content);
+				$this->setData(['page', $parent, 'content', $parent . '.html']);
+			}
+
 			$this->setData(['core', 'dataVersion', 11000]);
 		}
 	}
@@ -2144,17 +2162,20 @@ class core extends common {
 		) {
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getData(['page', $this->getUrl(0), 'content']),
+				'content' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content'])),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-				'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content']),
+				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight']) ?
+									file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+									: '',
+				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft']) ?
+									file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+									: '',
 			]);
 		}
-
 		// Importe le module
 		else {
 			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
@@ -2171,10 +2192,15 @@ class core extends common {
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-					'contentRight' => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'content']),
-					'contentLeft'  => $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'content'])
+					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight']) ?
+										file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+										: '',
+					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft']) ?
+										file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+										: '',
 				]);
-				$pageContent = $this->getData(['page', $this->getUrl(0), 'content']);
+				$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
+
 			}
 			else {
 				$moduleId = $this->getUrl(0);

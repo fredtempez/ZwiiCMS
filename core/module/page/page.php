@@ -57,6 +57,7 @@ class page extends common {
 		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
+	public static $content = '';
 
 	/**
 	 * Duplication
@@ -127,7 +128,7 @@ class page extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
                 'disable' => false,
-				'content' => 'Contenu de votre nouvelle page.',
+				'content' =>  $pageId . '.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -148,6 +149,11 @@ class page extends common {
 				'hideMenuChildren' => false
 			]
 		]);
+		// Creation du contenu de la page
+		if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
+			mkdir(self::DATA_DIR . self::$i18n . '/content');
+		}
+		file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
 		// Met à jour le site map
 		$this->createSitemap('all');
 		// Valeurs en sortie
@@ -267,6 +273,9 @@ class page extends common {
 			}
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
+			if (file_exists(self::DATA_DIR . self::$i18n . '/content/' . $url[0] . '.html')) {
+				unlink(self::DATA_DIR . self::$i18n . '/content/' . $url[0] . '.html');
+			}
 			$this->deleteData(['module', $url[0]]);
 			// Met à jour le site map
 			$this->createSitemap('all');
@@ -399,7 +408,7 @@ class page extends common {
 						'typeMenu' => $this->getinput('pageTypeMenu'),
 						'iconUrl' => $this->getinput('pageIconUrl'),
 						'disable'=> $this->getinput('pageEditDisable', helper::FILTER_BOOLEAN),
-						'content' => (empty($this->getInput('pageEditContent', null)) ? '<p>&nbsp;</p>' : $this->getInput('pageEditContent', null)),
+						'content' => $pageId . '.html',
 						'hideTitle' => $hideTitle,
 						'breadCrumb' => $this->getInput('pageEditbreadCrumb', helper::FILTER_BOOLEAN),
 						'metaDescription' => $this->getInput('pageEditMetaDescription', helper::FILTER_STRING_LONG),
@@ -420,6 +429,12 @@ class page extends common {
 						'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN)
 					]
 				]);
+				// Creation du contenu de la page
+				if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
+					mkdir(self::DATA_DIR . self::$i18n . '/content');
+				}
+				$content = empty($this->getInput('pageEditContent', null)) ? '<p>&nbsp;</p>' : $this->getInput('pageEditContent', null);
+				file_put_contents( self::DATA_DIR . self::$i18n . '/content/' . $pageid . '.html' , $content );
 				// Barre renommée : changement le nom de la barre dans les pages mères
 				if ($this->getinput('pageEditBlock') === 'bar') {
 					foreach ($this->getHierarchy() as $eachPageId=>$parentId) {
@@ -472,6 +487,8 @@ class page extends common {
 						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 					}
 			}
+			// Contenu de la page
+			self::$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' .  $this->getData(['page', $this->getUrl(2), 'content']));
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
@@ -482,5 +499,4 @@ class page extends common {
 			]);
 		}
 	}
-
 }
