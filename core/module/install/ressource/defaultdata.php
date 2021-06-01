@@ -71,10 +71,7 @@ class init extends common {
 			'typeMenu' => 'text',
 			'iconUrl' => '',
 			'disable' => false,
-			'content' => '<h2>Bienvenue sur votre nouveau site Zwii !</h2>
-							  <p><strong>Un email contenant le récapitulatif de votre installation vient de vous être envoyé.</strong></p>
-							  <p>Connectez-vous dès maintenant à votre espace membre afin de créer un site à votre image ! Vous pourrez personnaliser le thème, créer des pages, ajouter des utilisateurs et bien plus encore !</p>
-							  <p>Si vous avez besoin d\'aide ou si vous cherchez des informations sur Zwii, n\'hésitez pas à jeter un œil à notre <a title="Forum" href="https://forum.zwiicms.fr/">forum</a>.</p>',
+			'content' => 'accueil.html',
 			'hideTitle' => false,
 			'homePageId' => true,
 			'breadCrumb' => false,
@@ -252,12 +249,7 @@ class init extends common {
 					'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Vous pouvez assigner des parents à vos pages afin de mieux organiser votre menu !</p>
-								<div class="row">
-								<div class="col4"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac dolor arcu. Cras dignissim finibus nisi, vulputate egestas mauris faucibus ultricies. Nullam ornare pretium eleifend. Donec placerat purus ut turpis dapibus condimentum. Fusce at leo pharetra nisl vestibulum fermentum. Maecenas feugiat justo at semper tincidunt. Integer in blandit lorem.</p></div>
-								<div class="col4"><p>Ergo ego senator inimicus, si ita vultis, homini, amicus esse, sicut semper fui, rei publicae debeo. Quid? si ipsas inimicitias, depono rei publicae causa, quis me tandem iure reprehendet, praesertim cum ego omnium meorum consiliorum atque factorum exempla semper ex summorum hominum consiliis atque factis mihi censuerim petenda.</p></div>
-								<div class="col4"><p>Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.</p></div>
-								</div>',
+				'content' => 'enfant.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
 				'metaDescription' => '',
@@ -280,11 +272,7 @@ class init extends common {
 					'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Cette page n\'est visible que des membres de votre site !</p>
-								<div class="row">
-									<div class="col6"><p>Eius populus ab incunabulis primis ad usque pueritiae tempus extremum, quod annis circumcluditur fere trecentis, circummurana pertulit bella, deinde aetatem ingressus adultam post multiplices bellorum aerumnas Alpes transcendit et fretum, in iuvenem erectus et virum ex omni plaga quam orbis ambit inmensus, reportavit laureas et triumphos, iamque vergens in senium et nomine solo aliquotiens vincens ad tranquilliora vitae discessit.</p></div>
-									<div class="col6"><p>Exsistit autem hoc loco quaedam quaestio subdifficilis, num quando amici novi, digni amicitia, veteribus sint anteponendi, ut equis vetulis teneros anteponere solemus. Indigna homine dubitatio! Non enim debent esse amicitiarum sicut aliarum rerum satietates; veterrima quaeque, ut ea vina, quae vetustatem ferunt, esse debet suavissima; verumque illud est, quod dicitur, multos modios salis simul edendos esse, ut amicitiae munus expletum sit.</p></div>
-								</div>',
+				'content' => 'privee.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
 				'metaDescription' => '',
@@ -307,10 +295,7 @@ class init extends common {
 				'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Vous pouvez ajouter une ou deux barres latérales aux pages de votre site. Cette mise en page se définit dans les paramètres de page et peut s\'appliquer à l\'ensemble du site ou à certaines pages en particulier, au gré de vos désirs.</p>
-								<p>Pour créer une barre latérale à partir d\'une "Nouvelle page" ou transformer une page existante en barre latérale, sélectionnez l\'option dans la liste des gabarits. On peut bien sûr définir autant de barres latérales qu\'on le souhaite.</p>
-								<p>Cette nouvelle fonctionnalité autorise toutes sortes d\'utilisations : texte, encadrés, images, vidéos... ou simple marge blanche. Seule restriction : on ne peut pas installer un module dans une barre latérale.</p>
-								<p>La liste des barres disponibles et leur emplacement s\'affichent en fonction du gabarit que vous aurez choisi.',
+				'content' => 'mise-en-page.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
 				'metaDescription' => '',
@@ -333,9 +318,7 @@ class init extends common {
 				'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Cette page illustre la possibilité d\'ajouter un menu dans les barres latérales.<br>
-						Deux types de menus sont disponibles : l\'un reprenant les rubriques du menu principal comme celui-ci, l\'autre listant les pages d\'une même rubrique. Le choix du type de menu se fait dans la page de configuration d\'une barre latérale.</p>
-						<p>Pour ajouter un menu à une page, choisissez une barre latérale avec menu dans la page de configuration. Les bulles d\'aide de la rubrique "Menu" expliquent comment masquer une page.</p>',
+				'content' => 'menu-lateral.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
 				'metaDescription' => '',
@@ -358,7 +341,7 @@ class init extends common {
 				'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Cette page contient une instance du module de blog. Cliquez sur un article afin de le lire et de poster des commentaires.</p>',
+				'content' => 'blog.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -381,7 +364,7 @@ class init extends common {
 				'typeMenu' => 'text',
 						'iconUrl' => '',
 						'disable' => false,
-				'content' => '<p>Cette page contient une instance du module de galeries photos. Cliquez sur la galerie ci-dessous afin de voir les photos qu\'elle contient.</p>',
+				'content' => 'galeries.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -428,7 +411,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<p>Cette page contient un exemple de formulaire conçu à partir du module de génération de formulaires. Il est configuré pour envoyer les données saisies par mail aux administrateurs du site.</p>',
+				'content' => 'contact.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -451,7 +434,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<div class="block"><h4>ZwiiCMS</h4><h2>Le CMS sans base de données à l\'installation simple et rapide</h2></div>',
+				'content' => 'barre.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -474,7 +457,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<p>&nbsp;</p>',
+				'content' => 'barrelateraleavecmenu.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -497,55 +480,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<h1 style="text-align: center;">Conditions g&eacute;n&eacute;rales d\'utilisation</h1>
-				<h1 style="text-align: center;">En vigueur au 01/06/2020</h1>
-				<p><strong>Avertissement</strong>Cette page fictive est donn&eacute;e &agrave; titre indicatif elle a &eacute;t&eacute; r&eacute;alis&eacute;e &agrave; l\'aide d\'un g&eacute;n&eacute;rateur : <a href="https://www.legalplace.fr" target="_blank" rel="noopener">https://www.legalplace.fr</a></p>
-				<p justify="">Les pr&eacute;sentes conditions g&eacute;n&eacute;rales d\'utilisation (dites &laquo; CGU &raquo;) ont pour objet l\'encadrement juridique des modalit&eacute;s de mise &agrave; disposition du site et des services par et de d&eacute;finir les conditions d&rsquo;acc&egrave;s et d&rsquo;utilisation des services par &laquo; l\'Utilisateur &raquo;.</p>
-				<p justify="">Les pr&eacute;sentes CGU sont accessibles sur le site &agrave; la rubrique &laquo;CGU&raquo;.</p>
-				<p justify="">Toute inscription ou utilisation du site implique l\'acceptation sans aucune r&eacute;serve ni restriction des pr&eacute;sentes CGU par l&rsquo;utilisateur. Lors de l\'inscription sur le site via le Formulaire d&rsquo;inscription, chaque utilisateur accepte express&eacute;ment les pr&eacute;sentes CGU en cochant la case pr&eacute;c&eacute;dant le texte suivant : &laquo; Je reconnais avoir lu et compris les CGU et je les accepte &raquo;.</p>
-				<p justify="">En cas de non-acceptation des CGU stipul&eacute;es dans le pr&eacute;sent contrat, l\'Utilisateur se doit de renoncer &agrave; l\'acc&egrave;s des services propos&eacute;s par le site.</p>
-				<p justify="">www.site.com se r&eacute;serve le droit de modifier unilat&eacute;ralement et &agrave; tout moment le contenu des pr&eacute;sentes CGU.</p>
-				<h2>Article 1 : Les mentions l&eacute;gales</h2>
-				<p justify="">L&rsquo;&eacute;dition et la direction de la publication du site www.site.com est assur&eacute;e par John Doe, domicili&eacute; 1 rue de Paris - 75016 PARIS.</p>
-				<p justify="">Num&eacute;ro de t&eacute;l&eacute;phone est 0102030405</p>
-				<p justify="">Adresse e-mail john.doe@zwiicms.fr.</p>
-				<p justify="">L\'h&eacute;bergeur du site www.site.com est la soci&eacute;t&eacute; Nom de l\'h&eacute;bergeur, dont le si&egrave;ge social est situ&eacute; au 12 rue de Lyon - 69001 Lyon, avec le num&eacute;ro de t&eacute;l&eacute;phone : 0401020305.</p>
-				<h2>ARTICLE 2&nbsp;: Acc&egrave;s au site</h2>
-				<p justify="">Le site www.site.com permet &agrave; l\'Utilisateur un acc&egrave;s gratuit aux services suivants :</p>
-				<p justify="">Le site internet propose les services suivants :</p>
-				<p justify="">Publication</p>
-				<p justify="">Le site est accessible gratuitement en tout lieu &agrave; tout Utilisateur ayant un acc&egrave;s &agrave; Internet. Tous les frais support&eacute;s par l\'Utilisateur pour acc&eacute;der au service (mat&eacute;riel informatique, logiciels, connexion Internet, etc.) sont &agrave; sa charge.</p>
-				<p justify="">L&rsquo;Utilisateur non membre n\'a pas acc&egrave;s aux services r&eacute;serv&eacute;s. Pour cela, il doit s&rsquo;inscrire en remplissant le formulaire. En acceptant de s&rsquo;inscrire aux services r&eacute;serv&eacute;s, l&rsquo;Utilisateur membre s&rsquo;engage &agrave; fournir des informations sinc&egrave;res et exactes concernant son &eacute;tat civil et ses coordonn&eacute;es, notamment son adresse email.</p>
-				<p justify="">Pour acc&eacute;der aux services, l&rsquo;Utilisateur doit ensuite s\'identifier &agrave; l\'aide de son identifiant et de son mot de passe qui lui seront communiqu&eacute;s apr&egrave;s son inscription.</p>
-				<p justify="">Tout Utilisateur membre r&eacute;guli&egrave;rement inscrit pourra &eacute;galement solliciter sa d&eacute;sinscription en se rendant &agrave; la page d&eacute;di&eacute;e sur son espace personnel. Celle-ci sera effective dans un d&eacute;lai raisonnable.</p>
-				<p justify="">Tout &eacute;v&eacute;nement d&ucirc; &agrave; un cas de force majeure ayant pour cons&eacute;quence un dysfonctionnement du site ou serveur et sous r&eacute;serve de toute interruption ou modification en cas de maintenance, n\'engage pas la responsabilit&eacute; de www.site.com. Dans ces cas, l&rsquo;Utilisateur accepte ainsi ne pas tenir rigueur &agrave; l&rsquo;&eacute;diteur de toute interruption ou suspension de service, m&ecirc;me sans pr&eacute;avis.</p>
-				<p justify="">L\'Utilisateur a la possibilit&eacute; de contacter le site par messagerie &eacute;lectronique &agrave; l&rsquo;adresse email de l&rsquo;&eacute;diteur communiqu&eacute; &agrave; l&rsquo;ARTICLE 1.</p>
-				<h2>ARTICLE 3 : Collecte des donn&eacute;es</h2>
-				<p justify="">Le site est exempt&eacute; de d&eacute;claration &agrave; la Commission Nationale Informatique et Libert&eacute;s (CNIL) dans la mesure o&ugrave; il ne collecte aucune donn&eacute;e concernant les Utilisateurs.</p>
-				<h2>ARTICLE 4&nbsp;: Propri&eacute;t&eacute; intellectuelle</h2>
-				<p>Les marques, logos, signes ainsi que tous les contenus du site (textes, images, son&hellip;) font l\'objet d\'une protection par le Code de la propri&eacute;t&eacute; intellectuelle et plus particuli&egrave;rement par le droit d\'auteur.</p>
-				<p>L\'Utilisateur doit solliciter l\'autorisation pr&eacute;alable du site pour toute reproduction, publication, copie des diff&eacute;rents contenus. Il s\'engage &agrave; une utilisation des contenus du site dans un cadre strictement priv&eacute;, toute utilisation &agrave; des fins commerciales et publicitaires est strictement interdite.</p>
-				<p>Toute repr&eacute;sentation totale ou partielle de ce site par quelque proc&eacute;d&eacute; que ce soit, sans l&rsquo;autorisation expresse de l&rsquo;exploitant du site Internet constituerait une contrefa&ccedil;on sanctionn&eacute;e par l&rsquo;article L 335-2 et suivants du Code de la propri&eacute;t&eacute; intellectuelle.</p>
-				<p>Il est rappel&eacute; conform&eacute;ment &agrave; l&rsquo;article L122-5 du Code de propri&eacute;t&eacute; intellectuelle que l&rsquo;Utilisateur qui reproduit, copie ou publie le contenu prot&eacute;g&eacute; doit citer l&rsquo;auteur et sa source.</p>
-				<h2>ARTICLE 5&nbsp;: Responsabilit&eacute;</h2>
-				<p justify="">Les sources des informations diffus&eacute;es sur le site www.site.com sont r&eacute;put&eacute;es fiables mais le site ne garantit pas qu&rsquo;il soit exempt de d&eacute;fauts, d&rsquo;erreurs ou d&rsquo;omissions.</p>
-				<p justify="">Les informations communiqu&eacute;es sont pr&eacute;sent&eacute;es &agrave; titre indicatif et g&eacute;n&eacute;ral sans valeur contractuelle. Malgr&eacute; des mises &agrave; jour r&eacute;guli&egrave;res, le site www.site.com&nbsp;ne peut &ecirc;tre tenu responsable de la modification des dispositions administratives et juridiques survenant apr&egrave;s la publication. De m&ecirc;me, le site ne peut &ecirc;tre tenue responsable de l&rsquo;utilisation et de l&rsquo;interpr&eacute;tation de l&rsquo;information contenue dans ce site.</p>
-				<p justify="">L\'Utilisateur s\'assure de garder son mot de passe secret. Toute divulgation du mot de passe, quelle que soit sa forme, est interdite. Il assume les risques li&eacute;s &agrave; l\'utilisation de son identifiant et mot de passe. Le site d&eacute;cline toute responsabilit&eacute;.</p>
-				<p justify="">Le site www.site.com&nbsp;ne peut &ecirc;tre tenu pour responsable d&rsquo;&eacute;ventuels virus qui pourraient infecter l&rsquo;ordinateur ou tout mat&eacute;riel informatique de l&rsquo;Internaute, suite &agrave; une utilisation, &agrave; l&rsquo;acc&egrave;s, ou au t&eacute;l&eacute;chargement provenant de ce site.</p>
-				<p justify="">La responsabilit&eacute; du site ne peut &ecirc;tre engag&eacute;e en cas de force majeure ou du fait impr&eacute;visible et insurmontable d\'un tiers.</p>
-				<h2>ARTICLE 6&nbsp;: Liens hypertextes</h2>
-				<p justify="">Des liens hypertextes peuvent &ecirc;tre pr&eacute;sents sur le site. L&rsquo;Utilisateur est inform&eacute; qu&rsquo;en cliquant sur ces liens, il sortira du site www.site.com. Ce dernier n&rsquo;a pas de contr&ocirc;le sur les pages web sur lesquelles aboutissent ces liens et ne saurait, en aucun cas, &ecirc;tre responsable de leur contenu.</p>
-				<h2>ARTICLE 7 : Cookies</h2>
-				<p justify="">L&rsquo;Utilisateur est inform&eacute; que lors de ses visites sur le site, un cookie peut s&rsquo;installer automatiquement sur son logiciel de navigation.</p>
-				<p justify="">Les cookies sont de petits fichiers stock&eacute;s temporairement sur le disque dur de l&rsquo;ordinateur de l&rsquo;Utilisateur par votre navigateur et qui sont n&eacute;cessaires &agrave; l&rsquo;utilisation du site www.site.com. Les cookies ne contiennent pas d&rsquo;information personnelle et ne peuvent pas &ecirc;tre utilis&eacute;s pour identifier quelqu&rsquo;un. Un cookie contient un identifiant unique, g&eacute;n&eacute;r&eacute; al&eacute;atoirement et donc anonyme. Certains cookies expirent &agrave; la fin de la visite de l&rsquo;Utilisateur, d&rsquo;autres restent.</p>
-				<p justify="">L&rsquo;information contenue dans les cookies est utilis&eacute;e pour am&eacute;liorer le site www.site.com.</p>
-				<p justify="">En naviguant sur le site, L&rsquo;Utilisateur les accepte.</p>
-				<p justify="">L&rsquo;Utilisateur doit toutefois donner son consentement quant &agrave; l&rsquo;utilisation de certains cookies.</p>
-				<p justify="">A d&eacute;faut d&rsquo;acceptation, l&rsquo;Utilisateur est inform&eacute; que certaines fonctionnalit&eacute;s ou pages risquent de lui &ecirc;tre refus&eacute;es.</p>
-				<p justify="">L&rsquo;Utilisateur pourra d&eacute;sactiver ces cookies par l&rsquo;interm&eacute;diaire des param&egrave;tres figurant au sein de son logiciel de navigation.</p>
-				<h2>ARTICLE 8&nbsp;: Droit applicable et juridiction comp&eacute;tente</h2>
-				<p justify="">La l&eacute;gislation fran&ccedil;aise s\'applique au pr&eacute;sent contrat. En cas d\'absence de r&eacute;solution amiable d\'un litige n&eacute; entre les parties, les tribunaux fran&ccedil;ais seront seuls comp&eacute;tents pour en conna&icirc;tre.</p>
-				<p justify="">Pour toute question relative &agrave; l&rsquo;application des pr&eacute;sentes CGU, vous pouvez joindre l&rsquo;&eacute;diteur aux coordonn&eacute;es inscrites &agrave; l&rsquo;ARTICLE 1.</p>',
+				'content' => 'mentions-legales.html',
 				'hideTitle' => true,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -569,8 +504,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
-							  <div class="row"><div class="col4 offset8 textAlignCenter"><a href="./?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right"></span>Administration</a></div></div>',
+				'content' => 'erreur302.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -594,7 +528,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<h2 style="text-align: center;">Vous n\'êtes pas autorisé à accéder à cette page...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>',
+				'content' => 'erreur403.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -617,7 +551,7 @@ class init extends common {
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' => '<h2 style="text-align: center;">Oups ! La page demandée est introuvable...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>',
+				'content' => 'erreur404.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -640,7 +574,7 @@ class init extends common {
 				'typeMenu' => 'icon',
 				'iconUrl' => 'icones/loupe.png',
 				'disable' => false,
-				'content' => '<h1>Rechercher dans le site</h1>',
+				'content' => 'recherche.html',
 				'hideTitle' => true,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -839,4 +773,121 @@ class init extends common {
 			]
 		]
     ];
+
+	public static $siteContent = [
+		'accueil' => [
+			'content' => '<h2>Bienvenue sur votre nouveau site Zwii !</h2>
+						<p><strong>Un email contenant le récapitulatif de votre installation vient de vous être envoyé.</strong></p>
+						<p>Connectez-vous dès maintenant à votre espace membre afin de créer un site à votre image ! Vous pourrez personnaliser le thème, créer des pages, ajouter des utilisateurs et bien plus encore !</p>
+						<p>Si vous avez besoin d\'aide ou si vous cherchez des informations sur Zwii, n\'hésitez pas à jeter un œil à notre <a title="Forum" href="https://forum.zwiicms.fr/">forum</a>.</p>'
+		],
+		'enfant' => [
+			'content' => '<p>Vous pouvez assigner des parents à vos pages afin de mieux organiser votre menu !</p>
+						<div class="row">
+						<div class="col4"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac dolor arcu. Cras dignissim finibus nisi, vulputate egestas mauris faucibus ultricies. Nullam ornare pretium eleifend. Donec placerat purus ut turpis dapibus condimentum. Fusce at leo pharetra nisl vestibulum fermentum. Maecenas feugiat justo at semper tincidunt. Integer in blandit lorem.</p></div>
+						<div class="col4"><p>Ergo ego senator inimicus, si ita vultis, homini, amicus esse, sicut semper fui, rei publicae debeo. Quid? si ipsas inimicitias, depono rei publicae causa, quis me tandem iure reprehendet, praesertim cum ego omnium meorum consiliorum atque factorum exempla semper ex summorum hominum consiliis atque factis mihi censuerim petenda.</p></div>
+						<div class="col4"><p>Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.</p></div>
+						</div>'
+		],
+		'privee'=> [
+			'content' => '<p>Cette page n\'est visible que des membres de votre site !</p>
+						<div class="row">
+							<div class="col6"><p>Eius populus ab incunabulis primis ad usque pueritiae tempus extremum, quod annis circumcluditur fere trecentis, circummurana pertulit bella, deinde aetatem ingressus adultam post multiplices bellorum aerumnas Alpes transcendit et fretum, in iuvenem erectus et virum ex omni plaga quam orbis ambit inmensus, reportavit laureas et triumphos, iamque vergens in senium et nomine solo aliquotiens vincens ad tranquilliora vitae discessit.</p></div>
+							<div class="col6"><p>Exsistit autem hoc loco quaedam quaestio subdifficilis, num quando amici novi, digni amicitia, veteribus sint anteponendi, ut equis vetulis teneros anteponere solemus. Indigna homine dubitatio! Non enim debent esse amicitiarum sicut aliarum rerum satietates; veterrima quaeque, ut ea vina, quae vetustatem ferunt, esse debet suavissima; verumque illud est, quod dicitur, multos modios salis simul edendos esse, ut amicitiae munus expletum sit.</p></div>
+						</div>'
+		],
+		'mise-en-page' => [
+			'content' => '<p>Vous pouvez ajouter une ou deux barres latérales aux pages de votre site. Cette mise en page se définit dans les paramètres de page et peut s\'appliquer à l\'ensemble du site ou à certaines pages en particulier, au gré de vos désirs.</p>
+						<p>Pour créer une barre latérale à partir d\'une "Nouvelle page" ou transformer une page existante en barre latérale, sélectionnez l\'option dans la liste des gabarits. On peut bien sûr définir autant de barres latérales qu\'on le souhaite.</p>
+						<p>Cette nouvelle fonctionnalité autorise toutes sortes d\'utilisations : texte, encadrés, images, vidéos... ou simple marge blanche. Seule restriction : on ne peut pas installer un module dans une barre latérale.</p>
+						<p>La liste des barres disponibles et leur emplacement s\'affichent en fonction du gabarit que vous aurez choisi.'
+		],
+		'menu-lateral' => [
+			'content' => '<p>Cette page illustre la possibilité d\'ajouter un menu dans les barres latérales.<br>
+						Deux types de menus sont disponibles : l\'un reprenant les rubriques du menu principal comme celui-ci, l\'autre listant les pages d\'une même rubrique. Le choix du type de menu se fait dans la page de configuration d\'une barre latérale.</p>
+						<p>Pour ajouter un menu à une page, choisissez une barre latérale avec menu dans la page de configuration. Les bulles d\'aide de la rubrique "Menu" expliquent comment masquer une page.</p>'
+		],
+		'blog' => [
+			'content' => '<p>Cette page contient une instance du module de blog. Cliquez sur un article afin de le lire et de poster des commentaires.</p>'
+		],
+		'galeries' => [
+			'content' => '<p>Cette page contient une instance du module de galeries photos. Cliquez sur la galerie ci-dessous afin de voir les photos qu\'elle contient.</p>'
+		],
+		'site-de-zwii' => [
+			'content' => ''
+		],
+		'contact' => [
+			'content' => '<p>Cette page contient un exemple de formulaire conçu à partir du module de génération de formulaires. Il est configuré pour envoyer les données saisies par mail aux administrateurs du site.</p>'
+		],
+		'barre' => [
+			'content' => '<div class="block"><h4>ZwiiCMS</h4><h2>Le CMS sans base de données à l\'installation simple et rapide</h2></div>'
+		],
+		'barrelateraleavecmenu' => [
+			'content' => '<p>&nbsp;</p>'
+		],
+		'mentions-legales' => [
+			'content' => '<h1 style="text-align: center;">Conditions g&eacute;n&eacute;rales d\'utilisation</h1>
+			<h1 style="text-align: center;">En vigueur au 01/06/2020</h1>
+			<p><strong>Avertissement</strong>Cette page fictive est donn&eacute;e &agrave; titre indicatif elle a &eacute;t&eacute; r&eacute;alis&eacute;e &agrave; l\'aide d\'un g&eacute;n&eacute;rateur : <a href="https://www.legalplace.fr" target="_blank" rel="noopener">https://www.legalplace.fr</a></p>
+			<p justify="">Les pr&eacute;sentes conditions g&eacute;n&eacute;rales d\'utilisation (dites &laquo; CGU &raquo;) ont pour objet l\'encadrement juridique des modalit&eacute;s de mise &agrave; disposition du site et des services par et de d&eacute;finir les conditions d&rsquo;acc&egrave;s et d&rsquo;utilisation des services par &laquo; l\'Utilisateur &raquo;.</p>
+			<p justify="">Les pr&eacute;sentes CGU sont accessibles sur le site &agrave; la rubrique &laquo;CGU&raquo;.</p>
+			<p justify="">Toute inscription ou utilisation du site implique l\'acceptation sans aucune r&eacute;serve ni restriction des pr&eacute;sentes CGU par l&rsquo;utilisateur. Lors de l\'inscription sur le site via le Formulaire d&rsquo;inscription, chaque utilisateur accepte express&eacute;ment les pr&eacute;sentes CGU en cochant la case pr&eacute;c&eacute;dant le texte suivant : &laquo; Je reconnais avoir lu et compris les CGU et je les accepte &raquo;.</p>
+			<p justify="">En cas de non-acceptation des CGU stipul&eacute;es dans le pr&eacute;sent contrat, l\'Utilisateur se doit de renoncer &agrave; l\'acc&egrave;s des services propos&eacute;s par le site.</p>
+			<p justify="">www.site.com se r&eacute;serve le droit de modifier unilat&eacute;ralement et &agrave; tout moment le contenu des pr&eacute;sentes CGU.</p>
+			<h2>Article 1 : Les mentions l&eacute;gales</h2>
+			<p justify="">L&rsquo;&eacute;dition et la direction de la publication du site www.site.com est assur&eacute;e par John Doe, domicili&eacute; 1 rue de Paris - 75016 PARIS.</p>
+			<p justify="">Num&eacute;ro de t&eacute;l&eacute;phone est 0102030405</p>
+			<p justify="">Adresse e-mail john.doe@zwiicms.fr.</p>
+			<p justify="">L\'h&eacute;bergeur du site www.site.com est la soci&eacute;t&eacute; Nom de l\'h&eacute;bergeur, dont le si&egrave;ge social est situ&eacute; au 12 rue de Lyon - 69001 Lyon, avec le num&eacute;ro de t&eacute;l&eacute;phone : 0401020305.</p>
+			<h2>ARTICLE 2&nbsp;: Acc&egrave;s au site</h2>
+			<p justify="">Le site www.site.com permet &agrave; l\'Utilisateur un acc&egrave;s gratuit aux services suivants :</p>
+			<p justify="">Le site internet propose les services suivants :</p>
+			<p justify="">Publication</p>
+			<p justify="">Le site est accessible gratuitement en tout lieu &agrave; tout Utilisateur ayant un acc&egrave;s &agrave; Internet. Tous les frais support&eacute;s par l\'Utilisateur pour acc&eacute;der au service (mat&eacute;riel informatique, logiciels, connexion Internet, etc.) sont &agrave; sa charge.</p>
+			<p justify="">L&rsquo;Utilisateur non membre n\'a pas acc&egrave;s aux services r&eacute;serv&eacute;s. Pour cela, il doit s&rsquo;inscrire en remplissant le formulaire. En acceptant de s&rsquo;inscrire aux services r&eacute;serv&eacute;s, l&rsquo;Utilisateur membre s&rsquo;engage &agrave; fournir des informations sinc&egrave;res et exactes concernant son &eacute;tat civil et ses coordonn&eacute;es, notamment son adresse email.</p>
+			<p justify="">Pour acc&eacute;der aux services, l&rsquo;Utilisateur doit ensuite s\'identifier &agrave; l\'aide de son identifiant et de son mot de passe qui lui seront communiqu&eacute;s apr&egrave;s son inscription.</p>
+			<p justify="">Tout Utilisateur membre r&eacute;guli&egrave;rement inscrit pourra &eacute;galement solliciter sa d&eacute;sinscription en se rendant &agrave; la page d&eacute;di&eacute;e sur son espace personnel. Celle-ci sera effective dans un d&eacute;lai raisonnable.</p>
+			<p justify="">Tout &eacute;v&eacute;nement d&ucirc; &agrave; un cas de force majeure ayant pour cons&eacute;quence un dysfonctionnement du site ou serveur et sous r&eacute;serve de toute interruption ou modification en cas de maintenance, n\'engage pas la responsabilit&eacute; de www.site.com. Dans ces cas, l&rsquo;Utilisateur accepte ainsi ne pas tenir rigueur &agrave; l&rsquo;&eacute;diteur de toute interruption ou suspension de service, m&ecirc;me sans pr&eacute;avis.</p>
+			<p justify="">L\'Utilisateur a la possibilit&eacute; de contacter le site par messagerie &eacute;lectronique &agrave; l&rsquo;adresse email de l&rsquo;&eacute;diteur communiqu&eacute; &agrave; l&rsquo;ARTICLE 1.</p>
+			<h2>ARTICLE 3 : Collecte des donn&eacute;es</h2>
+			<p justify="">Le site est exempt&eacute; de d&eacute;claration &agrave; la Commission Nationale Informatique et Libert&eacute;s (CNIL) dans la mesure o&ugrave; il ne collecte aucune donn&eacute;e concernant les Utilisateurs.</p>
+			<h2>ARTICLE 4&nbsp;: Propri&eacute;t&eacute; intellectuelle</h2>
+			<p>Les marques, logos, signes ainsi que tous les contenus du site (textes, images, son&hellip;) font l\'objet d\'une protection par le Code de la propri&eacute;t&eacute; intellectuelle et plus particuli&egrave;rement par le droit d\'auteur.</p>
+			<p>L\'Utilisateur doit solliciter l\'autorisation pr&eacute;alable du site pour toute reproduction, publication, copie des diff&eacute;rents contenus. Il s\'engage &agrave; une utilisation des contenus du site dans un cadre strictement priv&eacute;, toute utilisation &agrave; des fins commerciales et publicitaires est strictement interdite.</p>
+			<p>Toute repr&eacute;sentation totale ou partielle de ce site par quelque proc&eacute;d&eacute; que ce soit, sans l&rsquo;autorisation expresse de l&rsquo;exploitant du site Internet constituerait une contrefa&ccedil;on sanctionn&eacute;e par l&rsquo;article L 335-2 et suivants du Code de la propri&eacute;t&eacute; intellectuelle.</p>
+			<p>Il est rappel&eacute; conform&eacute;ment &agrave; l&rsquo;article L122-5 du Code de propri&eacute;t&eacute; intellectuelle que l&rsquo;Utilisateur qui reproduit, copie ou publie le contenu prot&eacute;g&eacute; doit citer l&rsquo;auteur et sa source.</p>
+			<h2>ARTICLE 5&nbsp;: Responsabilit&eacute;</h2>
+			<p justify="">Les sources des informations diffus&eacute;es sur le site www.site.com sont r&eacute;put&eacute;es fiables mais le site ne garantit pas qu&rsquo;il soit exempt de d&eacute;fauts, d&rsquo;erreurs ou d&rsquo;omissions.</p>
+			<p justify="">Les informations communiqu&eacute;es sont pr&eacute;sent&eacute;es &agrave; titre indicatif et g&eacute;n&eacute;ral sans valeur contractuelle. Malgr&eacute; des mises &agrave; jour r&eacute;guli&egrave;res, le site www.site.com&nbsp;ne peut &ecirc;tre tenu responsable de la modification des dispositions administratives et juridiques survenant apr&egrave;s la publication. De m&ecirc;me, le site ne peut &ecirc;tre tenue responsable de l&rsquo;utilisation et de l&rsquo;interpr&eacute;tation de l&rsquo;information contenue dans ce site.</p>
+			<p justify="">L\'Utilisateur s\'assure de garder son mot de passe secret. Toute divulgation du mot de passe, quelle que soit sa forme, est interdite. Il assume les risques li&eacute;s &agrave; l\'utilisation de son identifiant et mot de passe. Le site d&eacute;cline toute responsabilit&eacute;.</p>
+			<p justify="">Le site www.site.com&nbsp;ne peut &ecirc;tre tenu pour responsable d&rsquo;&eacute;ventuels virus qui pourraient infecter l&rsquo;ordinateur ou tout mat&eacute;riel informatique de l&rsquo;Internaute, suite &agrave; une utilisation, &agrave; l&rsquo;acc&egrave;s, ou au t&eacute;l&eacute;chargement provenant de ce site.</p>
+			<p justify="">La responsabilit&eacute; du site ne peut &ecirc;tre engag&eacute;e en cas de force majeure ou du fait impr&eacute;visible et insurmontable d\'un tiers.</p>
+			<h2>ARTICLE 6&nbsp;: Liens hypertextes</h2>
+			<p justify="">Des liens hypertextes peuvent &ecirc;tre pr&eacute;sents sur le site. L&rsquo;Utilisateur est inform&eacute; qu&rsquo;en cliquant sur ces liens, il sortira du site www.site.com. Ce dernier n&rsquo;a pas de contr&ocirc;le sur les pages web sur lesquelles aboutissent ces liens et ne saurait, en aucun cas, &ecirc;tre responsable de leur contenu.</p>
+			<h2>ARTICLE 7 : Cookies</h2>
+			<p justify="">L&rsquo;Utilisateur est inform&eacute; que lors de ses visites sur le site, un cookie peut s&rsquo;installer automatiquement sur son logiciel de navigation.</p>
+			<p justify="">Les cookies sont de petits fichiers stock&eacute;s temporairement sur le disque dur de l&rsquo;ordinateur de l&rsquo;Utilisateur par votre navigateur et qui sont n&eacute;cessaires &agrave; l&rsquo;utilisation du site www.site.com. Les cookies ne contiennent pas d&rsquo;information personnelle et ne peuvent pas &ecirc;tre utilis&eacute;s pour identifier quelqu&rsquo;un. Un cookie contient un identifiant unique, g&eacute;n&eacute;r&eacute; al&eacute;atoirement et donc anonyme. Certains cookies expirent &agrave; la fin de la visite de l&rsquo;Utilisateur, d&rsquo;autres restent.</p>
+			<p justify="">L&rsquo;information contenue dans les cookies est utilis&eacute;e pour am&eacute;liorer le site www.site.com.</p>
+			<p justify="">En naviguant sur le site, L&rsquo;Utilisateur les accepte.</p>
+			<p justify="">L&rsquo;Utilisateur doit toutefois donner son consentement quant &agrave; l&rsquo;utilisation de certains cookies.</p>
+			<p justify="">A d&eacute;faut d&rsquo;acceptation, l&rsquo;Utilisateur est inform&eacute; que certaines fonctionnalit&eacute;s ou pages risquent de lui &ecirc;tre refus&eacute;es.</p>
+			<p justify="">L&rsquo;Utilisateur pourra d&eacute;sactiver ces cookies par l&rsquo;interm&eacute;diaire des param&egrave;tres figurant au sein de son logiciel de navigation.</p>
+			<h2>ARTICLE 8&nbsp;: Droit applicable et juridiction comp&eacute;tente</h2>
+			<p justify="">La l&eacute;gislation fran&ccedil;aise s\'applique au pr&eacute;sent contrat. En cas d\'absence de r&eacute;solution amiable d\'un litige n&eacute; entre les parties, les tribunaux fran&ccedil;ais seront seuls comp&eacute;tents pour en conna&icirc;tre.</p>
+			<p justify="">Pour toute question relative &agrave; l&rsquo;application des pr&eacute;sentes CGU, vous pouvez joindre l&rsquo;&eacute;diteur aux coordonn&eacute;es inscrites &agrave; l&rsquo;ARTICLE 1.</p>'
+		],
+		'erreur302' => [
+			'content' =>'<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
+			<div class="row"><div class="col4 offset8 textAlignCenter"><a href="./?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right"></span>Administration</a></div></div>'
+		],
+		'erreur403' => [
+			'content' => '<h2 style="text-align: center;">Vous n\'êtes pas autorisé à accéder à cette page...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>'
+		],
+		'erreur404' => [
+			'content' => '<h2 style="text-align: center;">Oups ! La page demandée est introuvable...</h2><p style="text-align: center;">Personnalisez cette page à votre convenance sans qu\'elle apparaisse dans les menus.<p>'
+		],
+		'recherche' => [
+			'content' => '<h1>Rechercher dans le site</h1>'
+		]
+	];
 }
