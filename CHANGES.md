@@ -5,7 +5,7 @@
     - Module actualités (news), version 3.3, le flux RSS affiche l'ensemble des articles plutôt que ceux de la page courante.
 - Modifications :
     - Installation  : livraison des fichiers de thème du site de test dans une archive. Désormais, le dossier site ne contiendra que les fichiers de sécurité htaccess. Cette procédure permettra de ne plus différencier les archives d'installation et de mise à jour.
-    -  Mises à jour : les mises à jour s'effectueront à partir de la forge plutôt que par le site.
+    -  Mises à jour : les mises à jour s'effectueront à partir de la forge plutôt que sur le site.
 
 ## version 10.6.02
 - Correction :
