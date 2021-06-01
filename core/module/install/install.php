@@ -108,9 +108,6 @@ class install extends common {
 				}
 				unlink(self::TEMP_DIR . 'files.tar.gz');
 				unlink(self::TEMP_DIR . 'files.tar');
-				// Copie des favicons
-				copy('core/module/install/ressource/favicon.ico', self::FILE_DIR . 'source/favicon.ico');
-				copy('core/module/install/ressource/faviconDark.ico', self::FILE_DIR . 'source/favicon.ico');
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
 				// Créer sitemap
