@@ -83,19 +83,7 @@ class install extends common {
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null
 				);
-				// Créer les dossiers
-				if (!is_dir(self::FILE_DIR.'source/banniere/')) {
-					mkdir(self::FILE_DIR.'source/banniere/');}
-				if (!is_dir(self::FILE_DIR.'thumb/banniere/')) {
-					mkdir(self::FILE_DIR.'thumb/banniere/');
-					}
-				// Copier les fichiers
-				copy('core/module/install/ressource/file/source/banniere960.jpg',self::FILE_DIR.'source/banniere/banniere960.jpg');
-				copy('core/module/install/ressource/file/thumb/banniere960.jpg',self::FILE_DIR.'thumb/banniere/banniere960.jpg');
-				// Copie des icônes
-				copy('core/module/install/ressource/file/source/favicon.ico',self::FILE_DIR.'source/favicon.ico');
-				copy('core/module/install/ressource/file/source/faviconDark.ico',self::FILE_DIR.'source/faviconDark.ico');
-				// Configure certaines données par défaut
+				// Installation du site de test
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page','fr',true);
 					$this->initData('module','fr',true);
@@ -103,6 +91,25 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 				}
+				// Images exemples livrées dans tous les cas
+				try {
+					// Décompression dans le dossier de fichier temporaires
+					if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
+						unlink(self::TEMP_DIR . 'files.tar.gz');
+					}
+					if (file_exists(self::TEMP_DIR . 'files.tar')) {
+						unlink(self::TEMP_DIR . 'files.tar');
+					}
+					copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
+					$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
+					$pharData->decompress();
+					// Installation
+					$pharData->extractTo(__DIR__ . '/../../../', null, true);
+				} catch (Exception $e) {
+					$success = $e->getMessage();
+				}
+				unlink(self::TEMP_DIR . 'files.tar.gz');
+				unlink(self::TEMP_DIR . 'files.tar');
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
 				// Créer sitemap
