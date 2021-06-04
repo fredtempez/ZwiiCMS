@@ -540,6 +540,8 @@ pageTypeMenuDOM.on("change", function() {
 });
 
 
+
+
 /**
  * Soumission du formulaire pour éditer le module
  */
