@@ -1,11 +1,17 @@
 # Changelog
 
-## version 10.6.03
-- Correction :
-    - Module actualités (news), version 3.3, le flux RSS affiche l'ensemble des articles plutôt que ceux de la page courante.
+
+## Version 11.0.00
 - Modifications :
-    - Installation  : livraison des fichiers de thème du site de test dans une archive. Désormais, le dossier site ne contiendra que les fichiers de sécurité htaccess. Cette procédure permettra de ne plus différencier les archives d'installation et de mise à jour.
-    -  Mises à jour : les mises à jour s'effectueront à partir de la forge plutôt que sur le site.
+    - Gestion multi-langues
+        - Traduction rédigée dans une langue européenne
+        - Traduction automatique dans une langue européenne
+        - Traduction selon la langue navigateur
+    - Configuration du site :
+        - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
+        - Suppression de l'option articles par pages.
+        - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
+        - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 
 ## version 10.6.03
 - Correction :
