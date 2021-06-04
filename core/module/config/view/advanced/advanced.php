@@ -28,31 +28,23 @@
 		<div class="block">
 			<h4>Maintenance</h4>
 			<div class="row">
-				<div class="col12">
+				<div class="col4">
 						<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
 							'checked' => $this->getData(['config', 'maintenance'])
 						]); ?>
 					</div>
-			</div>
-			<div class="row">
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::button('configBackupButton', [
 						'href' => helper::baseUrl() . 'config/backup',
 						'value' => 'Sauvegarder',
 						'ico' => 'download-cloud'
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3 offset1">
 					<?php echo template::button('configRestoreButton', [
 						'href' => helper::baseUrl() . 'config/restore',
 						'value' => 'Restaurer',
 						'ico' => 'upload-cloud'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::button('configBackupCopyButton', [
-						'href' => helper::baseUrl() . 'config/copyBackups',
-						'value' => 'Backups Auto &#10140; FileManager'
 					]); ?>
 				</div>
 			</div>
@@ -105,20 +97,6 @@
 			</div>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
-							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
-						]); ?>
-				</div>
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedFileBackup', true, 'Créer un backup des données json', [
-							'checked' => file_exists('site/data/.backup'),
-							'help' => 'Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers.'
-						]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col6">
 					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha complexe', [
 						'checked' => $this->getData(['config','captchaStrong']),
 						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
@@ -129,6 +107,21 @@
 							'checked' => $this->getData(['config','autoDisconnect']),
 							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 						]); ?>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
+						]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::button('configBackupCopyButton', [
+						'href' => helper::baseUrl() . 'config/copyBackups',
+						'value' => 'Backups Auto &#10140; FileManager'
+					]); ?>
 				</div>
 			</div>
 		</div>
