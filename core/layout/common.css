@@ -1235,7 +1235,7 @@ label {
 }
 
 /* Empêche le débordement et les sauts de ligne */
-.inputFileManagerWrapper, .inputDateManagerWrapper  {
+.inputFileManagerWrapper, .inputDateManagerWrapper {
 	display: inline;
 }
 
