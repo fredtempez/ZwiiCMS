@@ -56,7 +56,6 @@ class common {
 		'sitemap',
 		'theme',
 		'user',
-		'translate',
 		'addon'
 	];
 	public static $accessList = [
@@ -64,8 +63,7 @@ class common {
 		'theme',
 		'config',
 		'edit',
-		'config',
-		'translate'
+		'config'
 	];
 	public static $accessExclude = [
 		'login',
