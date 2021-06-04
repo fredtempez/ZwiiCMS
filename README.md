@@ -15,7 +15,7 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 ## Téléchargement de ZwiiCMS
 
-Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargement du [site](https://zwiicms.fr/telechargements)
+Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargement du [site](https://zwiicms.fr/telechargement)
 
 La version github est une **version de développement** qui peut encore contenir des bugs mais elle vous permet de tester les dernières nouveautés. Cette version n'est pas recommandée en production.
 
