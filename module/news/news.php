@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.1';
+	const VERSION = '3.3';
 	const REALNAME = 'Actualités';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -68,10 +68,10 @@ class news extends common {
 	];
 
 	public static $itemsBlur = [
-		'100%'		=> 'Aucun',
-		'90%' 		=> 'Faible',
-		'75%' 		=> 'Modéré',
-		'60%' 		=> 'Important',
+		'0%'		=> 'Aucun',
+		'15%' 		=> 'Faible',
+		'30%' 		=> 'Modéré',
+		'45%' 		=> 'Important',
 	];
 
 	// Signature de l'article
@@ -101,8 +101,6 @@ class news extends common {
 		$feeds->addGenerator();
 		// Corps des articles
 		$newsIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-		// Articles de la première page uniquement
-		$newsIdsPublishedOns = array_slice($newsIdsPublishedOns, 0, $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 		$newsIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
@@ -136,10 +134,12 @@ class news extends common {
 		if($this->isPost()) {
 			// Crée la news
 			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0)]));
+			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
+			$publishedOff = $this->getInput('newsAddPublishedOff' ) ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
 			$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 				'content' => $this->getInput('newsAddContent', null),
-				'publishedOn' => $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true),
-				'publishedOff' => $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME),
+				'publishedOn' => $publishedOn,
+				'publishedOff' => $publishedOff,
 				'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
 				'title' => $this->getInput('newsAddTitle', helper::FILTER_STRING_SHORT, true),
 				'userId' => $this->getInput('newsAddUserId', helper::FILTER_ID, true)
@@ -185,8 +185,11 @@ class news extends common {
 
 			// Générer la feuille de CSS
 			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
-			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
+				$style .= '.newsBlur {height: ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ';}';
+				//$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
+				//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			}
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0))) {
@@ -331,7 +334,7 @@ class news extends common {
 					$this->deleteData(['module', $this->getUrl(0),'posts', $this->getUrl(2)]);
 				}
 				$publishedOn = $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true);
-				$publishedOff = $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME);
+				$publishedOff = $this->getInput('newsEditPublishedOff' ) ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
 				$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 					'content' => $this->getInput('newsEditContent', null),
 					'publishedOn' => $publishedOn,
@@ -480,6 +483,15 @@ class news extends common {
 			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
 			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . 'pages/' . $this->getUrl(0) . '/theme.css' ]);
 		}
+
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
+		// Mise à jour 3.2
+		if (version_compare($versionData, '3.1', '<') ) {
+			$this->setData(['module',$this->getUrl(0),'theme', 'itemsBlur', '0%' ]);
+			// Mettre à jour la verison
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.2' ]);
+		}
 	}
 
 	/**
@@ -508,8 +520,9 @@ class news extends common {
 		if ( !file_exists(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
 			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
-			$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
-			$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			// Pas d'effet flou à l'initialisation
+			//$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
+			//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			// Sauver la feuille de style
 			file_put_contents(self::DATADIRECTORY . 'pages/' .  $this->getUrl(0) . '/theme.css' , $style );
 			// Stocker le nom de la feuille de style

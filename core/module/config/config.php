@@ -662,19 +662,14 @@ class config extends common {
 	public function logDownload() {
 		$fileName = self::DATA_DIR . 'journal.log';
 		if (file_exists($fileName)) {
+			ob_start();
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
 			header('Content-Length: ' . filesize($fileName));
+			ob_clean();   
+			ob_end_flush();
 			readfile( $fileName);
-			// Valeurs en sortie
-			$this->addOutput([
-				'display' => self::DISPLAY_RAW
-			]);
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index'
-			]);
+			exit();
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -689,6 +684,7 @@ class config extends common {
 	 * Tableau des IP blacklistés
 	 */
 	public function blacklistDownload () {
+		ob_start();
 		$fileName = self::TEMP_DIR . 'blacklist.log';
 		$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
 		file_put_contents($fileName,$d);
@@ -705,17 +701,11 @@ class config extends common {
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
 			header('Content-Length: ' . filesize($fileName));
+			ob_clean();   
+			ob_end_flush();
 			readfile( $fileName);
-			// Valeurs en sortie
-			$this->addOutput([
-				'display' => self::DISPLAY_RAW
-			]);
 			unlink(self::TEMP_DIR . 'blacklist.log');
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => 'Configuration',
-				'view' => 'index'
-			]);
+			exit();
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([

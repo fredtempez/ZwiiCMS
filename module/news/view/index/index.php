@@ -5,8 +5,10 @@
 				<h2 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 				</h2>
-				<div class="newsContent newsBlur">
+				<div class="newsContent">
 					<?php echo $news['content']; ?>
+					<div class="newsBlur">
+					</div>
 				</div>
 				<div class="newsSignature">
 					<i class="far fa-calendar-alt"></i>
@@ -36,7 +38,7 @@
 		<div id="rssFeed">
 			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" target="_blank">
 				<img  src='module/news/ressource/feed-icon-16.gif' />
-				<?php 
+				<?php
 					echo '<p>' . $this->getData(['module',$this->getUrl(0), 'config', 'feedsLabel']) . '</p>' ;
 				?>
 			</a>

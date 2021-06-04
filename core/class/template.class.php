@@ -247,12 +247,18 @@ class template {
         }
         $html .= self::notice($attributes['id'], $notice);
         // Date visible
+        $html .= '<div class="inputDateManagerWrapper">';
         $html .= sprintf(
             '<input type="text" class="datepicker %s" value="%s" %s>',
             $attributes['class'],
             $attributes['value'],
             helper::sprintAttributes($attributes, ['class', 'value'])
         );
+        $html .= self::button($attributes['id'] . 'Delete', [
+            'class' => 'inputDateDelete',
+            'value' => self::ico('cancel')
+        ]);
+        $html .= '</div>';
         // Fin du wrapper
         $html .= '</div>';
         // Retourne le html

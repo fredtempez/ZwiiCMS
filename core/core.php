@@ -44,6 +44,7 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
+	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 	const ZWII_VERSION = '11.0.000';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
@@ -460,6 +461,77 @@ class common {
 			}
 			return $tempData;
 		}
+	}
+
+	/**
+	 * Sauvegarde des données
+	 * @param array $keys Clé(s) des données
+	 */
+	public function setData($keys = []) {
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (!empty(self::$inputNotices)
+			OR empty($keys)) {
+			return false;
+		}
+
+		// Empêcher la sauvegarde d'une donnée nulle.
+		if (gettype($keys[count($keys) -1]) === NULL) {
+			return false;
+		}
+
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
+
+		// Aiguillage
+		switch(count($keys)) {
+			case 2:
+				$db->set($keys[0],$keys[1], true);
+				break;
+			case 3:
+				$db->set($keys[0].'.'.$keys[1],$keys[2], true);
+				break;
+			case 4:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3], true);
+				break;
+			case 5:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4], true);
+				break;
+			case 6:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5], true);
+				break;
+			case 7:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
+				break;
+			case 8:
+				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7], true );
+				break;
+		}
+		return true;
+	}
+
+	/**
+	 * Initialisation des données
+	 * @param array $module : nom du module à générer
+	 * choix valides :  core config user theme page module
+	 */
+	public function initData($module, $lang = 'fr', $sampleSite = false) {
+
+		// Tableau avec les données vierges
+		require_once('core/module/install/ressource/defaultdata.php');
+
+		// Stockage dans un sous-dossier localisé
+		// Le dossier de langue existe t-il ?
+		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
+			mkdir (self::DATA_DIR . '/' . $lang);
+		}
+		$db = $this->dataFiles[$module];
+		if ($sampleSite === true) {
+			$db->set($module,init::$siteData[$module]);
+		} else {
+			$db->set($module,init::$defaultData[$module]);
+		}
+
+		$db->save;
 	}
 
 	/*
@@ -883,8 +955,6 @@ class common {
 	 * @return bool
 	 */
 	public function sendMail($to, $subject, $content, $replyTo = null) {
-
-
 		// Layout
 		ob_start();
 		include 'core/layout/mail.php';
@@ -947,76 +1017,7 @@ class common {
 		}
 	}
 
-	/**
-	 * Sauvegarde des données
-	 * @param array $keys Clé(s) des données
-	 */
-	public function setData($keys = []) {
-		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-		if (!empty(self::$inputNotices)
-			OR empty($keys)) {
-			return false;
-		}
 
-		// Empêcher la sauvegarde d'une donnée nulle.
-		if (gettype($keys[count($keys) -1]) === NULL) {
-			return false;
-		}
-
-		// Descripteur
-		$db = $this->dataFiles[$keys[0]];
-
-		// Aiguillage
-		switch(count($keys)) {
-			case 2:
-				$db->set($keys[0],$keys[1], true);
-				break;
-			case 3:
-				$db->set($keys[0].'.'.$keys[1],$keys[2], true);
-				break;
-			case 4:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3], true);
-				break;
-			case 5:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4], true);
-				break;
-			case 6:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5], true);
-				break;
-			case 7:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
-				break;
-			case 8:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7], true );
-				break;
-		}
-		return true;
-	}
-
-	/**
-	 * Initialisation des données
-	 * @param array $module : nom du module à générer
-	 * choix valides :  core config user theme page module
-	 */
-	public function initData($module, $lang = 'fr', $sampleSite = false) {
-
-		// Tableau avec les données vierges
-		require_once('core/module/install/ressource/defaultdata.php');
-
-		// Stockage dans un sous-dossier localisé
-		// Le dossier de langue existe t-il ?
-		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
-			mkdir (self::DATA_DIR . '/' . $lang);
-		}
-		$db = $this->dataFiles[$module];
-		if ($sampleSite === true) {
-			$db->set($module,init::$siteData[$module]);
-		} else {
-			$db->set($module,init::$defaultData[$module]);
-		}
-
-		$db->save;
-	}
 
 	/**
 	* Effacer un dossier non vide.
@@ -1338,7 +1339,7 @@ class common {
 				}
 			}
 			// Contrôle des options php.ini pour la mise à jour auto
-			if (helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+			if (helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
 				$this->setData(['config','autoUpdate',false]);
 			}
 
