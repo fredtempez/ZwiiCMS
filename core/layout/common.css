@@ -29,7 +29,7 @@ body {
 }
 
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
 	body {
 		/*margin:0px 10px;*/
 		margin: 0;
@@ -41,7 +41,7 @@ body {
 /**
 * Petits écrans inférieurs à 768px de largeur, on supprime les marges
 */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	body {
 		margin: 0px;
 	}
@@ -65,7 +65,7 @@ body {
 
 
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	.siteContainer {
 		display: flex;
 		flex-direction: column;
@@ -237,12 +237,12 @@ td>.col12 {
 }
 
 /* Tableau sur les écrans de petites tailles */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	.table thead {
 		font-size: 0.8em;
 	}
 }
-@media (max-width: 668px) {
+@media screen and (max-width: 668px) {
 	.table thead {
 		display:none;
 	}
@@ -408,7 +408,7 @@ td>.col12 {
 	background-color: rgba(255, 255, 255, 1);
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
 	#bar #barLeft {
 		float: left;
 	}
@@ -419,7 +419,7 @@ td>.col12 {
 	}
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	#bar {
 		text-align: center;
 		padding: 0 1;
@@ -455,7 +455,7 @@ td>.col12 {
 	overflow: hidden;
 }
 /* Dans theme.css
-@media (min-width:768px) {
+@media screen and (min-width:768px) {
 	#site {
 		margin: 20px auto;
 	}
@@ -464,7 +464,7 @@ td>.col12 {
 
 /* Bannière */
 
-@media (min-width:768px) {
+@media screen and (min-width:768px) {
 	body>header {
 		margin: 0;
 		/*-10px;*/
@@ -598,13 +598,13 @@ nav::before {
 	display: flex;
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
 	nav #menu {
 		display: block;
 	}
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	body>nav {
 		margin: 0;
 	}
@@ -725,7 +725,7 @@ li .menuSideChild {
 
 
 /* Corps */
-@media (min-width:768px) {
+@media screen and (min-width:768px) {
 	section {
 		padding: 20px;
 	}
@@ -822,7 +822,7 @@ footer #footerbody>div {
 }
 
 /* Conserve le pied de page sur une ligne */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
 	body>footer {
 		margin: 0;
 	}
@@ -1367,7 +1367,7 @@ input[type='checkbox']:disabled+label:before {
 	display: inline-block;
 }
 
-@media (min-width: 769px) {
+@media screen and (min-width: 769px) {
 	.col1 {
 		width: 8.33333333%;
 	}
@@ -1556,7 +1556,7 @@ th.col12 {
 }
 
 /* Tableau sur les écrans de très petites tailles */
-@media (max-width: 480px){
+@media screen and (max-width: 480px){
     .table tr{
     display: block;
     margin-bottom: 10px;
