@@ -8,7 +8,14 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col2">
+			<?php echo template::button('configAdvancedHelp', [
+				'class' => 'buttonHelp',
+				'ico' => 'help',
+				'value' => 'Aide'
+			]); ?>
+		</div>
+		<div class="col3 offset3">
 		<?php echo template::button('configAdvancedButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => 'Utilitaire de copie',
@@ -20,6 +27,10 @@
 			<?php echo template::submit('translateFormSubmit'); ?>
 		</div>
 	</div>
+	<!-- Aide à propos de la configuration du site, view advanced -->
+	<div class="helpDisplayContent">
+		<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
+	</div>	
 	<div class="row">
 		<div class="col12">
 			<div class="block">
