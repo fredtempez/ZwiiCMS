@@ -8,10 +8,21 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2">
+		<?php echo template::button('configAdvancedHelp', [
+			'class' => 'buttonHelp',
+			'ico' => 'help',
+			'value' => 'Aide'
+		]); ?>
+	</div>
+	<div class="col2 offset6">
 		<?php echo template::submit('configAdvancedSubmit'); ?>
 	</div>
 </div>
+<!-- Aide à propos de la configuration du site, view advanced -->
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
+</div>	
 <div class="row">
 	<div class="col12">
 		<div class="block">
@@ -119,7 +130,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Mise à jour automatisée</h4>
-			<?php $updateError = helper::urlGetContents('http://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');?>
+			<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::checkbox('configAdvancedAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
