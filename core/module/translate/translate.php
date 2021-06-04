@@ -61,7 +61,7 @@ class translate extends common {
 			}
 
 			// Enregistrement des données
-			$this->setData(['config','translate', [
+			$this->setData(['config','i18n', [
 				'scriptGoogle'      => $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN),
 				'showCredits' 	 => $this->getInput('translateCredits', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 => $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN),

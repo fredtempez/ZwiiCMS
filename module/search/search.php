@@ -199,20 +199,20 @@ class search extends common {
 
 			// Traduction du mot clé si le script Google Trad est actif
 			// Le multi langue est sélectionné
-			if (  $this->getData(['config','translate','scriptGoogle']) === true
+			if (  $this->getData(['config','i18n','scriptGoogle']) === true
 			AND
 				// et la traduction de la langue courante est automatique
 				(   isset($_COOKIE['googtrans'])
-					AND ( $this->getData(['config','translate', substr($_COOKIE['googtrans'],4,2)]) === 'script'
+					AND ( $this->getData(['config','i18n', substr($_COOKIE['googtrans'],4,2)]) === 'script'
 					// Ou traduction automatique
-						OR 	$this->getData(['config','translate','autoDetect']) === true )
+						OR 	$this->getData(['config','i18n','autoDetect']) === true )
 				)
 			// Cas des pages d'administration
 			// Pas connecté
 			AND ( $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				// Ou connecté avec option active
 				OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getData(['config','translate','admin']) === true
+					AND $this->getData(['config','i18n','admin']) === true
 					)
 				)
 			AND !isset($_COOKIE['ZWII_I18N_SITE'])
