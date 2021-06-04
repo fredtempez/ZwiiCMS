@@ -1,17 +1,11 @@
 # Changelog
 
-
-## Version 11.0.00
+## version 10.6.03
+- Correction :
+    - Module actualités (news), version 3.3, le flux RSS affiche l'ensemble des articles plutôt que ceux de la page courante.
 - Modifications :
-    - Gestion multi-langues
-        - Traduction rédigée dans une langue européenne
-        - Traduction automatique dans une langue européenne
-        - Traduction selon la langue navigateur
-    - Configuration du site :
-        - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
-        - Suppression de l'option articles par pages.
-        - Suppression de l'option de backup individuel des fichiers de données, pour l'activer manuellement, créez un fichier vide .backup dans site/data
-        - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
+    - Installation  : livraison des fichiers de thème du site de test dans une archive. Désormais, le dossier site ne contiendra que les fichiers de sécurité htaccess. Cette procédure permettra de ne plus différencier les archives d'installation et de mise à jour.
+    -  Mises à jour : les mises à jour s'effectueront à partir de la forge plutôt que sur le site.
 
 ## version 10.6.03
 - Correction :
@@ -21,14 +15,14 @@
     -  Mises à jour : les mises à jour s'effectueront à partir de la forge plutôt que par le site.
 
 ## version 10.6.02
-Correction :
-    - Bug lors du téléchargement des journaux.
+- Correction :
+    - Débordement  lors du téléchargement des fichiers journaux.
 
 ## version 10.6.01
 Corrections :
     - Champs de formulaire, uniformisation de la hauteur (select, input, etc) identique à celle des boutons à 9px.
     - Module search : texte d'aide dans la zone de saisie non pris en compte.
-Modifications : 
+Modifications :
     - News 3.2 : ajout au sélecteur de date d'un bouton d'effacement identique à celui du sélecteur de fichiers.
     - News 3.2 : décoloration du texte, modification de l'effet blur.
 

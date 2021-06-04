@@ -32,24 +32,10 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
-			],
-			'i18n' => [
-				'enabled' => false,
-				'scriptGoogle' => false,
-				'showCredits' => false,
-				'autoDetect' => false,
-				'admin'	 => false,
-				'fr' => false,
-				'de' => false,
-				'en' => false,
-				'es' => false,
-				'it' => false,
-				'nl' => false,
-				'pt' => false
-			],
+			]
 		],
 		'core' => [
-			'dataVersion' => 11000,
+			'dataVersion' => 10602,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -94,6 +80,19 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
+		'translate' => [
+			'scriptGoogle' => false,
+			'showCredits' => false,
+			'autoDetect' => false,
+			'admin' => false,
+			'fr' => 'none',
+			'de' => 'none',
+			'en' => 'none',
+			'es' => 'none',
+			'it' => 'none',
+			'nl' => 'none',
+			'pt' => 'none'
+		],
 		'theme' =>  [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
@@ -137,7 +136,7 @@ class init extends common {
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
 				'height' => '150px',
-				'image' => 'banniere/zwii_banniere_norvege-960px.jpg',
+				'image' => 'banniere960.jpg',
 				'imagePosition' => 'center center',
 				'imageRepeat' => 'no-repeat',
 				'margin' => false,

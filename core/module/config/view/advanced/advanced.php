@@ -8,35 +8,43 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2">
+		<?php echo template::button('configAdvancedHelp', [
+			'class' => 'buttonHelp',
+			'ico' => 'help',
+			'value' => 'Aide'
+		]); ?>
+	</div>
+	<div class="col2 offset6">
 		<?php echo template::submit('configAdvancedSubmit'); ?>
 	</div>
 </div>
+<!-- Aide à propos de la configuration du site, view advanced -->
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
+</div>	
 <div class="row">
 	<div class="col12">
 		<div class="block">
 			<h4>Maintenance</h4>
-			<div class="row">
-				<div class="col4">
-						<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
-							'checked' => $this->getData(['config', 'maintenance'])
-						]); ?>
-					</div>
-				<div class="col3 offset1">
-					<?php echo template::button('configBackupButton', [
-						'href' => helper::baseUrl() . 'config/backup',
-						'value' => 'Sauvegarder',
-						'ico' => 'download-cloud'
+			<div class="col3">
+					<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
 					]); ?>
 				</div>
-				<div class="col3 offset1">
-					<?php echo template::button('configRestoreButton', [
-						'href' => helper::baseUrl() . 'config/restore',
-						'value' => 'Restaurer',
-						'ico' => 'upload-cloud'
-					]); ?>
-				</div>
-
+			<div class="col3 offset1">
+				<?php echo template::button('configManageButton', [
+					'href' => helper::baseUrl() . 'config/backup',
+					'value' => 'Sauvegarder',
+					'ico' => 'download'
+				]); ?>
+			</div>
+			<div class="col3 offset1">
+				<?php echo template::button('configManageButton', [
+					'href' => helper::baseUrl() . 'config/manage',
+					'value' => 'Restaurer',
+					'ico' => 'upload'
+				]); ?>
 			</div>
 		</div>
 	</div>
@@ -45,6 +53,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Réglages</h4>
+			<?php $error = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::file('configAdvancedFavicon', [
@@ -71,45 +80,37 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Message de consentement aux cookies', [
-						'checked' => $this->getData(['config', 'cookieConsent']),
-						'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Consentement aux cookies', [
+						'checked' => $this->getData(['config', 'cookieConsent'])
 					]); ?>
 				</div>
-				<div class="col6">
-					<?php echo template::checkbox('rewrite', true, 'URL intelligentes', [
+				<div class="col4">
+						<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha renforcé', [
+							'checked' => $this->getData(['config','captchaStrong']),
+							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha renforcé utilise quatre opérations de nombres de 0 à 20.'
+						]); ?>
+					</div>
+
+				<div class="col4">
+					<?php echo template::checkbox('rewrite', true, 'Réécriture d\'URL', [
 						'checked' => helper::checkRewrite(),
-						'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'
+						'help' => 'Vérifiez d\'abord que votre serveur l\'autorise : ce n\'est pas le cas chez Free.'
 					]); ?>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha complexe', [
-						'checked' => $this->getData(['config','captchaStrong']),
-						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
-					]); ?>
-				</div>
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedAutoDisconnect', true, 'Déconnexion automatique de la session', [
-							'checked' => $this->getData(['config','autoDisconnect']),
-							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
-						]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde quotidienne', [
 							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours puis effacée.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
+							'help' => '<p>Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement.</p>'
 						]); ?>
 				</div>
-				<div class="col3">
-					<?php echo template::button('configBackupCopyButton', [
-						'href' => helper::baseUrl() . 'config/copyBackups',
-						'value' => 'Backups Auto &#10140; FileManager'
-					]); ?>
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedFileBackup', true, 'Copie de sauvegarde', [
+							'checked' => file_exists('site/data/.backup'),
+							'help' => '<p>Un fichier .backup.json est généré à chaque édition ou effacement d\'une donnée. La désactivation entraîne la suppression de ces fichiers.</p>'
+						]); ?>
 				</div>
 			</div>
 		</div>
@@ -122,26 +123,26 @@
 			<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::checkbox('configAdvancedAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
+					<?php echo template::checkbox('configAdvancedAutoUpdate', true, 'Mise à jour en ligne', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
-							'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
-							'disabled' => !$updateError
+							'help' => 'Vérifie une fois par jour l\'existence d\'une mise à jour.',
+							'disabled' => !$error
 						]); ?>
 				</div>
-				<div class="col4">
-					<?php echo template::checkbox('configAdvancedAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
+				<div class="col4 ">
+				<?php echo template::checkbox('configAdvancedAutoUpdateHtaccess', true, 'Préserver htaccess', [
 							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
 							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-							'disabled' => !$updateError
+							'disabled' => !$error
 						]); ?>
 				</div>
-				<div class="col4">
+				<div class="col4 ">
 					<?php echo template::button('configAdvancedUpdateForced', [
 						'ico' => 'download-cloud',
 						'href' => helper::baseUrl() . 'install/update',
 						'value' => 'Mise à jour manuelle',
 						'class' => 'buttonRed',
-						'disabled' => !$updateError
+						'disabled' => !$error
 					]); ?>
 				</div>
 			</div>
@@ -319,7 +320,7 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col6">
+					<div class="col3">
 						<?php echo template::checkbox('configAdvancedConnectCaptcha', true, 'Captcha à la connexion', [
 							'checked' => $this->getData(['config', 'connect','captcha'])
 						]); ?>

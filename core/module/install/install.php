@@ -42,8 +42,6 @@ class install extends common {
 			// Soumission du formulaire
 			if($this->isPost()) {
 				$success = true;
-				// Nettoyer le cookie de langue dans le cas d'une réinstallation
-				helper::deleteCookie('ZWII_I18N_SITE');
 				// Double vérification pour le mot de passe
 				if($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
@@ -117,8 +115,8 @@ class install extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(false),
-					'notification' => ($sent === true ? 'Installation terminée' : $sent),
-					'state' => ($sent === true ? true : null)
+					'notification' => $sent === true ? 'Installation terminée' : $sent,
+					'state' => ($sent === true &&  $success === true) ? true : null
 				]);
 				}
 			}

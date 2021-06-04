@@ -83,11 +83,11 @@ class user extends common {
 					'signature' => $this->getInput('userAddSignature', helper::FILTER_INT, true),
 					'mail' => $userMail,
 					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
-					'connectFail' => null,
-					'connectTimeout' => null,
-					'accessUrl' => null,
-					'accessTimer' => null,
-					'accessCsrf' => null
+					"connectFail" => null,
+					"connectTimeout" => null,
+					"accessUrl" => null,
+					"accessTimer" => null,
+					"accessCsrf" => null
 				]
 			]);
 
@@ -656,11 +656,11 @@ class user extends common {
 									'pseudo' => $item['prenom'],
 									'signature' => 1, // Pseudo
 									'password' => uniqid(), // A modifier à la première connexion
-									'connectFail' => null,
-									'connectTimeout' => null,
-									'accessUrl' => null,
-									'accessTimer' => null,
-									'accessCsrf' => null
+									"connectFail" => null,
+									"connectTimeout" => null,
+									"accessUrl" => null,
+									"accessTimer" => null,
+									"accessCsrf" => null
 							]]);
 							// Icône de notification
 							$item['notification'] = $create  ? template::ico('check') : template::ico('cancel');
