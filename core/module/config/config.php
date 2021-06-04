@@ -18,17 +18,19 @@ class config extends common {
 
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
+		'copyBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'advanced' => self::GROUP_ADMIN,
-		'manage' => self::GROUP_ADMIN,
+		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
 		'logReset' => self::GROUP_ADMIN,
 		'logDownload'=> self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
-		'blacklistDownload' => self::GROUP_ADMIN
+		'blacklistDownload' => self::GROUP_ADMIN,
+
 	];
 
 	public static $timezones = [
@@ -191,7 +193,7 @@ class config extends common {
 		$this->addOutput([
 			'notification' => $successSitemap ? 'Le sitemap a été mis à jour' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'redirect' => helper::baseUrl() . 'config/advanced',
-			'state' => $successSitemap
+			'state' => $successSitemap 
 		]);
 	}
 
@@ -265,11 +267,11 @@ class config extends common {
 	/**
 	 * Procédure d'importation
 	 */
-	public function manage() {
+	public function restore() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			//if ($this->getInput('configManageImportFile'))
-			$fileZip = $this->getInput('configManageImportFile');
+			//if ($this->getInput('configRestoreImportFile'))
+			$fileZip = $this->getInput('configRestoreImportFile');
 			$file_parts = pathinfo($fileZip);
 			$folder = date('Y-m-d-h-i-s', time());
 			$zip = new ZipArchive();
@@ -277,7 +279,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Le fichier n\'est pas une archive valide',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 					]);
 			}
@@ -286,7 +288,7 @@ class config extends common {
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Impossible de lire l\'archive',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 					]);
 			}
@@ -311,21 +313,21 @@ class config extends common {
 					// V10 valide
 					$version = '10';
 					// Option active, les users sont stockées
-					if ($this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ) {
+					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
 						$users = $this->getData(['user']);
 					}
 			} else { // Version invalide
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-					'redirect' => helper::baseUrl() . 'config/manage',
+					'redirect' => helper::baseUrl() . 'config/restore',
 					'state' => false
 				]);
 			}
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
 			// Positionnement d'une  variable de session lue au constructeurs
 			if ($version === '9') {
-				$_SESSION['KEEP_USERS'] = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN);
+				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
 			}
 			// Extraire le zip ou 'site/'
 			$success = $zip->extractTo( 'site/' );
@@ -335,13 +337,13 @@ class config extends common {
 			// Restaurer les users originaux d'une v10 si option cochée
 			if (!empty($users) &&
 				$version === '10' &&
-				$this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true) {
+				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['user',$users]);
 			}
 
 			// Message de notification
 			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
-			$redirect = $this->getInput('configManageImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/manage' : helper::baseUrl() . 'user/login/';
+			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
 				'notification' => $notification,
@@ -353,7 +355,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Restaurer',
-			'view' => 'manage'
+			'view' => 'restore'
 		]);
 	}
 
@@ -399,6 +401,7 @@ class config extends common {
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
 				]
 			]);
+			$this->setData(['config', 'i18n', 'enabled', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
 			// Valeurs en sortie
@@ -428,6 +431,11 @@ class config extends common {
 				$this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
+			// Eviter déconnexion automatique après son activation
+			if ( $this->getData(['config','autoDisconnect']) === false
+				 AND $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
+				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
+			}
 			// Sauvegarder
 			$this->setData([
 				'config',
@@ -455,6 +463,7 @@ class config extends common {
 					'proxyUrl' => $this->getInput('configAdvancedProxyUrl'),
 					'proxyPort' => $this->getInput('configAdvancedProxyPort',helper::FILTER_INT),
 					'captchaStrong' => $this->getInput('configAdvancedCaptchaStrong',helper::FILTER_BOOLEAN),
+					'autoDisconnect' => $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN),
 					'smtp' => [
 						'enable' => $this->getInput('configAdvancedSmtpEnable',helper::FILTER_BOOLEAN),
 						'host' => $this->getInput('configAdvancedSmtpHost',helper::FILTER_STRING_SHORT),
@@ -612,7 +621,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'redirect' => helper::baseUrl() . 'config/manage',
+			'redirect' => helper::baseUrl() . 'config/restore',
 			'state' => $success ? true : false
 		]);
 	}
@@ -729,6 +738,23 @@ class config extends common {
 		}
 	}
 
+	/**
+	 * Récupération des backups auto dans le gestionnaire de fichiers
+	 */
+	public function copyBackups() {
+		// Créer le répertoire manquant
+		if (!is_dir(self::FILE_DIR.'source/backup')) {
+			mkdir(self::FILE_DIR.'source/backup');
+		}
+		$this->custom_copy(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'config/advanced',
+			'notification' => 'Copie terminée',
+			'state' => true
+		]);
+	}
+
 
 	/**
 	 * Fonction de parcours des données de module
@@ -749,5 +775,32 @@ class config extends common {
 			$count += $c;
 		}
 		return $newArray;
+	}
+
+	/*
+	* Copie récursive de dossiers
+	*
+	*/
+	private function custom_copy($src, $dst) {
+		// open the source directory
+		$dir = opendir($src);
+		// Make the destination directory if not exist
+		if (!is_dir($dst)) {
+			mkdir($dst);
+		}
+		// Loop through the files in source directory
+		while( $file = readdir($dir) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ){
+					// Recursively calling custom copy function
+					// for sub directory
+					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file, $dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
 	}
 }
