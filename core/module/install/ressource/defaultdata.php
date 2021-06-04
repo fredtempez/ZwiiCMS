@@ -80,7 +80,7 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
-		'translate' => [
+		'i18n' => [
 			'scriptGoogle' => false,
 			'showCredits' => false,
 			'autoDetect' => false,
