@@ -746,7 +746,7 @@ class config extends common {
 		if (!is_dir(self::FILE_DIR.'source/backup')) {
 			mkdir(self::FILE_DIR.'source/backup');
 		}
-		$this->custom_copy(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config/advanced',
@@ -775,32 +775,5 @@ class config extends common {
 			$count += $c;
 		}
 		return $newArray;
-	}
-
-	/*
-	* Copie récursive de dossiers
-	*
-	*/
-	private function custom_copy($src, $dst) {
-		// open the source directory
-		$dir = opendir($src);
-		// Make the destination directory if not exist
-		if (!is_dir($dst)) {
-			mkdir($dst);
-		}
-		// Loop through the files in source directory
-		while( $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Recursively calling custom copy function
-					// for sub directory
-					$this -> custom_copy($src . '/' . $file, $dst . '/' . $file);
-				}
-				else {
-					copy($src . '/' . $file, $dst . '/' . $file);
-				}
-			}
-		}
-		closedir($dir);
 	}
 }
