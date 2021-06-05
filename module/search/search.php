@@ -87,6 +87,9 @@ class search extends common {
 
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.0']);
 		}
+
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
 		// Mise à jour 2.2
 		if (version_compare($versionData, '2.2', '<') ) {
 			// Déplacer les données du dossier Pages
@@ -106,7 +109,7 @@ class search extends common {
 		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
 
 		if ($this->getData(['module', $this->getUrl(0)]) === null) {
-			// Données du module 
+			// Données du module
 			require_once('module/search/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config',init::$defaultConfig ]);
 			// Données de thème

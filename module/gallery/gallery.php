@@ -176,6 +176,9 @@ class gallery extends common {
 			// Nouvelle version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
 		}
+
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
 		// Mise à jour 3.1
 		if (version_compare($versionData, '3.1', '<') ) {
 			// Déplacer les données du dossier Pages
