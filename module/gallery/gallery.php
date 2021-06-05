@@ -183,7 +183,7 @@ class gallery extends common {
 		if (version_compare($versionData, '3.1', '<') ) {
 			// Déplacer les données du dossier Pages
 			$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
-			$this->removeDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0));
+			$this->removeDir(self::DATADIRECTORY . 'pages/');
 			// Mettre à jour la version
 			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.1' ]);
 		}
