@@ -81,6 +81,9 @@ class install extends common {
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null
 				);
+				// Nettoyer les cookies de langue d'une précédente installation
+				helper::deleteCookie('ZWII_I18N_SITE');
+				helper::deleteCookie('ZWII_I18N_SCRIPT');
 				// Installation du site de test
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page','fr',true);
@@ -88,7 +91,7 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-				}
+				} 
 				// Images exemples livrées dans tous les cas
 				try {
 					// Décompression dans le dossier de fichier temporaires

@@ -221,10 +221,7 @@ class init extends common {
 			'typeMenu' => 'text',
 			'iconUrl' => '',
 			'disable' => false,
-			'content' => '<h2>Bienvenue sur votre nouveau site Zwii !</h2>
-							  <p><strong>Un email contenant le récapitulatif de votre installation vient de vous être envoyé.</strong></p>
-							  <p>Connectez-vous dès maintenant à votre espace membre afin de créer un site à votre image ! Vous pourrez personnaliser le thème, créer des pages, ajouter des utilisateurs et bien plus encore !</p>
-							  <p>Si vous avez besoin d\'aide ou si vous cherchez des informations sur Zwii, n\'hésitez pas à jeter un œil à notre <a title="Forum" href="https://forum.zwiicms.fr/">forum</a>.</p>',
+			'content' => 'accueil.html',
 			'hideTitle' => false,
 			'homePageId' => true,
 			'breadCrumb' => false,

@@ -103,7 +103,6 @@ class translate extends common {
 			$script = $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN);
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
-				if ($keyi18n === 'fr') {continue;}
 				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
 					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'delete')
@@ -114,23 +113,13 @@ class translate extends common {
 				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site'
 					AND is_dir(self::DATA_DIR . $keyi18n) === false )
 				{
-					// Créer les données absentes
-					if (is_dir( self::DATA_DIR . $keyi18n )  === false ) {
-						mkdir( self::DATA_DIR . $keyi18n);
-					}
-					// Charger les modèles
-					require_once('core/module/install/ressource/defaultdata.php');
-					// Nouvelle instance des pages, module, locale
-					$files = ['page','module','locale'];
-					foreach ($files as $keyFile) {
-						echo $keyFile;
-						$e = new \Prowebcraft\JsonDb([
-							'name' => $keyFile . '.json',
-							'dir' => $this->dataPath ($keyFile,$keyi18n)
-						]);;
-						$e->set($keyFile, init::$defaultData[$keyFile]);
-						$e->save();
-					}
+					// Pas d'initialisation si la langue existe déjà
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/page.json'))
+						$this->initData('page', $keyi18n, false);
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/module.json'))
+						$this->initData('module', $keyi18n, false);
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/locale.json'))
+						$this->initData('locale', $keyi18n, false);
 				}
 				// Active le script si une langue est en trad auto
 				if ($script === false

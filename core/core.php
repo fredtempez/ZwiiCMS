@@ -520,7 +520,6 @@ class common {
 		require_once('core/module/install/ressource/defaultdata.php');
 
 		// Stockage dans un sous-dossier localisé
-		// Le dossier de langue existe t-il ?
 		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
 			mkdir (self::DATA_DIR . '/' . $lang);
 		}
@@ -531,6 +530,24 @@ class common {
 			$db->set($module,init::$defaultData[$module]);
 		}
 		$db->save;
+
+		// Dossier des pages
+		if (!is_dir(self::DATA_DIR . $lang . '/content')) {
+			mkdir(self::DATA_DIR . $lang . '/content');
+		}
+		// Créer le jeu de pages du site de test
+		if ($module === 'page' ) {
+			// Site de test ou page simple
+			if ($sampleSite === true) {
+				foreach(init::$siteContent as $key => $value) {
+					// Creation du contenu de la page
+					file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+				}
+			} else {
+				// Créer la page d'accueil
+				file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
+			}
+		}
 	}
 
 	/*
