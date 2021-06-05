@@ -497,6 +497,8 @@ class news extends common {
 			// Déplacer les données du dossier Pages
 			$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
 			$this->removeDir(self::DATADIRECTORY . 'pages/' );
+			$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
 			// Mettre à jour la version
 			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.3' ]);
 		}
