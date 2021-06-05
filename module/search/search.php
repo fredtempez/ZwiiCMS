@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '2.1';
+	const VERSION = '2.2';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -86,6 +86,14 @@ class search extends common {
 			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
 
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.0']);
+		}
+		// Mise à jour 2.2
+		if (version_compare($versionData, '2.2', '<') ) {
+			// Déplacer les données du dossier Pages
+			$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
+			$this->removeDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0));
+			// Mettre à jour la version
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '2.2' ]);
 		}
 	}
 

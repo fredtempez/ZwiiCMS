@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.0';
+	const VERSION = '3.1';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -175,6 +175,14 @@ class gallery extends common {
 			}
 			// Nouvelle version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
+		}
+		// Mise à jour 3.1
+		if (version_compare($versionData, '3.1', '<') ) {
+			// Déplacer les données du dossier Pages
+			$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
+			$this->removeDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0));
+			// Mettre à jour la version
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.1' ]);
 		}
 	}
 
