@@ -268,8 +268,8 @@ class page extends common {
 			// Effacer le dossier du module
 			$moduleId = $this->getData(['page',$url[0],'moduleId']);
 			$modulesData = helper::getModules();
-			if (is_dir($modulesData[$moduleId]['dataDirectory'].'pages/'.$url[0])) {
-				$this->removeDir( $modulesData[$moduleId]['dataDirectory'].'pages/'.$url[0] );
+			if (is_dir($modulesData[$moduleId]['dataDirectory'].'/'.$url[0])) {
+				$this->removeDir( $modulesData[$moduleId]['dataDirectory'].'/'.$url[0] );
 			}
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
@@ -331,13 +331,13 @@ class page extends common {
 						// Renommer le dossier du module
 						$moduleId = $this->getData(['page',$this->getUrl(2),'moduleId']);
 						$modulesData = helper::getModules();
-						if (is_dir($modulesData[$moduleId]['dataDirectory'].'pages/'.$this->getUrl(2))) {
+						if (is_dir($modulesData[$moduleId]['dataDirectory'].'/'.$this->getUrl(2))) {
 							// Placer la feuille de style dans un dossier au nom de la nouvelle instance
-							mkdir( $modulesData[$moduleId]['dataDirectory'].'pages/'.$pageId );
-							copy( $modulesData[$moduleId]['dataDirectory'].'pages/'.$this->getUrl(2), $modulesData[$moduleId]['dataDirectory'].'pages/'.$pageId);
-							$this->removeDir($modulesData[$moduleId]['dataDirectory'].'pages/'.$this->getUrl(2));
+							mkdir( $modulesData[$moduleId]['dataDirectory'].'/'.$pageId );
+							copy( $modulesData[$moduleId]['dataDirectory'].'/'.$this->getUrl(2), $modulesData[$moduleId]['dataDirectory'].'/'.$pageId);
+							$this->removeDir($modulesData[$moduleId]['dataDirectory'].'/'.$this->getUrl(2));
 							// Mettre à jour le nom de la feuille de style
-							$this->setData(['module',$pageId,'theme','style', $modulesData[$moduleId]['dataDirectory'].'pages/'.$pageId]);
+							$this->setData(['module',$pageId,'theme','style', $modulesData[$moduleId]['dataDirectory'].'/'.$pageId]);
 						}
 					}
 					// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
