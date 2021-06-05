@@ -75,6 +75,9 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [R] fr                 Dossier localisé
       [F] page.json        Données des pages
       [F] module.json      Données des modules de pages
+      [F] local.json       Données du site propres à la langue
+      [R] content          Dossier des contenus de page
+        [F] accueil.html   Exemple contenu de la page d'accueil
     [R] modules            Personnalisation des modules ou données propres
     [F] admin.css          Thème des pages d'administration
     [F] admin.json         Données de thème des pages d'administration
@@ -97,6 +100,6 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
 [F] sitemap.xml            Plan du site
 [F] sitemap.xml.gz         Version compressée
 
-Le fichiers .htaccess contribuent à la sécurité en filtant l'accès aux répertoires sensibles.
+Le fichiers .htaccess contribuent à la sécurité en filtrant l'accès aux répertoires sensibles.
 
 ```
