@@ -312,6 +312,10 @@ class page extends common {
 				} else {
 					$pageId = $this->getUrl(2);
 				}
+				// un dossier existe du même nom (erreur en cas de redirection)
+				if (file_exists($pageId)) {
+					$pageId = uniqid($pageId);
+				}
 				// Si l'id a changée
 				if ($pageId !== $this->getUrl(2)) {
 					// Incrémente le nouvel id de la page
