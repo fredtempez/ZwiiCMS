@@ -89,6 +89,8 @@ class page extends common {
 		// Duplication de la page
 		$pageTitle = $this->getData(['page',$url[0],'title']);
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+		$pageId = helper::increment($pageId, self::$coreModuleIds);
+		$pageId = helper::increment($pageId, self::$moduleIds);
 		$data = $this->getData([
 			'page',
 			$url[0]
