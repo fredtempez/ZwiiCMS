@@ -345,6 +345,10 @@ class helper {
 				if (empty($text)) {
 					$text = uniqid('');
 				}
+				// un dossier existe du même nom (erreur en cas de redirection)
+				if (file_exists($text)) {
+					$text = uniqid($text);
+				}
 				// Un ID ne peut pas être un entier, pour éviter les conflits avec le système de pagination
 				if(intval($text) !== 0) {
 					$text = '_' . $text;
