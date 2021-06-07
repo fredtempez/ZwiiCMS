@@ -40,7 +40,7 @@ class common {
 	const THUMBS_SEPARATOR = 'mini_';
 	const THUMBS_WIDTH = 640;
 
-	// Contrôle d'édition temps max en secondes avant déconnexion 30 minutes
+	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
