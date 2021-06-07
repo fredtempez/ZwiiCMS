@@ -429,7 +429,9 @@ class addon extends common {
 			// Parcourir les pages utilisant le module
 			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
 				// Export des pages hébergeant le module
-				$pageContent[$pageId] = $this->getData(['page',$pageId]);
+				$pageParam[$pageId] = $this->getData(['page',$pageId]);
+				// Export du contenu de la page
+				$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $pageId, 'content']));
 				// Export de fr/module.json
 				$moduleId = 'fr/module.json';
 				$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);
@@ -467,7 +469,9 @@ class addon extends common {
 			}
 			// Enregistrement des pages dans le dossier de langue identique à module
 			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
-				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageContent));
+				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageParam));
+				mkdir ($tmpFolder . '/' . $lang . '/content');
+				file_put_contents($tmpFolder . '/' . $lang . '/content/' . $this->getData(['page', $pageId, 'content']), $pageContent);
 			}
 			// création du zip
 			$fileName =  $this->getUrl(2) . '.zip';
