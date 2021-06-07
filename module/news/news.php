@@ -494,11 +494,13 @@ class news extends common {
 		}
 		// Mise à jour 3.3
 		if (version_compare($versionData, '3.3', '<') ) {
-			// Déplacer les données du dossier Pages
-			$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
-			$this->removeDir(self::DATADIRECTORY . 'pages/' );
-			$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
+			if (is_dir(self::DATADIRECTORY . 'pages/')) {
+				// Déplacer les données du dossier Pages
+				$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
+				$this->removeDir(self::DATADIRECTORY . 'pages/' );
+				$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
+				$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
+			}
 			// Mettre à jour la version
 			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.3' ]);
 		}
