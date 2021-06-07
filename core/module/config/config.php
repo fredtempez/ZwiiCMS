@@ -479,6 +479,9 @@ class config extends common {
 						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
 						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
+					],
+					'i18n' => [
+						'enabled' => $this->getData(['config', 'i18n', 'enabled'])
 					]
 				]
 			]);
