@@ -551,7 +551,7 @@ class addon extends common {
 								file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
 							}
 							// copie du contenu de la page
-							$this->copyDir (self::TEMP_DIR . $tempFolder . '/' .$key . '/content', self::DATA_DIR . '/' .$key . '/');
+							$this->copyDir (self::TEMP_DIR . $tempFolder . '/' .$key . '/content', self::DATA_DIR . '/' .$key . '/content');
 							// Supprimer les fichiers importés
 							unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
 						}
