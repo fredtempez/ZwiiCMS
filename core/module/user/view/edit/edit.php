@@ -64,7 +64,13 @@
 						'label' => 'Groupe',
 						'selected' => $this->getData(['user', $this->getUrl(2), 'group'])
 					]); ?>
-					 <div id="userEditLabelAuth">Autorisations :</div>
+					<div id="userEditMemberFiles" class="displayNone">
+							 <?php echo template::checkbox('userEditFiles', true, 'Updown et download autorisés', [
+									'checked' => $this->getData(['user', $this->getUrl(2), 'files']),
+									'help' => 'Ce membre pourra déposer ou télécharger des fichiers dans le dossier \'updown\' et ses sous-dossiers'
+							]); ?>
+					</div>
+					<div id="userEditLabelAuth">Autorisations :</div>
 					<ul id="userEditGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userEditGroupDescription displayNone">
 						<li>Accès aux pages privées membres</li>
 					</ul>

@@ -87,7 +87,8 @@ class user extends common {
 					"connectTimeout" => null,
 					"accessUrl" => null,
 					"accessTimer" => null,
-					"accessCsrf" => null
+					"accessCsrf" => null,
+					"files" => $this->getInput('userAddFiles', helper::FILTER_BOOLEAN)
 				]
 			]);
 
@@ -256,7 +257,8 @@ class user extends common {
 						'connectTimeout' => $this->getData(['user',$this->getUrl(2),'connectTimeout']),
 						'accessUrl' => $this->getData(['user',$this->getUrl(2),'accessUrl']),
 						'accessTimer' => $this->getData(['user',$this->getUrl(2),'accessTimer']),
-						'accessCsrf' => $this->getData(['user',$this->getUrl(2),'accessCsrf'])
+						'accessCsrf' => $this->getData(['user',$this->getUrl(2),'accessCsrf']),
+						'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN)
 					]
 				]);
 				// Redirection spécifique si l'utilisateur change son mot de passe

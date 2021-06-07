@@ -13,6 +13,75 @@ ob_start('mb_output_handler');
 date_default_timezone_set('Europe/Paris');
 setlocale(LC_CTYPE, 'fr_FR'); //correct transliteration
 
+/* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
+$userId = $_COOKIE['ZWII_USER_ID'];
+$json = file_get_contents('../../../site/data/user.json');
+$tab = json_decode($json, true);
+$group = $tab['user'][$userId]['group'];
+$uploadDir = '/site/file/source/';
+$currentPath = '../../../site/file/source/';
+if( $group === 3){
+	// Administrateur, droits maximum
+	$deleteFiles = true;
+	$createFolders = true;
+	$deleteFolders = true;
+	$uploadFiles = true;
+	$renameFiles = true;
+	$renameFolders = true;
+	$duplicateFiles = true;
+	$extractFiles = true;
+	$copycutFiles = true;
+	$copycutDirs = true;
+	$chmodFiles = true;
+	$chmodDirs = true;
+	$previewtextFiles = true;
+	$edittextFiles = true;
+	$createtextFiles = true;
+	$downloadFiles = true;
+}
+elseif( $group === 2){
+	// Modérateur éditeur
+	$deleteFiles = false;
+	$createFolders = true;
+	$deleteFolders = false;
+	$uploadFiles = true;
+	$renameFiles = true;
+	$renameFolders = false;
+	$duplicateFiles = true;
+	$extractFiles = true;
+	$copycutFiles = true;
+	$copycutDirs = false;
+	$chmodFiles = false;
+	$chmodDirs = false;
+	$previewtextFiles = true;
+	$edittextFiles = true;
+	$createtextFiles = true;
+	$downloadFiles = true;
+}
+else{
+	// Membre avec droits d'upload / download
+	$uploadDir = '/site/file/source/updown/';
+	$currentPath = '../../../site/file/source/updown/';
+	if(!is_dir('../../../site/file/source/updown')) mkdir ('../../../site/file/source/updown');
+	$deleteFiles = false;
+	$createFolders = false;
+	$deleteFolders = false;
+	$uploadFiles = true;
+	$renameFiles = false;
+	$renameFolders = false;
+	$duplicateFiles = false;
+	$extractFiles = false;
+	$copycutFiles = true;
+	$copycutDirs = false;
+	$chmodFiles = false;
+	$chmodDirs = false;
+	$previewtextFiles = false;
+	$edittextFiles = false;
+	$createtextFiles = false;
+	$downloadFiles = true;
+}
+/* Fin lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
+
 /*
 |--------------------------------------------------------------------------
 | Optional security
@@ -77,7 +146,7 @@ $config = array(
 	| with start and final /
 	|
 	*/
-	'upload_dir' => '/site/file/source/',
+	'upload_dir' => $uploadDir,
 	/*
 	|--------------------------------------------------------------------------
 	| relative path from filemanager folder to upload folder
@@ -86,7 +155,7 @@ $config = array(
 	| with final /
 	|
 	*/
-	'current_path' => '../../../site/file/source/',
+	'current_path' => $currentPath,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -128,7 +197,7 @@ $config = array(
 	|--------------------------------------------------------------------------
 	|
 	| If you want enable ftp use write these parametres otherwise leave empty
-	| Remember to set base_url properly to point in the ftp server domain and 
+	| Remember to set base_url properly to point in the ftp server domain and
 	| upload dir will be ftp_base_folder + upload_dir so without final /
 	|
 	*/
@@ -299,7 +368,7 @@ $config = array(
 	//******************
 	//
 	// WATERMARK IMAGE
-	// 
+	//
 	//Watermark path or false
 	'image_watermark'                          => false,//"../watermark.png",
 	# Could be a pre-determined position such as:
@@ -336,22 +405,23 @@ $config = array(
 	//*************************
 	//Permissions configuration
 	//******************
-	'delete_files'                            => true,
-	'create_folders'                          => true,
-	'delete_folders'                          => true,
-	'upload_files'                            => true,
-	'rename_files'                            => true,
-	'rename_folders'                          => true,
-	'duplicate_files'                         => true,
-	'extract_files'                           => true,
-	'copy_cut_files'                          => true, // for copy/cut files
-	'copy_cut_dirs'                           => true, // for copy/cut directories
-	'chmod_files'                             => true, // change file permissions
-	'chmod_dirs'                              => true, // change folder permissions
-	'preview_text_files'                      => true, // eg.: txt, log etc.
-	'edit_text_files'                         => true, // eg.: txt, log etc.
-	'create_text_files'                       => true, // only create files with exts. defined in $config['editable_text_file_exts']
-	'download_files'						  => true, // allow download files or just preview
+
+	'delete_files'                            => $deleteFiles,
+	'create_folders'                          => $createFolders,
+	'delete_folders'                          => $deleteFolders,
+	'upload_files'                            => $uploadFiles,
+	'rename_files'                            => $renameFiles,
+	'rename_folders'                          => $renameFolders,
+	'duplicate_files'                         => $duplicateFiles,
+	'extract_files'                           => $extractFiles,
+	'copy_cut_files'                          => $copycutFiles, // for copy/cut files
+	'copy_cut_dirs'                           => $copycutDirs, // for copy/cut directories
+	'chmod_files'                             => $chmodFiles, // change file permissions
+	'chmod_dirs'                              => $chmodDirs, // change folder permissions
+	'preview_text_files'                      => $previewtextFiles, // eg.: txt, log etc.
+	'edit_text_files'                         => $edittextFiles, // eg.: txt, log etc.
+	'create_text_files'                       => $createtextFiles, // only create files with exts. defined in $config['editable_text_file_exts']
+	'download_files'						  => $downloadFiles, // allow download files or just preview
 
 	// you can preview these type of files if $preview_text_files is true
 	'previewable_text_file_exts'              => array( "bsh", "c","css", "cc", "cpp", "cs", "csh", "cyc", "cv", "htm", "html", "java", "js", "m", "mxml", "perl", "pl", "pm", "py", "rb", "sh", "xhtml", "xml","xsl",'txt', 'log', 'gpx', 'kml', '' ),
@@ -567,9 +637,9 @@ return array_merge(
         'tui_defaults_config' => array(
             //'common.bi.image'                   => $config['common.bi.image'],
             //'common.bisize.width'               => $config['common.bisize.width'],
-            //'common.bisize.height'              => $config['common.bisize.height'], 
+            //'common.bisize.height'              => $config['common.bisize.height'],
             'common.backgroundImage'            => $config['common.backgroundImage'],
-            'common.backgroundColor'            => $config['common.backgroundColor'], 
+            'common.backgroundColor'            => $config['common.backgroundColor'],
             'common.border'                     => $config['common.border'],
             'header.backgroundImage'            => $config['header.backgroundImage'],
             'header.backgroundColor'            => $config['header.backgroundColor'],

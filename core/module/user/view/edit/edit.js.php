@@ -23,3 +23,27 @@ $("#userEditGroup").on("change", function() {
 		$("#userEditLabelAuth").css("display","inline-block");
 	}
 }).trigger("change");
+
+$(document).ready(function(){
+	// Membre avec ou sans gestion de fichiers
+	if($("#userEditGroup").val() === '1') {
+		$("#userEditMemberFiles").slideDown();
+	}
+	else {
+		$("#userEditMemberFiles").slideUp(function() {
+			$("#userEditFiles").prop("checked", false).trigger("change");
+		});
+	}
+});
+
+$("#userEditGroup").on("change", function() {
+	// Membre avec ou sans gestion de fichiers
+	if($("#userEditGroup").val() === '1') {
+		$("#userEditMemberFiles").slideDown();
+	}
+	else {
+		$("#userEditMemberFiles").slideUp(function() {
+			$("#userEditFiles").prop("checked", false).trigger("change");
+		});
+	}
+}).trigger("change");

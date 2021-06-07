@@ -43,3 +43,28 @@ $("#userAddGroup").on("change", function() {
 	$(".userAddGroupDescription").hide();
 	$("#userAddGroupDescription" + $(this).val()).show();
 }).trigger("change");
+
+/**
+ * Autorisation d'upload et de download pour un membre
+ */
+$(document).ready(function(){
+	if($("#userAddGroup").val() === '1') {
+		$("#userAddMemberFiles").slideDown();
+	}
+	else {
+		$("#userAddMemberFiles").slideUp(function() {
+			$("#userAddtFiles").prop("checked", false).trigger("change");
+		});
+	}
+});
+
+$("#userAddGroup").on("change", function() {
+	if($("#userAddGroup").val() === '1') {
+		$("#userAddMemberFiles").slideDown();
+	}
+	else {
+		$("#userAddMemberFiles").slideUp(function() {
+			$("#userAddFiles").prop("checked", false).trigger("change");
+		});
+	}
+}).trigger("change");

@@ -46,6 +46,11 @@
 					'label' => 'Groupe',
 					'selected' => self::GROUP_MEMBER
 				]); ?>
+				<div id="userAddMemberFiles" class="displayNone">
+					<?php echo template::checkbox('userAddFiles', true, 'Updown et download autorisés', [
+							'checked' => false
+					]); ?>
+				</div>
 				Autorisations :
 				<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
 					<li>Accès aux pages privées membres</li>
