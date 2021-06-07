@@ -65,9 +65,9 @@
 						'selected' => $this->getData(['user', $this->getUrl(2), 'group'])
 					]); ?>
 					<div id="userEditMemberFiles" class="displayNone">
-							 <?php echo template::checkbox('userEditFiles', true, 'Updown et download autorisés', [
+							 <?php echo template::checkbox('userEditFiles', true, 'Partage de fichiers autorisé', [
 									'checked' => $this->getData(['user', $this->getUrl(2), 'files']),
-									'help' => 'Ce membre pourra déposer ou télécharger des fichiers dans le dossier \'updown\' et ses sous-dossiers'
+									'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
 							]); ?>
 					</div>
 					<div id="userEditLabelAuth">Autorisations :</div>

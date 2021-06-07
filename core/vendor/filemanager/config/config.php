@@ -20,66 +20,69 @@ $tab = json_decode($json, true);
 $group = $tab['user'][$userId]['group'];
 $uploadDir = '/site/file/source/';
 $currentPath = '../../../site/file/source/';
-if( $group === 3){
-	// Administrateur, droits maximum
-	$deleteFiles = true;
-	$createFolders = true;
-	$deleteFolders = true;
-	$uploadFiles = true;
-	$renameFiles = true;
-	$renameFolders = true;
-	$duplicateFiles = true;
-	$extractFiles = true;
-	$copycutFiles = true;
-	$copycutDirs = true;
-	$chmodFiles = true;
-	$chmodDirs = true;
-	$previewtextFiles = true;
-	$edittextFiles = true;
-	$createtextFiles = true;
-	$downloadFiles = true;
+switch ($group) {
+	case 3:
+		// Administrateur, droits maximum
+		$deleteFiles = true;
+		$createFolders = true;
+		$deleteFolders = true;
+		$uploadFiles = true;
+		$renameFiles = true;
+		$renameFolders = true;
+		$duplicateFiles = true;
+		$extractFiles = true;
+		$copycutFiles = true;
+		$copycutDirs = true;
+		$chmodFiles = true;
+		$chmodDirs = true;
+		$previewtextFiles = true;
+		$edittextFiles = true;
+		$createtextFiles = true;
+		$downloadFiles = true;
+		break;
+	case 2:
+			// Modérateur éditeur
+		$deleteFiles = false;
+		$createFolders = true;
+		$deleteFolders = false;
+		$uploadFiles = true;
+		$renameFiles = true;
+		$renameFolders = false;
+		$duplicateFiles = true;
+		$extractFiles = true;
+		$copycutFiles = true;
+		$copycutDirs = false;
+		$chmodFiles = false;
+		$chmodDirs = false;
+		$previewtextFiles = true;
+		$edittextFiles = true;
+		$createtextFiles = true;
+		$downloadFiles = true;
+		break;
+	default:
+		// Membre avec droits d'upload / download
+		$uploadDir = '/site/file/source/partage/';
+		$currentPath = '../../../site/file/source/partage/';
+		if(!is_dir('../../../site/file/source/partage')) mkdir ('../../../site/file/source/partage');
+		$deleteFiles = false;
+		$createFolders = false;
+		$deleteFolders = false;
+		$uploadFiles = true;
+		$renameFiles = false;
+		$renameFolders = false;
+		$duplicateFiles = false;
+		$extractFiles = false;
+		$copycutFiles = true;
+		$copycutDirs = false;
+		$chmodFiles = false;
+		$chmodDirs = false;
+		$previewtextFiles = false;
+		$edittextFiles = false;
+		$createtextFiles = false;
+		$downloadFiles = true;
+		break;
 }
-elseif( $group === 2){
-	// Modérateur éditeur
-	$deleteFiles = false;
-	$createFolders = true;
-	$deleteFolders = false;
-	$uploadFiles = true;
-	$renameFiles = true;
-	$renameFolders = false;
-	$duplicateFiles = true;
-	$extractFiles = true;
-	$copycutFiles = true;
-	$copycutDirs = false;
-	$chmodFiles = false;
-	$chmodDirs = false;
-	$previewtextFiles = true;
-	$edittextFiles = true;
-	$createtextFiles = true;
-	$downloadFiles = true;
-}
-else{
-	// Membre avec droits d'upload / download
-	$uploadDir = '/site/file/source/updown/';
-	$currentPath = '../../../site/file/source/updown/';
-	if(!is_dir('../../../site/file/source/updown')) mkdir ('../../../site/file/source/updown');
-	$deleteFiles = false;
-	$createFolders = false;
-	$deleteFolders = false;
-	$uploadFiles = true;
-	$renameFiles = false;
-	$renameFolders = false;
-	$duplicateFiles = false;
-	$extractFiles = false;
-	$copycutFiles = true;
-	$copycutDirs = false;
-	$chmodFiles = false;
-	$chmodDirs = false;
-	$previewtextFiles = false;
-	$edittextFiles = false;
-	$createtextFiles = false;
-	$downloadFiles = true;
-}
+
 /* Fin lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
 
 /*

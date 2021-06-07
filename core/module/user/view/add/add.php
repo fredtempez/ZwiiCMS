@@ -47,8 +47,9 @@
 					'selected' => self::GROUP_MEMBER
 				]); ?>
 				<div id="userAddMemberFiles" class="displayNone">
-					<?php echo template::checkbox('userAddFiles', true, 'Updown et download autorisés', [
-							'checked' => false
+					<?php echo template::checkbox('userAddFiles', true, 'Partage de fichiers autorisé', [
+							'checked' => false,
+							'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
 					]); ?>
 				</div>
 				Autorisations :
