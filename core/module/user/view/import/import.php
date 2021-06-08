@@ -8,11 +8,22 @@
             'value' => 'Retour'
         ]); ?>
     </div>
-    <div class="col2 offset8">
+    <div class="col2">
+      <?php echo template::button('translateIndexHelp', [
+        'class' => 'buttonHelp',
+        'ico' => 'help',
+        'value' => 'Aide'
+      ]); ?>
+    </div>
+    <div class="col2 offset6">
 		<?php echo template::submit('userImportSubmit', [
 				'value' => 'Importer'
 			]); ?>
 	</div>
+</div>
+<!-- Aide à propos de la gestion des utilisateurs, view import -->
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/user/view/import/import.help.html') ;?>
 </div>
 <div class="row">
     <div class="col12">
@@ -35,17 +46,6 @@
                     <?php echo template::checkbox('userImportNotification', true, 'Envoyer un message de confirmation', [
 						'checked' => false
 					]); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col1">
-                    <p>Aide :</p>
-                </div>
-                <div class="col11">
-                    <p>Les en-têtes obligatoires sont : id, nom, prenom, email et groupe
-                    ( 1 : membre - 2 : éditeur - 3 : administrateur )
-                    <p>Voir ce <a href="core/module/user/ressource/template.csv">modèle</a> à compléter avec un tableur.
-                    Enregistrement au format CSV, séparateur ; ou , ou :</p>
                 </div>
             </div>
         </div>
