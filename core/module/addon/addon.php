@@ -310,19 +310,17 @@ class addon extends common {
 				}
 				self::$storeList [] = [
 					'<a href="' . self::URL_STORE . $key . '" target="_blank" >'.$store[$key]['title'].'</a>',
-					$store[$key]['fileVersion'],
-					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['fileDate']), 'UTF-8', true)
-					? strftime('%d %B %Y', $store[$key]['fileDate'])
-					: utf8_encode(strftime('%d %B %Y', $store[$key]['fileDate'])),
+					$store[$key]['version'],
+					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)
+					? strftime('%d %B %Y', $store[$key]['versionDate'])
+					: utf8_encode(strftime('%d %B %Y', $store[$key]['versionDate'])),
 					implode(', ', array_keys($inPagesTitle,$key)),
 					template::button('moduleExport' . $key, [
 							'class' => $class,
 							'href' => helper::baseUrl(). $this->getUrl(0) . '/uploadItem/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 							'value' => $ico
 							])
-					 ];
-
-
+				];
 			}
 		}
 
