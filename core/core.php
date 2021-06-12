@@ -332,7 +332,8 @@ class common {
 		}
 
 		// Mise à jour des données core
-		$this->update();
+		$zwii_version = intval(str_replace('.','',self::ZWII_VERSION));
+		if( $this->getData(['core', 'dataVersion']) !== $zwii_version) include( 'core/include/update.inc.php');
 
 		// Données de proxy
 		$proxy = $this->getData(['config','proxyType']) . $this->getData(['config','proxyUrl']) . ':' . $this->getData(['config','proxyPort']);
