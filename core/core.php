@@ -252,7 +252,7 @@ class common {
 		 *	- L'auto-détection est active
 		 */
 
-		if ( $this->getData(['config', 'i18n']) === true
+		if ( $this->getData(['config', 'i18n', 'enabled']) === true
 			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
 			 AND $this->getData(['config', 'i18n','autoDetect']) === true
 			 AND $this->getInput('ZWII_I18N_SITE') !== ''
@@ -1745,7 +1745,7 @@ class core extends common {
 		// Chargement de la bibliothèque googtrans
 
 		// Le script de traduction est sélectionné
-		if ($this->getData(['config', 'i18n']) === true) {
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
 			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
 					// et la traduction de la langue courante est automatique
 				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
@@ -1892,7 +1892,7 @@ class layout extends common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		if ($this->getData(['config', 'i18n']) === true) {
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
 			echo $this->showi18n('Site');
 		}
 		if(
@@ -1913,7 +1913,7 @@ class layout extends common {
 		 * La traduction est active et le site n'est pas en français.
 		 * La fonction est activée.
 		 */
-		if ( $this->getData(['config', 'i18n']) === true
+		if ( $this->getData(['config', 'i18n', 'enabled']) === true
 			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
 			 AND $this->getData(['config', 'i18n','showCredits']) === true
 			 AND
@@ -2279,7 +2279,7 @@ class layout extends common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		if ($this->getData(['config', 'i18n']) === true) {
+		if ($this->getData(['config', 'i18n', 'enabled']) === true) {
 			echo $this->showi18n('Nav');
 		}
 	}
@@ -2522,7 +2522,7 @@ class layout extends common {
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				if ($this->getData(['config', 'i18n']) === true) {
+				if ($this->getData(['config', 'i18n', 'enabled']) === true) {
 					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				}
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';

@@ -32,8 +32,7 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
-			],
-			'i18n' => false
+			]
 		],
 		'core' => [
 			'dataVersion' => 10602,
