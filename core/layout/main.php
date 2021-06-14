@@ -1,7 +1,6 @@
-<?php $layout = new layout($this); 
-$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
+<?php $layout = new layout($this); ?>
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="<?php echo $lan;?>">
+<html prefix="og: http://ogp.me/ns#" lang="<?php echo self::$i18n;?>">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
