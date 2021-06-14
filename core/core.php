@@ -186,6 +186,7 @@ class common {
 	 * Constructeur commun
 	 */
 	public function __construct() {
+
 		// Extraction des données http
 		if(isset($_POST)) {
 			$this->input['_POST'] = $_POST;
@@ -352,6 +353,7 @@ class common {
 			);
 			stream_context_set_default($context);
 		}
+
 	}
 
 	/**
@@ -1111,6 +1113,796 @@ class common {
 		}
 		$zip->close();
 	}
+
+	// Layout remplace la classe précédente
+
+	/**
+	 * Affiche le script Google Analytics
+	 */
+	public function showAnalytics() {
+		if($code = $this->getData(['config', 'analyticsId'])
+		  AND $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
+			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
+				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
+				<script>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag("js", new Date());
+					gtag("config","'. $code .'",{ "anonymize_ip": true });
+				</script>';
+		}
+	}
+
+	/**
+	 * Affiche le contenu
+	 * @param Page par défaut
+	 */
+	public function showContent() {
+		if ($this->getData(['config', 'i18n', 'active']) === true) {
+			echo $this->showi18n('Site');
+		}
+		if(
+			$this->output['title']
+			AND (
+				$this->getData(['page', $this->getUrl(0)]) === null
+				OR $this->getData(['page', $this->getUrl(0), 'hideTitle']) === false
+				OR $this->getUrl(1) === 'config'
+			)
+		) {
+			echo '<h1 id="sectionTitle">' . $this->output['title'] . '</h1>';
+		}
+
+		echo $this->output['content'];
+
+		/**
+		 * Affiche les crédits, conditions requis :
+		 * La traduction est active et le site n'est pas en français.
+		 * La fonction est activée.
+		 */
+		if ( $this->getData(['config', 'i18n', 'active']) === true
+			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
+			 AND $this->getData(['config', 'i18n','showCredits']) === true
+			 AND
+				// et la traduction n'est pas manuelle
+				(  $this->getInput('ZWII_I18N_SCRIPT')
+					AND $this->getData(['config', 'i18n', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
+				)
+           )
+		{
+		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
+		}
+	}
+
+
+
+	/**
+	 * Affiche le contenu de la barre gauche
+	 *
+	 */
+	public function showBarContentLeft() {
+		// Détermine si le menu est présent
+		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'none') {
+			// Pas de menu
+			echo $this->output['contentLeft'];
+		} else {
+			// $mark contient 0 le menu est positionné à la fin du contenu
+			$contentLeft = str_replace ('[]','[MENU]',$this->output['contentLeft']);
+			$contentLeft = str_replace ('[menu]','[MENU]',$contentLeft);
+			$mark = strrpos($contentLeft,'[MENU]')  !== false ? strrpos($contentLeft,'[MENU]') : strlen($contentLeft);
+			echo substr($contentLeft,0,$mark);
+			echo '<div id="menuSideLeft">';
+			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'parents' ? false : true);
+			echo '</div>';
+			echo substr($contentLeft,$mark+6,strlen($contentLeft));
+		}
+	}
+
+	/**
+	 * Affiche le contenu de la barre droite
+	 */
+	public function showBarContentRight() {
+		// Détermine si le menu est présent
+		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'none') {
+			// Pas de menu
+			echo $this->output['contentRight'];
+		} else {
+			// $mark contient 0 le menu est positionné à la fin du contenu
+			$contentRight = str_replace ('[]','[MENU]',$this->output['contentRight']);
+			$contentRight = str_replace ('[menu]','[MENU]',$contentRight);
+			$mark = strrpos($contentRight,'[MENU]')  !== false ? strrpos($contentRight,'[MENU]') : strlen($contentRight);
+			echo substr($contentRight,0,$mark);
+			echo '<div id="menuSideRight">';
+			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'parents' ? false : true);
+			echo '</div>';
+			echo substr($contentRight,$mark+6,strlen($contentRight));
+		}
+	}
+
+	/**
+	 * Affiche le texte du footer
+	 */
+	public function showFooterText() {
+		if($footerText = $this->getData(['theme', 'footer', 'text']) OR $this->getUrl(0) === 'theme') {
+			echo '<div id="footerText">' . $footerText . '</div>';
+		}
+	}
+
+     /**
+     * Affiche le copyright
+     */
+    public function showCopyright() {
+		// Ouverture Bloc copyright
+		$items = '<div id="footerCopyright">';
+		$items .= '<span id="footerFontCopyright">';
+		// Affichage de motorisé par
+		$items .= '<span id="footerDisplayCopyright" ';
+		$items .= $this->getData(['theme','footer','displayCopyright']) === false ? 'class="displayNone"' : '';
+		$items .= '>Motorisé&nbsp;par&nbsp;</span>';
+		// Toujours afficher le nom du CMS
+		$items .= '<span id="footerZwiiCMS">';
+		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
+		$items .= '</span>';
+		// Affichage du numéro de version
+		$items .= '<span id="footerDisplayVersion"';
+		$items .= $this->getData(['theme','footer','displayVersion']) === false ? ' class="displayNone"' : '';
+		$items .= '><wbr>&nbsp;'. common::ZWII_VERSION ;
+		$items .= '</span>';
+		// Affichage du sitemap
+		$items .= '<span id="footerDisplaySiteMap"';
+		$items .= $this->getData(['theme','footer','displaySiteMap']) ===  false ? ' class="displayNone"' : '';
+		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap" data-tippy-content="Plan du site" >Plan&nbsp;du&nbsp;site</a>';
+		$items .= '</span>';
+        // Affichage du module de recherche
+ 		$items .= '<span id="footerDisplaySearch"';
+		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
+		if ($this->getData(['locale','searchPageId']) !== 'none') {
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
+		}
+		$items .= '</span>';
+		// Affichage des mentions légales
+		$items .= '<span id="footerDisplayLegal"';
+		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
+		if ($this->getData(['locale','legalPageId']) !== 'none') {
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions légales">Mentions légales</a>';
+		}
+		$items .= '</span>';
+		// Affichage du lien de connexion
+		if(
+            (
+                $this->getData(['theme', 'footer', 'loginLink'])
+                AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+            )
+            OR $this->getUrl(0) === 'theme'
+        ) {
+			$items .= '<span id="footerLoginLink" ' .
+			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
+			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
+			strip_tags(str_replace('/', '_', $this->getUrl())) .
+			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">' . template::ico('login') .'</a></span>';
+		}
+		// Affichage de la barre de membre simple
+		if ( $this->getUser('group') === self::GROUP_MEMBER
+			 && $this->getData(['theme','footer','displayMemberBar']) === true
+			) {
+				$items .= '<span id="footerDisplayMemberAccount"';
+				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
+				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
+				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a>';
+				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
+				$items .= '</span>';
+		}
+		// Fermeture du bloc copyright
+        $items .= '</span></div>';
+        echo $items;
+	}
+
+
+	/**
+	 * Affiche les réseaux sociaux
+	 */
+	public function showSocials() {
+		$socials = '';
+		foreach($this->getData(['config', 'social']) as $socialName => $socialId) {
+			switch($socialName) {
+				case 'facebookId':
+					$socialUrl = 'https://www.facebook.com/';
+					$title = 'Facebook';
+					break;
+				case 'linkedinId':
+					$socialUrl = 'https://fr.linkedin.com/in/';
+					$title = 'Linkedin';
+					break;
+				case 'instagramId':
+					$socialUrl = 'https://www.instagram.com/';
+					$title = 'Instagram';
+					break;
+				case 'pinterestId':
+					$socialUrl = 'https://pinterest.com/';
+					$title = 'Pinterest';
+					break;
+				case 'twitterId':
+					$socialUrl = 'https://twitter.com/';
+					$title = 'Twitter';
+					break;
+				case 'youtubeId':
+					$socialUrl = 'https://www.youtube.com/channel/';
+					$title = 'Chaîne YouTube';
+					break;
+				case 'youtubeUserId':
+					$socialUrl = 'https://www.youtube.com/user/';
+					$title = 'YouTube';
+					break;
+				case 'githubId':
+					$socialUrl = 'https://www.github.com/';
+					$title = 'Github';
+					break;
+				default:
+					$socialUrl = '';
+			}
+			if($socialId !== '') {
+				$socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '">' . template::ico(substr(str_replace('User','',$socialName), 0, -2)) . '</a>';
+			}
+		}
+		if($socials !== '') {
+			echo '<div id="footerSocials">' . $socials . '</div>';
+		}
+	}
+
+
+
+	/**
+	 * Affiche le favicon
+	 */
+	public function showFavicon() {
+		// Light scheme
+		$favicon = $this->getData(['config', 'favicon']);
+		if($favicon &&
+			file_exists(self::FILE_DIR.'source/' . $favicon)
+			) {
+			echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $favicon . '">';
+		} else {
+			echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)"  href="' . helper::baseUrl(false) . 'core/vendor/zwiico/ico/favicon.ico">';
+		}
+		// Dark scheme
+		$faviconDark = $this->getData(['config', 'faviconDark']);
+		if(!empty($faviconDark) &&
+		file_exists(self::FILE_DIR.'source/' . $faviconDark)
+		) {
+			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $faviconDark . '">';
+			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
+			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous" type="application/javascript"></script>';
+		}
+	}
+
+
+	/**
+	 * Affiche le menu
+	 */
+	public function showMenu() {
+		// Met en forme les items du menu
+		$itemsLeft = '';
+		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
+		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+			// Passer les entrées masquées
+			// Propriétés de l'item
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
+			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
+			// Mise en page de l'item
+			$itemsLeft .= '<li>';
+
+			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
+				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				 ) OR (
+					$this->getData(['page',$parentPageId,'disable']) === true
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					AND $this->getUser('group') < self::GROUP_MODERATOR
+				 )
+			){
+				$itemsLeft .= '<a class="' . $parentPageId . '" href="'. helper::baseUrl() . $this->getUrl(0).'">';
+			} else {
+				$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
+			}
+
+			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
+				case '' :
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    break;
+				case 'text' :
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    break;
+				case 'icon' :
+				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
+				    $itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
+				    } else {
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    }
+				    break;
+				case 'icontitle' :
+				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
+				    	$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
+				   	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']).'"/>';
+				    } else {
+				  	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    }
+					break;
+		       }
+			// Cas où les pages enfants enfant sont toutes masquées dans le menu
+			// ne pas afficher de symbole lorsqu'il n'y a rien à afficher
+			$totalChild = 0;
+			$disableChild = 0;
+			foreach($childrenPageIds as $childKey) {
+				$totalChild += 1;
+			}
+			if($childrenPageIds && $disableChild !== $totalChild  &&
+				$this->getdata(['page',$parentPageId,'hideMenuChildren']) === false) {
+				$itemsLeft .= template::ico('down', 'left');
+			}
+			// ------------------------------------------------
+			$itemsLeft .= '</a>';
+			if ($this->getdata(['page',$parentPageId,'hideMenuChildren']) === true ||
+				empty($childrenPageIds)) {
+				continue;
+			}
+			$itemsLeft .= '<ul class="navSub">';
+			foreach($childrenPageIds as $childKey) {
+				// Propriétés de l'item
+				$active = ($childKey === $currentPageId) ? 'active ' : '';
+				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
+				// Mise en page du sous-item
+				$itemsLeft .= '<li>';
+				if ( ( $this->getData(['page',$childKey,'disable']) === true
+						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+						) OR (
+						$this->getData(['page',$childKey,'disable']) === true
+						AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						AND $this->getUser('group') < self::GROUP_MODERATOR
+						)
+				){
+					$itemsLeft .= '<a class="' . $parentPageId . '" href="'.helper::baseUrl() . $this->getUrl(0).'">';
+				} else {
+					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  . '>';
+				}
+
+				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
+					case '' :
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						break;
+					case 'text' :
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						break;
+					case 'icon' :
+						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						} else {
+						$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+						}
+						break;
+					case 'icontitle' :
+						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']).'"/>';
+						} else {
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						}
+						break;
+					case 'icontext' :
+						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						} else {
+						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						}
+						break;
+				}
+				$itemsLeft .= '</a></li>';
+			}
+			$itemsLeft .= '</ul>';
+		}
+		// Lien de connexion
+		$itemsRight = '';
+		if(
+			(
+				$this->getData(['theme', 'menu', 'loginLink'])
+				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+			)
+			OR $this->getUrl(0) === 'theme'
+		) {
+			$itemsRight .= '<li id="menuLoginLink" ' .
+			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
+			'><a href="' . helper::baseUrl() . 'user/login/' .
+			strip_tags(str_replace('/', '_', $this->getUrl())) .
+			'">' . template::ico('login') .'</a></li>';
+		}
+		// Commandes pour les membres simples
+		if($this->getUser('group') == self::GROUP_MEMBER
+			&& ( $this->getData(['theme','menu','memberBar']) === true
+				|| $this->getData(['theme','footer','displayMemberBar']) === false
+				)
+		) {
+			if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $itemsRight .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
+			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
+		}
+		// Retourne les items du menu
+		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
+		if ($this->getData(['config', 'i18n', 'active']) === true) {
+			echo $this->showi18n('Nav');
+		}
+	}
+
+	/**
+	 * Générer un menu pour la barre latérale
+	 * Uniquement texte
+	 * @param onlyChildren n'affiche les sous-pages de la page actuelle
+	 */
+	public function showMenuSide($onlyChildren = null) {
+		// Met en forme les items du menu
+		$items = '';
+		// Nom de la page courante
+		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
+		// Nom de la page parente
+		$currentParentPageId = $this->getData(['page',$currentPageId,'parentPageId']);
+		// Détermine si on affiche uniquement le parent et les enfants
+		// Filtre contient le nom de la page parente
+
+		if ($onlyChildren === true) {
+			if (empty($currentParentPageId)) {
+				$filterCurrentPageId = $currentPageId;
+			} else {
+				$filterCurrentPageId = $currentParentPageId;
+			}
+		} else {
+			$items .= '<ul class="menuSide">';
+		}
+
+		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+			// Ne pas afficher les entrées masquées
+			if ($this->getData(['page',$parentPageId,'hideMenuSide']) === true ) {
+				continue;
+			}
+			// Filtre actif et nom de la page parente courante différente, on sort de la boucle
+			if ($onlyChildren === true && $parentPageId !== $filterCurrentPageId) {
+				continue;
+			}
+			// Propriétés de l'item
+			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
+			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank" ' : '';
+			// Mise en page de l'item;
+			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
+			if ($onlyChildren === false) {
+				$items .= '<li class="menuSideChild">';
+				if ( $this->getData(['page',$parentPageId,'disable']) === true
+					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
+						$items .= '<a href="'.$this->getUrl(1).'">';
+				} else {
+						$items .= '<a href="'. helper::baseUrl() . $parentPageId . '"' . $targetBlank .  $active .'>';
+				}
+				$items .= $this->getData(['page', $parentPageId, 'title']);
+				$items .= '</a>';
+			}
+			$itemsChildren = '';
+			foreach($childrenPageIds as $childKey) {
+				// Passer les entrées masquées
+				if ($this->getData(['page',$childKey,'hideMenuSide']) === true ) {
+					continue;
+				}
+
+				// Propriétés de l'item
+				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
+				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
+				// Mise en page du sous-item
+				$itemsChildren .= '<li class="menuSideChild">';
+
+				if ( $this->getData(['page',$childKey,'disable']) === true
+					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
+						$itemsChildren .= '<a href="'.$this->getUrl(1).'">';
+				} else {
+					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>';
+				}
+
+				$itemsChildren .= $this->getData(['page', $childKey, 'title']);
+				$itemsChildren .= '</a></li>';
+			}
+			// Concatène les items enfants
+			if (!empty($itemsChildren)) {
+				$items .= '<ul class="menuSideChild">';
+				$items .= $itemsChildren;
+				$items .= '</ul>';
+			} else {
+				$items .= '</li>';
+			}
+
+		}
+		if ($onlyChildren === false) {
+			$items .= '</ul>';
+		}
+		// Retourne les items du menu
+		echo  $items;
+	}
+
+
+
+	/**
+	 * Affiche le meta titre
+	 */
+	public function showMetaTitle() {
+		echo '<title>' . $this->output['metaTitle'] . '</title>';
+		echo '<meta property="og:title" content="' . $this->output['metaTitle'] . '" />';
+		echo '<link rel="canonical" href="'. helper::baseUrl(true).$this->getUrl() .'" />';
+	}
+
+	/**
+	 * Affiche la meta description
+	 */
+	public function showMetaDescription() {
+			echo '<meta name="description" content="' . $this->output['metaDescription'] . '" />';
+			echo '<meta property="og:description" content="' . $this->output['metaDescription'] . '" />';
+	}
+
+	/**
+	 * Affiche le meta type
+	 */
+	public function showMetaType() {
+		echo '<meta property="og:type" content="website" />';
+	}
+
+	/**
+	 * Affiche la meta image (site screenshot)
+	 */
+	public function showMetaImage() {
+		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
+	}
+
+
+
+	/**
+	 * Affiche la notification
+	 */
+	public function showNotification() {
+		if (common::$importNotices) {
+			$notification = common::$importNotices [0];
+			$notificationClass = 'notificationSuccess';
+		}
+		if(common::$inputNotices) {
+			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
+			$notificationClass = 'notificationError';
+		}
+		if (common::$coreNotices) {
+			$notification = 'Données absentes, restauration de <p> | ';
+			foreach (common::$coreNotices as $item) $notification .= $item . ' | ';
+			$notificationClass = 'notificationError';
+		}
+		elseif(empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
+			$notification = $_SESSION['ZWII_NOTIFICATION_SUCCESS'];
+			$notificationClass = 'notificationSuccess';
+			unset($_SESSION['ZWII_NOTIFICATION_SUCCESS']);
+		}
+		elseif(empty($_SESSION['ZWII_NOTIFICATION_ERROR']) === false) {
+			$notification = $_SESSION['ZWII_NOTIFICATION_ERROR'];
+			$notificationClass = 'notificationError';
+			unset($_SESSION['ZWII_NOTIFICATION_ERROR']);
+		}
+		elseif(empty($_SESSION['ZWII_NOTIFICATION_OTHER']) === false) {
+			$notification = $_SESSION['ZWII_NOTIFICATION_OTHER'];
+			$notificationClass = 'notificationOther';
+			unset($_SESSION['ZWII_NOTIFICATION_OTHER']);
+		}
+		if(isset($notification) AND isset($notificationClass)) {
+			echo '<div id="notification" class="' . $notificationClass . '">' . $notification . '<span id="notificationClose">' . template::ico('cancel') . '<!----></span><div id="notificationProgress"></div></div>';
+		}
+	}
+
+	/**
+	 * Affiche la barre de membre
+	 */
+	public function showBar() {
+		if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+			// Items de gauche
+			$leftItems = '';
+			if($this->getUser('group') >= self::GROUP_MODERATOR) {
+				$leftItems .= '<li><select id="barSelectPage">';
+				$leftItems .= '<option value="">Choisissez une page</option>';
+				$leftItems .= '<optgroup label="Pages orphelines">';
+				$orpheline = true ;
+				$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
+				foreach($this->getHierarchy(null,false) as $parentPageId => $childrenPageIds) {
+					if ($this->getData(['page', $parentPageId, 'position']) !== 0  &&
+						$orpheline ) {
+							$orpheline = false;
+							$leftItems .= '<optgroup label="Pages du menu">';
+					}
+					// Exclure les barres
+					if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
+						$leftItems .= '<option value="' .
+									helper::baseUrl() .
+									$parentPageId . '"' .
+									($parentPageId === $currentPageId ? ' selected' : false) .
+									($this->getData(['page', $parentPageId, 'disable']) === true ? ' class="inactive"' : '') .
+									'>' .
+									$this->getData(['page', $parentPageId, 'title']) .
+									'</option>';
+						foreach($childrenPageIds as $childKey) {
+							$leftItems .= '<option value="' .
+											helper::baseUrl() .
+											$childKey . '"' .
+											($childKey === $currentPageId ? ' selected' : false) .
+											($this->getData(['page', $childKey, 'disable']) === true ? ' class="inactive"' : '') .
+											'>&nbsp;&nbsp;&nbsp;&nbsp;' .
+											$this->getData(['page', $childKey, 'title']) .
+											'</option>';
+						}
+					}
+				}
+				$leftItems .= '</optgroup'>
+				// Afficher les barres
+				$leftItems .= '<optgroup label="Barres latérales">';
+				foreach($this->getHierarchy(null, false,true) as $parentPageId => $childrenPageIds) {
+					$leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'title']) . '</option>';
+					foreach($childrenPageIds as $childKey) {
+						$leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']) . '</option>';
+					}
+				}
+				$leftItems .= '</optgroup>';
+				$leftItems .= '</select></li>';
+				$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/add" data-tippy-content="Créer une page ou<br>une barre latérale">' . template::ico('plus') . '</a></li>';
+				if(
+					// Sur un module de page qui autorise le bouton de modification de la page
+					$this->output['showBarEditButton']
+					// Sur une page sans module
+					OR $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
+					// Sur une page d'accueil
+					OR $this->getUrl(0) === ''
+				) {
+					$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '" data-tippy-content="Modifier la page">' . template::ico('pencil') . '</a></li>';
+					if ($this->getData(['page', $this->getUrl(0),'moduleId'])) {
+						$leftItems .= '<li><a href="' . helper::baseUrl() . $this->getUrl(0) . '/config' . '" data-tippy-content="Configurer le module">' . template::ico('gear') . '</a></li>';
+					}
+					$leftItems .= '<li><a id="pageDuplicate" href="' . helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Dupliquer la page">' . template::ico('clone') . '</a></li>';
+					$leftItems .= '<li><a id="pageDelete" href="' . helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Effacer la page">' . template::ico('trash') . '</a></li>';
+				}
+			}
+			// Items de droite
+			$rightItems = '';
+			if($this->getUser('group') >= self::GROUP_MODERATOR) {
+				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+			}
+			if($this->getUser('group') >= self::GROUP_ADMIN) {
+				if ($this->getData(['config', 'i18n', 'active']) === true) {
+					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
+				}
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
+				// Mise à jour automatique
+				$today = mktime(0, 0, 0);
+				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
+				if ( $this->getData(['config','autoUpdate']) === true
+					AND $today > $this->getData(['core','lastAutoUpdate']) + 86400 ) {
+						if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) ) {
+							$this->setData(['core','updateAvailable', true]);
+							$this->setData(['core','lastAutoUpdate',$today]);
+						}
+				}
+				// Afficher le bouton : Mise à jour détectée + activée
+				if ( $this->getData(['core','updateAvailable']) === true &&
+					$this->getData(['config','autoUpdate']) === true  ) {
+					$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii '. common::ZWII_VERSION .' vers '. helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) .'">' . template::ico('update colorRed') . '</a></li>';
+				}
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
+			}
+			$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
+			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
+			// Barre de membre
+			echo '<div id="bar"><div class="container"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div></div>';
+		}
+	}
+
+	/**
+	 * Affiche le script
+	 */
+	public function showScript() {
+		ob_start();
+		require 'core/core.js.php';
+		$coreScript = ob_get_clean();
+		echo '<script>' . helper::minifyJs($coreScript . $this->output['script']) . '</script>';
+	}
+
+	/**
+	 * Affiche le style
+	 */
+	public function showStyle() {
+		if($this->output['style']) {
+			echo '<base href="' . helper::baseUrl(true) .'">';
+			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
+				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
+			}
+			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
+		}
+	}
+
+	/**
+	 * Affiche l'import des librairies
+	 */
+	public function showVendor() {
+		// Variables partagées
+		$vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
+		$vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
+		if(
+			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			AND $this->getUser('group') >= self::GROUP_MODERATOR
+		) {
+			$vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR.'core.json')) . ';';
+		}
+		echo '<script>' . helper::minifyJs($vars) . '</script>';
+		// Librairies
+		$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+		foreach($this->output['vendor'] as $vendorName) {
+			// Coeur
+			if(file_exists('core/vendor/' . $vendorName . '/inc.json')) {
+				$vendorPath = 'core/vendor/' . $vendorName . '/';
+			}
+			// Module
+			elseif(
+				$moduleId
+				AND in_array($moduleId, self::$coreModuleIds) === false
+				AND file_exists('module/' . $moduleId . '/vendor/' . $vendorName . '/inc.json')
+			) {
+				$vendorPath = 'module/' . $moduleId . '/vendor/' . $vendorName . '/';
+			}
+			// Sinon continue
+			else {
+				continue;
+			}
+			// Détermine le type d'import en fonction de l'extension de la librairie
+			$vendorFiles = json_decode(file_get_contents($vendorPath . 'inc.json'));
+			foreach($vendorFiles as $vendorFile) {
+				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
+					case 'css':
+						// Force le rechargement lors d'une mise à jour du jeu d'icônes
+						$reload = $vendorPath === 'core/vendor/zwiico/'
+							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
+							: '';
+						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
+						break;
+					case 'js':
+						echo '<script src="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';
+						break;
+				}
+			}
+		}
+	}
+	/**
+	 * Affiche le cadre avec les drapeaux sélectionnés
+	 */
+	public function showi18n($id) {
+		echo '<div id="i18nContainer' . $id . '"><ul>';
+		foreach (self::$i18nList as $key => $value) {
+			if ($this->getData(['config', 'i18n',$key]) === 'site'
+				OR (
+					$this->getData(['config', 'i18n','scriptGoogle']) === true
+					AND $this->getData(['config', 'i18n',$key]) === 'script'
+				)
+			) {
+				if (
+					(isset($_COOKIE['ZWII_I18N_SITE'] )
+					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
+				    )
+					 OR
+					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
+					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
+				   ) ) {
+					   $select = ' id="i18nFlagSelected" ';
+				   } else {
+					   $select = ' id="i18nFlag" ';
+				   }
+
+				echo '<li>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '</li>';
+			}
+		}
+		echo '</ul></div>';
+	}
 }
 
 class core extends common {
@@ -1124,6 +1916,7 @@ class core extends common {
 		if(empty($_SESSION['csrf'])) {
 			$_SESSION['csrf'] = bin2hex(openssl_random_pseudo_bytes(32));
 		}
+
 		// Fuseau horaire
 		self::$timezone = $this->getData(['config', 'timezone']); // Utile pour transmettre le timezone à la classe helper
 		date_default_timezone_set(self::$timezone);
@@ -1397,6 +2190,7 @@ class core extends common {
 		elseif(is_readable('core/vendor/' . $classPath)) {
 			require 'core/vendor/' . $classPath;
 		}
+
 	}
 
 	/**
@@ -1855,806 +2649,5 @@ class core extends common {
 				require 'core/layout/main.php';
 				break;
 		}
-	}
-}
-
-class layout extends common {
-
-	private $core;
-
-	/**
-	 * Constructeur du layout
-	 */
-	public function __construct(core $core) {
-		parent::__construct();
-		$this->core = $core;
-	}
-
-	/**
-	 * Affiche le script Google Analytics
-	 */
-	public function showAnalytics() {
-		if($code = $this->getData(['config', 'analyticsId'])
-		  AND $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
-			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
-				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
-				<script>
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag("js", new Date());
-					gtag("config","'. $code .'",{ "anonymize_ip": true });
-				</script>';
-		}
-	}
-
-	/**
-	 * Affiche le contenu
-	 * @param Page par défaut
-	 */
-	public function showContent() {
-		if ($this->getData(['config', 'i18n', 'active']) === true) {
-			echo $this->showi18n('Site');
-		}
-		if(
-			$this->core->output['title']
-			AND (
-				$this->getData(['page', $this->getUrl(0)]) === null
-				OR $this->getData(['page', $this->getUrl(0), 'hideTitle']) === false
-				OR $this->getUrl(1) === 'config'
-			)
-		) {
-			echo '<h1 id="sectionTitle">' . $this->core->output['title'] . '</h1>';
-		}
-
-		echo $this->core->output['content'];
-
-		/**
-		 * Affiche les crédits, conditions requis :
-		 * La traduction est active et le site n'est pas en français.
-		 * La fonction est activée.
-		 */
-		if ( $this->getData(['config', 'i18n', 'active']) === true
-			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
-			 AND $this->getData(['config', 'i18n','showCredits']) === true
-			 AND
-				// et la traduction n'est pas manuelle
-				(  $this->getInput('ZWII_I18N_SCRIPT')
-					AND $this->getData(['config', 'i18n', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
-				)
-           )
-		{
-		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
-		}
-	}
-
-
-
-	/**
-	 * Affiche le contenu de la barre gauche
-	 *
-	 */
-	public function showBarContentLeft() {
-		// Détermine si le menu est présent
-		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'none') {
-			// Pas de menu
-			echo $this->core->output['contentLeft'];
-		} else {
-			// $mark contient 0 le menu est positionné à la fin du contenu
-			$contentLeft = str_replace ('[]','[MENU]',$this->core->output['contentLeft']);
-			$contentLeft = str_replace ('[menu]','[MENU]',$contentLeft);
-			$mark = strrpos($contentLeft,'[MENU]')  !== false ? strrpos($contentLeft,'[MENU]') : strlen($contentLeft);
-			echo substr($contentLeft,0,$mark);
-			echo '<div id="menuSideLeft">';
-			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'parents' ? false : true);
-			echo '</div>';
-			echo substr($contentLeft,$mark+6,strlen($contentLeft));
-		}
-	}
-
-	/**
-	 * Affiche le contenu de la barre droite
-	 */
-	public function showBarContentRight() {
-		// Détermine si le menu est présent
-		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'none') {
-			// Pas de menu
-			echo $this->core->output['contentRight'];
-		} else {
-			// $mark contient 0 le menu est positionné à la fin du contenu
-			$contentRight = str_replace ('[]','[MENU]',$this->core->output['contentRight']);
-			$contentRight = str_replace ('[menu]','[MENU]',$contentRight);
-			$mark = strrpos($contentRight,'[MENU]')  !== false ? strrpos($contentRight,'[MENU]') : strlen($contentRight);
-			echo substr($contentRight,0,$mark);
-			echo '<div id="menuSideRight">';
-			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'parents' ? false : true);
-			echo '</div>';
-			echo substr($contentRight,$mark+6,strlen($contentRight));
-		}
-	}
-
-	/**
-	 * Affiche le texte du footer
-	 */
-	public function showFooterText() {
-		if($footerText = $this->getData(['theme', 'footer', 'text']) OR $this->getUrl(0) === 'theme') {
-			echo '<div id="footerText">' . $footerText . '</div>';
-		}
-	}
-
-     /**
-     * Affiche le copyright
-     */
-    public function showCopyright() {
-		// Ouverture Bloc copyright
-		$items = '<div id="footerCopyright">';
-		$items .= '<span id="footerFontCopyright">';
-		// Affichage de motorisé par
-		$items .= '<span id="footerDisplayCopyright" ';
-		$items .= $this->getData(['theme','footer','displayCopyright']) === false ? 'class="displayNone"' : '';
-		$items .= '>Motorisé&nbsp;par&nbsp;</span>';
-		// Toujours afficher le nom du CMS
-		$items .= '<span id="footerZwiiCMS">';
-		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
-		$items .= '</span>';
-		// Affichage du numéro de version
-		$items .= '<span id="footerDisplayVersion"';
-		$items .= $this->getData(['theme','footer','displayVersion']) === false ? ' class="displayNone"' : '';
-		$items .= '><wbr>&nbsp;'. common::ZWII_VERSION ;
-		$items .= '</span>';
-		// Affichage du sitemap
-		$items .= '<span id="footerDisplaySiteMap"';
-		$items .= $this->getData(['theme','footer','displaySiteMap']) ===  false ? ' class="displayNone"' : '';
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap" data-tippy-content="Plan du site" >Plan&nbsp;du&nbsp;site</a>';
-		$items .= '</span>';
-        // Affichage du module de recherche
- 		$items .= '<span id="footerDisplaySearch"';
-		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
-		if ($this->getData(['locale','searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site" >Recherche</a>';
-		}
-		$items .= '</span>';
-		// Affichage des mentions légales
-		$items .= '<span id="footerDisplayLegal"';
-		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
-		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Mentions légales">Mentions légales</a>';
-		}
-		$items .= '</span>';
-		// Affichage du lien de connexion
-		if(
-            (
-                $this->getData(['theme', 'footer', 'loginLink'])
-                AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-            )
-            OR $this->getUrl(0) === 'theme'
-        ) {
-			$items .= '<span id="footerLoginLink" ' .
-			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
-			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">' . template::ico('login') .'</a></span>';
-		}
-		// Affichage de la barre de membre simple
-		if ( $this->getUser('group') === self::GROUP_MEMBER
-			 && $this->getData(['theme','footer','displayMemberBar']) === true
-			) {
-				$items .= '<span id="footerDisplayMemberAccount"';
-				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
-				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
-				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a>';
-				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
-				$items .= '</span>';
-		}
-		// Fermeture du bloc copyright
-        $items .= '</span></div>';
-        echo $items;
-	}
-
-
-	/**
-	 * Affiche les réseaux sociaux
-	 */
-	public function showSocials() {
-		$socials = '';
-		foreach($this->getData(['config', 'social']) as $socialName => $socialId) {
-			switch($socialName) {
-				case 'facebookId':
-					$socialUrl = 'https://www.facebook.com/';
-					$title = 'Facebook';
-					break;
-				case 'linkedinId':
-					$socialUrl = 'https://fr.linkedin.com/in/';
-					$title = 'Linkedin';
-					break;
-				case 'instagramId':
-					$socialUrl = 'https://www.instagram.com/';
-					$title = 'Instagram';
-					break;
-				case 'pinterestId':
-					$socialUrl = 'https://pinterest.com/';
-					$title = 'Pinterest';
-					break;
-				case 'twitterId':
-					$socialUrl = 'https://twitter.com/';
-					$title = 'Twitter';
-					break;
-				case 'youtubeId':
-					$socialUrl = 'https://www.youtube.com/channel/';
-					$title = 'Chaîne YouTube';
-					break;
-				case 'youtubeUserId':
-					$socialUrl = 'https://www.youtube.com/user/';
-					$title = 'YouTube';
-					break;
-				case 'githubId':
-					$socialUrl = 'https://www.github.com/';
-					$title = 'Github';
-					break;
-				default:
-					$socialUrl = '';
-			}
-			if($socialId !== '') {
-				$socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '">' . template::ico(substr(str_replace('User','',$socialName), 0, -2)) . '</a>';
-			}
-		}
-		if($socials !== '') {
-			echo '<div id="footerSocials">' . $socials . '</div>';
-		}
-	}
-
-
-
-	/**
-	 * Affiche le favicon
-	 */
-	public function showFavicon() {
-		// Light scheme
-		$favicon = $this->getData(['config', 'favicon']);
-		if($favicon &&
-			file_exists(self::FILE_DIR.'source/' . $favicon)
-			) {
-			echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $favicon . '">';
-		} else {
-			echo '<link rel="shortcut icon" media="(prefers-color-scheme:light)"  href="' . helper::baseUrl(false) . 'core/vendor/zwiico/ico/favicon.ico">';
-		}
-		// Dark scheme
-		$faviconDark = $this->getData(['config', 'faviconDark']);
-		if(!empty($faviconDark) &&
-		file_exists(self::FILE_DIR.'source/' . $faviconDark)
-		) {
-			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $faviconDark . '">';
-			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
-			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous" type="application/javascript"></script>';
-		}
-	}
-
-
-	/**
-	 * Affiche le menu
-	 */
-	public function showMenu() {
-		// Met en forme les items du menu
-		$itemsLeft = '';
-		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
-		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
-			// Passer les entrées masquées
-			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
-			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
-			// Mise en page de l'item
-			$itemsLeft .= '<li>';
-
-			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
-				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-				 ) OR (
-					$this->getData(['page',$parentPageId,'disable']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getUser('group') < self::GROUP_MODERATOR
-				 )
-			){
-				$itemsLeft .= '<a class="' . $parentPageId . '" href="'. helper::baseUrl() . $this->getUrl(0).'">';
-			} else {
-				$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
-			}
-
-			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
-				case '' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
-				    break;
-				case 'text' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
-				    break;
-				case 'icon' :
-				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    $itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
-				    } else {
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
-				    }
-				    break;
-				case 'icontitle' :
-				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    	$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
-				   	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']).'"/>';
-				    } else {
-				  	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
-				    }
-					break;
-		       }
-			// Cas où les pages enfants enfant sont toutes masquées dans le menu
-			// ne pas afficher de symbole lorsqu'il n'y a rien à afficher
-			$totalChild = 0;
-			$disableChild = 0;
-			foreach($childrenPageIds as $childKey) {
-				$totalChild += 1;
-			}
-			if($childrenPageIds && $disableChild !== $totalChild  &&
-				$this->getdata(['page',$parentPageId,'hideMenuChildren']) === false) {
-				$itemsLeft .= template::ico('down', 'left');
-			}
-			// ------------------------------------------------
-			$itemsLeft .= '</a>';
-			if ($this->getdata(['page',$parentPageId,'hideMenuChildren']) === true ||
-				empty($childrenPageIds)) {
-				continue;
-			}
-			$itemsLeft .= '<ul class="navSub">';
-			foreach($childrenPageIds as $childKey) {
-				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? 'active ' : '';
-				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-				// Mise en page du sous-item
-				$itemsLeft .= '<li>';
-				if ( ( $this->getData(['page',$childKey,'disable']) === true
-						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						) OR (
-						$this->getData(['page',$childKey,'disable']) === true
-						AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getUser('group') < self::GROUP_MODERATOR
-						)
-				){
-					$itemsLeft .= '<a class="' . $parentPageId . '" href="'.helper::baseUrl() . $this->getUrl(0).'">';
-				} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  . '>';
-				}
-
-				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
-					case '' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
-						break;
-					case 'text' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
-						break;
-					case 'icon' :
-						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
-						} else {
-						$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
-						}
-						break;
-					case 'icontitle' :
-						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']).'"/>';
-						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
-						}
-						break;
-					case 'icontext' :
-						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
-						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
-						}
-						break;
-				}
-				$itemsLeft .= '</a></li>';
-			}
-			$itemsLeft .= '</ul>';
-		}
-		// Lien de connexion
-		$itemsRight = '';
-		if(
-			(
-				$this->getData(['theme', 'menu', 'loginLink'])
-				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-			)
-			OR $this->getUrl(0) === 'theme'
-		) {
-			$itemsRight .= '<li id="menuLoginLink" ' .
-			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><a href="' . helper::baseUrl() . 'user/login/' .
-			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'">' . template::ico('login') .'</a></li>';
-		}
-		// Commandes pour les membres simples
-		if($this->getUser('group') == self::GROUP_MEMBER
-			&& ( $this->getData(['theme','menu','memberBar']) === true
-				|| $this->getData(['theme','footer','displayMemberBar']) === false
-				)
-		) {
-			if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $itemsRight .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
-			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
-			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
-		}
-		// Retourne les items du menu
-		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		if ($this->getData(['config', 'i18n', 'active']) === true) {
-			echo $this->showi18n('Nav');
-		}
-	}
-
-	/**
-	 * Générer un menu pour la barre latérale
-	 * Uniquement texte
-	 * @param onlyChildren n'affiche les sous-pages de la page actuelle
-	 */
-	public function showMenuSide($onlyChildren = null) {
-		// Met en forme les items du menu
-		$items = '';
-		// Nom de la page courante
-		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
-		// Nom de la page parente
-		$currentParentPageId = $this->getData(['page',$currentPageId,'parentPageId']);
-		// Détermine si on affiche uniquement le parent et les enfants
-		// Filtre contient le nom de la page parente
-
-		if ($onlyChildren === true) {
-			if (empty($currentParentPageId)) {
-				$filterCurrentPageId = $currentPageId;
-			} else {
-				$filterCurrentPageId = $currentParentPageId;
-			}
-		} else {
-			$items .= '<ul class="menuSide">';
-		}
-
-		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
-			// Ne pas afficher les entrées masquées
-			if ($this->getData(['page',$parentPageId,'hideMenuSide']) === true ) {
-				continue;
-			}
-			// Filtre actif et nom de la page parente courante différente, on sort de la boucle
-			if ($onlyChildren === true && $parentPageId !== $filterCurrentPageId) {
-				continue;
-			}
-			// Propriétés de l'item
-			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? ' class="active"' : '';
-			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank" ' : '';
-			// Mise en page de l'item;
-			// Ne pas afficher le parent d'une sous-page quand l'option est sélectionnée.
-			if ($onlyChildren === false) {
-				$items .= '<li class="menuSideChild">';
-				if ( $this->getData(['page',$parentPageId,'disable']) === true
-					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$items .= '<a href="'.$this->getUrl(1).'">';
-				} else {
-						$items .= '<a href="'. helper::baseUrl() . $parentPageId . '"' . $targetBlank .  $active .'>';
-				}
-				$items .= $this->getData(['page', $parentPageId, 'title']);
-				$items .= '</a>';
-			}
-			$itemsChildren = '';
-			foreach($childrenPageIds as $childKey) {
-				// Passer les entrées masquées
-				if ($this->getData(['page',$childKey,'hideMenuSide']) === true ) {
-					continue;
-				}
-
-				// Propriétés de l'item
-				$active = ($childKey === $currentPageId) ? ' class="active"' : '';
-				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-				// Mise en page du sous-item
-				$itemsChildren .= '<li class="menuSideChild">';
-
-				if ( $this->getData(['page',$childKey,'disable']) === true
-					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')	) {
-						$itemsChildren .= '<a href="'.$this->getUrl(1).'">';
-				} else {
-					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>';
-				}
-
-				$itemsChildren .= $this->getData(['page', $childKey, 'title']);
-				$itemsChildren .= '</a></li>';
-			}
-			// Concatène les items enfants
-			if (!empty($itemsChildren)) {
-				$items .= '<ul class="menuSideChild">';
-				$items .= $itemsChildren;
-				$items .= '</ul>';
-			} else {
-				$items .= '</li>';
-			}
-
-		}
-		if ($onlyChildren === false) {
-			$items .= '</ul>';
-		}
-		// Retourne les items du menu
-		echo  $items;
-	}
-
-
-
-	/**
-	 * Affiche le meta titre
-	 */
-	public function showMetaTitle() {
-		echo '<title>' . $this->core->output['metaTitle'] . '</title>';
-		echo '<meta property="og:title" content="' . $this->core->output['metaTitle'] . '" />';
-		echo '<link rel="canonical" href="'. helper::baseUrl(true).$this->getUrl() .'" />';
-	}
-
-	/**
-	 * Affiche la meta description
-	 */
-	public function showMetaDescription() {
-			echo '<meta name="description" content="' . $this->core->output['metaDescription'] . '" />';
-			echo '<meta property="og:description" content="' . $this->core->output['metaDescription'] . '" />';
-	}
-
-	/**
-	 * Affiche le meta type
-	 */
-	public function showMetaType() {
-		echo '<meta property="og:type" content="website" />';
-	}
-
-	/**
-	 * Affiche la meta image (site screenshot)
-	 */
-	public function showMetaImage() {
-		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
-	}
-
-
-
-	/**
-	 * Affiche la notification
-	 */
-	public function showNotification() {
-		if (common::$importNotices) {
-			$notification = common::$importNotices [0];
-			$notificationClass = 'notificationSuccess';
-		}
-		if(common::$inputNotices) {
-			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
-			$notificationClass = 'notificationError';
-		}
-		if (common::$coreNotices) {
-			$notification = 'Données absentes, restauration de <p> | ';
-			foreach (common::$coreNotices as $item) $notification .= $item . ' | ';
-			$notificationClass = 'notificationError';
-		}
-		elseif(empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
-			$notification = $_SESSION['ZWII_NOTIFICATION_SUCCESS'];
-			$notificationClass = 'notificationSuccess';
-			unset($_SESSION['ZWII_NOTIFICATION_SUCCESS']);
-		}
-		elseif(empty($_SESSION['ZWII_NOTIFICATION_ERROR']) === false) {
-			$notification = $_SESSION['ZWII_NOTIFICATION_ERROR'];
-			$notificationClass = 'notificationError';
-			unset($_SESSION['ZWII_NOTIFICATION_ERROR']);
-		}
-		elseif(empty($_SESSION['ZWII_NOTIFICATION_OTHER']) === false) {
-			$notification = $_SESSION['ZWII_NOTIFICATION_OTHER'];
-			$notificationClass = 'notificationOther';
-			unset($_SESSION['ZWII_NOTIFICATION_OTHER']);
-		}
-		if(isset($notification) AND isset($notificationClass)) {
-			echo '<div id="notification" class="' . $notificationClass . '">' . $notification . '<span id="notificationClose">' . template::ico('cancel') . '<!----></span><div id="notificationProgress"></div></div>';
-		}
-	}
-
-	/**
-	 * Affiche la barre de membre
-	 */
-	public function showBar() {
-		if($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
-			// Items de gauche
-			$leftItems = '';
-			if($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$leftItems .= '<li><select id="barSelectPage">';
-				$leftItems .= '<option value="">Choisissez une page</option>';
-				$leftItems .= '<optgroup label="Pages orphelines">';
-				$orpheline = true ;
-				$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
-				foreach($this->getHierarchy(null,false) as $parentPageId => $childrenPageIds) {
-					if ($this->getData(['page', $parentPageId, 'position']) !== 0  &&
-						$orpheline ) {
-							$orpheline = false;
-							$leftItems .= '<optgroup label="Pages du menu">';
-					}
-					// Exclure les barres
-					if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
-						$leftItems .= '<option value="' .
-									helper::baseUrl() .
-									$parentPageId . '"' .
-									($parentPageId === $currentPageId ? ' selected' : false) .
-									($this->getData(['page', $parentPageId, 'disable']) === true ? ' class="inactive"' : '') .
-									'>' .
-									$this->getData(['page', $parentPageId, 'title']) .
-									'</option>';
-						foreach($childrenPageIds as $childKey) {
-							$leftItems .= '<option value="' .
-											helper::baseUrl() .
-											$childKey . '"' .
-											($childKey === $currentPageId ? ' selected' : false) .
-											($this->getData(['page', $childKey, 'disable']) === true ? ' class="inactive"' : '') .
-											'>&nbsp;&nbsp;&nbsp;&nbsp;' .
-											$this->getData(['page', $childKey, 'title']) .
-											'</option>';
-						}
-					}
-				}
-				$leftItems .= '</optgroup'>
-				// Afficher les barres
-				$leftItems .= '<optgroup label="Barres latérales">';
-				foreach($this->getHierarchy(null, false,true) as $parentPageId => $childrenPageIds) {
-					$leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'title']) . '</option>';
-					foreach($childrenPageIds as $childKey) {
-						$leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']) . '</option>';
-					}
-				}
-				$leftItems .= '</optgroup>';
-				$leftItems .= '</select></li>';
-				$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/add" data-tippy-content="Créer une page ou<br>une barre latérale">' . template::ico('plus') . '</a></li>';
-				if(
-					// Sur un module de page qui autorise le bouton de modification de la page
-					$this->core->output['showBarEditButton']
-					// Sur une page sans module
-					OR $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
-					// Sur une page d'accueil
-					OR $this->getUrl(0) === ''
-				) {
-					$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '" data-tippy-content="Modifier la page">' . template::ico('pencil') . '</a></li>';
-					if ($this->getData(['page', $this->getUrl(0),'moduleId'])) {
-						$leftItems .= '<li><a href="' . helper::baseUrl() . $this->getUrl(0) . '/config' . '" data-tippy-content="Configurer le module">' . template::ico('gear') . '</a></li>';
-					}
-					$leftItems .= '<li><a id="pageDuplicate" href="' . helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Dupliquer la page">' . template::ico('clone') . '</a></li>';
-					$leftItems .= '<li><a id="pageDelete" href="' . helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Effacer la page">' . template::ico('trash') . '</a></li>';
-				}
-			}
-			// Items de droite
-			$rightItems = '';
-			if($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
-			}
-			if($this->getUser('group') >= self::GROUP_ADMIN) {
-				if ($this->getData(['config', 'i18n', 'active']) === true) {
-					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
-				}
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
-				// Mise à jour automatique
-				$today = mktime(0, 0, 0);
-				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
-				if ( $this->getData(['config','autoUpdate']) === true
-					AND $today > $this->getData(['core','lastAutoUpdate']) + 86400 ) {
-						if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) ) {
-							$this->setData(['core','updateAvailable', true]);
-							$this->setData(['core','lastAutoUpdate',$today]);
-						}
-				}
-				// Afficher le bouton : Mise à jour détectée + activée
-				if ( $this->getData(['core','updateAvailable']) === true &&
-					$this->getData(['config','autoUpdate']) === true  ) {
-					$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii '. common::ZWII_VERSION .' vers '. helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) .'">' . template::ico('update colorRed') . '</a></li>';
-				}
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
-			}
-			$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
-			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
-			// Barre de membre
-			echo '<div id="bar"><div class="container"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div></div>';
-		}
-	}
-
-	/**
-	 * Affiche le script
-	 */
-	public function showScript() {
-		ob_start();
-		require 'core/core.js.php';
-		$coreScript = ob_get_clean();
-		echo '<script>' . helper::minifyJs($coreScript . $this->core->output['script']) . '</script>';
-	}
-
-	/**
-	 * Affiche le style
-	 */
-	public function showStyle() {
-		if($this->core->output['style']) {
-			echo '<base href="' . helper::baseUrl(true) .'">';
-			if (strpos($this->core->output['style'], 'admin.css') >= 1 ) {
-				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
-			}
-			echo '<style type="text/css">' . helper::minifyCss($this->core->output['style']) . '</style>';
-		}
-	}
-
-	/**
-	 * Affiche l'import des librairies
-	 */
-	public function showVendor() {
-		// Variables partagées
-		$vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
-		$vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
-		if(
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			AND $this->getUser('group') >= self::GROUP_MODERATOR
-		) {
-			$vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR.'core.json')) . ';';
-		}
-		echo '<script>' . helper::minifyJs($vars) . '</script>';
-		// Librairies
-		$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
-		foreach($this->core->output['vendor'] as $vendorName) {
-			// Coeur
-			if(file_exists('core/vendor/' . $vendorName . '/inc.json')) {
-				$vendorPath = 'core/vendor/' . $vendorName . '/';
-			}
-			// Module
-			elseif(
-				$moduleId
-				AND in_array($moduleId, self::$coreModuleIds) === false
-				AND file_exists('module/' . $moduleId . '/vendor/' . $vendorName . '/inc.json')
-			) {
-				$vendorPath = 'module/' . $moduleId . '/vendor/' . $vendorName . '/';
-			}
-			// Sinon continue
-			else {
-				continue;
-			}
-			// Détermine le type d'import en fonction de l'extension de la librairie
-			$vendorFiles = json_decode(file_get_contents($vendorPath . 'inc.json'));
-			foreach($vendorFiles as $vendorFile) {
-				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
-					case 'css':
-						// Force le rechargement lors d'une mise à jour du jeu d'icônes
-						$reload = $vendorPath === 'core/vendor/zwiico/'
-							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
-							: '';
-						echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . $vendorPath . $vendorFile . $reload . '">';
-						break;
-					case 'js':
-						echo '<script src="' . helper::baseUrl(false) . $vendorPath . $vendorFile . '"></script>';
-						break;
-				}
-			}
-		}
-	}
-	/**
-	 * Affiche le cadre avec les drapeaux sélectionnés
-	 */
-	public function showi18n($id) {
-		echo '<div id="i18nContainer' . $id . '"><ul>';
-		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config', 'i18n',$key]) === 'site'
-				OR (
-					$this->getData(['config', 'i18n','scriptGoogle']) === true
-					AND $this->getData(['config', 'i18n',$key]) === 'script'
-				)
-			) {
-				if (
-					(isset($_COOKIE['ZWII_I18N_SITE'] )
-					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
-				    )
-					 OR
-					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
-					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
-				   ) ) {
-					   $select = ' id="i18nFlagSelected" ';
-				   } else {
-					   $select = ' id="i18nFlag" ';
-				   }
-
-				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
-				echo '</li>';
-			}
-		}
-		echo '</ul></div>';
 	}
 }
