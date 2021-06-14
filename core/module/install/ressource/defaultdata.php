@@ -32,6 +32,20 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'captcha' => true
+			],
+			"i18n" => [
+				"active"=> true,
+				"scriptGoogle"=> false,
+				"showCredits"=> false,
+				"autoDetect"=> false,
+				"admin"=> false,
+				"fr"=> "none",
+				"de"=> "none",
+				"en"=> "none",
+				"es"=> "none",
+				"it"=> "none",
+				"nl"=> "none",
+				"pt"=> "none"
 			]
 		],
 		'core' => [

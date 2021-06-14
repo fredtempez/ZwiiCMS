@@ -401,7 +401,7 @@ class config extends common {
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
 				]
 			]);
-			$this->setData(['config', 'i18n', 'enabled', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
+			$this->setData(['config', 'i18n', 'active', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
 			// Valeurs en sortie
@@ -481,7 +481,7 @@ class config extends common {
 						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [
-						'enabled' => $this->getData(['config', 'i18n', 'enabled'])
+						'active' => $this->getData(['config', 'i18n', 'active'])
 					]
 				]
 			]);
