@@ -401,7 +401,7 @@ class page extends common {
 						'typeMenu' => $this->getinput('pageTypeMenu'),
 						'iconUrl' => $this->getinput('pageIconUrl'),
 						'disable'=> $this->getinput('pageEditDisable', helper::FILTER_BOOLEAN),
-						'content' => (empty($this->getInput('pageEditContent', null)) ? '<p>&nbsp;</p>' : $this->getInput('pageEditContent', null)),
+						'content' => (empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null))),
 						'hideTitle' => $hideTitle,
 						'breadCrumb' => $this->getInput('pageEditbreadCrumb', helper::FILTER_BOOLEAN),
 						'metaDescription' => $this->getInput('pageEditMetaDescription', helper::FILTER_STRING_LONG),
