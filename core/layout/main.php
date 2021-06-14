@@ -1,4 +1,5 @@
-<?php $lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
+<?php $layout = new layout($this); 
+$lan = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2); ?>
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#" lang="<?php echo $lan;?>">
 	<head>
