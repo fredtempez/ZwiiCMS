@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('configAdvancedHelp', [
+			<?php echo template::button('translateAdvancedHelp', [
 				'class' => 'buttonHelp',
 				'ico' => 'help',
 				'value' => 'Aide'
@@ -29,7 +29,7 @@
 	</div>
 	<!-- Aide à propos de la configuration du site, view advanced -->
 	<div class="helpDisplayContent">
-		<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
+		<?php echo file_get_contents( 'core/module/translate/view/index/index.help.html') ;?>
 	</div>
 	<div class="row">
 		<div class="col12">
