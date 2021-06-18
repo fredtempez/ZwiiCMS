@@ -103,6 +103,7 @@ class translate extends common {
 			}
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
+				if ($keyi18n === 'fr') continue;
 				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
 					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'delete')
@@ -115,19 +116,9 @@ class translate extends common {
 					AND is_dir(self::DATA_DIR . $keyi18n) === false )
 				{
 
-
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/page.json')) {
-						echo $keyi18n;
-						$this->initData('page', $keyi18n, false);
-					}
-
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/module.json')) {
-						$this->initData('module', $keyi18n, false);
-					}
-
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/locale.json')) {
-						$this->initData('locale', $keyi18n, false);
-					}
+					helper::deleteCookie('ZWII_I18N_SITE');
+					helper::deleteCookie('ZWII_I18N_SCRIPT');
+					setcookie('ZWII_I18N_SITE', $keyi18n, time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 
 				}
 				// Active le script si une langue est en trad auto
@@ -136,6 +127,7 @@ class translate extends common {
 						$script = true;
 					}
 			}
+
 			// Enregistrement des données
 			$this->setData(['config','i18n', [
 				'active'			=> $this->getData(['config', 'i18n', 'active']),
