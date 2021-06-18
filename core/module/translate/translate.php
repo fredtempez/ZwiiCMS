@@ -96,11 +96,11 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Désactivation du script Google
-			if ($this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) === false) {
+			$script = $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN);
+			if ($script === false) {
 				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
 				$_SESSION['googtrans'] = '/fr/fr';
 			}
-			$script = $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN);
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
 				// Effacement d'une langue installée
@@ -111,15 +111,24 @@ class translate extends common {
 				}
 				// Installation d'une langue
 				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site'
+					// Pas d'initialisation si la langue existe déjà
 					AND is_dir(self::DATA_DIR . $keyi18n) === false )
 				{
-					// Pas d'initialisation si la langue existe déjà
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/page.json'))
+
+
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/page.json')) {
+						echo $keyi18n;
 						$this->initData('page', $keyi18n, false);
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/module.json'))
+					}
+
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/module.json')) {
 						$this->initData('module', $keyi18n, false);
-					if (!file_exists( self::DATA_DIR . $keyi18n . '/locale.json'))
+					}
+
+					if (!file_exists( self::DATA_DIR . $keyi18n . '/locale.json')) {
 						$this->initData('locale', $keyi18n, false);
+					}
+
 				}
 				// Active le script si une langue est en trad auto
 				if ($script === false
@@ -182,13 +191,13 @@ class translate extends common {
 	 */
 	public function language() {
 
-		// Activation du drapeau 
+		// Activation du drapeau
 		if ( $this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2) ) {
 			// Nettoyer et stocker le choix de l'utilisateur
 			helper::deleteCookie('ZWII_I18N_SITE');
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Sélectionner
-			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);	
+			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 		// Désactivation du drapeau, langue FR par défaut
 		} else {
 			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
