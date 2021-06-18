@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('configAdvancedHelp', [
+			<?php echo template::button('translateAdvancedHelp', [
 				'class' => 'buttonHelp',
 				'ico' => 'help',
 				'value' => 'Aide'
@@ -29,8 +29,8 @@
 	</div>
 	<!-- Aide à propos de la configuration du site, view advanced -->
 	<div class="helpDisplayContent">
-		<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
-	</div>	
+		<?php echo file_get_contents( 'core/module/translate/view/index/index.help.html') ;?>
+	</div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
@@ -135,15 +135,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-
-	<div class="col10 helpDisplayContent">
-		<p>Vous avez le choix entre une traduction automatique réalisée avec le script Google Traduction ou une traduction rédigée. La traduction automatique offre deux possibilités, la détection automatique de la langue du navigateur même celle-ci n'est pas
-		matérialisée par un drapeau. Le clic sur un drapeau forcera la traduction dans cette langue, pour cela sélectionnez le drapeau puis l'option de "Traduction automatique".
-		La traduction automatique est réalisée à partir du site en version française.</p>
-		<p>Avec l'option "Traduction rédigée", une nouveau sité est généré, seule la page d'accueil est crée, il faut alors rédiger les pages dans la langue sélectionnée.
-		Il est possible de copier les pages et les modules  d'une langue vers une autre à l'aide de l'utilitaire de copie.
-		Quand un drapeau est masqué, la traduction est effacée, pensez à sauvegarder.
-		Afficher le drapeau français  pour revenir à la traduction dans la langue originale.</p>
 	</div>
 <?php echo template::formClose(); ?>

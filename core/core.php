@@ -522,8 +522,8 @@ class common {
 		require_once('core/module/install/ressource/defaultdata.php');
 
 		// Stockage dans un sous-dossier localisé
-		if (!file_exists(self::DATA_DIR . '/' . $lang)) {
-			mkdir (self::DATA_DIR . '/' . $lang);
+		if (!file_exists(self::DATA_DIR .  $lang)) {
+			mkdir (self::DATA_DIR .$lang);
 		}
 		$db = $this->dataFiles[$module];
 		if ($sampleSite === true) {
