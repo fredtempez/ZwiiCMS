@@ -94,19 +94,6 @@ class init extends common {
 		],
 		'module' => [],
 		'user' => [],
-		'i18n' => [
-			'scriptGoogle' => false,
-			'showCredits' => false,
-			'autoDetect' => false,
-			'admin' => false,
-			'fr' => 'none',
-			'de' => 'none',
-			'en' => 'none',
-			'es' => 'none',
-			'it' => 'none',
-			'nl' => 'none',
-			'pt' => 'none'
-		],
 		'theme' =>  [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
@@ -781,6 +768,16 @@ class init extends common {
 					]
 				]
 			]
+		],
+		'locale' => [
+			'homePageId' => 'accueil',
+			'page302' => 'none',
+			'page403' => 'none',
+			'page404' => 'none',
+			'legalPageId' => 'none',
+			'searchPageId' => 'none',
+			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
+			'title' => 'Votre site en quelques clics !'
 		]
     ];
 
