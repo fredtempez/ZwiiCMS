@@ -104,23 +104,17 @@ class translate extends common {
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
 				if ($keyi18n === 'fr') continue;
+
 				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
 					AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'delete')
-				 {
-						$this->removeDir( self::DATA_DIR . $keyi18n);
-				}
-				// Installation d'une langue
-				if ( $this->getInput('translate' . strtoupper($keyi18n)) === 'site'
-					// Pas d'initialisation si la langue existe déjà
-					AND is_dir(self::DATA_DIR . $keyi18n) === false )
 				{
-
-					helper::deleteCookie('ZWII_I18N_SITE');
-					helper::deleteCookie('ZWII_I18N_SCRIPT');
-					setcookie('ZWII_I18N_SITE', $keyi18n, time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-
+						$this->removeDir( self::DATA_DIR . $keyi18n);
+						// Au cas ou la langue est sélectionnée
+						helper::deleteCookie('ZWII_I18N_SITE');
+						helper::deleteCookie('ZWII_I18N_SCRIPT');
 				}
+
 				// Active le script si une langue est en trad auto
 				if ($script === false
 					AND $this->getInput('translate'. strtoupper($keyi18n)) === 'script') {
