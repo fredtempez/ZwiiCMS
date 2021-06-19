@@ -2422,9 +2422,9 @@ class layout extends common {
 			$notificationClass = 'notificationError';
 		}
 		if (common::$coreNotices) {
-			$notification = 'Données absentes, restauration de <p> | ';
-			foreach (common::$coreNotices as $item) $notification .= $item . ' | ';
-			$notificationClass = 'notificationError';
+			$notification = 'Installation des données :<p> ';
+			foreach (common::$coreNotices as $item) $notification .= $item . ' ';
+			$notificationClass = 'notificationSuccess';
 		}
 		elseif(empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
 			$notification = $_SESSION['ZWII_NOTIFICATION_SUCCESS'];
