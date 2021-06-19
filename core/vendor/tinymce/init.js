@@ -25,7 +25,7 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons nonbreaking",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons nonbreaking",
 	// Contenu de la barre d'outils
 	toolbar: "restoredraft | undo redo | formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
 	// Emoticons
@@ -96,8 +96,10 @@ tinymce.init({
 	link_context_toolbar: true,
 	// Cache la barre de statut
 	statusbar: false,
-	// Active le copié collé à partir du Web
+	// Bloque le collage blob
 	paste_data_images: false,
+	// Bloque le lâché déplacé
+	paste_block_drop: true,
 	// Active le copié collé à partir du presse papier
 	paste_filter_drop: false,
 	/* Eviter BLOB à tester

@@ -44,7 +44,8 @@ class common {
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '10.6.02';
+	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
+	const ZWII_VERSION = '10.6.03';
 	const ZWII_UPDATE_CHANNEL = "v10";
 
 	public static $actions = [];
@@ -3053,7 +3054,7 @@ class layout extends common {
 			foreach($vendorFiles as $vendorFile) {
 				switch(pathinfo($vendorFile, PATHINFO_EXTENSION)) {
 					case 'css':
-						// Force le rechargement lors d'une mise à jour² du jeu d'icônes
+						// Force le rechargement lors d'une mise à jour du jeu d'icônes
 						$reload = $vendorPath === 'core/vendor/zwiico/'
 							? '?' . md5_file('core/vendor/zwiico/css/zwiico-codes.css')
 							: '';

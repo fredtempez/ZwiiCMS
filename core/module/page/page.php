@@ -88,6 +88,8 @@ class page extends common {
 		// Duplication de la page
 		$pageTitle = $this->getData(['page',$url[0],'title']);
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+		$pageId = helper::increment($pageId, self::$coreModuleIds);
+		$pageId = helper::increment($pageId, self::$moduleIds);
 		$data = $this->getData([
 			'page',
 			$url[0]
@@ -399,7 +401,7 @@ class page extends common {
 						'typeMenu' => $this->getinput('pageTypeMenu'),
 						'iconUrl' => $this->getinput('pageIconUrl'),
 						'disable'=> $this->getinput('pageEditDisable', helper::FILTER_BOOLEAN),
-						'content' => (empty($this->getInput('pageEditContent', null)) ? '<p>&nbsp;</p>' : $this->getInput('pageEditContent', null)),
+						'content' => (empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null))),
 						'hideTitle' => $hideTitle,
 						'breadCrumb' => $this->getInput('pageEditbreadCrumb', helper::FILTER_BOOLEAN),
 						'metaDescription' => $this->getInput('pageEditMetaDescription', helper::FILTER_STRING_LONG),

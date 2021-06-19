@@ -1,5 +1,12 @@
 # Changelog
 
+## version 10.6.03
+- Correction :
+    - Module actualités (news), version 3.3, le flux RSS affiche l'ensemble des articles plutôt que ceux de la page courante.
+- Modifications :
+    - Installation  : livraison des fichiers de thème du site de test dans une archive afin de ne plus différencier les archives d'installation et de mise à jour.
+    - Mises à jour : les mises à jour s'effectue à partir de la forge plutôt que sur le site zwiicms.fr
+
 ## version 10.6.02
 - Correction :
     - Débordement  lors du téléchargement des fichiers journaux.

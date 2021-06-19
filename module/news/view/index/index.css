@@ -58,6 +58,7 @@
     display: inline;
     vertical-align: top;
 }
+/*
 @media (min-width: 769px)
 {
 	.col2 {width: 20%;}
@@ -79,4 +80,5 @@
 	.col3 {width: 100%;}
 	.col4 {width: 100%;}
 }
+*/
 

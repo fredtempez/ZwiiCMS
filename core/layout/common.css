@@ -691,36 +691,64 @@ li .menuSideChild {
 
 /* Container des drapeaux */
 
-#i18nContainer {
-	z-index: 100;
+
+#i18nContainerNav, #i18nContainerSite {
 	position: relative ;
 	float: right;
-	width: auto;
+	/*width: auto;
 	height: auto;
-	margin-top: -25px;
+	margin-top: -25px;*/
 }
 
-#i18nContainer ul {
+#i18nContainerNav ul, #i18nContainerSite ul {
 	list-style: none;
 }
 
-#i18nContainer li {
+#i18nContainerNav li, #i18nContainerSite li {
 	display: inline-block;
 	position: relative;
 }
 
-#i18nContainer img {
-	width: 80%;
+#i18nFlag {
+	width: 70%;
+}
+
+#i18nFlagSelected {
+	width: 100%;
 }
 
 
+/*
+* Position du bloc dans le site sur les petits écrans
+*/
 
-
-#i18nContainer img {
-	margin: 2px;
+#i18nContainerNav {
+	display: block;
+}
+#i18nContainerSite {
+	display: none;
 }
 
+@media screen and (max-width:1024px){
+	#i18nContainerNav {
+	  display: none;
+	}
+	#i18nContainerSite {
+	  display: block;
+	  margin-top: -10px;
+	}
 
+	#i18nFlag {
+		width: 100%;
+		padding: 5px;
+	}
+	
+	#i18nFlagSelected {
+		width: 130%;
+		padding:  5px;
+	}
+	
+  }
 
 
 
@@ -1030,6 +1058,7 @@ footer #footerSocials .zwiico-github:hover {
 	-ms-user-select: none;
 	user-select: none;
 }
+
 
 /* Lightbox */
 .lightbox {
@@ -1709,4 +1738,8 @@ th.col12 {
   box-shadow: 5px 5px 11px 0px #222222;
   border-radius: 5px;
   z-index: 30;
+}
+
+.helpDisplayButton {
+    cursor: pointer;
 }

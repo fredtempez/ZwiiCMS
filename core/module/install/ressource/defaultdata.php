@@ -139,7 +139,7 @@ class init extends common {
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
 				'height' => '150px',
-				'image' => 'banniere/zwii_banniere_norvege-960px.jpg',
+				'image' => 'banniere960.jpg',
 				'imagePosition' => 'center center',
 				'imageRepeat' => 'no-repeat',
 				'margin' => false,
