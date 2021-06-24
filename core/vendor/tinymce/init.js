@@ -25,7 +25,7 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons nonbreaking",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor emoticons nonbreaking",
 	// Contenu de la barre d'outils
 	toolbar: "restoredraft | undo redo | formatselect bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist emoticons | table template | image media link | code fullscreen",
 	// Emoticons
@@ -96,12 +96,8 @@ tinymce.init({
 	link_context_toolbar: true,
 	// Cache la barre de statut
 	statusbar: false,
-	// Bloque le collage blob
-	paste_data_images: false,
-	// Bloque le lâché déplacé
-	paste_block_drop: true,
-	// Active le copié collé à partir du presse papier
-	paste_filter_drop: false,
+	// Coller images blob
+	paste_data_images: true,
 	/* Eviter BLOB à tester
 	images_dataimg_filter: function(img) {
 		return img.hasAttribute('internal-blob');
@@ -298,7 +294,7 @@ tinymce.init({
 	// Cache la barre de statut
 	statusbar: false,
 	// Autorise le copié collé à partir du web
-	paste_data_images: false,
+	paste_data_images: true,
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
 	media_dimensions: true,
 	// Désactiver la dimension des images
