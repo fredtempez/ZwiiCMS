@@ -57,7 +57,7 @@ class page extends common {
 		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
-	public static $content = '';
+
 
 	/**
 	 * Duplication

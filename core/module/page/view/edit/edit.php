@@ -96,7 +96,7 @@ echo template::formOpen('pageEditForm');
 		<div class="col12">
 			<?php echo template::textarea('pageEditContent', [
 				'class' => 'editorWysiwyg',
-				'value' => $module::$content
+				'value' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' .  $this->getData(['page', $this->getUrl(2), 'content']))
 			]); ?>
 		</div>
 	</div>
