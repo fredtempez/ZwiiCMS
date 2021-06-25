@@ -490,8 +490,6 @@ class page extends common {
 						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 					}
 			}
-			// Contenu de la page
-			self::$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' .  $this->getData(['page', $this->getUrl(2), 'content']));
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
