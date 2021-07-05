@@ -133,9 +133,9 @@ class news extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Crée la news
-			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0)]));
+			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0), 'posts']));
 			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
-			$publishedOff = $this->getInput('newsAddPublishedOff' ) ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
+			$publishedOff = $this->getInput('newsAddPublishedOff' ) ? $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME) : '';
 			$this->setData(['module', $this->getUrl(0),'posts', $newsId, [
 				'content' => $this->getInput('newsAddContent', null),
 				'publishedOn' => $publishedOn,
@@ -329,7 +329,7 @@ class news extends common {
 				$newsId = $this->getInput('newsEditTitle', helper::FILTER_ID, true);
 				if($newsId !== $this->getUrl(2)) {
 					// Incrémente le nouvel id de la news
-					$newsId = helper::increment($newsId, $this->getData(['module', $this->getUrl(0)]));
+					$newsId = helper::increment($newsId, $this->getData(['module', $this->getUrl(0), 'posts']));
 					// Supprime l'ancien news
 					$this->deleteData(['module', $this->getUrl(0),'posts', $this->getUrl(2)]);
 				}
