@@ -9,6 +9,8 @@
         - Traduction selon la langue navigateur
     - Données de site :
         - Le contenu des pages est désormais stocké en dehors du fichier page.json mais dans des fichiers html placés dans un sous-dossier "content" du dossier de langue.
+    - Droits des utilisateurs :
+        - Le compte membre pourra disposer d'un répertoire partagé avec les administrateurs et les éditeurs.
     - Configuration du site :
         - Activation et désactivation de la déconnexion automatique empêchant plusieurs sessions avec le même compte.
         - Suppression de l'option articles par pages désormais intégrées aux modules.
