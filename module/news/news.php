@@ -507,7 +507,6 @@ class news extends common {
 		// Mise à jour 3.4
 		if (version_compare($versionData, '3.4', '<') ) {
 			$this->deleteData(['module',$this->getUrl(0),'theme']);
-			unlink(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css');
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
 				$this->removeDir(self::DATADIRECTORY . $this->getUrl(0));
 			}
