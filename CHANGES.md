@@ -1,8 +1,9 @@
 # Changelog
 
 
-## Version 11.0.00
+## Version 11.0.03
 - Modifications :
+    - Intégration de la classe layout dans la classe core
     - Gestion multi-langues
         - Traduction rédigée dans une langue européenne
         - Traduction automatique dans une langue européenne
