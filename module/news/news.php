@@ -521,15 +521,15 @@ class news extends common {
 	private function init() {
 
 
-		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css';
+		//$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css';
 
 		// Données du module absentes
 		if ($this->getData(['module', $this->getUrl(0), 'config' ]) === null) {
 			require_once('module/news/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 			// Données de thème
-			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .   $this->getUrl(0) . '/theme.css' ]);
+			//$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
+			//$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .   $this->getUrl(0) . '/theme.css' ]);
 		}
 
 		// Dossier de l'instance
