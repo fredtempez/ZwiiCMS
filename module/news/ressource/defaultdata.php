@@ -5,6 +5,7 @@ class init extends search {
         'feedsLabel'         => '',
         'itemsperPage'       => 8,
         'itemsperCol'        => 12,
+        'height'             => 1000,
         'versionData'        => '3.4'
     ];
     /*
