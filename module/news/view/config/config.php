@@ -38,31 +38,24 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col3">
+					<div class="col4">
 						<?php echo template::select('newsConfigItemsperCol', $module::$columns, [
 							'label' => 'Pagination',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']),
 							'help' => 'Nombre de colonnes par page'
 						]); ?>
 					</div>
-					<div class="col3">
+					<div class="col4">
 						<?php echo template::select('newsConfigItemsperPage', $module::$itemsList, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 						]); ?>
 					</div>
-					<div class="col3">
-						<?php echo template::select('newsConfigItemsHeight', $module::$itemsHeight, [
+					<div class="col4">
+						<?php echo template::select('newsConfigHeight', $module::$height, [
 							'label' => 'Hauteur',
-							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsHeight']),
+							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'height']),
 							'help' => 'Limite la hauteur de l\'article, cette option est utile lorsque la pagination en colonnes est activée.'
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::select('newsConfigItemsBlur', $module::$itemsBlur, [
-							'label' => 'Effet flou',
-							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'itemsBlur']),
-							'help' => 'Effet appliqué en bas de l\'article afin d\'éviter une coupure brutale quand la hauteur de l\'article n\'est pas définie sur Article Complet'
 						]); ?>
 					</div>
 				</div>

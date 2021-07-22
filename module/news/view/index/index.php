@@ -7,8 +7,9 @@
 				</h2>
 				<div class="newsContent">
 					<?php echo $news['content']; ?>
-					<div class="newsBlur">
-					</div>
+					<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'height']) !== 1000):?>
+					<?php echo ' ... <a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '"><span class="newsSuite">lire la suite</span></a>'; ?>
+					<?php endif; ?>
 				</div>
 				<div class="newsSignature">
 					<i class="far fa-calendar-alt"></i>

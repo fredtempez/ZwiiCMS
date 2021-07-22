@@ -15,8 +15,8 @@
 
 class news extends common {
 
-	const VERSION = '3.3';
-	const REALNAME = 'Actualités';
+	const VERSION = '3.4';
+	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
 	const DATADIRECTORY =  self::DATA_DIR . 'news/';
@@ -60,18 +60,11 @@ class news extends common {
 	];
 	public static $nbrCol = 1;
 
-	public static $itemsHeight = [
-		'200px' 	=> 'Petite',
-		'300px' 	=> 'Moyenne',
-		'400px' 	=> 'Grande',
-		'auto'		=> 'Article complet'
-	];
-
-	public static $itemsBlur = [
-		'0%'		=> 'Aucun',
-		'15%' 		=> 'Faible',
-		'30%' 		=> 'Modéré',
-		'45%' 		=> 'Important',
+	public static $height = [
+		200 	=> 'Petite',
+		400 	=> 'Moyenne',
+		600 	=> 'Grande',
+		1000		=> 'Article complet'
 	];
 
 	// Signature de l'article
@@ -184,12 +177,12 @@ class news extends common {
 		if($this->isPost()) {
 
 			// Générer la feuille de CSS
-			$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
-				$style .= '.newsBlur {height: ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ';}';
+			//$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
+			//if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
+			//	$style = '.newsBlur {height: ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ';}';
 				//$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
 				//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
-			}
+			//}
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
@@ -202,8 +195,8 @@ class news extends common {
 
 			$this->setData(['module', $this->getUrl(0), 'theme',[
 				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
-				'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
-				'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
+				//'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
+				//'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
 			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -211,6 +204,7 @@ class news extends common {
 				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
 				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
+				'height' => $this->getInput('newsConfigHeight', helper::FILTER_INT,true),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 			// Valeurs en sortie
@@ -432,7 +426,13 @@ class news extends common {
 			// News en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
-				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsIds[$i], 'userId']));
+				// Longueur de la news affichée
+				if ($this->getData(['module', $this->getUrl(0), 'config', 'height']) !== 1000) {
+					self::$news[$newsIds[$i]]['content'] = substr($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content']), 0,
+					$this->getData(['module', $this->getUrl(0), 'config', 'height'])) ;
+				}
+				// Mise en forme de la signature
+				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'userId']));
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -504,6 +504,16 @@ class news extends common {
 			// Mettre à jour la version
 			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.3' ]);
 		}
+		// Mise à jour 3.4
+		if (version_compare($versionData, '3.4', '<') ) {
+			$this->deleteData(['module',$this->getUrl(0),'theme']);
+			unlink(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css');
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+				$this->removeDir(self::DATADIRECTORY . $this->getUrl(0));
+			}
+			// Mettre à jour la version
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.4' ]);
+		}
 	}
 
 	/**
@@ -524,21 +534,22 @@ class news extends common {
 		}
 
 		// Dossier de l'instance
-		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-			mkdir (self::DATADIRECTORY . $this->getUrl(0) , 0777, true);
-		}
+		//if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+		//	mkdir (self::DATADIRECTORY . $this->getUrl(0) , 0777, true);
+		//}
 
 		// Check la présence de la feuille de style
-		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')) {
+		//if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
-			$style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
+			// Supprimé dans 3.4
+			// $style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
 			// Pas d'effet flou à l'initialisation
 			//$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
 			//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
 			// Sauver la feuille de style
-			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
+			//file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
 			// Stocker le nom de la feuille de style
-			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
-		}
+			//$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
+		//}
 	}
 }
