@@ -1,16 +1,15 @@
-<?php $layout = new layout($this); ?>
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#" lang="<?php echo self::$i18n;?>">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<?php $layout->showMetaTitle(); ?>
-		<?php $layout->showMetaDescription(); ?>
-		<?php $layout->showMetaType(); ?>
-		<?php $layout->showMetaImage(); ?>
-		<?php $layout->showFavicon(); ?>
-		<?php $layout->showVendor(); ?>
-		<?php $layout->showAnalytics(); ?>
+		<?php $this->showMetaTitle(); ?>
+		<?php $this->showMetaDescription(); ?>
+		<?php $this->showMetaType(); ?>
+		<?php $this->showMetaImage(); ?>
+		<?php $this->showFavicon(); ?>
+		<?php $this->showVendor(); ?>
+		<?php $this->showAnalytics(); ?>
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css');?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
@@ -20,16 +19,16 @@
 					AND $this->getData(['module', $this->getUrl(0), 'config', 'feeds']) === TRUE ): ?>
 			<link rel="alternate" type="application/rss+xml" href="'<?php echo helper::baseUrl(). $this->getUrl(0) . '/rss';?>" title="fLUX rss">
 		<?php endif; ?>
-		<?php $layout->showStyle(); ?>
+		<?php $this->showStyle(); ?>
 		<?php if (file_exists(self::DATA_DIR .'head.inc.html')) {
 			include(self::DATA_DIR .'head.inc.html');
 		}?>
 	</head>
 	<body>
 		<?php if($this->getUser('group') > self::GROUP_MEMBER): ?>
-			<?php $layout->showBar(); ?>
+			<?php $this->showBar(); ?>
 		<?php endif;?>
-		<?php $layout->showNotification(); ?>
+		<?php $this->showNotification(); ?>
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 			<!-- Menu dans le fond du site avant la bannière -->
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
@@ -52,14 +51,14 @@
 				<div id="menu" class="
 				<?php if($this->getData(['theme', 'menu', 'position']) === 'top'){echo 'container-large';}else{echo'container';}
 				?>">
-				<?php $layout->showMenu(); ?>
+				<?php $this->showMenu(); ?>
 				</div> <!--fin menu -->
 			</nav>
 		<?php endif; ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
 			<header>
-				<?php //$layout->showi18n();?>
+				<?php //$this->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
@@ -88,7 +87,7 @@
 					<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
+				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
 		<!-- Site -->
@@ -101,7 +100,7 @@
 						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 					<?php endif; ?>
 					<?php echo template::ico('menu',null,null,'2em'); ?></div>
-					<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
+					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 				</nav>
 			<?php endif; ?>
 			<?php if(
@@ -148,12 +147,12 @@
 						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
 					<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
+				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
-			<?php //$layout->showi18n();?>
+			<?php //$this->showi18n();?>
 			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante
@@ -183,7 +182,7 @@
 				if ((sizeof($blocks) === 1 ||
 					in_array($this->getUrl(1),$pattern)  )
 					) { // Pleine page en mode configuration
-						$layout->showContent();
+						$this->showContent();
 						if (file_exists(self::DATA_DIR . 'body.inc.html')) {
 							include( self::DATA_DIR . 'body.inc.html');
 						}
@@ -192,10 +191,10 @@
 				<div class="row siteContainer">
 					<?php
 						if ($blockleft !== "") :?>
-						<div class="<?php echo $blockleft; ?>" id="contentLeft"><aside><?php 	$layout->showBarContentLeft(); ?></aside></div>
+						<div class="<?php echo $blockleft; ?>" id="contentLeft"><aside><?php 	$this->showBarContentLeft(); ?></aside></div>
 						<?php endif; ?>
 						<div class="<?php echo $content; ?>" id="contentSite">
-						<?php $layout->showContent();
+						<?php $this->showContent();
 							if (file_exists(self::DATA_DIR . 'body.inc.html')) {
 								include(self::DATA_DIR . 'body.inc.html');
 							}
@@ -203,7 +202,7 @@
 						</div>
 					<?php
 						if ($blockright !== "") :?>
-						<div class="<?php echo $blockright; ?>" id="contentRight"><aside><?php $layout->showBarContentRight(); ?></aside></div>
+						<div class="<?php echo $blockright; ?>" id="contentRight"><aside><?php $this->showBarContentRight(); ?></aside></div>
 						<?php endif; ?>
 				</div>
 				<?php }
@@ -261,21 +260,21 @@
 							break;
 					}?>
 						<div class="<?php echo $class['left'];?>" id="footer<?php echo $position;?>Left">
-							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'left') { $layout->showFooterText(); }
-									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'left') {	$layout->showSocials(); }
-									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'left') {$layout->showCopyright(); }
+							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'left') { $this->showFooterText(); }
+									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'left') {	$this->showSocials(); }
+									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'left') {$this->showCopyright(); }
 							?>
 						</div>
 						<div class="<?php echo $class['center'];?>" id="footer<?php echo $position;?>Center">
-							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'center') { $layout->showFooterText(); }
-									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'center') { $layout->showSocials(); }
-									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'center') { $layout->showCopyright(); }
+							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'center') { $this->showFooterText(); }
+									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'center') { $this->showSocials(); }
+									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'center') { $this->showCopyright(); }
 							?>
 						</div>
 						<div class="<?php echo $class['right'];?>" id="footer<?php echo $position;?>Right">
-							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'right') { $layout->showFooterText(); }
-									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'right') { $layout->showSocials(); }
-									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'right') { $layout->showCopyright(); }
+							<?php if($this->getData(['theme', 'footer', 'textPosition']) === 'right') { $this->showFooterText(); }
+									if($this->getData(['theme', 'footer', 'socialsPosition']) === 'right') { $this->showSocials(); }
+									if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'right') { $this->showCopyright(); }
 							?>
 						</div>
 					</div>
@@ -287,6 +286,6 @@
 		} ?>
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
-		<?php $layout->showScript();?>
+		<?php $this->showScript();?>
 </body>
 </html>
