@@ -7,7 +7,8 @@
 				</h2>
 				<div class="newsContent">
 					<?php echo $news['content']; ?>
-					<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'height']) !== 1000):?>
+					<?php if ( $this->getData(['module', $this->getUrl(0), 'config', 'height']) !== -1
+					 		   && strlen($this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'content'])) >= $this->getData(['module', $this->getUrl(0), 'config', 'height'])):?>
 					<?php echo ' ... <a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '"><span class="newsSuite">lire la suite</span></a>'; ?>
 					<?php endif; ?>
 				</div>

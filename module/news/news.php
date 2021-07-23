@@ -62,9 +62,9 @@ class news extends common {
 
 	public static $height = [
 		200 	=> 'Petite',
-		400 	=> 'Moyenne',
-		600 	=> 'Grande',
-		1000		=> 'Article complet'
+		600 	=> 'Moyenne',
+		1200 	=> 'Grande',
+		-1		=> 'Article complet'
 	];
 
 	// Signature de l'article
@@ -427,9 +427,13 @@ class news extends common {
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				self::$news[$newsIds[$i]] = $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i]]);
 				// Longueur de la news affichée
-				if ($this->getData(['module', $this->getUrl(0), 'config', 'height']) !== 1000) {
-					self::$news[$newsIds[$i]]['content'] = substr($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content']), 0,
-					$this->getData(['module', $this->getUrl(0), 'config', 'height'])) ;
+				if ( $this->getData(['module', $this->getUrl(0), 'config', 'height']) !== -1
+					 && strlen($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content'])) >= $this->getData(['module', $this->getUrl(0), 'config', 'height']) ) {
+						 	// Contenu raccourci
+							$content = substr($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content']), 0, $this->getData(['module', $this->getUrl(0), 'config', 'height']));
+							// Ne pas couper un mot
+							$lastSpace = strrpos($content, ' ', -1  );
+							self::$news[$newsIds[$i]]['content'] = substr($content,	0, $lastSpace) ;
 				}
 				// Mise en forme de la signature
 				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'userId']));
