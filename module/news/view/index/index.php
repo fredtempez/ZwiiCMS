@@ -1,7 +1,7 @@
 <?php if($module::$news): ?>
 	<div class="row">
 		<?php foreach($module::$news as $newsId => $news): ?>
-			<div class="col<?php echo $module::$nbrCol ;?>" >
+			<div class="newsFrame col<?php echo $module::$nbrCol ;?>" >
 				<h2 class="newsTitle" id="<?php echo $newsId;?>">
 					<?php echo '<a href="'. helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 				</h2>

@@ -19,7 +19,8 @@
         - Nouvelle option permettant de transférer les fichiers de sauvegarde automatiques dans le gestionnaire de fichiers.
 - Module News 3.4 :
     - Changement de nom, Actualités -> News
-    - La version courte des articles dépend du nombre de caractères au lieu de la hauteur de la div. L'effet flou inutile est aussi supprimé.
+    - La version abrégée des articles dépend du nombre de caractères au lieu de la hauteur de la div. L'effet flou inutile est aussi supprimé.
+    - Personnalisation du style, encadrement, et couleur de fond des blocs d'articles.
 
 
 ## version 10.6.03

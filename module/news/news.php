@@ -49,24 +49,41 @@ class news extends common {
 		8 => '8 articles',
 		12 => '12 articles',
 		16 => '16 articles',
-		22 => '22  articles'
+		22 => '22 articles'
 	];
 	// Nombre de colone par page
 	public static $columns = [
-		12 => '1 Colonne',
-		6 => '2 Colonnes',
-		4 => '3 Colonnes',
-		2 => '4 Colonnes'
+		12 => '1 colonne',
+		6 => '2 colonnes',
+		4 => '3 colonnes',
+		3 => '4 colonnes'
 	];
 	public static $nbrCol = 1;
 
 	public static $height = [
-		200 	=> '200 caractères',
-		400 	=> '400 caractères',
-		600 	=> '600 caractères',
-		500 	=> '800 caractères',
+		-1		=> 'Article complet',
 		1000 	=> '1000 caractères',
-		-1		=> 'Article complet'
+		800 	=> '800 caractères',
+		600 	=> '600 caractères',
+		400 	=> '400 caractères',
+		200 	=> '200 caractères',
+	];
+
+	public static $borderWidth = [
+		0 			=> 'Aucune',
+		'0.1em' 	=> 'Très fine',
+		'0.15em'	=> 'Fine',
+		'0.2em'		=> 'Très petite',
+		'0.25em'	=> 'Petite',
+	];
+
+	public static $borderStyle =[
+		'none'	=> 'Aucune',
+		'solid' => 'Tiret',
+		'inset'	=> '3D enfoncé',
+		'outset'=> '3D surélevé',
+		'ridge'	=> 'Relief 1',
+		'groove'=> 'Relief 2'
 	];
 
 	// Signature de l'article
@@ -178,13 +195,12 @@ class news extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
+
 			// Générer la feuille de CSS
-			//$style = '.newsContent {height:' . $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT) . ';}';
-			//if ($this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) !== '100%') {
-			//	$style = '.newsBlur {height: ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ';}';
-				//$style .= '.newsBlur {background: linear-gradient(' .  $this->getData(['theme', 'text', 'textColor']) . ' ' . $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT) . ',rgba(255,255,255,0) );';
-				//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
-			//}
+			$style =  '.newsFrame {';
+			$style .= 'border:' .  $this->getInput('newsThemeBorderStyle',helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth',helper::FILTER_STRING_SHORT) . ';';
+			$style .= 'background-color:' . $this->getInput('newsThemeBackgroundColor') . ';';
+			$style .= '}';
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
@@ -196,9 +212,11 @@ class news extends common {
 			// Fin feuille de style
 
 			$this->setData(['module', $this->getUrl(0), 'theme',[
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
-				//'itemsHeight' => $this->getInput('newsConfigItemsHeight',helper::FILTER_STRING_SHORT),
-				//'itemsBlur' => $this->getInput('newsConfigItemsBlur',helper::FILTER_STRING_SHORT)
+				'style'       => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
+				'borderStyle' => $this->getInput('newsThemeBorderStyle',helper::FILTER_STRING_SHORT),
+				'borderColor' => $this->getInput('newsThemeBorderColor'),
+				'borderWidth'	  => $this->getInput('newsThemeBorderWidth',helper::FILTER_STRING_SHORT),
+				'backgroundColor' => $this->getInput('newsThemeBackgroundColor')
 			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
@@ -209,6 +227,8 @@ class news extends common {
 				'height' => $this->getInput('newsConfigHeight', helper::FILTER_INT,true),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
+
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -262,7 +282,10 @@ class news extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Configuration du module',
-				'view' => 'config'
+				'view' => 'config',
+				'vendor' => [
+					'tinycolorpicker'
+				]
 			]);
 		}
 	}
@@ -512,10 +535,11 @@ class news extends common {
 		}
 		// Mise à jour 3.4
 		if (version_compare($versionData, '3.4', '<') ) {
-			$this->deleteData(['module',$this->getUrl(0),'theme']);
-			if (is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				$this->removeDir(self::DATADIRECTORY . $this->getUrl(0));
-			}
+			// Effacer le style précédent
+			unlink(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css');
+			$this->deleteData(['module', $this->getUrl(0), 'theme' ]);
+			// Le générer
+			$this->init();
 			// Mettre à jour la version
 			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.4' ]);
 		}
@@ -526,35 +550,36 @@ class news extends common {
 	 */
 	private function init() {
 
-
-		//$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css';
+		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css';
 
 		// Données du module absentes
+		require_once('module/news/ressource/defaultdata.php');
 		if ($this->getData(['module', $this->getUrl(0), 'config' ]) === null) {
-			require_once('module/news/ressource/defaultdata.php');
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+		}
+		if ($this->getData(['module', $this->getUrl(0), 'theme' ]) === null) {
 			// Données de thème
-			//$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
-			//$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .   $this->getUrl(0) . '/theme.css' ]);
+			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .   $this->getUrl(0) . '/theme.css' ]);
 		}
 
 		// Dossier de l'instance
-		//if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-		//	mkdir (self::DATADIRECTORY . $this->getUrl(0) , 0777, true);
-		//}
+		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+			mkdir (self::DATADIRECTORY . $this->getUrl(0) , 0777, true);
+		}
 
 		// Check la présence de la feuille de style
-		//if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')) {
+		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')) {
 			// Générer la feuille de CSS
-			// Supprimé dans 3.4
-			// $style = '.newsContent {height: ' . $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsHeight' ]) .';}';
-			// Pas d'effet flou à l'initialisation
-			//$style .= '.newsBlur {background: linear-gradient(' . $this->getData(['theme', 'text', 'textColor']) . ' ' .  $this->getData([ 'module',  $this->getUrl(0), 'theme', 'itemsBlur' ]) . ',rgba(255,255,255,0) );';
-			//$style .= '	background-clip: text;-webkit-background-clip: text;-webkit-text-fill-color: transparent;}';
+			$style =  '.newsFrame {';
+			$style .= 'border:' .  $this->getData(['module', $this->getUrl(0), 'theme', 'borderStyle' ]) . ' ' .$this->getData(['module', $this->getUrl(0), 'theme', 'borderColor' ])  . ' ' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderWidth' ]) . ';';
+			$style .= 'background-color:' . $this->getData(['module', $this->getUrl(0), 'theme', 'backgroundColor' ]) . ';';
+			$style .= '}';
+			
 			// Sauver la feuille de style
-			//file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
 			// Stocker le nom de la feuille de style
-			//$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
-		//}
+			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
+		}
 	}
 }
