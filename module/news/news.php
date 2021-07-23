@@ -61,9 +61,11 @@ class news extends common {
 	public static $nbrCol = 1;
 
 	public static $height = [
-		200 	=> 'Petite',
-		600 	=> 'Moyenne',
-		1200 	=> 'Grande',
+		200 	=> '200 caractères',
+		400 	=> '400 caractères',
+		600 	=> '600 caractères',
+		500 	=> '800 caractères',
+		1000 	=> '1000 caractères',
 		-1		=> 'Article complet'
 	];
 
