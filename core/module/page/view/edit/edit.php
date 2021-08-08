@@ -251,7 +251,7 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class='row' id="pageEditSeoWrapper">
 		<div class="col12">
-			<div class="block" id="ceo">
+			<div class="block" id="seo">
 				<h4>Permission et référencement
 				<div class="openClose">
 						<?php

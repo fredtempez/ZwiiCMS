@@ -25,7 +25,10 @@ class init extends common {
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',
 			'smtp' => [
-				'enable' => false,
+				'enable' => true,
+			],
+			'seo' => [
+				'seo' => false
 			],
 			'connect' => [
 				'timeout' => 600,

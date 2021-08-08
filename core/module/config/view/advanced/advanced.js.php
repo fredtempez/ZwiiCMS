@@ -39,7 +39,7 @@ $( document).ready(function() {
      * Initialisation des blocs
      */
 
-    var i = [ "social", "ceo", "network", "smtp", "login", "logs", "script" ];
+    var i = [ "social", "seo", "network", "smtp", "login", "logs", "script" ];
     $.each(i,function(e) {
         if (getCookie(i[e]) === "true") {
             $("#" + i[e]).find(".zwiico-plus-circled").hide();

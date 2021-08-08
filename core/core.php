@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.0.04';
+	const ZWII_VERSION = '11.0.05';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -835,8 +835,8 @@ class common {
 		$outputDir = getcwd();
 		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false),$outputDir);
 
-		// will create also compressed (gzipped) sitemap
-		$sitemap->enableCompression();
+		// will create also compressed (gzipped) sitemap : option buguée
+		// $sitemap->enableCompression();
 
 		// determine how many urls should be put into one file
 		// according to standard protocol 50000 is maximum value (see http://www.sitemaps.org/protocol.html)
@@ -900,7 +900,11 @@ class common {
 		$sitemap->finalize();
 
 		// Update robots.txt file in output directory or create a new one
-		$sitemap->updateRobots();
+		if ($this->getData(['config','seo', 'robots']) === true) {
+			$sitemap->updateRobots();
+		} else {
+			copy('core/module/install/ressource/robots.txt', 'robots.txt');
+		}
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
 		if (empty ($this->getData(['config','proxyType']) . $this->getData(['config','proxyUrl']) . ':' . $this->getData(['config','proxyPort'])) ) {

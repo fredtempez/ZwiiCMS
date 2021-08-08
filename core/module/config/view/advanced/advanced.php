@@ -238,7 +238,7 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="ceo">
+		<div class="block" id="seo">
 			<h4>Référencement
 				<div class="openClose">
 					<?php
@@ -265,6 +265,13 @@
 									'href' => helper::baseUrl() . 'config/generateFiles',
 									'value' => 'Sitemap.xml / Robots.txt',
 									'ico' => 'pencil'
+								]); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col12">
+								<?php echo template::checkbox('configAdvancedSeoRobots', true, 'Autoriser les robots à référencer le site', [
+									'checked' => $this->getData(['config', 'seo','robots'])
 								]); ?>
 							</div>
 						</div>

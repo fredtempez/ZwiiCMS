@@ -474,6 +474,9 @@ class config extends common {
 						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configAdvancedSmtpPassword')),
 						'sender' => $this->getInput('configAdvancedSmtpSender',helper::FILTER_MAIL)
 					],
+					'seo' => [
+						'robots' => $this->getInput('configAdvancedSeoRobots',helper::FILTER_BOOLEAN)
+					],
 					'connect' => [
 						'attempt' => $this->getInput('configAdvancedConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
