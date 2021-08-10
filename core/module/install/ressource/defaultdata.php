@@ -28,7 +28,7 @@ class init extends common {
 				'enable' => true,
 			],
 			'seo' => [
-				'seo' => false
+				'seo' => true
 			],
 			'connect' => [
 				'timeout' => 600,
