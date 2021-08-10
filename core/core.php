@@ -900,7 +900,9 @@ class common {
 		$sitemap->finalize();
 
 		// Update robots.txt file in output directory or create a new one
+
 		if ($this->getData(['config','seo', 'robots']) === true) {
+			unlink('robots.txt');
 			$sitemap->updateRobots();
 		} else {
 			copy('core/module/install/ressource/robots.txt', 'robots.txt');

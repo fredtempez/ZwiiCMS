@@ -191,7 +191,7 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => $successSitemap ? 'Le sitemap a été mis à jour' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
+			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'redirect' => helper::baseUrl() . 'config/advanced',
 			'state' => $successSitemap 
 		]);
@@ -544,7 +544,7 @@ class config extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
+				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
 			]);
 		}
