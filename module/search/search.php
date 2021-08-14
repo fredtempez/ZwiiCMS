@@ -266,7 +266,8 @@ class search extends common {
                         $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
 						$url = $parentId;
 						$titre = $this->getData(['page', $parentId, 'title']);
-						$contenu =  ' ' . $titre . ' ' . $this->getData(['page', $parentId, 'content']);
+						$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $parentId, 'content']));
+						$contenu =   $titre . ' ' . $contenu ;
 						// Pages sauf pages filles et articles de blog
 						$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 						if (is_array($tempData) ) {
@@ -281,7 +282,8 @@ class search extends common {
                                 $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
                                     $url = $childId;
                                     $titre = $this->getData(['page', $childId, 'title']);
-                                    $contenu = ' ' . $titre . ' ' . $this->getData(['page', $childId, 'content']);
+									$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $childId, 'content']));
+									$contenu =   $titre . ' ' . $contenu ;
                                     //Pages filles
 									$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 									if (is_array($tempData) ) {
@@ -289,9 +291,9 @@ class search extends common {
 									}
 							}
 
-							// Articles d'une sous-page blog
-							if ($this->getData(['page', $childId, 'moduleId']) === 'blog' &&
-								$this->getData(['module',$parentId,'posts']) )
+							// Articles d'une sous-page blog ou de news
+							if ($this->getData(['page', $childId, 'moduleId']) === 'blog' || $this->getData(['page', $childId, 'moduleId']) === 'news'
+							 && $this->getData(['module',$parentId,'posts']) )
 							{
 								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
 									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
@@ -308,16 +310,15 @@ class search extends common {
 							}
                     }
 
-					// Articles d'un blog
-					if ($this->getData(['page', $parentId, 'moduleId']) === 'blog' &&
-						$this->getData(['module',$parentId,'posts']) ) {
+					// Articles d'un blog ou de news
+					if ( $this->getData(['page', $parentId, 'moduleId']) === 'blog' || $this->getData(['page', $parentId, 'moduleId']) === 'news'
+						 && $this->getData(['module',$parentId,'posts']) ) {
 						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
 							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
 							{
 								$url = $parentId. '/' . $articleId;
 								$titre = $article['title'];
 								$contenu = ' ' . $titre . ' ' . $article['content'];
-								// Articles de Blog
 								$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 								if (is_array($tempData) ) {
 									$result [] = $tempData;
