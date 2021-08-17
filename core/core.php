@@ -466,6 +466,39 @@ class common {
 	}
 
 	/**
+	 * Lire les données de la page
+	 * @param string pageId
+	 * @param return contenu de la page
+	 */
+	public function getPage($page) {
+
+		return file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $page, 'content']));
+
+	}
+
+	/**
+	 * Ecrire les données de la page
+	 * @param string pageId
+	 * @param string contenu de la page 
+	 */
+	public function setPage($page, $value) {
+
+		file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']), $value);
+
+	}
+
+	/**
+	 * Effacer les données de la page
+	 * @param string pageId
+	 * @param return statut de l'effacement
+	 */
+	public function deletePage($page) {
+
+			return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
+
+			}
+
+	/**
 	 * Sauvegarde des données
 	 * @param array $keys Clé(s) des données
 	 */
@@ -2337,17 +2370,20 @@ class core extends common {
 		) {
 			$this->addOutput([
 				'title' => $title,
-				'content' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content'])),
+				//'content' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content'])),
+				'content' => $this->getPage($this->getUrl(0)),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight']) ?
-									file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
+									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
 									: '',
-				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft']) ?
-									file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
+									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']))
 									: '',
 			]);
 		}
@@ -2367,15 +2403,18 @@ class core extends common {
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight']) ?
-										file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
+										//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
+										//? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
 										: '',
-					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft']) ?
-										file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
+										// ? file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']))
 										: '',
 				]);
-				$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
-
+				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
+				$pageContent = $this->getPage($this->getUrl(0));
 			}
 			else {
 				$moduleId = $this->getUrl(0);
