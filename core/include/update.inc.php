@@ -588,8 +588,8 @@ $this->deleteData(['config','itemsperPage']);
 $this->setData(['core', 'dataVersion', 10600]);
 }
 
-// Version 11.0.00
-if ($this->getData(['core', 'dataVersion']) < 11000) {
+// Version 11.0.06
+if ($this->getData(['core', 'dataVersion']) < 11006) {
 
 	// Option de déconnexion auto activée
 	$this->setData(['config','autoDisconnect',true]);
@@ -636,7 +636,10 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 		$this->setData(['page', $parent, 'content', $parent . '.html']);
 	}
 
-	$this->setData(['core', 'dataVersion', 11000]);
+	// Référencement
+	$this->setData(['config','seo','robots',true]);
+
+	$this->setData(['core', 'dataVersion', 11006]);
 }
 
 ?>
