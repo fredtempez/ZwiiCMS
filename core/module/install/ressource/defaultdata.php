@@ -175,8 +175,8 @@ class init extends common {
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
-				'radius' => '0',
-				'shadow' => '0',
+				'radius' => '0px',
+				'shadow' => '0px 0px 0px',
 				'width' => '960px'
 			],
 			'block' => [
