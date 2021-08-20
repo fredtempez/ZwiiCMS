@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.1';
+	const VERSION = '3.2';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';

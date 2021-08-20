@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '2.2';
+	const VERSION = '2.3';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
