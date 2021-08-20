@@ -179,6 +179,11 @@ class gallery extends common {
 
 		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
 
+		// le module n'est pas initialisé
+		if ($versionData === NULL) {
+			$this->init();
+		}
+
 		// Mise à jour 3.1
 		if (version_compare($versionData, '3.1', '<') ) {
 			if (is_dir(self::DATADIRECTORY . 'pages/')) {
@@ -312,9 +317,6 @@ class gallery extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
-		// Initialisation d'un nouveau module
-		$this->init();
 
 		//Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0), 'content']);
@@ -598,9 +600,6 @@ class gallery extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
-		// Initialisation d'un nouveau module
-		$this->init();
 
 		// Images d'une galerie
 		if($this->getUrl(1)) {
