@@ -52,43 +52,13 @@ class search extends common {
 	 */
 	private function update() {
 
-		// Déplacement des données d'une version ultérieure
-		// selon la présence de previewLenght
-		if ($this->getData(['module', $this->getUrl(0), 'previewLength']) ) {
-			$data = $this->getData(['module', $this->getUrl(0)]);
-			// Feuille de style
-			$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
-			$this->setData(['module', $this->getUrl(0), 'config', [
-				'submitText' => $this->getData(['module', $this->getUrl(0), 'submitText']),
-				'placeHolder' => $this->getData(['module', $this->getUrl(0), 'placeHolder']),
-				'resultHideContent' => $this->getData(['module', $this->getUrl(0), 'resultHideContent']),
-				'previewLength' => $this->getData(['module', $this->getUrl(0), 'previewLength']),
-				'versionData' => '2.0'
-			]]);
-			$this->setData(['module', $this->getUrl(0), 'theme', [
-				'keywordColor' => $this->getData(['module', $this->getUrl(0), 'keywordColor']),
-				'style' => $fileCSS
-			]]);
-
-			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0)  )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
-			}
-			// Générer la feuille de CSS
-			$style = '.keywordColor {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
-			// Sauver la feuille de style
-			$success = file_put_contents( $fileCSS, $style);
-			// Nettoyage des données précédentes
-			$this->deleteData(['module', $this->getUrl(0), 'submitText']);
-			$this->deleteData(['module', $this->getUrl(0), 'placeHolder']);
-			$this->deleteData(['module', $this->getUrl(0), 'resultHideContent']);
-			$this->deleteData(['module', $this->getUrl(0), 'previewLength']);
-			$this->deleteData(['module', $this->getUrl(0), 'keywordColor']);
-
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.0']);
-		}
 
 		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
+		// le module n'est pas initialisé
+		if ($versionData === NULL) {
+			$this->init();
+		}
 
 		// Mise à jour 2.2
 		if (version_compare($versionData, '2.2', '<') ) {
@@ -145,10 +115,6 @@ class search extends common {
 		// Mise à jour des données de module
 		$this->update();
 
-		// Initialisation d'un nouveau module
-		$this->init();
-
-
 		if($this->isPost())  {
 
 			// Générer la feuille de CSS
@@ -193,10 +159,6 @@ class search extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
-		// Initialisation d'un nouveau module
-		$this->init();
-
 
 		if($this->isPost())  {
 			//Initialisations variables
@@ -267,9 +229,9 @@ class search extends common {
 						$url = $parentId;
 						$titre = $this->getData(['page', $parentId, 'title']);
 						$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $parentId, 'content']));
-						$contenu =   $titre . ' ' . $contenu ;
+						$content =   $titre . ' ' . $content ;
 						// Pages sauf pages filles et articles de blog
-						$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+						$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
 						if (is_array($tempData) ) {
 							$result [] = $tempData;
 						}
@@ -283,9 +245,9 @@ class search extends common {
                                     $url = $childId;
                                     $titre = $this->getData(['page', $childId, 'title']);
 									$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $childId, 'content']));
-									$contenu =   $titre . ' ' . $contenu ;
+									$content =   $titre . ' ' . $content ;
                                     //Pages filles
-									$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+									$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
 									if (is_array($tempData) ) {
 										$result [] = $tempData;
 									}
