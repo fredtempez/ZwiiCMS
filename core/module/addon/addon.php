@@ -395,7 +395,7 @@ class addon extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Modules installés',
+			'title' => 'Gestion des modules',
 			'view' => 'index'
 		]);
 	}

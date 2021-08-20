@@ -14,16 +14,10 @@
 			'value' => 'Aide'
 		]); ?>
 	</div>
-	<div class="col3 offset2">
+	<div class="col2 offset6">
 		<?php echo template::button('configStoreUpload', [
 			'href' => helper::baseUrl() . 'addon/upload',
-			'value' => 'Téléverser un module'
-		]); ?>
-	</div>
-	<div class="col3">
-		<?php echo template::button('configModulesStore', [
-			'href' => helper::baseUrl() . 'addon/store',
-			'value' => 'Catalogue en ligne'
+			'value' => 'Installer un module'
 		]); ?>
 	</div>
 </div>
