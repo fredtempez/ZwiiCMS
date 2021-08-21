@@ -481,10 +481,11 @@ class common {
 	 * Ecrire les données de la page
 	 * @param string pageId
 	 * @param string contenu de la page 
+	 * @param return nombre d'octets écrits ou erreur
 	 */
 	public function setPage($page, $value, $lang) {
 
-		file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']), $value);
+		return file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']), $value);
 
 	}
 
@@ -577,11 +578,13 @@ class common {
 			if ($sampleSite === true) {
 				foreach(init::$siteContent as $key => $value) {
 					// Creation du contenu de la page
-					file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+					// file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+					$this->setPage($this->getData(['page', $key, 'content']), $value, $lang);
 				}
 			} else {
 				// Créer la page d'accueil
-				file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
+				// file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
+				$this->setPage('accueil.html', '<p>Contenu de votre nouvelle page.</p>', $lang);
 			}
 		}
 	}

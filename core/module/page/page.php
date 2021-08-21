@@ -155,7 +155,8 @@ class page extends common {
 		if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
 			mkdir(self::DATA_DIR . self::$i18n . '/content');
 		}
-		file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18N,);
 		// Met à jour le site map
 		$this->createSitemap('all');
 		// Valeurs en sortie
@@ -439,7 +440,8 @@ class page extends common {
 						mkdir(self::DATA_DIR . self::$i18n . '/content');
 					}
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
-					file_put_contents( self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html' , $content );
+					// file_put_contents( self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html' , $content );
+					$this->setPage($pageId, $content, self::$i18n);
 					// Barre renommée : changement le nom de la barre dans les pages mères
 					if ($this->getinput('pageEditBlock') === 'bar') {
 						foreach ($this->getHierarchy() as $eachPageId=>$parentId) {
