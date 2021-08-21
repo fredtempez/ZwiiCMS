@@ -25,7 +25,8 @@
 
 html,
 body {
-	min-height: 100%;
+	/*min-height: 100%;*/
+	min-height: 100vh;
 }
 
 
@@ -757,7 +758,8 @@ li .menuSideChild {
 }
 
 section {
-	min-height: 450px;
+	/*min-height: 100%;*/
+	min-height: 65vh;
 }
 
 section #sectionTitle {

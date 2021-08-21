@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.4';
+	const VERSION = '3.5';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -188,9 +188,6 @@ class news extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
-		// Initialisation d'un nouveau module
-		$this->init();
 
 		// Soumission du formulaire
 		if($this->isPost()) {
@@ -396,9 +393,6 @@ class news extends common {
 		// Mise à jour des données de module
 		$this->update();
 
-		// Initialisation d'un nouveau module
-		$this->init();
-
 		// Affichage d'un article
 		if(
 			$this->getUrl(1)
@@ -502,18 +496,12 @@ class news extends common {
 	 */
 	private function update() {
 
-		// Créer la structure de configuration si absente
-		// Il n'existait aucun paramétrage dans les version précédentes
-		if ($this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) === NULL ) {
-			// Données config et theme absentes du précédent module
-			require_once('module/news/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
-			// Données de thème
-			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ]);
-		}
-
 		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+
+		// le module n'est pas initialisé
+		if ($versionData === NULL) {
+			$this->init();
+		}
 
 		// Mise à jour 3.2
 		if (version_compare($versionData, '3.1', '<') ) {
