@@ -211,7 +211,7 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys,self::$i18n),
+				'dir' => $this->dataPath ($keys, self::$i18n),
 				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
@@ -234,7 +234,7 @@ class common {
 		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dataPath ($stageId, self::$i18n);
 			if (file_exists($folder . $stageId .'.json') === false) {
-				$this->initData($stageId,self::$i18n);
+				$this->initData($stageId, self::$i18n);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -468,11 +468,12 @@ class common {
 	/**
 	 * Lire les données de la page
 	 * @param string pageId
+	 * @param string langue
 	 * @param return contenu de la page
 	 */
-	public function getPage($page) {
+	public function getPage($page, $lang) {
 
-		return file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $page, 'content']));
+		return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 
 	}
 
@@ -481,7 +482,7 @@ class common {
 	 * @param string pageId
 	 * @param string contenu de la page 
 	 */
-	public function setPage($page, $value) {
+	public function setPage($page, $value, $lang) {
 
 		file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']), $value);
 
@@ -492,7 +493,7 @@ class common {
 	 * @param string pageId
 	 * @param return statut de l'effacement
 	 */
-	public function deletePage($page) {
+	public function deletePage($page, $lang) {
 
 			return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 
@@ -2371,7 +2372,7 @@ class core extends common {
 			$this->addOutput([
 				'title' => $title,
 				//'content' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content'])),
-				'content' => $this->getPage($this->getUrl(0)),
+				'content' => $this->getPage($this->getUrl(0), self::$i18n),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -2379,11 +2380,11 @@ class core extends common {
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
 									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
-									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 									: '',
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
 									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
-									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']))
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 									: '',
 			]);
 		}
@@ -2406,15 +2407,15 @@ class core extends common {
 					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
 										//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
 										//? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
-										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 										: '',
 					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
 										// ? file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
-										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']))
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 										: '',
 				]);
 				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
-				$pageContent = $this->getPage($this->getUrl(0));
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
 			}
 			else {
 				$moduleId = $this->getUrl(0);
