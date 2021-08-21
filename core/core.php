@@ -578,13 +578,11 @@ class common {
 			if ($sampleSite === true) {
 				foreach(init::$siteContent as $key => $value) {
 					// Creation du contenu de la page
-					// file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
-					$this->setPage($this->getData(['page', $key, 'content']), $value, $lang);
+					file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
 				}
 			} else {
 				// Créer la page d'accueil
-				// file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
-				$this->setPage('accueil.html', '<p>Contenu de votre nouvelle page.</p>', $lang);
+				file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
 			}
 		}
 	}
