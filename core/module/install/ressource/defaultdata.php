@@ -25,7 +25,7 @@ class init extends common {
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',
 			'smtp' => [
-				'enable' => true,
+				'enable' => false,
 			],
 			'seo' => [
 				'robots' => true
