@@ -595,17 +595,18 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	$this->setData(['config','autoDisconnect',true]);
 
 	// Mettre à jour les données de langue
+	$this->setData(['config', 'i18n','active', true ]);
 	$this->setData(['config', 'i18n','scriptGoogle', false ]);
 	$this->setData(['config', 'i18n','showCredits', false ]);
 	$this->setData(['config', 'i18n','autoDetect', false ]);
 	$this->setData(['config', 'i18n','admin', false ]);
-	$this->setData(['config', 'i18n','fr', false ]);
-	$this->setData(['config', 'i18n','de', false ]);
-	$this->setData(['config', 'i18n','en', false ]);
-	$this->setData(['config', 'i18n','es', false ]);
-	$this->setData(['config', 'i18n','it', false ]);
-	$this->setData(['config', 'i18n','nl', false ]);
-	$this->setData(['config', 'i18n','pt', false ]);
+	$this->setData(['config', 'i18n','fr', 'none' ]);
+	$this->setData(['config', 'i18n','de', 'none' ]);
+	$this->setData(['config', 'i18n','en', 'none' ]);
+	$this->setData(['config', 'i18n','es', 'none' ]);
+	$this->setData(['config', 'i18n','it', 'none' ]);
+	$this->setData(['config', 'i18n','nl', 'none' ]);
+	$this->setData(['config', 'i18n','pt', 'none' ]);
 
 	// Supprimer les fichiers de backup
 	if (file_exists('site/data/.backup')) unlink('site/data/.backup');
