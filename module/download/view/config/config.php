@@ -8,6 +8,9 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
+		<div class="col2 offset8">
+			<?php echo template::submit('downloadConfigSubmit'); ?>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col12">
@@ -38,11 +41,6 @@
 								'label' => 'Articles par page',
 								'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 							]); ?>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col2 offset10">
-							<?php echo template::submit('downloadConfigSubmit'); ?>
 						</div>
 					</div>
 				</div>

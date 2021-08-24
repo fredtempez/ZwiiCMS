@@ -8,10 +8,15 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
+		<div class="col2 offset8">
+			<?php echo template::submit('categoriesSubmit', [
+				'value' => 'Valider'
+			]); ?>
+		</div>
 	</div>
     <div class="row">
 		<div class="col12">
-		<div class="block" id="params">
+			<div class="block" id="params">
 				<h4>Nouvelle catégorie
 					<div class="openClose">
 						<?php
@@ -27,13 +32,6 @@
 									'label' => 'Nom',
 									'value' => $this->getData(['module', $this->getUrl(0), 'categories', $this->getUrl(2), 'title'])
 								]); ?>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col2 offset10">
-							<?php echo template::submit('categoriesSubmit', [
-								'value' => 'Valider'
-							]); ?>
 						</div>
 					</div>
 				</div>
