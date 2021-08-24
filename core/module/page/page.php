@@ -156,7 +156,7 @@ class page extends common {
 			mkdir(self::DATA_DIR . self::$i18n . '/content');
 		}
 		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
-		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18N,);
+		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18n,);
 		// Met à jour le site map
 		$this->createSitemap('all');
 		// Valeurs en sortie
