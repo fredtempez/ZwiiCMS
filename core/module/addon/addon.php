@@ -29,8 +29,9 @@ class addon extends common {
 		'uploadItem'=> self::GROUP_ADMIN
 	];
 
-	const URL_STORE = 'http://zwiicms.fr/?modules/';
-	const BASEURL_STORE = 'http://zwiicms.fr/';
+	// URL des modules
+	const BASEURL_STORE = 'https://store.zwiicms.fr/';
+	const MODULE_STORE = '?modules/';
 
 	// Gestion des modules
 	public static $modInstal = [];
@@ -242,7 +243,7 @@ class addon extends common {
 			// Récupérer le module en ligne
 			$moduleName = $this->getUrl(2);
 			// Informations sur les module en ligne
-			$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
+			$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
 			// Télécharger le fichier
@@ -284,7 +285,7 @@ class addon extends common {
 	 * Catalogue des modules sur le site ZwiiCMS.fr
 	 */
 	public function store() {
-		$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
+		$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
@@ -309,7 +310,7 @@ class addon extends common {
 					$ico =  template::ico('update');
 				}
 				self::$storeList [] = [
-					'<a href="' . self::URL_STORE . $key . '" target="_blank" >'.$store[$key]['title'].'</a>',
+					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >'.$store[$key]['title'].'</a>',
 					$store[$key]['version'],
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['versionDate'])
@@ -335,7 +336,7 @@ class addon extends common {
 	 * Détail d'un objet du catalogue
 	 */
 	public function item() {
-		$store = json_decode(helper::urlGetContents(self::URL_STORE . 'list'), true);
+		$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		self::$storeItem = $store [$this->getUrl(2)] ;
 		self::$storeItem ['fileDate'] = mb_detect_encoding(strftime('%d %B %Y',self::$storeItem ['fileDate']), 'UTF-8', true)
 										? strftime('%d %B %Y', self::$storeItem ['fileDate'])
