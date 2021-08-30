@@ -310,6 +310,7 @@ class addon extends common {
 					$ico =  template::ico('update');
 				}
 				self::$storeList [] = [
+					$store[$key]['category'],
 					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >'.$store[$key]['title'].'</a>',
 					$store[$key]['version'],
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)

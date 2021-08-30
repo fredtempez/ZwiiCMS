@@ -14,7 +14,7 @@
 
 class download extends common {
 
-	const VERSION = '2.1';
+	const VERSION = '2.2';
 	const REALNAME = 'Téléchargement';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -1048,7 +1048,9 @@ class download extends common {
 				'versionDate'   =>$this->getData(['module', $this->getUrl(0), 'items', $key, 'versionDate']),
 				'author'   =>$this->getData(['module', $this->getUrl(0), 'items', $key, 'author']),
 				'license'   => $this->getData(['module', $this->getUrl(0), 'items', $key, 'license']),
-				'category' => $this->getData(['module', $this->getUrl(0), 'items', $key, 'category'])
+				'category' =>  $this->getData(['module', $this->getUrl(0),'categories',
+								$this->getData(['module', $this->getUrl(0), 'items', $key, 'category'])
+							])
 			];
 		}
 		$this->addOutput([
