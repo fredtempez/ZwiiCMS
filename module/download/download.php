@@ -14,7 +14,7 @@
 
 class download extends common {
 
-	const VERSION = '2.2';
+	const VERSION = '2.4';
 	const REALNAME = 'Téléchargement';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -945,11 +945,6 @@ class download extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_RAW
-				]);
-				// Valeurs en sortie
-				$this->addOutput([
-					'title' => 'Configuration',
-					'view' => 'index'
 				]);
 			} else {
 				// Valeurs en sortie

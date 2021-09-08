@@ -64,7 +64,8 @@
 					<div class="col3">
 						<?php if ($module::$categories) { 
 								echo template::select('downloadEditCategorie', $module::$categories, [
-									'label' => 'Catégorie'
+									'label' => 'Catégorie',
+									'selected' => $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'category'])
 									]); 
 								} else {
 								echo template::select('downloadEditCategorie', [''=>''], [

@@ -11,6 +11,13 @@
  */
 
 /**
+ * Incrément les stats
+ */
+ $('#downloadItemFile').click(function() {
+    $('#downloadStats').html(function(i, val) { return val*1+1 });
+});
+
+/**
  * Affiche le bloc pour rédiger un commentaire
  */
 var commentShowDOM = $("#downloadItemCommentShow");

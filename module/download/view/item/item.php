@@ -20,19 +20,17 @@
 					switch ($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1), 'ressourceType'])) {
 						case 'file':
 							$href =  helper::baseUrl() . $this->getUrl(0) . '/downloadFile/' . $this->getUrl(1) . '/' . $_SESSION['csrf'];
-							$value = 'Télécharger';
 							$target = '_self';
 							break;
 						case 'url' :
 							$href = $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1), 'url']);
-							$value = 'Visiter';
 							$target = '_blank';
 							break;
 					}
 					?>
 					<?php echo template::button('downloadItemFile', [
 							'href' => $href,
-							'value' => $value,
+							'value' => 'Télécharger',
 							'target'=> $target
 							]);
 					?>
@@ -74,9 +72,7 @@
 		<?php if ($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1), 'file'])): ?>
 			<div class="row">
 				<div class="col12 textAlignCenter">
-					<span>Téléchargements :
-					<?php echo $module::$statSum; ?>
-					</span>
+					<span>Téléchargements : <span id="downloadStats"><?php echo $module::$statSum;'<span>'?></span>
 				</div>
 			</div>
 		<?php endif; ?>
