@@ -17,7 +17,7 @@
 
 					?>
 						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>" class="downloadPicture">
-							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $item['picture']; ?>">
+							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $item['thumb']; ?>">
 						</a>
 					</div>
 					<div class="col9 downloadRight">
