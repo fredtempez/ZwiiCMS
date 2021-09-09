@@ -11,9 +11,9 @@
  */
 
 /**
- * Incrément les stats
+ * Incrémente les stats
  */
- $('#downloadItemFile').click(function() {
+$('#downloadItemFile').click(function() {
     $('#downloadStats').html(function(i, val) { return val*1+1 });
 });
 
