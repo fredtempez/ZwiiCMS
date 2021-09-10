@@ -14,7 +14,7 @@
 
 class download extends common {
 
-	const VERSION = '2.4';
+	const VERSION = '2.5';
 	const REALNAME = 'Téléchargement';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -923,9 +923,8 @@ class download extends common {
 		}
 		// Téléchargement
 		else {
-			$filePath = self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
-			$fileName = $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
-			if (file_exists($filePath)) {
+			$fileName = self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(2), 'file']);
+			if (file_exists($fileName)) {
 				// Statistiques de téléchargement
 				$statId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0),  'items', $this->getUrl(2), 'stats']));
 				$this->setData(['module',
@@ -938,14 +937,15 @@ class download extends common {
 						'ip' =>  helper::getIp()
 				]]);
 				// Formatage http
+				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
-				header('Content-Disposition: attachment; filename="' . $fileName . '"');
-				header('Content-Length: ' . filesize($filePath));
-				readfile( $filePath);
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_RAW
-				]);
+				header('Content-Disposition: attachment; filename="'.basename($fileName).'"');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($fileName));
+				readfile($fileName);
+				exit;
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
