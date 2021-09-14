@@ -193,7 +193,7 @@ class config extends common {
 		$this->addOutput([
 			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'redirect' => helper::baseUrl() . 'config/advanced',
-			'state' => $successSitemap 
+			'state' => $successSitemap
 		]);
 	}
 
@@ -298,25 +298,35 @@ class config extends common {
 				$files [] = ( basename( $stat['name'] ));
 			}
 
-			// Détermination de la version	à installer
-			if (in_array('theme.json',$files) === true &&
-				in_array('core.json',$files) === true &&
-				in_array ('user.json', $files) === false ) {
-					// V9 pas de fichier user dans l'archive
-					// Stocker le choix de conserver les users installées
-					$version = '9';
+			// Lire la dataversion
+			$tmpDir = uniqid(4);
+			$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
+			$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
+			$obj = json_decode($data);
+			$dataVersion = strval ($obj->core->dataVersion);
+			switch (strlen($dataVersion)) {
+				case 4:
+					if (substr($dataVersion,0,1) === '9' ) {
+						$version = 9;
+					} else {
+						$version = 0;
+					}
+					break;
+				case 5:
+					$version = substr($dataVersion,0,2);
+					break;
+				default:
+					$version = 0;
+					break;
+			}
+			$this->removeDir(self::TEMP_DIR . $tmpDir );
 
-			} elseif (in_array('theme.json',$files) === true &&
-				in_array('core.json',$files) === true &&
-				in_array ('user.json', $files) === true &&
-				in_array ('config.json', $files) === true ) {
-					// V10 valide
-					$version = '10';
+			if ($version >= 10 )	{
 					// Option active, les users sont stockées
 					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
 						$users = $this->getData(['user']);
-					}
-			} else { // Version invalide
+				}
+			} elseif ($version === 0) { // Version invalide
 				// Valeurs en sortie erreur
 				$this->addOutput([
 					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
@@ -326,7 +336,7 @@ class config extends common {
 			}
 			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
 			// Positionnement d'une  variable de session lue au constructeurs
-			if ($version === '9') {
+			if ($version === 9) {
 				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
 			}
 			// Extraire le zip ou 'site/'
@@ -334,13 +344,13 @@ class config extends common {
 			// Fermer l'archive
 			$zip->close();
 
+
 			// Restaurer les users originaux d'une v10 si option cochée
 			if (!empty($users) &&
-				$version === '10' &&
+				$version >= 10 &&
 				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['user',$users]);
 			}
-
 			// Message de notification
 			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';

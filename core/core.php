@@ -485,7 +485,7 @@ class common {
 	 */
 	public function setPage($page, $value, $lang) {
 
-		return file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']), $value);
+		return file_put_contents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
 
 	}
 

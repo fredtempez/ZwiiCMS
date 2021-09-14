@@ -633,8 +633,8 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	}
 	foreach ($pageList as $parentKey => $parent) {
 		$content = $this->getData(['page', $parent, 'content']);
-		// file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $parent . '.html', $content);
-		$this->setPage($parent, $content,  self::$i18n);
+		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $parent . '.html', $content);
+		$this->setPage($parent, $content, 'fr');
 		$this->setData(['page', $parent, 'content', $parent . '.html']);
 	}
 
@@ -643,5 +643,3 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 
 	$this->setData(['core', 'dataVersion', 11000]);
 }
-
-?>
