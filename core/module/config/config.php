@@ -340,6 +340,7 @@ class config extends common {
 				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
 			}
 			// Extraire le zip ou 'site/'
+			$this->removeDir(self::DATA_DIR);
 			$success = $zip->extractTo( 'site/' );
 			// Fermer l'archive
 			$zip->close();
