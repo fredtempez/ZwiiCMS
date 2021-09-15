@@ -18,13 +18,16 @@
 	<div class="col2">
 	<?php echo template::button('formDataBack', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/export2csv' . '/' . $_SESSION['csrf'],
-			'ico' => 'download',			
+			'ico' => 'download',
 			'value' => 'Export CSV'
 		]); ?>
 	</div>
 </div>
-<?php echo template::table([11, 1], $module::$data, ['Données', '']); ?>
-<?php echo $module::$pagination; ?>
+<?php if($module::$data): ?>
+		<?php echo template::table([11, 1], $module::$data, ['Données', '']); ?>
+	<?php else: ?>
+		<?php echo template::speech('Aucune donnée'); ?>
+	<?php endif; ?>
 <div class="moduleVersion">Version n°
 	<?php echo $module::VERSION; ?>
 </div>

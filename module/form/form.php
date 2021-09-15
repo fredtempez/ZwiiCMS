@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '2.9';
+	const VERSION = '2.10';
 	const REALNAME = 'Formulaire';
 	const DELETE = true;
 	const UPDATE = '0.0';
