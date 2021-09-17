@@ -68,7 +68,7 @@
 					// Affiche toujours le titre de la bannière pour l'édition du thème
 					OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 				): ?>
-						<span id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+						<span span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 				<?php else: ?>
 						<span id="themeHeaderTitle">&nbsp;</span>
 				<?php endif; ?>
@@ -122,7 +122,7 @@
 							// Affiche toujours le titre de la bannière pour l'édition du thème
 							OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 						): ?>
-							<span id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+							<span span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 						<?php else: ?>
 								<span id="themeHeaderTitle">&nbsp;</span>
 						<?php endif; ?>
