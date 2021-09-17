@@ -45,7 +45,7 @@
 				<!-- Menu Burger -->
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
+					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="
@@ -68,7 +68,7 @@
 					// Affiche toujours le titre de la bannière pour l'édition du thème
 					OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 				): ?>
-						<span span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+						<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 				<?php else: ?>
 						<span id="themeHeaderTitle">&nbsp;</span>
 				<?php endif; ?>
@@ -84,7 +84,7 @@
 			<nav>
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
+					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
@@ -97,7 +97,7 @@
 				<nav>
 					<div id="toggle">
 					<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
+						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
 					<?php endif; ?>
 					<?php echo template::ico('menu',null,null,'2em'); ?></div>
 					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
@@ -122,7 +122,7 @@
 							// Affiche toujours le titre de la bannière pour l'édition du thème
 							OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 						): ?>
-							<span span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+							<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 						<?php else: ?>
 								<span id="themeHeaderTitle">&nbsp;</span>
 						<?php endif; ?>
@@ -144,7 +144,7 @@
 			<nav <?php if($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
 				<div id="toggle">
 				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div id="burgerText"><?php echo $this->getData(['locale','title']);?></div>
+						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
 					<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
