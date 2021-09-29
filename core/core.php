@@ -1179,9 +1179,6 @@ class common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		if ($this->getData(['config', 'i18n', 'enable']) === true) {
-			echo $this->showi18n('Site');
-		}
 		if(
 			$this->output['title']
 			AND (
@@ -1565,10 +1562,11 @@ class common {
 			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
-		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
+		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
 		if ($this->getData(['config', 'i18n', 'enable']) === true) {
-			echo $this->showi18n('Nav');
+			echo $this->showi18n();
 		}
+		echo '</ul>';
 	}
 
 	/**
@@ -1915,10 +1913,9 @@ class common {
 	/**
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
-	public function showi18n($id) {
-		echo '<div id="i18nContainer' . $id . '"><ul>';
+	public function showi18n() {
 		foreach (self::$i18nList as $key => $value) {
-			if ($this->getData(['config', 'i18n',$key]) === 'site'
+			if ($this->getData(['config', 'i18n', $key]) === 'site'
 				OR (
 					$this->getData(['config', 'i18n','scriptGoogle']) === true
 					AND $this->getData(['config', 'i18n',$key]) === 'script'
@@ -1938,11 +1935,11 @@ class common {
 				   }
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
 				echo '</li>';
 			}
 		}
-		echo '</ul></div>';
+		echo '</ul>';
 	}
 }
 

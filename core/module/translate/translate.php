@@ -188,11 +188,14 @@ class translate extends common {
 		} else {
 			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
+			// Désactivation du script Google
+			// setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
+			// $_SESSION['googtrans'] = '/fr/fr';
 		}
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' 		=> 	helper::baseUrl()
+			'redirect' 		=> 	helper::baseUrl() . $this->getUrl(4)
 		]);
 	}
 }

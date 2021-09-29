@@ -690,22 +690,7 @@ li .menuSideChild {
 	padding-left: 10px;
 }
 
-/* Container des drapeaux */
-
-
-#i18nContainerNav, #i18nContainerSite {
-	position: relative ;
-	float: right;
-}
-
-#i18nContainerNav ul, #i18nContainerSite ul {
-	list-style: none;
-}
-
-#i18nContainerNav li, #i18nContainerSite li {
-	display: inline-block;
-	position: relative;
-}
+/* Drapeaux */
 
 #i18nFlag {
 	width: 70%;
@@ -720,32 +705,20 @@ li .menuSideChild {
 * Position du bloc dans le site sur les petits écrans
 */
 
-#i18nContainerNav {
-	display: block;
-}
-#i18nContainerSite {
-	display: none;
-}
 
 @media screen and (max-width:1024px){
-	#i18nContainerNav {
-	  display: none;
-	}
-	#i18nContainerSite {
-	  display: block;
-	  margin-top: -10px;
-	}
+
 
 	#i18nFlag {
 		width: 100%;
 		padding: 5px;
 	}
-	
+
 	#i18nFlagSelected {
 		width: 130%;
 		padding:  5px;
 	}
-	
+
   }
 
 
