@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.2';
+	const VERSION = '3.3';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -149,9 +149,36 @@ class gallery extends common {
 	 */
 	private function update() {
 
-		// Mise à jour d'une version inférieure, la gallery existe mais pas content
+		
+		// Initialisation du module, créer les données si elles sont manquantes.
+		$this->init();
+
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
+		// Mise à jour 3.1
+		if (version_compare($versionData, '3.1', '<') ) {
+			if (is_dir(self::DATADIRECTORY . 'pages/')) {
+				// Déplacer les données du dossier Pages
+				$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
+				$this->removeDir(self::DATADIRECTORY . 'pages/');
+				$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
+				$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
+			}
+			// Mettre à jour la version
+			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.1' ]);
+		}
+	}
+
+	/**
+	 * Initialisation séparée des éléments absents
+	 * Thème
+	 * Config
+	 * Content
+	 */
+	private function init() {
+
+		// Mise à jour d'une version inférieure, la gallery existe mais pas la variable content
 		if ($this->getData(['module', $this->getUrl(0)]) &&
-			$this->getData(['module', $this->getUrl(0), 'content']) === NULL  ) {
+		$this->getData(['module', $this->getUrl(0), 'content']) === NULL  ) {
 
 			// Changement de l'arborescence dans module.json
 			$data = $this->getData(['module', $this->getUrl(0)]);
@@ -173,52 +200,24 @@ class gallery extends common {
 				// Nom de la feuille de style
 				$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
 			}
-			// Nouvelle version
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.0']);
 		}
 
-		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
-
-		// le module n'est pas initialisé
-		if ($versionData === NULL) {
-			$this->init();
-		}
-
-		// Mise à jour 3.1
-		if (version_compare($versionData, '3.1', '<') ) {
-			if (is_dir(self::DATADIRECTORY . 'pages/')) {
-				// Déplacer les données du dossier Pages
-				$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
-				$this->removeDir(self::DATADIRECTORY . 'pages/');
-				$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
-				$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
-			}
-			// Mettre à jour la version
-			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '3.1' ]);
-		}
-	}
-
-	/**
-	 * Initialisation séparément les éléments absents
-	 * Thème
-	 * Config
-	 * Content
-	 */
-	private function init() {
 		// Variable commune
 		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
-		// Check la présence du thème
+
+		// Check la présence des données de thème
 		if ( $this->getData(['module',  $this->getUrl(0), 'theme']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module',  $this->getUrl(0), 'theme', theme::$defaultTheme]);
 			// Nom de la feuille de style
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
+
 		// Check la présence de la feuille de style
 		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 			}
 			// Générer la feuille de CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
@@ -244,7 +243,8 @@ class gallery extends common {
 			// Nom de la feuille de style
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
-		// Check Config
+
+		// Check la présence de la config
 		if ( $this->getData(['module',  $this->getUrl(0), 'config']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultData]);
@@ -743,7 +743,7 @@ class gallery extends common {
 		if($this->isPost()) {
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 			}
 			$this->setData(['module', $this->getUrl(0), 'theme', [
 					'thumbAlign' 	    => $this->getinput('galleryThemeThumbAlign', helper::FILTER_STRING_SHORT),

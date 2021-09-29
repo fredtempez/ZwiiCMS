@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '2.3';
+	const VERSION = '2.4';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -93,7 +93,7 @@ class search extends common {
 
 		// Dossier de l'instance
 		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
-			mkdir (self::DATADIRECTORY . $this->getUrl(0), 0777, true);
+			mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 		}
 
 		// Check la présence de la feuille de style

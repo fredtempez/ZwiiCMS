@@ -94,7 +94,7 @@ class addon extends common {
 		$zip = new ZipArchive();
 		if ($zip->open($moduleName) === TRUE) {
 			$notification = 'Archive ouverte';
-			mkdir (self::TEMP_DIR . $tempFolder);
+			mkdir (self::TEMP_DIR . $tempFolder, 0755);
 			$zip->extractTo(self::TEMP_DIR . $tempFolder );
 			// Archive de module ?
 			$success = false;
@@ -253,7 +253,7 @@ class addon extends common {
 			$moduleFile = $d[count($d)-1];
 			// Créer le dossier modules
 			if (!is_dir(self::FILE_DIR . 'source/modules')) {
-				mkdir (self::FILE_DIR . 'source/modules');
+				mkdir (self::FILE_DIR . 'source/modules', 0755);
 			}
 			// Sauver les données du fichiers
 			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
@@ -422,7 +422,7 @@ class addon extends common {
 			$tmpFolder = self::TEMP_DIR . uniqid();
 			//$tmpFolder = self::TEMP_DIR . 'test';
 			if (!is_dir($tmpFolder)) {
-				mkdir($tmpFolder);
+				mkdir($tmpFolder, 0755);
 			}
 			// Clés moduleIds dans les pages
 			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
@@ -446,15 +446,15 @@ class addon extends common {
 				}
 				// Créer le dossier temporaire si inexistant sinon le nettoie et le créer
 				if (!is_dir($tmpFolder . '/' . $lang)) {
-					mkdir ($tmpFolder . '/' . $lang, 0777, true);
+					mkdir ($tmpFolder . '/' . $lang, 0755, true);
 				} else {
 					$this->removeDir($tmpFolder . '/' . $lang);
-					mkdir ($tmpFolder . '/' . $lang, 0777, true);
+					mkdir ($tmpFolder . '/' . $lang, 0755, true);
 				}
 				// Créer le dossier temporaire des données du  module
 				if ($infoModules[$this->getUrl(2)]['dataDirectory']) {
 					if (!is_dir($tmpFolder . '/' . $moduleDir)) {
-						mkdir ($tmpFolder . '/' . $moduleDir, 0777, true) ;
+						mkdir ($tmpFolder . '/' . $moduleDir, 0755, true) ;
 					}
 				}
 				// Sauvegarde si données non vides
@@ -471,7 +471,7 @@ class addon extends common {
 			// Enregistrement des pages dans le dossier de langue identique à module
 			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
 				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageParam));
-				mkdir ($tmpFolder . '/' . $lang . '/content');
+				mkdir ($tmpFolder . '/' . $lang . '/content', 0755);
 				file_put_contents($tmpFolder . '/' . $lang . '/content/' . $this->getData(['page', $pageId, 'content']), $pageContent);
 			}
 			// création du zip
@@ -518,7 +518,7 @@ class addon extends common {
 				// Récupérer le fichier et le décompacter
 				$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
 				$tempFolder = uniqid();
-				mkdir (self::TEMP_DIR . $tempFolder);
+				mkdir (self::TEMP_DIR . $tempFolder, 0755);
 				$zip = new ZipArchive();
 				if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
 					$zip->extractTo(self::TEMP_DIR  . $tempFolder );

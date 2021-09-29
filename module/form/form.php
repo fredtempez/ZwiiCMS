@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '2.10';
+	const VERSION = '2.11';
 	const REALNAME = 'Formulaire';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -202,7 +202,7 @@ class form extends common {
 			if ($data !== []) {
 				$csvfilename = 'data-'.date('dmY').'-'.date('hm').'-'.rand(10,99).'.csv';
 				if (!file_exists(self::FILE_DIR.'source/data')) {
-					mkdir(self::FILE_DIR.'source/data');
+					mkdir(self::FILE_DIR.'source/data', 0755);
 				}
 				$fp = fopen(self::FILE_DIR.'source/data/'.$csvfilename, 'w');
 				fputcsv($fp, array_keys($data[1]), ';','"');

@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.5';
+	const VERSION = '3.6';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -201,7 +201,7 @@ class news extends common {
 
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', 0777, true);
+				mkdir (self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', 0755, true);
 			}
 
 			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style );
@@ -553,7 +553,7 @@ class news extends common {
 
 		// Dossier de l'instance
 		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-			mkdir (self::DATADIRECTORY . $this->getUrl(0) , 0777, true);
+			mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 		}
 
 		// Check la présence de la feuille de style

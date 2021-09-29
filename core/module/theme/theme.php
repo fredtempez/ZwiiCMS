@@ -636,7 +636,7 @@ class theme extends common {
 			$tempFolder = uniqid();
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR.'source/'.$zipFilename) === TRUE) {
-				mkdir (self::TEMP_DIR . $tempFolder);
+				mkdir (self::TEMP_DIR . $tempFolder, 0755);
 				$zip->extractTo(self::TEMP_DIR . $tempFolder );
 				$modele = '';
 				// Archive de thème ?
@@ -717,7 +717,7 @@ class theme extends common {
 		$zipFilename = $this->zipTheme($this->getUrl(2));
 		// Téléchargement du ZIP
 		if (!is_dir(self::FILE_DIR.'source/theme')) {
-			mkdir(self::FILE_DIR.'source/theme');
+			mkdir(self::FILE_DIR.'source/theme', 0755);
 		}
 		copy (self::TEMP_DIR . $zipFilename , self::FILE_DIR.'source/theme/' . $zipFilename);
 		// Nettoyage du dossier

@@ -153,7 +153,7 @@ class page extends common {
 		]);
 		// Creation du contenu de la page
 		if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-			mkdir(self::DATA_DIR . self::$i18n . '/content');
+			mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
 		}
 		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
 		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18n);
@@ -338,7 +338,7 @@ class page extends common {
 							$modulesData = helper::getModules();
 							if (is_dir($modulesData[$moduleId]['dataDirectory']. $this->getUrl(2))) {
 								// Placer la feuille de style dans un dossier au nom de la nouvelle instance
-								mkdir( $modulesData[$moduleId]['dataDirectory']. $pageId );
+								mkdir( $modulesData[$moduleId]['dataDirectory']. $pageId, 0755 );
 								copy( $modulesData[$moduleId]['dataDirectory']. $this->getUrl(2), $modulesData[$moduleId]['dataDirectory']. $pageId);
 								$this->removeDir($modulesData[$moduleId]['dataDirectory']. $this->getUrl(2));
 								// Mettre à jour le nom de la feuille de style
@@ -437,7 +437,7 @@ class page extends common {
 					]);
 					// Creation du contenu de la page
 					if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-						mkdir(self::DATA_DIR . self::$i18n . '/content');
+						mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
 					}
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
 					//file_put_contents( self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html' , $content );

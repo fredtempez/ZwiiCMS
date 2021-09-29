@@ -45,7 +45,7 @@ class translate extends common {
 			if ($copyFrom !== $toCreate) {
 				// Création du dossier
 				if (is_dir(self::DATA_DIR . $toCreate) === false ) { // Si le dossier est déjà créé
-					$success  = mkdir (self::DATA_DIR . $toCreate);
+					$success  = mkdir (self::DATA_DIR . $toCreate, 0755);
 				} else {
 					$success = true;
 				}

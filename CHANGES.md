@@ -1,6 +1,10 @@
 # Changelog
 
 ## Version 11.0.10
+- Corrections :
+    - Création d'un dossier : les droits d'accès sont positionnés sur 0755 au lieu de la valeur par défaut 0777. Concerne également les modules Formulaire, Galerie, News, Search et d'autres modules optionnels.
+    - Données d'initialisation, le numéro de version devient 11000 au lieu de 10602.
+    - Module galerie version 3.3, modification de l'initialisation du module.
 
 ## Version 11.0.09
 - Modifications :

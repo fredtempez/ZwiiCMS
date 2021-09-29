@@ -558,7 +558,7 @@ class common {
 
 		// Stockage dans un sous-dossier localisé
 		if (!file_exists(self::DATA_DIR .  $lang)) {
-			mkdir (self::DATA_DIR .$lang);
+			mkdir (self::DATA_DIR .$lang, 0755);
 		}
 		$db = $this->dataFiles[$module];
 		if ($sampleSite === true) {
@@ -570,7 +570,7 @@ class common {
 
 		// Dossier des pages
 		if (!is_dir(self::DATA_DIR . $lang . '/content')) {
-			mkdir(self::DATA_DIR . $lang . '/content');
+			mkdir(self::DATA_DIR . $lang . '/content', 0755);
 		}
 		// Créer le jeu de pages du site de test
 		if ($module === 'page' ) {
@@ -748,7 +748,7 @@ class common {
 
 		// Dossier de langues
 		if (!file_exists(self::DATA_DIR . '/fr')) {
-			mkdir (self::DATA_DIR . '/fr');
+			mkdir (self::DATA_DIR . '/fr', 0755);
 		}
 
 		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
@@ -963,7 +963,7 @@ class common {
 		// Vérifier l'existence du dossier de destination.
 		$fileInfo = pathinfo($dest);
 		if (!is_dir($fileInfo['dirname'])) {
-			mkdir($fileInfo['dirname'],0755,true);
+			mkdir($fileInfo['dirname'], 0755, true);
 		}
 		// Type d'image
 		switch(	$fileInfo['extension']) {

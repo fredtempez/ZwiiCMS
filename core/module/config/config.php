@@ -209,7 +209,7 @@ class config extends common {
 			$fileName = helper::autoBackup(self::TEMP_DIR,$filter);
 			// Créer le répertoire manquant
 			if (!is_dir(self::FILE_DIR.'source/backup')) {
-				mkdir(self::FILE_DIR.'source/backup');
+				mkdir(self::FILE_DIR.'source/backup', 0755);
 			}
 			// Copie dans les fichiers
 			$success = copy (self::TEMP_DIR . $fileName , self::FILE_DIR.'source/backup/' . $fileName);
@@ -761,7 +761,7 @@ class config extends common {
 	public function copyBackups() {
 		// Créer le répertoire manquant
 		if (!is_dir(self::FILE_DIR.'source/backup')) {
-			mkdir(self::FILE_DIR.'source/backup');
+			mkdir(self::FILE_DIR.'source/backup', 0755);
 		}
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie

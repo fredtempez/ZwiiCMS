@@ -623,7 +623,7 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	$pageList = array();
 	// Creation du contenu de la page
 	if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-		mkdir(self::DATA_DIR . self::$i18n . '/content');
+		mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
 	}
 	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
 		$pageList [] = $parentKey;
