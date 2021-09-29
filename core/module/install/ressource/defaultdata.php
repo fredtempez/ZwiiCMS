@@ -37,7 +37,7 @@ class init extends common {
 				'captcha' => true
 			],
 			"i18n" => [
-				"active"=> true,
+				"enable"=> true,
 				"scriptGoogle"=> false,
 				"showCredits"=> false,
 				"autoDetect"=> false,
@@ -52,7 +52,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11000,
+			'dataVersion' => 11010,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

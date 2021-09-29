@@ -253,7 +253,7 @@ class common {
 		 *	- L'auto-détection est active
 		 */
 
-		if ( $this->getData(['config', 'i18n', 'active']) === true
+		if ( $this->getData(['config', 'i18n', 'enable']) === true
 			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
 			 AND $this->getData(['config', 'i18n','autoDetect']) === true
 			 AND $this->getInput('ZWII_I18N_SITE') !== ''
@@ -1179,7 +1179,7 @@ class common {
 	 * @param Page par défaut
 	 */
 	public function showContent() {
-		if ($this->getData(['config', 'i18n', 'active']) === true) {
+		if ($this->getData(['config', 'i18n', 'enable']) === true) {
 			echo $this->showi18n('Site');
 		}
 		if(
@@ -1200,7 +1200,7 @@ class common {
 		 * La traduction est active et le site n'est pas en français.
 		 * La fonction est activée.
 		 */
-		if ( $this->getData(['config', 'i18n', 'active']) === true
+		if ( $this->getData(['config', 'i18n', 'enable']) === true
 			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
 			 AND $this->getData(['config', 'i18n','showCredits']) === true
 			 AND
@@ -1566,7 +1566,7 @@ class common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight . '</ul>';
-		if ($this->getData(['config', 'i18n', 'active']) === true) {
+		if ($this->getData(['config', 'i18n', 'enable']) === true) {
 			echo $this->showi18n('Nav');
 		}
 	}
@@ -1808,7 +1808,7 @@ class common {
 				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
-				if ($this->getData(['config', 'i18n', 'active']) === true) {
+				if ($this->getData(['config', 'i18n', 'enable']) === true) {
 					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				}
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
@@ -2586,7 +2586,7 @@ class core extends common {
 		// Chargement de la bibliothèque googtrans
 
 		// Le script de traduction est sélectionné
-		if ($this->getData(['config', 'i18n', 'active']) === true) {
+		if ($this->getData(['config', 'i18n', 'enable']) === true) {
 			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
 					// et la traduction de la langue courante est automatique
 				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''

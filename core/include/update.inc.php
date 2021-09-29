@@ -595,7 +595,7 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	$this->setData(['config','autoDisconnect',true]);
 
 	// Mettre à jour les données de langue
-	$this->setData(['config', 'i18n','active', true ]);
+	$this->setData(['config', 'i18n', 'enable', true ]);
 	$this->setData(['config', 'i18n','scriptGoogle', false ]);
 	$this->setData(['config', 'i18n','showCredits', false ]);
 	$this->setData(['config', 'i18n','autoDetect', false ]);
@@ -642,4 +642,15 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	$this->setData(['config','seo','robots',true]);
 
 	$this->setData(['core', 'dataVersion', 11000]);
+}
+
+// Version 11.0.10
+if ($this->getData(['core', 'dataVersion']) < 11010) {
+
+	// Renommer une variable
+	$data = $this->getData(['config', 'i18n', 'active']);
+	$this->deleteData(['config', 'i18n', 'active']);
+	$this->setData(['config', 'i18n', 'enable', $data ]);
+
+	$this->setData(['core', 'dataVersion', 11010]);
 }
