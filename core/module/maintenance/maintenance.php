@@ -36,7 +36,8 @@ class maintenance extends common {
 					'title' => $this->getData(['page',$this->getData(['locale','page302']),'hideTitle'])
 								? ''
 								: $this->getData(['page',$this->getData(['locale','page302']),'title']),
-					'content' => $this->getdata(['page',$this->getData(['locale','page302']),'content']),
+					//'content' => $this->getdata(['page',$this->getData(['locale','page302']),'content']),
+					'content' => $this->getPage($this->getData(['locale','page302']), self::$i18n),
 					'view' => 'index'
 				]);
 		} else {
