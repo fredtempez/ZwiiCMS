@@ -57,14 +57,13 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::checkbox('themefooterDisplaySiteMap', true, 'Plan du site', [
-                            'checked' => $this->getData(['theme', 'footer', 'displaySiteMap']),
-                            'help' => 'Un plan du site permet un meilleur référencement.'
+                            'checked' => $this->getData(['theme', 'footer', 'displaySiteMap'])
                         ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::checkbox('themeFooterLoginLink', true, 'Lien de connexion', [
                             'checked' => $this->getData(['theme', 'footer', 'loginLink']),
-                            'help' => 'Pour éviter les tentatives de piratage, enregistrez la page de connexion en favori et désactivez cette option.'
+                            'help' => 'Pour limiter les tentatives de piratage, enregistrez la page de connexion en favori et désactivez cette option.'
                         ]); ?>
                 </div>
             </div>
@@ -81,14 +80,14 @@
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
                             'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
                             'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
-                            'help' => $this->getData(['locale', 'legalPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant les mentions légales dans la configuration du site' : ''
+                            'help' => 'Sélectionnez la page contenant les mentions légales dans Configurer le site / Pages spéciales pour activer cette option'
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
                             'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                             'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
-                            'help' => $this->getData(['locale', 'searchPageId']) === 'none' ? 'Pour activer cette option, sélectionnez la page contenant un module de recherche dans la configuration du site' : ''
+                            'help' => 'Sélectionnez la page contenant un module de recherche dans Configurer le site / Pages spéciales pour activer cette option'
                         ]); ?>
                 </div>
             </div>
