@@ -473,7 +473,11 @@ class common {
 	 */
 	public function getPage($page, $lang) {
 
-		return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
+		if (file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))) {
+			return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
+		} else {
+			return 'Aucun contenu trouvé.';
+		}		
 
 	}
 
