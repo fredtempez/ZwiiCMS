@@ -473,10 +473,15 @@ class common {
 	 */
 	public function getPage($page, $lang) {
 
-		if (file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))) {
-			return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
-		} else {
-			return 'Aucun contenu trouvé.';
+		// Le nom de la ressource et le fichier de contenu sont définis : 
+		if (
+				$this->getData(['page', $page, 'content']) !== ''
+				&& file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
+				&& is_file(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
+			) {
+				return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
+			} else {
+				return 'Aucun contenu trouvé.';
 		}		
 
 	}
