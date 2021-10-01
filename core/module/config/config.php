@@ -377,27 +377,19 @@ class config extends common {
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			$success = true;
-			// Empêcher la modification si défini dans footer
+
+			// Répercuter la suppression de la page dans la configuration du footer
 			if ( $this->getData(['theme','footer','displaySearch']) === true
 				AND $this->getInput('configSearchPageId') === 'none'
 				){
-					$searchPageId = $this->getData(['locale','searchPageId']);
-					self::$inputNotices['configSearchPageId'] = 'Désactiver l\'option dans le pied de page';
-					$success = false;
-			} else {
-					$searchPageId = $this->getInput('configSearchPageId');
+					$this->setData(['theme', 'footer', 'displaySearch', false]);
 			}
-			// Empêcher la modification si défini dans footer
 			if ( $this->getData(['theme','footer','displayLegal']) === true
 				AND $this->getInput('configLegalPageId') === 'none'
 				){
-					$legalPageId = $this->getData(['locale','legalPageId']);
-					self::$inputNotices['configLegalPageId'] = 'Désactiver l\'option dans le pied de page';
-					$success = false;
-			} else {
-					$legalPageId = $this->getInput('configLegalPageId');
+					$this->setData(['theme', 'footer', 'displayLegal', false]);
 			}
+
 			// Sauvegarder
 			$this->setData([
 				'locale',
@@ -406,20 +398,23 @@ class config extends common {
 					'page404' => $this->getInput('configPage404'),
 					'page403' => $this->getInput('configPage403'),
 					'page302' => $this->getInput('configPage302'),
-					'legalPageId' => $legalPageId,
-					'searchPageId' => $searchPageId,
+					'legalPageId' => $this->getInput('configLegalPageId'),
+					'searchPageId' => $this->getInput('configSearchPageId'),
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
 				]
 			]);
+
 			$this->setData(['config', 'i18n', 'enable', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
+
 			// Générer robots.txt et sitemap
 			$this->generateFiles();
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'notification' => 'Modifications enregistrées',
-				'state' => $success
+				'state' => true
 			]);
 		}
 

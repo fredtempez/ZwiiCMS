@@ -80,14 +80,14 @@
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
                             'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
                             'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
-                            'help' => 'Sélectionnez la page contenant les mentions légales dans Configurer le site / Pages spéciales'
+                            'help' => $this->getData(['locale', 'legalPageId']) === 'none' ? 'Une page contenant les mentions légales n\'est pas définie dans la configuration du site / pages spéciales.' : ''
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
                             'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                             'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
-                            'help' => 'Sélectionnez la page contenant un module de recherche dans Configurer le site / Pages spéciales'
+                            'help' => $this->getData(['locale', 'searchPageId']) === 'none' ? 'Une page contenant un module de recherche n\'est pas définie dans la configuration du site / pages spéciales.' : ''
                         ]); ?>
                 </div>
             </div>
