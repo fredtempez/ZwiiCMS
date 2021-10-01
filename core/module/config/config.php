@@ -178,6 +178,8 @@ class config extends common {
 		600 => '10 minutes',
 		900 => '15 minutes'
 	];
+	// Langue traduite courante
+	public static $i18nSite = 'fr';
 
 	/**
 	 * Génére les fichiers pour les crawlers
@@ -400,6 +402,9 @@ class config extends common {
 					'page302' => $this->getInput('configPage302'),
 					'legalPageId' => $this->getInput('configLegalPageId'),
 					'searchPageId' => $this->getInput('configSearchPageId'),
+					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemaplabel' => empty($this->getInput('configSitemapLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapLabel', helper::FILTER_STRING_SHORT),
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
 				]
