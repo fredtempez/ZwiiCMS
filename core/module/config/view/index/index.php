@@ -1,9 +1,3 @@
-<?php
-$i18nSite = 'fr';
-if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
-		$i18nSite = $_COOKIE['ZWII_I18N_SITE'];
-}
-?>
 <?php echo template::formOpen('configForm');?>
 <div class="row">
 	<div class="col2">
@@ -58,7 +52,7 @@ if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
 			<div class="row">
 				<div class="col9">
 					<?php echo template::text('configTitle', [
-						'label' => 'Titre du site '. $i18nSite,
+						'label' => 'Titre du site '. template::flag('20px') ,
 						'value' => $this->getData(['locale', 'title']),
 						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
 					]); ?>
@@ -74,7 +68,7 @@ if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
 			<div class="row">
 				<div class="col12">
 					<?php echo template::textarea('configMetaDescription', [
-						'label' => 'Description du site ' . $i18nSite,
+						'label' => 'Description du site ' . template::flag('20px'),
 						'value' => $this->getData(['locale', 'metaDescription']),
 						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
 					]); ?>
@@ -164,21 +158,21 @@ if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
 			<div class="row">
 				<div class="col4">
 					<?php echo template::text('configLegalPageLabel', [
-						'label' => 'Mentions légales ' . $i18nSite,
+						'label' => 'Mentions légales ' . template::flag('20px'),
 						'placeholder' => 'Mentions légales',
 						'value' => $this->getData(['locale', 'legalPageLabel']),
 					]); ?>
 				</div>
 				<div class="col4">
 					<?php echo template::text('configSearchPageLabel', [
-						'label' => 'Rechercher ' . $i18nSite,
+						'label' => 'Rechercher ' . template::flag('20px'),
 						'placeholder' => 'Rechercher',
 						'value' => $this->getData(['locale', 'searchPageLabel']),
 					]); ?>
 				</div>
 				<div class="col4">
 					<?php echo template::text('configSitemapPageLabel', [
-						'label' => 'Plan du site ' . $i18nSite,
+						'label' => 'Plan du site ' . template::flag('20px'),
 						'placeholder' => 'Plan du site',
 						'value' => $this->getData(['locale', 'sitemapPageLabel']),
 					]); ?>

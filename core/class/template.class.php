@@ -423,6 +423,23 @@ class template {
         return '<span class="zwiico-' . $ico . ($margin ? ' zwiico-margin-' . $margin : '') . ($animate ? ' animate-spin' : '') . '" style="font-size:' . $fontSize . '"><!----></span>';
     }
 
+        /**
+    * Crée un drapeau du site courante
+    * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
+    * @param string $size Taille en pixels (default = auto)
+    * @return string
+    */
+    public static function flag( $size = 'auto') {
+        if ( isset($_COOKIE['ZWII_I18N_SITE'])
+    	) {
+            $lang = $_COOKIE['ZWII_I18N_SITE'];
+            return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png" 
+                    width="' . $size .'"
+                    height="' . $size .'"
+                    alt="(' . $lang . ')"/>';
+        }
+    }
+
     /**
     * Crée un label
     * @param string $for For du label

@@ -380,6 +380,11 @@ class theme extends common {
 					'displayMemberBar'=> $this->getInput('themeFooterDisplayMemberBar', helper::FILTER_BOOLEAN),
 					'template' => $this->getInput('themeFooterTemplate')
 				]]);
+
+				// Sauvegarder la configuration localisée
+				$this->setData(['locale','legalPageId', $this->getInput('configLegalPageId')]);
+				$this->setData(['locale','searchPageId', $this->getInput('configSearchPageId')]);
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'notification' => 'Modifications enregistrées',
