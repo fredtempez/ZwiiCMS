@@ -404,7 +404,7 @@ class config extends common {
 					'searchPageId' => $this->getInput('configSearchPageId'),
 					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
 					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemaplabel' => empty($this->getInput('configSitemapLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
 					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
 				]

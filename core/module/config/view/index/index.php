@@ -78,7 +78,6 @@ if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
 						'value' => $this->getData(['locale', 'metaDescription']),
 						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
 					]); ?>
-					
 				</div>
 			</div
 			><p>Le titre et la description sont spécifiques aux traductions rédigées du site.</p>
@@ -178,10 +177,10 @@ if ( isset($_COOKIE['ZWII_I18N_SITE'])	) {
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::text('configSitemapLabel', [
+					<?php echo template::text('configSitemapPageLabel', [
 						'label' => 'Plan du site ' . $i18nSite,
 						'placeholder' => 'Plan du site',
-						'value' => $this->getData(['locale', 'sitemaplabel']),
+						'value' => $this->getData(['locale', 'sitemapPageLabel']),
 					]); ?>
 				</div>
 			</div>

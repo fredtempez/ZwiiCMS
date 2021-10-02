@@ -65,10 +65,10 @@ class init extends common {
 			'page403' => 'none',
 			'page404' => 'none',
 			'legalPageId' => 'none',
-			'legalPageLabel' => 'Mentions légales',
 			'searchPageId' => 'none',
 			'searchPageLabel' => 'Rechercher',
-			'sitemaplabel' => 'Plan du site',
+			'sitemapPageLabel' => 'Plan du site',
+			'legalPageLabel' => 'Mentions légales',
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
 			'title' => 'Votre site en quelques clics !'
 		],

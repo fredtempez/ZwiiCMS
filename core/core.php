@@ -1297,13 +1297,13 @@ class common {
 		// Affichage du sitemap
 		$items .= '<span id="footerDisplaySiteMap"';
 		$items .= $this->getData(['theme','footer','displaySiteMap']) ===  false ? ' class="displayNone"' : '';
-		$label = empty($this->getData(['locale','sitemaplabel'])) ? 'Rechercher' : $this->getData(['locale','sitemaplabel']);
+		$label = empty($this->getData(['locale','sitemapPageLabel'])) ? 'Plan du site' : $this->getData(['locale','sitemapPageLabel']);
 		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap" data-tippy-content="Plan du site" >' . $label . '</a>';
 		$items .= '</span>';
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
-		$label = empty($this->getData(['locale','legalPageId'])) ? 'Rechercher' : $this->getData(['locale','legalPageId']);
+		$label = empty($this->getData(['locale','searchPageLabel'])) ? 'Rechercher' : $this->getData(['locale','searchPageLabel']);
 		if ($this->getData(['locale','searchPageId']) !== 'none') {
 			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="' . $label . '" >' . $label .'</a>';
 		}
@@ -1311,7 +1311,7 @@ class common {
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
-		$label = empty($this->getData(['locale','legalPageId'])) ? 'Mentions Légales' : $this->getData(['locale','legalPageId']);
+		$label = empty($this->getData(['locale','legalPageLabel'])) ? 'Mentions Légales' : $this->getData(['locale','legalPageLabel']);
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
 			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="' . $label . '">' . $label .'</a>';
 		}
