@@ -1,7 +1,8 @@
 # Changelog
 
-## Version 11.0.10
+## Version 11.1.00
 - Corrections :
+    Problèmes liés à la migration vers la version 11 :
     - Création d'un dossier : les droits d'accès sont positionnés sur 0755 au lieu de la valeur par défaut 0777. Concerne également les modules Formulaire, Galerie, News, Search et d'autres modules optionnels.
     - Données d'initialisation, le numéro de version devient 11000 au lieu de 10602.
 - Modifications :
@@ -9,6 +10,8 @@
         - Traduction des étiquettes Carte du site, Rechercher et Mentions légales dans le pied de page.
         - Refonte des pages de configuration et de la page du thème du pied de page.
         - La page courante reste sélectionnée après un clic sur un drapeau.
+    - Thème, pied de page :
+        - Sélection directe d'une page spéciale sans passer par la configuration du site.
     - Module galerie version 3.3, modification de l'initialisation du module.
 
 ## Version 11.0.09
