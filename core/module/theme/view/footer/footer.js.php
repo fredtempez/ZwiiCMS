@@ -18,18 +18,18 @@
 $("input, select").on("change", function() {
 	// Import des polices de caractères
 	var footerFont = $("#themeFooterFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + footerFont + "');";	
+	var css = "@import url('https://fonts.googleapis.com/css?family=" + footerFont + "');";
 	// Couleurs du pied de page
 	var colors = core.colorVariants($("#themeFooterBackgroundColor").val());
 	var textColor = $("#themeFooterTextColor").val();
-	var css = "footer {background-color:" + colors.normal + ";color:" + textColor + "}";	
+	var css = "footer {background-color:" + colors.normal + ";color:" + textColor + "}";
 	css += "footer a{color:" + textColor + "}";
 	// Couleur de l'éditeur
 	css += ".editorWysiwyg{background-color:" + colors.normal + " !important; color:" + textColor + " !important;}";
 	// Hauteur du pied de page
 	//css += "#footersiteLeft, #footersiteCenter, #footersiteRight, #footerbodyLeft, #footerbodyCenter, #footerbodyRight {margin:" + $("#themeFooterHeight").val() + " 0}";
-	css += "footer #footersite > div{margin:" + $("#themeFooterHeight").val() + " 0}";		
-	css += "footer #footerbody > div{margin:" + $("#themeFooterHeight").val() + " 0}";		
+	css += "footer #footersite > div{margin:" + $("#themeFooterHeight").val() + " 0}";
+	css += "footer #footerbody > div{margin:" + $("#themeFooterHeight").val() + " 0}";
 	// Alignement du contenu
 	css += "#footerSocials{text-align:" + $("#themeFooterSocialsAlign").val() + "}";
 	css += "#footerText > p {text-align:" + $("#themeFooterTextAlign").val() + "}";
@@ -77,7 +77,7 @@ $("input, select").on("change", function() {
 // Bloc texte personnalisé
 $(".themeFooterContent").on("change",function() {
 	// Position site ou body
-	var footerPosition = $("#themeFooterPosition").val();		
+	var footerPosition = $("#themeFooterPosition").val();
 	switch($("#themeFooterTextPosition").val()) {
 			case "hide":
 				$("#footerText").hide();
@@ -89,12 +89,12 @@ $(".themeFooterContent").on("change",function() {
 				$("#footerText").show().appendTo("#footer" + footerPosition + textPosition);
 				//console.log("text");
 				//console.log("#footer" + footerPosition + textPosition);
-				break;			
+				break;
 	}
 	switch($("#themeFooterSocialsPosition").val()) {
 			case 'hide':
 				$("#footerSocials").hide();
-				break;					
+				break;
 			default:
 				// Choix de la position du bloc
 				socialsPosition = $("#themeFooterSocialsPosition").val();
@@ -107,7 +107,7 @@ $(".themeFooterContent").on("change",function() {
 	switch($("#themeFooterCopyrightPosition").val()) {
 			case 'hide':
 				$("#footerCopyright").hide();
-				break;	
+				break;
 			default:
 				// Choix de la position du bloc
 				copyrightPosition = $("#themeFooterCopyrightPosition").val();
@@ -115,32 +115,32 @@ $(".themeFooterContent").on("change",function() {
 				$("#footerCopyright").show().appendTo("#footer" + footerPosition + copyrightPosition);
 				//console.log("copyright");
 				//console.log("#footer" + footerPosition + copyrightPosition);
-				break;							
+				break;
 	}
 
-	
+
 }).trigger("change");
 
 // Fin Position dans les blocs
 
-// Modification dynamique de la mise en page 
+// Modification dynamique de la mise en page
 $("#themeFooterTemplate").on("change",function() {
 	// Nettoyage des sélecteurs des contenus
 	var newOptions = {
-		4:  {'hide' : 'Masqué', 'left' : 'En haut', 'center' : 'Au milieu', 'right' : 'En bas'} , 
+		4:  {'hide' : 'Masqué', 'left' : 'En haut', 'center' : 'Au milieu', 'right' : 'En bas'} ,
 		3:  {'hide': 'Masqué', 'left':  'A gauche',	'center': 'Au centre',	'right': 'A droite'} ,
 		2:  {'hide': 'Masqué', 'left':  'A gauche',	'right': 'A droite'} ,
-		1:  {'hide': 'Masqué', 'center': 'Affiché'} 
-	};	
+		1:  {'hide': 'Masqué', 'center': 'Affiché'}
+	};
 	var $el = $(".themeFooterContent");
-	$el.empty(); 
+	$el.empty();
 	// Eléments des position de contenus
 	$.each(newOptions[$("#themeFooterTemplate").val()], function(key,value) {
 		$el.append($("<option></option>")
 			.attr("value", key).text(value));
 		});
 	var position = $("#themeFooterPosition").val();
-	// Masquer les contenus 
+	// Masquer les contenus
 	$("#footerCopyright").hide();
 	$("#footerText").hide();
 	$("#footerSocials").hide();
@@ -150,13 +150,13 @@ $("#themeFooterTemplate").on("change",function() {
 			$("#footer" + position + "Left").css("display","none");
 			$("#footer" + position + "Center").removeAttr('class').addClass("col12").css("display","");
 			$("#footer" + position + "Right").css("display","none");
-			break;			
-		case "2":	
+			break;
+		case "2":
 			$("#footer" + position + "Left").removeAttr('class').addClass('col6').css("display","");
 			$("#footer" + position + "Center").css("display","none").removeAttr('class');
 			$("#footer" + position + "Right").removeAttr('class').addClass('col6').css("display","");
 			break;
-		case "3":			
+		case "3":
 			$("#footer" + position + "Left").removeAttr('class').addClass('col4').css("display","");
 			$("#footer" + position + "Center").removeAttr('class').addClass('col4').css("display","");
 			$("#footer" + position + "Right").removeAttr('class').addClass('col4').css("display","");
@@ -167,18 +167,18 @@ $("#themeFooterTemplate").on("change",function() {
 			$("#footer" + position + "Right").removeAttr('class').addClass('col12').css("display","");
 			break;
 
-	} 
+	}
 });
 
 
 // Désactivation des sélections multiples
 $("#themeFooterSocialsPosition").on("change", function() {
-	if ($(this).prop('selectedIndex') >= 1 ) {			
+	if ($(this).prop('selectedIndex') >= 1 ) {
 		if ( $("#themeFooterTextPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {
             $("#themeFooterTextPosition").prop('selectedIndex',0);
-			$("#footerText").hide();			
+			$("#footerText").hide();
 		}
-		if ( $("#themeFooterCopyrightPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {				
+		if ( $("#themeFooterCopyrightPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {
 			$("#themeFooterCopyrightPosition").prop('selectedIndex',0);
 			$("#footerCopyright").hide();
 		}
@@ -190,7 +190,7 @@ $("#themeFooterTextPosition").on("change", function() {
 			$("#themeFooterSocialsPosition").prop('selectedIndex',0);
 			$("#footerSocials").hide();
 		}
-		if ( $("#themeFooterCopyrightPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {				
+		if ( $("#themeFooterCopyrightPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {
 			$("#themeFooterCopyrightPosition").prop('selectedIndex',0);
 			$("#footerCopyright").hide();
 		}
@@ -203,16 +203,16 @@ $("#themeFooterCopyrightPosition").on("change", function() {
 				$("#themeFooterTextPosition").prop('selectedIndex',0);
 				$("#footerText").hide();
 			}
-			if ( $("#themeFooterSocialsPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {				
+			if ( $("#themeFooterSocialsPosition").prop('selectedIndex') === $(this).prop('selectedIndex') ) {
 				$("#themeFooterSocialsPosition").prop('selectedIndex',0);
-				$("#footerSocials").hide();				
+				$("#footerSocials").hide();
 			}
 		}
 }).trigger("change");
 // Affiche / Cache les options du footer fixe
 $("#themeFooterPosition").on("change", function() {
 	if($(this).val() === 'body') {
-		$("#themeFooterPositionFixed").slideDown();	
+		$("#themeFooterPositionFixed").slideDown();
 	}
 	else {
 		$("#themeFooterPositionFixed").slideUp(function() {
@@ -230,7 +230,7 @@ $("#themeFooterLoginLink").on("change", function() {
 		$("#footerLoginLink").hide();
 	}
 }).trigger("change");
-	 
+
 // Numéro de version
 $("#themefooterDisplayVersion").on("change", function() {
 	if($(this).is(":checked")) {
@@ -270,6 +270,40 @@ $("#themeFooterDisplaySearch").on("change", function() {
 		$("#footerDisplaySearch").hide();
 	}
 }).trigger("change");
+
+// Mentions légales
+$("#themeFooterDisplayLegal").on("change", function() {
+	if($(this).is(":checked")) {
+		$("#footerDisplayLegal").show();
+	}
+	else {
+		$("#footerDisplayLegal").hide();
+	}
+}).trigger("change");
+
+
+// Pages spéciales  : activation si une page est sélectionnée
+$("#configLegalPageId").on("change", function() {
+	console.log($("#configLegalPageId option:selected").text());
+	if ( $("#configLegalPageId option:selected").text() === 'Aucune') {
+		$("#themeFooterDisplayLegal").prop('checked', false);
+		$("#themeFooterDisplayLegal").prop( "disabled", true );
+		$("#footerDisplayLegal").hide();
+	} else {
+		$("#themeFooterDisplayLegal").prop( "disabled", false );
+	}
+}).trigger("change");
+$("#configSearchPageId").on("change", function() {
+	console.log($("#configSearchPageId option:selected").text());
+	if ( $("#configSearchPageId option:selected").text() === 'Aucune') {
+		$("#themeFooterDisplaySearch").prop('checked', false);
+		$("#themeFooterDisplaySearch").prop( "disabled", true );
+		$("#footerDisplaySearch").hide();
+	} else {
+		$("#themeFooterDisplaySearch").prop( "disabled", false );
+	}
+}).trigger("change");
+
 
 /*
 // Affiche / Cache les options de la position

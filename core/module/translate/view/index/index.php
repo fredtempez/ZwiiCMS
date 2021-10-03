@@ -78,55 +78,55 @@
 			<div class="block" id="flagsWrapper">
 			<h4>Mode de traduction et affichage des drapeaux</h4>
 				<div class="row">
-					<div class="col4 offset4">
+					<div class="col3">
 						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [
-							'label' => 'Français',
-							'selected' => $this->getData(['config', 'i18n' , 'fr'])
+							'label' =>  template::flag('', '30px'),
+							'selected' => $this->getData(['config', 'i18n' , 'fr']),
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<div class="col8 offset2">
+					<div class="col3">
+						<div class="col12">
 							<?php echo template::select('translateDE', $module::$translateOptions['de'], [
-								'label' => 'Allemand',
+								'label' => template::flag('de', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'de'])
 							]); ?>
 						</div>
-						<div class="col8 offset2">
+						<div class="col12">
 							<?php echo template::select('translateEN', $module::$translateOptions['en'], [
-								'label' => 'Anglais',
+								'label' => template::flag('en', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'en'])
 							]); ?>
 						</div>
-						<div class="col8 offset2">
+					</div>
+					<div class="col3">
+						<div class="col12">
 							<?php echo template::select('translateES', $module::$translateOptions['es'], [
-								'label' => 'Espagnol',
+								'label' =>  template::flag('es', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'es'])
 							]); ?>
 						</div>
-					</div>
-					<div class="col6">
-						<div class="col8 offset2">
+						<div class="col12">
 							<?php echo template::select('translateIT', $module::$translateOptions['it'], [
-								'label' => 'Italien',
+								'label' =>  template::flag('it', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'it'])
 							]); ?>
 						</div>
-						<div class="col8 offset2">
+					</div>
+					<div class="col3">
+						<div class="col12">
 							<?php echo template::select('translateNL', $module::$translateOptions['nl'], [
-								'label' => 'Néerlandais',
+								'label' =>  template::flag('nl', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'nl'])
 							]); ?>
 						</div>
-						<div class="col8 offset2">
+						<div class="col12">
 							<?php echo template::select('translatePT', $module::$translateOptions['pt'], [
-								'label' => 'Portugais',
+								'label' =>  template::flag('pt', '30px'),
 								'class' => 'translateFlagSelect',
 								'selected' => $this->getData(['config', 'i18n' , 'pt'])
 							]); ?>

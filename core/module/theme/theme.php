@@ -240,6 +240,10 @@ class theme extends common {
 		'4' => 'Trois lignes superposées'
 	];
 
+	// Variables pour construire la liste des pages du site
+	public static $pages = [];
+	public static $orphans = [];
+
 	/**
 	 * Thème des écrans d'administration
 	 */

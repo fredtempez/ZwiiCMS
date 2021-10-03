@@ -425,19 +425,31 @@ class template {
 
         /**
     * Crée un drapeau du site courante
+    * @param string $langId Id de la langue à affiche ou site pour la langue traduite courante
     * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
-    * @param string $size Taille en pixels (default = auto)
     * @return string
     */
-    public static function flag( $size = 'auto') {
-        if ( isset($_COOKIE['ZWII_I18N_SITE'])
-    	) {
-            $lang = $_COOKIE['ZWII_I18N_SITE'];
-            return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png" 
-                    width="' . $size .'"
-                    height="' . $size .'"
-                    alt="(' . $lang . ')"/>';
+    public static function flag($langId, $size = 'auto') {
+        switch ($langId) {
+            case '':
+                $lang = 'fr';
+                break;
+            case in_array($langId,['fr', 'de', 'en', 'es', 'it', 'nl', 'pt']):
+                $lang = $langId;
+                break;
+            case 'site':
+                if ( isset($_COOKIE['ZWII_I18N_SITE'])
+    	        ) {
+                    $lang = $_COOKIE['ZWII_I18N_SITE'];
+                } else {
+                    $lang = 'fr';
+                }
         }
+        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png" 
+                width="' . $size .'"
+                height="' . $size .'"
+                title="' . $lang .'"
+                alt="(' . $lang . ')"/>';
     }
 
     /**

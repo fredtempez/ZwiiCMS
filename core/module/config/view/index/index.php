@@ -48,11 +48,11 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Identité du site</h4>
+			<h4>Identité du site <?php echo template::flag('site', '20px');?></h4>
 			<div class="row">
 				<div class="col9">
 					<?php echo template::text('configTitle', [
-						'label' => 'Titre du site '. template::flag('20px') ,
+						'label' => 'Titre du site' ,
 						'value' => $this->getData(['locale', 'title']),
 						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
 					]); ?>
@@ -68,7 +68,7 @@
 			<div class="row">
 				<div class="col12">
 					<?php echo template::textarea('configMetaDescription', [
-						'label' => 'Description du site ' . template::flag('20px'),
+						'label' => 'Description du site',
 						'value' => $this->getData(['locale', 'metaDescription']),
 						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
 					]); ?>
@@ -154,25 +154,25 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Etiquettes des pages spéciales dans le pied de page</h4>
+			<h4>Etiquettes des pages spéciales dans le pied de page <?php echo template::flag('site', '20px');?></h4>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::text('configLegalPageLabel', [
-						'label' => 'Mentions légales ' . template::flag('20px'),
+						'label' => 'Mentions légales',
 						'placeholder' => 'Mentions légales',
-						'value' => $this->getData(['locale', 'legalPageLabel']),
+						'value' => $this->getData(['locale', 'legalPageLabel'])
 					]); ?>
 				</div>
 				<div class="col4">
 					<?php echo template::text('configSearchPageLabel', [
-						'label' => 'Rechercher ' . template::flag('20px'),
+						'label' => 'Rechercher',
 						'placeholder' => 'Rechercher',
-						'value' => $this->getData(['locale', 'searchPageLabel']),
+						'value' => $this->getData(['locale', 'searchPageLabel'])
 					]); ?>
 				</div>
 				<div class="col4">
 					<?php echo template::text('configSitemapPageLabel', [
-						'label' => 'Plan du site ' . template::flag('20px'),
+						'label' => 'Plan du site',
 						'placeholder' => 'Plan du site',
 						'value' => $this->getData(['locale', 'sitemapPageLabel']),
 					]); ?>

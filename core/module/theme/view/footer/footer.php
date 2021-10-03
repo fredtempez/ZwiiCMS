@@ -37,7 +37,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col7">
+    <div class="col12">
         <div class="block">
             <h4>Informations</h4>
             <div class="row">
@@ -76,7 +76,8 @@
             </div>
         </div>
     </div>
-    <div class="col5">
+<div class="row">
+    <div class="col12">
         <div class="block">
         <h4>Pages spéciales</h4>
             <?php
@@ -87,46 +88,34 @@
                         unset($pages[$page]);
                     }
                 }
-                $orphans =  $this->getData(['page']);
-                foreach($orphans as $page => $pageId) {
-                    if ($this->getData(['page',$page,'block']) === 'bar' ||
-                        $this->getData(['page',$page,'disable']) === true ||
-                        $this->getdata(['page',$page, 'position']) !== 0) {
-                        unset($orphans[$page]);
-                    }
-                }
             ?>
             <div class="row">
-                <div class="col6">
+                <div class="col3 textAlignRight">
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
                             'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
                             'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
                             'help' => $this->getData(['locale', 'legalPageId']) === 'none' ? 'Une page contenant les mentions légales n\'est pas définie dans la configuration du site / pages spéciales.' : ''
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col3">
+					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
+						'label' => 'Page Mentions légales ' . template::flag('site', '20px'),
+						'selected' => $this->getData(['locale', 'legalPageId'])
+					]); ?>
+				</div>
+                <div class="col3 textAlignRight">
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
                             'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                             'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
                             'help' => $this->getData(['locale', 'searchPageId']) === 'none' ? 'Une page contenant un module de recherche n\'est pas définie dans la configuration du site / pages spéciales.' : ''
                         ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
-					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
-						'label' => 'Page Mentions légales ' . template::flag('20px'),
-						'selected' => $this->getData(['locale', 'legalPageId']),
-						'help' => 'Options identique à la configuration du site',
-                        'disabled' => true
-					]); ?>
-				</div>
-                <div class="col6">
+                <div class="col3">
 					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
-						'label' => 'Page Rechercher ' . template::flag('20px'),
+						'label' => 'Page Rechercher ' . template::flag('site', '20px'),
 						'selected' => $this->getData(['locale', 'searchPageId']),
 						'help' => 'Options identique à la configuration du site',
-                        'disabled' => true
+
 					]); ?>
 				</div>
             </div>
