@@ -25,6 +25,7 @@
 </div>
 <?php if($module::$data): ?>
 		<?php echo template::table([11, 1], $module::$data, ['Données', '']); ?>
+		<?php echo $module::$pages; ?>
 	<?php else: ?>
 		<?php echo template::speech('Aucune donnée'); ?>
 	<?php endif; ?>

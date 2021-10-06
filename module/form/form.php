@@ -157,7 +157,7 @@ class form extends common {
 			// Pagination
 			$pagination = helper::pagination($data, $this->getUrl(),self::ITEMSPAGE);
 			// Liste des pages
-			self::$pagination = $pagination['pages'];
+			self::$pages = $pagination['pages'];
 			// Inverse l'ordre du tableau
 			$dataIds = array_reverse(array_keys($data));
 			$data = array_reverse($data);
