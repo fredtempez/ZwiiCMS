@@ -181,6 +181,10 @@ class config extends common {
 	// Langue traduite courante
 	public static $i18nSite = 'fr';
 
+	// Variable pour construire la liste des pages du site
+	public static $pages = [];
+	public static $orphans = [];
+
 	/**
 	 * Génére les fichiers pour les crawlers
 	 * Sitemap compressé et non compressé
@@ -421,6 +425,24 @@ class config extends common {
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);
+		}
+
+		// Liste des pages
+		self::$pages = $this->getData(['page']);
+		foreach(self::$pages as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true) {
+				unset(self::$pages[$page]);
+			}
+		}
+
+		self::$orphans =  $this->getData(['page']);
+		foreach(self::$orphans as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true ||
+				$this->getdata(['page',$page, 'position']) !== 0) {
+				unset(self::$orphans[$page]);
+			}
 		}
 
 		// Valeurs en sortie

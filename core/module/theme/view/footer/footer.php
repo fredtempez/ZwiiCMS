@@ -80,15 +80,6 @@
     <div class="col12">
         <div class="block">
         <h4>Pages spéciales</h4>
-            <?php
-                $pages = $this->getData(['page']);
-                foreach($pages as $page => $pageId) {
-                    if ($this->getData(['page',$page,'block']) === 'bar' ||
-                        $this->getData(['page',$page,'disable']) === true) {
-                        unset($pages[$page]);
-                    }
-                }
-            ?>
             <div class="row">
                 <div class="col3 textAlignRight">
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
@@ -98,7 +89,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Page Mentions légales ' . template::flag('site', '20px'),
 						'selected' => $this->getData(['locale', 'legalPageId'])
 					]); ?>
@@ -111,7 +102,7 @@
                         ]); ?>
                 </div>
                 <div class="col3">
-					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($pages, 'title', 'SORT_ASC') ) , [
+					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pages, 'title', 'SORT_ASC') ) , [
 						'label' => 'Page Rechercher ' . template::flag('site', '20px'),
 						'selected' => $this->getData(['locale', 'searchPageId']),
 						'help' => 'Options identique à la configuration du site',

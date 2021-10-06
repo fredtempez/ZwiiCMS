@@ -240,9 +240,8 @@ class theme extends common {
 		'4' => 'Trois lignes superposées'
 	];
 
-	// Variables pour construire la liste des pages du site
+	// Variable pour construire la liste des pages du site
 	public static $pages = [];
-	public static $orphans = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -397,6 +396,16 @@ class theme extends common {
 				]);
 			}
 		}
+
+		// Liste des pages
+		self::$pages = $this->getData(['page']);
+		foreach(self::$pages as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true) {
+				unset(self::$pages[$page]);
+			}
+		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du pied de page',
