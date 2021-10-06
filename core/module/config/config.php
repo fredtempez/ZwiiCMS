@@ -182,8 +182,8 @@ class config extends common {
 	public static $i18nSite = 'fr';
 
 	// Variable pour construire la liste des pages du site
-	public static $pages = [];
-	public static $orphans = [];
+	public static $pagesList = [];
+	public static $orphansList = [];
 
 	/**
 	 * Génére les fichiers pour les crawlers
@@ -428,20 +428,20 @@ class config extends common {
 		}
 
 		// Liste des pages
-		self::$pages = $this->getData(['page']);
-		foreach(self::$pages as $page => $pageId) {
+		self::$pagesList = $this->getData(['page']);
+		foreach(self::$pagesList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
 				$this->getData(['page',$page,'disable']) === true) {
-				unset(self::$pages[$page]);
+				unset(self::$pagesList[$page]);
 			}
 		}
 
-		self::$orphans =  $this->getData(['page']);
-		foreach(self::$orphans as $page => $pageId) {
+		self::$orphansList =  $this->getData(['page']);
+		foreach(self::$orphansList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
 				$this->getData(['page',$page,'disable']) === true ||
 				$this->getdata(['page',$page, 'position']) !== 0) {
-				unset(self::$orphans[$page]);
+				unset(self::$orphansList[$page]);
 			}
 		}
 

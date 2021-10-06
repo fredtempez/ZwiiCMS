@@ -241,7 +241,7 @@ class theme extends common {
 	];
 
 	// Variable pour construire la liste des pages du site
-	public static $pages = [];
+	public static $pagesList = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -398,11 +398,11 @@ class theme extends common {
 		}
 
 		// Liste des pages
-		self::$pages = $this->getData(['page']);
-		foreach(self::$pages as $page => $pageId) {
+		self::$pagesList = $this->getData(['page']);
+		foreach(self::$pagesList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
 				$this->getData(['page',$page,'disable']) === true) {
-				unset(self::$pages[$page]);
+				unset(self::$pagesList[$page]);
 			}
 		}
 
