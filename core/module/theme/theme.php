@@ -443,42 +443,20 @@ class theme extends common {
 				'imageContainer' => $this->getInput('themeHeaderImageContainer')
 			]]);
 			// Modification de la position du menu selon la position de la bannière
-			if  ( $this->getInput('themeHeaderPosition') &&
-					( $this->getData(['theme','menu','position']) !== 'site' ||
-					  $this->getData(['theme','menu','position']) !== 'top') )
+			if  ( $this->getData(['theme','header','position']) == 'site'  )
 				{
-					switch ($this->getInput('themeHeaderPosition')) {
-						case 'site' :
-							$position = str_replace ('body','site',$this->getData(['theme','menu','position']));
-						break;
-						case 'body' :
-							$position = str_replace ('site','body',$this->getData(['theme','menu','position']));
-						break;
-						default:
-							$position = $this->getData(['theme','menu','position']);
-				}
+					$this->setData(['theme', 'menu', 'position',str_replace ('body-','site-',$this->getData(['theme','menu','position']))]);
 			}
-
-			$this->setData(['theme', 'menu', [
-				'backgroundColor' => $this->getData(['theme', 'menu', 'backgroundColor']),
-				'backgroundColorSub' => $this->getData(['theme', 'menu', 'backgroundColorSub']),
-				'font' => $this->getData(['theme', 'menu', 'font']),
-				'fontSize' => $this->getData(['theme', 'menu', 'fontSize']),
-				'fontWeight' => $this->getData(['theme', 'menu', 'fontWeight']),
-				'height' => $this->getData(['theme', 'menu', 'height']),
-				'loginLink' => $this->getData(['theme', 'menu', 'loginLink']),
-				'margin' => $this->getData(['theme', 'menu', 'margin']),
-				'position' => $position,
-				'textAlign' => $this->getData(['theme', 'menu', 'textAlign']),
-				'textColor' => $this->getData(['theme', 'menu', 'textColor']),
-				'textTransform' => $this->getData(['theme','menu','textTransform']),
-				'fixed' => $this->getData(['theme','menu','fixed']),
-				'activeColorAuto' => $this->getData(['theme','menu','activeColorAuto']),
-				'activeColor' => $this->getData(['theme','menu','activeColor']),
-				'activeTextColor' => $this->getData(['theme','menu','activeTextColor']),
-				'radius' => $this->getData(['theme','menu','radius']),
-				'memberBar' => $this->getData(['theme','menu','memberBar'])
-			]]);
+			if  ( $this->getData(['theme','header','position']) == 'body')
+				{
+					$this->setData(['theme', 'menu', 'position',str_replace ('site-','body-',$this->getData(['theme','menu','position']))]);
+			}
+			if  ( $this->getData(['theme','header','position']) == 'hide' &&
+				 (  $this->getData(['theme','menu','position']) == 'body-first' ||
+				    $this->getData(['theme','menu','position']) == 'site-first') )
+				{
+					$this->setData(['theme', 'menu', 'position','site']);
+			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',
