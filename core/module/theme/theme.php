@@ -451,10 +451,10 @@ class theme extends common {
 				{
 					$this->setData(['theme', 'menu', 'position',str_replace ('site-','body-',$this->getData(['theme','menu','position']))]);
 			}
+			// Menu accroché à la bannière qui devient cachée
 			if  ( $this->getData(['theme','header','position']) == 'hide' &&
-				 (  $this->getData(['theme','menu','position']) == 'body-first' ||
-				    $this->getData(['theme','menu','position']) == 'site-first') )
-				{
+				  in_array( $this->getData(['theme','menu','position']) , ['body-first', 'site-first', 'body-first' , 'site-second'])
+				 ) {
 					$this->setData(['theme', 'menu', 'position','site']);
 			}
 			// Valeurs en sortie

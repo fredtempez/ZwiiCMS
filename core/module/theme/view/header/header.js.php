@@ -104,34 +104,67 @@ $("input, select").on("change", function() {
 		css += 'header{margin:0}';
 	}
 	// Position de la bannière
-	switch($("#themeHeaderPosition").val()) {
+	var positionNav = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
+	var positionHeader = $("#themeHeaderPosition").val();
+
+	switch(positionHeader) {
 		case 'hide':
 			$("header").hide();
+			$("nav").show().prependTo("#site");
 			break;
 		case 'site':
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
-				$("header").show().insertAfter("nav");
-			}
-			else {
-				$("header").show().prependTo("#site");
-				// Supprime le margin en trop du menu
-				if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
-					css += 'nav{margin:0 20px}';
-				}
+			$("header").show().prependTo("#site");
+			// Position du menu
+			switch (positionNav) {
+				case "body-first":
+					$("nav").show().insertAfter("header");
+					break;
+				case "site-first":
+					$("nav").show().prependTo("#site");
+					// Supprime le margin en trop du menu
+					if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
+						css += 'nav{margin:0 20px}';
+					}
+					break;
+				case "body-second":
+				case "site-second":
+					$("nav").show().insertAfter("header");
+					// Supprime le margin en trop du menu
+					if(<?php echo json_encode($this->getData(['theme', 'menu', 'margin'])); ?>) {
+						css += 'nav{margin:0 20px}';
+					}
+					break;
 			}
 			break;
 		case 'body':
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'body-first'); ?>) {
-				$("header").show().insertAfter("nav");
+			// Position du menu
+			switch (positionNav) {
+				case "top":
+					$("header").show().insertAfter("nav");
+					break;
+				case "site-first":
+				case "body-first":
+					$("header").show().insertAfter("#bar");
+					$("nav").show().insertAfter("#bar");
+					break;
+				case "site-second":
+				case "body-second":
+					$("header").show().insertAfter("#bar");
+					$("nav").show().insertAfter("header");
+					break;
+
 			}
-			else {
-				$("header").show().insertAfter("#bar");
-			}
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'top'); ?>) {
-				$("header").show().insertAfter("nav");
-			}
-			break;
 	}
+
+	// La bannière est cachée, déplacer le menu dans le site
+	if (positionHeader === "hide" &&
+		(positionNav === "body-first" ||
+		 positionnav === "site-first" ||
+		 positionnav === "body-second" ||
+		 positionnav === "site-second"
+		 )) {
+			$("nav").show().prependTo("#site");
+		 }
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
