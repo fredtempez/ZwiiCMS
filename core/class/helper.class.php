@@ -37,8 +37,13 @@ class helper {
 		else{
 			$ip=$_SERVER['REMOTE_ADDR'];
 		}
-		
-		switch ($anon):
+		$ip='192.168.12.56';
+		// Anonymiser l'adresse IP v4
+		$d = array_slice(explode('.', $ip), 0, $anon);
+		$d = implode ('.', $d);
+		$j = array_fill(0, 4 - $anon, 'x');
+		$k = implode ('.', $j);
+		$ip = count($j) == 0 ? $d : $d . '.' . $k;
 		return $ip;
 	}
 

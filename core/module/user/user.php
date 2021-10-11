@@ -490,7 +490,7 @@ class user extends common {
 		$dataLog = mb_detect_encoding(strftime('%d/%m/%y',time()), 'UTF-8', true)
 				? strftime('%d/%m/%y',time()) . ';' . strftime('%R',time()) . ';'
 				: utf8_encode(strftime('%d/%m/%y',time())) . ';' . utf8_encode(strftime('%R',time())) . ';' ;
-		$dataLog .= helper::getIp() . ';';
+		$dataLog .= helper::getIp($this->getData(['config','connect','anonymousIp'])) . ';';
 		$dataLog .= $this->getInput('userLoginId', helper::FILTER_ID) . ';' ;
 		$dataLog .= $this->getUrl() .';' ;
 		$dataLog .= $logStatus ;
