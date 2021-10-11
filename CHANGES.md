@@ -5,7 +5,7 @@
     - Problème lié à la migration vers la version 11. Création d'un dossier : les droits d'accès sont positionnés sur 0755 au lieu de la valeur par défaut 0777. Concerne également les modules Formulaire, Galerie, News, Search et d'autres modules optionnels.
     - Données d’initialisation, le numéro de version devient 11000 au lieu de 10602.
     - Thème / Bannière : 
-        - Bug d'aperçu au déplacement de la bannière et du menu au dessous ou sous la bannière. 
+        - Bug d'aperçu au déplacement de la bannière et du menu au-dessous ou sous la bannière. 
         - Option de menu burger désactivée par la validation de la bannière.
     - Module Formulaire : gestion des réponses, barre de pagination absente.
 - Modifications :
