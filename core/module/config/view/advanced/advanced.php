@@ -361,23 +361,32 @@
 			</h4>
 			<div class="blockContainer">
 				<div class="row">
-					<div class="col4 verticalAlignBottom">
+					<div class="col4 offset2">
 						<?php echo template::checkbox('configAdvancedConnectLog', true, 'Activer la journalisation', [
 							'checked' => $this->getData(['config', 'connect', 'log'])
 						]); ?>
 					</div>
+					<div class="col4">
+						<?php echo template::select('configAdvancedConnectAnonymousIp', $module::$anonIP, [
+							'label' => 'Anonymat des adresses IP',
+							'selected' => $this->getData(['config', 'connect', 'anonymousIp']),
+							'help' => 'La réglementation française impose un anonymat de niveau 2'
+							]); ?>
+					</div>
+				</div>
+				<div class="row">
 					<div class="col3 offset2">
 						<?php echo template::button('configAdvancedLogDownload', [
 							'href' => helper::baseUrl() . 'config/logDownload',
-							'value' => 'Télécharger journal',
+							'value' => 'Télécharger le journal',
 							'ico' => 'download'
 						]); ?>
 					</div>
-					<div class="col3">
+					<div class="col3 offset1">
 						<?php echo template::button('configAdvancedLogReset', [
 							'class' => 'buttonRed',
 							'href' => helper::baseUrl() . 'config/logReset',
-							'value' => 'Réinitialiser journal',
+							'value' => 'Réinitialiser le journal',
 							'ico' => 'cancel'
 						]); ?>
 					</div>
@@ -400,11 +409,11 @@
 			<div class="blockContainer">
 				<div class="row">
 					<div class="col2">
-					<?php echo template::select('configAdvancedProxyType', $module::$proxyType, [
-						'label' => 'Type de proxy',
-						'selected' => $this->getData(['config', 'proxyType'])
-						]); ?>
-					</div>
+						<?php echo template::select('configAdvancedProxyType', $module::$proxyType, [
+							'label' => 'Type de proxy',
+							'selected' => $this->getData(['config', 'proxyType'])
+							]); ?>
+						</div>
 					<div  class="col8">
 						<?php echo template::text('configAdvancedProxyUrl', [
 							'label' => 'Adresse du proxy',

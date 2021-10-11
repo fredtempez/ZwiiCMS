@@ -34,6 +34,7 @@ class init extends common {
 				'timeout' => 600,
 				'attempt' => 3,
 				'log' => false,
+				'anonymousIp' => 2,
 				'captcha' => true
 			],
 			'i18n' => [
@@ -52,7 +53,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11010,
+			'dataVersion' => 11100,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

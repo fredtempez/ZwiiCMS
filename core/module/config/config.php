@@ -178,6 +178,15 @@ class config extends common {
 		600 => '10 minutes',
 		900 => '15 minutes'
 	];
+	// Anonymisation des IP du journal
+	public static $anonIP = [
+		0 => 'Non tronquées',
+		1 => 'Niveau 1 (192.168.12.x)',
+		2 => 'Niveau 2 (192.168.x.x)',
+		3 => 'Niveau 3 (192.x.x.x)',
+	];
+
+
 	// Langue traduite courante
 	public static $i18nSite = 'fr';
 
@@ -514,6 +523,7 @@ class config extends common {
 						'attempt' => $this->getInput('configAdvancedConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('configAdvancedConnectAnonymousIp',helper::FILTER_INT),
 						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [

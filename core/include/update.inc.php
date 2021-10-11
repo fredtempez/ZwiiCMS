@@ -654,3 +654,12 @@ if ($this->getData(['core', 'dataVersion']) < 11010) {
 
 	$this->setData(['core', 'dataVersion', 11010]);
 }
+
+// Version 11.1.00
+if ($this->getData(['core', 'dataVersion']) < 11100) {
+
+	// Anonymat des adresses iP de la journalisation
+	$this->setData(['config', 'connect', 'anonymousIp', 2 ]);
+
+	$this->setData(['core', 'dataVersion', 11100]);
+}

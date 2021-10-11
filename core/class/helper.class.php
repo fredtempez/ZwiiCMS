@@ -22,11 +22,12 @@ class helper {
 
 	/**
 	 * Récupérer l'adresse IP sans tenir compte du proxy
+	 * @param integer Niveau d'anonymat 0 aucun, 1 octet à droite, etc..
 	 * @return string IP adress
 	 * Cette fonction est utilisée par user
 	*/
 
-	public static function getIp() {
+	public static function getIp($anon = 4) {
 		if(!empty($_SERVER['HTTP_CLIENT_IP'])){
 			$ip=$_SERVER['HTTP_CLIENT_IP'];
 		}
@@ -36,6 +37,8 @@ class helper {
 		else{
 			$ip=$_SERVER['REMOTE_ADDR'];
 		}
+		
+		switch ($anon):
 		return $ip;
 	}
 
