@@ -37,7 +37,7 @@ class helper {
 		else{
 			$ip=$_SERVER['REMOTE_ADDR'];
 		}
-		$ip='192.168.12.56';
+
 		// Anonymiser l'adresse IP v4
 		$d = array_slice(explode('.', $ip), 0, $anon);
 		$d = implode ('.', $d);
