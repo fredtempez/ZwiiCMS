@@ -8,7 +8,7 @@
         - Bug d'aperçu au déplacement de la bannière et du menu au-dessous ou sous la bannière. 
         - Option de menu burger désactivée par la validation de la bannière.
     - Module Formulaire : gestion des réponses, barre de pagination absente.
-    - Gestionnaire de fichiers : droit des compte éditeur sur les fichiers et les dossiers.
+    - Gestionnaire de fichiers : droit des éditeurs sur les fichiers et les dossiers.
 - Modifications :
     - Langues étrangères :
         - Traduction des étiquettes Carte du site, Rechercher et Mentions légales dans le pied de page.
