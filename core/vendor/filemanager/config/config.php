@@ -42,8 +42,8 @@ switch ($group) {
 		break;
 	case 2:
 			// Modérateur éditeur
-		$deleteFiles = false;
-		$createFolders = true;
+		$deleteFiles = true;
+		$createFolders = false;
 		$deleteFolders = false;
 		$uploadFiles = true;
 		$renameFiles = true;
