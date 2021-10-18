@@ -83,6 +83,7 @@
 						<li>Accès à toutes les pages privées</li>
 						<li>Ajout / Édition / Suppression de pages</li>
 						<li>Ajout / Édition / Suppression de fichiers</li>
+						<li>Ajout / Édition / Suppression de dossiers</li>
 						<li>Ajout / Édition / Suppression d'utilisateurs</li>
 						<li>Configuration du site</li>
 						<li>Personnalisation du thème</li>
