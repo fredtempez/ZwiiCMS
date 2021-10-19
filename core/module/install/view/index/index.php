@@ -39,8 +39,9 @@
 	<div class="row">
 		<div class="col6">
 		<?php echo template::select('installTheme', $module::$themes, [
-						'label' => 'Thème',
-					]); ?>
+				'label' => 'Thème',
+				'help' => 'Le thème pourrait être changé après l\'installation'
+			]); ?>
 		</div>
 	</div>
 	<div class="row">

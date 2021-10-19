@@ -122,14 +122,21 @@ class install extends common {
 				// Créer sitemap
 				$this->createSitemap();
 
-				// Installation du thème 
-				$dataThemes = file_get_contents("core/module/install/ressource/themes/themes.json");
+				// Installation du thème sélectionné
+				$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 				$dataThemes = json_decode($dataThemes, true);
 				$themeId = $dataThemes [$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
 				if ($themeId !== 'default' ) {
 						$theme = new theme;
 						$theme->import('core/module/install/ressource/themes/' . $themeId);
 				}
+
+				// Copie des thèmes dans les fichiers
+				if (!is_dir(self::FILE_DIR . 'source/theme' )) {
+					mkdir(self::FILE_DIR . 'source/theme');
+				}
+				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
+				unlink(self::FILE_DIR . 'source/theme/themes.json');
 				
 				// Valeurs en sortie
 				$this->addOutput([
