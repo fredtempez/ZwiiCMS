@@ -1,0 +1,10 @@
+{
+    "defaut" : {
+        "name": "Par défaut",
+        "filename": ""
+    },
+    "affaire": {
+        "name": "Affaire",
+        "filename": "theme_affaire.zip"
+    }
+}

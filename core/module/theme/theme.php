@@ -28,6 +28,7 @@ class theme extends common {
 		'admin' => self::GROUP_ADMIN,
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
+		'import' => self::GROUP_ADMIN,
 		'save' => self::GROUP_ADMIN,
 		'checkImport' => self::GROUP_ADMIN
 	];
@@ -628,18 +629,51 @@ class theme extends common {
 	 */
 	public function manage() {
 		if($this->isPost() ) {
+
 			$zipFilename =	$this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
+			$data = $this->import(self::FILE_DIR.'source/' . $zipFilename);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => $data['notification'],
+				'state' => $data['success'],
+				'title' => 'Gestion des thèmes',
+				'view' => 'manage'
+			]);;
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Gestion des thèmes',
+			'view' => 'manage'
+		]);
+	}
+
+	/**
+	 * Importe un thème
+	 * @param string Url du thème à télécharger
+	 * @param @return array contenant $success = true ou false ; $ notification string message à afficher
+	 */
+
+	public function import($zipName = '') {
+
+		if ($zipName !== '' &&
+			file_exists($zipName)) {
+			// Init variables de retour
+			$success = false;
+			$notification = '';
+			// Dossier temporaire
 			$tempFolder = uniqid();
+			// Ouvrir le zip
 			$zip = new ZipArchive();
-			if ($zip->open(self::FILE_DIR.'source/'.$zipFilename) === TRUE) {
+			if ($zip->open($zipName) === TRUE) {
 				mkdir (self::TEMP_DIR . $tempFolder, 0755);
 				$zip->extractTo(self::TEMP_DIR . $tempFolder );
 				$modele = '';
 				// Archive de thème ?
 				if (
-					 file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
-					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
-					 AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
+					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
+					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
+					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
 					) {
 						$modele = 'theme';
 					}
@@ -670,19 +704,10 @@ class theme extends common {
 				$success = false;
 				$notification = 'Impossible d\'ouvrir l\'archive';
 			}
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => $notification,
-				'state' => $success,
-				'title' => 'Gestion des thèmes',
-				'view' => 'manage'
-			]);;
+			return (['success' => $success, 'notification' => $notification]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Gestion des thèmes',
-			'view' => 'manage'
-		]);
+
+		return (['success' => false, 'notification' => 'Archive non spécifiée ou introuvable']);
 	}
 
 

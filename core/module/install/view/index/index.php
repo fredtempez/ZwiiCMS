@@ -37,6 +37,13 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="col6">
+		<?php echo template::select('installTheme', $module::$themes, [
+						'label' => 'Thème',
+					]); ?>
+		</div>
+	</div>
+	<div class="row">
 		<div class="col12">
 			<?php echo template::checkbox('installDefaultData',true , 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [
 				'checked' => false

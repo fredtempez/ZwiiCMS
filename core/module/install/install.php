@@ -22,6 +22,8 @@ class install extends common {
 		'update' => self::GROUP_ADMIN
 	];
 
+	// Thèmes proposés à l'installation
+	public static $themes =   [];
 
 	public static $newVersion;
 
@@ -52,8 +54,11 @@ class install extends common {
 				$userLastname = $this->getInput('installLastname', helper::FILTER_STRING_SHORT, true);
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
+					
+
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
+				
 				$success = $this->setData([
 					'user',
 					$userId,
@@ -68,6 +73,7 @@ class install extends common {
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
 					]
 				]);
+				
 				// Compte créé, envoi du mail et création des données du site
 				if ($success) { // Formulaire complété envoi du mail
 				// Envoie le mail
@@ -115,6 +121,16 @@ class install extends common {
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
 				// Créer sitemap
 				$this->createSitemap();
+
+				// Installation du thème 
+				$dataThemes = file_get_contents("core/module/install/ressource/themes/themes.json");
+				$dataThemes = json_decode($dataThemes, true);
+				$themeId = $dataThemes [$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
+				if ($themeId !== 'default' ) {
+						$theme = new theme;
+						$theme->import('core/module/install/ressource/themes/' . $themeId);
+				}
+				
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(false),
@@ -123,7 +139,11 @@ class install extends common {
 				]);
 				}
 			}
-
+			// Récupération de la liste des thèmes
+			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
+			$dataThemes = json_decode($dataThemes, true);
+			self::$themes = helper::arrayCollumn($dataThemes, 'name');
+			
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,

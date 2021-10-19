@@ -587,7 +587,9 @@ class common {
 			if ($sampleSite === true) {
 				foreach(init::$siteContent as $key => $value) {
 					// Creation du contenu de la page
-					file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+					if (!empty($this->getData(['page', $key, 'content'])) ) {
+						file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+					}
 				}
 			} else {
 				// Créer la page d'accueil
