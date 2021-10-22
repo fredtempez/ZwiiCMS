@@ -14,10 +14,12 @@
         - Traduction des étiquettes Carte du site, Rechercher et Mentions légales dans le pied de page.
         - Refonte des pages de configuration et de la page du thème du pied de page.
         - La page courante reste sélectionnée après un clic sur un drapeau.
-    - Thème, pied de page :
-        - Sélection directe d'une page spéciale sans passer par la configuration du site.
-    - Module galerie version 3.3, modification de l’initialisation du module.
+    Thèmes : 
+        - Choix d'un thème à l'installation.
+        - Livraison de quelques thèmes.
+        - Pied de page, sélection directe d'une page spéciale sans passer par la configuration du site.
     - Configuration avancée / journalisation : une nouvelle option de mise en conformité avec la règlementation française qui impose de tronquer les adresses IP enregistrées dans les journaux. 4 options sont proposées : pas de troncage, troncages niveaux 1, 2 et 3.
+    - Module galerie version 3.3, modification de l’initialisation du module.
 
 ## Version 11.0.09
 - Modifications :
