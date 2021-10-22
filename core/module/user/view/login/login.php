@@ -23,7 +23,7 @@
 	<?php endif;?>
 	<div class="row">
 		<div class="col6">
-			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi', [
+			<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de mon identifiant', [
 				'checked' => $module::$userLongtime
 			]);	?>
 		</div>
