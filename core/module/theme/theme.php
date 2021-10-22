@@ -29,8 +29,7 @@ class theme extends common {
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN,
-		'checkImport' => self::GROUP_ADMIN
+		'save' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
@@ -689,8 +688,7 @@ class theme extends common {
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
-					// Check le thème
-					// $this->checkImport($modele);
+
 				} else {
 					// pas une archive de thème
 					$success = false;
@@ -749,48 +747,6 @@ class theme extends common {
 			'redirect' => helper::baseUrl() . 'theme/manage',
 			'state' => true
 		]);
-	}
-
-
-	/**
-	 * Contrôle du thème
-	 * Vérifie la présence de toutes les clés par rapport au thème par défaut
-	 * les créer si elles n'existent pas.
-	 */
-	private function checkImport ($modele = 'theme') {
-		require_once('core/module/install/ressource/defaultdata.php');
-		switch ($modele) {
-			case 'theme':
-				$default['theme'] = init::$defaultData['theme'];
-				// Check le thème
-				$dataKeys = ['body','footer','header','menu','site','block','text','title','button'];
-				// Parcourir les clés principales et stocker les contenus
-				foreach($dataKeys as  $key1) {
-					$itemKeys = $default['theme'][$key1];
-					// Parcourir les clés secondaires
-					foreach ($itemKeys as $key2 => $value) {
-						// Données nulles ou vides instaurer la donnée par défaut
-						if ($this->getData(['theme',$key1,$key2]) ===  NULL
-						) {
-							$this->setData(['theme',$key1,$key2,$value]);
-						}
-					}
-				}
-				break;
-			case 'admin':
-				// Check Admin
-				$default['admin'] = init::$defaultData['admin'];
-				// Pas de clé secondaire
-				$itemKeys = $default['admin'];
-				foreach ($itemKeys as $key1 => $value) {
-					// Données nulles ou vides instaurer la donnée par défaut
-					if ($this->getData(['admin',$key1]) ===  NULL
-					) {
-						$this->setData(['admin',$key1,$value]);
-					}
-				}
-				break;
-		}
 	}
 
 	/**
