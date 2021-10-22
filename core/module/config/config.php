@@ -562,6 +562,8 @@ class config extends common {
 						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
 						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+						"\tRewriteCond %{SERVER_PORT} 80" . PHP_EOL .
+						"\tRewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]" . PHP_EOL .
 						'</ifModule>',
 						FILE_APPEND
 					);
