@@ -1,18 +1,18 @@
 {
     "defaut" : {
-        "name": "Par défaut",
+        "name": "Le thème par défaut ambiance bleu et montagne",
         "filename": ""
     },
     "affaire": {
-        "name": "Affaire",
+        "name": "Thème affaire, bannière centre d'appel, ambiance prune",
         "filename": "theme_affaire.zip"
     },
     "black": {
-        "name": "Orange Sombre",
+        "name": "Thème de nuit, ambiance nocturne",
         "filename": "theme_orange_black.zip"
     },
     "facebook": {
-        "name": "Facebook héritage",
+        "name": "Thème Facebook ancienne génération, pas de bannière, menu fixe fond bleu",
         "filename": "theme_old_facebook.zip"
     }
 }

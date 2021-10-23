@@ -37,10 +37,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col6">
+		<div class="col12">
 		<?php echo template::select('installTheme', $module::$themes, [
-				'label' => 'Thème',
-				'help' => 'Le thème pourrait être changé après l\'installation'
+				'label' => 'Thème'
 			]); ?>
 		</div>
 	</div>
