@@ -44,13 +44,9 @@
 				?>
 				<!-- Menu Burger -->
 				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
-				<?php endif; ?>
+				<?php echo $this->getData(['theme','menu','burgerTitle']) ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="
-				<?php if($this->getData(['theme', 'menu', 'position']) === 'top'){echo 'container-large';}else{echo'container';}
-				?>">
+				<div id="menu" <?php echo $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"'; ?> >
 				<?php $this->showMenu(); ?>
 				</div> <!--fin menu -->
 			</nav>
@@ -58,10 +54,8 @@
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
 			<header <?php if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;?>>
-				<?php //$this->showi18n();?>
-				<?php
-				if ($this->getData(['theme','header','linkHomePage'])){
-				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
+				<?php ?>
+				<?php echo $this->getData(['theme','header','linkHomePage']) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
 				<div id="headerContainer" class="container">
 				<?php if(
 					$this->getData(['theme', 'header', 'textHide']) === false
@@ -73,9 +67,7 @@
 						<span id="themeHeaderTitle">&nbsp;</span>
 				<?php endif; ?>
 				</div> <!--fin container -->
-				<?php
-				if ($this->getData(['theme','header','linkHomePage'])){echo "</a>";}
-				?>
+				<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
 			</header>
 		<?php endif; ?>
 
@@ -83,9 +75,7 @@
 			<!-- Menu dans le fond du site après la bannière -->
 			<nav>
 				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
-				<?php endif; ?>
+				<?php echo $this->getData(['theme','menu','burgerTitle']) ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
@@ -96,42 +86,38 @@
 				<!-- Menu dans le site avant la bannière -->
 				<nav>
 					<div id="toggle">
-					<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
-					<?php endif; ?>
+					<?php echo $this->getData(['theme','menu','burgerTitle']) ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>	
 					<?php echo template::ico('menu',null,null,'2em'); ?></div>
 					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 				</nav>
 			<?php endif; ?>
 			<?php if(
-				$this->getData(['theme', 'header', 'position']) === 'site'
-				// Affiche toujours la bannière pour l'édition du thème
-				OR (
-					$this->getData(['theme', 'header', 'position']) === 'hide'
-					AND $this->getUrl(0) === 'theme'
-				)
-			): ?>
-				<!-- Bannière dans le site -->
-				<?php
-				if ($this->getData(['theme','header','linkHomePage'])){
-				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
-				<header <?php if($this->getData(['theme', 'header', 'position']) === 'hide'): ?>class="displayNone"<?php endif;
-							if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;
-						?>>
-					<div id="headerContainer" class="container">
-						<?php if(
-							$this->getData(['theme', 'header', 'textHide']) === false
-							// Affiche toujours le titre de la bannière pour l'édition du thème
-							OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
-						): ?>
-							<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
-						<?php else: ?>
-								<span id="themeHeaderTitle">&nbsp;</span>
-						<?php endif; ?>
-					</div> <!--fin container -->
-				</header>
-				<?php
-				if ($this->getData(['theme','header','linkHomePage'])){echo "</a>";}	?>
+						$this->getData(['theme', 'header', 'position']) === 'site'
+						// Affiche toujours la bannière pour l'édition du thème
+						OR (
+							$this->getData(['theme', 'header', 'position']) === 'hide'
+							AND $this->getUrl(0) === 'theme'
+						)
+					): ?>
+						<!-- Bannière dans le site -->
+						<?php echo $this->getData(['theme','header','linkHomePage']) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+						<header class="
+							<?php echo $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ''; ?>
+							<?php echo $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay' : ''; ?> 
+						">
+							<div id="headerContainer" class="container">
+								<?php if(
+									$this->getData(['theme', 'header', 'textHide']) === false
+									// Affiche toujours le titre de la bannière pour l'édition du thème
+									OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
+								): ?>
+									<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+								<?php else: ?>
+										<span id="themeHeaderTitle">&nbsp;</span>
+								<?php endif; ?>
+							</div> <!--fin container -->
+						</header>
+						<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
 				<?php endif; ?>
 			<?php if(
 				$this->getData(['theme', 'menu', 'position']) === 'site-second' ||
@@ -141,20 +127,17 @@
 					$this->getData(['theme', 'menu', 'position']) === 'hide'
 					AND $this->getUrl(0) === 'theme'
 				)
-			): ?>
-			<!-- Menu dans le site après la bannière -->
-			<nav <?php if($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
-				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
-						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
-					<?php endif; ?>
-				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
-			</nav>
+				): ?>
+					<!-- Menu dans le site après la bannière -->
+					<nav <?php echo $this->getData(['theme', 'menu', 'position']) === 'hide' ? 'class="displayNone"' : ''; ?>>
+						<div id="toggle">
+						<?php echo $this->getData(['theme','menu','burgerTitle']) ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
+						<?php echo template::ico('menu',null,null,'2em'); ?></div>
+						<div id="menu" class="container"><?php $this->showMenu(); ?></div>
+					</nav>
 			<?php endif; ?>
 			<!-- Corps de page -->
 			<section>
-			<?php //$this->showi18n();?>
 			<?php
 				// Gabarit :
 				// Récupérer la config de la page courante
@@ -232,12 +215,7 @@
 			?>
 			<!-- Pied de page -->
 			<footer <?php if($this->getData(['theme', 'footer', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
-				<?php
-				if ($position === 'site'): ?>
-					<div class="container"><div class="row" id="footersite">
-				<?php else: ?>
-					<div class="container-large <?php echo $positionFixed; ?>"><div class="row" id="footerbody">
-				<?php endif?>
+				<?php echo ($position === 'site') ? '<div class="container"><div class="row" id="footersite">' : '<div class="container-large <?php echo $positionFixed; ?>"><div class="row" id="footerbody">'; ?>
 					<!-- Mise en page -->
 					<?php switch($this->getData(['theme', 'footer', 'template'])) {
 						case '1' :
@@ -282,10 +260,7 @@
 					</div>
 				</div>
 			</footer>
-		<?php
-		if ($this->getData(['theme', 'footer', 'position']) === 'site') {
-			echo '</div>';
-		} ?>
+		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';?>
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
 		<?php $this->showScript();?>
