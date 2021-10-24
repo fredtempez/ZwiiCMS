@@ -159,9 +159,9 @@ $("input, select").on("change", function() {
 	// La bannière est cachée, déplacer le menu dans le site
 	if (positionHeader === "hide" &&
 		(positionNav === "body-first" ||
-		 positionnav === "site-first" ||
-		 positionnav === "body-second" ||
-		 positionnav === "site-second"
+		 positionNav === "site-first" ||
+		 positionNav === "body-second" ||
+		 positionNav === "site-second"
 		 )) {
 			$("nav").show().prependTo("#site");
 		 }
