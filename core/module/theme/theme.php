@@ -441,7 +441,7 @@ class theme extends common {
 				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
-				'smallDisplayHidden' => $this->getInput('themeHeaderSmallDisplayHidden', helper::FILTER_BOOLEAN)
+				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN)
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )

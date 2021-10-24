@@ -57,7 +57,7 @@
 		<?php endif; ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
-			<header <?php if($this->getData(['theme', 'header', 'smallDisplayHidden']) === true): ?>class="smallDisplayNone"<?php endif;?>>
+			<header <?php if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;?>>
 				<?php //$this->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
@@ -116,7 +116,7 @@
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
 				<header <?php if($this->getData(['theme', 'header', 'position']) === 'hide'): ?>class="displayNone"<?php endif;
-							if($this->getData(['theme', 'header', 'smallDisplayHidden']) === true): ?>class="smallDisplayNone"<?php endif;
+							if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;
 						?>>
 					<div id="headerContainer" class="container">
 						<?php if(

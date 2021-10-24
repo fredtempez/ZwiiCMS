@@ -154,7 +154,8 @@ class init extends common {
 				'textHide' => false,
 				'textTransform' => 'none',
 				'linkHomePage' => true,
-				'imageContainer' => 'auto'
+				'imageContainer' => 'auto',
+				'tinyHidden' => true
 			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',

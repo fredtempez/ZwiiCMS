@@ -125,15 +125,21 @@
                 </div>
 
             </div>
-            <div id="themeHeaderPositionOptions" class="displayNone">
-                <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
-						'checked' => $this->getData(['theme', 'header', 'margin'])
-					]); ?>
-            </div>
-            <div id="themeHeaderSmallDisplay" class="displayNone">
-                      <?php echo template::checkbox('themeHeaderSmallDisplayHidden', true, 'Masquer la bannière en écran réduit', [
-      						'checked' => $this->getData(['theme', 'header', 'smallDisplayHidden'])
-      					]); ?>
+            <div class="row">
+                <div class="col6">
+                    <div id="themeHeaderSmallDisplay" class="displayNone">
+                            <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
+                                    'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
+                                ]); ?>
+                    </div>                    
+                </div>
+                <div class="col6">
+                    <div id="themeHeaderPositionOptions" class="displayNone">
+                        <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
+                                'checked' => $this->getData(['theme', 'header', 'margin'])
+                            ]); ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
