@@ -529,6 +529,11 @@ nav #burgerText {
 	margin: 15px 0 0 10px;
 }
 
+nav #burgerLogo {
+	float: left;
+	margin: 5px 0 0 5px;
+}
+
 nav ul {
 	padding: 0;
 	margin: 0;
@@ -1714,4 +1719,11 @@ th.col12 {
 
 .helpDisplayButton {
     cursor: pointer;
+}
+
+/* Bannière masquable en petit écran*/
+@media screen and (max-width: 768px) {
+	.smallDisplayNone{
+		display : none;
+	}
 }

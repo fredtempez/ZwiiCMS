@@ -35,7 +35,7 @@
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
 					AND $this->getData(['theme', 'menu', 'fixed']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true) 
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true)
 					AND $this->getUser('group') > self::GROUP_MEMBER) {
 						echo '<nav id="navfixedconnected" >';
 					} else {
@@ -57,7 +57,7 @@
 		<?php endif; ?>
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
 			<!-- Bannière dans le fond du site -->
-			<header>
+			<header <?php if($this->getData(['theme', 'header', 'smallDisplayHidden']) === true): ?>class="smallDisplayNone"<?php endif;?>>
 				<?php //$this->showi18n();?>
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
@@ -115,7 +115,9 @@
 				<?php
 				if ($this->getData(['theme','header','linkHomePage'])){
 				echo "<a href='" . helper::baseUrl(false) . "'>" ;}	?>
-				<header <?php if($this->getData(['theme', 'header', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
+				<header <?php if($this->getData(['theme', 'header', 'position']) === 'hide'): ?>class="displayNone"<?php endif;
+							if($this->getData(['theme', 'header', 'smallDisplayHidden']) === true): ?>class="smallDisplayNone"<?php endif;
+						?>>
 					<div id="headerContainer" class="container">
 						<?php if(
 							$this->getData(['theme', 'header', 'textHide']) === false

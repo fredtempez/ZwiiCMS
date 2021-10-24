@@ -213,4 +213,12 @@ $("#themeHeaderPosition").on("change", function() {
 	}
 }).trigger("change");
 
-
+// Affiche / Cache l'option bannière masquée en écran réduit
+$("#themeHeaderPosition").on("change", function() {
+	if($(this).val() === 'hide') {
+		$("#themeHeaderSmallDisplay").slideUp();
+	}
+	else {
+		$("#themeHeaderSmallDisplay").slideDown();
+	}
+}).trigger("change");

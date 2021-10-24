@@ -130,7 +130,11 @@
 						'checked' => $this->getData(['theme', 'header', 'margin'])
 					]); ?>
             </div>
-
+            <div id="themeHeaderSmallDisplay" class="displayNone">
+                      <?php echo template::checkbox('themeHeaderSmallDisplayHidden', true, 'Masquer la bannière en écran réduit', [
+      						'checked' => $this->getData(['theme', 'header', 'smallDisplayHidden'])
+      					]); ?>
+            </div>
         </div>
     </div>
 </div>
