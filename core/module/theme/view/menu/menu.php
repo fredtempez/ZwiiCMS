@@ -176,23 +176,37 @@
         <div class="block">
         <h4>Contenus</h4>
             <div class="row">
-                <div class="col4">
+                <div class="col3">
                         <?php echo template::checkbox('themeMenuLoginLink', true, 'Lien de connexion', [
                                 'checked' => $this->getData(['theme', 'menu', 'loginLink'])
                             ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                         <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                                 'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
                                 'help' => 'Icônes de gestion de compte et de déconnexion. Uniquement pour les membres connectés'
                         ]); ?>
-                    </div>
-                <div class="col4">
-                        <?php echo template::checkbox('themeMenuBurgerTitle', true, 'Titre du site dans le menu réduit', [
-                                'checked' => $this->getData(['theme', 'menu', 'burgerTitle']),
+                </div>
+                <div class="col6">
+                        <?php echo template::select('themeMenuBurgerContent', $module::$burgerContent, [
+								                'label' => 'Affichage dans le menu burger',
+                                'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
                                 'help' => 'Le menu burger remplace le menu complet lorsque la largeur de l\'écran  n\'est pas suffisante.'
                             ]); ?>
                 </div>
+            </div>
+            <div class="row">
+              <div id="themeMenuLogoBurgerId" class="col6 offset6 <?php if( $this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone';?>">
+                <?php
+                  $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger'])) ?
+                      $this->getData(['theme', 'menu', 'logoBurger']) : "";
+                  echo template::file('themeMenuLogoBurger', [
+                    'help' => 'Sélectionner une image de dimensions adaptées',
+                    'label' => 'Logo du menu burger',
+                    'type' => 1,
+                    'value' => $imageFile
+                ]); ?>
+              </div>
             </div>
         </div>
     </div>

@@ -239,6 +239,11 @@ class theme extends common {
 		'3' => 'Trois colonnes : 1/3 - 1/3 - 1/3',
 		'4' => 'Trois lignes superposées'
 	];
+	public static $burgerContent = [
+	'no' => 'Aucun',
+	'title' => 'Titre du site',
+	'logo' => 'Logo du site'
+	];
 
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
@@ -511,7 +516,9 @@ class theme extends common {
 				'activeTextColor' => $this->getInput('themeMenuActiveTextColor'),
 				'radius' => $this->getInput('themeMenuRadius'),
 				'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN),
-				'memberBar' =>  $this->getInput('themeMenuMemberBar', helper::FILTER_BOOLEAN)
+				'memberBar' =>  $this->getInput('themeMenuMemberBar', helper::FILTER_BOOLEAN),
+				'logoBurger' => $this->getInput('themeMenuLogoBurger'),
+				'burgerContent' => $this->getInput('themeMenuBurgerContent')
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

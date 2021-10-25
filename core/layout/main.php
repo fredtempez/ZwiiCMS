@@ -44,8 +44,11 @@
 				?>
 				<!-- Menu Burger -->
 				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'title' ): ?>
 					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
+				<?php endif; ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'logo' ): ?>
+						<div class="notranslate" id="burgerLogo"><?php echo '<img src="'.helper::baseUrl(0).self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger']).'">';?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="
@@ -83,8 +86,11 @@
 			<!-- Menu dans le fond du site après la bannière -->
 			<nav>
 				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'title' ): ?>
 					<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
+				<?php endif; ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'logo' ): ?>
+						<div class="notranslate" id="burgerLogo"><?php echo '<img src="'.helper::baseUrl(0).self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger']).'">';?></div>
 				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
@@ -96,8 +102,11 @@
 				<!-- Menu dans le site avant la bannière -->
 				<nav>
 					<div id="toggle">
-					<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
+					<?php if ($this->getData(['theme','menu','burgerContent']) === 'title' ): ?>
 						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
+					<?php endif; ?>
+					<?php if ($this->getData(['theme','menu','burgerContent']) === 'logo' ): ?>
+							<div class="notranslate" id="burgerLogo"><?php echo '<img src="'.helper::baseUrl(0).self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger']).'">';?></div>
 					<?php endif; ?>
 					<?php echo template::ico('menu',null,null,'2em'); ?></div>
 					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
@@ -145,9 +154,12 @@
 			<!-- Menu dans le site après la bannière -->
 			<nav <?php if($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
 				<div id="toggle">
-				<?php if ($this->getData(['theme','menu','burgerTitle']) === true ): ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'title' ): ?>
 						<div class="notranslate" id="burgerText"><?php echo $this->getData(['locale', 'title']);?></div>
-					<?php endif; ?>
+				<?php endif; ?>
+				<?php if ($this->getData(['theme','menu','burgerContent']) === 'logo' ): ?>
+						<div class="notranslate" id="burgerLogo"><?php echo '<img src="'.helper::baseUrl(0).self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger']).'">';?></div>
+				<?php endif; ?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
