@@ -176,7 +176,9 @@ class init extends common {
 				'activeTextColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
 				'burgerTitle' => true,
-				'memberBar' => true
+				'memberBar' => true,
+				'logoBurger' => '',
+				'burgerContent' => 'title'
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
