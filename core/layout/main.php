@@ -150,14 +150,14 @@
 			<!-- footer -->
 			<?php $this->showFooter();?>
 
-	<!-- Fin du site -->
-	<?php echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';?>
+		<!-- Fin du site -->
+		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';?>
 
-	<!-- Lien remonter en haut -->
-	<div id="backToTop"><?php echo template::ico('up'); ?></div>
-	
-	<!-- Les scripts -->
-	<?php $this->showScript();?>
+		<!-- Lien remonter en haut -->
+		<div id="backToTop"><?php echo template::ico('up'); ?></div>
 
-</body>
+		<!-- Les scripts -->
+		<?php $this->showScript();?>
+
+	</body>
 </html>
