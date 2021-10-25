@@ -25,12 +25,16 @@
 		}?>
 	</head>
 	<body>
+		<!-- Barre d'administration -->
 		<?php if($this->getUser('group') > self::GROUP_MEMBER): ?>
 			<?php $this->showBar(); ?>
 		<?php endif;?>
+
+		<!-- Notifications -->
 		<?php $this->showNotification(); ?>
-		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
-			<!-- Menu dans le fond du site avant la bannière -->
+
+		<!-- Menu dans le fond du site avant la bannière -->
+		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>	
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
@@ -51,8 +55,9 @@
 				</div> <!--fin menu -->
 			</nav>
 		<?php endif; ?>
-		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
-			<!-- Bannière dans le fond du site -->
+
+		<!-- Bannière dans le fond du site -->
+		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>			
 			<header <?php if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;?>>
 				<?php ?>
 				<?php echo $this->getData(['theme','header','linkHomePage']) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
@@ -71,8 +76,9 @@
 			</header>
 		<?php endif; ?>
 
+		<!-- Menu dans le fond du site après la bannière -->
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
-			<!-- Menu dans le fond du site après la bannière -->
+			
 			<nav>
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerTitle']) ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
@@ -80,6 +86,7 @@
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
+
 		<!-- Site -->
 		<div id="site" class="container">
 			<?php if($this->getData(['theme', 'menu', 'position']) === 'site-first'): ?>
@@ -136,12 +143,21 @@
 						<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 					</nav>
 			<?php endif; ?>
+
 			<!-- Corps de page -->
 			<?php $this->showSection();?>
+
 			<!-- footer -->
 			<?php $this->showFooter();?>
-		<!-- Lien remonter en haut -->
-		<div id="backToTop"><?php echo template::ico('up'); ?></div>
-		<?php $this->showScript();?>
+
+	<!-- Fin du site -->
+	<?php echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';?>
+
+	<!-- Lien remonter en haut -->
+	<div id="backToTop"><?php echo template::ico('up'); ?></div>
+	
+	<!-- Les scripts -->
+	<?php $this->showScript();?>
+
 </body>
 </html>
