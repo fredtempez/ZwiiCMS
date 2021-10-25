@@ -1392,6 +1392,7 @@ class common {
 		// Fermeture du contenaire
 		echo '</div></div>';
 		echo '</footer>';
+		echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';
 	}
 
 	/**

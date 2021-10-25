@@ -140,7 +140,6 @@
 			<?php $this->showSection();?>
 			<!-- footer -->
 			<?php $this->showFooter();?>
-		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site'? '</div>' : '';?>
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
 		<?php $this->showScript();?>
