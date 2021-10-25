@@ -1186,10 +1186,107 @@ class common {
 	}
 
 	/**
+	 * Formate le contenu de la page selon les gabarits
+	 * @param Page par defaut
+	 */
+	public function showSection() {
+		echo '<section>';
+		// Récupérer la config de la page courante
+		$blocks = explode('-',$this->getData(['page',$this->getUrl(0),'block']));
+		// Initialiser
+		$blockleft=$blockright="";
+		switch (sizeof($blocks)) {
+			case 1 :  // une colonne
+				$content    = 'col'. $blocks[0] ;
+				break;
+			case 2 :  // 2 blocs
+				if ($blocks[0] < $blocks[1]) { // détermine la position de la colonne
+					$blockleft = 'col'. $blocks[0];
+					$content    = 'col'. $blocks[1] ;
+				} else {
+					$content    = 'col' . $blocks[0];
+					$blockright  = 'col' . $blocks[1];
+				}
+			break;
+			case 3 :  // 3 blocs
+					$blockleft  = 'col' . $blocks[0];
+					$content    = 'col' . $blocks[1];
+					$blockright = 'col' . $blocks[2];
+		}
+		// Page pleine pour la configuration des modules et l'édition des pages sauf l'affichage d'un article de blog
+		$pattern = ['config','edit','add','comment','data'];
+		if ((sizeof($blocks) === 1 ||
+			in_array($this->getUrl(1),$pattern)  )
+			) { // Pleine page en mode configuration
+				$this->showContent();
+				if (file_exists(self::DATA_DIR . 'body.inc.html')) {
+					include( self::DATA_DIR . 'body.inc.html');
+				}
+		} else {
+			echo '<div class="row siteContainer">';
+				/**
+				 * Barre gauche
+				 */
+				if ($blockleft !== "")  {
+					echo '<div class="'. $blockleft . '" id="contentLeft"><aside>' ;
+					// Détermine si le menu est présent
+					if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'none') {
+						// Pas de menu
+						echo $this->output['contentLeft'];
+					} else {
+						// $mark contient 0 le menu est positionné à la fin du contenu
+						$contentLeft = str_replace ('[]','[MENU]',$this->output['contentLeft']);
+						$contentLeft = str_replace ('[menu]','[MENU]',$contentLeft);
+						$mark = strrpos($contentLeft,'[MENU]')  !== false ? strrpos($contentLeft,'[MENU]') : strlen($contentLeft);
+						echo substr($contentLeft,0,$mark);
+						echo '<div id="menuSideLeft">';
+						echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'parents' ? false : true);
+						echo '</div>';
+						echo substr($contentLeft,$mark+6,strlen($contentLeft));
+					}
+					echo  "</aside></div>";
+				}
+				/**
+				 * Contenu de page
+				 */
+				echo '<div class="'. $content . '" id="contentSite">';
+				$this->showContent();
+				if (file_exists(self::DATA_DIR . 'body.inc.html')) {
+						include(self::DATA_DIR . 'body.inc.html');
+				}
+				echo '</div>';
+				/**
+				 * Barre droite
+				 */
+				if ($blockright !== "") {
+					echo '<div class="' . $blockright . '" id="contentRight"><aside>'; 
+					// Détermine si le menu est présent
+					if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'none') {
+						// Pas de menu
+						echo $this->output['contentRight'];
+					} else {
+						// $mark contient 0 le menu est positionné à la fin du contenu
+						$contentRight = str_replace ('[]','[MENU]',$this->output['contentRight']);
+						$contentRight = str_replace ('[menu]','[MENU]',$contentRight);
+						$mark = strrpos($contentRight,'[MENU]')  !== false ? strrpos($contentRight,'[MENU]') : strlen($contentRight);
+						echo substr($contentRight,0,$mark);
+						echo '<div id="menuSideRight">';
+						echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'parents' ? false : true);
+						echo '</div>';
+						echo substr($contentRight,$mark+6,strlen($contentRight));
+					}
+					echo '</aside></div>';
+				}
+			echo '</div>';
+		}
+		echo '</section>';
+	}
+
+	/**
 	 * Affiche le contenu
 	 * @param Page par défaut
 	 */
-	public function showContent() {
+	private function showContent() {
 		if(
 			$this->output['title']
 			AND (
@@ -1222,55 +1319,85 @@ class common {
 		}
 	}
 
-
-
 	/**
-	 * Affiche le contenu de la barre gauche
-	 *
+	 * Affiche le pied de page
 	 */
-	public function showBarContentLeft() {
-		// Détermine si le menu est présent
-		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'none') {
-			// Pas de menu
-			echo $this->output['contentLeft'];
-		} else {
-			// $mark contient 0 le menu est positionné à la fin du contenu
-			$contentLeft = str_replace ('[]','[MENU]',$this->output['contentLeft']);
-			$contentLeft = str_replace ('[menu]','[MENU]',$contentLeft);
-			$mark = strrpos($contentLeft,'[MENU]')  !== false ? strrpos($contentLeft,'[MENU]') : strlen($contentLeft);
-			echo substr($contentLeft,0,$mark);
-			echo '<div id="menuSideLeft">';
-			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'displayMenu']) === 'parents' ? false : true);
-			echo '</div>';
-			echo substr($contentLeft,$mark+6,strlen($contentLeft));
+	public function showFooter () {
+		// Déterminer la position
+		$positionFixed = '';
+		if (
+			$this->getData(['theme', 'footer', 'position']) === 'site'
+			// Affiche toujours le pied de page pour l'édition du thème
+			OR (
+				$this->getData(['theme', 'footer', 'position']) === 'hide'
+				AND $this->getUrl(0) === 'theme'
+			)
+			) {	
+				$position = 'site';
+			} else {
+					$position = 'body';
+					if ( $this->getData(['theme', 'footer', 'fixed']) === true) {
+						$positionFixed = 'footerbodyFixed';
+					}
+					// Sortir de la division précédente
+					echo '</div>';
 		}
-	}
+			
+		echo $this->getData(['theme', 'footer', 'position']) === 'hide' ? '<footer class="displayNone">' : '<footer>';
+		echo ($position === 'site') ? '<div class="container"><div class="row" id="footersite">' : '<div class="container-large'.  $positionFixed . '"><div class="row" id="footerbody">';
+		/**
+		 * Calcule la dimension des blocs selon la configuration
+		 */
+		switch($this->getData(['theme', 'footer', 'template'])) {
+			case '1' :
+				$class['left'] 	 = "displayNone";
+				$class['center'] = "col12";
+				$class['right']  = "displayNone";
+				break;
+			case '2' :
+				$class['left'] 	 = "col6";
+				$class['center'] = "displayNone";
+				$class['right']  = "col6";
+				break;
+			case '3' :
+				$class['left'] 	 = "col4";
+				$class['center'] = "col4";
+				$class['right']  = "col4";
+				break;
+			case '4' :
+				$class['left'] 	 = "col12";
+				$class['center'] = "col12";
+				$class['right']  = "col12";
+				break;
+		}
+		/**
+		 * Affiche les blocs
+		 */
+		echo '<div class="' . $class['left'] . '" id="footer' .  $position . 'Left">';
+		if($this->getData(['theme', 'footer', 'textPosition']) === 'left') { $this->showFooterText(); }
+		if($this->getData(['theme', 'footer', 'socialsPosition']) === 'left') {	$this->showSocials(); }
+		if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'left') {$this->showCopyright(); }
+		echo '</div>';
+		echo '<div class="' .$class['center'] . '" id="footer' . $position . 'Center">';
+		if($this->getData(['theme', 'footer', 'textPosition']) === 'center') { $this->showFooterText(); }
+		if($this->getData(['theme', 'footer', 'socialsPosition']) === 'center') { $this->showSocials(); }
+		if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'center') { $this->showCopyright(); }
+		echo '</div>';
+		echo '<div class="' . $class['right'] . '" id="footer' . $position .'Right">';
+		if($this->getData(['theme', 'footer', 'textPosition']) === 'right') { $this->showFooterText(); }
+		if($this->getData(['theme', 'footer', 'socialsPosition']) === 'right') { $this->showSocials(); }
+		if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'right') { $this->showCopyright(); }
+		echo '</div>';
 
-	/**
-	 * Affiche le contenu de la barre droite
-	 */
-	public function showBarContentRight() {
-		// Détermine si le menu est présent
-		if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'none') {
-			// Pas de menu
-			echo $this->output['contentRight'];
-		} else {
-			// $mark contient 0 le menu est positionné à la fin du contenu
-			$contentRight = str_replace ('[]','[MENU]',$this->output['contentRight']);
-			$contentRight = str_replace ('[menu]','[MENU]',$contentRight);
-			$mark = strrpos($contentRight,'[MENU]')  !== false ? strrpos($contentRight,'[MENU]') : strlen($contentRight);
-			echo substr($contentRight,0,$mark);
-			echo '<div id="menuSideRight">';
-			echo $this->showMenuSide($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'parents' ? false : true);
-			echo '</div>';
-			echo substr($contentRight,$mark+6,strlen($contentRight));
-		}
+		// Fermeture du contenaire
+		echo '</div></div>';
+		echo '</footer>';
 	}
 
 	/**
 	 * Affiche le texte du footer
 	 */
-	public function showFooterText() {
+	private function showFooterText() {
 		if($footerText = $this->getData(['theme', 'footer', 'text']) OR $this->getUrl(0) === 'theme') {
 			echo '<div id="footerText">' . $footerText . '</div>';
 		}
@@ -1279,7 +1406,7 @@ class common {
      /**
      * Affiche le copyright
      */
-    public function showCopyright() {
+    private function showCopyright() {
 		// Ouverture Bloc copyright
 		$items = '<div id="footerCopyright">';
 		$items .= '<span id="footerFontCopyright">';
@@ -1352,7 +1479,7 @@ class common {
 	/**
 	 * Affiche les réseaux sociaux
 	 */
-	public function showSocials() {
+	private function showSocials() {
 		$socials = '';
 		foreach($this->getData(['config', 'social']) as $socialName => $socialId) {
 			switch($socialName) {
@@ -1588,7 +1715,7 @@ class common {
 	 * Uniquement texte
 	 * @param onlyChildren n'affiche les sous-pages de la page actuelle
 	 */
-	public function showMenuSide($onlyChildren = null) {
+	private function showMenuSide($onlyChildren = null) {
 		// Met en forme les items du menu
 		$items = '';
 		// Nom de la page courante
