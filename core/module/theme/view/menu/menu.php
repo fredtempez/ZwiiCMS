@@ -196,11 +196,11 @@
                 </div>
             </div>
             <div class="row">
-              <div id="themeMenuLogoBurgerId" class="col6 offset6 <?php if( $this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone';?>">
+              <div id="themeMenuBurgerLogoId" class="col6 offset6 <?php if( $this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone';?>">
                 <?php
-                  $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'logoBurger'])) ?
-                      $this->getData(['theme', 'menu', 'logoBurger']) : "";
-                  echo template::file('themeMenuLogoBurger', [
+                  $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'menu', 'burgerLogo'])) ?
+                      $this->getData(['theme', 'menu', 'burgerLogo']) : "";
+                  echo template::file('themeMenuBurgerLogo', [
                     'help' => 'Sélectionner une image de dimensions adaptées',
                     'label' => 'Logo du menu burger',
                     'type' => 1,

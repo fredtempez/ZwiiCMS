@@ -179,9 +179,9 @@ $("#themeMenuActiveColorAuto").on("change", function() {
 $("#themeMenuBurgerContent").on("change", function() {
 	console.log( $(this).val());
 	if($(this).val() === 'logo') {
-		$("#themeMenuLogoBurgerId").slideDown();
+		$("#themeMenuBurgerLogoId").slideDown();
 	}
 	else {
-		$("#themeMenuLogoBurgerId").slideUp();
+		$("#themeMenuBurgerLogoId").slideUp();
 	}
 }).trigger("select");
