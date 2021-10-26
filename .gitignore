@@ -15,3 +15,5 @@ sitemap.xml.gz
 sitemap.xml
 robots.txt
 .DS_Store
+# Service de mise à jour
+gitupdate.sh
