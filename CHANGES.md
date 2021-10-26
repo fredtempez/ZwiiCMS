@@ -15,7 +15,7 @@
         - Traduction des étiquettes Carte du site, Rechercher et Mentions légales dans le pied de page.
         - Refonte des pages de configuration et de la page du thème du pied de page.
         - La page courante reste sélectionnée après un clic sur un drapeau.
-    Thèmes : 
+    - Thème : 
         - Choix d'un thème à l'installation.
         - Livraison de quelques thèmes.
         - Pied de page, sélection directe d'une page spéciale sans passer par la configuration du site.
