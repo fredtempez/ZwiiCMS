@@ -1286,7 +1286,7 @@ class common {
 	 * Affiche le contenu
 	 * @param Page par défaut
 	 */
-	private function showContent() {
+	public function showContent() {
 		if(
 			$this->output['title']
 			AND (
