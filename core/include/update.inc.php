@@ -661,5 +661,13 @@ if ($this->getData(['core', 'dataVersion']) < 11100) {
 	// Anonymat des adresses iP de la journalisation
 	$this->setData(['config', 'connect', 'anonymousIp', 2 ]);
 
+	// Nouvelles options de contenu pour les écrans réduits
+	if ($this->getData(['theme', 'menu', 'burgerTitle'])) {
+		$this->setData(['theme', 'menu', 'burgerContent', 'title']);
+	} else {
+		$this->setData(['theme', 'menu', 'burgerContent', 'none']);
+	}
+	$this->setData(['theme', 'menu', 'burgerLogo', '']);
+
 	$this->setData(['core', 'dataVersion', 11100]);
 }

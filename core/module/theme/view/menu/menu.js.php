@@ -79,7 +79,7 @@ $("input, select").on("change", function() {
 	) {
 		css += 'nav{padding:0 10px;}';
 	}
-	
+
 	// Position du menu
 	switch($("#themeMenuPosition").val()) {
 		case 'hide':
@@ -174,3 +174,14 @@ $("#themeMenuActiveColorAuto").on("change", function() {
 		$("#themeMenuActiveColorWrapper").slideDown();
 	}
 }).trigger("change");
+
+// Affiche / Cache la sélection du logo pour le menu burger
+$("#themeMenuBurgerContent").on("change", function() {
+	console.log( $(this).val());
+	if($(this).val() === 'logo') {
+		$("#themeMenuBurgerLogoId").slideDown();
+	}
+	else {
+		$("#themeMenuBurgerLogoId").slideUp();
+	}
+}).trigger("select");
