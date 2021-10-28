@@ -15,6 +15,40 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
+				<h4>Paramètres</h4>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::select('themeSiteWidth', $module::$widths, [
+							'label' => 'Largeur du site',
+							'selected' => $this->getData(['theme', 'site', 'width'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('themeSiteRadius', $module::$radius, [
+							'label' => 'Arrondi des angles',
+							'selected' => $this->getData(['theme', 'site', 'radius'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('themeSiteShadow', $module::$shadows, [
+							'label' => 'Ombre sur les bords du site',
+							'selected' => $this->getData(['theme', 'site', 'shadow'])
+						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col6">
+						<?php echo template::checkbox('themeSiteMargin',true, 'Pas de marge au-dessus et en-dessous du site', [
+							'checked' => $this->getData(['theme', 'site', 'margin'])
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
 				<h4>Couleurs</h4>
 				<div class="row">
 					<div class="col8">
@@ -154,40 +188,6 @@
 						<?php echo template::select('themeTitleTextTransform', $module::$textTransforms, [
 							'label' => 'Casse',
 							'selected' => $this->getData(['theme', 'title', 'textTransform'])
-						]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Apparence</h4>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::select('themeSiteWidth', $module::$widths, [
-							'label' => 'Largeur du site',
-							'selected' => $this->getData(['theme', 'site', 'width'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::select('themeSiteRadius', $module::$radius, [
-							'label' => 'Arrondi des angles',
-							'selected' => $this->getData(['theme', 'site', 'radius'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::select('themeSiteShadow', $module::$shadows, [
-							'label' => 'Ombre sur les bords du site',
-							'selected' => $this->getData(['theme', 'site', 'shadow'])
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('themeSiteMargin',true, 'Pas de marge au-dessus et en-dessous du site', [
-							'checked' => $this->getData(['theme', 'site', 'margin'])
 						]); ?>
 					</div>
 				</div>
