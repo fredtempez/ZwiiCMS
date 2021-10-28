@@ -15,158 +15,53 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Couleur</h4>
+            <h4>Paramètres</h4>
             <div class="row">
-                <div class="col4">
-                    <?php echo template::text('themeMenuTextColor', [
-							'class' => 'colorPicker',
-							'help' => 'Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Texte',
-							'value' => $this->getData(['theme', 'menu', 'textColor'])
-						]); ?>
-                </div>
-                <div class="col4">
-                    <?php echo template::text('themeMenuBackgroundColor', [
-                            'class' => 'colorPicker',
-                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                            'label' => 'Fond',
-                            'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
-                        ]); ?>
-                </div>
-                <div class="col4">
-                    <?php echo template::text('themeMenuBackgroundColorSub', [
-                            'class' => 'colorPicker',
-                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                            'label' => 'Fond du sous-menu',
-                            'value' => $this->getData(['theme', 'menu', 'backgroundColorSub'])
-                        ]); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col12">
-        <div class="block">
-            <h4>Page active</h4>
-            <div class="row">
-                <div class="col4">
-                    <?php echo template::text('themeMenuActiveTextColor', [
-                            'class' => 'colorPicker',
-                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                            'label' => 'Texte',
-                            'value' => $this->getData(['theme', 'menu', 'activeTextColor'])
-                        ]); ?>
-                </div>
-                <div class="col4 verticalAlignBottom">
+                <div class="col6">
                     <?php
-                        echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur du fond automatique', [
-                        'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
-                        'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
+                    if ( $this->getData(['theme', 'header', 'position']) == "site")
+                    {	echo template::select('themeMenuPosition', $module::$menuPositionsSite, [
+                            'label' => 'Position',
+                            'selected' => $this->getData(['theme', 'menu', 'position'])
+                        ]);
+                    }else{
+                    echo template::select('themeMenuPosition', $module::$menuPositionsBody, [
+                        'label' => 'Position',
+                        'selected' => $this->getData(['theme', 'menu', 'position'])
+                    ]);	}
+                    ?>
+                </div>
+                <div class="col6">
+                    <?php echo template::select('themeMenuRadius', $module::$menuRadius, [
+                    'label' => 'Bords arrondis',
+                    'selected' => $this->getData(['theme', 'menu', 'radius']),
+                    'help' => 'Autour de la page sélectionnée'
                     ]); ?>
                 </div>
-                <div class="col4">
-                    <?php echo template::text('themeMenuActiveColor', [
-							'class' => 'colorPicker',
-							'help' => 'Couleur de fond de la page sélectionnée dans le menu.<br>Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Fond',
-							'value' => $this->getData(['theme', 'menu', 'activeColor'])
-						]); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col12">
-        <div class="block">
-            <h4>Mise en forme du texte</h4>
-            <div class="row">
-                <div class="col6">
-                    <?php echo template::select('themeMenuFont', $module::$fonts, [
-								'label' => 'Police',
-								'selected' => $this->getData(['theme', 'menu', 'font']),
-                                'fonts' => true
-							]); ?>
-                </div>
-                <div class="col6">
-                    <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
-								'label' => 'Taille',
-								'help' => 'Proportionnelle à celle définie dans le site',
-								'selected' => $this->getData(['theme', 'menu', 'fontSize'])
-							]); ?>
-                </div>
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('themeMenuFontWeight', $module::$fontWeights, [
-							'label' => 'Style',
-							'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
-						]); ?>
+                    <?php echo template::select('themeMenuHeight', $module::$menuHeights, [
+                    'label' => 'Hauteur',
+                    'selected' => $this->getData(['theme', 'menu', 'height'])
+                ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeMenuTextTransform', $module::$textTransforms, [
-							'label' => 'Casse',
-							'selected' => $this->getData(['theme', 'menu', 'textTransform'])
-						]); ?>
+                    <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
+                    'label' => 'Alignement du contenu',
+                    'selected' => $this->getData(['theme', 'menu', 'textAlign'])
+                ]); ?>
                 </div>
             </div>
-            <div>
+            <div id="themeMenuPositionOptions" class="displayNone">
+                <?php echo template::checkbox('themeMenuMargin', true, 'Aligner le menu avec le contenu', [
+                        'checked' => $this->getData(['theme', 'menu', 'margin'])
+                    ]); ?>
             </div>
-        </div>
-        <div class="row">
-            <div class="col12">
-                <div class="block">
-                    <h4>Configuration</h4>
-                    <div class="row">
-                        <div class="col6">
-                            <?php
-                            if ( $this->getData(['theme', 'header', 'position']) == "site")
-                            {	echo template::select('themeMenuPosition', $module::$menuPositionsSite, [
-                                    'label' => 'Position',
-                                    'selected' => $this->getData(['theme', 'menu', 'position'])
-                                ]);
-                            }else{
-                            echo template::select('themeMenuPosition', $module::$menuPositionsBody, [
-                                'label' => 'Position',
-                                'selected' => $this->getData(['theme', 'menu', 'position'])
-                            ]);	}
-                            ?>
-                        </div>
-                        <div class="col6">
-                            <?php echo template::select('themeMenuRadius', $module::$menuRadius, [
-                            'label' => 'Bords arrondis',
-                            'selected' => $this->getData(['theme', 'menu', 'radius']),
-                            'help' => 'Autour de la page sélectionnée'
-                            ]); ?>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col6">
-                            <?php echo template::select('themeMenuHeight', $module::$menuHeights, [
-							'label' => 'Hauteur',
-							'selected' => $this->getData(['theme', 'menu', 'height'])
-						]); ?>
-                        </div>
-                        <div class="col6">
-                            <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
-							'label' => 'Alignement du contenu',
-							'selected' => $this->getData(['theme', 'menu', 'textAlign'])
-						]); ?>
-                        </div>
-                    </div>
-                    <div id="themeMenuPositionOptions" class="displayNone">
-                        <?php echo template::checkbox('themeMenuMargin', true, 'Aligner le menu avec le contenu', [
-								'checked' => $this->getData(['theme', 'menu', 'margin'])
-							]); ?>
-                    </div>
-                    <div id="themeMenuPositionFixed" class="displayNone">
-                        <?php echo template::checkbox('themeMenuFixed', true, 'Menu fixe', [
-								'checked' => $this->getData(['theme', 'menu', 'fixed'])
-							]); ?>
-                    </div>
-
-                </div>
+            <div id="themeMenuPositionFixed" class="displayNone">
+                <?php echo template::checkbox('themeMenuFixed', true, 'Menu fixe', [
+                        'checked' => $this->getData(['theme', 'menu', 'fixed'])
+                    ]); ?>
             </div>
         </div>
     </div>
@@ -207,6 +102,101 @@
                     'value' => $imageFile
                 ]); ?>
               </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>Couleurs</h4>
+            <div class="row">
+                <div class="col4">
+                    <?php echo template::text('themeMenuTextColor', [
+							'class' => 'colorPicker',
+							'help' => 'Le curseur horizontal règle le niveau de transparence.',
+							'label' => 'Texte',
+							'value' => $this->getData(['theme', 'menu', 'textColor'])
+						]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::text('themeMenuBackgroundColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
+                            'label' => 'Fond',
+                            'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
+                        ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::text('themeMenuBackgroundColorSub', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
+                            'label' => 'Fond du sous-menu',
+                            'value' => $this->getData(['theme', 'menu', 'backgroundColorSub'])
+                        ]); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col4">
+                    <?php echo template::text('themeMenuActiveTextColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Le curseur horizontal règle le niveau de transparence.',
+                            'label' => 'Texte page active',
+                            'value' => $this->getData(['theme', 'menu', 'activeTextColor'])
+                        ]); ?>
+                </div>
+                <div class="col4 verticalAlignBottom">
+                    <?php
+                        echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
+                        'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
+                        'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
+                    ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::text('themeMenuActiveColor', [
+                            'class' => 'colorPicker',
+                            'help' => 'Couleur de fond de la page sélectionnée dans le menu.<br>Le curseur horizontal règle le niveau de transparence.',
+                            'label' => 'Fond page active',
+                            'value' => $this->getData(['theme', 'menu', 'activeColor'])
+                        ]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>Mise en forme du texte</h4>
+            <div class="row">
+                <div class="col6">
+                    <?php echo template::select('themeMenuFont', $module::$fonts, [
+								'label' => 'Police',
+								'selected' => $this->getData(['theme', 'menu', 'font']),
+                                'fonts' => true
+							]); ?>
+                </div>
+                <div class="col6">
+                    <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
+								'label' => 'Taille',
+								'help' => 'Proportionnelle à celle définie dans le site',
+								'selected' => $this->getData(['theme', 'menu', 'fontSize'])
+							]); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col6">
+                    <?php echo template::select('themeMenuFontWeight', $module::$fontWeights, [
+							'label' => 'Style',
+							'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
+						]); ?>
+                </div>
+                <div class="col6">
+                    <?php echo template::select('themeMenuTextTransform', $module::$textTransforms, [
+							'label' => 'Casse',
+							'selected' => $this->getData(['theme', 'menu', 'textTransform'])
+						]); ?>
+                </div>
             </div>
         </div>
     </div>
