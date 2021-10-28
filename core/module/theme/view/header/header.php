@@ -13,7 +13,61 @@
     </div>
 </div>
 <div class="row">
-    <div class="col6">
+    <div class="col12">
+        <div class="block">
+            <h4>Paramètres</h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
+							'label' => 'Position',
+							'selected' => $this->getData(['theme', 'header', 'position'])
+						]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
+                            'label' => 'Adaptation',
+                            'selected' => $this->getData(['theme', 'header', 'imageContainer']),
+                            'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
+                                Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
+                                Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
+                        ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
+							'label' => 'Hauteur maximale',
+                            'selected' => $this->getData(['theme', 'header', 'height']),
+                            'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
+						]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
+							'label' => 'Alignement du contenu',
+							'selected' => $this->getData(['theme', 'header', 'textAlign'])
+						]); ?>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col6">
+                    <div id="themeHeaderSmallDisplay" class="displayNone">
+                            <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
+                                    'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
+                                ]); ?>
+                    </div>                    
+                </div>
+                <div class="col6">
+                    <div id="themeHeaderPositionOptions" class="displayNone">
+                        <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
+                                'checked' => $this->getData(['theme', 'header', 'margin'])
+                            ]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
         <div class="block">
             <h4>Couleurs</h4>
             <div class="row">
@@ -36,7 +90,9 @@
             </div>
         </div>
     </div>
-    <div class="col6">
+</div>
+<div class="row">
+    <div class="col12">
         <div class="block">
             <h4>Image</h4>
             <div class="row">
@@ -84,60 +140,6 @@
                         <span id="themeHeaderImage">
                             Largeur : <span id="themeHeaderImageWidth"></span> | Hauteur : <span id="themeHeaderImageHeight"></span> | ratio : <span id="themeHeaderImageRatio"></span>
                         </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col12">
-        <div class="block">
-            <h4>Configuration</h4>
-            <div class="row">
-                <div class="col3">
-                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
-							'label' => 'Position',
-							'selected' => $this->getData(['theme', 'header', 'position'])
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
-                            'label' => 'Adaptation',
-                            'selected' => $this->getData(['theme', 'header', 'imageContainer']),
-                            'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
-                                Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
-                                Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
-                        ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
-							'label' => 'Hauteur maximale',
-                            'selected' => $this->getData(['theme', 'header', 'height']),
-                            'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
-							'label' => 'Alignement du contenu',
-							'selected' => $this->getData(['theme', 'header', 'textAlign'])
-						]); ?>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col6">
-                    <div id="themeHeaderSmallDisplay" class="displayNone">
-                            <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
-                                    'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
-                                ]); ?>
-                    </div>                    
-                </div>
-                <div class="col6">
-                    <div id="themeHeaderPositionOptions" class="displayNone">
-                        <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
-                                'checked' => $this->getData(['theme', 'header', 'margin'])
-                            ]); ?>
                     </div>
                 </div>
             </div>
