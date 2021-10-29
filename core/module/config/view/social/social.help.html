@@ -1,98 +1,5 @@
-<h3>Maintenance</h3>
-<p>Pour passer un site en maintenance il faut cocher la case "Site en maintenance".<br>
-Tant que cette case sera cochée, la seule page accessible du site sera la page définie pour cette fonction dans les "Pages spéciales" de "Configurer le site".<br>
-Ici il est possible de "Sauvegarder" et "Restaurer" le site.<br></p>
-<h4>Sauvegarder</h4>
-<p>En plus du dossier/site/data/, la sauvegarde intègre par défaut les données du gestionnaire de fichiers, le dossier /site/file/, contrairement à la sauvegarde quotidienne qui peut être activée dans les "Pages spéciales" de "Configurer le site" qui ne comprend que /site/data/. C'est donc une sauvegarde complète des données du site qui peut être réalisée ici.<br>
-Si le site a un volume très important de fichiers il est peut-être préférable de décocher la case "Inclure le contenu du gestionnaire de fichiers" pour sauvegarder cette partie par FTP. Avec un gros volume de fichiers le temps pour générer le fichier de sauvegarde sera important et les hébergeurs limites les processus qui sollicitent trop le serveur : si le volume des fichiers est trop important par rapport au curseur de votre hébergeur la sauvegarde plantera, sinon il ne s'agit que d'une question de patience pour attendre la fin de la sauvegarde.<br>
-Pour lancer la sauvegarde en cliquer simplement sur le bouton "Sauvegarder" : à la fin de la sauvegarde une fenêtre surgissante doit indiquer "La sauvegarde a été générée avec succès", dans le cas contraire... le fichier de sauvegarde n'a pas pu être créé et il faudra investiguer pour trouver ce qui a empêché sa création.<br>
-À la fin de l'opération un fichier de sauvegarde sous la forme "dossier_du_site-backup-AAAA-JJ-MM-hh-mm-ss.zip" a été créé dans le dossier "backup" du gestionnaire de fichiers.<br>
-Le dossier "backup" n'existe pas tant qu'une première sauvegarde n'a pas été réalisée.<br>
-Ce dossier n'est pas le même que celui des sauvegardes quotidiennes qui ne sont pas elles-mêmes sauvegardées puisque dans le dossier /site/backup/.</p>
-<h4>Restaurer</h4>
-<h5>Paramètres</h5>
-<p>Choisir le fichier de sauvegarde en cliquant sur "Choisissez un fichier" : le fichier doit obligatoirement se trouver dans /site/file/source/backup/<br>
-Par défaut la case "Préserver les comptes des utilisateurs déjà installés" est cochée : dans le cas contraire les comptes utilisateurs déjà éventuellement créés sur le site seront supprimés lors de la restauration.<br></p>
-<h5>Conversion des URL</h5>
-<p>Cette opération est à réaliser AVANT de lancer la restauration !<br>
-Cette partie est particulièrement intéressante et importante quand il s'agit de restaurer un site sur une nouvelle installation, dans un dossier différent de celui du site sauvegardé. Sans cette conversion automatique cela serait particulièrement long et fastidieux de réaliser cette opération.<br>
-Il suffit de compléter les champs "Dossier de l'archive" et "Dossier du site actuel" avec les noms du dossier d'origine du site sauvegardé et du dossier de base du site de destination de la restauration.<br>
-Ensuite il y a juste à cliquer sur le bouton "convertir".<br>
-Une fois la conversion terminée, lancer la restauration en cliquant sur le bouton "Restaurer" : une fenêtre surgissante affichera le succès de l'opération quand elle sera terminée... patience.
-</p>
-<h3>Réglages</h3>
-<p>À ce niveau plusieurs paramètres importants peuvent être configurés.</p>
-<h4>Favicon</h4>
-<p>Il s'agit ici de choisir le fichier de l'icône qui s'affiche dans la barre de titre, l'onglet, du navigateur devant le "Titre du site" que vous avez indiqué dans "Configurer le site" à la rubrique "Identité".<br>
-Par défaut c'est l'îcone de ZwiiCMS qui est paramétrée.<br>
-Pour la modifier il suffit de cliquer dans le champ pour faire apparaître le gestionnaire de fichier.<br>
-Là il faut télécharger le fichier à utiliser pour qu'il soit dans la liste des fichiers afin d'être sélectionné : ce fichier doit obligatoirement avoir l'extension .ico.<br>
-Ensuite il suffit de cliquez sur le fichier désiré pour le sélectionner.<br>
-Après enregistrement c'est désormais l'icône précédemment sélectionnée qui doit s'afficher dans l'onglet du site : dans le cas contraire il est nécessaire de vider le cache du navigateur pour que le changement soit bien visible.<br></p>
-<h4>Favicon thème sombre</h4>
-<p>C'est exactement la même chose que le paramètre précédent mais comme son nom l'indique il s'agit ici d'indiquer une icône adaptée à un thème sombre.<br></p>
-<h4>Fuseau horaire</h4>
-<p>Dans ce champ est tout simplement indiqué le fuseau horaire sur lequel le site fonctionne en le choisissant dans le panneau déroulant.<br></p>
-<h4>Consentement aux cookies</h4>
-<p>En cochant cette case une fenêtre surgissante apparaîtra obligatoirement aux visiteurs, lors de leur première visite, pour leur demander leur consentement sur l'utilisation des cookies<br>
-Le texte suivant apparaîtra :<br>
-Ce site utilise des cookies pour assurer l'authentification, améliorer l'expérience utilisateur.<br>
-En cliquant sur ”Accepter”, vous acceptez l’utilisation de ces cookies.<br>
-Tant que le visiteur n'aura pas indiqué son choix en cliquant sur le bouton "Accepter" ou "Refuser" la fenêtre restera affichée.<br>
-Demander le consentement des visiteurs sur l'usage de cookies est une obligation légale en Europe.<br>
-Seuls les cookies indispensables au bon fonctionnement du site ne nécessitent pas ce consentement.<br>
-ZwiiCMS n'utilse ainsi pas de cookies nécessitant le consentement des visiteurs : cette case ne doit être cochée qu'à partir du moment ou des fonctionnalités tierces, comme google analytics par exemple, sont ajoutées au site. Outre ce consentement il faudra alors détailler les cookies ajoutés dans les Mentions légales, "Configurer le site" rubrique "Pages spéciales", en adaptant la page par défaut ou en en créant une spécifique.</p>
-<h4>Sauvegarde quotidienne</h4>
-<p>Il est prudent d'activer ce paramètre.<br>
-Il permet d'enregistrer automatiquement chaque jour une sauvegarde du dossier /site/data/ : c'est le coeur du site. Chaque page créée, modifiée est ainsi sauvegardée.<br>
-Par contre, tous les fichiers éventuellement utilisés, chargés via "Gérer les fichiers" ou FTP, ne sont ici pas sauvegardés : pour sauvegarder ces fichiers, et donc l'intégralité des données du site, il faut de temps en temps faire une sauvegarde comme décrit ci-dessus au paragraphe "Maintenance".
-Cette sauvegarde quotidienne est enregistrée dans le dossier /site/backup/ sous la forme "dossier_du_site-backup-AAAA-JJ-MM-hh-mm-ss.zip" et conservée 30 jours.<br>
-</p>
-<h4>Mise à jour en ligne</h4>
-<p>L'activation de ce paramètre entraîne la vérification quotidienne de l'existence d'une mise à jour.<br>
-Quand il y a effectivement une mise à jour une icône supplémentaire s'affiche alors dans la barre d'administration et permet de la lancer d'un seul clic.<br>
-Il est important de maintenir le site à jour afin de corriger d'éventuels dysfonctionnements, de bénéficier des nouvelles fonctionnalités et de le protéger de potentielles failles de sécurité.<br>
-Il est donc conseillé d'activer ce paramètre.<br>
-Cependant si généralement tout fonctionne bien, certains hébergeurs, rares, ne permettent pas toujours son usage complet : la vérification peut par exemple fonctionner mais la mise à jour non. Ou alors rien ne fonctionne.<br>
-Si cela se produit, et suivant le niveau de blocage de l'hébergeur, il faut alors déterminerer si il est judicieux ou pas d'activer ce paramètre : la pluspart du temps la vérification de l'existence d'une mise à jour fonctionne et cela permet ansi d'être simplement averti de sa disponiblité.<br>
-</p>
-<h4>Mise à jour manuelle</h4>
-<p>Ce large bouton rouge permet de lancer d'un simple clic la mise à jour vers la dernière version en ligne.<br>
-Une mise à jour existe mais pour une raison inconnue, alors qu'habituellement la "Mise à jour en ligne" fonctionne, là l'icône pour réaliser la mise à jour n'apparaît pas : en cliquant sur ce bouton la mise à jour est forcée.<br>
-Même si le site est déjà dans la dernière version la "mise à jour" sera réalisée.<br>
-L'usage de ce bouton ne permet pas de passer outre un éventuel blocage de l'hébergeur : les mécanismes de mise à jour sont les mêmes qu'avec la "Mise à jour en ligne"...<br>
-Si ce type de blocage de blocage du fait de l'hébergeur se produit le changement d'hébergeur est à envisager : les hébergeurs concernés sont tout de même très rares.<br>
-La seule possibilité pour alors réaliser une mise à jour est alors via FTP.<br>
-</p>
-<h4>Captcha renforcée</h4>
-<p>Par défaut ZwiiCMS dispose d'une Captcha simple qui consiste à additionner 2 nombres de 0 à 10 : par mesure de sécurité cette Captcha est activée par défaut (rubrique "Sécurité de la connexion", case "Captcha à la connexion" cochée par défaut).<br>
-Afin d'assurer une meilleure sécurité la Captcha renforcée utilise 4 opérations avec les nombres de 0 à 20.<br>
-Elle s'applique à l'ensemble des Captchas du site.<br>
-Il est fortement conseillé de l'activer afin de beaucoup mieux sécuriser la connexion au site et d'éviter par exemple les spams via un formulaire de contact.<br>
-ATTENTION : si la "Captcha à la connexion" est décochée à la rubique "Sécurité de la connexion", même si la Captcha renforcée est cochée, aucune captcha ne s'appliquera !<br>
-</p>
-<h4>Copie de sauvegarde</h4>
-<p>Là encore c'est un paramètre qu'il est préférable d'activer afin, en cas de problème, d'éviter que le site soit corrompu et inaccssible.<br>
-En l'activant, une copie des fichiers .json (ZwiiCMS n'a pas de base de données et toutes les données sont en fait enrégistrées dans des fichiers .json) est automatiquement réalisée dès l'édition ou l'effacement/modification d'une donnée : un fichier sous la forme nom.backup.json est généré.<br>
-Si pour une raison quelconque un fichier .json est corrompu au moment de son enregistrement le fichier de sauvegarde est alors disponible pour le remplacer après un simple renommage via FTP (en faire une copie avant renommage par prudence) : seules les dernières modifications depuis le dernier enregistrement sont ainsi éventuellement perdues et l'accès au site rétabli avec toutes ses fonctionnalités très rapidement.<br>
-</p>
-<h4>Préserver htaccess</h4>
-<p>Si le fichier .htaccess à la racine du site a été adapté ou modifié il faut absolument activer ce paramètre afin qu'il ne soit pas remplacé lors d'une mise à jour automatique (via l'icône dans la barre d'administration ou le bouton rouge "Mise à jour manuelle").<br>
-Si une mise à jour est réalisée via FTP ce paramètre n'empêchera pas le remplacement du fichier .htaccess : il faut alors penser à ne pas le remplacer.<br>
-</p>
-<h4>Réécriture d'URL</h4>
-<p>Sans cette option le nom d'une page dans la barre d'adresse est précédé d'un "?".<br>
-L'adresse d'une page nommée par exemple "accueil" est ainsi /mon_site/mon_zwii/?accueil.<br>
-En activant la réécriture d'URL la page s'affiche avec l'adresse /mon_site/mon_zwii/accueil, sans le "?", et est plus lisible pour notre esprit.<br>
-Un lien déjà communiqué avec le "?" fonctionne toujours après activation de la redirection.<br>
-Avant d'activer ce paramètre s'assurer que l'hébergeur autorise son usage : ce n'est par exemple pas le cas de Free.<br></p>
-<h3>Réseaux sociaux</h3>
-<p>Il suffit ici de compléter l'ID d'un réseau social pour que l'icône correspondante s'affiche dans le pied de page.<br>
-Cela implique évidemment d'avoir paramétré via "Personnaliser les thèmes" puis "Personnalisation du pied de page" l'affichage en question.<br>
-Par défaut cet affichage est déjà paramétré et l'icône Facebook affichée. Elle se contente au clic de renvoyer alors sur la page d'accueil de Facebook, aucun ID n'étant indiqué.<br>
-Pour supprimer l'affichage de cette icône il suffit d'effacer le contenu du champ "Facebbok" et d'enregistrer.
-</p>
-<h3>Référencement</h3>
+<h2 style="text-align:center">Aide</h2>
+<h3>PARAMETRES DU REFERENCEMENT</h3>
 <p>Le référencement consiste à mettre en oeuvre des pratiques pour faire apparaître un site dans les moteurs de recherche et pour lui faire gagner des positions, apparaître dans les premiers résultats sinon le premier.<br>
 Un site pour un usage strictement personnel, familial, n'a pas besoin d'être référencé, au contraire.<br>
 Par contre si un site doit avoir la fréquentation la plus importante possible son référencement est primordial.<br>
@@ -114,41 +21,13 @@ Par contre il autorise : /site/file/ et le fichier sitemap.xml.gz.
 Il suffit de cliquer sur le bouton bleu Sitemap.xml /Robots.txt pour que les fichiers soient mis à jour (ils sont automatiquement créés au moment de l'installation).<br>
 Si au lieu d'un message de succès sur fond vert apparaît le message sur fond rouge "Échec d'écriture, le sitemap n'a pas été mis à jour" il faudra investiguer pour déterminer et résoudre le problème.
 </p>
-<h3>Sécurité de la connexion</h3>
-<p>Cette rubrique regroupe un certain nombre d'éléments importants pour sécuriser la connexion au site : les visiteurs du site sans compte ne sont pas concernés par ces paramètres.<br></p>
-<h5>Connexions successives</h5>
-<p>Ce panneau déroulant réglé par défaut sur 3 tentatives permet de sélectionner le nombre d'échecs de connexion au bout duquel le blocage de la connexion est mis en place.<br></p>
-<h5>Blocage après échecs</h5>
-<p>C'est dans ce panneau déroulant réglé par défaut sur 10 minutes qu'est sélectionné le temps de blocage avant de pouvoir tenter à nouveau de se reconnecter après le nombre d'échecs paramétré à la rubrique ci-dessus.<br></p>
-<h5>Comptes inexistants</h5>
-<p>Les tentatives infructueuses de connexions sont enregistrées dans un fichier avec la date, l'heure, l'identifiant et l'adresse Ip utilisés.<br>
-En fonction des paramètres définis précédemment, nombre de tentatives et temps de blocage, l'adresse IP et l'identifiant sont éventuellement bloqués en conséquences.<br>
-Une tentative est inscrite quand l'identifiant, le mot de passe ou la captcha est faut : un seul élément erroné implique l'enregistrment d'une tentative.<br>
-En cliquant sur le bouton bleu "Télécharger liste noire" un fichier site_tmp_blacklist.log est téléchargé et permet ainsi de prendre connaissance de toutes les tentatives.<br>
-Cela permet d'identifier des adresses ip malveillantes et de pouvoir les bloquer définitivement via l'inteface d'administration de l'hébergeur : le blocage de ZwiiCMS n'est au maximum que de 15mn.<br>
-Un clic sur le bouton rouge "Réinitialiser liste" efface toutes les tentative de connexion infructueuses.<br></p>
-<h5>Captcha à la connexion</h5>
-<p>Cette case cochée par défaut active la captcha sur le site : c'est un élément important de sécurité, surtout si vous constatez dans le fichier "liste noire" de nombreuses tentatives de connexion. Dans ce cas il est alors judicieux d'activer la Captcha renforcée dans la rubrique "Réglages".<br>
-ATTENTION : si la "Captcha à la connexion" est décochée, même si la Captcha renforcée est cochée à la rubrique "Réglages", c'est ce choix qui prime et aucune captcha ne s'appliquera !<br>
+<h3>RESEAUX SOCIAUX</h3>
+<p>Il suffit ici de compléter l'ID d'un réseau social pour que l'icône correspondante s'affiche dans le pied de page.<br>
+Cela implique évidemment d'avoir paramétré via "Personnaliser les thèmes" puis "Personnalisation du pied de page" l'affichage en question.<br>
+Par défaut cet affichage est déjà paramétré et l'icône Facebook affichée. Elle se contente au clic de renvoyer alors sur la page d'accueil de Facebook, aucun ID n'étant indiqué.<br>
+Pour supprimer l'affichage de cette icône il suffit d'effacer le contenu du champ "Facebbok" et d'enregistrer.
 </p>
-<h3>Journalisation</h3>
-<p>Activer ce paramètre permet d'enregistrer tout ce qui se passe sur le site : c'est un élément à ne pas négliger si il est constaté des anomalies sur le site.<br>
-Un clic sur le bouton bleu "Télécharger journal" télécharge un fichier site_data_journal.log et permet ainsi d'examiner toute l'activité du site.<br>
-Un clic sur le bouton rouge "Réinitialiser journal" efface tous les enregistrements du journal.<br>
-</p>
-<h3>Réseau</h3>
-<p>Ces paramètres ne sont généralement pas nécessaires quand ZwiiCMS est installé chez un hébergeur ou à domicile.<br>
-Par contre dans les milieux professionnels l'usage d'un proxy est la norme.<br>
-Afin de permettre un usage normal de ZwiiCMS dans ce cas de figure il peut être nécessaire de renseigner le proxy de l'entreprise : ces paramètres, type, adresse et port, sont à demander à l'administrateur réseaux de l'entreprise.<br>
-Ces paramètres sont également généralement accessibles dans la configuration réseau d'un navigateur web fonctionnel.<br>
-</p>
-<h3>Messagerie SMTP</h3>
-<p>Activer le SMTP n'est généralement pas nécessaire : il s'agit de la fonctionnalité d'envoi de courriel et généralement tous les hébergeurs la propose sans qu'il y ait besoin de la paramétrer.<br>
-Toutefois il est possible que se ne soit pas le cas, dans le cas d'un auto-hébergement de ZwiiCMS et en milieux professionnels il peut également être nécessaire d'activer cette fonctionnalité et d'en renseigner les paramètres.<br>
-Ces paramètres, adresse et port, sont à récupérer auprès de l'hébergeur ou de l'administrateur réseaux de l'entreprise. Une authentification peut également être nécessaire et là encore l'hébergeur et le l'administrateur réseaux sont les bons interlocuteurs : outre le Nom d'utilisateur et le Mot de passe que chacun connait généralement c'est le type de sécurité qui est important.<br>
-Ces paramètres sont également généralement accessibles dans la configuration d'un logiciel de messagerie fonctionnel.<br>
-</p>
-<h3>Scripts</h3>
+<h3>SCRIPTS</h3>
 <p>Pour enrichir les fonctionnalités de ZwiiCMS il est possible d'utiliser de nombreux scripts à disposition sur internet : le plus souvent ces scripts impliquent de modifier le "head" ou/et le "body" du site et c'est donc ici que cela se passe.</p>
 <h4>Google Analytics</h4>
 <p>Ce script a un traitement particulier compte-tenu son usage intense : il suffit ici d'indiquer l'ID de suivi fournie par Google et d'enregistrer pour qu'il fonctionne.<br>

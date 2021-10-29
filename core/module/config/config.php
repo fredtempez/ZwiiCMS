@@ -684,7 +684,7 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Référencements',
+			'title' => 'Référencement',
 			'view' => 'social'
 		]);
 	}

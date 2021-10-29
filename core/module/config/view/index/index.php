@@ -1,4 +1,7 @@
 <?php echo template::formOpen('configAdvancedForm'); ?>
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/config/view/index/index.help.html') ;?>
+</div>
 <div class="row">
 	<div class="col2">
 		<?php echo template::button('configBack', [
@@ -20,16 +23,13 @@
 	</div>
 </div>
 <!-- Aide à propos de la configuration du site, view advanced -->
-<div class="helpDisplayContent">
-	<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
-</div>
 <div class="row">
 	<div class="col12">
 		<div class="row textAlignCenter">
 			<div class="col2">
 				<?php echo template::button('configAdvancedButton', [
 					'href' => helper::baseUrl() . 'config/index',
-					'value' => 'Bases'
+					'value' => 'Paramètres'
 				]); ?>
 			</div>
 			<div class="col2">

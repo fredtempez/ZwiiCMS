@@ -1,4 +1,8 @@
 <?php echo template::formOpen('configAdvancedForm'); ?>
+<!-- Aide à propos de la configuration du site, view advanced -->
+<div class="helpDisplayContent">
+	<?php echo file_get_contents( 'core/module/config/view/social/social.help.html') ;?>
+</div>	
 <div class="row">
 	<div class="col2">
 		<?php echo template::button('configBack', [
@@ -19,17 +23,13 @@
 		<?php echo template::submit('configAdvancedSubmit'); ?>
 	</div>
 </div>
-<!-- Aide à propos de la configuration du site, view advanced -->
-<div class="helpDisplayContent">
-	<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
-</div>	
 <div class="row">
 	<div class="col12">
 		<div class="row textAlignCenter">
 			<div class="col2">
 				<?php echo template::button('configAdvancedButton', [
 					'href' => helper::baseUrl() . 'config/index',
-					'value' => 'Bases'
+					'value' => 'Paramètres'
 				]); ?>
 			</div>
 			<div class="col2">
@@ -61,75 +61,42 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="social">
-			<h4>Réseaux sociaux
-				<div class="openClose">
-					<?php
-					echo template::ico('plus-circled','right');
-					echo template::ico('minus-circled','right');
-					?>
-				</div>
-			</h4>
-			 <div class="blockContainer">
-				<div class="row">
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialFacebookId', [
-							'help' => 'Saisissez votre ID : https://www.facebook.com/[ID].',
-							'label' => 'Facebook',
-							'value' => $this->getData(['config', 'social', 'facebookId'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialInstagramId', [
-							'help' => 'Saisissez votre ID : https://www.instagram.com/[ID].',
-							'label' => 'Instagram',
-							'value' => $this->getData(['config', 'social', 'instagramId'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialYoutubeId', [
-							'help' => 'ID de la chaîne : https://www.youtube.com/channel/[ID].',
-							'label' => 'Chaîne Youtube',
-							'value' => $this->getData(['config', 'social', 'youtubeId'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialYoutubeUserId', [
-							'help' => 'Saisissez votre ID Utilisateur : https://www.youtube.com/user/[ID].',
-							'label' => 'Youtube',
-							'value' => $this->getData(['config', 'social', 'youtubeUserId'])
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col3">
-							<?php echo template::text('configAdvancedSocialTwitterId', [
-								'help' => 'Saisissez votre ID : https://twitter.com/[ID].',
-								'label' => 'Twitter',
-							'value' => $this->getData(['config', 'social', 'twitterId'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialPinterestId', [
-							'help' => 'Saisissez votre ID : https://pinterest.com/[ID].',
-							'label' => 'Pinterest',
-							'value' => $this->getData(['config', 'social', 'pinterestId'])
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('configAdvancedSocialLinkedinId', [
-							'help' => 'Saisissez votre ID Linkedin : https://fr.linkedin.com/in/[ID].',
-							'label' => 'Linkedin',
-							'value' => $this->getData(['config', 'social', 'linkedinId'])
-						]); ?>
-					</div>
-					<div class="col3">
-							<?php echo template::text('configAdvancedSocialGithubId', [
-								'help' => 'Saisissez votre ID Github : https://github.com/[ID].',
-								'label' => 'Github',
-								'value' => $this->getData(['config', 'social', 'githubId'])
+		<div class="block">
+			<h4>Paramètres</h4>
+			<div class="row">
+				<div class="col4 offset1">
+					<div class="row">
+						<div class="col12">
+							<?php echo template::button('configAdvancedMetaImage', [
+							'href' => helper::baseUrl() . 'config/configMetaImage',
+							'value' => 'Générer une capture Open Graph'
 							]); ?>
+						</div>
 					</div>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::button('configAdvancedSiteMap', [
+								'href' => helper::baseUrl() . 'config/generateFiles',
+								'value' => 'Générer sitemap.xml et robots.txt'
+							]); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::checkbox('configAdvancedSeoRobots', true, 'Autoriser les robots à référencer le site', [
+								'checked' => $this->getData(['config', 'seo','robots'])
+							]); ?>
+						</div>
+					</div>
+				</div>
+				<div class="col6 offset1">
+					<?php if (file_exists(self::FILE_DIR.'source/screenshot.jpg')): ?>
+						<div class="row">
+							<div class="col8 offset2 textAlignCenter">
+								<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
+							</div>
+					</div>
+					<?php endif;?>
 				</div>
 			</div>
 		</div>
@@ -137,86 +104,97 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<div class="block" id="seo">
-			<h4>Référencement
-				<div class="openClose">
-					<?php
-					echo template::ico('plus-circled','right');
-					echo template::ico('minus-circled','right');
-					?>
-				</div>
-			</h4>
-			 <div class="blockContainer">
-				<div class="row">
-					<div class="col4 offset1">
-						<div class="row">
-							<div class="col12">
-								<?php echo template::button('configAdvancedMetaImage', [
-								'href' => helper::baseUrl() . 'config/configMetaImage',
-								'value' => 'Capture Open Graph',
-								'ico' => 'pencil'
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col12">
-								<?php echo template::button('configAdvancedSiteMap', [
-									'href' => helper::baseUrl() . 'config/generateFiles',
-									'value' => 'Sitemap.xml / Robots.txt',
-									'ico' => 'pencil'
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col12">
-								<?php echo template::checkbox('configAdvancedSeoRobots', true, 'Autoriser les robots à référencer le site', [
-									'checked' => $this->getData(['config', 'seo','robots'])
-								]); ?>
-							</div>
-						</div>
-					</div>
-					<div class="col6 offset1">
-						<?php if (file_exists(self::FILE_DIR.'source/screenshot.jpg')): ?>
-							<div class="row">
-								<div class="col8 offset2 textAlignCenter">
-									<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
-								</div>
-						</div>
-						<?php endif;?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block" id="script">
-			<h4>Scripts externes</h4>
-			<div class="blockContainer">
-				<div class="row">
-					<div class="col3">
-						<?php echo template::text('configAdvancedAnalyticsId', [
-							'help' => 'Saisissez l\'ID de suivi.',
-							'label' => 'Google Analytics',
-							'placeholder' => 'UA-XXXXXXXX-X',
-							'value' => $this->getData(['config', 'analyticsId'])
-						]); ?>
-					</div>
-					<div class="col3 offset3 verticalAlignBottom">
-						<?php echo template::button('configAdvancedScriptHead', [
-							'href' => helper::baseUrl() . 'config/script/head',
-							'value' => 'Script dans head',
-							'ico' => 'pencil'
-						]); ?>
-					</div>
-					<div class="col3 verticalAlignBottom">
-						<?php echo template::button('configAdvancedScriptBody', [
-							'href' => helper::baseUrl() . 'config/script/body',
-							'value' => 'Script dans body',
-							'ico' => 'pencil'
+		<div class="block">
+			<h4>Réseaux sociaux</h4>
+			<div class="row">
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialFacebookId', [
+						'help' => 'Saisissez votre ID : https://www.facebook.com/[ID].',
+						'label' => 'Facebook',
+						'value' => $this->getData(['config', 'social', 'facebookId'])
 					]); ?>
-					</div>
+				</div>
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialInstagramId', [
+						'help' => 'Saisissez votre ID : https://www.instagram.com/[ID].',
+						'label' => 'Instagram',
+						'value' => $this->getData(['config', 'social', 'instagramId'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialYoutubeId', [
+						'help' => 'ID de la chaîne : https://www.youtube.com/channel/[ID].',
+						'label' => 'Chaîne Youtube',
+						'value' => $this->getData(['config', 'social', 'youtubeId'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialYoutubeUserId', [
+						'help' => 'Saisissez votre ID Utilisateur : https://www.youtube.com/user/[ID].',
+						'label' => 'Youtube',
+						'value' => $this->getData(['config', 'social', 'youtubeUserId'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col3">
+						<?php echo template::text('configAdvancedSocialTwitterId', [
+							'help' => 'Saisissez votre ID : https://twitter.com/[ID].',
+							'label' => 'Twitter',
+						'value' => $this->getData(['config', 'social', 'twitterId'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialPinterestId', [
+						'help' => 'Saisissez votre ID : https://pinterest.com/[ID].',
+						'label' => 'Pinterest',
+						'value' => $this->getData(['config', 'social', 'pinterestId'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::text('configAdvancedSocialLinkedinId', [
+						'help' => 'Saisissez votre ID Linkedin : https://fr.linkedin.com/in/[ID].',
+						'label' => 'Linkedin',
+						'value' => $this->getData(['config', 'social', 'linkedinId'])
+					]); ?>
+				</div>
+				<div class="col3">
+						<?php echo template::text('configAdvancedSocialGithubId', [
+							'help' => 'Saisissez votre ID Github : https://github.com/[ID].',
+							'label' => 'Github',
+							'value' => $this->getData(['config', 'social', 'githubId'])
+						]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Scripts externes</h4>
+			<div class="row">
+				<div class="col3">
+					<?php echo template::text('configAdvancedAnalyticsId', [
+						'help' => 'Saisissez l\'ID de suivi.',
+						'label' => 'Google Analytics',
+						'placeholder' => 'UA-XXXXXXXX-X',
+						'value' => $this->getData(['config', 'analyticsId'])
+					]); ?>
+				</div>
+				<div class="col3 offset3 verticalAlignBottom">
+					<?php echo template::button('configAdvancedScriptHead', [
+						'href' => helper::baseUrl() . 'config/script/head',
+						'value' => 'Script dans head',
+						'ico' => 'pencil'
+					]); ?>
+				</div>
+				<div class="col3 verticalAlignBottom">
+					<?php echo template::button('configAdvancedScriptBody', [
+						'href' => helper::baseUrl() . 'config/script/body',
+						'value' => 'Script dans body',
+						'ico' => 'pencil'
+				]); ?>
 				</div>
 			</div>
 		</div>

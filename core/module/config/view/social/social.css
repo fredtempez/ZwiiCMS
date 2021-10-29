@@ -16,22 +16,3 @@
 /** NE PAS EFFACER
 * admin.css
 */ 
-
-.blockContainer {
-    display : none;
-}
-
-#info .zwiico-plus-circled {
-    display: inline;
-}
-
-.zwiico-minus-circled,
-#info .zwiico-minus-circled {
-    display: none;
-}
-
-
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-    cursor: pointer;
-}
