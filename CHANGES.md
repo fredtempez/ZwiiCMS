@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.1.01
+- Modifications : 
+    - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
+
 ## Version 11.1.00
 - Corrections :
     - Problème lié à la migration vers la version 11. Création d'un dossier : les droits d'accès sont positionnés sur 0755 au lieu de la valeur par défaut 0777. Concerne également les modules Formulaire, Galerie, News, Search et d'autres modules optionnels.
