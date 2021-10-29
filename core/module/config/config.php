@@ -22,7 +22,10 @@ class config extends common {
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'advanced' => self::GROUP_ADMIN,
+		'locale' => self::GROUP_ADMIN,
+		'social' => self::GROUP_ADMIN,
+		'safety' => self::GROUP_ADMIN,
+		'network' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
@@ -385,11 +388,149 @@ class config extends common {
 		]);
 	}
 
+	/** *
+	 * Configuration de base
+	 */
+	public function index() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Basculement en mise à jour auto
+			// Remise à 0 du compteur
+			if ($this->getData(['config','autoUpdate']) === false &&
+				$this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN) === true) {
+					$this->setData(['core','lastAutoUpdate',0]);
+				}
+			// Eviter déconnexion automatique après son activation
+			if ( $this->getData(['config','autoDisconnect']) === false
+					AND $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
+				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
+			}
+			// Sauvegarder
+			$this->setData([
+				'config',
+				[
+					'analyticsId' => $this->getInput('configAdvancedAnalyticsId'),
+					'autoBackup' => $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN),
+					'maintenance' => $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN),
+					'cookieConsent' => $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN),
+					'favicon' => $this->getInput('configAdvancedFavicon'),
+					'faviconDark' => $this->getInput('configAdvancedFaviconDark'),
+					'social' => [
+						'facebookId' => $this->getInput('configAdvancedSocialFacebookId'),
+						'linkedinId' => $this->getInput('configAdvancedSocialLinkedinId'),
+						'instagramId' => $this->getInput('configAdvancedSocialInstagramId'),
+						'pinterestId' => $this->getInput('configAdvancedSocialPinterestId'),
+						'twitterId' => $this->getInput('configAdvancedSocialTwitterId'),
+						'youtubeId' => $this->getInput('configAdvancedSocialYoutubeId'),
+						'youtubeUserId' => $this->getInput('configAdvancedSocialYoutubeUserId'),
+						'githubId' => $this->getInput('configAdvancedSocialGithubId')
+					],
+					'timezone' => $this->getInput('configAdvancedTimezone', helper::FILTER_STRING_SHORT, true),
+					'autoUpdate' => $this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdateHtaccess' => $this->getInput('configAdvancedAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
+					'proxyType' => $this->getInput('configAdvancedProxyType'),
+					'proxyUrl' => $this->getInput('configAdvancedProxyUrl'),
+					'proxyPort' => $this->getInput('configAdvancedProxyPort',helper::FILTER_INT),
+					'captchaStrong' => $this->getInput('configAdvancedCaptchaStrong',helper::FILTER_BOOLEAN),
+					'autoDisconnect' => $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN),
+					'smtp' => [
+						'enable' => $this->getInput('configAdvancedSmtpEnable',helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('configAdvancedSmtpHost',helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('configAdvancedSmtpPort',helper::FILTER_INT),
+						'auth' => $this->getInput('configAdvancedSmtpAuth',helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('configAdvancedSmtpSecure'),
+						'username' => $this->getInput('configAdvancedSmtpUsername',helper::FILTER_STRING_SHORT),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configAdvancedSmtpPassword')),
+						'sender' => $this->getInput('configAdvancedSmtpSender',helper::FILTER_MAIL)
+					],
+					'seo' => [
+						'robots' => $this->getInput('configAdvancedSeoRobots',helper::FILTER_BOOLEAN)
+					],
+					'connect' => [
+						'attempt' => $this->getInput('configAdvancedConnectAttempt',helper::FILTER_INT),
+						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
+						'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('configAdvancedConnectAnonymousIp',helper::FILTER_INT),
+						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
+					],
+					'i18n' => [
+						'enable' => $this->getData(['config', 'i18n', 'enable'])
+					]
+				]
+			]);
+			// Efface les fichiers de backup lorsque l'option est désactivée
+			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+				$path = realpath('site/data');
+				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+				{
+					if (strpos($filename,'backup.json')) {
+						unlink($filename);
+					}
+				}
+				if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+			} else {
+				touch('site/data/.backup');
+			}
+			// Notice
+			if(self::$inputNotices === []) {
+				// Active la réécriture d'URL
+				$rewrite = $this->getInput('rewrite', helper::FILTER_BOOLEAN);
+				if(
+					$rewrite
+					AND helper::checkRewrite() === false
+				) {
+					// Ajout des lignes dans le .htaccess
+					file_put_contents(
+						'.htaccess',
+						PHP_EOL .
+						'<ifModule mod_rewrite.c>' . PHP_EOL .
+						"\tRewriteEngine on" . PHP_EOL .
+						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+						"\tRewriteCond %{SERVER_PORT} 80" . PHP_EOL .
+						"\tRewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]" . PHP_EOL .
+						'</ifModule>',
+						FILE_APPEND
+					);
+					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
+					helper::$rewriteStatus = true;
+				}
+				// Désactive la réécriture d'URL
+				elseif(
+					$rewrite === false
+					AND helper::checkRewrite()
+				) {
+					// Suppression des lignes dans le .htaccess
+					$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
+					file_put_contents('.htaccess', $htaccess[0] . '# URL rewriting');
+					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
+					helper::$rewriteStatus = false;
+				}
+								// Met à jour la baseUrl
+								$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
+			}
+			// Générer robots.txt et sitemap
+			$this->generateFiles();
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'notification' => 'Modifications enregistrées ' ,
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration de base',
+			'view' => 'index'
+		]);
+	}
 
 	/**
 	 * Configuration
 	 */
-	public function index() {
+	public function locale() {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
@@ -456,15 +597,103 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index'
+			'title' => 'Localisation',
+			'view' => 'locale'
 		]);
 	}
+
+
+	/** 
+	 * Sécurité de la connexion
+	 **/
+	public function safety() {
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration avancée',
+			'view' => 'safety'
+		]);
+	}
+
+		/**
+	 * Configuration
+	 */
+	public function social() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+
+			// Répercuter la suppression de la page dans la configuration du footer
+			if ( $this->getData(['theme','footer','displaySearch']) === true
+				AND $this->getInput('configSearchPageId') === 'none'
+				){
+					$this->setData(['theme', 'footer', 'displaySearch', false]);
+			}
+			if ( $this->getData(['theme','footer','displayLegal']) === true
+				AND $this->getInput('configLegalPageId') === 'none'
+				){
+					$this->setData(['theme', 'footer', 'displayLegal', false]);
+			}
+
+			// Sauvegarder
+			$this->setData([
+				'locale',
+				[
+					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('configPage404'),
+					'page403' => $this->getInput('configPage403'),
+					'page302' => $this->getInput('configPage302'),
+					'legalPageId' => $this->getInput('configLegalPageId'),
+					'searchPageId' => $this->getInput('configSearchPageId'),
+					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
+					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
+					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
+				]
+			]);
+
+			$this->setData(['config', 'i18n', 'enable', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
+
+			// Générer robots.txt et sitemap
+			$this->generateFiles();
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
+		}
+
+		// Liste des pages
+		self::$pagesList = $this->getData(['page']);
+		foreach(self::$pagesList as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true) {
+				unset(self::$pagesList[$page]);
+			}
+		}
+
+		self::$orphansList =  $this->getData(['page']);
+		foreach(self::$orphansList as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true ||
+				$this->getdata(['page',$page, 'position']) !== 0) {
+				unset(self::$orphansList[$page]);
+			}
+		}
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Référencements',
+			'view' => 'social'
+		]);
+	}
+
 
 	/**
 	 * Configuration avancée
 	 */
-	public function advanced() {
+	public function network() {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Basculement en mise à jour auto
@@ -595,8 +824,8 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration avancée',
-			'view' => 'advanced'
+			'title' => 'Reseau et scripts',
+			'view' => 'network'
 		]);
 	}
 

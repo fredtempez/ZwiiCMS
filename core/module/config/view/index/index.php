@@ -1,4 +1,4 @@
-<?php echo template::formOpen('configForm');?>
+<?php echo template::formOpen('configAdvancedForm'); ?>
 <div class="row">
 	<div class="col2">
 		<?php echo template::button('configBack', [
@@ -9,36 +9,120 @@
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::button('addonIndexHelp', [
+		<?php echo template::button('configAdvancedHelp', [
 			'class' => 'buttonHelp',
 			'ico' => 'help',
 			'value' => 'Aide'
 		]); ?>
 	</div>
-	<div class="col2 offset4">
-		<?php echo template::button('configAdvancedButton', [
-			'href' => helper::baseUrl() . 'config/advanced',
-			'value' => 'Avancée',
-			'ico' => 'cog-alt',
-		]); ?>
-	</div>
-	<div class="col2">
-		<?php echo template::submit('configSubmit'); ?>
+	<div class="col2 offset6">
+		<?php echo template::submit('configAdvancedSubmit'); ?>
 	</div>
 </div>
-<!-- Aide à propos de la configuration du site, view index -->
+<!-- Aide à propos de la configuration du site, view advanced -->
 <div class="helpDisplayContent">
-	<?php echo file_get_contents( 'core/module/config/view/index/index.help.html') ;?>
+	<?php echo file_get_contents( 'core/module/config/view/advanced/advanced.help.html') ;?>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="row textAlignCenter">
+			<div class="col2">
+				<?php echo template::button('configAdvancedButton', [
+					'href' => helper::baseUrl() . 'config/index',
+					'value' => 'Bases'
+				]); ?>
+			</div>
+			<div class="col2">
+				<?php echo template::button('configAdvancedButton', [
+					'href' => helper::baseUrl() . 'config/locale',
+					'value' => 'Localisation'
+				]); ?>
+			</div>
+			<div class="col2">
+				<?php echo template::button('configAdvancedButton', [
+					'href' => helper::baseUrl() . 'config/social',
+					'value' => 'Référencement'
+				]); ?>
+			</div>
+			<div class="col2">
+				<?php echo template::button('configAdvancedButton', [
+					'href' => helper::baseUrl() . 'config/safety',
+					'value' => 'Sécurité'
+				]); ?>
+			</div>
+			<div class="col2">
+				<?php echo template::button('configAdvancedButton', [
+					'href' => helper::baseUrl() . 'config/network',
+					'value' => 'Réseau'
+				]); ?>
+			</div>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Langues étrangères</h4>
+			<h4>Paramètres</h4>
 			<div class="row">
-				<div class="col12">
-					<?php echo template::checkbox('configI18n', true, 'Activer la gestion des langues étrangères', [
-							'checked' => $this->getData(['config', 'i18n', 'enable']),
-							'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
+				<div class="col4">
+					<?php echo template::file('configAdvancedFavicon', [
+						'type' => 1,
+						'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
+						'label' => 'Favicon',
+						'value' => $this->getData(['config', 'favicon'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::file('configAdvancedFaviconDark', [
+						'type' => 1,
+						'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
+						'label' => 'Favicon thème sombre',
+						'value' => $this->getData(['config', 'faviconDark'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('configAdvancedTimezone', $module::$timezones, [
+						'label' => 'Fuseau horaire',
+						'selected' => $this->getData(['config', 'timezone']),
+						'help' => 'Le fuseau horaire est utile au bon référencement'
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedCookieConsent', true, 'Message de consentement aux cookies', [
+						'checked' => $this->getData(['config', 'cookieConsent']),
+						'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::checkbox('rewrite', true, 'URL intelligentes', [
+						'checked' => helper::checkRewrite(),
+						'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'
+					]); ?>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha complexe', [
+						'checked' => $this->getData(['config','captchaStrong']),
+						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedAutoDisconnect', true, 'Déconnexion automatique de la session', [
+							'checked' => $this->getData(['config','autoDisconnect']),
+							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
+						]); ?>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
 						]); ?>
 				</div>
 			</div>
@@ -48,112 +132,65 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Identité du site (en langue <?php echo template::flag('site', '20px');?> )</h4>
-			<p><em>Cette page doit être adaptée à chaque traduction rédigée.</em></p>
+			<h4>Mises à jour automatisée</h4>
+			<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 			<div class="row">
-				<div class="col9">
-					<?php echo template::text('configTitle', [
-						'label' => 'Titre du site' ,
-						'value' => $this->getData(['locale', 'title']),
-						'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
+							'checked' => $this->getData(['config', 'autoUpdate']),
+							'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
+							'disabled' => !$updateError
+						]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
+							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
+							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
+							'disabled' => !$updateError
+						]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::button('configAdvancedUpdateForced', [
+						'ico' => 'download-cloud',
+						'href' => helper::baseUrl() . 'install/update',
+						'value' => 'Mise à jour manuelle',
+						'class' => 'buttonRed',
+						'disabled' => !$updateError
+					]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Maintenance</h4>
+			<div class="row">
+				<div class="col3">
+					<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
+						'checked' => $this->getData(['config', 'maintenance'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::text('configVersion', [
-						'label' => 'ZwiiCMS Version',
-						'value' => common::ZWII_VERSION,
-						'readonly' => true
+					<?php echo template::button('configBackupButton', [
+						'href' => helper::baseUrl() . 'config/backup',
+						'value' => 'Sauvegarder',
+						'ico' => 'download-cloud'
 					]); ?>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col12">
-					<?php echo template::textarea('configMetaDescription', [
-						'label' => 'Description du site',
-						'value' => $this->getData(['locale', 'metaDescription']),
-						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
+				<div class="col3">
+					<?php echo template::button('configRestoreButton', [
+						'href' => helper::baseUrl() . 'config/restore',
+						'value' => 'Restaurer',
+						'ico' => 'upload-cloud'
 					]); ?>
 				</div>
-			</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-		<h4>Etiquettes des pages spéciales</h4>
-			<div class="row">
-				<div class="col4">
-					<?php echo template::text('configLegalPageLabel', [
-						'label' => 'Mentions légales',
-						'placeholder' => 'Mentions légales',
-						'value' => $this->getData(['locale', 'legalPageLabel'])
+				<div class="col3">
+					<?php echo template::button('configBackupCopyButton', [
+						'href' => helper::baseUrl() . 'config/copyBackups',
+						'value' => 'Backups Auto &#10140; FileManager'
 					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::text('configSearchPageLabel', [
-						'label' => 'Rechercher',
-						'placeholder' => 'Rechercher',
-						'value' => $this->getData(['locale', 'searchPageLabel'])
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::text('configSitemapPageLabel', [
-						'label' => 'Plan du site',
-						'placeholder' => 'Plan du site',
-						'value' => $this->getData(['locale', 'sitemapPageLabel']),
-					]); ?>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-			<h4>Assignation des pages spéciales</h4>
-			<div class="row">
-				<div class="col4">
-					<?php echo template::select('configHomePageId', helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC'), [
-							'label' => 'Accueil du site',
-							'selected' =>$this->getData(['locale', 'homePageId']),
-							'help' => 'La première page que vos visiteurs verront.'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configPage403', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($module::$orphansList, 'title', 'SORT_ASC')), [
-							'label' => 'Accès interdit, erreur 403',
-							'selected' =>$this->getData(['locale', 'page403']),
-							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
-						]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configPage404', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($module::$orphansList, 'title', 'SORT_ASC')), [
-							'label' => 'Page inexistante, erreur 404',
-							'selected' =>$this->getData(['locale', 'page404']),
-							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
-						]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col4">
-					<?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
-						'label' => 'Mentions légales',
-						'selected' => $this->getData(['locale', 'legalPageId']),
-						'help' => 'Les mentions légales sont obligatoires en France. Une option du pied de page ajoute un lien discret vers cette page.'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
-						'label' => 'Recherche dans le site',
-						'selected' => $this->getData(['locale', 'searchPageId']),
-						'help' => 'Sélectionnez une page contenant le module \'Recherche\'. Une option du pied de page ajoute un lien discret vers cette page.'
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php
-						echo template::select('configPage302', array_merge(['none' => 'Page par défaut'],helper::arrayCollumn($module::$orphansList, 'title', 'SORT_ASC')), [
-							'label' => 'Site en maintenance',
-							'selected' =>$this->getData(['locale', 'page302']),
-							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
-						]); ?>
 				</div>
 			</div>
 		</div>
