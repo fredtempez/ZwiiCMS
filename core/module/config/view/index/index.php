@@ -48,7 +48,8 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Identité du site <?php echo template::flag('site', '20px');?></h4>
+			<h4>Identité du site (en langue <?php echo template::flag('site', '20px');?> )</h4>
+			<p><em>Cette page doit être adaptée à chaque traduction rédigée.</em></p>
 			<div class="row">
 				<div class="col9">
 					<?php echo template::text('configTitle', [
@@ -73,15 +74,41 @@
 						'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
 					]); ?>
 				</div>
-			</div
-			><p>Le titre et la description sont spécifiques aux traductions rédigées du site.</p>
+			</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+		<h4>Etiquettes des pages spéciales</h4>
+			<div class="row">
+				<div class="col4">
+					<?php echo template::text('configLegalPageLabel', [
+						'label' => 'Mentions légales',
+						'placeholder' => 'Mentions légales',
+						'value' => $this->getData(['locale', 'legalPageLabel'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::text('configSearchPageLabel', [
+						'label' => 'Rechercher',
+						'placeholder' => 'Rechercher',
+						'value' => $this->getData(['locale', 'searchPageLabel'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::text('configSitemapPageLabel', [
+						'label' => 'Plan du site',
+						'placeholder' => 'Plan du site',
+						'value' => $this->getData(['locale', 'sitemapPageLabel']),
+					]); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Pages spéciales</h4>
+			<h4>Assignation des pages spéciales</h4>
 			<div class="row">
 				<div class="col4">
 					<?php echo template::select('configHomePageId', helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC'), [
@@ -127,37 +154,6 @@
 							'selected' =>$this->getData(['locale', 'page302']),
 							'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 						]); ?>
-				</div>
-			</div>
-			<p>Adaptez la sélection de ces pages pour chaque traduction rédigée.</p>
-		</div>
-	</div>
-</div>
-<div class="row">
-	<div class="col12">
-		<div class="block">
-			<h4>Etiquettes des pages spéciales dans le pied de page <?php echo template::flag('site', '20px');?></h4>
-			<div class="row">
-				<div class="col4">
-					<?php echo template::text('configLegalPageLabel', [
-						'label' => 'Mentions légales',
-						'placeholder' => 'Mentions légales',
-						'value' => $this->getData(['locale', 'legalPageLabel'])
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::text('configSearchPageLabel', [
-						'label' => 'Rechercher',
-						'placeholder' => 'Rechercher',
-						'value' => $this->getData(['locale', 'searchPageLabel'])
-					]); ?>
-				</div>
-				<div class="col4">
-					<?php echo template::text('configSitemapPageLabel', [
-						'label' => 'Plan du site',
-						'placeholder' => 'Plan du site',
-						'value' => $this->getData(['locale', 'sitemapPageLabel']),
-					]); ?>
 				</div>
 			</div>
 		</div>
