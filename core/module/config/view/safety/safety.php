@@ -64,6 +64,25 @@
 		<div class="block">
 			<h4>Sécurité de la connexion</h4>
 			<div class="row">
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedConnectCaptcha', true, 'Captcha à la connexion', [
+						'checked' => $this->getData(['config', 'connect','captcha'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha complexe', [
+						'checked' => $this->getData(['config','captchaStrong']),
+						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::checkbox('configAdvancedAutoDisconnect', true, 'Déconnexion automatique', [
+							'checked' => $this->getData(['config','autoDisconnect']),
+							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
+						]); ?>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col3">
 					<?php echo template::select('configAdvancedConnectAttempt', $module::$connectAttempt , [
 						'label' => 'Connexions successives',
@@ -95,13 +114,6 @@
 						'href' => helper::baseUrl() . 'config/blacklistReset',
 						'value' => 'Réinitialiser la liste',
 						'ico' => 'cancel'
-					]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedConnectCaptcha', true, 'Captcha à la connexion', [
-						'checked' => $this->getData(['config', 'connect','captcha'])
 					]); ?>
 				</div>
 			</div>

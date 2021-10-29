@@ -101,30 +101,6 @@
 						'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'
 					]); ?>
 				</div>
-
-			</div>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedCaptchaStrong', true, 'Captcha complexe', [
-						'checked' => $this->getData(['config','captchaStrong']),
-						'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
-					]); ?>
-				</div>
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedAutoDisconnect', true, 'Déconnexion automatique de la session', [
-							'checked' => $this->getData(['config','autoDisconnect']),
-							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
-						]); ?>
-				</div>
-
-			</div>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
-							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
-						]); ?>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -167,11 +143,19 @@
 		<div class="block">
 			<h4>Maintenance</h4>
 			<div class="row">
-				<div class="col3">
+				<div class="col6">
+					<?php echo template::checkbox('configAdvancedAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
+						]); ?>
+				</div>
+				<div class="col6">
 					<?php echo template::checkbox('configAdvancedMaintenance', true, 'Site en maintenance', [
 						'checked' => $this->getData(['config', 'maintenance'])
 					]); ?>
 				</div>
+			</div>
+			<div class="rows textAlignCenter">
 				<div class="col3">
 					<?php echo template::button('configBackupButton', [
 						'href' => helper::baseUrl() . 'config/backup',
