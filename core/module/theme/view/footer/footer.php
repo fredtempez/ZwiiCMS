@@ -17,32 +17,41 @@
         <div class="block">
             <h4>Paramètres</h4>
             <div class="row">
-                <div class="col3">
-                        <?php echo template::select('themeFooterPosition', $module::$footerPositions, [
-                                'label' => 'Position',
-                                'selected' => $this->getData(['theme', 'footer', 'position'])
-                            ]); ?>
+                <div class="col6">
+                    <?php echo template::select('themeFooterPosition', $module::$footerPositions, [
+                            'label' => 'Position',
+                            'selected' => $this->getData(['theme', 'footer', 'position'])
+                        ]); ?>
                 </div>
-                <div class="col3">
+                <div class="col6">
                     <?php echo template::select('themeFooterHeight', $module::$footerHeights, [
                             'label' => 'Marges verticales',
                             'selected' => $this->getData(['theme', 'footer', 'height'])
                         ]); ?>
                 </div>
-                <div class="col3">
-                    <?php echo template::text('themeFooterBackgroundColor', [
-							'class' => 'colorPicker',
-							'label' => 'Fond',
-                            'value' => $this->getData(['theme', 'footer', 'backgroundColor']),
-                            'help'  => 'Quand le pied de page est dans le site, l\'arrière plan transparent montre le fond de la page. Quand le pied de page est hors du site, l\'arrière plan transparent montre le fond du site.'
-						]); ?>
-                </div>
-                <div class="col3">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>Couleurs</h4>
+            <div class="row">
+                <div class="col6">
                     <?php echo template::text('themeFooterTextColor', [
-							'class' => 'colorPicker',
-							'label' => 'Texte',
-							'value' => $this->getData(['theme', 'footer', 'textColor'])
-						]); ?>
+                        'class' => 'colorPicker',
+                        'label' => 'Texte',
+                        'value' => $this->getData(['theme', 'footer', 'textColor'])
+                    ]); ?>
+                </div>
+                <div class="col6">
+                    <?php echo template::text('themeFooterBackgroundColor', [
+                        'class' => 'colorPicker',
+                        'label' => 'Fond',
+                        'value' => $this->getData(['theme', 'footer', 'backgroundColor']),
+                        'help'  => 'Quand le pied de page est dans le site, l\'arrière plan transparent montre le fond de la page. Quand le pied de page est hors du site, l\'arrière plan transparent montre le fond du site.'
+                    ]); ?>
                 </div>
             </div>
         </div>
