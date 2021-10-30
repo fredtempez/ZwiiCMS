@@ -36,6 +36,7 @@ class init extends common {
 				'anonymousIp' => 2,
 				'captcha' => true,
 				'captchaStrong' => false,
+				'autoDisconnect' => true
 			],
 			'i18n' => [
 				'enable'=> true,
