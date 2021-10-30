@@ -945,15 +945,13 @@ class common {
 		// Move flushed files to their final location. Compress if the option is enabled.
 		$sitemap->finalize();
 
-		// Update robots.txt file in output directory or create a new one
+		// Update robots.txt file in output directory
 
 		if ($this->getData(['config','seo', 'robots']) === true) {
 			unlink('robots.txt');
 			$sitemap->updateRobots();
-		} else {
-			copy('core/module/install/ressource/robots.txt', 'robots.txt');
 		}
-
+		
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
 		if (empty ($this->getData(['config','proxyType']) . $this->getData(['config','proxyUrl']) . ':' . $this->getData(['config','proxyPort'])) ) {
 			$sitemap->submitSitemap();
