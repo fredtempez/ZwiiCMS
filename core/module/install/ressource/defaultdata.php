@@ -10,7 +10,6 @@ class init extends common {
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
 			'maintenance' => false,
-			'captchaStrong' => false,
 			'social' => [
 				'facebookId' => 'facebook',
 				'instagramId' => '',
@@ -35,7 +34,8 @@ class init extends common {
 				'attempt' => 3,
 				'log' => false,
 				'anonymousIp' => 2,
-				'captcha' => true
+				'captcha' => true,
+				'captchaStrong' => false,
 			],
 			'i18n' => [
 				'enable'=> true,
@@ -53,7 +53,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11100,
+			'dataVersion' => 11200,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

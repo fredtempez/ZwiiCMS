@@ -671,3 +671,10 @@ if ($this->getData(['core', 'dataVersion']) < 11100) {
 
 	$this->setData(['core', 'dataVersion', 11100]);
 }
+
+// Version 11.2.00
+if ($this->getData(['core', 'dataVersion']) < 11200) {
+	// Déplacer la valeur captcha
+	$this->setData(['config', 'connect', 'captchaStrong', $this->getData(['config', 'captchaStrong'])]);
+	$this->setData(['core', 'dataVersion', 11200]);
+}
