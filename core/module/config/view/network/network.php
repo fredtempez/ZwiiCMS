@@ -1,4 +1,4 @@
-<div id="network">
+<div id="networkContainer">
 	<div class="row">
 		<div class="col12">
 			<div class="block">

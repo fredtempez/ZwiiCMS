@@ -23,32 +23,27 @@
     <div class="col12">
         <div class="row textAlignCenter">
             <div class="col2">
-                <?php echo template::button('Button', [
-                    'href' => helper::baseUrl() . 'config/index',
+                <?php echo template::button('configSetupButton', [
                     'value' => 'Paramètres'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('Button', [
-                    'href' => helper::baseUrl() . 'config/locale',
+                <?php echo template::button('configLocalButton', [
                     'value' => 'Localisation'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('Button', [
-                    'href' => helper::baseUrl() . 'config/social',
+                <?php echo template::button('configSocialButton', [
                     'value' => 'Référencement'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('Button', [
-                    'href' => helper::baseUrl() . 'config/safety',
-                    'value' => 'Sécurité'
+                <?php echo template::button('configConnectButton', [
+                    'value' => 'Connexion'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('Button', [
-                    'href' => helper::baseUrl() . 'config/network',
+                <?php echo template::button('configNetworkButton', [
                     'value' => 'Réseau'
                 ]); ?>
             </div>
@@ -59,6 +54,6 @@
 <?php include ('core/module/config/view/setup/setup.php') ?>
 <?php include ('core/module/config/view/locale/locale.php') ?>
 <?php include ('core/module/config/view/social/social.php') ?>
-<?php include ('core/module/config/view/safety/safety.php') ?>
+<?php include ('core/module/config/view/connect/connect.php') ?>
 <?php include ('core/module/config/view/network/network.php') ?>
 <?php echo template::formClose(); ?>

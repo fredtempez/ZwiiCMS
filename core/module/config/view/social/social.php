@@ -1,4 +1,4 @@
-<div id="social">
+<div id="socialContainer">
 	<div class="row">
 		<div class="col12">
 			<div class="block">

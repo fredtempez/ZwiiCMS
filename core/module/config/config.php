@@ -443,6 +443,12 @@ class config extends common {
 					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'favicon' => $this->getInput('configFavicon'),
 					'faviconDark' => $this->getInput('configFaviconDark'),
+					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT),
+					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
+					'proxyType' => $this->getInput('configProxyType'),
+					'proxyUrl' => $this->getInput('configProxyUrl'),
+					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
 					'social' => [
 						'facebookId' => $this->getInput('configSocialFacebookId'),
 						'linkedinId' => $this->getInput('configSocialLinkedinId'),
@@ -453,14 +459,6 @@ class config extends common {
 						'youtubeUserId' => $this->getInput('configSocialYoutubeUserId'),
 						'githubId' => $this->getInput('configSocialGithubId')
 					],
-					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
-					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
-					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
-					'proxyType' => $this->getInput('configProxyType'),
-					'proxyUrl' => $this->getInput('configProxyUrl'),
-					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
-					'captchaStrong' => $this->getInput('configCaptchaStrong',helper::FILTER_BOOLEAN),
-					'autoDisconnect' => $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN),
 					'smtp' => [
 						'enable' => $this->getInput('configSmtpEnable',helper::FILTER_BOOLEAN),
 						'host' => $this->getInput('configSmtpHost',helper::FILTER_STRING_SHORT),
@@ -474,12 +472,14 @@ class config extends common {
 					'seo' => [
 						'robots' => $this->getInput('configSeoRobots',helper::FILTER_BOOLEAN)
 					],
-					'connect' => [
+					'safety' => [
 						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
 						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
 						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
 						'anonymousIp' => $this->getInput('configConnectAnonymousIp',helper::FILTER_INT),
 						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
+						'captchaStrong' => $this->getInput('configConnectCaptchaStrong',helper::FILTER_BOOLEAN),
+						'autoDisconnect' => $this->getInput('configConnectAutoDisconnect',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [
 						'enable' => $this->getData(['config', 'i18n', 'enable'])

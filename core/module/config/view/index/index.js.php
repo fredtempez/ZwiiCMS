@@ -87,4 +87,59 @@ $( document).ready(function() {
         }
     });
 
+    /**
+     * Captcha strong si captcha sélectionné
+     */
+        $("input[name=configConnectCaptcha]").on("change", function() {
+            
+        if ($("input[name=configConnectCaptcha]").is(':checked')) {
+            $("#configConnectCaptchaStrongWrapper").addClass("disabled");
+            $("#configConnectCaptchaStrongWrapper").slideDown();
+            $( "#configConnectCaptchaStrong" ).prop( "checked", false );
+        } else {
+            $("#configConnectCaptchaStrongWrapper").removeClass("disabled");
+            $("#configConnectCaptchaStrongWrapper").slideUp();
+        }
+    });
+
+
+    /**
+     *  Sélection de la  page de configuration à afficher
+     */
+    $("#configSetupButton").on("click", function() {
+        $("#localeContainer").slideUp();
+        $("#socialContainer").slideUp();
+        $("#connectContainer").slideUp();
+        $("#networkContainer").slideUp();
+        $("#setupContainer").slideDown();
+    });
+    $("#configLocalButton").on("click", function() {
+        $("#setupContainer").slideUp();
+        $("#socialContainer").slideUp();
+        $("#connectContainer").slideUp();
+        $("#networkContainer").slideUp();
+        $("#localeContainer").slideDown();
+    });
+    $("#configSocialButton").on("click", function() {
+        $("#connectContainer").slideUp();
+        $("#setupContainer").slideUp();
+        $("#localeContainer").slideUp();
+        $("#networkContainer").slideUp();
+        $("#socialContainer").slideDown();
+    });
+    $("#configConnectButton").on("click", function() {
+        $("#setupContainer").slideUp();
+        $("#localeContainer").slideUp();
+        $("#socialContainer").slideUp();
+        $("#networkContainer").slideUp();
+        $("#connectContainer").slideDown();
+    });
+    $("#configNetworkButton").on("click", function() {
+        $("#setupContainer").slideUp();
+        $("#localeContainer").slideUp();
+        $("#socialContainer").slideUp();
+        $("#connectContainer").slideUp();
+        $("#networkContainer").slideDown();
+    });
+
 });

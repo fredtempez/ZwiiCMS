@@ -1,4 +1,4 @@
-<div id="locale">
+<div id="localeContainer">
 	<div class="row">
 		<div class="col12">
 			<div class="block">
@@ -44,6 +44,9 @@
 						]); ?>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
