@@ -443,45 +443,43 @@ class config extends common {
 					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
-
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
-
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
 					'social' => [
-						'facebookId' => $this->getInput('configSocialFacebookId'),
-						'linkedinId' => $this->getInput('configSocialLinkedinId'),
-						'instagramId' => $this->getInput('configSocialInstagramId'),
-						'pinterestId' => $this->getInput('configSocialPinterestId'),
-						'twitterId' => $this->getInput('configSocialTwitterId'),
-						'youtubeId' => $this->getInput('configSocialYoutubeId'),
-						'youtubeUserId' => $this->getInput('configSocialYoutubeUserId'),
-						'githubId' => $this->getInput('configSocialGithubId')
+						'facebookId' => $this->getInput('socialFacebookId'),
+						'linkedinId' => $this->getInput('socialLinkedinId'),
+						'instagramId' => $this->getInput('socialInstagramId'),
+						'pinterestId' => $this->getInput('socialPinterestId'),
+						'twitterId' => $this->getInput('socialTwitterId'),
+						'youtubeId' => $this->getInput('socialYoutubeId'),
+						'youtubeUserId' => $this->getInput('socialYoutubeUserId'),
+						'githubId' => $this->getInput('socialGithubId')
 					],
 					'smtp' => [
-						'enable' => $this->getInput('configSmtpEnable',helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('configSmtpHost',helper::FILTER_STRING_SHORT),
-						'port' => $this->getInput('configSmtpPort',helper::FILTER_INT),
-						'auth' => $this->getInput('configSmtpAuth',helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('configSmtpSecure'),
-						'username' => $this->getInput('configSmtpUsername',helper::FILTER_STRING_SHORT),
-						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configSmtpPassword')),
-						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
+						'enable' => $this->getInput('smtpEnable',helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('smtpHost',helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('smtpPort',helper::FILTER_INT),
+						'auth' => $this->getInput('smtpAuth',helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure'),
+						'username' => $this->getInput('smtpUsername',helper::FILTER_STRING_SHORT),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('smtpPassword')),
+						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('SeoRobots',helper::FILTER_BOOLEAN),
-						'analyticsId' => $this->getInput('SeoAnalyticsId')
+						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN),
+						'analyticsId' => $this->getInput('seoAnalyticsId')
 					],
-					'safety' => [
-						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
-						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
-						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
-						'anonymousIp' => $this->getInput('configConnectAnonymousIp',helper::FILTER_INT),
-						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
-						'captchaStrong' => $this->getInput('configConnectCaptchaStrong',helper::FILTER_BOOLEAN),
-						'autoDisconnect' => $this->getInput('configConnectAutoDisconnect',helper::FILTER_BOOLEAN),
+					'connect' => [
+						'attempt' => $this->getInput('connectAttempt',helper::FILTER_INT),
+						'timeout' => $this->getInput('connectTimeout',helper::FILTER_INT),
+						'log' => $this->getInput('connectLog',helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('connectAnonymousIp',helper::FILTER_INT),
+						'captcha' => $this->getInput('connectCaptcha',helper::FILTER_BOOLEAN),
+						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
+						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [
 						'enable' => $this->getData(['config', 'i18n', 'enable'])

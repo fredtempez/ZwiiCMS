@@ -68,21 +68,21 @@ $( document).ready(function() {
      * Options de blocage de connexions
      * Contrôle la cohérence des sélections et interdit une seule valeur Aucune
      */
-    $("select[name=configConnectAttempt]").on("change", function() {
-        if ($("select[name=configConnectAttempt]").val() === "999") {
-            $("select[name=configConnectTimeout]").val(0);
+    $("select[name=connectAttempt]").on("change", function() {
+        if ($("select[name=connectAttempt]").val() === "999") {
+            $("select[name=connectTimeout]").val(0);
         } else {
-            if ($("select[name=configConnectTimeout]").val() === "0") {
-                $("select[name=configConnectTimeout]").val(300);
+            if ($("select[name=connectTimeout]").val() === "0") {
+                $("select[name=connectTimeout]").val(300);
             }
         }
     });
-    $("select[name=configConnectTimeout]").on("change", function() {
-        if ($("select[name=configConnectTimeout]").val() === "0") {
-            $("select[name=configConnectAttempt]").val(999);
+    $("select[name=connectTimeout]").on("change", function() {
+        if ($("select[name=connectTimeout]").val() === "0") {
+            $("select[name=connectAttempt]").val(999);
         } else {
-            if ($("select[name=configConnectAttempt]").val() === "999") {
-                $("select[name=configConnectAttempt]").val(3);
+            if ($("select[name=connectAttempt]").val() === "999") {
+                $("select[name=connectAttempt]").val(3);
             }
         }
     });
@@ -90,15 +90,15 @@ $( document).ready(function() {
     /**
      * Captcha strong si captcha sélectionné
      */
-        $("input[name=configConnectCaptcha]").on("change", function() {
+        $("input[name=connectCaptcha]").on("change", function() {
             
-        if ($("input[name=configConnectCaptcha]").is(':checked')) {
-            $("#configConnectCaptchaStrongWrapper").addClass("disabled");
-            $("#configConnectCaptchaStrongWrapper").slideDown();
-            $( "#configConnectCaptchaStrong" ).prop( "checked", false );
+        if ($("input[name=connectCaptcha]").is(':checked')) {
+            $("#connectCaptchaStrongWrapper").addClass("disabled");
+            $("#connectCaptchaStrongWrapper").slideDown();
+            $( "#connectCaptchaStrong" ).prop( "checked", false );
         } else {
-            $("#configConnectCaptchaStrongWrapper").removeClass("disabled");
-            $("#configConnectCaptchaStrongWrapper").slideUp();
+            $("#connectCaptchaStrongWrapper").removeClass("disabled");
+            $("#connectCaptchaStrongWrapper").slideUp();
         }
     });
 
