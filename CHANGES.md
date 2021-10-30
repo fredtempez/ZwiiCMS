@@ -1,7 +1,8 @@
 # Changelog
 
-## Version 11.1.01
+## Version 11.2.00
 - Modifications : 
+    - Disposition des options du menu de  configuration du site.
     - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
 
 ## Version 11.1.00
