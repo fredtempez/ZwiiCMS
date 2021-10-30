@@ -2402,7 +2402,7 @@ class core extends common {
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			AND ( $this->getUser('group') === self::GROUP_BANNED
 				  OR ( $_SESSION['csrf'] !== $this->getData(['user',$this->getUser('id'),'accessCsrf'])
-					  AND $this->getData(['config','autoDisconnect']) === true)
+					  AND $this->getData(['config','connect', 'autoDisconnect']) === true)
 			    )
 		) {
 			$user = new user;

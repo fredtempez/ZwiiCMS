@@ -17,7 +17,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::checkbox('connectAutoDisconnect', true, 'Déconnexion automatique', [
-								'checked' => $this->getData(['config','autoDisconnect']),
+								'checked' => $this->getData(['config','connect', 'autoDisconnect']),
 								'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 							]); ?>
 					</div>

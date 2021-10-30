@@ -399,7 +399,7 @@ class config extends common {
 				}
 
 			// Eviter déconnexion automatique après son activation
-			if ( $this->getData(['config','autoDisconnect']) === false
+			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
 				 AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
 				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
 			}
