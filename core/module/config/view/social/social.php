@@ -7,7 +7,7 @@
 					<div class="col4 offset1">
 						<div class="row">
 							<div class="col12">
-								<?php echo template::button('MetaImage', [
+								<?php echo template::button('SocialMetaImage', [
 								'href' => helper::baseUrl() . 'config/configMetaImage',
 								'value' => 'Générer une capture Open Graph'
 								]); ?>
@@ -15,7 +15,7 @@
 						</div>
 						<div class="row">
 							<div class="col12">
-								<?php echo template::button('SiteMap', [
+								<?php echo template::button('SocialSiteMap', [
 									'href' => helper::baseUrl() . 'config/generateFiles',
 									'value' => 'Générer sitemap.xml et robots.txt'
 								]); ?>
@@ -115,22 +115,22 @@
 				<h4>Scripts externes</h4>
 				<div class="row">
 					<div class="col3">
-						<?php echo template::text('AnalyticsId', [
+						<?php echo template::text('SeoAnalyticsId', [
 							'help' => 'Saisissez l\'ID de suivi.',
 							'label' => 'Google Analytics',
 							'placeholder' => 'UA-XXXXXXXX-X',
-							'value' => $this->getData(['config', 'analyticsId'])
+							'value' => $this->getData(['config', 'seo', 'analyticsId'])
 						]); ?>
 					</div>
 					<div class="col3 offset3 verticalAlignBottom">
-						<?php echo template::button('ScriptHead', [
+						<?php echo template::button('SocialScriptHead', [
 							'href' => helper::baseUrl() . 'config/script/head',
 							'value' => 'Script dans head',
 							'ico' => 'pencil'
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">
-						<?php echo template::button('ScriptBody', [
+						<?php echo template::button('SocialScriptBody', [
 							'href' => helper::baseUrl() . 'config/script/body',
 							'value' => 'Script dans body',
 							'ico' => 'pencil'

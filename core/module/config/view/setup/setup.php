@@ -5,7 +5,7 @@
 				<h4>Paramètres</h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::file('Favicon', [
+						<?php echo template::file('configFavicon', [
 							'type' => 1,
 							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon',
@@ -13,7 +13,7 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::file('FaviconDark', [
+						<?php echo template::file('configFaviconDark', [
 							'type' => 1,
 							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon thème sombre',
@@ -30,13 +30,13 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('ConfigCookieConsent', true, 'Message de consentement aux cookies', [
+						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 							'checked' => $this->getData(['config', 'cookieConsent']),
 							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('ConfigRewrite', true, 'URL intelligentes', [
+						<?php echo template::checkbox('configRewrite', true, 'URL intelligentes', [
 							'checked' => helper::checkRewrite(),
 							'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'
 						]); ?>
@@ -52,21 +52,21 @@
 				<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::checkbox('ConfigAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
+						<?php echo template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
 								'checked' => $this->getData(['config', 'autoUpdate']),
 								'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
 								'disabled' => !$updateError
 							]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::checkbox('ConfigAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
+						<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
 								'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
 								'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
 								'disabled' => !$updateError
 							]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::button('ConfigUpdateForced', [
+						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
 							'value' => 'Mise à jour manuelle',
@@ -84,13 +84,13 @@
 				<h4>Maintenance</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('ConfigAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
+						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
 								'checked' => $this->getData(['config', 'autoBackup']),
 								'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
 							]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('ConfigMaintenance', true, 'Site en maintenance', [
+						<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
 							'checked' => $this->getData(['config', 'maintenance'])
 						]); ?>
 					</div>

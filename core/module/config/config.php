@@ -419,17 +419,17 @@ class config extends common {
 			$this->setData([
 				'locale',
 				[
-					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('configPage404'),
-					'page403' => $this->getInput('configPage403'),
-					'page302' => $this->getInput('configPage302'),
-					'legalPageId' => $this->getInput('configLegalPageId'),
-					'searchPageId' => $this->getInput('configSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
+					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('localePage404'),
+					'page403' => $this->getInput('localePage403'),
+					'page302' => $this->getInput('localePage302'),
+					'legalPageId' => $this->getInput('localeLegalPageId'),
+					'searchPageId' => $this->getInput('localeSearchPageId'),
+					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
+					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true)
 				]
 			]);
 
@@ -437,15 +437,16 @@ class config extends common {
 			$this->setData([
 				'config',
 				[
-					'analyticsId' => $this->getInput('configAnalyticsId'),
-					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
-					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
-					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'favicon' => $this->getInput('configFavicon'),
 					'faviconDark' => $this->getInput('configFaviconDark'),
-					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT),
+					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
+					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
+
+					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
+					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
+
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
@@ -470,7 +471,8 @@ class config extends common {
 						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('configSeoRobots',helper::FILTER_BOOLEAN)
+						'robots' => $this->getInput('SeoRobots',helper::FILTER_BOOLEAN),
+						'analyticsId' => $this->getInput('SeoAnalyticsId')
 					],
 					'safety' => [
 						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
@@ -486,6 +488,7 @@ class config extends common {
 					]
 				]
 			]);
+
 			// Efface les fichiers de backup lorsque l'option est désactivée
 			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');

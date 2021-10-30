@@ -21,6 +21,6 @@
     display: block;
 }
 
-#localeContainer, #socialContainer, #safetyContainer, #networkContainer {
+#localeContainer, #socialContainer, #connectContainer, #networkContainer {
     display: none;
 }
