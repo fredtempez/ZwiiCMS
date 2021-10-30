@@ -14,24 +14,24 @@ $( document).ready(function() {
     /**
      * Afficher et masquer options SMTP
      */
-    if ($("input[name=configAdvancedSmtpEnable]").is(':checked')) {
-        $("#configAdvancedSmtpParam").addClass("disabled");
-        $("#configAdvancedSmtpParam").slideDown();
+    if ($("input[name=SmtpEnable]").is(':checked')) {
+        $("#SmtpParam").addClass("disabled");
+        $("#SmtpParam").slideDown();
     } else {
-        $("#configAdvancedSmtpParam").removeClass("disabled");
-        $("#configAdvancedSmtpParam").slideUp();
+        $("#SmtpParam").removeClass("disabled");
+        $("#SmtpParam").slideUp();
     }
 
     /**
      * Afficher et masquer options Auth
      */
 
-    if ($("select[name=configAdvancedSmtpEnable]").val() == true) {
-        $("#configAdvancedSmtpAuthParam").addClass("disabled");
-        $("#configAdvancedSmtpAuthParam").slideDown();
+    if ($("select[name=SmtpEnable]").val() == true) {
+        $("#SmtpAuthParam").addClass("disabled");
+        $("#SmtpAuthParam").slideDown();
     } else {
-        $("#configAdvancedSmtpAuthParam").removeClass("disabled");
-        $("#configAdvancedSmtpAuthParam").slideUp();
+        $("#SmtpAuthParam").removeClass("disabled");
+        $("#SmtpAuthParam").slideUp();
     }
 
 
@@ -40,13 +40,13 @@ $( document).ready(function() {
     /**
      * Afficher et masquer options SMTP
      */
-    $("input[name=configAdvancedSmtpEnable]").on("change", function() {
-        if ($("input[name=configAdvancedSmtpEnable]").is(':checked')) {
-            $("#configAdvancedSmtpParam").addClass("disabled");
-            $("#configAdvancedSmtpParam").slideDown();
+    $("input[name=SmtpEnable]").on("change", function() {
+        if ($("input[name=SmtpEnable]").is(':checked')) {
+            $("#SmtpParam").addClass("disabled");
+            $("#SmtpParam").slideDown();
         } else {
-            $("#configAdvancedSmtpParam").removeClass("disabled");
-            $("#configAdvancedSmtpParam").slideUp();
+            $("#SmtpParam").removeClass("disabled");
+            $("#SmtpParam").slideUp();
         }
     });
 
@@ -54,13 +54,13 @@ $( document).ready(function() {
      * Afficher et masquer options Auth
      */
 
-    $("select[name=configAdvancedSmtpAuth]").on("change", function() {
-        if ($("select[name=configAdvancedSmtpAuth]").val() == true) {
-            $("#configAdvancedSmtpAuthParam").addClass("disabled");
-            $("#configAdvancedSmtpAuthParam").slideDown();
+    $("select[name=SmtpAuth]").on("change", function() {
+        if ($("select[name=SmtpAuth]").val() == true) {
+            $("#SmtpAuthParam").addClass("disabled");
+            $("#SmtpAuthParam").slideDown();
         } else {
-            $("#configAdvancedSmtpAuthParam").removeClass("disabled");
-            $("#configAdvancedSmtpAuthParam").slideUp();
+            $("#SmtpAuthParam").removeClass("disabled");
+            $("#SmtpAuthParam").slideUp();
         }
     });
 

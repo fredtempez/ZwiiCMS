@@ -9,45 +9,45 @@
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::button('configAdvancedHelp', [
+		<?php echo template::button('Help', [
 			'class' => 'buttonHelp',
 			'ico' => 'help',
 			'value' => 'Aide'
 		]); ?>
 	</div>
 	<div class="col2 offset6">
-		<?php echo template::submit('configAdvancedSubmit'); ?>
+		<?php echo template::submit('Submit'); ?>
 	</div>
 </div>
 <div class="row">
     <div class="col12">
         <div class="row textAlignCenter">
             <div class="col2">
-                <?php echo template::button('configAdvancedButton', [
+                <?php echo template::button('Button', [
                     'href' => helper::baseUrl() . 'config/index',
                     'value' => 'Paramètres'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('configAdvancedButton', [
+                <?php echo template::button('Button', [
                     'href' => helper::baseUrl() . 'config/locale',
                     'value' => 'Localisation'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('configAdvancedButton', [
+                <?php echo template::button('Button', [
                     'href' => helper::baseUrl() . 'config/social',
                     'value' => 'Référencement'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('configAdvancedButton', [
+                <?php echo template::button('Button', [
                     'href' => helper::baseUrl() . 'config/safety',
                     'value' => 'Sécurité'
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('configAdvancedButton', [
+                <?php echo template::button('Button', [
                     'href' => helper::baseUrl() . 'config/network',
                     'value' => 'Réseau'
                 ]); ?>

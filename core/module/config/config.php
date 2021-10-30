@@ -22,10 +22,6 @@ class config extends common {
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'locale' => self::GROUP_ADMIN,
-		'social' => self::GROUP_ADMIN,
-		'safety' => self::GROUP_ADMIN,
-		'network' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
@@ -388,35 +384,110 @@ class config extends common {
 		]);
 	}
 
-	/** *
-	 * Configuration de base
+
+	/**
+	 * Configuration
 	 */
 	public function index() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Basculement en mise à jour auto
-			// Remise à 0 du compteur
+
+			// Basculement en mise à jour auto,  remise à 0 du compteur
 			if ($this->getData(['config','autoUpdate']) === false &&
-				$this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN) === true) {
+				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
+
 			// Eviter déconnexion automatique après son activation
 			if ( $this->getData(['config','autoDisconnect']) === false
-					AND $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
+				 AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
 				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
 			}
-			// Sauvegarder
-			$this->setData(['config', 'autoBackup', $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN)]);
-			$this->setData(['config', 'maintenance', $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN)]);
-			$this->setData(['config', 'cookieConsent', $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN)]);
-			$this->setData(['config', 'favicon', $this->getInput('configAdvancedFavicon')]);
-			$this->setData(['config', 'faviconDark', $this->getInput('configAdvancedFaviconDark')]);
-			$this->setData(['config', 'timezone', $this->getInput('configAdvancedTimezone', helper::FILTER_STRING_SHORT, true)]);
-			$this->setData(['config', 'autoUpdate', $this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN)]);
-			$this->setData(['config', 'autoUpdateHtaccess', $this->getInput('configAdvancedAutoUpdateHtaccess', helper::FILTER_BOOLEAN)]);
+				// Répercuter la suppression de la page dans la configuration du footer
+				if ( $this->getData(['theme','footer','displaySearch']) === true
+				AND $this->getInput('configSearchPageId') === 'none'
+				){
+					$this->setData(['theme', 'footer', 'displaySearch', false]);
+			}
+			if ( $this->getData(['theme','footer','displayLegal']) === true
+				AND $this->getInput('configLegalPageId') === 'none'
+				){
+					$this->setData(['theme', 'footer', 'displayLegal', false]);
+			}
+		
+			// Sauvegarder les locales
+			$this->setData([
+				'locale',
+				[
+					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('configPage404'),
+					'page403' => $this->getInput('configPage403'),
+					'page302' => $this->getInput('configPage302'),
+					'legalPageId' => $this->getInput('configLegalPageId'),
+					'searchPageId' => $this->getInput('configSearchPageId'),
+					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
+					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
+					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
+				]
+			]);
 
+			// Sauvegarder la configuration
+			$this->setData([
+				'config',
+				[
+					'analyticsId' => $this->getInput('configAnalyticsId'),
+					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
+					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
+					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
+					'favicon' => $this->getInput('configFavicon'),
+					'faviconDark' => $this->getInput('configFaviconDark'),
+					'social' => [
+						'facebookId' => $this->getInput('configSocialFacebookId'),
+						'linkedinId' => $this->getInput('configSocialLinkedinId'),
+						'instagramId' => $this->getInput('configSocialInstagramId'),
+						'pinterestId' => $this->getInput('configSocialPinterestId'),
+						'twitterId' => $this->getInput('configSocialTwitterId'),
+						'youtubeId' => $this->getInput('configSocialYoutubeId'),
+						'youtubeUserId' => $this->getInput('configSocialYoutubeUserId'),
+						'githubId' => $this->getInput('configSocialGithubId')
+					],
+					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
+					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
+					'proxyType' => $this->getInput('configProxyType'),
+					'proxyUrl' => $this->getInput('configProxyUrl'),
+					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
+					'captchaStrong' => $this->getInput('configCaptchaStrong',helper::FILTER_BOOLEAN),
+					'autoDisconnect' => $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN),
+					'smtp' => [
+						'enable' => $this->getInput('configSmtpEnable',helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('configSmtpHost',helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('configSmtpPort',helper::FILTER_INT),
+						'auth' => $this->getInput('configSmtpAuth',helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('configSmtpSecure'),
+						'username' => $this->getInput('configSmtpUsername',helper::FILTER_STRING_SHORT),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configSmtpPassword')),
+						'sender' => $this->getInput('configSmtpSender',helper::FILTER_MAIL)
+					],
+					'seo' => [
+						'robots' => $this->getInput('configSeoRobots',helper::FILTER_BOOLEAN)
+					],
+					'connect' => [
+						'attempt' => $this->getInput('configConnectAttempt',helper::FILTER_INT),
+						'timeout' => $this->getInput('configConnectTimeout',helper::FILTER_INT),
+						'log' => $this->getInput('configConnectLog',helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('configConnectAnonymousIp',helper::FILTER_INT),
+						'captcha' => $this->getInput('configConnectCaptcha',helper::FILTER_BOOLEAN),
+					],
+					'i18n' => [
+						'enable' => $this->getData(['config', 'i18n', 'enable'])
+					]
+				]
+			]);
 			// Efface les fichiers de backup lorsque l'option est désactivée
-			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
 				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
 				{
@@ -477,61 +548,7 @@ class config extends common {
 				'state' => true
 			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration de base',
-			'view' => 'index'
-		]);
-	}
-
-	/**
-	 * Configuration
-	 */
-	public function locale() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-
-			// Répercuter la suppression de la page dans la configuration du footer
-			if ( $this->getData(['theme','footer','displaySearch']) === true
-				AND $this->getInput('configSearchPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displaySearch', false]);
-			}
-			if ( $this->getData(['theme','footer','displayLegal']) === true
-				AND $this->getInput('configLegalPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displayLegal', false]);
-			}
-
-			// Sauvegarder
-			$this->setData([
-				'locale',
-				[
-					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('configPage404'),
-					'page403' => $this->getInput('configPage403'),
-					'page302' => $this->getInput('configPage302'),
-					'legalPageId' => $this->getInput('configLegalPageId'),
-					'searchPageId' => $this->getInput('configSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
-				],
-			]);
-
-			$this->setData(['config', 'i18n', 'enable', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
-				'state' => true
-			]);
-		}
-
-		// Liste des pages
+		// Générer la list des pages disponibles
 		self::$pagesList = $this->getData(['page']);
 		foreach(self::$pagesList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
@@ -548,111 +565,13 @@ class config extends common {
 				unset(self::$orphansList[$page]);
 			}
 		}
-
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Localisation',
-			'view' => 'locale'
+			'title' => 'Configuration',
+			'view' => 'index'
 		]);
 	}
 
-
-	/** 
-	 * Sécurité de la connexion
-	 **/
-	public function safety() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-			$this->setData([ 'config', 'captchaStrong', $this->getInput('configAdvancedCaptchaStrong',helper::FILTER_BOOLEAN)]);
-			$this->setData([ 'config', 'autoDisconnect', $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN)]);
-			$this->setData([ 'config', 'connect' => [
-				'attempt' => $this->getInput('configAdvancedConnectAttempt',helper::FILTER_INT),
-				'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
-				'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
-				'anonymousIp' => $this->getInput('configAdvancedConnectAnonymousIp',helper::FILTER_INT),
-				'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN)
-			]]);
-		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration avancée',
-			'view' => 'safety'
-		]);
-	}
-
-		/**
-	 * Configuration
-	 */
-	public function social() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Sauvegarder
-			$this->setData([ 'config', 'analyticsId', $this->getInput('configAdvancedAnalyticsId')]);
-			$this->setData([ 'config',	'social' => [
-				'facebookId' => $this->getInput('configAdvancedSocialFacebookId'),
-				'linkedinId' => $this->getInput('configAdvancedSocialLinkedinId'),
-				'instagramId' => $this->getInput('configAdvancedSocialInstagramId'),
-				'pinterestId' => $this->getInput('configAdvancedSocialPinterestId'),
-				'twitterId' => $this->getInput('configAdvancedSocialTwitterId'),
-				'youtubeId' => $this->getInput('configAdvancedSocialYoutubeId'),
-				'youtubeUserId' => $this->getInput('configAdvancedSocialYoutubeUserId'),
-				'githubId' => $this->getInput('configAdvancedSocialGithubId')
-			]]);
-
-			$this->setData([ 'config', 	'seo' => [
-					'robots' => $this->getInput('configAdvancedSeoRobots',helper::FILTER_BOOLEAN)
-			]]);
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées ' ,
-				'state' => true
-			]);
-		}
-
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Référencement',
-			'view' => 'social'
-		]);
-	}
-
-
-	/**
-	 * Configuration avancée
-	 */
-	public function network() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Sauvegarder
-			$this->setData([ 'config', 'proxyType', $this->getInput('configAdvancedProxyType')]);
-			$this->setData([ 'config', 'proxyUrl', $this->getInput('configAdvancedProxyUrl')]);
-			$this->setData([ 'config', 'proxyUrl', $this->getInput('configAdvancedProxyUrl')]);
-			$this->setData([ 'config', 'smtp' => [
-				'enable' => $this->getInput('configAdvancedSmtpEnable',helper::FILTER_BOOLEAN),
-				'host' => $this->getInput('configAdvancedSmtpHost',helper::FILTER_STRING_SHORT),
-				'port' => $this->getInput('configAdvancedSmtpPort',helper::FILTER_INT),
-				'auth' => $this->getInput('configAdvancedSmtpAuth',helper::FILTER_BOOLEAN),
-				'secure' => $this->getInput('configAdvancedSmtpSecure'),
-				'username' => $this->getInput('configAdvancedSmtpUsername',helper::FILTER_STRING_SHORT),
-				'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configAdvancedSmtpPassword')),
-				'sender' => $this->getInput('configAdvancedSmtpSender',helper::FILTER_MAIL)
-			]]);
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées ' ,
-				'state' => true
-			]);
-		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Reseau et scripts',
-			'view' => 'network'
-		]);
-	}
 
 	public function script() {
 		// Soumission du formulaire

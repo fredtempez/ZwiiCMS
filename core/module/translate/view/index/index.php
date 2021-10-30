@@ -16,7 +16,7 @@
 			]); ?>
 		</div>
 		<div class="col3 offset3">
-		<?php echo template::button('configAdvancedButton', [
+		<?php echo template::button('translateButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => 'Utilitaire de copie',
 			'ico' => 'cog-alt',
