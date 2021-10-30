@@ -47,7 +47,7 @@
 			<div class="row">
 				<div class="col12 textAlignCenter">
 					<?php echo template::captcha('formCaptcha', [
-						'limit' => $this->getData(['config','captchaStrong'])
+						'limit' => $this->getData(['config','connect', 'captchaStrong'])
 					]); ?>
 				</div>
 			</div>
