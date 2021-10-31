@@ -482,7 +482,18 @@ class config extends common {
 						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [
-						'enable' => $this->getData(['config', 'i18n', 'enable'])
+						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),
+						'scriptGoogle'      => $this->getData(['config', 'i18n', 'scriptGoogle']),
+						'showCredits' 	 	=> $this->getData(['config', 'i18n', 'showCredits']),
+						'autoDetect' 	 	=> $this->getData(['config', 'i18n', 'autoDetect']),
+						'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
+						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
+						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
+						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),
+						'es' 			 	=> $this->getData(['config', 'i18n', 'es']),
+						'it' 			 	=> $this->getData(['config', 'i18n', 'it']),
+						'nl' 			 	=> $this->getData(['config', 'i18n', 'nl']),
+						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
 					]
 				]
 			]);
