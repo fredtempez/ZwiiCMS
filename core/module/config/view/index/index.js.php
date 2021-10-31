@@ -117,6 +117,7 @@ $( document).ready(function() {
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","setup");
     });
     $("#configLocalButton").on("click", function() {
         $("#setupContainer").hide();
@@ -129,6 +130,7 @@ $( document).ready(function() {
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","locale");
     });
     $("#configSocialButton").on("click", function() {
         $("#connectContainer").hide();
@@ -141,6 +143,7 @@ $( document).ready(function() {
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","social");
     });
     $("#configConnectButton").on("click", function() {
         $("#setupContainer").hide();
@@ -153,6 +156,7 @@ $( document).ready(function() {
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","connect");
     });
     $("#configNetworkButton").on("click", function() {
         $("#setupContainer").hide();
@@ -165,6 +169,53 @@ $( document).ready(function() {
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").addClass("activeButton");
+        setCookie("configLayout","network");
     });
 
 });
+
+$( document).ready(function() {
+    var configLayout = getCookie("configLayout");
+    if (configLayout == null) {
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").hide();
+        $("#setupContainer").show();
+        $("#configSetupButton").addClass("activeButton");
+        $("#configLocalButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","setup");
+    }
+    $("#localeContainer").hide();
+    $("#socialContainer").hide();
+    $("#connectContainer").hide();
+    $("#networkContainer").hide();
+    $("#setupContainer").hide();
+    $("#" + configLayout + "Container" ).show();
+
+});
+
+
+function setCookie(name,value,days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}

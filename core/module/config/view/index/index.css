@@ -21,10 +21,6 @@
     display: block;
 }
 
-#localeContainer, #socialContainer, #connectContainer, #networkContainer {
-    display: none;
-}
-
 .activeButton {
     filter : brightness(125%);    
 }
