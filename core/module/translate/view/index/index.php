@@ -34,11 +34,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Traduction automatique
-				<span class="helpDisplayButton">
-					<?php echo template::ico('help', 'left');?>
-				</span>
-			</h4>
+			<h4>Traduction automatique</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
