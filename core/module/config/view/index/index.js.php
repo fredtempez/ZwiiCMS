@@ -172,7 +172,11 @@ $( document).ready(function() {
         setCookie("configLayout","network");
     });
 
-    /** Boutons d'aide */
+    /** 
+     * Boutons d'aide
+     *  Page des paramètres
+     */
+
     $("#setupHelpButton").on("click", function() {
         $("#setupHelpContainer").slideDown();
     });
@@ -181,6 +185,23 @@ $( document).ready(function() {
     });
     $("#maintenanceHelpButton").on("click", function() {
         $("#maintenanceHelpContainer").slideDown();
+    });
+
+    /** 
+     * Boutons d'aide
+     *  Page des locales
+     */
+
+    $("#localeHelpButton").on("click", function() {
+        $("#localeHelpContainer").slideDown();
+    });
+    $("#labelHelpButton").on("click", function() {
+        console.log("e");
+        $("#labelHelpContainer").slideDown();
+    });
+    $("#specialeHelpButton").on("click", function() {
+        console.log("f");
+        $("#specialeHelpContainer").slideDown();
     });
 
     /** Bouton de fermeture */

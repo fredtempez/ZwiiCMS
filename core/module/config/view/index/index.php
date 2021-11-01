@@ -43,28 +43,50 @@
         </div>
     </div>
 </div>
-<!-- Aide en ligne SETUP -->
-<div class="row">
-    <div class="col12 helpDisplayContainer" id="setupHelpContainer">
+
+<!-- SETUP -->
+<div class="row helpDisplayContainer" id="setupHelpContainer">
+    <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup.help.html') ?>
+        <?php include ('core/module/config/view/setup/setup0.help.html') ?>
     </div>
 </div>
-<div class="row">
-    <div class="col12 helpDisplayContainer" id="updateHelpContainer">
+<div class="row helpDisplayContainer" id="updateHelpContainer">
+    <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup_update.help.html') ?>
+        <?php include ('core/module/config/view/setup/setup1.help.html') ?>
     </div>
 </div>
-<div class="row">
-    <div class="col12 helpDisplayContainer" id="maintenanceHelpContainer">
+<div class="row helpDisplayContainer" id="maintenanceHelpContainer">
+    <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup_maintenance.help.html') ?>
+        <?php include ('core/module/config/view/setup/setup2.help.html') ?>
     </div>
 </div>
-<!-- Pages de configuration -->
 <?php include ('core/module/config/view/setup/setup.php') ?>
+
+<!-- LOCALISATION --> 
+<div class="row helpDisplayContainer" id="localeHelpContainer">
+    <div class="col12">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/locale/locale0.help.html') ?>
+    </div>
+</div>
+<div class="row helpDisplayContainer" id="labelHelpContainer">
+    <div class="col12">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/locale/locale1.help.html') ?>
+    </div>
+</div>
+<div class="row helpDisplayContainer" id="specialeHelpContainer">
+    <div class="col12">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/locale/locale2.help.html') ?>
+    </div>
+</div>
 <?php include ('core/module/config/view/locale/locale.php') ?>
+
+
 <?php include ('core/module/config/view/social/social.php') ?>
 <?php include ('core/module/config/view/connect/connect.php') ?>
 <?php include ('core/module/config/view/network/network.php') ?>

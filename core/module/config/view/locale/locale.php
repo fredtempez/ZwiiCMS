@@ -17,8 +17,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Identité du site (en langue <?php echo template::flag('site', '20px');?> )</h4>
-				<p><em>Cette page doit être adaptée à chaque traduction rédigée.</em></p>
+				<h4>Identité du site (<?php echo template::flag('site', '20px');?> )
+					<span id="localeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>				
 				<div class="row">
 					<div class="col9">
 						<?php echo template::text('localeTitle', [
@@ -50,7 +53,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Etiquettes des pages spéciales</h4>
+			<h4>Etiquettes des pages spéciales
+					<span id="labelHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::text('localeLegalPageLabel', [
@@ -80,7 +87,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Assignation des pages spéciales</h4>
+				<h4>Assignation des pages spéciales
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('localeHomePageId', helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC'), [

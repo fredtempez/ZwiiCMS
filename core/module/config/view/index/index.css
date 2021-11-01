@@ -28,6 +28,8 @@
 /** Div d'aide */
 
 .helpDisplayContainer {
+    position: sticky;
+    background-color: white;
 	display: none;
 	width: 100%;
 	padding: 10px 10px;
