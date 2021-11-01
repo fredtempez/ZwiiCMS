@@ -183,7 +183,7 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#setupContainer").show();
         $("#configSetupButton").addClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
