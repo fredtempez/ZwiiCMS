@@ -478,12 +478,12 @@ $(document).ready(function(){
 		};
 	});
 
-  /**
-   * Active le système d'aide interne
-   *
-  */
+	/**
+	 * Active le système d'aide interne
+	 *
+	 */
 
-  $(".buttonHelp").click(function() {
+	$(".buttonHelp").click(function() {
 			$(".helpDisplayContent").slideToggle();
 			/**
 			if( $(".buttonHelp").css('opacity') > '0.75'){

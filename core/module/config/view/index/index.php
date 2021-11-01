@@ -8,14 +8,7 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2">
-		<?php echo template::button('Help', [
-			'class' => 'buttonHelp',
-			'ico' => 'help',
-			'value' => 'Aide'
-		]); ?>
-	</div>
-	<div class="col2 offset6">
+	<div class="col2 offset8">
 		<?php echo template::submit('Submit'); ?>
 	</div>
 </div>
@@ -48,6 +41,25 @@
                 ]); ?>
             </div>
         </div>
+    </div>
+</div>
+<!-- Aide en ligne SETUP -->
+<div class="row">
+    <div class="col12 helpDisplayContainer" id="setupHelpContainer">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/setup/setup.help.html') ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col12 helpDisplayContainer" id="updateHelpContainer">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/setup/setup_update.help.html') ?>
+    </div>
+</div>
+<div class="row">
+    <div class="col12 helpDisplayContainer" id="maintenanceHelpContainer">
+        <?php echo template::ico('cancel'); ?>
+        <?php include ('core/module/config/view/setup/setup_maintenance.help.html') ?>
     </div>
 </div>
 <!-- Pages de configuration -->

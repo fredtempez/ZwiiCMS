@@ -24,3 +24,21 @@
 .activeButton {
     filter : brightness(125%);    
 }
+
+/** Div d'aide */
+
+.helpDisplayContainer {
+	display: none;
+	width: 100%;
+	padding: 10px 10px;
+    -webkit-box-shadow: 5px 5px 11px 0px #222222;
+    box-shadow: 5px 5px 11px 0px #222222;
+    border-radius: 5px;
+    z-index: 30;
+}
+
+/** Bouton d'aide et croix de fermeture */
+
+.zwiico-cancel, .helpDisplayButton {
+    cursor: pointer;
+}

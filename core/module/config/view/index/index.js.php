@@ -172,6 +172,23 @@ $( document).ready(function() {
         setCookie("configLayout","network");
     });
 
+    /** Boutons d'aide */
+    $("#setupHelpButton").on("click", function() {
+        $("#setupHelpContainer").slideDown();
+    });
+    $("#updateHelpButton").on("click", function() {
+        $("#updateHelpContainer").slideDown();
+    });
+    $("#maintenanceHelpButton").on("click", function() {
+        $("#maintenanceHelpContainer").slideDown();
+    });
+
+    /** Bouton de fermeture */
+
+	$(".zwiico-cancel").click(function() {
+		$(".helpDisplayContainer").slideUp();
+	});
+
 });
 
 $( document).ready(function() {

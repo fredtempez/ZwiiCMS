@@ -2,7 +2,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres</h4>
+				<h4>Paramètres
+					<span id="setupHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::file('configFavicon', [
@@ -48,7 +52,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Mises à jour automatisée</h4>
+				<h4>Mises à jour automatisées
+					<span id="updateHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 				<div class="row">
 					<div class="col4">
@@ -81,7 +89,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Maintenance</h4>
+				<h4>Maintenances
+					<span id="maintenanceHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
