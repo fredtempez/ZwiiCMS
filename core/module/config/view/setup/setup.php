@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres
+				<h4>Configuration
 					<span id="setupHelpButton" class="helpDisplayButton">
 						<?php echo template::ico('help', 'left');?>
 					</span>
@@ -52,7 +52,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Mises à jour automatisées
+				<h4>Mise à jour automatisée
 					<span id="updateHelpButton" class="helpDisplayButton">
 						<?php echo template::ico('help', 'left');?>
 					</span>
