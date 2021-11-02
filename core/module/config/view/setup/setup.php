@@ -125,7 +125,8 @@
 					<div class="col3">
 						<?php echo template::button('configBackupCopyButton', [
 							'href' => helper::baseUrl() . 'config/copyBackups',
-							'value' => 'Backups Auto &#10140; FileManager'
+							'value' => 'Sauvegardes automatiques',
+							'ico' => 'download-cloud'
 						]); ?>
 					</div>
 				</div>
