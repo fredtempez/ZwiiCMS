@@ -15,8 +15,7 @@ $( document).ready(function() {
         $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         if ($("input[name=configBackupOption]").is(':checked')) {
-            $("body").addClass("loading");
-            $(".modal").addClass("alertMessage");
+            $('body').css('cursor', 'wait');
         }
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
         $.ajax({
@@ -24,17 +23,15 @@ $( document).ready(function() {
             url: url,
             data: $("form").serialize(),
             success: function(data){
-                $("body").removeClass("loading");
+                $('body').css('cursor', 'default');
                 core.alert("La sauvegarde a été générée avec succès.");
             },
             error: function(data){
-                $("body").removeClass("loading");
+    
+                $('body').css('cursor', 'default');
                 core.alert("Une erreur s'est produite, la sauvegarde n'a pas été générée !");
             },
             complete: function(){
-                if ($("input[name=configBackupOption]").is(':checked')) {
-                    $(".modal").removeClass("alertMessage");
-                }
                 $("#configBackupSubmit").removeClass("disabled").prop("disabled", false);
             }
         });
