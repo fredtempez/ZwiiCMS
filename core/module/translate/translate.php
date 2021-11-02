@@ -46,6 +46,7 @@ class translate extends common {
 				// Création du dossier
 				if (is_dir(self::DATA_DIR . $toCreate) === false ) { // Si le dossier est déjà créé
 					$success  = mkdir (self::DATA_DIR . $toCreate, 0755);
+					$success  = mkdir (self::DATA_DIR . $toCreate.'/content', 0755);
 				} else {
 					$success = true;
 				}
@@ -53,6 +54,7 @@ class translate extends common {
 				$success  = (copy (self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
 				$success  = (copy (self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
 				$success  = (copy (self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
+				$success  = ($this->copyDir (self::DATA_DIR . $copyFrom . '/content', self::DATA_DIR . $toCreate . '/content') === true && $success  === true) ? true : false;
 				// Enregistrer la langue
 				if ($success) {
 					$this->setData(['config', 'i18n', $toCreate, 'site' ]);
