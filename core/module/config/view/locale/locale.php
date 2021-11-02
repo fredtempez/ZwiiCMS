@@ -17,7 +17,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Identité du site (<?php echo template::flag('site', '20px');?> )
+				<h4>Identité du site <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton">
 						<?php echo template::ico('help', 'left');?>
 					</span>
@@ -44,40 +44,6 @@
 							'label' => 'Description du site',
 							'value' => $this->getData(['locale', 'metaDescription']),
 							'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
-						]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-			<h4>Etiquettes des pages spéciales
-					<span id="labelHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
-					</span>
-				</h4>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::text('localeLegalPageLabel', [
-							'label' => 'Mentions légales',
-							'placeholder' => 'Mentions légales',
-							'value' => $this->getData(['locale', 'legalPageLabel'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::text('localeSearchPageLabel', [
-							'label' => 'Rechercher',
-							'placeholder' => 'Rechercher',
-							'value' => $this->getData(['locale', 'searchPageLabel'])
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::text('localeSitemapPageLabel', [
-							'label' => 'Plan du site',
-							'placeholder' => 'Plan du site',
-							'value' => $this->getData(['locale', 'sitemapPageLabel']),
 						]); ?>
 					</div>
 				</div>
@@ -137,6 +103,40 @@
 								'selected' =>$this->getData(['locale', 'page302']),
 								'help' => 'Cette page ne doit pas apparaître dans l\'arborescence du menu. Créez une page orpheline.'
 							]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+			<h4>Etiquettes des pages spéciales <?php echo template::flag('site', '20px');?>
+					<span id="labelHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
+				<div class="row">
+					<div class="col4">
+						<?php echo template::text('localeLegalPageLabel', [
+							'label' => 'Mentions légales',
+							'placeholder' => 'Mentions légales',
+							'value' => $this->getData(['locale', 'legalPageLabel'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::text('localeSearchPageLabel', [
+							'label' => 'Rechercher',
+							'placeholder' => 'Rechercher',
+							'value' => $this->getData(['locale', 'searchPageLabel'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::text('localeSitemapPageLabel', [
+							'label' => 'Plan du site',
+							'placeholder' => 'Plan du site',
+							'value' => $this->getData(['locale', 'sitemapPageLabel']),
+						]); ?>
 					</div>
 				</div>
 			</div>
