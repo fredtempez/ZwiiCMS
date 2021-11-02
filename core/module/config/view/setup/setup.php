@@ -89,7 +89,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Maintenances
+				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
 						<?php echo template::ico('help', 'left');?>
 					</span>
