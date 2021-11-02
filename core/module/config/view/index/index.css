@@ -25,7 +25,7 @@
     filter : brightness(125%);    
 }
 
-/** Div d'aide */
+/** Div d'aide 
 
 .helpDisplayContainer {
     position: sticky;
@@ -39,8 +39,9 @@
     z-index: 30;
 }
 
-/** Bouton d'aide et croix de fermeture */
+/** Bouton d'aide et croix de fermeture
 
 .zwiico-cancel, .helpDisplayButton {
     cursor: pointer;
 }
+*/

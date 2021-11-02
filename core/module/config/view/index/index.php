@@ -8,7 +8,14 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+    <div class="col2 ">
+			<?php echo template::button('translateAdvancedHelp', [
+				'class' => 'buttonHelp',
+				'ico' => 'help',
+				'value' => 'Aide'
+			]); ?>
+		</div>
+	<div class="col2 offset6">
 		<?php echo template::submit('Submit'); ?>
 	</div>
 </div>
@@ -44,46 +51,40 @@
     </div>
 </div>
 
-<!-- SETUP -->
+<!-- SETUP
 <div class="row helpDisplayContainer" id="setupHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup0.help.html') ?>
     </div>
 </div>
 <div class="row helpDisplayContainer" id="updateHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup1.help.html') ?>
     </div>
 </div>
 <div class="row helpDisplayContainer" id="maintenanceHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/setup/setup2.help.html') ?>
     </div>
-</div>
+</div> -->
 <?php include ('core/module/config/view/setup/setup.php') ?>
 
-<!-- LOCALISATION --> 
+<!-- LOCALISATION 
 <div class="row helpDisplayContainer" id="localeHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/locale/locale0.help.html') ?>
     </div>
 </div>
 <div class="row helpDisplayContainer" id="labelHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/locale/locale1.help.html') ?>
     </div>
 </div>
 <div class="row helpDisplayContainer" id="specialeHelpContainer">
     <div class="col12">
         <?php echo template::ico('cancel'); ?>
-        <?php include ('core/module/config/view/locale/locale2.help.html') ?>
     </div>
-</div>
+</div>--> 
 <?php include ('core/module/config/view/locale/locale.php') ?>
 
 

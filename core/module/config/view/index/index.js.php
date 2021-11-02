@@ -175,41 +175,40 @@ $( document).ready(function() {
     /** 
      * Boutons d'aide
      *  Page des paramètres
-     */
+    
 
     $("#setupHelpButton").on("click", function() {
-        $("#setupHelpContainer").slideDown();
+        
     });
     $("#updateHelpButton").on("click", function() {
-        $("#updateHelpContainer").slideDown();
+        
     });
     $("#maintenanceHelpButton").on("click", function() {
-        $("#maintenanceHelpContainer").slideDown();
-    });
+        
+    }); */
 
     /** 
      * Boutons d'aide
      *  Page des locales
-     */
+    
 
     $("#localeHelpButton").on("click", function() {
-        $("#localeHelpContainer").slideDown();
+        
     });
     $("#labelHelpButton").on("click", function() {
-        console.log("e");
-        $("#labelHelpContainer").slideDown();
+        
     });
     $("#specialeHelpButton").on("click", function() {
         console.log("f");
-        $("#specialeHelpContainer").slideDown();
-    });
+        
+    }); */
 
-    /** Bouton de fermeture */
+    /** Bouton de fermeture 
 
 	$(".zwiico-cancel").click(function() {
 		$(".helpDisplayContainer").slideUp();
 	});
-
+    */
 });
 
 $( document).ready(function() {
