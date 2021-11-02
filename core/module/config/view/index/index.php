@@ -11,6 +11,8 @@
     <div class="col2 ">
 			<?php echo template::button('translateAdvancedHelp', [
 				'class' => 'buttonHelp',
+                'href' => 'https://doc.zwiicms.fr/menu-configurer',
+                'target' => '_blank',
 				'ico' => 'help',
 				'value' => 'Aide'
 			]); ?>
@@ -51,43 +53,9 @@
     </div>
 </div>
 
-<!-- SETUP
-<div class="row helpDisplayContainer" id="setupHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div>
-<div class="row helpDisplayContainer" id="updateHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div>
-<div class="row helpDisplayContainer" id="maintenanceHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div> -->
+
 <?php include ('core/module/config/view/setup/setup.php') ?>
-
-<!-- LOCALISATION 
-<div class="row helpDisplayContainer" id="localeHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div>
-<div class="row helpDisplayContainer" id="labelHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div>
-<div class="row helpDisplayContainer" id="specialeHelpContainer">
-    <div class="col12">
-        <?php echo template::ico('cancel'); ?>
-    </div>
-</div>--> 
 <?php include ('core/module/config/view/locale/locale.php') ?>
-
-
 <?php include ('core/module/config/view/social/social.php') ?>
 <?php include ('core/module/config/view/connect/connect.php') ?>
 <?php include ('core/module/config/view/network/network.php') ?>
