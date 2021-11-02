@@ -4,7 +4,9 @@
 			<div class="block">
 				<h4>Configuration
 					<span id="setupHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/parametres#setup" target="_blank">
 						<?php echo template::ico('help', 'left');?>
+					</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -54,7 +56,9 @@
 			<div class="block">
 				<h4>Mise à jour automatisée
 					<span id="updateHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/parametres#update" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
@@ -91,7 +95,9 @@
 			<div class="block">
 				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/parametres#maintenance" target="_blank">
 						<?php echo template::ico('help', 'left');?>
+					</a>
 					</span>
 				</h4>
 				<div class="row">

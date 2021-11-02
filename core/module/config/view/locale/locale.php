@@ -2,7 +2,13 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Langues étrangères</h4>
+				<h4>Langues étrangères
+					<span id="localeHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/localisation#i18n" target="_blank">
+						<?php echo template::ico('help', 'left');?>
+					</a>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col12">
 						<?php echo template::checkbox('localei18n', true, 'Activer la gestion des langues étrangères', [
@@ -19,7 +25,9 @@
 			<div class="block">
 				<h4>Identité du site <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/localisation#id" target="_blank">
 						<?php echo template::ico('help', 'left');?>
+					</a>
 					</span>
 				</h4>				
 				<div class="row">
@@ -54,6 +62,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>Assignation des pages spéciales
+					<a href="https://doc.zwiicms.fr/localisation#assignation" target="_blank">	
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<?php echo template::ico('help', 'left');?>
 					</span>
@@ -113,7 +122,9 @@
 			<div class="block">
 			<h4>Etiquettes des pages spéciales <?php echo template::flag('site', '20px');?>
 					<span id="labelHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/localisation#speciales" target="_blank">
 						<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">

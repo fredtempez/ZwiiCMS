@@ -175,7 +175,7 @@ $( document).ready(function() {
     /** 
      * Boutons d'aide
      *  Page des paramètres
-    
+   
 
     $("#setupHelpButton").on("click", function() {
         
@@ -185,12 +185,12 @@ $( document).ready(function() {
     });
     $("#maintenanceHelpButton").on("click", function() {
         
-    }); */
+    });  */
 
     /** 
      * Boutons d'aide
      *  Page des locales
-    
+     
 
     $("#localeHelpButton").on("click", function() {
         
@@ -201,7 +201,7 @@ $( document).ready(function() {
     $("#specialeHelpButton").on("click", function() {
         console.log("f");
         
-    }); */
+    });*/
 
     /** Bouton de fermeture 
 
