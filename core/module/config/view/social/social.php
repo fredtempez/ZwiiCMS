@@ -2,7 +2,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres</h4>
+				<h4>Paramètres
+					<a href="https://doc.zwiicms.fr/referencement" target="_blank">	
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col4 offset1">
 						<div class="row">
@@ -45,7 +50,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Réseaux sociaux</h4>
+				<h4>Réseaux sociaux
+					<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank">	
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::text('socialFacebookId', [
@@ -112,7 +122,13 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Scripts externes</h4>
+				<h4>Scripts externes					
+					<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank">	
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
+				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::text('seoAnalyticsId', [
