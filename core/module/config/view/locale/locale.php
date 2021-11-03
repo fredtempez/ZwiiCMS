@@ -19,7 +19,7 @@
 			<div class="block">
 				<h4>Identité du site <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton">
-					<a href="https://doc.zwiicms.fr/identite-et-localisation" target="_blank">
+					<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
 						<?php echo template::ico('help', 'left');?>
 					</a>
 					</span>
