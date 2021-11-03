@@ -1,6 +1,9 @@
 # Changelog
 
 ## Version 11.1.01
+- Corrections :
+    - Langues : bug de l'utilitaire de  copie de site.
+    - Fichier robots.txt non copié si absent.
 - Modifications : 
     - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
 
