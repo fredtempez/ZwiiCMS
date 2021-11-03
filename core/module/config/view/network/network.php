@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Réseau</h4>
+				<h4>Paramètres</h4>
 				<div class="row">
 					<div class="col2">
 						<?php echo template::select('configProxyType', $module::$proxyType, [
