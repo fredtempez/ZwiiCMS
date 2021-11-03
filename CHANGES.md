@@ -2,7 +2,14 @@
 
 ## Version 11.2.00
 - Modifications : 
-    - Disposition des options du menu de  configuration du site.
+    - Disposition des options de configuration du site.
+    - Les écrans d'aide renvoient vers le site doc.zwiicms.fr
+
+## Version 11.1.01
+- Corrections :
+    - Langues : bug de l'utilitaire de  copie de site.
+    - Fichier robots.txt non copié si absent.
+- Modifications : 
     - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
 
 ## Version 11.1.00
