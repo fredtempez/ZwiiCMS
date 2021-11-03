@@ -26,7 +26,7 @@
         <div class="row textAlignCenter">
             <div class="col2">
                 <?php echo template::button('configSetupButton', [
-                    'value' => 'Paramètres'
+                    'value' => 'Configuration'
                 ]); ?>
             </div>
             <div class="col2">

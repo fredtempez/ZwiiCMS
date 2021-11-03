@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Configuration
+				<h4>Paramètres
 					<span id="setupHelpButton" class="helpDisplayButton">
 					<a href="https://doc.zwiicms.fr/parametres" target="_blank">
 						<?php echo template::ico('help', 'left');?>
