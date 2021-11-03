@@ -1898,8 +1898,10 @@ class common {
 									helper::baseUrl() .
 									$parentPageId . '"' .
 									($parentPageId === $currentPageId ? ' selected' : false) .
-									($this->getData(['page', $parentPageId, 'disable']) === true ? ' class="inactive"' : '') .
-									'>' .
+									'class="' .
+									($this->getData(['page', $parentPageId, 'disable']) === true ? 'pageInactive' : '') .
+									($this->getData(['page', $parentPageId, 'position']) === 0 ? ' pageHidden' : '') .
+									'">' .
 									$this->getData(['page', $parentPageId, 'title']) .
 									'</option>';
 						foreach($childrenPageIds as $childKey) {
@@ -1907,8 +1909,10 @@ class common {
 											helper::baseUrl() .
 											$childKey . '"' .
 											($childKey === $currentPageId ? ' selected' : false) .
-											($this->getData(['page', $childKey, 'disable']) === true ? ' class="inactive"' : '') .
-											'>&nbsp;&nbsp;&nbsp;&nbsp;' .
+											'class="' .
+											($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '') .
+											($this->getData(['page', $childKey, 'position']) === 0 ? ' pageHidden' : '') .
+											'">&nbsp;&nbsp;&nbsp;&nbsp;' .
 											$this->getData(['page', $childKey, 'title']) .
 											'</option>';
 						}
