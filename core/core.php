@@ -950,6 +950,8 @@ class common {
 		if ($this->getData(['config','seo', 'robots']) === true) {
 			unlink('robots.txt');
 			$sitemap->updateRobots();
+		} else {
+			file_put_contents('robots.txt','User-agent: *' .  PHP_EOL . 'Disallow: /');
 		}
 		
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
