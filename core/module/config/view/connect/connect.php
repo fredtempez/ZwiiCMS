@@ -2,7 +2,13 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Sécurité de la connexion</h4>
+				<h4>Sécurité de la connexion
+				<a href="https://doc.zwiicms.fr/connexion" target="_blank">	
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
@@ -63,7 +69,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Journalisation</h4>
+				<h4>Journalisation
+					<a href="https://doc.zwiicms.fr/journalisation" target="_blank">	
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<?php echo template::ico('help', 'left');?>
+					</span>
+				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::checkbox('connectLog', true, 'Activer la journalisation', [

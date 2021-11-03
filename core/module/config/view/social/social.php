@@ -128,7 +128,6 @@
 						<?php echo template::ico('help', 'left');?>
 					</span>
 				</h4>
-				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::text('seoAnalyticsId', [
