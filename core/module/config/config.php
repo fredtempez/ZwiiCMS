@@ -527,7 +527,18 @@ class config extends common {
 						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
 					],
 					'i18n' => [
-						'enable' => $this->getData(['config', 'i18n', 'enable'])
+						'enable' => $this->getData(['config', 'i18n', 'enable']),
+						'scriptGoogle'      => $this->getData(['config', 'i18n', 'scriptGoogle']),
+						'showCredits' 	 	=> $this->getData(['config', 'i18n', 'showCredits']),
+						'autoDetect' 	 	=> $this->getData(['config', 'i18n', 'autoDetect']),
+						'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
+						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
+						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
+						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),
+						'es' 			 	=> $this->getData(['config', 'i18n', 'es']),
+						'it' 			 	=> $this->getData(['config', 'i18n', 'it']),
+						'nl' 			 	=> $this->getData(['config', 'i18n', 'nl']),
+						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
 					]
 				]
 			]);
