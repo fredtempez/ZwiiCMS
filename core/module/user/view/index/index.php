@@ -8,7 +8,7 @@
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::button('translateAdvancedHelp', [
+		<?php echo template::button('userHelp', [
 			'href' => 'https://doc.zwiicms.fr/gestion-des-utilisateurs',
 			'target' => '_blank',
 			'ico' => 'help',

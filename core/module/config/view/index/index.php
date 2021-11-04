@@ -9,7 +9,7 @@
 		]); ?>
 	</div>
     <div class="col2 ">
-			<?php echo template::button('translateAdvancedHelp', [
+			<?php echo template::button('configHelp', [
 				'class' => 'buttonHelp',
                 'href' => 'https://doc.zwiicms.fr/configuration-du-site',
                 'target' => '_blank',

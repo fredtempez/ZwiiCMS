@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('translateAdvancedHelp', [
+			<?php echo template::button('translateHelp', [
 				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
 				'target' => '_blank',
 				'ico' => 'help',
