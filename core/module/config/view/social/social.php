@@ -124,9 +124,10 @@
 			<div class="block">
 				<h4>Scripts externes					
 					<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank">	
-					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
-					</span>
+						<span id="specialeHelpButton" class="helpDisplayButton">
+							<?php echo template::ico('help', 'left');?>
+						</span>
+					</a>
 				</h4>
 				<div class="row">
 					<div class="col3">
