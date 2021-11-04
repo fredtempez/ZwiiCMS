@@ -2,12 +2,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Sécurité de la connexion
-				<a href="https://doc.zwiicms.fr/connexion" target="_blank">	
+				<h4>Sécurité de la connexion				
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/connexion" target="_blank">	
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
-				</h4>
 				</h4>
 				<div class="row">
 					<div class="col4">
@@ -70,9 +70,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>Journalisation
-					<a href="https://doc.zwiicms.fr/journalisation" target="_blank">	
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/journalisation" target="_blank">	
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">

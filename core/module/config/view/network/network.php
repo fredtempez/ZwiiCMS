@@ -3,9 +3,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>Paramètres
-					<a href="https://doc.zwiicms.fr/reseau" target="_blank">	
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/reseau" target="_blank">	
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -36,10 +37,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>SMTP				
-				<a href="https://doc.zwiicms.fr/smtp" target="_blank">	
+				<h4>SMTP									
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/smtp" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">

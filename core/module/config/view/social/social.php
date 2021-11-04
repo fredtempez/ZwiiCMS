@@ -2,10 +2,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres
-					<a href="https://doc.zwiicms.fr/referencement" target="_blank">	
+				<h4>Paramètres					
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/referencement" target="_blank">	
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -50,10 +51,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Réseaux sociaux
-					<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank">	
+				<h4>Réseaux sociaux					
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank">	
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -122,12 +124,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Scripts externes					
-					<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank">	
-						<span id="specialeHelpButton" class="helpDisplayButton">
-							<?php echo template::ico('help', 'left');?>
-						</span>
-					</a>
+				<h4>Scripts externes										
+					<span id="specialeHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank">
+								<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 				</h4>
 				<div class="row">
 					<div class="col3">

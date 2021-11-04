@@ -4,9 +4,9 @@
 			<div class="block">
 				<h4>Paramètres
 					<span id="setupHelpButton" class="helpDisplayButton">
-					<a href="https://doc.zwiicms.fr/parametres" target="_blank">
-						<?php echo template::ico('help', 'left');?>
-					</a>
+						<a href="https://doc.zwiicms.fr/parametres" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -95,9 +95,9 @@
 			<div class="block">
 				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
-					<a href="https://doc.zwiicms.fr/maintenance" target="_blank">
-						<?php echo template::ico('help', 'left');?>
-					</a>
+						<a href="https://doc.zwiicms.fr/maintenance" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
