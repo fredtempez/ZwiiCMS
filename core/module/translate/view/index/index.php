@@ -10,9 +10,11 @@
 		</div>
 		<div class="col2">
 			<?php echo template::button('translateAdvancedHelp', [
-				'class' => 'buttonHelp',
+				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
+				'target' => '_blank',
 				'ico' => 'help',
-				'value' => 'Aide'
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
 			]); ?>
 		</div>
 		<div class="col3 offset3">
@@ -26,10 +28,6 @@
 		<div class="col2">
 			<?php echo template::submit('translateFormSubmit'); ?>
 		</div>
-	</div>
-	<!-- Aide à propos de la configuration du site, view advanced -->
-	<div class="helpDisplayContent">
-		<?php echo file_get_contents( 'core/module/translate/view/index/index.help.html') ;?>
 	</div>
 	<div class="row">
 		<div class="col12">
