@@ -56,9 +56,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>Assignation des pages spéciales
-					<a href="https://doc.zwiicms.fr/assignation-des-pages-speciales" target="_blank">	
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/assignation-des-pages-speciales" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
 					</span>
 				</h4>
 				<div class="row">
@@ -116,8 +117,8 @@
 			<div class="block">
 			<h4>Etiquettes des pages spéciales <?php echo template::flag('site', '20px');?>
 					<span id="labelHelpButton" class="helpDisplayButton">
-					<a href="https://doc.zwiicms.fr/etiquettes-des-pages-speciales" target="_blank">
-						<?php echo template::ico('help', 'left');?>
+						<a href="https://doc.zwiicms.fr/etiquettes-des-pages-speciales" target="_blank">
+							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
 				</h4>
