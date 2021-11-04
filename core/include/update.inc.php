@@ -681,6 +681,17 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['config', 'connect', 'autoDisconnect', $this->getData(['config', 'autoDisconnect'])]);
 	$this->deleteData(['config', 'autoDisconnect']);
 
+	// Ajout de la variable shortTitle basée sur Title
+	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+		$pageList [] = $parentKey;
+		foreach ($parentValue as $childKey) {
+			$pageList [] = $childKey;
+		}
+	}
+	foreach ($pageList as $parentKey => $parent) {
+		$this->setData(['page', $parent, 'shortTitle', $this->getData(['page', $parent, 'title']) ]);
+	}
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }

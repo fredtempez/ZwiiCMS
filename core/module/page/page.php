@@ -142,6 +142,7 @@ class page extends common {
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
 				'title' => $pageTitle,
+				'shortTitle' => $pageTitle,
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
@@ -426,6 +427,7 @@ class page extends common {
 							'group' => $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0,
 							'targetBlank' => $this->getInput('pageEditTargetBlank', helper::FILTER_BOOLEAN),
 							'title' => $this->getInput('pageEditTitle', helper::FILTER_STRING_SHORT),
+							'shortTitle' => $this->getInput('pageEditShortTitle', helper::FILTER_STRING_SHORT, true),
 							'block' => $this->getinput('pageEditBlock'),
 							'barLeft' => $barLeft,
 							'barRight' => $barRight,
@@ -495,6 +497,8 @@ class page extends common {
 						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 					}
 			}
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->pages2Json();
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),

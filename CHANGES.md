@@ -3,7 +3,9 @@
 ## Version 11.2.00
 - Modifications : 
     - Disposition des options de configuration du site.
+    - Pages : il est désormais possible de donner un nom de page court qui sera utilisé dans le menu du site, dans les abrres latérales et dans les sélecteurs de page (éditeur / lien). En revanche le nom de la page affiché en haut de celle-ci est inchangé. Dans la plupart des cas le titre court sera identique au titre.
     - Les écrans d'aide renvoient vers le site doc.zwiicms.fr
+    - Mise en évidence du statut des pages dans la liste de la barre d'administration. Rouge italique : page orpheline ; Orange gras page inactive.
 
 ## Version 11.1.01
 - Corrections :

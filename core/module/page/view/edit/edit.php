@@ -1,9 +1,6 @@
-<?php
-echo template::formOpen('pageEditForm');
-	// Mise à jour de la liste des pages pour TinyMCE
-	$this->pages2Json(); ?>
+<?php echo template::formOpen('pageEditForm'); ?>
 	<div class="row">
-	<div class="col2">
+		<div class="col2">
 			<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
     		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
 			<?php echo template::button('pageEditBack', [
@@ -68,13 +65,20 @@ echo template::formOpen('pageEditForm');
 					</div>
 				</div>
 				<div class="row">
-					<div class="col4">
+					<div class="col2">
+								<?php echo template::text('pageEditShortTitle', [
+									'label' => 'Titre Court',
+									'value' => $this->getData(['page', $this->getUrl(2), 'shortTitle']),
+									'help' => 'Le titre court est affiché dans les menus. Il peut être identique au titre de la page.'
+								]); ?>
+							</div>
+					<div class="col3">
 						<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
 								'label' => 'Aspect du lien',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
                         <?php echo template::file('pageIconUrl', [
 							'help' => 'Sélectionnez une image ou une icône de petite dimension',
                             'label' => 'Icône',

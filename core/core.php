@@ -800,23 +800,23 @@ class common {
 			if ($this->getData(['page', $parentId, 'block']) !== 'bar' ) {
 				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
 				foreach($childIds as $childId) {
-					$children [] = [ 'title' => ' » '. html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES) ,
+					$children [] = [ 'title' => ' » '. html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES) ,
 								'value'=> $rewrite.$childId
 					];
 				}
 				// Traitement
 				if (empty($childIds)) {
 					// Pas d'enfant, uniquement l'entrée du parent
-					$parents [] = ['title' =>   html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES) ,
+					$parents [] = ['title' =>   html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES) ,
 									'value'=> $rewrite.$parentId
 					];
 				} else {
 					// Des enfants, on ajoute la page parent en premier
-					array_unshift ($children ,  ['title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES) ,
+					array_unshift ($children ,  ['title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES) ,
 									'value'=> $rewrite.$parentId
 					]);
 					// puis on ajoute les enfants au parent
-					$parents [] = ['title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES) ,
+					$parents [] = ['title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES) ,
 									'value'=> $rewrite.$parentId ,
 									'menu' => $children
 					];
@@ -1584,24 +1584,24 @@ class common {
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
 				case '' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				    break;
 				case 'text' :
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				    break;
 				case 'icon' :
 				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    $itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
+				    $itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'shortTitle']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" />';
 				    } else {
-				    $itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				    $itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				    }
 				    break;
 				case 'icontitle' :
 				    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-				    	$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
-				   	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']).'"/>';
+				    	$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'titlshortTitlee']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $parentPageId, 'iconUrl']).'" data-tippy-content="';
+				   	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']).'"/>';
 				    } else {
-				  	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+				  	 	$itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				    }
 					break;
 		       }
@@ -1644,32 +1644,32 @@ class common {
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
 					case '' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']);
 						break;
 					case 'text' :
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']);
 						break;
 					case 'icon' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'shortTitle']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
 						} else {
-						$itemsLeft .= $this->getData(['page', $parentPageId, 'title']);
+						$itemsLeft .= $this->getData(['page', $parentPageId, 'shortTitle']);
 						}
 						break;
 					case 'icontitle' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']).'"/>';
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'shortTitle']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" data-tippy-content="';
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']).'"/>';
 						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']);
 						}
 						break;
 					case 'icontext' :
 						if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'title']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$itemsLeft .= '<img alt="'.$this->getData(['page', $parentPageId, 'shortTitle']).'" src="'. helper::baseUrl(false) .self::FILE_DIR.'source/'.$this->getData(['page', $childKey, 'iconUrl']).'" />';
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']);
 						} else {
-						$itemsLeft .= $this->getData(['page', $childKey, 'title']);
+						$itemsLeft .= $this->getData(['page', $childKey, 'shortTitle']);
 						}
 						break;
 				}
@@ -1757,7 +1757,7 @@ class common {
 				} else {
 						$items .= '<a href="'. helper::baseUrl() . $parentPageId . '"' . $targetBlank .  $active .'>';
 				}
-				$items .= $this->getData(['page', $parentPageId, 'title']);
+				$items .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				$items .= '</a>';
 			}
 			$itemsChildren = '';
@@ -1780,7 +1780,7 @@ class common {
 					$itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>';
 				}
 
-				$itemsChildren .= $this->getData(['page', $childKey, 'title']);
+				$itemsChildren .= $this->getData(['page', $childKey, 'shortTitle']);
 				$itemsChildren .= '</a></li>';
 			}
 			// Concatène les items enfants
@@ -1844,7 +1844,6 @@ class common {
 			$notificationClass = 'notificationSuccess';
 		}
 		if(common::$inputNotices) {
-			var_dump ( common::$inputNotices );
 			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
 			$notificationClass = 'notificationError';
 		}
@@ -1898,22 +1897,22 @@ class common {
 									helper::baseUrl() .
 									$parentPageId . '"' .
 									($parentPageId === $currentPageId ? ' selected' : false) .
-									'class="' .
+									' class="' .
 									($this->getData(['page', $parentPageId, 'disable']) === true ? 'pageInactive' : '') .
 									($this->getData(['page', $parentPageId, 'position']) === 0 ? ' pageHidden' : '') .
 									'">' .
-									$this->getData(['page', $parentPageId, 'title']) .
+									$this->getData(['page', $parentPageId, 'shortTitle']) .
 									'</option>';
 						foreach($childrenPageIds as $childKey) {
 							$leftItems .= '<option value="' .
 											helper::baseUrl() .
 											$childKey . '"' .
 											($childKey === $currentPageId ? ' selected' : false) .
-											'class="' .
+											' class="' .
 											($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '') .
 											($this->getData(['page', $childKey, 'position']) === 0 ? ' pageHidden' : '') .
 											'">&nbsp;&nbsp;&nbsp;&nbsp;' .
-											$this->getData(['page', $childKey, 'title']) .
+											$this->getData(['page', $childKey, 'shortTitle']) .
 											'</option>';
 						}
 					}
@@ -1922,9 +1921,9 @@ class common {
 				// Afficher les barres
 				$leftItems .= '<optgroup label="Barres latérales">';
 				foreach($this->getHierarchy(null, false,true) as $parentPageId => $childrenPageIds) {
-					$leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'title']) . '</option>';
+					$leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
 					foreach($childrenPageIds as $childKey) {
-						$leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']) . '</option>';
+						$leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'shortTitle']) . '</option>';
 					}
 				}
 				$leftItems .= '</optgroup>';
