@@ -4,6 +4,7 @@
 - Corrections :
     - Langues : bug de l'utilitaire de  copie de site.
     - Fichier robots.txt non fourni lors les bots ne sont pas autorisés.
+    - Page parente ayant des pages enfants non affichées dans le menu : lors du renommage de la page, les pages enfants n'étaient pas actualisées.
 - Modifications : 
     - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
 
