@@ -43,7 +43,7 @@
 			<div class="block" id="info">
  				<h4>Informations générales
 				 	<span id="infoHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+						<a href="https://doc.zwiicms.fr/informations-generales" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -125,7 +125,7 @@
 			<div class="block" id="layout">
 				<h4>Mise en page
 					<span id="layoutHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+						<a href="https://doc.zwiicms.fr/les-barres-laterales" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -187,7 +187,7 @@
 			<div class="block" id="location">
 				<h4>Emplacement dans le menu
 					<span id="positionHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+						<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -255,7 +255,7 @@
 			<div class="block" id="advanced">
 				<h4>Options d'emplacement avancées
 					<span id="advancedHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+						<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -289,7 +289,7 @@
 			<div class="block" id="seo">
 				<h4>Permission et référencement
 				<span id="seoHelpButton" class="helpDisplayButton">
-					<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+					<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank">
 						<?php echo template::ico('help', 'left');?>
 					</a>
 				</span>
