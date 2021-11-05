@@ -10,7 +10,16 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset4">
+		<div class="col2">
+			<?php echo template::button('pageEditHelp', [
+				'href' => 'https://doc.zwiicms.fr/les-pages-simples',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
+			]); ?>
+		</div>
+		<div class="col2 offset2">
 			<?php echo template::button('pageEditDuplicate', [
 				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
 				'value' => 'Dupliquer',
@@ -32,7 +41,13 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block" id="info">
- 				<h4>Informations générales</h4>
+ 				<h4>Informations générales
+				 	<span id="infoHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
+				 </h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('pageEditTitle', [
@@ -109,6 +124,11 @@
 		<div class="col12" id="pageEditBlockLayout">
 			<div class="block" id="layout">
 				<h4>Mise en page
+					<span id="layoutHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 					<div class="openClose">
 						<?php
 						echo template::ico('plus-circled','right');
@@ -166,6 +186,11 @@
 		<div class="col12"  id="pageEditMenu">
 			<div class="block" id="location">
 				<h4>Emplacement dans le menu
+					<span id="positionHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 					<div class="openClose">
 						<?php
 						echo template::ico('plus-circled','right');
@@ -229,6 +254,11 @@
 		<div class="col12">
 			<div class="block" id="advanced">
 				<h4>Options d'emplacement avancées
+					<span id="advancedHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 					<div class="openClose">
 						<?php
 						echo template::ico('plus-circled','right');
@@ -258,6 +288,11 @@
 		<div class="col12">
 			<div class="block" id="seo">
 				<h4>Permission et référencement
+				<span id="seoHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
+						<?php echo template::ico('help', 'left');?>
+					</a>
+				</span>
 				<div class="openClose">
 						<?php
 						echo template::ico('plus-circled','right');
