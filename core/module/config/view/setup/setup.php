@@ -95,7 +95,7 @@
 			<div class="block">
 				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/maintenance" target="_blank">
+						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
