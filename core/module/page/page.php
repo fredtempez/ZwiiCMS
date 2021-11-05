@@ -377,7 +377,7 @@ class page extends common {
 					}
 					// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 					$lastPosition = 1;
-					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId'),null) : array_keys($this->getHierarchy());
+					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
 					foreach($hierarchy as $hierarchyPageId) {
 						// Ignore la page en cours de modification
