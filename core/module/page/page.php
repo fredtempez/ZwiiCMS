@@ -258,7 +258,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer une page contenant des enfants
-		elseif($this->getHierarchy($url[0])) {
+		elseif($this->getHierarchy($url[0],null)) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
@@ -326,7 +326,7 @@ class page extends common {
 							$pageId = helper::increment($pageId, self::$coreModuleIds);
 							$pageId = helper::increment($pageId, self::$moduleIds);
 						// Met à jour les enfants
-						foreach($this->getHierarchy($this->getUrl(2)) as $childrenPageId) {
+						foreach($this->getHierarchy($this->getUrl(2),null) as $childrenPageId) {
 							$this->setData(['page', $childrenPageId, 'parentPageId', $pageId]);
 						}
 						// Change l'id de page dans les données des modules
@@ -377,7 +377,7 @@ class page extends common {
 					}
 					// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 					$lastPosition = 1;
-					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
+					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId'),null) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
 					foreach($hierarchy as $hierarchyPageId) {
 						// Ignore la page en cours de modification
