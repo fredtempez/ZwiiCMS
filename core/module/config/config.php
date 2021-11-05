@@ -514,7 +514,7 @@ class config extends common {
 			// Notice
 			if(self::$inputNotices === []) {
 				// Active la réécriture d'URL
-				$rewrite = $this->getInput('rewrite', helper::FILTER_BOOLEAN);
+				$rewrite = $this->getInput('configRewrite', helper::FILTER_BOOLEAN);
 				if(
 					$rewrite
 					AND helper::checkRewrite() === false
