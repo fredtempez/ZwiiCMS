@@ -2233,7 +2233,6 @@ class core extends common {
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 			// Bannière
-			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 			if($this->getData(['theme', 'header', 'margin'])) {
 				if($this->getData(['theme', 'menu', 'position']) === 'site-first') {
 					$css .= 'header{margin:0 20px}';
@@ -2242,18 +2241,21 @@ class core extends common {
 					$css .= 'header{margin:20px 20px 0 20px}';
 				}
 			}
-			$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
-			$css .= 'header{background-color:' . $colors['normal'];
-
-			// Valeur de hauteur traditionnelle
-			$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) ;
-
-			$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
-			if($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
-				$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
+			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
+				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
+				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
+				$css .= 'header{background-color:' . $colors['normal'];
+	
+				// Valeur de hauteur traditionnelle
+				$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) ;
+	
+				$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
+				if($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
+					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
+				}
+				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';	
 			}
-			$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-			$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			// Menu
 			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));
 			$css .= 'nav,nav.navMain a{background-color:' . $colors['normal'] . '}';

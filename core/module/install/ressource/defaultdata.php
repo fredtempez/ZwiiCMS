@@ -157,7 +157,9 @@ class init extends common {
 				'textTransform' => 'none',
 				'linkHomePage' => true,
 				'imageContainer' => 'auto',
-				'tinyHidden' => true
+				'tinyHidden' => true,
+				'feature' => 'wallpaper',
+				'featureContent' => '<p>Bannière vide</p>'
 			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',

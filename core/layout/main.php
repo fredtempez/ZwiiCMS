@@ -61,20 +61,24 @@
 		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>			
 			<header <?php if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;?>>
 				<?php ?>
-				<?php echo $this->getData(['theme','header','linkHomePage']) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+				<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
 				<div id="headerContainer" class="container">
-				<?php if(
-					$this->getData(['theme', 'header', 'textHide']) === false
-					// Affiche toujours le titre de la bannière pour l'édition du thème
-					OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
-				): ?>
-						<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
-				<?php else: ?>
-						<span id="themeHeaderTitle">&nbsp;</span>
+					<?php if ($this->getData(['theme','header','feature']) === 'wallpaper' ): ?>
+						<?php if(
+							$this->getData(['theme', 'header', 'textHide']) === false
+							// Affiche toujours le titre de la bannière pour l'édition du thème
+							OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
+						): ?>
+								<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+						<?php else: ?>
+								<span id="themeHeaderTitle">&nbsp;</span>
+						<?php endif; ?>
+					<?php else: ?>
+					<?php echo $this->getData(['theme','header','content']);?>
 				<?php endif; ?>
-				</div> <!--fin container -->
-				<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
+			</div> <!--fin container -->
 			</header>
+			<?php echo ( $this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 		<?php endif; ?>
 
 		<!-- Menu dans le fond du site après la bannière -->
@@ -110,24 +114,26 @@
 						)
 					): ?>
 						<!-- Bannière dans le site -->
-						<?php echo $this->getData(['theme','header','linkHomePage']) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
-						<header class="
-							<?php echo $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ''; ?>
-							<?php echo $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay' : ''; ?> 
-						">
+						<?php echo  ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+						<header class="<?php echo $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ''; ?>
+									   <?php echo $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay' : ''; ?>   ">
 							<div id="headerContainer" class="container">
-								<?php if(
-									$this->getData(['theme', 'header', 'textHide']) === false
-									// Affiche toujours le titre de la bannière pour l'édition du thème
-									OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
-								): ?>
-									<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+								<?php if ($this->getData(['theme','header','feature']) === 'wallpaper' ): ?>
+									<?php if(
+										$this->getData(['theme', 'header', 'textHide']) === false
+										// Affiche toujours le titre de la bannière pour l'édition du thème
+										OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
+									): ?>
+										<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+									<?php else: ?>
+											<span id="themeHeaderTitle">&nbsp;</span>
+									<?php endif; ?>
 								<?php else: ?>
-										<span id="themeHeaderTitle">&nbsp;</span>
+									<?php echo $this->getData(['theme','header','content']);?>
 								<?php endif; ?>
 							</div> <!--fin container -->
 						</header>
-						<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
+						<?php echo ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 				<?php endif; ?>
 			<?php if(
 				$this->getData(['theme', 'menu', 'position']) === 'site-second' ||

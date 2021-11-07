@@ -17,50 +17,39 @@
         <div class="block">
             <h4>Paramètres</h4>
             <div class="row">
-                <div class="col3">
+                <div class="col6">
+                    <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
+							'label' => 'Nature de contenu',
+							'selected' => $this->getData(['theme', 'header', 'feature'])
+						]); ?>
+                </div>
+                <div class="col6">
                     <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
 							'label' => 'Position',
 							'selected' => $this->getData(['theme', 'header', 'position'])
 						]); ?>
                 </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
-                            'label' => 'Adaptation',
-                            'selected' => $this->getData(['theme', 'header', 'imageContainer']),
-                            'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
-                                Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
-                                Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
-                        ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
-							'label' => 'Hauteur maximale',
-                            'selected' => $this->getData(['theme', 'header', 'height']),
-                            'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
-							'label' => 'Alignement du contenu',
-							'selected' => $this->getData(['theme', 'header', 'textAlign'])
-						]); ?>
-                </div>
-
             </div>
             <div class="row">
-                <div class="col6">
+                <div class="col4">
                     <div id="themeHeaderSmallDisplay" class="displayNone">
                             <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
                                     'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
                                 ]); ?>
                     </div>                    
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <div id="themeHeaderPositionOptions" class="displayNone">
                         <?php echo template::checkbox('themeHeaderMargin', true, 'Aligner la bannière avec le contenu', [
                                 'checked' => $this->getData(['theme', 'header', 'margin'])
                             ]); ?>
                     </div>
+                </div>
+                <div class="col4">
+                    <?php echo template::select('themeHeaderContainer', $module::$containers, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'header', 'container'])
+						]); ?>
                 </div>
             </div>
         </div>
@@ -94,7 +83,42 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Image</h4>
+            <h4>Mise en forme du titre</h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::select('themeHeaderFont', $module::$fonts, [
+							'label' => 'Police',
+							'selected' => $this->getData(['theme', 'header', 'font']),
+							'fonts' => true
+						]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
+							'label' => 'Taille',
+							'help' => 'Proportionnelle à celle définie dans le site.',
+							'selected' => $this->getData(['theme', 'header', 'fontSize'])
+						]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
+							'label' => 'Style',
+							'selected' => $this->getData(['theme', 'header', 'fontWeight'])
+						]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
+							'label' => 'Casse',
+							'selected' => $this->getData(['theme', 'header', 'textTransform'])
+						]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>Papier peint</h4>
             <div class="row">
                 <div class="col12">
                     <?php
@@ -149,33 +173,13 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Mise en forme du texte</h4>
+            <h4>Contenu personnalisé</h4>
             <div class="row">
-                <div class="col3">
-                    <?php echo template::select('themeHeaderFont', $module::$fonts, [
-							'label' => 'Police',
-							'selected' => $this->getData(['theme', 'header', 'font']),
-							'fonts' => true
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
-							'label' => 'Taille',
-							'help' => 'Proportionnelle à celle définie dans le site.',
-							'selected' => $this->getData(['theme', 'header', 'fontSize'])
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
-							'label' => 'Style',
-							'selected' => $this->getData(['theme', 'header', 'fontWeight'])
-						]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
-							'label' => 'Casse',
-							'selected' => $this->getData(['theme', 'header', 'textTransform'])
-						]); ?>
+                <div class="col12">
+                    <?php echo template::textarea('themeHeaderContent', [
+                        'class' => 'editorWysiwyg',
+                        'value' => $this->getData(['theme', 'header', 'featureContent'])
+                    ]); ?>
                 </div>
             </div>
         </div>

@@ -32,21 +32,27 @@
                     ?>
                 </div>
                 <div class="col6">
+                    <?php echo template::select('themeMenuContainer', $module::$containers, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'menu', 'container'])
+						]); ?>
+                </div>
+            </div>
+            <div class="row">
+               <div class="col4">
                     <?php echo template::select('themeMenuRadius', $module::$menuRadius, [
                     'label' => 'Bords arrondis',
                     'selected' => $this->getData(['theme', 'menu', 'radius']),
                     'help' => 'Autour de la page sélectionnée'
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeMenuHeight', $module::$menuHeights, [
                     'label' => 'Hauteur',
                     'selected' => $this->getData(['theme', 'menu', 'height'])
                 ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
                     'label' => 'Alignement du contenu',
                     'selected' => $this->getData(['theme', 'menu', 'textAlign'])

@@ -69,6 +69,10 @@ class theme extends common {
 		'Ubuntu' => 'Ubuntu',
 		'Vollkorn' => 'Vollkorn'
 	];
+	public static $containers = [
+		'container' => 'Largeur du site',
+		'container-large' => 'Largeur de la page'
+	];
 	public static $footerblocks = [
 		1 => [
 			'hide' => 'Masqué',
@@ -132,6 +136,10 @@ class theme extends common {
 		'body' => 'Au dessus du site',
 		'site' => 'Dans le site',
 		'hide' => 'Cachée'
+	];
+	public static $headerFeatures = [
+		'wallpaper' => 'Couleur unie ou papier-peint',
+		'content'   => 'Contenu personnalisé'
 	];
 	public static $imagePositions = [
 		'top left' => 'En haut à gauche',
@@ -435,6 +443,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
 				'height' => $this->getInput('themeHeaderHeight'),
+				'container' => $this->getInput('themeHeaderContainer'),
 				'image' => $this->getInput('themeHeaderImage'),
 				'imagePosition' => $this->getInput('themeHeaderImagePosition'),
 				'imageRepeat' => $this->getInput('themeHeaderImageRepeat'),
@@ -446,7 +455,9 @@ class theme extends common {
 				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
-				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN)
+				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
+				'feature' => $this->getInput('themeHeaderFeature'),
+				'featureContent' => $this->getInput('themeHeaderContent', null)
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )
@@ -474,7 +485,8 @@ class theme extends common {
 		$this->addOutput([
 			'title' => 'Personnalisation de la bannière',
 			'vendor' => [
-				'tinycolorpicker'
+				'tinycolorpicker',
+				'tinymce'
 			],
 			'view' => 'header'
 		]);
@@ -504,6 +516,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeMenuFontSize'),
 				'fontWeight' => $this->getInput('themeMenuFontWeight'),
 				'height' => $this->getInput('themeMenuHeight'),
+				'container' => $this->getInput('themeMenuContainer'),
 				'loginLink' => $this->getInput('themeMenuLoginLink', helper::FILTER_BOOLEAN),
 				'margin' => $this->getInput('themeMenuMargin', helper::FILTER_BOOLEAN),
 				'position' => $this->getInput('themeMenuPosition'),
