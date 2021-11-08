@@ -23,10 +23,6 @@
 			]); ?>
 	</div>
 </div>
-<!-- Aide à propos de la gestion des utilisateurs, view import -->
-<div class="helpDisplayContent">
-	<?php echo file_get_contents( 'core/module/user/view/import/import.help.html') ;?>
-</div>
 <div class="row">
     <div class="col12">
         <div class="block">
