@@ -8,13 +8,15 @@
             'value' => 'Retour'
         ]); ?>
     </div>
-    <div class="col2">
-      <?php echo template::button('translateIndexHelp', [
-        'class' => 'buttonHelp',
-        'ico' => 'help',
-        'value' => 'Aide'
-      ]); ?>
-    </div>
+	<div class="col2">
+		<?php echo template::button('userHelp', [
+			'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
+			'target' => '_blank',
+			'ico' => 'help',
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
+		]); ?>
+	</div>
     <div class="col2 offset6">
 		<?php echo template::submit('userImportSubmit', [
 				'value' => 'Importer'
