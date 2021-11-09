@@ -11,35 +11,23 @@
  * @link http://zwiicms.fr/
  */
 
- /*
- * Chargement de l'aperçu
- */
-$(document).ready(function() {
-
-	/**
-	* Option de marge si la taille n'est pas fluide
-	*/
-	if ($('#themeSiteWidth').val() === '100%') {
-		$("#themeSiteMargin").prop("checked", true);
-		$("#themeSiteMargin").addClass("disabled");
-	} else {
-		$("#themeSiteMargin").addClass("enabled");
-	}
-
-	// Charger l'aperçu initial
-	previewDOM();
-
-});
 
 
 /**
  * Aperçu en direct
  */
-$("input, select").on("change",function() {
-	previewDOM();
-});
+ $("input, select").on("change",function() {
 
-function previewDOM() {
+	/**
+	* Option de marge si la taille n'est pas fluide
+	*/
+	if ($('#themeSiteWidth').val() === '100%') {
+		console.log ("pop");
+		$("#themeSiteMarginWrapper").prop("checked", true);
+		$("#themeSiteMarginWrapper").hide();
+	} else {
+		$("#themeSiteMarginWrapper").show();
+	}
 
 	/**
 	 * Aperçu dans la boîte
@@ -96,7 +84,6 @@ function previewDOM() {
 
 	// Couleur ou image de fond
 	var backgroundImage = <?php echo json_encode(helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme','body','image'])); ?>;
-	console.log(backgroundImage);
 	var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;
 	if(backgroundImage) {
 		css += "div.bodybackground{background-image:url(" + backgroundImage + ");background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
@@ -125,4 +112,4 @@ function previewDOM() {
 		.text(css)
 		.appendTo("head");
 
-};
+}).trigger("change");
