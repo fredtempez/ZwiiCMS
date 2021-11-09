@@ -141,13 +141,22 @@
             </div>
             <div id="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
-                    <div class="col6">
+                    <div class="col4">
                         <?php echo template::select('themeHeaderImageRepeat', $module::$repeats, [
 								'label' => 'Répétition',
 								'selected' => $this->getData(['theme', 'header', 'imageRepeat'])
 							]); ?>
                     </div>
-                    <div class="col6">
+                    <div class="col4">
+                        <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
+                                'label' => 'Adaptation',
+                                'selected' => $this->getData(['theme', 'header', 'imageContainer']),
+                                'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
+                                    Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
+                                    Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
+                            ]); ?>
+                    </div>
+                    <div class="col4">
                         <?php echo template::select('themeHeaderImagePosition', $module::$imagePositions, [
 								'label' => 'Position',
 								'selected' => $this->getData(['theme', 'header', 'imagePosition'])
