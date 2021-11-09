@@ -103,6 +103,7 @@ $("input, select").on("change", function() {
 	else {
 		css += 'header{margin:0}';
 	}
+
 	// Position de la bannière
 	var positionNav = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
 	var positionHeader = $("#themeHeaderPosition").val();
@@ -220,5 +221,18 @@ $("#themeHeaderPosition").on("change", function() {
 	}
 	else {
 		$("#themeHeaderSmallDisplay").slideDown();
+	}
+}).trigger("change");
+
+// Affiche les blocs selon le type bannière
+$("#themeHeaderFeature").on("change", function() {
+	if($(this).val() === 'wallpaper') {
+		$(".wallpaperContainer").show();
+		$(".featureContainer").hide();
+	}
+	if($(this).val() === 'feature') {
+		$(".featureContainer").show();
+		$(".wallpaperContainer").hide();
+
 	}
 }).trigger("change");

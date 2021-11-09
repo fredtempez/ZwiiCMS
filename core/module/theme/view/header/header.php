@@ -17,20 +17,33 @@
         <div class="block">
             <h4>Paramètres</h4>
             <div class="row">
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
 							'label' => 'Nature de contenu',
 							'selected' => $this->getData(['theme', 'header', 'feature'])
 						]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
 							'label' => 'Position',
 							'selected' => $this->getData(['theme', 'header', 'position'])
 						]); ?>
                 </div>
+                <div class="col4">
+                    <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
+							'label' => 'Hauteur maximale',
+                            'selected' => $this->getData(['theme', 'header', 'height']),
+                            'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
+						]); ?>
+                </div>
             </div>
             <div class="row">
+                <div class="col4">
+                    <?php echo template::select('themeHeaderContainer', $module::$containers, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'header', 'container'])
+						]); ?>
+                </div>
                 <div class="col4">
                     <div id="themeHeaderSmallDisplay" class="displayNone">
                             <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
@@ -45,17 +58,11 @@
                             ]); ?>
                     </div>
                 </div>
-                <div class="col4">
-                    <?php echo template::select('themeHeaderContainer', $module::$containers, [
-							'label' => 'Largeur',
-							'selected' => $this->getData(['theme', 'header', 'container'])
-						]); ?>
-                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
             <h4>Couleurs</h4>
@@ -80,7 +87,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
             <h4>Mise en forme du titre</h4>
@@ -115,7 +122,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
             <h4>Papier peint</h4>
@@ -170,7 +177,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row featureContainer">
     <div class="col12">
         <div class="block">
             <h4>Contenu personnalisé</h4>
