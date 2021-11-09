@@ -22,149 +22,97 @@
  */
 $("input, select").on("change", function() {
 
-	// Affiche / Cache les options de l'image du fond
-	$("#themeHeaderImage").on("change", function() {
-		if($(this).val()) {
-			$("#themeHeaderImageOptions").slideDown();
-		}
-		else {
-			$("#themeHeaderImageOptions").slideUp(function() {
-				$("#themeHeaderTextHide").prop("checked", false).trigger("change");
-			});
-		}
-	}).trigger("change");
-
-	// Affiche / Cache les options de la position
-	$("#themeHeaderPosition").on("change", function() {
-		if($(this).val() === 'site') {
-			$("#themeHeaderPositionOptions").slideDown();
-		}
-		else {
-			$("#themeHeaderPositionOptions").slideUp(function() {
-				$("#themeHeaderMargin").prop("checked", false).trigger("change");
-			});
-		}
-	}).trigger("change");
-
-	// Affiche / Cache les options de la bannière cliquable si pas masquée
-	$("#themeHeaderPosition").on("change", function() {
-		if($(this).val() === 'hide') {
-			$("#themeHeaderShow").slideUp(function() {
-				$("#themeHeaderlinkHome").prop("checked", false).trigger("change");
-			});
-		}
-		else {
-			$("#themeHeaderShow").slideDown();
-		}
-	}).trigger("change");
-
-	// Affiche / Cache l'option bannière masquée en écran réduit
-	$("#themeHeaderPosition").on("change", function() {
-		if($(this).val() === 'hide') {
-			$("#themeHeaderSmallDisplay").slideUp();
-		}
-		else {
-			$("#themeHeaderSmallDisplay").slideDown();
-		}
-	}).trigger("change");
-
-	// Affiche les blocs selon le type bannière
-	$("#themeHeaderFeature").on("change", function() {
-		if($(this).val() === 'wallpaper') {
-			$(".wallpaperContainer").show();
-			$(".featureContainer").hide();
-		}
-		if($(this).val() === 'feature') {
-			$(".featureContainer").show();
-			$(".wallpaperContainer").hide();
-
-		}
-	}).trigger("change");
-
-
-
-
-	// Récupérer la taille de l'image
-	var tmpImg = new Image();
-	tmpImg.onload = function() {
-		// Informations affichées
-		$("#themeHeaderImageHeight").html(tmpImg.height + "px");
-		$("#themeHeaderImageWidth").html(tmpImg.width + "px");
-		$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
-
-		// Limiter la hauteur à 600 px
-		if (tmpImg.height > 600) {
-			tmpImgHeight = 600;
-		} else {
-			tmpImgHeight = tmpImg.height;
-		}
-
-		//Modifier la dropdown liste si une image n'est pas sélectionnée
-		if ($("#themeHeaderImage").val() !== "" ) {
-			// Une image est ajoutée ou changée
-			if ($("#themeHeaderHeight option").length === 5) {
-				// Pas d'image précédemment on ajoute l'option
-				$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
-			}
-			// Modifier la valeur
-			$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
-			// Modifier l'option
-			$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
-		}
-	};
-
-	if ($("#themeHeaderImage").val() === "" &&
-		$("#themeHeaderHeight option").length === 6 ) {
-		$("#themeHeaderHeight option:eq(0)").remove();
-	}
-
-	tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
-
-	// Import des polices de caractères
-	var headerFont = $("#themeHeaderFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
-
-	// Couleurs, image, alignement et hauteur de la bannière
-	console.log ($("#themeHeaderFeature").val());
-	if ($("#themeHeaderFeature").val() == "wallpaper") {
-		css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
-		if ($("#themeHeaderImage").val()) {
-			// Une image est sélectionnée
-			css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
-			css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
-		// Pas d'image sélectionnée
-		} else {
-			// Désactiver l'option responsive
-			css += "background-image:none;";
-		}
-		css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
-	}
+	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
 		css += "header{height:" + $("#themeHeaderHeight").val() + ";}";
+		$("#featureContent").appendTo("#headerContainer").show();
+		$("#themeHeaderTitle").hide();
+		$("header").css("background-color", "");
+		$("header").css("background-image", "none");
+		$("header").css("height", "");
+		$("header").css("line-height", "1.5");
+		$("header").css("text-align", "");
+	
+
 	}
 
-	// Taille, couleur, épaisseur et capitalisation du titre de la bannière
-	css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
-	// Cache le titre de la bannière
+	// Couleurs, image, alignement et hauteur de la bannière
+	if ($("#themeHeaderFeature").val() == "wallpaper") {
 
-	if($("#themeHeaderTextHide").is(":checked")) {
-		$("header #themeHeaderTitle").hide();
-	}
-	else {
-		$("header #themeHeaderTitle").show();
-	}
+		// Récupérer la taille de l'image
+		var tmpImg = new Image();
+		tmpImg.onload = function() {
+			// Informations affichées
+			$("#themeHeaderImageHeight").html(tmpImg.height + "px");
+			$("#themeHeaderImageWidth").html(tmpImg.width + "px");
+			$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
 
-	// Marge
-	if($("#themeHeaderMargin").is(":checked")) {
-		if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
-			css += 'header{margin:0 20px}';
+			// Limiter la hauteur à 600 px
+			if (tmpImg.height > 600) {
+				tmpImgHeight = 600;
+			} else {
+				tmpImgHeight = tmpImg.height;
+			}
+
+			//Modifier la dropdown liste si une image n'est pas sélectionnée
+			if ($("#themeHeaderImage").val() !== "" ) {
+				// Une image est ajoutée ou changée
+				if ($("#themeHeaderHeight option").length === 5) {
+					// Pas d'image précédemment on ajoute l'option
+					$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
+				}
+				// Modifier la valeur
+				$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
+				// Modifier l'option
+				$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
+			}
+		};
+
+		if ($("#themeHeaderImage").val() === "" &&
+			$("#themeHeaderHeight option").length === 6 ) {
+			$("#themeHeaderHeight option:eq(0)").remove();
+		}
+
+		tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
+
+		// Import des polices de caractères
+		var headerFont = $("#themeHeaderFont").val();
+		var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
+
+			css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
+			if ($("#themeHeaderImage").val()) {
+				// Une image est sélectionnée
+				css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
+				css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
+			// Pas d'image sélectionnée
+			} else {
+				// Désactiver l'option responsive
+				css += "background-image:none;";
+			}
+			css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
+	
+
+		// Taille, couleur, épaisseur et capitalisation du titre de la bannière
+		css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
+		// Cache le titre de la bannière
+
+		if($("#themeHeaderTextHide").is(":checked")) {
+			$("header #themeHeaderTitle").hide();
 		}
 		else {
-			css += 'header{margin:20px 20px 0 20px}';
+			$("header #themeHeaderTitle").show();
 		}
-	}
-	else {
-		css += 'header{margin:0}';
+
+		// Marge
+		if($("#themeHeaderMargin").is(":checked")) {
+			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
+				css += 'header{margin:0 20px}';
+			} else {
+				css += 'header{margin:20px 20px 0 20px}';
+			}
+		} else {
+			css += 'header{margin:0}';
+		}
 	}
 
 	// Position de la bannière
@@ -228,7 +176,7 @@ $("input, select").on("change", function() {
 		 positionNav === "site-second"
 		 )) {
 			$("nav").show().prependTo("#site");
-		 }
+	}
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
@@ -239,3 +187,60 @@ $("input, select").on("change", function() {
 		.appendTo("head");
 }).trigger("change");
 
+// Affiche / Cache les options de l'image du fond
+$("#themeHeaderImage").on("change", function() {
+	if($(this).val()) {
+		$("#themeHeaderImageOptions").slideDown();
+	}
+	else {
+		$("#themeHeaderImageOptions").slideUp(function() {
+			$("#themeHeaderTextHide").prop("checked", false).trigger("change");
+		});
+	}
+}).trigger("change");
+
+// Affiche / Cache les options de la position
+$("#themeHeaderPosition").on("change", function() {
+	if($(this).val() === 'site') {
+		$("#themeHeaderPositionOptions").slideDown();
+	}
+	else {
+		$("#themeHeaderPositionOptions").slideUp(function() {
+			$("#themeHeaderMargin").prop("checked", false).trigger("change");
+		});
+	}
+}).trigger("change");
+
+// Affiche / Cache les options de la bannière cliquable si pas masquée
+$("#themeHeaderPosition").on("change", function() {
+	if($(this).val() === 'hide') {
+		$("#themeHeaderShow").slideUp(function() {
+			$("#themeHeaderlinkHome").prop("checked", false).trigger("change");
+		});
+	}
+	else {
+		$("#themeHeaderShow").slideDown();
+	}
+}).trigger("change");
+
+// Affiche / Cache l'option bannière masquée en écran réduit
+$("#themeHeaderPosition").on("change", function() {
+	if($(this).val() === 'hide') {
+		$("#themeHeaderSmallDisplay").slideUp();
+	}
+	else {
+		$("#themeHeaderSmallDisplay").slideDown();
+	}
+}).trigger("change");
+
+// Affiche les blocs selon le type bannière
+$("#themeHeaderFeature").on("change", function() {
+	if($(this).val() === 'wallpaper') {
+		$(".wallpaperContainer").show();
+		$(".featureContainer").hide();
+	}
+	if($(this).val() === 'feature') {
+		$(".featureContainer").show();
+		$(".wallpaperContainer").hide();
+	}
+}).trigger("change");

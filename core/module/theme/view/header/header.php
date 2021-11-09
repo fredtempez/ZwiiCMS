@@ -201,4 +201,7 @@
         </div>
     </div>
 </div>
+<div id="featureContent" class="displayNone">
+    <?php echo $this->getData(['theme','header','featureContent']);?>
+</div>
 <?php echo template::formClose(); ?>

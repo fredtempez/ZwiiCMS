@@ -74,7 +74,9 @@
 								<span id="themeHeaderTitle">&nbsp;</span>
 						<?php endif; ?>
 					<?php else: ?>
-						<?php echo $this->getData(['theme','header','featureContent']);?>
+						<div id="featureContent">
+							<?php echo $this->getData(['theme','header','featureContent']);?>
+						</div>
 				<?php endif; ?>
 			</div> <!--fin container -->
 			</header>
@@ -128,7 +130,9 @@
 											<span id="themeHeaderTitle">&nbsp;</span>
 									<?php endif; ?>
 								<?php else: ?>
+									<div id="featureContent">
 									<?php echo $this->getData(['theme','header','featureContent']);?>
+									</diV>
 								<?php endif; ?>
 							</div> <!--fin container -->
 						</header>
