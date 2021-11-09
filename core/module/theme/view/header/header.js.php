@@ -65,20 +65,22 @@ $("input, select").on("change", function() {
 	var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
 
 	// Couleurs, image, alignement et hauteur de la bannière
-	css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
-
-	if ($("#themeHeaderImage").val()) {
-		// Une image est sélectionnée
-		css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
-		css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
-	// Pas d'image sélectionnée
-	} else {
-		// Désactiver l'option responsive
-		css += "background-image:none;";
+	if ($("#themeHeaderFeature") === "wallpaper") {
+		css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
+		if ($("#themeHeaderImage").val()) {
+			// Une image est sélectionnée
+			css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
+			css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
+		// Pas d'image sélectionnée
+		} else {
+			// Désactiver l'option responsive
+			css += "background-image:none;";
+		}
+		css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
 	}
-
-	css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
-
+	if ($("#themeHeaderFeature") === "feature") {
+		css += "header{height:" + $("#themeHeaderHeight").val() + ";}";
+	}
 
 	// Taille, couleur, épaisseur et capitalisation du titre de la bannière
 	css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
