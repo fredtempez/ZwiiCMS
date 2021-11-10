@@ -9,7 +9,7 @@
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::button('themeSiteHelp', [
+		<?php echo template::button('themeBodyHelp', [
 			'href' => 'https://doc.zwiicms.fr/arriere-plan',
 			'target' => '_blank',
 			'ico' => 'help',
