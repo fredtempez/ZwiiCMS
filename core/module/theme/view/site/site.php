@@ -8,7 +8,16 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset8">
+		<div class="col2">
+			<?php echo template::button('themeSiteHelp', [
+				'href' => 'https://doc.zwiicms.fr/site61863d315ffe0',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
+			]); ?>
+		</div>
+		<div class="col2 offset6">
 			<?php echo template::submit('themeSiteSubmit'); ?>
 		</div>
 	</div>
