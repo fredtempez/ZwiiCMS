@@ -45,6 +45,17 @@
 			]); ?>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col2 offset5">
+			<?php echo template::button('themeBack', [
+				'href' => 'https://doc.zwiicms.fr/theme-2',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
+			]); ?>
+		</div>
+	</div>
 <?php else: ?>
 	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation.'); ?>
 	<div class="row">
@@ -77,6 +88,17 @@
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS',
 				'ico' => 'code'
+			]); ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col2 offset5">
+			<?php echo template::button('themeBack', [
+				'href' => 'https://doc.zwiicms.fr/theme-2',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
 			]); ?>
 		</div>
 	</div>

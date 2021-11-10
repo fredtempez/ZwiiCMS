@@ -8,7 +8,16 @@
 				'value' => 'Retour'
 			]); ?>
     </div>
-    <div class="col2 offset8">
+    <div class="col2">
+      <?php echo template::button('themeSiteHelp', [
+        'href' => 'https://doc.zwiicms.fr/banniere',
+        'target' => '_blank',
+        'ico' => 'help',
+        'value' => 'Aide',
+        'class' => 'buttonHelp'
+      ]); ?>
+    </div>
+    <div class="col2 offset6">
         <?php echo template::submit('themeHeaderSubmit'); ?>
     </div>
 </div>
@@ -53,7 +62,7 @@
                             <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
                                     'checked' => $this->getData(['theme', 'header', 'tinyHidden'])
                                 ]); ?>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col6">
                     <div id="themeHeaderPositionOptions" class="displayNone">
