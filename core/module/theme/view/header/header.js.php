@@ -27,11 +27,11 @@ $("input, select").on("change", function() {
 		css += "header{height:" + $("#themeHeaderHeight").val() + ";}";
 		$("#featureContent").appendTo("#headerContainer").show();
 		$("#themeHeaderTitle").hide();
-		$("header").css("background-color", "");
-		$("header").css("background-image", "none");
-		$("header").css("height", "");
-		$("header").css("line-height", "1.5");
-		$("header").css("text-align", "");
+		//$("header").css("background-color", "");
+		//$("header").css("background-image", "none");
+		$("header").removeAttr("style");
+		//$("header").css("line-height", "1.5");
+		//$("header").css("text-align", "");
 	
 
 	}
