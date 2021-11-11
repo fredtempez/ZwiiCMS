@@ -70,8 +70,8 @@ class theme extends common {
 		'Vollkorn' => 'Vollkorn'
 	];
 	public static $containers = [
-		'container' => 'Largeur du site',
-		'container-large' => 'Largeur de la page'
+		'container' => 'Du site',
+		'container-large' => 'De la page'
 	];
 	public static $footerblocks = [
 		1 => [
