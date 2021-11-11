@@ -26,16 +26,17 @@ $("input, select").on("change", function() {
 
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
-		css = "header{height:" + $("#themeHeaderHeight").val() + ";line-height:1.3;background-color:'';background-image:'none'!important;}";
-		$("#featureContent").append("header").show();
+		css = "header{height:" + $("#themeHeaderHeight").val() + ";background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
-		$("header").css("background-image", "none");
-		$("header").css("background-color", "");
+
 	}
 
 	// Couleurs, image, alignement et hauteur de la bannière
 	if ($("#themeHeaderFeature").val() == "wallpaper") {
 
+		// Masque le contenu perso
+		$("#featureContent").hide();
 		// Récupérer la taille de l'image
 		var tmpImg = new Image();
 		tmpImg.onload = function() {
@@ -91,13 +92,13 @@ $("input, select").on("change", function() {
 
 		// Taille, couleur, épaisseur et capitalisation du titre de la bannière
 		css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
+		
 		// Cache le titre de la bannière
-
 		if($("#themeHeaderTextHide").is(":checked")) {
-			$("header #themeHeaderTitle").hide();
+			$("#themeHeaderTitle").hide();
 		}
 		else {
-			$("header #themeHeaderTitle").show();
+			$("#themeHeaderTitle").show();
 		}
 
 		// Marge
@@ -163,6 +164,18 @@ $("input, select").on("change", function() {
 					break;
 
 			}
+	}
+
+	// Largeur du header
+	switch ($("#themeHeaderContainer").val()) {
+		case "container":
+			$("header").removeClass("container-large");
+			$("header").addClass("container");
+			break;
+		case "container-large":
+			$("header").removeClass("container");
+			$("header").addClass("container-large");
+			break;
 	}
 
 	// La bannière est cachée, déplacer le menu dans le site
