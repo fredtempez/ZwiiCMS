@@ -212,9 +212,13 @@ $("#themeHeaderImage").on("change", function() {
 // Affiche / Cache les options de la position
 $("#themeHeaderPosition").on("change", function() {
 	if($(this).val() === 'site') {
+		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideDown();
 	}
 	else {
+		if($(this).val() === 'hide') {
+			$("#themeHeaderContainerWrapper").slideUp();
+		}
 		$("#themeHeaderPositionOptions").slideUp(function() {
 			$("#themeHeaderMargin").prop("checked", false).trigger("change");
 		});
