@@ -21,19 +21,16 @@
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
+	
+	var css = "";
 
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
-		css += "header{height:" + $("#themeHeaderHeight").val() + ";}";
-		$("#featureContent").appendTo("#headerContainer").show();
+		css = "header{height:" + $("#themeHeaderHeight").val() + ";line-height:1.3;background-color:'';background-image:'none'!important;}";
+		$("#featureContent").append("header").show();
 		$("#themeHeaderTitle").hide();
-		//$("header").css("background-color", "");
-		//$("header").css("background-image", "none");
-		$("header").removeAttr("style");
-		//$("header").css("line-height", "1.5");
-		//$("header").css("text-align", "");
-	
-
+		$("header").css("background-image", "none");
+		$("header").css("background-color", "");
 	}
 
 	// Couleurs, image, alignement et hauteur de la bannière

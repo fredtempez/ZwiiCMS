@@ -32,12 +32,7 @@
 							'selected' => $this->getData(['theme', 'header', 'feature'])
 						]); ?>
                 </div>
-                <div class="col4">
-                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
-							'label' => 'Position',
-							'selected' => $this->getData(['theme', 'header', 'position'])
-						]); ?>
-                </div>
+
                 <div class="col4">
                     <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
 							'label' => 'Hauteur maximale',
@@ -45,14 +40,14 @@
                             'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
 						]); ?>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeHeaderContainer', $module::$containers, [
-							'label' => 'Largeur',
-							'selected' => $this->getData(['theme', 'header', 'container'])
+                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
+							'label' => 'Position',
+							'selected' => $this->getData(['theme', 'header', 'position'])
 						]); ?>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col4">
                     <div id="themeHeaderSmallDisplay" class="displayNone">
                             <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
@@ -66,6 +61,12 @@
                                 'checked' => $this->getData(['theme', 'header', 'margin'])
                             ]); ?>
                     </div>
+                </div>
+                <div class="col4">
+                    <?php echo template::select('themeHeaderContainer', $module::$containers, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'header', 'container'])
+						]); ?>
                 </div>
             </div>
         </div>
@@ -101,30 +102,38 @@
         <div class="block">
             <h4>Mise en forme du titre</h4>
             <div class="row">
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::select('themeHeaderFont', $module::$fonts, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'header', 'font']),
 							'fonts' => true
 						]); ?>
                 </div>
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
 							'label' => 'Taille',
 							'help' => 'Proportionnelle à celle définie dans le site.',
 							'selected' => $this->getData(['theme', 'header', 'fontSize'])
 						]); ?>
                 </div>
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
 							'label' => 'Style',
 							'selected' => $this->getData(['theme', 'header', 'fontWeight'])
 						]); ?>
                 </div>
-                <div class="col3">
+            </div>
+            <div class="row">
+                <div class="col4 offset2">
                     <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
 							'label' => 'Casse',
 							'selected' => $this->getData(['theme', 'header', 'textTransform'])
+						]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
+							'label' => 'Alignement du contenu',
+							'selected' => $this->getData(['theme', 'header', 'textAlign'])
 						]); ?>
                 </div>
             </div>
