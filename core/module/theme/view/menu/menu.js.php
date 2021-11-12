@@ -121,6 +121,14 @@ $("input, select").on("change", function() {
 			$("nav").show().prependTo("#site");
 			break;
 	}
+
+	//  Largeur étendue
+	if ($("#themeMenuContainer").val() === 'none') {
+		$("#menu").removeClass();
+	} else {
+		$("#menu").addClass("container");
+	}
+
 	// Ajout du css au DOM
 	$("#themePreview").remove();
 	$("<style>")
@@ -177,7 +185,6 @@ $("#themeMenuActiveColorAuto").on("change", function() {
 
 // Affiche / Cache la sélection du logo pour le menu burger
 $("#themeMenuBurgerContent").on("change", function() {
-	console.log( $(this).val());
 	if($(this).val() === 'logo') {
 		$("#themeMenuBurgerLogoId").slideDown();
 	}

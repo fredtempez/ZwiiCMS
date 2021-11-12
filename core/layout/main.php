@@ -51,7 +51,15 @@
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" <?php echo $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"'; ?> >
+				<!-- fin du menu burger -->
+				<?php 
+					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
+					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
+								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
+								 $this->getData(['theme', 'menu', 'container']) === 'none' // étendue sur la page
+								 ? 'class="container-large"'  : 'class="container"';				 
+				?>
+				<div id="menu" <?php echo $menuClass; ?> >
 				<?php $this->showMenu(); ?>
 				</div> <!--fin menu -->
 			</nav>
@@ -89,11 +97,21 @@
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
 			
 			<nav>
+				<!-- Menu burger -->
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
+				<!-- fin du menu burger -->
+				<?php 
+					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
+					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
+								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
+								 $this->getData(['theme', 'menu', 'container']) === 'none' // étendue sur la page
+								 ? 'class="container-large"'  : 'class="container"';				 
+				?>
+				<div id="menu" <?php echo $menuClass; ?> >
+					<?php $this->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
 
@@ -119,7 +137,11 @@
 					): ?>
 						<!-- Bannière dans le site -->
 						<?php echo  ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
-						<header class="<?php echo $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ($this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay' : ''); ?>">
+						<?php 
+								$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
+								$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
+							?>
+							<header <?php echo empty($headerClass) ? '' : 'class="' . $headerClass . '"';?>>
 							<?php if ($this->getData(['theme','header','feature']) === 'wallpaper' ): ?>
 								<?php if(
 									$this->getData(['theme', 'header', 'textHide']) === false
