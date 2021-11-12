@@ -697,11 +697,11 @@ li .menuSideChild {
 
 /* Drapeaux */
 
-#i18nFlag {
+.i18nFlag {
 	width: 70%;
 }
 
-#i18nFlagSelected {
+.i18nFlagSelected {
 	width: 100%;
 }
 
@@ -714,12 +714,12 @@ li .menuSideChild {
 @media screen and (max-width:1024px){
 
 
-	#i18nFlag {
+	.i18nFlag {
 		width: 100%;
 		padding: 5px;
 	}
 
-	#i18nFlagSelected {
+	.i18nFlagSelected {
 		width: 130%;
 		padding:  5px;
 	}
