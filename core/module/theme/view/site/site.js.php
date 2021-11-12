@@ -16,7 +16,7 @@
 /**
  * Aperçu en direct
  */
- $("input, select").on("change",function() {
+$("input, select").on("change",function() {
 
 	/**
 	* Option de marge si la taille n'est pas fluide

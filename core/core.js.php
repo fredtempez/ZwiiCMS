@@ -223,7 +223,7 @@ core.start = function() {
 	 * Message sur l'utilisation des cookies
 	 */
 	var analytics = "";
-	if (<?php echo json_encode($this->getData(['config', 'analyticsId'])); ?>) {
+	if (<?php echo json_encode($this->getData(['config', 'seo', 'analyticsId'])); ?>) {
 		 analytics = ' grâce au cookie Google Analytics'
 	}
 	if(<?php echo json_encode($this->getData(['config', 'cookieConsent'])); ?>) {

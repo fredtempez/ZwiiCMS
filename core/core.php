@@ -2074,17 +2074,16 @@ class common {
 					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
 					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
 				   ) ) {
-					   $select = ' id="i18nFlagSelected" ';
+					   $select = ' class="i18nFlagSelected" ';
 				   } else {
-					   $select = ' id="i18nFlag" ';
+					   $select = ' class="i18nFlag" ';
 				   }
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" /></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png" alt=' .  $key . '/></a>';
 				echo '</li>';
 			}
 		}
-		echo '</ul>';
 	}
 }
 
