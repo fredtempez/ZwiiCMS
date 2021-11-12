@@ -116,7 +116,8 @@
 				<div class="row">
 					<div class="col12">
 						<?php echo template::captcha('blogArticleCaptcha', [
-							'limit' => $this->getData(['config','connect', 'captchaStrong'])
+							'limit' => $this->getData(['config','connect', 'captchaStrong']),
+							'type' => $this->getData(['config','connect', 'captchaType'])
 						]); ?>
 					</div>
 				</div>

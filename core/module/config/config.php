@@ -184,7 +184,10 @@ class config extends common {
 		2 => 'Niveau 2 (192.168.x.x)',
 		1 => 'Niveau 3 (192.x.x.x)',
 	];
-
+	public static $captchaTypes = [
+		'num' => 'Chiffres',
+		'alpha'	  => 'Lettres'
+	];
 
 	// Langue traduite courante
 	public static $i18nSite = 'fr';
@@ -485,6 +488,7 @@ class config extends common {
 						'captcha' => $this->getInput('connectCaptcha',helper::FILTER_BOOLEAN),
 						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
 						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
+						'captchaType' => $this->getInput('connectCaptchaType')
 					],
 					'i18n' => [
 						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),

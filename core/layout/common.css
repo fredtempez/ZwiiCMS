@@ -1660,8 +1660,15 @@ th.col12 {
 
 /* Captcha
 */
-.captcha img {
-	height: 30px;
+.captchaNum {
+	height: 50px;
+	vertical-align: middle;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.captchaAlpha {
+	height: 65px;
 	vertical-align: middle;
 	padding-left: 10px;
 	padding-right: 10px;
