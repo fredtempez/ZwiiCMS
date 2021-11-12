@@ -169,12 +169,10 @@ $("input, select").on("change", function() {
 	// Largeur du header
 	switch ($("#themeHeaderContainer").val()) {
 		case "container":
-			$("header").removeClass("container-large");
 			$("header").addClass("container");
 			break;
-		case "container-large":
+		case "none":
 			$("header").removeClass("container");
-			$("header").addClass("container-large");
 			break;
 	}
 

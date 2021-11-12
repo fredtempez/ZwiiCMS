@@ -62,7 +62,7 @@
 			<?php 
 				$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ' ';
 				$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : ' ';
-				$headerClass .= $this->getData(['theme', 'header', 'container']);
+				$headerClass .= $this->getData(['theme', 'header', 'container']) === 'none' ? '' : 'container';
 			?>
 			<header class="<?php echo $headerClass;?>">
 			<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>

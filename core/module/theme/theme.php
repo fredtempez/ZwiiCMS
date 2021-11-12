@@ -71,7 +71,7 @@ class theme extends common {
 	];
 	public static $containers = [
 		'container' => 'Du site',
-		'' => 'De la page'
+		'none' => 'De la page'
 	];
 	public static $footerblocks = [
 		1 => [
