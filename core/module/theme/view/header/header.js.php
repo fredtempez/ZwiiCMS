@@ -26,10 +26,18 @@ $("input, select").on("change", function() {
 
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
-		css = "header{height:" + $("#themeHeaderHeight").val() + ";background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+		var headerHeight = $("#themeHeaderHeight").val();
+		if (headerHeight === 'none') {
+			css = "header{height:unset; background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+		} else {
+			css = "header{height:" + $("#themeHeaderHeight").val() + ";background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+		}
+		
 		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
 
+		// Modifier le texte du sélecteur de hauteur
+		$("#themeHeaderHeight option:eq(0)").text("Hauteur du contenu personnalisé");
 	}
 
 	// Couleurs, image, alignement et hauteur de la bannière

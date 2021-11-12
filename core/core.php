@@ -2256,7 +2256,11 @@ class core extends common {
 				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';	
 			}
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
-				$css .= 'header{height:' . $this->getData(['theme', 'header', 'height'])  . ';}'; ;
+				// Hauteur de la taille du contenu perso
+				if ($this->getData(['theme', 'header', 'height']) !== 'none') {
+					$css .= 'header{height:' . $this->getData(['theme', 'header', 'height'])  . ';}'; 
+				}
+				
 			}
 			// Menu
 			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));

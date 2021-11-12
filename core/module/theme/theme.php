@@ -70,8 +70,8 @@ class theme extends common {
 		'Vollkorn' => 'Vollkorn'
 	];
 	public static $containers = [
-		'container' => 'Du site',
-		'none' => 'De la page'
+		'container' => 'Limitée au site',
+		'none' => 'Etendue sur la page'
 	];
 	public static $footerblocks = [
 		1 => [
@@ -125,12 +125,12 @@ class theme extends common {
 		'2.4vmax' => 'Très grande (240%)'
 	];
 	public static $headerHeights = [
-		'none' => 'Hauteur de l\'image sélectionnée',
+		'none' => 'Libre', // texte dynamique cf header.js.php
 		'100px' => 'Très petite (100px) ',
 		'150px' => 'Petite (150px)',
 		'200px' => 'Moyenne (200px)',
 		'300px' => 'Grande (300px)',
-		'400px' => 'Très grande (400px)'
+		'400px' => 'Très grande (400px)',
 	];
 	public static $headerPositions = [
 		'body' => 'Au dessus du site',
