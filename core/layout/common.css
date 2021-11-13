@@ -1660,18 +1660,19 @@ th.col12 {
 
 /* Captcha
 */
-.captchaNum {
-	height: 50px;
+
+.captchaNum, .captchaAlpha {
 	vertical-align: middle;
 	padding-left: 10px;
 	padding-right: 10px;
 }
 
+.captchaNum {
+	height: 6em;
+}
+
 .captchaAlpha {
-	height: 65px;
-	vertical-align: middle;
-	padding-left: 10px;
-	padding-right: 10px;
+	height: 4em;
 }
 
 .captcha input[type='text'] {
