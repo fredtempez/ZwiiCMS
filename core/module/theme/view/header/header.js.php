@@ -175,7 +175,7 @@ $("input, select").on("change", function() {
 	}
 
 	// Largeur du header
-	switch ($("#themeHeaderContainer").val()) {
+	switch ($("#themeHeaderWidth").val()) {
 		case "container":
 			$("header").addClass("container");
 			break;

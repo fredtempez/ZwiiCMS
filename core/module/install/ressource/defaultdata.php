@@ -160,7 +160,7 @@ class init extends common {
 				'tinyHidden' => true,
 				'feature' => 'wallpaper',
 				'featureContent' => '<p>Bannière vide</p>',
-				'container' => 'container'
+				'width' => 'container'
 			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
@@ -183,7 +183,7 @@ class init extends common {
 				'memberBar' => true,
 				'burgerLogo' => '',
 				'burgerContent' => 'title',
-				'container' => 'container'
+				'width' => 'container'
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',

@@ -56,7 +56,7 @@
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
 					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
 								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'container']) === 'none' // étendue sur la page
+								 $this->getData(['theme', 'menu', 'width']) === 'none' // étendue sur la page
 								 ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
@@ -70,7 +70,7 @@
 			<?php 
 				$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 				$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
-				$headerClass .= $this->getData(['theme', 'header', 'container']) === 'none' ? '' : 'container';
+				$headerClass .= $this->getData(['theme', 'header', 'width']) === 'none' ? '' : 'container';
 			?>
 			<header <?php echo empty($headerClass) ? '' : 'class="' . $headerClass . '"';?>>
 			<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
@@ -107,7 +107,7 @@
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
 					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
 								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'container']) === 'none' // étendue sur la page
+								 $this->getData(['theme', 'menu', 'width']) === 'none' // étendue sur la page
 								 ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >

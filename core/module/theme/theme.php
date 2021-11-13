@@ -69,7 +69,7 @@ class theme extends common {
 		'Ubuntu' => 'Ubuntu',
 		'Vollkorn' => 'Vollkorn'
 	];
-	public static $containers = [
+	public static $widths = [
 		'container' => 'Limitée au site',
 		'none' => 'Etendue sur la page'
 	];
@@ -229,7 +229,7 @@ class theme extends common {
 		'uppercase' => 'Majuscules',
 		'capitalize' => 'Majuscule à chaque mot'
 	];
-	public static $widths = [
+	public static $headerMenuWidths = [
 		'750px' => 'Petite (750 pixels)',
 		'960px' => 'Moyenne (960 pixels)',
 		'1170px' => 'Grande (1170 pixels)',
@@ -443,7 +443,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
 				'height' => $this->getInput('themeHeaderHeight'),
-				'container' => $this->getInput('themeHeaderContainer'),
+				'width' => $this->getInput('themeHeaderWidth'),
 				'image' => $this->getInput('themeHeaderImage'),
 				'imagePosition' => $this->getInput('themeHeaderImagePosition'),
 				'imageRepeat' => $this->getInput('themeHeaderImageRepeat'),
@@ -516,7 +516,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeMenuFontSize'),
 				'fontWeight' => $this->getInput('themeMenuFontWeight'),
 				'height' => $this->getInput('themeMenuHeight'),
-				'container' => $this->getInput('themeMenuContainer'),
+				'width' => $this->getInput('themeMenuWidth'),
 				'loginLink' => $this->getInput('themeMenuLoginLink', helper::FILTER_BOOLEAN),
 				'margin' => $this->getInput('themeMenuMargin', helper::FILTER_BOOLEAN),
 				'position' => $this->getInput('themeMenuPosition'),
