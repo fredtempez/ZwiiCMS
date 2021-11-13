@@ -692,6 +692,12 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 		$this->setData(['page', $parent, 'shortTitle', $this->getData(['page', $parent, 'title']) ]);
 	}
 
+	// Incorporer les nouveaux champs du header et du menu
+	$this->setData(['theme', 'header', 'feature', 'wallpaper']);
+	$this->setData(['theme', 'header', 'featureContent', '<p>Bannière vide</p>']);
+	$this->setData(['theme', 'header', 'container', 'container']);
+	$this->setData(['theme', 'menu', 'container', 'container']);
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }

@@ -159,7 +159,8 @@ class init extends common {
 				'imageContainer' => 'auto',
 				'tinyHidden' => true,
 				'feature' => 'wallpaper',
-				'featureContent' => '<p>Bannière vide</p>'
+				'featureContent' => '<p>Bannière vide</p>',
+				'container' => 'container'
 			],
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
@@ -181,7 +182,8 @@ class init extends common {
 				'radius' => '0px',
 				'memberBar' => true,
 				'burgerLogo' => '',
-				'burgerContent' => 'title'
+				'burgerContent' => 'title',
+				'container' => 'container'
 			],
 			'site' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
