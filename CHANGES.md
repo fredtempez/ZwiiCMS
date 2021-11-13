@@ -2,7 +2,7 @@
 
 ## Version 11.2.00
 - Correction : 
-    Configuration, restauration d'une archive : La validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
+    - Configuration, restauration d'une archive du site : la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
 - Modifications :
     - Thème : 
         - Disposition des options de configuration du site.
