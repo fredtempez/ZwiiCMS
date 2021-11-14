@@ -30,7 +30,7 @@ $("input, select").on("change", function() {
 		if (headerHeight === 'none') {
 			css = "header{height:unset; background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
 		} else {
-			css = "header{height:" + $("#themeHeaderHeight").val() + ";background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+			css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden;background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
 		}
 		
 		$("#featureContent").appendTo("header").show();
