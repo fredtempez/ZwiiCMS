@@ -283,91 +283,96 @@ class config extends common {
 	 */
 	public function restore() {
 		// Soumission du formulaire
-		if($this->isPost()) {
-			//if ($this->getInput('configRestoreImportFile'))
-			$fileZip = $this->getInput('configRestoreImportFile');
-			$file_parts = pathinfo($fileZip);
-			$folder = date('Y-m-d-h-i-s', time());
-			$zip = new ZipArchive();
-			if ($file_parts['extension'] !== 'zip') {
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Le fichier n\'est pas une archive valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-					]);
-			}
-			$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
-			if ($successOpen === FALSE) {
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Impossible de lire l\'archive',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-					]);
-			}
-			// Lire le contenu de l'archive dans le tableau files
-			for( $i = 0; $i < $zip->numFiles; $i++ ){
-				$stat = $zip->statIndex( $i );
-				$files [] = ( basename( $stat['name'] ));
-			}
+		if($this->isPost() ) {
+			
+			$success = false;
 
-			// Lire la dataversion
-			$tmpDir = uniqid(4);
-			$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
-			$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
-			$obj = json_decode($data);
-			$dataVersion = strval ($obj->core->dataVersion);
-			switch (strlen($dataVersion)) {
-				case 4:
-					if (substr($dataVersion,0,1) === '9' ) {
-						$version = 9;
-					} else {
-						$version = 0;
-					}
-					break;
-				case 5:
-					$version = substr($dataVersion,0,2);
-					break;
-				default:
-					$version = 0;
-					break;
-			}
-			$this->removeDir(self::TEMP_DIR . $tmpDir );
+			if ($this->getInput('configRestoreImportFile', null, true) ) {
 
-			if ($version >= 10 )	{
-					// Option active, les users sont stockées
-					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
-						$users = $this->getData(['user']);
+				$fileZip = $this->getInput('configRestoreImportFile');
+				$file_parts = pathinfo($fileZip);
+				$folder = date('Y-m-d-h-i-s', time());
+				$zip = new ZipArchive();
+				if ($file_parts['extension'] !== 'zip') {
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'notification' => 'Le fichier n\'est pas une archive valide',
+						'redirect' => helper::baseUrl() . 'config/restore',
+						'state' => false
+						]);
 				}
-			} elseif ($version === 0) { // Version invalide
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-				]);
-			}
-			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
-			// Positionnement d'une  variable de session lue au constructeurs
-			if ($version === 9) {
-				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
-			}
-			// Extraire le zip ou 'site/'
-			$this->removeDir(self::DATA_DIR);
-			$success = $zip->extractTo( 'site/' );
-			// Fermer l'archive
-			$zip->close();
+				$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
+				if ($successOpen === FALSE) {
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'notification' => 'Impossible de lire l\'archive',
+						'redirect' => helper::baseUrl() . 'config/restore',
+						'state' => false
+						]);
+				}
+				// Lire le contenu de l'archive dans le tableau files
+				for( $i = 0; $i < $zip->numFiles; $i++ ){
+					$stat = $zip->statIndex( $i );
+					$files [] = ( basename( $stat['name'] ));
+				}
+
+				// Lire la dataversion
+				$tmpDir = uniqid(4);
+				$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
+				$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
+				$obj = json_decode($data);
+				$dataVersion = strval ($obj->core->dataVersion);
+				switch (strlen($dataVersion)) {
+					case 4:
+						if (substr($dataVersion,0,1) === '9' ) {
+							$version = 9;
+						} else {
+							$version = 0;
+						}
+						break;
+					case 5:
+						$version = substr($dataVersion,0,2);
+						break;
+					default:
+						$version = 0;
+						break;
+				}
+				$this->removeDir(self::TEMP_DIR . $tmpDir );
+
+				if ($version >= 10 )	{
+						// Option active, les users sont stockées
+						if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
+							$users = $this->getData(['user']);
+					}
+				} elseif ($version === 0) { // Version invalide
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
+						'redirect' => helper::baseUrl() . 'config/restore',
+						'state' => false
+					]);
+				}
+				// Préserver les comptes des utilisateurs d'une version 9 si option cochée
+				// Positionnement d'une  variable de session lue au constructeurs
+				if ($version === 9) {
+					$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
+				}
+				// Extraire le zip ou 'site/'
+				$this->removeDir(self::DATA_DIR);
+				$success = $zip->extractTo( 'site/' );
+				// Fermer l'archive
+				$zip->close();
 
 
-			// Restaurer les users originaux d'une v10 si option cochée
-			if (!empty($users) &&
-				$version >= 10 &&
-				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
-					$this->setData(['user',$users]);
+				// Restaurer les users originaux d'une v10 si option cochée
+				if (!empty($users) &&
+					$version >= 10 &&
+					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
+						$this->setData(['user',$users]);
+				}
 			}
 			// Message de notification
-			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
+			$notification  = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([

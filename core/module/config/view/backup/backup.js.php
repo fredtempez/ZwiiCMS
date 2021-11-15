@@ -14,11 +14,6 @@ $( document).ready(function() {
     $("#configBackupForm").submit( function(e){
         $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
-        /**
-        if ($("input[name=configBackupOption]").is(':checked')) {
-            $('body').css('cursor', 'wait');
-        }
-        */
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
         $.ajax({
             type: "POST",
@@ -38,11 +33,19 @@ $( document).ready(function() {
         });
     });
 
+
     /**
-     * Aspect de la souris
-    */
-    $("#configBackupSubmit").click(function(event) {
-        $('body').css('cursor', 'wait');
+     * Confirmation de sauvegarde complète
+     */
+    $("#configBackupSubmit").on("click", function() {
+        if ($("input[name=configBackupOption]").is(':checked')) {
+            return core.confirm("Une sauvegarde avec le contenu du gestionnaire de fichier peut prendre du temps à générer. Confirmez-vous ?", function() {
+                //$(location).attr("href", _this.attr("href"));
+                $('body').css('cursor', 'wait');
+                $('form#configBackupForm').submit();
+            });
+        }
     });
+
 });
 

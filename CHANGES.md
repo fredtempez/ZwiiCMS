@@ -1,8 +1,10 @@
 # Changelog
 
 ## Version 11.2.00
+- Correction : 
+    Configuration, restauration d'une archive : La validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
 - Modifications :
-    Thème : 
+    - Thème : 
         - Disposition des options de configuration du site.
         - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.
     - Pages : il est désormais possible de donner un nom de page court qui sera utilisé dans le menu du site, dans les abrres latérales et dans les sélecteurs de page (éditeur / lien). En revanche le nom de la page affiché en haut de celle-ci est inchangé. Dans la plupart des cas le titre court sera identique au titre.
