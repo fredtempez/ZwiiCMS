@@ -337,7 +337,7 @@ td>.col12 {
 
 /* Notice */
 .notice {
-	display: inline-block;
+	display: block; /* au lieu de inline-block notamment dans les input file*/
 	color: #E74C3C;
 }
 
