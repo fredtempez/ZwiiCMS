@@ -2257,11 +2257,10 @@ class core extends common {
 			}
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
-				if ($this->getData(['theme', 'header', 'height']) !== 'none') {
-					$css .= 'header{height:' . $this->getData(['theme', 'header', 'height'])  . ';}'; 
-				}
+				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . '; }'; 
 				
 			}
+
 			// Menu
 			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColor']));
 			$css .= 'nav,nav.navMain a{background-color:' . $colors['normal'] . '}';

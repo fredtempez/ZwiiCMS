@@ -69,7 +69,7 @@ class theme extends common {
 		'Ubuntu' => 'Ubuntu',
 		'Vollkorn' => 'Vollkorn'
 	];
-	public static $containerWidths = [
+	public static $containerWides = [
 		'container' => 'Limitée au site',
 		'none' => 'Etendue sur la page'
 	];
@@ -125,7 +125,7 @@ class theme extends common {
 		'2.4vmax' => 'Très grande (240%)'
 	];
 	public static $headerHeights = [
-		'none' => 'Libre', // texte dynamique cf header.js.php
+		'unset' => 'Libre', // texte dynamique cf header.js.php
 		'100px' => 'Très petite (100px) ',
 		'150px' => 'Petite (150px)',
 		'200px' => 'Moyenne (200px)',
@@ -443,7 +443,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
 				'height' => $this->getInput('themeHeaderHeight'),
-				'width' => $this->getInput('themeHeaderWidth'),
+				'wide' => $this->getInput('themeHeaderWide'),
 				'image' => $this->getInput('themeHeaderImage'),
 				'imagePosition' => $this->getInput('themeHeaderImagePosition'),
 				'imageRepeat' => $this->getInput('themeHeaderImageRepeat'),
@@ -516,7 +516,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeMenuFontSize'),
 				'fontWeight' => $this->getInput('themeMenuFontWeight'),
 				'height' => $this->getInput('themeMenuHeight'),
-				'width' => $this->getInput('themeMenuWidth'),
+				'wide' => $this->getInput('themeMenuWide'),
 				'loginLink' => $this->getInput('themeMenuLoginLink', helper::FILTER_BOOLEAN),
 				'margin' => $this->getInput('themeMenuMargin', helper::FILTER_BOOLEAN),
 				'position' => $this->getInput('themeMenuPosition'),

@@ -26,12 +26,8 @@ $("input, select").on("change", function() {
 
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
-		var headerHeight = $("#themeHeaderHeight").val();
-		if (headerHeight === 'none') {
-			css = "header{height:unset; background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
-		} else {
-			css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden;background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
-		}
+		
+		css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden;background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
 		
 		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
@@ -175,7 +171,7 @@ $("input, select").on("change", function() {
 	}
 
 	// Largeur du header
-	switch ($("#themeHeaderWidth").val()) {
+	switch ($("#themeHeaderWide").val()) {
 		case "container":
 			$("header").addClass("container");
 			break;

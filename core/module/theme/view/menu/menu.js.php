@@ -123,7 +123,7 @@ $("input, select").on("change", function() {
 	}
 
 	//  Largeur étendue
-	if ($("#themeMenuWidth").val() === 'none') {
+	if ($("#themeMenuWide").val() === 'none') {
 		$("#menu").removeClass();
 	} else {
 		$("#menu").addClass("container");
