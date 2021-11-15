@@ -12,15 +12,11 @@
 
 $( document).ready(function() {
 
-    $('body').css('cursor', 'default');
-
     /**
-     * Avertissement de restauration
-     */    
+     * Aspect de la souris
+    */
      $("#configRestoreSubmit").click(function(event) {
-        if( core.alert("Une restauration complète pourra prendre du temps, merci de patienter.") )
-            event.preventDefault();
-            $('body').css('cursor', 'wait');            
+        $('body').css('cursor', 'wait');
     });
     
 });

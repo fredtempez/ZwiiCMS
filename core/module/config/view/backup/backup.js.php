@@ -14,9 +14,11 @@ $( document).ready(function() {
     $("#configBackupForm").submit( function(e){
         $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
+        /**
         if ($("input[name=configBackupOption]").is(':checked')) {
             $('body').css('cursor', 'wait');
         }
+        */
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
         $.ajax({
             type: "POST",
@@ -27,7 +29,6 @@ $( document).ready(function() {
                 core.alert("La sauvegarde a été générée avec succès.");
             },
             error: function(data){
-    
                 $('body').css('cursor', 'default');
                 core.alert("Une erreur s'est produite, la sauvegarde n'a pas été générée !");
             },
@@ -38,12 +39,10 @@ $( document).ready(function() {
     });
 
     /**
-     * Avertissement de sauvegarde complète
-     */    
+     * Aspect de la souris
+    */
     $("#configBackupSubmit").click(function(event) {
-        if( core.alert("Une sauvegarde complète pourra prendre du temps, merci de patienter.") ) {
-            event.preventDefault();
-        }
+        $('body').css('cursor', 'wait');
     });
 });
 
