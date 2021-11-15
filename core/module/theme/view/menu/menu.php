@@ -41,7 +41,7 @@
                     ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeMenuWidth', $module::$widths, [
+                    <?php echo template::select('themeMenuWidth', $module::$containerWidths, [
 							'label' => 'Largeur',
 							'selected' => $this->getData(['theme', 'menu', 'width'])
 						]); ?>

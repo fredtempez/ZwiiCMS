@@ -63,7 +63,7 @@
                     </div>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeHeaderWidth', $module::$widths, [
+                    <?php echo template::select('themeHeaderWidth', $module::$containerWidths, [
 							'label' => 'Largeur',
 							'selected' => $this->getData(['theme', 'header', 'width'])
 						]); ?>

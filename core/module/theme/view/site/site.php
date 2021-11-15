@@ -27,7 +27,7 @@
 				<h4>Paramètres</h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('themeSiteWidth', $module::$widths, [
+						<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
 							'label' => 'Largeur du site',
 							'selected' => $this->getData(['theme', 'site', 'width'])
 						]); ?>

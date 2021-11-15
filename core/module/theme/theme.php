@@ -69,7 +69,7 @@ class theme extends common {
 		'Ubuntu' => 'Ubuntu',
 		'Vollkorn' => 'Vollkorn'
 	];
-	public static $widths = [
+	public static $containerWidths = [
 		'container' => 'Limitée au site',
 		'none' => 'Etendue sur la page'
 	];
@@ -229,7 +229,7 @@ class theme extends common {
 		'uppercase' => 'Majuscules',
 		'capitalize' => 'Majuscule à chaque mot'
 	];
-	public static $headerMenuWidths = [
+	public static $siteWidths = [
 		'750px' => 'Petite (750 pixels)',
 		'960px' => 'Moyenne (960 pixels)',
 		'1170px' => 'Grande (1170 pixels)',
