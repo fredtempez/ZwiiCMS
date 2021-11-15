@@ -56,7 +56,7 @@
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
 					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
 								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'width']) === 'none' // étendue sur la page
+								 $this->getData(['theme', 'menu', 'wide']) === 'none' // étendue sur la page
 								 ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
@@ -107,7 +107,7 @@
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
 					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
 								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'width']) === 'none' // étendue sur la page
+								 $this->getData(['theme', 'menu', 'wide']) === 'none' // étendue sur la page
 								 ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
