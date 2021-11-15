@@ -36,5 +36,14 @@ $( document).ready(function() {
             }
         });
     });
+
+    /**
+     * Avertissement de sauvegarde complète
+     */    
+    $("#configBackupSubmit").click(function(event) {
+        if( core.alert("Une sauvegarde complète pourra prendre du temps, merci de patienter.") ) {
+            event.preventDefault();
+        }
+    });
 });
 
