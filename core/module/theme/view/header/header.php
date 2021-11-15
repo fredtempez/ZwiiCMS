@@ -27,6 +27,12 @@
             <h4>Paramètres</h4>
             <div class="row">
                 <div class="col4">
+                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
+							'label' => 'Position',
+							'selected' => $this->getData(['theme', 'header', 'position'])
+						]); ?>
+                </div>
+                <div class="col4">
                     <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
 							'label' => 'Nature de contenu',
 							'selected' => $this->getData(['theme', 'header', 'feature'])
@@ -40,14 +46,14 @@
                             'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
 						]); ?>
                 </div>
-                <div class="col4">
-                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
-							'label' => 'Position',
-							'selected' => $this->getData(['theme', 'header', 'position'])
-						]); ?>
-                </div>
             </div>
             <div class="row">
+                <div class="col4">
+                    <?php echo template::select('themeHeaderWide', $module::$containerWides, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'header', 'wide'])
+						]); ?>
+                </div>
                 <div class="col4">
                     <div id="themeHeaderSmallDisplay" class="displayNone">
                             <?php echo template::checkbox('themeHeaderTinyHidden', true, 'Masquer la bannière en écran réduit', [
@@ -61,12 +67,6 @@
                                 'checked' => $this->getData(['theme', 'header', 'margin'])
                             ]); ?>
                     </div>
-                </div>
-                <div class="col4">
-                    <?php echo template::select('themeHeaderWide', $module::$containerWides, [
-							'label' => 'Largeur',
-							'selected' => $this->getData(['theme', 'header', 'width'])
-						]); ?>
                 </div>
             </div>
         </div>

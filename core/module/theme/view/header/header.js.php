@@ -216,28 +216,20 @@ $("#themeHeaderPosition").on("change", function() {
 	if($(this).val() === 'site') {
 		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideDown();
+		$("#themeHeaderWideWrapper").slideUp();
 	}
-	else {
-		if($(this).val() === 'hide') {
-			$("#themeHeaderContainerWrapper").slideUp();
-		}
+	else if ($(this).val() === 'hide') {
+		$("#themeHeaderContainerWrapper").slideUp();
+		$("#themeHeaderWideWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideUp(function() {
 			$("#themeHeaderMargin").prop("checked", false).trigger("change");
 		});
+	} else {
+		$("#themeHeaderWideWrapper").slideDown();
 	}
 }).trigger("change");
 
-// Affiche / Cache les options de la bannière cliquable si pas masquée
-$("#themeHeaderPosition").on("change", function() {
-	if($(this).val() === 'hide') {
-		$("#themeHeaderShow").slideUp(function() {
-			$("#themeHeaderlinkHome").prop("checked", false).trigger("change");
-		});
-	}
-	else {
-		$("#themeHeaderShow").slideDown();
-	}
-}).trigger("change");
+
 
 // Affiche / Cache l'option bannière masquée en écran réduit
 $("#themeHeaderPosition").on("change", function() {
