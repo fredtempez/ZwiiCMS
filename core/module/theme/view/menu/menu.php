@@ -27,6 +27,12 @@
             <h4>Paramètres</h4>
             <div class="row">
                 <div class="col6">
+                    <?php echo template::select('themeMenuWide', $module::$containerWides, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'menu', 'wide'])
+						]); ?>
+                </div>
+                <div class="col6">
                     <?php
                     if ( $this->getData(['theme', 'header', 'position']) == "site")
                     {	echo template::select('themeMenuPosition', $module::$menuPositionsSite, [
@@ -39,12 +45,6 @@
                         'selected' => $this->getData(['theme', 'menu', 'position'])
                     ]);	}
                     ?>
-                </div>
-                <div class="col6">
-                    <?php echo template::select('themeMenuWide', $module::$containerWides, [
-							'label' => 'Largeur',
-							'selected' => $this->getData(['theme', 'menu', 'wide'])
-						]); ?>
                 </div>
             </div>
             <div class="row">
