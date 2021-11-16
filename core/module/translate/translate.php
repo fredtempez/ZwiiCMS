@@ -186,13 +186,15 @@ class translate extends common {
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Sélectionner
 			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+			setrawcookie('googtrans', '/fr/' . $this->getUrl(2), time() + 3600, helper::baseUrl(false,false));
+			$_SESSION['googtrans'] = '/fr/' . $this->getUrl(2);
 		// Désactivation du drapeau, langue FR par défaut
 		} else {
 			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Désactivation du script Google
-			// setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
-			// $_SESSION['googtrans'] = '/fr/fr';
+			setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
+			$_SESSION['googtrans'] = '/fr/fr';
 		}
 
 		// Valeurs en sortie
