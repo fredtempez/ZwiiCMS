@@ -54,10 +54,7 @@
 				<!-- fin du menu burger -->
 				<?php 
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
-					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
-								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'wide']) === 'none' // étendue sur la page
-								 ? 'class="container-large"'  : 'class="container"';				 
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
 				<?php $this->showMenu(); ?>
@@ -104,11 +101,7 @@
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<!-- fin du menu burger -->
 				<?php 
-					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
-					$menuClass = ($this->getData(['theme', 'menu', 'position']) === 'body-first' || 
-								 $this->getData(['theme', 'menu', 'position']) === 'body-second' ) &&
-								 $this->getData(['theme', 'menu', 'wide']) === 'none' // étendue sur la page
-								 ? 'class="container-large"'  : 'class="container"';				 
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';				 
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
 					<?php $this->showMenu(); ?></div>
