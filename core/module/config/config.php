@@ -632,22 +632,24 @@ class config extends common {
 		$success = false ;
 		// Boucler sur les pages
 		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-			$content = $this->getData(['page',$parentId,'content']);
+			$content = $this->getPage($parentId, self::$i18n);
+			$content =   $titre . ' ' . $content ;
 			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
-				$this->setData(['page',$parentId,'content', $replace ]);
+				$this->setPage($parentId, $replace,  self::$i18n);
 				$c3 += $c1 + $c2;
 			}
 			foreach($childIds as $childId) {
-				$content = $this->getData(['page',$childId,'content']);
+				$content = $this->getPage($childId, self::$i18n);
+				$content =   $titre . ' ' . $content ;
 				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
-					$this->setData(['page',$childId,'content', $replace ]);
+					$this->setPage($childId, $replace,  self::$i18n);
 					$c3 += $c1 + $c2;
 				}
 			}

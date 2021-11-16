@@ -1,8 +1,10 @@
 # Changelog
 
 ## Version 11.2.00
-- Correction : 
-    - Configuration, restauration d'une archive du site : la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
+- Corrections : 
+    - Configuration, restauration d'une archive du site : 
+        - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
+        - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
 - Modifications :
     - Thème : 
         - Disposition des options de configuration du site.
