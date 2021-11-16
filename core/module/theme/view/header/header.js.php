@@ -27,14 +27,16 @@ $("input, select").on("change", function() {
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
 		
-		css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden;background-position:top; background-repeat: no-repeat;;line-height:1.15;background-color:unset;;background-image:unset;text-align:unset}";
+		css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden; background-position:top; background-repeat: no-repeat; line-height:1.15; background-color:unset; background-image:unset; text-align:unset;}";
 		
 		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
 
 		// Modifier le texte du sélecteur de hauteur
 		$("#themeHeaderHeight option:eq(0)").text("Hauteur du contenu personnalisé");
+
 	}
+	
 
 	// Couleurs, image, alignement et hauteur de la bannière
 	if ($("#themeHeaderFeature").val() == "wallpaper") {
@@ -104,18 +106,8 @@ $("input, select").on("change", function() {
 		else {
 			$("#themeHeaderTitle").show();
 		}
-
-		// Marge
-		if($("#themeHeaderMargin").is(":checked")) {
-			if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
-				css += 'header{margin:0 20px}';
-			} else {
-				css += 'header{margin:20px 20px 0 20px}';
-			}
-		} else {
-			css += 'header{margin:0}';
-		}
 	}
+
 
 	// Position de la bannière
 	var positionNav = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
@@ -170,6 +162,15 @@ $("input, select").on("change", function() {
 			}
 	}
 
+	// Marge dans le site
+	if(	$("#themeHeaderMargin").is(":checked") &&
+		$("#themeHeaderPosition").val() === "site"
+		) {			console.log("truc")	;
+			css += 'header{margin:20px 20px 0 20px !important;}';
+		/*} else { console.log("truc2")	;
+			css += 'header{margin:0 !important;}';*/
+    }
+
 	// Largeur du header
 	switch ($("#themeHeaderWide").val()) {
 		case "container":
@@ -223,12 +224,14 @@ $("#themeHeaderPosition").on("change", function() {
 		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderWideWrapper").slideUp();
 		$("#themeHeaderMarginWrapper").slideUp();
+		$("#themeHeaderMargin").prop("checked", false);
 		$("#themeHeaderPositionOptions").slideUp(function() {
 			$("#themeHeaderMargin").prop("checked", false).trigger("change");
 		});
 	} else {
 		$("#themeHeaderWideWrapper").slideDown();
 		$("#themeHeaderMarginWrapper").slideUp();
+		$("#themeHeaderMargin").prop("checked", false);
 	}
 }).trigger("change");
 
