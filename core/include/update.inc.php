@@ -680,6 +680,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->deleteData(['config', 'captchaStrong']);
 	$this->setData(['config', 'connect', 'autoDisconnect', $this->getData(['config', 'autoDisconnect'])]);
 	$this->deleteData(['config', 'autoDisconnect']);
+	$this->setData(['config', 'connect', 'captchaType', 'alpha']);
 
 	// Ajout de la variable shortTitle basée sur Title
 	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {

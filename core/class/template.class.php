@@ -48,7 +48,7 @@ class template {
             'name' => $nameId,
             'value' => '',
             'limit' => false, // captcha simple
-            'type'=> 'num' // num(érique) ou alpha(bétique)
+            'type'=> 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
 
    // Captcha quatre opérations
