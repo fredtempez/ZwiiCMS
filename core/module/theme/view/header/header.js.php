@@ -217,15 +217,18 @@ $("#themeHeaderPosition").on("change", function() {
 		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideDown();
 		$("#themeHeaderWideWrapper").slideUp();
+		$("#themeHeaderMarginWrapper").slideDown();
 	}
 	else if ($(this).val() === 'hide') {
 		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderWideWrapper").slideUp();
+		$("#themeHeaderMarginWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideUp(function() {
 			$("#themeHeaderMargin").prop("checked", false).trigger("change");
 		});
 	} else {
 		$("#themeHeaderWideWrapper").slideDown();
+		$("#themeHeaderMarginWrapper").slideUp();
 	}
 }).trigger("change");
 
