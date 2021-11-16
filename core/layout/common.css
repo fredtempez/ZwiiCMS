@@ -498,10 +498,10 @@ header .container {
 	height: 100%;
 }
 
-/* Marges au cotenu de la bannière personnalisée */
+/* Marges au cotenu de la bannière personnalisée 
 header:not(.container) #featureContent {
 	margin: 0 10px;
-}
+}*/
 
 header #featureContent {
 	overflow: hidden;
