@@ -1172,8 +1172,8 @@ class common {
 	 * Affiche le script Google Analytics
 	 */
 	public function showAnalytics() {
-		if($code = $this->getData(['config', 'seo', 'analyticsId'])
-		  AND $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
+		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
+		    $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
 			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
 				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
 				<script>
