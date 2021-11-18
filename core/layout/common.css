@@ -498,7 +498,7 @@ header .container {
 	height: 100%;
 }
 
-/* Marges au cotenu de la bannière personnalisée 
+/* Marges au cotenu de la bannière personnalisée
 header:not(.container) #featureContent {
 	margin: 0 10px;
 }*/
@@ -1012,7 +1012,18 @@ footer #footerSocials .zwiico-github:hover {
 	background: #777;
 }
 
-
+.cookieBox {
+position: relative;
+width: 15px;
+height: 15px;
+border: 1px solid blue;
+}
+.cookieBox .cookieClose {
+position: absolute;
+right: 2px;
+top: -2px;
+cursor: pointer;
+}
 
 /* Bloc */
 .block {

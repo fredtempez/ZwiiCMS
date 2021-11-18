@@ -34,7 +34,7 @@
 		<?php $this->showNotification(); ?>
 
 		<!-- Menu dans le fond du site avant la bannière -->
-		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>	
+		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
@@ -52,9 +52,9 @@
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<!-- fin du menu burger -->
-				<?php 
+				<?php
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
-					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';				 
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
 				<?php $this->showMenu(); ?>
@@ -63,8 +63,8 @@
 		<?php endif; ?>
 
 		<!-- Bannière dans le fond du site -->
-		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>	
-			<?php 
+		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
+			<?php
 				$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 				$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
 				$headerClass .= $this->getData(['theme', 'header', 'wide']) === 'none' ? '' : 'container';
@@ -92,7 +92,7 @@
 
 		<!-- Menu dans le fond du site après la bannière -->
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
-			
+
 			<nav>
 				<!-- Menu burger -->
 				<div id="toggle">
@@ -100,8 +100,8 @@
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
 				<!-- fin du menu burger -->
-				<?php 
-					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';				 
+				<?php
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
 				?>
 				<div id="menu" <?php echo $menuClass; ?> >
 					<?php $this->showMenu(); ?></div>
@@ -130,7 +130,7 @@
 					): ?>
 						<!-- Bannière dans le site -->
 						<?php echo  ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
-						<?php 
+						<?php
 								$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 								$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
 							?>
@@ -183,7 +183,8 @@
 
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
-
+		<!-- Affichage du consentement aux cookies-->
+		<?php $this->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php $this->showScript();?>
 

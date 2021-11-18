@@ -219,46 +219,31 @@ core.start = function() {
 		}
 	});
 
-	/**
-	 * Message sur l'utilisation des cookies
+  /**
+	 * Traitement du formulaire cookies
 	 */
-	var analytics = "";
-	if (<?php echo json_encode($this->getData(['config', 'seo', 'analyticsId'])); ?>) {
-		 analytics = ' grâce au cookie Google Analytics'
-	}
-	if(<?php echo json_encode($this->getData(['config', 'cookieConsent'])); ?>) {
-		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
-			$("body").append(
-				$("<div>").attr("id", "cookieConsent").append(
-					$("<span>").html("<p>Ce site utilise des cookies pour assurer l'authentification, améliorer l'expérience utilisateur"+analytics+". <br/>En cliquant sur ”J’accepte”, vous acceptez l’utilisation de ces cookies.</p>"),
-					$("<span>")
-						.attr("id", "cookieConsentConfirm")
-						.text("Accepter")
-						.on("click", function() {
-							// Créé le cookie d'acceptation
-							var expires = new Date();
-							expires.setFullYear(expires.getFullYear() + 1);
-							expires = "expires=" + expires.toUTCString();
-							document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires;
-							// Ferme le message
-							$(this).parents("#cookieConsent").fadeOut();
-						}),
-					$("<span>")
-					.attr("id", "cookieConsentRefuse")
-					.text("Refuser")
-					.on("click", function() {
-						// Créé le cookie d'acceptation
-						var expires = new Date();
-						expires.setFullYear(expires.getFullYear() + 1);
-						expires = "expires=" + expires.toUTCString();
-						document.cookie = "ZWII_COOKIE_CONSENT=false;" + expires;
-						// Ferme le message
-						$(this).parents("#cookieConsent").fadeOut();
-					}),
-				)
-			);
-		}
-	}
+	$("#cookieForm").submit(function(event){
+       const ga = document.getElementById('googleAnalytics');
+	   var samesite = "samesite=lax";
+	   var expires = new Date();
+       expires.setFullYear(expires.getFullYear() + 1);
+       expires = "expires=" + expires.toUTCString();
+       // Crée le cookie d'acceptation Google Analytics si nécessaire
+	   <?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
+	   <?php if( $analytics !== null AND $analytics !=='' ){ ?>
+		   if(ga.checked){
+			document.cookie = "ZWII_COOKIE_GA_CONSENT=true;" + expires +";"+ samesite;
+		   }
+		   else{
+			document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + expires +";"+ samesite;
+		   }
+	   <?php } ?>
+       document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires +";"+ samesite;
+    });
+	$(".cookieBox .cookieClose").on("click", function() {
+		$(this).parents("#cookieConsent").fadeOut();
+	});
+
 	/**
 	 * Choix de page dans la barre de membre
 	 */

@@ -473,7 +473,7 @@ class common {
 	 */
 	public function getPage($page, $lang) {
 
-		// Le nom de la ressource et le fichier de contenu sont définis : 
+		// Le nom de la ressource et le fichier de contenu sont définis :
 		if (
 				$this->getData(['page', $page, 'content']) !== ''
 				&& file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
@@ -482,14 +482,14 @@ class common {
 				return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 			} else {
 				return 'Aucun contenu trouvé.';
-		}		
+		}
 
 	}
 
 	/**
 	 * Ecrire les données de la page
 	 * @param string pageId
-	 * @param string contenu de la page 
+	 * @param string contenu de la page
 	 * @param return nombre d'octets écrits ou erreur
 	 */
 	public function setPage($page, $value, $lang) {
@@ -953,7 +953,7 @@ class common {
 		} else {
 			file_put_contents('robots.txt','User-agent: *' .  PHP_EOL . 'Disallow: /');
 		}
-		
+
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
 		if (empty ($this->getData(['config','proxyType']) . $this->getData(['config','proxyUrl']) . ':' . $this->getData(['config','proxyPort'])) ) {
 			$sitemap->submitSitemap();
@@ -1173,7 +1173,7 @@ class common {
 	 */
 	public function showAnalytics() {
 		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
-		    $this->getInput('ZWII_COOKIE_CONSENT') === 'true')  {
+		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true')  {
 			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
 				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
 				<script>
@@ -1182,6 +1182,33 @@ class common {
 					gtag("js", new Date());
 					gtag("config","'. $code .'",{ "anonymize_ip": true });
 				</script>';
+		}
+	}
+
+	/**
+	 * Affiche le consentement aux cookies
+	 */
+	public function showCookies() {
+		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
+			<div id="cookieConsent">
+				<div class="cookieBox"><div class="cookieClose">X</div></div>
+				<?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
+				<p>Ce site <?php echo helper::baseUrl(false); ?> utilise des cookies nécessaires à son fonctionnement,
+				ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie
+				ou la validation de ce message.
+				<?php $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']); ?>
+				<a href=" <?php echo helper::baseUrl() . $legalPage ?> ">Plus d'informations</a></p>
+				<?php if( $analytics !== null AND $analytics !=='' ){ ?>
+				<p>Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.</p>
+				<?php } ?>
+				<form method="POST" action="" id="cookieForm">
+					<?php if( $analytics !== null AND $analytics !=='' ){ ?>
+					<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">
+					<label for="googleAnalytics"> J'accepte les cookies Google Analytics</label> <?php } ?><br><br>
+					<input type="submit" id="cookieConsentConfirm" value="Valider">
+				</form>
+			</div>
+		<?php
 		}
 	}
 
@@ -1259,7 +1286,7 @@ class common {
 				 * Barre droite
 				 */
 				if ($blockright !== "") {
-					echo '<div class="' . $blockright . '" id="contentRight"><aside>'; 
+					echo '<div class="' . $blockright . '" id="contentRight"><aside>';
 					// Détermine si le menu est présent
 					if ($this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'displayMenu']) === 'none') {
 						// Pas de menu
@@ -1332,7 +1359,7 @@ class common {
 				$this->getData(['theme', 'footer', 'position']) === 'hide'
 				AND $this->getUrl(0) === 'theme'
 			)
-			) {	
+			) {
 				$position = 'site';
 			} else {
 					$position = 'body';
@@ -1342,7 +1369,7 @@ class common {
 					// Sortir de la division précédente
 					echo '</div>';
 		}
-			
+
 		echo $this->getData(['theme', 'footer', 'position']) === 'hide' ? '<footer class="displayNone">' : '<footer>';
 		echo ($position === 'site') ? '<div class="container"><div class="row" id="footersite">' : '<div class="container-large'.  $positionFixed . '"><div class="row" id="footerbody">';
 		/**
@@ -2245,21 +2272,21 @@ class core extends common {
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
 				$css .= 'header{background-color:' . $colors['normal'];
-	
+
 				// Valeur de hauteur traditionnelle
 				$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) ;
-	
+
 				$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
 				if($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';	
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
-				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . '; }'; 
-				
+				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . '; }';
+
 			}
 
 			// Menu
