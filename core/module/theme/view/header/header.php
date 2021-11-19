@@ -103,6 +103,11 @@
             <h4>Mise en forme du titre</h4>
             <div class="row">
                 <div class="col4">
+                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le titre du site', [
+                            'checked' => $this->getData(['theme', 'header', 'textHide'])
+                        ]); ?>
+                </div>
+                <div class="col4">
                     <?php echo template::select('themeHeaderFont', $module::$fonts, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'header', 'font']),
@@ -116,15 +121,15 @@
 							'selected' => $this->getData(['theme', 'header', 'fontSize'])
 						]); ?>
                 </div>
+            </div>
+            <div class="row">
                 <div class="col4">
                     <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
 							'label' => 'Style',
 							'selected' => $this->getData(['theme', 'header', 'fontWeight'])
 						]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col4 offset2">
+                <div class="col4">
                     <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
 							'label' => 'Casse',
 							'selected' => $this->getData(['theme', 'header', 'textTransform'])
@@ -136,6 +141,7 @@
 							'selected' => $this->getData(['theme', 'header', 'textAlign'])
 						]); ?>
                 </div>
+
             </div>
         </div>
     </div>
@@ -159,13 +165,13 @@
             </div>
             <div id="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::select('themeHeaderImageRepeat', $module::$repeats, [
 								'label' => 'Répétition',
 								'selected' => $this->getData(['theme', 'header', 'imageRepeat'])
 							]); ?>
                     </div>
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
                                 'label' => 'Adaptation',
                                 'selected' => $this->getData(['theme', 'header', 'imageContainer']),
@@ -174,20 +180,13 @@
                                     Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
                             ]); ?>
                     </div>
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::select('themeHeaderImagePosition', $module::$imagePositions, [
 								'label' => 'Position',
 								'selected' => $this->getData(['theme', 'header', 'imagePosition'])
 							]); ?>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col6">
-                        <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le titre du site', [
-								'checked' => $this->getData(['theme', 'header', 'textHide'])
-							]); ?>
-                    </div>
-                    <div id="themeHeaderShow" class="col6">
+                    <div id="themeHeaderShow" class="col3">
                         <?php echo template::checkbox('themeHeaderlinkHomePage', true, 'Bannière cliquable', [
                                 'checked' => $this->getData(['theme', 'header', 'linkHomePage'])
                             ]); ?>
