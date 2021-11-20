@@ -222,27 +222,30 @@ core.start = function() {
   /**
 	 * Traitement du formulaire cookies
 	 */
-	$("#cookieForm").submit(function(event){
-       const ga = document.getElementById('googleAnalytics');
-	   var samesite = "samesite=lax";
-	   var expires = new Date();
-       expires.setFullYear(expires.getFullYear() + 1);
-       expires = "expires=" + expires.toUTCString();
-       // Crée le cookie d'acceptation Google Analytics si nécessaire
-	   <?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
-	   <?php if( $analytics !== null AND $analytics !=='' ){ ?>
-		   if(ga.checked){
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=true;" + expires +";"+ samesite;
-		   }
-		   else{
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + expires +";"+ samesite;
-		   }
-	   <?php } ?>
-       document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires +";"+ samesite;
-    });
-	$(".cookieBox .cookieClose").on("click", function() {
-		$(this).parents("#cookieConsent").fadeOut();
-	});
+   $("#cookieForm").submit(function(event){
+        const ga = document.getElementById('googleAnalytics');
+ 	   var samesite = "samesite=lax";
+ 	   var expires = new Date();
+        expires.setFullYear(expires.getFullYear() + 1);
+        expires = "expires=" + expires.toUTCString();
+        // Crée le cookie d'acceptation Google Analytics si nécessaire
+ 	   <?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
+ 	   <?php if( $analytics !== null AND $analytics !=='' ){
+ 	   $cookieName = 'ZWII_COOKIE_GA_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));?>
+ 		   if(ga.checked){
+ 			document.cookie = "<?php echo $cookieName; ?>=true;" + expires +";"+ samesite;
+ 		   }
+ 		   else{
+ 			document.cookie = "<?php echo $cookieName; ?>=false;" + expires +";"+ samesite;
+ 		   }
+ 	   <?php }
+ 		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
+ 	   ?>
+        document.cookie = "<?php echo $cookieName; ?>=true;" + expires +";"+ samesite;
+     });
+ 	$(".cookieBox .cookieClose").on("click", function() {
+ 		$(this).parents("#cookieConsent").fadeOut();
+ 	});
 
 	/**
 	 * Choix de page dans la barre de membre

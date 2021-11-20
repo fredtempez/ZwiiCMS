@@ -1171,46 +1171,48 @@ class common {
 	/**
 	 * Affiche le script Google Analytics
 	 */
-	public function showAnalytics() {
-		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
-		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true')  {
-			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
-				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
-				<script>
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag("js", new Date());
-					gtag("config","'. $code .'",{ "anonymize_ip": true });
-				</script>';
-		}
-	}
+	 public function showAnalytics() {
+ 		$cookieName = 'ZWII_COOKIE_GA_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
+ 		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
+ 		    $this->getInput($cookieName) === 'true')  {
+ 			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
+ 				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
+ 				<script>
+ 					window.dataLayer = window.dataLayer || [];
+ 					function gtag(){dataLayer.push(arguments);}
+ 					gtag("js", new Date());
+ 					gtag("config","'. $code .'",{ "anonymize_ip": true });
+ 				</script>';
+ 		}
+ 	}
 
 	/**
 	 * Affiche le consentement aux cookies
 	 */
-	public function showCookies() {
-		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
-			<div id="cookieConsent">
-				<div class="cookieBox"><div class="cookieClose">X</div></div>
-				<?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
-				<p>Ce site <?php echo helper::baseUrl(false); ?> utilise des cookies nécessaires à son fonctionnement,
-				ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie
-				ou la validation de ce message.
-				<?php $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']); ?>
-				<a href=" <?php echo helper::baseUrl() . $legalPage ?> ">Plus d'informations</a></p>
-				<?php if( $analytics !== null AND $analytics !=='' ){ ?>
-				<p>Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.</p>
-				<?php } ?>
-				<form method="POST" action="" id="cookieForm">
-					<?php if( $analytics !== null AND $analytics !=='' ){ ?>
-					<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">
-					<label for="googleAnalytics"> J'accepte les cookies Google Analytics</label> <?php } ?><br><br>
-					<input type="submit" id="cookieConsentConfirm" value="Valider">
-				</form>
-			</div>
-		<?php
-		}
-	}
+	 public function showCookies() {
+ 		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
+ 		if($this->getInput($cookieName) !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
+ 			<div id="cookieConsent">
+ 				<div class="cookieBox"><div class="cookieClose">X</div></div>
+ 				<?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
+ 				<p>Ce site <?php echo helper::baseUrl(false); ?> utilise des cookies nécessaires à son fonctionnement,
+ 				ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie
+ 				ou la validation de ce message.
+ 				<?php $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']); ?>
+ 				<a href=" <?php echo helper::baseUrl() . $legalPage ?> ">Plus d'informations</a></p>
+ 				<?php if( $analytics !== null AND $analytics !=='' ){ ?>
+ 				<p>Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.</p>
+ 				<?php } ?>
+ 				<form method="POST" action="" id="cookieForm">
+ 					<?php if( $analytics !== null AND $analytics !=='' ){ ?>
+ 					<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">
+ 					<label for="googleAnalytics"> J'accepte les cookies Google Analytics</label> <?php } ?><br><br>
+ 					<input type="submit" id="cookieConsentConfirm" value="Valider">
+ 				</form>
+ 			</div>
+ 		<?php
+ 		}
+ 	}
 
 	/**
 	 * Formate le contenu de la page selon les gabarits
