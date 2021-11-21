@@ -457,7 +457,7 @@ class theme extends common {
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
 				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
 				'feature' => $this->getInput('themeHeaderFeature'),
-				'featureContent' => $this->getInput('themeHeaderContent', null)
+				'featureContent' => $this->getInput('themeHeaderText', null)
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )

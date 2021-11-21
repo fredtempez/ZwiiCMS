@@ -140,14 +140,11 @@
 </div>
 <div class="row">
     <div class="col12">
-        <div class="block">
-            <h4>Contenu personnalisé</h4>
-            <?php echo template::textarea('themeFooterText', [
-					'label' => '<strong>Texte ou HTML</strong>',
-					'value' => $this->getData(['theme', 'footer', 'text']),
-					'class' => 'editorWysiwyg'
-				]); ?>
-        </div>
+        <?php echo template::textarea('themeFooterText', [
+                'label' => '<div class="titleWysiwygContent">Contenu personnalisé</div>',
+                'value' => $this->getData(['theme', 'footer', 'text']),
+                'class' => 'editorWysiwyg'
+            ]); ?>
     </div>
 </div>
 <div class="row">

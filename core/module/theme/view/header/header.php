@@ -205,15 +205,13 @@
 </div>
 <div class="row featureContainer">
     <div class="col12">
-        <div class="block">
-            <h4>Contenu personnalisé</h4>
-            <div class="row">
-                <div class="col12">
-                    <?php echo template::textarea('themeHeaderContent', [
-                        'class' => 'editorWysiwyg',
-                        'value' => $this->getData(['theme', 'header', 'featureContent'])
-                    ]); ?>
-                </div>
+        <div class="row">
+            <div class="col12">
+                <?php echo template::textarea('themeHeaderText', [
+                    'label' => '<div class="titleWysiwygContent">Contenu personnalisé</div>',
+                    'class' => 'editorWysiwyg',
+                    'value' => $this->getData(['theme', 'header', 'featureContent'])
+                ]); ?>
             </div>
         </div>
     </div>
