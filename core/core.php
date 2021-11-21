@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.5';
+	const ZWII_VERSION = '11.2.00.6';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2241,15 +2241,16 @@ class core extends common {
 					$css .= 'header{margin:20px 20px 0 20px}';
 				}
 			}
+			// Couleur du fonc
+			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
+			$css .= 'header{background-color:' . $colors['normal'].'}';
+
 			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
-				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
-				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
-				$css .= 'header{background-color:' . $colors['normal'];
-	
+
+				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).';}';
+				
 				// Valeur de hauteur traditionnelle
-				$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) ;
-	
-				$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
+				$css .= 'header{height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) . ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
 				if($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}

@@ -72,7 +72,7 @@
         </div>
     </div>
 </div>
-<div class="row wallpaperContainer">
+<div class="row">
     <div class="col12">
         <div class="block">
             <h4>Couleurs</h4>
@@ -81,7 +81,7 @@
                     <?php echo template::text('themeHeaderBackgroundColor', [
 							'class' => 'colorPicker',
 							'help' => 'Le curseur horizontal règle le niveau de transparence.',
-							'label' => 'Fond',
+							'label' => 'Arrière-plan',
 							'value' => $this->getData(['theme', 'header', 'backgroundColor'])
 						]); ?>
                 </div>
@@ -157,7 +157,7 @@
                                 $this->getData(['theme', 'header', 'image']) : "";
                         echo template::file('themeHeaderImage', [
                             'help' => 'Sélectionner une image aux dimensions recommandées ci-dessous :',
-                            'label' => 'Fond',
+                            'label' => 'Image',
                             'type' => 1,
                             'value' => $imageFile
                     ]); ?>
