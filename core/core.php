@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.5';
+	const ZWII_VERSION = '11.2.00.6';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2266,6 +2266,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
+
 			// Bannière
 			if($this->getData(['theme', 'header', 'margin'])) {
 				if($this->getData(['theme', 'menu', 'position']) === 'site-first') {

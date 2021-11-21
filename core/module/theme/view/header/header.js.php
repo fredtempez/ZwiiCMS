@@ -83,7 +83,7 @@ $("input, select").on("change", function() {
 		var headerFont = $("#themeHeaderFont").val();
 		var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
 
-			css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
+			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
 			if ($("#themeHeaderImage").val()) {
 				// Une image est sélectionnée
 				css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
@@ -97,7 +97,7 @@ $("input, select").on("change", function() {
 	
 
 		// Taille, couleur, épaisseur et capitalisation du titre de la bannière
-		css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
+		css += "header span{font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
 		
 		// Cache le titre de la bannière
 		if($("#themeHeaderTextHide").is(":checked")) {
@@ -107,6 +107,9 @@ $("input, select").on("change", function() {
 			$("#themeHeaderTitle").show();
 		}
 	}
+
+	// Couleur du fond
+	css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";}";
 
 
 	// Position de la bannière
@@ -252,9 +255,11 @@ $("#themeHeaderFeature").on("change", function() {
 	if($(this).val() === 'wallpaper') {
 		$(".wallpaperContainer").show();
 		$(".featureContainer").hide();
+		$("#themeHeaderTextColorWrapper").show();
 	}
 	if($(this).val() === 'feature') {
 		$(".featureContainer").show();
 		$(".wallpaperContainer").hide();
+		$("#themeHeaderTextColorWrapper").hide();
 	}
 }).trigger("change");

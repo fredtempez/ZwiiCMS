@@ -505,6 +505,7 @@ header:not(.container) #featureContent {
 
 header #featureContent {
 	overflow: hidden;
+	margin: 0 10px;
 }
 
 
