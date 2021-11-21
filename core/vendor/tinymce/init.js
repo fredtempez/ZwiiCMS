@@ -20,6 +20,10 @@ tinymce.init({
 				if (ed.id === 'themeFooterText') {
 					$("#footerText").html(tinyMCE.get('themeFooterText').getContent());
 				}
+				if (ed.id === 'themeHeaderText') {
+					$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
+				}
+
 			});
 		},
 	// Langue
