@@ -243,7 +243,7 @@ core.start = function() {
  	   ?>
         document.cookie = "<?php echo $cookieName; ?>=true;" + expires +";"+ samesite;
      });
- 	$(".cookieBox .cookieClose").on("click", function() {
+ 	$("#cookieConsent .cookieClose").on("click", function() {
  		$(this).parents("#cookieConsent").fadeOut();
  	});
 

@@ -287,7 +287,7 @@ class config extends common {
 	public function restore() {
 		// Soumission du formulaire
 		if($this->isPost() ) {
-			
+
 			$success = false;
 
 			if ($this->getInput('configRestoreImportFile', null, true) ) {
@@ -422,7 +422,7 @@ class config extends common {
 				){
 					$this->setData(['theme', 'footer', 'displayLegal', false]);
 			}
-		
+
 			// Sauvegarder les locales
 			$this->setData([
 				'locale',
@@ -503,6 +503,13 @@ class config extends common {
 						'it' 			 	=> $this->getData(['config', 'i18n', 'it']),
 						'nl' 			 	=> $this->getData(['config', 'i18n', 'nl']),
 						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
+					],
+					'cookies' => [
+						'cookiesZwiiText'	=> $this->getInput('connectCookiesZwiiText', helper::FILTER_STRING_LONG),
+						'cookiesGaText'	=> $this->getInput('connectCookiesGaText', helper::FILTER_STRING_LONG),
+						'cookiesTitleText'	=> $this->getInput('connectCookiesTitleText', helper::FILTER_STRING_SHORT),
+						'cookiesLinkMlText'	=> $this->getInput('connectCookiesLinkMlText', helper::FILTER_STRING_SHORT),
+						'cookiesCheckboxGaText'	=> $this->getInput('connectCookiesCheckboxGaText', helper::FILTER_STRING_SHORT)
 					]
 				]
 			]);

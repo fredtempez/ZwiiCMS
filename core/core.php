@@ -1193,20 +1193,19 @@ class common {
  		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
  		if($this->getInput($cookieName) !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
  			<div id="cookieConsent">
- 				<div class="cookieBox"><div class="cookieClose">X</div></div>
+ 				<div class="cookieClose">X</div>
+				<h3><?php echo $this->getData(['config', 'cookies', 'cookiesTitleText']); ?></h3>
  				<?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
- 				<p>Ce site <?php echo helper::baseUrl(false); ?> utilise des cookies nécessaires à son fonctionnement,
- 				ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie
- 				ou la validation de ce message.
+ 				<p><?php echo $this->getData(['config', 'cookies', 'cookiesZwiiText']); ?></p>
  				<?php $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']); ?>
- 				<a href=" <?php echo helper::baseUrl() . $legalPage ?> ">Plus d'informations</a></p>
+ 				<p><a href=" <?php echo helper::baseUrl() . $legalPage ?> "><?php echo $this->getData(['config', 'cookies', 'cookiesLinkMlText']); ?></a></p>
  				<?php if( $analytics !== null AND $analytics !=='' ){ ?>
- 				<p>Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.</p>
+ 				<p><?php echo $this->getData(['config', 'cookies', 'cookiesGaText']); ?></p>
  				<?php } ?>
  				<form method="POST" action="" id="cookieForm">
  					<?php if( $analytics !== null AND $analytics !=='' ){ ?>
  					<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">
- 					<label for="googleAnalytics"> J'accepte les cookies Google Analytics</label> <?php } ?><br><br>
+ 					<label for="googleAnalytics"><?php echo $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']); ?></label> <?php } ?><br><br>
  					<input type="submit" id="cookieConsentConfirm" value="Valider">
  				</form>
  			</div>

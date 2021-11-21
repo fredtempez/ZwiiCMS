@@ -999,7 +999,7 @@ footer #footerSocials .zwiico-github:hover {
 	font-size: 1em;
 }
 
-#cookieConsentConfirm, #cookieConsentRefuse {
+#cookieConsentConfirm {
 	cursor: pointer;
 	margin-left: 10px;
 	background: #666;
@@ -1008,21 +1008,16 @@ footer #footerSocials .zwiico-github:hover {
 	transition: background .3s ease-out;
 }
 
-#cookieConsentConfirm:hover, #cookieConsentRefuse:hover {
+#cookieConsentConfirm:hover {
 	background: #777;
 }
 
-.cookieBox {
-position: relative;
-width: 15px;
-height: 15px;
-border: 1px solid blue;
-}
-.cookieBox .cookieClose {
-position: absolute;
-right: 2px;
-top: -2px;
-cursor: pointer;
+#cookieConsent .cookieClose {
+	position: absolute;
+	right: 5px;
+	top: 0px;
+	font-size: 1.5em;
+	cursor: pointer;
 }
 
 /* Bloc */
