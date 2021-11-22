@@ -149,7 +149,7 @@ class init extends common {
 				'template' => '3'
 			],
 			'header' => [
-				'backgroundColor' => 'rgba(0, 63, 134, 1)',
+				'backgroundColor' => 'rgba(255, 189, 0, 1)',
 				'font' => 'Oswald',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
@@ -167,8 +167,8 @@ class init extends common {
 				'imageContainer' => 'cover',
 				'tinyHidden' => true,
 				'feature' => 'feature',
-				'featureContent' => '<div class="row" style="background-color: #ffbd00; vertical-align: middle;">
-							<p class="col10 textAlignCenter"><strong><span style="font-size: 30pt; color: #003f86; background-color: #ffbd00;"><span style="font-size: 24pt;">Zwii, le <em>CMS&nbsp;</em>pour bien d&eacute;buter</span><br /><span style="font-size: 18pt;"><span style="font-size: 14pt;">Installation facile :<br />Aucune base de donn&eacute;es &agrave; configurer.<br /><br /></span><br /><br /></span></span></strong></p>
+				'featureContent' => '<div class="row" style="vertical-align: middle;">
+							<p class="col10 textAlignCenter"><strong><span style="font-size: 30pt; color: #003f86;"><span style="font-size: 24pt;">Zwii, le <em>CMS&nbsp;</em>pour bien d&eacute;buter</span><br /><span style="font-size: 18pt;"><span style="font-size: 14pt;">Installation facile :<br />Aucune base de donn&eacute;es &agrave; configurer.<br /><br /></span><br /><br /></span></span></strong></p>
 							<div class="col2"><p><img src="/ZwiiCMS/site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
 				'width' => 'container'
 			],
