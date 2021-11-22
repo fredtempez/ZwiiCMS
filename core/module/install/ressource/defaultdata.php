@@ -52,6 +52,13 @@ class init extends common {
 				'it'=> 'none',
 				'nl'=> 'none',
 				'pt'=> 'none'
+			],
+			'cookies' => [
+				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+ 				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
+ 				'cookiesTitleText' => 'Gérer les cookies',
+ 				'cookiesLinkMlText' => 'Plus d\u0026#39;informations',
+ 				'cookiesCheckboxGaText' => 'J\u0026#39;accepte les cookies Google Analytics'
 			]
 		],
 		'core' => [
