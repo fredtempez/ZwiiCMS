@@ -224,9 +224,9 @@ core.start = function() {
 	 */
     $("#cookieForm").submit(function(event){
 		var samesite = "samesite=lax";
-		var getUrl = window.location;
+		var getUrl   = window.location;
 		var domain   = "domain=" + getUrl.host;
-		var path     =  "path=" + getUrl.pathname.split('/')[1];
+		var path     = "path=" + getUrl.pathname.split('/')[1];
 		var samesite = "samesite=lax";
 		var e = new Date();
 		e.setFullYear(e.getFullYear() + 1);
