@@ -652,7 +652,9 @@ class theme extends common {
 
 			$zipFilename =	$this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
 			$data = $this->import(self::FILE_DIR.'source/' . $zipFilename);
-
+			if ($data['success']) {
+				header("Refresh:0");
+			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => $data['notification'],
@@ -709,6 +711,7 @@ class theme extends common {
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
+
 
 				} else {
 					// pas une archive de thème
