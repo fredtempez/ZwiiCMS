@@ -234,7 +234,6 @@ core.start = function() {
 
         // Crée le cookie d'acceptation Google Analytics si nécessaire
 		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
-		console.log(analytics.length );
  	    if( analytics.length > 0){
 			document.cookie = "ZWII_COOKIE_CONSENT_GA=" + $("#googleAnalytics").prop("checked") + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
 		}
