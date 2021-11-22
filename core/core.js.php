@@ -239,7 +239,7 @@ core.start = function() {
 							var expires = new Date();
 							expires.setFullYear(expires.getFullYear() + 1);
 							expires = "expires=" + expires.toUTCString();
-							document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires;
+							document.cookie = "ZWII_COOKIE_CONSENT=true;path:/;samesite=lax;" + expires;
 							// Ferme le message
 							$(this).parents("#cookieConsent").fadeOut();
 						}),
@@ -251,7 +251,7 @@ core.start = function() {
 						var expires = new Date();
 						expires.setFullYear(expires.getFullYear() + 1);
 						expires = "expires=" + expires.toUTCString();
-						document.cookie = "ZWII_COOKIE_CONSENT=false;" + expires;
+						document.cookie = "ZWII_COOKIE_CONSENT=false;path:/;samesite=lax;" + expires;
 						// Ferme le message
 						$(this).parents("#cookieConsent").fadeOut();
 					}),
