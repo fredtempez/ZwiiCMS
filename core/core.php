@@ -1172,9 +1172,8 @@ class common {
 	 * Affiche le script Google Analytics
 	 */
 	 public function showAnalytics() {
- 		$cookieName = 'ZWII_COOKIE_GA_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
  		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput($cookieName) === 'true')  {
+ 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true_'.str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])))  {
  			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
  				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
  				<script>
@@ -1190,8 +1189,7 @@ class common {
 	 * Affiche le consentement aux cookies
 	 */
 	 public function showCookies() {
- 		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
- 		if($this->getInput($cookieName) !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
+ 		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true_'.str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])) AND $this->getData(['config','cookieConsent']) === true){ ?>
  			<div id="cookieConsent">
  				<div class="cookieClose">X</div>
 				<h3><?php echo $this->getData(['config', 'cookies', 'cookiesTitleText']); ?></h3>
