@@ -654,14 +654,15 @@ class theme extends common {
 			$data = $this->import(self::FILE_DIR.'source/' . $zipFilename);
 			if ($data['success']) {
 				header("Refresh:0");
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => $data['notification'],
+					'state' => $data['success'],
+					'title' => 'Gestion des thèmes',
+					'view' => 'manage'
+				]);;
 			}
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => $data['notification'],
-				'state' => $data['success'],
-				'title' => 'Gestion des thèmes',
-				'view' => 'manage'
-			]);;
 		}
 		// Valeurs en sortie
 		$this->addOutput([
