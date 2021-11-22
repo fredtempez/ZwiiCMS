@@ -219,31 +219,46 @@ core.start = function() {
 		}
 	});
 
-  /**
-   * Traitement du formulaire cookies
-   */
-  $("#cookieForm").submit(function(event){
-    var samesite = "samesite=lax";
-    var getUrl   = window.location;
-    var domain   = "domain=" + getUrl.host;
-    var path     = "path=" + getUrl.pathname.split('/')[1];
-    var samesite = "samesite=lax";
-    var e = new Date();
-    e.setFullYear(e.getFullYear() + 1);
-    var expires = "expires=" + e.toUTCString();
-
-        // Crée le cookie d'acceptation Google Analytics si nécessaire
-    var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
-      if( analytics.length > 0){
-      document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
-    }
-    document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
-  });
-
-  $("#cookieConsent .cookieClose").on("click", function() {
-      $(this).parents("#cookieConsent").fadeOut();
-  });
-
+	/**
+	 * Message sur l'utilisation des cookies
+	 */
+	var analytics = "";
+	if (<?php echo json_encode($this->getData(['config', 'seo', 'analyticsId'])); ?>) {
+		 analytics = ' grâce au cookie Google Analytics'
+	}
+	if(<?php echo json_encode($this->getData(['config', 'cookieConsent'])); ?>) {
+		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
+			$("body").append(
+				$("<div>").attr("id", "cookieConsent").append(
+					$("<span>").html("<p>Ce site utilise des cookies pour assurer l'authentification, améliorer l'expérience utilisateur"+analytics+". <br/>En cliquant sur ”J’accepte”, vous acceptez l’utilisation de ces cookies.</p>"),
+					$("<span>")
+						.attr("id", "cookieConsentConfirm")
+						.text("Accepter")
+						.on("click", function() {
+							// Créé le cookie d'acceptation
+							var expires = new Date();
+							expires.setFullYear(expires.getFullYear() + 1);
+							expires = "expires=" + expires.toUTCString();
+							document.cookie = "ZWII_COOKIE_CONSENT=true;path:/;samesite=lax;" + expires;
+							// Ferme le message
+							$(this).parents("#cookieConsent").fadeOut();
+						}),
+					$("<span>")
+					.attr("id", "cookieConsentRefuse")
+					.text("Refuser")
+					.on("click", function() {
+						// Créé le cookie d'acceptation
+						var expires = new Date();
+						expires.setFullYear(expires.getFullYear() + 1);
+						expires = "expires=" + expires.toUTCString();
+						document.cookie = "ZWII_COOKIE_CONSENT=false;path:/;samesite=lax;" + expires;
+						// Ferme le message
+						$(this).parents("#cookieConsent").fadeOut();
+					}),
+				)
+			);
+		}
+	}
 	/**
 	 * Choix de page dans la barre de membre
 	 */
