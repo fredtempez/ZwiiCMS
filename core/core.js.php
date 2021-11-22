@@ -219,30 +219,28 @@ core.start = function() {
 		}
 	});
 
-  /**
+    /**
 	 * Traitement du formulaire cookies
 	 */
-   $("#cookieForm").submit(function(event){
-        const ga = document.getElementById('googleAnalytics');
- 	   var samesite = "samesite=lax";
- 	   var expires = new Date();
-        expires.setFullYear(expires.getFullYear() + 1);
-        expires = "expires=" + expires.toUTCString();
+    $("#cookieForm").submit(function(event){
+		var samesite = "samesite=lax";
+		var getUrl = window.location;
+		var domain   = "domain=" + getUrl.host;
+		var path     =  "path=" + getUrl.pathname.split('/')[1];
+		var samesite = "samesite=lax";
+		var e = new Date();
+		e.setFullYear(e.getFullYear() + 1);
+		var expires = "expires=" + e.toUTCString();
+
         // Crée le cookie d'acceptation Google Analytics si nécessaire
- 	   <?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
- 	   <?php if( $analytics !== null AND $analytics !=='' ){
- 	   $cookieName = 'ZWII_COOKIE_GA_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));?>
- 		   if(ga.checked){
- 			document.cookie = "<?php echo $cookieName; ?>=true;" + expires +";"+ samesite;
- 		   }
- 		   else{
- 			document.cookie = "<?php echo $cookieName; ?>=false;" + expires +";"+ samesite;
- 		   }
- 	   <?php }
- 		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
- 	   ?>
-        document.cookie = "<?php echo $cookieName; ?>=true;" + expires +";"+ samesite;
+		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+		console.log(analytics.length );
+ 	    if( analytics.length > 0){
+			document.cookie = "ZWII_COOKIE_CONSENT_GA=" + $("#googleAnalytics").prop("checked") + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
+		}
+        document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
      });
+
  	$("#cookieConsent .cookieClose").on("click", function() {
  		$(this).parents("#cookieConsent").fadeOut();
  	});

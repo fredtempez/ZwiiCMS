@@ -1190,8 +1190,8 @@ class common {
 	 * Affiche le consentement aux cookies
 	 */
 	 public function showCookies() {
- 		$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
- 		if($this->getInput($cookieName) !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
+ 		//$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
+ 		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true' AND $this->getData(['config','cookieConsent']) === true){ ?>
  			<div id="cookieConsent">
  				<div class="cookieClose">X</div>
 				<h3><?php echo $this->getData(['config', 'cookies', 'cookiesTitleText']); ?></h3>
