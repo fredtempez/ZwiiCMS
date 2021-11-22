@@ -237,7 +237,8 @@ core.start = function() {
  	    if( analytics.length > 0){
 			document.cookie = "ZWII_COOKIE_CONSENT_GA=" + $("#googleAnalytics").prop("checked") + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
 		}
-        document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
+        //document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
+		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])); ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
      });
 
  	$("#cookieConsent .cookieClose").on("click", function() {

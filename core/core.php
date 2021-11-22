@@ -1190,14 +1190,17 @@ class common {
 	 * Affiche le consentement aux cookies
 	 */
 	 public function showCookies() {
- 		//$cookieName = 'ZWII_COOKIE_CONSENT'.str_replace('_index.php','',str_replace( '/','_',$_SERVER['PHP_SELF']));
- 		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true' AND $this->getData(['config','cookieConsent']) === true){
+ 		
+ 		if( $this->getInput('ZWII_COOKIE_CONSENT') !== str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])) AND
+		    $this->getData(['config','cookieConsent']) === true
+		){
 
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
- 			
 			$item  = '<div id="cookieConsent">';
- 			$item .= '<div class="cookieClose">X</div>';
+ 			$item .= '<div class="cookieClose">';
+			$item .= template::ico('cancel');
+			$item .= '</div>';
 			$item .= '<h3>'. $this->getData(['config', 'cookies', 'cookiesTitleText']) . '</h3>';
 			$item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesZwiiText']) . '</p>';
 			$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['config', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
@@ -1212,8 +1215,9 @@ class common {
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
 			$item .= '</form></div>'; 			
+			echo $item;
  		}
-		 echo $item;
+		 
  	}
 
 	/**
