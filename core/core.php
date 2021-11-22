@@ -1189,26 +1189,34 @@ class common {
 	 * Affiche le consentement aux cookies
 	 */
 	 public function showCookies() {
- 		if($this->getInput('ZWII_COOKIE_CONSENT') !== 'true_'.str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])) AND $this->getData(['config','cookieConsent']) === true){ ?>
- 			<div id="cookieConsent">
- 				<div class="cookieClose">X</div>
-				<h3><?php echo $this->getData(['config', 'cookies', 'cookiesTitleText']); ?></h3>
- 				<?php $analytics = $this->getData(['config', 'seo', 'analyticsId']);?>
- 				<p><?php echo $this->getData(['config', 'cookies', 'cookiesZwiiText']); ?></p>
- 				<?php $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']); ?>
- 				<p><a href=" <?php echo helper::baseUrl() . $legalPage ?> "><?php echo $this->getData(['config', 'cookies', 'cookiesLinkMlText']); ?></a></p>
- 				<?php if( $analytics !== null AND $analytics !=='' ){ ?>
- 				<p><?php echo $this->getData(['config', 'cookies', 'cookiesGaText']); ?></p>
- 				<?php } ?>
- 				<form method="POST" action="" id="cookieForm">
- 					<?php if( $analytics !== null AND $analytics !=='' ){ ?>
- 					<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">
- 					<label for="googleAnalytics"><?php echo $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']); ?></label> <?php } ?><br><br>
- 					<input type="submit" id="cookieConsentConfirm" value="Valider">
- 				</form>
- 			</div>
- 		<?php
+ 		
+ 		if( $this->getInput('ZWII_COOKIE_CONSENT') !== str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])) AND
+		    $this->getData(['config','cookieConsent']) === true
+		){
+
+			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
+			$legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
+			$item  = '<div id="cookieConsent">';
+ 			$item .= '<div class="cookieClose">';
+			$item .= template::ico('cancel');
+			$item .= '</div>';
+			$item .= '<h3>'. $this->getData(['config', 'cookies', 'cookiesTitleText']) . '</h3>';
+			$item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesZwiiText']) . '</p>';
+			$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['config', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+ 			if( $analytics !== null AND $analytics !=='' ){
+				$item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesGaText']) . '</p>';
+			}
+			$item .= '<form method="POST" action="" id="cookieForm">';
+			if( $analytics !== null AND $analytics !=='' ) {
+				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">';
+				$item .= '<label for="googleAnalytics">' . $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
+			}
+			$item .= '<br><br>';
+			$item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
+			$item .= '</form></div>'; 			
+			echo $item;
  		}
+		 
  	}
 
 	/**

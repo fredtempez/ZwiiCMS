@@ -174,7 +174,7 @@
 
 			<!-- Corps de page -->
 			<?php $this->showSection();?>
-
+			
 			<!-- footer -->
 			<?php $this->showFooter();?>
 
@@ -183,7 +183,7 @@
 
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
-		<!-- Affichage du consentement aux cookies-->
+		<!-- Affichage du consentement aux cookies-->	
 		<?php $this->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php $this->showScript();?>
