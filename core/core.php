@@ -1173,7 +1173,7 @@ class common {
 	 */
 	 public function showAnalytics() {
  		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true_'.str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])))  {
+ 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true'.$_SERVER['PHP_SELF'])  {
  			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
  				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
  				<script>
@@ -1189,8 +1189,8 @@ class common {
 	 * Affiche le consentement aux cookies
 	 */
 	 public function showCookies() {
- 		
- 		if( $this->getInput('ZWII_COOKIE_CONSENT') !== str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])) AND
+
+ 		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
 		    $this->getData(['config','cookieConsent']) === true
 		){
 
@@ -1213,10 +1213,10 @@ class common {
 			}
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
-			$item .= '</form></div>'; 			
+			$item .= '</form></div>';
 			echo $item;
  		}
-		 
+
  	}
 
 	/**

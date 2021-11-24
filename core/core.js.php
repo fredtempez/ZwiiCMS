@@ -219,31 +219,30 @@ core.start = function() {
 		}
 	});
 
-    /**
-	 * Traitement du formulaire cookies
-	 */
-    $("#cookieForm").submit(function(event){
-		var samesite = "samesite=lax";
-		var getUrl   = window.location;
-		var domain   = "domain=" + getUrl.host;
-		var path     = "path=" + getUrl.pathname.split('/')[1];
-		var samesite = "samesite=lax";
-		var e = new Date();
-		e.setFullYear(e.getFullYear() + 1);
-		var expires = "expires=" + e.toUTCString();
+  /**
+   * Traitement du formulaire cookies
+   */
+  $("#cookieForm").submit(function(event){
+    var samesite = "samesite=lax";
+    var getUrl   = window.location;
+    var domain   = "domain=" + getUrl.host;
+    var path     = "path=" + getUrl.pathname.split('/')[1];
+    var samesite = "samesite=lax";
+    var e = new Date();
+    e.setFullYear(e.getFullYear() + 1);
+    var expires = "expires=" + e.toUTCString();
 
         // Crée le cookie d'acceptation Google Analytics si nécessaire
-		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
- 	    if( analytics.length > 0){
-			document.cookie = "ZWII_COOKIE_CONSENT_GA=" + $("#googleAnalytics").prop("checked") + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
-		}
-        //document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
-		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo str_replace('index.php','',str_replace( '/','',$_SERVER['PHP_SELF'])); ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
-     });
+    var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+      if( analytics.length > 0){
+      document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
+    }
+    document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
+  });
 
- 	$("#cookieConsent .cookieClose").on("click", function() {
- 		$(this).parents("#cookieConsent").fadeOut();
- 	});
+  $("#cookieConsent .cookieClose").on("click", function() {
+      $(this).parents("#cookieConsent").fadeOut();
+  });
 
 	/**
 	 * Choix de page dans la barre de membre
