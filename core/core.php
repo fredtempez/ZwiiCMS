@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.8';
+	const ZWII_VERSION = '11.2.00.9';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1188,36 +1188,36 @@ class common {
 	/**
 	 * Affiche le consentement aux cookies
 	 */
-	 public function showCookies() {
+	public function showCookies() {
 
- 		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
-		    $this->getData(['config', 'cookies', 'cookieConsent']) === true
-		){
+		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
+		   $this->getData(['config', 'cookies', 'cookieConsent']) === true
+	   ){
 
-			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
-			$legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
-			$item  = '<div id="cookieConsent">';
- 			$item .= '<div class="cookieClose">';
-			$item .= template::ico('cancel');
-			$item .= '</div>';
-			$item .= '<h3>'. $this->getData(['config', 'cookies', 'cookiesTitleText']) . '</h3>';
-			$item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesZwiiText']) . '</p>';
-			$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['config', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
- 			if( $analytics !== null AND $analytics !=='' ){
-				$item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesGaText']) . '</p>';
-			}
-			$item .= '<form method="POST" action="" id="cookieForm">';
-			if( $analytics !== null AND $analytics !=='' ) {
-				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">';
-				$item .= '<label for="googleAnalytics">' . $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
-			}
-			$item .= '<br><br>';
-			$item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
-			$item .= '</form></div>';
-			echo $item;
- 		}
+		   $analytics = $this->getData(['config', 'seo', 'analyticsId']);
+		   $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
+		   $item  = '<div id="cookieConsent">';
+			$item .= '<div class="cookieClose">';
+		   $item .= template::ico('cancel');
+		   $item .= '</div>';
+		   $item .= '<h3>'. $this->getData(['config', 'cookies', 'cookiesTitleText']) . '</h3>';
+		   $item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesZwiiText']) . '</p>';
+		   $item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['config', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+			if( $analytics !== null AND $analytics !=='' ){
+			   $item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesGaText']) . '</p>';
+		   }
+		   $item .= '<form method="POST" action="" id="cookieForm">';
+		   if( $analytics !== null AND $analytics !=='' ) {
+			   $item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">';
+			   $item .= '<label for="googleAnalytics">' . $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
+		   }
+		   $item .= '<br><br>';
+		   $item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
+		   $item .= '</form></div>';
+		   echo $item;
+		}
 
- 	}
+	}
 
 	/**
 	 * Formate le contenu de la page selon les gabarits
@@ -2276,16 +2276,15 @@ class core extends common {
 					$css .= 'header{margin:20px 20px 0 20px}';
 				}
 			}
-			// Couleur du fonc
-			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
-			$css .= 'header{background-color:' . $colors['normal'].'}';
-
 			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
+				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
+				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
+				$css .= 'header{background-color:' . $colors['normal'];
 
-				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).';}';
-				
 				// Valeur de hauteur traditionnelle
-				$css .= 'header{height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) . ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
+				$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']) ;
+
+				$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
 				if($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
