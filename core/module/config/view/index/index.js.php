@@ -11,6 +11,10 @@
  */
 
 $( document).ready(function() {
+
+    // Positionnement inital des options
+    //-----------------------------------------------------------------------------------------------------
+
     /**
      * Afficher et masquer options SMTP
      */
@@ -34,8 +38,18 @@ $( document).ready(function() {
         $("#SmtpAuthParam").slideUp();
     }
 
-
+    /**
+     * Cookie
+     */
+    if ($("input[name=configCookieConsent]").is(':checked')) {
+        $("#cookieContainer").slideDown();
+    } else {
+        $("#cookieContainer").slideUp();
+    }
   
+    // Gestion des événements
+    //---------------------------------------------------------------------------------------------------------------------
+
 
     /**
      * Afficher et masquer options SMTP
@@ -172,46 +186,19 @@ $( document).ready(function() {
         setCookie("configLayout","network");
     });
 
-    /** 
-     * Boutons d'aide
-     *  Page des paramètres
-   
+    /**
+     * Options des cookies
+     */
 
-    $("#setupHelpButton").on("click", function() {
-        
+     $("input[name=configCookieConsent]").on("change", function() {            
+        if ($("input[name=configCookieConsent]").is(':checked')) {
+            $("#cookieContainer").slideDown();
+        } else {
+            $("#cookieContainer").slideUp();
+        }
     });
-    $("#updateHelpButton").on("click", function() {
-        
-    });
-    $("#maintenanceHelpButton").on("click", function() {
-        
-    });  */
 
-    /** 
-     * Boutons d'aide
-     *  Page des locales
-     
-
-    $("#localeHelpButton").on("click", function() {
-        
-    });
-    $("#labelHelpButton").on("click", function() {
-        
-    });
-    $("#specialeHelpButton").on("click", function() {
-        console.log("f");
-        
-    });*/
-
-    /** Bouton de fermeture 
-
-	$(".zwiico-cancel").click(function() {
-		$(".helpDisplayContainer").slideUp();
-	});
-    */
-});
-
-$( document).ready(function() {
+  
     var configLayout = getCookie("configLayout");
     if (configLayout == null) {
         $("#localeContainer").hide();

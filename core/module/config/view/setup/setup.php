@@ -36,12 +36,6 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
-							'checked' => $this->getData(['config', 'cookieConsent']),
-							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
-						]); ?>
-					</div>
-					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'URL intelligentes', [
 							'checked' => helper::checkRewrite(),
 							'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'

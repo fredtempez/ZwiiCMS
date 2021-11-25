@@ -125,46 +125,56 @@
 					</span>
 				</h4>
 				<div class="row">
-					<div class="col12">
-						<?php echo template::textarea('connectCookiesZwiiText', [
-							'help' => 'Saisissez le message pour les cookies déposés par ZwiiCMS, nécessaires au fonctionnement et qui ne nécessitent pas de consentement.',
-							'label' => 'Cookies Zwii',
-							'value' => $this->getData(['config', 'cookies', 'cookiesZwiiText'])
-						]); ?>
+					<div class="col6">
+							<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
+								'checked' => $this->getData(['config', 'cookieConsent']),
+								'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
+							]); ?>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col12">
-						<?php echo template::textarea('connectCookiesGaText', [
-							'help' => 'Saisissez le message pour les cookies déposés par Google Analytics, le consentement est requis.',
-							'label' => 'Cookies Google Analytics',
-							'value' => $this->getData(['config', 'cookies', 'cookiesGaText'])
-						]); ?>
+				<div id="cookieContainer">	
+					<div class="row">
+						<div class="col12">
+							<?php echo template::textarea('connectCookiesZwiiText', [
+								'help' => 'Saisissez le message pour les cookies déposés par ZwiiCMS, nécessaires au fonctionnement et qui ne nécessitent pas de consentement.',
+								'label' => 'Cookies Zwii',
+								'value' => $this->getData(['config', 'cookies', 'cookiesZwiiText'])
+							]); ?>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::text('connectCookiesTitleText', [
-							'help' => 'Saisissez le titre de la fenêtre de gestion des cookies.',
-							'label' => 'Titre de la fenêtre',
-							'value' => $this->getData(['config', 'cookies', 'cookiesTitleText'])
-						]); ?>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::textarea('connectCookiesGaText', [
+								'help' => 'Saisissez le message pour les cookies déposés par Google Analytics, le consentement est requis.',
+								'label' => 'Cookies Google Analytics',
+								'value' => $this->getData(['config', 'cookies', 'cookiesGaText'])
+							]); ?>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::text('connectCookiesLinkMlText', [
-							'help' => 'Saisissez le texte du lien vers les mentions légales.',
-							'label' => 'Lien vers mentions légales',
-							'value' => $this->getData(['config', 'cookies', 'cookiesLinkMlText'])
-						]); ?>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::text('connectCookiesTitleText', [
+								'help' => 'Saisissez le titre de la fenêtre de gestion des cookies.',
+								'label' => 'Titre de la fenêtre',
+								'value' => $this->getData(['config', 'cookies', 'cookiesTitleText'])
+							]); ?>
+						</div>
 					</div>
-					<div class="col6">
-						<?php echo template::text('connectCookiesCheckboxGaText', [
-							'help' => 'Saisissez le texte de la case à cocher Google Analytics.',
-							'label' => 'Checkbox Google Analytics',
-							'value' => $this->getData(['config', 'cookies', 'cookiesCheckboxGaText'])
-						]); ?>
+					<div class="row">
+						<div class="col6">
+							<?php echo template::text('connectCookiesLinkMlText', [
+								'help' => 'Saisissez le texte du lien vers les mentions légales.',
+								'label' => 'Lien vers mentions légales',
+								'value' => $this->getData(['config', 'cookies', 'cookiesLinkMlText'])
+							]); ?>
+						</div>
+						<div class="col6">
+							<?php echo template::text('connectCookiesCheckboxGaText', [
+								'help' => 'Saisissez le texte de la case à cocher Google Analytics.',
+								'label' => 'Checkbox Google Analytics',
+								'value' => $this->getData(['config', 'cookies', 'cookiesCheckboxGaText'])
+							]); ?>
+						</div>
 					</div>
 				</div>
 			</div>
