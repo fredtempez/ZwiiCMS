@@ -223,6 +223,8 @@ core.start = function() {
 	 * Traitement du formulaire cookies
 	 */
 	$("#cookieForm").submit(function(event){
+
+		// Varables des cookies
 		var samesite = "samesite=lax";
 		var getUrl   = window.location;
 		var domain   = "domain=" + getUrl.host;
@@ -232,14 +234,19 @@ core.start = function() {
 		e.setFullYear(e.getFullYear() + 1);
 		var expires = "expires=" + e.toUTCString();
 
-			// Crée le cookie d'acceptation Google Analytics si nécessaire
+		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
 		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
 		if( analytics.length > 0){
-		document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
 		}
+
+		// Stocke lz cookie d'acceptation
 		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
 
+	/**
+	 * Fermeture de la popup des cookies
+	 */
 	$("#cookieConsent .cookieClose").on("click", function() {
 		$(this).parents("#cookieConsent").fadeOut();
 	});
