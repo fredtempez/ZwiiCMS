@@ -1191,7 +1191,7 @@ class common {
 	 public function showCookies() {
 
  		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
-		    $this->getData(['config','cookieConsent']) === true
+		    $this->getData(['config', 'cookies', 'cookieConsent']) === true
 		){
 
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);

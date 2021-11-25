@@ -127,7 +127,7 @@
 				<div class="row">
 					<div class="col6">
 							<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
-								'checked' => $this->getData(['config', 'cookieConsent']),
+								'checked' => $this->getData(['config', 'cookies', 'cookieConsent']),
 								'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
 							]); ?>
 					</div>
