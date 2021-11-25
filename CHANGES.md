@@ -1,6 +1,10 @@
 # Changelog
 
 ## Version 11.2.00
+Mises à jour : 
+    - jQuery v3.6.0
+    - Lity v2.4.1
+    - Lightbox v2.10.1
 - Corrections : 
     - Configuration, restauration d'une archive du site : 
         - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
