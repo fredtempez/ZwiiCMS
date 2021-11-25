@@ -448,7 +448,6 @@ class config extends common {
 					'favicon' => $this->getInput('configFavicon'),
 					'faviconDark' => $this->getInput('configFaviconDark'),
 					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
-					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
@@ -505,6 +504,7 @@ class config extends common {
 						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
 					],
 					'cookies' => [
+						'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 						'cookiesZwiiText'	=> $this->getInput('connectCookiesZwiiText', helper::FILTER_STRING_LONG),
 						'cookiesGaText'	=> $this->getInput('connectCookiesGaText', helper::FILTER_STRING_LONG),
 						'cookiesTitleText'	=> $this->getInput('connectCookiesTitleText', helper::FILTER_STRING_SHORT),
