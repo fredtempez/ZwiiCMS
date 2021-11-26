@@ -976,6 +976,7 @@ class common {
 		if (!is_dir($fileInfo['dirname'])) {
 			mkdir($fileInfo['dirname'], 0755, true);
 		}
+		$source_image = '';
 		// Type d'image
 		switch(	$fileInfo['extension']) {
 			case 'jpeg':
