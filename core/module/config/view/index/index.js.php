@@ -41,12 +41,13 @@ $( document).ready(function() {
     /**
      * Cookie
      */
+    /*
     if ($("input[name=configCookieConsent]").is(':checked')) {
         $("#cookieContainer").slideDown();
     } else {
         $("#cookieContainer").slideUp();
     }
-  
+  */
     // Gestion des événements
     //---------------------------------------------------------------------------------------------------------------------
 
@@ -189,7 +190,7 @@ $( document).ready(function() {
     /**
      * Options des cookies
      */
-
+/*
      $("input[name=configCookieConsent]").on("change", function() {            
         if ($("input[name=configCookieConsent]").is(':checked')) {
             $("#cookieContainer").slideDown();
@@ -197,7 +198,7 @@ $( document).ready(function() {
             $("#cookieContainer").slideUp();
         }
     });
-
+*/
   
     var configLayout = getCookie("configLayout");
     if (configLayout == null) {
