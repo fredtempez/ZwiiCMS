@@ -6,7 +6,7 @@
         - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
         - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
 - Modifications :
-    - Gestion des cookies : nouvelles options de personnalisation du message d'acceptation des cookies, refus du cookie Google Analytics.
+    - Gestion des cookies : nouvelles options de personnalisation du message d'acceptation des cookies, acceptation ou refus du cookie Google Analytics.
     - Thème : 
         - Disposition des options de configuration du site.
         - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.
