@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.9';
+	const ZWII_VERSION = '11.2.00.10';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2269,6 +2269,8 @@ class core extends common {
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 
 			// Bannière
+			
+			// Eléments communs
 			if($this->getData(['theme', 'header', 'margin'])) {
 				if($this->getData(['theme', 'menu', 'position']) === 'site-first') {
 					$css .= 'header{margin:0 20px}';
@@ -2277,8 +2279,11 @@ class core extends common {
 					$css .= 'header{margin:20px 20px 0 20px}';
 				}
 			}
+			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
+			$css .= 'header{background-color:' . $colors['normal'] . ';}';
+			
+			// Bannière de type papier peint
 			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
-				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
 				$css .= 'header{background-color:' . $colors['normal'];
 
@@ -2292,9 +2297,11 @@ class core extends common {
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
 				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
+
+			// Bannière au contenu personnalisé
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
-				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . '; }';
+				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . ';}';
 
 			}
 
