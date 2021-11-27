@@ -1480,6 +1480,8 @@ class common {
 			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="' . $label . '">' . $label .'</a>';
 		}
 		$items .= '</span>';
+		// Affichage de la gestion des cookies
+		$items .= $this->getData(['config', 'cookies', 'cookieConsent' ]) === false ? '':'<span id="footerCookies"><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getUrl(0). '">'.$this->getData(['config', 'cookies', 'cookiesFooterText' ]).'</a></span>';
 		// Affichage du lien de connexion
 		if(
             (
@@ -2269,7 +2271,7 @@ class core extends common {
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 
 			// Bannière
-			
+
 			// Eléments communs
 			if($this->getData(['theme', 'header', 'margin'])) {
 				if($this->getData(['theme', 'menu', 'position']) === 'site-first') {
@@ -2281,7 +2283,7 @@ class core extends common {
 			}
 			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 			$css .= 'header{background-color:' . $colors['normal'] . ';}';
-			
+
 			// Bannière de type papier peint
 			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
 				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';

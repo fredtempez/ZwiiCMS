@@ -244,6 +244,21 @@ core.start = function() {
 		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
 
+  /**
+	* Suppression du cookie de consentement
+	*/
+	$('#footerCookies').bind('click', function(event) {
+		var samesite = "samesite=lax";
+		var getUrl   = window.location;
+		var domain   = "domain=" + getUrl.host;
+		var path     = "path=" + getUrl.pathname.split('/')[1];
+		var samesite = "samesite=lax";
+		var e = new Date();
+		e.setFullYear(e.getFullYear() - 1);
+		var expires = "expires=" + e.toUTCString();
+		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
+	});
+
 	/**
 	 * Fermeture de la popup des cookies
 	 */

@@ -131,6 +131,13 @@
 								'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
 							]); ?>
 					</div>
+					<div class="col6">
+						<?php echo template::text('connectCookiesFooterText', [
+							'help' => 'Saisissez le texte du lien, présent dans le pied de page, qui permet au visiteur de modifier son consentement aux cookies.',
+							'label' => 'Texte du lien dans le pied de page',
+							'value' => $this->getData(['config', 'cookies', 'cookiesFooterText'])
+						]); ?>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col12">

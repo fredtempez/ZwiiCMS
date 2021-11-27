@@ -58,7 +58,8 @@ class init extends common {
  				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
  				'cookiesTitleText' => 'Gérer les cookies',
  				'cookiesLinkMlText' => 'Voir les mentions légales',
- 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics'
+ 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
+				'cookiesFooterText' => 'Gestion des cookies'
 			]
 		],
 		'core' => [

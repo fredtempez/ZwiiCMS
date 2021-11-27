@@ -509,7 +509,8 @@ class config extends common {
 						'cookiesGaText'	=> $this->getInput('connectCookiesGaText', helper::FILTER_STRING_LONG),
 						'cookiesTitleText'	=> $this->getInput('connectCookiesTitleText', helper::FILTER_STRING_SHORT),
 						'cookiesLinkMlText'	=> $this->getInput('connectCookiesLinkMlText', helper::FILTER_STRING_SHORT),
-						'cookiesCheckboxGaText'	=> $this->getInput('connectCookiesCheckboxGaText', helper::FILTER_STRING_SHORT)
+						'cookiesCheckboxGaText'	=> $this->getInput('connectCookiesCheckboxGaText', helper::FILTER_STRING_SHORT),
+						'cookiesFooterText' => $this->getInput('connectCookiesFooterText', helper::FILTER_STRING_SHORT)
 					]
 				]
 			]);
