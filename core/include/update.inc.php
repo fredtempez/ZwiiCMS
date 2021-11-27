@@ -698,15 +698,16 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['theme', 'header', 'featureContent', '<p>Bannière vide</p>']);
 	$this->setData(['theme', 'header', 'container', 'container']);
 	$this->setData(['theme', 'menu', 'container', 'container']);
+	// Option des cookies dans le footer
+	$this->setData(['theme', 'footer', 'displayCookie', false]);
 
 	// Acceptation et paramétres des cookies RGPD
-	$this->setData(['config', 'cookies', 'cookieConsent', $this->getData(['config', 'cookieConsent']) ]);
-	$this->deleteData(['config', 'cookieConsent' ]);
-	$this->setData(['config', 'cookies', 'cookiesZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
-	$this->setData(['config', 'cookies', 'cookiesGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
-	$this->setData(['config', 'cookies', 'cookiesTitleText', 'Gérer les cookies']);
-	$this->setData(['config', 'cookies', 'cookiesLinkMlText', 'Voir les mentions légales']);
-	$this->setData(['config', 'cookies', 'cookiesCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	$this->setData(['locale', 'cookies', 'cookieZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
+	$this->setData(['locale', 'cookies', 'cookieGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
+	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
+	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Voir les mentions légales']);
+	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);

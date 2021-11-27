@@ -9,6 +9,7 @@ class init extends common {
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
 			'maintenance' => false,
+			'cookieConsent' => true,
 			'social' => [
 				'facebookId' => 'facebook',
 				'instagramId' => '',
@@ -51,15 +52,6 @@ class init extends common {
 				'it'=> 'none',
 				'nl'=> 'none',
 				'pt'=> 'none'
-			],
-			'cookies' => [
-				'cookieConsent' => true,
-				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
- 				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
- 				'cookiesTitleText' => 'Gérer les cookies',
- 				'cookiesLinkMlText' => 'Voir les mentions légales',
- 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
-				'cookiesFooterText' => 'Gestion des cookies'
 			]
 		],
 		'core' => [
@@ -81,7 +73,16 @@ class init extends common {
 			'sitemapPageLabel' => 'Plan du site',
 			'legalPageLabel' => 'Mentions légales',
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !'
+			'title' => 'Votre site en quelques clics !',
+			'cookies' => [
+				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
+				'cookiesTitleText' => 'Gérer les cookies',
+				'cookiesLinkMlText' => 'Voir les mentions légales',
+				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
+				'cookiesFooterText' => 'Confidentialité'
+			]
+
 		],
 		'page' => [
 			'accueil' => [
@@ -144,6 +145,7 @@ class init extends common {
 				'displayVersion' => true,
 				'displaySiteMap' => true,
 				'displayCopyright' => false,
+				'displayCookie' => false,
 				'displayLegal' => false,
 				'displaySearch' => false,
 				'displayMemberBar' => false,

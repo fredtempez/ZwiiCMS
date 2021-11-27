@@ -391,6 +391,7 @@ class theme extends common {
 					'displayVersion' => $this->getInput('themefooterDisplayVersion', helper::FILTER_BOOLEAN),
 					'displaySiteMap' => $this->getInput('themefooterDisplaySiteMap', helper::FILTER_BOOLEAN),
 					'displayCopyright' => $this->getInput('themefooterDisplayCopyright', helper::FILTER_BOOLEAN),
+					'displayCookie' => $this->getInput('themefooterDisplayCookie', helper::FILTER_BOOLEAN),
 					'displayLegal' =>  $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
 					'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
 					'displayMemberBar'=> $this->getInput('themeFooterDisplayMemberBar', helper::FILTER_BOOLEAN),

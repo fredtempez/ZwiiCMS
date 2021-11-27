@@ -206,18 +206,6 @@ core.start = function() {
 		$("#notification").fadeOut();
 		$("#notificationProgress").stop();
 	});
-	/**
-	 * Affiche / Cache le menu en mode responsive
-	 */
-	var menuDOM = $("#menu");
-	$("#toggle").on("click", function() {
-		menuDOM.slideToggle();
-	});
-	$(window).on("resize", function() {
-		if($(window).width() > 768) {
-			menuDOM.css("display", "");
-		}
-	});
 
 	/**
 	 * Traitement du formulaire cookies
@@ -244,7 +232,7 @@ core.start = function() {
 		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
 
-  /**
+	/**
 	* Suppression du cookie de consentement
 	*/
 	$('#footerCookies').bind('click', function(event) {
@@ -265,6 +253,20 @@ core.start = function() {
 	$("#cookieConsent .cookieClose").on("click", function() {
 		$(this).parents("#cookieConsent").fadeOut();
 	});
+
+	/**
+	 * Affiche / Cache le menu en mode responsive
+	 */
+	 var menuDOM = $("#menu");
+	 $("#toggle").on("click", function() {
+		 menuDOM.slideToggle();
+	 });
+	 $(window).on("resize", function() {
+		 if($(window).width() > 768) {
+			 menuDOM.css("display", "");
+		 }
+	 });
+
 	/**
 	 * Choix de page dans la barre de membre
 	 */
