@@ -1196,16 +1196,18 @@ class common {
 	   ){
 
 		   $analytics = $this->getData(['locale', 'seo', 'analyticsId']);
-		   $legalPage = $this->getData(['locale', 'legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
+		   $legalPage = $this->getData(['locale', 'legalPageId']);
 		   $item  = '<div id="cookieConsent">';
-			$item .= '<div class="cookieClose">';
+		   $item .= '<div class="cookieClose">';
 		   $item .= template::ico('cancel');
 		   $item .= '</div>';
 		   $item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
 		   $item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
-		   $item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
-			if( $analytics !== null AND $analytics !=='' ){
-			   $item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
+		   if ($legalPage !== 'none')  {
+				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+			}
+		   if( $analytics !== null AND $analytics !=='' ){				
+				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
 		   }
 		   $item .= '<form method="POST" action="" id="cookieForm">';
 		   if( $analytics !== null AND $analytics !=='' ) {
