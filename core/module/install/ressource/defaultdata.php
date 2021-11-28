@@ -78,10 +78,10 @@ class init extends common {
 				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
 				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
 				'cookiesTitleText' => 'Gérer les cookies',
-				'cookiesLinkMlText' => 'Voir les mentions légales',
+				'cookiesLinkMlText' => 'Consulter  les mentions légales',
 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
-				'cookiesFooterText' => 'Confidentialité'
-				'cookieButtonText' => 'J\'ai compris'
+				'cookiesFooterText' => 'Confidentialité',
+				'cookiesButtonText' => 'J\'ai compris'
 			]
 		],
 		'page' => [

@@ -192,7 +192,7 @@
 							'help' => 'Saisissez le texte du lien vers les mentions légales,la page doit être définie dans la configuration du site.',
 							'label' => 'Lien page des mentions légales.',
 							'value' => $this->getData(['locale', 'cookies', 'cookiesLinkMlText']),
-							'placeHolder' => 'Voir les mentions légales'
+							'placeHolder' => 'Consulter  les mentions légales'
 						]); ?>
 					</div>
 				</div>

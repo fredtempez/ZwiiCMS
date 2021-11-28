@@ -838,7 +838,7 @@ footer #footerbody>div {
 #footerDisplayVersion,
 #footerDisplaySiteMap,
 #footerDisplayLegal,
-#footerCookies,
+#footerDisplayCookie,
 #footerDisplaySearch,
 #footerZwiiCMS {
 	font-size: inherit;
@@ -1019,8 +1019,8 @@ footer #footerSocials .zwiico-github:hover {
 
 #cookieConsent .cookieClose {
 	position: absolute;
-	right: 5px;
-	top: 0px;
+	right: 10px;
+	top: 10px;
 	font-size: 1.5em;
 	cursor: pointer;
 }

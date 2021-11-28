@@ -1196,22 +1196,19 @@ class common {
 			{
 			// Détermine si le bloc doit être affiché selon la validité du cookie
 			// L'URL du serveur faut TRUE
-			$enable = $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '' : 'displayNone';
-			// Construction de la division contenant un forulaire
-			$item  = '<div id="cookieConsent" class="' . $enable . '">';
+			$item  = '<div id="cookieConsent"';
+			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '>' : ' class="displayNone">';
+			// Bouton de fermeture
 			$item .= '<div class="cookieClose">';
 			$item .= template::ico('cancel');
 			$item .= '</div>';
+			// Texte de la popup
 			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
-			$legalPage = $this->getData(['locale', 'legalPageId']);
-			if ($legalPage !== 'none')  {
-				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
-			}
+			// Formulaire de réponse
 			$item .= '<form method="POST" action="" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
-			var_dump($stateCookieGA);
 			if( $analytics !== null AND $analytics !== '' ) {
 				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
 				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
@@ -1219,7 +1216,13 @@ class common {
 			}
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'cookiesButtonText']) . '">';
-			$item .= '</form></div>';
+			$item .= '</form>';
+			// mentions légales si la page est définie
+			$legalPage = $this->getData(['locale', 'legalPageId']);
+			if ($legalPage !== 'none')  {
+				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+			}
+			$item .= '</div>';
 			echo $item;
 		}
 
@@ -1486,8 +1489,11 @@ class common {
 		}
 		$items .= '</span>';
 		// Affichage de la gestion des cookies
-		$label = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Confidentialité' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
-		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie'])) === true ? '<span id="footerCookies"><wbr>&nbsp;|&nbsp;<a href="javascript:void(0)">'. $label .'</a></span>' : '';
+		$items .= '<span id="footerDisplayCookie"';
+		$items .= ($this->getData(['config', 'cookieConsent']) === false && $this->getData(['theme', 'footer', 'displayCookie']) === false)? ' class="displayNone" >' : '>';
+		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Confidentialité' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
+		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie">'. $label .'</a>';
+		$items .= '</span>';
 		// Affichage du lien de connexion
 		if(
             (

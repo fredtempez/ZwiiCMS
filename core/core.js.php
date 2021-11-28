@@ -269,14 +269,14 @@ core.start = function() {
 	 * Fermeture de la popup des cookies
 	 */
 	$("#cookieConsent .cookieClose").on("click", function() {
-		$(this).parents("#cookieConsent").fadeOut();
+		$('#cookieConsent').fadeOut();
 	});
 
 	/**
 	 * Commande de gestion des cookies dans le footer
 	 */
 	 
-	 $("footer #footerCookies").on("click", function() {
+	 $("#footerLinkCookie").on("click", function() {
 		$("#cookieConsent").removeClass("displayNone");
 	});
 

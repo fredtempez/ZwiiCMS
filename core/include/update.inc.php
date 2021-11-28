@@ -705,9 +705,9 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['locale', 'cookies', 'cookieZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
 	$this->setData(['locale', 'cookies', 'cookieGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
 	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
-	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Voir les mentions légales']);
+	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Consulter les mentions légales']);
 	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
-	$this->setData(['locale', 'cookies', 'cookieButtonText', 'J\'ai compris']);
+	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
 	
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
