@@ -1174,7 +1174,7 @@ class common {
 	 */
 	 public function showAnalytics() {
  		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true'.$_SERVER['PHP_SELF'])  {
+ 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] )  {
  			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
  				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
  				<script>
@@ -1191,33 +1191,36 @@ class common {
 	 */
 	public function showCookies() {
 
-		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
-		   $this->getData(['config', 'cookieConsent']) === true
-	   ){
-
-		   $analytics = $this->getData(['locale', 'seo', 'analyticsId']);
-		   $legalPage = $this->getData(['locale', 'legalPageId']);
-		   $item  = '<div id="cookieConsent">';
-		   $item .= '<div class="cookieClose">';
-		   $item .= template::ico('cancel');
-		   $item .= '</div>';
-		   $item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
-		   $item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
-		   if ($legalPage !== 'none')  {
+		// Gestion des cookies intégrée
+		if ($this->getData(['config', 'cookieConsent']) === true ) 
+			{
+			// Détermine si le bloc doit être affiché selon la validité du cookie
+			// L'URL du serveur faut TRUE
+			$enable = $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '' : 'displayNone';
+			// Construction de la division contenant un forulaire
+			$item  = '<div id="cookieConsent" class="' . $enable . '">';
+			$item .= '<div class="cookieClose">';
+			$item .= template::ico('cancel');
+			$item .= '</div>';
+			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
+			$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
+			$legalPage = $this->getData(['locale', 'legalPageId']);
+			if ($legalPage !== 'none')  {
 				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
 			}
-		   if( $analytics !== null AND $analytics !=='' ){				
+			$item .= '<form method="POST" action="" id="cookieForm">';
+			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
+			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
+			var_dump($stateCookieGA);
+			if( $analytics !== null AND $analytics !== '' ) {
 				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
-		   }
-		   $item .= '<form method="POST" action="" id="cookieForm">';
-		   if( $analytics !== null AND $analytics !=='' ) {
-			   $item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">';
-			   $item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
-		   }
-		   $item .= '<br><br>';
-		   $item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
-		   $item .= '</form></div>';
-		   echo $item;
+				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
+				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
+			}
+			$item .= '<br><br>';
+			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'cookiesButtonText']) . '">';
+			$item .= '</form></div>';
+			echo $item;
 		}
 
 	}
@@ -1484,7 +1487,7 @@ class common {
 		$items .= '</span>';
 		// Affichage de la gestion des cookies
 		$label = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Confidentialité' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
-		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie'])) ? '':'<span id="footerCookies"><wbr>&nbsp;|&nbsp;<a href="#">'. $label .'</a></span>';
+		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie'])) === true ? '<span id="footerCookies"><wbr>&nbsp;|&nbsp;<a href="javascript:void(0)">'. $label .'</a></span>' : '';
 		// Affichage du lien de connexion
 		if(
             (

@@ -224,18 +224,27 @@ core.start = function() {
 
 		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
 		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
 		if( analytics.length > 0){
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			// Traitement du retour de la checkbox
+			if ($("#googleAnalytics").is(":checked")) {
+				// L'URL du serveur faut TRUE
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			} else {
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+			}
+
 		}
 
-		// Stocke lz cookie d'acceptation
+		// Stocke le cookie d'acceptation
 		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
 
 	/**
 	* Suppression du cookie de consentement
-	*/
-	$('#footerCookies').bind('click', function(event) {
+	
+	$('#cookieConsentRefused').on('click', function() {
+	
 		var samesite = "samesite=lax";
 		var getUrl   = window.location;
 		var domain   = "domain=" + getUrl.host;
@@ -244,14 +253,31 @@ core.start = function() {
 		var e = new Date();
 		e.setFullYear(e.getFullYear() - 1);
 		var expires = "expires=" + e.toUTCString();
-		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
+		document.cookie = "ZWII_COOKIE_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+
+		// Désactiver le cookie GA
+		document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+		
+
+		
+		// fermer la fenêtre
+		$("#cookieConsent").fadeOut();
 	});
+	*/
 
 	/**
 	 * Fermeture de la popup des cookies
 	 */
 	$("#cookieConsent .cookieClose").on("click", function() {
 		$(this).parents("#cookieConsent").fadeOut();
+	});
+
+	/**
+	 * Commande de gestion des cookies dans le footer
+	 */
+	 
+	 $("footer #footerCookies").on("click", function() {
+		$("#cookieConsent").removeClass("displayNone");
 	});
 
 	/**

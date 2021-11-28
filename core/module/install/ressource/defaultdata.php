@@ -81,8 +81,8 @@ class init extends common {
 				'cookiesLinkMlText' => 'Voir les mentions légales',
 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
 				'cookiesFooterText' => 'Confidentialité'
+				'cookieButtonText' => 'J\'ai compris'
 			]
-
 		],
 		'page' => [
 			'accueil' => [

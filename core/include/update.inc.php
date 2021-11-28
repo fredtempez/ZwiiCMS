@@ -707,8 +707,8 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
 	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Voir les mentions légales']);
 	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	$this->setData(['locale', 'cookies', 'cookieButtonText', 'J\'ai compris']);
 	
-
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }
