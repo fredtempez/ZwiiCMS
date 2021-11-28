@@ -445,6 +445,7 @@ class config extends common {
 						'cookiesTitleText'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
 						'cookiesLinkMlText'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
 						'cookiesCheckboxGaText'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesCheckboxGtText'	=> $this->getInput('localeCookiesCheckboxGtText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
 						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
 						'cookiesButtonText' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent']))
 					]
