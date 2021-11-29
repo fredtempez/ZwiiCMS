@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.10';
+	const ZWII_VERSION = '11.2.00.11';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -265,6 +265,12 @@ class common {
 			 * */
 			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
 				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl(false, false));
+			} else {
+				// Langue du drapeau si elle est définie
+				if (  $this->getInput('ZWII_I18N_SCRIPT') !== '' )	{
+					// Paramètre du script
+					setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl(false,false));
+				}
 			}
 		}
 
@@ -2130,7 +2136,7 @@ class common {
 				   }
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
 				echo '</li>';
 			}
 		}
@@ -2810,8 +2816,7 @@ class core extends common {
 					)
 
 				)	{
-						// Paramètre du script
-						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl(false,false));
+
 						// Chargement de la librairie
 						$this->addOutput([
 							'vendor' => array_merge($this->output['vendor'], ['i18n'])
