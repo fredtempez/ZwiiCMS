@@ -1490,7 +1490,7 @@ class common {
 		$items .= '</span>';
 		// Affichage de la gestion des cookies
 		$items .= '<span id="footerDisplayCookie"';
-		$items .= ($this->getData(['config', 'cookieConsent']) === false && $this->getData(['theme', 'footer', 'displayCookie']) === false)? ' class="displayNone" >' : '>';
+		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie']) === true) ? '' : ' class="displayNone" >';
 		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Confidentialité' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
 		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie">'. $label .'</a>';
 		$items .= '</span>';
