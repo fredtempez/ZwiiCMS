@@ -264,7 +264,7 @@ class common {
 			 * la traduction est celle de la langue du drapeau
 			 * */
 			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
+				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl(false, false));
 			}
 		}
 
@@ -2811,7 +2811,7 @@ class core extends common {
 
 				)	{
 						// Paramètre du script
-						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
+						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl(false,false));
 						// Chargement de la librairie
 						$this->addOutput([
 							'vendor' => array_merge($this->output['vendor'], ['i18n'])
