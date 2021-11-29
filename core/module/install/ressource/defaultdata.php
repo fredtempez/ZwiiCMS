@@ -80,7 +80,6 @@ class init extends common {
 				'cookiesTitleText' => 'Gérer les cookies',
 				'cookiesLinkMlText' => 'Consulter  les mentions légales',
 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
-				'cookiesCheckboxGtText' => 'Autorisation des cookies Google Translate',
 				'cookiesFooterText' => 'Confidentialité',
 				'cookiesButtonText' => 'J\'ai compris'
 			]

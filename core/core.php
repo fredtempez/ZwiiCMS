@@ -256,7 +256,6 @@ class common {
 		if ( $this->getData(['config', 'i18n', 'enable']) === true
 			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
 			 AND $this->getData(['config', 'i18n','autoDetect']) === true
-			 AND $this->getInput('ZWII_COOKIE_GT_CONSENT') === $_SERVER['PHP_SELF']
 			 AND $this->getInput('ZWII_I18N_SITE') !== ''
 			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
 		{
@@ -1188,15 +1187,15 @@ class common {
  	}
 
 	/**
-	 * Affiche le consentement des cookies
+	 * Affiche le consentement aux cookies
 	 */
 	public function showCookies() {
 
-		// Gestion des cookies interne active
+		// Gestion des cookies intégrée
 		if ($this->getData(['config', 'cookieConsent']) === true ) 
 			{
-			// Détermine si le bloc doit être affiché selon la validité du cookie : l'URL du serveur faut TRUE
-			// Pour éviter la propagation (à revoir avec Sylvain)
+			// Détermine si le bloc doit être affiché selon la validité du cookie
+			// L'URL du serveur faut TRUE
 			$item  = '<div id="cookieConsent"';
 			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '>' : ' class="displayNone">';
 			// Bouton de fermeture
@@ -1208,26 +1207,17 @@ class common {
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
 			// Formulaire de réponse
 			$item .= '<form method="POST" action="" id="cookieForm">';
-			// Checkbox Google Analytics
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
 				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
 				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
 				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
-			}			
-			// Traduction automatique active
-			if ( $this->getData(['config', 'i18n','scriptGoogle']) === true ) {
-				// Checkbox Google Translate
-				$stateCookieGT = $this->getInput('ZWII_COOKIE_GT_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
-				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGtText']) . '</p>';
-				$item .= '<input type="checkbox" id="googleTranslate" name="googleTranslate" value="GT" ' . $stateCookieGT . '>';
-				$item .= '<label for="googleTranslate">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGtText']) . '</label>';
 			}
-			$item .= '<br><br>';			
+			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'cookiesButtonText']) . '">';
 			$item .= '</form>';
-			// Mentions légales si une page est définie
+			// mentions légales si la page est définie
 			$legalPage = $this->getData(['locale', 'legalPageId']);
 			if ($legalPage !== 'none')  {
 				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
@@ -1502,7 +1492,7 @@ class common {
 		$items .= '<span id="footerDisplayCookie"';
 		$items .= ($this->getData(['config', 'cookieConsent']) === false && $this->getData(['theme', 'footer', 'displayCookie']) === false)? ' class="displayNone" >' : '>';
 		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Confidentialité' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
-		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" class="footerShowCookieConsent">'. $label .'</a>';
+		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie">'. $label .'</a>';
 		$items .= '</span>';
 		// Affichage du lien de connexion
 		if(
@@ -1763,9 +1753,8 @@ class common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
-		if ($this->getData(['config', 'i18n', 'enable']) === true
-			) {
-				echo $this->showi18n();
+		if ($this->getData(['config', 'i18n', 'enable']) === true) {
+			echo $this->showi18n();
 		}
 		echo '</ul>';
 	}
@@ -2125,7 +2114,6 @@ class common {
 				OR (
 					$this->getData(['config', 'i18n','scriptGoogle']) === true
 					AND $this->getData(['config', 'i18n',$key]) === 'script'
-					AND $this->getInput('ZWII_COOKIE_GT_CONSENT') === $_SERVER['PHP_SELF']
 				)
 			) {
 				if (
@@ -2803,34 +2791,33 @@ class core extends common {
 		}
 
 		// Chargement de la bibliothèque googtrans
+
 		// Le script de traduction est sélectionné
 		if ($this->getData(['config', 'i18n', 'enable']) === true) {
-			// Trad auto
 			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
 					// et la traduction de la langue courante est automatique
-					AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
-							// Ou traduction automatique
-							OR 	$this->getData(['config', 'i18n','autoDetect']) === true
-						)
-					// Le cookie est accepté par le client
-					AND $this->getInput('ZWII_COOKIE_GT_CONSENT') === $_SERVER['PHP_SELF']
-					// Cas  des pages d'administration
-					// Pas connecté
-					AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-					AND $this->getUrl(1) !== 'login'
-						// Ou connecté avec option active
-						OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-							AND $this->getData(['config', 'i18n','admin']) === true
-						)
+				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
+						// Ou traduction automatique
+						OR 	$this->getData(['config', 'i18n','autoDetect']) === true
+					)
+				// Cas  des pages d'administration
+				// Pas connecté
+				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+				AND $this->getUrl(1) !== 'login'
+					// Ou connecté avec option active
+					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						AND $this->getData(['config', 'i18n','admin']) === true
+					)
 
-					)	{
+				)	{
 						// Paramètre du script
 						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
 						// Chargement de la librairie
 						$this->addOutput([
 							'vendor' => array_merge($this->output['vendor'], ['i18n'])
 						]);
-					}
+
+			}
 		}
 		// Erreurs
 		if($access === 'login') {

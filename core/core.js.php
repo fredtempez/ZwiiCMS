@@ -223,20 +223,17 @@ core.start = function() {
 		var expires = "expires=" + e.toUTCString();
 
 		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
-		// Traitement du retour de la checkbox
-		if ($("#googleAnalytics").is(":checked")) {
-			// L'URL du serveur faut TRUE
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
-		} else {
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
-		}
-		// Traitement du retour de la checkbox
-		if ($("#googleTranslate").is(":checked")) {
-			// L'URL du serveur faut TRUE
-			document.cookie = "ZWII_COOKIE_GT_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
-		} else {
-			document.cookie = "ZWII_COOKIE_GT_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
-			document.cookie = "googtrans=fr/fr;" + domain + ";" + path + ";" + samesite + ";" + expires;
+		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
+		if( analytics.length > 0){
+			// Traitement du retour de la checkbox
+			if ($("#googleAnalytics").is(":checked")) {
+				// L'URL du serveur faut TRUE
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			} else {
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+			}
+
 		}
 
 		// Stocke le cookie d'acceptation
@@ -279,7 +276,7 @@ core.start = function() {
 	 * Commande de gestion des cookies dans le footer
 	 */
 	 
-	 $(".footerShowCookieConsent").on("click", function() {
+	 $("#footerLinkCookie").on("click", function() {
 		$("#cookieConsent").removeClass("displayNone");
 	});
 

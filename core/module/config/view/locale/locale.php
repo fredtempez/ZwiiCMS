@@ -200,30 +200,19 @@
 					<div class="col8">
 						<?php echo template::textarea('localeCookiesGaText', [
 							'help' => 'Saisissez le message pour les cookies déposés par Google Analytics, le consentement est requis.',
-							'label' => 'Cookies Google Analytics et Translate',
+							'label' => 'Cookies Google Analytics',
 							'value' => $this->getData(['locale', 'cookies', 'cookiesGaText']),
 							'placeHolder' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.'
 						]); ?>
 					</div>
+
 					<div class="col4">
-						<div class="row">		
-							<div class="col12">
-								<?php echo template::text('localeCookiesCheckboxGaText', [
-									'help' => 'Saisissez le texte de la case à cocher Google Analytics.',
-									'label' => 'Checkbox Google Analytics',
-									'value' => $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']),
-									'placeHolder' => 'Autorisation des cookies Google Analytics'
-								]); ?>
-							</div>
-							<div class="col12">
-								<?php echo template::text('localeCookiesCheckboxGtText', [
-									'help' => 'Saisissez le texte de la case à cocher Google Translate.',
-									'label' => 'Checkbox Google Translate',
-									'value' => $this->getData(['locale', 'cookies', 'cookiesCheckboxGtText']),
-									'placeHolder' => 'Autorisation des cookies Google Translate'
-								]); ?>
-							</div>
-						</div>
+						<?php echo template::text('localeCookiesCheckboxGaText', [
+							'help' => 'Saisissez le texte de la case à cocher Google Analytics.',
+							'label' => 'Checkbox Google Analytics',
+							'value' => $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']),
+							'placeHolder' => 'Autorisation des cookies Google Analytics'
+						]); ?>
 					</div>
 				</div>
 				<div class="row">
