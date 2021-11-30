@@ -2321,7 +2321,8 @@ class core extends common {
 			// Bannière au contenu personnalisé
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
-				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . ';}';
+				$css .= 'header {height:'. $this->getData(['theme', 'header', 'height'])  . '; min-height:' . $this->getData(['theme', 'header', 'height'])  .  ';overflow: hidden;}';
+				//$css .= '.bannerDisplay img { width: auto;max-height:' . $this->getData(['theme', 'header', 'height']) . ';}';
 
 			}
 

@@ -27,7 +27,7 @@ $("input, select").on("change", function() {
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
 		
-		css = "header{height:" + $("#themeHeaderHeight").val() + "; overflow:hidden; background-position:top; background-repeat: no-repeat; line-height:1.15; background-color:unset; background-image:unset; text-align:unset;}";
+		css = "header{min-height: " + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "; overflow:hidden; background-position:top; background-repeat: no-repeat; line-height:1.15; background-color:unset; background-image:unset; text-align:unset;}";
 		
 		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
