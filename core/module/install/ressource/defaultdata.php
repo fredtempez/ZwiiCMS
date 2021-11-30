@@ -172,7 +172,7 @@ class init extends common {
 				'feature' => 'feature',
 				'featureContent' => '<div class="row" style="vertical-align: middle;">
 							<p class="col10 textAlignCenter"><strong><span style="font-size: 30pt; color: #003f86;"><span style="font-size: 24pt;">Zwii, le <em>CMS&nbsp;</em>pour bien d&eacute;buter</span><br /><span style="font-size: 18pt;"><span style="font-size: 14pt;">Installation facile :<br />Aucune base de donn&eacute;es &agrave; configurer.<br /><br /></span><br /><br /></span></span></strong></p>
-							<div class="col2"><p><img src="/site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
+							<div class="col2"><p><img src="./site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
 				'width' => 'container'
 			],
 			'menu' => [
