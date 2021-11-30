@@ -89,9 +89,9 @@
                         ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('themefooterDisplayCookie', true, 'Confidentialité', [
+                    <?php echo template::checkbox('themefooterDisplayCookie', true, 'Cookies', [
                             'checked' => $this->getData(['config', 'cookieConsent']) === true ? $this->getData(['theme', 'footer', 'displayCookie']) : false,
-                            'help' => 'Affiche le message relatif au cookie, disponible si le message d\'acceptation des cookies est activé.',
+                            'help' => 'Message d\'information relatif aux cookies, disponible si l\'acceptation des cookies est activé.',
                             'disabled' => !$this->getData(['config', 'cookieConsent'])
                         ]); ?>
                 </div>

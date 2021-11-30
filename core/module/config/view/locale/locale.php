@@ -148,9 +148,9 @@
 					</div>
 					<div class="col6">
 						<?php echo template::text('localeCookiesFooterText', [
-							'label' => 'Confidentialité des cookies',
+							'label' => 'Cookies',
 							'value' => $this->getData(['locale', 'cookies', 'cookiesFooterText']),
-							'placeHolder' => 'Confidentialité'
+							'placeHolder' => 'Cookies'
 						]); ?>
 					</div>
 				</div>
