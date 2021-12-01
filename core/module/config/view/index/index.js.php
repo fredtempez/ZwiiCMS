@@ -140,20 +140,20 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#setupContainer").show();
         $("#configSetupButton").addClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
         setCookie("configLayout","setup");
     });
-    $("#configLocalButton").on("click", function() {
+    $("#configLocaleButton").on("click", function() {
         $("#setupContainer").hide();
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").hide();
         $("#localeContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").addClass("activeButton");
+        $("#configLocaleButton").addClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -166,7 +166,7 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#socialContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -179,7 +179,7 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#connectContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -192,7 +192,7 @@ $( document).ready(function() {
         $("#connectContainer").hide();
         $("#networkContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").addClass("activeButton");
