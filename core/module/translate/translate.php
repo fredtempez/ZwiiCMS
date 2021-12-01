@@ -19,7 +19,7 @@ class translate extends common {
 		/*'config' => self::GROUP_MODERATOR,*/
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
-		'language' => self::GROUP_VISITOR
+		'i18n' => self::GROUP_VISITOR
 	];
 
 	public static $translateOptions = [];
@@ -177,7 +177,7 @@ class translate extends common {
 	 * Traitement du changement de langue
 	 * Fonction utilisée par le noyau
 	 */
-	public function language() {
+	public function i18n() {
 
 		// Activation du drapeau
 		if ( $this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2) ) {

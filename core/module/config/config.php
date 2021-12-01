@@ -437,7 +437,17 @@ class config extends common {
 					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
 					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
 					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true)
+					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+					'cookies' => [
+						// Les champs sont obligatoires si l'option consentement des cookies est active
+						'cookiesZwiiText'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'cookiesGaText'	=> $this->getInput('localeCookiesGaText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'cookiesTitleText'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesLinkMlText'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesCheckboxGaText'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesButtonText' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent']))
+					]
 				]
 			]);
 
@@ -452,6 +462,7 @@ class config extends common {
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
+					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
@@ -502,14 +513,6 @@ class config extends common {
 						'it' 			 	=> $this->getData(['config', 'i18n', 'it']),
 						'nl' 			 	=> $this->getData(['config', 'i18n', 'nl']),
 						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
-					],
-					'cookies' => [
-						'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
-						'cookiesZwiiText'	=> $this->getInput('connectCookiesZwiiText', helper::FILTER_STRING_LONG),
-						'cookiesGaText'	=> $this->getInput('connectCookiesGaText', helper::FILTER_STRING_LONG),
-						'cookiesTitleText'	=> $this->getInput('connectCookiesTitleText', helper::FILTER_STRING_SHORT),
-						'cookiesLinkMlText'	=> $this->getInput('connectCookiesLinkMlText', helper::FILTER_STRING_SHORT),
-						'cookiesCheckboxGaText'	=> $this->getInput('connectCookiesCheckboxGaText', helper::FILTER_STRING_SHORT)
 					]
 				]
 			]);

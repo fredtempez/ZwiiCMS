@@ -838,6 +838,7 @@ footer #footerbody>div {
 #footerDisplayVersion,
 #footerDisplaySiteMap,
 #footerDisplayLegal,
+#footerDisplayCookie,
 #footerDisplaySearch,
 #footerZwiiCMS {
 	font-size: inherit;
@@ -985,9 +986,9 @@ footer #footerSocials .zwiico-github:hover {
 
 /* Message sur les cookies */
 #cookieConsent {
-	width: 80%;
+	width: 60%;
 	margin: auto;
-	opacity: .9;
+	opacity: .95;
 	background: #212223;
 	position: fixed;
 	right: 0;
@@ -1001,22 +1002,25 @@ footer #footerSocials .zwiico-github:hover {
 }
 
 #cookieConsentConfirm {
+	background-color: green;
+}
+
+#cookieConsentConfirm {
 	cursor: pointer;
 	margin-left: 10px;
-	background: #666;
 	padding: 4px 8px;
 	display: inline-block;
 	transition: background .3s ease-out;
 }
 
 #cookieConsentConfirm:hover {
-	background: #777;
+	filter: grayscale(50%);
 }
 
 #cookieConsent .cookieClose {
 	position: absolute;
-	right: 5px;
-	top: 0px;
+	right: 10px;
+	top: 10px;
 	font-size: 1.5em;
 	cursor: pointer;
 }

@@ -206,18 +206,6 @@ core.start = function() {
 		$("#notification").fadeOut();
 		$("#notificationProgress").stop();
 	});
-	/**
-	 * Affiche / Cache le menu en mode responsive
-	 */
-	var menuDOM = $("#menu");
-	$("#toggle").on("click", function() {
-		menuDOM.slideToggle();
-	});
-	$(window).on("resize", function() {
-		if($(window).width() > 768) {
-			menuDOM.css("display", "");
-		}
-	});
 
 	/**
 	 * Traitement du formulaire cookies
@@ -236,20 +224,51 @@ core.start = function() {
 
 		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
 		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
 		if( analytics.length > 0){
-			document.cookie = "ZWII_COOKIE_GA_CONSENT=" + $("#googleAnalytics").prop("checked") + "<?php echo $_SERVER['PHP_SELF']; ?>" +";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			// Traitement du retour de la checkbox
+			if ($("#googleAnalytics").is(":checked")) {
+				// L'URL du serveur faut TRUE
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
+			} else {
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+			}
+
 		}
 
-		// Stocke lz cookie d'acceptation
+		// Stocke le cookie d'acceptation
 		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
+
 
 	/**
 	 * Fermeture de la popup des cookies
 	 */
 	$("#cookieConsent .cookieClose").on("click", function() {
-		$(this).parents("#cookieConsent").fadeOut();
+		$('#cookieConsent').fadeOut();
 	});
+
+	/**
+	 * Commande de gestion des cookies dans le footer
+	 */
+	 
+	 $("#footerLinkCookie").on("click", function() {
+		$("#cookieConsent").removeClass("displayNone");
+	});
+
+	/**
+	 * Affiche / Cache le menu en mode responsive
+	 */
+	 var menuDOM = $("#menu");
+	 $("#toggle").on("click", function() {
+		 menuDOM.slideToggle();
+	 });
+	 $(window).on("resize", function() {
+		 if($(window).width() > 768) {
+			 menuDOM.css("display", "");
+		 }
+	 });
+
 	/**
 	 * Choix de page dans la barre de membre
 	 */

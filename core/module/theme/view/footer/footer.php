@@ -71,32 +71,39 @@
         <div class="block">
             <h4>Contenu</h4>
             <div class="row">
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayCopyright', true, 'Motorisé par', [
                             'checked' => $this->getData(['theme', 'footer','displayCopyright']),
                             'help' => 'Affiche cette mention devant ZwiiCMS'
                         ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayVersion', true, 'Version', [
                             'checked' => $this->getData(['theme', 'footer','displayVersion']),
                             'help' => 'Affiche le numéro de version après ZwiiCMS'
                         ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themefooterDisplaySiteMap', true, 'Plan du site', [
                             'checked' => $this->getData(['theme', 'footer', 'displaySiteMap'])
                         ]); ?>
                 </div>
+                <div class="col3">
+                    <?php echo template::checkbox('themefooterDisplayCookie', true, 'Cookies', [
+                            'checked' => $this->getData(['config', 'cookieConsent']) === true ? $this->getData(['theme', 'footer', 'displayCookie']) : false,
+                            'help' => 'Message d\'information relatif aux cookies, disponible si l\'acceptation des cookies est activé.',
+                            'disabled' => !$this->getData(['config', 'cookieConsent'])
+                        ]); ?>
+                </div>
             </div>
             <div class="row">
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themeFooterLoginLink', true, 'Lien de connexion', [
                             'checked' => $this->getData(['theme', 'footer', 'loginLink']),
                             'help' => 'Pour limiter les tentatives de piratage, enregistrez la page de connexion en favori et désactivez cette option.'
                         ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themeFooterDisplayMemberBar', true, 'Barre du membre', [
                         'checked' =>  $this->getData(['theme', 'footer', 'displayMemberBar']),
                         'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés, ne s\'applique pas aux éditeurs et administrateurs.'
@@ -104,29 +111,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
                             'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
                             'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
                             'help' => 'Option active si une page a été sélectionnée.'
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
                         'label' => 'Page "Mentions légales" ' . template::flag('site', '20px'),
                         'selected' => $this->getData(['locale', 'legalPageId'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col4">
+
+                <div class="col3">
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
                             'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                             'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
                             'help' => 'Option active si une page a été sélectionnée.'
                         ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
                         'label' => 'Page "Rechercher" ' . template::flag('site', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId']),

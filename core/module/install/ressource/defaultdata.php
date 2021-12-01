@@ -9,6 +9,7 @@ class init extends common {
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
 			'maintenance' => false,
+			'cookieConsent' => true,
 			'social' => [
 				'facebookId' => 'facebook',
 				'instagramId' => '',
@@ -51,14 +52,6 @@ class init extends common {
 				'it'=> 'none',
 				'nl'=> 'none',
 				'pt'=> 'none'
-			],
-			'cookies' => [
-				'cookieConsent' => true,
-				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
- 				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
- 				'cookiesTitleText' => 'Gérer les cookies',
- 				'cookiesLinkMlText' => 'Voir les mentions légales',
- 				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics'
 			]
 		],
 		'core' => [
@@ -80,7 +73,16 @@ class init extends common {
 			'sitemapPageLabel' => 'Plan du site',
 			'legalPageLabel' => 'Mentions légales',
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !'
+			'title' => 'Votre site en quelques clics !',
+			'cookies' => [
+				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
+				'cookiesTitleText' => 'Gérer les cookies',
+				'cookiesLinkMlText' => 'Consulter  les mentions légales',
+				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
+				'cookiesFooterText' => 'Cookies',
+				'cookiesButtonText' => 'J\'ai compris'
+			]
 		],
 		'page' => [
 			'accueil' => [
@@ -143,6 +145,7 @@ class init extends common {
 				'displayVersion' => true,
 				'displaySiteMap' => true,
 				'displayCopyright' => false,
+				'displayCookie' => false,
 				'displayLegal' => false,
 				'displaySearch' => false,
 				'displayMemberBar' => false,
@@ -169,7 +172,7 @@ class init extends common {
 				'feature' => 'feature',
 				'featureContent' => '<div class="row" style="vertical-align: middle;">
 							<p class="col10 textAlignCenter"><strong><span style="font-size: 30pt; color: #003f86;"><span style="font-size: 24pt;">Zwii, le <em>CMS&nbsp;</em>pour bien d&eacute;buter</span><br /><span style="font-size: 18pt;"><span style="font-size: 14pt;">Installation facile :<br />Aucune base de donn&eacute;es &agrave; configurer.<br /><br /></span><br /><br /></span></span></strong></p>
-							<div class="col2"><p><img src="/ZwiiCMS/site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
+							<div class="col2"><p><img src="./site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
 				'width' => 'container'
 			],
 			'menu' => [

@@ -9,7 +9,12 @@ Mises à jour :
     - Configuration, restauration d'une archive du site : 
         - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
         - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
+    - Multi-langues :
+        - Bug auto détection du navigateur.
 - Modifications :
+    - Gestion des cookies : 
+        - Options de personnalisation du message d'acceptation des cookies, acceptation ou refus du cookie Google Analytics, affichage de la page des mentions légales.
+        - Etiquette dans le footer permettant d'afficher la popup des cookies.
     - Thème : 
         - Disposition des options de configuration du site.
         - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.

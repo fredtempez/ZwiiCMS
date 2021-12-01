@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.9';
+	const ZWII_VERSION = '11.2.00.12';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -264,7 +264,13 @@ class common {
 			 * la traduction est celle de la langue du drapeau
 			 * */
 			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl());
+				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl(false, false));
+			} else {
+				// Langue du drapeau si elle est définie
+				if (  $this->getInput('ZWII_I18N_SCRIPT') !== '' )	{
+					// Paramètre du script
+					setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl(false,false));
+				}
 			}
 		}
 
@@ -1174,7 +1180,7 @@ class common {
 	 */
 	 public function showAnalytics() {
  		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true'.$_SERVER['PHP_SELF'])  {
+ 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] )  {
  			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
  				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
  				<script>
@@ -1191,31 +1197,39 @@ class common {
 	 */
 	public function showCookies() {
 
-		if( $this->getInput('ZWII_COOKIE_CONSENT') !== $_SERVER['PHP_SELF'] AND
-		   $this->getData(['config', 'cookies', 'cookieConsent']) === true
-	   ){
-
-		   $analytics = $this->getData(['config', 'seo', 'analyticsId']);
-		   $legalPage = $this->getData(['locale','legalPageId']) ==='none'? 'mentions-legales' : $this->getData(['locale','legalPageId']);
-		   $item  = '<div id="cookieConsent">';
+		// Gestion des cookies intégrée
+		if ($this->getData(['config', 'cookieConsent']) === true ) 
+			{
+			// Détermine si le bloc doit être affiché selon la validité du cookie
+			// L'URL du serveur faut TRUE
+			$item  = '<div id="cookieConsent"';
+			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '>' : ' class="displayNone">';
+			// Bouton de fermeture
 			$item .= '<div class="cookieClose">';
-		   $item .= template::ico('cancel');
-		   $item .= '</div>';
-		   $item .= '<h3>'. $this->getData(['config', 'cookies', 'cookiesTitleText']) . '</h3>';
-		   $item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesZwiiText']) . '</p>';
-		   $item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['config', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
-			if( $analytics !== null AND $analytics !=='' ){
-			   $item .= '<p>' . $this->getData(['config', 'cookies', 'cookiesGaText']) . '</p>';
-		   }
-		   $item .= '<form method="POST" action="" id="cookieForm">';
-		   if( $analytics !== null AND $analytics !=='' ) {
-			   $item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA">';
-			   $item .= '<label for="googleAnalytics">' . $this->getData(['config', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
-		   }
-		   $item .= '<br><br>';
-		   $item .= '<input type="submit" id="cookieConsentConfirm" value="Valider">';
-		   $item .= '</form></div>';
-		   echo $item;
+			$item .= template::ico('cancel');
+			$item .= '</div>';
+			// Texte de la popup
+			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
+			$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
+			// Formulaire de réponse
+			$item .= '<form method="POST" action="" id="cookieForm">';
+			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
+			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
+			if( $analytics !== null AND $analytics !== '' ) {
+				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
+				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
+				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
+			}
+			$item .= '<br><br>';
+			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'cookiesButtonText']) . '">';
+			$item .= '</form>';
+			// mentions légales si la page est définie
+			$legalPage = $this->getData(['locale', 'legalPageId']);
+			if ($legalPage !== 'none')  {
+				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+			}
+			$item .= '</div>';
+			echo $item;
 		}
 
 	}
@@ -1469,7 +1483,7 @@ class common {
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale','searchPageLabel'])) ? 'Rechercher' : $this->getData(['locale','searchPageLabel']);
 		if ($this->getData(['locale','searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="' . $label . '" >' . $label .'</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site >' . $label .'</a>';
 		}
 		$items .= '</span>';
 		// Affichage des mentions légales
@@ -1477,8 +1491,14 @@ class common {
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale','legalPageLabel'])) ? 'Mentions Légales' : $this->getData(['locale','legalPageLabel']);
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="' . $label . '">' . $label .'</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Page des mentions légales" >' . $label .'</a>';
 		}
+		$items .= '</span>';
+		// Affichage de la gestion des cookies
+		$items .= '<span id="footerDisplayCookie"';
+		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie']) === true) ? '>' : ' class="displayNone" >';
+		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Cookies' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
+		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie" data-tippy-content="Message d\'information relatif aux cookies">'. $label .'</a>';
 		$items .= '</span>';
 		// Affichage du lien de connexion
 		if(
@@ -2116,7 +2136,7 @@ class common {
 				   }
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/language/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
 				echo '</li>';
 			}
 		}
@@ -2269,6 +2289,8 @@ class core extends common {
 			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 
 			// Bannière
+
+			// Eléments communs
 			if($this->getData(['theme', 'header', 'margin'])) {
 				if($this->getData(['theme', 'menu', 'position']) === 'site-first') {
 					$css .= 'header{margin:0 20px}';
@@ -2277,8 +2299,11 @@ class core extends common {
 					$css .= 'header{margin:20px 20px 0 20px}';
 				}
 			}
+			$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
+			$css .= 'header{background-color:' . $colors['normal'] . ';}';
+
+			// Bannière de type papier peint
 			if ($this->getData(['theme','header','feature']) === 'wallpaper' ) {
-				$colors = helper::colorVariants($this->getData(['theme', 'header', 'backgroundColor']));
 				$css .= 'header{background-size:' . $this->getData(['theme','header','imageContainer']).'}';
 				$css .= 'header{background-color:' . $colors['normal'];
 
@@ -2292,9 +2317,12 @@ class core extends common {
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
 				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
+
+			// Bannière au contenu personnalisé
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
-				$css .= 'header #featureContent{height:' . $this->getData(['theme', 'header', 'height'])  . '; }';
+				$css .= 'header {height:'. $this->getData(['theme', 'header', 'height'])  . '; min-height:' . $this->getData(['theme', 'header', 'height'])  .  ';overflow: hidden;}';
+				//$css .= '.bannerDisplay img { width: auto;max-height:' . $this->getData(['theme', 'header', 'height']) . ';}';
 
 			}
 
@@ -2789,8 +2817,7 @@ class core extends common {
 					)
 
 				)	{
-						// Paramètre du script
-						setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl());
+
 						// Chargement de la librairie
 						$this->addOutput([
 							'vendor' => array_merge($this->output['vendor'], ['i18n'])
