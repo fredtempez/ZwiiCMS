@@ -209,7 +209,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
-			'redirect' => helper::baseUrl() . 'config/advanced',
+			'redirect' => helper::baseUrl() . 'config',
 			'state' => $successSitemap
 		]);
 	}
@@ -276,7 +276,7 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'redirect' => helper::baseUrl() . 'config/advanced',
+			'redirect' => helper::baseUrl() . 'config',
 			'state' => $success === false ? false : true
 		]);
 	}
@@ -695,14 +695,14 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
 			]);
@@ -729,7 +729,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
 			]);
@@ -765,7 +765,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
 			]);
@@ -781,14 +781,14 @@ class config extends common {
 			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
 			]);
@@ -806,7 +806,8 @@ class config extends common {
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config/advanced',
+			'redirect' => helper::baseUrl() . 'config',
+			helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json')
 			'notification' => 'Copie terminée',
 			'state' => true
 		]);
