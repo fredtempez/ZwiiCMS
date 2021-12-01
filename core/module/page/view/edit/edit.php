@@ -35,7 +35,9 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::submit('pageEditSubmit'); ?>
+			<?php echo template::submit('pageEditSubmit', [
+				'uniqueSubmission' => true
+			]); ?>
 		</div>
 	</div>
 	<div class="row">
