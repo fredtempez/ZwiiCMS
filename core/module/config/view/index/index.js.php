@@ -38,21 +38,11 @@ $( document).ready(function() {
         $("#SmtpAuthParam").slideUp();
     }
 
-    /**
-     * Cookie
-     */
-    /*
-    if ($("input[name=configCookieConsent]").is(':checked')) {
-        $("#cookieContainer").slideDown();
-    } else {
-        $("#cookieContainer").slideUp();
-    }
-  */
+
     // Gestion des événements
     //---------------------------------------------------------------------------------------------------------------------
 
-
-    /**
+     /**
      * Afficher et masquer options SMTP
      */
     $("input[name=SmtpEnable]").on("change", function() {
@@ -186,19 +176,6 @@ $( document).ready(function() {
         $("#configNetworkButton").addClass("activeButton");
         setCookie("configLayout","network");
     });
-
-    /**
-     * Options des cookies
-     */
-/*
-     $("input[name=configCookieConsent]").on("change", function() {            
-        if ($("input[name=configCookieConsent]").is(':checked')) {
-            $("#cookieContainer").slideDown();
-        } else {
-            $("#cookieContainer").slideUp();
-        }
-    });
-*/
   
     var configLayout = getCookie("configLayout");
     if (configLayout == null) {

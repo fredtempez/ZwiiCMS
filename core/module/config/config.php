@@ -208,8 +208,9 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => 'Configuration',
+			'view' => 'index',
 			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
-			'redirect' => helper::baseUrl() . 'config',
 			'state' => $successSitemap
 		]);
 	}
@@ -275,8 +276,9 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => 'Configuration',
+			'view' => 'index',
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'redirect' => helper::baseUrl() . 'config',
 			'state' => $success === false ? false : true
 		]);
 	}
@@ -299,8 +301,9 @@ class config extends common {
 				if ($file_parts['extension'] !== 'zip') {
 					// Valeurs en sortie erreur
 					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
 						'notification' => 'Le fichier n\'est pas une archive valide',
-						'redirect' => helper::baseUrl() . 'config/restore',
 						'state' => false
 						]);
 				}
@@ -308,8 +311,9 @@ class config extends common {
 				if ($successOpen === FALSE) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
 						'notification' => 'Impossible de lire l\'archive',
-						'redirect' => helper::baseUrl() . 'config/restore',
 						'state' => false
 						]);
 				}
@@ -350,8 +354,9 @@ class config extends common {
 				} elseif ($version === 0) { // Version invalide
 					// Valeurs en sortie erreur
 					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
 						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-						'redirect' => helper::baseUrl() . 'config/restore',
 						'state' => false
 					]);
 				}
@@ -375,12 +380,13 @@ class config extends common {
 				}
 			}
 			// Message de notification
-			$notification  = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
+			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
+				'title' => 'Restaurer',
+				'view' => 'restore',
 				'notification' => $notification,
-				'redirect' =>$redirect,
 				'state' => $success
 			]);
 		}
@@ -574,7 +580,8 @@ class config extends common {
 			$this->generateFiles();
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
 			]);
@@ -616,8 +623,11 @@ class config extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
-				'redirect' => helper::baseUrl() . 'config/script/'. $this->geturl(2),
+				'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)) ,
+				'vendor' => [
+					'codemirror'
+				],
+				'view' => 'script',
 				'state' => true
 			]);
 		}
@@ -677,8 +687,9 @@ class config extends common {
 		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => 'Restaurer',
+			'view' => 'restore',
 			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'redirect' => helper::baseUrl() . 'config/restore',
 			'state' => $success ? true : false
 		]);
 	}
@@ -695,14 +706,16 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
 			]);
@@ -729,7 +742,8 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
 			]);
@@ -765,7 +779,8 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
 			]);
@@ -781,14 +796,16 @@ class config extends common {
 			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
 			]);
@@ -806,8 +823,8 @@ class config extends common {
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config',
-			helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json')
+			'title' => 'Configuration',
+			'view' => 'index',
 			'notification' => 'Copie terminée',
 			'state' => true
 		]);
