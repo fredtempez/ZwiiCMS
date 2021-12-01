@@ -38,6 +38,28 @@ $( document).ready(function() {
         $("#SmtpAuthParam").slideUp();
     }
 
+    var configLayout = getCookie("configLayout");
+    if (configLayout == null) {
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").hide();
+        $("#setupContainer").show();
+        $("#configSetupButton").addClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","setup");
+    }
+    $("#localeContainer").hide();
+    $("#socialContainer").hide();
+    $("#connectContainer").hide();
+    $("#networkContainer").hide();
+    $("#setupContainer").hide();
+    $("#" + configLayout + "Container" ).show();
+    $("#config" + capitalizeFirstLetter(configLayout) + "Button").addClass("activeButton");
+
 
     // Gestion des événements
     //---------------------------------------------------------------------------------------------------------------------
@@ -177,26 +199,6 @@ $( document).ready(function() {
         setCookie("configLayout","network");
     });
   
-    var configLayout = getCookie("configLayout");
-    if (configLayout == null) {
-        $("#localeContainer").hide();
-        $("#socialContainer").hide();
-        $("#connectContainer").hide();
-        $("#networkContainer").hide();
-        $("#setupContainer").show();
-        $("#configSetupButton").addClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
-        $("#configSocialButton").removeClass("activeButton");
-        $("#configConnectButton").removeClass("activeButton");
-        $("#configNetworkButton").removeClass("activeButton");
-        setCookie("configLayout","setup");
-    }
-    $("#localeContainer").hide();
-    $("#socialContainer").hide();
-    $("#connectContainer").hide();
-    $("#networkContainer").hide();
-    $("#setupContainer").hide();
-    $("#" + configLayout + "Container" ).show();
 
 });
 
@@ -221,3 +223,8 @@ function getCookie(name) {
     }
     return null;
 }
+
+// Define function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+ }
