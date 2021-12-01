@@ -10,7 +10,8 @@
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('configRestoreSubmit',[
-			'value' => 'Restaurer'
+			'value' => 'Restaurer',
+			'uniqueSubmission' => true,
 		]); ?>
 	</div>
 </div>

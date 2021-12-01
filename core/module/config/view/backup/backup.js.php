@@ -12,7 +12,7 @@
 
 $( document).ready(function() {
     $("#configBackupForm").submit( function(e){
-        $("#configBackupSubmit").addClass("disabled").prop("disabled", true);
+        //$("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
         $.ajax({
@@ -29,6 +29,9 @@ $( document).ready(function() {
             },
             complete: function(){
                 $("#configBackupSubmit").removeClass("disabled").prop("disabled", false);
+                $("#configBackupSubmit").removeClass("uniqueSubmission").prop("uniqueSubmission", false);
+                $("#configBackupSubmit span").removeClass("zwiico-spin animate-spin");
+                $("#configBackupSubmit span").addClass("zwiico-check zwiico-margin-right").text("Sauvegarder");
             }
         });
     });
