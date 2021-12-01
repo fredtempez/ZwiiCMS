@@ -30,7 +30,7 @@
                 ]); ?>
             </div>
             <div class="col2">
-                <?php echo template::button('configLocalButton', [
+                <?php echo template::button('configLocaleButton', [
                     'value' => 'Localisation'
                 ]); ?>
             </div>
