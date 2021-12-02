@@ -77,11 +77,11 @@
 								'disabled' => !$updateError
 							]); ?>
 					</div>
-					<div class="col4">
+					<div class="col2 offset1">
 						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
-							'value' => 'Mise à jour manuelle',
+							'value' => 'Réinstaller',
 							'class' => 'buttonRed',
 							'disabled' => !$updateError
 						]); ?>
@@ -131,7 +131,7 @@
 					<div class="col3">
 						<?php echo template::button('configBackupCopyButton', [
 							'href' => helper::baseUrl() . 'config/copyBackups',
-							'value' => 'Sauvegardes automatiques',
+							'value' => 'Copie sauvegardes auto',
 							'ico' => 'download-cloud'
 						]); ?>
 					</div>
