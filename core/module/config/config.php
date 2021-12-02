@@ -208,8 +208,9 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index',
+			/*'title' => 'Configuration',
+			'view' => 'index',*/
+			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'state' => $successSitemap
 		]);
@@ -276,8 +277,9 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index',
+			/*'title' => 'Configuration',
+			'view' => 'index',*/
+			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
 			'state' => $success === false ? false : true
 		]);
@@ -384,8 +386,9 @@ class config extends common {
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
-				'title' => 'Restaurer',
-				'view' => 'restore',
+				/*'title' => 'Restaurer',
+				'view' => 'restore',*/
+				'redirect' => $redirect,
 				'notification' => $notification,
 				'state' => $success
 			]);

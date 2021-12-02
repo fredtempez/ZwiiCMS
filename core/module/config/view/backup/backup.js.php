@@ -44,7 +44,7 @@ $( document).ready(function() {
         if ($("input[name=configBackupOption]").is(':checked')) {
             return core.confirm("Une sauvegarde avec le contenu du gestionnaire de fichier peut prendre du temps à générer. Confirmez-vous ?", function() {
                 //$(location).attr("href", _this.attr("href"));
-                $('body').css('cursor', 'wait');
+                $('body, .button').css('cursor', 'wait');
                 $('form#configBackupForm').submit();
             });
         }

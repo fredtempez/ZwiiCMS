@@ -16,7 +16,7 @@ $( document).ready(function() {
      * Aspect de la souris
     */
      $("#configRestoreSubmit").click(function(event) {
-        $('body').css('cursor', 'wait');
+        $('body, .button').css('cursor', 'wait');
     });
     
 });

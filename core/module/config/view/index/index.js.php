@@ -200,6 +200,14 @@ $( document).ready(function() {
     });
   
 
+    /**
+     * Aspect de la souris
+    */
+        $("#socialMetaImage, #socialSiteMap").click(function(event) {
+        $('body, .button').css('cursor', 'wait');
+    });
+        
+
 });
 
 
