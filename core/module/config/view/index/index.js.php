@@ -38,21 +38,33 @@ $( document).ready(function() {
         $("#SmtpAuthParam").slideUp();
     }
 
-    /**
-     * Cookie
-     */
-    /*
-    if ($("input[name=configCookieConsent]").is(':checked')) {
-        $("#cookieContainer").slideDown();
-    } else {
-        $("#cookieContainer").slideUp();
+    var configLayout = getCookie("configLayout");
+    if (configLayout == null) {
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").hide();
+        $("#setupContainer").show();
+        $("#configSetupButton").addClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout","setup");
     }
-  */
+    $("#localeContainer").hide();
+    $("#socialContainer").hide();
+    $("#connectContainer").hide();
+    $("#networkContainer").hide();
+    $("#setupContainer").hide();
+    $("#" + configLayout + "Container" ).show();
+    $("#config" + capitalizeFirstLetter(configLayout) + "Button").addClass("activeButton");
+
+
     // Gestion des événements
     //---------------------------------------------------------------------------------------------------------------------
 
-
-    /**
+     /**
      * Afficher et masquer options SMTP
      */
     $("input[name=SmtpEnable]").on("change", function() {
@@ -128,20 +140,20 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#setupContainer").show();
         $("#configSetupButton").addClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
         setCookie("configLayout","setup");
     });
-    $("#configLocalButton").on("click", function() {
+    $("#configLocaleButton").on("click", function() {
         $("#setupContainer").hide();
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").hide();
         $("#localeContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").addClass("activeButton");
+        $("#configLocaleButton").addClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -154,7 +166,7 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#socialContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -167,7 +179,7 @@ $( document).ready(function() {
         $("#networkContainer").hide();
         $("#connectContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -180,46 +192,13 @@ $( document).ready(function() {
         $("#connectContainer").hide();
         $("#networkContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocalButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").addClass("activeButton");
         setCookie("configLayout","network");
     });
-
-    /**
-     * Options des cookies
-     */
-/*
-     $("input[name=configCookieConsent]").on("change", function() {            
-        if ($("input[name=configCookieConsent]").is(':checked')) {
-            $("#cookieContainer").slideDown();
-        } else {
-            $("#cookieContainer").slideUp();
-        }
-    });
-*/
   
-    var configLayout = getCookie("configLayout");
-    if (configLayout == null) {
-        $("#localeContainer").hide();
-        $("#socialContainer").hide();
-        $("#connectContainer").hide();
-        $("#networkContainer").hide();
-        $("#setupContainer").show();
-        $("#configSetupButton").addClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
-        $("#configSocialButton").removeClass("activeButton");
-        $("#configConnectButton").removeClass("activeButton");
-        $("#configNetworkButton").removeClass("activeButton");
-        setCookie("configLayout","setup");
-    }
-    $("#localeContainer").hide();
-    $("#socialContainer").hide();
-    $("#connectContainer").hide();
-    $("#networkContainer").hide();
-    $("#setupContainer").hide();
-    $("#" + configLayout + "Container" ).show();
 
 });
 
@@ -231,7 +210,7 @@ function setCookie(name,value,days) {
         date.setTime(date.getTime() + (days*24*60*60*1000));
         expires = "; expires=" + date.toUTCString();
     }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/; samesite=lax";
 }
 
 function getCookie(name) {
@@ -244,3 +223,8 @@ function getCookie(name) {
     }
     return null;
 }
+
+// Define function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+ }

@@ -19,7 +19,8 @@
 		</div>
 		<div class="col2">
 			<?php echo template::submit('blogEditSubmit', [
-				'value' => 'Publier'
+				'value' => 'Publier',
+				'uniqueSubmission' => true,
 			]); ?>
 		</div>
 	</div>

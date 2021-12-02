@@ -337,8 +337,12 @@ td>.col12 {
 
 /* Notice */
 .notice {
-	display: block; /* au lieu de inline-block notamment dans les input file*/
+	display: inline-block; 
 	color: #E74C3C;
+}
+/* Mauvaise position dans les champs File*/
+.inputFile.notice {
+	display: block;
 }
 
 /* Container */

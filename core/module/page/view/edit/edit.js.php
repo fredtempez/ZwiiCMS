@@ -52,40 +52,6 @@ function protectModule() {
 */
 $( document ).ready(function() {
 
-    /**
-     * Initialisation des blocs
-     */
-
-    var i = ["info", "layout", "setup", "location", "advanced", "seo" ];
-    $.each(i,function(e) {
-        if (getCookie(i[e]) === "true") {
-            $("#" + i[e]).find(".zwiico-plus-circled").hide();
-            $("#" + i[e]).find(".zwiico-minus-circled").show();
-            $("#" + i[e]).find(".blockContainer").show();
-        }
-	});
-
-	/**
-     * Blocs dépliants
-	 * 
-	 * Sauvegarder la position des blocs
-     * true = bloc déplié
-     */
-
-    $("div .block").click(function(e) {
-        $(this).find(".zwiico-plus-circled").toggle();
-        $(this).find(".zwiico-minus-circled").toggle();
-        $(this).find(".blockContainer").slideToggle();
-        /* 
-        * Sauvegarder la position des blocs
-        * true = bloc déplié
-        */
-        document.cookie = $(this).attr('id') + "=" + $(this).find(".zwiico-minus").is(":visible") + ";expires=Fri, 31 Dec 9999 23:59:59 GMT;path=/;SameSite=Lax";
-    }).on("click", "span > input, input, textarea, label, option, button, a:not(.inputFile) , .blockContainer", function(e) {
-        // Empêcher les déclenchements dans les blocs
-		e.stopPropagation();
-    });
-
 
 	/*
 	* Enleve le menu fixe en édition de page
@@ -471,14 +437,6 @@ pageEditBlockDOM.on("change", function() {
 });
 
 
-
-/**
- * Lire un cookie s'il existe
- */
-function getCookie(name) {
-	var v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
-	return v ? v[2] : null;
-}
 
 
 /**
