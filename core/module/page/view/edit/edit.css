@@ -16,26 +16,3 @@
 * admin.css
 */
 
-#seo > .blockContainer,
-#advanced > .blockContainer {
-    display: none;
-}
-
-#info .zwiico-minus-circled,
-#layout .zwiico-minus-circled,
-#location .zwiico-minus-circled {
-    display: inline;
-}
-
-.zwiico-minus-circled,
-#info .zwiico-plus-circled,
-#layout .zwiico-plus-circled,
-#location .zwiico-plus-circled {
-    display: none;
-}
-
-
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-    cursor: pointer;
-}
