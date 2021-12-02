@@ -20,11 +20,11 @@ $( document).ready(function() {
             url: url,
             data: $("form").serialize(),
             success: function(data){
-                $('body').css('cursor', 'default');
+                $('body, .button').css('cursor', 'default');
                 core.alert("La sauvegarde a été générée avec succès.");
             },
             error: function(data){
-                $('body').css('cursor', 'default');
+                $('body, .button').css('cursor', 'default');
                 core.alert("Une erreur s'est produite, la sauvegarde n'a pas été générée !");
             },
             complete: function(){
