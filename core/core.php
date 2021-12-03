@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.15';
+	const ZWII_VERSION = '11.2.00.16';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2226,14 +2226,14 @@ class core extends common {
 			$css .= 'body{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
 				// Image dans html pour éviter les déformations.
-				$css .= 'html, .mce-menu.mce-in.mce-animate {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
+				$css .= 'html {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
 				// Couleur du body transparente
-				$css .= 'body, .mce-menu.mce-in.mce-animate{background-color: rgba(0,0,0,0)}';
+				$css .= 'body {background-color: rgba(0,0,0,0)}';
 			} else {
 				// Pas d'image couleur du body
-				$css .= 'html, .mce-menu.mce-in.mce-animate{background-color:' . $colors['normal'] . ';}';
+				$css .= 'html {background-color:' . $colors['normal'] . ';}';
 				// Même couleur dans le fond de l'éditeur
-				$css .= 'div.mce-edit-area {background-color:' . $colors['normal'] . ' !important}';
+				//$css .= '{background-color:' . $colors['normal'] . ' !important}';
 			}
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
@@ -2243,7 +2243,7 @@ class core extends common {
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			// Site dans TinyMCE
-			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= '.editorWysiwyg, div.mce-edit-area, .mce-menu.mce-in.mce-animate,.mce-text  {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
