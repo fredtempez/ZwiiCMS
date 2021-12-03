@@ -2243,7 +2243,7 @@ class core extends common {
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			// Site dans TinyMCE
-			$css .= '.mce-container-body {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= '.editorWysiwyg:not(.mce-text) {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
