@@ -2243,7 +2243,7 @@ class core extends common {
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			// Site dans TinyMCE
-			$css .= '.editorWysiwyg, div.mce-edit-area, .mce-menu.mce-in.mce-animate,.mce-text  {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= '.editorWysiwyg:not(.mce-text) {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
@@ -2286,7 +2286,7 @@ class core extends common {
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
-			$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
+			//$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 
 			// Bannière
 
