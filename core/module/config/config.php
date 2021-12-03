@@ -514,7 +514,7 @@ class config extends common {
 						'scriptGoogle'      => $this->getData(['config', 'i18n', 'scriptGoogle']),
 						'showCredits' 	 	=> $this->getData(['config', 'i18n', 'showCredits']),
 						'autoDetect' 	 	=> $this->getData(['config', 'i18n', 'autoDetect']),
-						'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
+						//'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
 						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
 						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
 						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),

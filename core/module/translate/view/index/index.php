@@ -56,13 +56,6 @@
 							'help' => 'Option recommandée pour le respect du droit d\'auteur'
 						]); ?>
 					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
-								'checked' => $this->getData(['config','i18n', 'admin']),
-								'class' => 'translateGoogleScriptOption',
-								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
-							]); ?>
-					</div>
 				</div>
 			</div>
 		</div>
