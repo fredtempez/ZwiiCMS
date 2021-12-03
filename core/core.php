@@ -2243,7 +2243,8 @@ class core extends common {
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
 			// Site dans TinyMCE
-			$css .= '.editorWysiwyg:not(.mce-text) {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= 'span.mce-text{background-color: unset !important;}';
 			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
@@ -2384,6 +2385,7 @@ class core extends common {
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
+		
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
@@ -2403,6 +2405,8 @@ class core extends common {
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . $this->getData(['admin','fontText'])  . '", sans-serif;}';
 			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $this->getData(['admin','fontTitle' ]) . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			
+			// TinyMCE
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
 			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:'.$this->getData(['admin','colorText']).'; color:'.$colors['normal'].';}';
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColorButton']));
