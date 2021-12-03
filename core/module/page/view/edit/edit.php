@@ -127,7 +127,7 @@
 			<div class="block">
 				<h4>Mise en page
 					<span id="layoutHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/les-barres-laterales" target="_blank">
+						<a href="https://doc.zwiicms.fr/mise-en-page-2" target="_blank">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
