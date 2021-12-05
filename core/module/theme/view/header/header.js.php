@@ -96,9 +96,9 @@ $("input, select").on("change", function() {
 			css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
 	
 
-		// Taille, couleur, épaisseur et capitalisation du titre de la bannière
-		css += "header span{font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
-		
+        // Taille, couleur, épaisseur et capitalisation du titre de la bannière
+        css += "header span{font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";		
+
 		// Cache le titre de la bannière
 		if($("#themeHeaderTextHide").is(":checked")) {
 			$("#themeHeaderTitle").hide();
