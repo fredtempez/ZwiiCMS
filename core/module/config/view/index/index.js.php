@@ -39,7 +39,7 @@ $( document).ready(function() {
     }
 
     var configLayout = getCookie("configLayout");
-    if (configLayout == null) {
+    if (configLayout == "null") {
         $("#localeContainer").hide();
         $("#socialContainer").hide();
         $("#connectContainer").hide();
