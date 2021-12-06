@@ -39,17 +39,8 @@ $( document).ready(function() {
     }
 
     var configLayout = getCookie("configLayout");
-    if (configLayout == "null") {
-        $("#localeContainer").hide();
-        $("#socialContainer").hide();
-        $("#connectContainer").hide();
-        $("#networkContainer").hide();
-        $("#setupContainer").show();
-        $("#configSetupButton").addClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
-        $("#configSocialButton").removeClass("activeButton");
-        $("#configConnectButton").removeClass("activeButton");
-        $("#configNetworkButton").removeClass("activeButton");
+    if (configLayout == null) {
+        configLayout = "setup";
         setCookie("configLayout","setup");
     }
     $("#localeContainer").hide();
@@ -235,4 +226,4 @@ function getCookie(name) {
 // Define function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
- }
+}
