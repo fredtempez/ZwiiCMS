@@ -12,7 +12,7 @@
 		</div>
 		<div class="col2">
 			<?php echo template::button('pageEditHelp', [
-				'href' => 'https://doc.zwiicms.fr/les-pages-simples',
+				'href' => 'https://doc.zwiicms.fr/edition-des-pages',
 				'target' => '_blank',
 				'ico' => 'help',
 				'value' => 'Aide',
