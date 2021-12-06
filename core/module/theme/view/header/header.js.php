@@ -168,9 +168,9 @@ $("input, select").on("change", function() {
 	// Marge dans le site
 	if(	$("#themeHeaderMargin").is(":checked") &&
 		$("#themeHeaderPosition").val() === "site"
-		) {			console.log("truc")	;
+		) {	
 			css += 'header{margin:20px 20px 0 20px !important;}';
-		/*} else { console.log("truc2")	;
+		/*} else { 
 			css += 'header{margin:0 !important;}';*/
     }
 

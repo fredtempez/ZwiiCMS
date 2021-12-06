@@ -22,7 +22,6 @@ $("input, select").on("change",function() {
 	* Option de marge si la taille n'est pas fluide
 	*/
 	if ($('#themeSiteWidth').val() === '100%') {
-		console.log ("pop");
 		$("#themeSiteMarginWrapper").prop("checked", true);
 		$("#themeSiteMarginWrapper").hide();
 	} else {

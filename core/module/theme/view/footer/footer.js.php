@@ -87,8 +87,6 @@ $(".themeFooterContent").on("change",function() {
 				textPosition = $("#themeFooterTextPosition").val();
 				textPosition = textPosition.substr(0,1).toUpperCase()+textPosition.substr(1);
 				$("#footerText").show().appendTo("#footer" + footerPosition + textPosition);
-				//console.log("text");
-				//console.log("#footer" + footerPosition + textPosition);
 				break;
 	}
 	switch($("#themeFooterSocialsPosition").val()) {
@@ -100,8 +98,6 @@ $(".themeFooterContent").on("change",function() {
 				socialsPosition = $("#themeFooterSocialsPosition").val();
 				socialsPosition = socialsPosition.substr(0,1).toUpperCase()+socialsPosition.substr(1);
 				$("#footerSocials").show().appendTo("#footer" + footerPosition + socialsPosition);
-				//console.log("socials");
-				//console.log("#footer" + footerPosition + socialsPosition);
 				break;
 	}
 	switch($("#themeFooterCopyrightPosition").val()) {
@@ -113,8 +109,6 @@ $(".themeFooterContent").on("change",function() {
 				copyrightPosition = $("#themeFooterCopyrightPosition").val();
 				copyrightPosition = copyrightPosition.substr(0,1).toUpperCase()+copyrightPosition.substr(1);
 				$("#footerCopyright").show().appendTo("#footer" + footerPosition + copyrightPosition);
-				//console.log("copyright");
-				//console.log("#footer" + footerPosition + copyrightPosition);
 				break;
 	}
 
@@ -284,7 +278,6 @@ $("#themeFooterDisplayLegal").on("change", function() {
 
 // Pages spéciales  : activation si une page est sélectionnée
 $("#configLegalPageId").on("change", function() {
-	console.log($("#configLegalPageId option:selected").text());
 	if ( $("#configLegalPageId option:selected").text() === 'Aucune') {
 		$("#themeFooterDisplayLegal").prop('checked', false);
 		$("#themeFooterDisplayLegal").prop( "disabled", true );
@@ -294,7 +287,6 @@ $("#configLegalPageId").on("change", function() {
 	}
 }).trigger("change");
 $("#configSearchPageId").on("change", function() {
-	console.log($("#configSearchPageId option:selected").text());
 	if ( $("#configSearchPageId option:selected").text() === 'Aucune') {
 		$("#themeFooterDisplaySearch").prop('checked', false);
 		$("#themeFooterDisplaySearch").prop( "disabled", true );

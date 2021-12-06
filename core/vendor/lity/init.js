@@ -4,4 +4,5 @@ $(document).ready(function() {
     $("a[rel='data-lity']").attr(
         "data-lity",""
     );
+    $(".lity-content").addClass("notranslate");
 });

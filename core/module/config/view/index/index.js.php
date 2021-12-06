@@ -19,7 +19,6 @@ $( document).ready(function() {
      * Afficher et masquer options smtp
      */
     if ($("input[name=smtpEnable]").is(':checked')) {
-        console.log("init");
         $("#smtpParam").addClass("disabled");
         $("#smtpParam").slideDown();
     } else {
@@ -59,7 +58,6 @@ $( document).ready(function() {
      * Afficher et masquer options smtp
      */
     $("input[name=smtpEnable]").on("change", function() {
-        console.log("truc");
         if ($("input[name=smtpEnable]").is(':checked')) {
             $("#smtpParam").addClass("disabled");
             $("#smtpParam").slideDown();
