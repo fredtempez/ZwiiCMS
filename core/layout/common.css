@@ -1683,11 +1683,11 @@ th.col12 {
 }
 
 .captchaNum {
-	height: 6em;
+	height: 5em;
 }
 
 .captchaAlpha {
-	height: 4em;
+	height: 2em;
 }
 
 .captcha input[type='text'] {
