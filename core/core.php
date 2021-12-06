@@ -2118,9 +2118,13 @@ class common {
 
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
 				OR (
+					// Le script de traduction est actif et la langue est traduite par script
 					$this->getData(['config', 'i18n','scriptGoogle']) === true
 					AND $this->getData(['config', 'i18n', $key]) === 'script'
-					AND $this->getUser('group') >= self::GROUP_MODERATOR
+					// Le drapeau n'est pas actif pour les non admin en mode connecté.
+					AND
+						( $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD') 
+						OR $this->getUser('group') === self::GROUP_ADMIN )
 				)
 			) {
 				if (
