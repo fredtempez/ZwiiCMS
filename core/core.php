@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.18';
+	const ZWII_VERSION = '11.2.00.19';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2119,7 +2119,8 @@ class common {
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
 				OR (
 					$this->getData(['config', 'i18n','scriptGoogle']) === true
-					AND $this->getData(['config', 'i18n',$key]) === 'script'
+					AND $this->getData(['config', 'i18n', $key]) === 'script'
+					AND $this->getUser('group') >= self::GROUP_MODERATOR
 				)
 			) {
 				if (
@@ -2135,9 +2136,9 @@ class common {
 					   $select = ' class="i18nFlag" ';
 				   }
 
-				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
-				echo '</li>';
+					echo '<li>';
+					echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+					echo '</li>';
 			}
 		}
 	}
