@@ -229,7 +229,7 @@ core.start = function() {
 			// Traitement du retour de la checkbox
 			if ($("#googleAnalytics").is(":checked")) {
 				// L'URL du serveur faut TRUE
-				document.cookie = "ZWII_COOKIE_GA_CONSENT=" + "<?php echo $_SERVER['PHP_SELF']; ?>" + ";" + domain + ";" + path + ";" + samesite + ";" + expires;
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
 			} else {
 				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
 			}
@@ -237,7 +237,7 @@ core.start = function() {
 		}
 
 		// Stocke le cookie d'acceptation
-		document.cookie = "ZWII_COOKIE_CONSENT=<?php echo $_SERVER['PHP_SELF']; ?>;" + domain + ";" + path + ";" + samesite + ";" + expires;
+		document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
 	});
 
 

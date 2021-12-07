@@ -1180,7 +1180,7 @@ class common {
 	 */
 	 public function showAnalytics() {
  		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] )  {
+ 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true' )  {
  			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
  				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
  				<script>
@@ -1203,7 +1203,7 @@ class common {
 			// Détermine si le bloc doit être affiché selon la validité du cookie
 			// L'URL du serveur faut TRUE
 			$item  = '<div id="cookieConsent"';
-			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  $_SERVER['PHP_SELF'] ? '>' : ' class="displayNone">';
+			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  'true' ? '>' : ' class="displayNone">';
 			// Bouton de fermeture
 			$item .= '<div class="cookieClose">';
 			$item .= template::ico('cancel');
@@ -1214,7 +1214,7 @@ class common {
 			// Formulaire de réponse
 			$item .= '<form method="POST" action="" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
-			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') === $_SERVER['PHP_SELF'] ? 'checked="checked"' : '';
+			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
 				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
 				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
