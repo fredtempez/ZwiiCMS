@@ -515,4 +515,11 @@ $(document).ready(function(){
 	if(/^\?fbclid=/.test(location.search))
 		location.replace(location.href.replace(/\?fbclid.+/, ""));
 
+	/**
+	 * No translate Lity close
+	 */
+	 $(document).on('lity:ready', function(event, instance) {
+		$('.lity-close').addClass('notranslate');
+	});
+
 });
