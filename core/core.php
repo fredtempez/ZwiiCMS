@@ -1623,7 +1623,7 @@ class common {
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
 			$itemsLeft .= '<li>';
-
+			
 			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				 ) OR (
@@ -1632,9 +1632,11 @@ class common {
 					AND $this->getUser('group') < self::GROUP_MODERATOR
 				 )
 			){
-				$itemsLeft .= '<a class="' . $parentPageId . '" href="'. helper::baseUrl() . $this->getUrl(0).'">';
+				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
+				$itemsLeft .= '<a class="A ' . $parentPageId . '" href="' . $pageUrl . '">';
 			} else {
-				$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . '>';
+				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false)  :  helper::baseUrl() . $parentPageId;
+				$itemsLeft .= '<a class="B ' . $active . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -1692,9 +1694,11 @@ class common {
 						AND $this->getUser('group') < self::GROUP_MODERATOR
 						)
 				){
-					$itemsLeft .= '<a class="' . $parentPageId . '" href="'.helper::baseUrl() . $this->getUrl(0).'">';
+					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
+					$itemsLeft .= '<a class="' . $parentPageId . '" href="'. $pageUrl .'">';
 				} else {
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' . helper::baseUrl() . $childKey . '"' . $targetBlank  . '>';
+					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false)  :  helper::baseUrl() . $childKey;
+					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
