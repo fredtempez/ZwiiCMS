@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.20';
+	const ZWII_VERSION = '11.2.00.21';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -912,7 +912,9 @@ class common {
 			}
 			// Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true ) {
-				$sitemap->addUrl ('/' . $parentPageId,$datetime);
+				// Cas de la page d'accueil ne pas dupliquer l'URL
+				$pageId = ($parentPageId !== $this->getData(['locale', 'homePageId'])) ? $parentPageId : '';
+				$sitemap->addUrl ('/' . $pageId, $datetime);
 			}
 			// Articles du blog
 			if ($this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
@@ -929,6 +931,8 @@ class common {
 				if ($this->getData(['page',$childKey,'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true)  {
 					continue;
 				}
+				// Cas de la page d'accueil ne pas dupliquer l'URL
+				$pageId = ($childKey !== $this->getData(['locale', 'homePageId'])) ? $childKey : '';
 				$sitemap->addUrl('/' . $childKey,$datetime);
 
 				// La sous-page est un blog
@@ -2838,6 +2842,7 @@ class core extends common {
 
 			}
 		}
+
 		// Erreurs
 		if($access === 'login') {
 			http_response_code(302);

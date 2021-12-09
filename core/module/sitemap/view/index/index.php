@@ -4,7 +4,8 @@
 			<?php
 			if ($this->getData(['page', $parentId, 'disable']) === false  && $this->getUser('group') >= $this->getData(['page', $parentId, 'group']))
 			{ ?>
-				<a href="<?php echo helper::baseUrl() . $parentId; ?>"><?php echo $this->getData(['page', $parentId, 'title']); ?></a>
+				<?php $pageUrl = ($parentId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $parentId : helper::baseUrl(false) ; ?>
+				<a href="<?php echo $pageUrl; ?>"><?php echo $this->getData(['page', $parentId, 'title']); ?></a>
 				<?php
 			} else {
 				// page désactivée
@@ -16,7 +17,8 @@
 					<!-- Sous-page -->
 					<?php if ($this->getData(['page', $childId, 'disable']) === false && $this->getUser('group') >= $this->getData(['page', $parentId, 'group']))
 					{ ?>
-						<a href="<?php echo helper::baseUrl() . $childId; ?>"><?php echo $this->getData(['page', $childId, 'title']); ?></a>
+						<?php $pageUrl = ($childId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $childId : helper::baseUrl(false) ; ?>
+						<a href="<?php echo $pageUrl ; ?>"><?php echo $this->getData(['page', $childId, 'title']); ?></a>
 					<?php } else { ?>
 							<!-- page désactivée -->
 							<?php echo $this->getData(['page', $childId, 'title']); }?>
