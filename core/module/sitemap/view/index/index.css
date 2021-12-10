@@ -12,6 +12,17 @@
  * @link http://zwiicms.fr/
  */
 
- ul {
-     list-style-type: circle;
+ #siteMap ul {
+     list-style: none ;
+     margin-left: .5em;
+     padding-left: 1em;
+     line-height: 1.5em;
  }
+
+.pageIcon li::before {
+    content: "📄 ";
+}
+
+.articleIcon li::before {
+    content: "📝 ";
+}
