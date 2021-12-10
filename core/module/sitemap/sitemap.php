@@ -28,58 +28,21 @@ class sitemap extends common
     {
         $items = '<ul>';
         foreach ($this->getHierarchy(null, true, null) as $parentId => $childIds) {
-            $items .= '<li class="pageIcon">';
-            if ($this->getData(['page', $parentId, 'disable']) === false  && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
-                $items .= '<a href="' .helper::baseUrl() . $parentId .'">'  .$this->getData(['page', $parentId, 'title']) . '</a>';
-               // $items .= '<';
-            } else {
-                // page désactivée
-                $items .= $this->getData(['page', $parentId, 'title']);
-            }
-			
-			// ou articles d'un blog
-			if ($this->getData(['page', $parentId, 'moduleId']) === 'blog'  &&
-			!empty($this->getData(['module',$parentId, 'posts' ]))) {
-				$items .= '<ul>';									
-				// Ids des articles par ordre de publication
-				$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $parentId,'posts']), 'publishedOn', 'SORT_DESC');
-				$articleIdsStates = helper::arrayCollumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
-				$articleIds = [];
-				foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
-					if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
-						$articleIds[] = $articleId;
-					}
-				}
-				foreach ($articleIds as $articleId => $article) {
-					if ($this->getData(['module',$parentId,'posts',$article,'state']) === true) {
-						$items .= '<li class="articleIcon">';
-						$items .= '<a href="' . helper::baseUrl() . $parentId. '/' . $article . '">' . $this->getData(['module',$parentId,'posts',$article,'title']) . '</a>';
-						$items .= '</li>';
-					}
-				}
-				$items .= '</ul>';
-			} 
-            
-            foreach ($childIds as $childId) {
-				$items .= '<ul>';
-                // Sous-page
-				$items .= '<li class="pageIcon">';              
-                if ($this->getData(['page', $childId, 'disable']) === false && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
-                    $items .= '<a href="' . helper::baseUrl() . $childId . '">' . $this->getData(['page', $childId, 'title']) . '</a>';
+            $items .= ' <li>';
+                if ($this->getData(['page', $parentId, 'disable']) === false  && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
+                    $items .= '<a href="' .helper::baseUrl() . $parentId .'">'  .$this->getData(['page', $parentId, 'title']) . '</a>';
                 } else {
                     // page désactivée
-                    $items .=  $this->getData(['page', $childId, 'title']);
+                    $items .= $this->getData(['page', $parentId, 'title']);
                 }
-				$items .= '</li>';
-
-
-                // Articles d'une sous-page blog                
-                if ($this->getData(['page', $childId, 'moduleId']) === 'blog'  &&
-                            !empty($this->getData(['module', $childId, 'posts' ]))) {
-                    $items .= '<ul>';
+                // ou articles d'un blog
+                
+                if ($this->getData(['page', $parentId, 'moduleId']) === 'blog'  &&
+                !empty($this->getData(['module',$parentId, 'posts' ]))) {
+                    $items .= '<ul>';									
                     // Ids des articles par ordre de publication
-                    $articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $childId,'posts']), 'publishedOn', 'SORT_DESC');
-                    $articleIdsStates = helper::arrayCollumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
+                    $articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $parentId,'posts']), 'publishedOn', 'SORT_DESC');
+                    $articleIdsStates = helper::arrayCollumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
                     $articleIds = [];
                     foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
                         if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
@@ -87,20 +50,55 @@ class sitemap extends common
                         }
                     }
                     foreach ($articleIds as $articleId => $article) {
-                        if ($this->getData(['module',$childId,'posts',$article,'state']) === true) {
-                            $items .= '<li class="articleIcon">';
-                            $items .=  '<a href="' . helper::baseUrl() . $childId . '/' . $article . '">' . $this->getData(['module',$childId,'posts',$article,'title']) . '</a>';
+                        if ($this->getData(['module',$parentId,'posts',$article,'state']) === true) {
+                            $items .= ' <li>';
+                            $items .= '<a href="' . helper::baseUrl() . $parentId. '/' . $article . '">' . $this->getData(['module',$parentId,'posts',$article,'title']) . '</a>';
                             $items .= '</li>';
                         }
                     }
                     $items .= '</ul>';
+                } 
+                
+                foreach ($childIds as $childId) {
+                    $items .= '<ul>';
+                        // Sous-page
+                        $items .= ' <li>';              
+                        if ($this->getData(['page', $childId, 'disable']) === false && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
+                            $items .= '<a href="' . helper::baseUrl() . $childId . '">' . $this->getData(['page', $childId, 'title']) . '</a>';
+                        } else {
+                            // page désactivée
+                            $items .=  $this->getData(['page', $childId, 'title']);
+                        }
+                        $items .= '</li>';
+
+                    // Articles d'une sous-page blog                
+                    if ($this->getData(['page', $childId, 'moduleId']) === 'blog'  &&
+                                !empty($this->getData(['module', $childId, 'posts' ]))) {
+                        $items .= '<ul>';
+                        // Ids des articles par ordre de publication
+                        $articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $childId,'posts']), 'publishedOn', 'SORT_DESC');
+                        $articleIdsStates = helper::arrayCollumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
+                        $articleIds = [];
+                        foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
+                            if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
+                                $articleIds[] = $articleId;
+                            }
+                        }
+                        foreach ($articleIds as $articleId => $article) {
+                            if ($this->getData(['module',$childId,'posts',$article,'state']) === true) {
+                                $items .= ' <li>';
+                                $items .=  '<a href="' . helper::baseUrl() . $childId . '/' . $article . '">' . $this->getData(['module',$childId,'posts',$article,'title']) . '</a>';
+                                $items .= '</li>';
+                            }
+                        }
+                        $items .= '</ul>';
+                    }
+                    $items .= '</ul>';
                 }
-			$items .= '</li>';
-			// Fin du grand bloc
-			$items .= '</ul>';               
-            }
+            $items .= '</li>';
         }
-        
+        // Fin du grand bloc
+        $items .= '</ul>';    
 		self::$siteMap = $items;
 
         // Valeurs en sortie
