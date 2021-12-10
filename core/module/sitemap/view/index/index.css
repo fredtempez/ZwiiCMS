@@ -13,16 +13,17 @@
  */
 
  #siteMap ul {
-     list-style: none ;
-     margin-left: .5em;
-     padding-left: 1em;
-     line-height: 1.5em;
- }
-
-.pageIcon li::before {
-    content: "📄 ";
+    list-style: none ;
+    margin-left: .5em;
+    padding-left: 1em;
+    line-height: 1.5em;
+    font-size: 16px;
 }
 
-.articleIcon li::before {
-    content: "📝 ";
+#siteMap ul > li::before {
+   content: "📄 ";
+}
+
+#siteMap li > ul > li::before {
+   content: "📃 ";
 }

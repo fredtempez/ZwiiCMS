@@ -13,6 +13,7 @@ Mises à jour :
         - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
     - Multi-langues :
         - Bug auto détection du navigateur.
+    - Page site map, correction d'erreurs et rénovation de la présentation.
 - Modifications :
     - Gestion des cookies : 
         - Options de personnalisation du message d'acceptation des cookies, acceptation ou refus du cookie Google Analytics, affichage de la page des mentions légales.
