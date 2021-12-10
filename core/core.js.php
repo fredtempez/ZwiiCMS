@@ -245,7 +245,7 @@ core.start = function() {
 	 * Fermeture de la popup des cookies
 	 */
 	$("#cookieConsent .cookieClose").on("click", function() {
-		$('#cookieConsent').fadeOut();
+		$('#cookieConsent').addClass("displayNone");
 	});
 
 	/**
