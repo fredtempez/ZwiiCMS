@@ -1469,7 +1469,7 @@ class common {
 		$items .= '>Motorisé&nbsp;par&nbsp;</span>';
 		// Toujours afficher le nom du CMS
 		$items .= '<span id="footerZwiiCMS">';
-		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" data-tippy-content="Zwii CMS sans base de données, très léger et performant">ZwiiCMS</a>';
+		$items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" >ZwiiCMS</a>';
 		$items .= '</span>';
 		// Affichage du numéro de version
 		$items .= '<span id="footerDisplayVersion"';
@@ -1480,14 +1480,14 @@ class common {
 		$items .= '<span id="footerDisplaySiteMap"';
 		$items .= $this->getData(['theme','footer','displaySiteMap']) ===  false ? ' class="displayNone"' : '';
 		$label = empty($this->getData(['locale','sitemapPageLabel'])) ? 'Plan du site' : $this->getData(['locale','sitemapPageLabel']);
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap" data-tippy-content="Plan du site" >' . $label . '</a>';
+		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap"  >' . $label . '</a>';
 		$items .= '</span>';
         // Affichage du module de recherche
  		$items .= '<span id="footerDisplaySearch"';
 		$items .= $this->getData(['theme','footer','displaySearch']) ===  false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale','searchPageLabel'])) ? 'Rechercher' : $this->getData(['locale','searchPageLabel']);
 		if ($this->getData(['locale','searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '" data-tippy-content="Rechercher dans le site >' . $label .'</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','searchPageId']) . '"  >' . $label .'</a>';
 		}
 		$items .= '</span>';
 		// Affichage des mentions légales
@@ -1495,14 +1495,14 @@ class common {
 		$items .= $this->getData(['theme','footer','displayLegal']) ===  false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale','legalPageLabel'])) ? 'Mentions Légales' : $this->getData(['locale','legalPageLabel']);
 		if ($this->getData(['locale','legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '" data-tippy-content="Page des mentions légales" >' . $label .'</a>';
+			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale','legalPageId']) . '"  >' . $label .'</a>';
 		}
 		$items .= '</span>';
 		// Affichage de la gestion des cookies
 		$items .= '<span id="footerDisplayCookie"';
 		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie']) === true) ? '>' : ' class="displayNone" >';
 		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Cookies' : $this->getData(['locale', 'cookies', 'cookiesFooterText']) ;
-		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie" data-tippy-content="Message d\'information relatif aux cookies">'. $label .'</a>';
+		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" class="skiptranslate" id="footerLinkCookie">'. $label .'</a>';
 		$items .= '</span>';
 		// Affichage du lien de connexion
 		if(
@@ -1516,7 +1516,7 @@ class common {
 			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
 			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
 			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'" data-tippy-content="Connexion à l\'administration" rel="nofollow">' . template::ico('login') .'</a></span>';
+			'" rel="nofollow">' . template::ico('login') .'</a></span>';
 		}
 		// Affichage de la barre de membre simple
 		if ( $this->getUser('group') === self::GROUP_MEMBER
@@ -1524,9 +1524,9 @@ class common {
 			) {
 				$items .= '<span id="footerDisplayMemberAccount"';
 				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
-				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '" data-tippy-content="Gérer mon compte" >' . template::ico('user', 'all') . '</a>';
-				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a>';
-				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout','left') . '</a>';
+				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '"  >' . template::ico('user', 'all') . '</a>';
+				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'"  data-lity>' . template::ico('folder') . '</a>';
+				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" >' . template::ico('logout','left') . '</a>';
 				$items .= '</span>';
 		}
 		// Fermeture du bloc copyright
