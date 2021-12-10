@@ -152,7 +152,7 @@ class init extends common {
 				'template' => '3'
 			],
 			'header' => [
-				'backgroundColor' => 'rgba(255, 189, 0, 1)',
+				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'font' => 'Oswald',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
@@ -167,17 +167,15 @@ class init extends common {
 				'textHide' => false,
 				'textTransform' => 'none',
 				'linkHomePage' => true,
-				'imageContainer' => 'cover',
+				'imageContainer' => 'auto',
 				'tinyHidden' => true,
-				'feature' => 'feature',
-				'featureContent' => '<div class="row" style="vertical-align: middle;">
-							<p class="col10 textAlignCenter"><strong><span style="font-size: 30pt; color: #003f86;"><span style="font-size: 24pt;">Zwii, le <em>CMS&nbsp;</em>pour bien d&eacute;buter</span><br /><span style="font-size: 18pt;"><span style="font-size: 14pt;">Installation facile :<br />Aucune base de donn&eacute;es &agrave; configurer.<br /><br /></span><br /><br /></span></span></strong></p>
-							<div class="col2"><p><img src="./site/file/source/zwii-logosocial-2022.png" width="512" height="512" alt="" /></p></div></div>',
+				'feature' => 'wallpaper',
+				'featureContent' => '<p>Bannière vide</p>',
 				'width' => 'container'
 			],
 			'menu' => [
-				'backgroundColor' => 'rgba(0, 63, 134, 1)',
-				'backgroundColorSub' => 'rgba(0, 63, 134, 1)',
+				'backgroundColor' => 'rgba(32, 59, 82, 1)',
+				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
 				'font' => 'Open+Sans',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
@@ -202,7 +200,7 @@ class init extends common {
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
 				'shadow' => '0px 0px 0px',
-				'width' => '1170px'
+				'width' => '960px'
 			],
 			'block' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
@@ -212,16 +210,16 @@ class init extends common {
 				'font' => 'Open+Sans',
 				'fontSize' => '13px',
 				'textColor' => 'rgba(33, 34, 35, 1)',
-				'linkColor' => 'rgba(0, 63, 134, 1)'
+				'linkColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
 				'font' => 'Oswald',
 				'fontWeight' => 'normal',
-				'textColor' => 'rgba(0, 63, 134, 1)',
+				'textColor' => 'rgba(74, 105, 189, 1)',
 				'textTransform' => 'none'
 			],
 			'button' => [
-				'backgroundColor' => 'rgba(0, 63, 134, 1)'
+				'backgroundColor' => 'rgba(32, 59, 82, 1)'
 			],
 			'version' => 0
 		],
@@ -231,8 +229,8 @@ class init extends common {
 			'fontSize' => '13px',
 			'fontTitle' => 'Oswald',
 			'colorText' => 'rgba(33, 34, 35, 1)',
-			'colorTitle' => 'rgba(0, 63, 134, 1)',
-			'backgroundColorButton' => 'rgba(0, 63, 134, 1)',
+			'colorTitle' => 'rgba(74, 105, 189, 1)',
+			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',
 			'backgroundColorButtonGrey' => 'rgba(170, 180, 188, 1)',
 			'backgroundColorButtonRed' => 'rgba(217, 95, 78, 1)',
 			'backgroundColorButtonGreen' => 'rgba(162, 223, 57, 1)',

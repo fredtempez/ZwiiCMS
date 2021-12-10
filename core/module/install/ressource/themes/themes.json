@@ -1,7 +1,11 @@
 {
     "defaut" : {
-        "name": "Le thème par défaut : bannière personnalisée ou papier-peint ambiance bleu et montagne",
+        "name": "Le thème par défaut, ambiance bleu et montagne",
         "filename": ""
+    },
+    "moderne": {
+        "name": "Thème avec la nouvelle bannière personnalisable",
+        "filename": "theme_moderne.zip"
     },
     "affaire": {
         "name": "Thème affaire, bannière centre d'appel, ambiance prune",
