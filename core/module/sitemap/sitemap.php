@@ -30,7 +30,8 @@ class sitemap extends common
         foreach ($this->getHierarchy(null, true, null) as $parentId => $childIds) {
             $items .= ' <li>';
                 if ($this->getData(['page', $parentId, 'disable']) === false  && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
-                    $items .= '<a href="' .helper::baseUrl() . $parentId .'">'  .$this->getData(['page', $parentId, 'title']) . '</a>';
+                    $pageUrl = ($parentId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $parentId : helper::baseUrl(false);
+                    $items .= '<a href="' . $pageUrl .'">'  .$this->getData(['page', $parentId, 'title']) . '</a>';
                 } else {
                     // page désactivée
                     $items .= $this->getData(['page', $parentId, 'title']);
@@ -64,7 +65,8 @@ class sitemap extends common
                         // Sous-page
                         $items .= ' <li>';              
                         if ($this->getData(['page', $childId, 'disable']) === false && $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])) {
-                            $items .= '<a href="' . helper::baseUrl() . $childId . '">' . $this->getData(['page', $childId, 'title']) . '</a>';
+                            $pageUrl = ($childId !== $this->getData(['locale', 'homePageId'])) ? helper::baseUrl() . $childId : helper::baseUrl(false) ;
+                            $items .= '<a href="' . $pageUrl . '">' . $this->getData(['page', $childId, 'title']) . '</a>';
                         } else {
                             // page désactivée
                             $items .=  $this->getData(['page', $childId, 'title']);
