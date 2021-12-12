@@ -24,3 +24,8 @@
 .activeButton {
     filter : brightness(150%);    
 }
+
+.buttonNotice {
+    border: 2px solid red !important; 
+    border-radius: 2px;
+}

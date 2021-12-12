@@ -196,7 +196,29 @@ $( document).ready(function() {
         $("#socialMetaImage, #socialSiteMap, #configBackupCopyButton").click(function(event) {
         $('body, .button').css('cursor', 'wait');
     });
-        
+
+
+    // Mise en évidence des erreurs de saisie au niveau des boutons de sélection
+    /*
+    var containers = ["setup", "locale", "social", "connect", "network"];
+    $.each( containers, function( index, value ){
+        console.log(value);
+        var a = $("div#" + value + "Container").find("input.notice").not(".displayNone");
+        if (a.length > 0) {
+            $("#config" + capitalizeFirstLetter(a) + "Button").addClass("buttonNotice");
+        } else {
+            $("#config" + capitalizeFirstLetter(a) + "Button").removeClass("buttonNotice");
+        }
+    });
+    */
+    
+    var locale = $("div#localeContainer").find("input.notice").not(".displayNone");
+    if (locale.length > 0) {
+        $("#configLocaleButton").addClass("buttonNotice");
+    } else {
+        $("#configLocaleButton").removeClass("buttonNotice");
+    }
+
 
 });
 
