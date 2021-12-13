@@ -492,7 +492,7 @@ class config extends common {
 						'auth' => $this->getInput('smtpAuth',helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('smtpSecure',helper::FILTER_BOOLEAN),
 						'username' => $this->getInput('smtpUsername',helper::FILTER_STRING_SHORT,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN)),
-						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('smtpPassword',$this->getInput('smtpAuth',helper::FILTER_BOOLEAN))),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('smtpPassword',null,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN))),
 						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [

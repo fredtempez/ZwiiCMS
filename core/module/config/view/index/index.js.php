@@ -29,7 +29,7 @@ $( document).ready(function() {
      * Afficher et masquer options Auth
      */
 
-    if ($("select[name=smtpEnable]").val() == true) {
+    if ($("select[name=smtpAuth]").val() == true) {
         $("#smtpAuthParam").addClass("disabled");
         $("#smtpAuthParam").slideDown();
     } else {
@@ -202,16 +202,20 @@ $( document).ready(function() {
     /*
     var containers = ["setup", "locale", "social", "connect", "network"];
     $.each( containers, function( index, value ){
-        console.log(value);
         var a = $("div#" + value + "Container").find("input.notice").not(".displayNone");
         if (a.length > 0) {
             $("#config" + capitalizeFirstLetter(a) + "Button").addClass("buttonNotice");
         } else {
             $("#config" + capitalizeFirstLetter(a) + "Button").removeClass("buttonNotice");
         }
-    });
-    */
-    
+    });*/
+
+    var locale = $("div#networkContainer").find("input.notice").not(".displayNone");
+    if (locale.length > 0) {
+        $("#configNetworkButton").addClass("buttonNotice");
+    } else {
+        $("#configNetworkButton").removeClass("buttonNotice");
+    }    
     var locale = $("div#localeContainer").find("input.notice").not(".displayNone");
     if (locale.length > 0) {
         $("#configLocaleButton").addClass("buttonNotice");
