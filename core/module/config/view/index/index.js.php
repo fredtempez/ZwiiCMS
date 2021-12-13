@@ -198,31 +198,16 @@ $( document).ready(function() {
     });
 
 
-    // Mise en évidence des erreurs de saisie au niveau des boutons de sélection
-    /*
+    // Mise en évidence des erreurs de saisie dans les boutons de sélection
     var containers = ["setup", "locale", "social", "connect", "network"];
     $.each( containers, function( index, value ){
         var a = $("div#" + value + "Container").find("input.notice").not(".displayNone");
         if (a.length > 0) {
-            $("#config" + capitalizeFirstLetter(a) + "Button").addClass("buttonNotice");
+           $("#config" + capitalizeFirstLetter(value) + "Button").addClass("buttonNotice");
         } else {
-            $("#config" + capitalizeFirstLetter(a) + "Button").removeClass("buttonNotice");
+           $("#config" + capitalizeFirstLetter(value) + "Button").removeClass("buttonNotice");
         }
-    });*/
-
-    var locale = $("div#networkContainer").find("input.notice").not(".displayNone");
-    if (locale.length > 0) {
-        $("#configNetworkButton").addClass("buttonNotice");
-    } else {
-        $("#configNetworkButton").removeClass("buttonNotice");
-    }    
-    var locale = $("div#localeContainer").find("input.notice").not(".displayNone");
-    if (locale.length > 0) {
-        $("#configLocaleButton").addClass("buttonNotice");
-    } else {
-        $("#configLocaleButton").removeClass("buttonNotice");
-    }
-
+    });
 
 });
 
