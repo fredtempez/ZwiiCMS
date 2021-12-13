@@ -437,6 +437,9 @@ class theme extends common {
 	public function header() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Modification des URL des images dans la bannière perso
+			$featureContent = $this->getInput('themeHeaderText', null);
+			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 			// Si une image est positionnée, l'arrière en transparent.
 			$this->setData(['theme', 'header', [
 				'backgroundColor' => $this->getInput('themeHeaderBackgroundColor'),
@@ -458,7 +461,7 @@ class theme extends common {
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
 				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
 				'feature' => $this->getInput('themeHeaderFeature'),
-				'featureContent' => $this->getInput('themeHeaderText', null)
+				'featureContent' => $featureContent
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )
