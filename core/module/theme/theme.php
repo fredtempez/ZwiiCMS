@@ -440,7 +440,37 @@ class theme extends common {
 			// Modification des URL des images dans la bannière perso
 			$featureContent = $this->getInput('themeHeaderText', null);
 			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
-			// Si une image est positionnée, l'arrière en transparent.
+
+			// Encodage des images en base64
+			// Identifier les images
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$src = 'src="' . $sx[0]['src'] . '"';
+				// Elément encodé en base64
+				$base64 = 'src="data:image/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
+				// Effectuer le remplacement dans la chaine
+				$featureContent = str_replace($src, $base64, $featureContent);
+			}
+			
+			// Encodage des video en base64
+			// Identifier les images
+			preg_match_all('/<source[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$src = 'src="' . $sx[0]['src'] . '"';
+				// Elément encodé en base64
+				$base64 = 'src="data:source/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
+				// Effectuer le remplacement dans la chaine
+				$featureContent = str_replace($src, $base64, $featureContent);
+			}
+
+
+			// Sauvegarder
 			$this->setData(['theme', 'header', [
 				'backgroundColor' => $this->getInput('themeHeaderBackgroundColor'),
 				'font' => $this->getInput('themeHeaderFont'),
@@ -805,23 +835,6 @@ class theme extends common {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
 								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
 								);
-					}
-					// Extraction des images de la bannière personnalisée
-					$images=[];
-					$ii=0;
-					if( $this->getData(['theme','header','feature'])=== 'feature') {
-						$tab = str_word_count($this->getData(['theme','header','featureContent']), 1, './' );
-						foreach( $tab as $key=>$value ){
-                        	if( $value ==='src'){
-                              	$images[$ii] = $tab [$key + 1];
-                              	$ii++;
-                          }
-            }
-						// ajout des images dans le zip
-						foreach( $images as $key=>$value){
-							$value = str_replace( './site', 'site' , $value);
-							$zip->addFile( $value, $value );
-						}
 					}
 					break;
 			}
