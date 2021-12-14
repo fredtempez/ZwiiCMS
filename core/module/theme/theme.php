@@ -806,6 +806,23 @@ class theme extends common {
 								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
 								);
 					}
+					// Extraction des images de la bannière personnalisée
+					$images=[];
+					$ii=0;
+					if( $this->getData(['theme','header','feature'])=== 'feature') {
+						$tab = str_word_count($this->getData(['theme','header','featureContent']), 1, './' );
+						foreach( $tab as $key=>$value ){
+                        	if( $value ==='src'){
+                              	$images[$ii] = $tab [$key + 1];
+                              	$ii++;
+                          }
+            }
+						// ajout des images dans le zip
+						foreach( $images as $key=>$value){
+							$value = str_replace( './site', 'site' , $value);
+							$zip->addFile( $value, $value );
+						}
+					}
 					break;
 			}
 			$ret = $zip->close();
