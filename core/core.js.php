@@ -376,11 +376,7 @@ core.start = function() {
 			var height = heightpx.substr(0,heightpx.length-2);
 			var ratio = width / height;
 			if ( ($(window).width() / ratio) <= height) {
-				var feature = "<?php echo $this->getdata(['theme','header','feature']);?>";
 				$("header").height( $(window).width() / ratio );
-				if( feature !== "feature"){
-					$("header").css("line-height", $(window).width() / ratio + "px");
-				};
 			}
 		}
 	}).trigger("resize");
