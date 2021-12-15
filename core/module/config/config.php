@@ -656,6 +656,7 @@ class config extends common {
 		// Boucler sur les pages
 		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
 			$content = $this->getPage($parentId, self::$i18n);
+			$titre = $this->getData(['page', $parentId, 'title']);
 			$content =   $titre . ' ' . $content ;
 			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
