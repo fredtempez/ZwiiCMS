@@ -443,6 +443,7 @@ class theme extends common {
 
 			// Encodage des images en base64
 			// Identifier les images
+			/*
 			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
 			foreach($results[0] as $value) {				
 				// Lire le contenu XML
@@ -455,8 +456,7 @@ class theme extends common {
 				$featureContent = str_replace($src, $base64, $featureContent);
 			}
 			
-			// Encodage des video en base64
-			// Identifier les images
+			// Encodage des videos en base64
 			preg_match_all('/<source[^>]+>/i',$featureContent, $results); 			
 			foreach($results[0] as $value) {				
 				// Lire le contenu XML
@@ -467,8 +467,18 @@ class theme extends common {
 				$base64 = 'src="data:source/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
 				// Effectuer le remplacement dans la chaine
 				$featureContent = str_replace($src, $base64, $featureContent);
-			}
+			}*/
 
+			/** 
+			* Stocker les images incluses dans la bannière perso dans un tableau
+			*/
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$files [] = str_replace('./site/file/source/','',(string) $sx[0]['src']);
+			}
 
 			// Sauvegarder
 			$this->setData(['theme', 'header', [
@@ -491,7 +501,8 @@ class theme extends common {
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
 				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
 				'feature' => $this->getInput('themeHeaderFeature'),
-				'featureContent' => $featureContent
+				'featureContent' => $featureContent,
+				'featureFiles' => 	$files
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )
@@ -809,7 +820,7 @@ class theme extends common {
 	}
 
 	/**
-	 * construction du zip
+	 * construction du zip Fonction appelée par export() et save()
 	 * @param string $modele theme ou admin
 	 */
 	private function zipTheme($modele) {
@@ -826,16 +837,25 @@ class theme extends common {
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
 					$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
 					$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');
+					// Traite l'image dans le body
 					if ($this->getData(['theme','body','image']) !== '' ) {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
 								self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])
 								);
 					}
+					// Traite l'image dans le header
 					if ($this->getData(['theme','header','image']) !== '' ) {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
 								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
 								);
 					}
+					// Traite les images du header perso
+					if (!empty($this->getData(['theme','header','featureFiles'])) ) {
+						foreach($this->getData(['theme','header','featureFiles']) as $value) {
+							$zip->addFile(self::FILE_DIR . 'source/' . $value, 
+										  self::FILE_DIR . 'source/' . $value );
+						}
+					} 
 					break;
 			}
 			$ret = $zip->close();
