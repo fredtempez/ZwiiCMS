@@ -507,7 +507,9 @@ class config extends common {
 						'captcha' => $this->getInput('connectCaptcha',helper::FILTER_BOOLEAN),
 						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
 						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
-						'captchaType' => $this->getInput('connectCaptchaType')
+						'captchaType' => $this->getInput('connectCaptchaType'),
+						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN),
+						
 					],
 					'i18n' => [
 						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),

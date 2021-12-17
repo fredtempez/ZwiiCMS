@@ -9,9 +9,12 @@
  * @link http://zwiicms.fr/
  */
 
-#passwordLabel, #passwordIcon {
-    display: inline-flex;
-}
-#passwordIcon {
-    float: right;
-}
+$(document).ready(function(){
+
+    $(".zwiico-eye").mouseenter(function() {
+        $("#userLoginPassword").attr("type", 'text');    
+    });
+    $(".zwiico-eye").mouseleave(function() {
+        $("#userLoginPassword").attr("type", 'password');    
+    });
+});

@@ -7,8 +7,14 @@
 			]); ?>
 		</div>
 		<div class="col6">
+			<?php if ($this->getData(['config', 'connect', 'showPassword']) === true) {
+					$passwordLabel = '<span id="passwordLabel">Mot de passe</span><span id="passwordIcon">'.  template::ico('eye') . '</span>';
+				}	else {
+					$passwordLabel = 'Mot de passe';
+				}
+			?>
 			<?php echo template::password('userLoginPassword', [
-				'label' => 'Mot de passe'
+				'label' => $passwordLabel
 			]); ?>
 		</div>
 	</div>

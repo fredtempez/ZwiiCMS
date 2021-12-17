@@ -710,7 +710,10 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
 
 	// Supppression de l'option de traduction en mode connecté
-	$this->serData(['config','i18n', 'admin', false]);
+	$this->setData(['config','i18n', 'admin', false]);
+
+	// Option de dévoilement du mdp
+	$this->setData(['config', 'connect', 'showPassword', true]);
 	
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
