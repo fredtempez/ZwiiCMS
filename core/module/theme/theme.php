@@ -11,7 +11,7 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  * @copyright  :  Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  */
 
 class theme extends common {
