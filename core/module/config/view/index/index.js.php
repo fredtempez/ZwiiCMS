@@ -37,6 +37,23 @@ $( document).ready(function() {
         $("#smtpAuthParam").slideUp();
     }
 
+    /**
+     * Afficher etmasquer les option de captcha
+     */
+
+    if ($("input[name=connectCaptcha]").is(':checked')) {
+        $("#connectCaptchaStrongWrapper").addClass("disabled");
+        $("#connectCaptchaStrongWrapper").slideDown();
+        $("#connectCaptchaTypeWrapper").addClass("disabled");
+        $("#connectCaptchaTypeWrapper").slideDown();
+        $( "#connectCaptchaStrong" ).prop( "checked", false );
+    } else {
+        $("#connectCaptchaStrongWrapper").removeClass("disabled");
+        $("#connectCaptchaStrongWrapper").slideUp();
+        $("#connectCaptchaTypeWrapper").removeClass("disabled");
+        $("#connectCaptchaTypeWrapper").slideUp();
+    }
+
     var configLayout = getCookie("configLayout");
     if (configLayout == null) {
         configLayout = "setup";
@@ -112,10 +129,15 @@ $( document).ready(function() {
         if ($("input[name=connectCaptcha]").is(':checked')) {
             $("#connectCaptchaStrongWrapper").addClass("disabled");
             $("#connectCaptchaStrongWrapper").slideDown();
+            $("#connectCaptchaTypeWrapper").addClass("disabled");
+            $("#connectCaptchaTypeWrapper").slideDown();
+            
             $( "#connectCaptchaStrong" ).prop( "checked", false );
         } else {
             $("#connectCaptchaStrongWrapper").removeClass("disabled");
             $("#connectCaptchaStrongWrapper").slideUp();
+            $("#connectCaptchaTypeWrapper").removeClass("disabled");
+            $("#connectCaptchaTypeWrapper").slideUp();
         }
     });
 
