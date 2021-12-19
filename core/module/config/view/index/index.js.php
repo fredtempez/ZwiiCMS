@@ -38,20 +38,20 @@ $( document).ready(function() {
     }
 
     /**
-     * Afficher etmasquer les option de captcha
+     * Afficher et masquer les options de captcha
      */
 
     if ($("input[name=connectCaptcha]").is(':checked')) {
         $("#connectCaptchaStrongWrapper").addClass("disabled");
         $("#connectCaptchaStrongWrapper").slideDown();
         $("#connectCaptchaTypeWrapper").addClass("disabled");
-        $("#connectCaptchaTypeWrapper").slideDown();
-        $( "#connectCaptchaStrong" ).prop( "checked", false );
+        $("#connectCaptchaTypeWrapper").slideDown();        
     } else {
         $("#connectCaptchaStrongWrapper").removeClass("disabled");
         $("#connectCaptchaStrongWrapper").slideUp();
         $("#connectCaptchaTypeWrapper").removeClass("disabled");
         $("#connectCaptchaTypeWrapper").slideUp();
+        $( "#connectCaptchaStrong" ).prop( "checked", false );
     }
 
     var configLayout = getCookie("configLayout");
@@ -130,14 +130,14 @@ $( document).ready(function() {
             $("#connectCaptchaStrongWrapper").addClass("disabled");
             $("#connectCaptchaStrongWrapper").slideDown();
             $("#connectCaptchaTypeWrapper").addClass("disabled");
-            $("#connectCaptchaTypeWrapper").slideDown();
-            
-            $( "#connectCaptchaStrong" ).prop( "checked", false );
+            $("#connectCaptchaTypeWrapper").slideDown();            
+           
         } else {
             $("#connectCaptchaStrongWrapper").removeClass("disabled");
             $("#connectCaptchaStrongWrapper").slideUp();
             $("#connectCaptchaTypeWrapper").removeClass("disabled");
             $("#connectCaptchaTypeWrapper").slideUp();
+            $( "#connectCaptchaStrong" ).prop( "checked", false );
         }
     });
 
