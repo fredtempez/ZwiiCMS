@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.00.27';
+	const ZWII_VERSION = '11.2.00.28';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
