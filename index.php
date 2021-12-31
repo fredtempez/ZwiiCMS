@@ -17,6 +17,9 @@
  /**
  * Initialisation de Zwii
  */
+// Remplace la directive htaccess
+ini_set('session.use_trans_sid', FALSE);
+// Démarre la session
 session_start();
 
 /**
