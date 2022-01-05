@@ -8,7 +8,16 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset8">
+		<div class="col2">
+			<?php echo template::button('themeSiteHelp', [
+				'href' => 'https://doc.zwiicms.fr/site61863d315ffe0',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
+			]); ?>
+		</div>
+		<div class="col2 offset6">
 			<?php echo template::submit('themeSiteSubmit'); ?>
 		</div>
 	</div>
@@ -18,7 +27,7 @@
 				<h4>Paramètres</h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('themeSiteWidth', $module::$widths, [
+						<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
 							'label' => 'Largeur du site',
 							'selected' => $this->getData(['theme', 'site', 'width'])
 						]); ?>
@@ -57,7 +66,7 @@
 								<?php echo template::text('themeSiteBackgroundColor', [
 									'class' => 'colorPicker',
 									'help' => 'Le curseur horizontal règle le niveau de transparence.',
-									'label' => 'Fond',
+									'label' => 'Arrière-plan',
 									'value' => $this->getData(['theme', 'site', 'backgroundColor'])
 								]); ?>
 							</div>

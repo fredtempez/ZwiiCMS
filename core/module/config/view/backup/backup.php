@@ -3,17 +3,17 @@
 	<div class="col2">
 		<?php echo template::button('configBackupBack', [
 				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'config/advanced',
+				'href' => helper::baseUrl() . 'config',
 				'ico' => 'left',
 				'value' => 'Retour'
 		]); ?>
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('configBackupSubmit',[
-			'value' => 'Sauvegarder'
+			'value' => 'Sauvegarder',
+			'uniqueSubmission' => true
 		]); ?>
 	</div>
-	<div class="modal">Merci de patienter, je travaille pour vous.<!-- Emplacement pour l'animation --></div>
 </div>
 <div class="row">
 	<div class="col12">

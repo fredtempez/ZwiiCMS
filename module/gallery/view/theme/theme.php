@@ -115,7 +115,7 @@
                     <?php echo template::text('galleryThemeLegendBgColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                        'label' => 'Fond',
+                        'label' => 'Arrière-plan',
                         'value' => $this->getData(['module', $this->getUrl(0), 'theme','legendBgColor'])
                     ]); ?>
                 </div>

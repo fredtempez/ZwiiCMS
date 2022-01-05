@@ -47,7 +47,8 @@ class template {
             'id' => $nameId,
             'name' => $nameId,
             'value' => '',
-            'limit' => false // captcha simple
+            'limit' => false, // captcha simple
+            'type'=> 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
 
    // Captcha quatre opérations
@@ -114,14 +115,15 @@ class template {
         $secondLetter = uniqid();
 
         // Masquage image source pour éviter un décodage
-        copy ('core/vendor/zwiico/png/'.$letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
-        copy ('core/vendor/zwiico/png/'.$letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
+        copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
+        copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
 
+      
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="captcha inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         $html .= self::label($attributes['id'],
-                 '<img src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captchaNumber" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
+                 '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
                         'help' => $attributes['help']
                 ]);
 

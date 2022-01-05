@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -17,6 +17,9 @@
  /**
  * Initialisation de Zwii
  */
+// Remplace la directive htaccess
+ini_set('session.use_trans_sid', FALSE);
+// Démarre la session
 session_start();
 
 /**

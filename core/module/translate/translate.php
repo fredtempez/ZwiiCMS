@@ -8,7 +8,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -19,7 +19,7 @@ class translate extends common {
 		/*'config' => self::GROUP_MODERATOR,*/
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
-		'language' => self::GROUP_VISITOR
+		'i18n' => self::GROUP_VISITOR
 	];
 
 	public static $translateOptions = [];
@@ -130,7 +130,7 @@ class translate extends common {
 				'scriptGoogle'      => $script,
 				'showCredits' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
 				'autoDetect' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN) : false,
-				'admin'			 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAdmin', helper::FILTER_BOOLEAN) : false,
+				//'admin'			 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAdmin', helper::FILTER_BOOLEAN) : false,
 				'fr'		 		=> $this->getInput('translateFR'),
 				'de' 		 		=> $this->getInput('translateDE'),
 				'en' 			 	=> $this->getInput('translateEN'),
@@ -177,7 +177,7 @@ class translate extends common {
 	 * Traitement du changement de langue
 	 * Fonction utilisée par le noyau
 	 */
-	public function language() {
+	public function i18n() {
 
 		// Activation du drapeau
 		if ( $this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2) ) {
@@ -186,18 +186,20 @@ class translate extends common {
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Sélectionner
 			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
+			setrawcookie('googtrans', '/fr/' . $this->getUrl(2), time() + 3600, helper::baseUrl(false,false));
+			$_SESSION['googtrans'] = '/fr/' . $this->getUrl(2);
 		// Désactivation du drapeau, langue FR par défaut
 		} else {
 			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Désactivation du script Google
-			// setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
-			// $_SESSION['googtrans'] = '/fr/fr';
+			setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
+			$_SESSION['googtrans'] = '/fr/fr';
 		}
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' 		=> 	helper::baseUrl() . $this->getUrl(4)
+			'redirect' 	=> 	helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId' ])
 		]);
 	}
 }

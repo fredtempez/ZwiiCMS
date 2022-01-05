@@ -6,7 +6,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -121,6 +121,14 @@ $("input, select").on("change", function() {
 			$("nav").show().prependTo("#site");
 			break;
 	}
+
+	//  Largeur étendue
+	if ($("#themeMenuWide").val() === 'none') {
+		$("#menu").removeClass();
+	} else {
+		$("#menu").addClass("container");
+	}
+
 	// Ajout du css au DOM
 	$("#themePreview").remove();
 	$("<style>")
@@ -177,7 +185,6 @@ $("#themeMenuActiveColorAuto").on("change", function() {
 
 // Affiche / Cache la sélection du logo pour le menu burger
 $("#themeMenuBurgerContent").on("change", function() {
-	console.log( $(this).val());
 	if($(this).val() === 'logo') {
 		$("#themeMenuBurgerLogoId").slideDown();
 	}

@@ -7,7 +7,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -16,26 +16,3 @@
 * admin.css
 */
 
-#ceo > .blockContainer,
-#advanced > .blockContainer {
-    display: none;
-}
-
-#info .zwiico-minus-circled,
-#layout .zwiico-minus-circled,
-#location .zwiico-minus-circled {
-    display: inline;
-}
-
-.zwiico-minus-circled,
-#info .zwiico-plus-circled,
-#layout .zwiico-plus-circled,
-#location .zwiico-plus-circled {
-    display: none;
-}
-
-
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-    cursor: pointer;
-}

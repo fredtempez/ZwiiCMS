@@ -7,11 +7,23 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
 
- ul {
-     list-style-type: circle;
- }
+ #siteMap ul {
+    list-style: none ;
+    margin-left: .5em;
+    padding-left: 1em;
+    line-height: 1.5em;
+    font-size: 16px;
+}
+
+#siteMap ul > li::before {
+   content: "📄 ";
+}
+
+#siteMap li > ul > li::before {
+   content: "📃 ";
+}

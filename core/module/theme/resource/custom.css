@@ -8,7 +8,7 @@
  */
 
 
-/* 
+/*
 * Grille du site
 * Barres et page
 */
@@ -46,7 +46,7 @@ nav a.active {
 /* Menu latéral */
 /* aspect des puces */
 ul #menuSide  {
-} 
+}
 /* Block menu à droite */
 #menuSideRight {
 }
@@ -176,3 +176,49 @@ textarea:hover {
 .newsSignature {
     color: 	#404040;
 }
+
+/* Consentement aux cookies */
+
+/*
+
+#cookieConsent {
+
+  width: 80%;
+
+  color: #FFF;
+
+  background: #212223;
+
+  opacity: 0.9;
+
+}
+
+#cookieConsent a{
+
+  color : yellow;
+
+}
+
+#cookieConsent h3{
+
+  color : red;
+
+}
+
+#cookieConsentConfirm {
+
+  background: rgba(0,0,255,1);
+
+  color: rgba(255,255,255,1);
+
+}
+
+#cookieConsentConfirm:hover {
+
+  background: rgba(0,50,255,1);
+
+  color: rgba(255,255,255,1);
+
+}
+
+*/

@@ -7,7 +7,16 @@
 			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col2">
+		<?php echo template::button('userHelp', [
+			'href' => 'https://doc.zwiicms.fr/gestion-des-utilisateurs',
+			'target' => '_blank',
+			'ico' => 'help',
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
+		]); ?>
+	</div>
+	<div class="col2 offset4">
 		<?php echo template::button('userImport', [
 			'href' => helper::baseUrl() . 'user/import',
 			'ico' => 'plus',

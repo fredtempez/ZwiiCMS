@@ -6,7 +6,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -194,11 +194,11 @@ core.start = function() {
 			// Disparition de la notification
 			notificationTimer = setTimeout(function() {
 				$("#notification").fadeOut();
-			}, 2000);
+			}, 3000);
 			// Barre de progression
 			$("#notificationProgress").animate({
 				"width": "0%"
-			}, 2000, "linear");
+			}, 3000, "linear");
 		})
 		.trigger("mouseleave");
 	$("#notificationClose").on("click", function() {
@@ -206,59 +206,69 @@ core.start = function() {
 		$("#notification").fadeOut();
 		$("#notificationProgress").stop();
 	});
+
 	/**
-	 * Affiche / Cache le menu en mode responsive
+	 * Traitement du formulaire cookies
 	 */
-	var menuDOM = $("#menu");
-	$("#toggle").on("click", function() {
-		menuDOM.slideToggle();
-	});
-	$(window).on("resize", function() {
-		if($(window).width() > 768) {
-			menuDOM.css("display", "");
+	$("#cookieForm").submit(function(event){
+
+		// Varables des cookies
+		var samesite = "samesite=lax";
+		var getUrl   = window.location;
+		var domain   = "domain=" + getUrl.host;
+		var path     = "path=" + getUrl.pathname.split('/')[1];
+		var samesite = "samesite=lax";
+		var e = new Date();
+		e.setFullYear(e.getFullYear() + 1);
+		var expires = "expires=" + e.toUTCString();
+
+		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
+		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
+		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
+		if( analytics.length > 0){
+			// Traitement du retour de la checkbox
+			if ($("#googleAnalytics").is(":checked")) {
+				// L'URL du serveur faut TRUE
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
+			} else {
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;" + domain + ";" + path + ";" + samesite + ";" + expires;
+			}
+
 		}
+
+		// Stocke le cookie d'acceptation
+		document.cookie = "ZWII_COOKIE_CONSENT=true;" + domain + ";" + path + ";" + samesite + ";" + expires;
+	});
+
+
+	/**
+	 * Fermeture de la popup des cookies
+	 */
+	$("#cookieConsent .cookieClose").on("click", function() {
+		$('#cookieConsent').addClass("displayNone");
 	});
 
 	/**
-	 * Message sur l'utilisation des cookies
+	 * Commande de gestion des cookies dans le footer
 	 */
-	var analytics = "";
-	if (<?php echo json_encode($this->getData(['config', 'seo', 'analyticsId'])); ?>) {
-		 analytics = ' grâce au cookie Google Analytics'
-	}
-	if(<?php echo json_encode($this->getData(['config', 'cookieConsent'])); ?>) {
-		if(document.cookie.indexOf("ZWII_COOKIE_CONSENT") === -1) {
-			$("body").append(
-				$("<div>").attr("id", "cookieConsent").append(
-					$("<span>").html("<p>Ce site utilise des cookies pour assurer l'authentification, améliorer l'expérience utilisateur"+analytics+". <br/>En cliquant sur ”J’accepte”, vous acceptez l’utilisation de ces cookies.</p>"),
-					$("<span>")
-						.attr("id", "cookieConsentConfirm")
-						.text("Accepter")
-						.on("click", function() {
-							// Créé le cookie d'acceptation
-							var expires = new Date();
-							expires.setFullYear(expires.getFullYear() + 1);
-							expires = "expires=" + expires.toUTCString();
-							document.cookie = "ZWII_COOKIE_CONSENT=true;" + expires;
-							// Ferme le message
-							$(this).parents("#cookieConsent").fadeOut();
-						}),
-					$("<span>")
-					.attr("id", "cookieConsentRefuse")
-					.text("Refuser")
-					.on("click", function() {
-						// Créé le cookie d'acceptation
-						var expires = new Date();
-						expires.setFullYear(expires.getFullYear() + 1);
-						expires = "expires=" + expires.toUTCString();
-						document.cookie = "ZWII_COOKIE_CONSENT=false;" + expires;
-						// Ferme le message
-						$(this).parents("#cookieConsent").fadeOut();
-					}),
-				)
-			);
-		}
-	}
+
+	 $("#footerLinkCookie").on("click", function() {
+		$("#cookieConsent").removeClass("displayNone");
+	});
+
+	/**
+	 * Affiche / Cache le menu en mode responsive
+	 */
+	 var menuDOM = $("#menu");
+	 $("#toggle").on("click", function() {
+		 menuDOM.slideToggle();
+	 });
+	 $(window).on("resize", function() {
+		 if($(window).width() > 768) {
+			 menuDOM.css("display", "");
+		 }
+	 });
+
 	/**
 	 * Choix de page dans la barre de membre
 	 */
@@ -366,8 +376,11 @@ core.start = function() {
 			var height = heightpx.substr(0,heightpx.length-2);
 			var ratio = width / height;
 			if ( ($(window).width() / ratio) <= height) {
+				//var feature = "<?php echo $this->getdata(['theme','header','feature']);?>";
 				$("header").height( $(window).width() / ratio );
-				$("header").css("line-height", $(window).width() / ratio + "px");
+				//if( feature !== "feature"){
+				//	$("header").css("line-height", $(window).width() / ratio + "px");
+				//};
 			}
 		}
 	}).trigger("resize");
@@ -478,21 +491,25 @@ $(document).ready(function(){
 		};
 	});
 
-  /**
-   * Active le système d'aide interne
-   *
-  */
+	/**
+	 * Active le système d'aide interne
+	 *
+	 */
 
-  $(".buttonHelp").on({
-		click: function () {
+	$(".buttonHelp").click(function() {
 			$(".helpDisplayContent").slideToggle();
+			/**
 			if( $(".buttonHelp").css('opacity') > '0.75'){
 				$(".buttonHelp").css('opacity','0.5');
 			}
 			else{
 				$(".buttonHelp").css('opacity','1');
 			}
-		}
+			*/
+	});
+
+	$(".helpDisplayContent").click(function() {
+		$(".helpDisplayContent").slideToggle();
 	});
 
 	/**
@@ -500,5 +517,12 @@ $(document).ready(function(){
 	 */
 	if(/^\?fbclid=/.test(location.search))
 		location.replace(location.href.replace(/\?fbclid.+/, ""));
+
+	/**
+	 * No translate Lity close
+	 */
+	 $(document).on('lity:ready', function(event, instance) {
+		$('.lity-close').addClass('notranslate');
+	});
 
 });

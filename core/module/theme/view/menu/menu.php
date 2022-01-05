@@ -8,7 +8,16 @@
 				'value' => 'Retour'
 			]); ?>
     </div>
-    <div class="col2 offset8">
+    <div class="col2">
+      <?php echo template::button('themeMenuHelp', [
+        'href' => 'https://doc.zwiicms.fr/menu',
+        'target' => '_blank',
+        'ico' => 'help',
+        'value' => 'Aide',
+        'class' => 'buttonHelp'
+      ]); ?>
+    </div>
+    <div class="col2 offset6">
         <?php echo template::submit('themeMenuSubmit'); ?>
     </div>
 </div>
@@ -32,21 +41,27 @@
                     ?>
                 </div>
                 <div class="col6">
+                    <?php echo template::select('themeMenuWide', $module::$containerWides, [
+							'label' => 'Largeur',
+							'selected' => $this->getData(['theme', 'menu', 'wide'])
+						]); ?>
+                </div>
+            </div>
+            <div class="row">
+               <div class="col4">
                     <?php echo template::select('themeMenuRadius', $module::$menuRadius, [
                     'label' => 'Bords arrondis',
                     'selected' => $this->getData(['theme', 'menu', 'radius']),
                     'help' => 'Autour de la page sélectionnée'
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeMenuHeight', $module::$menuHeights, [
                     'label' => 'Hauteur',
                     'selected' => $this->getData(['theme', 'menu', 'height'])
                 ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
                     'label' => 'Alignement du contenu',
                     'selected' => $this->getData(['theme', 'menu', 'textAlign'])
@@ -123,7 +138,7 @@
                     <?php echo template::text('themeMenuBackgroundColor', [
                             'class' => 'colorPicker',
                             'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                            'label' => 'Fond',
+                            'label' => 'Arrière-plan',
                             'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
                         ]); ?>
                 </div>

@@ -6,7 +6,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -135,8 +135,13 @@ li ul {
 	margin: 0;
 }
 
-option.inactive {
-	color: darkorange;
+option.pageInactive {
+	color: orange;
+	font-weight: bold;
+}
+option.pageHidden {
+	color: red;
+	font-style: italic;
 }
 
 /* Séparateur */
@@ -332,8 +337,12 @@ td>.col12 {
 
 /* Notice */
 .notice {
-	display: inline-block;
+	display: inline-block; 
 	color: #E74C3C;
+}
+/* Mauvaise position dans les champs File*/
+.inputFile.notice {
+	display: block;
 }
 
 /* Container */
@@ -492,6 +501,18 @@ header .container {
 	overflow: hidden;
 	height: 100%;
 }
+
+/* Marges au cotenu de la bannière personnalisée
+header:not(.container) #featureContent {
+	margin: 0 10px;
+}*/
+
+header #featureContent {
+	overflow: hidden;
+	margin: 0 10px;
+}
+
+
 
 /* Element du header
 
@@ -821,6 +842,7 @@ footer #footerbody>div {
 #footerDisplayVersion,
 #footerDisplaySiteMap,
 #footerDisplayLegal,
+#footerDisplayCookie,
 #footerDisplaySearch,
 #footerZwiiCMS {
 	font-size: inherit;
@@ -968,9 +990,9 @@ footer #footerSocials .zwiico-github:hover {
 
 /* Message sur les cookies */
 #cookieConsent {
-	width: 80%;
+	width: 60%;
 	margin: auto;
-	opacity: .9;
+	opacity: .95;
 	background: #212223;
 	position: fixed;
 	right: 0;
@@ -983,20 +1005,29 @@ footer #footerSocials .zwiico-github:hover {
 	font-size: 1em;
 }
 
-#cookieConsentConfirm, #cookieConsentRefuse {
+#cookieConsentConfirm {
+	background-color: green;
+}
+
+#cookieConsentConfirm {
 	cursor: pointer;
 	margin-left: 10px;
-	background: #666;
 	padding: 4px 8px;
 	display: inline-block;
 	transition: background .3s ease-out;
 }
 
-#cookieConsentConfirm:hover, #cookieConsentRefuse:hover {
-	background: #777;
+#cookieConsentConfirm:hover {
+	filter: grayscale(50%);
 }
 
-
+#cookieConsent .cookieClose {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	font-size: 1.5em;
+	cursor: pointer;
+}
 
 /* Bloc */
 .block {
@@ -1644,11 +1675,19 @@ th.col12 {
 
 /* Captcha
 */
-.captcha img {
-	height: 30px;
+
+.captchaNum, .captchaAlpha {
 	vertical-align: middle;
 	padding-left: 10px;
 	padding-right: 10px;
+}
+
+.captchaNum {
+	height: 5em;
+}
+
+.captchaAlpha {
+	height: 2em;
 }
 
 .captcha input[type='text'] {
@@ -1711,13 +1750,13 @@ th.col12 {
 	display: none;
 	width: 100%;
 	padding: 10px 10px;
-  -webkit-box-shadow: 5px 5px 11px 0px #222222;
-  box-shadow: 5px 5px 11px 0px #222222;
-  border-radius: 5px;
-  z-index: 30;
+    -webkit-box-shadow: 5px 5px 11px 0px #222222;
+    box-shadow: 5px 5px 11px 0px #222222;
+    border-radius: 5px;
+    z-index: 30;
 }
 
-.helpDisplayButton {
+.helpDisplayContent, .helpDisplayButton {
     cursor: pointer;
 }
 

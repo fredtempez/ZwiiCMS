@@ -9,14 +9,16 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('translateAdvancedHelp', [
-				'class' => 'buttonHelp',
+			<?php echo template::button('translateHelp', [
+				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
+				'target' => '_blank',
 				'ico' => 'help',
-				'value' => 'Aide'
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
 			]); ?>
 		</div>
 		<div class="col3 offset3">
-		<?php echo template::button('configAdvancedButton', [
+		<?php echo template::button('translateButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => 'Utilitaire de copie',
 			'ico' => 'cog-alt',
@@ -27,18 +29,10 @@
 			<?php echo template::submit('translateFormSubmit'); ?>
 		</div>
 	</div>
-	<!-- Aide à propos de la configuration du site, view advanced -->
-	<div class="helpDisplayContent">
-		<?php echo file_get_contents( 'core/module/translate/view/index/index.help.html') ;?>
-	</div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Traduction automatique
-				<span class="helpDisplayButton">
-					<?php echo template::ico('help', 'left');?>
-				</span>
-			</h4>
+			<h4>Traduction automatique</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
@@ -61,13 +55,6 @@
 							'class' => 'translateGoogleScriptOption',
 							'help' => 'Option recommandée pour le respect du droit d\'auteur'
 						]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAdmin', true, 'Traduction en mode connecté', [
-								'checked' => $this->getData(['config','i18n', 'admin']),
-								'class' => 'translateGoogleScriptOption',
-								'help'   => 'Traduit le site et l\'interface de ZwiiCMS quand un utilisateur est connecté'
-							]); ?>
 					</div>
 				</div>
 			</div>

@@ -11,7 +11,7 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  * @copyright  :  Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  */
 
 class theme extends common {
@@ -69,6 +69,10 @@ class theme extends common {
 		'Ubuntu' => 'Ubuntu',
 		'Vollkorn' => 'Vollkorn'
 	];
+	public static $containerWides = [
+		'container' => 'Limitée au site',
+		'none' => 'Etendue sur la page'
+	];
 	public static $footerblocks = [
 		1 => [
 			'hide' => 'Masqué',
@@ -121,17 +125,21 @@ class theme extends common {
 		'2.4vmax' => 'Très grande (240%)'
 	];
 	public static $headerHeights = [
-		'none' => 'Hauteur de l\'image sélectionnée',
+		'unset' => 'Libre', // texte dynamique cf header.js.php
 		'100px' => 'Très petite (100px) ',
 		'150px' => 'Petite (150px)',
 		'200px' => 'Moyenne (200px)',
 		'300px' => 'Grande (300px)',
-		'400px' => 'Très grande (400px)'
+		'400px' => 'Très grande (400px)',
 	];
 	public static $headerPositions = [
 		'body' => 'Au dessus du site',
 		'site' => 'Dans le site',
 		'hide' => 'Cachée'
+	];
+	public static $headerFeatures = [
+		'wallpaper' => 'Couleur unie ou papier-peint',
+		'feature'   => 'Contenu personnalisé'
 	];
 	public static $imagePositions = [
 		'top left' => 'En haut à gauche',
@@ -221,7 +229,7 @@ class theme extends common {
 		'uppercase' => 'Majuscules',
 		'capitalize' => 'Majuscule à chaque mot'
 	];
-	public static $widths = [
+	public static $siteWidths = [
 		'750px' => 'Petite (750 pixels)',
 		'960px' => 'Moyenne (960 pixels)',
 		'1170px' => 'Grande (1170 pixels)',
@@ -383,6 +391,7 @@ class theme extends common {
 					'displayVersion' => $this->getInput('themefooterDisplayVersion', helper::FILTER_BOOLEAN),
 					'displaySiteMap' => $this->getInput('themefooterDisplaySiteMap', helper::FILTER_BOOLEAN),
 					'displayCopyright' => $this->getInput('themefooterDisplayCopyright', helper::FILTER_BOOLEAN),
+					'displayCookie' => $this->getInput('themefooterDisplayCookie', helper::FILTER_BOOLEAN),
 					'displayLegal' =>  $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
 					'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
 					'displayMemberBar'=> $this->getInput('themeFooterDisplayMemberBar', helper::FILTER_BOOLEAN),
@@ -428,13 +437,57 @@ class theme extends common {
 	public function header() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Si une image est positionnée, l'arrière en transparent.
+			// Modification des URL des images dans la bannière perso
+			$featureContent = $this->getInput('themeHeaderText', null);
+			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
+
+			// Encodage des images en base64
+			// Identifier les images
+			/*
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$src = 'src="' . $sx[0]['src'] . '"';
+				// Elément encodé en base64
+				$base64 = 'src="data:image/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
+				// Effectuer le remplacement dans la chaine
+				$featureContent = str_replace($src, $base64, $featureContent);
+			}
+			
+			// Encodage des videos en base64
+			preg_match_all('/<source[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$src = 'src="' . $sx[0]['src'] . '"';
+				// Elément encodé en base64
+				$base64 = 'src="data:source/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
+				// Effectuer le remplacement dans la chaine
+				$featureContent = str_replace($src, $base64, $featureContent);
+			}*/
+
+			/** 
+			* Stocker les images incluses dans la bannière perso dans un tableau
+			*/
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
+			foreach($results[0] as $value) {				
+				// Lire le contenu XML
+				$sx = simplexml_load_string($value);
+				// Elément à remplacer
+				$files [] = str_replace('./site/file/source/','',(string) $sx[0]['src']);
+			}
+
+			// Sauvegarder
 			$this->setData(['theme', 'header', [
 				'backgroundColor' => $this->getInput('themeHeaderBackgroundColor'),
 				'font' => $this->getInput('themeHeaderFont'),
 				'fontSize' => $this->getInput('themeHeaderFontSize'),
 				'fontWeight' => $this->getInput('themeHeaderFontWeight'),
 				'height' => $this->getInput('themeHeaderHeight'),
+				'wide' => $this->getInput('themeHeaderWide'),
 				'image' => $this->getInput('themeHeaderImage'),
 				'imagePosition' => $this->getInput('themeHeaderImagePosition'),
 				'imageRepeat' => $this->getInput('themeHeaderImageRepeat'),
@@ -446,7 +499,10 @@ class theme extends common {
 				'textTransform' => $this->getInput('themeHeaderTextTransform'),
 				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
-				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN)
+				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
+				'feature' => $this->getInput('themeHeaderFeature'),
+				'featureContent' => $featureContent,
+				'featureFiles' => 	$files
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )
@@ -474,7 +530,8 @@ class theme extends common {
 		$this->addOutput([
 			'title' => 'Personnalisation de la bannière',
 			'vendor' => [
-				'tinycolorpicker'
+				'tinycolorpicker',
+				'tinymce'
 			],
 			'view' => 'header'
 		]);
@@ -504,6 +561,7 @@ class theme extends common {
 				'fontSize' => $this->getInput('themeMenuFontSize'),
 				'fontWeight' => $this->getInput('themeMenuFontWeight'),
 				'height' => $this->getInput('themeMenuHeight'),
+				'wide' => $this->getInput('themeMenuWide'),
 				'loginLink' => $this->getInput('themeMenuLoginLink', helper::FILTER_BOOLEAN),
 				'margin' => $this->getInput('themeMenuMargin', helper::FILTER_BOOLEAN),
 				'position' => $this->getInput('themeMenuPosition'),
@@ -639,14 +697,17 @@ class theme extends common {
 
 			$zipFilename =	$this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
 			$data = $this->import(self::FILE_DIR.'source/' . $zipFilename);
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => $data['notification'],
-				'state' => $data['success'],
-				'title' => 'Gestion des thèmes',
-				'view' => 'manage'
-			]);;
+			if ($data['success']) {
+				header("Refresh:0");
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => $data['notification'],
+					'state' => $data['success'],
+					'title' => 'Gestion des thèmes',
+					'view' => 'manage'
+				]);;
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -696,6 +757,7 @@ class theme extends common {
 					$success = $zip->extractTo('.');
 					// traitement de l'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
+
 
 				} else {
 					// pas une archive de thème
@@ -758,7 +820,7 @@ class theme extends common {
 	}
 
 	/**
-	 * construction du zip
+	 * construction du zip Fonction appelée par export() et save()
 	 * @param string $modele theme ou admin
 	 */
 	private function zipTheme($modele) {
@@ -775,16 +837,25 @@ class theme extends common {
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
 					$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
 					$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');
+					// Traite l'image dans le body
 					if ($this->getData(['theme','body','image']) !== '' ) {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
 								self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])
 								);
 					}
+					// Traite l'image dans le header
 					if ($this->getData(['theme','header','image']) !== '' ) {
 					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
 								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
 								);
 					}
+					// Traite les images du header perso
+					if (!empty($this->getData(['theme','header','featureFiles'])) ) {
+						foreach($this->getData(['theme','header','featureFiles']) as $value) {
+							$zip->addFile(self::FILE_DIR . 'source/' . $value, 
+										  self::FILE_DIR . 'source/' . $value );
+						}
+					} 
 					break;
 			}
 			$ret = $zip->close();

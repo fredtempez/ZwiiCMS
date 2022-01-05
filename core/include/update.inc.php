@@ -671,3 +671,50 @@ if ($this->getData(['core', 'dataVersion']) < 11100) {
 
 	$this->setData(['core', 'dataVersion', 11100]);
 }
+
+// Version 11.2.00
+if ($this->getData(['core', 'dataVersion']) < 11200) {
+
+	// Mise àjour des données de config
+	$this->setData(['config', 'connect', 'captchaStrong', $this->getData(['config', 'captchaStrong'])]);
+	$this->deleteData(['config', 'captchaStrong']);
+	$this->setData(['config', 'connect', 'autoDisconnect', $this->getData(['config', 'autoDisconnect'])]);
+	$this->deleteData(['config', 'autoDisconnect']);
+	$this->setData(['config', 'connect', 'captchaType', 'alpha']);
+
+	// Ajout de la variable shortTitle basée sur Title
+	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+		$pageList [] = $parentKey;
+		foreach ($parentValue as $childKey) {
+			$pageList [] = $childKey;
+		}
+	}
+	foreach ($pageList as $parentKey => $parent) {
+		$this->setData(['page', $parent, 'shortTitle', $this->getData(['page', $parent, 'title']) ]);
+	}
+
+	// Incorporer les nouveaux champs du header et du menu
+	$this->setData(['theme', 'header', 'feature', 'wallpaper']);
+	$this->setData(['theme', 'header', 'featureContent', '<p>Bannière vide</p>']);
+	$this->setData(['theme', 'header', 'container', 'container']);
+	$this->setData(['theme', 'menu', 'container', 'container']);
+	// Option des cookies dans le footer
+	$this->setData(['theme', 'footer', 'displayCookie', false]);
+
+	// Acceptation et paramétres des cookies RGPD
+	$this->setData(['locale', 'cookies', 'cookieZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
+	$this->setData(['locale', 'cookies', 'cookieGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
+	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
+	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Consulter les mentions légales']);
+	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
+
+	// Supppression de l'option de traduction en mode connecté
+	$this->setData(['config','i18n', 'admin', false]);
+
+	// Option de dévoilement du mdp
+	$this->setData(['config', 'connect', 'showPassword', true]);
+	
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11200]);
+}

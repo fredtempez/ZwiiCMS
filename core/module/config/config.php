@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -22,7 +22,6 @@ class config extends common {
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
-		'advanced' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
@@ -185,7 +184,10 @@ class config extends common {
 		2 => 'Niveau 2 (192.168.x.x)',
 		1 => 'Niveau 3 (192.x.x.x)',
 	];
-
+	public static $captchaTypes = [
+		'num' => 'Chiffres',
+		'alpha'	  => 'Lettres'
+	];
 
 	// Langue traduite courante
 	public static $i18nSite = 'fr';
@@ -206,8 +208,10 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
+			/*'title' => 'Configuration',
+			'view' => 'index',*/
+			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
-			'redirect' => helper::baseUrl() . 'config/advanced',
 			'state' => $successSitemap
 		]);
 	}
@@ -273,8 +277,10 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
+			/*'title' => 'Configuration',
+			'view' => 'index',*/
+			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'redirect' => helper::baseUrl() . 'config/advanced',
 			'state' => $success === false ? false : true
 		]);
 	}
@@ -284,96 +290,106 @@ class config extends common {
 	 */
 	public function restore() {
 		// Soumission du formulaire
-		if($this->isPost()) {
-			//if ($this->getInput('configRestoreImportFile'))
-			$fileZip = $this->getInput('configRestoreImportFile');
-			$file_parts = pathinfo($fileZip);
-			$folder = date('Y-m-d-h-i-s', time());
-			$zip = new ZipArchive();
-			if ($file_parts['extension'] !== 'zip') {
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Le fichier n\'est pas une archive valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-					]);
-			}
-			$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
-			if ($successOpen === FALSE) {
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Impossible de lire l\'archive',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-					]);
-			}
-			// Lire le contenu de l'archive dans le tableau files
-			for( $i = 0; $i < $zip->numFiles; $i++ ){
-				$stat = $zip->statIndex( $i );
-				$files [] = ( basename( $stat['name'] ));
-			}
+		if($this->isPost() ) {
 
-			// Lire la dataversion
-			$tmpDir = uniqid(4);
-			$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
-			$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
-			$obj = json_decode($data);
-			$dataVersion = strval ($obj->core->dataVersion);
-			switch (strlen($dataVersion)) {
-				case 4:
-					if (substr($dataVersion,0,1) === '9' ) {
-						$version = 9;
-					} else {
-						$version = 0;
-					}
-					break;
-				case 5:
-					$version = substr($dataVersion,0,2);
-					break;
-				default:
-					$version = 0;
-					break;
-			}
-			$this->removeDir(self::TEMP_DIR . $tmpDir );
+			$success = false;
 
-			if ($version >= 10 )	{
-					// Option active, les users sont stockées
-					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
-						$users = $this->getData(['user']);
+			if ($this->getInput('configRestoreImportFile', null, true) ) {
+
+				$fileZip = $this->getInput('configRestoreImportFile');
+				$file_parts = pathinfo($fileZip);
+				$folder = date('Y-m-d-h-i-s', time());
+				$zip = new ZipArchive();
+				if ($file_parts['extension'] !== 'zip') {
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
+						'notification' => 'Le fichier n\'est pas une archive valide',
+						'state' => false
+						]);
 				}
-			} elseif ($version === 0) { // Version invalide
-				// Valeurs en sortie erreur
-				$this->addOutput([
-					'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-					'redirect' => helper::baseUrl() . 'config/restore',
-					'state' => false
-				]);
-			}
-			// Préserver les comptes des utilisateurs d'une version 9 si option cochée
-			// Positionnement d'une  variable de session lue au constructeurs
-			if ($version === 9) {
-				$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
-			}
-			// Extraire le zip ou 'site/'
-			$this->removeDir(self::DATA_DIR);
-			$success = $zip->extractTo( 'site/' );
-			// Fermer l'archive
-			$zip->close();
+				$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
+				if ($successOpen === FALSE) {
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
+						'notification' => 'Impossible de lire l\'archive',
+						'state' => false
+						]);
+				}
+				// Lire le contenu de l'archive dans le tableau files
+				for( $i = 0; $i < $zip->numFiles; $i++ ){
+					$stat = $zip->statIndex( $i );
+					$files [] = ( basename( $stat['name'] ));
+				}
+
+				// Lire la dataversion
+				$tmpDir = uniqid(4);
+				$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
+				$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
+				$obj = json_decode($data);
+				$dataVersion = strval ($obj->core->dataVersion);
+				switch (strlen($dataVersion)) {
+					case 4:
+						if (substr($dataVersion,0,1) === '9' ) {
+							$version = 9;
+						} else {
+							$version = 0;
+						}
+						break;
+					case 5:
+						$version = substr($dataVersion,0,2);
+						break;
+					default:
+						$version = 0;
+						break;
+				}
+				$this->removeDir(self::TEMP_DIR . $tmpDir );
+
+				if ($version >= 10 )	{
+						// Option active, les users sont stockées
+						if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
+							$users = $this->getData(['user']);
+					}
+				} elseif ($version === 0) { // Version invalide
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
+						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
+						'state' => false
+					]);
+				}
+				// Préserver les comptes des utilisateurs d'une version 9 si option cochée
+				// Positionnement d'une  variable de session lue au constructeurs
+				if ($version === 9) {
+					$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
+				}
+				// Extraire le zip ou 'site/'
+				$this->removeDir(self::DATA_DIR);
+				$success = $zip->extractTo( 'site/' );
+				// Fermer l'archive
+				$zip->close();
 
 
-			// Restaurer les users originaux d'une v10 si option cochée
-			if (!empty($users) &&
-				$version >= 10 &&
-				$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
-					$this->setData(['user',$users]);
+				// Restaurer les users originaux d'une v10 si option cochée
+				if (!empty($users) &&
+					$version >= 10 &&
+					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
+						$this->setData(['user',$users]);
+				}
 			}
 			// Message de notification
-			$notification  = $success === true ? 'Restauration réalisée avec succès' : 'Erreur inconnue';
+			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
+				/*'title' => 'Restaurer',
+				'view' => 'restore',*/
+				'redirect' => $redirect,
 				'notification' => $notification,
-				'redirect' =>$redirect,
 				'state' => $success
 			]);
 		}
@@ -393,8 +409,19 @@ class config extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Répercuter la suppression de la page dans la configuration du footer
-			if ( $this->getData(['theme','footer','displaySearch']) === true
+			// Basculement en mise à jour auto,  remise à 0 du compteur
+			if ($this->getData(['config','autoUpdate']) === false &&
+				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
+					$this->setData(['core','lastAutoUpdate',0]);
+				}
+
+			// Eviter déconnexion automatique après son activation
+			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
+				 AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
+				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
+			}
+				// Répercuter la suppression de la page dans la configuration du footer
+				if ( $this->getData(['theme','footer','displaySearch']) === true
 				AND $this->getInput('configSearchPageId') === 'none'
 				){
 					$this->setData(['theme', 'footer', 'displaySearch', false]);
@@ -405,133 +432,90 @@ class config extends common {
 					$this->setData(['theme', 'footer', 'displayLegal', false]);
 			}
 
-			// Sauvegarder
+			// Sauvegarder les locales
 			$this->setData([
 				'locale',
 				[
-					'homePageId' => $this->getInput('configHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('configPage404'),
-					'page403' => $this->getInput('configPage403'),
-					'page302' => $this->getInput('configPage302'),
-					'legalPageId' => $this->getInput('configLegalPageId'),
-					'searchPageId' => $this->getInput('configSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('configSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('configLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('configSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('configMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('configTitle', helper::FILTER_STRING_SHORT, true)
+					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+					'page404' => $this->getInput('localePage404'),
+					'page403' => $this->getInput('localePage403'),
+					'page302' => $this->getInput('localePage302'),
+					'legalPageId' => $this->getInput('localeLegalPageId'),
+					'searchPageId' => $this->getInput('localeSearchPageId'),
+					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
+					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+					'cookies' => [
+						// Les champs sont obligatoires si l'option consentement des cookies est active
+						'cookiesZwiiText'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'cookiesGaText'	=> $this->getInput('localeCookiesGaText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'cookiesTitleText'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesLinkMlText'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesCheckboxGaText'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'cookiesButtonText' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent']))
+					]
 				]
 			]);
 
-			$this->setData(['config', 'i18n', 'enable', $this->getInput('configI18n',helper::FILTER_BOOLEAN) ]);
-
-			// Générer robots.txt et sitemap
-			$this->generateFiles();
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
-				'state' => true
-			]);
-		}
-
-		// Liste des pages
-		self::$pagesList = $this->getData(['page']);
-		foreach(self::$pagesList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true) {
-				unset(self::$pagesList[$page]);
-			}
-		}
-
-		self::$orphansList =  $this->getData(['page']);
-		foreach(self::$orphansList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true ||
-				$this->getdata(['page',$page, 'position']) !== 0) {
-				unset(self::$orphansList[$page]);
-			}
-		}
-
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration',
-			'view' => 'index'
-		]);
-	}
-
-	/**
-	 * Configuration avancée
-	 */
-	public function advanced() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Basculement en mise à jour auto
-			// Remise à 0 du compteur
-			if ($this->getData(['config','autoUpdate']) === false &&
-				$this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN) === true) {
-					$this->setData(['core','lastAutoUpdate',0]);
-				}
-			// Eviter déconnexion automatique après son activation
-			if ( $this->getData(['config','autoDisconnect']) === false
-				 AND $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
-				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
-			}
-			// Sauvegarder
+			// Sauvegarder la configuration
 			$this->setData([
 				'config',
 				[
-					'analyticsId' => $this->getInput('configAdvancedAnalyticsId'),
-					'autoBackup' => $this->getInput('configAdvancedAutoBackup', helper::FILTER_BOOLEAN),
-					'maintenance' => $this->getInput('configAdvancedMaintenance', helper::FILTER_BOOLEAN),
-					'cookieConsent' => $this->getInput('configAdvancedCookieConsent', helper::FILTER_BOOLEAN),
-					'favicon' => $this->getInput('configAdvancedFavicon'),
-					'faviconDark' => $this->getInput('configAdvancedFaviconDark'),
+					'favicon' => $this->getInput('configFavicon'),
+					'faviconDark' => $this->getInput('configFaviconDark'),
+					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
+					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
+					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
+					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
+					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
+					'proxyType' => $this->getInput('configProxyType'),
+					'proxyUrl' => $this->getInput('configProxyUrl'),
+					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
 					'social' => [
-						'facebookId' => $this->getInput('configAdvancedSocialFacebookId'),
-						'linkedinId' => $this->getInput('configAdvancedSocialLinkedinId'),
-						'instagramId' => $this->getInput('configAdvancedSocialInstagramId'),
-						'pinterestId' => $this->getInput('configAdvancedSocialPinterestId'),
-						'twitterId' => $this->getInput('configAdvancedSocialTwitterId'),
-						'youtubeId' => $this->getInput('configAdvancedSocialYoutubeId'),
-						'youtubeUserId' => $this->getInput('configAdvancedSocialYoutubeUserId'),
-						'githubId' => $this->getInput('configAdvancedSocialGithubId')
+						'facebookId' => $this->getInput('socialFacebookId'),
+						'linkedinId' => $this->getInput('socialLinkedinId'),
+						'instagramId' => $this->getInput('socialInstagramId'),
+						'pinterestId' => $this->getInput('socialPinterestId'),
+						'twitterId' => $this->getInput('socialTwitterId'),
+						'youtubeId' => $this->getInput('socialYoutubeId'),
+						'youtubeUserId' => $this->getInput('socialYoutubeUserId'),
+						'githubId' => $this->getInput('socialGithubId')
 					],
-					'timezone' => $this->getInput('configAdvancedTimezone', helper::FILTER_STRING_SHORT, true),
-					'autoUpdate' => $this->getInput('configAdvancedAutoUpdate', helper::FILTER_BOOLEAN),
-					'autoUpdateHtaccess' => $this->getInput('configAdvancedAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
-					'proxyType' => $this->getInput('configAdvancedProxyType'),
-					'proxyUrl' => $this->getInput('configAdvancedProxyUrl'),
-					'proxyPort' => $this->getInput('configAdvancedProxyPort',helper::FILTER_INT),
-					'captchaStrong' => $this->getInput('configAdvancedCaptchaStrong',helper::FILTER_BOOLEAN),
-					'autoDisconnect' => $this->getInput('configAdvancedAutoDisconnect',helper::FILTER_BOOLEAN),
 					'smtp' => [
-						'enable' => $this->getInput('configAdvancedSmtpEnable',helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('configAdvancedSmtpHost',helper::FILTER_STRING_SHORT),
-						'port' => $this->getInput('configAdvancedSmtpPort',helper::FILTER_INT),
-						'auth' => $this->getInput('configAdvancedSmtpAuth',helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('configAdvancedSmtpSecure'),
-						'username' => $this->getInput('configAdvancedSmtpUsername',helper::FILTER_STRING_SHORT),
-						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('configAdvancedSmtpPassword')),
-						'sender' => $this->getInput('configAdvancedSmtpSender',helper::FILTER_MAIL)
+						'enable' => $this->getInput('smtpEnable',helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('smtpHost',helper::FILTER_STRING_SHORT,$this->getInput('smtpEnable',helper::FILTER_BOOLEAN)),
+						'port' => $this->getInput('smtpPort',helper::FILTER_INT,$this->getInput('smtpEnable',helper::FILTER_BOOLEAN)),
+						'auth' => $this->getInput('smtpAuth',helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure',helper::FILTER_BOOLEAN),
+						'username' => $this->getInput('smtpUsername',helper::FILTER_STRING_SHORT,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN)),
+						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('smtpPassword',null,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN))),
+						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('configAdvancedSeoRobots',helper::FILTER_BOOLEAN)
+						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN),
+						'analyticsId' => $this->getInput('seoAnalyticsId')
 					],
 					'connect' => [
-						'attempt' => $this->getInput('configAdvancedConnectAttempt',helper::FILTER_INT),
-						'timeout' => $this->getInput('configAdvancedConnectTimeout',helper::FILTER_INT),
-						'log' => $this->getInput('configAdvancedConnectLog',helper::FILTER_BOOLEAN),
-						'anonymousIp' => $this->getInput('configAdvancedConnectAnonymousIp',helper::FILTER_INT),
-						'captcha' => $this->getInput('configAdvancedConnectCaptcha',helper::FILTER_BOOLEAN),
+						'attempt' => $this->getInput('connectAttempt',helper::FILTER_INT),
+						'timeout' => $this->getInput('connectTimeout',helper::FILTER_INT),
+						'log' => $this->getInput('connectLog',helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('connectAnonymousIp',helper::FILTER_INT),
+						'captcha' => $this->getInput('connectCaptcha',helper::FILTER_BOOLEAN),
+						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
+						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
+						'captchaType' => $this->getInput('connectCaptchaType'),
+						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN)
 					],
 					'i18n' => [
-						'enable' => $this->getData(['config', 'i18n', 'enable']),
+						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),
 						'scriptGoogle'      => $this->getData(['config', 'i18n', 'scriptGoogle']),
 						'showCredits' 	 	=> $this->getData(['config', 'i18n', 'showCredits']),
 						'autoDetect' 	 	=> $this->getData(['config', 'i18n', 'autoDetect']),
-						'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
+						//'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
 						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
 						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
 						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),
@@ -542,8 +526,9 @@ class config extends common {
 					]
 				]
 			]);
+
 			// Efface les fichiers de backup lorsque l'option est désactivée
-			if ($this->getInput('configAdvancedFileBackup', helper::FILTER_BOOLEAN) === false) {
+			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
 				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
 				{
@@ -558,7 +543,7 @@ class config extends common {
 			// Notice
 			if(self::$inputNotices === []) {
 				// Active la réécriture d'URL
-				$rewrite = $this->getInput('rewrite', helper::FILTER_BOOLEAN);
+				$rewrite = $this->getInput('configRewrite', helper::FILTER_BOOLEAN);
 				if(
 					$rewrite
 					AND helper::checkRewrite() === false
@@ -599,17 +584,36 @@ class config extends common {
 			$this->generateFiles();
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
 			]);
 		}
+		// Générer la list des pages disponibles
+		self::$pagesList = $this->getData(['page']);
+		foreach(self::$pagesList as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true) {
+				unset(self::$pagesList[$page]);
+			}
+		}
+
+		self::$orphansList =  $this->getData(['page']);
+		foreach(self::$orphansList as $page => $pageId) {
+			if ($this->getData(['page',$page,'block']) === 'bar' ||
+				$this->getData(['page',$page,'disable']) === true ||
+				$this->getdata(['page',$page, 'position']) !== 0) {
+				unset(self::$orphansList[$page]);
+			}
+		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration avancée',
-			'view' => 'advanced'
+			'title' => 'Configuration',
+			'view' => 'index'
 		]);
 	}
+
 
 	public function script() {
 		// Soumission du formulaire
@@ -623,8 +627,11 @@ class config extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
-				'redirect' => helper::baseUrl() . 'config/script/'. $this->geturl(2),
+				'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)) ,
+				'vendor' => [
+					'codemirror'
+				],
+				'view' => 'script',
 				'state' => true
 			]);
 		}
@@ -649,22 +656,25 @@ class config extends common {
 		$success = false ;
 		// Boucler sur les pages
 		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-			$content = $this->getData(['page',$parentId,'content']);
+			$content = $this->getPage($parentId, self::$i18n);
+			$titre = $this->getData(['page', $parentId, 'title']);
+			$content =   $titre . ' ' . $content ;
 			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
-				$this->setData(['page',$parentId,'content', $replace ]);
+				$this->setPage($parentId, $replace,  self::$i18n);
 				$c3 += $c1 + $c2;
 			}
 			foreach($childIds as $childId) {
-				$content = $this->getData(['page',$childId,'content']);
+				$content = $this->getPage($childId, self::$i18n);
+				$content =   $titre . ' ' . $content ;
 				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
-					$this->setData(['page',$childId,'content', $replace ]);
+					$this->setPage($childId, $replace,  self::$i18n);
 					$c3 += $c1 + $c2;
 				}
 			}
@@ -682,8 +692,9 @@ class config extends common {
 		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => 'Restaurer',
+			'view' => 'restore',
 			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'redirect' => helper::baseUrl() . 'config/restore',
 			'state' => $success ? true : false
 		]);
 	}
@@ -700,14 +711,16 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
 			]);
@@ -734,7 +747,8 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
 			]);
@@ -770,7 +784,8 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
 			]);
@@ -786,14 +801,16 @@ class config extends common {
 			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'config/advanced',
+				'title' => 'Configuration',
+				'view' => 'index',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
 			]);
@@ -811,7 +828,8 @@ class config extends common {
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config/advanced',
+			'title' => 'Configuration',
+			'view' => 'index',
 			'notification' => 'Copie terminée',
 			'state' => true
 		]);

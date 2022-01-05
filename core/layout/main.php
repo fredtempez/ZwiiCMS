@@ -34,12 +34,12 @@
 		<?php $this->showNotification(); ?>
 
 		<!-- Menu dans le fond du site avant la bannière -->
-		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>	
+		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top' ): ?>
 				<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
 				<?php
 				if ( $this->getData(['theme', 'menu', 'position']) === 'top'
 					AND $this->getData(['theme', 'menu', 'fixed']) === true
-					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD',true)
+					AND $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					AND $this->getUser('group') > self::GROUP_MEMBER) {
 						echo '<nav id="navfixedconnected" >';
 					} else {
@@ -51,41 +51,60 @@
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" <?php echo $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"'; ?> >
+				<!-- fin du menu burger -->
+				<?php
+					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
+				?>
+				<div id="menu" <?php echo $menuClass; ?> >
 				<?php $this->showMenu(); ?>
 				</div> <!--fin menu -->
 			</nav>
 		<?php endif; ?>
 
 		<!-- Bannière dans le fond du site -->
-		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>			
-			<header <?php if($this->getData(['theme', 'header', 'tinyHidden']) === true): ?>class="bannerDisplay"<?php endif;?>>
-				<?php ?>
-				<?php echo $this->getData(['theme','header','linkHomePage']) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
-				<div id="headerContainer" class="container">
-				<?php if(
-					$this->getData(['theme', 'header', 'textHide']) === false
-					// Affiche toujours le titre de la bannière pour l'édition du thème
-					OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
-				): ?>
-						<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+		<?php if($this->getData(['theme', 'header', 'position']) === 'body'): ?>
+			<?php
+				$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
+				$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
+				$headerClass .= $this->getData(['theme', 'header', 'wide']) === 'none' ? '' : 'container';
+			?>
+			<header <?php echo empty($headerClass) ? '' : 'class="' . $headerClass . '"';?>>
+			<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+				<?php if ($this->getData(['theme','header','feature']) === 'wallpaper' ): ?>
+					<?php if(
+						$this->getData(['theme', 'header', 'textHide']) === false
+						// Affiche toujours le titre de la bannière pour l'édition du thème
+						OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
+					): ?>
+							<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+					<?php else: ?>
+							<span id="themeHeaderTitle">&nbsp;</span>
+					<?php endif; ?>
 				<?php else: ?>
-						<span id="themeHeaderTitle">&nbsp;</span>
-				<?php endif; ?>
-				</div> <!--fin container -->
-				<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
+					<div id="featureContent">
+						<?php echo $this->getData(['theme','header','featureContent']);?>
+					</div>
+			<?php endif; ?>
 			</header>
+			<?php echo ( $this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 		<?php endif; ?>
 
 		<!-- Menu dans le fond du site après la bannière -->
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
-			
+
 			<nav>
+				<!-- Menu burger -->
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu',null,null,'2em'); ?></div>
-				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
+				<!-- fin du menu burger -->
+				<?php
+					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
+				?>
+				<div id="menu" <?php echo $menuClass; ?> >
+					<?php $this->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
 
@@ -110,12 +129,13 @@
 						)
 					): ?>
 						<!-- Bannière dans le site -->
-						<?php echo $this->getData(['theme','header','linkHomePage']) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
-						<header class="
-							<?php echo $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : ''; ?>
-							<?php echo $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay' : ''; ?> 
-						">
-							<div id="headerContainer" class="container">
+						<?php echo  ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
+						<?php
+								$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
+								$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
+							?>
+							<header <?php echo empty($headerClass) ? '' : 'class="' . $headerClass . '"';?>>
+							<?php if ($this->getData(['theme','header','feature']) === 'wallpaper' ): ?>
 								<?php if(
 									$this->getData(['theme', 'header', 'textHide']) === false
 									// Affiche toujours le titre de la bannière pour l'édition du thème
@@ -125,9 +145,13 @@
 								<?php else: ?>
 										<span id="themeHeaderTitle">&nbsp;</span>
 								<?php endif; ?>
-							</div> <!--fin container -->
+							<?php else: ?>
+								<div id="featureContent">
+								<?php echo $this->getData(['theme','header','featureContent']);?>
+								</diV>
+							<?php endif; ?>
 						</header>
-						<?php echo $this->getData(['theme','header','linkHomePage']) ? '</a>' : ''; ?>
+						<?php echo ( $this->getData(['theme','header','linkHomePage']) &&  $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 				<?php endif; ?>
 			<?php if(
 				$this->getData(['theme', 'menu', 'position']) === 'site-second' ||
@@ -150,7 +174,7 @@
 
 			<!-- Corps de page -->
 			<?php $this->showSection();?>
-
+			
 			<!-- footer -->
 			<?php $this->showFooter();?>
 
@@ -159,7 +183,8 @@
 
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
-
+		<!-- Affichage du consentement aux cookies-->	
+		<?php $this->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php $this->showScript();?>
 

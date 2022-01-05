@@ -8,7 +8,7 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @license GNU General Public License, version 3
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2021, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  * @link http://zwiicms.fr/
  */
 
@@ -21,88 +21,97 @@
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
+	
+	var css = "";
 
-	// Récupérer la taille de l'image
+	// Contenu perso
+	if ($("#themeHeaderFeature").val() == "feature") {
+		
+		css = "header{min-height: " + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "; overflow:hidden; background-position:top; background-repeat: no-repeat; line-height:1.15; background-color:unset; background-image:unset; text-align:unset;}";
+		
+		$("#featureContent").appendTo("header").show();
+		$("#themeHeaderTitle").hide();
 
-	var tmpImg = new Image();
+		// Modifier le texte du sélecteur de hauteur
+		$("#themeHeaderHeight option:eq(0)").text("Hauteur du contenu personnalisé");
 
-	tmpImg.onload = function() {
-		// Informations affichées
-		$("#themeHeaderImageHeight").html(tmpImg.height + "px");
-		$("#themeHeaderImageWidth").html(tmpImg.width + "px");
-		$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
-
-		// Limiter la hauteur à 600 px
-		if (tmpImg.height > 600) {
-			tmpImgHeight = 600;
-		} else {
-			tmpImgHeight = tmpImg.height;
-		}
-
-		//Modifier la dropdown liste si une image n'est pas sélectionnée
-		if ($("#themeHeaderImage").val() !== "" ) {
-			// Une image est ajoutée ou changée
-			if ($("#themeHeaderHeight option").length === 5) {
-				// Pas d'image précédemment on ajoute l'option
-				$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
-			}
-			// Modifier la valeur
-			$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
-			// Modifier l'option
-			$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
-		}
-	};
-
-	if ($("#themeHeaderImage").val() === "" &&
-		$("#themeHeaderHeight option").length === 6 ) {
-		$("#themeHeaderHeight option:eq(0)").remove();
 	}
-
-	tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
-
-	// Import des polices de caractères
-	var headerFont = $("#themeHeaderFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
+	
 
 	// Couleurs, image, alignement et hauteur de la bannière
-	css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";text-align:" + $("#themeHeaderTextAlign").val() + ";";
+	if ($("#themeHeaderFeature").val() == "wallpaper") {
 
-	if ($("#themeHeaderImage").val()) {
-		// Une image est sélectionnée
-		css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
-		css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
-	// Pas d'image sélectionnée
-	} else {
-		// Désactiver l'option responsive
-		css += "background-image:none;";
-	}
+		// Masque le contenu perso
+		$("#featureContent").hide();
+		// Récupérer la taille de l'image
+		var tmpImg = new Image();
+		tmpImg.onload = function() {
+			// Informations affichées
+			$("#themeHeaderImageHeight").html(tmpImg.height + "px");
+			$("#themeHeaderImageWidth").html(tmpImg.width + "px");
+			$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
 
-	css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
+			// Limiter la hauteur à 600 px
+			if (tmpImg.height > 600) {
+				tmpImgHeight = 600;
+			} else {
+				tmpImgHeight = tmpImg.height;
+			}
 
+			//Modifier la dropdown liste si une image n'est pas sélectionnée
+			if ($("#themeHeaderImage").val() !== "" ) {
+				// Une image est ajoutée ou changée
+				if ($("#themeHeaderHeight option").length === 5) {
+					// Pas d'image précédemment on ajoute l'option
+					$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
+				}
+				// Modifier la valeur
+				$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
+				// Modifier l'option
+				$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
+			}
+		};
 
-	// Taille, couleur, épaisseur et capitalisation du titre de la bannière
-	css += "header span{color:" + $("#themeHeaderTextColor").val() + ";font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + "}";
-	// Cache le titre de la bannière
+		if ($("#themeHeaderImage").val() === "" &&
+			$("#themeHeaderHeight option").length === 6 ) {
+			$("#themeHeaderHeight option:eq(0)").remove();
+		}
 
-	if($("#themeHeaderTextHide").is(":checked")) {
-		$("header #themeHeaderTitle").hide();
-	}
-	else {
-		$("header #themeHeaderTitle").show();
-	}
+		tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
 
-	// Marge
-	if($("#themeHeaderMargin").is(":checked")) {
-		if(<?php echo json_encode($this->getData(['theme', 'menu', 'position']) === 'site-first'); ?>) {
-			css += 'header{margin:0 20px}';
+		// Import des polices de caractères
+		var headerFont = $("#themeHeaderFont").val();
+		var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
+
+			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
+			if ($("#themeHeaderImage").val()) {
+				// Une image est sélectionnée
+				css += "background-image:url('<?php echo helper::baseUrl(false); ?>site/file/source/" + $("#themeHeaderImage").val() + "');background-repeat:" + $("#themeHeaderImageRepeat").val() + ";background-position:" + $("#themeHeaderImagePosition").val() + ";";
+				css += "background-size:" + $("#themeHeaderImageContainer").val() + ";";
+			// Pas d'image sélectionnée
+			} else {
+				// Désactiver l'option responsive
+				css += "background-image:none;";
+			}
+			css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
+	
+
+        // Taille, couleur, épaisseur et capitalisation du titre de la bannière
+        css += "header span{font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";		
+
+		// Cache le titre de la bannière
+		if($("#themeHeaderTextHide").is(":checked")) {
+			$("#themeHeaderTitle").hide();
 		}
 		else {
-			css += 'header{margin:20px 20px 0 20px}';
+			$("#themeHeaderTitle").show();
 		}
 	}
-	else {
-		css += 'header{margin:0}';
-	}
+
+	// Couleur du fond
+	css += "header{background-color:" + $("#themeHeaderBackgroundColor").val() + ";}";
+
+
 	// Position de la bannière
 	var positionNav = <?php echo json_encode($this->getData(['theme', 'menu', 'position'])); ?>;
 	var positionHeader = $("#themeHeaderPosition").val();
@@ -156,6 +165,25 @@ $("input, select").on("change", function() {
 			}
 	}
 
+	// Marge dans le site
+	if(	$("#themeHeaderMargin").is(":checked") &&
+		$("#themeHeaderPosition").val() === "site"
+		) {	
+			css += 'header{margin:20px 20px 0 20px !important;}';
+		/*} else { 
+			css += 'header{margin:0 !important;}';*/
+    }
+
+	// Largeur du header
+	switch ($("#themeHeaderWide").val()) {
+		case "container":
+			$("header").addClass("container");
+			break;
+		case "none":
+			$("header").removeClass("container");
+			break;
+	}
+
 	// La bannière est cachée, déplacer le menu dans le site
 	if (positionHeader === "hide" &&
 		(positionNav === "body-first" ||
@@ -164,7 +192,7 @@ $("input, select").on("change", function() {
 		 positionNav === "site-second"
 		 )) {
 			$("nav").show().prependTo("#site");
-		 }
+	}
 
 	// Ajout du css au DOM
 	$("#themePreview").remove();
@@ -174,8 +202,6 @@ $("input, select").on("change", function() {
 		.text(css)
 		.appendTo("head");
 }).trigger("change");
-
-
 
 // Affiche / Cache les options de l'image du fond
 $("#themeHeaderImage").on("change", function() {
@@ -192,26 +218,27 @@ $("#themeHeaderImage").on("change", function() {
 // Affiche / Cache les options de la position
 $("#themeHeaderPosition").on("change", function() {
 	if($(this).val() === 'site') {
+		$("#themeHeaderContainerWrapper").slideUp();
 		$("#themeHeaderPositionOptions").slideDown();
+		$("#themeHeaderWideWrapper").slideUp();
+		$("#themeHeaderMarginWrapper").slideDown();
 	}
-	else {
+	else if ($(this).val() === 'hide') {
+		$("#themeHeaderContainerWrapper").slideUp();
+		$("#themeHeaderWideWrapper").slideUp();
+		$("#themeHeaderMarginWrapper").slideUp();
+		$("#themeHeaderMargin").prop("checked", false);
 		$("#themeHeaderPositionOptions").slideUp(function() {
 			$("#themeHeaderMargin").prop("checked", false).trigger("change");
 		});
+	} else {
+		$("#themeHeaderWideWrapper").slideDown();
+		$("#themeHeaderMarginWrapper").slideUp();
+		$("#themeHeaderMargin").prop("checked", false);
 	}
 }).trigger("change");
 
-// Affiche / Cache les options de la bannière cliquable si pas masquée
-$("#themeHeaderPosition").on("change", function() {
-	if($(this).val() === 'hide') {
-		$("#themeHeaderShow").slideUp(function() {
-			$("#themeHeaderlinkHome").prop("checked", false).trigger("change");
-		});
-	}
-	else {
-		$("#themeHeaderShow").slideDown();
-	}
-}).trigger("change");
+
 
 // Affiche / Cache l'option bannière masquée en écran réduit
 $("#themeHeaderPosition").on("change", function() {
@@ -220,5 +247,19 @@ $("#themeHeaderPosition").on("change", function() {
 	}
 	else {
 		$("#themeHeaderSmallDisplay").slideDown();
+	}
+}).trigger("change");
+
+// Affiche les blocs selon le type bannière
+$("#themeHeaderFeature").on("change", function() {
+	if($(this).val() === 'wallpaper') {
+		$(".wallpaperContainer").show();
+		$(".featureContainer").hide();
+		$("#themeHeaderTextColorWrapper").show();
+	}
+	if($(this).val() === 'feature') {
+		$(".featureContainer").show();
+		$(".wallpaperContainer").hide();
+		$("#themeHeaderTextColorWrapper").hide();
 	}
 }).trigger("change");

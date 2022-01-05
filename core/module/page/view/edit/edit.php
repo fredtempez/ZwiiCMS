@@ -1,9 +1,6 @@
-<?php
-echo template::formOpen('pageEditForm');
-	// Mise à jour de la liste des pages pour TinyMCE
-	$this->pages2Json(); ?>
+<?php echo template::formOpen('pageEditForm'); ?>
 	<div class="row">
-	<div class="col2">
+		<div class="col2">
 			<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
     		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
 			<?php echo template::button('pageEditBack', [
@@ -13,7 +10,16 @@ echo template::formOpen('pageEditForm');
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset4">
+		<div class="col2">
+			<?php echo template::button('pageEditHelp', [
+				'href' => 'https://doc.zwiicms.fr/edition-des-pages',
+				'target' => '_blank',
+				'ico' => 'help',
+				'value' => 'Aide',
+				'class' => 'buttonHelp'
+			]); ?>
+		</div>
+		<div class="col2 offset2">
 			<?php echo template::button('pageEditDuplicate', [
 				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
 				'value' => 'Dupliquer',
@@ -29,20 +35,35 @@ echo template::formOpen('pageEditForm');
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::submit('pageEditSubmit'); ?>
+			<?php echo template::submit('pageEditSubmit', [
+				'uniqueSubmission' => true
+			]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col12">
 			<div class="block" id="info">
- 				<h4>Informations générales</h4>
+ 				<h4>Informations générales
+				 	<span id="infoHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/informations-generales" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
+				 </h4>
 				<div class="row">
-					<div class="col8">
+					<div class="col6">
 						<?php echo template::text('pageEditTitle', [
 							'label' => 'Titre',
 							'value' => $this->getData(['page', $this->getUrl(2), 'title'])
 						]); ?>
 					</div>
+					<div class="col2">
+								<?php echo template::text('pageEditShortTitle', [
+									'label' => 'Titre Court',
+									'value' => $this->getData(['page', $this->getUrl(2), 'shortTitle']),
+									'help' => 'Le titre court est affiché dans les menus. Il peut être identique au titre de la page.'
+								]); ?>
+							</div>
 					<div class="col4">
 						<div class="row">
 							<div class="col9">
@@ -102,15 +123,14 @@ echo template::formOpen('pageEditForm');
 		</div>
 	</div>
 	<div class="row">
-		<div class="col12" id="pageEditBlockLayout">
-			<div class="block" id="layout">
+	<div class="col12" id="pageEditBlockLayout">
+			<div class="block">
 				<h4>Mise en page
-					<div class="openClose">
-						<?php
-						echo template::ico('plus-circled','right');
-						echo template::ico('minus-circled','right');
-						?>
-					</div>
+					<span id="layoutHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/mise-en-page-2" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 				</h4>
 				<div class="blockContainer">
 					<div class="row">
@@ -159,15 +179,14 @@ echo template::formOpen('pageEditForm');
 		</div>
 	</div>
 	<div class="row">
-		<div class="col12"  id="pageEditMenu">
-			<div class="block" id="location">
+	<div class="col12"  id="pageEditMenu">
+			<div class="block">
 				<h4>Emplacement dans le menu
-					<div class="openClose">
-						<?php
-						echo template::ico('plus-circled','right');
-						echo template::ico('minus-circled','right');
-						?>
-					</div>
+					<span id="positionHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 				</h4>
 				<div class="blockContainer">
 					<div class="row">
@@ -223,14 +242,13 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class='row' id="pageEditAdvancedWrapper">
 		<div class="col12">
-			<div class="block" id="advanced">
+			<div class="block">
 				<h4>Options d'emplacement avancées
-					<div class="openClose">
-						<?php
-						echo template::ico('plus-circled','right');
-						echo template::ico('minus-circled','right');
-						?>
-					</div>
+					<span id="advancedHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
 				</h4>
 				<div class="blockContainer">
 					<div class="row">
@@ -252,14 +270,13 @@ echo template::formOpen('pageEditForm');
 	</div>
 	<div class='row' id="pageEditSeoWrapper">
 		<div class="col12">
-			<div class="block" id="seo">
+			<div class="block">
 				<h4>Permission et référencement
-				<div class="openClose">
-						<?php
-						echo template::ico('plus-circled','right');
-						echo template::ico('minus-circled','right');
-						?>
-					</div>
+				<span id="seoHelpButton" class="helpDisplayButton">
+					<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank">
+						<?php echo template::ico('help', 'left');?>
+					</a>
+				</span>
 				</h4>
 				<div class="blockContainer">
 					<div class="row">

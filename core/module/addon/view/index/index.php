@@ -8,10 +8,12 @@
 		]); ?>
 	</div>
 	<div class="col2">
-		<?php echo template::button('addonIndexHelp', [
-			'class' => 'buttonHelp',
+		<?php echo template::button('configModulesHelp', [
+			'href' => 'https://doc.zwiicms.fr/les-modules',
+			'target' => '_blank',
 			'ico' => 'help',
-			'value' => 'Aide'
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
 		]); ?>
 	</div>
 	<div class="col2 offset6">
