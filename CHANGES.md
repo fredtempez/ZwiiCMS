@@ -1,7 +1,7 @@
 # Changelog
 
-## Version 11.2.00
-Mises à jour : 
+## Version 11.2.01
+- Mises à jour : 
     - jQuery v3.6.0
     - Lity v2.4.1
     - Lightbox v2.10.1
