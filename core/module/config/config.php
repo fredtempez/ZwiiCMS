@@ -195,6 +195,8 @@ class config extends common {
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
 	public static $orphansList = [];
+	public static $onlineVersion = '';
+	public static $updateButtonText = 'Réinstaller';
 
 	/**
 	 * Génére les fichiers pour les crawlers
@@ -607,6 +609,13 @@ class config extends common {
 				unset(self::$orphansList[$page]);
 			}
 		}
+
+		// Variable de version
+		self::$onlineVersion = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
+		if (self::$onlineVersion !== common::ZWII_VERSION) {
+			self::$updateButtonText = "Mettre à jour" ;
+		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration',

@@ -25,18 +25,11 @@
 					</span>
 				</h4>				
 				<div class="row">
-					<div class="col9">
+					<div class="col12">
 						<?php echo template::text('localeTitle', [
 							'label' => 'Titre du site' ,
 							'value' => $this->getData(['locale', 'title']),
 							'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
-						]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::text('localeVersion', [
-							'label' => 'ZwiiCMS Version',
-							'value' => common::ZWII_VERSION,
-							'readonly' => true
 						]); ?>
 					</div>
 				</div>

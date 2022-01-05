@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 11.2.02
+- Modification : 
+    - Configuration :
+        - Le numéro de version est désormais affiché dans le bloc Mise à jour.
+        - Le bloc Mise à jour dans l'écran de configuration est modifié ; les numéros de version installé et en ligne, si disponible, sont affichés.
+        - Le libellé du bouton de Réinstaller devient Mettre à jour selon le cas de figure.
+
 ## Version 11.2.01
 - Mises à jour : 
     - jQuery v3.6.0

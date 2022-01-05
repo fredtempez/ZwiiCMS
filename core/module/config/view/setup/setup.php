@@ -61,29 +61,34 @@
 						</a>
 					</span>
 				</h4>
-				<?php $updateError = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');?>
 				<div class="row">
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
 								'checked' => $this->getData(['config', 'autoUpdate']),
 								'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
-								'disabled' => !$updateError
+								'disabled' => !$module::$onlineVersion
 							]); ?>
 					</div>
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
 								'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
 								'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-								'disabled' => !$updateError
+								'disabled' => !$module::$onlineVersion
 							]); ?>
 					</div>
-					<div class="col2 offset1">
+				</div>
+				<div class="row">
+					<div class="col6">
+						<?php 	echo  '<pre>Version installée : <strong>' . common::ZWII_VERSION . '</strong></pre>' ; ?>
+						<?php	echo  $module::$onlineVersion ? '<pre>Version en ligne  : <strong>'  . $module::$onlineVersion . '</strong></pre>' : '' ;?>
+					</div>
+					<div class="col4 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
-							'value' => 'Réinstaller',
+							'value' => $module::$updateButtonText,
 							'class' => 'buttonRed',
-							'disabled' => !$updateError
+							'disabled' => !$module::$onlineVersion
 						]); ?>
 					</div>
 				</div>
