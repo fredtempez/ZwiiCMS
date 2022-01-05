@@ -56,7 +56,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11200,
+			'dataVersion' => 11201,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

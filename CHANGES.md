@@ -9,7 +9,7 @@ Mises à jour :
     - FavIcon Switcher v1.2.2
 - Corrections : 
     - Configuration, restauration d'une archive du site : 
-        - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoque le crash du site.
+        - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoquait le crash du site.
         - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
     - Multi-langues :
         - Bug auto détection du navigateur.
@@ -21,9 +21,9 @@ Mises à jour :
     - Thème : 
         - Disposition des options de configuration du site.
         - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.
-    - Pages : il est désormais possible de donner un nom de page court qui sera utilisé dans le menu du site, dans les barres latérales et dans les sélecteurs de page (éditeur / lien). En revanche le nom de la page affiché en haut de celle-ci est inchangé. Dans la plupart des cas le titre court sera identique au titre.
+    - Pages : il est désormais possible de donner un nom de page court utilisé dans le menu du site, dans les barres latérales et dans les sélecteurs de page (éditeur / lien). En revanche le nom de la page affiché en haut de celle-ci est inchangé. Dans la plupart des cas le titre court sera identique au titre.
     - Les écrans d'aide renvoient vers le site doc.zwiicms.fr
-    - Mise en évidence du statut des pages dans la liste de la barre d'administration. Rouge italique : page orpheline ; Orange gras page inactive.
+    - Mise en évidence du statut des pages dans la liste de la barre d'administration. Rouge italique = page orpheline ; Orange gras = page inactive.
     - Référencement, l'URL de la page d'accueil (www.site.fr/accueil) est remplacée par la base Url du site (www.site.fr/) afin d'éviter la duplication de contenu.
 
 ## Version 11.1.01
