@@ -89,7 +89,7 @@
 						<?php echo template::date('blogEditPublishedOn', [
 							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
 							'label' => 'Date de publication',
-							'value' => time()
+							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'publishedOn'])
 						]); ?>
 					</div>
 					<div class="col4">
