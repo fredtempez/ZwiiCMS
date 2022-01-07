@@ -4,7 +4,7 @@
 			<div class="block">
 				<h4>Sécurité de la connexion
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/connexion" target="_blank">
+						<a href="https://doc.zwiicms.fr/connexion" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -85,7 +85,7 @@
 			<div class="block">
 				<h4>Journalisation
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/journalisation" target="_blank">
+						<a href="https://doc.zwiicms.fr/journalisation" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>

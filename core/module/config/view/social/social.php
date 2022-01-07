@@ -4,7 +4,7 @@
 			<div class="block">
 				<h4>Paramètres					
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/referencement" target="_blank">	
+						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">	
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -54,7 +54,7 @@
 			<div class="block">
 				<h4>Réseaux sociaux					
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank">	
+						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">	
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -127,7 +127,7 @@
 			<div class="block">
 				<h4>Scripts externes										
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank">
+						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 								<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>

@@ -4,7 +4,7 @@
 			<div class="block">
 				<h4>Paramètres
 					<span id="setupHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/parametres" target="_blank">
+						<a href="https://doc.zwiicms.fr/parametres" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -56,7 +56,7 @@
 			<div class="block">
 				<h4>Mise à jour automatisée
 					<span id="updateHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank">
+						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -100,7 +100,7 @@
 			<div class="block">
 				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank">
+						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
