@@ -554,7 +554,7 @@ class config extends common {
 					file_put_contents(
 						'.htaccess',
 						PHP_EOL .
-						'<ifModule mod_rewrite.c>' . PHP_EOL .
+						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
@@ -562,7 +562,7 @@ class config extends common {
 						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
 						"\tRewriteCond %{SERVER_PORT} 80" . PHP_EOL .
 						"\tRewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]" . PHP_EOL .
-						'</ifModule>',
+						'</IfModule>',
 						FILE_APPEND
 					);
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
