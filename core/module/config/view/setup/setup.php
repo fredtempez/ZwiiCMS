@@ -44,7 +44,7 @@
 					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'URL intelligentes', [
 							'checked' => helper::checkRewrite(),
-							'help' => 'Vérifiez d\'abord que votre serveur autorise l\'URL rewriting (ce qui n\'est pas le cas chez Free).'
+							'help' => 	'Supprime ? dans les URL et redirige sur le protocole HTTPS.'
 						]); ?>
 					</div>
 				</div>
