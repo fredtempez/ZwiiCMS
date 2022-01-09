@@ -4,6 +4,8 @@
 - Correction : 
     - Mise à jour : les noms des étiquettes de la popup des cookies n'étaient pas créés.
 - Modification : 
+    - Configuration du fichier htacess : 
+        - Suppression de la redirection forcée vers HTTPS lors de l'activation des URL intelligentes.
     - Configuration :
         - Le numéro de version est désormais affiché dans le bloc Mise à jour.
         - Le bloc Mise à jour dans l'écran de configuration est modifié ; les numéros de version installé et en ligne sont affichés si disponibles.

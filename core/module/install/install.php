@@ -248,13 +248,13 @@ class install extends common {
 					$success = (file_put_contents(
 						'.htaccess',
 						PHP_EOL .
-						'<ifModule mod_rewrite.c>' . PHP_EOL .
+						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
 						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
 						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</ifModule>',
+						'</IfModule>',
 						FILE_APPEND
 					) !== false);
 				}
