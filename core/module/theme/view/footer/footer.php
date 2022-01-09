@@ -39,6 +39,22 @@
                         ]); ?>
                 </div>
             </div>
+            <div class="row">
+                <div class="col6">
+                    <div id="themeFooterPositionOptions">
+                        <?php echo template::checkbox('themeFooterMargin', true, 'Alignement avec le contenu', [
+                                'checked' => $this->getData(['theme', 'footer', 'margin'])
+                            ]); ?>
+                    </div>
+                </div>
+                <div class="col6">
+                    <div id="themeFooterPositionFixed" class="displayNone">
+                        <?php echo template::checkbox('themeFooterFixed', true, 'Pied de page fixe', [
+							'checked' => $this->getData(['theme', 'footer', 'fixed'])
+						]); ?>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -260,20 +276,6 @@
                                     'selected' => $this->getData(['theme', 'footer', 'copyrightAlign'])
                                 ]); ?>
                         </div>
-                    </div>
-                </div>
-                <div class="col6">
-                    <div id="themeFooterPositionOptions">
-                        <?php echo template::checkbox('themeFooterMargin', true, 'Alignement avec le contenu', [
-                                'checked' => $this->getData(['theme', 'footer', 'margin'])
-                            ]); ?>
-                    </div>
-                </div>
-                <div class="col6">
-                    <div id="themeFooterPositionFixed" class="displayNone">
-                        <?php echo template::checkbox('themeFooterFixed', true, 'Pied de page fixe', [
-							'checked' => $this->getData(['theme', 'footer', 'fixed'])
-						]); ?>
                     </div>
                 </div>
             </div>
