@@ -2,7 +2,7 @@
 
 ## Version 11.2.02
 - Correction :
-    - Mise à jour : les noms des étiquettes de le popup des cookies n'étaient pas créés.
+    - Mise à jour : les noms des étiquettes du popup des cookies n'étaient pas créés.
 - Modifications :
     - Configuration du fichier htaccess :
     - Suppression de la redirection forcée vers HTTPS lors de l'activation des URL intelligentes.
