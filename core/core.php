@@ -1213,24 +1213,24 @@ class common {
 			$item .= template::ico('cancel');
 			$item .= '</div>';
 			// Texte de la popup
-			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'cookiesTitleText']) . '</h3>';
-			$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesZwiiText']) . '</p>';
+			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
+			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
 			$item .= '<form method="POST" action="" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
-				$item .= '<p>' . $this->getData(['locale', 'cookies', 'cookiesGaText']) . '</p>';
+				$item .= '<p>' . $this->getData(['locale', 'cookies', 'gaLabel']) . '</p>';
 				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
-				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) . '</label>';
+				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'checkboxGaLabel']) . '</label>';
 			}
 			$item .= '<br><br>';
-			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'cookiesButtonText']) . '">';
+			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
 			$item .= '</form>';
 			// mentions légales si la page est définie
 			$legalPage = $this->getData(['locale', 'legalPageId']);
 			if ($legalPage !== 'none')  {
-				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'cookiesLinkMlText']) . '</a></p>';
+				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'linkLegalLabel']) . '</a></p>';
 			}
 			$item .= '</div>';
 			echo $item;

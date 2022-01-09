@@ -56,7 +56,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11201,
+			'dataVersion' => 11202,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -76,13 +76,13 @@ class init extends common {
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
 			'title' => 'Votre site en quelques clics !',
 			'cookies' => [
-				'cookiesZwiiText' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
-				'cookiesGaText' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
-				'cookiesTitleText' => 'Gérer les cookies',
-				'cookiesLinkMlText' => 'Consulter  les mentions légales',
-				'cookiesCheckboxGaText' => 'Autorisation des cookies Google Analytics',
+				'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+				'gaLabel' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
+				'titleLabel' => 'Gérer les cookies',
+				'linkLegalLabel' => 'Consulter  les mentions légales',
+				'checkboxGaLabel' => 'Autorisation des cookies Google Analytics',
 				'cookiesFooterText' => 'Cookies',
-				'cookiesButtonText' => 'J\'ai compris'
+				'buttonValidLabel' => 'J\'ai compris'
 			]
 		],
 		'page' => [

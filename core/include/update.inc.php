@@ -702,11 +702,11 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['theme', 'footer', 'displayCookie', false]);
 
 	// Acceptation et paramétres des cookies RGPD
-	$this->setData(['locale', 'cookies', 'cookieZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
-	$this->setData(['locale', 'cookies', 'cookieGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
-	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
-	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Consulter les mentions légales']);
-	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	$this->setData(['locale', 'cookies', 'cookiesZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
+	$this->setData(['locale', 'cookies', 'cookiesGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
+	$this->setData(['locale', 'cookies', 'cookiesTitleText', 'Gérer les cookies']);
+	$this->setData(['locale', 'cookies', 'cookiesLinkMlText', 'Consulter les mentions légales']);
+	$this->setData(['locale', 'cookies', 'cookiesCheckboxGaText', 'Autorisation des cookies Google Analytics']);
 	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
 
 	// Supppression de l'option de traduction en mode connecté
@@ -717,4 +717,26 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
+}
+
+// Version 11.2.02
+if ($this->getData(['core', 'dataVersion']) < 11202) {
+
+	// Renommer les champs 
+	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText']) ]);
+	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText']) ]);
+	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText']) ]);
+	$this->setData(['locale', 'cookies', 'linkLegalLabel', 	$this->getData(['locale', 'cookies', 'cookiesLinkMlText']) ]);
+	$this->setData(['locale', 'cookies', 'checkboxGaLabel', $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText']) ]);
+	$this->setData(['locale', 'cookies', 'buttonValidLabel',$this->getData(['locale', 'cookies', 'cookiesButtonText']) ]);
+	// Effacer les anciens champs
+	$this->deleteData(['locale', 'cookies', 'cookiesZwiiText']);
+	$this->deleteData(['locale', 'cookies', 'cookiesGaText']);
+	$this->deleteData(['locale', 'cookies', 'cookiesTitleText']);
+	$this->deleteData(['locale', 'cookies', 'cookiesLinkMlText']);
+	$this->deleteData(['locale', 'cookies', 'cookiesCheckboxGaText']);
+	$this->deleteData(['locale', 'cookies', 'cookiesButtonText']);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11202]);
 }

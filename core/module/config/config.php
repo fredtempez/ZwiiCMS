@@ -451,13 +451,13 @@ class config extends common {
 					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
 					'cookies' => [
 						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'cookiesZwiiText'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
-						'cookiesGaText'	=> $this->getInput('localeCookiesGaText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
-						'cookiesTitleText'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
-						'cookiesLinkMlText'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
-						'cookiesCheckboxGaText'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'gaLabel'	=> $this->getInput('localeCookiesGaText', helper::FILTER_STRING_LONG, $this->getData(['config', 'cookieConsent'])),
+						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
+						'checkboxGaLabel'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
 						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent'])),
-						'cookiesButtonText' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent']))
+						'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getData(['config', 'cookieConsent']))
 					]
 				]
 			]);
