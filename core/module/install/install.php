@@ -200,8 +200,9 @@ class install extends common {
 				//$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
 				file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5a = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
-				$md5b = md5_file(self::TEMP_DIR.'update.md5');
+				$md5b = md5_file(self::TEMP_DIR.'update.tar.gz');
 				$success = $md5a === $md5b;
+				die();
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
