@@ -610,7 +610,7 @@ class config extends common {
 
 		// Variable de version
 		self::$onlineVersion = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
-		if (self::$onlineVersion !== common::ZWII_VERSION) {
+		if (self::$onlineVersion > common::ZWII_VERSION) {
 			self::$updateButtonText = "Mettre à jour" ;
 		}
 
