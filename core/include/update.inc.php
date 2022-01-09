@@ -702,12 +702,11 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['theme', 'footer', 'displayCookie', false]);
 
 	// Acceptation et paramétres des cookies RGPD
-	echo self::$i18n;
-	$this->setData(['locale', 'cookies', 'cookiesZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
-	$this->setData(['locale', 'cookies', 'cookiesGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
-	$this->setData(['locale', 'cookies', 'cookiesTitleText', 'Gérer les cookies']);
-	$this->setData(['locale', 'cookies', 'cookiesLinkMlText', 'Consulter les mentions légales']);
-	$this->setData(['locale', 'cookies', 'cookiesCheckboxGaText', 'Autorisation des cookies Google Analytics']);
+	$this->setData(['locale', 'cookies', 'cookieZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
+	$this->setData(['locale', 'cookies', 'cookieGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
+	$this->setData(['locale', 'cookies', 'cookieTitleText', 'Gérer les cookies']);
+	$this->setData(['locale', 'cookies', 'cookieLinkMlText', 'Consulter les mentions légales']);
+	$this->setData(['locale', 'cookies', 'cookieCheckboxGaText', 'Autorisation des cookies Google Analytics']);
 	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
 
 	// Supppression de l'option de traduction en mode connecté
