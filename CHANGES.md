@@ -1,17 +1,17 @@
 # Changelog
 
 ## Version 11.2.02
-- Correction : 
-    - Mise à jour : les noms des étiquettes de la popup des cookies n'étaient pas créés.
-- Modification : 
-    - Configuration du fichier htacess : 
-        - Suppression de la redirection forcée vers HTTPS lors de l'activation des URL intelligentes.
+- Correction :
+    - Mise à jour : les noms des étiquettes de le popup des cookies n'étaient pas créés.
+- Modifications :
+    - Configuration du fichier htaccess :
+    - Suppression de la redirection forcée vers HTTPS lors de l'activation des URL intelligentes.
     - Configuration :
         - Le numéro de version est désormais affiché dans le bloc Mise à jour.
-        - Le bloc Mise à jour dans l'écran de configuration est modifié ; les numéros de version installé et en ligne sont affichés si disponibles.
-        - Le libellé du bouton de Réinstaller devient Mettre à jour selon que le numéro de la version installée différe.
-    - Système d'aide :
-        - Affichage d'une popup d'information sur les boutons qui envoient vers l'aide en ligne.
+        - Le bloc Mise à jour dans l'écran de configuration est modifié ; les numéros de version installée et en ligne sont affichés si disponibles.
+        - Le libellé du bouton de Réinstaller devient Mettre à jour selon que le numéro de la version installée diffère.
+- Système d'aide :
+    - Affichage d'un popup d'information sur les boutons qui envoient vers l'aide en ligne.
 
 ## Version 11.2.01
 - Mises à jour : 
