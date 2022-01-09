@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.2.03
+- Modification :
+    - Mise à jour en ligne, contrôle de la clé MD5 de l'archive update.tar.gz.
+
 ## Version 11.2.02
 - Correction :
     - Mise à jour : les noms des étiquettes du popup des cookies n'étaient pas créés.
