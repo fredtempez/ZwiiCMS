@@ -1,7 +1,10 @@
 # Changelog
 
 ## Version 11.2.03
+- Correction :
+    - Thème ; pied de page ; option pied de page fixe inopérante.
 - Modification :
+    - Thème ; pied de page ; options pied de page fixe et alignement avec le contenu déplacées dans les paramètres.
     - Mise à jour en ligne, contrôle de la clé MD5 de l'archive update.tar.gz.
 
 ## Version 11.2.02

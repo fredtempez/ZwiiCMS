@@ -1390,7 +1390,7 @@ class common {
 			} else {
 					$position = 'body';
 					if ( $this->getData(['theme', 'footer', 'fixed']) === true) {
-						$positionFixed = 'footerbodyFixed';
+						$positionFixed = ' footerbodyFixed';
 					}
 					// Sortir de la division précédente
 					echo '</div>';
