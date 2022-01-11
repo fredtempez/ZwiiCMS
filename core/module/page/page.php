@@ -407,6 +407,39 @@ class page extends common {
 						$position = 0;
 						$hideTitle = true;
 					}
+					// Une page parent devient orpheline, les pages enfants le devienne pour éviter une incohérence
+					if ( 
+						$position === 0 &&
+						$position !==  $this->getData(['page', $this->getUrl(2), 'position']) &&
+						$this->getinput('pageEditBlock') !== 'bar'
+						) {
+							foreach ($this->getHierarchy($pageId) as $parentId=>$childId) {
+								if ($this->getData(['page',$childId,'parentPageId']) === $pageId) {
+									$this->setData(['page',$childId,'position', 0]);
+								}
+							}
+					}
+
+					// La page est une barre latérale qui a été renommée : changer le nom de la barre dans les pages qui l'utilisent
+					if ($this->getinput('pageEditBlock') === 'bar') {
+						foreach ($this->getHierarchy() as $eachPageId=>$parentId) {
+							if ($this->getData(['page',$eachPageId,'barRight']) === $this->getUrl(2)) {
+								$this->setData(['page',$eachPageId,'barRight',$pageId]);
+							}
+							if ($this->getData(['page',$eachPageId,'barLeft']) === $this->getUrl(2)) {
+								$this->setData(['page',$eachPageId,'barLeft',$pageId]);
+							}
+							foreach ($parentId as $childId) {
+								if ($this->getData(['page',$childId,'barRight']) === $this->getUrl(2)) {
+									$this->setData(['page',$childId,'barRight',$pageId]);
+								}
+								if ($this->getData(['page',$childId,'barLeft']) === $this->getUrl(2)) {
+									$this->setData(['page',$childId,'barLeft',$pageId]);
+								}
+							}
+						}
+					}
+
 					// Modifie la page ou en crée une nouvelle si l'id a changé
 					$this->setData([
 						'page',
@@ -437,44 +470,28 @@ class page extends common {
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 						]
 					]);
+
 					// Creation du contenu de la page
 					if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
 						mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
 					}
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
-					//file_put_contents( self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html' , $content );
 					$this->setPage($pageId , $content, self::$i18n);
-					// Barre renommée : changement le nom de la barre dans les pages mères
-					if ($this->getinput('pageEditBlock') === 'bar') {
-						foreach ($this->getHierarchy() as $eachPageId=>$parentId) {
-							if ($this->getData(['page',$eachPageId,'barRight']) === $this->getUrl(2)) {
-								$this->setData(['page',$eachPageId,'barRight',$pageId]);
-							}
-							if ($this->getData(['page',$eachPageId,'barLeft']) === $this->getUrl(2)) {
-								$this->setData(['page',$eachPageId,'barLeft',$pageId]);
-							}
-							foreach ($parentId as $childId) {
-								if ($this->getData(['page',$childId,'barRight']) === $this->getUrl(2)) {
-									$this->setData(['page',$childId,'barRight',$pageId]);
-								}
-								if ($this->getData(['page',$childId,'barLeft']) === $this->getUrl(2)) {
-									$this->setData(['page',$childId,'barLeft',$pageId]);
-								}
-							}
-						}
-					}
+
+
 					// Met à jour le site map
 					$this->createSitemap('all');
 					// Redirection vers la configuration
-					if($this->getInput('pageEditModuleRedirect', helper::FILTER_BOOLEAN)) {
-						// Valeurs en sortie
-						$this->addOutput([
-							'redirect' => helper::baseUrl() . $pageId . '/config',
-							'state' => true
-						]);
-					}
-					// Redirection vers la page
-					else {
+					if(
+						$this->getInput('pageEditModuleRedirect', helper::FILTER_BOOLEAN)
+						) {
+							// Valeurs en sortie
+							$this->addOutput([
+								'redirect' => helper::baseUrl() . $pageId . '/config',
+								'state' => true
+							]);
+						// Redirection vers la page
+						} else {
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $pageId,
