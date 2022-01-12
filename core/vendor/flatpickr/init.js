@@ -9,6 +9,6 @@ $(function() {
 		time_24hr: true,
 		locale: "fr",
 		regional:"fr",	
-		dateFormat: "Y-m-d H:i:s"
+		dateFormat: "Y-m-d H:i"
 	});
 });
