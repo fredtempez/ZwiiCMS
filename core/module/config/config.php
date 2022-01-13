@@ -23,6 +23,7 @@ class config extends common {
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
+		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
 		'logReset' => self::GROUP_ADMIN,
 		'logDownload'=> self::GROUP_ADMIN,
@@ -382,6 +383,15 @@ class config extends common {
 						$this->setData(['user',$users]);
 				}
 			}
+			// Conversion vers des Url relatives
+			if ($this->getData(['core', 'baseUrl'])) {
+				$url = str_replace('?','',$this->getData(['core', 'baseUrl']));
+				// Suppresion de la base Url
+				$this->updateBaseUrl($url);
+				// Effacer la baseUrl
+				$this->deleteData(['core', 'baseUrl']);
+			}			
+		
 			// Message de notification
 			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
@@ -648,6 +658,58 @@ class config extends common {
 				'codemirror'
 			],
 			'view' => 'script'
+		]);
+	}
+
+	/**
+	 * Met à jour les données de site avec l'adresse transmise
+	 */
+	public function updateBaseUrl ($url) {
+		// Supprimer l'information de redirection
+		$c3 = 0;
+		$success = false ;
+		// Boucler sur les pages
+		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
+			$content = $this->getPage($parentId, self::$i18n);
+			$titre = $this->getData(['page', $parentId, 'title']);
+			$content =   $titre . ' ' . $content ;
+			$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
+			$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
+
+			if ($c1 > 0 || $c2 > 0) {
+				$success = true;
+				$this->setPage($parentId, $replace,  self::$i18n);
+				$c3 += $c1 + $c2;
+			}
+			foreach($childIds as $childId) {
+				$content = $this->getPage($childId, self::$i18n);
+				$content =   $titre . ' ' . $content ;
+				$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
+				$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
+				if ($c1 > 0 || $c2 > 0) {
+					$success = true;
+					$this->setPage($childId, $replace,  self::$i18n);
+					$c3 += $c1 + $c2;
+				}
+			}
+		}
+		// Traiter les modules dont la redirection
+		$content = $this->getdata(['module']);
+		$replace = $this->recursive_array_replace('href="' . $url , 'href="'. '', $content, $c1);
+		$replace = $this->recursive_array_replace('src="' . $url , 'src="'. '', $replace, $c2);
+		if ($content !== $replace) {
+			$this->setdata(['module',$replace]);
+			$c3 += $c1 + $c2;
+			$success = true;
+		}
+		// Mettre à jour la base URl
+		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Restaurer',
+			'view' => 'restore',
+			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
+			'state' => $success ? true : false
 		]);
 	}
 
