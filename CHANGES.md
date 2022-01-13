@@ -2,6 +2,7 @@
 
 ## Version 11.2.03
 - Corrections :
+    - Flatpickr, le sélecteur de date n'affiche pas l'heure et la minute, réinstallation temporaire de la version 4.6.3.
     - Thème ; pied de page ; option pied de page fixe inopérante.
     - Edition des pages orphelines : "Ne pas afficher" une page contenant des sous-pages provoquait un bug d'affichage dans le menu, la page était malgré tout affichée en fin de menu. Ce problème était causé par les pages enfants dont l'affichage n'était pas modifié. Le correctif cascade l'option "Ne pas afficher" aux sous-pages. La réciproque n'est pas appliquée, il faudra rendre visible les sous-pages d'une page parente qui devient à nouveau visible.
 - Modifications :
