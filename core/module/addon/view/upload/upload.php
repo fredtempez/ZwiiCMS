@@ -15,13 +15,7 @@
           'value' => 'Aide'
         ]); ?>
       </div>
-      <div class="col2 ">
-          <?php echo template::button('configModulesStore', [
-              'href' => helper::baseUrl() . 'addon/store',
-              'value' => 'Catalogue en ligne'
-            ]); ?>
-      </div>
-      <div class="col2 offset4">
+      <div class="col2 offset6">
             <?php echo template::submit('configModulesSubmit',[
                 'value' => 'Valider',
                 'ico' => 'check'

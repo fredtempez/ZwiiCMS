@@ -7,6 +7,7 @@
     - Thème ; pied de page ; option pied de page fixe inopérante.
     - Edition des pages orphelines : "Ne pas afficher" une page contenant des sous-pages provoquait un bug d'affichage dans le menu, la page était malgré tout affichée en fin de menu. Ce problème était causé par les pages enfants dont l'affichage n'était pas modifié. Le correctif cascade l'option "Ne pas afficher" aux sous-pages. La réciproque n'est pas appliquée, il faudra rendre visible les sous-pages d'une page parente qui devient à nouveau visible.
 - Modifications :
+    - Addons (gestion des modules), le bouton d'accès au store est déplacé à la page de gestion des modules. Quelques étiquettes de boutons sont modifiés.
     - Thème ; pied de page ; options pied de page fixe et alignement avec le contenu déplacées dans les paramètres.
     - Mise à jour en ligne, contrôle de la clé MD5 de l'archive update.tar.gz.
 

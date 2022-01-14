@@ -9,7 +9,7 @@
 	</div>
 </div>
 <?php if($module::$storeList): ?>
-	<?php echo template::table([2, 2, 1, 2, 2, 2, 1], $module::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Pages', 'Télécharger']); ?>
+	<?php echo template::table([2, 2, 1, 2, 2, 2, 1], $module::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Pages', 'Télécharger ou <br> Mettre à jour']); ?>
 <?php else: ?>
 	<?php echo template::speech('Le catalogue est vide.'); ?>
 <?php endif; ?>
