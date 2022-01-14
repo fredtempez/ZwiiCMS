@@ -151,9 +151,7 @@
                 <div class="col3">
                     <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
                         'label' => 'Page "Rechercher" ' . template::flag('site', '20px'),
-                        'selected' => $this->getData(['locale', 'searchPageId']),
-                        'help' => 'Options identique à la configuration du site',
-
+                        'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
                 </div>
             </div>
