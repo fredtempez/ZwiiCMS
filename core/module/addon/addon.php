@@ -67,7 +67,10 @@ class addon extends common {
 				$success = true;
 				$notification = 'Module '. $module .' désinstallé';
 				if(($infoModules[$this->getUrl(2)]['dataDirectory']) ) {
-					if (!$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])){
+					if ( 
+							is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
+							&& !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
+						){
 						$notification = 'Module '.$module .' désinstallé, il reste des données dans ' . $infoModules[$this->getUrl(2)]['dataDirectory'];
 					}
 				}
