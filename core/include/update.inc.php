@@ -741,8 +741,8 @@ if ($this->getData(['core', 'dataVersion']) < 11202) {
 	$this->setData(['core', 'dataVersion', 11202]);
 }
 
-// Version 11.2.04
-if ($this->getData(['core', 'dataVersion']) < 11204) {
+// Version 11.2.03
+if ($this->getData(['core', 'dataVersion']) < 11203) {
 	// Supprimer l'information de redirection
 	$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
 	$new = '';
@@ -787,7 +787,7 @@ if ($this->getData(['core', 'dataVersion']) < 11204) {
 	$this->deleteData(['core', 'baseUrl']);
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11204]);
+	$this->setData(['core', 'dataVersion', 11203]);
 }
 // Version 11.3.00
 if ($this->getData(['core', 'dataVersion']) < 11300) {
