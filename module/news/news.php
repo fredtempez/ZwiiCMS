@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.7';
+	const VERSION = '4.0';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -23,7 +23,8 @@ class news extends common {
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
-		'config' => self::GROUP_MODERATOR,
+		'config' => self::GROUP_MODERATOR, // Edition des news
+		'layout' => self::GROUP_MODERATOR,  // paramétrage des news
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
@@ -88,7 +89,8 @@ class news extends common {
 
 	// Signature de l'article
 	public static $articleSignature = '';
-
+	// Nombre d'articles dans la page de config:
+	public static $itemsperPage = 8;
 
 	/**
 	 * Flux RSS
@@ -189,9 +191,62 @@ class news extends common {
 		// Mise à jour des données de module
 		$this->update();
 
+		// Ids des news par ordre de publication
+		$newsIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+		// Pagination fixe
+		$pagination = helper::pagination($newsIds, $this->getUrl(),self::$itemsperPage );
+		// Liste des pages
+		self::$pages = $pagination['pages'];
+		// News en fonction de la pagination
+		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			// Met en forme le tableau
+			$dateOn = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
+			$dateOn .= ' à ';
+			$dateOn .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
+			if ($this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])) {
+				$dateOff = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
+				$dateOff .=	' à ';
+				$dateOff .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
+					? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
+					: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
+			} else {
+				$dateOff = 'Permanent';
+			}
+			self::$news[] = [
+				$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'title']),
+				$dateOn,
+				$dateOff,
+				self::$states[$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'state'])],
+				template::button('newsConfigEdit' . $newsIds[$i], [
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],
+					'value' => template::ico('pencil')
+				]),
+				template::button('newsConfigDelete' . $newsIds[$i], [
+					'class' => 'newsConfigDelete buttonRed',
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
+					'value' => template::ico('cancel')
+				])
+			];
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration du module',
+			'view' => 'config',
+			'vendor' => [
+				'tinycolorpicker'
+			]
+		]);
+	}
+
+	public function layout() {
 		// Soumission du formulaire
 		if($this->isPost()) {
-
 
 			// Générer la feuille de CSS
 			$style =  '.newsFrame {';
@@ -217,69 +272,26 @@ class news extends common {
 			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
-				'feeds' 	 => $this->getInput('newsConfigShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('newsConfigFeedslabel',helper::FILTER_STRING_SHORT),
-				'itemsperPage' => $this->getInput('newsConfigItemsperPage', helper::FILTER_INT,true),
-				'itemsperCol' => $this->getInput('newsConfigItemsperCol', helper::FILTER_INT,true),
-				'height' => $this->getInput('newsConfigHeight', helper::FILTER_INT,true),
+				'feeds' 	 => $this->getInput('newsLayoutShowFeeds',helper::FILTER_BOOLEAN),
+				'feedsLabel' => $this->getInput('newsLayoutFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('newsLayoutItemsperPage', helper::FILTER_INT,true),
+				'itemsperCol' => $this->getInput('newsLayoutItemsperCol', helper::FILTER_INT,true),
+				'height' => $this->getInput('newsLayoutHeight', helper::FILTER_INT,true),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/layout',
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);
 		} else {
-			// Ids des news par ordre de publication
-			$newsIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
-			// Pagination
-			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
-			// Liste des pages
-			self::$pages = $pagination['pages'];
-			// News en fonction de la pagination
-			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
-				// Met en forme le tableau
-				$dateOn = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
-						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
-						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
-				$dateOn .= ' à ';
-				$dateOn .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])), 'UTF-8', true)
-						? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn']))
-						: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOn'])));
-				if ($this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])) {
-					$dateOff = mb_detect_encoding(strftime('%d %B %Y',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
-						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
-						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
-					$dateOff .=	' à ';
-					$dateOff .= mb_detect_encoding(strftime('%H:%M',  $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])), 'UTF-8', true)
-						? strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff']))
-						: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'publishedOff'])));
-				} else {
-					$dateOff = 'Permanent';
-				}
-				self::$news[] = [
-					$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'title']),
-					$dateOn,
-					$dateOff,
-					self::$states[$this->getData(['module', $this->getUrl(0),'posts', $newsIds[$i], 'state'])],
-					template::button('newsConfigEdit' . $newsIds[$i], [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],
-						'value' => template::ico('pencil')
-					]),
-					template::button('newsConfigDelete' . $newsIds[$i], [
-						'class' => 'newsConfigDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel')
-					])
-				];
-			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du module',
-				'view' => 'config',
+				'title' => 'Mise en page',
+				'view' => 'layout',
 				'vendor' => [
 					'tinycolorpicker'
 				]
@@ -435,8 +447,7 @@ class news extends common {
 					$newsIds[] = $newsId;
 				}
 			}
-			// Pagination
-			//$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['config','itemsperPage']));
+			// Pagination selon le layout
 			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 			// Nombre de colonnes
 			self::$nbrCol = $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol']);
