@@ -16,35 +16,11 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::submit('blogConfigSubmit'); ?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Paramètres du module</h4>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('blogConfigShowFeeds', true, 'Lien du flux RSS', [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
-						]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::text('blogConfigFeedslabel', [
-							'label' => 'Texte de l\'étiquette',
-							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6 offset6">
-						<?php echo template::select('blogConfigItemsperPage', $module::$ItemsList, [
-							'label' => 'Articles par page',
-							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
-						]); ?>
-					</div>
-				</div>
-			</div>
+			<?php echo template::button('blogConfigLayout', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/layout',
+				'ico' => 'brush',
+				'value' => 'Mise en page'
+			]); ?>
 		</div>
 	</div>
 <?php echo template::formClose(); ?>
