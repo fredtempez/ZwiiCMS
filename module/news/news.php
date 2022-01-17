@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '3.6';
+	const VERSION = '3.7';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -499,7 +499,9 @@ class news extends common {
 		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
 
 		// le module n'est pas initialisé
-		if ($versionData === NULL) {
+		if (	$versionData === NULL
+		  	|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')		
+		) {
 			$this->init();
 		}
 
