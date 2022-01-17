@@ -18,7 +18,7 @@
 		<div class="col2">
 			<?php echo template::button('newsConfigLayout', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/layout',
-				'ico' => 'puzzle',
+				'ico' => 'brush',
 				'value' => 'Mise en page'
 			]); ?>
 		</div>
