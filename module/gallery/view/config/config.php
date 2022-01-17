@@ -11,7 +11,7 @@
 		<div class="col2 offset8">
 			<?php echo template::button('galleryConfigBack', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
-				'value' => template::ico('brush','right') . 'Thème'
+				'value' => template::ico('brush','right') . 'Mise en page'
 			]); ?>
 		</div>
 	</div>
