@@ -29,9 +29,9 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor nonbreaking",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker contextmenu fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor visualblocks nonbreaking",
 	// Contenu de la barre d'outils
-	toolbar: "formatselect fontsizeselect |  bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | table template | image media link | code fullscreen",
+	toolbar: "formatselect fontsizeselect |  bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | table template | image media link | visualblocks code fullscreen",
 	fontsize_formats:
     "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	// CodeMirror
