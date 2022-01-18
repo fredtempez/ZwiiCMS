@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '2.11';
+	const VERSION = '3.0';
 	const REALNAME = 'Formulaire';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -24,6 +24,7 @@ class form extends common {
 
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
+		'layout'  => self::GROUP_MODERATOR,
 		'data' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'deleteall' => self::GROUP_MODERATOR,
@@ -37,6 +38,9 @@ class form extends common {
 	public static $pages = [];
 
 	public static $pagination;
+
+	// Nombre d'articles dans la page de config:
+	public static $itemperPage = 20;
 
 
 	// Objets
@@ -75,38 +79,31 @@ class form extends common {
 		'100' => '100%'
 	];
 
+	public static $formOffset = [
+		'none' 		=> 'Aucune',
+		'1'	=> 'Une colonne',
+		'2'	=> 'Deux colonnes',
+		'3'	=> 'Trois colonnes',
+		'4'	=> 'Quatre colonnes',
+	];
+
+	public static $formWidth = [
+		'6'	=> 'Six colonne',
+		'7'	=> 'Sept colonnes',
+		'8'	=> 'Huit colonnes',
+		'9'	=> 'Neuf colonnes',
+		'10'	=> 'Dix colonnes',
+		'11'	=> 'Onze colonnes',
+		'12'	=> 'Douze colonnes',
+	];
+
+
 	/**
 	 * Configuration
 	 */
 	public function config() {
-		// Liste des utilisateurs
-		$userIdsFirstnames = helper::arrayCollumn($this->getData(['user']), 'firstname');
-		ksort($userIdsFirstnames);
-		self::$listUsers [] = '';
-		foreach($userIdsFirstnames as $userId => $userFirstname) {
-			self::$listUsers [] =  $userId;
-		}
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Configuration
-			$this->setData([
-				'module',
-				$this->getUrl(0),
-				'config',
-				[
-					'button' => $this->getInput('formConfigButton'),
-					'captcha' => $this->getInput('formConfigCaptcha', helper::FILTER_BOOLEAN),
-					'group' => $this->getInput('formConfigGroup', helper::FILTER_INT),
-					'user' =>  self::$listUsers [$this->getInput('formConfigUser', helper::FILTER_INT)],
-					'mail' => $this->getInput('formConfigMail') ,
-					'pageId' => $this->getInput('formConfigPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formConfigPageId', helper::FILTER_ID) : '',
-					'subject' => $this->getInput('formConfigSubject'),
-					'replyto' => $this->getInput('formConfigMailReplyTo', helper::FILTER_BOOLEAN),
-					'signature' => $this->getInput('formConfigSignature'),
-					'logoUrl' => $this->getInput('formConfigLogo'),
-					'logoWidth' => $this->getInput('formConfigLogoWidth')
-				]
-			]);
 			// Génération des données vides
 			if ($this->getData(['module', $this->getUrl(0), 'data']) === null) {
 				$this->setData(['module', $this->getUrl(0), 'data', []]);
@@ -148,6 +145,66 @@ class form extends common {
 		]);
 	}
 
+
+	public function layout() {
+		// Liste des utilisateurs
+		$userIdsFirstnames = helper::arrayCollumn($this->getData(['user']), 'firstname');
+		ksort($userIdsFirstnames);
+		self::$listUsers [] = '';
+		foreach ($userIdsFirstnames as $userId => $userFirstname) {
+			self::$listUsers [] =  $userId;
+		}
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			// Configuration
+			$this->setData([
+				'module',
+				$this->getUrl(0),
+				'config',
+				[
+					'button' => $this->getInput('formLayoutButton'),
+					'captcha' => $this->getInput('formLayoutCaptcha', helper::FILTER_BOOLEAN),
+					'group' => $this->getInput('formLayoutGroup', helper::FILTER_INT),
+					'user' =>  self::$listUsers [$this->getInput('formLayoutUser', helper::FILTER_INT)],
+					'mail' => $this->getInput('formLayoutMail') ,
+					'pageId' => $this->getInput('formLayoutPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formLayoutPageId', helper::FILTER_ID) : '',
+					'subject' => $this->getInput('formLayoutSubject'),
+					'replyto' => $this->getInput('formLayoutMailReplyTo', helper::FILTER_BOOLEAN),
+					'signature' => $this->getInput('formLayoutSignature'),
+					'logoUrl' => $this->getInput('formLayoutLogo'),
+					'logoWidth' => $this->getInput('formLayoutLogoWidth')
+				]
+			]);
+			// Génération des données vides
+			if ($this->getData(['module', $this->getUrl(0), 'data']) === null) {
+				$this->setData(['module', $this->getUrl(0), 'data', []]);
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Modifications enregistrées',
+				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'state' => true
+			]);
+		} else   {
+			// Liste des pages
+			foreach($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
+				self::$pages[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
+				foreach($childrenPageIds as $childKey) {
+					self::$pages[$childKey] = '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']);
+				}
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Paramètres',
+				'vendor' => [
+					'html-sortable',
+					'flatpickr'
+				],
+				'view' => 'layout'
+			]);
+		}
+	}
+
 	/**
 	 * Données enregistrées
 	 */
@@ -155,7 +212,7 @@ class form extends common {
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
 		if($data) {
 			// Pagination
-			$pagination = helper::pagination($data, $this->getUrl(),self::ITEMSPAGE);
+			$pagination = helper::pagination($data, $this->getUrl(), self::$itemsperPages);
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Inverse l'ordre du tableau
