@@ -24,7 +24,7 @@ class form extends common {
 
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
-		'layout'  => self::GROUP_MODERATOR,
+		'option'  => self::GROUP_MODERATOR,
 		'data' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'deleteall' => self::GROUP_MODERATOR,
@@ -146,7 +146,7 @@ class form extends common {
 	}
 
 
-	public function layout() {
+	public function option() {
 		// Liste des utilisateurs
 		$userIdsFirstnames = helper::arrayCollumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
@@ -162,17 +162,17 @@ class form extends common {
 				$this->getUrl(0),
 				'config',
 				[
-					'button' => $this->getInput('formLayoutButton'),
-					'captcha' => $this->getInput('formLayoutCaptcha', helper::FILTER_BOOLEAN),
-					'group' => $this->getInput('formLayoutGroup', helper::FILTER_INT),
-					'user' =>  self::$listUsers [$this->getInput('formLayoutUser', helper::FILTER_INT)],
-					'mail' => $this->getInput('formLayoutMail') ,
-					'pageId' => $this->getInput('formLayoutPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formLayoutPageId', helper::FILTER_ID) : '',
-					'subject' => $this->getInput('formLayoutSubject'),
-					'replyto' => $this->getInput('formLayoutMailReplyTo', helper::FILTER_BOOLEAN),
-					'signature' => $this->getInput('formLayoutSignature'),
-					'logoUrl' => $this->getInput('formLayoutLogo'),
-					'logoWidth' => $this->getInput('formLayoutLogoWidth')
+					'button' => $this->getInput('formOptionButton'),
+					'captcha' => $this->getInput('formOptionCaptcha', helper::FILTER_BOOLEAN),
+					'group' => $this->getInput('formOptionGroup', helper::FILTER_INT),
+					'user' =>  self::$listUsers [$this->getInput('formOptionUser', helper::FILTER_INT)],
+					'mail' => $this->getInput('formOptionMail') ,
+					'pageId' => $this->getInput('formOptionPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formOptionPageId', helper::FILTER_ID) : '',
+					'subject' => $this->getInput('formOptionSubject'),
+					'replyto' => $this->getInput('formOptionMailReplyTo', helper::FILTER_BOOLEAN),
+					'signature' => $this->getInput('formOptionSignature'),
+					'logoUrl' => $this->getInput('formOptionLogo'),
+					'logoWidth' => $this->getInput('formOptionLogoWidth')
 				]
 			]);
 			// Génération des données vides
@@ -200,7 +200,7 @@ class form extends common {
 					'html-sortable',
 					'flatpickr'
 				],
-				'view' => 'layout'
+				'view' => 'option'
 			]);
 		}
 	}
