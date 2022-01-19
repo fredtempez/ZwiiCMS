@@ -66,8 +66,8 @@
 	</div>
 	<div class="col2">
 		<?php echo template::button('formConfigLayout', [
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/layout',
-			'value' => 'Paramètres',
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
+			'value' => 'Options',
 			'ico' => 'cog-alt'
 		]); ?>
 	</div>
