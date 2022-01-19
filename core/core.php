@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.03';
+	const ZWII_VERSION = '11.3.00';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1145,6 +1145,27 @@ class common {
 		return $success;
 	}
 
+
+	/**
+	 * Fonction de parcours des données de module
+	 * @param string $find donnée à rechercher
+	 * @param string $replace donnée à remplacer
+	 * @param array tableau à analyser
+	 * @param int count nombres d'occurrences
+	 * @return array avec les valeurs remplacées.
+	 */
+	private function recursive_array_replace ($find, $replace, $array, &$count) {
+		if (!is_array($array)) {
+			return str_replace($find, $replace, $array, $count);
+		}
+
+		$newArray = [];
+		foreach ($array as $key => $value) {
+			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);
+			$count += $c;
+		}
+		return $newArray;
+	}
 
 	/**
 	 * Génère une archive d'un dossier et des sous-dossiers

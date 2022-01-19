@@ -383,6 +383,15 @@ class config extends common {
 						$this->setData(['user',$users]);
 				}
 			}
+			// Conversion vers des Url relatives
+			if ($this->getData(['core', 'baseUrl'])) {
+				$url = str_replace('?','',$this->getData(['core', 'baseUrl']));
+				// Suppresion de la base Url
+				$this->updateBaseUrl($url);
+				// Effacer la baseUrl
+				$this->deleteData(['core', 'baseUrl']);
+			}			
+		
 			// Message de notification
 			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
@@ -655,10 +664,8 @@ class config extends common {
 	/**
 	 * Met à jour les données de site avec l'adresse transmise
 	 */
-	public function updateBaseUrl () {
+	public function updateBaseUrl ($url) {
 		// Supprimer l'information de redirection
-		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
-		$new = helper::baseUrl(false,false);
 		$c3 = 0;
 		$success = false ;
 		// Boucler sur les pages
@@ -666,8 +673,8 @@ class config extends common {
 			$content = $this->getPage($parentId, self::$i18n);
 			$titre = $this->getData(['page', $parentId, 'title']);
 			$content =   $titre . ' ' . $content ;
-			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
+			$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
+			$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
 
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
@@ -677,8 +684,8 @@ class config extends common {
 			foreach($childIds as $childId) {
 				$content = $this->getPage($childId, self::$i18n);
 				$content =   $titre . ' ' . $content ;
-				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
+				$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
+				$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
 				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
 					$this->setPage($childId, $replace,  self::$i18n);
@@ -688,8 +695,8 @@ class config extends common {
 		}
 		// Traiter les modules dont la redirection
 		$content = $this->getdata(['module']);
-		$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
-		$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
+		$replace = $this->recursive_array_replace('href="' . $url , 'href="'. '', $content, $c1);
+		$replace = $this->recursive_array_replace('src="' . $url , 'src="'. '', $replace, $c2);
 		if ($content !== $replace) {
 			$this->setdata(['module',$replace]);
 			$c3 += $c1 + $c2;
@@ -842,25 +849,4 @@ class config extends common {
 		]);
 	}
 
-
-	/**
-	 * Fonction de parcours des données de module
-	 * @param string $find donnée à rechercher
-	 * @param string $replace donnée à remplacer
-	 * @param array tableau à analyser
-	 * @param int count nombres d'occurrences
-	 * @return array avec les valeurs remplacées.
-	 */
-	private function recursive_array_replace ($find, $replace, $array, &$count) {
-		if (!is_array($array)) {
-			return str_replace($find, $replace, $array, $count);
-		}
-
-		$newArray = [];
-		foreach ($array as $key => $value) {
-			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);
-			$count += $c;
-		}
-		return $newArray;
-	}
 }
