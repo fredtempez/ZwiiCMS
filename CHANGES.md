@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 11.3
+### Modifications
+    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
+    - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
+
 ## Version 11.2.03
 - Corrections :
     - Addon, bug lors de l'effacement d'un module non initialisé.
@@ -10,6 +15,7 @@
     - Addons (gestion des modules), le bouton d'accès au store est déplacé à la page de gestion des modules. Quelques étiquettes de boutons sont modifiés.
     - Thème ; pied de page ; options pied de page fixe et alignement avec le contenu déplacées dans les paramètres.
     - Mise à jour en ligne, contrôle de la clé MD5 de l'archive update.tar.gz.
+    - Thème ; pied de page ; options pied de page fixe et alignement avec le contenu déplacées dans les paramètres.
 
 ## Version 11.2.02
 - Correction :
