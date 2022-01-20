@@ -32,7 +32,7 @@ class blog extends common {
 		'commentDelete' => self::GROUP_MODERATOR,
 		'commentDeleteAll' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR,
-		'layout' => self::GROUP_MODERATOR,
+		'option' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
@@ -482,20 +482,20 @@ class blog extends common {
 		]);
 	}
 
-	public function layout() {
+	public function option() {
 		// Mise à jour des données de module
 		$this->update();
 		// Soumission du formulaire
 		if($this->isPost()) {
 			$this->setData(['module', $this->getUrl(0), 'config',[
-				'feeds' 	 => $this->getInput('blogLayoutShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('blogLayoutFeedslabel',helper::FILTER_STRING_SHORT),
-				'itemsperPage' => $this->getInput('blogLayoutItemsperPage', helper::FILTER_INT,true),
+				'feeds' 	 => $this->getInput('blogOptionShowFeeds',helper::FILTER_BOOLEAN),
+				'feedsLabel' => $this->getInput('blogOptionFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT,true),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/layout',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);
@@ -503,7 +503,7 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Mise en page',
-				'view' => 'layout'
+				'view' => 'option'
 			]);
 		}
 	}
