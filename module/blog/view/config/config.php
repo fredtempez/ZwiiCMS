@@ -9,16 +9,17 @@
 			]); ?>
 		</div>
 		<div class="col1 offset8">
-			<?php echo template::button('blogConfigAdd', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
-				'ico' => 'plus',
-				'value' => ''
-			]); ?>
-		</div>
-		<div class="col1">
 			<?php echo template::button('blogConfigOption', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
 				'ico' => 'cogs',
+				'value' => ''
+			]); ?>
+
+		</div>
+		<div class="col1">
+			<?php echo template::button('blogConfigAdd', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
+				'ico' => 'plus',
 				'value' => ''
 			]); ?>
 		</div>
