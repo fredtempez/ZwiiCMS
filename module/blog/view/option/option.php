@@ -1,7 +1,7 @@
-<?php echo template::formOpen('blogLayout'); ?>
+<?php echo template::formOpen('blogOption'); ?>
 	<div class="row">
 		<div class="col2">
-			<?php echo template::button('blogLayoutBack', [
+			<?php echo template::button('blogOptionBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'ico' => 'left',
@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2 offset8">
-			<?php echo template::submit('blogLayoutSubmit'); ?>
+			<?php echo template::submit('blogOptionSubmit'); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -18,12 +18,12 @@
 				<h4>Paramètres du module</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('blogLayoutShowFeeds', true, 'Lien du flux RSS', [
+						<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::text('blogLayoutFeedslabel', [
+						<?php echo template::text('blogOptionFeedslabel', [
 							'label' => 'Texte de l\'étiquette',
 							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
@@ -31,7 +31,7 @@
 				</div>
 				<div class="row">
 					<div class="col6 offset6">
-						<?php echo template::select('blogLayoutItemsperPage', $module::$ItemsList, [
+						<?php echo template::select('blogOptionItemsperPage', $module::$ItemsList, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 						]); ?>

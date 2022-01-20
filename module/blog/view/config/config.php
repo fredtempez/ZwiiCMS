@@ -8,18 +8,18 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col1 offset8">
 			<?php echo template::button('blogConfigAdd', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
 				'ico' => 'plus',
-				'value' => 'Article'
+				'value' => ''
 			]); ?>
 		</div>
-		<div class="col2">
-			<?php echo template::button('blogConfigLayout', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/layout',
-				'ico' => 'brush',
-				'value' => 'Mise en page'
+		<div class="col1">
+			<?php echo template::button('blogConfigOption', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
+				'ico' => 'cogs',
+				'value' => ''
 			]); ?>
 		</div>
 	</div>
