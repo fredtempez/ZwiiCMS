@@ -208,7 +208,7 @@ class form extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Paramètres',
+				'title' => 'Options de configuration',
 				'vendor' => [
 					'html-sortable',
 					'flatpickr'

@@ -1,14 +1,13 @@
 <?php echo template::formOpen('newsOption'); ?>
 <div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('newsOptionBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset8">
+		<div class="col2 offset9">
 				<?php echo template::submit('newsOptionSubmit'); ?>
 		</div>
 	</div>

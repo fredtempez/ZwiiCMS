@@ -50,15 +50,14 @@
 </div>
 <?php echo template::formOpen('formConfigForm'); ?>
 <div class="row">
-    <div class="col2">
+    <div class="col1">
         <?php echo template::button('formConfigBack', [
             'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-            'ico' => 'left',
-            'value' => 'Retour'
+			'value' => template::ico('left')
         ]); ?>
 	</div>
-	<div class="col1 offset6">
+	<div class="col1 offset7">
 		<?php echo template::button('formConfigData', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/data',
 			'value' => template::ico('code')

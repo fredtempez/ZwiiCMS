@@ -1,14 +1,13 @@
 <?php echo template::formOpen('searchConfig'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('searchConfigBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset8">
+		<div class="col2 offset9">
 				<?php echo template::submit('searchConfigSubmit'); ?>
 		</div>
 	</div>
