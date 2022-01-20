@@ -11,7 +11,9 @@
 			<?php echo template::button('themeAdvancedReset', [
 				'href' => helper::baseUrl() . 'theme/reset/custom' . '&csrf=' . $_SESSION['csrf'],
 				'class' => 'buttonRed',
-				'value' => template::ico('cancel')
+				'value' => template::ico('cancel'),
+				'help' => 'Réinitialiser la feuille de style'
+				
 			]); ?>
 		</div>
 		<div class="col2">

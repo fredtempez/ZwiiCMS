@@ -11,19 +11,22 @@
 			'href' => 'https://doc.zwiicms.fr/modules-utilisation-generique',
 			'target' => '_blank',
 			'value' => template::ico('help'),
-			'class' => 'buttonHelp'
+			'class' => 'buttonHelp',
+			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col1 offset8">
           <?php echo template::button('configModulesStore', [
               'href' => helper::baseUrl() . 'addon/store',
-              'value' => 'Catalogue en ligne'
+			  'value' => template::ico('plus') . template::ico('plus'),
+			  "help" => 'Lister le catalogue en ligne'
             ]); ?>
       </div>
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('configStoreUpload', [
 			'href' => helper::baseUrl() . 'addon/upload',
-			'value' => 'Installer'
+			'value' => template::ico('plus'),
+			"help" => 'Ajouter à partir d\'une archive ZIP'
 		]); ?>
 	</div>
 </div>

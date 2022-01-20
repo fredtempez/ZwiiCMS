@@ -11,16 +11,17 @@
 			<?php echo template::button('translateHelp', [
 				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
 				'target' => '_blank',
-				'value' => template::ico('cancel'),
-				'class' => 'buttonHelp'
+				'value' => template::ico('help'),
+				'class' => 'buttonHelp',
+				'help' => 'Consulter l\'aide en ligne'
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col1 offset7">
 		<?php echo template::button('translateButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => 'Copie inter-langues',
-			'ico' => 'cogs',
-			'disabled' => $module::$siteTranslate
+			'value' => template::ico('cogs'),
+			'disabled' => $module::$siteTranslate,
+			'help' => 'Utilitaire de copie de site inter-langues'
 		]); ?>
 		</div>
 		<div class="col2">
