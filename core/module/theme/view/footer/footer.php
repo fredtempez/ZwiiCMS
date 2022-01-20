@@ -1,23 +1,21 @@
 <?php echo template::formOpen('themeFooterForm'); ?>
 <div class="row">
-    <div class="col2">
+    <div class="col1">
         <?php echo template::button('themeFooterBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
     </div>
-    <div class="col2">
+    <div class="col1">
       <?php echo template::button('themeFooterHelp', [
         'href' => 'https://doc.zwiicms.fr/pied-de-page',
         'target' => '_blank',
-        'ico' => 'help',
-        'value' => 'Aide',
+        'value' => template::ico('help'),
         'class' => 'buttonHelp'
       ]); ?>
     </div>
-    <div class="col2 offset6">
+    <div class="col2 offset8">
         <?php echo template::submit('themeFooterSubmit'); ?>
     </div>
 </div>

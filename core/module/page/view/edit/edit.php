@@ -1,37 +1,33 @@
 <?php echo template::formOpen('pageEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
     		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')$href = helper::baseUrl(); ?>
 			<?php echo template::button('pageEditBack', [
 				'class' => 'buttonGrey',
 				'href' => $href,
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('home')
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('pageEditHelp', [
 				'href' => 'https://doc.zwiicms.fr/edition-des-pages',
 				'target' => '_blank',
-				'ico' => 'help',
-				'value' => 'Aide',
+				'value' => template::ico('help'),
 				'class' => 'buttonHelp'
 			]); ?>
 		</div>
-		<div class="col2 offset2">
-			<?php echo template::button('pageEditDuplicate', [
-				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
-				'value' => 'Dupliquer',
-				'ico' => 'clone'
-			]); ?>
-		</div>
-		<div class="col2">
+		<div class="col1 offset6">
 			<?php echo template::button('pageEditDelete', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
-				'value' => 'Supprimer',
-				'ico' => 'cancel'
+				'value' => template::ico('cancel')
+			]); ?>
+		</div>
+		<div class="col1">
+			<?php echo template::button('pageEditDuplicate', [
+				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
+				'value' => template::ico('clone')
 			]); ?>
 		</div>
 		<div class="col2">
