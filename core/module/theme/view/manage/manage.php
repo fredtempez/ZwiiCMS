@@ -7,12 +7,12 @@
 				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset7">
+		<div class="col1 offset8">
 			<?php echo template::button('configManageReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/reset/manage'  . '&csrf=' . $_SESSION['csrf'],
-				'value' => 'Réinitialiser',
-				'ico' => 'cancel'
+				'value' => template::ico('cancel'),
+				'help' => 'Réinitialiser avec le thème par défaut'
 			]); ?>
 		</div>
 		<div class="col2">

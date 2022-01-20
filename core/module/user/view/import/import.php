@@ -12,7 +12,8 @@
 			'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
 			'target' => '_blank',
             'value' => template::ico('help'),
-			'class' => 'buttonHelp'
+			'class' => 'buttonHelp',
+			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
     <div class="col2 offset8">

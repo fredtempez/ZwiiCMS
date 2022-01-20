@@ -12,7 +12,8 @@
           'href' => 'https://doc.zwiicms.fr/installation-d-un-module',
           'target' => '_blank',
           'class' => 'buttonHelp',
-          'value' => template::ico('help')
+          'value' => template::ico('help'),
+          'help' => 'Consulter l\'aide en ligne'
         ]); ?>
       </div>
       <div class="col2 offset8">

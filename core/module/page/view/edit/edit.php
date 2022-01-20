@@ -14,7 +14,8 @@
 				'href' => 'https://doc.zwiicms.fr/edition-des-pages',
 				'target' => '_blank',
 				'value' => template::ico('help'),
-				'class' => 'buttonHelp'
+				'class' => 'buttonHelp',
+				'help' => 'Consulter l\'aide en ligne'
 			]); ?>
 		</div>
 		<div class="col1 offset6">
@@ -28,7 +29,8 @@
 		<div class="col1">
 			<?php echo template::button('pageEditDuplicate', [
 				'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
-				'value' => template::ico('clone')
+				'value' => template::ico('clone'),
+				'help' => 'Dupliquer la page'
 			]); ?>
 		</div>
 		<div class="col2">
