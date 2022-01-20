@@ -1,14 +1,13 @@
 <?php echo template::formOpen('blogConfig'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('blogConfigBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0), 'posts',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col1 offset8">
+		<div class="col1 offset9">
 			<?php echo template::button('blogConfigOption', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
 				'value' => template::ico('cogs')

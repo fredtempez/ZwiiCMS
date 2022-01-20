@@ -290,7 +290,7 @@ class news extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Mise en page',
+				'title' => 'Options de configuration',
 				'view' => 'option',
 				'vendor' => [
 					'tinycolorpicker'

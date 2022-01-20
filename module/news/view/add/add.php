@@ -1,17 +1,16 @@
 <?php echo template::formOpen('newsAddForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('newsAddBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col2 offset7">
 			<?php echo template::button('newsAddDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Enregistrer en brouillon'
+				'value' => 'Brouillon'
 			]); ?>
 			<?php echo template::hidden('newsAddState', [
 				'value' => true
