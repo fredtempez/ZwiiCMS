@@ -1,7 +1,7 @@
-<?php echo template::formOpen('newsLayout'); ?>
+<?php echo template::formOpen('newsOption'); ?>
 <div class="row">
 		<div class="col2">
-			<?php echo template::button('newsLayoutBack', [
+			<?php echo template::button('newsOptionBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'ico' => 'left',
@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2 offset8">
-				<?php echo template::submit('newsLayoutSubmit'); ?>
+				<?php echo template::submit('newsOptionSubmit'); ?>
 		</div>
 	</div>
     <div class="row">
@@ -18,13 +18,13 @@
 				<h4>Paramètres du module</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('newsLayoutShowFeeds', true, 'Lien du flux RSS', [
+						<?php echo template::checkbox('newsOptionShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 							'help' => 'Flux limité aux articles de la première page.'
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::text('newsLayoutFeedslabel', [
+						<?php echo template::text('newsOptionFeedslabel', [
 							'label' => 'Etiquette RSS',
 							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
@@ -32,19 +32,19 @@
 				</div>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('newsLayoutItemsperCol', $module::$columns, [
+						<?php echo template::select('newsOptionItemsperCol', $module::$columns, [
 							'label' => 'Nombre de colonnes',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperCol'])
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('newsLayoutItemsperPage', $module::$itemsList, [
+						<?php echo template::select('newsOptionItemsperPage', $module::$itemsList, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('newsLayoutHeight', $module::$height, [
+						<?php echo template::select('newsOptionHeight', $module::$height, [
 							'label' => 'Abrégé de l\'article',
 							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'height'])
 						]); ?>

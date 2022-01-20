@@ -24,7 +24,7 @@ class news extends common {
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
 		'config' => self::GROUP_MODERATOR, // Edition des news
-		'layout' => self::GROUP_MODERATOR,  // paramétrage des news
+		'option' => self::GROUP_MODERATOR,  // paramétrage des news
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
@@ -244,7 +244,7 @@ class news extends common {
 		]);
 	}
 
-	public function layout() {
+	public function option() {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
@@ -272,18 +272,18 @@ class news extends common {
 			]]);
 
 			$this->setData(['module', $this->getUrl(0), 'config',[
-				'feeds' 	 => $this->getInput('newsLayoutShowFeeds',helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('newsLayoutFeedslabel',helper::FILTER_STRING_SHORT),
-				'itemsperPage' => $this->getInput('newsLayoutItemsperPage', helper::FILTER_INT,true),
-				'itemsperCol' => $this->getInput('newsLayoutItemsperCol', helper::FILTER_INT,true),
-				'height' => $this->getInput('newsLayoutHeight', helper::FILTER_INT,true),
+				'feeds' 	 => $this->getInput('newsOptionShowFeeds',helper::FILTER_BOOLEAN),
+				'feedsLabel' => $this->getInput('newsOptionFeedslabel',helper::FILTER_STRING_SHORT),
+				'itemsperPage' => $this->getInput('newsOptionItemsperPage', helper::FILTER_INT,true),
+				'itemsperCol' => $this->getInput('newsOptionItemsperCol', helper::FILTER_INT,true),
+				'height' => $this->getInput('newsOptionHeight', helper::FILTER_INT,true),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
 
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/layout',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);
@@ -291,7 +291,7 @@ class news extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Mise en page',
-				'view' => 'layout',
+				'view' => 'option',
 				'vendor' => [
 					'tinycolorpicker'
 				]
