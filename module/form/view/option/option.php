@@ -132,10 +132,24 @@
             <h4>Gabarit</h4>
                 <div class="row">
                     <div class="col6">
-                            
+                        <?php echo template::select('formOptionAlign', $module::$optionAlign, [
+                            'label' => 'Alignement du formulaire',
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'align'])
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col6">
+                        <?php echo template::select('formOptionOffset', $module::$optionOffset, [
+                            'label' => 'Décalage à gauche',
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'offset'])
+                        ]); ?>
                     </div>
                     <div class="col6">
-
+                         <?php echo template::select('formOptionWidth', $module::$optionWidth, [
+                            'label' => 'Largeur',
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'width'])
+                        ]); ?>
                     </div>
                 </div>
             </div>

@@ -79,22 +79,26 @@ class form extends common {
 		'100' => '100%'
 	];
 
-	public static $formOffset = [
-		'none' 		=> 'Aucune',
-		'1'	=> 'Une colonne',
-		'2'	=> 'Deux colonnes',
-		'3'	=> 'Trois colonnes',
-		'4'	=> 'Quatre colonnes',
+	public static $optionOffset = [
+		0 	=> 'Aucune',
+		1	=> 'Une colonne',
+		2	=> 'Deux colonnes'
 	];
 
-	public static $formWidth = [
-		'6'	=> 'Six colonne',
-		'7'	=> 'Sept colonnes',
-		'8'	=> 'Huit colonnes',
-		'9'	=> 'Neuf colonnes',
-		'10'	=> 'Dix colonnes',
-		'11'	=> 'Onze colonnes',
-		'12'	=> 'Douze colonnes',
+	public static $optionWidth = [
+		6	=> 'Six colonnes',
+		7	=> 'Sept colonnes',
+		8	=> 'Huit colonnes',
+		9	=> 'Neuf colonnes',
+		10	=> 'Dix colonnes',
+		11	=> 'Onze colonnes',
+		12	=> 'Douze colonnes',
+	];
+
+	public static $optionAlign = [
+		''					=> 'A gauche',
+		'textAlignCenter'   => 'Au centre',
+		'textAlignRight' 	=> 'A droite'
 	];
 
 
@@ -156,6 +160,12 @@ class form extends common {
 		}
 		// Soumission du formulaire
 		if ($this->isPost()) {
+			// Débordement
+			$width = $this->getInput('formOptionWidth');
+			if ($this->getInput('formOptionWidth',helper::FILTER_INT) + $this->getInput('formOptionOffset',helper::FILTER_INT) > 12 ) {				
+				$width = (string) $this->getInput('formOptionWidth',helper::FILTER_INT) - $this->getInput('formOptionOffset',helper::FILTER_INT);
+			}
+
 			// Configuration
 			$this->setData([
 				'module',
@@ -172,7 +182,10 @@ class form extends common {
 					'replyto' => $this->getInput('formOptionMailReplyTo', helper::FILTER_BOOLEAN),
 					'signature' => $this->getInput('formOptionSignature'),
 					'logoUrl' => $this->getInput('formOptionLogo'),
-					'logoWidth' => $this->getInput('formOptionLogoWidth')
+					'logoWidth' => $this->getInput('formOptionLogoWidth'),
+					'offset' =>$this->getInput('formOptionOffset'),
+					'width' =>$width,
+					'align' =>$this->getInput('formOptionAlign'),
 				]
 			]);
 			// Génération des données vides
@@ -181,7 +194,7 @@ class form extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => 'Modifications enregistrées' ,
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'state' => true
 			]);
