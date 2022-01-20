@@ -1,23 +1,21 @@
 <?php echo template::formOpen('themeBodyForm'); ?>
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('themeBodyBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'theme',
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('themeBodyHelp', [
 			'href' => 'https://doc.zwiicms.fr/arriere-plan',
 			'target' => '_blank',
-			'ico' => 'help',
-			'value' => 'Aide',
+			'value' => template::ico('help'),
 			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col2 offset8">
 		<?php echo template::submit('themeBodySubmit'); ?>
 	</div>
 </div>

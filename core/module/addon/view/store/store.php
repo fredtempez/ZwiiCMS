@@ -1,10 +1,9 @@
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('configStoreBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'addon/upload',
-			'ico' => 'left',
-			'value' => 'Retour'
+			'href' => helper::baseUrl()  . 'addon',
+			'value' => template::ico('left')
 		]); ?>
 	</div>
 </div>

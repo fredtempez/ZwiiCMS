@@ -1,27 +1,25 @@
 <?php echo template::formOpen('translateForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('translateFormBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl(),
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('translateHelp', [
 				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
 				'target' => '_blank',
-				'ico' => 'help',
-				'value' => 'Aide',
+				'value' => template::ico('cancel'),
 				'class' => 'buttonHelp'
 			]); ?>
 		</div>
-		<div class="col3 offset3">
+		<div class="col3 offset5">
 		<?php echo template::button('translateButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => 'Utilitaire de copie',
-			'ico' => 'cog-alt',
+			'value' => 'Copie inter-langues',
+			'ico' => 'cogs',
 			'disabled' => $module::$siteTranslate
 		]); ?>
 		</div>

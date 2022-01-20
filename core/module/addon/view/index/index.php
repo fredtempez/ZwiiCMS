@@ -1,22 +1,20 @@
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('configModulesBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl(),
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('configModulesHelp', [
-			'href' => 'https://doc.zwiicms.fr/les-modules',
+			'href' => 'https://doc.zwiicms.fr/modules-utilisation-generique',
 			'target' => '_blank',
-			'ico' => 'help',
-			'value' => 'Aide',
+			'value' => template::ico('help'),
 			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-	<div class="col2 offset4">
+	<div class="col2 offset6">
           <?php echo template::button('configModulesStore', [
               'href' => helper::baseUrl() . 'addon/store',
               'value' => 'Catalogue en ligne'

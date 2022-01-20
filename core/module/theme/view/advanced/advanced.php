@@ -1,19 +1,17 @@
 <?php echo template::formOpen('themeAdvancedForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('themeAdvancedBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col1 offset8">
 			<?php echo template::button('themeAdvancedReset', [
 				'href' => helper::baseUrl() . 'theme/reset/custom' . '&csrf=' . $_SESSION['csrf'],
 				'class' => 'buttonRed',
-				'ico' => 'cancel',
-				'value' => 'Réinitialiser'
+				'value' => template::ico('cancel')
 			]); ?>
 		</div>
 		<div class="col2">
