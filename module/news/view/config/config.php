@@ -8,18 +8,16 @@
 				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col1 offset8">
 			<?php echo template::button('newsConfigAdd', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
-				'ico' => 'plus',
-				'value' => 'News'
+				'value' => template::ico('plus')
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('newsConfigLayout', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/layout',
-				'ico' => 'brush',
-				'value' => 'Mise en page'
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
+				'value' => template::ico('brush')
 			]); ?>
 		</div>
 	</div>
