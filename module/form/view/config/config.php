@@ -58,17 +58,16 @@
             'value' => 'Retour'
         ]); ?>
 	</div>
-	<div class="col2 offset4">
+	<div class="col1 offset6">
 		<?php echo template::button('formConfigData', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/data',
-			'value' => 'Données'
+			'value' => template::ico('code')
 		]); ?>
 	</div>
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('formConfigLayout', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
-			'value' => 'Options',
-			'ico' => 'cog-alt'
+			'value' => template::ico('cogs')
 		]); ?>
 	</div>
 	<div class="col2">
