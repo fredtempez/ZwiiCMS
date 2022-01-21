@@ -19,7 +19,7 @@
 		<div class="col1 offset7">
 		<?php echo template::button('translateButton', [
 			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => template::ico('cogs'),
+			'value' => template::ico('docs'),
 			'disabled' => $module::$siteTranslate,
 			'help' => 'Copie de sites inter-langues'
 		]); ?>

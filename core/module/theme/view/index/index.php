@@ -32,7 +32,7 @@
 	<div class="row">
 		<div class="col2  offset3">
 			<?php echo template::button('themeManage', [
-				'ico' => 'cogs',
+				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
@@ -77,7 +77,7 @@
 	<div class="row">
 		<div class="col2  offset3">
 			<?php echo template::button('themeManage', [
-				'ico' => 'cogs',
+				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
