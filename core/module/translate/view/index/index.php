@@ -21,7 +21,7 @@
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('cogs'),
 			'disabled' => $module::$siteTranslate,
-			'help' => 'Utilitaire de copie de site inter-langues'
+			'help' => 'Copie de sites inter-langues'
 		]); ?>
 		</div>
 		<div class="col2">

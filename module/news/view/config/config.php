@@ -8,15 +8,17 @@
 			]); ?>
 		</div>
 		<div class="col1 offset9">
-			<?php echo template::button('newsConfigAdd', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
-				'value' => template::ico('plus')
+			<?php echo template::button('newsConfigLayout', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
+				'value' => template::ico('cogs'),
+				'help' => 'Options de configuration'
 			]); ?>
 		</div>
 		<div class="col1">
-			<?php echo template::button('newsConfigLayout', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
-				'value' => template::ico('brush')
+			<?php echo template::button('newsConfigAdd', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
+				'value' => template::ico('plus'),
+				'help' => 'Rédiger une news'
 			]); ?>
 		</div>
 	</div>

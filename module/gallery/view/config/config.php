@@ -10,7 +10,8 @@
 		<div class="col1 offset10">
 			<?php echo template::button('galleryConfigBack', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
-				'value' => template::ico('brush')
+				'value' => template::ico('brush'),
+				'help' => 'Thème de cette galerie'
 			]); ?>
 		</div>
 	</div>

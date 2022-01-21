@@ -462,16 +462,19 @@ class blog extends common {
 				template::button('blogConfigComment' . $articleIds[$i], [
 					'class' => ($toApprove || $approved ) > 0 ?  '' : 'buttonGrey' ,
 					'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
-					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
+					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved,
+					'help' =>  ($toApprove || $approved ) > 0 ?  'Editer  / Approuver les commentaires' : ''
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('pencil')
+					'value' => template::ico('pencil'),
+					'help' => 'Editer l\'article'
 				]),
 				template::button('blogConfigDelete' . $articleIds[$i], [
 					'class' => 'blogConfigDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('cancel')
+					'value' => template::ico('cancel'),
+					'help' => 'Effacer l\'article'
 				])
 			];
 		}

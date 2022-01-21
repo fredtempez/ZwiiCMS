@@ -10,14 +10,16 @@
 		<div class="col1 offset9">
 			<?php echo template::button('blogConfigOption', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
-				'value' => template::ico('cogs')
+				'value' => template::ico('cogs'),
+				'help' => 'Options de configuration'
 			]); ?>
 
 		</div>
 		<div class="col1">
 			<?php echo template::button('blogConfigAdd', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/add',
-				'value' => template::ico('plus')
+				'value' => template::ico('plus'),
+				'help' => 'Rédiger un article'
 			]); ?>
 		</div>
 	</div>

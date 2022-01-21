@@ -60,13 +60,15 @@
 	<div class="col1 offset7">
 		<?php echo template::button('formConfigData', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/data',
-			'value' => template::ico('code')
+			'value' => template::ico('code'),
+			'help' => 'Voir et exporter les données du formulaire'
 		]); ?>
 	</div>
 	<div class="col1">
 		<?php echo template::button('formConfigLayout', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
-			'value' => template::ico('cogs')
+			'value' => template::ico('cogs'),
+			'help' => 'Options de configuration'
 		]); ?>
 	</div>
 	<div class="col2">
