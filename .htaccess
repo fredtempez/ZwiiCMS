@@ -24,9 +24,6 @@
     AddOutputFilterByType DEFLATE application/x-javascript
 </IfModule> 
 
-# Cache le PHPSESSID de l'url // Désormais géré par index.php
-# SetEnv SESSION_USE_TRANS_SID 0
-
 # Bloque l'accès à la liste des fichiers
 Options -Indexes
 

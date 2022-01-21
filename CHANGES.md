@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.2.04
+- Correction  :
+    - Affiche une notification de mise à jour si la numérotation de la version en ligne est supérieur à celle installée.
+
 ## Version 11.2.03
 - Corrections :
     - Addon, bug lors de l'effacement d'un module non initialisé.
