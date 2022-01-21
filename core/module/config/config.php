@@ -19,6 +19,7 @@ class config extends common {
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
 		'copyBackups'=> self::GROUP_ADMIN,
+		'delBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
@@ -593,7 +594,7 @@ class config extends common {
 			$this->generateFiles();
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
@@ -625,7 +626,7 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration',
+			'title' => 'Configuration du site',
 			'view' => 'index'
 		]);
 	}
@@ -725,7 +726,7 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
@@ -733,7 +734,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
@@ -761,7 +762,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
@@ -798,7 +799,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
@@ -815,7 +816,7 @@ class config extends common {
 			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
@@ -823,7 +824,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration',
+				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
@@ -842,11 +843,37 @@ class config extends common {
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration',
+			'title' => 'Configuration du site',
 			'view' => 'index',
 			'notification' => 'Copie terminée',
 			'state' => true
 		]);
 	}
+
+	/**
+	 * Vider le dosser des sauvegardes automatisées
+	 */
+	public function delBackups() {
+		$path = realpath(self::BACKUP_DIR);
+		$success = $fail = 0;
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
+		{
+			if (strpos($filename,'.zip')) {
+				
+				$r = unlink($filename);
+				$success = $r === true ? $succes + 1 : $success;
+				$fail = $r === false ? $fail + 1 : $fail;
+			}
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Configuration du site',
+			'view' => 'index',
+			'notification' => 'Suppression terminée :<br />' . $success . ' fichiers effacé(s) <br />' . $fail . ' échec(s)',
+			'state' => true
+		]);
+	}
+
+
 
 }
