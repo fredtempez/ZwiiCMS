@@ -302,15 +302,18 @@ class addon extends common {
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
+				$help = 'Installer le module';
 				// Le module est installé
 				if (array_key_exists($key,$infoModules) === true) {
 					$class = 'buttonGreen';
 					$ico = template::ico('update');
+					$help = 'Mettre à jour ce module';
 				}
 				// Le module est installé et utilisé
 				if (in_array($key,$inPages) === true) {
 					$class = 'buttonRed';
 					$ico =  template::ico('update');
+					$help = 'Mettre à jour le module';
 				}
 				self::$storeList [] = [
 					$store[$key]['category'],
@@ -323,7 +326,8 @@ class addon extends common {
 					template::button('moduleExport' . $key, [
 							'class' => $class,
 							'href' => helper::baseUrl(). $this->getUrl(0) . '/uploadItem/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-							'value' => $ico
+							'value' => $ico,
+							'help' => $help
 							])
 				];
 			}
@@ -380,19 +384,22 @@ class addon extends common {
 											? template::button('moduleDelete' . $key, [
 													'class' => 'moduleDelete buttonRed',
 													'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel')
+													'value' => template::ico('cancel'),
+													'help' => 'Supprimer le module '. $key
 												])
 											: '',
 				implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('download')
+												'value' => template::ico('download'),
+												'help' => 'Exporter les données du module avec sa page'
 												])
 											: '',
 				implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('upload')
+												'value' => template::ico('upload'),
+												'help' => 'Importer les données du module avec sa page'
 												])
 											: ''
 			];

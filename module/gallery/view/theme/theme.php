@@ -5,7 +5,7 @@
 			<?php echo template::button('galleryThemeBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'value' => template::ico('cancel')
+				'value' => template::ico('left')
 			]); ?>
 		</div>
 		<div class="col2 offset9">
