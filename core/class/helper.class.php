@@ -281,7 +281,7 @@ class helper {
 
 		if($version = helper::getOnlineVersion()) {
 			//return (trim($version) !== common::ZWII_VERSION);
-			return ((version_compare(common::ZWII_VERSION,$version)) === -1);
+			return ((version_compare(common::ZWII_VERSION,$version,'<')) === -1);
 		}
 		else {
 			return false;
