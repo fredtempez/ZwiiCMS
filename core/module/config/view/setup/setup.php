@@ -137,7 +137,7 @@
 						<?php echo template::button('configBackupCopyButton', [
 							'href' => helper::baseUrl() . 'config/copyBackups',
 							'value' => 'Copie sauvegardes auto',
-							'ico' => 'download-cloud'
+							'ico' => 'docs'
 						]); ?>
 					</div>
 				</div>

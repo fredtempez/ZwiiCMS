@@ -18,7 +18,7 @@
 	<div class="col1 offset8">
 		<?php echo template::button('userImport', [
 			'href' => helper::baseUrl() . 'user/import',
-			'value' => template::ico('plus') . template::ico('plus'),
+			'value' => template::ico('table') ,
 			'help' => 'Importer des utilisateurs en masse'
 		]); ?>
 	</div>

@@ -10,7 +10,7 @@
 		<div class="col1 offset9">
 			<?php echo template::button('newsConfigLayout', [
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/option',
-				'value' => template::ico('cogs'),
+				'value' => template::ico('sliders'),
 				'help' => 'Options de configuration'
 			]); ?>
 		</div>

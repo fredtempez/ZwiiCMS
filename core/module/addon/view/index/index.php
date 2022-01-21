@@ -18,7 +18,7 @@
 	<div class="col1 offset8">
           <?php echo template::button('configModulesStore', [
               'href' => helper::baseUrl() . 'addon/store',
-			  'value' => template::ico('plus') . template::ico('plus'),
+			  'value' => template::ico('shopping-basket'),
 			  "help" => 'Lister le catalogue en ligne'
             ]); ?>
       </div>
