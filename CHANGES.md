@@ -2,7 +2,7 @@
 
 ## Version 11.2.04
 - Correction  :
-    - Affiche une notification de mise à jour si la numérotation de la version en ligne est supérieur à celle installée.
+    - Affiche une notification de mise à jour si la numérotation de la version en ligne est supérieure à celle installée.
 
 ## Version 11.2.03
 - Corrections :
