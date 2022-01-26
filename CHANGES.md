@@ -1,8 +1,9 @@
 # Changelog
 
 ## Version 11.2.05
-- Correction : 
+- Corrections : 
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.
+    - Disparition de l'icône de gestion du compte pour le profil éditeur.
     
 ## Version 11.2.04
 - Correction  :
