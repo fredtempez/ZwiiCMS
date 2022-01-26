@@ -17,21 +17,21 @@
 	</div>
 	<div class="col1 offset8">
           <?php echo template::button('configModulesStore', [
-              'href' => helper::baseUrl() . 'addon/store',
+              'href' => helper::baseUrl() . 'plugin/store',
 			  'value' => template::ico('shopping-basket'),
 			  "help" => 'Lister le catalogue en ligne'
             ]); ?>
       </div>
 	<div class="col1">
 		<?php echo template::button('configStoreUpload', [
-			'href' => helper::baseUrl() . 'addon/upload',
+			'href' => helper::baseUrl() . 'plugin/upload',
 			'value' => template::ico('plus'),
 			"help" => 'Ajouter à partir d\'une archive ZIP'
 		]); ?>
 	</div>
 </div>
 <?php if($module::$modInstal): ?>
-	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', 'Exporter', 'Importer']); ?>
+	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', '', '']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>

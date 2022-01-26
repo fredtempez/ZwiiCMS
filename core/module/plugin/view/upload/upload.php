@@ -3,12 +3,12 @@
       <div class="col1">
           <?php echo template::button('configModulesBack', [
               'class' => 'buttonGrey',
-              'href' => helper::baseUrl()  . 'addon',
+              'href' => helper::baseUrl()  . 'plugin',
               'value' => template::ico('left')
           ]); ?>
       </div>
       <div class="col1">
-        <?php echo template::button('addonIndexHelp', [
+        <?php echo template::button('pluginIndexHelp', [
           'href' => 'https://doc.zwiicms.fr/installation-d-un-module',
           'target' => '_blank',
           'class' => 'buttonHelp',

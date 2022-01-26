@@ -16,21 +16,21 @@
  * @link http://zwiicms.fr/
  */
 
-class addon extends common {
+class plugin extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
-		'export' => self::GROUP_ADMIN,
-		'import' => self::GROUP_ADMIN,
+		'dataExport' => self::GROUP_ADMIN, 
+		'dataImport' => self::GROUP_ADMIN, // les données d'un module
 		'store' => self::GROUP_ADMIN,
-		'item' => self::GROUP_ADMIN,
-		'upload' => self::GROUP_ADMIN,
-		'uploadItem'=> self::GROUP_ADMIN
+		'item' => self::GROUP_ADMIN, // détail d'un objet
+		'upload' => self::GROUP_ADMIN, // Téléverser catalogue
+		'uploadItem'=> self::GROUP_ADMIN // Téléverser par archive
 	];
 
 	// URL des modules
-	const BASEURL_STORE = 'https://www.zwiicms.fr/';
+	const BASEURL_STORE = 'https://store.zwiicms.fr/';
 	const MODULE_STORE = '?modules/';
 
 	// Gestion des modules
@@ -43,6 +43,9 @@ class addon extends common {
 	public static $storeList = [];
 	public static $storeItem = [];
 
+	// Liste de pages
+	public static $pagesList = [];
+
 
 	/*
 	* Effacement d'un module installé et non utilisé
@@ -53,7 +56,7 @@ class addon extends common {
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'addon',
+				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
 				'notification' => 'Action non autorisée'
 			]);
@@ -81,7 +84,7 @@ class addon extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'addon',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'notification' => $notification,
 				'state' => $success
 			]);
@@ -271,7 +274,7 @@ class addon extends common {
 			*}
 			*/
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'addon/store',
+				'redirect' => helper::baseUrl()  . 'plugin/store',
 				'notification' => $moduleFile . ' téléchargé dans le dossier modules du gestionnaire de fichiers',
 				'state' => true
 			]);
@@ -390,16 +393,16 @@ class addon extends common {
 											: '',
 				implode(', ',array_keys($inPages,$key)) !== ''
 											? template::button('moduleExport' . $key, [
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/export/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+												'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('download'),
-												'help' => 'Exporter les données du module avec sa page'
+												'help' => 'Exporter les données du module'
 												])
 											: '',
 				implode(', ',array_keys($inPages,$key)) === ''
 											? template::button('moduleExport' . $key, [
 												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 												'value' => template::ico('upload'),
-												'help' => 'Importer les données du module avec sa page'
+												'help' => 'Importer les données du module'
 												])
 											: ''
 			];
@@ -415,95 +418,114 @@ class addon extends common {
 	/*
 	* Export des données d'un module externes ou interne à module.json
 	*/
-	public function export(){
+	public function dataExport(){
 		// Jeton incorrect
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'addon',
+				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
 				'notification' => 'Action non autorisée'
 			]);
 		}
 		else {
-			// Lire les données du module
-			$infoModules = helper::getModules();
-			// Créer un dossier par défaut
-			$tmpFolder = self::TEMP_DIR . uniqid();
-			//$tmpFolder = self::TEMP_DIR . 'test';
-			if (!is_dir($tmpFolder)) {
-				mkdir($tmpFolder, 0755);
-			}
-			// Clés moduleIds dans les pages
-			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-			// Parcourir les pages utilisant le module
-			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
-				// Export des pages hébergeant le module
-				$pageParam[$pageId] = $this->getData(['page',$pageId]);
-				// Export du contenu de la page
-				//$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $pageId, 'content']));
-				$pageContent[$pageId] = $this->getPage($pageId, self::$i18n);
-				// Export de fr/module.json
-				$moduleId = 'fr/module.json';
-				$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);
-				// Création de l'arborescence des langues
-				// Pas de nom dossier de langue - dossier par défaut
-				$t = explode ('/',$moduleId);
-				if ( is_array($t)) {
-					$lang = 'fr';
-				} else {
-					$lang = $t[0];
+			// Soumission du formulaire
+			if($this->isPost()) {
+				// Lire les données du module
+				$infoModules = helper::getModules();
+				// Créer un dossier par défaut
+				$tmpFolder = self::TEMP_DIR . uniqid();
+				//$tmpFolder = self::TEMP_DIR . 'test';
+				if (!is_dir($tmpFolder)) {
+					mkdir($tmpFolder, 0755);
 				}
-				// Créer le dossier temporaire si inexistant sinon le nettoie et le créer
-				if (!is_dir($tmpFolder . '/' . $lang)) {
-					mkdir ($tmpFolder . '/' . $lang, 0755, true);
-				} else {
-					$this->removeDir($tmpFolder . '/' . $lang);
-					mkdir ($tmpFolder . '/' . $lang, 0755, true);
-				}
-				// Créer le dossier temporaire des données du  module
-				if ($infoModules[$this->getUrl(2)]['dataDirectory']) {
-					if (!is_dir($tmpFolder . '/' . $moduleDir)) {
-						mkdir ($tmpFolder . '/' . $moduleDir, 0755, true) ;
+				$page = $this->getInput('pluginExportSelectPage');
+
+				// Clés moduleIds dans les pages
+				$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+				// Parcourir les pages utilisant le module
+				foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
+					// Export des pages hébergeant le module
+					$pageParam[$pageId] = $this->getData(['page',$pageId]);
+					// Export du contenu de la page
+					//$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $pageId, 'content']));
+					$pageContent[$pageId] = $this->getPage($pageId, self::$i18n);
+					// Export de fr/module.json
+					$moduleId = 'fr/module.json';
+					$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);
+					// Création de l'arborescence des langues
+					// Pas de nom dossier de langue - dossier par défaut
+					$t = explode ('/',$moduleId);
+					if ( is_array($t)) {
+						$lang = 'fr';
+					} else {
+						$lang = $t[0];
+					}
+					// Créer le dossier temporaire si inexistant sinon le nettoie et le créer
+					if (!is_dir($tmpFolder . '/' . $lang)) {
+						mkdir ($tmpFolder . '/' . $lang, 0755, true);
+					} else {
+						$this->removeDir($tmpFolder . '/' . $lang);
+						mkdir ($tmpFolder . '/' . $lang, 0755, true);
+					}
+					// Créer le dossier temporaire des données du  module
+					if ($infoModules[$this->getUrl(2)]['dataDirectory']) {
+						if (!is_dir($tmpFolder . '/' . $moduleDir)) {
+							mkdir ($tmpFolder . '/' . $moduleDir, 0755, true) ;
+						}
+					}
+					// Sauvegarde si données non vides
+					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
+					if ($tmpData [$pageId] !== null) {
+						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+					}
+					// Export des données localisées dans le dossier de données du module
+					if ($infoModules[$this->getUrl(2)]['dataDirectory'] &&
+						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])) {
+							$this->copyDir ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
 					}
 				}
-				// Sauvegarde si données non vides
-				$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-				if ($tmpData [$pageId] !== null) {
-					file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
+				// Enregistrement des pages dans le dossier de langue identique à module
+				if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
+					file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageParam));
+					mkdir ($tmpFolder . '/' . $lang . '/content', 0755);
+					file_put_contents($tmpFolder . '/' . $lang . '/content/' . $this->getData(['page', $pageId, 'content']), $pageContent);
 				}
-				// Export des données localisées dans le dossier de données du module
-				if ($infoModules[$this->getUrl(2)]['dataDirectory'] &&
-					is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])) {
-						$this->copyDir ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
+				// création du zip
+				$fileName =  $this->getUrl(2) . '.zip';
+				$this->makeZip ($fileName, $tmpFolder, []);
+				if (file_exists($fileName)) {
+					ob_start();
+					header('Content-Type: application/octet-stream');
+					header('Content-Disposition: attachment; filename="' . $fileName . '"');
+					header('Content-Length: ' . filesize($fileName));
+					ob_clean();   
+					ob_end_flush();
+					readfile( $fileName);
+					unlink($fileName);
+					$this->removeDir($tmpFolder);
+					exit();
+				} else {
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl() . 'plugin',
+						'notification' => 'Quelque chose s\'est mal passé',
+						'state' => false
+					]);
 				}
-			}
-			// Enregistrement des pages dans le dossier de langue identique à module
-			if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
-				file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageParam));
-				mkdir ($tmpFolder . '/' . $lang . '/content', 0755);
-				file_put_contents($tmpFolder . '/' . $lang . '/content/' . $this->getData(['page', $pageId, 'content']), $pageContent);
-			}
-			// création du zip
-			$fileName =  $this->getUrl(2) . '.zip';
-			$this->makeZip ($fileName, $tmpFolder, []);
-			if (file_exists($fileName)) {
-				ob_start();
-				header('Content-Type: application/octet-stream');
-				header('Content-Disposition: attachment; filename="' . $fileName . '"');
-				header('Content-Length: ' . filesize($fileName));
-				ob_clean();   
-				ob_end_flush();
-				readfile( $fileName);
-				unlink($fileName);
-				$this->removeDir($tmpFolder);
-				exit();
 			} else {
+
+				// Liste des pages contenant le module
+				$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+				foreach( $inPages as $key=>$value){
+					if ($value === $this->getUrl(2)) {
+						self::$pagesList[] = $key;
+					}						
+				}
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'addon',
-					'notification' => 'Quelque chose s\'est mal passé',
-					'state' => false
+					'title' => 'Export des données de module',
+					'view' => 'dataExport'
 				]);
 			}
 		}
@@ -512,12 +534,12 @@ class addon extends common {
 	/*
 	* Importer des données d'un module externes ou interne à module.json
 	*/
-	public function import(){
+	public function dataImport(){
 		// Jeton incorrect
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'addon',
+				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
 				'notification' => 'Action non autorisée'
 			]);
@@ -526,18 +548,32 @@ class addon extends common {
 			// Soumission du formulaire
 			if($this->isPost()) {
 				// Récupérer le fichier et le décompacter
-				$zipFilename =	$this->getInput('addonImportFile', helper::FILTER_STRING_SHORT, true);
+				$zipFilename =	$this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
+				$targetPage = $this->getInput('pluginImportPage', helper::FILTER_STRING_SHORT, true);
 				$tempFolder = uniqid();
 				mkdir (self::TEMP_DIR . $tempFolder, 0755);
 				$zip = new ZipArchive();
 				if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
 					$zip->extractTo(self::TEMP_DIR  . $tempFolder );
 				}
+
+				// copie du contenu de la page
+				$this->copyDir (self::TEMP_DIR . $tempFolder . '/' .$key . '/content', self::DATA_DIR . '/' .$key . '/content');
+				// Supprimer les fichiers importés
+				unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
+				// Import des fichiers placés ailleurs que dans les dossiers localisés.
+				$this->copyDir (self::TEMP_DIR . $tempFolder, self::DATA_DIR );
+				
+
 				// Import des données localisées page.json et module.json
 				// Pour chaque dossier localisé
-				$dataTarget = array();
-				$dataSource = array();
+				// $dataTarget = array();
+				// $dataSource = array();
+				
+
+				
 				// Liste des pages de même nom dans l'archive et le site
+				/*
 				$list = '';
 				foreach (self::$i18nList as $key=>$value) {
 					// Les Pages et les modules
@@ -561,20 +597,16 @@ class addon extends common {
 							if( $list === ''){
 								file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
 							}
-							// copie du contenu de la page
-							$this->copyDir (self::TEMP_DIR . $tempFolder . '/' .$key . '/content', self::DATA_DIR . '/' .$key . '/content');
-							// Supprimer les fichiers importés
-							unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
 						}
 					}
 				}
+				*/
 
-				// Import des fichiers placés ailleurs que dans les dossiers localisés.
-				$this->copyDir (self::TEMP_DIR . $tempFolder,self::DATA_DIR );
 
 				// Supprimer le dossier temporaire
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
+				/*
 				if( $list !== '' ){
 					 $success = false;
 					strpos( $list, ',') === false ? $notification = 'Import impossible la page suivante doit être renommée :'.$list : $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
@@ -582,18 +614,29 @@ class addon extends common {
 				else{
 					 $success = true;
 					 $notification = 'Import réussi';
-				}
+				}*/
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'addon',
+					'redirect' => helper::baseUrl() . 'plugin',
 					'state' => $success,
 					'notification' => $notification
 				]);
 			}
+
+			// Liste des pages ne contenant pas de module
+			self::$pagesList = $this->getData(['page']);
+			foreach(self::$pagesList as $page => $pageId) {
+				if ($this->getData(['page',$page,'block']) === 'bar' ||
+					$this->getData(['page',$page,'disable']) === true ||
+					$this->getData(['page',$page,'moduleId']) !== '') {
+					unset(self::$pagesList[$page]);
+				}
+			}
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Importer des données de module',
-				'view' => 'import'
+				'view' => 'dataImport'
 			]);
 		}
 	}
