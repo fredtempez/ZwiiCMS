@@ -2,7 +2,7 @@
 	<div class="col1">
 		<?php echo template::button('configStoreBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl()  . 'addon',
+			'href' => helper::baseUrl()  . 'plugin',
 			'value' => template::ico('left')
 		]); ?>
 	</div>
