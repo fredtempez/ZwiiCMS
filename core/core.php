@@ -58,7 +58,7 @@ class common {
 		'theme',
 		'user',
 		'translate',
-		'addon'
+		'plugin'
 	];
 	public static $accessList = [
 		'user',
@@ -2069,7 +2069,7 @@ class common {
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'plugin" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				if ($this->getData(['config', 'i18n', 'enable']) === true) {
 					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				}
