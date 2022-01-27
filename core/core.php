@@ -1154,7 +1154,7 @@ class common {
 	 * @param int count nombres d'occurrences
 	 * @return array avec les valeurs remplacées.
 	 */
-	private function recursive_array_replace ($find, $replace, $array, &$count) {
+	public function recursive_array_replace ($find, $replace, $array, &$count) {
 		if (!is_array($array)) {
 			return str_replace($find, $replace, $array, $count);
 		}
