@@ -9,9 +9,9 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2022, Frédéric Tempez
- * @author Sylvain Lelièvre <lelievresylvain@free.fr>
  * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
+  * @copyright Copyright (C) 2018-2022, Frédéric Tempez
+ * @author Sylvain Lelièvre <lelievresylvain@free.fr>
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -21,7 +21,7 @@ class plugin extends common {
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
-		'dataExport' => self::GROUP_ADMIN, 
+		'dataExport' => self::GROUP_ADMIN, // Fonction muette d'exportation
 		'dataImport' => self::GROUP_ADMIN, // les données d'un module
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN, // détail d'un objet
@@ -35,6 +35,7 @@ class plugin extends common {
 
 	// Gestion des modules
 	public static $modInstal = [];
+	public static $modOrphans = [];
 
 	// pour tests
 	public static $valeur = [];
@@ -82,6 +83,7 @@ class plugin extends common {
 				$success = false;
 				$notification = 'La suppression a échouée';
 			}
+	
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -298,7 +300,7 @@ class plugin extends common {
 			// Clés moduleIds dans les pages
 			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 			foreach( $inPages as $key=>$value){
-				$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
+				$pagesInfos[ $this->getData(['page', $key, 'title' ]) ] = $value;
 			}
 			// Parcourir les données des modules
 			foreach ($store as $key=>$value) {
@@ -325,7 +327,7 @@ class plugin extends common {
 					mb_detect_encoding(strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)
 					? strftime('%d %B %Y', $store[$key]['versionDate'])
 					: utf8_encode(strftime('%d %B %Y', $store[$key]['versionDate'])),
-					implode(', ', array_keys($inPagesTitle,$key)),
+					implode(', ', array_keys($pagesInfos,$key)),
 					template::button('moduleExport' . $key, [
 							'class' => $class,
 							'href' => helper::baseUrl(). $this->getUrl(0) . '/uploadItem/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
@@ -368,131 +370,137 @@ class plugin extends common {
 		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
 		$infoModules = helper::getModules();
 
-		// Clés moduleIds dans les pages
-		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-		foreach( $inPages as $key=>$value){
-			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
+		// Tableau des langues installées
+		foreach (self::$i18nList as $key => $value) {
+			if ($this->getData(['config','i18n', $key]) === 'site' ||
+				$key === 'fr') {
+				$i18nSites[$key] = $value;
+			}
+		}
+		
+		// Langue actuelle
+		$savei18n = self::$i18n;
+		// Parcourir les langues du site traduit
+		foreach ($i18nSites as $keyI18n=>$vaueI18n) {
+			self::$i18n = $keyI18n;
+			// Clés moduleIds dans les pages de la langue sélectionnée
+			$pagesModules = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			// Générer ls liste des pages avec module pour la sauvegarde ou le backup
+			foreach( $pagesModules as $key=>$value ) {
+				if (!empty($value)) {
+					$pagesInfos [self::$i18n] [$key] ['pageId'] = $key ;
+					$pagesInfos [self::$i18n] [$key] ['title'] = $this->getData(['page', $key, 'title' ]) ;
+					$pagesInfos [self::$i18n] [$key] ['moduleId'] = $value;
+				}			
+			}
 		}
 
-		// Parcourir les données des modules
+		// Restaurer la langue actuelle
+		self::$i18n = $savei18n;
+
+		//var_dump($pagesModules);
+		//var_dump($pagesInfos);
+
+		// Générer la liste des modules orphelins
 		foreach ($infoModules as $key=>$value) {
-			// Construire le tableau de sortie
-			self::$modInstal[] = [
-				$key,
-				$infoModules[$key]['realName'],
-				$infoModules[$key]['version'],
-				implode(', ', array_keys($inPagesTitle,$key)),
-				//|| ('delete',$infoModules[$key]) && $infoModules[$key]['delete'] === true && implode(', ',array_keys($inPages,$key)) === ''
-				$infoModules[$key]['delete'] === true  && implode(', ',array_keys($inPages,$key)) === ''
-											? template::button('moduleDelete' . $key, [
-													'class' => 'moduleDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel'),
-													'help' => 'Supprimer le module '. $key
-												])
-											: '',
-				implode(', ',array_keys($inPages,$key)) !== ''
-											? template::button('moduleExport' . $key, [
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('download'),
-												'help' => 'Exporter les données du module'
-												])
-											: '',
-				implode(', ',array_keys($inPages,$key)) === ''
-											? template::button('moduleExport' . $key, [
-												'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $key . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-												'value' => template::ico('upload'),
-												'help' => 'Importer les données du module'
-												])
-											: ''
-			];
+			if (!array_search($key, $pagesModules) ) {					
+				$orphans[] = $key;
+			}
+		}
+		//  Mise ene forme du tableau des modules orphelins
+		if (isset($orphans)) {
+			foreach ($orphans as $key) {
+				// Construire le tableau de sortie
+				self::$modOrphans [] = [	
+					$infoModules [$key] ['realName'],
+					$key,
+					$infoModules [$key] ['version'],
+					'',
+					'',
+					'',
+					'',
+					$infoModules[$key] ['delete'] === true 
+						? template::button('moduleDelete' . $key, [
+								'class' => 'moduleDelete buttonRed',
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' .$key . '/' . $_SESSION['csrf'],
+								'value' => template::ico('cancel'),
+								'help' => 'Supprimer le module'
+							])
+						: '',
+
+				];		
+			}
+		}
+
+		// Parcourir les langues du site traduit
+		foreach ($pagesInfos as $keyI18n=>$valueI18n) {
+			// Modules affectés à des pages
+
+			foreach ($valueI18n as $keyPage=>$value) {			
+
+				// Construire le tableau de sortie
+				self::$modInstal[] = [
+					$infoModules[$pagesInfos[$keyI18n][$keyPage]['moduleId']] ['realName'],
+					$pagesInfos[$keyI18n][$keyPage]['moduleId'],
+					$infoModules[$pagesInfos [$keyI18n][$keyPage]['moduleId']] ['version'],
+					template::flag($keyI18n, '20px'),
+					$pagesInfos [$keyI18n][$keyPage]['title'] . ' (' .$keyPage . ')',
+					template::button('moduleExport' . $keyPage, [
+													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyI18n . '/' . $pagesInfos[$keyI18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+													'value' => template::ico('download'),
+													'help' => 'Exporter les données du module'
+													]),
+					template::button('moduleImport' . $keyPage, [
+													'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $keyI18n . '/' . $pagesInfos[$keyI18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+													'value' => template::ico('upload'),
+													'help' => 'Importer les données du module'
+													])
+				];
+			}
 		}
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des modules',
+			'title' => 'Gestion des modules installés',
 			'view' => 'index'
 		]);
 	}
 
+
 	/*
-	* Export des données d'un module externes ou interne à module.json
+	* Export des données d'un module
 	*/
-	public function dataExport(){
+	public function dataExport() {
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
 				'notification' => 'Action non autorisée'
 			]);
-		}
-		else {
-			// Soumission du formulaire
-			if($this->isPost()) {
-				// Lire les données du module
-				$infoModules = helper::getModules();
-				// Créer un dossier par défaut
-				$tmpFolder = self::TEMP_DIR . uniqid();
-				//$tmpFolder = self::TEMP_DIR . 'test';
-				if (!is_dir($tmpFolder)) {
-					mkdir($tmpFolder, 0755);
-				}
-				$page = $this->getInput('pluginExportSelectPage');
+		} else {
 
-				// Clés moduleIds dans les pages
-				$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-				// Parcourir les pages utilisant le module
-				foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
-					// Export des pages hébergeant le module
-					$pageParam[$pageId] = $this->getData(['page',$pageId]);
-					// Export du contenu de la page
-					//$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $pageId, 'content']));
-					$pageContent[$pageId] = $this->getPage($pageId, self::$i18n);
-					// Export de fr/module.json
-					$moduleId = 'fr/module.json';
-					$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);
-					// Création de l'arborescence des langues
-					// Pas de nom dossier de langue - dossier par défaut
-					$t = explode ('/',$moduleId);
-					if ( is_array($t)) {
-						$lang = 'fr';
-					} else {
-						$lang = $t[0];
-					}
-					// Créer le dossier temporaire si inexistant sinon le nettoie et le créer
-					if (!is_dir($tmpFolder . '/' . $lang)) {
-						mkdir ($tmpFolder . '/' . $lang, 0755, true);
-					} else {
-						$this->removeDir($tmpFolder . '/' . $lang);
-						mkdir ($tmpFolder . '/' . $lang, 0755, true);
-					}
-					// Créer le dossier temporaire des données du  module
-					if ($infoModules[$this->getUrl(2)]['dataDirectory']) {
-						if (!is_dir($tmpFolder . '/' . $moduleDir)) {
-							mkdir ($tmpFolder . '/' . $moduleDir, 0755, true) ;
-						}
-					}
-					// Sauvegarde si données non vides
-					$tmpData [$pageId] = $this->getData(['module',$pageId ]);
-					if ($tmpData [$pageId] !== null) {
-						file_put_contents($tmpFolder . '/' . $moduleId, json_encode($tmpData));
-					}
-					// Export des données localisées dans le dossier de données du module
-					if ($infoModules[$this->getUrl(2)]['dataDirectory'] &&
-						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])) {
-							$this->copyDir ($infoModules[$this->getUrl(2)]['dataDirectory'], $tmpFolder . '/' . $moduleDir);
-					}
-				}
-				// Enregistrement des pages dans le dossier de langue identique à module
-				if (!file_exists($tmpFolder . '/' . $lang . '/page.json')) {
-					file_put_contents($tmpFolder . '/' . $lang . '/page.json', json_encode($pageParam));
-					mkdir ($tmpFolder . '/' . $lang . '/content', 0755);
-					file_put_contents($tmpFolder . '/' . $lang . '/content/' . $this->getData(['page', $pageId, 'content']), $pageContent);
-				}
-				// création du zip
-				$fileName =  $this->getUrl(2) . '.zip';
+			// Créer un dossier par défaut
+			$tmpFolder = self::TEMP_DIR . uniqid();
+			if (!is_dir($tmpFolder)) {
+				mkdir($tmpFolder, 0755);
+			}
+			
+			// Copie des infos sur le module
+			$moduleData = $this->getData(['module', $this->getUrl(3) ]);
+			$success = file_put_contents ($tmpFolder . '/module.json', json_encode($moduleData));
+
+			// Le dossier du module s'il existe 
+			if (is_dir(self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3) ) ) {
+				// Copier le dossier des données
+				$success = $this->copyDir(self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3), $tmpFolder . '/' . self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3));
+			}			
+
+			// création du zip
+			if ($success) 
+			{
+				$fileName =  $this->getUrl(2) . '-' . $this->getUrl(3) . '.zip';
 				$this->makeZip ($fileName, $tmpFolder, []);
 				if (file_exists($fileName)) {
 					ob_start();
@@ -505,29 +513,15 @@ class plugin extends common {
 					unlink($fileName);
 					$this->removeDir($tmpFolder);
 					exit();
-				} else {
-					// Valeurs en sortie
-					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'plugin',
-						'notification' => 'Quelque chose s\'est mal passé',
-						'state' => false
-					]);
 				}
 			} else {
-
-				// Liste des pages contenant le module
-				$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
-				foreach( $inPages as $key=>$value){
-					if ($value === $this->getUrl(2)) {
-						self::$pagesList[] = $key;
-					}						
-				}
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => 'Export des données de module',
-					'view' => 'dataExport'
+					'redirect' => helper::baseUrl() . 'plugin',
+					'notification' => 'Quelque chose s\'est mal passé',
+					'state' => false
 				]);
-			}
+			} 
 		}
 	}
 
@@ -640,5 +634,6 @@ class plugin extends common {
 			]);
 		}
 	}
+
 
 }
