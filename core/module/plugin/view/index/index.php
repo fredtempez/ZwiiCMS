@@ -29,9 +29,14 @@
 			"help" => 'Ajouter à partir d\'une archive ZIP'
 		]); ?>
 	</div>
-</div>
+</div
+<?php if($module::$modOrphans): ?>>
+	<h3>Modules non utilisés : </h3>
+	<?php echo template::table([2, 2, 1, 2, 2, 1, 1, 1], $module::$modOrphans, [ 'Module', 'moduleId', 'Version', '', '', '', '', 'Supprimer']); ?>
+<?php endif; ?>
 <?php if($module::$modInstal): ?>
-	<?php echo template::table([2, 2, 2, 2, 1, 1, 1], $module::$modInstal, ['Module installé', 'Alias', 'Version', 'Page(s)', 'Supprimer', '', '']); ?>
+	<h3>Modules utilisés : </h3>
+	<?php echo template::table([2, 2, 1, 1, 4, 1, 1], $module::$modInstal, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '', '']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
