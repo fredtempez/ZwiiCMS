@@ -366,9 +366,7 @@ class plugin extends common {
 	 */
 	public function index() {
 
-		// Lister les modules
-		// $infoModules[nom_module]['realName'], ['version'], ['update'], ['delete'], ['dataDirectory']
-		$infoModules = helper::getModules();
+
 
 		// Tableau des langues installées
 		foreach (self::$i18nList as $key => $value) {
@@ -377,9 +375,10 @@ class plugin extends common {
 				$i18nSites[$key] = $value;
 			}
 		}
+		// Lister les modules
+		$infoModules = helper::getModules();
 		
-		// Langue actuelle
-		$savei18n = self::$i18n;
+
 		// Parcourir les langues du site traduit
 		foreach ($i18nSites as $keyI18n=>$vaueI18n) {
 			self::$i18n = $keyI18n;
@@ -395,8 +394,7 @@ class plugin extends common {
 			}
 		}
 
-		// Restaurer la langue actuelle
-		self::$i18n = $savei18n;
+
 
 		//var_dump($pagesModules);
 		//var_dump($pagesInfos);
@@ -472,7 +470,7 @@ class plugin extends common {
 	*/
 	public function dataExport() {
 		// Jeton incorrect
-		if ($this->getUrl(4) !== $_SESSION['csrf']) {
+		if ($this->getUrl(5) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
@@ -487,20 +485,28 @@ class plugin extends common {
 				mkdir($tmpFolder, 0755);
 			}
 			
+			// Sauvegarder la langue active
+			$saveI18n = self::$i18n;
+
+			self::$i18n = $this->getUrl(2);
+
 			// Copie des infos sur le module
-			$moduleData = $this->getData(['module', $this->getUrl(3) ]);
+			$moduleData = $this->getData(['module', $this->getUrl(4) ]);
 			$success = file_put_contents ($tmpFolder . '/module.json', json_encode($moduleData));
 
 			// Le dossier du module s'il existe 
-			if (is_dir(self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3) ) ) {
+			if (is_dir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4) ) ) {
 				// Copier le dossier des données
-				$success = $this->copyDir(self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3), $tmpFolder . '/' . self::DATA_DIR . $this->getUrl(2) . '/' . $this->getUrl(3));
+				$success = $this->copyDir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4), $tmpFolder . '/' . self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4));
 			}			
+
+			// Restaurer la langue active
+			//self::$i18n = $saveI18n;
 
 			// création du zip
 			if ($success) 
 			{
-				$fileName =  $this->getUrl(2) . '-' . $this->getUrl(3) . '.zip';
+				$fileName =  $this->getUrl(2) . '-' .  $this->getUrl(3) . '-' . $this->getUrl(4) . '.zip';
 				$this->makeZip ($fileName, $tmpFolder, []);
 				if (file_exists($fileName)) {
 					ob_start();
@@ -634,6 +640,7 @@ class plugin extends common {
 			]);
 		}
 	}
+
 
 
 }

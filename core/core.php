@@ -538,6 +538,8 @@ class common {
 
 	}
 
+
+
 	/**
 	 * Effacer les données de la page
 	 * @param string pageId
@@ -547,7 +549,8 @@ class common {
 
 			return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 
-			}
+	}
+
 
 	/**
 	 * Sauvegarde des données
