@@ -440,26 +440,24 @@ class plugin extends common {
 			}
 		}
 
-		// Parcourir les langues du site traduit
-		foreach ($pagesInfos as $keyI18n=>$valueI18n) {
-			// Modules affectés à des pages
-
+		// Mise en forme du tableau des modules employés dans les pages
+		// Avec les commandes de sauvegarde et de restauration
+		foreach ($pagesInfos as $keyi18n=>$valueI18n) {
 			foreach ($valueI18n as $keyPage=>$value) {			
-
 				// Construire le tableau de sortie
 				self::$modInstal[] = [
-					$infoModules[$pagesInfos[$keyI18n][$keyPage]['moduleId']] ['realName'],
-					$pagesInfos[$keyI18n][$keyPage]['moduleId'],
-					$infoModules[$pagesInfos [$keyI18n][$keyPage]['moduleId']] ['version'],
-					template::flag($keyI18n, '20px'),
-					$pagesInfos [$keyI18n][$keyPage]['title'] . ' (' .$keyPage . ')',
+					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
+					$pagesInfos[$keyi18n][$keyPage]['moduleId'],
+					$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
+					template::flag($keyi18n, '20px'),
+					$pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')',
 					template::button('moduleExport' . $keyPage, [
-													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyI18n . '/' . $pagesInfos[$keyI18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
 													'help' => 'Exporter les données du module'
 													]),
 					template::button('moduleImport' . $keyPage, [
-													'href' => helper::baseUrl(). $this->getUrl(0) . '/import/' . $keyI18n . '/' . $pagesInfos[$keyI18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataImport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('upload'),
 													'help' => 'Importer les données du module'
 													])
