@@ -368,44 +368,54 @@ class plugin extends common {
 
 
 
-		// Tableau des langues installées
+		// Tableau des langues rédigées
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site' ||
 				$key === 'fr') {
 				$i18nSites[$key] = $value;
 			}
 		}
-		// Lister les modules
+
+		// Lister les modules installés
 		$infoModules = helper::getModules();
 		
 
-		// Parcourir les langues du site traduit
-		foreach ($i18nSites as $keyI18n=>$vaueI18n) {
-			self::$i18n = $keyI18n;
-			// Clés moduleIds dans les pages de la langue sélectionnée
-			$pagesModules = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		// Parcourir les langues du site traduit et recherche les modules affectés à des pages
+		foreach ($i18nSites as $keyi18n=>$vauei18n) {
+
+			// Clés moduleIds dans les pages de la langue
+			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/' . 'page.json'), true);
+
+			// Extraire les clés des modules
+			$pagesModules [$keyi18n] = array_filter(helper::arrayCollumn($pages['page'],'moduleId', 'SORT_DESC'), 'strlen');
+
 			// Générer ls liste des pages avec module pour la sauvegarde ou le backup
-			foreach( $pagesModules as $key=>$value ) {
+			foreach( $pagesModules [$keyi18n] as $key=>$value ) {
 				if (!empty($value)) {
-					$pagesInfos [self::$i18n] [$key] ['pageId'] = $key ;
-					$pagesInfos [self::$i18n] [$key] ['title'] = $this->getData(['page', $key, 'title' ]) ;
-					$pagesInfos [self::$i18n] [$key] ['moduleId'] = $value;
+					$pagesInfos [$keyi18n] [$key] ['pageId'] = $key ;
+					$pagesInfos [$keyi18n] [$key] ['title'] = $this->getData(['page', $key, 'title' ]) ;
+					$pagesInfos [$keyi18n] [$key] ['moduleId'] = $value;
 				}			
 			}
 		}
 
 
-
-		//var_dump($pagesModules);
-		//var_dump($pagesInfos);
-
-		// Générer la liste des modules orphelins
-		foreach ($infoModules as $key=>$value) {
-			if (!array_search($key, $pagesModules) ) {					
-				$orphans[] = $key;
+		// Recherche des modules orphelins dans toutes les langues
+		$orphans = array_flip(array_keys ($infoModules));
+		foreach ($i18nSites as $keyi18n=>$valuei18n) {
+			// Générer la liste des modules orphelins
+			foreach ($infoModules as $key=>$value) {
+				//echo $key . '<p>';
+				//echo array_search($key, $pagesModules[$keyi18n]);
+				if (array_search($key, $pagesModules[$keyi18n]) ) {
+					unset($orphans [$key]);
+				}
+				
 			}
 		}
-		//  Mise ene forme du tableau des modules orphelins
+		$orphans = array_flip($orphans);
+
+		//  Mise en forme du tableau des modules orphelins
 		if (isset($orphans)) {
 			foreach ($orphans as $key) {
 				// Construire le tableau de sortie
