@@ -31,7 +31,7 @@
 	</div>
 </div
 <?php if($module::$modOrphans): ?>>
-	<h3>Modules non utilisés : </h3>
+	<h3>Modules installés non utilisés  par une page : </h3>
 	<?php echo template::table([2, 2, 1, 2, 2, 1, 1, 1], $module::$modOrphans, [ 'Module', 'moduleId', 'Version', '', '', '', '', 'Supprimer']); ?>
 <?php endif; ?>
 <?php if($module::$modInstal): ?>
