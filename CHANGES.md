@@ -1,5 +1,9 @@
 # Changelog
 
+
+## Version 11.2.06
+
+
 ## Version 11.2.05
 - Corrections : 
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.
