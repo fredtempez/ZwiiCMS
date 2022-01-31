@@ -1176,7 +1176,7 @@ class common {
 	 * @param string folder path à zipper
 	 * @param array filter dossiers à exclure
 	 */
-	public function makeZip ($fileName, $folder, $filter ) {
+	public function makeZip ($fileName, $folder, $filter = [] ) {
 		$zip = new ZipArchive();
 		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		//$directory = 'site/';
