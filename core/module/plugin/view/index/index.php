@@ -8,7 +8,7 @@
 	</div>
 	<div class="col1">
 		<?php echo template::button('configModulesHelp', [
-			'href' => 'https://doc.zwiicms.fr/modules-utilisation-generique',
+			'href' => 'https://doc.zwiicms.fr/gestion-des-modules',
 			'target' => '_blank',
 			'value' => template::ico('help'),
 			'class' => 'buttonHelp',
@@ -29,14 +29,18 @@
 			"help" => 'Ajouter à partir d\'une archive ZIP'
 		]); ?>
 	</div>
-</div
-<?php if($module::$modOrphans): ?>>
-	<h3>Modules installés non utilisés  par une page : </h3>
-	<?php echo template::table([2, 2, 1, 2, 2, 1, 1, 1], $module::$modOrphans, [ 'Module', 'moduleId', 'Version', '', '', '', '', 'Supprimer']); ?>
+</div>
+<?php if($module::$modulesOrphan): ?>
+	<h3>Suppression des modules orphelins</h3>
+	<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Module', 'moduleId', 'Version', '', '']); ?>
 <?php endif; ?>
-<?php if($module::$modInstal): ?>
-	<h3>Modules utilisés : </h3>
-	<?php echo template::table([2, 2, 1, 1, 4, 1, 1], $module::$modInstal, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '', '']); ?>
+<?php if($module::$modulesInstalled): ?>
+	<h3>Sauvegarde des modules</h3>
+	<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Module', 'moduleId', 'Version', '', '', '']); ?>
+<?php endif; ?>
+<?php if($module::$modulesData): ?>
+	<h3>Sauvegarde des données des modules installés</h3>
+	<?php echo template::table([2, 2, 1, 1, 4, 1, 1], $module::$modulesData, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '', '']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>

@@ -21,6 +21,7 @@ class plugin extends common {
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
+		'save' => self::GROUP_ADMIN, // Sauvegarde le module dans un fichier ZIP ou dans le gestionnaire
 		'dataExport' => self::GROUP_ADMIN, // Fonction muette d'exportation
 		'dataImport' => self::GROUP_ADMIN, // les données d'un module
 		'store' => self::GROUP_ADMIN,
@@ -34,8 +35,9 @@ class plugin extends common {
 	const MODULE_STORE = '?modules/';
 
 	// Gestion des modules
-	public static $modInstal = [];
-	public static $modOrphans = [];
+	public static $modulesData = [];
+	public static $modulesOrphan = [];
+	public static $modulesInstalled = [];
 
 	// pour tests
 	public static $valeur = [];
@@ -236,7 +238,7 @@ class plugin extends common {
 	}
 
 	/***
-	 * Installation  d'un module par le catalogue
+	 * Installation  d'un module depuis le catalogue
 	 */
 	public function uploadItem() {
 		// Jeton incorrect
@@ -366,8 +368,6 @@ class plugin extends common {
 	 */
 	public function index() {
 
-
-
 		// Tableau des langues rédigées
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site' ||
@@ -375,13 +375,11 @@ class plugin extends common {
 				$i18nSites[$key] = $value;
 			}
 		}
-
 		// Lister les modules installés
 		$infoModules = helper::getModules();
-		
 
 		// Parcourir les langues du site traduit et recherche les modules affectés à des pages
-		foreach ($i18nSites as $keyi18n=>$vauei18n) {
+		foreach ($i18nSites as $keyi18n=>$valuei18n) {
 
 			// Clés moduleIds dans les pages de la langue
 			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/' . 'page.json'), true);
@@ -401,12 +399,11 @@ class plugin extends common {
 
 
 		// Recherche des modules orphelins dans toutes les langues
-		$orphans = array_flip(array_keys ($infoModules));
+		$orphans = $installed = array_flip(array_keys ($infoModules));
 		foreach ($i18nSites as $keyi18n=>$valuei18n) {
 			// Générer la liste des modules orphelins
 			foreach ($infoModules as $key=>$value) {
-				//echo $key . '<p>';
-				//echo array_search($key, $pagesModules[$keyi18n]);
+				// Supprimer les éléments affectés
 				if (array_search($key, $pagesModules[$keyi18n]) ) {
 					unset($orphans [$key]);
 				}
@@ -419,13 +416,10 @@ class plugin extends common {
 		if (isset($orphans)) {
 			foreach ($orphans as $key) {
 				// Construire le tableau de sortie
-				self::$modOrphans [] = [	
+				self::$modulesOrphan [] = [	
 					$infoModules [$key] ['realName'],
 					$key,
 					$infoModules [$key] ['version'],
-					'',
-					'',
-					'',
 					'',
 					$infoModules[$key] ['delete'] === true 
 						? template::button('moduleDelete' . $key, [
@@ -440,17 +434,43 @@ class plugin extends common {
 			}
 		}
 
+		// Modules installés non orphelins
+		//  Mise en forme du tableau des modules utilisés
+		if (isset($installed)) {
+			foreach (array_flip($installed) as $key) {
+				// Construire le tableau de sortie
+				self::$modulesInstalled [] = [	
+					$infoModules [$key] ['realName'],
+					$key,
+					$infoModules [$key] ['version'],
+					'',
+					template::button('moduleSave' . $key, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/filemanager/' .$key . '/' . $_SESSION['csrf'],
+						'value' => template::ico('download-cloud'),
+						'help' => 'Sauvegarder le module dans le gestionnaire de fichiers'
+					]),
+					template::button('moduleDownload' . $key, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/download/' .$key . '/' . $_SESSION['csrf'],
+						'value' => template::ico('download'),
+						'help' => 'Sauvegarder et télécharger le module'
+					])
+
+				];		
+			}
+		}
+
+
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
 		foreach ($pagesInfos as $keyi18n=>$valueI18n) {
 			foreach ($valueI18n as $keyPage=>$value) {			
 				// Construire le tableau de sortie
-				self::$modInstal[] = [
+				self::$modulesData[] = [
 					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
 					$pagesInfos[$keyi18n][$keyPage]['moduleId'],
 					$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
 					template::flag($keyi18n, '20px'),
-					$pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')',
+					'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')</a>',
 					template::button('moduleExport' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
@@ -473,6 +493,64 @@ class plugin extends common {
 	}
 
 
+	/**
+	 * Sauvergarde un module sans les données
+	 */
+
+	 public function save() {
+		// Jeton incorrect
+		if ($this->getUrl(4) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'plugin',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
+		} else {
+			
+			// Créer un dossier temporaire
+			$tmpFolder = self::TEMP_DIR . uniqid();
+			if (!is_dir($tmpFolder)) {
+				mkdir($tmpFolder, 0755);
+			}
+
+			//Nom de l'archive
+			$fileName =  $this->getUrl(3) . '.zip';
+			$this->makeZip ($tmpFolder . '/' . $fileName, 'module/' .  $this->getUrl(3));
+
+			switch ($this->getUrl(2)) {
+				case 'filemanager':
+					if (!file_exists(self::FILE_DIR . 'source/modules')) {
+						mkdir(self::FILE_DIR . 'source/modules');
+					}
+					$success = copy($tmpFolder . '/' . $fileName , self::FILE_DIR . 'source/modules/' . $this->getUrl(3) . '.zip' );
+					// Nettoyage
+					unlink($tmpFolder . '/' . $fileName);
+					$this->removeDir($tmpFolder);
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl() . 'plugin',
+						'notification' => $success ? $this->getUrl(3) . '.zip copié dans le dossier Module du gestionnaire de fichier' : 'Erreur de copie',
+						'state' => $success
+					]);
+					break;
+				case 'download':					
+				default:
+					header('Content-Type: application/octet-stream');
+					header('Content-Disposition: attachment; filename="' . $fileName . '"');
+					header('Content-Length: ' . filesize($tmpFolder . '/' . $fileName));
+					ob_clean();   
+					ob_end_flush();
+					readfile( $tmpFolder . '/' .$fileName);
+					unlink($tmpFolder . '/' . $fileName);
+					$this->removeDir($tmpFolder);
+					exit();
+					break;
+			}
+
+		}
+	 }
+
 	/*
 	* Export des données d'un module
 	*/
@@ -487,7 +565,7 @@ class plugin extends common {
 			]);
 		} else {
 
-			// Créer un dossier par défaut
+			// Créer un dossier temporaire
 			$tmpFolder = self::TEMP_DIR . uniqid();
 			if (!is_dir($tmpFolder)) {
 				mkdir($tmpFolder, 0755);
@@ -515,7 +593,7 @@ class plugin extends common {
 			if ($success) 
 			{
 				$fileName =  $this->getUrl(2) . '-' .  $this->getUrl(3) . '-' . $this->getUrl(4) . '.zip';
-				$this->makeZip ($fileName, $tmpFolder, []);
+				$this->makeZip ($fileName, $tmpFolder);
 				if (file_exists($fileName)) {
 					ob_start();
 					header('Content-Type: application/octet-stream');
