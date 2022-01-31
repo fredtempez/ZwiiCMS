@@ -2,7 +2,8 @@
 
 
 ## Version 11.2.06
-
+- Modification : 
+    - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
 
 ## Version 11.2.05
 - Corrections : 
