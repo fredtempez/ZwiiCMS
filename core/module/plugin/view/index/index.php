@@ -15,20 +15,13 @@
 			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
-	<div class="col1 offset8">
+	<div class="col1 offset9">
           <?php echo template::button('configModulesStore', [
               'href' => helper::baseUrl() . 'plugin/store',
 			  'value' => template::ico('shopping-basket'),
-			  "help" => 'Lister le catalogue en ligne'
+			  "help" => 'Catalogue de modules en ligne'
             ]); ?>
-      </div>
-	<div class="col1">
-		<?php echo template::button('configStoreUpload', [
-			'href' => helper::baseUrl() . 'plugin/upload',
-			'value' => template::ico('plus'),
-			"help" => 'Ajouter à partir d\'une archive ZIP'
-		]); ?>
-	</div>
+    </div>
 </div>
 <?php if($module::$modulesOrphan): ?>
 	<h3>Suppression des modules orphelins</h3>
@@ -39,8 +32,19 @@
 	<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Module', 'moduleId', 'Version', '', '', '']); ?>
 <?php endif; ?>
 <?php if($module::$modulesData): ?>
-	<h3>Sauvegarde des données des modules installés</h3>
-	<?php echo template::table([2, 2, 1, 1, 4, 1, 1], $module::$modulesData, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '', '']); ?>
+	<div class="row">
+		<div class="col11">
+			<h3>Sauvegarde des données des modules installés</h3>
+		</div>
+		<div class="col1">
+          <?php echo template::button('configModuledataImport', [
+              'href' => helper::baseUrl() . 'dataImport',
+			  'value' => template::ico('upload'),
+			  "help" => 'Importer des données de module'
+            ]); ?>
+    	</div>
+	</div>
+	<?php echo template::table([2, 2, 1, 1, 5, 1], $module::$modulesData, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '']); ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>

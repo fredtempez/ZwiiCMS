@@ -6,6 +6,13 @@
 			'value' => template::ico('left')
 		]); ?>
 	</div>
+	<div class="col1 offset10">
+		<?php echo template::button('configStoreUpload', [
+			'href' => helper::baseUrl() . 'plugin/upload',
+			'value' => template::ico('plus'),
+			"help" => 'Importer depuis une archive ZIP'
+		]); ?>
+	</div>
 </div>
 <?php if($module::$storeList): ?>
 	<?php echo template::table([2, 2, 1, 2, 2, 2, 1], $module::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Pages', 'Obtenir']); ?>
