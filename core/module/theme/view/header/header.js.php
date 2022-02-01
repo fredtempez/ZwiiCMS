@@ -47,9 +47,9 @@ $("input, select").on("change", function() {
 		var tmpImg = new Image();
 		tmpImg.onload = function() {
 			// Informations affichées
-			$("#themeHeaderImageHeight").html(tmpImg.height + "px");
-			$("#themeHeaderImageWidth").html(tmpImg.width + "px");
-			$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
+			$("#themeHeaderImageHeight").val(tmpImg.height + " px");
+			$("#themeHeaderImageWidth").val(tmpImg.width + " px");
+			$("#themeHeaderImageRatio").val(tmpImg.width / tmpImg.height);
 
 			// Limiter la hauteur à 600 px
 			if (tmpImg.height > 600) {

@@ -1,5 +1,10 @@
 # Changelog
 
+
+## Version 11.2.06
+- Modification : 
+    - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
+
 ## Version 11.2.05
 - Corrections : 
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.

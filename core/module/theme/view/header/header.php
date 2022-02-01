@@ -163,6 +163,32 @@
                     ]); ?>
                 </div>
             </div>
+            <div class="row">
+                <div class="col3 textAlignRight">
+                    Informations sur l'image : 
+                </div>
+                <div class="col2">                    
+                    <?php echo template::text('themeHeaderImageWidth', [
+                            'label' => 'Largeur',
+                            'class' => 'textAlignCenter',
+                            'disable' => true
+                    ]); ?>
+                </div>
+                <div class="col2">                    
+                    <?php echo template::text('themeHeaderImageHeight', [
+                            'label' => 'Hauteur',
+                            'class' => 'textAlignCenter',
+                            'disable' => true
+                    ]); ?>
+                </div>
+                <div class="col2">                    
+                    <?php echo template::text('themeHeaderImageRatio', [
+                            'label' => 'Ratio (L/H)',
+                            'class' => 'textAlignCenter',
+                            'disable' => true
+                    ]); ?>
+                </div>
+            </div>
             <div id="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
                     <div class="col3">
@@ -190,13 +216,6 @@
                         <?php echo template::checkbox('themeHeaderlinkHomePage', true, 'Bannière cliquable', [
                                 'checked' => $this->getData(['theme', 'header', 'linkHomePage'])
                             ]); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col12 textAlignCenter">
-                        <span id="themeHeaderImage">
-                            Largeur : <span id="themeHeaderImageWidth"></span> | Hauteur : <span id="themeHeaderImageHeight"></span> | ratio : <span id="themeHeaderImageRatio"></span>
-                        </span>
                     </div>
                 </div>
             </div>
