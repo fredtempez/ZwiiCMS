@@ -2269,7 +2269,7 @@ class core extends common {
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
 			// Couleur fixée dans admin.css
 			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
-			$css .= '.container, .helpDisplayContent{max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
+			$css .= '.container {max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
