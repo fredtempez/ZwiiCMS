@@ -2,6 +2,8 @@
 
 
 ## Version 11.2.06
+- Correction : 
+    - Thème / site : problème d'aperçu du body.
 - Modification : 
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
 
