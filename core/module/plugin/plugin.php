@@ -572,7 +572,7 @@ class plugin extends common {
 
 			// Copie des infos sur le module
 			$modulesData = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/module.json' ), true);
-			$moduleData [$this->getUrl(4)] = $modulesData['module'] [$this->getUrl(4)];
+			$moduleData = $modulesData['module'] [$this->getUrl(4)];
 			$success = file_put_contents ($tmpFolder . '/module.json', json_encode($moduleData));
 
 			// Le dossier du module s'il existe 
@@ -584,8 +584,8 @@ class plugin extends common {
 			// Descripteur de l'archive 
 			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode([
 				'langue' => $this->getUrl(2),
-				'page' 	 => $this->getUrl(3),
-				'module' => $this->getUrl(4)
+				'moduleid' 	 => $this->getUrl(3),
+				'pageId' => $this->getUrl(4)
 			]));
 
 
@@ -622,85 +622,36 @@ class plugin extends common {
 	*/
 	public function dataImport(){
 
-		// Soumission du formulaire
+		// Soumission du formulaire d'importation du module dans une page libre
 		if($this->isPost()) {
-			// Jeton incorrect
-			if ($this->getUrl(3) !== $_SESSION['csrf']) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl()  . 'plugin',
-					'state' => false,
-					'notification' => 'Action non autorisée'
-				]);
-			}
 			// Récupérer le fichier et le décompacter
 			$zipFilename =	$this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
 			$targetPage = $this->getInput('pluginImportPage', helper::FILTER_STRING_SHORT, true);
 			$tempFolder = uniqid();
+			$success = false;
+			$notification = '';
+
+			// Extraction dans un dossier temporaire
 			mkdir (self::TEMP_DIR . $tempFolder, 0755);
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
 				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
 			}
-
-			// copie du contenu de la page
-			$this->copyDir (self::TEMP_DIR . $tempFolder . '/' .$key . '/content', self::DATA_DIR . '/' .$key . '/content');
-			// Supprimer les fichiers importés
-			unlink (self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json');
-			// Import des fichiers placés ailleurs que dans les dossiers localisés.
-			$this->copyDir (self::TEMP_DIR . $tempFolder, self::DATA_DIR );
 			
-
-			// Import des données localisées page.json et module.json
-			// Pour chaque dossier localisé
-			// $dataTarget = array();
-			// $dataSource = array();
+			// Lire le descripteur
+			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/descripteur.json'), true);
 			
+			// Intégration des données du module importé
+			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true );
 
 			
-			// Liste des pages de même nom dans l'archive et le site
-			/*
-			$list = '';
-			foreach (self::$i18nList as $key=>$value) {
-				// Les Pages et les modules
-				foreach (['page','module'] as $fileTarget){
-					if (file_exists(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json')) {
-						// Le dossier de langue existe
-						// faire la fusion
-						$dataSource  = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . '/' .$key . '/' . $fileTarget . '.json'), true);
-						// Des pages de même nom que celles de l'archive existent
-						if( $fileTarget === 'page' ){
-							foreach( $dataSource as $keydataSource=>$valuedataSource ){
-								foreach( $this->getData(['page']) as $keypage=>$valuepage ){
-									if( $keydataSource === $keypage){
-										$list === '' ? $list .= ' '.$this->getData(['page', $keypage, 'title']) : $list .= ', '.$this->getData(['page', $keypage, 'title']);
-									}
-								}
-							}
-						}
-						$dataTarget  = json_decode(file_get_contents(self::DATA_DIR . $key . '/' . $fileTarget . '.json'), true);
-						$data [$fileTarget] = array_merge($dataTarget[$fileTarget], $dataSource);
-						if( $list === ''){
-							file_put_contents(self::DATA_DIR . '/' .$key . '/' . $fileTarget . '.json', json_encode( $data ,JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX) );
-						}
-					}
-				}
-			}
-			*/
+
+
 
 
 			// Supprimer le dossier temporaire
 			$this->removeDir(self::TEMP_DIR . $tempFolder);
 			$zip->close();
-			/*
-			if( $list !== '' ){
-					$success = false;
-				strpos( $list, ',') === false ? $notification = 'Import impossible la page suivante doit être renommée :'.$list : $notification = 'Import impossible les pages suivantes doivent être renommées :'.$list;
-			}
-			else{
-					$success = true;
-					$notification = 'Import réussi';
-			}*/
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -708,6 +659,28 @@ class plugin extends common {
 				'notification' => $notification
 			]);
 		}
+		// Bouton d'importation des données d'un module spécifique
+		if (count(explode('/',$this->getUrl())) === 6) {
+				// Jeton incorrect
+				if ($this->getUrl(3) !== $_SESSION['csrf']) {
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl()  . 'plugin',
+						'state' => false,
+						'notification' => 'Action non autorisée'
+					]);
+				}
+
+			// Traitement
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'plugin',
+				'state' => true,
+				'notification' => 'Okay'
+			]);
+		}
+					
 
 		// Liste des pages ne contenant pas de module
 		self::$pagesList = $this->getData(['page']);

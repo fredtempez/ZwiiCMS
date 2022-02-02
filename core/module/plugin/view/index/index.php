@@ -43,7 +43,7 @@
 			<div class="row">
 				<div class="col1 offset11">
 					<?php echo template::button('configModuledataImport', [
-				'href' => helper::baseUrl() . 'dataImport',
+				'href' => helper::baseUrl() . 'plugin/dataImport',
 				'value' => template::ico('upload'),
 				"help" => 'Importer des données de module dans une page libre'
 				]); ?>
