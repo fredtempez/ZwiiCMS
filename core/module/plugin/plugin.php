@@ -475,14 +475,12 @@ class plugin extends common {
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
 													'help' => 'Exporter les données du module'
-													])
-					/*								
+					]),						
 					template::button('moduleImport' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataImport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('upload'),
 													'help' => 'Importer les données du module'
 													])
-					*/
 				];
 			}
 		}
