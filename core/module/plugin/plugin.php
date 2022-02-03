@@ -24,6 +24,7 @@ class plugin extends common {
 		'save' => self::GROUP_ADMIN, // Sauvegarde le module dans un fichier ZIP ou dans le gestionnaire
 		'dataExport' => self::GROUP_ADMIN, // Fonction muette d'exportation
 		'dataImport' => self::GROUP_ADMIN, // les données d'un module
+		'dataDelete' => self::GROUP_ADMIN, 
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN, // détail d'un objet
 		'upload' => self::GROUP_ADMIN, // Téléverser catalogue
@@ -475,12 +476,14 @@ class plugin extends common {
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
 													'help' => 'Exporter les données du module'
-					]),						
-					template::button('moduleImport' . $keyPage, [
-													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataImport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-													'value' => template::ico('upload'),
-													'help' => 'Importer les données du module'
+					]),													
+					template::button('moduleDelete' . $keyPage, [
+													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+													'value' => template::ico('cancel'),
+													'class' => 'buttonRed',
+													'help' => 'Détacher le module de la page',
 													])
+					
 				];
 			}
 		}
@@ -494,7 +497,7 @@ class plugin extends common {
 
 
 	/**
-	 * Sauvergarde un module sans les données
+	 * Sauvegarde un module sans les données
 	 */
 
 	 public function save() {
@@ -549,6 +552,15 @@ class plugin extends common {
 		}
 	 }
 
+
+	/*
+	* Détacher un module d'une page
+	*/
+	public function dataDelete() {
+		
+	}
+
+
 	/*
 	* Export des données d'un module
 	*/
@@ -582,11 +594,8 @@ class plugin extends common {
 			}
 			
 			// Descripteur de l'archive 
-			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode([
-				'langue' => $this->getUrl(2),
-				'moduleid' 	 => $this->getUrl(3),
-				'pageId' => $this->getUrl(4)
-			]));
+			$infoModule = helper::getModules();
+			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode( $infoModule [$this->getUrl(3)] ));
 
 
 			// création du zip
