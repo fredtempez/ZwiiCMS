@@ -28,12 +28,22 @@
 	<div class="col12">
 		<div class="block">
 			<h4>Sauvegarde des modules installés</h4>
-			<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Module', 'moduleId', 'Version', '', '', '']); ?>
+			<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Modules', 'moduleId', 'Versions', '', '', '']); ?>
 		</div>
 	</div>
 </div>
 <?php else: ?>
 <?php echo template::speech('Aucun module installé.'); ?>
+<?php endif; ?>
+<?php if($module::$modulesOrphan): ?>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4>Désinstallation des modules orphelins</h4>
+			<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Modules', 'moduleId', 'Versions', '', '']); ?>
+		</div>
+	</div>
+</div>
 <?php endif; ?>
 <?php if($module::$modulesData): ?>
 <div class="row">
@@ -51,19 +61,10 @@
 			</div>
 			<div class="row">
 				<div class="col12">
-					<?php echo template::table([2, 2, 1, 1, 4, 1, 1], $module::$modulesData, [ 'Module', 'moduleId', 'Version', 'Langue', 'Page (id)', '', '']); ?>
+					<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Modules', 'moduleId', 'Versions', 'Pages ' . template::flag( self::$i18n, '15px')  . ' (pageId)', '', '']); ?>
 				</div>
 			</div>
 		</div>
 	</div>
-	<?php endif; ?>
-	<?php if($module::$modulesOrphan): ?>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Désinstallation des modules orphelins</h4>
-				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Module', 'moduleId', 'Version', '', '']); ?>
-			</div>
-		</div>
-	</div>
-	<?php endif; ?>
+</div>
+<?php endif; ?>
