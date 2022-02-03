@@ -26,7 +26,7 @@ $(".moduleDelete").on("click", function() {
  */
  $(".dataDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer ce module ?", function() {
+	return core.confirm("Êtes-vous sûr de vouloir supprimer le module de cette page ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
