@@ -25,7 +25,7 @@
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('pluginImportPage',  helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') , [
+                    <?php echo template::select('pluginImportPage', $module::$pagesList, [
                             'label' => 'Importer le module dans la page ' . template::flag('site', '20px')
                         ]); ?>
                 </div>
