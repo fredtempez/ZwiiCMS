@@ -475,15 +475,15 @@ class plugin extends common {
 					$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
 					//template::flag($keyi18n, '20px'),
 					'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')</a>',
-					template::button('moduleExport' . $keyPage, [
+					template::button('dataExport' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
 													'help' => 'Exporter les données du module'
 					]),													
-					template::button('moduleDelete' . $keyPage, [
+					template::button('dataDelete' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('cancel'),
-													'class' => 'buttonRed',
+													'class' => 'buttonRed dataDelete',
 													'help' => 'Détacher le module de la page',
 													])
 					
@@ -559,8 +559,31 @@ class plugin extends common {
 
 	/*
 	* Détacher un module d'une page en supprimant les données du module
+	* 2 : i18n id
+	* 3 : moduleId
+	* 4 : pageId
+	* 5 : CSRF
 	*/
 	public function dataDelete() {
+		// Jeton incorrect
+		if ($this->getUrl(5) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'plugin',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
+		} else {
+			$this->setData(['page', $this->getUrl(4), 'moduleId', '']);
+			$this->deleteData(['module', $this->getUrl(4)]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'plugin',
+				'notification' => 'Le module ' .  $this->getUrl(3) . ' de la page '.  $this->getUrl(4) . ' a été supprimé.',
+				'state' => true
+			]);
+		}
+
 		
 	}
 
@@ -646,8 +669,6 @@ class plugin extends common {
 			$zipFilename =	$this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
 			$targetPage = $this->getInput('pluginImportPage', helper::FILTER_STRING_SHORT, true);
 			$tempFolder = uniqid();
-			$success = false;
-			$notification = '';
 
 			// Extraction dans un dossier temporaire
 			mkdir (self::TEMP_DIR . $tempFolder, 0755);
@@ -669,11 +690,14 @@ class plugin extends common {
 			// Supprimer le dossier temporaire
 			$this->removeDir(self::TEMP_DIR . $tempFolder);
 			$zip->close();
+
+
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
-				'state' => $success,
-				'notification' => $notification
+				'state' => true,
+				'notification' => 'Import des données effectué'
 			]);
 		}
 		// Bouton d'importation des données d'un module spécifique
