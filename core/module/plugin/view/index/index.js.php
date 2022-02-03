@@ -30,3 +30,21 @@ $(".moduleDelete").on("click", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
+
+// Sélecteur de fonctions
+
+$("#configManageModuleButton").on("click", function () {
+	console.log("clic");
+	$("#manageDatas").hide();
+	$("#manageModules").show();
+	$("#configManageModuleButton").addClass("activeButton");
+	$("#configManageDatasButton").removeClass("activeButton");
+	setCookie("pluginLayout", "module");
+});
+$("#configManageDatasButton").on("click", function () {
+	$("#manageModules").hide();
+	$("#manageDatas").show();
+	$("#configManageModuleButton").removeClass("activeButton");
+	$("#configManageDatasButton").addClass("activeButton");
+	setCookie("pluginLayout", "data");
+});
