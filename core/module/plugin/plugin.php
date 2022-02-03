@@ -662,9 +662,9 @@ class plugin extends common {
 			// Lecture des données du module
 			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true );
 			// Chargement des données du module importé
-			$this->setData(['module', array_first_key($descripteur), $moduleData ]);
+			$this->setData(['module', $targetPage, $moduleData ]);
 			// Intégration des données du module importé dans la page
-			$this->setData(['page', 'moduleId', array_first_key($descripteur) ]);
+			$this->setData(['page', $targetPage ,'moduleId', array_key_first($descripteur) ]);
 
 			// Supprimer le dossier temporaire
 			$this->removeDir(self::TEMP_DIR . $tempFolder);
@@ -699,15 +699,20 @@ class plugin extends common {
 		}
 					
 
-		// Liste des pages ne contenant pas de module
-		self::$pagesList = $this->getData(['page']);
+		/**
+		 * Liste des pages sans module
+		 * et ne sont pas des barres latérales
+		 */
+		self::$pagesList = $this->getHierarchy(null, null, null);
 		foreach(self::$pagesList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true ||
-				$this->getData(['page',$page,'moduleId']) !== '') {
+				//$this->getData(['page',$page,'disable']) === true ||
+				$this->getData(['page',$page,'moduleId']) !== ''
+			) {
 				unset(self::$pagesList[$page]);
 			}
 		}
+		self::$pagesList = array_keys(self::$pagesList);
 
 		// Valeurs en sortie
 		$this->addOutput([
