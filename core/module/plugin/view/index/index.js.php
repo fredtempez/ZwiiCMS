@@ -16,6 +16,16 @@
  */
 $(".moduleDelete").on("click", function() {
 	var _this = $(this);
+	return core.confirm("Êtes-vous sûr de vouloir désinstaller ce module ?", function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
+
+/**
+ * Confirmation de suppression
+ */
+ $(".dataDelete").on("click", function() {
+	var _this = $(this);
 	return core.confirm("Êtes-vous sûr de vouloir supprimer ce module ?", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
