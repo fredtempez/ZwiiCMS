@@ -463,14 +463,17 @@ class plugin extends common {
 
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
-		foreach ($pagesInfos as $keyi18n=>$valueI18n) {
+		//foreach ($pagesInfos as $keyi18n=>$valueI18n) {
+
+			$keyi18n = self::$i18n;
+			$valueI18n = $pagesInfos[self::$i18n];
 			foreach ($valueI18n as $keyPage=>$value) {			
 				// Construire le tableau de sortie
 				self::$modulesData[] = [
 					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
 					$pagesInfos[$keyi18n][$keyPage]['moduleId'],
 					$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
-					template::flag($keyi18n, '20px'),
+					//template::flag($keyi18n, '20px'),
 					'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')</a>',
 					template::button('moduleExport' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
@@ -486,7 +489,8 @@ class plugin extends common {
 					
 				];
 			}
-		}
+
+		//}
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -554,7 +558,7 @@ class plugin extends common {
 
 
 	/*
-	* Détacher un module d'une page
+	* Détacher un module d'une page en supprimant les données du module
 	*/
 	public function dataDelete() {
 		
@@ -563,6 +567,11 @@ class plugin extends common {
 
 	/*
 	* Export des données d'un module
+	* Structure de l'adresse reçue
+	* 2 : i18n id
+	* 3 : moduleId
+	* 4 : pageId
+	* 5 : CSRF
 	*/
 	public function dataExport() {
 		// Jeton incorrect
@@ -595,7 +604,7 @@ class plugin extends common {
 			
 			// Descripteur de l'archive 
 			$infoModule = helper::getModules();
-			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode( $infoModule [$this->getUrl(3)] ));
+			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode(  [$this->getUrl(3) => $infoModule [$this->getUrl(3)]] ));
 
 
 			// création du zip
@@ -650,13 +659,12 @@ class plugin extends common {
 			// Lire le descripteur
 			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/descripteur.json'), true);
 			
-			// Intégration des données du module importé
+			// Lecture des données du module
 			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true );
-
-			
-
-
-
+			// Chargement des données du module importé
+			$this->setData(['module', array_first_key($descripteur), $moduleData ]);
+			// Intégration des données du module importé dans la page
+			$this->setData(['page', 'moduleId', array_first_key($descripteur) ]);
 
 			// Supprimer le dossier temporaire
 			$this->removeDir(self::TEMP_DIR . $tempFolder);
