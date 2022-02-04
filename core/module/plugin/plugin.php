@@ -226,7 +226,7 @@ class plugin extends common {
 				$state = $this->install(self::FILE_DIR.'source/'.$zipFilename, $checkValidMaj);
 			}
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'redirect' => helper::baseUrl() . 'plugin',
 				'notification' => $state['notification'],
 				'state' => $state['success']
 			]);
@@ -310,7 +310,7 @@ class plugin extends common {
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
-				$help = 'Installer le module';
+				$help = 'Télécharger le module';
 				// Le module est installé
 				if (array_key_exists($key,$infoModules) === true) {
 					$class = 'buttonGreen';
@@ -494,7 +494,7 @@ class plugin extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des modules installés',
+			'title' => 'Gestion des modules',
 			'view' => 'index'
 		]);
 	}

@@ -15,13 +15,6 @@
 			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
-	<div class="col1 offset9">
-		<?php echo template::button('configModulesStore', [
-              'href' => helper::baseUrl() . 'plugin/store',
-			  'value' => template::ico('shopping-basket'),
-			  "help" => 'Catalogue de modules en ligne'
-            ]); ?>
-	</div>
 </div>
 <div class="row">
     <div class="col12">
@@ -41,6 +34,27 @@
     </div>
 </div>
 <div id="manageModules">
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>Installation / mise à jour d'un module</h4>
+				<div class="row textAlignCenter">
+					<div class="col4">
+						<?php echo template::button('configModulesStore', [
+							'href' => helper::baseUrl() . 'plugin/store',
+							'value' => template::ico('shopping-basket') . ' Catalogue en ligne'
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::button('configStoreUpload', [
+							'href' => helper::baseUrl() . 'plugin/upload',
+							'value' => template::ico('upload')  . ' Depuis une archive ZIP'
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<?php if($module::$modulesInstalled): ?>
 	<div class="row">
 		<div class="col12">
@@ -69,7 +83,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Données des modules installés</h4>
+				<h4>Modules configurés <?php echo template::flag( self::$i18n, '20px'); ?>  </h4>
 				<div class="row">
 					<div class="col1 offset11">
 						<?php echo template::button('configModuledataImport', [
@@ -81,7 +95,7 @@
 				</div>
 				<div class="row">
 					<div class="col12">
-						<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Modules', 'moduleId', 'Versions', 'Pages ' . template::flag( self::$i18n, '15px')  . ' (pageId)', '', '']); ?>
+						<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Modules', 'moduleId', 'Versions', 'Pages (pageId)', '', '']); ?>
 					</div>
 				</div>
 			</div>
