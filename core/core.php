@@ -181,6 +181,37 @@ class common {
 		'blacklist' => '',
 		'locale' => ''
 	];
+	
+	// Fontes
+	public static $fonts = [
+		'abril-fatface' => 'Abril Fatface',
+		'arimo' => 'Arimo',
+		'arvo' => 'Arvo',
+		'berkshire-swash' => 'Berkshire Swash',
+		'dancing-script' => 'Dancing Script',
+		'droid-sans-2' => 'Droid Sans',
+		'droid-serif-2' => 'Droid Serif',
+		'fira-sans' => 'Fira Sans',
+		'genera' => 'Genera',
+		'inconsolata-2' => 'Inconsolata',
+		'indie-flower' => 'Indie Flower',
+		'josefin-sans-std' => 'Josefin Sans',
+		'lobster-2' => 'Lobster',
+		'lora' => 'Lora',
+		'lato' => 'Lato',
+		'montserrat-ace' => 'Montserrat Ace',
+		'old-standard-tt-3' => 'Old Standard TT',
+		'open-sans' => 'Open Sans',
+		'oswald-4' => 'Oswald',
+		'pt-mono' => 'PT Mono',
+		'pt-serif' => 'PT Serif',
+		'raleway-5' => 'Raleway',
+		'rancho' => 'Rancho',
+		'roboto' => 'Roboto',
+		'signika' => 'Signika',
+		'ubuntu' => 'Ubuntu',
+		'vollkorn' => 'Vollkorn'
+	];
 
 	/**
 	 * Constructeur commun
@@ -2235,11 +2266,14 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
 			// Import des polices de caractères
-			$css .= '@import url("https://fonts.googleapis.com/css?family=' . $this->getData(['theme', 'text', 'font']) . '|' . $this->getData(['theme', 'title', 'font']) . '|' . $this->getData(['theme', 'header', 'font']) .  '|' . $this->getData(['theme', 'menu', 'font']) . '");';
+			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'text',  'font']) . '");';
+			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'title', 'font']) . '");';
+			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'header', 'font']) . '");';
+			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'menu', 'font']) . '");';
 			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
 			// Body
-			$css .= 'body{font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
+			$css .= 'body{font-family:"' . self::$fonts[$this->getData(['theme', 'text', 'font'])] . '",sans-serif}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
 				// Image dans html pour éviter les déformations.
 				$css .= 'html {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
@@ -2257,7 +2291,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			// Couleurs de site dans TinyMCe
-			$css .= 'div.mce-edit-area {font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'text', 'font'])) . '",sans-serif}';
+			$css .= 'div.mce-edit-area {font-family:"' .  self::$fonts[$this->getData(['theme', 'text', 'font'])] . '",sans-serif}';
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
@@ -2298,7 +2332,7 @@ class core extends common {
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
 			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
-			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'title', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
+			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'title', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
@@ -2332,7 +2366,7 @@ class core extends common {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'header', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'header', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
 			// Bannière au contenu personnalisé
@@ -2381,7 +2415,7 @@ class core extends common {
 					$css .= 'nav{padding:0 10px;}';
 			}
 
-			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'menu', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
+			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:"' .  self::$fonts[$this->getData(['theme', 'menu', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
 
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
@@ -2391,7 +2425,7 @@ class core extends common {
 				$css .= 'footer{padding:0}';
 			}
 
-			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' . str_replace('+', ' ', $this->getData(['theme', 'footer', 'font'])) . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
+			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'footer', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';

@@ -56,7 +56,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11202,
+			'dataVersion' => 11206,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -127,7 +127,7 @@ class init extends common {
 			],
 			'footer' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
-				'font' => 'Open+Sans',
+				'font' => 'open-sans',
 				'fontSize' => '.8em',
 				'fontWeight' => 'normal',
 				'height' => '5px',
@@ -154,7 +154,7 @@ class init extends common {
 			],
 			'header' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
-				'font' => 'Oswald',
+				'font' => 'oswald-4',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
 				'height' => '150px',
@@ -177,7 +177,7 @@ class init extends common {
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
-				'font' => 'Open+Sans',
+				'font' => 'open-sans',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
 				'height' => '15px 10px',
@@ -208,13 +208,13 @@ class init extends common {
 				'borderColor' => 'rgba(236, 239, 241, 1)'
 			],
 			'text' => [
-				'font' => 'Open+Sans',
+				'font' => 'open-sans',
 				'fontSize' => '13px',
 				'textColor' => 'rgba(33, 34, 35, 1)',
 				'linkColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
-				'font' => 'Oswald',
+				'font' => 'oswald-4',
 				'fontWeight' => 'normal',
 				'textColor' => 'rgba(74, 105, 189, 1)',
 				'textTransform' => 'none'
@@ -226,9 +226,9 @@ class init extends common {
 		],
 		'admin' => [
 			'backgroundColor' => 'rgba(255, 255, 255, 1)',
-			'fontText' => 'open+Sans',
+			'fontText' => 'open-Sans',
 			'fontSize' => '13px',
-			'fontTitle' => 'Oswald',
+			'fontTitle' => 'oswald-4',
 			'colorText' => 'rgba(33, 34, 35, 1)',
 			'colorTitle' => 'rgba(74, 105, 189, 1)',
 			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',

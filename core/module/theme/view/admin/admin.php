@@ -127,7 +127,7 @@
 					<h4>Mise en forme du texte</h4>
 					<div class="row">
 						<div class="col4">
-							<?php echo template::select('adminFontText', $module::$fonts, [
+							<?php echo template::select('adminFontText', self::$fonts, [
 								'label' => 'Police du texte',
 								'selected' => $this->getData(['admin', 'fontText']),
 								'fonts' => true
@@ -140,7 +140,7 @@
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php echo template::select('adminFontTitle', $module::$fonts, [
+							<?php echo template::select('adminFontTitle', self::$fonts, [
 								'label' => 'Police des titres',
 								'selected' => $this->getData(['admin', 'fontTitle']),
 								'fonts' => true

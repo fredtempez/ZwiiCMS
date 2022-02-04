@@ -740,3 +740,66 @@ if ($this->getData(['core', 'dataVersion']) < 11202) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11202]);
 }
+
+// Version 11.2.06
+if ($this->getData(['core', 'dataVersion']) < 11206) {
+
+	// tableau de substitution
+	$fonts = [
+		'Abril+Fatface' => 'abril-fatface',
+		'Arimo' => 'arimo',
+		'Arvo' => 'arvo',
+		'Berkshire+Swash' => 'berkshire-swash',
+		'Cabin' => 'genera',
+		'Dancing+Script' => 'dancing-script',
+		'Droid+Sans' => 'droid-sans-2',
+		'Droid+Serif' => 'droid-serif-2',
+		'Fira+Sans' => 'fira-sans',
+		'Inconsolata' => 'inconsolata-2',
+		'Indie+Flower' =>'indie-flower',
+		'Josefin+Slab' => 'josefin-sans-std',
+		'Lobster' => 'lobster-2',
+		'Lora' => 'lora',
+		'Lato' =>'lato',
+		'Marvel' => 'montserrat-ace',
+		'Old+Standard+TT' => 'old-standard-tt-3',
+		'Open+Sans' =>'open-sans',
+			// Corriger l'erreur de nom de police installée par défaut, il manquait un O en majuscule
+		'open+Sans' =>'open-sans',
+		'Oswald' =>'oswald-4',
+		'PT+Mono' => 'pt-mono',
+		'PT+Serif' =>'pt-serif',
+		'Raleway' => 'raleway-5',
+		'Rancho' => 'rancho',
+		'Roboto' => 'Roboto',
+		'Signika' => 'signika',
+		'Ubuntu' => 'ubuntu',
+		'Vollkorn' => 'vollkorn'
+	];
+
+	if (array_key_exists($fonts[$this->getData (['theme', 'footer', 'font'])], $fonts) ) {
+		$this->setData(['theme', 'footer', 'font', $fonts[$this->getData (['theme', 'footer', 'font']) ] ]);
+	}
+	if (array_key_exists($fonts[$this->getData (['theme', 'header', 'font'])], $fonts) ) {
+		$this->setData(['theme', 'header', 'font', $fonts[$this->getData (['theme', 'header', 'font' ]) ] ]);
+	}
+	if (array_key_exists($fonts[$this->getData (['theme', 'menu', 'font'])], $fonts) ) {
+		$this->setData(['theme', 'menu', 'font',   $fonts[$this->getData (['theme', 'menu', 'font' ]) ] ]);
+	}
+	if (array_key_exists($fonts[$this->getData (['theme', 'text', 'font'])], $fonts) ) {
+		$this->setData(['theme', 'text', 'font',   $fonts[$this->getData (['theme', 'text', 'font' ]) ] ]);
+	}
+	if (array_key_exists($fonts[$this->getData (['theme', 'title', 'font'])], $fonts) ) {
+		$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
+	}
+	if (array_key_exists($fonts[$this->getData (['admin', 'fontTitle'])], $fonts) ) {
+		$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
+	}
+
+	if (array_key_exists($fonts[$this->getData (['admin', 'fontText'])], $fonts) ) {
+		$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
+	}
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11206]);
+}

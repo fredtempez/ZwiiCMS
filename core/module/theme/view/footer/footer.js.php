@@ -17,8 +17,9 @@
  */
 $("input, select").on("change", function() {
 	// Import des polices de caractères
-	var footerFont = $("#themeFooterFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + footerFont + "');";
+	var footerFont = $("#themeFooterFont :selected").val();
+	var footerFontText = $("#themeFooterFont :selected").text();
+	var css = "@import url('http://fonts.cdnfonts.com/css/" + footerFont + "');";
 	// Couleurs du pied de page
 	var colors = core.colorVariants($("#themeFooterBackgroundColor").val());
 	var textColor = $("#themeFooterTextColor").val();
@@ -35,7 +36,7 @@ $("input, select").on("change", function() {
 	css += "#footerText > p {text-align:" + $("#themeFooterTextAlign").val() + "}";
 	css += "#footerCopyright{text-align:" + $("#themeFooterCopyrightAlign").val() + "}";
 	// Taille, couleur, épaisseur et capitalisation du titre de la bannière
-	css += "footer span, #footerText > p {color:" + $("#themeFooterTextColor").val() + ";font-family:'" + footerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeFooterFontWeight").val() + ";font-size:" + $("#themeFooterFontSize").val() + ";text-transform:" + $("#themeFooterTextTransform").val() + "}";
+	css += "footer span, #footerText > p {color:" + $("#themeFooterTextColor").val() + ";font-family:'" + footerFontText + "',sans-serif;font-weight:" + $("#themeFooterFontWeight").val() + ";font-size:" + $("#themeFooterFontSize").val() + ";text-transform:" + $("#themeFooterTextTransform").val() + "}";
 	// Marge
 	if($("#themeFooterMargin").is(":checked")) {
 		css += 'footer{padding: 0 20px;}';

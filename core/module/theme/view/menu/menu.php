@@ -185,7 +185,7 @@
             <h4>Mise en forme du texte</h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('themeMenuFont', $module::$fonts, [
+                    <?php echo template::select('themeMenuFont', self::$fonts, [
 								'label' => 'Police',
 								'selected' => $this->getData(['theme', 'menu', 'font']),
                                 'fonts' => true

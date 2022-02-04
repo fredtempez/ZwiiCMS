@@ -40,8 +40,9 @@ $(document).ready(function(){
  */
 $("input, select").on("change", function() {
 	// Import des polices de caractères
-	var menuFont = $("#themeMenuFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + menuFont + "');";
+	var menuFont = $("#themeMenuFont :selected").val();
+	var menuFontText = $("#themeMenuFont :selected").text();
+	var css = "@import url('http://fonts.cdnfonts.com/css/" + menuFont + "');";
 	var colors = core.colorVariants($("#themeMenuBackgroundColor").val());
 	// Couleurs du menu
 	css += "nav,nav.navLevel1 a{background-color:" + colors.normal + "}";
@@ -56,7 +57,7 @@ $("input, select").on("change", function() {
 	var colors = core.colorVariants($("#themeMenuBackgroundColorSub").val());
 	css += 'nav .navSub a{background-color:' + colors.normal + '}';
 	// Taille, hauteur, épaisseur et capitalisation de caractères du menu
-	css += "#toggle span,#menu a{padding:" + $("#themeMenuHeight").val() + ";font-family:'" + menuFont.replace(/\+/g, " ")  + "',sans-serif;font-weight:" + $("#themeMenuFontWeight").val() + ";font-size:" + $("#themeMenuFontSize").val() + ";text-transform:" + $("#themeMenuTextTransform").val() + "}";
+	css += "#toggle span,#menu a{padding:" + $("#themeMenuHeight").val() + ";font-family:'" + menuFontText  + "',sans-serif;font-weight:" + $("#themeMenuFontWeight").val() + ";font-size:" + $("#themeMenuFontSize").val() + ";text-transform:" + $("#themeMenuTextTransform").val() + "}";
 	// Alignement du menu
 	css += "#menu{text-align:" + $("#themeMenuTextAlign").val() + "}";
 	// Marge

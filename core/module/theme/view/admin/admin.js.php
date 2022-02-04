@@ -17,7 +17,8 @@ $("input, select").on("change", function() {
 
     var titleFont = $("#adminFontTitle").val();
     var textFont = $("#adminFontText").val();
-    var css = "@import url('https://fonts.googleapis.com/css?family=" + titleFont + "|" + textFont + "');";
+    var css = "@import url('http://fonts.cdnfonts.com/css/" + titleFont +  "');";
+    var css = "@import url('http://fonts.cdnfonts.com/css/" + textFont + "');";
     var colors = core.colorVariants($("#adminBackgroundColor").val());
     var css = "#site{background-color:" + colors.normal + ";}";
     css += "body, .row > div {font:" + $("#adminFontTextSize").val() + " '" + textFont  + "', sans-serif;}";

@@ -80,8 +80,9 @@ $("input, select").on("change", function() {
 		tmpImg.src= "<?php echo helper::baseUrl(false); ?>" + "site/file/source/" + $("#themeHeaderImage").val();
 
 		// Import des polices de caractères
-		var headerFont = $("#themeHeaderFont").val();
-		var css = "@import url('https://fonts.googleapis.com/css?family=" + headerFont + "');";
+		var headerFont = $("#themeHeaderFont :selected").val();
+		var headerFontText = $("#themeHeaderFont :selected").text();
+		var css = "@import url('http://fonts.cdnfonts.com/css/" + headerFont + "');";
 
 			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
 			if ($("#themeHeaderImage").val()) {
@@ -97,7 +98,7 @@ $("input, select").on("change", function() {
 	
 
         // Taille, couleur, épaisseur et capitalisation du titre de la bannière
-        css += "header span{font-family:'" + headerFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";		
+        css += "header span{font-family:'" + headerFontText + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";		
 
 		// Cache le titre de la bannière
 		if($("#themeHeaderTextHide").is(":checked")) {

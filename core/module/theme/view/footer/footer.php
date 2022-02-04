@@ -173,7 +173,7 @@
             <h4>Mise en forme du texte</h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeFooterFont', $module::$fonts, [
+                    <?php echo template::select('themeFooterFont', self::$fonts, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'footer', 'font']),
 							'fonts' => true

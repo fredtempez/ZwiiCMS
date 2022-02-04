@@ -33,9 +33,13 @@ $("input, select").on("change",function() {
 	 */
 
 	// Import des polices de caractères
-	var titleFont = $("#themeTitleFont").val();
-	var textFont = $("#themeTextFont").val();
-	var css = "@import url('https://fonts.googleapis.com/css?family=" + titleFont + "|" + textFont + "');";
+	var titleFont = $("#themeTitleFont :selected").val();
+	var titleFontText = $("#themeTitleFont :selected").text();
+	var textFont = $("#themeTextFont :selected").val();
+	var textFontText = $("#themeTextFont :selected").text();
+	console.log(textFontText);
+	var css = "@import url('http://fonts.cdnfonts.com/css/" + titleFont +  "');";
+	var css = "@import url('http://fonts.cdnfonts.com/css/" + textFont + "');";
 	// Couleurs des boutons
 	var colors = core.colorVariants($("#themeButtonBackgroundColor").val());
 	css += ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
@@ -47,10 +51,10 @@ $("input, select").on("change",function() {
 	css += "a.urlPreview{color:" + colors.normal + "}";
 	css += "a.urlPreview:hover{color:" + colors.darken + "}";
 	// Couleur, polices, épaisseur et capitalisation de caractères des titres
-	css += ".headerPreview,.headerPreview{color:" + $("#themeTitleTextColor").val() + ";font-family:'" + titleFont.replace(/\+/g, " ") + "',sans-serif;font-weight:" + $("#themeTitleFontWeight").val() + ";text-transform:" + $("#themeTitleTextTransform").val() + "}";
+	css += ".headerPreview,.headerPreview{color:" + $("#themeTitleTextColor").val() + ";font-family:'" + titleFontText + "',sans-serif;font-weight:" + $("#themeTitleFontWeight").val() + ";text-transform:" + $("#themeTitleTextTransform").val() + "}";
 	// Police de caractères
 	// Police + couleur
-	css += ".textPreview,.urlPreview{color:" + $("#themeTextTextColor").val() + ";font-family:'" + textFont.replace(/\+/g, " ") + "',sans-serif; font-size:" + $("#themeTextFontSize").val() + ";}";
+	css += ".textPreview,.urlPreview{color:" + $("#themeTextTextColor").val() + ";font-family:'" + textFontText + "',sans-serif; font-size:" + $("#themeTextFontSize").val() + ";}";
 	// Couleur des liens
 	//css += "a.preview,.buttonSubmitPreview{font-family:'" + textFont.replace(/\+/g, " ") + "',sans-serif}";
 

@@ -619,9 +619,10 @@ class template {
             $attributes['selected'] = common::$inputBefore[$attributes['id']];
         }
         // Liste des polices à intégrer
+        //var_dump(core::$fonts);
         if ($attributes['fonts'] === true) {
-            foreach ($options as $fontId) {
-                echo "<link href='https://fonts.googleapis.com/css?family=".str_replace(" ", "+", $fontId)."' rel='stylesheet' type='text/css'>\n";
+            foreach (core::$fonts as $fontId => $font) {
+                echo "<link href='https://fonts.cdnfonts.com/css/" . $fontId . "' rel='stylesheet' type='text/css'>\n";
             }
         }
         // Début du wrapper
@@ -648,7 +649,7 @@ class template {
                     '<option value="%s"%s style="font-family: %s;">%s</option>',
                     $value,
                     $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                    str_replace('+',' ',$value),
+                    core::$fonts[$value],
                     $text
                 ) : sprintf(
                     '<option value="%s"%s>%s</option>',

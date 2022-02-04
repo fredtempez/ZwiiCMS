@@ -40,35 +40,6 @@ class theme extends common {
 		'scroll' => 'Standard',
 		'fixed' => 'Fixe'
 	];
-	public static $fonts = [
-		'Abril+Fatface' => 'Abril Fatface',
-		'Arimo' => 'Arimo',
-		'Arvo' => 'Arvo',
-		'Berkshire+Swash' => 'Berkshire Swash',
-		'Cabin' => 'Cabin',
-		'Dancing+Script' => 'Dancing Script',
-		'Droid+Sans' => 'Droid Sans',
-		'Droid+Serif' => 'Droid Serif',
-		'Fira+Sans' => 'Fira Sans',
-		'Inconsolata' => 'Inconsolata',
-		'Indie+Flower' => 'Indie Flower',
-		'Josefin+Slab' => 'Josefin Slab',
-		'Lobster' => 'Lobster',
-		'Lora' => 'Lora',
-		'Lato' => 'Lato',
-		'Marvel' => 'Marvel',
-		'Old+Standard+TT' => 'Old Standard TT',
-		'Open+Sans' => 'Open Sans',
-		'Oswald' => 'Oswald',
-		'PT+Mono' => 'PT Mono',
-		'PT+Serif' => 'PT Serif',
-		'Raleway' => 'Raleway',
-		'Rancho' => 'Rancho',
-		'Roboto' => 'Roboto',
-		'Signika' => 'Signika',
-		'Ubuntu' => 'Ubuntu',
-		'Vollkorn' => 'Vollkorn'
-	];
 	public static $containerWides = [
 		'container' => 'Limitée au site',
 		'none' => 'Etendue sur la page'

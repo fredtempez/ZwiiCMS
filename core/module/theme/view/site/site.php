@@ -160,7 +160,7 @@
 				<h4>Mise en forme du texte</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::select('themeTextFont', $module::$fonts, [
+						<?php echo template::select('themeTextFont', self::$fonts, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'text', 'font']),
 							'fonts' => true
@@ -181,7 +181,7 @@
 				<h4>Mise en forme des titres</h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('themeTitleFont', $module::$fonts, [
+						<?php echo template::select('themeTitleFont', self::$fonts, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'title', 'font']),
 							'fonts' => true
