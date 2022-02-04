@@ -13,7 +13,7 @@
 					<?php endif; ?>
 				</div>
 				<div class="newsSignature">
-					<i class="far fa-calendar-alt"></i>
+					<?php echo template::ico('calendar-empty'); ?>
 					<?php echo mb_detect_encoding(strftime('%d %B %Y', $news['publishedOn']), 'UTF-8', true)
 								? strftime('%d %B %Y', $news['publishedOn'])
 								: utf8_encode(strftime('%d %B %Y', $news['publishedOn'])); ?>

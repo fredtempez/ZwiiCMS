@@ -35,7 +35,7 @@
 							<?php echo template::ico('comment', 'left'); ?>
 						</div>
 						<div class="blogDate">
-							<i class="far fa-calendar-alt"></i>
+							<?php echo template::ico('calendar-empty'); ?>
 							<?php echo mb_detect_encoding(strftime('%d %B %Y - %H:%M',  $article['publishedOn']), 'UTF-8', true)
 										? strftime('%d %B %Y', $article['publishedOn'])
 										: utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>

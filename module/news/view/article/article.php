@@ -7,7 +7,7 @@
 	<div class="col12 newsDate">
 		<!-- bloc signature et date -->
 		<?php echo $module::$articleSignature . ' - ';?>
-		<i class="far fa-calendar-alt"></i>
+		<?php echo template::ico('calendar-empty'); ?>
 		<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
 						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
 						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
