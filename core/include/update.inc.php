@@ -777,28 +777,16 @@ if ($this->getData(['core', 'dataVersion']) < 11206) {
 		'Vollkorn' => 'vollkorn'
 	];
 
-	if (array_key_exists($fonts[$this->getData (['theme', 'footer', 'font'])], $fonts) ) {
-		$this->setData(['theme', 'footer', 'font', $fonts[$this->getData (['theme', 'footer', 'font']) ] ]);
-	}
-	if (array_key_exists($fonts[$this->getData (['theme', 'header', 'font'])], $fonts) ) {
-		$this->setData(['theme', 'header', 'font', $fonts[$this->getData (['theme', 'header', 'font' ]) ] ]);
-	}
-	if (array_key_exists($fonts[$this->getData (['theme', 'menu', 'font'])], $fonts) ) {
-		$this->setData(['theme', 'menu', 'font',   $fonts[$this->getData (['theme', 'menu', 'font' ]) ] ]);
-	}
-	if (array_key_exists($fonts[$this->getData (['theme', 'text', 'font'])], $fonts) ) {
-		$this->setData(['theme', 'text', 'font',   $fonts[$this->getData (['theme', 'text', 'font' ]) ] ]);
-	}
-	if (array_key_exists($fonts[$this->getData (['theme', 'title', 'font'])], $fonts) ) {
-		$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
-	}
-	if (array_key_exists($fonts[$this->getData (['admin', 'fontTitle'])], $fonts) ) {
-		$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
-	}
-
-	if (array_key_exists($fonts[$this->getData (['admin', 'fontText'])], $fonts) ) {
-		$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
-	}
+	$this->setData(['theme', 'footer', 'font', $fonts[$this->getData (['theme', 'footer', 'font']) ] ]);
+	$this->setData(['theme', 'header', 'font', $fonts[$this->getData (['theme', 'header', 'font' ]) ] ]);
+	$this->setData(['theme', 'menu', 'font',   $fonts[$this->getData (['theme', 'menu', 'font' ]) ] ]);
+	$this->setData(['theme', 'text', 'font',   $fonts[$this->getData (['theme', 'text', 'font' ]) ] ]);
+	$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
+	$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
+	$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
+	
+	unlink(self::DATA_DIR . 'admin.css');
+	unlink(self::DATA_DIR . 'theme.css');
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11206]);
