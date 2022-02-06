@@ -2,20 +2,20 @@
 
 
 ## Version 11.3.00
-- Correction : 
-    - Thème / site : problème d'aperçu du body.
-    - Bugs avec les sélecteurs de fontes.
-- Modification : 
-    - Police de carcatères :
+- Correction :
+    - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
+    - Bugs avec les aperçus des sélecteurs de fontes.
+- Modification :
+    - Police de caractères :
         - Changement de fournisseur, CdnFont remplace Google Font.
-        
+        - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
 
 ## Version 11.2.05
-- Corrections : 
+- Corrections :
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.
     - Disparition de l'icône de gestion du compte pour le profil éditeur.
-    
+
 ## Version 11.2.04
 - Correction  :
     - Affiche une notification de mise à jour si la numérotation de la version en ligne est supérieure à celle installée.
@@ -45,24 +45,24 @@
     - Affichage d'un popup d'information sur les boutons qui envoient vers l'aide en ligne.
 
 ## Version 11.2.01
-- Mises à jour : 
+- Mises à jour :
     - jQuery v3.6.0
     - Lity v2.4.1
     - Lightbox v2.10.1
     - Faltpickr v4.6.9
     - FavIcon Switcher v1.2.2
-- Corrections : 
-    - Configuration, restauration d'une archive du site : 
+- Corrections :
+    - Configuration, restauration d'une archive du site :
         - la validation du formulaire sans avoir sélectionné de fichier de sauvegarde provoquait le crash du site.
         - la conversion des URL des ressources ne fonctionnait plus depuis l'externalisation du contenu des pages dans des fichiers séparés.
     - Multi-langues :
         - Bug auto détection du navigateur.
     - Page site map, correction d'erreurs et rénovation de la présentation.
 - Modifications :
-    - Gestion des cookies : 
+    - Gestion des cookies :
         - Options de personnalisation du message d'acceptation des cookies, acceptation ou refus du cookie Google Analytics, affichage de la page des mentions légales.
         - Etiquette dans le footer permettant d'afficher la popup des cookies.
-    - Thème : 
+    - Thème :
         - Disposition des options de configuration du site.
         - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.
     - Pages : il est désormais possible de donner un nom de page court utilisé dans le menu du site, dans les barres latérales et dans les sélecteurs de page (éditeur / lien). En revanche le nom de la page affiché en haut de celle-ci est inchangé. Dans la plupart des cas le titre court sera identique au titre.
@@ -76,15 +76,15 @@
     - Fichier robots.txt non fourni lors les bots ne sont pas autorisés.
     - Page parente ayant des pages enfants non affichées dans le menu : lors du renommage de la page, les pages enfants n'étaient pas actualisées.
     - Bugs de conformités.
-- Modifications : 
+- Modifications :
     - Dispositions des écrans du thème : site, menu, pied de page, menu et bannière.
 
 ## Version 11.1.00
 - Corrections :
     - Problème lié à la migration vers la version 11. Création d'un dossier : les droits d'accès sont positionnés sur 0755 au lieu de la valeur par défaut 0777. Concerne également les modules Formulaire, Galerie, News, Search et d'autres modules optionnels.
     - Données d’initialisation, le numéro de version devient 11000 au lieu de 10602.
-    - Thème / Bannière : 
-        - Bug d'aperçu au déplacement de la bannière et du menu au-dessous ou sous la bannière. 
+    - Thème / Bannière :
+        - Bug d'aperçu au déplacement de la bannière et du menu au-dessous ou sous la bannière.
         - Option de menu burger désactivée par la validation de la bannière.
     - Module Formulaire : gestion des réponses, barre de pagination absente.
     - Gestionnaire de fichiers : droit des éditeurs sur les fichiers et les dossiers.
@@ -94,7 +94,7 @@
         - Traduction des étiquettes Carte du site, Rechercher et Mentions légales dans le pied de page.
         - Refonte des pages de configuration et de la page du thème du pied de page.
         - La page courante reste sélectionnée après un clic sur un drapeau.
-    - Thème : 
+    - Thème :
         - Choix d'un thème à l'installation.
         - Livraison de quelques thèmes.
         - Pied de page, sélection directe d'une page spéciale sans passer par la configuration du site.
