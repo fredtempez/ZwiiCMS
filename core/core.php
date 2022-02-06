@@ -2266,14 +2266,47 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
 
-			// Import des polices de caractères
+			/**
+			 * Import des polices de caractères à partir du CDN
+			 */
 			$importFonts = [$this->getData(['theme', 'text',  'font']),
 							$this->getData(['theme', 'title', 'font']),
 							$this->getData(['theme', 'header', 'font']),
 							$this->getData(['theme', 'menu', 'font']),
 							$this->getData(['theme', 'footer', 'font'])
 			];
-			$imporFonts = array_unique($importFonts);
+			// Suppression des polices identiques
+			$importFonts = array_unique($importFonts);
+
+			// Un fichier local de configuration existe
+			/*
+			if ( file_exists(self::FILE_DIR . 'source/fonts/fonts.json') )
+			{
+				// Lire le fichier et check l'existence des fichiers locaux
+				$fontList = json_decode(file_get_contents (self::FILE_DIR . "source/fonts/fonts.json"), true);
+				// Validité du format
+				if (is_array($fontList) ) {
+					foreach ($fontList as $fontId => $fontName) {
+						
+						// Validité du tableau :
+						// L'id de la police est présent dans la liste interne
+						// Le nom de la police fournie correspond à un fichier existant
+						//
+						if ( array_key_exists($fontId, self::$fonts) &&
+							 file_exists(self::FILE_DIR . 'source/fonts/' . $fontName) ) {
+								 // Chargement de la police
+								 $formatFont = explode('.', self::FILE_DIR . 'source/fonts/' . $fontName);
+								 $css .= '@import url("' . helper::baseUrl(false) . self::FILE_DIR . 'source/fonts/' . $fontName . '");';
+								 // Déchargement l'élément des fonts en ligne
+								 unset($importFonts[$fontId]);
+						}
+					}
+				}
+			}
+			*/
+			
+
+			// Chargement en ligne des polices
 			foreach ($importFonts as $fontId) {
 				$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
 			}			
