@@ -1,10 +1,14 @@
 # Changelog
 
 
-## Version 11.2.06
+## Version 11.3.00
 - Correction : 
     - Thème / site : problème d'aperçu du body.
+    - Bugs avec les sélecteurs de fontes.
 - Modification : 
+    - Police de carcatères :
+        - Changement de fournisseur, CdnFont remplace Google Font.
+        
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
 
 ## Version 11.2.05

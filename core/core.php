@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.2.06';
+	const ZWII_VERSION = '11.3.00';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -2265,11 +2265,19 @@ class core extends common {
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['theme'])))) {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
+
 			// Import des polices de caractères
-			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'text',  'font']) . '");';
-			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'title', 'font']) . '");';
-			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'header', 'font']) . '");';
-			$css .= '@import url("http://fonts.cdnfonts.com/css/' . $this->getData(['theme', 'menu', 'font']) . '");';
+			$importFonts = [$this->getData(['theme', 'text',  'font']),
+							$this->getData(['theme', 'title', 'font']),
+							$this->getData(['theme', 'header', 'font']),
+							$this->getData(['theme', 'menu', 'font']),
+							$this->getData(['theme', 'footer', 'font'])
+			];
+			$imporFonts = array_unique($importFonts);
+			foreach ($importFonts as $fontId) {
+				$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+			}			
+
 			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
 			// Body
