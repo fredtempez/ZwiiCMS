@@ -1,26 +1,11 @@
 @font-face {
   font-family: 'zwiico';
-<<<<<<< HEAD
-<<<<<<< HEAD
   src: url('../font/zwiico.eot?39677933');
   src: url('../font/zwiico.eot?39677933#iefix') format('embedded-opentype'),
        url('../font/zwiico.woff2?39677933') format('woff2'),
        url('../font/zwiico.woff?39677933') format('woff'),
        url('../font/zwiico.ttf?39677933') format('truetype'),
        url('../font/zwiico.svg?39677933#zwiico') format('svg');
-=======
-=======
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
-  src: url('../font/zwiico.eot?37992248');
-  src: url('../font/zwiico.eot?37992248#iefix') format('embedded-opentype'),
-       url('../font/zwiico.woff2?37992248') format('woff2'),
-       url('../font/zwiico.woff?37992248') format('woff'),
-       url('../font/zwiico.ttf?37992248') format('truetype'),
-       url('../font/zwiico.svg?37992248#zwiico') format('svg');
-<<<<<<< HEAD
->>>>>>> Nouveau jeu d'icônes
-=======
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
   font-weight: normal;
   font-style: normal;
 }
@@ -30,15 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'zwiico';
-<<<<<<< HEAD
-<<<<<<< HEAD
     src: url('../font/zwiico.svg?39677933#zwiico') format('svg');
-=======
-    src: url('../font/zwiico.svg?37992248#zwiico') format('svg');
->>>>>>> Nouveau jeu d'icônes
-=======
-    src: url('../font/zwiico.svg?37992248#zwiico') format('svg');
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
   }
 }
 */
@@ -133,14 +110,8 @@
 .zwiico-calendar-empty:before { content: '\f133'; } /* '' */
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
-<<<<<<< HEAD
-<<<<<<< HEAD
 .zwiico-box:before { content: '\f187'; } /* '' */
 .zwiico-file-archive:before { content: '\f1c6'; } /* '' */
-=======
->>>>>>> Nouveau jeu d'icônes
-=======
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
 .zwiico-sliders:before { content: '\f1de'; } /* '' */
 .zwiico-brush:before { content: '\f1fc'; } /* '' */
 .zwiico-pinterest:before { content: '\f231'; } /* '' */

@@ -55,14 +55,8 @@
 .zwiico-calendar-empty:before { content: '\f133'; } /* '' */
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
-<<<<<<< HEAD
-<<<<<<< HEAD
 .zwiico-box:before { content: '\f187'; } /* '' */
 .zwiico-file-archive:before { content: '\f1c6'; } /* '' */
-=======
->>>>>>> Nouveau jeu d'icônes
-=======
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
 .zwiico-sliders:before { content: '\f1de'; } /* '' */
 .zwiico-brush:before { content: '\f1fc'; } /* '' */
 .zwiico-pinterest:before { content: '\f231'; } /* '' */
