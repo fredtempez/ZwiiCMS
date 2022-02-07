@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< HEAD
 
 ## Version 11.3.00
 - Correction :
@@ -11,6 +12,13 @@
         - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
 
+=======
+## Version 11.3
+### Modifications
+    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
+    - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
+    
+>>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
 ## Version 11.2.05
 - Corrections :
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.
