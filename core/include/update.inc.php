@@ -842,8 +842,11 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 }
 
 // Version 12.0.00
-if ($this->getData(['core', 'dataVersion']) < 11200) {
+if ($this->getData(['core', 'dataVersion']) < 12000) {
+
+	// Effacer le dossier 
+	$this->removeDir('core/module/addon');
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11200]);
+	$this->setData(['core', 'dataVersion', 12000]);
 }	
