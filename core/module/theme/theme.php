@@ -412,34 +412,6 @@ class theme extends common {
 			$featureContent = $this->getInput('themeHeaderText', null);
 			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 
-			// Encodage des images en base64
-			// Identifier les images
-			/*
-			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
-				// Lire le contenu XML
-				$sx = simplexml_load_string($value);
-				// Elément à remplacer
-				$src = 'src="' . $sx[0]['src'] . '"';
-				// Elément encodé en base64
-				$base64 = 'src="data:image/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
-				// Effectuer le remplacement dans la chaine
-				$featureContent = str_replace($src, $base64, $featureContent);
-			}
-			
-			// Encodage des videos en base64
-			preg_match_all('/<source[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
-				// Lire le contenu XML
-				$sx = simplexml_load_string($value);
-				// Elément à remplacer
-				$src = 'src="' . $sx[0]['src'] . '"';
-				// Elément encodé en base64
-				$base64 = 'src="data:source/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
-				// Effectuer le remplacement dans la chaine
-				$featureContent = str_replace($src, $base64, $featureContent);
-			}*/
-
 			/** 
 			* Stocker les images incluses dans la bannière perso dans un tableau
 			*/
@@ -447,7 +419,7 @@ class theme extends common {
 			foreach($results[0] as $value) {				
 				// Lire le contenu XML
 				$sx = simplexml_load_string($value);
-				// Elément à remplacer
+				// Élément à remplacer
 				$files [] = str_replace('./site/file/source/','',(string) $sx[0]['src']);
 			}
 
