@@ -2247,6 +2247,15 @@ class core extends common {
 				}
 			}
 		}
+
+		// Importe les polices personnalisées
+		$fontsImported = $this->getData(['fonts', 'imported']);
+		if (is_array($fontsImported) &&
+			!empty ($fontsImported)
+		) {
+			self::$fonts = array_merge(self::$fonts, $fontsImported);
+		}
+
 		// Crée le fichier de personnalisation avancée
 		if(file_exists(self::DATA_DIR.'custom.css') === false) {
 			file_put_contents(self::DATA_DIR.'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
