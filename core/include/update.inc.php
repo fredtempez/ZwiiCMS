@@ -741,8 +741,8 @@ if ($this->getData(['core', 'dataVersion']) < 11202) {
 	$this->setData(['core', 'dataVersion', 11202]);
 }
 
-// Version 11.2.06
-if ($this->getData(['core', 'dataVersion']) < 11206) {
+// Version 11.3.00
+if ($this->getData(['core', 'dataVersion']) < 11300) {
 
 	// tableau de substitution
 	$fonts = [
@@ -789,5 +789,5 @@ if ($this->getData(['core', 'dataVersion']) < 11206) {
 	unlink(self::DATA_DIR . 'theme.css');
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11206]);
+	$this->setData(['core', 'dataVersion', 11300]);
 }
