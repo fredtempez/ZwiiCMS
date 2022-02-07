@@ -789,6 +789,7 @@ if ($this->getData(['core', 'dataVersion']) < 11203) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11203]);
 }
+
 // Version 11.3.00
 if ($this->getData(['core', 'dataVersion']) < 11300) {
 
@@ -839,3 +840,10 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11300]);
 }
+
+// Version 12.0.00
+if ($this->getData(['core', 'dataVersion']) < 11200) {
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11200]);
+}	
