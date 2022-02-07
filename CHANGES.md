@@ -1,24 +1,24 @@
 # Changelog
 
-<<<<<<< HEAD
+
+## Version 12.3.00
+- Modifications :
+    - Module addon refondu et renommé plugin.
+    - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
+    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
+
 
 ## Version 11.3.00
-- Correction :
+Corrections :
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
     - Bugs avec les aperçus des sélecteurs de fontes.
-- Modification :
+Modifications :
     - Police de caractères :
-        - Changement de fournisseur, CdnFont remplace Google Font.
+        - Changement de fournisseur, CdnFont remplace Google Font. 
         - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
+        - Installation de police personnalisées.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
-
-=======
-## Version 11.3
-### Modifications
-    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
-    - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
     
->>>>>>> 957121d76ec1c3c2f545d39f4228d501487904af
 ## Version 11.2.05
 - Corrections :
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.
@@ -35,7 +35,6 @@
     - Thème ; pied de page ; option pied de page fixe inopérante.
     - Edition des pages orphelines : "Ne pas afficher" une page contenant des sous-pages provoquait un bug d'affichage dans le menu, la page était malgré tout affichée en fin de menu. Ce problème était causé par les pages enfants dont l'affichage n'était pas modifié. Le correctif cascade l'option "Ne pas afficher" aux sous-pages. La réciproque n'est pas appliquée, il faudra rendre visible les sous-pages d'une page parente qui devient à nouveau visible.
 - Modifications :
-    - **Chemin vers les données de site (images et liens internes)**. Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
     - Mise à jour en ligne, contrôle de la clé MD5 de l'archive update.tar.gz.
     - Thème ; pied de page ; options pied de page fixe et alignement avec le contenu déplacées dans les paramètres.
 
