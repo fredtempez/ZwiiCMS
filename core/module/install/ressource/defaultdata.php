@@ -85,6 +85,10 @@ class init extends common {
 				'buttonValidLabel' => 'J\'ai compris'
 			]
 		],
+		'fonts' => [
+			'files' => [],
+			'imported' => []
+		],
 		'page' => [
 			'accueil' => [
 			'typeMenu' => 'text',
@@ -226,7 +230,7 @@ class init extends common {
 		],
 		'admin' => [
 			'backgroundColor' => 'rgba(255, 255, 255, 1)',
-			'fontText' => 'open-Sans',
+			'fontText' => 'open-sans',
 			'fontSize' => '13px',
 			'fontTitle' => 'oswald-4',
 			'colorText' => 'rgba(33, 34, 35, 1)',
