@@ -86,10 +86,10 @@ $("input, select").on("change",function() {
 	css += "#site{border-radius:" + $("#themeSiteRadius").val() + ";box-shadow:" + $("#themeSiteShadow").val() + " #212223}";
 
 	// Couleur ou image de fond
-	var backgroundImage = <?php if( $this->getData(['theme','body','image']) !== '') { echo json_encode(helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme','body','image']));} else { echo 'null';} ?> ;
+	var backgroundImage = <?php echo json_encode($this->getData(['theme','body','image'])); ?>;
 	var backgroundcolor = <?php echo json_encode($this->getdata(['theme','body','backgroundColor'])); ?>;
 	if(backgroundImage ) {
-		css += "div.bodybackground{background-image:url(" + backgroundImage + ");background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
+		css += "div.bodybackground{background-image:url(" + window.location.origin + window.location.pathname + '/site/file/source/' +  backgroundImage + ");background-repeat:" + $("#themeBodyImageRepeat").val() + ";background-position:" + $("#themeBodyImagePosition").val() + ";background-attachment:" + $("#themeBodyImageAttachment").val() + ";background-size:" + $("#themeBodyImageSize").val() + "}";
 		css += "div.bodybackground{background-color:rgba(0,0,0,0);}";
 	}
 	else {
