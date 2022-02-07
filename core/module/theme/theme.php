@@ -29,7 +29,8 @@ class theme extends common {
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN
+		'save' => self::GROUP_ADMIN,
+		'fonts' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
@@ -412,11 +413,11 @@ class theme extends common {
 			$featureContent = $this->getInput('themeHeaderText', null);
 			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 
-			/** 
+			/**
 			* Stocker les images incluses dans la bannière perso dans un tableau
 			*/
-			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results);
+			foreach($results[0] as $value) {
 				// Lire le contenu XML
 				$sx = simplexml_load_string($value);
 				// Élément à remplacer
@@ -535,6 +536,20 @@ class theme extends common {
 				'tinycolorpicker'
 			],
 			'view' => 'menu'
+		]);
+	}
+
+	/**
+	 * Options des fontes
+	 */
+	public function fonts() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Gestion des fontes',
+			'view' => 'fonts'
 		]);
 	}
 
@@ -795,10 +810,10 @@ class theme extends common {
 					// Traite les images du header perso
 					if (!empty($this->getData(['theme','header','featureFiles'])) ) {
 						foreach($this->getData(['theme','header','featureFiles']) as $value) {
-							$zip->addFile(self::FILE_DIR . 'source/' . $value, 
+							$zip->addFile(self::FILE_DIR . 'source/' . $value,
 										  self::FILE_DIR . 'source/' . $value );
 						}
-					} 
+					}
 					break;
 			}
 			$ret = $zip->close();
