@@ -1659,7 +1659,7 @@ class common {
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
-			$itemsLeft .= '<li>';
+			$itemsLeft .= '<li id="' . $parentPageId  .'">';
 
 			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
@@ -1722,7 +1722,7 @@ class common {
 				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
-				$itemsLeft .= '<li>';
+				$itemsLeft .= '<li id=' . $childKey .'>';
 				if ( ( $this->getData(['page',$childKey,'disable']) === true
 						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 						) OR (
