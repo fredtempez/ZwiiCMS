@@ -30,9 +30,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col2  offset3">
+		<div class="col2  offset2">
 			<?php echo template::button('themeManage', [
-				'ico' => 'cogs',
+				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
@@ -50,6 +50,13 @@
 				'ico' => 'code',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
+			]); ?>
+		</div>
+		<div class="col2">
+			<?php echo template::button('themeFonts', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'value' => 'Fontes'
 			]); ?>
 		</div>
 	</div>
@@ -75,9 +82,9 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col2  offset3">
+		<div class="col2  offset2">
 			<?php echo template::button('themeManage', [
-				'ico' => 'cogs',
+				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
 				'value' => 'Gestion'
 			]); ?>
@@ -95,6 +102,13 @@
 				'ico' => 'code',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
+			]); ?>
+		</div>
+		<div class="col2">
+			<?php echo template::button('themeFonts', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'value' => 'Fontes'
 			]); ?>
 		</div>
 	</div>

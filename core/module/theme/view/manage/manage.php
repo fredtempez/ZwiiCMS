@@ -1,19 +1,18 @@
 <?php echo template::formOpen('themeManageForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('themeManageBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col1 offset8">
 			<?php echo template::button('configManageReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/reset/manage'  . '&csrf=' . $_SESSION['csrf'],
-				'value' => 'Réinitialiser',
-				'ico' => 'cancel'
+				'value' => template::ico('cancel'),
+				'help' => 'Réinitialiser avec le thème par défaut'
 			]); ?>
 		</div>
 		<div class="col2">

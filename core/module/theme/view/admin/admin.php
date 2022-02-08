@@ -1,24 +1,25 @@
 <?php echo template::formOpen('configAdminForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('configAdminBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset4">
+		<!--
+		<div class="col2 offset5">
 			<?php echo template::button('configAdminTest', [
 				'value' => 'Bouton Standard'
 			]); ?>
 		</div>
-		<div class="col2 offset">
+		-->
+		<div class="col1 offset8">
 			<?php echo template::button('configAdminReset', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'theme/reset/admin' . '&csrf=' . $_SESSION['csrf'],
-				'value' => 'Réinitialiser',
-				'ico' => 'cancel'
+				'value' => template::ico('cancel'),
+				'help' => 'Réinitialiser avec le thème par défaut'
 			]); ?>
 		</div>
 		<div class="col2">

@@ -29,7 +29,8 @@ class theme extends common {
 		'manage' => self::GROUP_ADMIN,
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN
+		'save' => self::GROUP_ADMIN,
+		'fonts' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
@@ -226,6 +227,8 @@ class theme extends common {
 
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
+	// Variable pour construire la liste des fontes installées
+	public static $fontsList = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -412,42 +415,14 @@ class theme extends common {
 			$featureContent = $this->getInput('themeHeaderText', null);
 			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 
-			// Encodage des images en base64
-			// Identifier les images
-			/*
-			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
-				// Lire le contenu XML
-				$sx = simplexml_load_string($value);
-				// Elément à remplacer
-				$src = 'src="' . $sx[0]['src'] . '"';
-				// Elément encodé en base64
-				$base64 = 'src="data:image/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
-				// Effectuer le remplacement dans la chaine
-				$featureContent = str_replace($src, $base64, $featureContent);
-			}
-			
-			// Encodage des videos en base64
-			preg_match_all('/<source[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
-				// Lire le contenu XML
-				$sx = simplexml_load_string($value);
-				// Elément à remplacer
-				$src = 'src="' . $sx[0]['src'] . '"';
-				// Elément encodé en base64
-				$base64 = 'src="data:source/'. pathinfo($sx[0]['src'],PATHINFO_EXTENSION) . ';base64,'. base64_encode(file_get_contents($sx[0]['src'])).'"';
-				// Effectuer le remplacement dans la chaine
-				$featureContent = str_replace($src, $base64, $featureContent);
-			}*/
-
-			/** 
+			/**
 			* Stocker les images incluses dans la bannière perso dans un tableau
 			*/
-			preg_match_all('/<img[^>]+>/i',$featureContent, $results); 			
-			foreach($results[0] as $value) {				
+			preg_match_all('/<img[^>]+>/i',$featureContent, $results);
+			foreach($results[0] as $value) {
 				// Lire le contenu XML
 				$sx = simplexml_load_string($value);
-				// Elément à remplacer
+				// Élément à remplacer
 				$files [] = str_replace('./site/file/source/','',(string) $sx[0]['src']);
 			}
 
@@ -563,6 +538,32 @@ class theme extends common {
 				'tinycolorpicker'
 			],
 			'view' => 'menu'
+		]);
+	}
+
+	/**
+	 * Options des fontes
+	 */
+	public function fonts() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+		}
+		//Polices trouvées dans la configuration 
+		
+		if ( file_exists(self::DATA_DIR . 'fonts.json') ) {
+			$localFonts = $this->getData(['fonts', 'files']);
+		}
+		// Parcourir les fontes installées et construire le tableau pour le formulaire
+		foreach (self::$fonts as $fontId => $fontName) {
+			self::$fontsList [] = [ 
+				$fontName,
+				$fontId
+			];
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Gestion des fontes',
+			'view' => 'fonts'
 		]);
 	}
 
@@ -823,10 +824,10 @@ class theme extends common {
 					// Traite les images du header perso
 					if (!empty($this->getData(['theme','header','featureFiles'])) ) {
 						foreach($this->getData(['theme','header','featureFiles']) as $value) {
-							$zip->addFile(self::FILE_DIR . 'source/' . $value, 
+							$zip->addFile(self::FILE_DIR . 'source/' . $value,
 										  self::FILE_DIR . 'source/' . $value );
 						}
-					} 
+					}
 					break;
 			}
 			$ret = $zip->close();
