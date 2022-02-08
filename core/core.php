@@ -2290,33 +2290,30 @@ class core extends common {
 			// Suppression des polices identiques
 			$cdnFonts = array_unique($cdnFonts);
 
-			// Un fichier local de configuration existe
-			if ( file_exists(self::DATA_DIR . 'fonts.json') )
-			{
-				// Lire le fichier et check l'existence des fichiers locaux
-				// $localFonts = json_decode(file_get_contents (self::FILE_DIR . "source/fonts/fonts.json"), true);
-				$localFonts = $this->getData(['fonts', 'files']);
-				// Validité du format
-				if (is_array($localFonts) ) {
-					foreach ($localFonts as $fontId => $fontName) {
-						// Validité du tableau :
-						// L'id de la police est présent dans la liste interne
-						// Le nom de la police fournie correspond à un fichier existant
-						if ( array_key_exists($fontId, self::$fonts) &&
-							 file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
-								// La police locale est-elle invoquée ?
-								$d = array_search($fontId, $cdnFonts);
-								if ( $d !== NULL ) {
-									// Chargement de la police demandée dans le thème
-									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
-									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
-									$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
-									// Supprimer l'élément des fontes chargées en ligne
-									unset($cdnFonts[$d]);
-								}
-						}
-
+			// Lire le fichier et check l'existence des fichiers locaux
+			$localFonts = $this->getData(['fonts', 'files']);
+			// Validité du format
+			if (is_array($localFonts  &&
+				!empty($localFonts)) 
+			) {
+				foreach ($localFonts as $fontId => $fontName) {
+					// Validité du tableau :
+					// L'id de la police est présent dans la liste interne
+					// Le nom de la police fournie correspond à un fichier existant
+					if ( array_key_exists($fontId, self::$fonts) &&
+							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
+							// La police locale est-elle invoquée ?
+							$d = array_search($fontId, $cdnFonts);
+							if ( $d !== NULL ) {
+								// Chargement de la police demandée dans le thème
+								$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+								$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
+								$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
+								// Supprimer l'élément des fontes chargées en ligne
+								unset($cdnFonts[$d]);
+							}
 					}
+
 				}
 			}
 			// Chargement des polices en ligne
@@ -2519,12 +2516,12 @@ class core extends common {
 			];
 			// Suppression des polices identiques
 			$cdnFonts = array_unique($cdnFonts);
-			// Un fichier local de configuration existe
-			if ( file_exists(self::DATA_DIR . 'fonts.json') )
-			{
-				// Lire le fichier et check l'existence des fichiers locaux
-				// $localFonts = json_decode(file_get_contents (self::FILE_DIR . "source/fonts/fonts.json"), true);
-				$localFonts = $this->getData(['fonts', 'files']);
+			// Lire le fichier et check l'existence des fichiers locaux
+			$localFonts = $this->getData(['fonts', 'files']);
+			// Validité du format
+			if ( is_array($localFonts) &&
+				 !empty($localFonts) 
+			) {
 				// Validité du format
 				if (is_array($localFonts) ) {
 					foreach ($localFonts as $fontId => $fontName) {
