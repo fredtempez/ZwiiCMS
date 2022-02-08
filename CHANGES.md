@@ -17,7 +17,8 @@ Modifications :
         - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
         - Installation de police personnalisées.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
-    
+    - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
+
 ## Version 11.2.05
 - Corrections :
     - Configuration / localisation : Les champs de cookies ne devraient pas être obligatoires lorsque la case à cocher de consentement des cookies n'est pas sélectionnée.

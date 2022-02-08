@@ -1683,7 +1683,7 @@ class common {
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
-			$itemsLeft .= '<li>';
+			$itemsLeft .= '<li id="' . $parentPageId  .'">';
 
 			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
@@ -1694,10 +1694,10 @@ class common {
 				 )
 			){
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-				$itemsLeft .= '<a class="A ' . $parentPageId . '" href="' . $pageUrl . '">';
+				$itemsLeft .= '<a id="' . $parentPageId . '" href="' . $pageUrl . '">';
 			} else {
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false)  :  helper::baseUrl() . $parentPageId;
-				$itemsLeft .= '<a class="B ' . $active . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
+				$itemsLeft .= '<a class="' . $active . '" id="' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -1746,7 +1746,7 @@ class common {
 				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
-				$itemsLeft .= '<li>';
+				$itemsLeft .= '<li id=' . $childKey .'>';
 				if ( ( $this->getData(['page',$childKey,'disable']) === true
 						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 						) OR (
@@ -1756,10 +1756,10 @@ class common {
 						)
 				){
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-					$itemsLeft .= '<a class="' . $parentPageId . '" href="'. $pageUrl .'">';
+					$itemsLeft .= '<a id="' . $parentPageId . '" href="'. $pageUrl .'">';
 				} else {
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false)  :  helper::baseUrl() . $childKey;
-					$itemsLeft .= '<a class="' . $active . $parentPageId . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
+					$itemsLeft .= '<a class="' . $active . ' ' .  $parentPageId . '" id="' . $childKey . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
