@@ -562,7 +562,7 @@ class theme extends common {
 				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
 					? 	template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $fontId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('cancel')
 						])
 					: ''
@@ -584,6 +584,8 @@ class theme extends common {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
 			$file = $this->getInput('fontAddFile', null, true);
+			$e = explode ('/', $file);
+			$file = $e[count($e) - 1 ];
 
 			// Charger les données des fontes
 			$files = $this->getData(['fonts', 'files']);
