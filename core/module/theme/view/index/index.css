@@ -40,7 +40,8 @@ nav li ul {
 #themeBack,	
 #themeManage,
 #themeAdmin,
-#themeAdvanced {
+#themeAdvanced,
+#themeFonts {
 	position: relative;
 	z-index: 11;
 }
