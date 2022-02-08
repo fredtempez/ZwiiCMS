@@ -2,7 +2,7 @@
 
 
 ## Version 11.3.00
-- Correction :
+- Corrections :
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
     - Bugs avec les aperçus des sélecteurs de fontes.
 - Modification :
@@ -10,6 +10,7 @@
         - Changement de fournisseur, CdnFont remplace Google Font.
         - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
+    - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
 
 ## Version 11.2.05
 - Corrections :
