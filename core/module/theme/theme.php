@@ -583,22 +583,28 @@ class theme extends common {
 		if ($this->isPost()) {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
-			$file = $this->getInput('fontAddFile', null, true);
-			$e = explode ('/', $file);
+			$filePath = $this->getInput('fontAddFile', null, true);
+			$e = explode ('/', $filePath);
 			$file = $e[count($e) - 1 ];
 
 			// Charger les données des fontes
 			$files = $this->getData(['fonts', 'files']);
 			$imported = $this->getData(['fonts', 'imported']);
+
 			// Concaténation dans les tableaux existants
 			$imported = array_merge([$fontId => $fontName], $imported);
 			$files = array_merge([$fontId => $file], $files);
+
+			// Copier la fonte
+			copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
+
 			// Mettre à jour le fichier des fontes
 			$this->setData(['fonts', 'imported', $imported ]);
 			$this->setData(['fonts', 'files', $files ]);
 			// Valeurs en sortie
+
 			$this->addOutput([
-				'notification' => 'Fonte importée',
+				'notification' => 'La fonte a été importée',
 				'redirect' => helper::baseUrl() . 'theme/fonts',
 				'state' => true
 			]);
