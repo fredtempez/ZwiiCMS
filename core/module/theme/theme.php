@@ -603,19 +603,20 @@ class theme extends common {
 		if ($this->isPost()) {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
-			$filePath = $this->getInput('fontAddFile', null);
+			$filePath = $this->getInput('fontAddFile', null, true);
 			$e = explode ('/', $filePath);
 			$file = $e[count($e) - 1 ];
 
-			// Vérifier la validité de fontId si téléchargée de cdnFonts
+			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
 			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
-			if ( strpos($data, $fontName) === false
+			if ( (strpos($data, 'No results found.') >= 0
+				 || strpos($data, $fontName) === false )
 				&& empty($filePath)
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Cette fonte n\'existe pas sur le serveur https://cdnfonts.com<br>Il faut spécifier un fichier de fonte (format WOFFF)  ',
+					'notification' => 'Le fichie de police étant absent,<br/>la fonte doit exister sur le serveur https://cdnfonts.com<br>et le nom de la fonte doit correspondre (family name)<br>',
 					'redirect' => helper::baseUrl() . 'theme/fontAdd',
 					'state' => false
 				]);
