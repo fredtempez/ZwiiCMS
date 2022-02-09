@@ -610,8 +610,8 @@ class theme extends common {
 			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
 			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
-			if ( (strpos($data, 'No results found.') >= 0
-				 || strpos($data, $fontName) === false )
+/*			if ( strpos($data, 'No results found.') >= 0
+				 //|| strpos($data, $fontName) === false 
 				&& empty($filePath)
 			) {
 				// Valeurs en sortie
@@ -621,7 +621,7 @@ class theme extends common {
 					'state' => false
 				]);
 			} else {
-				// Charger les données des fontes
+*/				// Charger les données des fontes
 				$files = $this->getData(['fonts', 'files']);
 				$imported = $this->getData(['fonts', 'imported']);
 
@@ -636,7 +636,9 @@ class theme extends common {
 
 				// Mettre à jour le fichier des fontes
 				$this->setData(['fonts', 'imported', $imported ]);
-				$this->setData(['fonts', 'files', $files ]);
+				if (!empty($filePath) ) {
+					$this->setData(['fonts', 'files', $files ]);
+				}
 
 				// Valeurs en sortie
 				$this->addOutput([
@@ -644,7 +646,7 @@ class theme extends common {
 					'redirect' => helper::baseUrl() . 'theme/fonts',
 					'state' => true
 				]);
-			}
+//			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
