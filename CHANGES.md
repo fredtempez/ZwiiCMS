@@ -8,7 +8,7 @@
 - Modification :
     - Police de caractères :
         - Changement de fournisseur, CdnFont remplace Google Font.
-        - Les polices pourront désormais être téléchargées à partir du site et non du CDN.
+        - Les polices pourront désormais être téléchargées à partir du site et non du CD grâce à une nouvelle fonctionnalité du thème permet de gérer l'installation des fontes, soit à partir du CDN, soit à partir d'un fichier téléchargé.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
     - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
 
