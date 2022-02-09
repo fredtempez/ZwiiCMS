@@ -1940,7 +1940,6 @@ class common {
 			$notificationClass = 'notificationSuccess';
 		}
 		if(common::$inputNotices) {
-			var_dump(common::$inputNotices);
 			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
 			$notificationClass = 'notificationError';
 		}
