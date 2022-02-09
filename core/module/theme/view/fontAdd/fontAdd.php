@@ -20,6 +20,11 @@
 			<div class="block">
 				<h4>Identité de la fonte</h4>
 				<div class="row">
+					<div class="col12">
+						Police utilisée en ligne se connecter sur <a href="https://www.cdnfonts.com/" target="_blank">https://www.cdnfonts.com/</a> pour récupérer les informations  nécessaires.<br/>Sinon, précisez le nom du fichier de fonte au format WOFF.
+					</div>
+				</div>
+				<div class="row">
 					<div class="col6">
 						<?php echo template::text('fontAddFontId', [
 							'autocomplete' => 'off',
