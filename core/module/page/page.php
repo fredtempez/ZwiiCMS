@@ -272,7 +272,9 @@ class page extends common {
 			// Effacer le dossier du module
 			$moduleId = $this->getData(['page',$url[0],'moduleId']);
 			$modulesData = helper::getModules();
-			if (is_dir($modulesData[$moduleId]['dataDirectory']. $url[0])) {
+			if (	array_key_exists($moduleId, $modulesData)
+				&&  is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
+			) {
 				$this->removeDir( $modulesData[$moduleId]['dataDirectory']. $url[0] );
 			}
 			// Effacer la page
