@@ -16,7 +16,7 @@
 	</div>
 </div>
 <?php if($module::$fontsList): ?>
-  <?php echo template::table([4, 4, 3, 4, 1], $module::$fontsList, ['Family Name', 'Font Id', '', 'Accès', 'Effacer']); ?>
+  <?php echo template::table([2, 2, 3, 2, 2, 1], $module::$fontsList, ['Family Name', 'Font Id', 'Usage', '', 'Accès', 'Effacer']); ?>
 <?php else: ?>
   <?php echo template::speech('Aucune fonte !'); ?>
 <?php endif; ?>

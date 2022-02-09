@@ -547,23 +547,44 @@ class theme extends common {
 	 * Options des fontes
 	 */
 	public function fonts() {
-		// Soumission du formulaire
-		if($this->isPost()) {
-		}
-		//Polices trouvées dans la configuration
+
+		// Polices trouvées dans la configuration
 		$fonts = $this->getData(['fonts']);
+
+		// Polices liées au thème
+		$used = [
+			$this->getData (['theme', 'header', 'font']) => 'Bannière',
+			$this->getData (['theme', 'menu', 'font']) 	 => 'Menu',
+			$this->getData (['theme', 'title', 'font'])  => 'Titre',
+			$this->getData (['theme', 'text', 'font'])   => 'Texte',
+			$this->getData (['theme', 'footer', 'font']) => 'Pied de page',
+			$this->getData (['admin', 'fontTitle' ])     => 'Titre (admin)',
+			$this->getData (['admin', 'fontText' ])     => 'Admin (texte)'
+		];
+		$fontUsed = [];
+		foreach (self::$fonts as $fontId => $fontName) {
+			foreach ($used as $key => $value) {
+				if ( $key === $fontId) {
+					$fontUsed[$fontId] = $value . ' ';
+				} else {
+					$fontUsed[$fontId] = '';
+				}
+			}
+		}
 		// Parcourir les fontes installées et construire le tableau pour le formulaire
 		foreach (self::$fonts as $fontId => $fontName) {
 			self::$fontsList [] = [
 				$fontName,
 				$fontId,
+				$fontUsed[$fontId],
 				array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
 				array_key_exists($fontId, $fonts['files']) ?  $fonts['files'][$fontId] : 'CDN Fonts',
 				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
 					? 	template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
 							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
-							'value' => template::ico('cancel')
+							'value' => template::ico('cancel'),
+							'disabled' => !empty($fontUsed[$fontId])
 						])
 					: ''
 			];
