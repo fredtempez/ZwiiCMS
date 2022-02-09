@@ -5,6 +5,7 @@
 - Corrections :
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
     - Bugs avec les aperçus des sélecteurs de fontes.
+    - Notice générée par l'effacement d'une page sans module.
 - Modification :
     - Police de caractères :
         - Changement de fournisseur, CdnFont remplace Google Font.
