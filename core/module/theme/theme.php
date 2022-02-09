@@ -553,26 +553,25 @@ class theme extends common {
 
 		// Polices liées au thème
 		$used = [
-			$this->getData (['theme', 'header', 'font']) => 'Bannière',
-			$this->getData (['theme', 'menu', 'font']) 	 => 'Menu',
-			$this->getData (['theme', 'title', 'font'])  => 'Titre',
-			$this->getData (['theme', 'text', 'font'])   => 'Texte',
-			$this->getData (['theme', 'footer', 'font']) => 'Pied de page',
-			$this->getData (['admin', 'fontTitle' ])     => 'Titre (admin)',
-			$this->getData (['admin', 'fontText' ])     => 'Admin (texte)'
+			'Bannière' 		=> $this->getData (['theme', 'header', 'font']),
+			'Menu' 			=> $this->getData (['theme', 'menu', 'font']),
+			'Titre ' 		=> $this->getData (['theme', 'title', 'font']),
+			'Texte'   		=> $this->getData (['theme', 'text', 'font']),
+			'Pied de page' 	=> $this->getData (['theme', 'footer', 'font']),
+			'Titre (admin)' => $this->getData (['admin', 'fontTitle' ]),
+			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
 		];
-		$fontUsed = [];
-		foreach (self::$fonts as $fontId => $fontName) {
-			foreach ($used as $key => $value) {
-				if ( $key === $fontId) {
-					$fontUsed[$fontId] = $value . ' ';
-				} else {
-					$fontUsed[$fontId] = '';
-				}
-			}
-		}
+
 		// Parcourir les fontes installées et construire le tableau pour le formulaire
 		foreach (self::$fonts as $fontId => $fontName) {
+
+			// Fontes utilisées par le thème
+			$fontUsed[$fontId] = '';
+			foreach ($used as $key => $value) {
+				if ( $value === $fontId) {
+					$fontUsed[$fontId] .=  $key . '<br/>';
+				}
+			}
 			self::$fontsList [] = [
 				$fontName,
 				$fontId,
