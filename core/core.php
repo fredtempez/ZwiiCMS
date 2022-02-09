@@ -2305,7 +2305,7 @@ class core extends common {
 							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
 							// La police locale est-elle invoquée ?
 							$d = array_search($fontId, $cdnFonts);
-							if ( $d !== NULL ) {
+							if ( $d !== false ) {
 								// Chargement de la police demandée dans le thème
 								$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 								$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
@@ -2533,7 +2533,7 @@ class core extends common {
 							 file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
 								// La police locale est-elle invoquée ?
 								$d = array_search($fontId, $cdnFonts);
-								if ( $d !== NULL ) {
+								if ( $d !== false ) {
 									// Chargement de la police demandée dans le thème
 									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
