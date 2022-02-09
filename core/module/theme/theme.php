@@ -603,7 +603,7 @@ class theme extends common {
 		if ($this->isPost()) {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
-			$filePath = $this->getInput('fontAddFile', null, true);
+			$filePath = $this->getInput('fontAddFile', null);
 			$e = explode ('/', $filePath);
 			$file = $e[count($e) - 1 ];
 
