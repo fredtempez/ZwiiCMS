@@ -583,31 +583,47 @@ class theme extends common {
 		if ($this->isPost()) {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
-			$filePath = $this->getInput('fontAddFile', null, true);
+			$filePath = $this->getInput('fontAddFile', null);
 			$e = explode ('/', $filePath);
 			$file = $e[count($e) - 1 ];
 
-			// Charger les données des fontes
-			$files = $this->getData(['fonts', 'files']);
-			$imported = $this->getData(['fonts', 'imported']);
+			// Vérifier la validité de fontId si téléchargée de cdnFonts
+			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
-			// Concaténation dans les tableaux existants
-			$imported = array_merge([$fontId => $fontName], $imported);
-			$files = array_merge([$fontId => $file], $files);
+			if ( strpos($data, $fontName) === false
+				&& empty($filePath)
+			) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'Cette fonte n\'existe pas sur le serveur https://cdnfonts.com<br>Il faut spécifier un fichier de fonte (format WOFFF)  ',
+					'redirect' => helper::baseUrl() . 'theme/fontAdd',
+					'state' => false
+				]);
+			} else {
+				// Charger les données des fontes
+				$files = $this->getData(['fonts', 'files']);
+				$imported = $this->getData(['fonts', 'imported']);
 
-			// Copier la fonte
-			copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
+				// Concaténation dans les tableaux existants
+				$imported = array_merge([$fontId => $fontName], $imported);
+				$files = array_merge([$fontId => $file], $files);
 
-			// Mettre à jour le fichier des fontes
-			$this->setData(['fonts', 'imported', $imported ]);
-			$this->setData(['fonts', 'files', $files ]);
-			// Valeurs en sortie
+				// Copier la fonte si le nom du fichier est fourni
+				if (!empty($filePath)) {
+					copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
+				}
 
-			$this->addOutput([
-				'notification' => 'La fonte a été importée',
-				'redirect' => helper::baseUrl() . 'theme/fonts',
-				'state' => true
-			]);
+				// Mettre à jour le fichier des fontes
+				$this->setData(['fonts', 'imported', $imported ]);
+				$this->setData(['fonts', 'files', $files ]);
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'La fonte a été importée',
+					'redirect' => helper::baseUrl() . 'theme/fonts',
+					'state' => true
+				]);
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -641,7 +657,7 @@ class theme extends common {
 			}
 
 			// Supprimer les entrées
-			unset($file[$this->getUrl(2)]);
+			unset($files[$this->getUrl(2)]);
 			unset($imported[$this->getUrl(2)]);
 
 			// Mettre à jour le fichier des fontes

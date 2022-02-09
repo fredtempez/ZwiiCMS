@@ -18,12 +18,12 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Identification</h4>
+				<h4>Identité de la fonte</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('fontAddFontId', [
 							'autocomplete' => 'off',
-							'label' => 'Identifiant',
+							'label' => 'Identifiant (sans espace ni majuscule)',
 							'placeholder' => 'perry-gothic'
 
 						]); ?>
