@@ -11,12 +11,9 @@
 				</h4>
 				<div class="row">
 					<div class="col3">
-							<div class="row">
 							<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
-								'checked' => $this->getData(['config', 'connect','captcha'])
+									'checked' => $this->getData(['config', 'connect','captcha'])
 							]); ?>
-						</div>
-						<div class="row">
 							<?php echo template::checkbox('connectCaptchaStrong', true, 'Captcha complexe', [
 								'checked' => $this->getData(['config', 'connect', 'captchaStrong']),
 								'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
@@ -100,7 +97,7 @@
 						<?php echo template::select('connectAnonymousIp', $module::$anonIP, [
 							'label' => 'Anonymat des adresses IP',
 							'selected' => $this->getData(['config', 'connect', 'anonymousIp']),
-							'help' => 'La réglementation française impose un anonymat de niveau 2'
+							'help' => 'La règlementation française impose un anonymat de niveau 2'
 							]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">

@@ -59,7 +59,7 @@
 					</div>
 					<div class="col2">
 								<?php echo template::text('pageEditShortTitle', [
-									'label' => 'Titre Court',
+									'label' => 'Titre court',
 									'value' => $this->getData(['page', $this->getUrl(2), 'shortTitle']),
 									'help' => 'Le titre court est affiché dans les menus. Il peut être identique au titre de la page.'
 								]); ?>

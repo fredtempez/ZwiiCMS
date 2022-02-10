@@ -616,10 +616,11 @@ class theme extends common {
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Erreur de nom ou d\'identifiant',
+					'notification' => 'Erreur de nom de fonte ou d\'identifiant',
 					'redirect' => helper::baseUrl() . 'theme/fontAdd',
 					'state' => false
 				]);
+
 			} else {
 
 				// Charger les données des fontes
