@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/light.css">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
+	<?php $this->showFonts(); ?>
 </head>
 <body>
 <?php $this->showNotification(); ?>

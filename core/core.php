@@ -1475,7 +1475,7 @@ class common {
 		if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'right') { $this->showCopyright(); }
 		echo '</div>';
 
-		// Fermeture du contenaire
+		// Fermeture du conteneur
 		echo '</div></div>';
 		echo '</footer>';
 	}
@@ -1929,6 +1929,61 @@ class common {
 		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
 	}
 
+	/**
+	 * Fontes  de caractère à importer depuis cdn fonts
+	 *
+	 */
+	public function showFonts() {
+		$cdnFonts = [
+			$this->getData(['theme', 'text',  'font']),
+			$this->getData(['theme', 'title', 'font']),
+			$this->getData(['theme', 'header', 'font']),
+			$this->getData(['theme', 'menu', 'font']),
+			$this->getData(['theme', 'footer', 'font']),
+			$this->getData(['admin', 'fontText']),
+			$this->getData(['admin', 'fontTitle']),
+
+		];
+		// Suppression des polices identiques
+		$cdnFonts = array_unique($cdnFonts);
+
+		// Lire le fichier et check l'existence des fichiers locaux
+		$localFonts = $this->getData(['fonts', 'files']);
+
+		// Validité du format
+		if ( is_array($localFonts) &&
+			!empty($localFonts)
+		) {
+			// Validité du format
+			if (is_array($localFonts) ) {
+			foreach ($localFonts as $fontId => $fontName) {
+				// Validité du tableau :
+				// L'id de la police est présent dans la liste interne
+				// Le nom de la police fournie correspond à un fichier existant
+				if ( array_key_exists($fontId, self::$fonts) &&
+					file_exists(self::DATA_DIR . 'fonts/' . $fontName)
+					 ) {
+						// La police locale est-elle invoquée oou téléchargée ?
+						$d = array_search($fontId, $cdnFonts);
+						if ( $d !== false ) {
+							// Supprimer l'élément des fontes chargées en ligne
+							unset($cdnFonts[$d]);
+						}
+					}
+				}
+			}
+		}
+		// Chargement des polices en ligne
+		$css = '';
+		if ($cdnFonts) {
+			foreach ($cdnFonts as $fontId) {
+				//$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+				$css .= '<link href="http://fonts.cdnfonts.com/css/' . $fontId . '" rel="stylesheet">';
+			}
+			echo $css;
+		}
+	}
+
 
 
 	/**
@@ -2298,7 +2353,7 @@ class core extends common {
 
 			// Validité du format
 			if ( is_array($localFonts) &&
-				 !empty($localFonts) 
+				 !empty($localFonts)
 			) {
 				// Validité du format
 				if (is_array($localFonts) ) {
@@ -2312,7 +2367,7 @@ class core extends common {
 								$d = array_search($fontId, $cdnFonts);
 								if ( $d !== false ) {
 									// Chargement de la police demandée dans le thème
-									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+									//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
 									$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
 									// Supprimer l'élément des fontes chargées en ligne
@@ -2323,12 +2378,14 @@ class core extends common {
 					}
 				}
 			}
+			/*
 			// Chargement des polices en ligne
+			/* Désormais dans main.php avec showFonts
 			if ($cdnFonts) {
 				foreach ($cdnFonts as $fontId) {
 					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
 				}
-			}
+			}*/
 
 			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
@@ -2528,7 +2585,7 @@ class core extends common {
 
 			// Validité du format
 			if ( is_array($localFonts) &&
-				 !empty($localFonts) 
+				 !empty($localFonts)
 			) {
 				// Validité du format
 				if (is_array($localFonts) ) {
@@ -2542,7 +2599,7 @@ class core extends common {
 								$d = array_search($fontId, $cdnFonts);
 								if ( $d !== false ) {
 									// Chargement de la police demandée dans le thème
-									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+									//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
 									$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
 									// Supprimer l'élément des fontes chargées en ligne
@@ -2555,11 +2612,12 @@ class core extends common {
 			}
 
 			// Chargement des polices en ligne
+			/* Désormais dans main.php avec showFonts
 			if ($cdnFonts) {
 				foreach ($cdnFonts as $fontId) {
 					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
 				}
-			}
+			}*/
 
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
