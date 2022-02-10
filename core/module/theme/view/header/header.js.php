@@ -21,14 +21,14 @@
  * Aperçu en direct
  */
 $("input, select").on("change", function() {
-	
+
 	var css = "";
 
 	// Contenu perso
 	if ($("#themeHeaderFeature").val() == "feature") {
-		
+
 		css = "header{min-height: " + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "; overflow:hidden; background-position:top; background-repeat: no-repeat; line-height:1.15; background-color:unset; background-image:unset; text-align:unset;}";
-		
+
 		$("#featureContent").appendTo("header").show();
 		$("#themeHeaderTitle").hide();
 
@@ -36,7 +36,7 @@ $("input, select").on("change", function() {
 		$("#themeHeaderHeight option:eq(0)").text("Hauteur du contenu personnalisé");
 
 	}
-	
+
 
 	// Couleurs, image, alignement et hauteur de la bannière
 	if ($("#themeHeaderFeature").val() == "wallpaper") {
@@ -95,10 +95,10 @@ $("input, select").on("change", function() {
 				css += "background-image:none;";
 			}
 			css += "line-height:" + $("#themeHeaderHeight").val() + ";height:" + $("#themeHeaderHeight").val() + "}";
-	
+
 
         // Taille, couleur, épaisseur et capitalisation du titre de la bannière
-        css += "header span{font-family:'" + headerFontText + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";		
+        css += "header span{font-family:'" + headerFontText + "',sans-serif;font-weight:" + $("#themeHeaderFontWeight").val() + ";font-size:" + $("#themeHeaderFontSize").val() + ";text-transform:" + $("#themeHeaderTextTransform").val() + ";color:" + $("#themeHeaderTextColor").val() + "}";
 
 		// Cache le titre de la bannière
 		if($("#themeHeaderTextHide").is(":checked")) {
@@ -169,9 +169,9 @@ $("input, select").on("change", function() {
 	// Marge dans le site
 	if(	$("#themeHeaderMargin").is(":checked") &&
 		$("#themeHeaderPosition").val() === "site"
-		) {	
+		) {
 			css += 'header{margin:20px 20px 0 20px !important;}';
-		/*} else { 
+		/*} else {
 			css += 'header{margin:0 !important;}';*/
     }
 
