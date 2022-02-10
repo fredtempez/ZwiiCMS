@@ -41,13 +41,6 @@
 						]); ?>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Source</h4>
 				<div class="row">
 					<div class="col12">
 						<?php echo template::file('fontAddFile', [
@@ -58,6 +51,5 @@
 				</div>
 			</div>
 		</div>
-		</div>
-					
+	</div>
 <?php echo template::formClose(); ?>

@@ -610,18 +610,19 @@ class theme extends common {
 			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
 			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
-/*			if ( strpos($data, 'No results found.') >= 0
-				 //|| strpos($data, $fontName) === false 
-				&& empty($filePath)
+			if ( $filePath === ''
+				 && strpos($data, $fontName) === false
 			) {
+
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Le fichie de police étant absent,<br/>la fonte doit exister sur le serveur https://cdnfonts.com<br>et le nom de la fonte doit correspondre (family name)<br>',
+					'notification' => 'Erreur de nom ou d\'identifiant',
 					'redirect' => helper::baseUrl() . 'theme/fontAdd',
 					'state' => false
 				]);
 			} else {
-*/				// Charger les données des fontes
+
+				// Charger les données des fontes
 				$files = $this->getData(['fonts', 'files']);
 				$imported = $this->getData(['fonts', 'imported']);
 
@@ -646,7 +647,7 @@ class theme extends common {
 					'redirect' => helper::baseUrl() . 'theme/fonts',
 					'state' => true
 				]);
-//			}
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
