@@ -2253,7 +2253,10 @@ class core extends common {
 		if (is_array($fontsImported) &&
 			!empty ($fontsImported)
 		) {
+			// Fusionner les fonts avec les fontes installées
 			self::$fonts = array_merge(self::$fonts, $fontsImported);
+			// Tri Alphabétique
+			sort(self::$fonts);
 		}
 
 		// Crée le fichier de personnalisation avancée

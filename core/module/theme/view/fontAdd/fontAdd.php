@@ -22,7 +22,7 @@
 				<div class="row">
 					<div class="col6">
 							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte téléchargée sur cdnFonts', [
-								'help' => 'Police utilisée en ligne, se connecter sur cdnFonts pour récupérer les informations  nécessaires.'
+								'help' => 'Police utilisée en ligne, se connecter sur cdnFonts pour récupérer les informations nécessaires.'
 							]); ?>
 					</div>
 					<div class="col6">
