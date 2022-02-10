@@ -601,6 +601,7 @@ class theme extends common {
 	public function fontAdd() {
 		// Soumission du formulaire
 		if ($this->isPost()) {
+
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
 			$filePath = $this->getInput('fontAddFile', null);
@@ -611,6 +612,7 @@ class theme extends common {
 			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
 			if ( $filePath === ''
+				 && $fontName !== ''
 				 && strpos($data, $fontName) === false
 			) {
 
