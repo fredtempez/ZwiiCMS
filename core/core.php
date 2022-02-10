@@ -2256,7 +2256,7 @@ class core extends common {
 			// Fusionner les fonts avec les fontes installées
 			self::$fonts = array_merge(self::$fonts, $fontsImported);
 			// Tri Alphabétique
-			sort(self::$fonts);
+			asort(self::$fonts);
 		}
 
 		// Crée le fichier de personnalisation avancée
