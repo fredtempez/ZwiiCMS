@@ -360,7 +360,9 @@ class page extends common {
 					// Supprime l'ancienne page si l'id a changée
 					if($pageId !== $this->getUrl(2)) {
 						$this->deleteData(['page', $this->getUrl(2)]);
-						unlink (self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html');
+						if (file_exists(self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html')) {
+							unlink (self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html');
+						}
 					}
 					// Traitement des pages spéciales affectées dans la config :
 					if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId']) ) {
