@@ -576,7 +576,7 @@ class theme extends common {
 				$fontName,
 				$fontId,
 				$fontUsed[$fontId],
-				array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
+				//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
 				array_key_exists($fontId, $fonts['files']) ?  $fonts['files'][$fontId] : 'CDN Fonts',
 				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
 					? 	template::button('themeFontDelete' . $fontId, [
