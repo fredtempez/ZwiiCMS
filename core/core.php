@@ -2564,7 +2564,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . self::$fonts[$this->getData(['admin','fontText'])]  . '", sans-serif;}';
-			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   self::$fonts[$this->getData(['admin','fontTitle'])] . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:"' .   self::$fonts[$this->getData(['admin','fontTitle'])] . '", sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 
 			// TinyMCE
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
