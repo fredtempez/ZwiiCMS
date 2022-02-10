@@ -241,7 +241,7 @@ if($this->getData(['core', 'dataVersion']) < 10000) {
 		}
 	}
 	// Contrôle des options php.ini pour la mise à jour auto
-	if (helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+	if (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
 		$this->setData(['config','autoUpdate',false]);
 	}
 
