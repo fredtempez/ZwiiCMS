@@ -199,11 +199,11 @@ class install extends common {
 			// Téléchargement
 			case 2:
 				// Téléchargement depuis le serveur de Zwii
-				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
+				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::getUrlContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
 				// URL sur le git
-				//$newVersion = helper::urlGetContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
-				file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
-				$md5origin = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
+				//$newVersion = helper::getUrlContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
+				file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
+				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 				$md5origin = (explode(' ',$md5origin));
 				$md5target = md5_file(self::TEMP_DIR.'update.tar.gz');
 				// Valeurs en sortie
@@ -291,7 +291,7 @@ class install extends common {
 	 */
 	public function update() {
 		// Nouvelle version
-		self::$newVersion = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
+		self::$newVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
