@@ -60,15 +60,6 @@
 			]); ?>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col2">
-			<?php echo template::button('themeFonts', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
-				'value' => 'Fontes'
-			]); ?>
-		</div>
-	</div>
 <?php else: ?>
 	<?php echo template::speech('Cliquez sur une zone afin d\'accéder à ses options de personnalisation.'); ?>
 	<div class="row">
@@ -117,15 +108,6 @@
 				'ico' => 'code',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
-			]); ?>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col2">
-			<?php echo template::button('themeFonts', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
-				'value' => 'Fontes'
 			]); ?>
 		</div>
 	</div>
