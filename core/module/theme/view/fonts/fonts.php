@@ -1,17 +1,16 @@
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('themeFontBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'theme',
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col1 offset10">
 		<?php echo template::button('themeFontAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
-			'ico' => 'plus',
-			'value' => 'Fonte'
+			'value' => template::ico('plus'),
+			'help' => 'Ajouter une fonte'
 		]); ?>
 	</div>
 </div>
