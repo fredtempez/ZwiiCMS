@@ -30,7 +30,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col2  offset2">
+		<div class="col2 offset2">
+			<?php echo template::button('themeFonts', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'value' => 'Fontes'
+			]); ?>
+		</div>
+		<div class="col2">
 			<?php echo template::button('themeManage', [
 				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
@@ -50,13 +57,6 @@
 				'ico' => 'code',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
-			]); ?>
-		</div>
-		<div class="col2">
-			<?php echo template::button('themeFonts', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
-				'value' => 'Fontes'
 			]); ?>
 		</div>
 	</div>
@@ -82,7 +82,14 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col2  offset2">
+		<div class="col2 offset2">
+			<?php echo template::button('themeFonts', [
+				'ico' => 'code',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'value' => 'Fontes'
+			]); ?>
+		</div>
+		<div class="col2">
 			<?php echo template::button('themeManage', [
 				'ico' => 'sliders',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/manage',
@@ -95,20 +102,12 @@
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/admin',
 				'value' => 'Administration'
 			]); ?>
-
 		</div>
 		<div class="col2">
 			<?php echo template::button('themeAdvanced', [
 				'ico' => 'code',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/advanced',
 				'value' => 'Éditeur CSS'
-			]); ?>
-		</div>
-		<div class="col2">
-			<?php echo template::button('themeFonts', [
-				'ico' => 'code',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
-				'value' => 'Fontes'
 			]); ?>
 		</div>
 	</div>
