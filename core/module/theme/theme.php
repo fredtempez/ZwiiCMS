@@ -30,7 +30,9 @@ class theme extends common {
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'save' => self::GROUP_ADMIN,
-		'fonts' => self::GROUP_ADMIN
+		'fonts' => self::GROUP_ADMIN,
+		'fontAdd' => self::GROUP_ADMIN,
+		'fontDelete' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
@@ -227,6 +229,8 @@ class theme extends common {
 
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
+	// Variable pour construire la liste des fontes installées
+	public static $fontsList = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -543,8 +547,46 @@ class theme extends common {
 	 * Options des fontes
 	 */
 	public function fonts() {
-		// Soumission du formulaire
-		if($this->isPost()) {
+
+		// Polices trouvées dans la configuration
+		$fonts = $this->getData(['fonts']);
+
+		// Polices liées au thème
+		$used = [
+			'Bannière' 		=> $this->getData (['theme', 'header', 'font']),
+			'Menu' 			=> $this->getData (['theme', 'menu', 'font']),
+			'Titre ' 		=> $this->getData (['theme', 'title', 'font']),
+			'Texte'   		=> $this->getData (['theme', 'text', 'font']),
+			'Pied de page' 	=> $this->getData (['theme', 'footer', 'font']),
+			'Titre (admin)' => $this->getData (['admin', 'fontTitle' ]),
+			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
+		];
+
+		// Parcourir les fontes installées et construire le tableau pour le formulaire
+		foreach (self::$fonts as $fontId => $fontName) {
+
+			// Fontes utilisées par le thème
+			$fontUsed[$fontId] = '';
+			foreach ($used as $key => $value) {
+				if ( $value === $fontId) {
+					$fontUsed[$fontId] .=  $key . '<br/>';
+				}
+			}
+			self::$fontsList [] = [
+				$fontName,
+				$fontId,
+				$fontUsed[$fontId],
+				//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
+				array_key_exists($fontId, $fonts['files']) ?  $fonts['files'][$fontId] : 'CDN Fonts',
+				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
+					? 	template::button('themeFontDelete' . $fontId, [
+							'class' => 'themeFontDelete buttonRed',
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
+							'value' => template::ico('cancel'),
+							'disabled' => !empty($fontUsed[$fontId])
+						])
+					: ''
+			];
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -552,6 +594,111 @@ class theme extends common {
 			'view' => 'fonts'
 		]);
 	}
+
+	/**
+	 * Ajouter une fonte
+	 */
+	public function fontAdd() {
+		// Soumission du formulaire
+		if ($this->isPost()) {
+
+			$fontId = $this->getInput('fontAddFontId', null, true);
+			$fontName = $this->getInput('fontAddFontName', null, true);
+			$filePath = $this->getInput('fontAddFile', null);
+			$e = explode ('/', $filePath);
+			$file = $e[count($e) - 1 ];
+
+			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
+			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
+
+			if ( $filePath === ''
+				 && $fontName !== ''
+				 && strpos($data, $fontName) === false
+			) {
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'Erreur de nom de fonte ou d\'identifiant',
+					'redirect' => helper::baseUrl() . 'theme/fontAdd',
+					'state' => false
+				]);
+
+			} else {
+
+				// Charger les données des fontes
+				$files = $this->getData(['fonts', 'files']);
+				$imported = $this->getData(['fonts', 'imported']);
+
+				// Concaténation dans les tableaux existants
+				$imported = array_merge([$fontId => $fontName], $imported);
+				$files = array_merge([$fontId => $file], $files);
+
+				// Copier la fonte si le nom du fichier est fourni
+				if (!empty($filePath)) {
+					copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
+				}
+
+				// Mettre à jour le fichier des fontes
+				$this->setData(['fonts', 'imported', $imported ]);
+				if (!empty($filePath) ) {
+					$this->setData(['fonts', 'files', $files ]);
+				}
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'La fonte a été importée',
+					'redirect' => helper::baseUrl() . 'theme/fonts',
+					'state' => true
+				]);
+			}
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Ajouter une fonte',
+			'view' => 'fontAdd'
+		]);
+	}
+
+	/**
+	 * Effacer une fonte
+	 */
+	public function fontDelete() {
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'theme/fonts',
+				'notification' => 'Action non autorisée'
+			]);
+		}
+		// Suppression
+		else {
+
+			// Charger les données des fontes
+			$files = $this->getData(['fonts', 'files']);
+			$imported = $this->getData(['fonts', 'imported']);
+
+			// Effacer le fichier existant
+			if ( file_exists(self::DATA_DIR . $files[$this->getUrl(2)]) ) {
+				unlink(self::DATA_DIR . $files[$this->getUrl(2)]);
+			}
+
+			// Supprimer les entrées
+			unset($files[$this->getUrl(2)]);
+			unset($imported[$this->getUrl(2)]);
+
+			// Mettre à jour le fichier des fontes
+			$this->setData(['fonts', 'files', $files ]);
+			$this->setData(['fonts', 'imported', $imported ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'theme/fonts',
+				'notification' => 'Fonte supprimée',
+				'state' => true
+			]);
+		}
+	}
+
 
 	/**
 	 * Réinitialisation de la personnalisation avancée

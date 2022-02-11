@@ -1499,7 +1499,7 @@ class common {
 		if($this->getData(['theme', 'footer', 'copyrightPosition']) === 'right') { $this->showCopyright(); }
 		echo '</div>';
 
-		// Fermeture du contenaire
+		// Fermeture du conteneur
 		echo '</div></div>';
 		echo '</footer>';
 	}
@@ -1953,8 +1953,6 @@ class common {
 		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
 	}
 
-
-
 	/**
 	 * Affiche la notification
 	 */
@@ -2277,7 +2275,10 @@ class core extends common {
 		if (is_array($fontsImported) &&
 			!empty ($fontsImported)
 		) {
+			// Fusionner les fonts avec les fontes installées
 			self::$fonts = array_merge(self::$fonts, $fontsImported);
+			// Tri Alphabétique
+			asort(self::$fonts);
 		}
 
 		// Crée le fichier de personnalisation avancée
@@ -2305,48 +2306,44 @@ class core extends common {
 			 * Import des polices de caractères
 			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
-			$cdnFonts = [ $this->getData(['theme', 'text',  'font']),
+			$fonts = [ $this->getData(['theme', 'text',  'font']),
 						  $this->getData(['theme', 'title', 'font']),
 						  $this->getData(['theme', 'header', 'font']),
 						  $this->getData(['theme', 'menu', 'font']),
 						  $this->getData(['theme', 'footer', 'font'])
 			];
 			// Suppression des polices identiques
-			$cdnFonts = array_unique($cdnFonts);
+			$fonts = array_unique($fonts);
+			// Lire le fichier des fontes locales
+			$localFonts = $this->getData(['fonts', 'files']);
 
-			// Un fichier local de configuration existe
-			if ( file_exists(self::DATA_DIR . 'fonts.json') )
-			{
-				// Lire le fichier et check l'existence des fichiers locaux
-				// $localFonts = json_decode(file_get_contents (self::FILE_DIR . "source/fonts/fonts.json"), true);
-				$localFonts = $this->getData(['fonts', 'files']);
-				// Validité du format
-				if (is_array($localFonts) ) {
-					foreach ($localFonts as $fontId => $fontName) {
-						// Validité du tableau :
-						// L'id de la police est présent dans la liste interne
-						// Le nom de la police fournie correspond à un fichier existant
-						if ( array_key_exists($fontId, self::$fonts) &&
-							 file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
-								// La police locale est-elle invoquée ?
-								$d = array_search($fontId, $cdnFonts);
-								if ( $d !== NULL ) {
-									// Chargement de la police demandée dans le thème
-									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
-									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
-									$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
-									// Supprimer l'élément des fontes chargées en ligne
-									unset($cdnFonts[$d]);
-								}
-						}
-
-					}
+			/**
+			* Chargement des polices en ligne
+			*/
+			foreach ($fonts as $fontId) {
+				if (!array_key_exists($fontId, $localFonts) ) {
+					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+					// Supprimer l'élément des fontes chargées en ligne
+					unset($fonts[$fontId]);
 				}
 			}
-			// Chargement des polices en ligne
-			if ($cdnFonts) {
-				foreach ($cdnFonts as $fontId) {
-					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+
+			/**
+			 * Fontes installées localement
+			 */
+			// Validité du format
+			if (  !empty($localFonts)
+			) {
+				foreach ($localFonts as $fontId => $fontName) {
+					// Validité du tableau :
+					if ( array_key_exists($fontId, self::$fonts) &&
+							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
+							// Chargement de la police
+							//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
+							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
+					}
+
 				}
 			}
 
@@ -2538,52 +2535,49 @@ class core extends common {
 			 * Import des polices de caractères
 			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
-			$cdnFonts = [ $this->getData(['admin', 'fontText']),
+			$fonts = [ $this->getData(['admin', 'fontText']),
 						  $this->getData(['admin', 'fontTitle']),
 			];
 			// Suppression des polices identiques
-			$cdnFonts = array_unique($cdnFonts);
-			// Un fichier local de configuration existe
-			if ( file_exists(self::DATA_DIR . 'fonts.json') )
-			{
-				// Lire le fichier et check l'existence des fichiers locaux
-				// $localFonts = json_decode(file_get_contents (self::FILE_DIR . "source/fonts/fonts.json"), true);
-				$localFonts = $this->getData(['fonts', 'files']);
-				// Validité du format
-				if (is_array($localFonts) ) {
-					foreach ($localFonts as $fontId => $fontName) {
-						// Validité du tableau :
-						// L'id de la police est présent dans la liste interne
-						// Le nom de la police fournie correspond à un fichier existant
-						if ( array_key_exists($fontId, self::$fonts) &&
-							 file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
-								// La police locale est-elle invoquée ?
-								$d = array_search($fontId, $cdnFonts);
-								if ( $d !== NULL ) {
-									// Chargement de la police demandée dans le thème
-									$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
-									$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
-									$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
-									// Supprimer l'élément des fontes chargées en ligne
-									unset($cdnFonts[$d]);
-								}
-						}
+			$fonts = array_unique($fonts);
+			// Lire le fichier des fontes locales
+			$localFonts = $this->getData(['fonts', 'files']);
 
-					}
-				}
-			}
-
-			// Chargement des polices en ligne
-			if ($cdnFonts) {
-				foreach ($cdnFonts as $fontId) {
+			/**
+			* Chargement des polices en ligne
+			*/
+			foreach ($fonts as $fontId) {
+				if (!array_key_exists($fontId, $localFonts) ) {
 					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+					// Supprimer l'élément des fontes chargées en ligne
+					unset($fonts[$fontId]);
 				}
 			}
 
+			/**
+			 * Fontes installées localement
+			 */
+			// Validité du format
+			if (  !empty($localFonts)
+			) {
+				foreach ($localFonts as $fontId => $fontName) {
+					// Validité du tableau :
+					if ( array_key_exists($fontId, self::$fonts) &&
+							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
+							// Chargement de la police
+							//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
+							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
+					}
+
+				}
+			}
+
+			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
 			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . self::$fonts[$this->getData(['admin','fontText'])]  . '", sans-serif;}';
-			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   self::$fonts[$this->getData(['admin','fontTitle'])] . ', sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:"' .   self::$fonts[$this->getData(['admin','fontTitle'])] . '", sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 
 			// TinyMCE
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';

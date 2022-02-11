@@ -339,10 +339,11 @@ td>.col12 {
 	display: inline-block; 
 	color: #E74C3C;
 }
-/* Mauvaise position dans les champs File*/
+
+/* Mauvaise position dans les champs File
 .inputFile.notice {
 	display: block;
-}
+}*/
 
 /* Container */
 .container {

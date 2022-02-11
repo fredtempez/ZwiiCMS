@@ -272,7 +272,9 @@ class page extends common {
 			// Effacer le dossier du module
 			$moduleId = $this->getData(['page',$url[0],'moduleId']);
 			$modulesData = helper::getModules();
-			if (is_dir($modulesData[$moduleId]['dataDirectory']. $url[0])) {
+			if (	array_key_exists($moduleId, $modulesData)
+				&&  is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
+			) {
 				$this->removeDir( $modulesData[$moduleId]['dataDirectory']. $url[0] );
 			}
 			// Effacer la page
@@ -358,7 +360,9 @@ class page extends common {
 					// Supprime l'ancienne page si l'id a changée
 					if($pageId !== $this->getUrl(2)) {
 						$this->deleteData(['page', $this->getUrl(2)]);
-						unlink (self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html');
+						if (file_exists(self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html')) {
+							unlink (self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html');
+						}
 					}
 					// Traitement des pages spéciales affectées dans la config :
 					if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId']) ) {

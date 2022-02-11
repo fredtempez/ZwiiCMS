@@ -24,6 +24,7 @@
 .zwiico-eye-off:before { content: '\e815'; } /* '' */
 .zwiico-down-open:before { content: '\e816'; } /* '' */
 .zwiico-upload:before { content: '\e817'; } /* '' */
+.zwiico-font:before { content: '\e818'; } /* '' */
 .zwiico-left-open:before { content: '\e819'; } /* '' */
 .zwiico-down-big:before { content: '\e81a'; } /* '' */
 .zwiico-cog-alt:before { content: '\e81b'; } /* '' */
@@ -56,6 +57,7 @@
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
 .zwiico-box:before { content: '\f187'; } /* '' */
+.zwiico-cubes:before { content: '\f1b3'; } /* '' */
 .zwiico-file-archive:before { content: '\f1c6'; } /* '' */
 .zwiico-sliders:before { content: '\f1de'; } /* '' */
 .zwiico-brush:before { content: '\f1fc'; } /* '' */

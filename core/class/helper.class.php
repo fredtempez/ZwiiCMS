@@ -53,7 +53,7 @@ class helper {
 	 * @return mixed données récupérées
 	 */
 
-	public static function urlGetContents ($url) {
+	public static function getUrlContents ($url) {
 		// Ejecter free.fr
 		if (strpos(self::baseUrl(),'free.fr') > 0 ){
 			return false;
@@ -269,7 +269,7 @@ class helper {
 	 * @return string
 	 */
 	public static function getOnlineVersion() {
-		return (helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version'));
+		return (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version'));
 	}
 
 

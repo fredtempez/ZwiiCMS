@@ -262,7 +262,7 @@ class config extends common {
 			$site = helper::baseUrl(false);	}
 
 		$success= false;
-		$googlePagespeedData = helper::urlGetContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
+		$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
 		if ($googlePagespeedData  !== false) {
 			$googlePagespeedData = json_decode($googlePagespeedData, true);
 			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
@@ -619,7 +619,7 @@ class config extends common {
 		}
 
 		// Variable de version
-		self::$onlineVersion = helper::urlGetContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
+		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		if (self::$onlineVersion > common::ZWII_VERSION) {
 			self::$updateButtonText = "Mettre à jour" ;
 		}

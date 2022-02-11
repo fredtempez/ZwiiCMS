@@ -1,11 +1,22 @@
-<?php
-$filefont = 'https://www.cdnfonts.com/sketched.font';
-$doc = new DOMDocument();
-$doc->loadHTMLFile($filefont, LIBXML_NOERROR);
-$elements = $doc->getElementsByTagName('i');
-var_dump ($elements);
-foreach($elements as $element) {
-    if ($element->$textContent === 'http://fonts.cdnfonts.com/css/sketched') {
-      var_dump( $element['textContent'] );
-    }
-}
+<div class="row">
+	<div class="col2">
+		<?php echo template::button('themeFontBack', [
+			'class' => 'buttonGrey',
+			'href' => helper::baseUrl() . 'theme',
+			'ico' => 'left',
+			'value' => 'Retour'
+		]); ?>
+	</div>
+	<div class="col2 offset8">
+		<?php echo template::button('themeFontAdd', [
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
+			'ico' => 'plus',
+			'value' => 'Fonte'
+		]); ?>
+	</div>
+</div>
+<?php if($module::$fontsList): ?>
+  <?php echo template::table([3, 3, 3, 3, 1], $module::$fontsList, ['Family Name', 'Font Id', 'Affectation', 'Ressource', 'Effacer']); ?>
+<?php else: ?>
+  <?php echo template::speech('Aucune fonte !'); ?>
+<?php endif; ?>

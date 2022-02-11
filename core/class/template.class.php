@@ -298,12 +298,6 @@ class template {
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
-        // Label
-        if($attributes['label']) {
-            $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
-            ]);
-        }
         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
@@ -311,6 +305,12 @@ class template {
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
+        // Label
+        if($attributes['label']) {
+            $html .= self::label($attributes['id'], $attributes['label'], [
+                'help' => $attributes['help']
+            ]);
+        }
         // Champ caché contenant l'url de la page
         $html .= self::hidden($attributes['id'], [
             'class' => 'inputFileHidden',
