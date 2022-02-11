@@ -78,6 +78,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
       [F] local.json       Données du site propres à la langue
       [R] content          Dossier des contenus de page
         [F] accueil.html   Exemple contenu de la page d'accueil
+    [F] fonts              Dossier contenant les fontes installées
     [R] modules            Personnalisation des modules ou données propres
     [F] admin.css          Thème des pages d'administration
     [F] admin.json         Données de thème des pages d'administration
@@ -85,6 +86,7 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
     [F] config.json        Configuration du site
     [F] core.json          Configuration du noyau
     [F] custom.css         Feuille de style de la personnalisation avancée
+    [F] fonts.json         Descripteur des fontes personnalisées
     [F] journal.log        Journalisation des actions
     [F] theme.css          Thème du site
     [F] theme.json         Données du site
