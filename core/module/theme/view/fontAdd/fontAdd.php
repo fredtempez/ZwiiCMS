@@ -21,13 +21,13 @@
 				<h4>Identité de la fonte</h4>
 				<div class="row">
 					<div class="col6">
-							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte téléchargée sur cdnFonts', [
+							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte téléchargée sur <a href="https://cdnfonts.com" target="_blank">cdnFonts</a>', [
 								'help' => 'Police utilisée en ligne, se connecter sur cdnFonts pour récupérer les informations nécessaires.'
 							]); ?>
 					</div>
 					<div class="col6">
 							<?php echo template::checkbox('fontAddFontFile', true,'Fonte installée', [
-								'help' => '<br/>Sélectionnez un fichier de fonte au format WOFF.'
+								'help' => 'Sélectionnez un fichier de fonte au format WOFF.'
 							]); ?>
 					</div>
 				</div>
