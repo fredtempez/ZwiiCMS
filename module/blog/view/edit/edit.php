@@ -1,17 +1,16 @@
 <?php echo template::formOpen('blogEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('blogEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col3 offset6">
 			<?php echo template::button('blogEditDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Enregistrer en brouillon'
+				'value' => 'Brouillon'
 			]); ?>
 			<?php echo template::hidden('blogEditState', [
 				'value' => true

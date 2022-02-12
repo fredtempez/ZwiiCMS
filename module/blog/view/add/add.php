@@ -1,17 +1,16 @@
 <?php echo template::formOpen('blogAddForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('blogAddBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col2 offset7">
 			<?php echo template::button('blogAddDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Enregistrer en brouillon'
+				'value' => 'Brouillon'
 			]); ?>
 			<?php echo template::hidden('blogAddState', [
 				'value' => true

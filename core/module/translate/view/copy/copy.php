@@ -1,15 +1,16 @@
 <?php echo template::formOpen('translateFormCopy'); ?>
 <div class="row">
-    <div class="col2">
+    <div class="col1">
         <?php echo template::button('translateFormCopyBack', [
             'class' => 'buttonGrey',
             'href' => helper::baseUrl() . 'translate',
-            'ico' => 'left',
-            'value' => 'Retour'
+            'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col2 offset8">
-        <?php echo template::submit('translateFormCopySubmit'); ?>
+    <div class="col2 offset9">
+        <?php echo template::submit('translateFormCopySubmit', [
+            'value' => 'Copier'
+        ]); ?>
     </div>
 </div>
 <div class="row">

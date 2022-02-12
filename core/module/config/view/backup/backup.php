@@ -1,14 +1,13 @@
 <?php echo template::formOpen('configBackupForm'); ?>
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('configBackupBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 		<?php echo template::submit('configBackupSubmit',[
 			'value' => 'Sauvegarder',
 			'uniqueSubmission' => true
