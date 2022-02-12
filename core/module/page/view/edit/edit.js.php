@@ -423,6 +423,8 @@ pageEditBlockDOM.on("change", function() {
 			if ($("#pageEditParentPageId").val() !== "") {
 				$("#pageEditbreadCrumbWrapper").addClass("disabled");
 				$("#pageEditbreadCrumbWrapper").slideDown();
+				$("#pageEditExtraPositionWrapper").slideDown();
+	} else {
 			}
 			if ($("#pageEditModuleId").val() === "") {
 				$("#pageEditModuleConfig").addClass("disabled");	
@@ -467,18 +469,23 @@ pageEditParentPageIdDOM.on("change", function() {
 		!$('input[name=pageEditHideTitle]').is(':checked') ) {
 			$("#pageEditbreadCrumbWrapper").removeClass("disabled");
 			$("#pageEditbreadCrumbWrapper").slideUp();
+			$("#pageEditExtraPositionWrapper").slideUp();
 	} else {
 			$("#pageEditbreadCrumbWrapper").addClass("disabled");
 			$("#pageEditbreadCrumbWrapper").slideDown();
+			$("#pageEditExtraPositionWrapper").slideDown();
 
 	}
 	if ($(this).val() !== "") {
 		  $("#pageEditHideMenuChildrenWrapper").removeClass("disabled");
 			$("#pageEditHideMenuChildrenWrapper").slideUp();
-		}	else {
+			$("#pageEditExtraPositionWrapper").slideUp();
+	}	else {
 			$("#pageEditHideMenuChildrenWrapper").addClass("disabled");
 			$("#pageEditHideMenuChildrenWrapper").slideDown();
-		}
+			$("#pageEditExtraPositionWrapper").slideDown();
+	}
+
 });
 
 

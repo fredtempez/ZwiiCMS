@@ -190,13 +190,13 @@
 				</h4>
 				<div class="blockContainer">
 					<div class="row">
-						<div class="col6">
+						<div class="col4">
 							<?php echo template::select('pageEditPosition', [], [
 								'label' => 'Position',
 								'help' => '\'Ne pas afficher\' crée une page orpheline non accessible par le biais des menus.'
 							]); ?>
 						</div>
-						<div class="col6">
+						<div class="col4">
 							<?php	if($this->getHierarchy($this->getUrl(2), false)): ?>
 								<?php echo template::hidden('pageEditParentPageId', [
 									'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
@@ -208,8 +208,14 @@
 								]); ?>
 							<?php endif; ?>
 						</div>
+						<div class="col4">
+								<?php echo template::select('pageEditExtraPosition', $module::$extraPosition, [
+									'label' => 'Emplacement :',
+									'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']),
+									'help' => 'Le petit accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
+								]); ?>
+						</div>
 					</div>
-
 					<div class="row">
 						<div class="col6">
 							<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
@@ -253,15 +259,15 @@
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants dans le menu horizontal', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren'])
-								]); ?>
+							<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants dans le menu horizontal', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren'])
+							]); ?>
 						</div>
 						<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale' , [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']),
-									'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.'
-								]); ?>
+							<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale' , [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']),
+								'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.'
+							]); ?>
 						</div>
 					</div>
 				</div>

@@ -53,9 +53,13 @@ class page extends common {
 		'bar'	=> 'Barre latérale'
 	];
 	public static $displayMenu = [
-		'none'	=> 'Aucun',
+		'none'		=> 'Aucun',
 		'parents' 	=> 'Le menu',
 		'children'	=> 'Le sous-menu de la page parente'
+	];
+	public static $extraPosition = [
+		false 	=> 'Menu standard',
+		true 	=> 'Menu accessoire'
 	];
 
 
@@ -472,6 +476,7 @@ class page extends common {
 							'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
+							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN)
 						]
 					]);
 
