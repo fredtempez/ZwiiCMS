@@ -113,7 +113,8 @@ class init extends common {
 			'barRight' => '',
 			'displayMenu' => 'none',
 			'hideMenuSide' => false,
-			'hideMenuChildren' =>false
+			'hideMenuChildren' =>false,
+			'extraPosition' => false
 			]
 		],
 		'module' => [],
@@ -272,7 +273,8 @@ class init extends common {
 			'barRight' => '',
 			'displayMenu' => 'none',
 			'hideMenuSide' => false,
-			'hideMenuChildren' =>false
+			'hideMenuChildren' =>false,
+			'extraPosition' => false
 			],
 			'enfant' => [
 					'typeMenu' => 'text',
@@ -296,7 +298,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'privee' => [
 					'typeMenu' => 'text',
@@ -320,7 +323,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'mise-en-page' => [
 				'typeMenu' => 'text',
@@ -344,7 +348,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'menu-lateral' => [
 				'typeMenu' => 'text',
@@ -368,7 +373,8 @@ class init extends common {
 				'barRight' => 'barrelateraleavecmenu',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 				],
 			'blog' => [
 				'typeMenu' => 'text',
@@ -392,7 +398,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'galeries' => [
 				'typeMenu' => 'text',
@@ -416,7 +423,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'site-de-zwii' => [
 			'typeMenu' => 'text',
@@ -441,7 +449,8 @@ class init extends common {
 			'barRight' => '',
 			'displayMenu' => 'none',
 			'hideMenuSide' => false,
-			'hideMenuChildren' =>false
+			'hideMenuChildren' =>false,
+			'extraPosition' => false
 			],
 			'contact' => [
 				'typeMenu' => 'text',
@@ -465,7 +474,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'barre' => [
 				'typeMenu' => 'text',
@@ -489,7 +499,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'barrelateraleavecmenu' => [
 				'typeMenu' => 'text',
@@ -513,7 +524,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'parents',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'mentions-legales' => [
 				'typeMenu' => 'text',
@@ -538,7 +550,8 @@ class init extends common {
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'extraPosition' => false
 			],
 			'erreur302' => [
 				'typeMenu' => 'text',
@@ -563,7 +576,8 @@ class init extends common {
 				'displayMenu' => 'none',
 				'hideMenuSide' => true,
 				'hideMenuHead' => true,
-				'hideMenuChildren' => true
+				'hideMenuChildren' => true,
+				'extraPosition' => false
 				],
 			'erreur403' => [
 				'typeMenu' => 'text',
@@ -587,7 +601,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'extraPosition' => false
 			],
 			'erreur404' => [
 				'typeMenu' => 'text',
@@ -611,7 +626,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false
+				'hideMenuChildren' =>false,
+				'extraPosition' => false
 			],
 			'recherche' => [
 				'typeMenu' => 'icon',
@@ -635,7 +651,8 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'extraPosition' => true
 			],
 		],
 		'module' => [

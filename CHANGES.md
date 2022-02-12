@@ -18,6 +18,7 @@ Corrections :
         - Les polices pourront désormais être téléchargées à partir du site et non du CD grâce à une nouvelle fonctionnalité du thème permet de gérer l'installation des fontes, soit à partir du CDN, soit à partir d'un fichier téléchargé.
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
     - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
+    - Pages dans le menu accessoire. Ce menu à affiché à droite de la barre de menu, il est traditionnellement utilisé pour y placer les drapeaux de traduction, le bouton de connexion et de gestion du compte des membres. Il sera désormais possible d'y placer des pages sous la forme d'icônes de préférence.
 
 ## Version 11.2.05
 - Corrections :
