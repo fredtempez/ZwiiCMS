@@ -714,7 +714,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Option de dévoilement du mdp
 	$this->setData(['config', 'connect', 'showPassword', true]);
-	
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }
@@ -722,7 +722,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 // Version 11.2.02
 if ($this->getData(['core', 'dataVersion']) < 11202) {
 
-	// Renommer les champs 
+	// Renommer les champs
 	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText']) ]);
 	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText']) ]);
 	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText']) ]);
@@ -784,10 +784,22 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
 	$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
 	$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
-	
+
 	unlink(self::DATA_DIR . 'admin.css');
 	unlink(self::DATA_DIR . 'theme.css');
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11300]);
+}
+
+// Version 12.0.00
+if ($this->getData(['core', 'dataVersion']) < 12000) {
+
+	// Effacer le dossier
+	if (is_dir('core/module/addon')) {
+		$this->removeDir('core/module/addon');
+	}
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12000]);
 }
