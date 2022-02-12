@@ -45,8 +45,8 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '12.0.00';
-	const ZWII_UPDATE_CHANNEL = "test";
+	const ZWII_VERSION = '11.3.00';
+	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -58,7 +58,7 @@ class common {
 		'theme',
 		'user',
 		'translate',
-		'plugin'
+		'addon'
 	];
 	public static $accessList = [
 		'user',
@@ -538,8 +538,6 @@ class common {
 
 	}
 
-
-
 	/**
 	 * Effacer les données de la page
 	 * @param string pageId
@@ -549,8 +547,7 @@ class common {
 
 			return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 
-	}
-
+			}
 
 	/**
 	 * Sauvegarde des données
@@ -1183,33 +1180,12 @@ class common {
 
 
 	/**
-	 * Fonction de parcours des données de module
-	 * @param string $find donnée à rechercher
-	 * @param string $replace donnée à remplacer
-	 * @param array tableau à analyser
-	 * @param int count nombres d'occurrences
-	 * @return array avec les valeurs remplacées.
-	 */
-	public function recursive_array_replace ($find, $replace, $array, &$count) {
-		if (!is_array($array)) {
-			return str_replace($find, $replace, $array, $count);
-		}
-
-		$newArray = [];
-		foreach ($array as $key => $value) {
-			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);
-			$count += $c;
-		}
-		return $newArray;
-	}
-
-	/**
 	 * Génère une archive d'un dossier et des sous-dossiers
 	 * @param string fileName path et nom de l'archive
 	 * @param string folder path à zipper
 	 * @param array filter dossiers à exclure
 	 */
-	public function makeZip ($fileName, $folder, $filter = [] ) {
+	public function makeZip ($fileName, $folder, $filter ) {
 		$zip = new ZipArchive();
 		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		//$directory = 'site/';
@@ -2091,7 +2067,7 @@ class common {
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'plugin" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'addon" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
 				if ($this->getData(['config', 'i18n', 'enable']) === true) {
 					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
 				}

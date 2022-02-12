@@ -1,13 +1,14 @@
 <?php echo template::formOpen('userAddForm'); ?>
 	<div class="row">
-		<div class="col1">
+		<div class="col2">
 			<?php echo template::button('userAddBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'user',
-				'value' => template::ico('left')
+				'ico' => 'left',
+				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset9">
+		<div class="col2 offset8">
 			<?php echo template::submit('userAddSubmit'); ?>
 		</div>
 	</div>

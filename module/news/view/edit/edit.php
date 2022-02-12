@@ -4,13 +4,14 @@
 			<?php echo template::button('newsEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'value' => template::ico('left')
+				'ico' => 'left',
+				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col3 offset5">
 			<?php echo template::button('newsEditDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Brouillon'
+				'value' => 'Enregistrer en brouillon'
 			]); ?>
 			<?php echo template::hidden('newsEditState', [
 				'value' => true

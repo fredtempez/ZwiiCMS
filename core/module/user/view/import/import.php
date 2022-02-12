@@ -1,22 +1,23 @@
 <?php echo template::formOpen('userImportForm'); ?>
 <div class="row">
-    <div class="col1">
+    <div class="col2">
         <?php echo template::button('userImportBack', [
             'class' => 'buttonGrey',
             'href' => helper::baseUrl() . 'user',
-            'value' => template::ico('left')
+            'ico' => 'left',
+            'value' => 'Retour'
         ]); ?>
     </div>
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('userHelp', [
 			'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
 			'target' => '_blank',
-            'value' => template::ico('help'),
-			'class' => 'buttonHelp',
-			'help' => 'Consulter l\'aide en ligne'
+			'ico' => 'help',
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-    <div class="col2 offset8">
+    <div class="col2 offset6">
 		<?php echo template::submit('userImportSubmit', [
 				'value' => 'Importer'
 			]); ?>
@@ -27,7 +28,7 @@
         <div class="block">
         <h4>Importation de fichier plat CSV</h4>
             <div class="row">
-                <div class="col10">
+                <div class="col6">
                       <?php echo template::file('userImportCSVFile', [
                             'label' => 'Liste d\'utilisateurs :'
                       ]); ?>

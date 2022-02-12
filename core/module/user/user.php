@@ -346,14 +346,12 @@ class user extends common {
 					self::$groups[$this->getData(['user', $userId, 'group'])],
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/'. $_SESSION['csrf'],
-						'value' => template::ico('pencil'),
-						'help' => 'Editer ' . $userId
+						'value' => template::ico('pencil')
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
 						'href' => helper::baseUrl() . 'user/delete/' . $userId. '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel'),
-						'help' => 'Supprimer ' . $userId
+						'value' => template::ico('cancel')
 					])
 				];
 			}

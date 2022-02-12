@@ -3,10 +3,11 @@
 		'label' => 'Identifiant'
 	]); ?>
 	<div class="row">
-		<div class="col1 offset9">
+		<div class="col3 offset6">
 			<?php echo template::button('userForgotBack', [
 				'href' => helper::baseUrl() . 'user/login/' . $this->getUrl(2),
-				'value' => template::ico('left')
+				'ico' => 'left',
+				'value' => 'Retour'
 			]); ?>
 		</div>
 		<div class="col3">

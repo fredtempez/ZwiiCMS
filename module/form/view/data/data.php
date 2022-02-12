@@ -1,24 +1,25 @@
 <div class="row">
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('formDataBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-			'value' => template::ico('left')
+			'ico' => 'left',
+			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col1 offset9">
+	<div class="col2 offset6">
 	<?php echo template::button('formDataDeleteAll', [
 			'class' => 'formDataDeleteAll buttonRed',
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/deleteall' . '/' . $_SESSION['csrf'],
-			'value' => template::ico('cancel'),
-			'help' => 'Effacer toutes les données'
+			'ico' => 'cancel',
+			'value' => 'Tout effacer'
 		]); ?>
 	</div>
-	<div class="col1">
+	<div class="col2">
 	<?php echo template::button('formDataBack', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/export2csv' . '/' . $_SESSION['csrf'],
-			'value' => template::ico('download'),
-			'help' => 'Exporter toutes les données'
+			'ico' => 'download',
+			'value' => 'Export CSV'
 		]); ?>
 	</div>
 </div>

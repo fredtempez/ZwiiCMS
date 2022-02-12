@@ -19,7 +19,6 @@ class config extends common {
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
 		'copyBackups'=> self::GROUP_ADMIN,
-		'delBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'generateFiles' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
@@ -384,15 +383,6 @@ class config extends common {
 						$this->setData(['user',$users]);
 				}
 			}
-			// Conversion vers des Url relatives
-			if ($this->getData(['core', 'baseUrl'])) {
-				$url = str_replace('?','',$this->getData(['core', 'baseUrl']));
-				// Suppresion de la base Url
-				$this->updateBaseUrl($url);
-				// Effacer la baseUrl
-				$this->deleteData(['core', 'baseUrl']);
-			}			
-		
 			// Message de notification
 			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
@@ -594,7 +584,7 @@ class config extends common {
 			$this->generateFiles();
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
@@ -626,7 +616,7 @@ class config extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du site',
+			'title' => 'Configuration',
 			'view' => 'index'
 		]);
 	}
@@ -665,8 +655,10 @@ class config extends common {
 	/**
 	 * Met à jour les données de site avec l'adresse transmise
 	 */
-	public function updateBaseUrl ($url) {
+	public function updateBaseUrl () {
 		// Supprimer l'information de redirection
+		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
+		$new = helper::baseUrl(false,false);
 		$c3 = 0;
 		$success = false ;
 		// Boucler sur les pages
@@ -674,8 +666,8 @@ class config extends common {
 			$content = $this->getPage($parentId, self::$i18n);
 			$titre = $this->getData(['page', $parentId, 'title']);
 			$content =   $titre . ' ' . $content ;
-			$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
-			$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
+			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
+			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
@@ -685,8 +677,8 @@ class config extends common {
 			foreach($childIds as $childId) {
 				$content = $this->getPage($childId, self::$i18n);
 				$content =   $titre . ' ' . $content ;
-				$replace = str_replace( 'href="' . $url , 'href="'. '' , stripslashes($content),$c1) ;
-				$replace = str_replace( 'src="' . $url , 'src="'. '' , stripslashes($replace),$c2) ;
+				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
+				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 				if ($c1 > 0 || $c2 > 0) {
 					$success = true;
 					$this->setPage($childId, $replace,  self::$i18n);
@@ -696,8 +688,8 @@ class config extends common {
 		}
 		// Traiter les modules dont la redirection
 		$content = $this->getdata(['module']);
-		$replace = $this->recursive_array_replace('href="' . $url , 'href="'. '', $content, $c1);
-		$replace = $this->recursive_array_replace('src="' . $url , 'src="'. '', $replace, $c2);
+		$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
+		$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
 		if ($content !== $replace) {
 			$this->setdata(['module',$replace]);
 			$c3 += $c1 + $c2;
@@ -726,7 +718,7 @@ class config extends common {
 			file_put_contents(self::DATA_DIR . 'journal.log',$d);
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
@@ -734,7 +726,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
@@ -762,7 +754,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
@@ -799,7 +791,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
@@ -816,7 +808,7 @@ class config extends common {
 			$this->setData(['blacklist',[]]);
 			// Valeurs en sortie
 				$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
@@ -824,7 +816,7 @@ class config extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => 'Configuration',
 				'view' => 'index',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
@@ -843,37 +835,32 @@ class config extends common {
 		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du site',
+			'title' => 'Configuration',
 			'view' => 'index',
 			'notification' => 'Copie terminée',
 			'state' => true
 		]);
 	}
 
+
 	/**
-	 * Vider le dosser des sauvegardes automatisées
+	 * Fonction de parcours des données de module
+	 * @param string $find donnée à rechercher
+	 * @param string $replace donnée à remplacer
+	 * @param array tableau à analyser
+	 * @param int count nombres d'occurrences
+	 * @return array avec les valeurs remplacées.
 	 */
-	public function delBackups() {
-		$path = realpath(self::BACKUP_DIR);
-		$success = $fail = 0;
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-		{
-			if (strpos($filename,'.zip')) {
-				
-				$r = unlink($filename);
-				$success = $r === true ? $succes + 1 : $success;
-				$fail = $r === false ? $fail + 1 : $fail;
-			}
+	private function recursive_array_replace ($find, $replace, $array, &$count) {
+		if (!is_array($array)) {
+			return str_replace($find, $replace, $array, $count);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Configuration du site',
-			'view' => 'index',
-			'notification' => 'Suppression terminée :<br />' . $success . ' fichiers effacé(s) <br />' . $fail . ' échec(s)',
-			'state' => true
-		]);
+
+		$newArray = [];
+		foreach ($array as $key => $value) {
+			$newArray[$key] = $this->recursive_array_replace($find, $replace, $value,$c);
+			$count += $c;
+		}
+		return $newArray;
 	}
-
-
-
 }

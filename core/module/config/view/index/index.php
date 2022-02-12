@@ -1,22 +1,23 @@
 <?php echo template::formOpen('configForm');?>
 <div class="row">
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('configBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl(false),
-            'value' => template::ico('home')
+			'ico' => 'home',
+			'value' => 'Accueil'
 		]); ?>
 	</div>
-    <div class="col1">
+    <div class="col2 ">
 			<?php echo template::button('configHelp', [
 				'class' => 'buttonHelp',
                 'href' => 'https://doc.zwiicms.fr/configuration-du-site',
                 'target' => '_blank',
-				'value' => template::ico('help'),
-				'help' => 'Consulter l\'aide en ligne'
+				'ico' => 'help',
+				'value' => 'Aide'
 			]); ?>
 		</div>
-	<div class="col2 offset8">
+	<div class="col2 offset6">
 		<?php echo template::submit('Submit'); ?>
 	</div>
 </div>

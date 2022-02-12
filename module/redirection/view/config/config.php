@@ -1,13 +1,14 @@
 <?php echo template::formOpen('redirectionConfig'); ?>
 	<div class="row">
-		<div class="col1">
+		<div class="col2">
 			<?php echo template::button('redirectionConfigBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-				'value' => template::ico('left')
+				'ico' => 'left',
+				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset9">
+		<div class="col2 offset8">
 			<?php echo template::submit('redirectionConfigSubmit'); ?>
 		</div>
 	</div>

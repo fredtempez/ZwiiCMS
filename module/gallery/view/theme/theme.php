@@ -1,14 +1,15 @@
 <?php echo template::formOpen('galleryThemeForm'); ?>
 
 	<div class="row">
-		<div class="col1">
+		<div class="col2">
 			<?php echo template::button('galleryThemeBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'value' => template::ico('left')
+				'ico' => 'left',
+				'value' => 'Retour'
 			]); ?>
 		</div>
-		<div class="col2 offset9">
+		<div class="col2 offset8">
 			<?php echo template::submit('galleryThemeBack'); ?>
 		</div>
 	</div>

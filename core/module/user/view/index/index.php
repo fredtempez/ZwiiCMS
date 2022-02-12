@@ -1,32 +1,33 @@
 <div class="row">
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('userAddBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl(false),
-			'value' => template::ico('home')
+			'ico' => 'home',
+			'value' => 'Accueil'
 		]); ?>
 	</div>
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('userHelp', [
 			'href' => 'https://doc.zwiicms.fr/gestion-des-utilisateurs',
 			'target' => '_blank',
-			'value' => template::ico('help'),
-			'class' => 'buttonHelp',
-			'help' => 'Consulter l\'aide en ligne'
+			'ico' => 'help',
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-	<div class="col1 offset8">
+	<div class="col2 offset4">
 		<?php echo template::button('userImport', [
 			'href' => helper::baseUrl() . 'user/import',
-			'value' => template::ico('upload') ,
-			'help' => 'Importer des utilisateurs en masse'
+			'ico' => 'plus',
+			'value' => 'Importation'
 		]); ?>
 	</div>
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('userAdd', [
 			'href' => helper::baseUrl() . 'user/add',
-			'value' => template::ico('plus'),
-			'help' => 'Ajouter un utilisateur'
+			'ico' => 'plus',
+			'value' => 'Utilisateur'
 		]); ?>
 	</div>
 </div>

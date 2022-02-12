@@ -118,36 +118,26 @@
 						]); ?>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col4 offset1">
+				<div class="rows textAlignCenter">
+					<div class="col3">
 						<?php echo template::button('configBackupButton', [
 							'href' => helper::baseUrl() . 'config/backup',
-							'value' => 'Sauvegarder les données du site',
+							'value' => 'Sauvegarder',
 							'ico' => 'download-cloud'
 						]); ?>
 					</div>
-					<div class="col4 offset1">
+					<div class="col3">
 						<?php echo template::button('configRestoreButton', [
 							'href' => helper::baseUrl() . 'config/restore',
-							'value' => 'Restaurer les données du site',
+							'value' => 'Restaurer',
 							'ico' => 'upload-cloud'
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col4 offset1">
+					<div class="col3">
 						<?php echo template::button('configBackupCopyButton', [
 							'href' => helper::baseUrl() . 'config/copyBackups',
-							'value' => 'Copier sauvegardes auto',
-							'ico' => 'docs'
-						]); ?>
-					</div>
-					<div class="col4 offset1">
-						<?php echo template::button('configBackupDelButton', [
-							'href' => helper::baseUrl() . 'config/delBackups',
-							'value' => 'Vider dossier sauvegardes auto',
-							'ico' => 'cancel',
-							'class' => 'buttonRed'
+							'value' => 'Copie sauvegardes auto',
+							'ico' => 'download-cloud'
 						]); ?>
 					</div>
 				</div>

@@ -55,15 +55,6 @@ function add(inputUid, input) {
 }
 
 /**
- * Afficher/cacher les options supplémentaires
- */
- $(document).on("click", ".formConfigMoreToggle", function() {
-
-	$(this).parents(".formConfigInput").find(".formConfigMore").slideToggle();
-	$(this).parents(".formConfigInput").find(".formConfigMoreLabel").slideToggle();
-});
-
-/**
  * Calcul des positions
  */
 function position() {
@@ -85,6 +76,14 @@ if(inputs) {
 	});
 }
 
+/**
+ * Afficher/cacher les options supplémentaires
+ */
+$(document).on("click", ".formConfigMoreToggle", function() {
+
+	$(this).parents(".formConfigInput").find(".formConfigMore").slideToggle();
+	$(this).parents(".formConfigInput").find(".formConfigMoreLabel").slideToggle();
+});
 
 /**
  * Crée un nouveau champ à partir des champs cachés
@@ -97,12 +96,6 @@ $("#formConfigAdd").on("click", function() {
 /**
  * Actions sur les champs
  */
-
-// Validation auto après ajout d'un champ
-$("a#formConfigAdd.button").click(function () {
-	$("#formConfigForm").submit();
-});
-
 // Tri entre les champs
 sortable("#formConfigInputs", {
 	forcePlaceholderSize: true,
@@ -150,3 +143,73 @@ $("#formConfigInputs")
 	});
 // Simule un changement de type au chargement de la page
 $(".formConfigType").trigger("change");
+
+/**
+ * Affiche/cache les options de la case à cocher du mail
+ */
+$("#formConfigMailOptionsToggle").on("change", function() {
+	if($(this).is(":checked")) {
+		$("#formConfigMailOptions").slideDown();
+	}
+	else {
+		$("#formConfigMailOptions").slideUp(function() {
+			$("#formConfigGroup").val("");
+			$("#formConfigSubject").val("");
+			$("#formConfigMail").val("");
+			$("#formConfigUser").val("");
+		});
+	}
+}).trigger("change");
+
+/**
+ * Affiche/cache les options de la case à cocher de la redirection
+ */
+$("#formConfigPageIdToggle").on("change", function() {
+	if($(this).is(":checked")) {
+		$("#formConfigPageIdWrapper").slideDown();
+	}
+	else {
+		$("#formConfigPageIdWrapper").slideUp(function() {
+			$("#formConfigPageId").val("");
+		});
+	}
+}).trigger("change");
+
+/**
+* Paramètres par défaut au chargement
+*/
+$( document ).ready(function() {
+
+	/**
+	* Masquer ou afficher la sélection du logo
+	*/
+	if ($("#formConfigSignature").val() !== "text") {
+		$("#formConfigLogoWrapper").addClass("disabled");
+		$("#formConfigLogoWrapper").slideDown();
+		$("#formConfigLogoWidthWrapper").addClass("disabled");
+		$("#formConfigLogoWidthWrapper").slideDown();
+	} else {
+		$("#formConfigLogoWrapper").removeClass("disabled");
+		$("#formConfigLogoWrapper").slideUp();
+		$("#formConfigLogoWidthWrapper").removeClass("disabled");
+		$("#formConfigLogoWidthWrapper").slideUp();
+	}
+});
+
+/**
+ * Masquer ou afficher la sélection du logo
+ */
+var formConfigSignatureDOM = $("#formConfigSignature");
+formConfigSignatureDOM.on("change", function() {
+	if ($(this).val() !== "text") {
+			$("#formConfigLogoWrapper").addClass("disabled");
+			$("#formConfigLogoWrapper").slideDown();
+			$("#formConfigLogoWidthWrapper").addClass("disabled");
+			$("#formConfigLogoWidthWrapper").slideDown();
+	} else {
+			$("#formConfigLogoWrapper").removeClass("disabled");
+			$("#formConfigLogoWrapper").slideUp();
+			$("#formConfigLogoWidthWrapper").removeClass("disabled");
+			$("#formConfigLogoWidthWrapper").slideUp();
+	}
+});

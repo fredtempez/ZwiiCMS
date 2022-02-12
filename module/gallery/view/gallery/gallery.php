@@ -1,9 +1,10 @@
 <div class="row">
-	<div class="col1">
+	<div class="col2">
 		<?php echo template::button('galleryGalleryBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . $this->getUrl(0),
-			'value' => template::ico('left')
+			'ico' => 'left',
+			'value' => 'Retour'
 		]); ?>
 	</div>
 </div>
