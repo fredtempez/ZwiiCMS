@@ -1032,6 +1032,8 @@ class common {
 			case 'gif':
 				$source_image = imagecreatefromgif($src);
 				break;
+			case 'webp':
+				$source_image = imagecreatefromwebp($src);
 		}
 		// Image valide
 		if ($source_image) {
@@ -1053,6 +1055,9 @@ class common {
 					break;
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
+					break;
+				case 'image/webp':
+					return (imagewebp($virtual_image, $dest));
 					break;
 			}
 		} else {

@@ -6,6 +6,7 @@
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
     - Bugs avec les aperçus des sélecteurs de fontes.
     - Notice générée par l'effacement d'une page sans module.
+    - Prise en charge du format webp pour les modules nécessitant des miniatures.
 - Modification :
     - Police de caractères :
         - Changement de fournisseur, CdnFont remplace Google Font.
