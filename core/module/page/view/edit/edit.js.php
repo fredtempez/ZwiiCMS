@@ -234,6 +234,17 @@ $( document ).ready(function() {
 		$("#pageEditHideMenuChildrenWrapper").slideDown();
 	}
 
+	/**
+	 * Liste des pages pour le menu accessoire
+	 */
+		 if ($("#pageEditExtraPosition").val() == 1 ) {
+			var positionDOM = $("#pageEditPosition");
+			positionDOM.empty().append(
+				$("<option>").val(0).text("Ne pas afficher"),
+				$("<option>").val(1).text("Au début")
+			);
+		}
+
 });
 
 
@@ -427,7 +438,7 @@ pageEditBlockDOM.on("change", function() {
 	} else {
 			}
 			if ($("#pageEditModuleId").val() === "") {
-				$("#pageEditModuleConfig").addClass("disabled");	
+				$("#pageEditModuleConfig").addClass("disabled");
 			} else {
 				$("#pageEditModuleConfig").removeClass("disabled");
 			}
@@ -505,8 +516,24 @@ pageTypeMenuDOM.on("change", function() {
 });
 
 
+/**
+ * Actualise la liste de pages lorsque le menu accessoire est sélectionné
+ */
+// Initialise à Début si le menu accessoire est sélectionné
 
+$("#pageEditExtraPosition").on("change", function() {
+	if ($("#pageEditExtraPosition").val() == 1 ) {
 
+		var positionDOM = $("#pageEditPosition");
+		positionDOM.empty().append(
+			$("<option>").val(0).text("Ne pas afficher"),
+			$("<option>").val(1).text("Au début")
+		);
+	} else {
+		getPages();
+		//$("#pageEditParentPageId").trigger("change");
+	}
+});
 /**
  * Soumission du formulaire pour éditer le module
  */
@@ -518,23 +545,27 @@ $("#pageEditModuleConfig").on("click", function() {
 /**
  * Affiche les pages en fonction de la page parent dans le choix de la position
  */
-var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
-
-var pages = <?php echo json_encode($this->getData(['page'])); ?>;
-
-
-// 9.0.07 corrige une mauvaise sélection d'une page orpheline avec enfant
-var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
-// 9.0.07
 $("#pageEditParentPageId").on("change", function() {
+	getPages();
+}).trigger("change");
+
+/**
+ * Construit un select contenant la liste des pages du site.
+ */
+
+function getPages() {
+	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
+	var pages = <?php echo json_encode($this->getData(['page'])); ?>;
+	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 	var positionDOM = $("#pageEditPosition");
 	positionDOM.empty().append(
 		$("<option>").val(0).text("Ne pas afficher"),
 		$("<option>").val(1).text("Au début")
 	);
-	var parentSelected = $(this).val();
+	var parentSelected = $("#pageEditParentPageId").val();
 	var positionSelected = 0;
 	var positionPrevious = 1;
+
 	// Aucune page parent selectionnée
 	if(parentSelected === "") {
 		// Liste des pages sans parents
@@ -555,11 +586,9 @@ $("#pageEditParentPageId").on("change", function() {
 				}
 			}
 		}
-		// 9.0.07 corrige une mauvaise sélection d'une page orpheline avec enfant
 		if (positionInitial === 0) {
 			positionSelected = 0;
 		}
-		// 9.0.07
 	}
 	// Un page parent est selectionnée
 	else {
@@ -582,4 +611,4 @@ $("#pageEditParentPageId").on("change", function() {
 	}
 	// Sélectionne la bonne position
 	positionDOM.val(positionSelected);
-}).trigger("change");
+};
