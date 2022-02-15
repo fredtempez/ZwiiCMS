@@ -19,6 +19,7 @@
     - Bugs avec les aperçus des sélecteurs de fontes.
     - Notice générée par l'effacement d'une page sans module.
     - Modules blog et download : filtrage excessif des tags breaking et saut de paragraphe.
+    - Mise à jour en ligne, une version  inférieure ne déclenche plus la notification.
 
 ## Version 11.2.05
 - Corrections :
