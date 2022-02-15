@@ -41,7 +41,7 @@
 										: utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>
 						</div>
 						<p class="blogContent">
-							<?php echo helper::subword(strip_tags($article['content']), 0, 400); ?>...
+							<?php echo helper::subword(strip_tags($article['content'],'<br><p>'), 0, 400); ?>...
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">Lire la suite</a>
 						</p>
 					</div>
