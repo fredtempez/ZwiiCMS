@@ -5,7 +5,7 @@
 
 ### Nouveautés :
     - Police de caractères :
-        - Changement de fournisseur, CdnFont remplace Google Font.
+        - Changement de fournisseur, CdnFonts remplace Google Font.
         - Les polices pourront désormais être téléchargées à partir du site et non du CD grâce à une nouvelle fonctionnalité du thème permet de gérer l'installation des fontes, soit à partir du CDN, soit à partir d'un fichier téléchargé.
     - Pages dans le menu accessoire. Ce menu à affiché à droite de la barre de menu, il est traditionnellement utilisé pour y placer les drapeaux de traduction, le bouton de connexion et de gestion du compte des membres. Il sera désormais possible d'y placer des pages sous la forme d'icônes de préférence.
     - Prise en charge du format webp pour les modules nécessitant des miniatures.
@@ -15,7 +15,7 @@
     - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
 
 ### Corrections :
-    - Thème / site : problème d'aperçu du body ; police du thème admin non chargées.
+    - Thème / site : problème d'aperçu du body ; police du thème admin non chargée.
     - Bugs avec les aperçus des sélecteurs de fontes.
     - Notice générée par l'effacement d'une page sans module.
     - Modules blog et download : filtrage excessif des tags breaking et saut de paragraphe.
