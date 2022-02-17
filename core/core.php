@@ -170,17 +170,17 @@ class common {
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
 	private $dataFiles = [
-		'config' => '',
-		'page' => '',
-		'module' => '',
-		'core' => '',
-		'page' => '',
-		'user' => '',
-		'theme' => '',
 		'admin' => '',
 		'blacklist' => '',
+		'config' => '',
+		'core' => '',
+		'fonts' => '',
+		'module' => '',
 		'locale' => '',
-		'fonts' => ''
+		'page' => '',
+		'theme' => '',
+		'user' => ''
+	
 	];
 
 	// Fontes
