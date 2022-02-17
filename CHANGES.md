@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 11.3.01
+
+### Correction :
+    - Gestionnaire de fichier, chevauchement d'icônes en multi sélection et aides non traduites.
+
 
 ## Version 11.3.00
 
