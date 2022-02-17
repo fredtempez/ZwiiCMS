@@ -19,7 +19,7 @@ $("input, select").on("change", function() {
 	// Import des polices de caractères
 	var footerFont = $("#themeFooterFont :selected").val();
 	var footerFontText = $("#themeFooterFont :selected").text();
-	var css = "@import url('http://fonts.cdnfonts.com/css/" + footerFont + "');";
+	var css = "@import url('https://fonts.cdnfonts.com/css/" + footerFont + "');";
 	// Couleurs du pied de page
 	var colors = core.colorVariants($("#themeFooterBackgroundColor").val());
 	var textColor = $("#themeFooterTextColor").val();

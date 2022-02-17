@@ -42,7 +42,7 @@ $("input, select").on("change", function() {
 	// Import des polices de caractères
 	var menuFont = $("#themeMenuFont :selected").val();
 	var menuFontText = $("#themeMenuFont :selected").text();
-	var css = "@import url('http://fonts.cdnfonts.com/css/" + menuFont + "');";
+	var css = "@import url('https://fonts.cdnfonts.com/css/" + menuFont + "');";
 	var colors = core.colorVariants($("#themeMenuBackgroundColor").val());
 	// Couleurs du menu
 	css += "nav,nav.navLevel1 a{background-color:" + colors.normal + "}";

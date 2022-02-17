@@ -2,8 +2,9 @@
 
 ## Version 11.3.01
 
-### Correction :
+### Corrections :
     - Gestionnaire de fichier, chevauchement d'icônes en multi sélection et aides non traduites.
+    - Fontes : utilisation d'une adresse d'import de fonte HTTPS
 
 
 ## Version 11.3.00

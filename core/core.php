@@ -2324,7 +2324,7 @@ class core extends common {
 			*/
 			foreach ($fonts as $fontId) {
 				if (!array_key_exists($fontId, $localFonts) ) {
-					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+					$css .= '@import url("https://fonts.cdnfonts.com/css/' . $fontId . '");';
 					// Supprimer l'élément des fontes chargées en ligne
 					unset($fonts[$fontId]);
 				}
@@ -2550,7 +2550,7 @@ class core extends common {
 			*/
 			foreach ($fonts as $fontId) {
 				if (!array_key_exists($fontId, $localFonts) ) {
-					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+					$css .= '@import url("https://fonts.cdnfonts.com/css/' . $fontId . '");';
 					// Supprimer l'élément des fontes chargées en ligne
 					unset($fonts[$fontId]);
 				}

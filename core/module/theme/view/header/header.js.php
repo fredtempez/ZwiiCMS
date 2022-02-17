@@ -82,7 +82,7 @@ $("input, select").on("change", function() {
 		// Import des polices de caractères
 		var headerFont = $("#themeHeaderFont :selected").val();
 		var headerFontText = $("#themeHeaderFont :selected").text();
-		var css = "@import url('http://fonts.cdnfonts.com/css/" + headerFont + "');";
+		var css = "@import url('https://fonts.cdnfonts.com/css/" + headerFont + "');";
 
 			css += "header{text-align:" + $("#themeHeaderTextAlign").val() + ";";
 			if ($("#themeHeaderImage").val()) {
