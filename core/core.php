@@ -1678,7 +1678,14 @@ class common {
 		$itemsLeft = '';
 		$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
 		foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
-			// Passer les entrées masquées
+			// Menu extra ou standard
+			if (
+				// Absence de la position extra, la page est toujours affichée à gauche.
+				($this->getData(['page',$parentPageId,'extraPosition']) !== NULL || $extra === true)
+				&&
+				$this->getData(['page',$parentPageId,'extraPosition']) !== $extra )  {
+				continue;
+			}
 			// Propriétés de l'item
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
