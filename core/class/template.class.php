@@ -19,15 +19,17 @@ class template {
             'name' => $nameId,
             'target' => '',
             'uniqueSubmission' => false,
-            'value' => 'Bouton'
+            'value' => 'Bouton',
+            'help' => ''
         ], $attributes);
         // Retourne le html
         return  sprintf(
-            '<a %s class="button %s %s %s">%s</a>',
+            '<a %s class="button %s %s %s" %s>%s</a>',
             helper::sprintAttributes($attributes, ['class', 'disabled', 'ico', 'value']),
             $attributes['disabled'] ? 'disabled' : '',
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
+            $attributes['help'] ? ' title="' . $attributes['help'] . '" ': '',
             ($attributes['ico'] ? template::ico($attributes['ico'], 'right') : '') . $attributes['value']
         );
     }

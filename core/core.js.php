@@ -490,26 +490,6 @@ $(document).ready(function(){
 		};
 	});
 
-	/**
-	 * Active le système d'aide interne
-	 *
-	 */
-
-	$(".buttonHelp").click(function() {
-			$(".helpDisplayContent").slideToggle();
-			/**
-			if( $(".buttonHelp").css('opacity') > '0.75'){
-				$(".buttonHelp").css('opacity','0.5');
-			}
-			else{
-				$(".buttonHelp").css('opacity','1');
-			}
-			*/
-	});
-
-	$(".helpDisplayContent").click(function() {
-		$(".helpDisplayContent").slideToggle();
-	});
 
 	/**
 	* Remove ID Facebook from URL

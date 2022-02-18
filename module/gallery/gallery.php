@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.3';
+	const VERSION = '3.4';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -346,12 +346,14 @@ class gallery extends common {
 					$gallery['config']['directory'],
 					template::button('galleryConfigEdit' . $galleryId , [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'],
-						'value' => template::ico('pencil')
+						'value' => template::ico('pencil'),
+						'help' => 'Configuration de la galerie '
 					]),
 					template::button('galleryConfigDelete' . $galleryId, [
 						'class' => 'galleryConfigDelete buttonRed',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $galleryId . '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel')
+						'value' => template::ico('cancel'),
+						'help' => 'Supprimer cette galerie'
 					])
 				];
 				// Tableau des id des galleries pour le drag and drop

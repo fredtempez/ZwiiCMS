@@ -714,7 +714,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Option de dévoilement du mdp
 	$this->setData(['config', 'connect', 'showPassword', true]);
-
+	
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }
@@ -722,7 +722,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 // Version 11.2.02
 if ($this->getData(['core', 'dataVersion']) < 11202) {
 
-	// Renommer les champs
+	// Renommer les champs 
 	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText']) ]);
 	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText']) ]);
 	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText']) ]);
@@ -739,6 +739,55 @@ if ($this->getData(['core', 'dataVersion']) < 11202) {
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11202]);
+}
+
+// Version 11.2.03
+if ($this->getData(['core', 'dataVersion']) < 11203) {
+	// Supprimer l'information de redirection
+	$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
+	$new = '';
+	$c3 = 0;
+	$success = false ;
+	// Boucler sur les pages
+	foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
+		$content = $this->getPage($parentId, self::$i18n);
+		$titre = $this->getData(['page', $parentId, 'title']);
+		$content =   $titre . ' ' . $content ;
+		$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
+		$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
+
+		if ($c1 > 0 || $c2 > 0) {
+			$success = true;
+			$this->setPage($parentId, $replace,  self::$i18n);
+			$c3 += $c1 + $c2;
+		}
+		foreach($childIds as $childId) {
+			$content = $this->getPage($childId, self::$i18n);
+			$content =   $titre . ' ' . $content ;
+			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
+			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
+			if ($c1 > 0 || $c2 > 0) {
+				$success = true;
+				$this->setPage($childId, $replace,  self::$i18n);
+				$c3 += $c1 + $c2;
+			}
+		}
+	}
+	// Traiter les modules dont la redirection
+	$content = $this->getdata(['module']);
+	$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
+	$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
+	if ($content !== $replace) {
+		$this->setdata(['module',$replace]);
+		$c3 += $c1 + $c2;
+		$success = true;
+	}
+
+	// Effacer la baseUrl
+	$this->deleteData(['core', 'baseUrl']);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11203]);
 }
 
 // Version 11.3.00
@@ -784,7 +833,7 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
 	$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
 	$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
-
+	
 	unlink(self::DATA_DIR . 'admin.css');
 	unlink(self::DATA_DIR . 'theme.css');
 
@@ -795,11 +844,9 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 // Version 12.0.00
 if ($this->getData(['core', 'dataVersion']) < 12000) {
 
-	// Effacer le dossier
-	if (is_dir('core/module/addon')) {
-		$this->removeDir('core/module/addon');
-	}
+	// Effacer le dossier 
+	$this->removeDir('core/module/addon');
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
-}
+}	

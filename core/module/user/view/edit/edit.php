@@ -1,23 +1,21 @@
 <?php echo template::formOpen('userEditForm'); ?>
 	<div class="row">
-		<div class="col2">
-		<?php if($this->getUser('group') === self::GROUP_ADMIN): ?>
+		<div class="col1">
+			<?php if($this->getUser('group') === self::GROUP_ADMIN): ?>
 				<?php echo template::button('userEditBack', [
 					'class' => 'buttonGrey',
 					'href' => helper::baseUrl() . 'user',
-					'ico' => 'left',
-					'value' => 'Retour'
+					'value' => template::ico('left')
 				]); ?>
 			<?php else: ?>
 				<?php echo template::button('userEditBack', [
 					'class' => 'buttonGrey',
 					'href' => helper::baseUrl(false),
-					'ico' => 'home',
-					'value' => 'Accueil'
+					'value' => template::ico('home')
 				]); ?>
 			<?php endif; ?>
 		</div>
-		<div class="col2 offset8">
+		<div class="col2 offset9">
 			<?php echo template::submit('userEditSubmit'); ?>
 		</div>
 	</div>
