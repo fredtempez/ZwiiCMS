@@ -3,7 +3,7 @@
 ## Version 11.3.02
 ### Corrections :
      - Importation d'une police sur cdnFonts impossible, nom de fonction incorrect.
-     - Thème moderne, url de l'image corrigée
+     - Thème moderne, url de l'image corrigé
      - Thème, import d'un thème sauvegardé, conversion des fontes Google.
 
 
