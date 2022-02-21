@@ -1172,10 +1172,10 @@ class common {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ){
 					// Appel récursif des sous-dossiers
-					$success = $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+					$success = $success OR $this->copyDir($src . '/' . $file, $dst . '/' . $file);
 				}
 				else {
-					$success = copy($src . '/' . $file, $dst . '/' . $file);
+					$success = $success OR copy($src . '/' . $file, $dst . '/' . $file);
 				}
 			}
 		}

@@ -227,6 +227,7 @@ class theme extends common {
 		'logo' => 'Logo du site'
 	];
 
+
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
 	// Variable pour construire la liste des fontes installées
@@ -609,7 +610,7 @@ class theme extends common {
 			$file = $e[count($e) - 1 ];
 
 			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
-			$data = helper::urlGetContents('https://www.cdnfonts.com/' . $fontId . '.font');
+			$data = helper::getUrlContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
 			if ( $filePath === ''
 				 && $fontName !== ''
@@ -849,18 +850,40 @@ class theme extends common {
 					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
 					) {
 						$modele = 'theme';
-					}
+				}
 				if(
 					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
 					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
 				) {
 						$modele = 'admin';
+
 				}
 				if (!empty($modele)
 				) {
 					// traiter l'archive
 					$success = $zip->extractTo('.');
-					// traitement de l'erreur
+
+					// Substitution des fontes Google
+					if ($modele = 'theme') {
+						$c = $this->subFonts(self::DATA_DIR . 'theme.json');
+						// Un remplacement nécessite la régénération de la feuille de style
+						if ($c > 0
+							AND file_exists(self::DATA_DIR . 'theme.css')
+						) {
+								unlink(self::DATA_DIR . 'theme.css');
+						}
+					}
+					if ($modele = 'admin') {
+						$c = $this->subFonts(self::DATA_DIR . 'admin.json');
+						// Un remplacement nécessite la régénération de la feuille de style
+						if ($c > 0
+							AND file_exists(self::DATA_DIR . 'admin.css')
+							) {
+								unlink(self::DATA_DIR . 'admin.css');
+						}
+					}
+
+					// traitement d'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
 
 
@@ -966,6 +989,59 @@ class theme extends common {
 			$ret = $zip->close();
 		}
 		return ($zipFilename);
+	}
+
+	/**
+	 * Subsitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
+	 * @param string $file, nom du fichier json à convertir
+	 * @return int nombre de substitution effectuées
+	 */
+	private function subFonts($file)   {
+		// Tableau de substitution des fontes
+		$fonts = [
+			'Abril+Fatface' => 'abril-fatface',
+			'Arimo' => 'arimo',
+			'Arvo' => 'arvo',
+			'Berkshire+Swash' => 'berkshire-swash',
+			'Cabin' => 'genera',
+			'Dancing+Script' => 'dancing-script',
+			'Droid+Sans' => 'droid-sans-2',
+			'Droid+Serif' => 'droid-serif-2',
+			'Fira+Sans' => 'fira-sans',
+			'Inconsolata' => 'inconsolata-2',
+			'Indie+Flower' =>'indie-flower',
+			'Josefin+Slab' => 'josefin-sans-std',
+			'Lobster' => 'lobster-2',
+			'Lora' => 'lora',
+			'Lato' =>'lato',
+			'Marvel' => 'montserrat-ace',
+			'Old+Standard+TT' => 'old-standard-tt-3',
+			'Open+Sans' =>'open-sans',
+				// Corriger l'erreur de nom de police installée par défaut, il manquait un O en majuscule
+			'open+Sans' =>'open-sans',
+			'Oswald' =>'oswald-4',
+			'PT+Mono' => 'pt-mono',
+			'PT+Serif' =>'pt-serif',
+			'Raleway' => 'raleway-5',
+			'Rancho' => 'rancho',
+			'Roboto' => 'Roboto',
+			'Signika' => 'signika',
+			'Ubuntu' => 'ubuntu',
+			'Vollkorn' => 'vollkorn'
+		];
+
+		$data = file_get_contents($file);
+		$count = 0;
+		foreach ($fonts as $oldId => $newId){
+			$data = str_replace($oldId, $newId, $data, $c);
+			$count = $count + (int) $c;
+		}
+		// Sauvegarder la chaîne modifiée
+		if ($count > 0) {
+			file_put_contents($file, $data);
+		}
+		// Retourner le nombre d'occurrences
+		return ($count);
 	}
 
 }
