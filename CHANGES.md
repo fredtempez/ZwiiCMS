@@ -1,25 +1,28 @@
 # Changelog
 
-## Version 11.3.01
+## Version 11.3.02
+### Corrections :
+     - Importation d'une police sur cdnFonts impossible, non de fonction incorrect.
+     - Thème moderne, url de l'image corrigée
+     - Thème, import d'un thème sauvegardé, conversion des fontes Google.
 
+
+## Version 11.3.01
 ### Corrections :
     - Gestionnaire de fichier, chevauchement d'icônes en multi sélection et aides non traduites.
     - Fontes : utilisation d'une adresse d'import de fonte HTTPS
 
 
 ## Version 11.3.00
-
 ### Nouveautés :
     - Police de caractères :
         - Changement de fournisseur, CdnFonts remplace Google Font.
         - Les polices pourront désormais être téléchargées à partir du site et non du CD grâce à une nouvelle fonctionnalité du thème permet de gérer l'installation des fontes, soit à partir du CDN, soit à partir d'un fichier téléchargé.
     - Pages dans le menu accessoire. Ce menu à affiché à droite de la barre de menu, il est traditionnellement utilisé pour y placer les drapeaux de traduction, le bouton de connexion et de gestion du compte des membres. Il sera désormais possible d'y placer des pages sous la forme d'icônes de préférence.
     - Prise en charge du format webp pour les modules nécessitant des miniatures.
-
 ### Améliorations :
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
     - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
-
 ### Corrections :
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargée.
     - Bugs avec les aperçus des sélecteurs de fontes.
