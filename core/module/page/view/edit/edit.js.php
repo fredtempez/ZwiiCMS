@@ -239,10 +239,12 @@ $( document ).ready(function() {
 	 */
 		 if ($("#pageEditExtraPosition").val() == 1 ) {
 			var positionDOM = $("#pageEditPosition");
+			var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 			positionDOM.empty().append(
 				$("<option>").val(0).text("Ne pas afficher"),
 				$("<option>").val(1).text("Au début")
 			);
+			$("#pageEditPosition").val(positionInitial);
 		}
 
 });
@@ -525,12 +527,16 @@ $("#pageEditExtraPosition").on("change", function() {
 	if ($("#pageEditExtraPosition").val() == 1 ) {
 
 		var positionDOM = $("#pageEditPosition");
+		/*
 		positionDOM.empty().append(
 			$("<option>").val(0).text("Ne pas afficher"),
 			$("<option>").val(1).text("Au début")
 		);
+		$("#pageEditPosition").val(1);
+		*/
+		getPages(true);
 	} else {
-		getPages();
+		getPages(false);
 		//$("#pageEditParentPageId").trigger("change");
 	}
 });
@@ -546,17 +552,18 @@ $("#pageEditModuleConfig").on("click", function() {
  * Affiche les pages en fonction de la page parent dans le choix de la position
  */
 $("#pageEditParentPageId").on("change", function() {
-	getPages();
+	getPages(false);
 }).trigger("change");
 
 /**
  * Construit un select contenant la liste des pages du site.
  */
 
-function getPages() {
+function getPages(extra) {
 	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
 	var pages = <?php echo json_encode($this->getData(['page'])); ?>;
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
+	var extraPosition = $("#pageEditExtraPosition").val();
 	var positionDOM = $("#pageEditPosition");
 	positionDOM.empty().append(
 		$("<option>").val(0).text("Ne pas afficher"),
@@ -566,11 +573,12 @@ function getPages() {
 	var positionSelected = 0;
 	var positionPrevious = 1;
 
-	// Aucune page parent selectionnée
+	// Aucune page parent sélectionnée
 	if(parentSelected === "") {
 		// Liste des pages sans parents
 		for(var key in hierarchy) {
-			if(hierarchy.hasOwnProperty(key)) {
+			if(hierarchy.hasOwnProperty(key) &&
+				extra === false ) {
 				// Sélectionne la page avant s'il s'agit de la page courante
 				if(key === "<?php echo $this->getUrl(2); ?>") {
 					positionSelected = positionPrevious;
@@ -590,7 +598,7 @@ function getPages() {
 			positionSelected = 0;
 		}
 	}
-	// Un page parent est selectionnée
+	// Une page parent est sélectionnée
 	else {
 		// Liste des pages enfants de la page parent
 		for(var i = 0; i < hierarchy[parentSelected].length; i++) {
