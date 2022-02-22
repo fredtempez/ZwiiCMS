@@ -1,5 +1,11 @@
 # Changelog
 
+
+## Version 11.3.03
+### Modifications :
+    - Suppression de l'application du thème administration à la page d'accueil du thème.
+
+
 ## Version 11.3.02
 ### Corrections :
      - Importation d'une police sur cdnFonts impossible, nom de fonction incorrect.
