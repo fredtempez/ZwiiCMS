@@ -4,6 +4,7 @@
 ## Version 11.3.03
 ### Modifications :
     - Suppression de l'application du thème administration à la page d'accueil du thème.
+    - Position d'une page dans le menu accessoire, ordre des pages dans ce menu.
 
 
 ## Version 11.3.02
