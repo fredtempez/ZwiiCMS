@@ -6,6 +6,13 @@
     - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
     - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
 
+## Version 11.3.02
+### Corrections :
+     - Importation d'une police sur cdnFonts impossible, nom de fonction incorrect.
+     - Thème moderne, url de l'image corrigé
+     - Thème, import d'un thème sauvegardé, conversion des fontes Google.
+
+
 ## Version 11.3.01
 ### Corrections :
     - Gestionnaire de fichier, chevauchement d'icônes en multi sélection et aides non traduites.
@@ -13,18 +20,15 @@
 
 
 ## Version 11.3.00
-
 ### Nouveautés :
     - Police de caractères :
         - Changement de fournisseur, CdnFonts remplace Google Font.
         - Les polices pourront désormais être téléchargées à partir du site et non du CD grâce à une nouvelle fonctionnalité du thème permet de gérer l'installation des fontes, soit à partir du CDN, soit à partir d'un fichier téléchargé.
     - Pages dans le menu accessoire. Ce menu à affiché à droite de la barre de menu, il est traditionnellement utilisé pour y placer les drapeaux de traduction, le bouton de connexion et de gestion du compte des membres. Il sera désormais possible d'y placer des pages sous la forme d'icônes de préférence.
     - Prise en charge du format webp pour les modules nécessitant des miniatures.
-
 ### Améliorations :
     - Thème / Bannière : ergonomie de l'information sur l'image sélectionnée.
     - Identifications des éléments du menu, les pages parents prennent comme id CSS leur id, les pages enfants également et pour classe Id de la page parente.
-
 ### Corrections :
     - Thème / site : problème d'aperçu du body ; police du thème admin non chargée.
     - Bugs avec les aperçus des sélecteurs de fontes.
