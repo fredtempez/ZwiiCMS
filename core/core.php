@@ -463,6 +463,37 @@ class common {
 		}
 	}
 
+		/**
+	 * Sauvegarde des données
+	 * @param array $keys Clé(s) des données
+	 */
+	public function setData($keys = []) {
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (!empty(self::$inputNotices)
+			OR empty($keys)) {
+			return false;
+		}
+
+		// Empêcher la sauvegarde d'une donnée nulle.
+		if (gettype($keys[count($keys) -1]) === NULL) {
+			return false;
+		}
+
+		// Descripteur
+		$db = $this->dataFiles[$keys[0]];
+		if (count($keys) >= 1) {
+			/**
+			 * Lecture directe
+			*/
+			$db = $this->dataFiles[$keys[0]];
+			$result = $keys[0];
+			for ($i=1; $i < count($keys)-1 ; $i++) {
+				$result .= '.' . $keys[$i];
+			}
+			$db->set($result, $keys[count($keys)-1], true);
+		}
+	}
+
 	/**
 	 * Accède aux données
 	 * @param array $keys Clé(s) des données
@@ -475,33 +506,11 @@ class common {
 			 * Lecture directe
 			*/
 			$db = $this->dataFiles[$keys[0]];
-			switch(count($keys)) {
-				case 1:
-					$tempData = $db->get($keys[0]);
-					break;
-				case 2:
-					$tempData = $db->get($keys[0].'.'.$keys[1]);
-					break;
-				case 3:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2]);
-					break;
-				case 4:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3]);
-					break;
-				case 5:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4]);
-					break;
-				case 6:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5]);
-					break;
-				case 7:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6]);
-					break;
-				case 8:
-					$tempData = $db->get($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6].'.'.$keys[7]);
-					break;
+			$result = $keys[0];
+			for ($i=1; $i < count($keys) ; $i++) { 
+				$result .= '.' . $keys[$i];
 			}
-			return $tempData;
+			return $db->get($result);
 		}
 	}
 
@@ -549,52 +558,6 @@ class common {
 
 			return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 
-	}
-
-
-	/**
-	 * Sauvegarde des données
-	 * @param array $keys Clé(s) des données
-	 */
-	public function setData($keys = []) {
-		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-		if (!empty(self::$inputNotices)
-			OR empty($keys)) {
-			return false;
-		}
-
-		// Empêcher la sauvegarde d'une donnée nulle.
-		if (gettype($keys[count($keys) -1]) === NULL) {
-			return false;
-		}
-
-		// Descripteur
-		$db = $this->dataFiles[$keys[0]];
-		// Aiguillage
-		switch(count($keys)) {
-			case 2:
-				$db->set($keys[0],$keys[1], true);
-				break;
-			case 3:
-				$db->set($keys[0].'.'.$keys[1],$keys[2], true);
-				break;
-			case 4:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2],$keys[3], true);
-				break;
-			case 5:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3],$keys[4], true);
-				break;
-			case 6:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4],$keys[5], true);
-				break;
-			case 7:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5],$keys[6], true);
-				break;
-			case 8:
-				$db->set($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6],$keys[7], true );
-				break;
-		}
-		return true;
 	}
 
 	/**
