@@ -15,7 +15,7 @@
 /**
  * Confirmation de suppression
  */
-$("#pageEditDelete").on("click", function() {
+ $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
 	return core.confirm("Confirmez-vous la suppression de cette page ?", function() {
 		$(location).attr("href", _this.attr("href"));
@@ -240,10 +240,7 @@ $( document ).ready(function() {
 		 if ($("#pageEditExtraPosition").val() == 1 ) {
 			var positionDOM = $("#pageEditPosition");
 			var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
-			positionDOM.empty().append(
-				$("<option>").val(0).text("Ne pas afficher"),
-				$("<option>").val(1).text("Au début")
-			);
+			buildPagesList(true);
 			$("#pageEditPosition").val(positionInitial);
 		}
 
@@ -525,18 +522,9 @@ pageTypeMenuDOM.on("change", function() {
 
 $("#pageEditExtraPosition").on("change", function() {
 	if ($("#pageEditExtraPosition").val() == 1 ) {
-
-		var positionDOM = $("#pageEditPosition");
-		/*
-		positionDOM.empty().append(
-			$("<option>").val(0).text("Ne pas afficher"),
-			$("<option>").val(1).text("Au début")
-		);
-		$("#pageEditPosition").val(1);
-		*/
-		getPages(true);
+		buildPagesList(true);
 	} else {
-		getPages(false);
+		buildPagesList(false);
 		//$("#pageEditParentPageId").trigger("change");
 	}
 });
@@ -552,14 +540,14 @@ $("#pageEditModuleConfig").on("click", function() {
  * Affiche les pages en fonction de la page parent dans le choix de la position
  */
 $("#pageEditParentPageId").on("change", function() {
-	getPages(false);
+	buildPagesList(false);
 }).trigger("change");
 
 /**
  * Construit un select contenant la liste des pages du site.
  */
 
-function getPages(extra) {
+function buildPagesList(extraPosition) {
 	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
 	var pages = <?php echo json_encode($this->getData(['page'])); ?>;
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
@@ -577,8 +565,8 @@ function getPages(extra) {
 	if(parentSelected === "") {
 		// Liste des pages sans parents
 		for(var key in hierarchy) {
-			if(hierarchy.hasOwnProperty(key) &&
-				extra === false ) {
+			if(hierarchy.hasOwnProperty(key)
+			  && extraPosition === pages[key].extraPosition) {
 				// Sélectionne la page avant s'il s'agit de la page courante
 				if(key === "<?php echo $this->getUrl(2); ?>") {
 					positionSelected = positionPrevious;
