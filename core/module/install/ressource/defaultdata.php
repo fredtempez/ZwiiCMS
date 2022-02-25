@@ -236,10 +236,10 @@ class init extends common {
 			'fontTitle' => 'oswald-4',
 			'colorText' => 'rgba(33, 34, 35, 1)',
 			'colorTitle' => 'rgba(74, 105, 189, 1)',
-			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',
+			'backgroundColorButton' => 'rgba(63, 125, 250, 1)',
 			'backgroundColorButtonGrey' => 'rgba(170, 180, 188, 1)',
 			'backgroundColorButtonRed' => 'rgba(217, 95, 78, 1)',
-			'backgroundColorButtonGreen' => 'rgba(162, 223, 57, 1)',
+			'backgroundColorButtonGreen' => 'rgba(100, 207, 8, 1)',
 			'backgroundColorButtonHelp' => 'rgba(255, 153, 0, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
