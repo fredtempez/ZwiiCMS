@@ -254,11 +254,11 @@ class plugin extends common {
 			// Récupérer le module en ligne
 			$moduleName = $this->getUrl(2);
 			// Informations sur les module en ligne
-			$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+			$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
 			// Télécharger le fichier
-			$moduleData = helper::urlGetContents(self::BASEURL_STORE . self::FILE_DIR . 'source/' . $moduleFilePath);
+			$moduleData = helper::getUrlContents(self::BASEURL_STORE . self::FILE_DIR . 'source/' . $moduleFilePath);
 			// Extraire de l'arborescence
 			$d = explode('/',$moduleFilePath);
 			$moduleFile = $d[count($d)-1];
@@ -296,7 +296,7 @@ class plugin extends common {
 	 * Catalogue des modules sur le site ZwiiCMS.fr
 	 */
 	public function store() {
-		$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
@@ -352,7 +352,7 @@ class plugin extends common {
 	 * Détail d'un objet du catalogue
 	 */
 	public function item() {
-		$store = json_decode(helper::urlGetContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		self::$storeItem = $store [$this->getUrl(2)] ;
 		self::$storeItem ['fileDate'] = mb_detect_encoding(strftime('%d %B %Y',self::$storeItem ['fileDate']), 'UTF-8', true)
 										? strftime('%d %B %Y', self::$storeItem ['fileDate'])
