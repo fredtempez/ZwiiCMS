@@ -565,8 +565,7 @@ function buildPagesList(extraPosition) {
 	if(parentSelected === "") {
 		// Liste des pages sans parents
 		for(var key in hierarchy) {
-			if(hierarchy.hasOwnProperty(key)
-			  && extraPosition === pages[key].extraPosition) {
+			if(hierarchy.hasOwnProperty(key) ) {
 				// Sélectionne la page avant s'il s'agit de la page courante
 				if(key === "<?php echo $this->getUrl(2); ?>") {
 					positionSelected = positionPrevious;
@@ -574,11 +573,14 @@ function buildPagesList(extraPosition) {
 				// Sinon ajoute la page à la liste
 				else {
 					// Enregistre la position de cette page afin de la sélectionner si la prochaine page de la liste est la page courante
-					positionPrevious++;
-					// Ajout à la liste
-					positionDOM.append(
-						$("<option>").val(positionPrevious).html("Après \"" + (pages[key].title) + "\"")
-					);
+					if (extraPosition == pages[key].extraPosition ) {
+						positionPrevious++;
+						// Ajout à la liste
+						positionDOM.append(
+							$("<option>").val(positionPrevious).html("Après \"" + (pages[key].title) + "\"")
+						);
+					}
+
 				}
 			}
 		}
