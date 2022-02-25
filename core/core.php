@@ -180,7 +180,7 @@ class common {
 		'page' => '',
 		'theme' => '',
 		'user' => ''
-	
+
 	];
 
 	// Fontes
@@ -435,15 +435,16 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function deleteData($keys) {
-		// Descripteur
+		// Descripteur de la base
 		$db = $this->dataFiles[$keys[0]];
-		// Aiguillage
-		$result = false;
-		$result = $keys[0];
+		// Initialisation de la requête par le nom de la base
+		$query = $keys[0];
+		// Construire la requête
 		for ($i=1; $i <= count($keys) -1 ; $i++) {
-			$result .= '.' . $keys[$i];
+			$query .= '.' . $keys[$i];
 		}
-		$success = $db->delete($result, true);
+		// Effacer la donnée
+		$success = $db->delete($query, true);
 		return is_object($success);
 	}
 
@@ -463,17 +464,20 @@ class common {
 			return false;
 		}
 
-		// Descripteur
+		// Initialisation du retour en cas d'erreur de descripteur
 		$success = false;
-		$db = $this->dataFiles[$keys[0]];
+		// Construire la requête dans la base inf à 1 retourner toute la base
 		if (count($keys) >= 1) {
+			// Descripteur de la base
 			$db = $this->dataFiles[$keys[0]];
-			$result = $keys[0];
+			$query = $keys[0];
+			// Construire la requête
 			// Ne pas tenir compte du dernier élément qui une une value donc <
 			for ($i=1; $i < count($keys)-1 ; $i++) {
-				$result .= '.' . $keys[$i];
+				$query .= '.' . $keys[$i];
 			}
-			$success = is_object ($db->set($result, $keys[count($keys)-1], true));
+			// Appliquer la modification, le dernier élément étant la donnée à sauvegarder
+			$success = is_object ($db->set($query, $keys[count($keys)-1], true));
 		}
 		return $success;
 	}
@@ -485,16 +489,16 @@ class common {
 	 */
 	public function getData($keys = []) {
 
+		// Eviter une requete vide
 		if (count($keys) >= 1) {
-			/**
-			 * Lecture directe
-			*/
+			// descripteur de la base
 			$db = $this->dataFiles[$keys[0]];
-			$result = $keys[0];
-			for ($i=1; $i < count($keys) ; $i++) { 
-				$result .= '.' . $keys[$i];
+			$query = $keys[0];
+			// Construire la requête
+			for ($i=1; $i < count($keys) ; $i++) {
+				$query .= '.' . $keys[$i];
 			}
-			return $db->get($result);
+			return $db->get($query);
 		}
 	}
 
