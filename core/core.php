@@ -438,29 +438,13 @@ class common {
 		// Descripteur
 		$db = $this->dataFiles[$keys[0]];
 		// Aiguillage
-		switch(count($keys)) {
-			case 1:
-				$db->delete($keys[0], true);
-				break;
-			case 2:
-				$db->delete($keys[0].'.'.$keys[1],true);
-				break;
-			case 3:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2], true);
-				break;
-			case 4:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3], true);
-				break;
-			case 5:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4], true);
-				break;
-			case 6:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5], true);
-				break;
-			case 7:
-				$db->delete($keys[0].'.'.$keys[1].'.'.$keys[2].'.'.$keys[3].'.'.$keys[4].'.'.$keys[5].'.'.$keys[6], true);
-				break;
+		$result = false;
+		$result = $keys[0];
+		for ($i=1; $i <= count($keys) -1 ; $i++) {
+			echo $i;
+			$result .= '.' . $keys[$i];
 		}
+		$success = is_object ($db->delete($result, $keys[count($keys)], true));
 	}
 
 		/**
@@ -483,11 +467,9 @@ class common {
 		$success = false;
 		$db = $this->dataFiles[$keys[0]];
 		if (count($keys) >= 1) {
-			/**
-			 * Lecture directe
-			*/
 			$db = $this->dataFiles[$keys[0]];
 			$result = $keys[0];
+			// Ne pas tenir compte du dernier élément qui une une value donc <
 			for ($i=1; $i < count($keys)-1 ; $i++) {
 				$result .= '.' . $keys[$i];
 			}
