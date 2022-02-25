@@ -480,6 +480,7 @@ class common {
 		}
 
 		// Descripteur
+		$success = false;
 		$db = $this->dataFiles[$keys[0]];
 		if (count($keys) >= 1) {
 			/**
@@ -490,8 +491,9 @@ class common {
 			for ($i=1; $i < count($keys)-1 ; $i++) {
 				$result .= '.' . $keys[$i];
 			}
-			$db->set($result, $keys[count($keys)-1], true);
+			$success = is_object ($db->set($result, $keys[count($keys)-1], true));
 		}
+		return $success;
 	}
 
 	/**
