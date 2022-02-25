@@ -160,12 +160,8 @@ class common {
 	private $url = '';
 	// Données de site
 	private $user = [];
-	private $core = [];
-	private $config = [];
-	// Dossier localisé
-	private $page = [];
-	private $module = [];
-	private $locale = [];
+	// Drapeau de sauvegarde
+	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
