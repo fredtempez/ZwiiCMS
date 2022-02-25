@@ -441,10 +441,10 @@ class common {
 		$result = false;
 		$result = $keys[0];
 		for ($i=1; $i <= count($keys) -1 ; $i++) {
-			echo $i;
 			$result .= '.' . $keys[$i];
 		}
-		$success = is_object ($db->delete($result, $keys[count($keys)], true));
+		$success = $db->delete($result, true);
+		return is_object($success);
 	}
 
 		/**
