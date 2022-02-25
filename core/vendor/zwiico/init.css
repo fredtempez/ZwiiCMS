@@ -6,6 +6,10 @@
 [class*=" zwiico-"]:before {
 	margin: 0;
 }
+button [class^="zwiico-"], a.button [class^="zwiico-"],
+button [class*=" zwiico-"], a.button [class*=" zwiico-"] {
+	font-size: 1.3em !important;
+}
 .zwiico-margin-left:before {
 	margin-left: .4em;
 }
