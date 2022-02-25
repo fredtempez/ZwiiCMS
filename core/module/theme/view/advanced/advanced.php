@@ -13,7 +13,7 @@
 				'class' => 'buttonRed',
 				'value' => template::ico('cancel'),
 				'help' => 'Réinitialiser la feuille de style'
-				
+
 			]); ?>
 		</div>
 		<div class="col2">

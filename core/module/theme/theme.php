@@ -583,7 +583,7 @@ class theme extends common {
 					? 	template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
 							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
-							'value' => template::ico('cancel'),
+							'value' => template::ico('trash'),
 							'disabled' => !empty($fontUsed[$fontId])
 						])
 					: ''

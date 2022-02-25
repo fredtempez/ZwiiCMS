@@ -352,7 +352,7 @@ class user extends common {
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
 						'href' => helper::baseUrl() . 'user/delete/' . $userId. '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel'),
+						'value' => template::ico('trash'),
 						'help' => 'Supprimer ' . $userId
 					])
 				];

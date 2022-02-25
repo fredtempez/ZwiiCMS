@@ -352,7 +352,7 @@ class gallery extends common {
 					template::button('galleryConfigDelete' . $galleryId, [
 						'class' => 'galleryConfigDelete buttonRed',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $galleryId . '/' . $_SESSION['csrf'],
-						'value' => template::ico('cancel'),
+						'value' => template::ico('trash'),
 						'help' => 'Supprimer cette galerie'
 					])
 				];

@@ -146,7 +146,7 @@
 						<?php echo template::button('configBackupDelButton', [
 							'href' => helper::baseUrl() . 'config/delBackups',
 							'value' => 'Vider dossier sauvegardes auto',
-							'ico' => 'cancel',
+							'ico' => 'trash',
 							'class' => 'buttonRed'
 						]); ?>
 					</div>

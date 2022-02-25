@@ -259,7 +259,7 @@ class blog extends common {
 		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
 					'class' => 'blogCommentDeleteAll buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2).'/' . $_SESSION['csrf'] ,
-					'ico' => 'cancel',
+					'ico' => 'trash',
 					'value' => 'Tout effacer'
 		]);
 		// Ids des commentaires par ordre de création
@@ -293,7 +293,7 @@ class blog extends common {
 				template::button('blogCommentDelete' . $commentIds[$i], [
 					'class' => 'blogCommentDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'] ,
-					'value' => template::ico('cancel')
+					'value' => template::ico('trash')
 				])
 			];
 		}
@@ -473,7 +473,7 @@ class blog extends common {
 				template::button('blogConfigDelete' . $articleIds[$i], [
 					'class' => 'blogConfigDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('cancel'),
+					'value' => template::ico('trash'),
 					'help' => 'Effacer l\'article'
 				])
 			];

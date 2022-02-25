@@ -24,7 +24,7 @@ class plugin extends common {
 		'save' => self::GROUP_ADMIN, // Sauvegarde le module dans un fichier ZIP ou dans le gestionnaire
 		'dataExport' => self::GROUP_ADMIN, // Fonction muette d'exportation
 		'dataImport' => self::GROUP_ADMIN, // les données d'un module
-		'dataDelete' => self::GROUP_ADMIN, 
+		'dataDelete' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
 		'item' => self::GROUP_ADMIN, // détail d'un objet
 		'upload' => self::GROUP_ADMIN, // Téléverser catalogue
@@ -74,7 +74,7 @@ class plugin extends common {
 				$success = true;
 				$notification = 'Module '. $module .' désinstallé';
 				if(($infoModules[$this->getUrl(2)]['dataDirectory']) ) {
-					if ( 
+					if (
 							is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
 							&& !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 						){
@@ -86,7 +86,7 @@ class plugin extends common {
 				$success = false;
 				$notification = 'La suppression a échouée';
 			}
-	
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -394,7 +394,7 @@ class plugin extends common {
 					$pagesInfos [$keyi18n] [$key] ['pageId'] = $key ;
 					$pagesInfos [$keyi18n] [$key] ['title'] = $this->getData(['page', $key, 'title' ]) ;
 					$pagesInfos [$keyi18n] [$key] ['moduleId'] = $value;
-				}			
+				}
 			}
 		}
 
@@ -408,7 +408,7 @@ class plugin extends common {
 				if (array_search($key, $pagesModules[$keyi18n]) ) {
 					unset($orphans [$key]);
 				}
-				
+
 			}
 		}
 		$orphans = array_flip($orphans);
@@ -417,21 +417,21 @@ class plugin extends common {
 		if (isset($orphans)) {
 			foreach ($orphans as $key) {
 				// Construire le tableau de sortie
-				self::$modulesOrphan [] = [	
+				self::$modulesOrphan [] = [
 					$infoModules [$key] ['realName'],
 					$key,
 					$infoModules [$key] ['version'],
 					'',
-					$infoModules[$key] ['delete'] === true 
+					$infoModules[$key] ['delete'] === true
 						? template::button('moduleDelete' . $key, [
 								'class' => 'moduleDelete buttonRed',
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' .$key . '/' . $_SESSION['csrf'],
-								'value' => template::ico('cancel'),
+								'value' => template::ico('trash'),
 								'help' => 'Supprimer le module'
 							])
 						: '',
 
-				];		
+				];
 			}
 		}
 
@@ -440,7 +440,7 @@ class plugin extends common {
 		if (isset($installed)) {
 			foreach (array_flip($installed) as $key) {
 				// Construire le tableau de sortie
-				self::$modulesInstalled [] = [	
+				self::$modulesInstalled [] = [
 					$infoModules [$key] ['realName'],
 					$key,
 					$infoModules [$key] ['version'],
@@ -456,7 +456,7 @@ class plugin extends common {
 						'help' => 'Sauvegarder et télécharger le module'
 					])
 
-				];		
+				];
 			}
 		}
 
@@ -467,7 +467,7 @@ class plugin extends common {
 
 			$keyi18n = self::$i18n;
 			$valueI18n = $pagesInfos[self::$i18n];
-			foreach ($valueI18n as $keyPage=>$value) {			
+			foreach ($valueI18n as $keyPage=>$value) {
 				// Construire le tableau de sortie
 				self::$modulesData[] = [
 					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
@@ -479,14 +479,14 @@ class plugin extends common {
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 													'value' => template::ico('download'),
 													'help' => 'Exporter les données du module'
-					]),													
+					]),
 					template::button('dataDelete' . $keyPage, [
 													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-													'value' => template::ico('cancel'),
+													'value' => template::ico('trash'),
 													'class' => 'buttonRed dataDelete',
 													'help' => 'Détacher le module de la page',
 													])
-					
+
 				];
 			}
 
@@ -514,7 +514,7 @@ class plugin extends common {
 				'notification' => 'Action non autorisée'
 			]);
 		} else {
-			
+
 			// Créer un dossier temporaire
 			$tmpFolder = self::TEMP_DIR . uniqid();
 			if (!is_dir($tmpFolder)) {
@@ -539,12 +539,12 @@ class plugin extends common {
 						'state' => $success
 					]);
 					break;
-				case 'download':					
+				case 'download':
 				default:
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
 					header('Content-Length: ' . filesize($tmpFolder . '/' . $fileName));
-					ob_clean();   
+					ob_clean();
 					ob_end_flush();
 					readfile( $tmpFolder . '/' .$fileName);
 					exit();
@@ -584,7 +584,7 @@ class plugin extends common {
 			]);
 		}
 
-		
+
 	}
 
 
@@ -612,26 +612,26 @@ class plugin extends common {
 			if (!is_dir($tmpFolder)) {
 				mkdir($tmpFolder, 0755);
 			}
-		
+
 
 			// Copie des infos sur le module
 			$modulesData = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/module.json' ), true);
 			$moduleData = $modulesData['module'] [$this->getUrl(4)];
 			$success = file_put_contents ($tmpFolder . '/module.json', json_encode($moduleData));
 
-			// Le dossier du module s'il existe 
+			// Le dossier du module s'il existe
 			if (is_dir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4) ) ) {
 				// Copier le dossier des données
 				$success .= $this->copyDir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4), $tmpFolder);
 			}
-			
-			// Descripteur de l'archive 
+
+			// Descripteur de l'archive
 			$infoModule = helper::getModules();
 			$success .= file_put_contents ($tmpFolder . '/descripteur.json', json_encode(  [$this->getUrl(3) => $infoModule [$this->getUrl(3)]] ));
 
 
 			// création du zip
-			if ($success) 
+			if ($success)
 			{
 				$fileName =  $this->getUrl(2) . '-' .  $this->getUrl(3) . '-' . $this->getUrl(4) . '.zip';
 				$this->makeZip ($fileName, $tmpFolder);
@@ -640,7 +640,7 @@ class plugin extends common {
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
 					header('Content-Length: ' . filesize($fileName));
-					ob_clean();   
+					ob_clean();
 					ob_end_flush();
 					readfile( $fileName);
 					unlink($fileName);
@@ -654,7 +654,7 @@ class plugin extends common {
 					'notification' => 'Quelque chose s\'est mal passé',
 					'state' => false
 				]);
-			} 
+			}
 		}
 	}
 
@@ -676,10 +676,10 @@ class plugin extends common {
 			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
 				$zip->extractTo(self::TEMP_DIR  . $tempFolder );
 			}
-			
+
 			// Lire le descripteur
 			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/descripteur.json'), true);
-			
+
 			// Lecture des données du module
 			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true );
 			// Chargement des données du module importé
@@ -721,7 +721,7 @@ class plugin extends common {
 				'notification' => 'Okay'
 			]);
 		}
-					
+
 
 		/**
 		 * Liste des pages sans module

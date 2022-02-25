@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '4.0';
+	const VERSION = '4.1';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -231,7 +231,7 @@ class news extends common {
 				template::button('newsConfigDelete' . $newsIds[$i], [
 					'class' => 'newsConfigDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('cancel'),
+					'value' => template::ico('trash'),
 					'help' => 'Effacer cette nouvelle'
 				])
 			];

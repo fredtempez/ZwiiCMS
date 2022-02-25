@@ -70,7 +70,7 @@
 							'class' => 'buttonRed',
 							'href' => helper::baseUrl() . 'config/blacklistReset',
 							'value' => 'Réinitialiser la liste',
-							'ico' => 'cancel'
+							'ico' => 'trash'
 						]); ?>
 					</div>
 				</div>
@@ -112,7 +112,7 @@
 							'class' => 'buttonRed',
 							'href' => helper::baseUrl() . 'config/logReset',
 							'value' => 'Réinitialiser le journal',
-							'ico' => 'cancel'
+							'ico' => 'trash'
 						]); ?>
 					</div>
 				</div>

@@ -10,7 +10,7 @@
 	<?php echo template::button('formDataDeleteAll', [
 			'class' => 'formDataDeleteAll buttonRed',
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/deleteall' . '/' . $_SESSION['csrf'],
-			'value' => template::ico('cancel'),
+			'value' => template::ico('trash'),
 			'help' => 'Effacer toutes les données'
 		]); ?>
 	</div>

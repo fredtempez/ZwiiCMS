@@ -22,7 +22,7 @@
 			<?php echo template::button('pageEditDelete', [
 				'class' => 'buttonRed',
 				'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
-				'value' => template::ico('cancel'),
+				'value' => template::ico('trash'),
 				'help' => 'Effacer la page'
 			]); ?>
 		</div>
