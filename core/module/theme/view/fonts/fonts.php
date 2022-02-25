@@ -7,7 +7,16 @@
 			'value' => 'Retour'
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2">
+		<?php echo template::button('pageEditHelp', [
+			'href' => 'https://doc.zwiicms.fr/fontes',
+			'target' => '_blank',
+			'ico' => 'help',
+			'value' => 'Aide',
+			'class' => 'buttonHelp'
+		]); ?>
+	</div>
+	<div class="col2 offset6">
 		<?php echo template::button('themeFontAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
 			'ico' => 'plus',
