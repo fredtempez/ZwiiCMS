@@ -11,14 +11,14 @@
 		</div>
 		<div id="installUpdateError" class="colorRed displayNone">
 			<?php echo template::ico('cancel', ''); ?>
-			Une erreur est survenue lors de l'étape <span id="installUpdateErrorStep"></span>.
+			<strong>Une erreur est survenue lors de l'étape : <span id="installUpdateErrorStep"> </span>.</strong>
 		</div>
 		<div id="installUpdateSuccess" class="colorGreen displayNone">
 			<?php echo template::ico('check', ''); ?>
 			Mise à jour terminée avec succès.
 		</div>
 	</div>
-	<div class="col3 verticalAlignMiddle">
+	<div class="col3 verticalAlignTop">
 		<?php echo template::button('installUpdateEnd', [
 			'value' => 'Terminer',
 			'href' => helper::baseUrl() . 'config',
@@ -27,3 +27,8 @@
 		]); ?>
 	</div>
 </div>
+<div class="row">
+	<div class="col12">
+		<p><em><span class="colorRed" id="installUpdateErrorMessage"></span></em></p>
+	</div>
+</div

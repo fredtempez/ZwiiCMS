@@ -2,6 +2,8 @@
  * Exécution des différentes étapes de mise à jour
  */
 function step(i, data) {
+	// tableau des erreurs
+	var errors = ['préparation de la mise à jour', 'téléchargement et validation de l\'archive', 'installation', 'configuration'];
 	// Affiche le texte de progression
 	$(".installUpdateProgressText").hide();
 	$(".installUpdateProgressText[data-id=" + i + "]").show();
@@ -35,7 +37,7 @@ function step(i, data) {
 				// Échec
 				else {
 					// Affiche le message d'erreur
-					$("#installUpdateErrorStep").text(i);
+					$("#installUpdateErrorStep").text(errors[i]);
 					$("#installUpdateError").show();
 					// Déverrouille le bouton "Terminer"
 					$("#installUpdateEnd").removeClass("disabled");
@@ -43,22 +45,22 @@ function step(i, data) {
 					$("#installUpdateProgress").hide();
 					// Affiche le résultat dans la console
 					console.error(result);
-					alert(xhr);
+					$("#installUpdateErrorMessage").text(result.replace( /<[^p].*?>/g, '' ));
 				}
 			}, 2000);
 		},
 		// Échec de la requête
 		error: function(xhr) {
 			// Affiche le message d'erreur
-			$("#installUpdateErrorStep").text(0);
+			$("#installUpdateErrorStep").text(errors[1]);
 			$("#installUpdateError").show();
 			// Déverrouille le bouton "Terminer"
 			$("#installUpdateEnd").removeClass("disabled");
 			// Cache le texte de progression
 			$("#installUpdateProgress").hide();
 			// Affiche l'erreur dans la console
-			console.error(xhr);
-			alert(xhr);
+			console.error(xhr.responseText);
+			$("#installUpdateErrorMessage").text(xhr.responseText.replace( /<[^p].*?>/g, '' ));
 		}
 	});
 }
