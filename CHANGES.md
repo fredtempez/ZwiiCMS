@@ -7,6 +7,7 @@
     - Réorganisation massive des modules afin d'éviter de faire cohabiter des formulaires avec des champs d'information.
     - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
     - Amélioration du thème admin de base, modifications du jeu d'icônes.
+    - Mise à jour automatisée, affichage de l'erreur en cas d'échec.
 
 ## Version 11.3.03
 ### Modifications :
