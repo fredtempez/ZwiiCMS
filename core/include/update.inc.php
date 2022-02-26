@@ -841,8 +841,26 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	$this->setData(['core', 'dataVersion', 11300]);
 }
 
-// Version 12.0.00
-if ($this->getData(['core', 'dataVersion']) < 12000) {
+// Version 11.3.03
+if ($this->getData(['core', 'dataVersion']) < 11303) {
+
+	// Ajout de la variable shortTitle basée sur Title
+	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+		$pageList [] = $parentKey;
+		foreach ($parentValue as $childKey) {
+			$pageList [] = $childKey;
+		}
+	}
+	foreach ($pageList as $parentKey => $parent) {
+		$this->setData(['page', $parent, 'extraPosition', false]);
+	}
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11303]);
+}
+
+// Version 11.4.00
+if ($this->getData(['core', 'dataVersion']) < 11400) {
 
 	// Effacer le dossier
 	if (is_dir('core/module/addon') )  {
@@ -850,5 +868,5 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	}
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12000]);
+	$this->setData(['core', 'dataVersion', 11400]);
 }
