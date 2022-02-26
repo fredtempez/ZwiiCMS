@@ -43,6 +43,7 @@ function step(i, data) {
 					$("#installUpdateProgress").hide();
 					// Affiche le résultat dans la console
 					console.error(result);
+					alert(xhr);
 				}
 			}, 2000);
 		},
@@ -57,6 +58,7 @@ function step(i, data) {
 			$("#installUpdateProgress").hide();
 			// Affiche l'erreur dans la console
 			console.error(xhr);
+			alert(xhr);
 		}
 	});
 }

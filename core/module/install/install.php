@@ -54,11 +54,11 @@ class install extends common {
 				$userLastname = $this->getInput('installLastname', helper::FILTER_STRING_SHORT, true);
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
-					
+
 
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
-				
+
 				$success = $this->setData([
 					'user',
 					$userId,
@@ -73,7 +73,7 @@ class install extends common {
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
 					]
 				]);
-				
+
 				// Compte créé, envoi du mail et création des données du site
 				if ($success) { // Formulaire complété envoi du mail
 				// Envoie le mail
@@ -97,7 +97,7 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-				} 
+				}
 				// Images exemples livrées dans tous les cas
 				try {
 					// Décompression dans le dossier de fichier temporaires
@@ -120,7 +120,7 @@ class install extends common {
 				// Créer le dossier des fontes
 				if (!is_dir(self::DATA_DIR . 'fonts')) {
 					mkdir(self::DATA_DIR . 'fonts');
-				}				
+				}
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
 				// Créer sitemap
@@ -141,7 +141,7 @@ class install extends common {
 				}
 				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
 				unlink(self::FILE_DIR . 'source/theme/themes.json');
-				
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(false),
@@ -154,7 +154,7 @@ class install extends common {
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);
 			self::$themes = helper::arrayCollumn($dataThemes, 'name');
-			
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
@@ -198,10 +198,6 @@ class install extends common {
 				break;
 			// Téléchargement
 			case 2:
-				// Téléchargement depuis le serveur de Zwii
-				//$success = (file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::getUrlContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz')) !== false);
-				// URL sur le git
-				//$newVersion = helper::getUrlContents('https://zwiicms.fr/update/' . common::ZWII_UPDATE_CHANNEL . '/version');
 				file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 				$md5origin = (explode(' ',$md5origin));
