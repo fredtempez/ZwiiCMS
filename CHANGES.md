@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 11.4.00
+## Version 12.0.00
 ### Modifications :
     - 
     - Module addon refondu et renommé plugin.

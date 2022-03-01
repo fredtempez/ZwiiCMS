@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.4.00';
+	const ZWII_VERSION = '12.0.00';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1691,10 +1691,10 @@ class common {
 				 )
 			){
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-				$items .= '<a id="' . $parentPageId . '" href="' . $pageUrl . '">';
+				$items .= '<a href="' . $pageUrl . '">';
 			} else {
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false)  :  helper::baseUrl() . $parentPageId;
-				$items .= '<a class="' . $active . '" id="' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
+				$items .= '<a class="' . $active . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -1753,10 +1753,10 @@ class common {
 						)
 				){
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-					$items .= '<a id="' . $parentPageId . '" href="'. $pageUrl .'">';
+					$items .= '<a href="'. $pageUrl .'">';
 				} else {
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false)  :  helper::baseUrl() . $childKey;
-					$items .= '<a class="' . $active . ' ' .  $parentPageId . '" id="' . $childKey . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
+					$items .= '<a class="' . $active . ' ' .  $parentPageId . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
