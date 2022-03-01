@@ -1,4 +1,4 @@
-<div id="setupContainer">
+<div id="setupContainer" class="tabContent">
 	<div class="row">
 		<div class="col12">
 			<div class="block">

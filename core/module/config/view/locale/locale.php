@@ -1,4 +1,4 @@
-<div id="localeContainer">
+<div id="localeContainer" class="tabContent">
 	<div class="row">
 		<div class="col12">
 			<div class="block">
@@ -23,7 +23,7 @@
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
-				</h4>				
+				</h4>
 				<div class="row">
 					<div class="col12">
 						<?php echo template::text('localeTitle', [
@@ -214,7 +214,7 @@
 							'label' => 'Bouton de validation',
 							'value' => $this->getData(['locale', 'cookies', 'buttonValidLabel']),
 							'placeHolder' => 'J\'ai compris'
-						]); ?>	
+						]); ?>
 					</div>
 				</div>
 			</div>

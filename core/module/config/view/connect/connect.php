@@ -1,4 +1,4 @@
-<div id="connectContainer">
+<div id="connectContainer" class="tabContent">
 	<div class="row">
 		<div class="col12">
 			<div class="block">
