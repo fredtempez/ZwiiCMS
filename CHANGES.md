@@ -1,6 +1,10 @@
 # Changelog
 
 
+## Version 11.3.04
+### Corrections :
+    - Duplication d'id dans le menu.
+
 ## Version 11.3.03
 ### Modifications :
     - Suppression du thème administration dans le menu du thème.
