@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.3.04';
+	const ZWII_VERSION = '11.3.03';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -1714,7 +1714,7 @@ class common {
 			$active = ($parentPageId === $currentPageId OR in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
-			$items .= '<li id="parent-' . $parentPageId  .'">';
+			$items .= '<li id="' . $parentPageId  .'">';
 
 			if ( ( $this->getData(['page',$parentPageId,'disable']) === true
 				 AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
@@ -1725,10 +1725,10 @@ class common {
 				 )
 			){
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-				$items .= '<a id="child-' . $parentPageId . '" href="' . $pageUrl . '">';
+				$items .= '<a id="' . $parentPageId . '" href="' . $pageUrl . '">';
 			} else {
 				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false)  :  helper::baseUrl() . $parentPageId;
-				$items .= '<a class="' . $active . '" id="url-' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
+				$items .= '<a class="' . $active . '" id="' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 			}
 
 			switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
@@ -1777,7 +1777,7 @@ class common {
 				$active = ($childKey === $currentPageId) ? 'active ' : '';
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
-				$items .= '<li id=child-' . $childKey .'>';
+				$items .= '<li id=' . $childKey .'>';
 				if ( ( $this->getData(['page',$childKey,'disable']) === true
 						AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 						) OR (
@@ -1787,10 +1787,10 @@ class common {
 						)
 				){
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
-					$items .= '<a id="url-' . $parentPageId . '" href="'. $pageUrl .'">';
+					$items .= '<a id="' . $parentPageId . '" href="'. $pageUrl .'">';
 				} else {
 					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false)  :  helper::baseUrl() . $childKey;
-					$items .= '<a class="' . $active . ' ' .  $parentPageId . '" id="url-' . $childKey . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
+					$items .= '<a class="' . $active . ' ' .  $parentPageId . '" id="' . $childKey . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
