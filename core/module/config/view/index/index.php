@@ -20,37 +20,38 @@
 		<?php echo template::submit('Submit'); ?>
 	</div>
 </div>
-<div class="row">
-    <div class="col12">
-        <div class="row textAlignCenter">
-            <div class="col2">
-                <?php echo template::button('configSetupButton', [
-                    'value' => 'Configuration'
-                ]); ?>
-            </div>
-            <div class="col2">
-                <?php echo template::button('configLocaleButton', [
-                    'value' => 'Localisation'
-                ]); ?>
-            </div>
-            <div class="col2">
-                <?php echo template::button('configSocialButton', [
-                    'value' => 'Référencement'
-                ]); ?>
-            </div>
-            <div class="col2">
-                <?php echo template::button('configConnectButton', [
-                    'value' => 'Connexion'
-                ]); ?>
-            </div>
-            <div class="col2">
-                <?php echo template::button('configNetworkButton', [
-                    'value' => 'Réseau'
-                ]); ?>
-            </div>
-        </div>
-    </div>
+
+<div class="tab">
+    <?php echo template::button('configSetupButton', [
+        'value' => 'Configuration',
+        'class' => 'buttonTab'
+    ]); ?>
 </div>
+<div class="tab">
+    <?php echo template::button('configLocaleButton', [
+        'value' => 'Localisation',
+        'class' => 'buttonTab'
+    ]); ?>
+</div>
+<div class="tab">
+    <?php echo template::button('configSocialButton', [
+        'value' => 'Référencement',
+        'class' => 'buttonTab'
+    ]); ?>
+</div>
+<div class="tab">
+    <?php echo template::button('configConnectButton', [
+        'value' => 'Connexion',
+        'class' => 'buttonTab'
+    ]); ?>
+</div>
+<div class="tab">
+    <?php echo template::button('configNetworkButton', [
+        'value' => 'Réseau',
+        'class' => 'buttonTab'
+    ]); ?>
+</div>
+
 
 
 <?php include ('core/module/config/view/setup/setup.php') ?>

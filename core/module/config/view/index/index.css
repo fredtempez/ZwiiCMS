@@ -22,10 +22,30 @@
 }
 
 .activeButton {
-    filter : brightness(150%);    
+
+    filter : brightness(180%);
+}
+.buttonTab:hover {
+    filter : brightness(140%);
 }
 
 .buttonNotice {
-    border: 2px solid red !important; 
+    border: 2px solid red !important;
     border-radius: 2px;
+}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    display: inline-block;
+  }
+
+
+.buttonTab {
+float: left;
+transition: 0.3s;
+border-radius: 10px 10px 0px 0px;
+width: 160px;
+/*background-color: #ccc;*/
+margin: 0 1px;
 }
