@@ -26,26 +26,22 @@
         'value' => 'Configuration',
         'class' => 'buttonTab'
     ]); ?>
-</div>
-<div class="tab">
+
     <?php echo template::button('configLocaleButton', [
         'value' => 'Localisation',
         'class' => 'buttonTab'
     ]); ?>
-</div>
-<div class="tab">
+
     <?php echo template::button('configSocialButton', [
         'value' => 'Référencement',
         'class' => 'buttonTab'
     ]); ?>
-</div>
-<div class="tab">
+
     <?php echo template::button('configConnectButton', [
         'value' => 'Connexion',
         'class' => 'buttonTab'
     ]); ?>
-</div>
-<div class="tab">
+
     <?php echo template::button('configNetworkButton', [
         'value' => 'Réseau',
         'class' => 'buttonTab'

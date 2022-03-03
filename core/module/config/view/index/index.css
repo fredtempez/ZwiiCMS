@@ -21,13 +21,6 @@
     display: block;
 }
 
-.activeButton {
-
-    filter : brightness(180%);
-}
-.buttonTab:hover {
-    filter : brightness(140%);
-}
 
 .buttonNotice {
     border: 2px solid red !important;
@@ -36,16 +29,28 @@
 
 /* Style the tab */
 .tab {
+    margin-top: 1.8em;
     overflow: hidden;
-    display: inline-block;
-  }
+    text-align: center;
+}
 
+.tab ~ .tabContent {
+    margin-top: -10px;
+}
 
 .buttonTab {
-float: left;
-transition: 0.3s;
-border-radius: 10px 10px 0px 0px;
-width: 160px;
-/*background-color: #ccc;*/
-margin: 0 1px;
+    display: inline-block;
+    transition: 0.3s;
+    border-radius: 10px 10px 0px 0px;
+    width: 160px;
+    margin: 0 1px;
+}
+
+.buttonTab:hover {
+    filter : brightness(140%);
+}
+
+.activeButton {
+
+    filter : brightness(70%);
 }
