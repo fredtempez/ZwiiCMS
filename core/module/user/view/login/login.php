@@ -39,17 +39,15 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col3 offset6">
+		<div class="col2">
 			<?php echo template::button('userLoginBack', [
 				'href' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
-				'ico' => 'left',
-				'value' => 'Annuler'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col3">
+		<div class="col3 offset7">
 			<?php echo template::submit('userLoginSubmit', [
-				'value' => 'Connexion',
-				'ico' => 'lock'
+				'value' => 'Connexion'
 			]); ?>
 		</div>
 	</div>
