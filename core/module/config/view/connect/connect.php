@@ -25,13 +25,11 @@
 								'selected' => $this->getData(['config', 'connect', 'captchaType'])
 							]); ?>
 					</div>
-					<div class="col3">
+					<div class="col6">
 						<?php echo template::checkbox('connectAutoDisconnect', true, 'Déconnexion automatique', [
 							'checked' => $this->getData(['config', 'connect', 'autoDisconnect']),
 							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 						]); ?>
-					</div>
-					<div class="col3">
 						<?php echo template::checkbox('connectShowPassword', true, 'Dévoiler le mot de passe', [
 							'checked' => $this->getData(['config', 'connect', 'showPassword']),
 							'help' => 'Dans l\'écran de connexion, active une icône dont le survol affiche temporairement le mot de passe.'
