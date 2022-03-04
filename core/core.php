@@ -2118,6 +2118,7 @@ class common {
 	 * Affiche le style
 	 */
 	public function showStyle() {
+		// Import des styles liés à la page
 		if($this->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
 			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
@@ -2125,7 +2126,7 @@ class common {
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
-		// Import des fontes
+		// Import des fontes liées au thème
 		if (file_exists(self::DATA_DIR.'fonts/fonts.html')) {
 			include_once(self::DATA_DIR.'fonts/fonts.html');
 		}
