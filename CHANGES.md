@@ -5,7 +5,7 @@
 ### Correction :
     - Duplication d'id dans le menu.
 ### Amélioration :
-    - Chargement des fontes optimisé, le dossier data/fonts contient un nouveau fichier fonts.html contenant les url des fontes à télécharger. ce fichier est régénéré à chaque mise à jour du thème.
+    - Chargement des fontes optimisé, le dossier data/fonts contient un nouveau fichier fonts.html contenant les url des fontes à télécharger. Ce fichier est généré à chaque modification du thème.
 
 
 ## Version 11.3.03
