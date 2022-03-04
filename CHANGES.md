@@ -4,6 +4,7 @@
 ## Version 11.3.04
 ### Corrections :
     - Duplication d'id dans le menu.
+    https://sia.codes/posts/making-google-fonts-faster/
 
 ## Version 11.3.03
 ### Modifications :
