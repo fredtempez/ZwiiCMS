@@ -70,11 +70,11 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col12">
+			<div class="col6">
 				<div class="block">
 					<h4>Extensions</h4>
 					<div class="row">
-						<div class="col6">
+						<div class="col12">
 							<?php echo template::hidden('pageEditModuleRedirect'); ?>
 							<?php echo template::select('pageEditModuleId', $module::$moduleIds, [
 								'help' => 'En cas de changement de module, les données du module précédent seront supprimées.',
@@ -86,14 +86,16 @@
 								'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']),$module::$moduleIds)? $module::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 							]); ?>
 						</div>
-						<div class="col5">
+					</div>
+					<div class="row">
+						<div class="col10">
 							<?php echo template::select('configModulePosition', $module::$modulePosition,[
 								'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
 								'label' => 'Position du module',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
 							]); ?>
 						</div>
-						<div class="col1 verticalAlignBottom">
+						<div class="col2 verticalAlignBottom">
 							<?php echo template::button('pageEditModuleConfig', [
 								'disabled' => (bool) $this->getData(['page', $this->getUrl(2), 'moduleId']) === false,
 								'uniqueSubmission' => true,
@@ -103,20 +105,20 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col12">
+			<div class="col6">
 				<div class="block">
 					<h4>Contenu avancé</h4>
 					<div class="row">
-						<div class="col3 offset2">
+						<div class="col6 offset3">
 							<?php echo template::button('pageEditCssEditor', [
 								'href' => helper::baseUrl() . 'page/cssEditor/' . $this->getUrl(2),
 								'value' => 'Editeur CSS',
 								'help' => 'Feuille de style spécifique à la page.'
 							]); ?>
 						</div>
-						<div class="col3 offset2">
+					</div>
+					<div class="row">
+						<div class="col6 offset3">
 							<?php echo template::button('pageEditJsEditor', [
 								'href' => helper::baseUrl() . 'page/jsEditor/' . $this->getUrl(2),
 								'value' => 'Editeur JS',
