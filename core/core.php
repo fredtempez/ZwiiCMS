@@ -2085,12 +2085,17 @@ class common {
 	 * Affiche le style
 	 */
 	public function showStyle() {
+		// Import des styles liés à la page
 		if($this->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
 			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
 				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
+		}
+		// Import des fontes liées au thème
+		if (file_exists(self::DATA_DIR.'fonts/fonts.html')) {
+			include_once(self::DATA_DIR.'fonts/fonts.html');
 		}
 	}
 
@@ -2287,11 +2292,12 @@ class core extends common {
 			$localFonts = $this->getData(['fonts', 'files']);
 
 			/**
-			* Chargement des polices en ligne
+			* Chargement des polices en ligne dans un fichier séparé
 			*/
+			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if (!array_key_exists($fontId, $localFonts) ) {
-					$css .= '@import url("http://fonts.cdnfonts.com/css/' . $fontId . '");';
+					$fontFile .= '<link href="https://fonts.cdnfonts.com/css/' . $fontId .'" rel="stylesheet">';
 					// Supprimer l'élément des fontes chargées en ligne
 					unset($fonts[$fontId]);
 				}
@@ -2485,6 +2491,7 @@ class core extends common {
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
+			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
 			header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");

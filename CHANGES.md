@@ -9,6 +9,13 @@
     - Amélioration du thème admin de base, modifications du jeu d'icônes.
     - Mise à jour automatisée, affichage de l'erreur en cas d'échec.
 
+## Version 11.3.04
+### Correction :
+    - Duplication d'id dans le menu.
+### Amélioration :
+    - Chargement des fontes optimisé, le dossier data/fonts contient un nouveau fichier fonts.html contenant les url des fontes à télécharger. Ce fichier est généré à chaque modification du thème.
+
+
 ## Version 11.3.03
 ### Modifications :
     - Suppression du thème administration dans le menu du thème.
