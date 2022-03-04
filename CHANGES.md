@@ -2,9 +2,11 @@
 
 
 ## Version 11.3.04
-### Corrections :
+### Correction :
     - Duplication d'id dans le menu.
-    https://sia.codes/posts/making-google-fonts-faster/
+### Amélioration :
+    - Chargement des fontes optimisé, le dossier data/fonts contient un nouveau fichier fonts.html contenant les url des fontes à télécharger. ce fichier est régénéré à chaque mise à jour du thème.
+
 
 ## Version 11.3.03
 ### Modifications :
