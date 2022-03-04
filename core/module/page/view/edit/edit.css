@@ -16,3 +16,31 @@
 * admin.css
 */
 
+
+/* Style the tab */
+.tab {
+    margin-top: 1.8em;
+    overflow: hidden;
+    text-align: center;
+}
+
+.tab ~ .tabContent {
+    margin-top: -10px;
+}
+
+.buttonTab {
+    display: inline-block;
+    transition: 0.3s;
+    border-radius: 10px 10px 0px 0px;
+    width: 160px;
+    margin: 0 1px;
+}
+
+.buttonTab:hover {
+    filter : brightness(140%);
+}
+
+.activeButton {
+
+    filter : brightness(70%);
+}

@@ -20,7 +20,9 @@ class page extends common {
 		'add' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
-		'duplicate' => self::GROUP_MODERATOR
+		'duplicate' => self::GROUP_MODERATOR,
+		'jsEditor' => self::GROUP_MODERATOR,
+		'cssEditor' => self::GROUP_MODERATOR
 	];
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
@@ -535,4 +537,55 @@ class page extends common {
 			]);
 		}
 	}
+
+	/**
+	 * Editeur de feuille de style
+	 */
+	public function cssEditor() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Enregistre le CSS
+			$this->setData(['page', $this->getUrl(2), 'css', $this->getInput('pageCssEditorContent') ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Modifications enregistrées',
+				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2),
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Éditeur CSS',
+			'vendor' => [
+				'codemirror'
+			],
+			'view' => 'cssEditor'
+		]);
+	}
+
+		/**
+	 * Editeur de feuille de style
+	 */
+	public function jsEditor() {
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Enregistre le JS
+			$this->setData(['page', $this->getUrl(2), 'js', $this->getInput('pageJsEditorContent') ]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'Modifications enregistrées',
+				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2),
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Éditeur Js',
+			'vendor' => [
+				'codemirror'
+			],
+			'view' => 'jsEditor'
+		]);
+	}
+
 }

@@ -53,6 +53,13 @@ function protectModule() {
 $( document ).ready(function() {
 
 
+	/**
+	 * Position initiales des blocs
+	 */
+	 $("#pageEditSetupContainer").hide();
+	 $("#pageEditPositionContainer").hide();
+	 $("#pageEditLayoutContainer").hide();
+
 	/*
 	* Enleve le menu fixe en édition de page
 	*/
@@ -64,11 +71,12 @@ $( document ).ready(function() {
 	*/
 	if($("#pageEditModuleId").val() === "") {
 		$("#pageEditModuleConfig").addClass("disabled");
-		$("#pageEditContentContainer").hide();
+		/*$("#pageEditContentContainer").hide();*/
+
 	}
 	else {
 		$("#pageEditModuleConfig").removeClass("disabled");
-		$("#pageEditContentContainer").hide();
+		/*$("#pageEditContentContainer").hide();*/
 		$("#pageEditBlock option[value='bar']").remove();
 	}
 
@@ -237,16 +245,65 @@ $( document ).ready(function() {
 	/**
 	 * Liste des pages pour le menu accessoire
 	 */
-		 if ($("#pageEditExtraPosition").val() == 1 ) {
-			var positionDOM = $("#pageEditPosition");
-			var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
-			buildPagesList(true);
-			$("#pageEditPosition").val(positionInitial);
-		}
+		if ($("#pageEditExtraPosition").val() == 1 ) {
+		var positionDOM = $("#pageEditPosition");
+		var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
+		buildPagesList(true);
+		$("#pageEditPosition").val(positionInitial);
+	}
+
+
 
 });
 
 
+ 	// Gestion des événements
+	//--------------------------------------------------------------------------------------
+
+	/**
+     *  Sélection de la  page de configuration à afficher
+     */
+		 $("#pageEditContentButton").on("click", function () {
+			$("#pageEditContentContainer").show();
+			$("#pageEditSetupContainer").hide();
+			$("#pageEditPositionContainer").hide();
+			$("#pageEditLayoutContainer").hide();
+			$("#pageEditContentButton").addClass("activeButton");
+			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#PageEditPositionButton").removeClass("activeButton");
+			$("#pageEditLayoutButton").removeClass("activeButton");
+
+		});
+		$("#pageEditSetupButton").on("click", function () {
+			$("#pageEditContentContainer").hide();
+			$("#pageEditSetupContainer").show();
+			$("#pageEditPositionContainer").hide();
+			$("#pageEditLayoutContainer").hide();
+			$("#pageEditContentButton").removeClass("activeButton");
+			$("#pageEditSetupButton").addClass("activeButton");
+			$("#PageEditPositionButton").removeClass("activeButton");
+			$("#pageEditLayoutButton").removeClass("activeButton");
+		});
+		$("#PageEditPositionButton").on("click", function () {
+			$("#pageEditContentContainer").hide();
+			$("#pageEditSetupContainer").hide();
+			$("#pageEditPositionContainer").show();
+			$("#pageEditLayoutContainer").hide();
+			$("#pageEditContentButton").removeClass("activeButton");
+			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#PageEditPositionButton").addClass("activeButton");
+			$("#pageEditLayoutButton").removeClass("activeButton");
+		});
+		$("#pageEditLayoutButton").on("click", function () {
+			$("#pageEditContentContainer").hide();
+			$("#pageEditSetupContainer").hide();
+			$("#pageEditPositionContainer").hide();
+			$("#pageEditLayoutContainer").show();
+			$("#pageEditContentButton").removeClass("activeButton");
+			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#PageEditPositionButton").removeClass("activeButton");
+			$("#pageEditLayoutButton").addClass("activeButton");
+		});
 
 /**
  * Cache le l'option "ne pas afficher les pages enfants dans le menu horizontal" lorsque la page est désactivée
@@ -286,12 +343,10 @@ var pageEditModuleIdDOM = $("#pageEditModuleId");
 pageEditModuleIdDOM.on("change", function() {
 	if($(this).val() === "") {
 		$("#pageEditModuleConfig").addClass("disabled");
-		$("#pageEditContentContainer").slideDown();
 		$("#pageEditBlock").append('<option value="bar">Barre latérale</option>');
 	}
 	else {
 		$("#pageEditModuleConfig").removeClass("disabled");
-		$("#pageEditContentContainer").slideUp();
 		$("#pageEditBlock option[value='bar']").remove();
 	}
 });
