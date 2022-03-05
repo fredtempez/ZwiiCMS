@@ -1,6 +1,10 @@
 # Changelog
 
 
+## Version 11.4.00
+### Amélioration :
+    - prise en charge des fontes Web Safe : Georgia, Times, Arial, Trebuchet, Lucida, Tahoma, Verdana, Courier et Monaco.
+
 ## Version 11.3.04
 ### Correction :
     - Duplication d'id dans le menu.

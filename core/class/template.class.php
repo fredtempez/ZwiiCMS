@@ -649,7 +649,7 @@ class template {
                     '<option value="%s"%s style="font-family: %s;">%s</option>',
                     $value,
                     $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                    core::$fonts[$value],
+                    $text,
                     $text
                 ) : sprintf(
                     '<option value="%s"%s>%s</option>',

@@ -37,7 +37,6 @@ $("input, select").on("change",function() {
 	var titleFontText = $("#themeTitleFont :selected").text();
 	var textFont = $("#themeTextFont :selected").val();
 	var textFontText = $("#themeTextFont :selected").text();
-	console.log(textFontText);
 	var css = "@import url('https://fonts.cdnfonts.com/css/" + titleFont +  "');";
 	var css = "@import url('https://fonts.cdnfonts.com/css/" + textFont + "');";
 	// Couleurs des boutons
