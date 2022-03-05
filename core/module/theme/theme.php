@@ -574,11 +574,13 @@ class theme extends common {
 				}
 			}
 			self::$fontsList [] = [
-				$fontName,
+				'<span style="font-family:' . $fontName . '">' . $fontName . '</span>' ,
 				$fontId,
 				$fontUsed[$fontId],
 				//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
-				array_key_exists($fontId, $fonts['files']) ?  $fonts['files'][$fontId] : 'CDN Fonts',
+				array_key_exists($fontId, $fonts['files']) ?
+							 $fonts['files'][$fontId] : 
+							 (array_key_exists($fontId, self::$fontsWebSafe) ? 'WebSafe' :	'CDN Fonts'),
 				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
 					? 	template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
