@@ -714,7 +714,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Option de dévoilement du mdp
 	$this->setData(['config', 'connect', 'showPassword', true]);
-	
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }
@@ -722,7 +722,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 // Version 11.2.02
 if ($this->getData(['core', 'dataVersion']) < 11202) {
 
-	// Renommer les champs 
+	// Renommer les champs
 	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText']) ]);
 	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText']) ]);
 	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText']) ]);
@@ -784,7 +784,7 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
 	$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
 	$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
-	
+
 	unlink(self::DATA_DIR . 'admin.css');
 	unlink(self::DATA_DIR . 'theme.css');
 
@@ -807,4 +807,35 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11303]);
+}
+
+// Version 11.4.00
+if ($this->getData(['core', 'dataVersion']) < 11400) {
+
+	$fonts = [
+		'arimo' => 'Arimo',
+		'arvo' => 'Arvo',
+		'dancing-script' => 'Dancing Script',
+		'droid-sans-2' => 'Droid Sans',
+		'droid-serif-2' => 'Droid Serif',
+		'indie-flower' => 'Indie Flower',
+		'liberation-sans' => 'Liberation Sans',
+		'liberation-serif' => 'Liberation Serif',
+		'lobster-2' => 'Lobster',
+		'lora' => 'Lora',
+		'lato' => 'Lato',
+		'old-standard-tt-3' => 'Old Standard TT',
+		'open-sans' => 'Open Sans',
+		'oswald-4' => 'Oswald',
+		'pt-mono' => 'PT Mono',
+		'pt-serif' => 'PT Serif',
+		'rancho' => 'Rancho',
+		'roboto' => 'Roboto',
+		'ubuntu' => 'Ubuntu',
+		'vollkorn' => 'Vollkorn'
+	];
+	$this->setData(['fonts', 'imported', $fonts]);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11400]);
 }

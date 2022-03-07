@@ -87,7 +87,28 @@ class init extends common {
 		],
 		'fonts' => [
 			'files' => [],
-			'imported' => []
+			'imported'=> [
+				'arimo'=> 'Arimo',
+				'arvo'=> 'Arvo',
+				'dancing-script' => 'Dancing Script',
+				'droid-sans-2'=> 'Droid Sans',
+				'droid-serif-2'=> 'Droid Serif',
+				'indie-flower'=> 'Indie Flower',
+				'liberation-sans'=> 'Liberation Sans',
+				'liberation-serif'=> 'Liberation Serif',
+				'lobster-2'=> 'Lobster',
+				'lora'=> 'Lora',
+				'lato'=> 'Lato',
+				'old-standard-tt-3'=> 'Old Standard TT',
+				'open-sans'=> 'Open Sans',
+				'oswald-4'=> 'Oswald',
+				'pt-mono'=> 'PT Mono',
+				'pt-serif'=> 'PT Serif',
+				'rancho'=> 'Rancho',
+				'roboto'=> 'Roboto',
+				'ubuntu'=> 'Ubuntu',
+				'vollkorn'=> 'Vollkorn'
+			]
 		],
 		'page' => [
 			'accueil' => [

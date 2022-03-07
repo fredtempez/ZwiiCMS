@@ -185,40 +185,24 @@ class common {
 
 	// Fontes
 	public static $fonts = [
-		'arimo' => 'Arimo',
-		'arvo' => 'Arvo',
-		'dancing-script' => 'Dancing Script',
-		'droid-sans-2' => 'Droid Sans',
-		'droid-serif-2' => 'Droid Serif',
-		'indie-flower' => 'Indie Flower',
-		'liberation-sans' => 'Liberation Sans',
-		'liberation-serif' => 'Liberation Serif',
-		'lobster-2' => 'Lobster',
-		'lora' => 'Lora',
-		'lato' => 'Lato',
-		'old-standard-tt-3' => 'Old Standard TT',
-		'open-sans' => 'Open Sans',
-		'oswald-4' => 'Oswald',
-		'pt-mono' => 'PT Mono',
-		'pt-serif' => 'PT Serif',
-		'rancho' => 'Rancho',
-		'roboto' => 'Roboto',
-		'ubuntu' => 'Ubuntu',
-		'vollkorn' => 'Vollkorn'
 	];
 
 	public static $fontsWebSafe = [
-		'georgia' => 'Georgia, DejaVu Serif, Norasi, serif;',
-		'times' => 'Times, Times New Roman, Liberation Serif, FreeSerif, serif;',
-		'arial' => 'Arial, Helvetica, Liberation Sans, FreeSans, sans-serif;',
-		'trebuchet' => 'Trebuchet MS, Arial, Helvetica, sans-serif;',
-		'lucida' => 'Lucida Sans, Lucida Grande, Lucida Sans Unicode, Luxi Sans, sans-serif;',
-		'tahoma' => 'Tahoma, Geneva, Kalimati, sans-serif;',
-		'verdana' => 'Verdana, DejaVu Sans, Bitstream Vera Sans, Geneva, sans-serif;',
-		'impact' => 'Impact, Arial Black, sans-serif;',
-		'courrier' => 'Courier, Courier New, FreeMono, Liberation Mono, monospace;',
-		'monaco' => 'Monaco, DejaVu Sans Mono, Lucida Console, Andale Mono, monospace;'
+		'arial' 			=> 'Arial, Helvetica, sans-serif;',
+		'arial-black' 		=> 'Arial Black, Gadget, sans-serif;',
+		'courrier' 			=> 'Courier, Liberation Mono, monospace;',
+		'courrier-new' 		=> 'Courier New, Courier, monospace',
+		'garamond' 			=> 'Garamond, serif',
+		'georgia' 			=> 'Georgia, serif;',
+		'impact' 			=> 'Impact, Charcoal, sans-serif;',
+		'lucida' 			=> 'Lucida Sans Unicode, Lucida Grande, sans-serif',
+		'tahoma'			=> 'Tahoma, Geneva, sans-serif;',
+		'times-new-roman' 	=> 'Times New Roman, Liberation Serif, serif;',
+		'trebuchet' 		=> 'Trebuchet MS, Arial, Helvetica, sans-serif;',
+		'tahoma' 			=> 'Tahoma, Geneva, sans-serif;',
+		'verdana' 			=> 'Verdana, Geneva, sans-serif;',
 	];
+
 
 	/**
 	 * Constructeur commun
