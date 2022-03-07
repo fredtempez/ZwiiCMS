@@ -181,36 +181,24 @@ class common {
 
 	// Fontes
 	public static $fonts = [
-		'abril-fatface' => 'Abril Fatface',
-		'arimo' => 'Arimo',
-		'arvo' => 'Arvo',
-		'berkshire-swash' => 'Berkshire Swash',
-		'dancing-script' => 'Dancing Script',
-		'droid-sans-2' => 'Droid Sans',
-		'droid-serif-2' => 'Droid Serif',
-		'fira-sans' => 'Fira Sans',
-		'genera' => 'Genera',
-		'inconsolata-2' => 'Inconsolata',
-		'indie-flower' => 'Indie Flower',
-		'josefin-sans-std' => 'Josefin Sans',
-		'liberation-sans' => 'Liberation Sans',
-		'liberation-serif' => 'Liberation Serif',
-		'lobster-2' => 'Lobster',
-		'lora' => 'Lora',
-		'lato' => 'Lato',
-		'montserrat-ace' => 'Montserrat Ace',
-		'old-standard-tt-3' => 'Old Standard TT',
-		'open-sans' => 'Open Sans',
-		'oswald-4' => 'Oswald',
-		'pt-mono' => 'PT Mono',
-		'pt-serif' => 'PT Serif',
-		'raleway-5' => 'Raleway',
-		'rancho' => 'Rancho',
-		'roboto' => 'Roboto',
-		'signika' => 'Signika',
-		'ubuntu' => 'Ubuntu',
-		'vollkorn' => 'Vollkorn'
 	];
+
+	public static $fontsWebSafe = [
+		'arial' 			=> 'Arial, Helvetica, sans-serif;',
+		'arial-black' 		=> 'Arial Black, Gadget, sans-serif;',
+		'courrier' 			=> 'Courier, Liberation Mono, monospace;',
+		'courrier-new' 		=> 'Courier New, Courier, monospace',
+		'garamond' 			=> 'Garamond, serif',
+		'georgia' 			=> 'Georgia, serif;',
+		'impact' 			=> 'Impact, Charcoal, sans-serif;',
+		'lucida' 			=> 'Lucida Sans Unicode, Lucida Grande, sans-serif',
+		'tahoma'			=> 'Tahoma, Geneva, sans-serif;',
+		'times-new-roman' 	=> 'Times New Roman, Liberation Serif, serif;',
+		'trebuchet' 		=> 'Trebuchet MS, Arial, Helvetica, sans-serif;',
+		'tahoma' 			=> 'Tahoma, Geneva, sans-serif;',
+		'verdana' 			=> 'Verdana, Geneva, sans-serif;',
+	];
+
 
 	/**
 	 * Constructeur commun
@@ -2244,16 +2232,26 @@ class core extends common {
 			}
 		}
 
+		/**
+		 * Traitement des polices de caractères
+		 */
+
+		// Fusionne la liste des fontes avec les webSafe
+		foreach (self::$fontsWebSafe as $fontId => $fontValue) {
+			$fontName = explode (',', $fontValue);
+			self::$fonts [$fontId] = $fontName[0];
+		}
 		// Importe les polices personnalisées
 		$fontsImported = $this->getData(['fonts', 'imported']);
 		if (is_array($fontsImported) &&
 			!empty ($fontsImported)
 		) {
-			// Fusionner les fonts avec les fontes installées
+			// Fusionner avec les fontes installées
 			self::$fonts = array_merge(self::$fonts, $fontsImported);
-			// Tri Alphabétique
-			asort(self::$fonts);
+
 		}
+		// Tri Alphabétique
+		asort(self::$fonts);
 
 		// Crée le fichier de personnalisation avancée
 		if(file_exists(self::DATA_DIR.'custom.css') === false) {
@@ -2278,7 +2276,9 @@ class core extends common {
 
 			/**
 			 * Import des polices de caractères
-			 * A partir du CDN ou dans le dossier site/file/source/fonts
+			 * A partir du CDN
+			 * ou dans le dossier site/file/source/fonts
+			 * ou pas du tout si fonte webSafe
 			 */
 			$fonts = [ $this->getData(['theme', 'text',  'font']),
 						  $this->getData(['theme', 'title', 'font']),
@@ -2288,12 +2288,21 @@ class core extends common {
 			];
 			// Suppression des polices identiques
 			$fonts = array_unique($fonts);
-			// Lire le fichier des fontes locales
-			$localFonts = $this->getData(['fonts', 'files']);
+
+			/**
+			 * Fontes Web Safe, ne sont pas chargées.
+			 */
+			foreach ($fonts as $fontId) {
+				if (array_key_exists($fontId, self::$fontsWebSafe) ) {
+					unset($fonts[$fontId]);
+				}
+			}
 
 			/**
 			* Chargement des polices en ligne dans un fichier séparé
 			*/
+			// Lire le fichier des fontes locales
+			$localFonts = $this->getData(['fonts', 'files']);
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if (!array_key_exists($fontId, $localFonts) ) {
@@ -2516,6 +2525,16 @@ class core extends common {
 			];
 			// Suppression des polices identiques
 			$fonts = array_unique($fonts);
+
+			/**
+			 * Fontes Web Safe, ne sont pas chargées.
+			 */
+			foreach ($fonts as $fontId) {
+				if (array_key_exists($fontId, self::$fontsWebSafe) ) {
+					unset($fonts[$fontId]);
+				}
+			}
+
 			// Lire le fichier des fontes locales
 			$localFonts = $this->getData(['fonts', 'files']);
 

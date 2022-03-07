@@ -10,6 +10,13 @@
     - Amélioration du thème admin de base, modifications du jeu d'icônes.
     - Mise à jour automatisée, affichage de l'erreur en cas d'échec.
 
+## Version 11.4.00
+### Améliorations :
+    - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
+    - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
+## Correction :
+    - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
+
 ## Version 11.3.04
 ### Correction :
     - Duplication d'id dans le menu.

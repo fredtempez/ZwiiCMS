@@ -19,7 +19,7 @@
 		<div class="col2">
 			<?php echo template::submit('blogEditSubmit', [
 				'value' => 'Publier',
-				'uniqueSubmission' => true,
+				'uniqueSubmission' => true
 			]); ?>
 		</div>
 	</div>
@@ -38,7 +38,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::file('blogEditPicture', [
-							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
+							'help' => $this->getData(['theme', 'site', 'width']) !== '100%' ? 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.' : '',
 							'label' => 'Image de couverture',
 							'type' => 1,
 							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'picture'])

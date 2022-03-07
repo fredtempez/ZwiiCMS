@@ -870,3 +870,33 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11400]);
 }
+
+// Version 12.0.00
+if ($this->getData(['core', 'dataVersion']) < 12000) {
+	$fonts = [
+		'arimo' => 'Arimo',
+		'arvo' => 'Arvo',
+		'dancing-script' => 'Dancing Script',
+		'droid-sans-2' => 'Droid Sans',
+		'droid-serif-2' => 'Droid Serif',
+		'indie-flower' => 'Indie Flower',
+		'liberation-sans' => 'Liberation Sans',
+		'liberation-serif' => 'Liberation Serif',
+		'lobster-2' => 'Lobster',
+		'lora' => 'Lora',
+		'lato' => 'Lato',
+		'old-standard-tt-3' => 'Old Standard TT',
+		'open-sans' => 'Open Sans',
+		'oswald-4' => 'Oswald',
+		'pt-mono' => 'PT Mono',
+		'pt-serif' => 'PT Serif',
+		'rancho' => 'Rancho',
+		'roboto' => 'Roboto',
+		'ubuntu' => 'Ubuntu',
+		'vollkorn' => 'Vollkorn'
+	];
+	$this->setData(['fonts', 'imported', $fonts]);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12000]);
+}
