@@ -240,6 +240,12 @@ $( document ).ready(function() {
 		 if ($("#pageEditExtraPosition").val() == 1 ) {
 			var positionDOM = $("#pageEditPosition");
 			var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
+			console.log(positionInitial);
+			// La position précédente était dans le menu standard
+			if (positionInitial >= 2)
+			{
+				positionInitial = 0;
+			}
 			positionDOM.empty().append(
 				$("<option>").val(0).text("Ne pas afficher"),
 				$("<option>").val(1).text("Au début")

@@ -389,8 +389,9 @@ class page extends common {
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
 					foreach($hierarchy as $hierarchyPageId) {
-						// Ignore la page en cours de modification
-						if($hierarchyPageId === $this->getUrl(2)) {
+						// Ignore la page en cours de modification et les pages dans le menu extra
+						if($hierarchyPageId === $this->getUrl(2) ||
+						   $this->getData(['page', $hierarchyPageId, 'extraPosition']) === false ) {
 							continue;
 						}
 						// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
