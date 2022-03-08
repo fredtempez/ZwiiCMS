@@ -2332,9 +2332,8 @@ class core extends common {
 			}
 
 			/**
-			* Chargement des polices en ligne dans un fichier séparé
+			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
 			*/
-			// Lire le fichier des fontes locales
 			$localFonts = $this->getData(['fonts', 'files']);
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
@@ -2348,7 +2347,6 @@ class core extends common {
 			/**
 			 * Fontes installées localement
 			 */
-			// Validité du format
 			if (  !empty($localFonts)
 			) {
 				foreach ($localFonts as $fontId => $fontName) {

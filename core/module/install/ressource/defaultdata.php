@@ -153,7 +153,7 @@ class init extends common {
 			],
 			'footer' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
-				'font' => 'open-sans',
+				'font' => 'georgia',
 				'fontSize' => '.8em',
 				'fontWeight' => 'normal',
 				'height' => '5px',
@@ -180,7 +180,7 @@ class init extends common {
 			],
 			'header' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
-				'font' => 'oswald-4',
+				'font' => 'arial',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
 				'height' => '150px',
@@ -203,7 +203,7 @@ class init extends common {
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
-				'font' => 'open-sans',
+				'font' => 'georgia',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
 				'height' => '15px 10px',
@@ -234,13 +234,13 @@ class init extends common {
 				'borderColor' => 'rgba(236, 239, 241, 1)'
 			],
 			'text' => [
-				'font' => 'open-sans',
+				'font' => 'georgia',
 				'fontSize' => '13px',
 				'textColor' => 'rgba(33, 34, 35, 1)',
 				'linkColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
-				'font' => 'oswald-4',
+				'font' => 'arial',
 				'fontWeight' => 'normal',
 				'textColor' => 'rgba(74, 105, 189, 1)',
 				'textTransform' => 'none'
@@ -252,9 +252,9 @@ class init extends common {
 		],
 		'admin' => [
 			'backgroundColor' => 'rgba(255, 255, 255, 1)',
-			'fontText' => 'open-sans',
+			'fontText' => 'georgia',
 			'fontSize' => '13px',
-			'fontTitle' => 'oswald-4',
+			'fontTitle' => 'arial',
 			'colorText' => 'rgba(33, 34, 35, 1)',
 			'colorTitle' => 'rgba(74, 105, 189, 1)',
 			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',
