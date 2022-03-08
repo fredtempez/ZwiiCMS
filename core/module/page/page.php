@@ -155,7 +155,9 @@ class page extends common {
 				'displayMenu' => '0',
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'js' => '',
+				'css' => ''
 			]
 		]);
 		// Creation du contenu de la page
@@ -478,7 +480,9 @@ class page extends common {
 							'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
-							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN)
+							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN),
+							'css' => $this->getData(['page', $pageId, 'css']),
+							'js' => $this->getData(['page', $pageId, 'js'])
 						]
 					]);
 

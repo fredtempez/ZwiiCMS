@@ -2772,7 +2772,7 @@ class core extends common {
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
 									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
-									: '',
+									: ''
 			]);
 		}
 		// Importe le module
@@ -2799,7 +2799,7 @@ class core extends common {
 					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
 										// ? file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
-										: '',
+										: ''
 				]);
 				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
 				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
@@ -2888,6 +2888,13 @@ class core extends common {
 								'content' => $output['content']
 							]);
 						}
+						// Incorporer le style perso stocké avec la page
+						if ( !empty($this->getData(['page', $this->getUrl(0), 'css'])) ) {
+							$this->addOutput([
+								'style' => $this->output['style'] . $this->getData(['page', $this->getUrl(0), 'css'])
+							]);
+
+						}
 						// Contenu par vue
 						elseif($output['view']) {
 							// Chemin en fonction d'un module du coeur ou d'un module
@@ -2904,6 +2911,7 @@ class core extends common {
 									'style' => $this->output['style'] . file_get_contents($output['style'])
 								]);
 							}
+
 							// JS
 							$scriptPath = $modulePath . 'module/' . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
 							if(file_exists($scriptPath)) {
