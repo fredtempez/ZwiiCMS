@@ -240,16 +240,7 @@ $( document ).ready(function() {
 		 if ($("#pageEditExtraPosition").val() == 1 ) {
 			var positionDOM = $("#pageEditPosition");
 			var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
-			console.log(positionInitial);
-			// La position précédente était dans le menu standard
-			if (positionInitial >= 2)
-			{
-				positionInitial = 0;
-			}
-			positionDOM.empty().append(
-				$("<option>").val(0).text("Ne pas afficher"),
-				$("<option>").val(1).text("Au début")
-			);
+			buildPagesList(true);
 			$("#pageEditPosition").val(positionInitial);
 		}
 
@@ -531,18 +522,9 @@ pageTypeMenuDOM.on("change", function() {
 
 $("#pageEditExtraPosition").on("change", function() {
 	if ($("#pageEditExtraPosition").val() == 1 ) {
-
-		var positionDOM = $("#pageEditPosition");
-		/*
-		positionDOM.empty().append(
-			$("<option>").val(0).text("Ne pas afficher"),
-			$("<option>").val(1).text("Au début")
-		);
-		$("#pageEditPosition").val(1);
-		*/
-		getPages(true);
+		buildPagesList(true);
 	} else {
-		getPages(false);
+		buildPagesList(false);
 		//$("#pageEditParentPageId").trigger("change");
 	}
 });
@@ -558,14 +540,14 @@ $("#pageEditModuleConfig").on("click", function() {
  * Affiche les pages en fonction de la page parent dans le choix de la position
  */
 $("#pageEditParentPageId").on("change", function() {
-	getPages(false);
+	buildPagesList(false);
 }).trigger("change");
 
 /**
  * Construit un select contenant la liste des pages du site.
  */
 
-function getPages(extra) {
+function buildPagesList(extraPosition) {
 	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
 	var pages = <?php echo json_encode($this->getData(['page'])); ?>;
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
@@ -583,8 +565,7 @@ function getPages(extra) {
 	if(parentSelected === "") {
 		// Liste des pages sans parents
 		for(var key in hierarchy) {
-			if(hierarchy.hasOwnProperty(key) &&
-				extra === false ) {
+			if(hierarchy.hasOwnProperty(key) ) {
 				// Sélectionne la page avant s'il s'agit de la page courante
 				if(key === "<?php echo $this->getUrl(2); ?>") {
 					positionSelected = positionPrevious;
@@ -592,11 +573,14 @@ function getPages(extra) {
 				// Sinon ajoute la page à la liste
 				else {
 					// Enregistre la position de cette page afin de la sélectionner si la prochaine page de la liste est la page courante
-					positionPrevious++;
-					// Ajout à la liste
-					positionDOM.append(
-						$("<option>").val(positionPrevious).html("Après \"" + (pages[key].title) + "\"")
-					);
+					if (extraPosition == pages[key].extraPosition ) {
+						positionPrevious++;
+						// Ajout à la liste
+						positionDOM.append(
+							$("<option>").val(positionPrevious).html("Après \"" + (pages[key].title) + "\"")
+						);
+					}
+
 				}
 			}
 		}
