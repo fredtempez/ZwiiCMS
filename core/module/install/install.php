@@ -153,7 +153,7 @@ class install extends common {
 			// Récupération de la liste des thèmes
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);
-			self::$themes = helper::arrayCollumn($dataThemes, 'name');
+			self::$themes = helper::arrayColumn($dataThemes, 'name');
 
 			// Valeurs en sortie
 			$this->addOutput([

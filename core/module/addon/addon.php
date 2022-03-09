@@ -293,7 +293,7 @@ class addon extends common {
 			// Modules installés
 			$infoModules = helper::getModules();
 			// Clés moduleIds dans les pages
-			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			$inPages = helper::arrayColumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 			foreach( $inPages as $key=>$value){
 				$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
 			}
@@ -362,7 +362,7 @@ class addon extends common {
 		$infoModules = helper::getModules();
 
 		// Clés moduleIds dans les pages
-		$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+		$inPages = helper::arrayColumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 		foreach( $inPages as $key=>$value){
 			$inPagesTitle[ $this->getData(['page', $key, 'title' ]) ] = $value;
 		}
@@ -428,7 +428,7 @@ class addon extends common {
 				mkdir($tmpFolder, 0755);
 			}
 			// Clés moduleIds dans les pages
-			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			$inPages = helper::arrayColumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 			// Parcourir les pages utilisant le module
 			foreach (array_keys($inPages,$this->getUrl(2)) as $pageId) {
 				// Export des pages hébergeant le module
