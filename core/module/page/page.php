@@ -388,14 +388,15 @@ class page extends common {
 					$lastPosition = 1;
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
+					$extraPosition = $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN);
 					foreach($hierarchy as $hierarchyPageId) {
 
-						// Ignore la page en cours de modification 
-						if($hierarchyPageId === $this->getUrl(2) ) {
-							continue;
-						}
-						// Ne traite que les pages du menu standard
-						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === false) {
+						// Ne traite que les pages du menu sélectionné
+						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition ) {
+							// Ignore la page en cours de modification 
+							if($hierarchyPageId === $this->getUrl(2) ) {
+								continue;
+							}
 							// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
 							if($lastPosition === $position) {
 								$lastPosition++;
@@ -481,7 +482,7 @@ class page extends common {
 							'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
-							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN)
+							'extraPosition' => $extraPosition
 						]
 					]);
 
