@@ -549,8 +549,9 @@ class theme extends common {
 	 */
 	public function fonts() {
 
-		// Polices trouvées dans la configuration
-		$fonts = $this->getData(['fonts']);
+		$this->listFonts();
+		//echo "<pre>";
+
 
 		// Polices liées au thème
 		$used = [
@@ -994,7 +995,8 @@ class theme extends common {
 	}
 
 	/**
-	 * Subsitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
+	 * Substitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
+	 * Cette fonction est utilisée par l'import.
 	 * @param string $file, nom du fichier json à convertir
 	 * @return int nombre de substitution effectuées
 	 */
@@ -1044,6 +1046,18 @@ class theme extends common {
 		}
 		// Retourner le nombre d'occurrences
 		return ($count);
+	}
+
+	// Peule la variable self:$fonts avec les fontes disponibles.
+	public function listFonts() {
+		// Récupère la liste des fontes installées
+		$f = $this->getFonts();
+		// Construit un tableau avec leur ID et leur famille
+		foreach(['websafe', 'imported', 'files'] as $type) {
+			foreach ($f[$type] as $fontId => $fontValue ) {
+				self::$fonts [$fontId] = $fontValue['name'];
+			}
+		}
 	}
 
 }
