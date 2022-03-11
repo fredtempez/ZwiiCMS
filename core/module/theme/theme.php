@@ -232,6 +232,8 @@ class theme extends common {
 	public static $pagesList = [];
 	// Variable pour construire la liste des fontes installées
 	public static $fontsList = [];
+	// Variable pour détailler les fontes installées
+	public static $fontsDetail = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -554,14 +556,6 @@ class theme extends common {
 	 */
 	public function fonts() {
 
-		// Peuple la variable de module fontsList de la liste des fonts disponibles clé : fontid - valeur nom de la fonte
-		$this->enumFonts();
-		//echo "<pre>";
-
-
-
-
-
 		// Polices liées au thème
 		$used = [
 			'Bannière' 		=> $this->getData (['theme', 'header', 'font']),
@@ -573,36 +567,42 @@ class theme extends common {
 			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
 		];
 
+		// Récupérer le détail des fontes installées
+		$f = $this->getFonts();
+
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
-		foreach ($fonts as $fontId => $fontName) {
+		foreach ($f as $type => $typeValue) {
 
-			// Fontes utilisées par les thèmes
-			$fontUsed[$fontId] = '';
-			foreach ($used as $key => $value) {
-				if ( $value === $fontId) {
-					$fontUsed[$fontId] .=  $key . '<br/>';
+			foreach ($typeValue as $fontId => $fontValue) {
+				// Fontes utilisées par les thèmes
+				$fontUsed[$fontId] = '';
+				foreach ($used as $key => $value) {
+					if ( $value === $fontId) {
+						$fontUsed[$fontId] .=  $key . '<br/>';
+					}
 				}
+				self::$fontsDetail [] = [
+					$fontId,
+					'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
+					$f[$type][$fontId]['font-family'],
+					$fontUsed[$fontId],
+					//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
+					/*array_key_exists($fontId, $fonts['files']) ?
+								$fonts['files'][$fontId] :
+								(array_key_exists($fontId, self::$fontsWebSafe) ? 'WebSafe' :	'CDN Fonts'),
+								*/
+					$type,
+					$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
+												'class' => 'themeFontDelete buttonRed',
+												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
+												'value' => template::ico('cancel'),
+												'disabled' => !empty($fontUsed[$fontId])
+											])
+										: ''
+				];
 			}
-
-
-			self::$fontsList [] = [
-				'<span style="font-family:' . $fontName . '">' . $fontName . '</span>' ,
-				$fontId,
-				$fontUsed[$fontId],
-				//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
-				array_key_exists($fontId, $fonts['files']) ?
-							 $fonts['files'][$fontId] : 
-							 (array_key_exists($fontId, self::$fontsWebSafe) ? 'WebSafe' :	'CDN Fonts'),
-				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
-					? 	template::button('themeFontDelete' . $fontId, [
-							'class' => 'themeFontDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
-							'value' => template::ico('cancel'),
-							'disabled' => !empty($fontUsed[$fontId])
-						])
-					: ''
-			];
 		}
+		sort(self::$fontsDetail);
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Gestion des fontes',

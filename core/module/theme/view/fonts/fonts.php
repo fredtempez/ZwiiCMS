@@ -24,8 +24,8 @@
 		]); ?>
 	</div>
 </div>
-<?php if($module::$fontsList): ?>
-  <?php echo template::table([3, 3, 3, 3, 1], $module::$fontsList, ['Family Name', 'Font Id', 'Affectation', 'Ressource', 'Effacer']); ?>
+<?php if($module::$fontsDetail): ?>
+  <?php echo template::table([2, 2, 3, 3, 1, 1], $module::$fontsDetail, ['FontId', 'Nom', 'Famille', 'Affectation', 'Origine', '']); ?>
 <?php else: ?>
   <?php echo template::speech('Aucune fonte !'); ?>
 <?php endif; ?>
