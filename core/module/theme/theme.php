@@ -616,56 +616,44 @@ class theme extends common {
 	public function fontAdd() {
 		// Soumission du formulaire
 		if ($this->isPost()) {
-
+			// Type d'import en ligne ou local
+			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'url';
+			$ressource = $type === 'imported' ? $this->getInput('fontAddFile', helper::FILTER__SHORT_STRING) : $this->getInput('fontAddUrl',  helper::FILTER__SHORT_STRING);
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
-			$filePath = $this->getInput('fontAddFile', null);
-			$e = explode ('/', $filePath);
-			$file = $e[count($e) - 1 ];
+			$fontFamilyName = $this->getInput('fontAddFontFamilyName', null, true);
 
-			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
-			$data = helper::getUrlContents('https://www.cdnfonts.com/' . $fontId . '.font');
+			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
+			/*
+			if ($type === 'url') {
+				$data = helper::getUrlContents($ressource);
+			}*/
 
-			if ( $filePath === ''
-				 && $fontName !== ''
-				 && strpos($data, $fontName) === false
-			) {
+			// Charger les données des fontes
+			$files = $this->getData(['fonts', 'files']);
+			$imported = $this->getData(['fonts', 'imported']);
 
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => 'Erreur de nom de fonte ou d\'identifiant',
-					'redirect' => helper::baseUrl() . 'theme/fontAdd',
-					'state' => false
-				]);
+			// Concaténation dans les tableaux existants
+			$imported = array_merge([$fontId => $fontName], $imported);
+			$files = array_merge([$fontId => $file], $files);
 
-			} else {
-
-				// Charger les données des fontes
-				$files = $this->getData(['fonts', 'files']);
-				$imported = $this->getData(['fonts', 'imported']);
-
-				// Concaténation dans les tableaux existants
-				$imported = array_merge([$fontId => $fontName], $imported);
-				$files = array_merge([$fontId => $file], $files);
-
-				// Copier la fonte si le nom du fichier est fourni
-				if (!empty($filePath)) {
-					copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
-				}
-
-				// Mettre à jour le fichier des fontes
-				$this->setData(['fonts', 'imported', $imported ]);
-				if (!empty($filePath) ) {
-					$this->setData(['fonts', 'files', $files ]);
-				}
-
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => 'La fonte a été importée',
-					'redirect' => helper::baseUrl() . 'theme/fonts',
-					'state' => true
-				]);
+			// Copier la fonte si le nom du fichier est fourni
+			if (!empty($filePath)) {
+				copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
 			}
+
+			// Mettre à jour le fichier des fontes
+			$this->setData(['fonts', 'imported', $imported ]);
+			if (!empty($filePath) ) {
+				$this->setData(['fonts', 'files', $files ]);
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'La fonte a été importée',
+				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'state' => true
+			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([

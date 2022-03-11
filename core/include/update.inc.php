@@ -813,26 +813,106 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 if ($this->getData(['core', 'dataVersion']) < 11400) {
 
 	$fonts = [
-		'arimo'=> 'Arimo,  sans-serif',
-		'arvo'=> 'Arvo, sans-serif',
-		'dancing-script' => '"Dancing Script", sans-serif',
-		'droid-sans-2'=> '"Droid Sans", sans-serif',
-		'droid-serif-2'=> '"Droid Serif", serif',
-		'indie-flower'=> '"Indie Flower", sans-serif',
-		'liberation-sans'=> '"Liberation Sans", sans-serif',
-		'liberation-serif'=> '"Liberation Serif", serif',
-		'lobster-2'=> 'Lobster, sans-serif',
-		'lora'=> 'Lora, serif',
-		'lato'=> 'Lato, sans-serif',
-		'old-standard-tt-3'=> '"Old Standard TT", serif',
-		'open-sans'=> '"Open Sans", sans-serif',
-		'oswald-4'=> 'Oswald, sans-serif',
-		'pt-mono'=> '"PT Mono", monospace',
-		'pt-serif'=> '"PT Serif", serif',
-		'rancho'=> 'Rancho, sans-serif',
-		'roboto'=> 'Roboto, sans-serif',
-		'ubuntu'=> 'Ubuntu, sans-serif',
-		'vollkorn'=> 'Vollkorn, serif'
+			'arimo'=> [
+				'name' => 'Arimo',
+				'font-family' => 'Arimo,  sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/arimo'
+			],
+			'arvo'=> [
+				'name' => 'Arvo',
+				'font-family' => 'Arvo,  sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/arvo'
+			],
+			'dancing-script' => [
+				'name' => 'Dancing Script',
+				'font-family' => '"Dancing Script", sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/dancing-script'
+			],
+			'droid-sans-2'=> [
+				'name' => 'Droid Sans',
+				'font-family' =>  '"Droid Sans", sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
+			],
+			'droid-serif-2'=> [
+				'name' => 'Droid Serif',
+				'font-family' =>  '"Droid Serif", serif',
+				'url' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
+			],
+			'indie-flower'=> [
+				'name' => 'Indie Flower',
+				'font-family' => '"Indie Flower", sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/indie-flower'
+			],
+			'liberation-sans'=> [
+				'name' => 'Liberation Sans',
+				'font-family' => '"Liberation Sans", sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/liberation-sans'
+			],
+			'liberation-serif'=> [
+				'name' => 'Liberation Serif',
+				'font-family' => '"Liberation Serif", serif',
+				'url' => 'https://fonts.cdnfonts.com/css/liberation-serif'
+			],
+			'lobster-2'=> [
+				'name' => 'Lobster',
+				'font-family' => 'Lobster, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/lobster-2'
+			],
+			'lato'=> [
+				'name' => 'lato',
+				'font-family' => 'Lato, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/lato'
+			],
+			'lora'=> [
+				'name' => 'Lora',
+				'font-family' => 'Lora, serif',
+				'url' => 'https://fonts.cdnfonts.com/css/lora'
+			],
+			'old-standard-tt-3'=> [
+				'name' => 'Old Standard TT',
+				'font-family' => '"Old Standard TT", serif',
+				'url' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
+			],
+			'open-sans' => [
+				'name' => 'Open Sans',
+				'font-family' => '"Open Sans", sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/open-sans'
+			],
+			'oswald-4'=> [
+				'name' => 'Oswald',
+				'font-family' => 'Oswald, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/oswald-4'
+			],
+			'pt-mono'=> [
+				'name' => 'PT Mono',
+				'font-family' => '"PT Mono", monospace',
+				'url' => 'https://fonts.cdnfonts.com/css/pt-mono'
+			],
+			'pt-serif'=> [
+				'name' => "PR Serif",
+				'font-family' => '"PT Serif", serif',
+				'url' => 'https://fonts.cdnfonts.com/css/pt-serif'
+			],
+			'rancho'=> [
+				'name' => 'Rancho',
+				'font-family' => 'Rancho, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/rancho'
+			],
+			'roboto'=> [
+				'name' => 'Roboto',
+				'font-family' => 'Roboto, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/roboto'
+			],
+			'ubuntu'=> [
+				'name' => 'Ubuntu',
+				'font-family' => 'Ubuntu, sans-serif',
+				'url' => 'https://fonts.cdnfonts.com/css/ubuntu'
+			],
+			'vollkorn'=> [
+				'name' => 'Vollkorn',
+				'font-family' => 'Vollkorn, serif',
+				'url' => 'https://fonts.cdnfonts.com/css/vollkorn'
+			]
 	];
 	$this->setData(['fonts', 'imported', $fonts]);
 
