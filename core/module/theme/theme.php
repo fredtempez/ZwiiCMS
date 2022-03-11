@@ -396,7 +396,8 @@ class theme extends common {
 				unset(self::$pagesList[$page]);
 			}
 		}
-
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du pied de page',
@@ -475,6 +476,8 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation de la bannière',
@@ -534,6 +537,8 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du menu',
@@ -549,8 +554,12 @@ class theme extends common {
 	 */
 	public function fonts() {
 
-		$this->listFonts();
+		// Peuple la variable de module fontsList de la liste des fonts disponibles clé : fontid - valeur nom de la fonte
+		$this->enumFonts();
 		//echo "<pre>";
+
+
+
 
 
 		// Polices liées au thème
@@ -564,16 +573,18 @@ class theme extends common {
 			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
 		];
 
-		// Parcourir les fontes installées et construire le tableau pour le formulaire
-		foreach (self::$fonts as $fontId => $fontName) {
+		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
+		foreach ($fonts as $fontId => $fontName) {
 
-			// Fontes utilisées par le thème
+			// Fontes utilisées par les thèmes
 			$fontUsed[$fontId] = '';
 			foreach ($used as $key => $value) {
 				if ( $value === $fontId) {
 					$fontUsed[$fontId] .=  $key . '<br/>';
 				}
 			}
+
+
 			self::$fontsList [] = [
 				'<span style="font-family:' . $fontName . '">' . $fontName . '</span>' ,
 				$fontId,
@@ -787,6 +798,8 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du site',
@@ -1048,16 +1061,19 @@ class theme extends common {
 		return ($count);
 	}
 
-	// Peule la variable self:$fonts avec les fontes disponibles.
-	public function listFonts() {
+	// Retourne un tableau simple des fonts installées idfont avec le nom
+	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
+	public function enumFonts() {
 		// Récupère la liste des fontes installées
 		$f = $this->getFonts();
 		// Construit un tableau avec leur ID et leur famille
 		foreach(['websafe', 'imported', 'files'] as $type) {
 			foreach ($f[$type] as $fontId => $fontValue ) {
-				self::$fonts [$fontId] = $fontValue['name'];
+				$fonts [$fontId] = $fontValue['name'];
 			}
 		}
+		ksort($fonts);
+		self::$fontsList = $fonts;
 	}
 
 }

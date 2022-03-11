@@ -183,10 +183,6 @@ class common {
 
 	];
 
-	// Fontes
-	public static $fonts = [
-	];
-
 	public static $fontsWebSafe = [
 		'arial' 			=> 'Arial, Helvetica, sans-serif;',
 		'arial-black' 		=> 'Arial Black, Gadget, sans-serif;',
@@ -422,7 +418,7 @@ class common {
 		foreach (self::$fontsWebSafe as $fontId => $fontValue) {
 			$fontName = explode (',', $fontValue);
 			$f ['websafe'] [$fontId] =  [
-				'name' => $fontName[0],
+				'name' => str_replace('"', '', $fontName[0]),
 				'font-family'=> $fontValue
 			];
 		}
@@ -433,7 +429,7 @@ class common {
 			foreach ($fontsImported as $fontId => $fontValue) {
 				$fontName = explode (',', $fontValue);
 				$f ['imported'] [$fontId] =  [
-					'name' => $fontName[0],
+					'name' => str_replace('"', '', $fontName[0]),
 					'font-family'=> $fontValue
 					//'ressource'
 				];
@@ -446,7 +442,8 @@ class common {
 			foreach ($fontsFiles as $fontId => $fontValue) {
 				$f ['files'] [$fontId] =  [
 					'font-family'=> $fontValue ['font-family'],
-					'ressource'=> $fontValue ['ressource']
+					'ressource'=> $fontValue ['ressource'],
+					'name' => ucfirst($fontId) // A créer
 				];
 			}
 		}
@@ -2355,7 +2352,7 @@ class core extends common {
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['websafe'][$fontId])) {
-					self::$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
+					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
 				}
 			}
 
@@ -2367,7 +2364,7 @@ class core extends common {
 				if ( isset($fontsAvailable['imported'][$fontId])) {
 						$fontFile .= '<link href="https://fonts.cdnfonts.com/css/' . $fontId .'" rel="stylesheet">';
 						// Tableau pour la construction de la feuille de style
-						self::$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
+						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
 				}
 			}
 			// Enregistre la personnalisation
@@ -2385,7 +2382,7 @@ class core extends common {
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
 						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
 						// Tableau pour la construction de la feuille de style
-						self::$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
+						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 				}
 
 			}
@@ -2393,7 +2390,7 @@ class core extends common {
 			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
 			// Body
-			$css .= 'body{font-family:' . self::$fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
+			$css .= 'body{font-family:' . $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
 				// Image dans html pour éviter les déformations.
 				$css .= 'html {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
@@ -2411,7 +2408,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			// Couleurs de site dans TinyMCe
-			$css .= 'div.mce-edit-area {font-family:' .  self::$fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
+			$css .= 'div.mce-edit-area {font-family:' .  $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
@@ -2452,7 +2449,7 @@ class core extends common {
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
 			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
-			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' .  self::$fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
+			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
@@ -2486,7 +2483,7 @@ class core extends common {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' .  self::$fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
 			// Bannière au contenu personnalisé
@@ -2535,7 +2532,7 @@ class core extends common {
 					$css .= 'nav{padding:0 10px;}';
 			}
 
-			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:' .  self::$fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
+			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:' .  $fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
 
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
@@ -2545,7 +2542,7 @@ class core extends common {
 				$css .= 'footer{padding:0}';
 			}
 
-			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:' .  self::$fonts[$this->getData(['theme', 'footer', 'font'])] . ';font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
+			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:' .  $fonts[$this->getData(['theme', 'footer', 'font'])] . ';font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
@@ -2589,7 +2586,7 @@ class core extends common {
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['websafe'][$fontId])) {
-					self::$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
+					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
 				}
 			}
 
@@ -2601,7 +2598,7 @@ class core extends common {
 				if ( isset($fontsAvailable['imported'][$fontId])) {
 						$fontFile .= '<link href="https://fonts.cdnfonts.com/css/' . $fontId .'" rel="stylesheet">';
 						// Tableau pour la construction de la feuille de style
-						self::$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
+						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
 				}
 			}
 			// Enregistre la personnalisation
@@ -2619,7 +2616,7 @@ class core extends common {
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
 						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
 						// Tableau pour la construction de la feuille de style
-						self::$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
+						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 				}
 
 			}
@@ -2627,8 +2624,8 @@ class core extends common {
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
-			$css .= '.row > div {font:' . self::$fonts[$this->getData(['admin','fontText'])]  . ';font-size:' . $this->getData(['admin','fontSize']) .'}';
-			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   self::$fonts[$this->getData(['admin','fontTitle'])] . ';color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= '.row > div {font:' . $fonts[$this->getData(['admin','fontText'])]  . ';font-size:' . $this->getData(['admin','fontSize']) .'}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $fonts[$this->getData(['admin','fontTitle'])] . ';color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 
 			// TinyMCE
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
