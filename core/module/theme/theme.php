@@ -32,6 +32,7 @@ class theme extends common {
 		'save' => self::GROUP_ADMIN,
 		'fonts' => self::GROUP_ADMIN,
 		'fontAdd' => self::GROUP_ADMIN,
+		'fontEdit' => self::GROUP_ADMIN,
 		'fontDelete' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
@@ -586,12 +587,14 @@ class theme extends common {
 					'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
 					$f[$type][$fontId]['font-family'],
 					$fontUsed[$fontId],
-					//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
-					/*array_key_exists($fontId, $fonts['files']) ?
-								$fonts['files'][$fontId] :
-								(array_key_exists($fontId, self::$fontsWebSafe) ? 'WebSafe' :	'CDN Fonts'),
-								*/
 					$type,
+					$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
+												'class' => 'themeFontEdit',
+												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' . $fontId . '/' . $_SESSION['csrf'],
+												'value' => template::ico('pencil'),
+												'disabled' => !empty($fontUsed[$fontId])
+											])
+										: '',
 					$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
 												'class' => 'themeFontDelete buttonRed',
 												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
@@ -614,6 +617,62 @@ class theme extends common {
 	 * Ajouter une fonte
 	 */
 	public function fontAdd() {
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			// Type d'import en ligne ou local
+			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER__SHORT_STRING);
+			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
+			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
+			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  helper::FILTER_STRING_SHORT, true);
+
+			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
+
+			// Charger les données des fontes
+			$fonts = $this->getData(['fonts']);
+
+			// Concaténation dans les tableaux existants
+			$t = [ $fontId => [
+					'name' => $fontName,
+					'font-family' => $fontFamilyName,
+					'ressource' => $ressource
+			]];
+
+			// Stocker les fontes
+			$this->setData(['fonts', $type, [ $fontId =>
+								[
+									'name' => $fontName,
+									'font-family' => $fontFamilyName,
+									'ressource' => $ressource
+								]]
+			]);
+
+			// Copier la fonte si le nom du fichier est fourni
+			if ( $type === 'files' &&
+					is_file(self::FILE_DIR . 'source/' . $ressource)
+			) {
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'La fonte a été importée',
+				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Ajouter une fonte',
+			'view' => 'fontAdd'
+		]);
+	}
+
+
+	/**
+	 * Ajouter une fonte
+	 */
+	public function fontEdit() {
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local

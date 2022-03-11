@@ -185,16 +185,16 @@ class common {
 
 	public static $fontsWebSafe = [
 		'arial' 			=> 'Arial, Helvetica, sans-serif;',
-		'arial-black' 		=> 'Arial Black, Gadget, sans-serif;',
-		'courrier' 			=> 'Courier, Liberation Mono, monospace;',
-		'courrier-new' 		=> 'Courier New, Courier, monospace',
+		'arial-black' 		=> '"Arial Black", Gadget, sans-serif;',
+		'courrier' 			=> 'Courier, "Liberation Mono", monospace;',
+		'courrier-new' 		=> '"Courier New", Courier, monospace',
 		'garamond' 			=> 'Garamond, serif',
 		'georgia' 			=> 'Georgia, serif;',
 		'impact' 			=> 'Impact, Charcoal, sans-serif;',
-		'lucida' 			=> 'Lucida Sans Unicode, Lucida Grande, sans-serif',
+		'lucida' 			=> '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
 		'tahoma'			=> 'Tahoma, Geneva, sans-serif;',
-		'times-new-roman' 	=> 'Times New Roman, Liberation Serif, serif;',
-		'trebuchet' 		=> 'Trebuchet MS, Arial, Helvetica, sans-serif;',
+		'times-new-roman' 	=> '"Times New Roman", "Liberation Serif", serif;',
+		'trebuchet' 		=> '"Trebuchet MS", Arial, Helvetica, sans-serif;',
 		'tahoma' 			=> 'Tahoma, Geneva, sans-serif;',
 		'verdana' 			=> 'Verdana, Geneva, sans-serif;',
 	];
