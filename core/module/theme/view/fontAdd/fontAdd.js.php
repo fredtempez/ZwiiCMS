@@ -16,7 +16,7 @@
  $(document).ready(function(){
     $('input[name=fontAddFontImported]').prop('checked', true);
     $('input[name=fontAddFontUrl]').prop('checked', false);
-    $('#containerFontAddUrl').hide();
+    $('#containerFontAddFile').hide();
 });
 
 

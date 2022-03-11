@@ -430,7 +430,7 @@ class common {
 				$f ['imported'] [$fontId] =  [
 					'name' => $fontValue ['name'],
 					'font-family'=> $fontValue ['font-family'],
-					'url' => $fontValue ['url']
+					'ressource' => $fontValue ['ressource']
 				];
 			}
 		}
@@ -442,7 +442,7 @@ class common {
 				$f ['files'] [$fontId] =  [
 					'name' => $fontValue ['name'],
 					'font-family'=> $fontValue ['font-family'],
-					'file' => $fontValue ['file']
+					'ressource' => $fontValue ['ressource']
 				];
 			}
 		}
@@ -2361,7 +2361,7 @@ class core extends common {
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['imported'][$fontId])) {
-						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['url'] .'" rel="stylesheet">';
+						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['ressource'] .'" rel="stylesheet">';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
 				}
@@ -2379,7 +2379,7 @@ class core extends common {
 						// Chargement de la police
 						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['file'] . '");}';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['ressource'] . '");}';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 				}
@@ -2595,7 +2595,7 @@ class core extends common {
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['imported'][$fontId])) {
-						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['url'] .'" rel="stylesheet">';
+						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['ressource'] .'" rel="stylesheet">';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
 				}
@@ -2613,7 +2613,7 @@ class core extends common {
 						// Chargement de la police
 						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['file'] . '");}';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['ressource'] . '");}';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 				}

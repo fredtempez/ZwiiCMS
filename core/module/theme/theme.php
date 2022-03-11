@@ -617,35 +617,38 @@ class theme extends common {
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
-			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'url';
-			$ressource = $type === 'imported' ? $this->getInput('fontAddFile', helper::FILTER__SHORT_STRING) : $this->getInput('fontAddUrl',  helper::FILTER__SHORT_STRING);
-			$fontId = $this->getInput('fontAddFontId', null, true);
-			$fontName = $this->getInput('fontAddFontName', null, true);
-			$fontFamilyName = $this->getInput('fontAddFontFamilyName', null, true);
+			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER__SHORT_STRING);
+			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
+			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
+			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  helper::FILTER_STRING_SHORT, true);
 
 			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
-			/*
-			if ($type === 'url') {
-				$data = helper::getUrlContents($ressource);
-			}*/
 
 			// Charger les données des fontes
-			$files = $this->getData(['fonts', 'files']);
-			$imported = $this->getData(['fonts', 'imported']);
+			$fonts = $this->getData(['fonts']);
 
 			// Concaténation dans les tableaux existants
-			$imported = array_merge([$fontId => $fontName], $imported);
-			$files = array_merge([$fontId => $file], $files);
+			$t = [ $fontId => [
+					'name' => $fontName,
+					'font-family' => $fontFamilyName,
+					'ressource' => $ressource
+			]];
+
+			// Stocker les fontes
+			$this->setData(['fonts', $type, [ $fontId =>
+								[
+									'name' => $fontName,
+									'font-family' => $fontFamilyName,
+									'ressource' => $ressource
+								]]
+			]);
 
 			// Copier la fonte si le nom du fichier est fourni
-			if (!empty($filePath)) {
-				copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
-			}
-
-			// Mettre à jour le fichier des fontes
-			$this->setData(['fonts', 'imported', $imported ]);
-			if (!empty($filePath) ) {
-				$this->setData(['fonts', 'files', $files ]);
+			if ( $type === 'files' &&
+					is_file(self::FILE_DIR . 'source/' . $ressource)
+			) {
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
 			}
 
 			// Valeurs en sortie
