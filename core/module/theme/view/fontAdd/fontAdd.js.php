@@ -15,7 +15,8 @@
  */
  $(document).ready(function(){
     $('input[name=fontAddFontImported]').prop('checked', true);
-    $('#fontAddFileWrapper').hide();
+    $('input[name=fontAddFontUrl]').prop('checked', false);
+    $('#containerFontAddUrl').hide();
 });
 
 
@@ -28,7 +29,8 @@ $("input[name=fontAddFontImported]").on("click", function() {
     } else {
         $('input[name=fontAddFontFile]').prop('checked', true);
     }
-    $('#fontAddFileWrapper').hide();
+    $('#containerFontAddFile').hide();
+    $('#containerFontAddUrl').show();
 });
 
 $("input[name=fontAddFontFile]").on("click", function() {
@@ -37,5 +39,6 @@ $("input[name=fontAddFontFile]").on("click", function() {
     } else {
         $('input[name=fontAddFontImported]').prop('checked', true);
     }
-    $('#fontAddFileWrapper').show();
+    $('#containerFontAddFile').show();
+    $('#containerFontAddUrl').hide();
 });
