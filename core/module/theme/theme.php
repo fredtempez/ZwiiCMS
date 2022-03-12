@@ -590,7 +590,7 @@ class theme extends common {
 					$type,
 					$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
 												'class' => 'themeFontEdit',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' . $fontId . '/' . $_SESSION['csrf'],
+												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
 												'value' => template::ico('pencil'),
 												'disabled' => !empty($fontUsed[$fontId])
 											])
@@ -719,8 +719,8 @@ class theme extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Ajouter une fonte',
-			'view' => 'fontAdd'
+			'title' => 'Editer une fonte',
+			'view' => 'fontEdit'
 		]);
 	}
 

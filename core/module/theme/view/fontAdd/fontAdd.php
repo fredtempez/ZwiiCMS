@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('pageEditHelp', [
+			<?php echo template::button('fontAddHelp', [
 				'href' => 'https://doc.zwiicms.fr/fontes#add',
 				'target' => '_blank',
 				'ico' => 'help',
