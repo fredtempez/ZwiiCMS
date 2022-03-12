@@ -656,7 +656,7 @@ class theme extends common {
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'La fonte a été importée',
+				'notification' => 'La fonte a été créée',
 				'redirect' => helper::baseUrl() . 'theme/fonts',
 				'state' => true
 			]);
@@ -676,11 +676,11 @@ class theme extends common {
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
-			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER__SHORT_STRING);
-			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
-			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
-			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  helper::FILTER_STRING_SHORT, true);
+			$type = $this->getInput('fontEditFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontEditFile',  helper::FILTER__SHORT_STRING);
+			$fontId = $this->getInput('fontEditFontId',  helper::FILTER_STRING_SHORT, true);
+			$fontName = $this->getInput('fontEditFontName',  helper::FILTER_STRING_SHORT, true);
+			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  helper::FILTER_STRING_SHORT, true);
 
 			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
 
@@ -712,7 +712,7 @@ class theme extends common {
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'La fonte a été importée',
+				'notification' => 'La fonte a été éditée',
 				'redirect' => helper::baseUrl() . 'theme/fonts',
 				'state' => true
 			]);
