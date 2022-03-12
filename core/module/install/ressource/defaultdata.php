@@ -91,102 +91,102 @@ class init extends common {
 				'arimo'=> [
 					'name' => 'Arimo',
 					'font-family' => 'Arimo,  sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/arimo'
+					'ressource' => 'https://fonts.cdnfonts.com/css/arimo'
 				],
 				'arvo'=> [
 					'name' => 'Arvo',
 					'font-family' => 'Arvo,  sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/arvo'
+					'ressource' => 'https://fonts.cdnfonts.com/css/arvo'
 				],
 				'dancing-script' => [
 					'name' => 'Dancing Script',
 					'font-family' => '"Dancing Script", sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/dancing-script'
+					'ressource' => 'https://fonts.cdnfonts.com/css/dancing-script'
 				],
 				'droid-sans-2'=> [
 					'name' => 'Droid Sans',
 					'font-family' =>  '"Droid Sans", sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
+					'ressource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 				],
 				'droid-serif-2'=> [
 					'name' => 'Droid Serif',
 					'font-family' =>  '"Droid Serif", serif',
-					'url' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
+					'ressource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 				],
 				'indie-flower'=> [
 					'name' => 'Indie Flower',
 					'font-family' => '"Indie Flower", sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/indie-flower'
+					'ressource' => 'https://fonts.cdnfonts.com/css/indie-flower'
 				],
 				'liberation-sans'=> [
 					'name' => 'Liberation Sans',
 					'font-family' => '"Liberation Sans", sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/liberation-sans'
+					'ressource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
 				],
 				'liberation-serif'=> [
 					'name' => 'Liberation Serif',
 					'font-family' => '"Liberation Serif", serif',
-					'url' => 'https://fonts.cdnfonts.com/css/liberation-serif'
+					'ressource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
 				],
 				'lobster-2'=> [
 					'name' => 'Lobster',
 					'font-family' => 'Lobster, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/lobster-2'
+					'ressource' => 'https://fonts.cdnfonts.com/css/lobster-2'
 				],
 				'lato'=> [
 					'name' => 'lato',
 					'font-family' => 'Lato, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/lato'
+					'ressource' => 'https://fonts.cdnfonts.com/css/lato'
 				],
 				'lora'=> [
 					'name' => 'Lora',
 					'font-family' => 'Lora, serif',
-					'url' => 'https://fonts.cdnfonts.com/css/lora'
+					'ressource' => 'https://fonts.cdnfonts.com/css/lora'
 				],
 				'old-standard-tt-3'=> [
 					'name' => 'Old Standard TT',
 					'font-family' => '"Old Standard TT", serif',
-					'url' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
+					'ressource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
 				],
 				'open-sans' => [
 					'name' => 'Open Sans',
 					'font-family' => '"Open Sans", sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/open-sans'
+					'ressource' => 'https://fonts.cdnfonts.com/css/open-sans'
 				],
 				'oswald-4'=> [
 					'name' => 'Oswald',
 					'font-family' => 'Oswald, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/oswald-4'
+					'ressource' => 'https://fonts.cdnfonts.com/css/oswald-4'
 				],
 				'pt-mono'=> [
 					'name' => 'PT Mono',
 					'font-family' => '"PT Mono", monospace',
-					'url' => 'https://fonts.cdnfonts.com/css/pt-mono'
+					'ressource' => 'https://fonts.cdnfonts.com/css/pt-mono'
 				],
 				'pt-serif'=> [
 					'name' => "PR Serif",
 					'font-family' => '"PT Serif", serif',
-					'url' => 'https://fonts.cdnfonts.com/css/pt-serif'
+					'ressource' => 'https://fonts.cdnfonts.com/css/pt-serif'
 				],
 				'rancho'=> [
 					'name' => 'Rancho',
 					'font-family' => 'Rancho, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/rancho'
+					'ressource' => 'https://fonts.cdnfonts.com/css/rancho'
 				],
 				'roboto'=> [
 					'name' => 'Roboto',
 					'font-family' => 'Roboto, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/roboto'
+					'ressource' => 'https://fonts.cdnfonts.com/css/roboto'
 				],
 				'ubuntu'=> [
 					'name' => 'Ubuntu',
 					'font-family' => 'Ubuntu, sans-serif',
-					'url' => 'https://fonts.cdnfonts.com/css/ubuntu'
+					'ressource' => 'https://fonts.cdnfonts.com/css/ubuntu'
 				],
 				'vollkorn'=> [
 					'name' => 'Vollkorn',
 					'font-family' => 'Vollkorn, serif',
-					'url' => 'https://fonts.cdnfonts.com/css/vollkorn'
+					'ressource' => 'https://fonts.cdnfonts.com/css/vollkorn'
 				]
 			]
 		],
