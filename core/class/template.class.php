@@ -620,13 +620,6 @@ class template {
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['selected'] = common::$inputBefore[$attributes['id']];
         }
-        // Liste des polices à intégrer
-        //var_dump(core::$fonts);
-        if ($attributes['fonts'] === true) {
-            foreach (core::$fonts as $fontId => $font) {
-                echo "<link href='https://fonts.cdnfonts.com/css/" . $fontId . "' rel='stylesheet' type='text/css'>\n";
-            }
-        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label

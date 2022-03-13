@@ -144,8 +144,8 @@ class blog extends common {
 		$feeds->setDate(date('r',time()));
 		$feeds->addGenerator();
 		// Corps des articles
-		$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-		$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'state', 'SORT_DESC');
+		$articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+		$articleIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0),'posts']), 'state', 'SORT_DESC');
 		foreach( $articleIdsPublishedOns as $articleId => $articlePublishedOn ) {
 			if( $articlePublishedOn <= time() AND $articleIdsStates[$articleId]			 ) {
 				// Miniature
@@ -234,7 +234,7 @@ class blog extends common {
 			]);
 		}
 		// Liste des utilisateurs
-		self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
+		self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort(self::$users);
 		foreach(self::$users as $userId => &$userFirstname) {
 			$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
@@ -263,7 +263,7 @@ class blog extends common {
 					'value' => 'Tout effacer'
 		]);
 		// Ids des commentaires par ordre de création
-		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
+		$commentIds = array_keys(helper::arrayColumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
 		$pagination = helper::pagination($commentIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 		// Liste des pages
@@ -503,6 +503,78 @@ class blog extends common {
 				'state' => true
 			]);
 		} else {
+			// Ids des articles par ordre de publication
+			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+			// Gestion des droits d'accès
+			$filterData=[];
+			foreach ($articleIds as $key => $value) {
+				if (
+					(  // Propriétaire
+						$this->getData(['module',  $this->getUrl(0), 'posts', $value,'editConsent']) === self::EDIT_OWNER
+						AND ( $this->getData(['module',  $this->getUrl(0), 'posts', $value,'userId']) === $this->getUser('id')
+						OR $this->getUser('group') === self::GROUP_ADMIN )
+					)
+
+					OR (
+						// Groupe
+						$this->getData(['module',  $this->getUrl(0), 'posts',  $value,'editConsent']) !== self::EDIT_OWNER
+						AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), 'posts', $value,'editConsent'])
+					)
+					OR (
+						// Tout le monde
+						$this->getData(['module',  $this->getUrl(0), 'posts',  $value,'editConsent']) === self::EDIT_ALL
+					)
+				) {
+					$filterData[] = $value;
+				}
+			}
+			$articleIds = $filterData;
+			// Pagination
+			$pagination = helper::pagination($articleIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
+			// Liste des pages
+			self::$pages = $pagination['pages'];
+			// Articles en fonction de la pagination
+			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+				// Nombre de commentaires à approuver et approuvés
+				$approvals = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts',  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+				if ( is_array($approvals) ) {
+					$a = array_values($approvals);
+					$toApprove = count(array_keys($a,false));
+					$approved = count(array_keys($a,true));
+				} else {
+					$toApprove = 0;
+					$approved = count($this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i],'comment']));
+				}
+				// Met en forme le tableau
+				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+				self::$articles[] = [
+					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
+					$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'title']) .
+					'</a>',
+					$date .' à '. $heure,
+					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
+					// Bouton pour afficher les commentaires de l'article
+					template::button('blogConfigComment' . $articleIds[$i], [
+						'class' => ($toApprove || $approved ) > 0 ?  '' : 'buttonGrey' ,
+						'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
+						'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved
+					]),
+					template::button('blogConfigEdit' . $articleIds[$i], [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+						'value' => template::ico('pencil')
+					]),
+					template::button('blogConfigDelete' . $articleIds[$i], [
+						'class' => 'blogConfigDelete buttonRed',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+						'value' => template::ico('cancel')
+					])
+				];
+			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Options de configuration',
@@ -612,7 +684,7 @@ class blog extends common {
 				]);
 			}
 			// Liste des utilisateurs
-			self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
+			self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
 			// Les membres ne sont pas éditeurs, les exclure de la liste
@@ -726,7 +798,7 @@ class blog extends common {
 					// Ligne suivante si affichage du nombre total de commentaires approuvés sous l'article
 					self::$nbCommentsApproved = count($commentsApproved);
 				}
-				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
+				$commentIds = array_keys(helper::arrayColumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
 				// Liste des pages
@@ -766,8 +838,8 @@ class blog extends common {
 		// Liste des articles
 		else {
 			// Ids des articles par ordre de publication
-			$articleIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'posts']), 'publishedOn', 'SORT_DESC');
-			$articleIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
+			$articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0),'posts']), 'publishedOn', 'SORT_DESC');
+			$articleIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 			$articleIds = [];
 			foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 				if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {

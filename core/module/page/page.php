@@ -392,19 +392,25 @@ class page extends common {
 					$lastPosition = 1;
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
+					$extraPosition = $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN);
 					foreach($hierarchy as $hierarchyPageId) {
-						// Ignore la page en cours de modification
-						if($hierarchyPageId === $this->getUrl(2)) {
-							continue;
-						}
-						// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
-						if($lastPosition === $position) {
+
+						// Ne traite que les pages du menu sélectionné
+						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition ) {
+							// Ignore la page en cours de modification 
+							if($hierarchyPageId === $this->getUrl(2) ) {
+								continue;
+							}
+							// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
+							if($lastPosition === $position) {
+								$lastPosition++;
+							}
+							// Change la position
+							$this->setData(['page', $hierarchyPageId, 'position', $lastPosition]);
+							// Incrémente pour la prochaine position
 							$lastPosition++;
 						}
-						// Change la position
-						$this->setData(['page', $hierarchyPageId, 'position', $lastPosition]);
-						// Incrémente pour la prochaine position
-						$lastPosition++;
+
 					}
 					if ($this->getinput('pageEditBlock') !== 'bar') {
 						$barLeft = $this->getinput('pageEditBarLeft');
@@ -516,7 +522,7 @@ class page extends common {
 					}
 				}
 			}
-			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayCollumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
+			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayColumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
 			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);

@@ -9,7 +9,7 @@
 			]); ?>
 		</div>
 		<div class="col2">
-			<?php echo template::button('pageEditHelp', [
+			<?php echo template::button('fontAddHelp', [
 				'href' => 'https://doc.zwiicms.fr/fontes#add',
 				'target' => '_blank',
 				'ico' => 'help',
@@ -30,14 +30,10 @@
 				<h4>Identité de la fonte</h4>
 				<div class="row">
 					<div class="col6">
-							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte téléchargée sur cdnFonts', [
-								'help' => 'Police utilisée en ligne, se connecter sur cdnFonts pour récupérer les informations nécessaires.'
-							]); ?>
+							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte en ligne', []); ?>
 					</div>
 					<div class="col6">
-							<?php echo template::checkbox('fontAddFontFile', true,'Fonte installée', [
-								'help' => '<br/>Sélectionnez un fichier de fonte au format WOFF.'
-							]); ?>
+							<?php echo template::checkbox('fontAddFontFile', true,'Fonte installée', []); ?>
 					</div>
 				</div>
 				<div class="row">
@@ -45,23 +41,39 @@
 						<?php echo template::text('fontAddFontId', [
 							'autocomplete' => 'off',
 							'label' => 'Identifiant (sans espace ni majuscule)',
-							'placeholder' => 'perry-gothic'
+							'placeholder' => 'big-marker-extrude'
 
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::text('fontAddFontName', [
 							'autocomplete' => 'off',
-							'label' => 'Nom (Font Family)',
-							'placeholder' => 'PerryGothic'
+							'label' => 'Nom',
+							'placeholder' => 'Big Marker Extrude'
 						]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col12">
+					<?php echo template::text('fontAddFontFamilyName', [
+							'autocomplete' => 'off',
+							'label' => 'Famille',
+							'placeholder' =>  "'Big Marker Extrude', sans-serif"
+						]); ?>
+					</div>
+				</div>
+				<div class="row" id="containerFontAddFile">
+					<div class="col12">
 						<?php echo template::file('fontAddFile', [
-							'label' => 'Fichier de police (Format WOFF)',
-							'placeholder' => 'https://fonts.cdnfonts.com/s/7896/PERRYGOT.woff'
+							'label' => 'Fichier de fonte (Format WOFF)'
+						]); ?>
+					</div>
+				</div>
+				<div class="row" id="containerFontAddUrl">
+					<div class="col12">
+						<?php echo template::text('fontAddUrl', [
+							'label' => 'Url du fichier de fonte',
+							'placeholder' => 'https://fonts.cdnfonts.com/css/big-marker-extrude'
 						]); ?>
 					</div>
 				</div>

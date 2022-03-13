@@ -106,6 +106,13 @@ class form extends common {
 	 * Configuration
 	 */
 	public function config() {
+		// Liste des utilisateurs
+		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
+		ksort($userIdsFirstnames);
+		self::$listUsers [] = '';
+		foreach($userIdsFirstnames as $userId => $userFirstname) {
+			self::$listUsers [] =  $userId;
+		}
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Génération des données vides

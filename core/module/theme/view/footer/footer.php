@@ -133,7 +133,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
+                    <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'] , helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
                         'label' => 'Page "Mentions légales" ' . template::flag('site', '20px'),
                         'selected' => $this->getData(['locale', 'legalPageId'])
                     ]); ?>
@@ -147,7 +147,7 @@
                         ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayCollumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
+                    <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'] , helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC') ) , [
                         'label' => 'Page "Rechercher" ' . template::flag('site', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
@@ -171,7 +171,7 @@
             <h4>Mise en forme du texte</h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeFooterFont', self::$fonts, [
+                    <?php echo template::select('themeFooterFont', $module::$fontsList, [
 							'label' => 'Police',
 							'selected' => $this->getData(['theme', 'footer', 'font']),
 							'fonts' => true

@@ -9,27 +9,15 @@
 						</a>
 					</span>
 				</h4>
+
 				<div class="row">
-					<div class="col3">
-							<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
-									'checked' => $this->getData(['config', 'connect','captcha'])
-							]); ?>
-							<?php echo template::checkbox('connectCaptchaStrong', true, 'Captcha complexe', [
-								'checked' => $this->getData(['config', 'connect', 'captchaStrong']),
-								'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
-							]); ?>
-					</div>
-					<div class="col3">
-						<?php echo template::select('connectCaptchaType', $module::$captchaTypes , [
-								'label' => 'Type de captcha',
-								'selected' => $this->getData(['config', 'connect', 'captchaType'])
-							]); ?>
-					</div>
 					<div class="col6">
 						<?php echo template::checkbox('connectAutoDisconnect', true, 'Déconnexion automatique', [
 							'checked' => $this->getData(['config', 'connect', 'autoDisconnect']),
 							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 						]); ?>
+					</div>
+					<div class="col6">
 						<?php echo template::checkbox('connectShowPassword', true, 'Dévoiler le mot de passe', [
 							'checked' => $this->getData(['config', 'connect', 'showPassword']),
 							'help' => 'Dans l\'écran de connexion, active une icône dont le survol affiche temporairement le mot de passe.'
@@ -39,7 +27,7 @@
 				<div class="row">
 					<div class="col3">
 						<?php echo template::select('connectAttempt', $module::$connectAttempt , [
-							'label' => 'Connexions successives',
+							'label' => 'Limitation des tentatives',
 							'selected' => $this->getData(['config', 'connect', 'attempt'])
 						]); ?>
 					</div>
@@ -69,6 +57,25 @@
 							'value' => 'Réinitialiser la liste',
 							'ico' => 'trash'
 						]); ?>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col3">
+							<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
+									'checked' => $this->getData(['config', 'connect','captcha'])
+							]); ?>
+					</div>
+					<div class="col3">
+							<?php echo template::checkbox('connectCaptchaStrong', true, 'Captcha complexe', [
+								'checked' => $this->getData(['config', 'connect', 'captchaStrong']),
+								'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
+							]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::select('connectCaptchaType', $module::$captchaTypes , [
+								'label' => 'Type de captcha',
+								'selected' => $this->getData(['config', 'connect', 'captchaType'])
+							]); ?>
 					</div>
 				</div>
 			</div>
