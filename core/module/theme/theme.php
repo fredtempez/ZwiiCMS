@@ -597,7 +597,7 @@ class theme extends common {
 										: '',
 					$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
 												'class' => 'themeFontDelete buttonRed',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
+												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
 												'value' => template::ico('cancel'),
 												'disabled' => !empty($fontUsed[$fontId])
 											])
@@ -712,7 +712,7 @@ class theme extends common {
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'La fonte a été éditée',
+				'notification' => 'La fonte a été actualisée',
 				'redirect' => helper::baseUrl() . 'theme/fonts',
 				'state' => true
 			]);
@@ -729,7 +729,7 @@ class theme extends common {
 	 */
 	public function fontDelete() {
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
@@ -739,26 +739,19 @@ class theme extends common {
 		// Suppression
 		else {
 
-			// Charger les données des fontes
-			$files = $this->getData(['fonts', 'files']);
-			$imported = $this->getData(['fonts', 'imported']);
+			// Effacer la fonte de la base
+			$this->deleteData(['fonts', $this->getUrl(2), $this->getUrl(3)]);
 
 			// Effacer le fichier existant
-			if ( file_exists(self::DATA_DIR . $files[$this->getUrl(2)]) ) {
-				unlink(self::DATA_DIR . $files[$this->getUrl(2)]);
+			if ( $this->getUrl(2) === 'file' &&
+				file_exists(self::DATA_DIR . $this->getUrl(2)) ) {
+				unlink(self::DATA_DIR . $this->getUrl(2));
 			}
 
-			// Supprimer les entrées
-			unset($files[$this->getUrl(2)]);
-			unset($imported[$this->getUrl(2)]);
-
-			// Mettre à jour le fichier des fontes
-			$this->setData(['fonts', 'files', $files ]);
-			$this->setData(['fonts', 'imported', $imported ]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
-				'notification' => 'Fonte supprimée',
+				'notification' => 'La fonte a été supprimée',
 				'state' => true
 			]);
 		}
