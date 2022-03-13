@@ -192,7 +192,7 @@ class news extends common {
 		$this->update();
 
 		// Ids des news par ordre de publication
-		$newsIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+		$newsIds = array_keys(helper::arraycolumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 		// Pagination fixe
 		$pagination = helper::pagination($newsIds, $this->getUrl(),self::$itemsperPage );
 		// Liste des pages

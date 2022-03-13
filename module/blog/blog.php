@@ -404,7 +404,7 @@ class blog extends common {
 	public function config() {
 
 		// Ids des articles par ordre de publication
-		$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+		$articleIds = array_keys(helper::arraycolumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 		// Gestion des droits d'accès
 		$filterData=[];
 		foreach ($articleIds as $key => $value) {
@@ -436,7 +436,7 @@ class blog extends common {
 		// Articles en fonction de la pagination
 		for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Nombre de commentaires à approuver et approuvés
-			$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts',  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+			$approvals = helper::arraycolumn($this->getData(['module', $this->getUrl(0), 'posts',  $articleIds[$i], 'comment' ]),'approval', 'SORT_DESC');
 			if ( is_array($approvals) ) {
 				$a = array_values($approvals);
 				$toApprove = count(array_keys($a,false));

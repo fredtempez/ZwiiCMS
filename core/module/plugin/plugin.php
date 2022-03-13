@@ -301,7 +301,7 @@ class plugin extends common {
 			// Modules installés
 			$infoModules = helper::getModules();
 			// Clés moduleIds dans les pages
-			$inPages = helper::arrayCollumn($this->getData(['page']),'moduleId', 'SORT_DESC');
+			$inPages = helper::arraycolumn($this->getData(['page']),'moduleId', 'SORT_DESC');
 			foreach( $inPages as $key=>$value){
 				$pagesInfos[ $this->getData(['page', $key, 'title' ]) ] = $value;
 			}
@@ -386,7 +386,7 @@ class plugin extends common {
 			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/' . 'page.json'), true);
 
 			// Extraire les clés des modules
-			$pagesModules [$keyi18n] = array_filter(helper::arrayCollumn($pages['page'],'moduleId', 'SORT_DESC'), 'strlen');
+			$pagesModules [$keyi18n] = array_filter(helper::arraycolumn($pages['page'],'moduleId', 'SORT_DESC'), 'strlen');
 
 			// Générer ls liste des pages avec module pour la sauvegarde ou le backup
 			foreach( $pagesModules [$keyi18n] as $key=>$value ) {
