@@ -69,7 +69,7 @@
 					<div class="col12">
 						<?php echo template::file('fontEditFile', [
 							'label' => 'Fichier de fonte (Format WOFF)',
-                            'value' => $this->getUrl(2) === 'file' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']) : ''
+                            'value' => $this->getUrl(2) === 'file' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 						]); ?>
 					</div>
 				</div>
@@ -77,7 +77,7 @@
 					<div class="col12">
 						<?php echo template::text('fontEditUrl', [
 							'label' => 'Url du fichier de fonte',
-							'value' => $this->getUrl(2) === 'imported' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']) : ''
+							'value' => $this->getUrl(2) === 'imported' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 						]); ?>
 					</div>
 				</div>
