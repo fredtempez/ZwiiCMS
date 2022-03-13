@@ -872,102 +872,102 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 			'arimo'=> [
 				'name' => 'Arimo',
 				'font-family' => 'Arimo,  sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/arimo'
+				'resource' => 'https://fonts.cdnfonts.com/css/arimo'
 			],
 			'arvo'=> [
 				'name' => 'Arvo',
 				'font-family' => 'Arvo,  sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/arvo'
+				'resource' => 'https://fonts.cdnfonts.com/css/arvo'
 			],
 			'dancing-script' => [
 				'name' => 'Dancing Script',
 				'font-family' => '"Dancing Script", sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/dancing-script'
+				'resource' => 'https://fonts.cdnfonts.com/css/dancing-script'
 			],
 			'droid-sans-2'=> [
 				'name' => 'Droid Sans',
 				'font-family' =>  '"Droid Sans", sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
+				'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 			],
 			'droid-serif-2'=> [
 				'name' => 'Droid Serif',
 				'font-family' =>  '"Droid Serif", serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
+				'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 			],
 			'indie-flower'=> [
 				'name' => 'Indie Flower',
 				'font-family' => '"Indie Flower", sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/indie-flower'
+				'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
 			],
 			'liberation-sans'=> [
 				'name' => 'Liberation Sans',
 				'font-family' => '"Liberation Sans", sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
+				'resource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
 			],
 			'liberation-serif'=> [
 				'name' => 'Liberation Serif',
 				'font-family' => '"Liberation Serif", serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
+				'resource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
 			],
 			'lobster-2'=> [
 				'name' => 'Lobster',
 				'font-family' => 'Lobster, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/lobster-2'
+				'resource' => 'https://fonts.cdnfonts.com/css/lobster-2'
 			],
 			'lato'=> [
 				'name' => 'lato',
 				'font-family' => 'Lato, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/lato'
+				'resource' => 'https://fonts.cdnfonts.com/css/lato'
 			],
 			'lora'=> [
 				'name' => 'Lora',
 				'font-family' => 'Lora, serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/lora'
+				'resource' => 'https://fonts.cdnfonts.com/css/lora'
 			],
 			'old-standard-tt-3'=> [
 				'name' => 'Old Standard TT',
 				'font-family' => '"Old Standard TT", serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
+				'resource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
 			],
 			'open-sans' => [
 				'name' => 'Open Sans',
 				'font-family' => '"Open Sans", sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/open-sans'
+				'resource' => 'https://fonts.cdnfonts.com/css/open-sans'
 			],
 			'oswald-4'=> [
 				'name' => 'Oswald',
 				'font-family' => 'Oswald, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/oswald-4'
+				'resource' => 'https://fonts.cdnfonts.com/css/oswald-4'
 			],
 			'pt-mono'=> [
 				'name' => 'PT Mono',
 				'font-family' => '"PT Mono", monospace',
-				'ressource' => 'https://fonts.cdnfonts.com/css/pt-mono'
+				'resource' => 'https://fonts.cdnfonts.com/css/pt-mono'
 			],
 			'pt-serif'=> [
 				'name' => "PR Serif",
 				'font-family' => '"PT Serif", serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/pt-serif'
+				'resource' => 'https://fonts.cdnfonts.com/css/pt-serif'
 			],
 			'rancho'=> [
 				'name' => 'Rancho',
 				'font-family' => 'Rancho, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/rancho'
+				'resource' => 'https://fonts.cdnfonts.com/css/rancho'
 			],
 			'roboto'=> [
 				'name' => 'Roboto',
 				'font-family' => 'Roboto, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/roboto'
+				'resource' => 'https://fonts.cdnfonts.com/css/roboto'
 			],
 			'ubuntu'=> [
 				'name' => 'Ubuntu',
 				'font-family' => 'Ubuntu, sans-serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/ubuntu'
+				'resource' => 'https://fonts.cdnfonts.com/css/ubuntu'
 			],
 			'vollkorn'=> [
 				'name' => 'Vollkorn',
 				'font-family' => 'Vollkorn, serif',
-				'ressource' => 'https://fonts.cdnfonts.com/css/vollkorn'
+				'resource' => 'https://fonts.cdnfonts.com/css/vollkorn'
 			]
 	];
 	$this->setData(['fonts', 'imported', $fonts]);
