@@ -30,19 +30,14 @@
 				<h4>Identité de la fonte</h4>
 				<div class="row">
 					<div class="col6">
-						<?php switch ($this->getUrl(2)) {
-							case 'imported':
-								echo template::checkbox('fontEditFontImported', true, 'Fonte en ligne',[
-									'checked' => true
-								]);
-								break;
-							case 'files':
-								echo template::checkbox('fontEditFontFile', true,'Fonte installée', [
-									'checked' => true
-								]);
-								break;
-						}
-						?>
+							<?php echo template::checkbox('fontEditFontImported', true, 'Fonte en ligne', [
+								'checked' => $this->getUrl(2) === 'imported' ? true : false
+							]); ?>
+					</div>
+					<div class="col6">
+							<?php echo template::checkbox('fontEditFontFile', true,'Fonte installée', [
+								'checked' => $this->getUrl(2) === 'file' ? true : false
+							]); ?>
 					</div>
 				</div>
 				<div class="row">
@@ -51,7 +46,6 @@
 							'autocomplete' => 'off',
 							'label' => 'Identifiant (sans espace ni majuscule)',
 							'value' =>  $this->getUrl(3)
-
 						]); ?>
 					</div>
 					<div class="col6">
@@ -61,7 +55,6 @@
 							'value' => $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'name'])
 						]); ?>
 					</div>
-
 				</div>
 				<div class="row">
 					<div class="col12">
@@ -74,23 +67,18 @@
 				</div>
 				<div class="row" id="containerfontEditFile">
 					<div class="col12">
-						<?php switch ($this->getUrl(2)) {
-								case 'imported':
-									echo template::text('fontEditUrl', [
-										'label' => 'Url du fichier de fonte',
-										'value' => $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']),
-										'class' => $this->getUrl(2) === 'imported' ? '' : 'noDisplay'
-									]);
-									break;
-								case 'files':
-									echo template::file('fontEditFile', [
-										'label' => 'Fichier de fonte (Format WOFF)',
-										'value' => $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']),
-										'class' => $this->getUrl(2) === 'file' ? '' : 'noDisplay'
-									]);
-									break;
-							}
-						?>
+						<?php echo template::file('fontEditFile', [
+							'label' => 'Fichier de fonte (Format WOFF)',
+                            'value' => $this->getUrl(2) === 'file' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']) : ''
+						]); ?>
+					</div>
+				</div>
+				<div class="row" id="containerfontEditUrl">
+					<div class="col12">
+						<?php echo template::text('fontEditUrl', [
+							'label' => 'Url du fichier de fonte',
+							'value' => $this->getUrl(2) === 'imported' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'ressource']) : ''
+						]); ?>
 					</div>
 				</div>
 			</div>
