@@ -635,7 +635,7 @@ class theme extends common {
 			$t = [ $fontId => [
 					'name' => $fontName,
 					'font-family' => $fontFamilyName,
-					'ressource' => $ressource
+					'resource' => $ressource
 			]];
 
 			// Stocker les fontes
@@ -643,7 +643,7 @@ class theme extends common {
 								[
 									'name' => $fontName,
 									'font-family' => $fontFamilyName,
-									'ressource' => $ressource
+									'resource' => $ressource
 								]]
 			]);
 
@@ -691,7 +691,7 @@ class theme extends common {
 			$t = [ $fontId => [
 					'name' => $fontName,
 					'font-family' => $fontFamilyName,
-					'ressource' => $ressource
+					'resource' => $ressource
 			]];
 
 			// Stocker les fontes
@@ -699,7 +699,7 @@ class theme extends common {
 								[
 									'name' => $fontName,
 									'font-family' => $fontFamilyName,
-									'ressource' => $ressource
+									'resource' => $ressource
 								]]
 			]);
 
