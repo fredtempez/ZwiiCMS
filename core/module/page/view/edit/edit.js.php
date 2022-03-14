@@ -59,6 +59,7 @@ $( document ).ready(function() {
 	 $("#pageEditSetupContainer").hide();
 	 $("#pageEditPositionContainer").hide();
 	 $("#pageEditLayoutContainer").hide();
+	 $("#pageEditContentButton").addClass("activeButton");
 
 	/*
 	* Enleve le menu fixe en édition de page
