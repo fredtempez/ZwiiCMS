@@ -972,6 +972,14 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	];
 	$this->setData(['fonts', 'imported', $fonts]);
 
+	// Rafraichir les thèmes
+	if (file_exists(self::DATA_DIR . 'admin.css')) {
+		unlink (self::DATA_DIR . 'admin.css');
+	}
+	if (file_exists(self::DATA_DIR . 'theme.css')) {
+		unlink (self::DATA_DIR . 'theme.css');
+	}
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11400]);
 }
