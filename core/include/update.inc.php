@@ -843,6 +843,11 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'font-family' => '"Indie Flower", sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
 			],
+			'fira-sans' => [
+				'name' => 'Fira Sans',
+				'font-family' => '"Fira Sans", sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/fira'
+			],
 			'liberation-sans'=> [
 				'name' => 'Liberation Sans',
 				'font-family' => '"Liberation Sans", sans-serif',
