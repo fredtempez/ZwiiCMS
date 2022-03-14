@@ -14,8 +14,9 @@
 ### Améliorations :
     - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
     - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
-## Correction :
+## Corrections :
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
+    - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
 
 ## Version 11.3.04
 ### Correction :
