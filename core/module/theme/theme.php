@@ -1104,6 +1104,7 @@ class theme extends common {
 		return ($count);
 	}
 
+
 	// Retourne un tableau simple des fonts installées idfont avec le nom
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
 	public function enumFonts() {
@@ -1111,8 +1112,10 @@ class theme extends common {
 		$f = $this->getFonts();
 		// Construit un tableau avec leur ID et leur famille
 		foreach(['websafe', 'imported', 'files'] as $type) {
-			foreach ($f[$type] as $fontId => $fontValue ) {
-				$fonts [$fontId] = $fontValue['name'];
+			if(array_key_exists($type, $f))  {
+				foreach ($f[$type] as $fontId => $fontValue ) {
+					$fonts [$fontId] = $fontValue['name'];
+				}
 			}
 		}
 		ksort($fonts);
