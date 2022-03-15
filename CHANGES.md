@@ -18,6 +18,10 @@
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
 
+## Version 11.3.05
+### Correction :
+    - Dossier du fichier de fontes non créé empêchant la création du fichier des appels de fontes.
+
 ## Version 11.3.04
 ### Correction :
     - Duplication d'id dans le menu.
