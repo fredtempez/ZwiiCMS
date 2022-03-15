@@ -1,1 +1,1 @@
-<!-- rien -->
+Le flux RSS est vide ou indisponible !
