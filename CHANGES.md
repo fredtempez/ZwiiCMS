@@ -1,6 +1,10 @@
 # Changelog
 
 
+## Version 11.3.05
+### Correction :
+    - Dossier du fichier de fontes non créé empêchant la création du fichier des appels de fontes.
+
 ## Version 11.3.04
 ### Correction :
     - Duplication d'id dans le menu.
