@@ -94,7 +94,7 @@ class blog extends common {
 	];
 
 	public static $articlesLenght = [ 
-		0 => 'Article complet',
+		0 => 'Intégralité des articles,  disposition moderne',
 		500 => '500 signes',
 		1000 => '1000 signes',
 		1500 => '1500 signes',
@@ -503,7 +503,6 @@ class blog extends common {
 				'feeds' 	 => $this->getInput('blogOptionShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('blogOptionFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT,true),
-				'layout' => $this->getInput('blogOptionLayout',helper::FILTER_BOOLEAN),
 				'articlesLenght'=> $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]]);
@@ -881,7 +880,7 @@ class blog extends common {
 	/**
 	 * Retourne la signature d'un utilisateur
 	 */
-	private function signature($userId) {
+	public function signature($userId) {
 		switch ($this->getData(['user', $userId, 'signature'])){
 			case 1:
 				return $userId;
