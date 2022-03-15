@@ -78,11 +78,13 @@ class blog extends common {
 
 	// Nombre d'objets par page
 	public static $ArticlesListed = [
+		1 => '1 article',
+		2 => '2 articles',
 		4 => '4 articles',
+		6 => '6 articles',
 		8 => '8 articles',
-		12 => '12 articles',
-		16 => '16 articles',
-		22 => '22  articles'
+		10 => '10 articles',
+		12 => '12 articles'
 	];
 
 	//Paramètre longueur maximale des commentaires en nb de caractères
@@ -93,12 +95,12 @@ class blog extends common {
 		750 => '750 signes'
 	];
 
-	public static $articlesLenght = [ 
+	public static $articlesLenght = [
 		0 => 'Intégralité des articles,  disposition moderne',
-		500 => '500 signes',
-		1000 => '1000 signes',
-		1500 => '1500 signes',
-		2000 => '2000 signes'
+		200 => '200 signes',
+		400 => '400 signes',
+		600 => '600 signes',
+		800 => '800 signes'
 	];
 
 	// Permissions d'un article
