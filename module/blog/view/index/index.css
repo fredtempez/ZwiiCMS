@@ -14,6 +14,24 @@
 	*/
 }
 
+#sectionTitle {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+.blogArticlePicture {
+	height: auto;
+	border:1px solid lightgray;
+	box-shadow: 1px 1px 5px;
+}
+.blogArticlePictureleft {
+	float: left;
+	margin: 15px 10px 5px 0 ;
+}
+.blogArticlePictureright {
+	float: right;
+	margin: 15px 0 5px 10px ;
+}
+
 .blogPicture:hover {
 	opacity: .7;
 }
@@ -54,6 +72,24 @@
 		margin-right: auto;
 	}
 }
+
+.pict20{
+	width: 20%;
+}
+.pict30{
+	width: 30%;
+}
+.pict40{
+	width: 40%;
+}
+.pict50{
+	width: 50%;
+}
+.pict100{
+	width: 100%;
+	margin: 15px 0 20px 0 ;
+}
+
 
 /*
 * Flux RSS

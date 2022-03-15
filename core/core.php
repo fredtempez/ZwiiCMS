@@ -1959,6 +1959,7 @@ class common {
 		if(common::$inputNotices) {
 			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
 			$notificationClass = 'notificationError';
+			var_dump(common::$inputNotices) ;
 		}
 		if (common::$coreNotices) {
 			$notification = 'Données absentes, restauration de <p> | ';

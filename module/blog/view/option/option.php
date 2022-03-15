@@ -14,27 +14,47 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres du module</h4>
+				<h4>Flux RSS</h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::text('blogOptionFeedslabel', [
 							'label' => 'Texte de l\'étiquette',
 							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>Disposition de la liste des articles</h4>
 				<div class="row">
-					<div class="col6 offset6">
-						<?php echo template::select('blogOptionItemsperPage', $module::$ItemsList, [
-							'label' => 'Articles par page',
-							'selected' => $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage'])
+					<div class="col4">
+						<?php echo template::checkbox('blogOptionLayout', true, 'Disposition moderne', [
+							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'layout']),
+							'help' => 'La disposition moderne affiche les articles les uns à la suite des autres'
 						]); ?>
 					</div>
+					<div class="col4">
+					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
+							'label' => 'Longueur des articles',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
+						]); ?>
+					</div>
+					<div class="col4">
+						<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
+							'label' => 'Articles par page',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])
+						]); ?>
+					</div>
+
 				</div>
 			</div>
 		</div>

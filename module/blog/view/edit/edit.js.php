@@ -64,4 +64,8 @@ $( document).ready(function() {
 	} else {
 		$("#blogEditCommentGroupNotification").slideUp();
 	}
+
+	// Permalink
+	$('#blogEditTitle').furl({id:'blogEditPermalink', seperate: '_' });
+
 });

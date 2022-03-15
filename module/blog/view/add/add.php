@@ -28,9 +28,14 @@
 			<div class="block">
 				<h4>Informations générales</h4>
 				<div class="row">
-					<div class="col12">
+					<div class="col6">
 						<?php echo template::text('blogAddTitle', [
 							'label' => 'Titre'
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::text('blogAddPermalink', [
+							'label' => 'Permalink'
 						]); ?>
 					</div>
 				</div>
@@ -55,10 +60,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col12">
-					<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image dans l\'article', [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'hidePicture'])
-							]); ?>
+					<div class="col6">
+						<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image dans l\'article', [
+							'checked' => true
+						]); ?>
 					</div>
 				</div>
 			</div>

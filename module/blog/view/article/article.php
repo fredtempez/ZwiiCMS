@@ -66,12 +66,12 @@
 <?php if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentClose'])): ?>
 	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>
-	<h3 id="comment">
+	<h5 id="comment">
 		<?php  //$commentsNb = count($module::$comments); ?>
 		<?php $commentsNb = $module::$nbCommentsApproved; ?>
 		<?php $s =  $commentsNb === 1 ? '': 's' ?>
 		<?php echo $commentsNb > 0 ? $commentsNb . ' ' .  'commentaire' . $s : 'Pas encore de commentaire'; ?>
-	</h3>
+	</h5>
 	<?php echo template::formOpen('blogArticleForm'); ?>
 		<?php echo template::text('blogArticleCommentShow', [
 			'placeholder' => 'Rédiger un commentaire...',

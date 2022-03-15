@@ -28,10 +28,16 @@
 			<div class="block">
 				<h4>Informations générales</h4>
 				<div class="row">
-					<div class="col12">
+					<div class="col6">
 						<?php echo template::text('blogEditTitle', [
 							'label' => 'Titre',
 							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title'])
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::text('blogEditPermalink', [
+							'label' => 'Permalink',
+							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'permalink'])
 						]); ?>
 					</div>
 				</div>
@@ -60,7 +66,7 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('blogEditHidePicture', true, 'Masquer l\'image dans l\'article', [
+						<?php echo template::checkbox('blogEditHidePicture', true, 'Masquer l\'image de couverture dans l\'article', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'hidePicture'])
 							]); ?>
 					</div>

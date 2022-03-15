@@ -77,7 +77,7 @@ class blog extends common {
 	];
 
 	// Nombre d'objets par page
-	public static $ItemsList = [
+	public static $ArticlesListed = [
 		4 => '4 articles',
 		8 => '8 articles',
 		12 => '12 articles',
@@ -87,11 +87,18 @@ class blog extends common {
 
 	//Paramètre longueur maximale des commentaires en nb de caractères
 	public static $commentLength = [
-		'500' => '500',
-		'1000' => '1000',
-		'2000' => '2000',
-		'5000' => '5000',
-		'10000' => '10000'
+		100 => '100 signes',
+		250 => '250 signes',
+		500 => '500 signes',
+		750 => '750 signes'
+	];
+
+	public static $articlesLenght = [ 
+		0 => 'Article complet',
+		500 => '500 signes',
+		1000 => '1000 signes',
+		1500 => '1500 signes',
+		2000 => '2000 signes'
 	];
 
 	// Permissions d'un article
@@ -100,6 +107,7 @@ class blog extends common {
 		self::EDIT_GROUP       => 'Groupe du propriétaire',
 		self::EDIT_OWNER       => 'Propriétaire'
 	];
+
 
 	// Nombre d'articles dans la page de config:
 	public static $itemsperPage = 8;
@@ -245,7 +253,8 @@ class blog extends common {
 			'title' => 'Nouvel article',
 			'vendor' => [
 				'flatpickr',
-				'tinymce'
+				'tinymce',
+				'furl'
 			],
 			'view' => 'add'
 		]);
@@ -494,7 +503,9 @@ class blog extends common {
 				'feeds' 	 => $this->getInput('blogOptionShowFeeds',helper::FILTER_BOOLEAN),
 				'feedsLabel' => $this->getInput('blogOptionFeedslabel',helper::FILTER_STRING_SHORT),
 				'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT,true),
-				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+				'layout' => $this->getInput('blogOptionLayout',helper::FILTER_BOOLEAN),
+				'articlesLenght'=> $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT),
+				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -654,6 +665,8 @@ class blog extends common {
 					$this->getUrl(0),
 					'posts',
 					$articleId, [
+						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
+						'permalink' => $this->getInput('blogEditPermalink', helper::FILTER_STRING_SHORT, true),
 						'comment' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2), 'comment']),
 						'content' => $this->getInput('blogEditContent', null),
 						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
@@ -662,7 +675,6 @@ class blog extends common {
 						'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
 						'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
-						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'userId' => $newuserid,
 						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : $this->getInput('blogEditConsent'),
 						'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
@@ -699,7 +711,8 @@ class blog extends common {
 				'title' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'title']),
 				'vendor' => [
 					'flatpickr',
-					'tinymce'
+					'tinymce',
+					'furl'
 				],
 				'view' => 'edit'
 			]);
@@ -844,6 +857,8 @@ class blog extends common {
 			foreach($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 				if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
 					$articleIds[] = $articleId;
+					// Nombre de commentaires approuvés par article
+					self::$comments [$articleId] = count ( $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'comment']));
 				}
 			}
 			// Pagination

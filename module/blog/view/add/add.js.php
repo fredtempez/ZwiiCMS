@@ -52,4 +52,7 @@ $( document).ready(function() {
 	} else {
 		$("#blogAddCommentGroupNotification").slideUp();
 	}
+
+	// Permalink
+	$('#blogAddTitle').furl({id:'blogAddPermalink', seperate: '_' });
 });
