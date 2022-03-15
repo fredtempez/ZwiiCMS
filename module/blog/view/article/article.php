@@ -66,15 +66,20 @@
 <?php if($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentClose'])): ?>
 	<p>Cet article ne reçoit pas de commentaire.</p>
 <?php else: ?>
-	<h4 id="comment">
-		<?php
-			if ($module::$nbCommentsApproved > 0) {
-				echo $module::$nbCommentsApproved . ' commentaire' . ($module::$nbCommentsApproved > 1 ? 's' : '');
-			} else {
-				echo  'Pas encore de commentaire';
-			}
-		?>
-	</h5>
+	<div class="row">
+		<div class="col12" id="comment">
+			<h3>
+				<?php
+					echo template::ico('comment', 'right');
+					if ($module::$nbCommentsApproved > 0) {
+						echo $module::$nbCommentsApproved . ' commentaire' . ($module::$nbCommentsApproved > 1 ? 's' : '');
+					} else {
+						echo  'Pas encore de commentaire';
+					}
+				?>
+			</h3>
+		</div>
+	</div>
 	<?php echo template::formOpen('blogArticleForm'); ?>
 		<?php echo template::text('blogArticleCommentShow', [
 			'placeholder' => 'Rédiger un commentaire...',

@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<div class="row verticalAlignMiddle">
-				<div class="col12 blogDate">
+				<div class="col6 blogDate">
 					<!-- bloc signature et date -->
 					<?php echo $module->signature($this->getData(['module', $this->getUrl(0),  'posts', $articleId, 'userId']));?>
 					<?php echo ' - ';?>
@@ -64,23 +64,24 @@
 							</a>
 					<?php endif; ?>
 				</div>
-			</div>
-			<div class="row">
-				<?php if($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'commentClose'])): ?>
-					<p>Cet article ne reçoit pas de commentaire.</p>
-				<?php else: ?>
-					<h3 id="comment">
-						<?php
-							if ($module::$comments[$articleId] > 0) {
-								echo '<a href="'. helper::baseUrl() . $this->getUrl(0) . '/' . $articleId .'">';
-								echo $module::$comments[$articleId] . ' commentaire' . ($module::$comments[$articleId] > 1 ? 's' : '');
-								echo '</a>';
-							} else {
-								echo  'Pas encore de commentaire';
-							}
-						?>
-					</h3>
-				<?php endif; ?>
+				<div class="col6 textAlignRight" id="comment">
+					<?php if($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'commentClose'])): ?>
+						<p>Cet article ne reçoit pas de commentaire.</p>
+					<?php else: ?>
+						<p>	
+							<?php echo template::ico('comment', 'right'); ?>
+							<?php
+								if ($module::$comments[$articleId] > 0) {
+									echo '<a href="'. helper::baseUrl() . $this->getUrl(0) . '/' . $articleId .'">';
+									echo $module::$comments[$articleId] . ' commentaire' . ($module::$comments[$articleId] > 1 ? 's' : '');
+									echo '</a>';
+								} else {
+									echo  'Pas encore de commentaire';
+								}
+							?>
+						</p>
+					<?php endif; ?>
+				</div>
 			</div>
 		<?php else: ?>
 			<div class="row rowArticle">
