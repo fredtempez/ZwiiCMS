@@ -2552,8 +2552,15 @@ class core extends common {
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
+			// Enregistre les fontes
+			if (!is_dir(self::DATA_DIR . 'fonts')) {
+				mkdir(self::DATA_DIR . 'fonts');
+			}
+			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile, );
+
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
+
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
 			header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
 			header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
