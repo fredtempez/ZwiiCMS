@@ -2915,13 +2915,6 @@ class core extends common {
 								'content' => $output['content']
 							]);
 						}
-						// Incorporer le style perso stocké avec la page
-						if ( !empty($this->getData(['page', $this->getUrl(0), 'css'])) ) {
-							$this->addOutput([
-								'style' => $this->output['style'] . $this->getData(['page', $this->getUrl(0), 'css'])
-							]);
-
-						}
 						// Contenu par vue
 						elseif($output['view']) {
 							// Chemin en fonction d'un module du coeur ou d'un module
