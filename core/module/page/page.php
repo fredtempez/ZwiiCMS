@@ -457,7 +457,6 @@ class page extends common {
 							}
 						}
 					}
-
 					// Modifie la page ou en crée une nouvelle si l'id a changé
 					$this->setData([
 						'page',
@@ -487,8 +486,8 @@ class page extends common {
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN),
-							'css' => $this->getData(['page', $pageId, 'css']),
-							'js' => $this->getData(['page', $pageId, 'js'])
+							'css' => $this->getData(['page', $this->getUrl(2), 'css']),
+							'js' => $this->getData(['page', $this->getUrl(2), 'js'])
 						]
 					]);
 
@@ -554,8 +553,12 @@ class page extends common {
 	public function cssEditor() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Contrôle la présence des balises
+			$css =$this->getInput('pageCssEditorContent');
+			$css = strpos ( $css, '<style>')  >= 1 ? $css : '<style>' . $css;
+			$css = strpos ( $css, '</style>') >= 1 ? $css : $css . '</style>';
 			// Enregistre le CSS
-			$this->setData(['page', $this->getUrl(2), 'css', $this->getInput('pageCssEditorContent') ]);
+			$this->setData(['page', $this->getUrl(2), 'css', $css ]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',
@@ -579,8 +582,12 @@ class page extends common {
 	public function jsEditor() {
 		// Soumission du formulaire
 		if($this->isPost()) {
+			// Contrôle la présence des balises
+			$js = $this->getInput('pageJsEditorContent');
+			$js = strpos ( $css, '<script>') >=1 ? $js : '<script>' . $js;
+			$js = strpos ( $css, '</script>')  >=1 ? $js : $js . '</script>';
 			// Enregistre le JS
-			$this->setData(['page', $this->getUrl(2), 'js', $this->getInput('pageJsEditorContent') ]);
+			$this->setData(['page', $this->getUrl(2), 'js', $js ]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',

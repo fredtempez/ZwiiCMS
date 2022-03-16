@@ -2785,8 +2785,10 @@ class core extends common {
 		) {
 			$this->addOutput([
 				'title' => $title,
-				//'content' => file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content'])),
-				'content' => $this->getPage($this->getUrl(0), self::$i18n),
+				'content' => 	$this->getPage($this->getUrl(0), self::$i18n) .
+								// Concatène avec les paramètres avancés.
+								$this->getData(['page', $this->getUrl(0), 'css']) . 
+								$this->getData(['page', $this->getUrl(0), 'js']),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
