@@ -210,7 +210,7 @@ class blog extends common {
 				$newuserid = $this->getUser('id');
 			}
 			// Incrémente l'id de l'article
-			$articleId = helper::increment($this->getInput('blogAddTitle', helper::FILTER_ID), $this->getData(['page']));
+			$articleId = helper::increment($this->getInput('blogAddPermalink'), $this->getData(['page']));
 			$articleId = helper::increment($articleId, (array) $this->getData(['module', $this->getUrl(0)]));
 			$articleId = helper::increment($articleId, array_keys(self::$actions));
 			// Crée l'article
@@ -218,9 +218,8 @@ class blog extends common {
 				$this->getUrl(0),
 				'posts',
 				$articleId, [
-					'comment' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2), 'comment']),
 					'content' => $this->getInput('blogAddContent', null),
-					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
+					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT),
 					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
 					'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
 					'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),
@@ -234,6 +233,7 @@ class blog extends common {
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
 					'commentNotification'  => $this->getInput('blogAddCommentNotification', helper::FILTER_BOOLEAN),
 					'commentGroupNotification' => $this->getInput('blogAddCommentGroupNotification', helper::FILTER_INT),
+					'comment' => []
 				]
 			]);
 			// Valeurs en sortie
@@ -655,7 +655,7 @@ class blog extends common {
 				else{
 					$newuserid = $this->getUser('id');
 				}
-				$articleId = $this->getInput('blogEditTitle', helper::FILTER_ID, true);
+				$articleId = $this->getInput('blogEditPermalink', null, true);
 				// Incrémente le nouvel id de l'article
 				if($articleId !== $this->getUrl(2)) {
 					$articleId = helper::increment($articleId, $this->getData(['page']));
@@ -667,10 +667,9 @@ class blog extends common {
 					'posts',
 					$articleId, [
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
-						'permalink' => $this->getInput('blogEditPermalink', helper::FILTER_STRING_SHORT, true),
 						'comment' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2), 'comment']),
 						'content' => $this->getInput('blogEditContent', null),
-						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT, true),
+						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT),
 						'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
 						'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
 						'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
@@ -859,7 +858,7 @@ class blog extends common {
 				if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
 					$articleIds[] = $articleId;
 					// Nombre de commentaires approuvés par article
-					self::$comments [$articleId] = count ( $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'comment']));
+					self::$comments [$articleId] = count ( $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']));
 				}
 			}
 			// Pagination

@@ -37,7 +37,7 @@
 					<div class="col6">
 						<?php echo template::text('blogEditPermalink', [
 							'label' => 'Permalink',
-							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'permalink'])
+							'value' => $this->getUrl(2)
 						]); ?>
 					</div>
 				</div>

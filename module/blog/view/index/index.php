@@ -12,13 +12,16 @@
 			</div>
 			<div class="row">
 				<div class="col12">
-					<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'pictureSize']); ?>
-					<?php if ($this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'hidePicture']) == false) {
-						echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'picturePosition']) .
-						' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'picture']) .
-						'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'picture']) . '">';
-					} ?>
-					<?php echo $this->getData(['module', $this->getUrl(0),'posts',$articleId, 'content']); ?>
+					<?php if (  $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) &&
+								file_exists( self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture'])) ): ?>
+							<?php $pictureSize =  $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']); ?>
+							<?php if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'hidePicture']) == false) {
+								echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picturePosition']) .
+								' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) .
+								'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) . '">';
+							} ?>
+					<?php endif; ?>
+				<?php echo $this->getData(['module', $this->getUrl(0),'posts', $articleId, 'content']); ?>
 				</div>
 			</div>
 			<div class="row verticalAlignMiddle">
@@ -27,12 +30,12 @@
 					<?php echo $module->signature($this->getData(['module', $this->getUrl(0),  'posts', $articleId, 'userId']));?>
 					<?php echo ' - ';?>
 					<?php echo template::ico('calendar-empty'); ?>
-					<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn'])), 'UTF-8', true)
-									? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn']))
-									: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn'])));
-							$heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn'])), 'UTF-8', true)
-									? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn']))
-									:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts',$articleId, 'publishedOn'])));
+					<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])), 'UTF-8', true)
+									? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']))
+									: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
+							$heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])), 'UTF-8', true)
+									? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']))
+									:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
 							echo $date . ' à ' . $heure;
 					?>
 					<!-- Bloc edition -->
@@ -42,15 +45,15 @@
 						AND
 						(  // Propriétaire
 							(
-									$this->getData(['module',  $this->getUrl(0), 'posts',$articleId,'editConsent']) === $module::EDIT_OWNER
-									AND ( $this->getData(['module',  $this->getUrl(0), 'posts',$articleId,'userId']) === $this->getUser('id')
+									$this->getData(['module',  $this->getUrl(0), 'posts', $articleId,'editConsent']) === $module::EDIT_OWNER
+									AND ( $this->getData(['module',  $this->getUrl(0), 'posts', $articleId,'userId']) === $this->getUser('id')
 									OR $this->getUser('group') === self::GROUP_ADMIN )
 						)
 						OR (
 								// Groupe
 								( $this->getData(['module',  $this->getUrl(0), 'posts', $articleId,'editConsent']) === self::GROUP_ADMIN
 								OR $this->getData(['module',  $this->getUrl(0), 'posts', $articleId,'editConsent']) === self::GROUP_MODERATOR)
-								AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), 'posts',$articleId,'editConsent'])
+								AND $this->getUser('group') >=  $this->getData(['module',$this->getUrl(0), 'posts', $articleId,'editConsent'])
 						)
 						OR (
 								// Tout le monde
@@ -85,24 +88,27 @@
 			</div>
 		<?php else: ?>
 			<div class="row rowArticle">
-				<div class="col3">
-				<?php if (  file_exists(self::FILE_DIR . 'source/' . $article['picture']) ): ?>
-					<?php // Déterminer le nom de la miniature
-						$parts = explode('/',$article['picture']);
-						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $article['picture']);
-						// Créer la miniature si manquante
-						if (!file_exists( self::FILE_DIR . 'thumb/' . $thumb) ) {
-							$this->makeThumb(  self::FILE_DIR . 'source/' . $article['picture'],
-											self::FILE_DIR . 'thumb/' . $thumb,
-											self::THUMBS_WIDTH);
-						}
-					?>
-					<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
-						<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $article['picture']; ?>">
-					</a>
+				<?php if (  $article['picture'] &&
+							file_exists( self::FILE_DIR . 'source/' . $article['picture']) ):?>
+					<div class="col3">
+						<?php // Déterminer le nom de la miniature
+							$parts = explode('/',$article['picture']);
+							$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $article['picture']);
+							// Créer la miniature si manquante
+							if (!file_exists( self::FILE_DIR . 'thumb/' . $thumb) ) {
+								$this->makeThumb(  self::FILE_DIR . 'source/' . $article['picture'],
+												self::FILE_DIR . 'thumb/' . $thumb,
+												self::THUMBS_WIDTH);
+							}
+						?>
+						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
+							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $article['picture']; ?>">
+						</a>
+					</div>
+					<div class="col9">
+				<?php else:?>
+					<div class="col12">
 				<?php endif;?>
-				</div>
-				<div class="col9">
 					<h2 class="blogTitle">
 						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
 							<?php echo $article['title']; ?>
