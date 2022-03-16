@@ -15,51 +15,30 @@
 			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
-</div>
-<div class="row">
-    <div class="col12">
-        <div class="row textAlignCenter">
-            <div class="col3">
-                <?php echo template::button('configManageModuleButton', [
-                    'value' => 'Modules installés',
-					'class' => 'activeButton'
-                ]); ?>
-            </div>
-            <div class="col3">
-                <?php echo template::button('configManageDatasButton', [
-                    'value' => 'Données des modules'
-                ]); ?>
-            </div>
-        </div>
-    </div>
-</div>
-<div id="manageModules">
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Installation / mise à jour d'un module</h4>
-				<div class="row textAlignCenter">
-					<div class="col4">
-						<?php echo template::button('configModulesStore', [
-							'href' => helper::baseUrl() . 'plugin/store',
-							'value' => template::ico('shopping-basket') . ' Catalogue en ligne'
-						]); ?>
-					</div>
-					<div class="col4">
-						<?php echo template::button('configStoreUpload', [
-							'href' => helper::baseUrl() . 'plugin/upload',
-							'value' => template::ico('upload')  . ' Depuis une archive ZIP'
-						]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="col3 offset7">
+		<?php echo template::button('configModulesStore', [
+			'href' => helper::baseUrl() . 'plugin/store',
+			'ico' => 'shopping-basket',
+			'value' => 'Catalogue en ligne'
+		]); ?>
 	</div>
+</div>
+<div class="tab">
+	<?php echo template::button('configManageModuleButton', [
+		'value' => 'Modules installés',
+		'class' => ' buttonTab activeButton'
+	]); ?>
+	<?php echo template::button('configManageDatasButton', [
+		'value' => 'Données des modules',
+		'class' => 'buttonTab'
+	]); ?>
+</div>
+<div class="tabContent" id="manageModules">
 	<?php if($module::$modulesInstalled): ?>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Sauvegarde des modules installés</h4>
+				<h4>Sauvegarde</h4>
 				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Modules', 'moduleId', 'Versions', '', '', '']); ?>
 			</div>
 		</div>
@@ -71,14 +50,14 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Désinstallation des modules orphelins</h4>
+				<h4>Modules orphelins</h4>
 				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Modules', 'moduleId', 'Versions', '', '']); ?>
 			</div>
 		</div>
 	</div>
 	<?php endif; ?>
 </div>
-<div id="manageDatas" class="displayNone">
+<div class="tabContent displayNone" id="manageDatas">
 	<?php if($module::$modulesData): ?>
 	<div class="row">
 		<div class="col12">

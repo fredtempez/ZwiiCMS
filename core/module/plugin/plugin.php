@@ -233,7 +233,7 @@ class plugin extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Téléverser un module',
+			'title' => 'Installer un module',
 			'view' => 'upload'
 		]);
 	}
@@ -310,18 +310,18 @@ class plugin extends common {
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
-				$help = 'Télécharger le module';
+				$help = 'Télécharger le module dans le gestionnaire de fichiers';
 				// Le module est installé
 				if (array_key_exists($key,$infoModules) === true) {
 					$class = 'buttonGreen';
 					$ico = template::ico('update');
-					$help = 'Mettre à jour ce module';
+					$help = 'Mettre à jour le module orphelin';
 				}
 				// Le module est installé et utilisé
 				if (in_array($key,$inPages) === true) {
 					$class = 'buttonRed';
 					$ico =  template::ico('update');
-					$help = 'Mettre à jour le module';
+					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
 				}
 				self::$storeList [] = [
 					$store[$key]['category'],
