@@ -521,7 +521,7 @@ class page extends common {
 					}
 				}
 			}
-			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayColumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
+			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arraycollumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
 			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);

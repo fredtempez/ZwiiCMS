@@ -78,7 +78,7 @@ function position() {
 var inputUid = 0;
 var inputs = <?php echo json_encode($this->getData(['module', $this->getUrl(0), 'input'])); ?>;
 if(inputs) {
-	var inputsPerPosition = <?php echo json_encode(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'input']), 'position', 'SORT_ASC')); ?>;
+	var inputsPerPosition = <?php echo json_encode(helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'input']), 'position', 'SORT_ASC')); ?>;
 	$.each(inputsPerPosition, function(id) {
 		add(inputUid, inputs[id]);
 		inputUid++;
