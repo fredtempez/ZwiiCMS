@@ -46,16 +46,15 @@
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditSetupButton', [
-			'value' => 'Configuration',
+			'value' => 'Identité',
 			'class' => 'buttonTab'
 		]); ?>
-
 		<?php echo template::button('PageEditPositionButton', [
 			'value' => 'Emplacement',
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditLayoutButton', [
-			'value' => 'Mise en page',
+			'value' => 'Disposition',
 			'class' => 'buttonTab'
 		]); ?>
 	</div>
@@ -72,7 +71,7 @@
 		<div class="row">
 			<div class="col6">
 				<div class="block">
-					<h4>Extensions</h4>
+					<h4>Extension</h4>
 					<div class="row">
 						<div class="col10">
 							<?php echo template::hidden('pageEditModuleRedirect'); ?>
@@ -136,7 +135,7 @@
 		<div class="row">
 			<div class="col12">
 				<div class="block">
-					<h4>Identité
+					<h4>Titres
 						<span id="infoHelpButton" class="helpDisplayButton">
 							<a href="https://doc.zwiicms.fr/informations-generales" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 								<?php echo template::ico('help', 'left');?>
