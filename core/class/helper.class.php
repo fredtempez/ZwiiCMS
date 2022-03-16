@@ -86,7 +86,7 @@ class helper {
 	 * @param string $sort Type de tri à appliquer au tableau (SORT_ASC, SORT_DESC, ou null)
 	 * @return array
 	 */
-	public static function arrayColumn($array, $column, $sort = null) {
+	public static function arraycollumn($array, $column, $sort = null) {
 		$newArray = [];
 		if(empty($array) === false) {
 			$newArray = array_map(function($element) use($column) {
