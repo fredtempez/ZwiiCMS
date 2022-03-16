@@ -2524,7 +2524,7 @@ class core extends common {
 			if (!is_dir(self::DATA_DIR . 'fonts')) {
 				mkdir(self::DATA_DIR . 'fonts');
 			}
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile, );
+			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
