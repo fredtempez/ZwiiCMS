@@ -39,9 +39,9 @@ class page extends common {
 	];
 	// Position du module
 	public static $modulePosition = [
-		'bottom' => 'En bas',
-		'top'    => 'En haut',
-		'free'   => 'Libre'
+		'bottom' => 'Après le contenu de page',
+		'top'    => 'Avant le contenu de page',
+		'free'   => 'Libre, à l\'emplacement de [MODULE] dans la page'
 	];
 	public static $pageBlocks = [
 		'12'    => 'Page standard',

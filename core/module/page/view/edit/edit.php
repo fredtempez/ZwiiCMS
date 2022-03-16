@@ -74,7 +74,7 @@
 				<div class="block">
 					<h4>Extensions</h4>
 					<div class="row">
-						<div class="col12">
+						<div class="col10">
 							<?php echo template::hidden('pageEditModuleRedirect'); ?>
 							<?php echo template::select('pageEditModuleId', $module::$moduleIds, [
 								'help' => 'En cas de changement de module, les données du module précédent seront supprimées.',
@@ -86,15 +86,6 @@
 								'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']),$module::$moduleIds)? $module::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 							]); ?>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col10">
-							<?php echo template::select('configModulePosition', $module::$modulePosition,[
-								'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
-								'label' => 'Position du module',
-								'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
-							]); ?>
-						</div>
 						<div class="col2 verticalAlignBottom">
 							<?php echo template::button('pageEditModuleConfig', [
 								'disabled' => (bool) $this->getData(['page', $this->getUrl(2), 'moduleId']) === false,
@@ -102,6 +93,16 @@
 								'value' => template::ico('gear')
 							]); ?>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::select('configModulePosition', $module::$modulePosition,[
+								'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
+								'label' => 'Position du module',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
+							]); ?>
+						</div>
+
 					</div>
 				</div>
 			</div>
