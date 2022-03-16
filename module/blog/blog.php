@@ -124,10 +124,22 @@ class blog extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
+		// Initialisation
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '0.0', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'feeds', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'feedsLabel', 'Flux RSS']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','4.0']);
+		}
 		// Version 5.0
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','5.0']);
+		}
+		// Version 6.0
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '6.0', '<') ) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'articlesLenght', 0]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'commentMaxlength', 250]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','6.0']);
 		}
 	}
 
