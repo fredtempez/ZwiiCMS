@@ -184,7 +184,7 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('themeMenuFont', $module::$fontsList, [
-								'label' => 'Police',
+								'label' => 'Fonte',
 								'selected' => $this->getData(['theme', 'menu', 'font']),
                                 'fonts' => true
 							]); ?>
