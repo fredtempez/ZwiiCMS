@@ -80,11 +80,7 @@ class news extends common {
 
 	public static $borderStyle =[
 		'none'	=> 'Aucune',
-		'solid' => 'Tiret',
-		'inset'	=> '3D enfoncé',
-		'outset'=> '3D surélevé',
-		'ridge'	=> 'Relief 1',
-		'groove'=> 'Relief 2'
+		'solid' => 'Tiret'
 	];
 
 	// Signature de l'article
@@ -252,7 +248,8 @@ class news extends common {
 
 			// Générer la feuille de CSS
 			$style =  '.newsFrame {';
-			$style .= 'border:' .  $this->getInput('newsThemeBorderStyle',helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth',helper::FILTER_STRING_SHORT) . ';';
+			$style .= 'border-right:' .  $this->getInput('newsThemeBorderStyle',helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth',helper::FILTER_STRING_SHORT) . ';';
+			$style .= 'border-left:' .  $this->getInput('newsThemeBorderStyle',helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth',helper::FILTER_STRING_SHORT) . ';';
 			$style .= 'background-color:' . $this->getInput('newsThemeBackgroundColor') . ';';
 			$style .= '}';
 
