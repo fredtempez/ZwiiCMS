@@ -283,7 +283,7 @@ class init extends common {
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
-				'font' => 'georgia',
+				'font' => 'arial',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
 				'height' => '15px 10px',
