@@ -1,6 +1,12 @@
 # Changelog
 
 
+## Version 11.3.06
+### Corrections :
+    - Bugs dans la gestion des fontes, fichier de fonte non disponible.
+### Amélioration :
+    - Amléioration du code de gestion des fontes.
+
 ## Version 11.3.05
 ### Correction :
     - Dossier du fichier de fontes non créé empêchant la création du fichier des appels de fontes.
