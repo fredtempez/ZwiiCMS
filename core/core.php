@@ -410,7 +410,7 @@ class common {
 	/**
 	 * Construit la liste des fontes dans un tableau
 	 * @return array @fonts
-	 * 
+	 *
 	 */
 	public function getFonts() {
 
@@ -2374,16 +2374,19 @@ class core extends common {
 			 */
 			foreach ($fonts as $fontId) {
 				// Validité du tableau :
-				if ( isset($fontsAvailable['files'][$fontId]) &&
-						file_exists(self::DATA_DIR . 'fonts/' . $f) ) {
+				if ( isset($fontsAvailable['files'][$fontId]) ) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
 						// Chargement de la police
 						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
 						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
+					} else {
+						// Le fichier de font n'est pas disponible, fonte par défaut
+						$fonts [$fontId] = 'verdana';
+					}
 				}
-
 			}
 
 			// Fond du body
