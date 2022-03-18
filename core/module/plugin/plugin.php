@@ -9,9 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
   * @copyright Copyright (C) 2018-2022, Frédéric Tempez
- * @author Sylvain Lelièvre <lelievresylvain@free.fr>
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
@@ -100,51 +98,82 @@ class plugin extends common {
 	 * Installation d'un module
 	 * Fonction utilisée par upload et storeUpload
 	 */
-	private function install ($moduleName, $checkValid){
-		$tempFolder = 'datamodules';//uniqid();
-		$zip = new ZipArchive();
-		if ($zip->open($moduleName) === TRUE) {
-			$notification = 'Archive ouverte';
-			mkdir (self::TEMP_DIR . $tempFolder, 0755);
-			$zip->extractTo(self::TEMP_DIR . $tempFolder );
-			// Archive de module ?
-			$success = false;
-			$notification = 'Ce n\'est pas l\'archive d\'un module !';
-			$moduleDir = self::TEMP_DIR . $tempFolder . '/module';
-			$moduleName = '';
-			if ( is_dir( $moduleDir )) {
-				// Lire le nom du module
-				if ($dh = opendir( $moduleDir )) {
-					while ( false !== ($file = readdir($dh)) ) {
-						if ($file != "." && $file != "..") {
-							$moduleName = $file;
-						}
-					}
-					closedir($dh);
-				}
-				// Module normalisé ?
-				if( is_file( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php' ) AND is_file( $moduleDir.'/'.$moduleName.'/view/index/index.php' ) ){
+	private function install($moduleFileName, $checkValid){
 
-					// Lecture de la version et de la validation d'update du module pour validation de la mise à jour
-					// Pour une version <= version installée l'utilisateur doit cocher 'Mise à jour forcée'
-					$version = '0.0';
-					$update = '0.0';
-					$valUpdate = false;
-					$file = file_get_contents( $moduleDir.'/'.$moduleName.'/'.$moduleName.'.php');
-					$file = str_replace(' ','',$file);
-					$file = str_replace("\t",'',$file);
-					$pos1 = strpos($file, 'constVERSION');
-					if( $pos1 !== false){
-						$posdeb = strpos($file, "'", $pos1);
-						$posend = strpos($file, "'", $posdeb + 1);
-						$version = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-					}
-					$pos1 = strpos($file, 'constUPDATE');
-					if( $pos1 !== false){
-						$posdeb = strpos($file, "'", $pos1);
-						$posend = strpos($file, "'", $posdeb + 1);
-						$update = substr($file, $posdeb + 1, $posend - $posdeb - 1);
-					}
+		/**
+		 * Initialisation des variables
+		 */
+		//$tempFolder = uniqid() . '/';
+		$tempFolder = 'truc/';
+		$notification = '';
+		// Numéro de version du module déjà installé
+		$versionInstalled = '';
+
+		/**
+		 * Désarchivage
+		 */
+		$zip = new ZipArchive();
+		if ($zip->open($moduleFileName) === TRUE) {
+
+			/**
+			 * Création du dossier temporaire
+			 */
+			if (!is_dir (self::TEMP_DIR . $tempFolder) ) {
+				mkdir (self::TEMP_DIR . $tempFolder, 0755);
+			}
+
+			$zip->extractTo(self::TEMP_DIR . $tempFolder );
+			// Lecture du descripteur de ressource
+			$modulePath = self::TEMP_DIR . $tempFolder . 'module';
+			if (file_exists(self::TEMP_DIR . $tempFolder . 'desc.json')
+				) {
+					$res = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'desc.json'), true);
+				} else {
+					return([
+						'success' => false,
+						'notification'=> 'Cette archive est invalide'
+					]);
+			}
+			/**
+			 * Structure lue
+			 * $res ['name'] = id du module, correspond à la classe
+			 * $res ['realname'] = Nom complet du module
+			 * $res ['version'] = version du module
+			 * $res ['dirs'] @array
+			 * 		'dossier' => 'destination',
+			 * 		'download" => 'module/download'
+			 * 
+			 * Attention le dossier source est celui dans l'archive, la destination correspond à l’arborescence cible
+			 */
+			echo "<pre>";
+			// Affectation
+			$moduleName = $res ['name'];
+			$modulePath = $res ['name'] . '/';
+			$moduleFile = $res ['name'] . '.php' ;
+
+			/**
+			 * Validation des informations du descripteur
+			 */
+			if ( !is_dir ( self::TEMP_DIR . $tempFolder . $modulePath) ||
+				 !is_file (self::TEMP_DIR . $tempFolder . $modulePath . $moduleFile)
+				) {
+					return([
+						'success' => false,
+						'notification'=> 'Cette archive est invalide'
+					]);
+			}
+			/**
+			 * Le module est-il installé ? Lire le numéro de version
+			 */
+			if (is_file( 'module/' . $modulePath . $moduleFile) ) {
+				$c = helper::getModules();
+				if (array_key_exists($moduleName, $c)) {
+					$versionInstalled = $c[$moduleName]['version'];
+				}
+			}
+			echo $versionInstalled;
+
+			die();
 					// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
 					$infoModules = helper::getModules();
 					if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
@@ -195,7 +224,6 @@ class plugin extends common {
 						}
 					}
 				}
-			}
 			// Supprimer le dossier temporaire même si le module est invalide
 			$this->removeDir(self::TEMP_DIR . $tempFolder);
 			$zip->close();
