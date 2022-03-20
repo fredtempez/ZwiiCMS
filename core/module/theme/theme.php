@@ -958,23 +958,18 @@ class theme extends common {
 		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) {
 			switch ($modele) {
 				case 'admin':
-					$zip->addFile(self::DATA_DIR.'admin.json');
-					$zip->addFile(self::DATA_DIR.'admin.css');
+					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
+					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
 					// Ajoute les fontes
 					$zip->addEmptyDir(self::DATA_DIR .'fonts');
-					$path = realpath('site/data/fonts');
-					foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $fileName)
-					{
-						echo $fileName;
-						//var_dump($fileName !== $path . '/..' );
-						echo "<p>";
-						if ($fileName !== $path . '/.' || $fileName !== $path . '/..') {
-							$zip->addFile($fileName);
-							//echo $fileName;
-							//echo '<p>';
-						}
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
 					}
-					die();
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+					}
 					break;
 				case 'theme':
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
@@ -1001,13 +996,15 @@ class theme extends common {
 					}
 					// Ajoute les fontes
 					$zip->addEmptyDir(self::DATA_DIR .'fonts');
-					$pathdir = self::DATA_DIR .'fonts';
-					$dir = opendir(self::DATA_DIR .'fonts');
-					while($file = readdir($dir)) {
-						if(is_file($pathdir.$file)) {
-							$zip -> addFile($pathdir.$file, $file);
-						}
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
 					}
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+					}
+
 					break;
 			}
 			$ret = $zip->close();
