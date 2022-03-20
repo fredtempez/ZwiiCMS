@@ -1005,6 +1005,16 @@ class theme extends common {
 				case 'admin':
 					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
 					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+					}
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+					}
 					break;
 				case 'theme':
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
@@ -1028,6 +1038,16 @@ class theme extends common {
 							$zip->addFile(self::FILE_DIR . 'source/' . $value,
 										  self::FILE_DIR . 'source/' . $value );
 						}
+					}
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+					}
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
 					}
 					break;
 			}
