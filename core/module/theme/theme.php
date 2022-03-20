@@ -603,13 +603,14 @@ class theme extends common {
 		// Soumission du formulaire
 		if ($this->isPost()) {
 
-			$fontId = $this->getInput('fontAddFontId', null, true);
-			$fontName = $this->getInput('fontAddFontName', null, true);
-			$filePath = $this->getInput('fontAddFile', null);
+			$fontId = $this->getInput('fontAddFontId', helper::FILTER_STRING_SHORT, true);
+			$fontName = $this->getInput('fontAddFontName',helper::FILTER_STRING_SHORT, true);
+			$filePath = $this->getInput('fontAddFile', helper::FILTER_STRING_SHORT);
+			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$e = explode ('/', $filePath);
 			$file = $e[count($e) - 1 ];
 
-			// Vérifier l'existence de fontId et validité de family namesi usage en ligne de cdnFonts
+			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
 			$data = helper::getUrlContents('https://www.cdnfonts.com/' . $fontId . '.font');
 
 			if ( $filePath === ''
@@ -626,23 +627,20 @@ class theme extends common {
 
 			} else {
 
-				// Charger les données des fontes
-				$files = $this->getData(['fonts', 'files']);
-				$imported = $this->getData(['fonts', 'imported']);
-
 				// Concaténation dans les tableaux existants
-				$imported = array_merge([$fontId => $fontName], $imported);
-				$files = array_merge([$fontId => $file], $files);
-
-				// Copier la fonte si le nom du fichier est fourni
-				if (!empty($filePath)) {
-					copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
-				}
-
-				// Mettre à jour le fichier des fontes
-				$this->setData(['fonts', 'imported', $imported ]);
-				if (!empty($filePath) ) {
-					$this->setData(['fonts', 'files', $files ]);
+				switch ($type) {
+					case 'imported':
+						$imported = $this->getData(['fonts', 'imported']);
+						$imported = array_merge([$fontId => $fontName], $imported);
+						$this->setData(['fonts', 'imported', $imported ]);
+						break;
+					case 'files':
+						$files = $this->getData(['fonts', 'files']);
+						$files = array_merge([$fontId => $file], $files);
+						$this->setData(['fonts', 'files', $files ]);
+						// Copier la fonte si le nom du fichier est fourni
+						copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
+						break;
 				}
 
 				// Valeurs en sortie
