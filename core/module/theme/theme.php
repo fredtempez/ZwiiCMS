@@ -960,6 +960,15 @@ class theme extends common {
 				case 'admin':
 					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
 					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$pathdir = self::DATA_DIR .'fonts';
+					$dir = opendir(self::DATA_DIR .'fonts');
+					while($file = readdir($dir)) {
+						if(is_file($pathdir.$file)) {
+							$zip -> addFile($pathdir.$file, $file);
+						}
+					}
 					break;
 				case 'theme':
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
@@ -982,6 +991,15 @@ class theme extends common {
 						foreach($this->getData(['theme','header','featureFiles']) as $value) {
 							$zip->addFile(self::FILE_DIR . 'source/' . $value,
 										  self::FILE_DIR . 'source/' . $value );
+						}
+					}
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$pathdir = self::DATA_DIR .'fonts';
+					$dir = opendir(self::DATA_DIR .'fonts');
+					while($file = readdir($dir)) {
+						if(is_file($pathdir.$file)) {
+							$zip -> addFile($pathdir.$file, $file);
 						}
 					}
 					break;

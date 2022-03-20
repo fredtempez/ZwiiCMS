@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.3.05';
+	const ZWII_VERSION = '11.3.06';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -2339,17 +2339,18 @@ class core extends common {
 			/**
 			 * Fontes installées localement
 			 */
-			// Validité du format
 			if (  !empty($localFonts)
 			) {
 				foreach ($localFonts as $fontId => $fontName) {
 					// Validité du tableau :
-					if ( array_key_exists($fontId, self::$fonts) &&
+					if ( array_key_exists($fontId, self::$fonts) ||
 							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
 							// Chargement de la police
-							//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
 							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
+					}  else {
+						// Le fichier de font n'est pas disponible, fonte par défaut
+						$fonts [$fontId] = 'verdana';
 					}
 
 				}
@@ -2571,17 +2572,18 @@ class core extends common {
 			/**
 			 * Fontes installées localement
 			 */
-			// Validité du format
 			if (  !empty($localFonts)
 			) {
 				foreach ($localFonts as $fontId => $fontName) {
 					// Validité du tableau :
-					if ( array_key_exists($fontId, self::$fonts) &&
+					if ( array_key_exists($fontId, self::$fonts) ||
 							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
 							// Chargement de la police
-							//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
 							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
+					}  else {
+						// Le fichier de font n'est pas disponible, fonte par défaut
+						$fonts [$fontId] = 'verdana';
 					}
 
 				}

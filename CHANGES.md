@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.3.06
+### Corrections :
+    - Bug d'affichage des blocs de présentation.
+    - Une fonte Websafe remplace une fonte locale dont le fichier n'est pas disponible.
 
 ## Version 11.3.05
 ### Correction :

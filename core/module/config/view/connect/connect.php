@@ -11,14 +11,13 @@
 				</h4>
 				<div class="row">
 					<div class="col3">
-							<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
-									'checked' => $this->getData(['config', 'connect','captcha'])
-							]); ?>
-							<?php echo template::checkbox('connectCaptchaStrong', true, 'Captcha complexe', [
-								'checked' => $this->getData(['config', 'connect', 'captchaStrong']),
-								'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
-							]); ?>
-						</div>
+						<?php echo template::checkbox('connectCaptcha', true, 'Captcha à la connexion', [
+								'checked' => $this->getData(['config', 'connect','captcha'])
+						]); ?>
+						<?php echo template::checkbox('connectCaptchaStrong', true, 'Captcha complexe', [
+							'checked' => $this->getData(['config', 'connect', 'captchaStrong']),
+							'help' => 'Option recommandée pour sécuriser la connexion. S\'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.'
+						]); ?>
 					</div>
 					<div class="col3">
 						<?php echo template::select('connectCaptchaType', $module::$captchaTypes , [
