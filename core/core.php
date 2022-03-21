@@ -2982,8 +2982,7 @@ class core extends common {
 									'style' => file_get_contents($stylePath)
 								]);
 							}
-							if ($output['style'] &&
-								file_exists($output['style'])) {
+							if ($output['style']) {
 									$this->addOutput([
 										'style' => $this->output['style'] . file_get_contents($output['style'])
 									]);
