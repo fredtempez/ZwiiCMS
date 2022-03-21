@@ -2372,13 +2372,18 @@ class core extends common {
 			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
 			*/
 			$fontFile = '';
+			$gf = false;
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['imported'][$fontId])) {
 						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] .'" rel="stylesheet">';
 						// Tableau pour la construction de la feuille de style
 						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
+						$gf =  strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
 			}
+			// Ajoute le préconnect des fontes Googles.
+			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
+							: $fontFile;
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
 
