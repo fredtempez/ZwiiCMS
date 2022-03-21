@@ -625,7 +625,7 @@ class theme extends common {
 			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER_STRING_SHORT);
 			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
 			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
-			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  helper::FILTER_STRING_SHORT, true);
+			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
 
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
@@ -675,7 +675,7 @@ class theme extends common {
 			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontEditFile',  helper::FILTER_STRING_SHORT);
 			$fontId = $this->getInput('fontEditFontId',  helper::FILTER_STRING_SHORT, true);
 			$fontName = $this->getInput('fontEditFontName',  helper::FILTER_STRING_SHORT, true);
-			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  helper::FILTER_STRING_SHORT, true);
+			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
 
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
