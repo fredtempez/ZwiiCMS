@@ -621,37 +621,31 @@ class theme extends common {
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER__SHORT_STRING);
+			$typeFlip = $type === 'files' ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER_STRING_SHORT);
 			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
 			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
 			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  helper::FILTER_STRING_SHORT, true);
 
-			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
+			// Supprime la fonte si elle existe dans le type inverse
+			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
+				$this->deleteData(['fonts', $typeFlip, $fontId ]);
+			}
+			// Stocker la fonte
+			$this->setData(['fonts',
+							$type,
+							$fontId, [
+								'name' => $fontName,
+								'font-family' => $fontFamilyName,
+								'resource' => $ressource
+			]]);
 
-			// Charger les données des fontes
-			$fonts = $this->getData(['fonts']);
-
-			// Concaténation dans les tableaux existants
-			$t = [ $fontId => [
-					'name' => $fontName,
-					'font-family' => $fontFamilyName,
-					'resource' => $ressource
-			]];
-
-			// Stocker les fontes
-			$this->setData(['fonts', $type, [ $fontId =>
-								[
-									'name' => $fontName,
-									'font-family' => $fontFamilyName,
-									'resource' => $ressource
-								]]
-			]);
 
 			// Copier la fonte si le nom du fichier est fourni
 			if ( $type === 'files' &&
-					is_file(self::FILE_DIR . 'source/' . $ressource)
+					file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . $ressource );
 			}
 
 			// Valeurs en sortie
@@ -677,37 +671,29 @@ class theme extends common {
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontEditFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontEditFile',  helper::FILTER__SHORT_STRING);
+			$typeFlip = $type === 'files' ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontEditFile',  helper::FILTER_STRING_SHORT);
 			$fontId = $this->getInput('fontEditFontId',  helper::FILTER_STRING_SHORT, true);
 			$fontName = $this->getInput('fontEditFontName',  helper::FILTER_STRING_SHORT, true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  helper::FILTER_STRING_SHORT, true);
 
-			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
-
-			// Charger les données des fontes
-			$fonts = $this->getData(['fonts']);
-
-			// Concaténation dans les tableaux existants
-			$t = [ $fontId => [
-					'name' => $fontName,
-					'font-family' => $fontFamilyName,
-					'resource' => $ressource
-			]];
-
+			// Supprime la fonte si elle existe dans le type inverse
+			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
+				$this->deleteData(['fonts', $typeFlip, $fontId ]);
+			}
 			// Stocker les fontes
-			$this->setData(['fonts', $type, [ $fontId =>
-								[
-									'name' => $fontName,
-									'font-family' => $fontFamilyName,
-									'resource' => $ressource
-								]]
-			]);
-
+			$this->setData(['fonts',
+							$type,
+							$fontId, [
+								'name' => $fontName,
+								'font-family' => $fontFamilyName,
+								'resource' => $ressource
+			]]);
 			// Copier la fonte si le nom du fichier est fourni
 			if ( $type === 'files' &&
-					is_file(self::FILE_DIR . 'source/' . $ressource)
+					file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . $ressource );
 			}
 
 			// Valeurs en sortie
@@ -1019,6 +1005,16 @@ class theme extends common {
 				case 'admin':
 					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
 					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+					}
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+					}
 					break;
 				case 'theme':
 					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
@@ -1042,6 +1038,16 @@ class theme extends common {
 							$zip->addFile(self::FILE_DIR . 'source/' . $value,
 										  self::FILE_DIR . 'source/' . $value );
 						}
+					}
+					// Ajoute les fontes
+					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$fonts = $this->getData(['fonts', 'files']);
+					foreach ($fonts as $fontId => $fontName) {
+						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+					}
+					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+
+						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
 					}
 					break;
 			}

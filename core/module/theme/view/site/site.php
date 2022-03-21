@@ -159,7 +159,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::select('themeTextFont', $module::$fontsList, [
-							'label' => 'Police',
+							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'text', 'font']),
 							'fonts' => true
 						]); ?>
@@ -180,7 +180,7 @@
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('themeTitleFont', $module::$fontsList, [
-							'label' => 'Police',
+							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'title', 'font']),
 							'fonts' => true
 						]); ?>

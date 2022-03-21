@@ -20,6 +20,14 @@
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
 
+## Version 11.3.06
+### Corrections :
+    - Bug d'affichage des blocs de présentation.
+    - Double déclaration d'une fonte locale.
+### Améliorations :
+    - Sauvegarde des fontes avec le thème.
+    - Une fonte Websafe remplace une fonte locale dont le fichier n'est pas disponible.
+
 ## Version 11.3.05
 ### Correction :
     - Dossier du fichier de fontes non créé empêchant la création du fichier des appels de fontes.

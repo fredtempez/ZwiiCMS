@@ -859,6 +859,21 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 	$this->setData(['core', 'dataVersion', 11303]);
 }
 
+
+	// Version 11.3.06
+if ($this->getData(['core', 'dataVersion']) < 11306) {
+
+	// Supprime les fontes déclarées en double par la version précédentes
+	$files = $this->getData(['fonts', 'files']);
+	foreach ($files as $fontId => $fontFile) {
+		if ( !is_null($this->getData(['fonts', 'imported', $fontId])) )   {
+			$this->deleteData(['fonts', 'imported', $fontId]);
+		}
+	}
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11306]);
+}
+
 // Version 11.4.00
 if ($this->getData(['core', 'dataVersion']) < 11400) {
 
