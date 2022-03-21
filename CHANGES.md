@@ -3,7 +3,8 @@
 ## Version 11.3.06
 ### Corrections :
     - Bug d'affichage des blocs de présentation.
-### Amélioration :
+    - Double déclaration d'une fonte locale.
+### Améliorations :
     - Sauvegarde des fontes avec le thème.
     - Une fonte Websafe remplace une fonte locale dont le fichier n'est pas disponible.
 

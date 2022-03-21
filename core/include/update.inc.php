@@ -714,7 +714,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Option de dévoilement du mdp
 	$this->setData(['config', 'connect', 'showPassword', true]);
-	
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11200]);
 }
@@ -722,7 +722,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 // Version 11.2.02
 if ($this->getData(['core', 'dataVersion']) < 11202) {
 
-	// Renommer les champs 
+	// Renommer les champs
 	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText']) ]);
 	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText']) ]);
 	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText']) ]);
@@ -784,7 +784,7 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 	$this->setData(['theme', 'title', 'font',  $fonts[ $this->getData (['theme', 'title', 'font' ]) ] ]);
 	$this->setData(['admin', 'fontTitle',  $fonts[ $this->getData (['admin', 'fontTitle' ]) ] ]);
 	$this->setData(['admin', 'fontText',   $fonts[$this->getData (['admin','fontText' ]) ] ]);
-	
+
 	unlink(self::DATA_DIR . 'admin.css');
 	unlink(self::DATA_DIR . 'theme.css');
 
@@ -807,4 +807,18 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11303]);
+}
+
+// Version 11.3.06
+if ($this->getData(['core', 'dataVersion']) < 11306) {
+
+	// Supprime les fontes déclarées en double par la version précédentes
+	$files = $this->getData(['fonts', 'files']);
+	foreach ($files as $fontId => $fontFile) {
+		if ( !is_null($this->getData(['fonts', 'imported', $fontId])) )   {
+			$this->deleteData(['fonts', 'imported', $fontId]);
+		}
+	}
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11306]);
 }

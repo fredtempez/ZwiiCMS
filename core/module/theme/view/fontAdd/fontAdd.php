@@ -53,7 +53,7 @@
 						<?php echo template::text('fontAddFontName', [
 							'autocomplete' => 'off',
 							'label' => 'Nom (Font Family)',
-							'placeholder' => 'PerryGothic'
+							'placeholder' => 'PerryGothic, sans-serif'
 						]); ?>
 					</div>
 				</div>
