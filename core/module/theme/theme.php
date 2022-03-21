@@ -633,6 +633,9 @@ class theme extends common {
 			$fontName = $this->getInput('fontAddFontName', null, true);
 			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
 
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
+
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
 				$this->deleteData(['fonts', $typeFlip, $fontId ]);
@@ -682,6 +685,9 @@ class theme extends common {
 			$fontId = $this->getInput('fontEditFontId',  null, true);
 			$fontName = $this->getInput('fontEditFontName', null , true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
+
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
