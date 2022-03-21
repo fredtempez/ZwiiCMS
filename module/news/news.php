@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '4.1';
+	const VERSION = '4.2';
 	const REALNAME = 'News';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -515,7 +515,9 @@ class news extends common {
 				'showBarEditButton' => true,
 				'showPageContent' => true,
 				'view' => 'index',
-				'style' => $this->getData(['module', $this->getUrl(0),'theme', 'style'])
+				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
+							? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+							: ''
 			]);
 
 		}

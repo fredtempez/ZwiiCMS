@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.4';
+	const VERSION = '3.5';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -665,7 +665,9 @@ class gallery extends common {
 						'showBarEditButton' => true,
 						'title' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'name']),
 						'view' => 'gallery',
-						'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+						'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
+									? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+									: ''
 					]);
 				}
 				// Pas d'image dans la galerie

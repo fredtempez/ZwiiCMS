@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '2.4';
+	const VERSION = '2.6';
 	const REALNAME = 'Recherche';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -313,7 +313,9 @@ class search extends common {
 				'view' => 'index',
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
-				'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
+							? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+							: ''
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
