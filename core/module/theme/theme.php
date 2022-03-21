@@ -578,36 +578,37 @@ class theme extends common {
 
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
 		foreach ($f as $type => $typeValue) {
-
-			foreach ($typeValue as $fontId => $fontValue) {
-				// Fontes utilisées par les thèmes
-				$fontUsed[$fontId] = '';
-				foreach ($used as $key => $value) {
-					if ( $value === $fontId) {
-						$fontUsed[$fontId] .=  $key . '<br/>';
+			if (is_array($typeValue)) {
+				foreach ($typeValue as $fontId => $fontValue) {
+					// Fontes utilisées par les thèmes
+					$fontUsed[$fontId] = '';
+					foreach ($used as $key => $value) {
+						if ( $value === $fontId) {
+							$fontUsed[$fontId] .=  $key . '<br/>';
+						}
 					}
+					self::$fontsDetail [] = [
+						$fontId,
+						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
+						$f[$type][$fontId]['font-family'],
+						$fontUsed[$fontId],
+						$type,
+						$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
+													'class' => 'themeFontEdit',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('pencil'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: '',
+						$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
+													'class' => 'themeFontDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: ''
+					];
 				}
-				self::$fontsDetail [] = [
-					$fontId,
-					'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
-					$f[$type][$fontId]['font-family'],
-					$fontUsed[$fontId],
-					$type,
-					$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
-												'class' => 'themeFontEdit',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-												'value' => template::ico('pencil'),
-												'disabled' => !empty($fontUsed[$fontId])
-											])
-										: '',
-					$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
-												'class' => 'themeFontDelete buttonRed',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-												'value' => template::ico('cancel'),
-												'disabled' => !empty($fontUsed[$fontId])
-											])
-										: ''
-				];
 			}
 		}
 		sort(self::$fontsDetail);
