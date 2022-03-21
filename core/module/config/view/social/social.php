@@ -2,9 +2,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres					
+				<h4>Paramètres
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">	
+						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -16,7 +16,7 @@
 								<?php echo template::button('socialMetaImage', [
 								'href' => helper::baseUrl() . 'config/configMetaImage',
 								'value' => 'Générer une capture Open Graph'
-								
+
 								]); ?>
 							</div>
 						</div>
@@ -52,9 +52,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Réseaux sociaux					
+				<h4>Réseaux sociaux
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">	
+						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', 'left');?>
 						</a>
 					</span>
@@ -125,7 +125,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Scripts externes										
+				<h4>Scripts externes
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 								<?php echo template::ico('help', 'left');?>

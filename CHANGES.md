@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## Version 11.4.00
 ### Améliorations :
     - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
@@ -8,6 +7,14 @@
 ## Corrections :
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
+
+## Version 11.3.06
+### Corrections :
+    - Bug d'affichage des blocs de présentation.
+    - Double déclaration d'une fonte locale.
+### Améliorations :
+    - Sauvegarde des fontes avec le thème.
+    - Une fonte Websafe remplace une fonte locale dont le fichier n'est pas disponible.
 
 ## Version 11.3.05
 ### Correction :
