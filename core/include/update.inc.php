@@ -992,6 +992,20 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	];
 	$this->setData(['fonts', 'imported', $fonts]);
 
+	// Conversion des fontes locales
+	$files = $this->getData(['fonts', 'files']);
+	if (is_array($files)) {
+		$this->deleteData(['fonts', 'files']);
+		foreach ($files as $fontId => $fontName) {
+			$this->setData(['fonts', 'files',  $fontId, [
+				'name' => ucfirst($fontId),
+				'font-family'=> $fontId . ', sans-serif',
+				'resource' => $fontName
+			]]);
+		}
+	}
+
+
 	// Rafraichir les thèmes
 	if (file_exists(self::DATA_DIR . 'admin.css')) {
 		unlink (self::DATA_DIR . 'admin.css');
