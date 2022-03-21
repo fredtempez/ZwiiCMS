@@ -622,9 +622,9 @@ class theme extends common {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$typeFlip = $type === 'files' ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontAddFile',  helper::FILTER_STRING_SHORT);
-			$fontId = $this->getInput('fontAddFontId',  helper::FILTER_STRING_SHORT, true);
-			$fontName = $this->getInput('fontAddFontName',  helper::FILTER_STRING_SHORT, true);
+			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
+			$fontId = $this->getInput('fontAddFontId', null, true);
+			$fontName = $this->getInput('fontAddFontName', null, true);
 			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
 
 			// Supprime la fonte si elle existe dans le type inverse
@@ -672,9 +672,9 @@ class theme extends common {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontEditFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$typeFlip = $type === 'files' ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', helper::FILTER_STRING_SHORT) : $this->getInput('fontEditFile',  helper::FILTER_STRING_SHORT);
-			$fontId = $this->getInput('fontEditFontId',  helper::FILTER_STRING_SHORT, true);
-			$fontName = $this->getInput('fontEditFontName',  helper::FILTER_STRING_SHORT, true);
+			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', null) : $this->getInput('fontEditFile',  null);
+			$fontId = $this->getInput('fontEditFontId',  null, true);
+			$fontName = $this->getInput('fontEditFontName', null , true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
 
 			// Supprime la fonte si elle existe dans le type inverse
