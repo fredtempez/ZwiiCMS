@@ -61,7 +61,7 @@
 					<?php echo template::text('fontEditFontFamilyName', [
 							'autocomplete' => 'off',
 							'label' => 'Famille',
-							'value' => $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'font-family'])
+							'value' => stripslashes($this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'font-family']))
 						]); ?>
 					</div>
 				</div>

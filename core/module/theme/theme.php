@@ -265,6 +265,8 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Administration',
@@ -569,40 +571,44 @@ class theme extends common {
 		];
 
 		// Récupérer le détail des fontes installées
-		$f = $this->getFonts();
+		//$f = $this->getFonts();
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
 
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
 		foreach ($f as $type => $typeValue) {
-
-			foreach ($typeValue as $fontId => $fontValue) {
-				// Fontes utilisées par les thèmes
-				$fontUsed[$fontId] = '';
-				foreach ($used as $key => $value) {
-					if ( $value === $fontId) {
-						$fontUsed[$fontId] .=  $key . '<br/>';
+			if (is_array($typeValue)) {
+				foreach ($typeValue as $fontId => $fontValue) {
+					// Fontes utilisées par les thèmes
+					$fontUsed[$fontId] = '';
+					foreach ($used as $key => $value) {
+						if ( $value === $fontId) {
+							$fontUsed[$fontId] .=  $key . '<br/>';
+						}
 					}
+					self::$fontsDetail [] = [
+						$fontId,
+						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
+						$f[$type][$fontId]['font-family'],
+						$fontUsed[$fontId],
+						$type,
+						$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
+													'class' => 'themeFontEdit',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('pencil'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: '',
+						$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
+													'class' => 'themeFontDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: ''
+					];
 				}
-				self::$fontsDetail [] = [
-					$fontId,
-					'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
-					$f[$type][$fontId]['font-family'],
-					$fontUsed[$fontId],
-					$type,
-					$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
-												'class' => 'themeFontEdit',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-												'value' => template::ico('pencil'),
-												'disabled' => !empty($fontUsed[$fontId])
-											])
-										: '',
-					$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
-												'class' => 'themeFontDelete buttonRed',
-												'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-												'value' => template::ico('cancel'),
-												'disabled' => !empty($fontUsed[$fontId])
-											])
-										: ''
-				];
 			}
 		}
 		sort(self::$fontsDetail);
@@ -626,6 +632,9 @@ class theme extends common {
 			$fontId = $this->getInput('fontAddFontId', null, true);
 			$fontName = $this->getInput('fontAddFontName', null, true);
 			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
+
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
@@ -676,6 +685,9 @@ class theme extends common {
 			$fontId = $this->getInput('fontEditFontId',  null, true);
 			$fontName = $this->getInput('fontEditFontName', null , true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
+
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
 			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
@@ -1115,7 +1127,9 @@ class theme extends common {
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
 	public function enumFonts() {
 		// Récupère la liste des fontes installées
-		$f = $this->getFonts();
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
 		// Construit un tableau avec leur ID et leur famille
 		foreach(['websafe', 'imported', 'files'] as $type) {
 			if(array_key_exists($type, $f))  {
