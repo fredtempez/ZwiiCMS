@@ -2,7 +2,7 @@
 
 ## Version 11.3.06
 ### Corrections :
-    - Bug d'affichage des blocs de présentation.
+    - Bug d'affichage des blocs de présentation dans la configuration du site.
     - Double déclaration d'une fonte locale.
 ### Améliorations :
     - Sauvegarde des fontes avec le thème.
