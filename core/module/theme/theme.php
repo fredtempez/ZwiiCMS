@@ -265,6 +265,8 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Administration',

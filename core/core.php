@@ -184,19 +184,71 @@ class common {
 	];
 
 	public static $fontsWebSafe = [
-		'arial' 			=> 'Arial, Helvetica, sans-serif;',
-		'arial-black' 		=> '"Arial Black", Gadget, sans-serif;',
-		'courrier' 			=> 'Courier, "Liberation Mono", monospace;',
-		'courrier-new' 		=> '"Courier New", Courier, monospace',
-		'garamond' 			=> 'Garamond, serif',
-		'georgia' 			=> 'Georgia, serif;',
-		'impact' 			=> 'Impact, Charcoal, sans-serif;',
-		'lucida' 			=> '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
-		'tahoma'			=> 'Tahoma, Geneva, sans-serif;',
-		'times-new-roman' 	=> '"Times New Roman", "Liberation Serif", serif;',
-		'trebuchet' 		=> '"Trebuchet MS", Arial, Helvetica, sans-serif;',
-		'tahoma' 			=> 'Tahoma, Geneva, sans-serif;',
-		'verdana' 			=> 'Verdana, Geneva, sans-serif;',
+		'arial'	=> [ 
+			'name' 			=> 'Arial',
+			'font-family' 	=> 'Arial, Helvetica, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'arial-black' => [
+			'name' 			=> 'Arial Black',
+			'font-family' 	=> '\'Arial Black\', Gadget, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'courrier' => [
+			'name' 			=> 'Courier',
+			'font-family' 	=> 'Courier, \'Liberation Mono\', monospace',
+			'resource' 		=> 'websafe'
+		],
+		'courrier-new' 		=> [
+			'name'			=> 'Courier New',
+			'font-family' 	=> '\'Courier New\', Courier, monospace',
+			'resource' 		=> 'websafe'
+		],
+		'garamond' 			=> [
+			'name'			=> 'Garamond',
+			'font-family' 	=> 'Garamond, serif',
+			'resource' 		=> 'websafe'
+		],
+		'georgia' 			=> [
+			'name'			=> 'Geogia',
+			'font-family' 	=> 'Georgia, serif',
+			'resource' 		=> 'websafe'
+		],
+		'impact' 			=> [
+			'name' 			=> 'Impact',
+			'font-family'	=> 'Impact, Charcoal, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'lucida' 			=> [
+			'name'			=> 'Lucida',
+			'font-family' 	=> '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'tahoma'			=> [
+			'name'			=> 'Tahoma',
+			'font-family'	=> 'Tahoma, Geneva, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'times-new-roman' 	=> [
+			'name'			=> 'Times New Roman',
+			'font-family'	=> '\'Times New Roman\', \'Liberation Serif\', serif',
+			'resource' 		=> 'websafe'
+		],
+		'trebuchet' 		=> [
+			'name'			=> 'Trebuchet',
+			'font-family'	=> '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'tahoma' 			=> [
+			'name'			=> 'Tahoma',
+			'font-family'	=> 'Tahoma, Geneva, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'verdana' 			=> [
+			'name'			=> 'Verdana',
+			'font-family'	=>	'Verdana, Geneva, sans-serif;',
+			'resource' 		=> 'websafe'
+		]
 	];
 
 
@@ -416,10 +468,10 @@ class common {
 
 		// Fusionne la liste des fontes avec les webSafe
 		foreach (self::$fontsWebSafe as $fontId => $fontValue) {
-			$fontName = explode (',', $fontValue);
 			$f ['websafe'] [$fontId] =  [
-				'name' => str_replace('"', '', $fontName[0]),
-				'font-family'=> $fontValue
+				'name' => $fontValue ['name'],
+				'font-family'=> $fontValue ['font-family'],
+				'resource' => $fontValue ['resource']
 			];
 		}
 		// Ajoute les polices importées

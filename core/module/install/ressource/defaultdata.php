@@ -100,32 +100,32 @@ class init extends common {
 				],
 				'dancing-script' => [
 					'name' => 'Dancing Script',
-					'font-family' => '"Dancing Script", sans-serif',
+					'font-family' => '\'Dancing Script\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/dancing-script'
 				],
 				'droid-sans-2'=> [
 					'name' => 'Droid Sans',
-					'font-family' =>  '"Droid Sans", sans-serif',
+					'font-family' =>  '\'Droid Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 				],
 				'droid-serif-2'=> [
 					'name' => 'Droid Serif',
-					'font-family' =>  '"Droid Serif", serif',
+					'font-family' =>  '\'Droid Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 				],
 				'indie-flower'=> [
 					'name' => 'Indie Flower',
-					'font-family' => '"Indie Flower", sans-serif',
+					'font-family' => '\'Indie Flower\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
 				],
 				'liberation-sans'=> [
 					'name' => 'Liberation Sans',
-					'font-family' => '"Liberation Sans", sans-serif',
+					'font-family' => '\'Liberation Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
 				],
 				'liberation-serif'=> [
 					'name' => 'Liberation Serif',
-					'font-family' => '"Liberation Serif", serif',
+					'font-family' => '\'Liberation Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
 				],
 				'lobster-2'=> [
@@ -145,12 +145,12 @@ class init extends common {
 				],
 				'old-standard-tt-3'=> [
 					'name' => 'Old Standard TT',
-					'font-family' => '"Old Standard TT", serif',
+					'font-family' => '\'Old Standard TT\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
 				],
 				'open-sans' => [
 					'name' => 'Open Sans',
-					'font-family' => '"Open Sans", sans-serif',
+					'font-family' => '\'Open Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/open-sans'
 				],
 				'oswald-4'=> [
@@ -160,12 +160,12 @@ class init extends common {
 				],
 				'pt-mono'=> [
 					'name' => 'PT Mono',
-					'font-family' => '"PT Mono", monospace',
+					'font-family' => '\'PT Mono\', monospace',
 					'resource' => 'https://fonts.cdnfonts.com/css/pt-mono'
 				],
 				'pt-serif'=> [
-					'name' => "PR Serif",
-					'font-family' => '"PT Serif", serif',
+					'name' => 'PR Serif',
+					'font-family' => '\'PT Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/pt-serif'
 				],
 				'rancho'=> [
