@@ -460,48 +460,6 @@ class common {
 	}
 
 	/**
-	 * Construit la liste des fontes dans un tableau
-	 * @return array @fonts
-	 *
-	 */
-	public function getFonts() {
-
-		// Fusionne la liste des fontes avec les webSafe
-		foreach (self::$fontsWebSafe as $fontId => $fontValue) {
-			$f ['websafe'] [$fontId] =  [
-				'name' => $fontValue ['name'],
-				'font-family'=> $fontValue ['font-family'],
-				'resource' => $fontValue ['resource']
-			];
-		}
-		// Ajoute les polices importées
-		$fontsImported = $this->getData(['fonts', 'imported']);
-		if (is_array($fontsImported)
-		) {
-			foreach ($fontsImported as $fontId => $fontValue) {
-				$f ['imported'] [$fontId] =  [
-					'name' => $fontValue ['name'],
-					'font-family'=> $fontValue ['font-family'],
-					'resource' => $fontValue ['resource']
-				];
-			}
-		}
-		// Ajoute les polices locales
-		$fontsFiles = $this->getData(['fonts', 'files']);
-		if (is_array($fontsFiles)
-		) {
-			foreach ($fontsFiles as $fontId => $fontValue) {
-				$f ['files'] [$fontId] =  [
-					'name' => $fontValue ['name'],
-					'font-family'=> $fontValue ['font-family'],
-					'resource' => $fontValue ['resource']
-				];
-			}
-		}
-		return $f;
-	}
-
-	/**
 	 * Check du token CSRF (true = bo
 	 */
 	public function checkCSRF() {
@@ -2386,7 +2344,10 @@ class core extends common {
 			 */
 
 			// Fonts disponibles
-			$fontsAvailable = $this->getFonts();
+			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
+			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
+			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
+
 			// Fontes installées
 			$fonts = [ $this->getData(['theme', 'text',  'font']),
 						  $this->getData(['theme', 'title', 'font']),

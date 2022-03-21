@@ -571,7 +571,10 @@ class theme extends common {
 		];
 
 		// Récupérer le détail des fontes installées
-		$f = $this->getFonts();
+		//$f = $this->getFonts();
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
 
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
 		foreach ($f as $type => $typeValue) {
@@ -1117,7 +1120,9 @@ class theme extends common {
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
 	public function enumFonts() {
 		// Récupère la liste des fontes installées
-		$f = $this->getFonts();
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
 		// Construit un tableau avec leur ID et leur famille
 		foreach(['websafe', 'imported', 'files'] as $type) {
 			if(array_key_exists($type, $f))  {
