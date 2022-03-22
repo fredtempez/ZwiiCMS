@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 11.3.07
+### Correction :
+    - Module galerie, option plein écran inopérante.
+### Amélioration : 
+    - Module galerie, lorsque le module ne cotient qu'une galerie, la page listant les galeries est omise.
+
 ## Version 11.3.06
 ### Corrections :
     - Bug d'affichage des blocs de présentation dans la configuration du site.
