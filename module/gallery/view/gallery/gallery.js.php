@@ -25,7 +25,7 @@ var b = new SimpleLightbox('.galleryGalleryPicture', {
 
 $( document ).ready(function() {
 	// Démarre en mode plein écran
-	var fullscreen = <?php echo json_encode($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'fullScreen'])); ?>;
+	var fullscreen = <?php echo json_encode($this->getData(['module',$this->getUrl(0),'content',$this->getUrl(1),'config','fullScreen'])); ?>;
 	if ( fullscreen === true) {
 		$('a#homePicture')[0].click();
 	}
