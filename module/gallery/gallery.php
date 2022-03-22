@@ -605,8 +605,9 @@ class gallery extends common {
 
 		// Une seule galerie, bifurquer sur celle-ci
 		$gallery = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
-				? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
-				: $this->getUrl(1);
+			? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
+			: $this->getUrl(1);
+
 		// Images d'une galerie
 		if($gallery) {
 			// La galerie n'existe pas
