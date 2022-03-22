@@ -1,3 +1,4 @@
+<?php if ( count($this->getData(['module', $this->getUrl(0), 'content'])) !== 1): ?>
 <div class="row">
 	<div class="col1">
 		<?php echo template::button('galleryGalleryBack', [
@@ -7,6 +8,7 @@
 		]); ?>
 	</div>
 </div>
+<?php endif; ?>
 <div class="row galleryRow">
 <?php foreach($module::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
