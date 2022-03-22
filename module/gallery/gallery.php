@@ -42,6 +42,8 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
+	public static $config = [];
+
 	public static $actions = [
 		'config' 		=> self::GROUP_MODERATOR,
 		'delete' 		=> self::GROUP_MODERATOR,
@@ -600,11 +602,14 @@ class gallery extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
+		// Une seule galerie, bifurquer sur celle-ci
+		$gallery = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
+				? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
+				: $this->getUrl(1);
 		// Images d'une galerie
-		if($this->getUrl(1)) {
+		if($gallery) {
 			// La galerie n'existe pas
-			if($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1)]) === null) {
+			if($this->getData(['module', $this->getUrl(0), 'content', $gallery]) === null) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'access' => false
@@ -613,13 +618,17 @@ class gallery extends common {
 			// La galerie existe
 			else {
 				// Images de la galerie
-				$directory = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'directory']);
+				$directory = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'directory']);
+				// Définir les options
+				self::$config['homePicture'] =  $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','homePicture']);
+				self::$config['fullScreen'] = $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','fullScreen']) === true ? 'fullScreen' : '';
+				self::$config['mono'] = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1;
 				if(is_dir($directory)) {
 					$iterator = new DirectoryIterator($directory);
 					foreach($iterator as $fileInfos) {
 						if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-							self::$pictures[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'legend', str_replace('.','',$fileInfos->getFilename())]);
-							$picturesSort[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'positions', str_replace('.','',$fileInfos->getFilename())]);
+							self::$pictures[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'legend', str_replace('.','',$fileInfos->getFilename())]);
+							$picturesSort[$directory . '/' . $fileInfos->getFilename()] = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'positions', str_replace('.','',$fileInfos->getFilename())]);
 							// Créer la miniature si manquante
 							if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
 								$this->makeThumb($fileInfos->getPathname(),
@@ -630,10 +639,11 @@ class gallery extends common {
 							self::$thumbs[$directory . '/' . $fileInfos->getFilename()] = 	file_exists( str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))
 																							? str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR .  strtolower($fileInfos->getFilename())
 																							: str_replace('source','thumb',$directory) . '/' .  strtolower($fileInfos->getFilename());
+
 						}
 					}
 					// Tri des images par ordre alphabétique
-					switch ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'sort'])) {
+					switch ($this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'sort'])) {
 						case self::SORT_HAND:
 							asort($picturesSort);
 							if ($picturesSort) {
@@ -657,7 +667,7 @@ class gallery extends common {
 					// Valeurs en sortie
 					$this->addOutput([
 						'showBarEditButton' => true,
-						'title' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(1), 'config', 'name']),
+						'title' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'name']),
 						'view' => 'gallery',
 						'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 					]);
