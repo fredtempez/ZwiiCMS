@@ -21,6 +21,12 @@
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
 
+## Version 11.3.07
+### Correction :
+    - Module galerie, option plein écran inopérante.
+### Amélioration :
+    - Module galerie, lorsque le module ne cotient qu'une galerie, la page listant les galeries est omise.
+
 ## Version 11.3.06
 ### Corrections :
     - Bug d'affichage des blocs de présentation dans la configuration du site.
