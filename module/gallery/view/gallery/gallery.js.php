@@ -24,9 +24,8 @@ var b = new SimpleLightbox('.galleryGalleryPicture', {
 });
 
 $( document ).ready(function() {
-	// Démarre en mode plein écran
-	var fullscreen = <?php echo json_encode($this->getData(['module', $this->getUrl(0), $this->getUrl(1), 'config', 'fullScreen'])); ?>;
-	if ( fullscreen === true) {
+	// Démarre en mode plein écran	
+	if ( $("#pictureContainer").hasClass("fullScreen") ) {
 		$('a#homePicture')[0].click();
 	}
  });

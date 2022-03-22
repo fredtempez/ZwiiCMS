@@ -42,6 +42,8 @@ class gallery extends common {
 
 	public static $thumbs = [];
 
+	public static $config = [];
+
 	public static $actions = [
 		'config' 		=> self::GROUP_MODERATOR,
 		'delete' 		=> self::GROUP_MODERATOR,
@@ -600,7 +602,6 @@ class gallery extends common {
 
 		// Mise à jour des données de module
 		$this->update();
-
 		// Une seule galerie, bifurquer sur celle-ci
 		$gallery = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
 				? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
@@ -618,6 +619,10 @@ class gallery extends common {
 			else {
 				// Images de la galerie
 				$directory = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'directory']);
+				// Définir les options
+				self::$config['homePicture'] =  $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','homePicture']);
+				self::$config['fullScreen'] = $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','fullScreen']) === true ? 'fullScreen' : '';
+				self::$config['mono'] = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1;
 				if(is_dir($directory)) {
 					$iterator = new DirectoryIterator($directory);
 					foreach($iterator as $fileInfos) {
@@ -634,6 +639,7 @@ class gallery extends common {
 							self::$thumbs[$directory . '/' . $fileInfos->getFilename()] = 	file_exists( str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))
 																							? str_replace('source','thumb',$directory) . '/' . self::THUMBS_SEPARATOR .  strtolower($fileInfos->getFilename())
 																							: str_replace('source','thumb',$directory) . '/' .  strtolower($fileInfos->getFilename());
+
 						}
 					}
 					// Tri des images par ordre alphabétique
