@@ -320,11 +320,13 @@ class addon extends common {
 					? strftime('%d %B %Y', $store[$key]['versionDate'])
 					: utf8_encode(strftime('%d %B %Y', $store[$key]['versionDate'])),
 					implode(', ', array_keys($inPagesTitle,$key)),
+					/*
 					template::button('moduleExport' . $key, [
 							'class' => $class,
 							'href' => helper::baseUrl(). $this->getUrl(0) . '/uploadItem/' . $key.'/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
 							'value' => $ico
 							])
+							*/
 				];
 			}
 		}
