@@ -11,7 +11,6 @@
 <div class="row galleryRow">
 <?php foreach($module::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
-		<?php var_dump ( $this->getData(['module',$this->getUrl(0),'content',$this->getUrl(1),'config','fullScreen'])); ?>
 		<a
 			href="<?php echo helper::baseUrl(false) . $picture; ?>"
 			<?php if ( strpos($picture, $this->getData(['module',$this->getUrl(0),'content',$this->getUrl(1),'config','homePicture'])) > 0)  {
