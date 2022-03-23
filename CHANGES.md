@@ -7,7 +7,6 @@
     - Réorganisation des écrans pour éviter de mélanger des formulaires avec des champs d'information.
     - Nouvelle présentation de l'édition des pages et de la configuration du site.
     - Options de pages, feuille de style et script attachés à la page.
-    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
     - Amélioration du thème admin de base, modifications du jeu d'icônes.
     - Mise à jour automatisée, affichage de l'erreur en cas d'échec.
 
@@ -17,6 +16,7 @@
     - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
     - Toutes les fontes sont désormais acceptées quelque soit le CDN, Google Fonte (avec preconnect) ou CDN Fontes.
     - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
+    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
 ## Corrections :
     - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
