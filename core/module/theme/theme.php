@@ -422,7 +422,7 @@ class theme extends common {
 		if($this->isPost()) {
 			// Modification des URL des images dans la bannière perso
 			$featureContent = $this->getInput('themeHeaderText', null);
-			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
+			//$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 
 			/**
 			* Stocker les images incluses dans la bannière perso dans un tableau
