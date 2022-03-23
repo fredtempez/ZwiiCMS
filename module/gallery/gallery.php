@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.4';
+	const VERSION = '3.5';
 	const REALNAME = 'Galerie';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -510,7 +510,8 @@ class gallery extends common {
 							// pas de positions, on active le tri alpha
 							'sort' =>  $this->getInput('galleryEditSort'),
 							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
-							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN)
+							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN),
+							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN)
 
 						],
 						'legend' => $legends,
@@ -669,7 +670,8 @@ class gallery extends common {
 						'showBarEditButton' => true,
 						'title' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'name']),
 						'view' => 'gallery',
-						'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+						'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style']),
+						'showPageContent' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'showPageContent']),
 					]);
 				}
 				// Pas d'image dans la galerie

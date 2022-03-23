@@ -51,7 +51,7 @@ directoryDOM.on("change", function() {
 	directoryOldDOM.val($(this).val());
 });
 
-$('.homePicture').click(function(){ 
+$('.homePicture').click(function(){
 	$('.homePicture').prop('checked', false);
 	$(this).prop('checked', true);
 });
@@ -62,11 +62,11 @@ $('.homePicture').click(function(){
 
 $( document ).ready(function() {
 
-	$("#galleryTable").tableDnD({		
+	$("#galleryTable").tableDnD({
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
 		},
-		onDragStop : function(table, row) {		
+		onDragStop : function(table, row) {
 			// Sauvegarde le tri
 			sortPictures();
 			$("#galleryEditFormResponse").val("");

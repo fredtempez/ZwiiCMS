@@ -1,16 +1,6 @@
 
-<?php if ( $module::$config['mono'] !== true): ?>
-<div class="row">
-	<div class="col2">
-		<?php echo template::button('galleryGalleryBack', [
-			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . $this->getUrl(0),
-			'ico' => 'left',
-			'value' => 'Retour'
-		]); ?>
-	</div>
-</div>
-<?php endif; ?>
+
+
 <div id="pictureContainer" class="row galleryRow  <?php echo ($module::$config['fullScreen']);?> ">
 <?php foreach($module::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
@@ -28,3 +18,15 @@
 	</div>
 <?php endforeach; ?>
 </div>
+<?php if ( $module::$config['mono'] !== true): ?>
+<div class="row">
+	<div class="col2">
+		<?php echo template::button('galleryGalleryBack', [
+			'class' => 'buttonGrey',
+			'href' => helper::baseUrl() . $this->getUrl(0),
+			'ico' => 'left',
+			'value' => 'Retour'
+		]); ?>
+	</div>
+</div>
+<?php endif; ?>

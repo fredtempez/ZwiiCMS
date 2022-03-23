@@ -16,7 +16,7 @@
  * Galerie d'image
  * SLB est activé pour tout le site
  */
-var b = new SimpleLightbox('.galleryGalleryPicture', { 
+var b = new SimpleLightbox('.galleryGalleryPicture', {
 	captionSelector: "self",
 	captionType: "data",
 	captionsData: "caption",
@@ -24,7 +24,7 @@ var b = new SimpleLightbox('.galleryGalleryPicture', {
 });
 
 $( document ).ready(function() {
-	// Démarre en mode plein écran	
+	// Démarre en mode plein écran
 	if ( $("#pictureContainer").hasClass("fullScreen") ) {
 		$('a#homePicture')[0].click();
 	}
