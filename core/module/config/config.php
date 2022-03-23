@@ -652,59 +652,6 @@ class config extends common {
 		]);
 	}
 
-	/**
-	 * Met à jour les données de site avec l'adresse transmise
-	 */
-	public function updateBaseUrl () {
-		// Supprimer l'information de redirection
-		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
-		$new = helper::baseUrl(false,false);
-		$c3 = 0;
-		$success = false ;
-		// Boucler sur les pages
-		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-			$content = $this->getPage($parentId, self::$i18n);
-			$titre = $this->getData(['page', $parentId, 'title']);
-			$content =   $titre . ' ' . $content ;
-			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
-
-			if ($c1 > 0 || $c2 > 0) {
-				$success = true;
-				$this->setPage($parentId, $replace,  self::$i18n);
-				$c3 += $c1 + $c2;
-			}
-			foreach($childIds as $childId) {
-				$content = $this->getPage($childId, self::$i18n);
-				$content =   $titre . ' ' . $content ;
-				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
-				if ($c1 > 0 || $c2 > 0) {
-					$success = true;
-					$this->setPage($childId, $replace,  self::$i18n);
-					$c3 += $c1 + $c2;
-				}
-			}
-		}
-		// Traiter les modules dont la redirection
-		$content = $this->getdata(['module']);
-		$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
-		$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
-		if ($content !== $replace) {
-			$this->setdata(['module',$replace]);
-			$c3 += $c1 + $c2;
-			$success = true;
-		}
-		// Mettre à jour la base URl
-		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Restaurer',
-			'view' => 'restore',
-			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'state' => $success ? true : false
-		]);
-	}
 
 	/**
 	 * Vider le fichier de log
