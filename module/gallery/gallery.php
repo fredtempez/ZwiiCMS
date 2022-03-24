@@ -263,7 +263,7 @@ class gallery extends common {
 	 *
 	 */
 	public function sortGalleries() {
-		if($_POST['response']) {
+		if( isset($_POST['response']) ){
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
 			for($i=0;$i<count($data);$i++) {
@@ -274,7 +274,8 @@ class gallery extends common {
 						'homePicture' => $this->getData(['module',$this->getUrl(0), 'content', $data[$i],'config','homePicture']),
 						'sort' => $this->getData(['module',$this->getUrl(0), 'content', $data[$i],'config','sort']),
 						'position'=> $i,
-						'fullScreen' => $this->getData(['module',$this->getUrl(0), 'content',$data[$i],'config','fullScreen'])
+						'fullScreen' => $this->getData(['module',$this->getUrl(0), 'content',$data[$i],'config','fullScreen']),
+						'showPageContent' => $this->getData(['module',$this->getUrl(0), 'content',$data[$i],'config','showPageContent'])
 
 					],
 					'legend' => $this->getData(['module',$this->getUrl(0), 'content', $data[$i],'legend']),
@@ -289,22 +290,22 @@ class gallery extends common {
 	 *
 	 */
 	public function sortPictures() {
-		if($_POST['response']) {
+		if( isset($_POST['response']) ) {
 			$galleryName = $_POST['gallery'];
 			$data = explode('&',$_POST['response']);
 			$data = str_replace('galleryTable%5B%5D=','',$data);
 			// Sauvegarder
 			$this->setData(['module', $this->getUrl(0), 'content', $galleryName, [
 				'config' => [
-					'name' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','name']),
-					'directory' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','directory']),
-					'homePicture' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','homePicture']),
-					'sort' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','sort']),
-					'position' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','position']),
-					'fullScreen' => $this->getData(['module',$this->getUrl(0),$galleryName,'config','fullScreen'])
+					'name' => $this->getData(['module',$this->getUrl(0), 'content', $galleryName,'config','name']),
+					'directory' => $this->getData(['module',$this->getUrl(0),'content',$galleryName,'config','directory']),
+					'homePicture' => $this->getData(['module',$this->getUrl(0),'content',$galleryName,'config','homePicture']),
+					'sort' => $this->getData(['module',$this->getUrl(0),'content',$galleryName,'config','sort']),
+					'position' => $this->getData(['module',$this->getUrl(0),'content',$galleryName,'config','position']),
+					'fullScreen' => $this->getData(['module',$this->getUrl(0),'content',$galleryName,'config','fullScreen'])
 
 				],
-				'legend' => $this->getData(['module',$this->getUrl(0),$galleryName,'legend']),
+				'legend' => $this->getData(['module',$this->getUrl(0), 'content', $galleryName,'legend']),
 				'positions' => array_flip($data)
 			]]);
 		}
@@ -385,8 +386,9 @@ class gallery extends common {
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
 						'sort' => self::SORT_ASC,
-						'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
-						'fullScreen' => false
+						'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
+						'fullScreen' => false,
+						'showPageContent' => false
 					],
 					'legend' => [],
 					'positions' => []
