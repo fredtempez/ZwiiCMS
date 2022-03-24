@@ -151,7 +151,6 @@ class gallery extends common {
 	 */
 	private function update() {
 
-		
 		// Initialisation du module, créer les données si elles sont manquantes.
 		$this->init();
 

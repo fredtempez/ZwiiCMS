@@ -1,6 +1,3 @@
-
-
-
 <div id="pictureContainer" class="row galleryRow  <?php echo ($module::$config['fullScreen']);?> ">
 <?php foreach($module::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
