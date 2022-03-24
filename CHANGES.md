@@ -20,8 +20,10 @@
     - Galerie, version 3.5 :
         - Possibilité d'afficher le contenu de la page lorsque le module ne contient qu'une galerie et que sont contenu est affiché directement.
         - Déplacement du bouton de retour à la liste des galeries en bas de l'écran.
+        - Ajout des options de la galerie dans la fenêtre d'ajout.
 ## Corrections :
-    - Module blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
+    - Module Galerie : correction de bugs, tri des images, erreurs d'affectation.
+    - Module Blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
     - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
 
 ## Version 11.3.07
