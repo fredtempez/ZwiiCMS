@@ -387,10 +387,10 @@ class gallery extends common {
 						'name' => $this->getInput('galleryConfigName'),
 						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
 						'homePicture' => $homePicture,
-						'sort' => self::SORT_ASC,
+						'sort' =>  $this->getInput('galleryConfigSort'),
 						'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
-						'fullScreen' => false,
-						'showPageContent' => false
+						'fullScreen' => $this->getInput('galleryConfigFullscreen', helper::FILTER_BOOLEAN),
+						'showPageContent' => $this->getInput('galleryConfigShowPageContent', helper::FILTER_BOOLEAN)
 					],
 					'legend' => [],
 					'positions' => []
