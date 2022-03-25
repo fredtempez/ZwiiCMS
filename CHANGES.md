@@ -9,6 +9,7 @@
         - Possibilité d'afficher le contenu de la page lorsque le module ne contient qu'une galerie et que sont contenu est affiché directement.
         - Déplacement du bouton de retour à la liste des galeries en bas de l'écran.
         - Ajout des options de la galerie dans la fenêtre d'ajout.
+    - Edition d'une page, le nom court se complète automatiquement.
 ## Corrections :
     - Module Galerie : correction de bugs, tri des images, erreurs d'affectation.
     - Module Blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).

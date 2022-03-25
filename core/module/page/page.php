@@ -146,7 +146,7 @@ class page extends common {
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
 				'title' => $pageTitle,
-				'shortTitle' => $pageTitle,
+				'shortTitle' => '',
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
