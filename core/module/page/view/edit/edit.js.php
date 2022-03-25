@@ -253,13 +253,11 @@ $( document ).ready(function() {
 		$("#pageEditPosition").val(positionInitial);
 	}
 
-	// Permalink
-	$('#pageEditTitle').furl({id:'pageEditShortTitle', seperate: '_' });
 
 });
 
 
- 	// Gestion des événements
+ 	// Gestion des évènements
 	//--------------------------------------------------------------------------------------
 
 	/**
