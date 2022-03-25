@@ -3,7 +3,7 @@
 ## Version 11.4.00
 ### Améliorations :
     - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
-    - Toutes les fontes sont désormais acceptées quelque soit le CDN, Google Fonte (avec preconnect) ou CDN Fontes.
+    - Toutes les fontes sont désormais acceptées quel que soit le CDN, Google Fonte (avec preconnect) ou CDN Fontes.
     - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
     - Galerie, version 3.5 :
         - Possibilité d'afficher le contenu de la page lorsque le module ne contient qu'une galerie et que sont contenu est affiché directement.
