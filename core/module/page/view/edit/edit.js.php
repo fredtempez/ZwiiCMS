@@ -569,6 +569,12 @@ pageTypeMenuDOM.on("change", function() {
 	}
 });
 
+/**
+ * Duplication du champ Title dans Short title
+ */
+$("#pageEditTitle").on("input", function() {
+	$("#pageEditShortTitle").val($(this).val());
+});
 
 /**
  * Actualise la liste de pages lorsque le menu accessoire est sélectionné
