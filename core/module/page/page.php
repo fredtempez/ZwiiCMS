@@ -496,6 +496,10 @@ class page extends common {
 
 					// Met à jour le site map
 					$this->createSitemap('all');
+
+					// Mise à jour de la liste des pages pour TinyMCE
+					$this->pages2Json();
+
 					// Redirection vers la configuration
 					if(
 						$this->getInput('pageEditModuleRedirect', helper::FILTER_BOOLEAN)
@@ -529,8 +533,6 @@ class page extends common {
 						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 					}
 			}
-			// Mise à jour de la liste des pages pour TinyMCE
-			$this->pages2Json();
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
