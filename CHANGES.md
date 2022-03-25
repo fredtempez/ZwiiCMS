@@ -14,11 +14,11 @@
 ## Version 11.4.00
 ### Améliorations :
     - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
-    - Toutes les fontes sont désormais acceptées quelque soit le CDN, Google Fonte (avec preconnect) ou CDN Fontes.
+    - Toutes les fontes sont désormais acceptées quel que soit le CDN, Google Fonte (avec preconnect) ou CDN Fontes.
     - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
-    - Désormais, les URL internes seront relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
+    - Désormais, les URL internes sont relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
     - Galerie, version 3.5 :
-        - Possibilité d'afficher le contenu de la page lorsque le module ne contient qu'une galerie et que sont contenu est affiché directement.
+        - Possibilité d'afficher le contenu de la page lorsque le module ne contient qu'une galerie et que son contenu est affiché directement.
         - Déplacement du bouton de retour à la liste des galeries en bas de l'écran.
         - Ajout des options de la galerie dans la fenêtre d'ajout.
     - Edition d'une page, le nom court se complète automatiquement.
