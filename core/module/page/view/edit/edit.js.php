@@ -253,7 +253,8 @@ $( document ).ready(function() {
 		$("#pageEditPosition").val(positionInitial);
 	}
 
-
+	// Permalink
+	$('#pageEditTitle').furl({id:'pageEditShortTitle', seperate: '_' });
 
 });
 

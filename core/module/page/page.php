@@ -540,7 +540,8 @@ class page extends common {
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
 				'vendor' => [
-					'tinymce'
+					'tinymce',
+					'furl'
 				],
 				'view' => 'edit'
 			]);
