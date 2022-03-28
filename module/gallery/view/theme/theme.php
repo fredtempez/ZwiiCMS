@@ -14,23 +14,6 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Galerie unique</h4>
-            <div class="row">
-                <div class="col12 verticalAlignBottom">
-                    <?php echo template::checkbox('galleryThemeShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une galerie' , [
-                                'checked' => count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
-                                                ? $this->getData(['module', $this->getUrl(0), 'theme', 'showUniqueGallery'])
-                                                : false,
-                                'disabled' => count($this->getData(['module', $this->getUrl(0), 'content'])) > 1
-                        ]); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col12">
-        <div class="block">
             <h4>Vignettes
                 <?php 
                     echo template::help('Les paramètres du thème sont communs aux modules du même type.'); 
