@@ -3,8 +3,8 @@ $version = "9.14.0";
 if (session_id() == '') session_start();
 
 mb_internal_encoding('UTF-8');
-mb_http_output('UTF-8');
-mb_http_input('UTF-8');
+mb_http_output();
+mb_http_input();
 mb_language('uni');
 if (function_exists('mb_regex_encoding')) {
 	mb_regex_encoding('UTF-8');
