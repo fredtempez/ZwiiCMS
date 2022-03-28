@@ -2,7 +2,6 @@
 	<div class="row">
 		<div class="col1">
 			<?php echo template::button('galleryEditBack', [
-				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'value' => template::ico('left')
 			]); ?>
@@ -41,17 +40,24 @@
 						'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
 					]); ?>
 				</div>
-				<div class="col4 verticalAlignBottom">
-					<?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
-							'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
-						]); ?>
-				</div>
-				<div class="col4 verticalAlignBottom">
-					<?php echo template::checkbox('galleryEditShowPageContent', true, 'Contenu de la page dans la galerie' , [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent']),
-							'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.'
-						]); ?>
+				<div class="col7 verticalAlignBottom">
+					<div class="row">
+						<div class="col12">
+								<?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
+										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
+										'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
+									]); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col12">
+								<?php echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page dans les galeries' , [
+										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent']),
+										'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.'
+									]); ?>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">

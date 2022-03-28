@@ -19,10 +19,9 @@
 <div class="row">
 	<div class="col2">
 		<?php echo template::button('galleryGalleryBack', [
-			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . $this->getUrl(0),
 			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => ''
 		]); ?>
 	</div>
 </div>

@@ -51,7 +51,9 @@ class gallery extends common {
 		'sortGalleries' => self::GROUP_MODERATOR,
 		'sortPictures' 	=> self::GROUP_MODERATOR,
 		'edit' 			=> self::GROUP_MODERATOR,
+		'add' 			=> self::GROUP_MODERATOR,
 		'theme' 		=> self::GROUP_MODERATOR,
+		'option' 		=> self::GROUP_MODERATOR,
 		'index' 		=> self::GROUP_VISITOR
 	];
 
@@ -414,6 +416,58 @@ class gallery extends common {
 	}
 
 	/**
+	 * Ajout d'une galerie
+	 */
+	public function add() {
+		// Soumission du formulaire d'ajout d'une galerie
+		if($this->isPost()) {
+			if (!$this->getInput('galleryAddFilterResponse')) {
+				$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
+				// définir une vignette par défaut
+				$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
+				$iterator = new DirectoryIterator($directory);
+				foreach($iterator as $fileInfos) {
+					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
+						// Créer la miniature si manquante
+						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+							$this->makeThumb($fileInfos->getPathname(),
+											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
+											self::THUMBS_WIDTH);
+						}
+						// Miniatures
+						$homePicture = strtolower($fileInfos->getFilename());
+					break;
+					}
+				}
+				$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
+					'config' => [
+						'name' => $this->getInput('galleryAddName'),
+						'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
+						'homePicture' => $homePicture,
+						'sort' =>  $this->getInput('galleryAddSort'),
+						'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
+						'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
+						'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
+					],
+					'legend' => [],
+					'positions' => []
+				]]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config', // '#galleryAddForm'*/,
+					'notification' => 'Modifications enregistrées',
+					'state' => true
+				]);
+			}
+		} else {
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => 'Ajout d\'une galerie',
+				'view' => 'add'
+			]);
+		}
+	}
+	/**
 	 * Suppression
 	 */
 	public function delete() {
@@ -607,10 +661,10 @@ class gallery extends common {
 		// Mise à jour des données de module
 		$this->update();
 		// Une seule galerie, bifurquer sur celle-ci
-		$gallery = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
-			? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
-			: $this->getUrl(1);
-
+		$gallery =  $this->getData(['module', $this->getUrl(0), 'theme', 'showUniqueGallery']) === true &&
+					count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
+						? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
+						: $this->getUrl(1);
 		// Images d'une galerie
 		if($gallery) {
 			// La galerie n'existe pas
@@ -780,7 +834,8 @@ class gallery extends common {
 					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign', helper::FILTER_STRING_SHORT),
 					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor', helper::FILTER_STRING_SHORT),
 					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor', helper::FILTER_STRING_SHORT),
-					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css'
+					'showUniqueGallery' => $this->getinput('galleryThemeShowUniqueGallery', helper::FILTER_BOOLEAN),
+					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css',
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
@@ -815,6 +870,41 @@ class gallery extends common {
 			'vendor' => [
 				'tinycolorpicker'
 			]
+		]);
+	}
+
+	/**
+	 * Option de configuration de la galerie
+	 */
+	public function option() {
+		// Jeton incorrect
+		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+				'notification' => 'Action  non autorisée'
+			]);
+		}
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Dossier de l'instance
+			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
+			}
+			$this->setData(['module', $this->getUrl(0), 'config', [
+					'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN)
+			]]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl() . '/option',
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => "Options",
+			'view' => 'option'
 		]);
 	}
 
