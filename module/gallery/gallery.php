@@ -605,9 +605,10 @@ class gallery extends common {
 		// Mise à jour des données de module
 		$this->update();
 		// Une seule galerie, bifurquer sur celle-ci
-		$gallery = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
-				? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
-				: $this->getUrl(1);
+		$gallery =  $this->getData(['module', $this->getUrl(0), 'theme', 'showUniqueGallery']) === true &&
+					count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
+						? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
+						: $this->getUrl(1);
 		// Images d'une galerie
 		if($gallery) {
 			// La galerie n'existe pas
@@ -775,7 +776,8 @@ class gallery extends common {
 					'legendAlign'	    => $this->getinput('galleryThemeLegendAlign', helper::FILTER_STRING_SHORT),
 					'legendTextColor'   => $this->getinput('galleryThemeLegendTextColor', helper::FILTER_STRING_SHORT),
 					'legendBgColor'	    => $this->getinput('galleryThemeLegendBgColor', helper::FILTER_STRING_SHORT),
-					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css'
+					'showUniqueGallery' => $this->getinput('galleryThemeShowUniqueGallery', helper::FILTER_BOOLEAN),
+					'style'				=> self::DATADIRECTORY . $this->getUrl(0) . '/theme.css',
 			]]);
 			// Création des fichiers CSS
 			$content = file_get_contents('module/gallery/ressource/vartheme.css');
