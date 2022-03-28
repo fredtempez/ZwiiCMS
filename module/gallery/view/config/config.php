@@ -10,22 +10,19 @@
 	<div class="col1 offset7">
 		<?php echo template::button('galleryConfigOption', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/option/' . $_SESSION['csrf'],
-			'value' => '',
-			'ico' => 'sliders',
+			'value' => template::ico('sliders')
 		]); ?>
 	</div>
 	<div class="col1">
 		<?php echo template::button('galleryConfigTheme', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
-			'value' => '',
-			'ico' => 'brush',
+			'value' => template::ico('brush')
 		]); ?>
 	</div>
 	<div class="col1">
 		<?php echo template::button('galleryAdd', [
-			'ico' => '',
-			'value' => template::ico('plus'),
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/add/',
+			'value' => template::ico('plus')
 		]); ?>
 	</div>
 </div>
