@@ -546,7 +546,6 @@ class common {
 		if (
 				$this->getData(['page', $page, 'content']) !== ''
 				&& file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
-				&& is_file(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
 			) {
 				return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 			} else {
