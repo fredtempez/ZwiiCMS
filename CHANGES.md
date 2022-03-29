@@ -24,10 +24,12 @@
     - Lorsque la galerie n'en contient qu'**une seule galerie**, elle peut être affichée directement, la liste des galeries étant ignorée. Pour cela, activer cette option dans les options de la galerie.
     - Le contenu de la page peut désormais être affiché avec le contenu de la galerie sélectionnée. Ce paramètre ce gère au niveau de chaque galerie.
     - Déplacement du bouton de retour à la liste des galeries en bas de l'écran.
-## Corrections :
+### Corrections :
 - Module Galerie : correction de bugs, tri des images, erreurs d'affectation.
 - Module Blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
 - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
+### Mise à jour :
+- TableDND, script JQUERY de tri de tables, utilisé par la galerie, passe en version 1.0.5
 
 ## Version 11.3.07
 ### Correction :
