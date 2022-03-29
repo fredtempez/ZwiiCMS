@@ -52,7 +52,7 @@
 					</div>
 					<div class="row">
 						<div class="col12">
-								<?php echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page dans les galeries' , [
+								<?php echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page avec la galerie' , [
 										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent']),
 										'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.'
 									]); ?>
