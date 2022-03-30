@@ -345,7 +345,7 @@ class gallery extends common {
 				}
 				// Met en forme le tableau
 				self::$galleries[] = [
-					template::ico('sort'),
+					$gallery['config']['position'] + 1,
 					$gallery['config']['name'],
 					$gallery['config']['directory'],
 					template::button('galleryConfigEdit' . $galleryId , [
@@ -570,7 +570,7 @@ class gallery extends common {
 
 						],
 						'legend' => $legends,
-						'positions' => empty($oldPositions) ? $this->getdata(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
+						'positions' => empty($oldPositions) ? $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
 					]]);
 				}
 				// Valeurs en sortie
@@ -584,7 +584,6 @@ class gallery extends common {
 			$directory = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']);
 			if(is_dir($directory)) {
 				$iterator = new DirectoryIterator($directory);
-
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
 						// Créer la miniature RFM si manquante
@@ -594,7 +593,7 @@ class gallery extends common {
 											122);
 						}
 						self::$pictures[str_replace('.','',$fileInfos->getFilename())] = [
-							template::ico('sort'),
+							$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'positions', str_replace('.','',$fileInfos->getFilename())]) + 1,
 							$fileInfos->getFilename(),
 							template::checkbox( 'homePicture[' . $fileInfos->getFilename() . ']', true, '', [
 								'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config', 'homePicture']) === $fileInfos->getFilename() ? true : false,
@@ -611,7 +610,7 @@ class gallery extends common {
 				// Tri des images
 				switch ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort'])) {
 					case self::SORT_HAND:
-						$positions = $this->getdata(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
+						$positions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
 						if ($positions) {
 							foreach ($positions as $key => $value) {
 								if (array_key_exists($key,self::$pictures)) {
