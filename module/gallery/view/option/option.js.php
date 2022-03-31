@@ -12,10 +12,15 @@
  * @link http://zwiicms.fr/
  */
 
-#topBackPosition.bottom {
-    display: none;
- }
+/**
+ * Gestion des événements
+ */
 
-#bottomBackPosition.top{
-    display: none;
- }
+// Activation des options pour les galeries non uniques
+$("#galleryOptionShowUniqueGallery").click(function() {
+    if ($(this).prop("checked")) {
+        $("#galleryOptionBackPosition, #galleryOptionBackAlign").prop( "disabled", true );
+    } else {
+        $("#galleryOptionBackPosition, #galleryOptionBackAlign").prop( "disabled", false );
+    }
+});

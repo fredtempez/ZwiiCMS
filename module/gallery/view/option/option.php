@@ -25,7 +25,7 @@
                         ]); ?>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" id="containerBackOptions">
                 <div class="col6">
                     <?php echo template::select('galleryOptionBackPosition', $module::$galleryOptionBackPosition, [
                         'label' => 'Position du bouton de retour à l\'index des galeries',
