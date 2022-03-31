@@ -72,7 +72,7 @@
 						<?php if($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'commentClose'])): ?>
 							<p>Cet article ne reçoit pas de commentaire.</p>
 						<?php else: ?>
-							<p>	
+							<p>
 								<?php echo template::ico('comment', 'right'); ?>
 								<?php
 									if ($module::$comments[$articleId] > 0) {

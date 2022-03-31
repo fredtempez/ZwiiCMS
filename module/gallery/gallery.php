@@ -147,6 +147,18 @@ class gallery extends common {
 		'1px 1px 50px' => 'Très importante'
 	];
 
+	public static $galleryOptionBackPosition = [
+		'displayNone'	=> 'Masqué',
+		'top' 			=> 'Au-dessus',
+		'bottom' 		=> 'En dessous',
+	];
+
+	public static $galleryOptionBackAlign = [
+		'left' 		=> 'A gauche',
+		'center' 	=> 'Au centre',
+		'right' 	=> 'A droite',
+	];
+
 		/**
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
@@ -681,8 +693,9 @@ class gallery extends common {
 				// Définir les options
 				self::$config['homePicture'] =  $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','homePicture']);
 				self::$config['fullScreen'] = $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','fullScreen']) === true ? 'fullScreen' : '';
-				self::$config['mono'] = count($this->getData(['module', $this->getUrl(0), 'content'])) === 1;
-				if(is_dir($directory)) {
+				self::$config['backPosition'] = $this->getData(['module', $this->getUrl(0), 'config','backPosition']) ;
+				self::$config['backAlign'] = 'textAlign' . ucfirst($this->getData(['module', $this->getUrl(0), 'config','backAlign'])) ;
+				if(is_dir($directory) ) {
 					$iterator = new DirectoryIterator($directory);
 					foreach($iterator as $fileInfos) {
 						if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
@@ -892,7 +905,9 @@ class gallery extends common {
 				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 			}
 			$this->setData(['module', $this->getUrl(0), 'config', [
-					'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN)
+					'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
+					'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
+					'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

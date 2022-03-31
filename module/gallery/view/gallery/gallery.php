@@ -1,3 +1,12 @@
+
+<div id="topBackPosition" class="row <?php echo $module::$config['backPosition'] . ' ' . $module::$config['backAlign'];?>">
+	<div class="col1">
+		<?php echo template::button('galleryGalleryBack', [
+			'href' => helper::baseUrl() . $this->getUrl(0),
+			'value' => template::ico('left')
+		]); ?>
+	</div>
+</div>
 <div id="pictureContainer" class="row galleryRow  <?php echo ($module::$config['fullScreen']);?> ">
 <?php foreach($module::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
@@ -15,14 +24,11 @@
 	</div>
 <?php endforeach; ?>
 </div>
-<?php if ( $module::$config['mono'] !== true): ?>
-<div class="row">
-	<div class="col2">
+<div id="bottomBackPosition" class="row <?php echo $module::$config['backPosition'] . ' ' . $module::$config['backAlign'];?>">
+	<div class="col1">
 		<?php echo template::button('galleryGalleryBack', [
 			'href' => helper::baseUrl() . $this->getUrl(0),
-			'ico' => 'left',
-			'value' => ''
+			'value' => template::ico('left')
 		]); ?>
 	</div>
 </div>
-<?php endif; ?>
