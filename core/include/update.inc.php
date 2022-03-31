@@ -941,10 +941,25 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	if (is_array($files)) {
 		$this->deleteData(['fonts', 'files']);
 		foreach ($files as $fontId => $fontName) {
-			$this->setData(['fonts', 'files',  $fontId, [
-				'name' => ucfirst($fontId),
+			if (file_exists(self::DIR_DATA . 'fonts' . $fontName)) {
+				$this->setData(['fonts', 'files',  $fontId, [
+					'name' => ucfirst($fontId),
+					'font-family'=> $fontId . ', sans-serif',
+					'resource' => $fontName
+				]]);
+			}
+		}
+	}
+	// Consersion des fontes importées 
+	// Conversion des fontes locales
+	$imported = $this->getData(['fonts', 'imported']);
+	if (is_array($imported)) {
+		$this->deleteData(['fonts', 'imported']);
+		foreach ($imported as $fontId => $fontName) {
+			$this->setData(['fonts', 'imported',  $fontId, [
+				'name' => $fontId,
 				'font-family'=> $fontId . ', sans-serif',
-				'resource' => $fontName
+				'resource' => 'https:\/\/fonts.cdnfonts.com\/css\/' . $fontId
 			]]);
 		}
 	}
