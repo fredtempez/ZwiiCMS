@@ -942,7 +942,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 			if (file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
 				$this->setData(['fonts', 'files',  $fontId, [
 					'name' => ucfirst($fontId),
-					'font-family'=> $fontId . ', sans-serif',
+					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
 					'resource' => $fontName
 				]]);
 			}
@@ -955,7 +955,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		foreach ($imported as $fontId => $fontUrl) {
 			$this->setData(['fonts', 'imported',  $fontId, [
 				'name' => ucfirst($fontId),
-				'font-family'=> '\'' . $fontId . '\', sans-serif',
+				'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
 				'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
 			]]);
 		}
