@@ -940,7 +940,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	if (is_array($files)) {
 		$this->deleteData(['fonts', 'files']);
 		foreach ($files as $fontId => $fontName) {
-			if (file_exists(self::DIR_DATA . 'fonts' . $fontName)) {
+			if (file_exists(self::DATA_DIR . 'fonts' . $fontName)) {
 				$this->setData(['fonts', 'files',  $fontId, [
 					'name' => ucfirst($fontId),
 					'font-family'=> $fontId . ', sans-serif',
