@@ -934,7 +934,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'resource' => 'https://fonts.cdnfonts.com/css/vollkorn'
 			]
 	];
-	$this->setData(['fonts', 'imported', $fonts]);
 
 	// Conversion des fontes locales
 	$files = $this->getData(['fonts', 'files']);
@@ -950,19 +949,21 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 			}
 		}
 	}
-	// Consersion des fontes importées 
-	// Conversion des fontes locales
+	// Consersion des fontes importées
 	$imported = $this->getData(['fonts', 'imported']);
 	if (is_array($imported)) {
 		$this->deleteData(['fonts', 'imported']);
-		foreach ($imported as $fontId => $fontName) {
+		foreach ($imported as $fontId => $fontUrl) {
 			$this->setData(['fonts', 'imported',  $fontId, [
 				'name' => $fontId,
-				'font-family'=> $fontId . ', sans-serif',
-				'resource' => 'https:\/\/fonts.cdnfonts.com\/css\/' . $fontId
+				'font-family'=> '"' . $fontId . '", sans-serif',
+				'resource' => 'https:\/\/fonts.cdnfonts.com\/css\/' . $fontUrl
 			]]);
 		}
 	}
+
+
+	$this->setData(['fonts', 'imported', $fonts]);
 
 	// Rafraichir les thèmes
 	if (file_exists(self::DATA_DIR . 'admin.css')) {
