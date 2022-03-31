@@ -955,7 +955,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		foreach ($imported as $fontId => $fontUrl) {
 			$this->setData(['fonts', 'imported',  $fontId, [
 				'name' => ucfirst($fontId),
-				'font-family'=> '"' . $fontId . '", sans-serif',
+				'font-family'=> '\'' . $fontId . '\', sans-serif',
 				'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
 			]]);
 		}
