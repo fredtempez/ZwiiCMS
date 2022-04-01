@@ -15,7 +15,7 @@
 		</div>
 		<div class="col2">
 			<?php echo template::button('themeHelp', [
-				'href' => 'https://doc.zwiicms.fr/theme-2',
+				'href' => 'https://doc.zwiicms.fr/gestion-du-theme',
 				'target' => '_blank',
 				'ico' => 'help',
 				'value' => 'Aide',
@@ -73,7 +73,7 @@
 		</div>
 		<div class="col2">
 			<?php echo template::button('themeHelp', [
-				'href' => 'https://doc.zwiicms.fr/theme-2',
+				'href' => 'https://doc.zwiicms.fr/gestion-du-theme',
 				'target' => '_blank',
 				'ico' => 'help',
 				'value' => 'Aide',
