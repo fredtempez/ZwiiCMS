@@ -63,7 +63,7 @@
 			<div class="row">
 				<div class="col12">
 					<?php if($module::$pictures): ?>
-						<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
+						<?php echo template::table([1, 4, 1, 5, 1], $module::$pictures, ['#','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], $module::$picturesId ); ?>
 						<?php echo template::hidden('galleryEditFormResponse'); ?>
 						<?php echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrl(2)]); ?>
 					<?php else: ?>

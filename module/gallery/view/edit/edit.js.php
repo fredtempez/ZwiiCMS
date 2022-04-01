@@ -65,11 +65,7 @@ $( document ).ready(function() {
 	$("#galleryTable").tableDnD({
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
-		},
-		onDragStop : function(table, row) {
-			// Sauvegarde le tri
 			sortPictures();
-			$("#galleryEditFormResponse").val("");
 		},
 		serializeRegexp:  ""
 	});

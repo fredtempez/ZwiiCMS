@@ -21,12 +21,8 @@ $( document ).ready(function() {
 	$("#galleryTable").tableDnD({
 		onDrop: function(table, row) {
 			$("#galleryConfigFilterResponse").val($.tableDnD.serialize());
-		},
-		onDragStop : function(table, row) {
-			// Affiche le bouton de tri après un déplacement
-			//$(":input[type='submit']").prop('disabled', false);
-			// Sauvegarde le tri
 			sortGalleries();
+			location.reload();
 		},
 		// Supprime le tiret des séparateurs
 		serializeRegexp:  ""
