@@ -1255,7 +1255,7 @@ class common {
 			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
-			$item .= '<form method="POST" action="" id="cookieForm">';
+			$item .= '<form method="POST" action="' . helper::baseUrl(false, true) . '" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
@@ -1647,7 +1647,7 @@ class common {
 		) {
 			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $faviconDark . '">';
 			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
-			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous" type="application/javascript"></script>';
+			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous"></script>';
 		}
 	}
 
@@ -2217,7 +2217,7 @@ class common {
 				   }
 
 					echo '<li>';
-					echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+					echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
 					echo '</li>';
 			}
 		}

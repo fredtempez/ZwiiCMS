@@ -85,11 +85,10 @@
 					<div id="featureContent">
 						<?php echo $this->getData(['theme','header','featureContent']);?>
 					</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '</a>' : '';?>
 			</header>
-			<?php echo ( $this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 		<?php endif; ?>
-
 		<!-- Menu dans le fond du site après la bannière -->
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
 
