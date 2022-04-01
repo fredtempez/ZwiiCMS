@@ -610,7 +610,7 @@ class gallery extends common {
 				// Tri des images
 				switch ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort'])) {
 					case self::SORT_HAND:
-						$positions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
+						$positions = $this->getData(['module',$this->getUrl(0),'content', $this->getUrl(2),'positions']);
 						if ($positions) {
 							foreach ($positions as $key => $value) {
 								if (array_key_exists($key,self::$pictures)) {
@@ -887,7 +887,7 @@ class gallery extends common {
 				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 			}
 			$this->setData(['module', $this->getUrl(0), 'config', [
-					'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN)
+					'showUniqueGallery' => $this->getinput('galleriesOptionShowUniqueGallery', helper::FILTER_BOOLEAN)
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([

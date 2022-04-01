@@ -1,14 +1,14 @@
-<?php echo template::formOpen('galleryOptionForm'); ?>
+<?php echo template::formOpen('galleriesOptionForm'); ?>
 <div class="row">
     <div class="col2">
-        <?php echo template::button('galleryOptionBack', [
+        <?php echo template::button('galleriesOptionBack', [
             'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
             'ico' => 'left',
             'value' => 'Retour'
         ]); ?>
     </div>
     <div class="col2 offset8">
-        <?php echo template::submit('galleryOptionSubmit'); ?>
+        <?php echo template::submit('galleriesOptionSubmit'); ?>
     </div>
 </div>
 <div class="row">
@@ -17,7 +17,7 @@
             <h4>Galerie unique</h4>
             <div class="row">
                 <div class="col12 verticalAlignBottom">
-                    <?php echo template::checkbox('galleryOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une galerie' , [
+                    <?php echo template::checkbox('galleriesOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une galerie' , [
                                 'checked' => count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
                                                 ? $this->getData(['module', $this->getUrl(0), 'theme', 'showUniqueGallery'])
                                                 : false,
