@@ -2,6 +2,7 @@
 <div id="topBackPosition" class="row <?php echo $module::$config['backPosition'] . ' ' . $module::$config['backAlign'];?>">
 	<div class="col1">
 		<?php echo template::button('galleryGalleryBack', [
+			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . $this->getUrl(0),
 			'value' => template::ico('left')
 		]); ?>

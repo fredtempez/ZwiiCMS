@@ -2,6 +2,7 @@
 	<div class="row">
 		<div class="col1">
 			<?php echo template::button('galleryEditBack', [
+				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'value' => template::ico('left')
 			]); ?>

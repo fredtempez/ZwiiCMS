@@ -1,13 +1,13 @@
 <?php echo template::formOpen('galleryConfigForm'); ?>
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('galleryConfigBack', [
+			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col1 offset7">
+	<div class="col1 offset8">
 		<?php echo template::button('galleryConfigOption', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/option/' . $_SESSION['csrf'],
 			'value' => template::ico('sliders')
