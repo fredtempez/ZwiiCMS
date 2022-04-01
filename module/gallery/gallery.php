@@ -543,57 +543,6 @@ class gallery extends common {
 		}
 		// La galerie existe
 		else {
-			// Soumission du formulaire
-			if($this->isPost()) {
-				// Si l'id a changée
-				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
-				if($galleryId !== $this->getUrl(2)) {
-					// Incrémente le nouvel id de la galerie
-					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0), 'content']));
-					// Transférer la position des images
-					$oldPositions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
-					// Supprime l'ancienne galerie
-					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
-				}
-				// légendes
-				$legends = [];
-				foreach((array) $this->getInput('legend', null) as $file => $legend) {
-					// Image de couverture par défaut si non définie
-					$homePicture = $file;
-					$file = str_replace('.','',$file);
-					$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
-
-				}
-				// Photo de la page de garde de l'album définie dans form
-				if (is_array($this->getInput('homePicture', null)) ) {
-					$d = array_keys($this->getInput('homePicture', null));
-					$homePicture = $d[0];
-				}
-				// Sauvegarder
-				if ($this->getInput('galleryEditName')) {
-					$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
-						'config' => [
-							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
-							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-							'homePicture' => $homePicture,
-							// pas de positions, on active le tri alpha
-							'sort' =>  $this->getInput('galleryEditSort'),
-							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
-							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN),
-							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN)
-
-						],
-						'legend' => $legends,
-						'positions' => empty($oldPositions) ? $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
-					]]);
-				}
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
-					'notification' => 'Modifications enregistrées',
-					'state' => true
-				]);
-			}
 			// Met en forme le tableau
 			$directory = $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']);
 			if(is_dir($directory)) {
@@ -889,37 +838,114 @@ class gallery extends common {
 	 * Option de configuration de la galerie
 	 */
 	public function option() {
-		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		/**
+		 * Bifurcation options des galleries ou option d'une galerie
+		 */
+		if ($this->getUrl(2) === 'galleries') {
+			// Jeton incorrect
+			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+					'notification' => 'Action  non autorisée'
+				]);
+			}
+			// Soumission du formulaire
+			if($this->isPost()) {
+				// Dossier de l'instance
+				if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
+					mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
+				}
+				$this->setData(['module', $this->getUrl(0), 'config', [
+						'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
+						'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
+						'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
+				]]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl() . '/option',
+					'notification' => 'Modifications enregistrées',
+					'state' => true
+				]);
+			}
 			// Valeurs en sortie
+			$this->addOutput([
+				'title' => "Options des galeries",
+				'view' => 'option'
+			]);
+		} elseif ($this->getUrl(2) === 'gallery') {
+			// Paramètre d'une galerie
+			// Jeton incorrect
+			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit',
+					'notification' => 'Action  non autorisée'
+				]);
+			}
+			// Soumission du formulaire
+			if($this->isPost()) {
+				// Si l'id a changée
+				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
+				if($galleryId !== $this->getUrl(2)) {
+					// Incrémente le nouvel id de la galerie
+					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0), 'content']));
+					// Transférer la position des images
+					$oldPositions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
+					// Supprime l'ancienne galerie
+					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
+				}
+				// légendes
+				$legends = [];
+				foreach((array) $this->getInput('legend', null) as $file => $legend) {
+					// Image de couverture par défaut si non définie
+					$homePicture = $file;
+					$file = str_replace('.','',$file);
+					$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
+
+				}
+				// Photo de la page de garde de l'album définie dans form
+				if (is_array($this->getInput('homePicture', null)) ) {
+					$d = array_keys($this->getInput('homePicture', null));
+					$homePicture = $d[0];
+				}
+				// Sauvegarder
+				if ($this->getInput('galleryEditName')) {
+					$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
+						'config' => [
+							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
+							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
+							'homePicture' => $homePicture,
+							// pas de positions, on active le tri alpha
+							'sort' =>  $this->getInput('galleryEditSort'),
+							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
+							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN),
+							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN)
+
+						],
+						'legend' => $legends,
+						'positions' => empty($oldPositions) ? $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
+					]]);
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
+					'notification' => 'Modifications enregistrées',
+					'state' => true
+				]);
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => "Options de la galerie",
+				'view' => 'option'
+			]);
+		} else {
+			// Valeurs en sortie par défaut
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => 'Action  non autorisée'
 			]);
 		}
-		// Soumission du formulaire
-		if($this->isPost()) {
-			// Dossier de l'instance
-			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-				mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
-			}
-			$this->setData(['module', $this->getUrl(0), 'config', [
-					'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
-					'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
-					'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
-			]]);
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl() . '/option',
-				'notification' => 'Modifications enregistrées',
-				'state' => true
-			]);
-		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => "Options des galeries",
-			'view' => 'option'
-		]);
 	}
 
 }

@@ -7,7 +7,13 @@
 				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset9">
+		<div class="col1 offset8">
+			<?php echo template::button('galleryConfigOption', [
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/option/gallery/' . $_SESSION['csrf'],
+				'value' => template::ico('sliders')
+			]); ?>
+		</div>
+		<div class="col2">
 			<?php echo template::submit('galleryEditSubmit'); ?>
 		</div>
 	</div>
