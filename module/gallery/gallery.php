@@ -917,7 +917,7 @@ class gallery extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => "Options",
+			'title' => "Options des galeries",
 			'view' => 'option'
 		]);
 	}
