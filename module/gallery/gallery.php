@@ -159,6 +159,8 @@ class gallery extends common {
 		'right' 	=> 'A droite',
 	];
 
+	public static $formOptionSelect = '';
+
 		/**
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
@@ -868,6 +870,8 @@ class gallery extends common {
 					'state' => true
 				]);
 			}
+			// Routage du formulaire
+			self::$formOptionSelect = 'galleries';
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => "Options des galeries",
@@ -934,6 +938,8 @@ class gallery extends common {
 					'state' => true
 				]);
 			}
+			// Routage du formulaire
+			self::$formOptionSelect = 'gallery';
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => "Options de la galerie",
