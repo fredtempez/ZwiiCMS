@@ -379,6 +379,7 @@ class gallery extends common {
 			}
 		}
 		// Soumission du formulaire d'ajout d'une galerie
+		/*
 		if($this->isPost()) {
 			if (!$this->getInput('galleryConfigFilterResponse')) {
 				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
@@ -413,12 +414,13 @@ class gallery extends common {
 				]]);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl() /*. '#galleryConfigForm'*/,
+					'redirect' => helper::baseUrl() . $this->getUrl(),
 					'notification' => 'Modifications enregistrées',
 					'state' => true
 				]);
 			}
 		}
+		*/
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration du module',
@@ -534,6 +536,46 @@ class gallery extends common {
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => 'Action  non autorisée'
+			]);
+		}
+		// Soumission du formulaire
+		if($this->isPost()) {
+			// Photo de la page de garde de l'album définie dans form
+			if (is_array($this->getInput('homePicture', null)) ) {
+				$d = array_keys($this->getInput('homePicture', null));
+				$homePicture = $d[0];
+			}
+			// légendes
+			$legends = [];
+			$homePicture ='';
+			foreach((array) $this->getInput('legend', null) as $file => $legend) {
+				// Image de couverture par défaut si non définie
+				$homePicture = $file;
+				$file = str_replace('.','',$file);
+				$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
+
+			}
+			// Sauvegarder
+			$this->setData(['module', $this->getUrl(0), 'content', $this->getUrl(2), [
+				'config' => [
+					'name' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
+					'directory' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']),
+					'homePicture' => $homePicture,
+					// pas de positions, on active le tri alpha
+					'sort' =>  $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config','sort']),
+					'position' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config', 'position']),
+					'fullScreen' =>$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullscreen']),
+					'showPageContent' =>$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent'])
+
+				],
+				'legend' => $legends,
+				'positions' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'positions'])
+			]]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' .$this->getUrl(2) . '/' . $_SESSION['csrf'] ,
+				'notification' => 'Modifications enregistrées',
+				'state' => true
 			]);
 		}
 		// La galerie n'existe pas
@@ -863,6 +905,8 @@ class gallery extends common {
 						'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
 						'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
 				]]);
+
+				
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl() . '/option',
@@ -878,9 +922,10 @@ class gallery extends common {
 				'view' => 'option'
 			]);
 		} elseif ($this->getUrl(2) === 'gallery') {
+
 			// Paramètre d'une galerie
 			// Jeton incorrect
-			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			if ($this->getUrl(4) !== $_SESSION['csrf']) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit',
@@ -899,35 +944,20 @@ class gallery extends common {
 					// Supprime l'ancienne galerie
 					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
 				}
-				// légendes
-				$legends = [];
-				foreach((array) $this->getInput('legend', null) as $file => $legend) {
-					// Image de couverture par défaut si non définie
-					$homePicture = $file;
-					$file = str_replace('.','',$file);
-					$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
-
-				}
-				// Photo de la page de garde de l'album définie dans form
-				if (is_array($this->getInput('homePicture', null)) ) {
-					$d = array_keys($this->getInput('homePicture', null));
-					$homePicture = $d[0];
-				}
 				// Sauvegarder
 				if ($this->getInput('galleryEditName')) {
 					$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
 						'config' => [
 							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
 							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-							'homePicture' => $homePicture,
-							// pas de positions, on active le tri alpha
+							'homePicture' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'config', 'homePicture']),
 							'sort' =>  $this->getInput('galleryEditSort'),
 							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
 							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN),
 							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN)
 
 						],
-						'legend' => $legends,
+						'legend' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'config', 'legend']),
 						'positions' => empty($oldPositions) ? $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
 					]]);
 				}

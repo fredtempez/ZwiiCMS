@@ -11,50 +11,7 @@
  * @link http://zwiicms.fr/
  */
 
-/**
- * Liste des dossiers
- */
-var oldResult = [];
-var directoryDOM = $("#galleryEditDirectory");
-var directoryOldDOM = $("#galleryEditDirectoryOld");
-function dirs() {
-	$.ajax({
-		type: "POST",
-		url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
-		success: function(result) {
-			if($(result).not(oldResult).length !== 0 || $(oldResult).not(result).length !== 0) {
-				directoryDOM.empty();
-				for(var i = 0; i < result.length; i++) {
-					directoryDOM.append(function(i) {
-						var option = $("<option>").val(result[i]).text(result[i]);
-						if(directoryOldDOM.val() === result[i]) {
-							option.prop("selected", true);
-						}
-						return option;
-					}(i))
-				}
-				oldResult = result;
-			}
-		}
-	});
-}
-dirs();
-// Actualise la liste des dossiers toutes les trois secondes
-setInterval(function() {
-	dirs();
-}, 3000);
 
-/**
- * Stock le dossier choisi pour le re-sélectionner en cas d'actualisation ajax de la liste des dossiers
- */
-directoryDOM.on("change", function() {
-	directoryOldDOM.val($(this).val());
-});
-
-$('.homePicture').click(function(){
-	$('.homePicture').prop('checked', false);
-	$(this).prop('checked', true);
-});
 
 /**
  * Tri dynamique de la galerie
@@ -70,7 +27,9 @@ $( document ).ready(function() {
 		serializeRegexp:  ""
 	});
 
-	if ($("#galleryEditSort").val() !==  "SORT_HAND") {
+	console.log($("#galleryEditSort").val());
+
+if ($("#galleryEditSort").val() !==  "SORT_HAND") {
 		$("#galleryTable tr").addClass("nodrag nodrop");
 		$(".zwiico-sort").hide();
 		$("#galleryTable").tableDnDUpdate();

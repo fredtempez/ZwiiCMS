@@ -63,12 +63,12 @@
 				<div class="col6">
 					<?php echo template::text('galleryEditName', [
 						'label' => 'Nom',
-						'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name'])
+						'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'name'])
 					]); ?>
 				</div>
 				<div class="col6">
 					<?php echo template::hidden('galleryEditDirectoryOld', [
-						'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']),
+						'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']),
 						'noDirty' => true // Désactivé à cause des modifications en ajax
 					]); ?>
 					<?php echo template::select('galleryEditDirectory', [], [
@@ -80,7 +80,7 @@
 			<div class="row">
 				<div class="col3">
 					<?php echo template::select('galleryEditSort', $module::$sort, [
-						'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort']),
+						'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'sort']),
 						'label' => 'Tri des images',
 						'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
 					]); ?>
@@ -89,7 +89,7 @@
 					<div class="row">
 						<div class="col12">
 								<?php echo template::checkbox('galleryEditFullscreen', true, 'Mode plein écran automatique' , [
-										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
+										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'fullScreen']),
 										'help' => 'A l\'ouverture de la galerie, la première image est affichée en plein écran.'
 									]); ?>
 						</div>
@@ -97,7 +97,7 @@
 					<div class="row">
 						<div class="col12">
 								<?php echo template::checkbox('galleryEditShowPageContent', true, 'Afficher le contenu de la page avec la galerie' , [
-										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent']),
+										'checked' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'showPageContent']),
 										'help' => 'Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l\'afficher directement, cette option est utile dans ce cas précis.'
 									]); ?>
 							</div>
