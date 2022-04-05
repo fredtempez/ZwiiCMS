@@ -395,44 +395,66 @@ class gallery extends common {
 	public function add() {
 		// Soumission du formulaire d'ajout d'une galerie
 		if($this->isPost()) {
-
-			$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
-			$homePicture = '';
-			// définir une vignette par défaut
-			$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
-			$iterator = new DirectoryIterator($directory);
-			foreach($iterator as $fileInfos) {
-				if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-					// Créer la miniature si manquante
-					if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-						$this->makeThumb($fileInfos->getPathname(),
-										str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-										self::THUMBS_WIDTH);
+			$galleryId = $this->getInput('galleryAddName', null, true);
+			$success =  false;
+			if ($galleryId ) {
+				$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
+				$homePicture = '';
+				// définir une vignette par défaut
+				$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
+				$iterator = new DirectoryIterator($directory);
+				$i = 0;
+				foreach($iterator as $fileInfos) {
+					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
+						$i += 1;
+						// Créer la miniature si manquante
+						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+							$this->makeThumb($fileInfos->getPathname(),
+											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
+											self::THUMBS_WIDTH);
+						}
+						// Miniatures
+						$homePicture = strtolower($fileInfos->getFilename());
+					break;
 					}
-					// Miniatures
-					$homePicture = strtolower($fileInfos->getFilename());
-				break;
+				}
+				// Le dossier de la galerie est vide
+				if ($i > 0) {
+					$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
+						'config' => [
+							'name' => $this->getInput('galleryAddName'),
+							'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
+							'homePicture' => $homePicture,
+							'sort' =>  $this->getInput('galleryAddSort'),
+							'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
+							'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
+							'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
+						],
+						'legend' => [],
+						'positions' => []
+					]]);
+					$success = true;
+				} else {
+					self::$inputNotices['galleryAddDirectory'] = "Le dossier sélectionné ne contient aucune image";
+					$success = false;
 				}
 			}
-			$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
-				'config' => [
-					'name' => $this->getInput('galleryAddName'),
-					'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
-					'homePicture' => $homePicture,
-					'sort' =>  $this->getInput('galleryAddSort'),
-					'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
-					'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
-					'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
-				],
-				'legend' => [],
-				'positions' => []
-			]]);
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config', // '#galleryAddForm'*/,
-				'notification' => 'Modifications enregistrées',
-				'state' => true
-			]);
+
+			if ($success) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
+					'notification' => 'La galerie a été ajoutée',
+					'state' => true
+				]);
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => 'Ajout d\'une galerie',
+					'view' => 'add'
+				]);
+			}
+
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
