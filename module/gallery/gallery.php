@@ -381,7 +381,7 @@ class gallery extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module et des galeries',
+			'title' => 'Configuration des galeries du module',
 			'view' => 'config',
 			'vendor' => [
 				'tablednd'
