@@ -5,6 +5,7 @@
 - Prise en charge des fontes Web Safe. Les fontes initiales sont transférées dans les fontes optionnelles, donc effaçables.
 - Toutes les fontes en ligne sont désormais acceptées quel que soit le CDN, Google Fonte (avec preconnect),  CDN Fontes ou autre.
 - Désormais, les URL internes sont relatives, cela signifie qu'elles ne contiendront plus le domaine et le chemin d'accès au site. Cela permettra le déplacement d'un site d'un hébergement à un autre, d'un dossier d'hébergement à un autre, sans avoir à convertir les adresses internes. Les données d'un site mis à jour et importées d'une version antérieures sont automatiquement converties. En conséquence, le bloc de conversion de la fenêtre d'import est supprimé.
+- Suppression temporaire de l'option d'installation d'un module, il faudra passer par une connexion FTP pour cela. Cette fonctionnalité a été réécriter dans 11.2 à venir.
 ### Améliorations :
 - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
 - Edition d'une page, le nom court se complète automatiquement.
