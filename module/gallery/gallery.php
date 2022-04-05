@@ -378,52 +378,10 @@ class gallery extends common {
 				self::$galleriesId[] = $galleryId;
 			}
 		}
-		// Soumission du formulaire d'ajout d'une galerie
-		/*
-		if($this->isPost()) {
-			if (!$this->getInput('galleryConfigFilterResponse')) {
-				$galleryId = helper::increment($this->getInput('galleryConfigName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
-				// définir une vignette par défaut
-				$directory = $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true);
-				$iterator = new DirectoryIterator($directory);
-				foreach($iterator as $fileInfos) {
-					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-						// Créer la miniature si manquante
-						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-							$this->makeThumb($fileInfos->getPathname(),
-											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-											self::THUMBS_WIDTH);
-						}
-						// Miniatures
-						$homePicture = strtolower($fileInfos->getFilename());
-					break;
-					}
-				}
-				$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
-					'config' => [
-						'name' => $this->getInput('galleryConfigName'),
-						'directory' => $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture,
-						'sort' =>  $this->getInput('galleryConfigSort'),
-						'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
-						'fullScreen' => $this->getInput('galleryConfigFullscreen', helper::FILTER_BOOLEAN),
-						'showPageContent' => $this->getInput('galleryConfigShowPageContent', helper::FILTER_BOOLEAN)
-					],
-					'legend' => [],
-					'positions' => []
-				]]);
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(),
-					'notification' => 'Modifications enregistrées',
-					'state' => true
-				]);
-			}
-		}
-		*/
+
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => 'Configuration du module et des galeries',
 			'view' => 'config',
 			'vendor' => [
 				'tablednd'
@@ -437,44 +395,44 @@ class gallery extends common {
 	public function add() {
 		// Soumission du formulaire d'ajout d'une galerie
 		if($this->isPost()) {
-			if (!$this->getInput('galleryAddFilterResponse')) {
-				$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
-				// définir une vignette par défaut
-				$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
-				$iterator = new DirectoryIterator($directory);
-				foreach($iterator as $fileInfos) {
-					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
-						// Créer la miniature si manquante
-						if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
-							$this->makeThumb($fileInfos->getPathname(),
-											str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
-											self::THUMBS_WIDTH);
-						}
-						// Miniatures
-						$homePicture = strtolower($fileInfos->getFilename());
-					break;
+
+			$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
+			$homePicture = '';
+			// définir une vignette par défaut
+			$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
+			$iterator = new DirectoryIterator($directory);
+			foreach($iterator as $fileInfos) {
+				if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
+					// Créer la miniature si manquante
+					if (!file_exists( str_replace('source','thumb',$fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()))) {
+						$this->makeThumb($fileInfos->getPathname(),
+										str_replace('source','thumb',$fileInfos->getPath()) .  '/' . self::THUMBS_SEPARATOR  . strtolower($fileInfos->getFilename()),
+										self::THUMBS_WIDTH);
 					}
+					// Miniatures
+					$homePicture = strtolower($fileInfos->getFilename());
+				break;
 				}
-				$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
-					'config' => [
-						'name' => $this->getInput('galleryAddName'),
-						'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
-						'homePicture' => $homePicture,
-						'sort' =>  $this->getInput('galleryAddSort'),
-						'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
-						'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
-						'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
-					],
-					'legend' => [],
-					'positions' => []
-				]]);
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config', // '#galleryAddForm'*/,
-					'notification' => 'Modifications enregistrées',
-					'state' => true
-				]);
 			}
+			$this->setData(['module', $this->getUrl(0), 'content', $galleryId, [
+				'config' => [
+					'name' => $this->getInput('galleryAddName'),
+					'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
+					'homePicture' => $homePicture,
+					'sort' =>  $this->getInput('galleryAddSort'),
+					'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
+					'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
+					'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
+				],
+				'legend' => [],
+				'positions' => []
+			]]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config', // '#galleryAddForm'*/,
+				'notification' => 'Modifications enregistrées',
+				'state' => true
+			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -540,14 +498,8 @@ class gallery extends common {
 		}
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Photo de la page de garde de l'album définie dans form
-			if (is_array($this->getInput('homePicture', null)) ) {
-				$d = array_keys($this->getInput('homePicture', null));
-				$homePicture = $d[0];
-			}
+
 			// légendes
-			$legends = [];
-			$homePicture ='';
 			foreach((array) $this->getInput('legend', null) as $file => $legend) {
 				// Image de couverture par défaut si non définie
 				$homePicture = $file;
@@ -555,16 +507,21 @@ class gallery extends common {
 				$legends[$file] = helper::filter($legend, helper::FILTER_STRING_SHORT);
 
 			}
+			// Photo de la page de garde de l'album définie dans form
+			if (is_array($this->getInput('homePicture', null)) ) {
+				// Extrait la couverture sélectionnée
+				$homePicture = array_keys($this->getInput('homePicture', null))[0];
+			}
 			// Sauvegarder
 			$this->setData(['module', $this->getUrl(0), 'content', $this->getUrl(2), [
 				'config' => [
+					'homePicture' => $homePicture,
+					// Données mises à jour par les options
 					'name' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
 					'directory' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'directory']),
-					'homePicture' => $homePicture,
-					// pas de positions, on active le tri alpha
 					'sort' =>  $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config','sort']),
 					'position' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2),'config', 'position']),
-					'fullScreen' =>$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullscreen']),
+					'fullScreen' =>$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'fullScreen']),
 					'showPageContent' =>$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'showPageContent'])
 
 				],
@@ -648,7 +605,7 @@ class gallery extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
+				'title' => 'Configuration de la galerie ' . $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
 				'view' => 'edit',
 				'vendor' => [
 					'tablednd'
@@ -733,8 +690,8 @@ class gallery extends common {
 						'showBarEditButton' => true,
 						'title' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'name']),
 						'view' => 'gallery',
-						'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
-									? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+						'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
+									? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 									: '',
 						'showPageContent' => $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'showPageContent']),
 					]);
@@ -799,8 +756,8 @@ class gallery extends common {
 				'showBarEditButton' => true,
 				'showPageContent' => true,
 				'view' => 'index',
-				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
-							? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
+							? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 							: ''
 			]);
 		}
@@ -883,7 +840,7 @@ class gallery extends common {
 	 */
 	public function option() {
 		/**
-		 * Bifurcation options des galleries ou option d'une galerie
+		 * Options applicables à toutes les galeries du module
 		 */
 		if ($this->getUrl(2) === 'galleries') {
 			// Jeton incorrect
@@ -896,17 +853,14 @@ class gallery extends common {
 			}
 			// Soumission du formulaire
 			if($this->isPost()) {
-				// Dossier de l'instance
-				if (!is_dir(self::DATADIRECTORY . $this->getUrl(0) )) {
-					mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
-				}
+
+				// Sauver la configuration de la galerie
 				$this->setData(['module', $this->getUrl(0), 'config', [
 						'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
 						'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
 						'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
 				]]);
 
-				
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl() . '/option',
@@ -921,9 +875,10 @@ class gallery extends common {
 				'title' => "Options des galeries",
 				'view' => 'option'
 			]);
+			/**
+			 * Enregistre les options de configuration de la galerie d'images sélectionnée
+			 */
 		} elseif ($this->getUrl(2) === 'gallery') {
-
-			// Paramètre d'une galerie
 			// Jeton incorrect
 			if ($this->getUrl(4) !== $_SESSION['csrf']) {
 				// Valeurs en sortie
@@ -934,15 +889,22 @@ class gallery extends common {
 			}
 			// Soumission du formulaire
 			if($this->isPost()) {
-				// Si l'id a changée
-				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(2);
-				if($galleryId !== $this->getUrl(2)) {
+
+				// Le nom de la galerie est vide c'est le nom dans l'url qui est pris en compte
+				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(3);
+
+				// Sauvegarde des Valeurs non affectées par ce formulaire
+				$homePicture =  $this->getData(['module', $this->getUrl(0), 'content',  $this->getUrl(3), 'config', 'homePicture']);
+				$position = $this->getData(['module', $this->getUrl(0), 'content',  $this->getUrl(3),'config','position']);
+				$legend = $this->getData(['module', $this->getUrl(0), 'content',  $this->getUrl(3), 'legend']);
+				$positions = $this->getData(['module', $this->getUrl(0), 'content',  $this->getUrl(3), 'positions']);
+
+				// Le nom de la galerie n'est pas celui dans la BDD
+				if($galleryId !== $this->getUrl(3)) {
 					// Incrémente le nouvel id de la galerie
 					$galleryId = helper::increment($galleryId, $this->getData(['module', $this->getUrl(0), 'content']));
-					// Transférer la position des images
-					$oldPositions = $this->getData(['module',$this->getUrl(0), $this->getUrl(2),'positions']);
 					// Supprime l'ancienne galerie
-					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]);
+					$this->deleteData(['module', $this->getUrl(0), 'content', $this->getUrl(3)]);
 				}
 				// Sauvegarder
 				if ($this->getInput('galleryEditName')) {
@@ -950,15 +912,16 @@ class gallery extends common {
 						'config' => [
 							'name' => $this->getInput('galleryEditName', helper::FILTER_STRING_SHORT, true),
 							'directory' => $this->getInput('galleryEditDirectory', helper::FILTER_STRING_SHORT, true),
-							'homePicture' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'config', 'homePicture']),
 							'sort' =>  $this->getInput('galleryEditSort'),
-							'position' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId,'config','position']),
 							'fullScreen' => $this->getInput('galleryEditFullscreen', helper::FILTER_BOOLEAN),
-							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN)
+							'showPageContent' => $this->getInput('galleryEditShowPageContent', helper::FILTER_BOOLEAN),
+							// Données lues à partir du formulaire edit de la galerie avec la liste des images
+							'homePicture' =>$homePicture,
+							'position' => $position
 
 						],
-						'legend' => $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'config', 'legend']),
-						'positions' => empty($oldPositions) ? $this->getData(['module', $this->getUrl(0), 'content', $galleryId, 'positions']) : $oldPositions
+						'legend' => $legend,
+						'positions' => $positions
 					]]);
 				}
 				// Valeurs en sortie
@@ -972,7 +935,7 @@ class gallery extends common {
 			self::$formOptionSelect = 'gallery';
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => "Options de la galerie",
+				'title' => "Options",
 				'view' => 'option'
 			]);
 		} else {

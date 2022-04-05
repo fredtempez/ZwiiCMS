@@ -67,14 +67,16 @@
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::hidden('galleryEditDirectoryOld', [
-						'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']),
-						'noDirty' => true // Désactivé à cause des modifications en ajax
-					]); ?>
-					<?php echo template::select('galleryEditDirectory', [], [
-						'label' => 'Dossier cible',
-						'noDirty' => true // Désactivé à cause des modifications en ajax
-					]); ?>
+                    <div class="noDisplay">
+                    <?php echo template::hidden('galleryEditDirectoryOld', [
+                        'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']),
+                        'noDirty' => true // Désactivé à cause des modifications en ajax
+                    ]); ?>
+					</div>
+                    <?php echo template::select('galleryEditDirectory', [], [
+                        'label' => 'Dossier cible',
+                        'noDirty' => true // Désactivé à cause des modifications en ajax
+                    ]); ?>
 				</div>
 			</div>
 			<div class="row">

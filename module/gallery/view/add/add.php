@@ -8,11 +8,7 @@
 			]); ?>
 		</div>
 		<div class="col2 offset9">
-            <?php echo template::submit('galleryAddSubmit', [
-                'ico' => 'plus',
-                'value' => ' Ajouter',
-                'class' => 'gallerySubmit'
-            ]); ?>
+            <?php echo template::submit('galleryAddSubmit'); ?>
 		</div>
 	</div>
 	<div class="row">
@@ -25,10 +21,12 @@
 							'label' => 'Nom'
 						]); ?>
 					</div>
-					<div class="col5">
-						<?php echo template::hidden('galleryAddDirectoryOld', [
-							'noDirty' => true // Désactivé à cause des modifications en ajax
-						]); ?>
+					<div class="col6">
+						<div class="noDisplay">
+							<?php echo template::hidden('galleryAddDirectoryOld', [
+								'noDirty' => true // Désactivé à cause des modifications en ajax
+							]); ?>
+						</div>
 						<?php echo template::select('galleryAddDirectory', [], [
 							'label' => 'Dossier cible',
 							'noDirty' => true // Désactivé à cause des modifications en ajax

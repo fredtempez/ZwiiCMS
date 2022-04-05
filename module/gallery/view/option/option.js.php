@@ -66,7 +66,3 @@ $("#galleryOptionShowUniqueGallery").click(function() {
      directoryOldDOM.val($(this).val());
  });
  
- $('.homePicture').click(function(){
-     $('.homePicture').prop('checked', false);
-     $(this).prop('checked', true);
- });
