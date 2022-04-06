@@ -346,7 +346,7 @@ class common {
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
-			$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
+			$pages = helper::arrayCollumn($this->getData(['page']), 'position', 'SORT_ASC');
 			// Parents
 			foreach($pages as $pageId => $pagePosition) {
 				if(
