@@ -104,6 +104,14 @@ class helper {
 		return $newArray;
 	}
 
+	/**
+	 * Compatibilité avec les anciens modules
+	 */
+	public static function arrayCollumn($array, $column, $sort = null) {
+		return (helper::arrayColumn($array, $column, $sort));
+	}
+
+
 
 	/**
 	 * Génère un backup des données de site
