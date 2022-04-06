@@ -107,7 +107,7 @@ class form extends common {
 	 */
 	public function config() {
 		// Liste des utilisateurs
-		$userIdsFirstnames = helper::arraycollumn($this->getData(['user']), 'firstname');
+		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
 		self::$listUsers [] = '';
 		foreach($userIdsFirstnames as $userId => $userFirstname) {
@@ -159,7 +159,7 @@ class form extends common {
 
 	public function option() {
 		// Liste des utilisateurs
-		$userIdsFirstnames = helper::arraycollumn($this->getData(['user']), 'firstname');
+		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
 		self::$listUsers [] = '';
 		foreach ($userIdsFirstnames as $userId => $userFirstname) {

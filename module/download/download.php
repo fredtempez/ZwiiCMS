@@ -165,8 +165,8 @@ class download extends common {
 		$feeds->setDate(date('r',time()));
 		$feeds->addGenerator();
 		// Corps des items
-		$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
-		$itemIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'items']), 'state', 'SORT_DESC');
+		$itemIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
+		$itemIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0),'items']), 'state', 'SORT_DESC');
 		foreach($itemIdsPublishedOns as $itemId => $itemPublishedOn) {
 			if($itemPublishedOn <= time() AND $itemIdsStates[$itemId]) {
 				// Miniature
@@ -259,7 +259,7 @@ class download extends common {
 			]);
 		}
 		// Liste des utilisateurs
-		self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
+		self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort(self::$users);
 		foreach(self::$users as $userId => &$userFirstname) {
 			$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
@@ -310,7 +310,7 @@ class download extends common {
 					'value' => 'Tout effacer'
 		]);
 		// Ids des commentaires par ordre de création
-		$commentIds = array_keys(helper::arrayCollumn($comments, 'createdOn', 'SORT_DESC'));
+		$commentIds = array_keys(helper::arrayColumn($comments, 'createdOn', 'SORT_DESC'));
 		// Pagination
 		$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']));
 		// Liste des pages
@@ -467,7 +467,7 @@ class download extends common {
 			]);
 		} else {
 			// Ids des items par ordre de publication
-			$itemIds = array_keys(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC'));
+			$itemIds = array_keys(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC'));
 			// Gestion des droits d'accès
 			$filterData=[];
 			foreach ($itemIds as $key => $value) {
@@ -511,7 +511,7 @@ class download extends common {
 			// items en fonction de la pagination
 			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Nombre de commentaires à approuver et approuvés
-				$approvals = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items',  $itemIds[$i], 'comment' ]),'approval', 'SORT_DESC');
+				$approvals = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items',  $itemIds[$i], 'comment' ]),'approval', 'SORT_DESC');
 				if ( is_array($approvals) ) {
 					$a = array_values($approvals);
 					$toApprove = count(array_keys($a,false));
@@ -527,10 +527,10 @@ class download extends common {
 				//$heure = mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'versionDate'])), 'UTF-8', true)
 				//	? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'versionDate']))
 				//	: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i], 'versionDate'])));
-				$stat = count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'stats']), 'time') ) === 0
+				$stat = count(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'stats']), 'time') ) === 0
 					? '0'
 					: '<a href="' . helper::baseurl() . $this->getUrl(0) . '/stats/' . $itemIds[$i] . '" >' .
-					count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'stats']), 'time') )  .
+					count(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items', $itemIds[$i],'stats']), 'time') )  .
 					'</a>';
 				// Lien toutes les catégories quand le filtre est actif
 				if ($this->getUrl(2)) {
@@ -680,7 +680,7 @@ class download extends common {
 				]);
 			}
 			// Liste des utilisateurs
-			self::$users = helper::arrayCollumn($this->getData(['user']), 'firstname');
+			self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
 			// Les membres ne sont pas éditeurs, les exclure de la liste
@@ -799,13 +799,13 @@ class download extends common {
 					// Ligne suivante si affichage du nombre total de commentaires approuvés sous l'item
 					self::$nbCommentsApproved = count($commentsApproved);
 				}
-				$commentIds = array_keys(helper::arrayCollumn($commentsApproved, 'createdOn', 'SORT_DESC'));
+				$commentIds = array_keys(helper::arrayColumn($commentsApproved, 'createdOn', 'SORT_DESC'));
 				// Pagination
 				$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0),'config', 'itemsperPage']),'#comment');
 				// Nombre de téléchargements
-				self::$statSum = count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items',$this->getUrl(1),'stats']), 'time') ) === 0
+				self::$statSum = count(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items',$this->getUrl(1),'stats']), 'time') ) === 0
 								? '0'
-								: count(helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1),'stats']), 'time') ) ;
+								: count(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items', $this->getUrl(1),'stats']), 'time') ) ;
 				// Liste des pages
 				self::$pages = $pagination['pages'];
 				// Signature de l'item
@@ -842,8 +842,8 @@ class download extends common {
 		// Liste des items
 		else {
 			// Ids des items par ordre de publication
-			$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'items']), 'publishedOn', 'SORT_DESC');
-			$itemIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'state', 'SORT_DESC');
+			$itemIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0),'items']), 'publishedOn', 'SORT_DESC');
+			$itemIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'state', 'SORT_DESC');
 			$itemIds = [];
 			foreach($itemIdsPublishedOns as $itemId => $itemPublishedOn) {
 				if($itemPublishedOn <= time() AND $itemIdsStates[$itemId]) {
@@ -1025,8 +1025,8 @@ class download extends common {
 	 * Retourne une chaîne json contenant la liste des téléchargements disponibles
 	*/
 	public function list() {
-		$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0),'items']), 'publishedOn', 'SORT_DESC');
-		$itemIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'state', 'SORT_DESC');
+		$itemIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0),'items']), 'publishedOn', 'SORT_DESC');
+		$itemIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'state', 'SORT_DESC');
 		$itemIds = [];
 		foreach($itemIdsPublishedOns as $itemId => $itemPublishedOn) {
 			if($itemPublishedOn <= time() AND $itemIdsStates[$itemId]) {
@@ -1157,7 +1157,7 @@ class download extends common {
 				if ($oldItemId !== $itemId) {
 					$i = 0;
 					// Mettre à jour les catégories dans items
-					$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
+					$itemIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
 					foreach ($itemIdsPublishedOns as $key => $value) {
 						if ($this->getData(['module', $this->getUrl(0), 'items', $key, 'category']) === $oldItemId) {
 							$this->setData(['module', $this->getUrl(0), 'items', $key, 'category', $itemId]);
@@ -1204,7 +1204,7 @@ class download extends common {
 			]);
 		} else {
 			// Mettre à jour les catégories dans items
-			$itemIdsPublishedOns = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
+			$itemIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'items']), 'publishedOn', 'SORT_DESC');
 			$success = true;
 			$i = 0;
 			foreach ($itemIdsPublishedOns as $key => $value) {
