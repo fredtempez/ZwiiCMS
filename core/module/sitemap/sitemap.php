@@ -42,8 +42,8 @@ class sitemap extends common
                 !empty($this->getData(['module',$parentId, 'posts' ]))) {
                     $items .= '<ul>';									
                     // Ids des articles par ordre de publication
-                    $articleIdsPublishedOns = helper::arraycollumn($this->getData(['module', $parentId,'posts']), 'publishedOn', 'SORT_DESC');
-                    $articleIdsStates = helper::arraycollumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
+                    $articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $parentId,'posts']), 'publishedOn', 'SORT_DESC');
+                    $articleIdsStates = helper::arrayColumn($this->getData(['module', $parentId, 'posts']), 'state', 'SORT_DESC');
                     $articleIds = [];
                     foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
                         if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
@@ -78,8 +78,8 @@ class sitemap extends common
                                 !empty($this->getData(['module', $childId, 'posts' ]))) {
                         $items .= '<ul>';
                         // Ids des articles par ordre de publication
-                        $articleIdsPublishedOns = helper::arraycollumn($this->getData(['module', $childId,'posts']), 'publishedOn', 'SORT_DESC');
-                        $articleIdsStates = helper::arraycollumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
+                        $articleIdsPublishedOns = helper::arrayColumn($this->getData(['module', $childId,'posts']), 'publishedOn', 'SORT_DESC');
+                        $articleIdsStates = helper::arrayColumn($this->getData(['module', $childId, 'posts']), 'state', 'SORT_DESC');
                         $articleIds = [];
                         foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
                             if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {

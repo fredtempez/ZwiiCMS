@@ -110,8 +110,8 @@ class news extends common {
 		$feeds->setDate(date('r',time()));
 		$feeds->addGenerator();
 		// Corps des articles
-		$newsIdsPublishedOns = helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-		$newsIdsStates = helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
+		$newsIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+		$newsIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if($newsPublishedOn <= time() AND $newsIdsStates[$newsId]) {
 				$newsArticle = $feeds->createNewItem();
@@ -162,7 +162,7 @@ class news extends common {
 			]);
 		}
 		// Liste des utilisateurs
-		self::$users = helper::arraycollumn($this->getData(['user']), 'firstname');
+		self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort(self::$users);
 		foreach(self::$users as $userId => &$userFirstname) {
 			$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
@@ -188,7 +188,7 @@ class news extends common {
 		$this->update();
 
 		// Ids des news par ordre de publication
-		$newsIds = array_keys(helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+		$newsIds = array_keys(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 		// Pagination fixe
 		$pagination = helper::pagination($newsIds, $this->getUrl(),self::$itemsperPage );
 		// Liste des pages
@@ -288,7 +288,7 @@ class news extends common {
 			]);
 		} else {
 			// Ids des news par ordre de publication
-			$newsIds = array_keys(helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
+			$newsIds = array_keys(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 			// Pagination
 			$pagination = helper::pagination($newsIds, $this->getUrl(),$this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']) );
 			// Liste des pages
@@ -421,7 +421,7 @@ class news extends common {
 				]);
 			}
 			// Liste des utilisateurs
-			self::$users = helper::arraycollumn($this->getData(['user']), 'firstname');
+			self::$users = helper::arrayColumn($this->getData(['user']), 'firstname');
 			ksort(self::$users);
 			foreach(self::$users as $userId => &$userFirstname) {
 				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']);
@@ -474,8 +474,8 @@ class news extends common {
 		} else {
 			// Affichage index
 			// Ids des news par ordre de publication
-			$newsIdsPublishedOns = helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
-			$newsIdsStates = helper::arraycollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
+			$newsIdsPublishedOns = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC');
+			$newsIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 			$newsIds = [];
 			foreach($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 				$newsIdsPublishedOff = $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOff']);

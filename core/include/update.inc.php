@@ -481,7 +481,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 	foreach ($pageList as $parentKey => $parent) {
 		//La page est un blog
 		if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-			$articleIds = array_keys(helper::arraycollumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
+			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
 			foreach ($articleIds as $key => $article) {
 				// Droits les deux groupes
 				$this->setData(['module',  $parent, 'posts', $article,'editConsent', 3]);

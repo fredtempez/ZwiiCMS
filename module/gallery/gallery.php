@@ -338,7 +338,7 @@ class gallery extends common {
 
 		//Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0), 'content']);
-		$p = helper::arraycollumn(helper::arraycollumn($g,'config'),'position');
+		$p = helper::arrayColumn(helper::arrayColumn($g,'config'),'position');
 		asort($p,SORT_NUMERIC);
 		$galleries = [];
 		foreach ($p as $positionId => $item) {
@@ -732,7 +732,7 @@ class gallery extends common {
 		else {
 			// Tri des galeries suivant l'ordre défini
 			$g = $this->getData(['module', $this->getUrl(0), 'content']);
-			$p = helper::arraycollumn(helper::arraycollumn($g,'config'),'position');
+			$p = helper::arrayColumn(helper::arrayColumn($g,'config'),'position');
 			asort($p,SORT_NUMERIC);
 			$galleries = [];
 			foreach ($p as $positionId => $item) {
