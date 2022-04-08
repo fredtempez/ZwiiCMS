@@ -15,11 +15,18 @@
 			'help' => 'Consulter l\'aide en ligne'
 		]); ?>
 	</div>
-	<div class="col3 offset7">
+	<div class="col1 offset8">
 		<?php echo template::button('configModulesStore', [
 			'href' => helper::baseUrl() . 'plugin/store',
-			'ico' => 'shopping-basket',
-			'value' => 'Catalogue en ligne'
+			'value' => template::ico('shopping-basket'),
+			'help' => 'Installer depuis le catalogue en ligne'
+		]); ?>
+	</div>
+	<div class="col1">
+		<?php echo template::button('configStoreUpload', [
+			'href' => helper::baseUrl() . 'plugin/upload',
+			'value' => template::ico('file-archive'),
+			'help' => 'Installer depuis une archive'
 		]); ?>
 	</div>
 </div>

@@ -35,6 +35,7 @@ class common {
 	const DATA_DIR = 'site/data/';
 	const FILE_DIR = 'site/file/';
 	const TEMP_DIR = 'site/tmp/';
+	const MODULE_DIR = 'module/';
 
 	// Miniatures de la galerie
 	const THUMBS_SEPARATOR = 'mini_';
@@ -180,7 +181,7 @@ class common {
 	];
 
 	public static $fontsWebSafe = [
-		'arial'	=> [ 
+		'arial'	=> [
 			'name' 			=> 'Arial',
 			'font-family' 	=> 'Arial, Helvetica, sans-serif',
 			'resource' 		=> 'websafe'
@@ -1137,30 +1138,52 @@ class common {
 	* @param string $dst dossier destination
 	* @return bool
 	*/
-	public function copyDir($src, $dst) {
-		// Ouvrir le dossier source
-		$dir = opendir($src);
-		// Créer le dossier de destination
-		if (!is_dir($dst))
-			$success = mkdir($dst, 0755, true);
-		else
-			$success = true;
+	function copyDir( string $sourceDirectory, string $destinationDirectory, string $childFolder = '') {
 
-		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
-		while( $success
-			   AND $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
-				if ( is_dir($src . '/' . $file) ){
-					// Appel récursif des sous-dossiers
-					$success = $success OR $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+		$success = true;
+		$directory = opendir($sourceDirectory);
+
+		if (is_dir($destinationDirectory) === false) {
+			mkdir($destinationDirectory);
+		}
+
+		if ($childFolder !== '') {
+			if (is_dir("$destinationDirectory/$childFolder") === false) {
+				mkdir("$destinationDirectory/$childFolder");
+			}
+
+			while (($file = readdir($directory)) !== false) {
+				if ($file === '.' || $file === '..') {
+					continue;
 				}
-				else {
-					$success = $success OR copy($src . '/' . $file, $dst . '/' . $file);
+
+				if (is_dir("$sourceDirectory/$file") === true) {
+					$success = $success && $this->copyDir("$sourceDirectory/$file", "$destinationDirectory/$childFolder/$file");
+				} else {
+					$success = $success && copy("$sourceDirectory/$file", "$destinationDirectory/$childFolder/$file");
 				}
 			}
+
+			closedir($directory);
+
+			return;
 		}
-		closedir($dir);
-		return $success;
+
+		while (($file = readdir($directory)) !== false) {
+			if ($file === '.' || $file === '..') {
+				continue;
+			}
+
+			if (is_dir("$sourceDirectory/$file") === true) {
+				$success = $success && $this->copyDir("$sourceDirectory/$file", "$destinationDirectory/$file");
+			}
+			else {
+				$success = $success && copy("$sourceDirectory/$file", "$destinationDirectory/$file");
+			}
+		}
+
+		closedir($directory);
+		return($success);
 	}
 
 
@@ -2160,9 +2183,9 @@ class common {
 			elseif(
 				$moduleId
 				AND in_array($moduleId, self::$coreModuleIds) === false
-				AND file_exists('module/' . $moduleId . '/vendor/' . $vendorName . '/inc.json')
+				AND file_exists(self::MODULE_DIR . $moduleId . '/vendor/' . $vendorName . '/inc.json')
 			) {
-				$vendorPath = 'module/' . $moduleId . '/vendor/' . $vendorName . '/';
+				$vendorPath = self::MODULE_DIR . $moduleId . '/vendor/' . $vendorName . '/';
 			}
 			// Sinon continue
 			else {
@@ -2660,8 +2683,8 @@ class core extends common {
 			require 'core/module/' . $classPath;
 		}
 		// Module
-		elseif(is_readable('module/' . $classPath)) {
-			require 'module/' . $classPath;
+		elseif(is_readable(self::MODULE_DIR . $classPath)) {
+			require self::MODULE_DIR . $classPath;
 		}
 		// Librairie
 		elseif(is_readable('core/vendor/' . $classPath)) {
@@ -2810,7 +2833,7 @@ class core extends common {
 				'title' => $title,
 				'content' => 	$this->getPage($this->getUrl(0), self::$i18n) .
 								// Concatène avec les paramètres avancés.
-								$this->getData(['page', $this->getUrl(0), 'css']) . 
+								$this->getData(['page', $this->getUrl(0), 'css']) .
 								$this->getData(['page', $this->getUrl(0), 'js']),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
@@ -2945,7 +2968,7 @@ class core extends common {
 							// Chemin en fonction d'un module du coeur ou d'un module
 							$modulePath = in_array($moduleId, self::$coreModuleIds) ? 'core/' : '';
 							// CSS
-							$stylePath = $modulePath . 'module/' . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.css';
+							$stylePath = $modulePath . self::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.css';
 							if(file_exists($stylePath)) {
 								$this->addOutput([
 									'style' => file_get_contents($stylePath)
@@ -2958,7 +2981,7 @@ class core extends common {
 							}
 
 							// JS
-							$scriptPath = $modulePath . 'module/' . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
+							$scriptPath = $modulePath . self::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
 							if(file_exists($scriptPath)) {
 								ob_start();
 								include $scriptPath;
@@ -2967,7 +2990,7 @@ class core extends common {
 								]);
 							}
 							// Vue
-							$viewPath = $modulePath . 'module/' . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.php';
+							$viewPath = $modulePath . self::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.php';
 							if(file_exists($viewPath)) {
 								ob_start();
 								include $viewPath;

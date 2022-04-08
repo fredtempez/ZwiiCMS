@@ -31,7 +31,7 @@ class plugin extends common {
 
 	// URL des modules
 	const BASEURL_STORE = 'https://store.zwiicms.fr/';
-	const MODULE_STORE = '?modules/';
+	const MODULE_STORE = 'modules-pour-zwii-v12/';
 
 	// Gestion des modules
 	public static $modulesData = [];
@@ -100,14 +100,9 @@ class plugin extends common {
 	 */
 	private function install($moduleFileName, $checkValid){
 
-		/**
-		 * Initialisation des variables
-		 */
-		//$tempFolder = uniqid() . '/';
-		$tempFolder = 'truc/';
-		$notification = '';
-		// Numéro de version du module déjà installé
-		$versionInstalled = '';
+		// Dossier temporaire
+		$tempFolder = uniqid() . '/';
+		//$tempFolder = 'truc/';
 
 		/**
 		 * Désarchivage
@@ -115,123 +110,143 @@ class plugin extends common {
 		$zip = new ZipArchive();
 		if ($zip->open($moduleFileName) === TRUE) {
 
-			/**
-			 * Création du dossier temporaire
-			 */
+
+			//Création du dossier temporaire et extraction
 			if (!is_dir (self::TEMP_DIR . $tempFolder) ) {
 				mkdir (self::TEMP_DIR . $tempFolder, 0755);
 			}
-
 			$zip->extractTo(self::TEMP_DIR . $tempFolder );
-			// Lecture du descripteur de ressource
-			$modulePath = self::TEMP_DIR . $tempFolder . 'module';
-			if (file_exists(self::TEMP_DIR . $tempFolder . 'desc.json')
-				) {
-					$res = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'desc.json'), true);
-				} else {
-					return([
-						'success' => false,
-						'notification'=> 'Cette archive est invalide'
-					]);
-			}
+
 			/**
-			 * Structure lue
-			 * $res ['name'] = id du module, correspond à la classe
-			 * $res ['realname'] = Nom complet du module
-			 * $res ['version'] = version du module
-			 * $res ['dirs'] @array
+			 * Lecture du descripteur de ressource
+			 * $module ['name'] = id du module, correspond à la classe
+			 * $module ['realname'] = Nom complet du module
+			 * $module ['version'] = version du module
+			 * $module ['dirs'] @array
 			 * 		'dossier' => 'destination',
 			 * 		'download" => 'module/download'
-			 * 
-			 * Attention le dossier source est celui dans l'archive, la destination correspond à l’arborescence cible
 			 */
-			echo "<pre>";
-			// Affectation
-			$moduleName = $res ['name'];
-			$modulePath = $res ['name'] . '/';
-			$moduleFile = $res ['name'] . '.php' ;
+
+			if (file_exists(self::TEMP_DIR . $tempFolder . 'desc.json')
+				) {
+					$module = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'desc.json'), true);
+				} else {
+					// Message de retour
+					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					$zip->close();
+					return([
+						'success' => false,
+						'notification'=> 'Archive invalide, le descripteur est absent.'
+					]);
+			}
 
 			/**
 			 * Validation des informations du descripteur
 			 */
-			if ( !is_dir ( self::TEMP_DIR . $tempFolder . $modulePath) ||
-				 !is_file (self::TEMP_DIR . $tempFolder . $modulePath . $moduleFile)
-				) {
+			foreach ($module['dirs'] as $src => $dest) {
+				// Vérification de la présence des dossier décrits
+				if ( !is_dir (self::TEMP_DIR . $tempFolder . $src )) {
+					// Message de retour
+					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					$zip->close();
 					return([
 						'success' => false,
-						'notification'=> 'Cette archive est invalide'
+						'notification'=> 'Archive invalide, les dossiers ne correspondent pas au descripteur.'
 					]);
+				}
+				// Interdire l'écriture dans le dossier core
+				if ( strstr($dest, 'core') !== false ) {
+					// Message de retour
+					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					$zip->close();
+					return([
+						'success' => false,
+						'notification'=> 'Archive invalide, l\'écriture dans le dossier core est interdite'
+					]);
+				}
 			}
+
 			/**
-			 * Le module est-il installé ? Lire le numéro de version
+			 * Validation de la présence du fichier de base du module
 			 */
-			if (is_file( 'module/' . $modulePath . $moduleFile) ) {
+			if ( !file_exists(self::TEMP_DIR . $tempFolder . $module['name'] . '/' . $module['name'] . '.php')) {
+				// Message de retour
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
+				return([
+					'success' => false,
+					'notification'=> 'Cette archive est invalide, le fichier de classe est absent.'
+				]);
+			}
+
+
+			/**
+			 * Le module est-il déjà installé ?
+			 * Si oui lire le numéro de version et le stocker dans $versionInstalled
+			 */
+			if (is_file( self::MODULE_DIR .  $module['name'] . '/' .  $module['name'] . '.php') ) {
 				$c = helper::getModules();
-				if (array_key_exists($moduleName, $c)) {
-					$versionInstalled = $c[$moduleName]['version'];
+				if (array_key_exists($module['name'], $c)) {
+					$versionInstalled = $c[$module['name']]['version'];
 				}
 			}
-					// Si version actuelle >= version indiquée dans UPDATE la mise à jour est validée
-					$infoModules = helper::getModules();
-					if( $infoModules[$moduleName]['update'] >= $update ) $valUpdate = true;
 
-					// Module déjà installé ?
-					$moduleInstal = false;
-					foreach($infoModules as $key=>$value ){
-						if($moduleName === $key){
-							$moduleInstal = true;
-						}
-					}
-
-					// Validation de la maj si autorisation du concepteur du module ET
-					// ( Version plus récente OU Check de forçage )
-					$valNewVersion = floatval($version);
-					$valInstalVersion = floatval( $infoModules[$moduleName]['version'] );
-					$newVersion = false;
-					if( $valNewVersion > $valInstalVersion ) $newVersion = true;
-					$validMaj = $valUpdate && ( $newVersion || $checkValid);
-
-					// Nouvelle installation ou mise à jour du module
-					if( ! $moduleInstal ||  $validMaj ){
-						// Copie récursive des dossiers
-						$this->copyDir( self::TEMP_DIR . $tempFolder, './' );
-						$success = true;
-						if( ! $moduleInstal ){
-							$notification = 'Module '.$moduleName.' installé';
-						}
-						else{
-							$notification = 'Module '.$moduleName.' mis à jour';
-						}
-					}
-					else{
-						$success = false;
-						if( $valNewVersion == $valInstalVersion){
-							$notification = ' Version détectée '.$version.' = à celle installée '.$infoModules[$moduleName]['version'];
-						}
-						else{
-							$notification = ' Version détectée '.$version.' < à celle installée '.$infoModules[$moduleName]['version'];
-						}
-						if( $valUpdate === false){
-							if( $infoModules[$moduleName]['update'] === $update ){
-								$notification = ' Mise à jour par ce procédé interdite par le concepteur du module';
-							}
-							else{
-								$notification = ' Mise à jour par ce procédé interdite, votre version est trop ancienne';
-							}
-						}
+			// Le module est installé, contrôle de la version
+			$installOk = false;
+			if ( isset($versionInstalled) === false ) {
+				$installOk = true;
+			} elseif (	version_compare($module['version'], $versionInstalled) >= 0 ) {
+				$installOk = true;
+			} else {
+				if (version_compare($module['version'], $versionInstalled) === -1 ) {
+					// Contrôle du forçage
+					if ($this->getInput('configModulesCheck', helper::FILTER_BOOLEAN) === true) {
+						$installOk = true;
+					} else {
+						// Message de retour
+						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$zip->close();
+						return([
+							'success' => false,
+							'notification'=> 'La version installée est plus récente, la mise à jour peut être forcée en cochant l\'option.'
+						]);
 					}
 				}
-			// Supprimer le dossier temporaire même si le module est invalide
-			$this->removeDir(self::TEMP_DIR . $tempFolder);
-			$zip->close();
+			}
+
+			// Installation ou mise à jour du module valides
+			if ($installOk) {
+				// Copie récursive des dossiers
+				foreach ($module['dirs'] as $src => $dest) {
+					if (!is_dir (self::TEMP_DIR . $tempFolder . $src)) {
+						mkdir(self::TEMP_DIR . $tempFolder . $src);
+					}
+					$success = $this->copyDir( self::TEMP_DIR . $tempFolder . $src, $dest );
+				}
+				// Message de retour
+				$t = isset($versionInstalled) ? ' actualisé' : 'installé';
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
+				return(['success' => $success,
+						'notification'=> $success ? 'Le module '.$module['name'].' a été ' . $t
+												  : 'Erreur inconnue, le module n\'est pas installé'
+				]);
+			} else {
+				return([
+					'success' => false,
+					'notification'=> 'Une erreur inconnue s\est produite !'
+				]);
+				// Supprimer le dossier temporaire
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
+			}
 		} else {
-			// erreur à l'ouverture
-			$success = false;
-			$notification = 'Impossible d\'ouvrir l\'archive';
+			// Message de retour
+			return(['success' => $success,
+					'notification'=> 'Impossible d\'ouvrir l\'archive'
+			]);
 		}
-		return(['success' => $success,
-				'notification'=> $notification
-		]);
+
 	}
 
 	/***
@@ -294,21 +309,19 @@ class plugin extends common {
 			// Sauver les données du fichiers
 			file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
 
-			/**
-			* $if( $moduleFile !== ''){
-			*	$success = [
-			*		'success' => false,
-			*		'notification'=> ''
-			*	];
-			*	$state = $this->install(self::FILE_DIR.'source/modules/'.$moduleFile, false);
-			*}
-			*/
+			// Installation directe
+			if ( file_exists(self::FILE_DIR . 'source/modules/' . $moduleFile) ) {
+				$r = $this->install(self::FILE_DIR . 'source/modules/' . $moduleFile, false);
+			} else {
+				$r['notification'] = 'Un problème est survenu, le module n\'est pas installé';
+				$r['success'] = false;
+			}
+			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin/store',
-				'notification' => $moduleFile . ' téléchargé dans le dossier modules du gestionnaire de fichiers',
-				'state' => true
+				'notification' => $r['notification'],
+				'state' => $r['success']
 			]);
-
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -548,7 +561,7 @@ class plugin extends common {
 
 			//Nom de l'archive
 			$fileName =  $this->getUrl(3) . '.zip';
-			$this->makeZip ($tmpFolder . '/' . $fileName, 'module/' .  $this->getUrl(3));
+			$this->makeZip ($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $this->getUrl(3));
 
 			switch ($this->getUrl(2)) {
 				case 'filemanager':
