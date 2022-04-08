@@ -29,9 +29,26 @@ tinymce.init({
 	// Langue
 	language: "fr_FR",
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor visualblocks nonbreaking",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
-	toolbar: "formatselect fontsizeselect |  bold italic underline forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | table template | image media link | visualblocks code fullscreen",
+	toolbar: "formatgroup paragraphgroup insertgroup | visualblocks fullscreen code",
+    toolbar_groups: {
+        formatgroup: {
+            icon: 'format',
+            tooltip: 'Format du texte',
+            items: 'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat'
+        },
+        paragraphgroup: {
+            icon: 'paragraph',
+            tooltip: 'Format des paragraphes',
+            items: 'h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | indent outdent'
+        },
+        insertgroup: {
+            icon: 'plus',
+            tooltip: 'Insérer',
+            items: 'link image emoticons charmap hr table template'
+        }
+    },
 	fontsize_formats:
     "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
@@ -43,7 +60,6 @@ tinymce.init({
 		path: 'codemirror', // Path to CodeMirror distribution
 		saveCursorPosition: false,    // Insert caret marker
 		config: {           // CodeMirror config object
-			/*theme: 'ambiance',*/
 			fullscreen: true,
 			/*mode: 'application/x-httpd-php',*/
 			indentUnit: 4,
@@ -60,9 +76,10 @@ tinymce.init({
 			'addon/search/searchcursor.js',
 			'addon/search/search.js',
 		],
+		/*
 		cssFiles: [
-			/*'theme/ambiance.css',*/
-		],
+			'theme/cobalt.css',
+		],*/
 		width: 800,         // Default value is 800
 		height: 500       // Default value is 550
 	},
