@@ -23,9 +23,8 @@ class JsonDb extends \Prowebcraft\Dot
     {
         $this->config = array_merge([
             'name' => 'data.json',
-            'backup' => 5,
-            'dir' => getcwd(),
-            'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
+            'backup' => false,
+            'dir' => getcwd()
         ], $config);
         $this->loadData();
         parent::__construct();
@@ -113,17 +112,12 @@ class JsonDb extends \Prowebcraft\Dot
         if ($this->data === null || $reload) {
             $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
             if (!file_exists($this->db)) {
-                $templateFile = $this->config['template'];
-                if (file_exists($templateFile)) {
-                    copy($templateFile, $this->db);
-                } else {
-                    //file_put_contents($this->db, '{}');
-                    return null; // Rebuild database manage by CMS
-                }
+                return null; // Rebuild database manage by CMS
             } else {
                 if ($this->config['backup']) {
                    try {
                        //todo make backup of database
+                       copy ($this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'], $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup');
                    } catch (\Exception $e) {
 
                    }
@@ -139,7 +133,7 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
-     * Сохранение в локальную базу
+     * Save database
      */
     public function save() {
         file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)); // Multi user get a locker
