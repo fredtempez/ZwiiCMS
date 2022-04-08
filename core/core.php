@@ -300,7 +300,9 @@ class common {
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dataPath ($stageId, self::$i18n);
-			if (file_exists($folder . $stageId .'.json') === false) {
+			if ( file_exists($folder . $stageId .'.json') === false ||
+					$this->getData([$stageId]) === NULL
+				) {
 				$this->initData($stageId, self::$i18n);
 				common::$coreNotices [] = $stageId ;
 			}
