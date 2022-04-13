@@ -46,15 +46,15 @@
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditSetupButton', [
-			'value' => 'Identité',
+			'value' => 'Désignation',
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('PageEditPositionButton', [
-			'value' => 'Emplacement',
+			'value' => 'Menu',
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditLayoutButton', [
-			'value' => 'Disposition',
+			'value' => 'Mise en page',
 			'class' => 'buttonTab'
 		]); ?>
 	</div>
