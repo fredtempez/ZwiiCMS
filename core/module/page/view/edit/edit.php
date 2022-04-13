@@ -58,7 +58,7 @@
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditPermissionButton', [
-			'value' => 'Permissions',
+			'value' => 'Référencement',
 			'class' => 'buttonTab'
 		]); ?>	
 	</div>
