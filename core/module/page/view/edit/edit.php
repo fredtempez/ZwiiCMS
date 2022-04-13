@@ -43,23 +43,68 @@
 	<div class="tab">
 		<?php echo template::button('pageEditContentButton', [
 			'value' => 'Contenu',
-			'class' => 'buttonTab'
-		]); ?>
-		<?php echo template::button('pageEditSetupButton', [
-			'value' => 'Désignation',
-			'class' => 'buttonTab'
+			'class' => 'buttonTab activeButton'
 		]); ?>
 		<?php echo template::button('PageEditPositionButton', [
 			'value' => 'Menu',
 			'class' => 'buttonTab'
 		]); ?>
+		<?php echo template::button('pageEditExtensionButton', [
+			'value' => 'Extension',
+			'class' => 'buttonTab'
+		]); ?>	
 		<?php echo template::button('pageEditLayoutButton', [
 			'value' => 'Mise en page',
 			'class' => 'buttonTab'
 		]); ?>
+		<?php echo template::button('pageEditPermissionButton', [
+			'value' => 'Permissions',
+			'class' => 'buttonTab'
+		]); ?>	
 	</div>
 
 	<div id="pageEditContentContainer" class="tabContent">
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>Titres
+						<span id="infoHelpButton" class="helpDisplayButton">
+							<a href="https://doc.zwiicms.fr/informations-generales" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
+								<?php echo template::ico('help', 'left');?>
+							</a>
+						</span>
+					</h4>
+					<div class="row">
+						<div class="col8">
+							<?php echo template::text('pageEditTitle', [
+								'label' => 'Titre',
+								'value' => $this->getData(['page', $this->getUrl(2), 'title'])
+							]); ?>
+						</div>
+						<div class="col4">
+							<?php echo template::text('pageEditShortTitle', [
+								'label' => 'Titre court',
+								'value' => $this->getData(['page', $this->getUrl(2), 'shortTitle']),
+								'help' => 'Le titre court est affiché dans les menus. Il peut être identique au titre de la page.'
+							]); ?>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col6">
+								<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué dans la page', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
+								]); ?>
+						</div>
+						<div class="col6">
+							<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane dans une page enfant', [
+								'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']),
+								'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.'
+							]); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col12">
 				<?php echo template::textarea('pageEditContent', [
@@ -68,6 +113,110 @@
 				]); ?>
 			</div>
 		</div>
+	</div>
+
+	<div id="pageEditPositionContainer" class="tabContent">
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>Emplacement dans le menu
+						<span id="positionHelpButton" class="helpDisplayButton">
+							<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
+								<?php echo template::ico('help', 'left');?>
+							</a>
+						</span>
+					</h4>
+					<div class="blockContainer">
+						<div class="row">
+							<div class="col4">
+								<?php echo template::select('pageEditPosition', [], [
+									'label' => 'Position',
+									'help' => '\'Ne pas afficher\' crée une page orpheline non accessible par le biais des menus.'
+								]); ?>
+							</div>
+							<div class="col4">
+								<?php	if($this->getHierarchy($this->getUrl(2), false)): ?>
+									<?php echo template::hidden('pageEditParentPageId', [
+										'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
+									]); ?>
+								<?php else: ?>
+									<?php echo template::select('pageEditParentPageId', $module::$pagesNoParentId, [
+										'label' => 'Page parent',
+										'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
+									]); ?>
+								<?php endif; ?>
+							</div>
+							<div class="col4">
+									<?php echo template::select('pageEditExtraPosition', $module::$extraPosition, [
+										'label' => 'Emplacement :',
+										'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']),
+										'help' => 'Le petit accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
+									]); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col6">
+								<?php echo template::checkbox('pageEditDisable', true, 'Page non cliquable', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'disable']),
+									'help' => 'Option active en mode déconnecté uniquement, les pages enfants sont visibles et accessibles.'
+								]); ?>
+							</div>
+							<div class="col6">
+								<?php echo template::checkbox('pageEditTargetBlank', true, 'S\'ouvre dans un nouvel onglet', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank'])
+								]); ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>Options avancées
+						<span id="advancedHelpButton" class="helpDisplayButton">
+							<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
+								<?php echo template::ico('help', 'left');?>
+							</a>
+						</span>
+					</h4>
+					<div class="blockContainer">
+						<div class="row">
+							<div class="col3">
+								<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
+										'label' => 'Aspect du lien',
+										'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
+								]); ?>
+							</div>
+							<div class="col9">
+								<?php echo template::file('pageIconUrl', [
+									'help' => 'Sélectionnez une image ou une icône de petite dimension',
+									'label' => 'Icône',
+									'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
+								]); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col6">
+								<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants dans le menu horizontal', [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren'])
+								]); ?>
+							</div>
+							<div class="col6">
+								<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale' , [
+									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']),
+									'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.'
+								]); ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="pageEditExtensionContainer" class="tabContent">
 		<div class="row">
 			<div class="col6">
 				<div class="block">
@@ -131,185 +280,6 @@
 		</div>
 	</div>
 
-	<div id="pageEditSetupContainer" class="tabContent">
-		<div class="row">
-			<div class="col12">
-				<div class="block">
-					<h4>Titres
-						<span id="infoHelpButton" class="helpDisplayButton">
-							<a href="https://doc.zwiicms.fr/informations-generales" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
-							</a>
-						</span>
-					</h4>
-					<div class="row">
-						<div class="col8">
-							<?php echo template::text('pageEditTitle', [
-								'label' => 'Titre',
-								'value' => $this->getData(['page', $this->getUrl(2), 'title'])
-							]); ?>
-						</div>
-						<div class="col4">
-							<?php echo template::text('pageEditShortTitle', [
-								'label' => 'Titre court',
-								'value' => $this->getData(['page', $this->getUrl(2), 'shortTitle']),
-								'help' => 'Le titre court est affiché dans les menus. Il peut être identique au titre de la page.'
-							]); ?>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col12">
-				<div class="block">
-					<h4>Permission et référencement
-					<span id="seoHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
-						</a>
-					</span>
-					</h4>
-					<div class="blockContainer">
-						<div class="row">
-							<div class='col6'>
-								<?php echo template::select('pageEditGroup', self::$groupPublics, [
-									'label' => 'Groupe requis pour accéder à la page :',
-									'selected' => $this->getData(['page', $this->getUrl(2), 'group'])
-								]); ?>
-							</div>
-							<div class='col12'>
-								<?php echo template::text('pageEditMetaTitle', [
-									'label' => 'Méta-titre',
-									'value' => $this->getData(['page', $this->getUrl(2), 'metaTitle'])
-								]); ?>
-								<?php echo template::textarea('pageEditMetaDescription', [
-									'label' => 'Méta-description',
-									//'maxlength' => '500',
-									'value' => $this->getData(['page', $this->getUrl(2), 'metaDescription'])
-								]); ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="pageEditPositionContainer" class="tabContent">
-		<div class="row">
-			<div class="col12">
-				<div class="block">
-					<h4>Emplacement dans le menu
-						<span id="positionHelpButton" class="helpDisplayButton">
-							<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
-							</a>
-						</span>
-					</h4>
-					<div class="blockContainer">
-						<div class="row">
-							<div class="col4">
-								<?php echo template::select('pageEditPosition', [], [
-									'label' => 'Position',
-									'help' => '\'Ne pas afficher\' crée une page orpheline non accessible par le biais des menus.'
-								]); ?>
-							</div>
-							<div class="col4">
-								<?php	if($this->getHierarchy($this->getUrl(2), false)): ?>
-									<?php echo template::hidden('pageEditParentPageId', [
-										'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
-									]); ?>
-								<?php else: ?>
-									<?php echo template::select('pageEditParentPageId', $module::$pagesNoParentId, [
-										'label' => 'Page parent',
-										'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
-									]); ?>
-								<?php endif; ?>
-							</div>
-							<div class="col4">
-									<?php echo template::select('pageEditExtraPosition', $module::$extraPosition, [
-										'label' => 'Emplacement :',
-										'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']),
-										'help' => 'Le petit accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
-									]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col6">
-								<?php echo template::checkbox('pageEditDisable', true, 'Désactivée', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'disable']),
-									'help' => 'Une page désactivée n\'est pas cliquable en mode déconnecté, les pages enfants sont visibles et accessibles. La page d\'accueil n\'est pas désactivable.'
-								]); ?>
-							</div>
-							<div class="col6">
-								<?php echo template::checkbox('pageEditTargetBlank', true, 'Nouvel onglet', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'targetBlank'])
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col6">
-									<?php echo template::checkbox('pageEditHideTitle', true, 'Titre masqué', [
-										'checked' => $this->getData(['page', $this->getUrl(2), 'hideTitle'])
-									]); ?>
-							</div>
-							<div class="col6">
-								<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']),
-									'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.'
-								]); ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col12">
-				<div class="block">
-					<h4>Options avancées
-						<span id="advancedHelpButton" class="helpDisplayButton">
-							<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
-							</a>
-						</span>
-					</h4>
-					<div class="blockContainer">
-						<div class="row">
-							<div class="col3">
-								<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
-										'label' => 'Aspect du lien',
-										'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
-								]); ?>
-							</div>
-							<div class="col9">
-								<?php echo template::file('pageIconUrl', [
-									'help' => 'Sélectionnez une image ou une icône de petite dimension',
-									'label' => 'Icône',
-									'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuChildren', true, 'Masquer les pages enfants dans le menu horizontal', [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuChildren'])
-								]); ?>
-							</div>
-							<div class="col6">
-								<?php echo template::checkbox('pageEditHideMenuSide', true, 'Masquer la page et les pages enfants dans le menu d\'une barre latérale' , [
-									'checked' => $this->getData(['page', $this->getUrl(2), 'hideMenuSide']),
-									'help' => 'La page est affichée dans un menu horizontal mais pas dans le menu vertical d\'une barre latérale.'
-								]); ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div id="pageEditLayoutContainer" class="tabContent">
 		<div class="row">
 			<div class="col12">
@@ -360,6 +330,43 @@
 									'label' => 'Contenu du menu vertical',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'displayMenu']),
 									'help' => 'Par défaut le menu est affiché APRES le contenu de la page. Pour le positionner à un emplacement précis, insérez [MENU] dans le contenu de la page.'
+								]); ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="pageEditPermissionContainer" class="tabContent">
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>Permission et référencement
+					<span id="seoHelpButton" class="helpDisplayButton">
+						<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', 'left');?>
+						</a>
+					</span>
+					</h4>
+					<div class="blockContainer">
+						<div class="row">
+							<div class='col6'>
+								<?php echo template::select('pageEditGroup', self::$groupPublics, [
+									'label' => 'Groupe requis pour accéder à la page :',
+									'selected' => $this->getData(['page', $this->getUrl(2), 'group'])
+								]); ?>
+							</div>
+							<div class='col12'>
+								<?php echo template::text('pageEditMetaTitle', [
+									'label' => 'Méta-titre',
+									'value' => $this->getData(['page', $this->getUrl(2), 'metaTitle'])
+								]); ?>
+								<?php echo template::textarea('pageEditMetaDescription', [
+									'label' => 'Méta-description',
+									//'maxlength' => '500',
+									'value' => $this->getData(['page', $this->getUrl(2), 'metaDescription'])
 								]); ?>
 							</div>
 						</div>

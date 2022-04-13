@@ -56,9 +56,10 @@ $( document ).ready(function() {
 	/**
 	 * Position initiales des blocs
 	 */
-	 $("#pageEditSetupContainer").hide();
+	 $("#pageEditExtensionContainer").hide();
 	 $("#pageEditPositionContainer").hide();
 	 $("#pageEditLayoutContainer").hide();
+	 $("#pageEditPermissionContainer").hide();
 	 $("#pageEditContentButton").addClass("activeButton");
 
 	/*
@@ -265,44 +266,63 @@ $( document ).ready(function() {
      */
 		 $("#pageEditContentButton").on("click", function () {
 			$("#pageEditContentContainer").show();
-			$("#pageEditSetupContainer").hide();
+			$("#pageEditExtensionContainer").hide();
 			$("#pageEditPositionContainer").hide();
 			$("#pageEditLayoutContainer").hide();
+			$("#pageEditPermissionContainer").hide();
 			$("#pageEditContentButton").addClass("activeButton");
-			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#pageEditExtensionButton").removeClass("activeButton");
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
-
+			$("#pageEditPermissionButton").removeClass("activeButton");
 		});
-		$("#pageEditSetupButton").on("click", function () {
+		$("#pageEditExtensionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
-			$("#pageEditSetupContainer").show();
+			$("#pageEditExtensionContainer").show();
 			$("#pageEditPositionContainer").hide();
 			$("#pageEditLayoutContainer").hide();
+			$("#pageEditPermissionContainer").hide();
 			$("#pageEditContentButton").removeClass("activeButton");
-			$("#pageEditSetupButton").addClass("activeButton");
+			$("#pageEditExtensionButton").addClass("activeButton");
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
+			$("#pageEditPermissionButton").removeClass("activeButton");
 		});
 		$("#PageEditPositionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
-			$("#pageEditSetupContainer").hide();
+			$("#pageEditExtensionContainer").hide();
 			$("#pageEditPositionContainer").show();
 			$("#pageEditLayoutContainer").hide();
+			$("#pageEditPermissionContainer").hide();
 			$("#pageEditContentButton").removeClass("activeButton");
-			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#pageEditExtensionButton").removeClass("activeButton");
 			$("#PageEditPositionButton").addClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
+			$("#pageEditPermissionButton").removeClass("activeButton");
 		});
 		$("#pageEditLayoutButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
-			$("#pageEditSetupContainer").hide();
+			$("#pageEditExtensionContainer").hide();
 			$("#pageEditPositionContainer").hide();
 			$("#pageEditLayoutContainer").show();
+			$("#pageEditPermissionContainer").hide();
 			$("#pageEditContentButton").removeClass("activeButton");
-			$("#pageEditSetupButton").removeClass("activeButton");
+			$("#pageEditExtensionButton").removeClass("activeButton");
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").addClass("activeButton");
+			$("#pageEditPermissionButton").removeClass("activeButton");
+		});
+		$("#pageEditPermissionButton").on("click", function () {
+			$("#pageEditContentContainer").hide();
+			$("#pageEditExtensionContainer").hide();
+			$("#pageEditPositionContainer").hide();
+			$("#pageEditLayoutContainer").hide();
+			$("#pageEditPermissionContainer").show();
+			$("#pageEditContentButton").removeClass("activeButton");
+			$("#pageEditExtensionButton").removeClass("activeButton");
+			$("#pageEditPositionButton").removeClass("activeButton");
+			$("#pageEditLayoutButton").removeClass("activeButton");
+			$("#pageEditPermissionButton").addClass("activeButton");
 		});
 
 /**
