@@ -1023,6 +1023,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	}
 
 	// Transforme les URL en références relatives
+	/*
 	$baseUrl = $this->getData(['core', 'baseUrl']);
 	$baseUrl2 = str_replace('?', '', $baseUrl);
 	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
@@ -1038,6 +1039,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		$s = str_replace ($baseUrl2, './', $s);
 		$this->setPage( $parent, $s, self::$i18n);
 	}
+	*/
 
 	// Suppression de la variable URL dans core
 	//$this->deleteData(['core', 'baseUrl']);
