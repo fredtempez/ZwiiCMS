@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php echo template::textarea('pageJsEditorContent', [
-				'value' => empty($this->getData(['page', $this->getUrl(2), 'js' ])) ? '<script></script>': $this->getData(['page', $this->getUrl(2), 'js' ]),
+				'value' => empty($this->getData(['page', $this->getUrl(2), 'js' ])) ? '': $this->getData(['page', $this->getUrl(2), 'js' ]),
 				'class' => 'editor'
 			]); ?>
 		</div>

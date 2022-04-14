@@ -2784,19 +2784,17 @@ class core extends common {
 				'title' => $title,
 				'content' => 	$this->getPage($this->getUrl(0), self::$i18n) .
 								// Concatène avec les paramètres avancés.
-								$this->getData(['page', $this->getUrl(0), 'css']) .
-								$this->getData(['page', $this->getUrl(0), 'js']),
+								'<style type="text/css">' . $this->getData(['page', $this->getUrl(0), 'css']) . '</style>' .
+								'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>',
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
-									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 									: '',
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
-									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 									: ''
 			]);
@@ -2828,7 +2826,10 @@ class core extends common {
 										: ''
 				]);
 				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18n).
+								// Concatène avec les paramètres avancés.
+								'<style type="text/css">'  . $this->getData(['page', $this->getUrl(0), 'css']) . '</style>' .
+								'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>';
 			}
 			else {
 				$moduleId = $this->getUrl(0);

@@ -96,7 +96,7 @@
 								]); ?>
 						</div>
 						<div class="col6">
-							<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane dans une page enfant', [
+							<?php echo template::checkbox('pageEditbreadCrumb', true, 'Fil d\'Ariane dans le titre', [
 								'checked' => $this->getData(['page', $this->getUrl(2), 'breadCrumb']),
 								'help' => 'Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.'
 							]); ?>
@@ -185,7 +185,7 @@
 						<div class="row">
 							<div class="col3">
 								<?php echo template::select('pageTypeMenu', $module::$typeMenu,[
-										'label' => 'Aspect du lien',
+										'label' => 'Apparence',
 										'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 								]); ?>
 							</div>
@@ -220,7 +220,7 @@
 		<div class="row">
 			<div class="col6">
 				<div class="block">
-					<h4>Extension</h4>
+					<h4>Module</h4>
 					<div class="row">
 						<div class="col10">
 							<?php echo template::hidden('pageEditModuleRedirect'); ?>
