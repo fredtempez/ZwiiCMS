@@ -735,7 +735,10 @@ class common {
 	}
 
 
-
+	/**
+	 * Initialise un fichier de données absent.
+	 * Connecte la base de données si le descripteur est inconnu.
+	 */
 	private function connectData ($database) {
 
 		// Installation fraîche, initialisation des modules manquants
