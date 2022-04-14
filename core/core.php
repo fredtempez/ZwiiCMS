@@ -734,54 +734,6 @@ class common {
 		return ($this->checkCSRF() AND $this->input['_POST'] !== []);
 	}
 
-	/**
-	 * Import des données de la version 9
-	 * Convertit un fichier de données data.json puis le renomme
-	 */
-	public function importData($keepUsers = false) {
-		// Trois tentatives de lecture
-		for($i = 0; $i < 3; $i++) {
-			$tempData=json_decode(file_get_contents(self::DATA_DIR.'core.json'), true);
-			$tempTheme=json_decode(file_get_contents(self::DATA_DIR.'theme.json'), true);
-			if($tempData && $tempTheme) {
-				// Backup
-				rename (self::DATA_DIR.'core.json',self::DATA_DIR.'imported_core.json');
-				rename (self::DATA_DIR.'theme.json',self::DATA_DIR.'imported_theme.json');
-				break;
-			}
-			elseif($i === 2) {
-                throw new \ErrorException('Import des données impossible.');
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
-		}
-
-		// Dossier de langues
-		if (!file_exists(self::DATA_DIR . '/fr')) {
-			mkdir (self::DATA_DIR . '/fr', 0755);
-		}
-
-		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
-		$tempData = array_merge($tempData,$tempTheme);
-
-		// Ecriture des données
-		$this->setData(['config',$tempData['config']]);
-		$this->setData(['core',$tempData['core']]);
-		$this->setData(['page',$tempData['page']]);
-		$this->setData(['module',$tempData['module']]);
-		$this->setData(['theme',$tempData['theme']]);
-
-		// Import des users sauvegardés si option active
-		if ($keepUsers === false
-			AND $tempData['user'] !== NULL) {
-			$this->setData(['user',$tempData['user']]);
-		}
-
-		// Nettoyage du fichier de thème pour forcer une régénération
-		if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
-			unlink (self::DATA_DIR . '/theme.css');
-		}
-	}
 
 
 	private function connectData ($database) {
