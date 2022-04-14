@@ -337,7 +337,13 @@ class config extends common {
 				switch (strlen($dataVersion)) {
 					case 4:
 						if (substr($dataVersion,0,1) === '9' ) {
-							$version = 9;
+							// Valeurs en sortie erreur
+							$this->addOutput([
+								'title' => 'Restaurer',
+								'view' => 'restore',
+								'notification' => 'Cette archive est trop ancienne, elle ne peut être restaurée',
+								'state' => false
+							]);
 						} else {
 							$version = 0;
 						}
@@ -352,30 +358,24 @@ class config extends common {
 				$this->removeDir(self::TEMP_DIR . $tmpDir );
 
 				if ($version >= 10 )	{
-						// Option active, les users sont stockées
-						if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
-							$users = $this->getData(['user']);
+					// Option active, les users sont stockées
+					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
+						$users = $this->getData(['user']);
 					}
 				} elseif ($version === 0) { // Version invalide
-					// Valeurs en sortie erreur
-					$this->addOutput([
-						'title' => 'Restaurer',
-						'view' => 'restore',
-						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-						'state' => false
-					]);
-				}
-				// Préserver les comptes des utilisateurs d'une version 9 si option cochée
-				// Positionnement d'une  variable de session lue au constructeurs
-				if ($version === 9) {
-					$_SESSION['KEEP_USERS'] = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN);
+							// Valeurs en sortie erreur
+							$this->addOutput([
+								'title' => 'Restaurer',
+								'view' => 'restore',
+								'notification' => 'Cette archive n\'est pas une sauvegarde valide',
+								'state' => false
+							]);
 				}
 				// Extraire le zip ou 'site/'
 				$this->removeDir(self::DATA_DIR);
 				$success = $zip->extractTo( 'site/' );
 				// Fermer l'archive
 				$zip->close();
-
 
 				// Restaurer les users originaux d'une v10 si option cochée
 				if (!empty($users) &&
@@ -391,8 +391,8 @@ class config extends common {
 				$this->updateBaseUrl($url);
 				// Effacer la baseUrl
 				$this->deleteData(['core', 'baseUrl']);
-			}			
-		
+			}
+
 			// Message de notification
 			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
@@ -808,7 +808,7 @@ class config extends common {
 		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
 		{
 			if (strpos($filename,'.zip')) {
-				
+
 				$r = unlink($filename);
 				$success = $r === true ? $succes + 1 : $success;
 				$fail = $r === false ? $fail + 1 : $fail;

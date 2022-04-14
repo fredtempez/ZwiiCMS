@@ -23,20 +23,30 @@ class JsonDb extends \Prowebcraft\Dot
     {
         $this->config = array_merge([
             'name' => 'data.json',
-            'backup' => 5,
-            'dir' => getcwd(),
-            'template' => getcwd() . DIRECTORY_SEPARATOR . 'data.template.json'
+            'backup' => false,
+            'dir' => getcwd()
         ], $config);
         $this->loadData();
         parent::__construct();
     }
 
     /**
+     * Reload data from file
+     * @return $this
+     */
+    public function reload()
+    {
+        $this->loadData(true);
+        return $this;
+    }
+
+
+    /**
      * Set value or array of values to path
      *
      * @param mixed      $key   Path or array of paths and values
      * @param mixed|null $value Value to set if path is not an array
-     * @param bool $save Сохранить данные в базу
+     * @param bool $save Save data to database
      * @return $this
      */
     public function set($key, $value = null, $save = true)
@@ -49,10 +59,10 @@ class JsonDb extends \Prowebcraft\Dot
     /**
      * Add value or array of values to path
      *
-     * @param mixed $key Path or array of paths and values
+     * @param mixed      $key Path or array of paths and values
      * @param mixed|null $value Value to set if path is not an array
-     * @param boolean $pop Helper to pop out last key if value is an array
-     * @param bool $save Сохранить данные в базу
+     * @param boolean    $pop Helper to pop out last key if value is an array
+     * @param bool       $save    Save data to database
      * @return $this
      */
     public function add($key, $value = null, $pop = false, $save = true)
@@ -65,9 +75,9 @@ class JsonDb extends \Prowebcraft\Dot
     /**
      * Delete path or array of paths
      *
-     * @param mixed $key Path or array of paths to delete
-     * @param bool $save Сохранить данные в базу
-     * @return $this
+     * @param mixed     $key Path or array of paths to delete
+     * @param bool      $save Save data to database
+     * @return $thisurn $this
      */
     public function delete($key, $save = true)
     {
@@ -81,8 +91,8 @@ class JsonDb extends \Prowebcraft\Dot
      * optionally format path if it doesn't exist
      *
      * @param mixed|null $key Path or array of paths to clean
-     * @param boolean $format Format option
-     * @param bool $save Сохранить данные в базу
+     * @param boolean    $format Format option
+     * @param bool       $save Save data to database
      * @return $this
      */
     public function clear($key = null, $format = false, $save = true)
@@ -94,26 +104,20 @@ class JsonDb extends \Prowebcraft\Dot
 
 
     /**
-     * Загрузка локальной базы данных
-     * @param bool $reload
-     * Перезагрузить данные?
+     * Local database upload
+     * @param bool $reload Reboot data?
      * @return array|mixed|null
      */
     protected function loadData($reload = false) {
         if ($this->data === null || $reload) {
             $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
             if (!file_exists($this->db)) {
-                $templateFile = $this->config['template'];
-                if (file_exists($templateFile)) {
-                    copy($templateFile, $this->db);
-                } else {
-                    //file_put_contents($this->db, '{}');
-                    return null; // Rebuild database manage by CMS
-                }
+                return null; // Rebuild database manage by CMS
             } else {
                 if ($this->config['backup']) {
                    try {
                        //todo make backup of database
+                       copy ($this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'], $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup');
                    } catch (\Exception $e) {
 
                    }
@@ -129,7 +133,7 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
-     * Сохранение в локальную базу
+     * Save database
      */
     public function save() {
         file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)); // Multi user get a locker

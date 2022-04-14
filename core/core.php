@@ -165,7 +165,6 @@ class common {
 	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
-	// Liste ici tous les fichiers de données
 	private $dataFiles = [
 		'admin' => '',
 		'blacklist' => '',
@@ -177,7 +176,6 @@ class common {
 		'page' => '',
 		'theme' => '',
 		'user' => ''
-
 	];
 
 	public static $fontsWebSafe = [
@@ -270,42 +268,6 @@ class common {
 
 		} else  {
 			self::$i18n = 'fr';
-		}
-
-		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys, self::$i18n),
-				'backup' => file_exists('site/data/.backup')
-			]);;
-		}
-
-
-		// Import version 9
-		if (file_exists(self::DATA_DIR . 'core.json') === true &&
-		$this->getData(['core','dataVersion']) < 10000) {
-			$keepUsers = isset($_SESSION['KEEP_USERS']) ? $_SESSION['KEEP_USERS'] : false;
-			$this->importData($keepUsers);
-			unset ($_SESSION['KEEP_USERS']);
-			// Réinstaller htaccess
-			copy('core/module/install/ressource/.htaccess', self::DATA_DIR . '.htaccess');
-			common::$importNotices [] = "Importation réalisée avec succès" ;
-			//echo '<script>window.location.replace("' .  helper::baseUrl() . $this->getData(['config','homePageId']) . '")</script>';
-		}
-
-		// Installation fraîche, initialisation des modules manquants
-		// La langue d'installation par défaut est fr
-		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath ($stageId, self::$i18n);
-			if ( file_exists($folder . $stageId .'.json') === false ||
-					$this->getData([$stageId]) === NULL
-				) {
-				$this->initData($stageId, self::$i18n);
-				common::$coreNotices [] = $stageId ;
-			}
 		}
 
 		// Utilisateur connecté
@@ -470,6 +432,10 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function deleteData($keys) {
+
+		// Récupère le descripteur dans le tableau dataFiles si absent
+		$this->connectData($keys[0]);
+
 		// Descripteur de la base
 		$db = $this->dataFiles[$keys[0]];
 		// Initialisation de la requête par le nom de la base
@@ -499,6 +465,9 @@ class common {
 			return false;
 		}
 
+		// Récupère le descripteur dans le tableau dataFiles si absent
+		$this->connectData($keys[0]);
+
 		// Initialisation du retour en cas d'erreur de descripteur
 		$success = false;
 		// Construire la requête dans la base inf à 1 retourner toute la base
@@ -523,6 +492,9 @@ class common {
 	 * @return mixed
 	 */
 	public function getData($keys = []) {
+
+		// Récupère le descripteur dans le tableau dataFiles si absent
+		$this->connectData($keys[0]);
 
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
@@ -762,52 +734,27 @@ class common {
 		return ($this->checkCSRF() AND $this->input['_POST'] !== []);
 	}
 
-	/**
-	 * Import des données de la version 9
-	 * Convertit un fichier de données data.json puis le renomme
-	 */
-	public function importData($keepUsers = false) {
-		// Trois tentatives de lecture
-		for($i = 0; $i < 3; $i++) {
-			$tempData=json_decode(file_get_contents(self::DATA_DIR.'core.json'), true);
-			$tempTheme=json_decode(file_get_contents(self::DATA_DIR.'theme.json'), true);
-			if($tempData && $tempTheme) {
-				// Backup
-				rename (self::DATA_DIR.'core.json',self::DATA_DIR.'imported_core.json');
-				rename (self::DATA_DIR.'theme.json',self::DATA_DIR.'imported_theme.json');
-				break;
-			}
-			elseif($i === 2) {
-                throw new \ErrorException('Import des données impossible.');
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
+
+
+	private function connectData ($database) {
+
+		// Installation fraîche, initialisation des modules manquants
+		// La langue d'installation par défaut est fr
+		$folder = $this->dataPath ($database, self::$i18n);
+		if ( file_exists($folder . $database .'.json') === false
+			) {
+			$this->initData($database, self::$i18n);
+			common::$coreNotices [] = $database ;
 		}
 
-		// Dossier de langues
-		if (!file_exists(self::DATA_DIR . '/fr')) {
-			mkdir (self::DATA_DIR . '/fr', 0755);
-		}
-
-		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
-		$tempData = array_merge($tempData,$tempTheme);
-
-		// Ecriture des données
-		$this->setData(['config',$tempData['config']]);
-		$this->setData(['core',$tempData['core']]);
-		$this->setData(['page',$tempData['page']]);
-		$this->setData(['module',$tempData['module']]);
-		$this->setData(['theme',$tempData['theme']]);
-
-		// Import des users sauvegardés si option active
-		if ($keepUsers === false
-			AND $tempData['user'] !== NULL) {
-			$this->setData(['user',$tempData['user']]);
-		}
-
-		// Nettoyage du fichier de thème pour forcer une régénération
-		if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
-			unlink (self::DATA_DIR . '/theme.css');
+		// Instanciation de la classe des entrées / sorties
+		// Constructeur  JsonDB
+		if (!is_object($this->dataFiles[$database]) ) {
+			$this->dataFiles[$database] = new \Prowebcraft\JsonDb([
+				'name' => $database . '.json',
+				'dir' => $this->dataPath ($database, self::$i18n),
+				'backup' => file_exists('site/data/.backup')
+			]);;
 		}
 	}
 
