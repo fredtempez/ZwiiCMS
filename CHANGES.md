@@ -31,6 +31,7 @@
 - Module Galerie : correction de bugs, tri des images, erreurs d'affectation.
 - Module Blog : taille recommandée de l'image erronée lorsque la largeur de l'écran est réglée sur fluide (100%).
 - Gestion des pages : positionnement dans le menu accessoire ou dans le menu standard.
+- Safari sur Mac, bug avec les cookies qui ne sont pas stockés.
 - Nettoyage du code.
 ### Mise à jour :
 - TableDND, script JQUERY de tri de tables, utilisé par la galerie, passe en version 1.0.5
