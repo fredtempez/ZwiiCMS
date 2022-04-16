@@ -213,7 +213,7 @@ class config extends common {
 			/*'title' => 'Configuration',
 			'view' => 'index',*/
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap etsiteMaps.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
+			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour',
 			'state' => $successSitemap
 		]);
 	}
