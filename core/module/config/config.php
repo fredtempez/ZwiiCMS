@@ -206,12 +206,10 @@ class config extends common {
 	public function siteMap() {
 
 		// Mettre à jour le site map
-		$successSitemap=$this->createSitemap();
+		$successSitemap = $this->createSitemap();
 
 		// Valeurs en sortie
 		$this->addOutput([
-			/*'title' => 'Configuration',
-			'view' => 'index',*/
 			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour',
 			'state' => $successSitemap
