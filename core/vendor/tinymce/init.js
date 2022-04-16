@@ -41,7 +41,7 @@ tinymce.init({
         paragraphgroup: {
             icon: 'paragraph',
             tooltip: 'Format des paragraphes',
-            items: 'h1 h2 h3 | bullist numlist | alignleft aligncenter alignright | indent outdent'
+            items: 'h1 h2 h3 | bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
         },
         insertgroup: {
             icon: 'plus',
