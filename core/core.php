@@ -762,10 +762,9 @@ class common {
 
 
 	/**
-	 * Génère un fichier json avec la liste des pages
-	 *
+	 * Génère la liste des pages pour le plugin Link de TinyMCE
 	*/
-    public function pages2Json() {
+    public function listPages() {
     // Sauve la liste des pages pour TinyMCE
 		$parents = [];
         $rewrite = (helper::checkRewrite()) ? '' : '?';
@@ -850,8 +849,6 @@ class common {
 	*/
 
 	public function createSitemap($command = "all") {
-
-		//require_once "core/vendor/sitemap/SitemapGenerator.php";
 
 		$timezone = $this->getData(['config','timezone']);
 		$outputDir = getcwd();

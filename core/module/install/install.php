@@ -121,10 +121,9 @@ class install extends common {
 				if (!is_dir(self::DATA_DIR . 'fonts')) {
 					mkdir(self::DATA_DIR . 'fonts');
 				}
+
 				// Stocker le dossier d'installation
 				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-				// Créer sitemap
-				$this->createSitemap();
 
 				// Installation du thème sélectionné
 				$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
@@ -154,6 +153,11 @@ class install extends common {
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);
 			self::$themes = helper::arrayColumn($dataThemes, 'name');
+
+			// Créer sitemap
+			$this->createSitemap();
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->listPages();
 
 			// Valeurs en sortie
 			$this->addOutput([
