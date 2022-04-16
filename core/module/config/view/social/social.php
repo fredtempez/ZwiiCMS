@@ -23,7 +23,7 @@
 						<div class="row">
 							<div class="col12">
 								<?php echo template::button('socialSiteMap', [
-									'href' => helper::baseUrl() . 'config/generateFiles',
+									'href' => helper::baseUrl() . 'config/siteMap',
 									'value' => 'Générer sitemap.xml et robots.txt'
 								]); ?>
 							</div>

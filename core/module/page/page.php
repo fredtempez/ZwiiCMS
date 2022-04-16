@@ -164,6 +164,8 @@ class page extends common {
 		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18n);
 		// Met à jour le site map
 		$this->createSitemap('all');
+		// Mise à jour de la liste des pages pour TinyMCE
+		$this->listPages();
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . $pageId,
@@ -289,6 +291,8 @@ class page extends common {
 			$this->deleteData(['module', $url[0]]);
 			// Met à jour le site map
 			$this->createSitemap('all');
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->listPages();
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl(false),
@@ -493,12 +497,10 @@ class page extends common {
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
 					$this->setPage($pageId , $content, self::$i18n);
 
-
 					// Met à jour le site map
 					$this->createSitemap('all');
-
 					// Mise à jour de la liste des pages pour TinyMCE
-					$this->pages2Json();
+					$this->listPages();
 
 					// Redirection vers la configuration
 					if(

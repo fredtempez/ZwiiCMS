@@ -20,7 +20,7 @@ class config extends common {
 		'backup' => self::GROUP_ADMIN,
 		'copyBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
-		'generateFiles' => self::GROUP_ADMIN,
+		'siteMap' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
@@ -28,8 +28,7 @@ class config extends common {
 		'logReset' => self::GROUP_ADMIN,
 		'logDownload'=> self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
-		'blacklistDownload' => self::GROUP_ADMIN,
-
+		'blacklistDownload' => self::GROUP_ADMIN
 	];
 
 	public static $timezones = [
@@ -203,7 +202,7 @@ class config extends common {
 	 * Sitemap compressé et non compressé
 	 * Robots.txt
 	 */
-	public function generateFiles() {
+	public function siteMap() {
 
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
@@ -213,7 +212,7 @@ class config extends common {
 			/*'title' => 'Configuration',
 			'view' => 'index',*/
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
+			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap etsiteMaps.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
 			'state' => $successSitemap
 		]);
 	}
@@ -581,7 +580,7 @@ class config extends common {
 								$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
 			}
 			// Générer robots.txt et sitemap
-			$this->generateFiles();
+			$this->siteMap();
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Configuration',
