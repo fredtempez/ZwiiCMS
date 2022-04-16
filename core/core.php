@@ -1307,6 +1307,9 @@ class common {
 						echo '</div>';
 						echo substr($contentLeft,$mark+6,strlen($contentLeft));
 					}
+					// Feuille de style et script de la barre
+					echo '<style type="text/css">' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'css']) . '</style>' ;
+					echo '<script>' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'js']) . '</script>';
 					echo  "</aside></div>";
 				}
 				/**
@@ -1338,6 +1341,9 @@ class common {
 						echo '</div>';
 						echo substr($contentRight,$mark+6,strlen($contentRight));
 					}
+					// Feuille de style et script de la barre
+					echo '<style type="text/css">' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'css']) . '</style>' ;
+					echo '<script>' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'js']) . '</script>';
 					echo '</aside></div>';
 				}
 			echo '</div>';
