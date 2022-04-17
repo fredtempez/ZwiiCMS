@@ -560,6 +560,9 @@ class common {
 	 */
 	public function initData($module, $lang = 'fr', $sampleSite = false) {
 
+		// Récupère le descripteur dans le tableau dataFiles si absent
+		$this->connectData($module);
+
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
