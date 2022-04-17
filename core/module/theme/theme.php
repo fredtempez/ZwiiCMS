@@ -1132,7 +1132,7 @@ class theme extends common {
 		$f ['websafe'] = self::$fontsWebSafe;
 		// Construit un tableau avec leur ID et leur famille
 		foreach(['websafe', 'imported', 'files'] as $type) {
-			if(array_key_exists($type, $f))  {
+			if (is_array($f[$type]))  {
 				foreach ($f[$type] as $fontId => $fontValue ) {
 					$fonts [$fontId] = $fontValue['name'];
 				}
