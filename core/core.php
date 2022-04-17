@@ -2595,6 +2595,11 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
+			// Fonts disponibles
+			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
+			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
+			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
+
 			/**
 			 * Import des polices de caractères
 			 * A partir du CDN ou dans le dossier site/file/source/fonts
