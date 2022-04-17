@@ -2308,7 +2308,6 @@ class core extends common {
 			/**
 			 * Charge les fontes websafe
 			 */
-			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['websafe'][$fontId])) {
 					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
@@ -2328,7 +2327,7 @@ class core extends common {
 						$gf =  strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
 			}
-			// Ajoute le préconnect des fontes Googles.
+			// Ajoute le préconnect des fontes Google.
 			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
 							: $fontFile;
 			// Enregistre la personnalisation
@@ -2544,6 +2543,11 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
+			// Fonts disponibles
+			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
+			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
+			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
+
 			/**
 			 * Import des polices de caractères
 			 * A partir du CDN ou dans le dossier site/file/source/fonts
@@ -2557,7 +2561,6 @@ class core extends common {
 			/**
 			 * Charge les fontes websafe
 			 */
-			$fontFile = '';
 			foreach ($fonts as $fontId) {
 				if ( isset($fontsAvailable['websafe'][$fontId])) {
 					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
@@ -2597,6 +2600,8 @@ class core extends common {
 					}
 				}
 			}
+
+
 
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
