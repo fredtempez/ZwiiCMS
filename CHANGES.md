@@ -9,6 +9,7 @@
 ### Améliorations :
 - Configuration de la bannière, modalité d'affichage de la taille d'image recommandée et affichage des dimensions de l'image.
 - Edition d'une page, le nom court se complète automatiquement.
+- Configuration de la connexion, une option autorise l'affichage de la page de connexion lorsqu'une page de gestion du site est demandée:  'user', 'theme', 'config', 'edit', 'translate', 'addon'.
 - Galerie, version 3.5 :
     - Nouvelle structure anticipée sur la version 12, le formulaire d'ajout de la galerie est séparé de la liste des galeries du module.
     - Lorsque la galerie n'en contient qu'**une seule galerie**, elle peut être affichée directement, la liste des galeries étant ignorée. Pour cela, activer cette option dans les options de la galerie.
