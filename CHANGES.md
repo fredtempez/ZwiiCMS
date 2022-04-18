@@ -23,6 +23,7 @@
 - Nettoyage du code.
 ### Mise à jour :
 - TableDND, script JQUERY de tri de tables utilisé par la galerie, passe en version 1.0.5
+- PHPMailer 6.6.0
 
 ## Version 11.3.07
 ### Correction :

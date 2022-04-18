@@ -1114,6 +1114,7 @@ class common {
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
 		$mail->CharSet = 'UTF-8';
+		$mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
 		// Mail
 		try{
 			// Paramètres SMTP
@@ -1163,10 +1164,10 @@ class common {
 			else {
 					return $mail->ErrorInfo;
 			}
-		} catch (phpmailerException $e) {
-			return $e->errorMessage();
 		} catch (Exception $e) {
-			return $e->getMessage();
+			echo $e->errorMessage();
+		} catch (\Exception $e) {
+			echo $e->getMessage();
 		}
 	}
 
