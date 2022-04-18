@@ -11,16 +11,22 @@
 				</h4>
 
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::checkbox('connectShowPassword', true, 'Dévoiler le mot de passe', [
+							'checked' => $this->getData(['config', 'connect', 'showPassword']),
+							'help' => 'Le survom d\'une icône de l\'écran de connexion affiche temporairement le mot de passe.'
+						]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::checkbox('connectAutoDisconnect', true, 'Déconnexion automatique', [
 							'checked' => $this->getData(['config', 'connect', 'autoDisconnect']),
 							'help' => 'Déconnecte les sessions ouvertes précédemment sur d\'autres navigateurs ou terminaux. Activation recommandée.'
 						]); ?>
 					</div>
-					<div class="col6">
-						<?php echo template::checkbox('connectShowPassword', true, 'Dévoiler le mot de passe', [
-							'checked' => $this->getData(['config', 'connect', 'showPassword']),
-							'help' => 'Dans l\'écran de connexion, active une icône dont le survol affiche temporairement le mot de passe.'
+					<div class="col4">
+						<?php echo template::checkbox('connectRedirectLogin', true, 'Redirige vers la page de connexion', [
+							'checked' => $this->getData(['config', 'connect', 'redirectLogin']),
+							'help' => 'Cette redirection ne concerne que les pages d\'administration du site.'
 						]); ?>
 					</div>
 				</div>

@@ -38,7 +38,8 @@ class init extends common {
 				'captchaStrong' => false,
 				"captchaType" => 'num',
 				'autoDisconnect' => true,
-				'showPassword' => true
+				'showPassword' => true,
+				'redirectLogin' => true
 			],
 			'i18n' => [
 				'enable'=> true,
