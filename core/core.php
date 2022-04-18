@@ -66,7 +66,6 @@ class common {
 		'theme',
 		'config',
 		'edit',
-		'config',
 		'translate'
 	];
 	public static $accessExclude = [
