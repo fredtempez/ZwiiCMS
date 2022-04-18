@@ -210,7 +210,8 @@ class config extends common {
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour'
+			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour',
+			'state' => $successSitemap
 		]);
 	}
 
