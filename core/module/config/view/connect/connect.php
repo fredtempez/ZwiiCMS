@@ -24,7 +24,7 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::checkbox('connectRedirectLogin', true, 'Redirige vers la page de connexion', [
+						<?php echo template::checkbox('connectRedirectLogin', true, 'Redirection vers la connexion', [
 							'checked' => $this->getData(['config', 'connect', 'redirectLogin']),
 							'help' => 'Cette redirection ne concerne que les pages d\'administration du site.'
 						]); ?>
