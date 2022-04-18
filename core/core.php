@@ -3097,15 +3097,23 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				if ( $this->getData(['locale','page403']) !== 'none'
-					AND $this->getData(['page',$this->getData(['locale','page403'])]))
-				{
-					header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
+				// Redirige vers la page de connexion si page de gestion demandée
+				if ( $this->getData(['config', 'connect', 'redirectLogin']) === true
+					&& in_array($this->geturl(0), self::$accessList) )	{
+					http_response_code(302);
+					header('Location:' . helper::baseUrl() . 'user/login/');
+					exit();
 				} else {
-					$this->addOutput([
-						'title' => 'Accès interdit',
-						'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
-					]);
+					if ( $this->getData(['locale','page403']) !== 'none'
+						AND $this->getData(['page',$this->getData(['locale','page403'])]))
+					{
+						header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
+					} else {
+						$this->addOutput([
+							'title' => 'Accès interdit',
+							'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
+						]);
+					}
 				}
 			}
 		} elseif ($this->output['content'] === '') {

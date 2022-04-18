@@ -966,6 +966,9 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		$this->setData(['fonts', 'imported', $fontId, $fontValue]);
 	}
 
+	// Redirection des pages d'administration vers la bannière de connexion
+	$this->setData(['config', 'connect', 'redirectLogin', true]);
+
 	// Transforme les URL en références relatives
 	/*
 	$baseUrl = $this->getData(['core', 'baseUrl']);
