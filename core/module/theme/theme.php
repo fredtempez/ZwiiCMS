@@ -571,6 +571,7 @@ class theme extends common {
 		];
 
 		// Récupérer le détail des fontes installées
+		//$f = $this->getFonts();
 		$f ['files'] =  $this->getData(['fonts', 'files']);
 		$f ['imported'] =  $this->getData(['fonts', 'imported']);
 		$f ['websafe'] = self::$fontsWebSafe;
@@ -1124,8 +1125,7 @@ class theme extends common {
 
 	// Retourne un tableau simple des fonts installées idfont avec le nom
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
-	// Génère une feuille de style pour l'aperçu des sélecteurs
-	private function enumFonts() {
+	public function enumFonts() {
 		// Récupère la liste des fontes installées
 		$f ['files'] =  $this->getData(['fonts', 'files']);
 		$f ['imported'] =  $this->getData(['fonts', 'imported']);
@@ -1140,7 +1140,6 @@ class theme extends common {
 		}
 		ksort($fonts);
 		self::$fontsList = $fonts;
-
 	}
 
 }
