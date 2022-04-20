@@ -130,8 +130,7 @@
 						<div class="col4">
 							<?php echo template::select('adminFontText', $module::$fontsList, [
 								'label' => 'Police du texte',
-								'selected' => $this->getData(['admin', 'fontText']),
-								'fonts' => true
+								'selected' => $this->getData(['admin', 'fontText'])
 							]); ?>
 						</div>
 						<div class="col4">
@@ -143,8 +142,7 @@
 						<div class="col4">
 							<?php echo template::select('adminFontTitle', $module::$fontsList, [
 								'label' => 'Police des titres',
-								'selected' => $this->getData(['admin', 'fontTitle']),
-								'fonts' => true
+								'selected' => $this->getData(['admin', 'fontTitle'])
 							]); ?>
 						</div>
 					</div>

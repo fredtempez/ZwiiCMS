@@ -185,8 +185,7 @@
                 <div class="col6">
                     <?php echo template::select('themeMenuFont', $module::$fontsList, [
 								'label' => 'Fonte',
-								'selected' => $this->getData(['theme', 'menu', 'font']),
-                                'fonts' => true
+								'selected' => $this->getData(['theme', 'menu', 'font'])
 							]); ?>
                 </div>
                 <div class="col6">
