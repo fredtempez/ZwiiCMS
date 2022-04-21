@@ -1,6 +1,6 @@
 <?php
 
-class template {
+class template  {
 
     /**
     * Crée un bouton
@@ -118,7 +118,7 @@ class template {
         copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
         copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
 
-      
+
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="captcha inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
@@ -447,7 +447,7 @@ class template {
                     $lang = 'fr';
                 }
         }
-        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png" 
+        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"
                 width="' . $size .'"
                 height="' . $size .'"
                 title="' . $lang .'"
@@ -612,8 +612,13 @@ class template {
             'label' => '',
             'name' => $nameId,
             'selected' => '',
-            'fonts' => false
+            'fonts' =>  []
         ], $attributes);
+        // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
+        if (empty($attributes['fonts']) === false) {
+            $fonts = $attributes['fonts'];
+            $attributes['fonts'] = [];
+        }
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['selected'] = common::$inputBefore[$attributes['id']];
@@ -626,7 +631,7 @@ class template {
                 'help' => $attributes['help']
             ]);
         }
-        // Notice
+         // Notice
         $notice = '';
         if(array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
@@ -638,12 +643,14 @@ class template {
             helper::sprintAttributes($attributes)
         );
         foreach($options as $value => $text) {
-            $html .=   $attributes['fonts'] === true ? sprintf(
+            // Select des liste de fontes
+            $html .=   isset($fonts)  ? sprintf(
                     '<option value="%s"%s style="font-family: %s;">%s</option>',
                     $value,
                     $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                    $text,
+                    $fonts[$value],
                     $text
+                // Select standard
                 ) : sprintf(
                     '<option value="%s"%s>%s</option>',
                         $value,

@@ -11,7 +11,32 @@
  * @link http://zwiicms.fr/
  */
 
+ $( document ).ready(function() {
 
+	/**
+	 * Chargement des fontes installées pour l'aperçu dans les sélecteurs
+	 */
+	var fontsFile = 	<?php echo json_encode($this->getData(['fonts', 'files']) ); ?>;
+	var fontsImported = <?php echo json_encode($this->getData(['fonts', 'imported']) ); ?>;
+	var fonts = 		<?php echo json_encode(self::$fontsWebSafe); ?>;
+
+	// Concaténation
+	if (fontsImported.length != 0 ) {
+		fonts = $.merge(fonts, fontsImported);
+	}
+	if (fontsFile.length != 0 ) {
+		fonts = $.merge(fonts, fontsFile);
+	}
+	// Fonte WebSa
+	 $.each(fonts, function(key, value) {
+		console.log( "The key is" + key);
+		$.each(value, function(i, f) {
+			console.log(f);
+		});
+
+	});
+
+ });
 
 /**
  * Aperçu en direct
@@ -28,20 +53,19 @@ $("input, select").on("change",function() {
 		$("#themeSiteMarginWrapper").show();
 	}
 
+
 	/**
 	 * Aperçu dans la boîte
 	 */
 
-	// Import des polices de caractères
+	// Import des polices de caractères pour l'aperçu en temps réel
 	var titleFont = $("#themeTitleFont :selected").val();
 	var titleFontText = $("#themeTitleFont :selected").text();
 	var textFont = $("#themeTextFont :selected").val();
 	var textFontText = $("#themeTextFont :selected").text();
-	var css = "@import url('https://fonts.cdnfonts.com/css/" + titleFont +  "');";
-	var css = "@import url('https://fonts.cdnfonts.com/css/" + textFont + "');";
 	// Couleurs des boutons
 	var colors = core.colorVariants($("#themeButtonBackgroundColor").val());
-	css += ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
+	var css = ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
 	css += ".button.buttonSubmitPreview:hover{background-color:" + colors.darken + "}";
 	css += ".button.buttonSubmitPreview{color:" + colors.text + ";}";
 
@@ -113,5 +137,4 @@ $("input, select").on("change",function() {
 		.attr("id", "themePreview")
 		.text(css)
 		.appendTo("head");
-
 }).trigger("change");

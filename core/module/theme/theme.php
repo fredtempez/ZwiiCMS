@@ -232,7 +232,8 @@ class theme extends common {
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
 	// Variable pour construire la liste des fontes installées
-	public static $fontsList = [];
+	public static $fontsNames= [];
+	public static $fonts = [];
 	// Variable pour détailler les fontes installées
 	public static $fontsDetail = [];
 
@@ -1126,7 +1127,11 @@ class theme extends common {
 	// Retourne un tableau simple des fonts installées idfont avec le nom
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
 	public function enumFonts() {
-		// Récupère la liste des fontes installées
+		/**
+		* Récupère la liste des fontes installées et construit deux tableaux
+		* id - nom
+		* id - font-family - resource
+		*/
 		$f ['files'] =  $this->getData(['fonts', 'files']);
 		$f ['imported'] =  $this->getData(['fonts', 'imported']);
 		$f ['websafe'] = self::$fontsWebSafe;
@@ -1134,12 +1139,14 @@ class theme extends common {
 		foreach(['websafe', 'imported', 'files'] as $type) {
 			if (is_array($f[$type]))  {
 				foreach ($f[$type] as $fontId => $fontValue ) {
-					$fonts [$fontId] = $fontValue['name'];
+					self::$fonts['name'][$fontId] = $fontValue['name'];
+					self::$fonts['family'][$fontId] = $fontValue['font-family'];
 				}
 			}
 		}
-		ksort($fonts);
-		self::$fontsList = $fonts;
+		// Liste des fontes pour les sélecteurs
+		ksort(self::$fonts['name']);
+		ksort(self::$fonts['family']);
 	}
 
 }

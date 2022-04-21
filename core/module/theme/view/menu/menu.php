@@ -183,10 +183,10 @@
             <h4>Mise en forme du texte</h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('themeMenuFont', $module::$fontsList, [
+                    <?php echo template::select('themeMenuFont', $module::$fonts['name'], [
 								'label' => 'Fonte',
 								'selected' => $this->getData(['theme', 'menu', 'font']),
-                                'fonts' => true
+                                'fonts' => $module::$fonts['family']
 							]); ?>
                 </div>
                 <div class="col6">

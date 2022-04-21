@@ -106,10 +106,10 @@
                         ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeHeaderFont', $module::$fontsList, [
+                    <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
 							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'header', 'font']),
-							'fonts' => true
+							'fonts' => $module::$fonts['family']
 						]); ?>
                 </div>
                 <div class="col4">
