@@ -11,33 +11,6 @@
  * @link http://zwiicms.fr/
  */
 
- $( document ).ready(function() {
-
-	/**
-	 * Chargement des fontes installées pour l'aperçu dans les sélecteurs
-	 */
-	var fontsFile = 	<?php echo json_encode($this->getData(['fonts', 'files']) ); ?>;
-	var fontsImported = <?php echo json_encode($this->getData(['fonts', 'imported']) ); ?>;
-	var fonts = 		<?php echo json_encode(self::$fontsWebSafe); ?>;
-
-	// Concaténation
-	if (fontsImported.length != 0 ) {
-		fonts = $.merge(fonts, fontsImported);
-	}
-	if (fontsFile.length != 0 ) {
-		fonts = $.merge(fonts, fontsFile);
-	}
-	// Fonte WebSa
-	 $.each(fonts, function(key, value) {
-		console.log( "The key is" + key);
-		$.each(value, function(i, f) {
-			console.log(f);
-		});
-
-	});
-
- });
-
 /**
  * Aperçu en direct
  */

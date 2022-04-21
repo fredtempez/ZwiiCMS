@@ -655,9 +655,10 @@ class theme extends common {
 			if ( $type === 'files' &&
 					file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . $ressource );
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
 			}
-
+			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
+			$this->setFonts();
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'La fonte a été créée',
@@ -706,8 +707,11 @@ class theme extends common {
 			if ( $type === 'files' &&
 					file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . $ressource );
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
 			}
+
+			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
+			$this->setFonts();
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -746,6 +750,9 @@ class theme extends common {
 				file_exists(self::DATA_DIR . $this->getUrl(2)) ) {
 				unlink(self::DATA_DIR . $this->getUrl(2));
 			}
+
+			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
+			$this->setFonts();
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -1147,6 +1154,47 @@ class theme extends common {
 		// Liste des fontes pour les sélecteurs
 		ksort(self::$fonts['name']);
 		ksort(self::$fonts['family']);
+	}
+
+	/**
+	 * Création d'un fichier de liens d'appel des fontes
+	 */
+	private function setFonts() {
+
+		/**
+		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+		*/
+		$gf = false;
+		$fileContent = '';
+		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
+			$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+			// Pré connect pour api.google
+			$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+		}
+
+		// Ajoute le préconnect des fontes Googles.
+		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
+						: $fileContent;
+
+						// Enregistre la personnalisation
+		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
+
+		/**
+		 * Fontes installées localement
+		 */
+		$fileContent = '';
+		foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
+			if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
+				// Chargement de la police
+				$fileContent .=  '@font-face {' ;
+				$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
+				$fileContent .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '");';
+				$fileContent .=  '}' ;
+			}
+		}
+		// Enregistre la personnalisation
+		file_put_contents(self::DATA_DIR.'fonts/fonts.css',  $fileContent);
+
 	}
 
 }

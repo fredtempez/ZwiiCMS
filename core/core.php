@@ -2156,14 +2156,11 @@ class common {
 		// Import des styles liés à la page
 		if($this->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
+			// Import de la feuille de style des pages admin
 			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
 				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
-		}
-		// Import des fontes liées au thème
-		if (file_exists(self::DATA_DIR.'fonts/fonts.html')) {
-			include_once(self::DATA_DIR.'fonts/fonts.html');
 		}
 	}
 
@@ -2334,74 +2331,18 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
 
-
 			/**
 			 * Import des polices de caractères
-			 * A partir du CDN
-			 * ou dans le dossier site/file/source/fonts
-			 * ou pas du tout si fonte webSafe
 			 */
 
-			// Fonts disponibles
-			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
-			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
-			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
-
-			// Fontes installées
-			$fonts = [ $this->getData(['theme', 'text',  'font']),
-						  $this->getData(['theme', 'title', 'font']),
-						  $this->getData(['theme', 'header', 'font']),
-						  $this->getData(['theme', 'menu', 'font']),
-						  $this->getData(['theme', 'footer', 'font'])
-			];
-			// Suppression des polices identiques
-			$fonts = array_unique($fonts);
-
-			/**
-			 * Charge les fontes websafe
-			 */
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if ( isset($fontsAvailable['websafe'][$fontId])) {
-					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
-				}
-			}
-
-			/**
-			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
-			*/
-			$fontFile = '';
-			$gf = false;
-			foreach ($fonts as $fontId) {
-				if ( isset($fontsAvailable['imported'][$fontId])) {
-						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] .'" rel="stylesheet">';
-						// Tableau pour la construction de la feuille de style
-						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
-						$gf =  strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
-				}
-			}
-			// Ajoute le préconnect des fontes Googles.
-			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
-							: $fontFile;
-			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
-
-			/**
-			 * Fontes installées localement
-			 */
-			foreach ($fonts as $fontId) {
-				// Validité du tableau :
-				if ( isset($fontsAvailable['files'][$fontId]) ) {
-					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
-						// Chargement de la police
-						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
-						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
-						// Tableau pour la construction de la feuille de style
-						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
-					} else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts [$fontId] = 'verdana';
+			$f ['files'] =  $this->getData(['fonts', 'files']);
+			$f ['imported'] =  $this->getData(['fonts', 'imported']);
+			$f ['websafe'] = self::$fontsWebSafe;
+			// Construit un tableau avec leur ID et leur famille
+			foreach(['websafe', 'imported', 'files'] as $type) {
+				if (is_array($f[$type]))  {
+					foreach ($f[$type] as $fontId => $fontValue ) {
+						$fonts[$fontId] = $fontValue['font-family'];
 					}
 				}
 			}
@@ -2572,12 +2513,6 @@ class core extends common {
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
-			// Enregistre les fontes
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
-			}
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
-
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
 
@@ -2596,61 +2531,18 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
-			// Fonts disponibles
-			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
-			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
-			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
-
 			/**
 			 * Import des polices de caractères
-			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
-			$fonts = [ $this->getData(['admin', 'fontText']),
-						  $this->getData(['admin', 'fontTitle']),
-			];
-			// Suppression des polices identiques
-			$fonts = array_unique($fonts);
 
-			/**
-			 * Charge les fontes websafe
-			 */
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if ( isset($fontsAvailable['websafe'][$fontId])) {
-					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
-				}
-			}
-
-			/**
-			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
-			*/
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if ( isset($fontsAvailable['imported'][$fontId])) {
-						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] .'" rel="stylesheet">';
-						// Tableau pour la construction de la feuille de style
-						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
-				}
-			}
-			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
-
-			/**
-			 * Fontes installées localement
-			 */
-			foreach ($fonts as $fontId) {
-				// Validité du tableau :
-				if ( isset($fontsAvailable['files'][$fontId]) ) {
-					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
-						// Chargement de la police
-						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
-						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
-						// Tableau pour la construction de la feuille de style
-						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
-					} else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts [$fontId] = 'verdana';
+			$f ['files'] =  $this->getData(['fonts', 'files']);
+			$f ['imported'] =  $this->getData(['fonts', 'imported']);
+			$f ['websafe'] = self::$fontsWebSafe;
+			// Construit un tableau avec leur ID et leur famille
+			foreach(['websafe', 'imported', 'files'] as $type) {
+				if (is_array($f[$type]))  {
+					foreach ($f[$type] as $fontId => $fontValue ) {
+						$fonts[$fontId] = $fontValue['font-family'];
 					}
 				}
 			}
