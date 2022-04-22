@@ -1205,13 +1205,12 @@ class theme extends common {
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
 						: $fileContent;
 
-		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
+
 
 		/**
 		 * Fontes installées localement
 		 */
-		$fileContent = '';
+		$fileContentCss = '';
 		foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
 			if (
 						( $scope === 'user' && in_array($fontId, $fontsInstalled) )
@@ -1219,15 +1218,20 @@ class theme extends common {
 				) {
 					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
 						// Chargement de la police
-						$fileContent .=  '@font-face {' ;
-						$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
-						$fileContent .= 'src: local("' . $fontValue['name'] . '"), url("' . $fontValue['resource'] . '") format("woff");';
-						$fileContent .=  '}' ;
+						$fileContentCss .=  '@font-face {' ;
+						$fileContentCss .= 'font-family:"' . $fontValue['font-family'] . '";';
+						$fileContentCss .= 'src: local("' . $fontValue['name'] . '"), url("' . $fontValue['resource'] . '") format("woff");';
+						$fileContentCss .=  '}' ;
+						// Préchargement
+						$fileContent = '<link rel="preload" as="font" href="' . helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous">' . $fileContent;
 					}
 			}
 		}
+
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR.'fonts/fonts.css',  $fileContent);
+		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
+		// Enregistre la personnalisation
+		file_put_contents(self::DATA_DIR.'fonts/fonts.css',  $fileContentCss);
 
 	}
 
