@@ -499,6 +499,9 @@ class theme extends common {
 	 * Accueil de la personnalisation
 	 */
 	public function index() {
+		// Restaurer les fontes utilisateurs
+		$this->setFonts('user');
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation des thèmes',
@@ -559,6 +562,9 @@ class theme extends common {
 	 * Options des fontes
 	 */
 	public function fonts() {
+
+		// Toutes les fontes installées
+		$this->setFonts('all');
 
 		// Polices liées au thème
 		$used = [
@@ -657,8 +663,7 @@ class theme extends common {
 			) {
 				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
 			}
-			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
-			$this->setFonts();
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'La fonte a été créée',
@@ -710,9 +715,6 @@ class theme extends common {
 				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
 			}
 
-			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
-			$this->setFonts();
-
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'La fonte a été actualisée',
@@ -750,9 +752,6 @@ class theme extends common {
 				file_exists(self::DATA_DIR . $this->getUrl(2)) ) {
 				unlink(self::DATA_DIR . $this->getUrl(2));
 			}
-
-			// Met à jour les fichiers d'appel des fontes utilisés par les layouts
-			$this->setFonts();
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -1158,8 +1157,22 @@ class theme extends common {
 
 	/**
 	 * Création d'un fichier de liens d'appel des fontes
+	 * @param string $scope vaut all pour toutes les fontes ; 'user' pour les fontes utilisateurs
 	 */
-	private function setFonts() {
+	private function setFonts($scope = 'all') {
+
+		// Filtrage par fontes installées
+		$fontsInstalled = [ $this->getData(['theme', 'text',  'font']),
+							$this->getData(['theme', 'title', 'font']),
+							$this->getData(['theme', 'header', 'font']),
+							$this->getData(['theme', 'menu', 'font']),
+							$this->getData(['theme', 'footer', 'font']),
+							$this->getData(['admin', 'fontText']),
+							$this->getData(['admin', 'fontTitle']),
+	   ];
+
+	   	// Compression
+		$fontsInstalled = array_unique($fontsInstalled);
 
 		/**
 		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
@@ -1167,16 +1180,21 @@ class theme extends common {
 		$gf = false;
 		$fileContent = '';
 		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
-			$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
-			// Pré connect pour api.google
-			$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+			if (
+				 		( $scope === 'user' && array_key_exists($fontId, $fontsInstalled) )
+					||  $scope === 'all'
+				) {
+				$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+				// Pré connect pour api.google
+				$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+			}
 		}
 
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
 						: $fileContent;
 
-						// Enregistre la personnalisation
+		// Enregistre la personnalisation
 		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
 
 		/**
@@ -1184,12 +1202,17 @@ class theme extends common {
 		 */
 		$fileContent = '';
 		foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
-			if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
-				// Chargement de la police
-				$fileContent .=  '@font-face {' ;
-				$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
-				$fileContent .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '");';
-				$fileContent .=  '}' ;
+			if (
+						( $scope === 'user' && array_key_exists($fontId, $fontsInstalled) )
+					||  $scope === 'all'
+				) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
+						// Chargement de la police
+						$fileContent .=  '@font-face {' ;
+						$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
+						$fileContent .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '");';
+						$fileContent .=  '}' ;
+					}
 			}
 		}
 		// Enregistre la personnalisation

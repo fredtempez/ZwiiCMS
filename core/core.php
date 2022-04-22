@@ -184,7 +184,7 @@ class common {
 	];
 
 	public static $fontsWebSafe = [
-		'arial'	=> [ 
+		'arial'	=> [
 			'name' 			=> 'Arial',
 			'font-family' 	=> 'Arial, Helvetica, sans-serif',
 			'resource' 		=> 'websafe'
@@ -1377,9 +1377,6 @@ class common {
 				 */
 				echo '<div class="'. $content . '" id="contentSite">';
 				$this->showContent();
-				if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-						include(self::DATA_DIR . 'body.inc.html');
-				}
 				echo '</div>';
 				/**
 				 * Barre droite
@@ -2161,6 +2158,14 @@ class common {
 				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
+		}
+		// Import des fontes en ligne
+		if ( file_exists(self::DATA_DIR.'fonts/fonts.html') ){
+			include_once(self::DATA_DIR . 'fonts/fonts.html');
+		}
+		// Import des fontes locales
+		if (file_exists(self::DATA_DIR.'fonts/fonts.css')) {
+			echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css?' . md5_file(helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css') . '">';
 		}
 	}
 
