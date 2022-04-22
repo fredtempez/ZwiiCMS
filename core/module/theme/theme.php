@@ -499,6 +499,7 @@ class theme extends common {
 	 * Accueil de la personnalisation
 	 */
 	public function index() {
+
 		// Restaurer les fontes utilisateurs
 		$this->setFonts('user');
 
@@ -563,7 +564,7 @@ class theme extends common {
 	 */
 	public function fonts() {
 
-		// Toutes les fontes installées
+		// Toutes les fontes installées sont chargées
 		$this->setFonts('all');
 
 		// Polices liées au thème
@@ -1181,7 +1182,7 @@ class theme extends common {
 		$fileContent = '';
 		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
 			if (
-				 		( $scope === 'user' && array_key_exists($fontId, $fontsInstalled) )
+				 		( $scope === 'user' && in_array($fontId, $fontsInstalled) )
 					||  $scope === 'all'
 				) {
 				$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
@@ -1203,7 +1204,7 @@ class theme extends common {
 		$fileContent = '';
 		foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
 			if (
-						( $scope === 'user' && array_key_exists($fontId, $fontsInstalled) )
+						( $scope === 'user' && in_array($fontId, $fontsInstalled) )
 					||  $scope === 'all'
 				) {
 					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
