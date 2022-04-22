@@ -194,6 +194,11 @@ class common {
 			'font-family' 	=> '\'Arial Black\', Gadget, sans-serif',
 			'resource' 		=> 'websafe'
 		],
+		'arvo'=> [
+			'name' => 'Arvo',
+			'font-family' => 'Arvo,  sans-serif',
+			'resource' 		=> 'websafe'
+		],
 		'courrier' => [
 			'name' 			=> 'Courier',
 			'font-family' 	=> 'Courier, \'Liberation Mono\', monospace',
@@ -219,9 +224,19 @@ class common {
 			'font-family'	=> 'Impact, Charcoal, sans-serif',
 			'resource' 		=> 'websafe'
 		],
+		'lora'=> [
+			'name' => 'Lora',
+			'font-family' => 'Lora, serif',
+			'resource' 		=> 'websafe'
+		],
 		'lucida' 			=> [
 			'name'			=> 'Lucida',
 			'font-family' 	=> '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'roboto'=> [
+			'name' => 'Roboto',
+			'font-family' => 'Roboto, sans-serif',
 			'resource' 		=> 'websafe'
 		],
 		'tahoma'			=> [

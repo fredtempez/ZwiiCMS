@@ -833,11 +833,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'font-family' => 'Arimo,  sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/arimo'
 			],
-			'arvo'=> [
-				'name' => 'Arvo',
-				'font-family' => 'Arvo,  sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/arvo'
-			],
 			'dancing-script' => [
 				'name' => 'Dancing Script',
 				'font-family' => '\'Dancing Script\', sans-serif',
@@ -883,11 +878,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'font-family' => 'Lato, sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/lato'
 			],
-			'lora'=> [
-				'name' => 'Lora',
-				'font-family' => 'Lora, serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/lora'
-			],
 			'old-standard-tt-3'=> [
 				'name' => 'Old Standard TT',
 				'font-family' => '\'Old Standard TT\', serif',
@@ -917,11 +907,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'name' => 'Rancho',
 				'font-family' => 'Rancho, sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/rancho'
-			],
-			'roboto'=> [
-				'name' => 'Roboto',
-				'font-family' => 'Roboto, sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/roboto'
 			],
 			'ubuntu'=> [
 				'name' => 'Ubuntu',

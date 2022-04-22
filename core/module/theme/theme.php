@@ -1221,7 +1221,7 @@ class theme extends common {
 						// Chargement de la police
 						$fileContent .=  '@font-face {' ;
 						$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
-						$fileContent .= 'src: url("' . $fontValue['resource'] . '");';
+						$fileContent .= 'src: local("' . $fontValue['name'] . '"), url("' . $fontValue['resource'] . '") format("woff");';
 						$fileContent .=  '}' ;
 					}
 			}
