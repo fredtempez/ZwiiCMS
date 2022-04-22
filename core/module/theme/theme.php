@@ -268,6 +268,8 @@ class theme extends common {
 		}
 		// Lire les fontes installées
 		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Administration',
@@ -404,6 +406,8 @@ class theme extends common {
 		}
 		// Lire les fontes installées
 		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du pied de page',
@@ -484,6 +488,8 @@ class theme extends common {
 		}
 		// Lire les fontes installées
 		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation de la bannière',
@@ -549,6 +555,8 @@ class theme extends common {
 		}
 		// Lire les fontes installées
 		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du menu',
@@ -849,6 +857,8 @@ class theme extends common {
 		}
 		// Lire les fontes installées
 		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du site',
@@ -1179,7 +1189,7 @@ class theme extends common {
 		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
 		*/
 		$gf = false;
-		$fileContent = '';
+		$fileContent = '<!-- Fontes locales --><link rel="stylesheet" href="' . helper::baseUrl(false)  . self::DATA_DIR . 'fonts/fonts.css" /><!-- Fontes en ligne -->';
 		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
 			if (
 				 		( $scope === 'user' && in_array($fontId, $fontsInstalled) )
@@ -1211,7 +1221,7 @@ class theme extends common {
 						// Chargement de la police
 						$fileContent .=  '@font-face {' ;
 						$fileContent .= 'font-family:"' . $fontValue['font-family'] . '";';
-						$fileContent .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '");';
+						$fileContent .= 'src: url("' . $fontValue['resource'] . '");';
 						$fileContent .=  '}' ;
 					}
 			}

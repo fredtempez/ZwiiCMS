@@ -2159,13 +2159,9 @@ class common {
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
-		// Import des fontes en ligne
-		if ( file_exists(self::DATA_DIR.'fonts/fonts.html') ){
+		// Import des fontes
+		if ( file_exists(self::DATA_DIR . 'fonts/fonts.html') ){
 			include_once(self::DATA_DIR . 'fonts/fonts.html');
-		}
-		// Import des fontes locales
-		if (file_exists(self::DATA_DIR.'fonts/fonts.css')) {
-			echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css?' . md5_file(helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css') . '">';
 		}
 	}
 
