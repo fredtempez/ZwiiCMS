@@ -856,7 +856,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 			'fira-sans' => [
 				'name' => 'Fira Sans',
 				'font-family' => '\'Fira Sans\', sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/fira'
+				'resource' => 'https://fonts.cdnfonts.com/css/fira-sans'
 			],
 			'liberation-sans'=> [
 				'name' => 'Liberation Sans',
