@@ -189,11 +189,6 @@ class common {
 			'font-family' 	=> 'Arial, Helvetica, sans-serif',
 			'resource' 		=> 'websafe'
 		],
-		'arial-black' => [
-			'name' 			=> 'Arial Black',
-			'font-family' 	=> '\'Arial Black\', Gadget, sans-serif',
-			'resource' 		=> 'websafe'
-		],
 		'arvo'=> [
 			'name' => 'Arvo',
 			'font-family' => 'Arvo,  sans-serif',
@@ -2177,6 +2172,9 @@ class common {
 		// Import des fontes
 		if ( file_exists(self::DATA_DIR . 'fonts/fonts.html') ){
 			include_once(self::DATA_DIR . 'fonts/fonts.html');
+		}
+		if ( file_exists(self::DATA_DIR . 'fonts/fonts.css') ){
+			echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css?' . md5_file(self::DATA_DIR .'fonts/fonts.css') . '">';
 		}
 	}
 

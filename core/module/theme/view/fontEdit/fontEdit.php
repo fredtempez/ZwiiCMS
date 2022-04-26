@@ -1,23 +1,21 @@
 <?php echo template::formOpen('fontEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('fontEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme/fonts',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('fontEditHelp', [
 				'href' => 'https://doc.zwiicms.fr/fontes#add',
 				'target' => '_blank',
-				'ico' => 'help',
-				'value' => 'Aide',
+				'value' => template::ico('help'),
 				'class' => 'buttonHelp'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset8">
 			<?php echo template::submit('fontEditPublish', [
 				'value' => 'Valider',
 				'uniqueSubmission' => true

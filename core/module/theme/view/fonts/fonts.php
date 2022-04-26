@@ -1,22 +1,20 @@
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('themeFontBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . 'theme',
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('pageEditHelp', [
 			'href' => 'https://doc.zwiicms.fr/fontes',
 			'target' => '_blank',
-			'ico' => 'help',
-			'value' => 'Aide',
+			'value' => template::ico('help'),
 			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-	<div class="col2 offset6">
+	<div class="col2 offset8">
 		<?php echo template::button('themeFontAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
 			'ico' => 'plus',

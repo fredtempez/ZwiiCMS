@@ -1189,12 +1189,14 @@ class theme extends common {
 		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
 		*/
 		$gf = false;
-		$fileContent = '<!-- Fontes locales --><link rel="stylesheet" href="' . helper::baseUrl(false)  . self::DATA_DIR . 'fonts/fonts.css" /><!-- Fontes en ligne -->';
+		$fileContent = '<!-- Fontes personnalisées -->';
 		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
 			if (
 				 		( $scope === 'user' && in_array($fontId, $fontsInstalled) )
 					||  $scope === 'all'
 				) {
+				//Pré chargement à revoir
+				//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
 				$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
 				// Pré connect pour api.google
 				$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
@@ -1217,13 +1219,15 @@ class theme extends common {
 					||  $scope === 'all'
 				) {
 					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
+						// Extension
+						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
 						// Chargement de la police
 						$fileContentCss .=  '@font-face {' ;
-						$fileContentCss .= 'font-family:"' . $fontValue['font-family'] . '";';
-						$fileContentCss .= 'src: local("' . $fontValue['name'] . '"), url("' . $fontValue['resource'] . '") format("woff");';
+						$fileContentCss .= 'font-family:"' . $fontId . '";';
+						$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
 						$fileContentCss .=  '}' ;
 						// Préchargement
-						$fileContent = '<link rel="preload" as="font" href="' . helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous">' . $fileContent;
+						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
 					}
 			}
 		}
