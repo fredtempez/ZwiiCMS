@@ -11,8 +11,6 @@
  * @link http://zwiicms.fr/
  */
 
-
-
 /**
  * Aperçu en direct
  */
@@ -28,20 +26,19 @@ $("input, select").on("change",function() {
 		$("#themeSiteMarginWrapper").show();
 	}
 
+
 	/**
 	 * Aperçu dans la boîte
 	 */
 
-	// Import des polices de caractères
+	// Import des polices de caractères pour l'aperçu en temps réel
 	var titleFont = $("#themeTitleFont :selected").val();
 	var titleFontText = $("#themeTitleFont :selected").text();
 	var textFont = $("#themeTextFont :selected").val();
 	var textFontText = $("#themeTextFont :selected").text();
-	var css = "@import url('https://fonts.cdnfonts.com/css/" + titleFont +  "');";
-	var css = "@import url('https://fonts.cdnfonts.com/css/" + textFont + "');";
 	// Couleurs des boutons
 	var colors = core.colorVariants($("#themeButtonBackgroundColor").val());
-	css += ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
+	var css = ".button.buttonSubmitPreview{background-color:" + colors.normal + ";}";
 	css += ".button.buttonSubmitPreview:hover{background-color:" + colors.darken + "}";
 	css += ".button.buttonSubmitPreview{color:" + colors.text + ";}";
 
@@ -113,5 +110,4 @@ $("input, select").on("change",function() {
 		.attr("id", "themePreview")
 		.text(css)
 		.appendTo("head");
-
 }).trigger("change");

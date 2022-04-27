@@ -1,23 +1,21 @@
 <?php echo template::formOpen('fontEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('fontEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'theme/fonts',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('fontEditHelp', [
 				'href' => 'https://doc.zwiicms.fr/fontes#add',
 				'target' => '_blank',
-				'ico' => 'help',
-				'value' => 'Aide',
+				'value' => template::ico('help'),
 				'class' => 'buttonHelp'
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset8">
 			<?php echo template::submit('fontEditPublish', [
 				'value' => 'Valider',
 				'uniqueSubmission' => true
@@ -36,7 +34,7 @@
 					</div>
 					<div class="col6">
 							<?php echo template::checkbox('fontEditFontFile', true,'Fonte installée', [
-								'checked' => $this->getUrl(2) === 'file' ? true : false
+								'checked' => $this->getUrl(2) === 'files' ? true : false
 							]); ?>
 					</div>
 				</div>
@@ -69,7 +67,7 @@
 					<div class="col12">
 						<?php echo template::file('fontEditFile', [
 							'label' => 'Fichier de fonte (Format WOFF)',
-                            'value' => $this->getUrl(2) === 'file' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
+                            'value' => $this->getUrl(2) === 'files' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 						]); ?>
 					</div>
 				</div>

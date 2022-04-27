@@ -10,35 +10,50 @@
  */
 
 
-/** 
+/**
  * Option par défaut du sélecteur de mode
  */
  $(document).ready(function(){
-    $('input[name=fontEditFontImported]').prop('checked', true);
-    $('input[name=fontEditFontUrl]').prop('checked', false);
-    $('#containerfontEditFile').hide();
+    if( $('input[name=fontEditFontImported]').is(':checked') ){
+        $('#containerfontEditFile').hide();
+        $('#containerfontEditUrl').show();
+        $('#fontEditFontFileWrapper').hide();
+        $('input[name=fontEditFontImported]').attr('disabled', 'disabled');
+
+    }
+
+
+    if( $('input[name=fontEditFontFile]').is(':checked') ){
+        $('#containerfontEditFile').show();
+        $('#containerfontEditUrl').hide();
+        $('#fontEditFontImportedWrapper').hide();
+        $('input[name=fontEditFontFile]').attr('disabled', 'disabled');
+    }
+
 });
 
 
 /**
  * Mode téléchargement en ligne de la fonte ou installation locale
- */
-$("input[name=fontEditFontImported]").on("click", function() {
-    if( $('input[name=fontEditFontImported]').is(':checked') ){
-        $('input[name=fontEditFontFile]').prop('checked', false);
-    } else {
-        $('input[name=fontEditFontFile]').prop('checked', true);
-    }
-    $('#containerfontEditFile').hide();
-    $('#containerfontEditUrl').show();
-});
 
-$("input[name=fontEditFontFile]").on("click", function() {
-    if( $('input[name=fontEditFontFile]').is(':checked') ){
-        $('input[name=fontEditFontImported]').prop('checked', false);
-    } else {
-        $('input[name=fontEditFontImported]').prop('checked', true);
-    }
-    $('#containerfontEditFile').show();
-    $('#containerfontEditUrl').hide();
+ $("input, select").on("change", function() {
+
+        if( $('input[name=fontEditFontImported]').is(':checked') ){
+            $('input[name=fontEditFontFile]').prop('checked', false);
+            $('#containerfontEditFile').hide();
+            $('#containerfontEditUrl').show();
+        } else {
+
+        }
+
+
+        if( $('input[name=fontEditFontFile]').is(':checked') ){
+            $('input[name=fontEditFontImported]').prop('checked', false);
+            $('#containerfontEditFile').show();
+            $('#containerfontEditUrl').hide();
+        } else {
+            $('input[name=fontEditFontImported]').prop('checked', true);
+        }
+
 });
+ */

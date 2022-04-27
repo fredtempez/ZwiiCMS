@@ -705,11 +705,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'font-family' => 'Arimo,  sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/arimo'
 			],
-			'arvo'=> [
-				'name' => 'Arvo',
-				'font-family' => 'Arvo,  sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/arvo'
-			],
 			'dancing-script' => [
 				'name' => 'Dancing Script',
 				'font-family' => '\'Dancing Script\', sans-serif',
@@ -733,7 +728,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 			'fira-sans' => [
 				'name' => 'Fira Sans',
 				'font-family' => '\'Fira Sans\', sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/fira'
+				'resource' => 'https://fonts.cdnfonts.com/css/fira-sans'
 			],
 			'liberation-sans'=> [
 				'name' => 'Liberation Sans',
@@ -754,11 +749,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'name' => 'lato',
 				'font-family' => 'Lato, sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/lato'
-			],
-			'lora'=> [
-				'name' => 'Lora',
-				'font-family' => 'Lora, serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/lora'
 			],
 			'old-standard-tt-3'=> [
 				'name' => 'Old Standard TT',
@@ -790,11 +780,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				'font-family' => 'Rancho, sans-serif',
 				'resource' => 'https://fonts.cdnfonts.com/css/rancho'
 			],
-			'roboto'=> [
-				'name' => 'Roboto',
-				'font-family' => 'Roboto, sans-serif',
-				'resource' => 'https://fonts.cdnfonts.com/css/roboto'
-			],
 			'ubuntu'=> [
 				'name' => 'Ubuntu',
 				'font-family' => 'Ubuntu, sans-serif',
@@ -811,7 +796,8 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$files = $this->getData(['fonts', 'files']);
 	if (is_array($files)) {
 		foreach ($files as $fontId => $fontName) {
-			if (file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
+			if ( gettype($fontName) === 'string'
+				&& file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
 				$this->setData(['fonts', 'files',  $fontId, [
 					'name' => ucfirst($fontId),
 					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
@@ -825,11 +811,13 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$imported = $this->getData(['fonts', 'imported']);
 	if (is_array($imported)) {
 		foreach ($imported as $fontId => $fontUrl) {
-			$this->setData(['fonts', 'imported',  $fontId, [
-				'name' => ucfirst($fontId),
-				'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
-				'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
-			]]);
+			if ( gettype($fontUrl) === 'string' ) {
+				$this->setData(['fonts', 'imported',  $fontId, [
+					'name' => ucfirst($fontId),
+					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
+					'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
+				]]);
+			}
 		}
 	}
 	// Importation des fontes exemples
@@ -861,7 +849,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	*/
 
 	// Suppression de la variable URL dans core
-	//$this->deleteData(['core', 'baseUrl']);
+	$this->deleteData(['core', 'baseUrl']);
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11400]);

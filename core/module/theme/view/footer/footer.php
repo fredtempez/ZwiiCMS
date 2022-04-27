@@ -171,10 +171,10 @@
             <h4>Mise en forme du texte</h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeFooterFont', $module::$fontsList, [
+                    <?php echo template::select('themeFooterFont', $module::$fonts['name'], [
 							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'footer', 'font']),
-							'fonts' => true
+							'fonts' => $module::$fonts['family']
 						]); ?>
                 </div>
                 <div class="col3">

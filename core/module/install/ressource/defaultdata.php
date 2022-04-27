@@ -57,12 +57,11 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11300,
+			'dataVersion' => 11400,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
-			'updateAvailable' => false,
-			'baseUrl' => ''
+			'updateAvailable' => false
 		],
 		'locale' => [
 			'homePageId' => 'accueil',

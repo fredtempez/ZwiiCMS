@@ -11,11 +11,10 @@
 			'href' => 'https://doc.zwiicms.fr/fontes',
 			'target' => '_blank',
 			'value' => template::ico('help'),
-			'class' => 'buttonHelp',
-			'help' => 'Consulter l\'aide en ligne'
+			'class' => 'buttonHelp'
 		]); ?>
 	</div>
-	<div class="col1 offset9">
+	<div class="col2 offset8">
 		<?php echo template::button('themeFontAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
 			'value' => template::ico('plus'),
