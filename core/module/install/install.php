@@ -122,9 +122,6 @@ class install extends common {
 					mkdir(self::DATA_DIR . 'fonts');
 				}
 
-				// Stocker le dossier d'installation
-				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-
 				// Installation du thème sélectionné
 				$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 				$dataThemes = json_decode($dataThemes, true);

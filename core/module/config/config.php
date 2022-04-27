@@ -573,8 +573,6 @@ class config extends common {
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = false;
 				}
-								// Met à jour la baseUrl
-								$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
 			}
 			// Générer robots.txt et sitemap
 			$this->siteMap();

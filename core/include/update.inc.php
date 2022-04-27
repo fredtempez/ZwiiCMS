@@ -924,7 +924,8 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$files = $this->getData(['fonts', 'files']);
 	if (is_array($files)) {
 		foreach ($files as $fontId => $fontName) {
-			if (file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
+			if ( gettype($fontName) === 'string'
+				&& file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
 				$this->setData(['fonts', 'files',  $fontId, [
 					'name' => ucfirst($fontId),
 					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
@@ -938,11 +939,13 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$imported = $this->getData(['fonts', 'imported']);
 	if (is_array($imported)) {
 		foreach ($imported as $fontId => $fontUrl) {
-			$this->setData(['fonts', 'imported',  $fontId, [
-				'name' => ucfirst($fontId),
-				'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
-				'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
-			]]);
+			if ( gettype($fontUrl) === 'string' ) {
+				$this->setData(['fonts', 'imported',  $fontId, [
+					'name' => ucfirst($fontId),
+					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
+					'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
+				]]);
+			}
 		}
 	}
 	// Importation des fontes exemples
@@ -974,7 +977,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	*/
 
 	// Suppression de la variable URL dans core
-	//$this->deleteData(['core', 'baseUrl']);
+	$this->deleteData(['core', 'baseUrl']);
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11400]);
