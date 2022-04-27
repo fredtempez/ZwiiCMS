@@ -10,19 +10,24 @@
  */
 
 
-/** 
+/**
  * Option par défaut du sélecteur de mode
  */
  $(document).ready(function(){
     if( $('input[name=fontEditFontImported]').is(':checked') ){
         $('#containerfontEditFile').hide();
         $('#containerfontEditUrl').show();
+        $('#fontEditFontFileWrapper').hide();
+        $('input[name=fontEditFontImported]').attr('disabled', 'disabled');
+
     }
 
 
     if( $('input[name=fontEditFontFile]').is(':checked') ){
         $('#containerfontEditFile').show();
         $('#containerfontEditUrl').hide();
+        $('#fontEditFontImportedWrapper').hide();
+        $('input[name=fontEditFontFile]').attr('disabled', 'disabled');
     }
 
 });
@@ -30,7 +35,7 @@
 
 /**
  * Mode téléchargement en ligne de la fonte ou installation locale
- */
+
  $("input, select").on("change", function() {
 
         if( $('input[name=fontEditFontImported]').is(':checked') ){
@@ -38,7 +43,7 @@
             $('#containerfontEditFile').hide();
             $('#containerfontEditUrl').show();
         } else {
-            $('input[name=fontEditFontFile]').prop('checked', true);
+
         }
 
 
@@ -51,3 +56,4 @@
         }
 
 });
+ */
