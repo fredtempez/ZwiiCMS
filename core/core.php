@@ -194,11 +194,6 @@ class common {
 			'font-family' => 'Arvo,  sans-serif',
 			'resource' 		=> 'websafe'
 		],
-		'courrier' => [
-			'name' 			=> 'Courier',
-			'font-family' 	=> 'Courier, \'Liberation Mono\', monospace',
-			'resource' 		=> 'websafe'
-		],
 		'courrier-new' 		=> [
 			'name'			=> 'Courier New',
 			'font-family' 	=> '\'Courier New\', Courier, monospace',
