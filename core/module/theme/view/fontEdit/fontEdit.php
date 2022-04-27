@@ -34,7 +34,7 @@
 					</div>
 					<div class="col6">
 							<?php echo template::checkbox('fontEditFontFile', true,'Fonte installée', [
-								'checked' => $this->getUrl(2) === 'file' ? true : false
+								'checked' => $this->getUrl(2) === 'files' ? true : false
 							]); ?>
 					</div>
 				</div>
@@ -67,7 +67,7 @@
 					<div class="col12">
 						<?php echo template::file('fontEditFile', [
 							'label' => 'Fichier de fonte (Format WOFF)',
-                            'value' => $this->getUrl(2) === 'file' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
+                            'value' => $this->getUrl(2) === 'files' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 						]); ?>
 					</div>
 				</div>
