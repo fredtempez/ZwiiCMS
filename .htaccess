@@ -27,22 +27,11 @@
 # Bloque l'accès à la liste des fichiers
 Options -Indexes
 
+
+# URL rewriting
+
+
 # Désactive l'option de substitution automatique
 <IfModule mod_negotiation.c>
     Options -MultiViews
 </IfModule>
-
-
-
-
-# URL rewriting
-<IfModule mod_rewrite.c>
-	RewriteEngine on
-	RewriteBase /ZwiiCMS/
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(.*)$ index.php?$1 [L]
-</IfModule>
-# URL rewriting
-
-
