@@ -42,9 +42,9 @@
 							]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::checkbox('configRewrite', true, 'URL intelligentes', [
+						<?php echo template::checkbox('configRewrite', true, 'Réécritures URL Apache', [
 							'checked' => helper::checkRewrite(),
-							'help' => 	'Supprime ? dans les URL, fonctionne qu\'avec Apache Server.',
+							'help' => 	'Supprime le point d\'interrogation dans les URL, option indisponible sous Nginx',
 							'disabled' =>  strpos($_SERVER["SERVER_SOFTWARE"], 'Apache') > 0 ? true : false
 						]); ?>
 					</div>
