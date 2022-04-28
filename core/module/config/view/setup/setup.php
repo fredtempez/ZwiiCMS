@@ -44,7 +44,8 @@
 					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'URL intelligentes', [
 							'checked' => helper::checkRewrite(),
-							'help' => 	'Supprime ? dans les URL et redirige sur le protocole HTTPS.'
+							'help' => 	'Supprime ? dans les URL, fonctionne qu\'avec Apache Server.',
+							'disabled' =>  strpos($_SERVER["SERVER_SOFTWARE"], 'Apache') > 0 ? true : false
 						]); ?>
 					</div>
 				</div>

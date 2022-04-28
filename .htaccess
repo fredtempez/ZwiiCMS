@@ -32,4 +32,5 @@ Options -Indexes
     Options -MultiViews
 </IfModule>
 
+
 # URL rewriting
