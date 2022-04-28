@@ -252,19 +252,23 @@ class install extends common {
 				$success = true;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") {
-					$success = (file_put_contents(
+				if ($rewrite === "true") {					// Ajout des lignes dans le .htaccess
+					$fileContent = file_get_contents('.htaccess');
+					$rewriteData = 	PHP_EOL .
+									'# URL rewriting' .  PHP_EOL .
+									'<IfModule mod_rewrite.c>' . PHP_EOL .
+									"\tRewriteEngine on" . PHP_EOL .
+									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+									'</IfModule>'. PHP_EOL .
+									'# URL rewriting' . PHP_EOL ;
+					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
+					file_put_contents(
 						'.htaccess',
-						PHP_EOL .
-						'<IfModule mod_rewrite.c>' . PHP_EOL .
-						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</IfModule>',
-						FILE_APPEND
-					) !== false);
+						$fileContent
+					);
 				}
 				// Recopie htaccess
 				if ($this->getData(['config','autoUpdateHtaccess']) &&
@@ -272,7 +276,7 @@ class install extends common {
 				) {
 						// L'écraser avec le backup
 						$success = copy( '.htaccess.bak' ,'.htaccess' );
-						// Effacer l ebackup
+						// Effacer le backup
 						unlink('.htaccess.bak');
 				}
 				// Valeurs en sortie

@@ -267,7 +267,8 @@ class helper {
 			// Ouvre et scinde le fichier .htaccess
 			$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
 			// Retourne un boolean en fonction du contenu de la partie réservée à l'URL rewriting
-			self::$rewriteStatus = (empty($htaccess[1]) === false);
+			//self::$rewriteStatus = (empty($htaccess[1]) === false);
+			self::$rewriteStatus = (strpos($htaccess[1], 'RewriteEngine on') > 0) ? true : false;
 		}
 		return self::$rewriteStatus;
 	}

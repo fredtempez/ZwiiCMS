@@ -291,7 +291,6 @@ class common {
 			]);;
 		}
 
-
 		// Import version 9
 		if (file_exists(self::DATA_DIR . 'core.json') === true &&
 		$this->getData(['core','dataVersion']) < 10000) {
