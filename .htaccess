@@ -27,11 +27,9 @@
 # Bloque l'accès à la liste des fichiers
 Options -Indexes
 
-
-# URL rewriting
-
-
 # Désactive l'option de substitution automatique
 <IfModule mod_negotiation.c>
     Options -MultiViews
 </IfModule>
+
+# URL rewriting (ne pas supprimer ce commentaire !)
