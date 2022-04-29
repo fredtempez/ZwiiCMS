@@ -557,17 +557,21 @@ class config extends common {
 					AND helper::checkRewrite() === false
 				) {
 					// Ajout des lignes dans le .htaccess
+					$fileContent = file_get_contents('.htaccess');
+					$rewriteData = 	PHP_EOL .
+									'# URL rewriting' .  PHP_EOL .
+									'<IfModule mod_rewrite.c>' . PHP_EOL .
+									"\tRewriteEngine on" . PHP_EOL .
+									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+									'</IfModule>'. PHP_EOL .
+									'# URL rewriting' . PHP_EOL ;
+					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
 					file_put_contents(
 						'.htaccess',
-						PHP_EOL .
-						'<IfModule mod_rewrite.c>' . PHP_EOL .
-						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</IfModule>',
-						FILE_APPEND
+						$fileContent
 					);
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = true;
@@ -578,8 +582,13 @@ class config extends common {
 					AND helper::checkRewrite()
 				) {
 					// Suppression des lignes dans le .htaccess
-					$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
-					file_put_contents('.htaccess', $htaccess[0] . '# URL rewriting');
+					$fileContent = file_get_contents('.htaccess');
+					$fileContent = explode('# URL rewriting', $fileContent);
+					$fileContent = $fileContent[0] . '# URL rewriting' . $fileContent[2];
+					file_put_contents(
+						'.htaccess',
+						$fileContent
+					);
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = false;
 				}
