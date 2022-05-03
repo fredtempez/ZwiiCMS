@@ -31,7 +31,7 @@
 ## Version 11.3.07
 ### Correction :
     - Module galerie, option plein écran inopérante.
-### Amélioration : 
+### Amélioration :
     - Module galerie, lorsque le module ne contient qu'une galerie, la page listant les galeries est omise.
 ### Modification :
     - Neutralisation du téléchargement depuis le catalogue.

@@ -46,8 +46,8 @@
 					<div class="col6">
 						<?php echo template::text('fontAddFontName', [
 							'autocomplete' => 'off',
-							'label' => 'Nom (Font Family)',
-							'placeholder' => 'PerryGothic'
+							'label' => 'Nom',
+							'placeholder' => 'Big Marker Extrude'
 						]); ?>
 					</div>
 				</div>
