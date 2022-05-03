@@ -336,7 +336,7 @@ class user extends common {
 	 * Liste des utilisateurs
 	 */
 	public function index() {
-		$userIdsFirstnames = helper::arrayCollumn($this->getData(['user']), 'firstname');
+		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
 		foreach($userIdsFirstnames as $userId => $userFirstname) {
 			if ($this->getData(['user', $userId, 'group'])) {
@@ -397,7 +397,7 @@ class user extends common {
 					]
 				]);
 				// Verrouillage des IP
-				$ipBlackList = helper::arrayCollumn($this->getData(['blacklist']), 'ip');
+				$ipBlackList = helper::arrayColumn($this->getData(['blacklist']), 'ip');
 				if ( $this->getData(['blacklist',$userId,'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
 					AND in_array($this->getData(['blacklist',$userId,'ip']),$ipBlackList) ) {
 					$logStatus = 'Compte inconnu verrouillé';

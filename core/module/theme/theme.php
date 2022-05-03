@@ -32,6 +32,7 @@ class theme extends common {
 		'save' => self::GROUP_ADMIN,
 		'fonts' => self::GROUP_ADMIN,
 		'fontAdd' => self::GROUP_ADMIN,
+		'fontEdit' => self::GROUP_ADMIN,
 		'fontDelete' => self::GROUP_ADMIN
 	];
 	public static $aligns = [
@@ -231,7 +232,10 @@ class theme extends common {
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
 	// Variable pour construire la liste des fontes installées
-	public static $fontsList = [];
+	public static $fontsNames= [];
+	public static $fonts = [];
+	// Variable pour détailler les fontes installées
+	public static $fontsDetail = [];
 
 	/**
 	 * Thème des écrans d'administration
@@ -262,6 +266,10 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Administration',
@@ -396,7 +404,10 @@ class theme extends common {
 				unset(self::$pagesList[$page]);
 			}
 		}
-
+		// Lire les fontes installées
+		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du pied de page',
@@ -416,7 +427,7 @@ class theme extends common {
 		if($this->isPost()) {
 			// Modification des URL des images dans la bannière perso
 			$featureContent = $this->getInput('themeHeaderText', null);
-			$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
+			//$featureContent = str_replace(helper::baseUrl(false,false), './', $featureContent);
 
 			/**
 			* Stocker les images incluses dans la bannière perso dans un tableau
@@ -475,6 +486,10 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation de la bannière',
@@ -490,6 +505,10 @@ class theme extends common {
 	 * Accueil de la personnalisation
 	 */
 	public function index() {
+
+		// Restaurer les fontes utilisateurs
+		$this->setFonts('user');
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation des thèmes',
@@ -534,6 +553,10 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du menu',
@@ -549,8 +572,8 @@ class theme extends common {
 	 */
 	public function fonts() {
 
-		// Polices trouvées dans la configuration
-		$fonts = $this->getData(['fonts']);
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 
 		// Polices liées au thème
 		$used = [
@@ -563,32 +586,48 @@ class theme extends common {
 			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
 		];
 
-		// Parcourir les fontes installées et construire le tableau pour le formulaire
-		foreach (self::$fonts as $fontId => $fontName) {
+		// Récupérer le détail des fontes installées
+		//$f = $this->getFonts();
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
 
-			// Fontes utilisées par le thème
-			$fontUsed[$fontId] = '';
-			foreach ($used as $key => $value) {
-				if ( $value === $fontId) {
-					$fontUsed[$fontId] .=  $key . '<br/>';
+		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
+		foreach ($f as $type => $typeValue) {
+			if (is_array($typeValue)) {
+				foreach ($typeValue as $fontId => $fontValue) {
+					// Fontes utilisées par les thèmes
+					$fontUsed[$fontId] = '';
+					foreach ($used as $key => $value) {
+						if ( $value === $fontId) {
+							$fontUsed[$fontId] .=  $key . '<br/>';
+						}
+					}
+					self::$fontsDetail [] = [
+						$fontId,
+						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
+						$f[$type][$fontId]['font-family'],
+						$fontUsed[$fontId],
+						$type,
+						$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
+													'class' => 'themeFontEdit',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('pencil'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: '',
+						$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
+													'class' => 'themeFontDelete buttonRed',
+													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+													'value' => template::ico('cancel'),
+													'disabled' => !empty($fontUsed[$fontId])
+												])
+											: ''
+					];
 				}
 			}
-			self::$fontsList [] = [
-				$fontName,
-				$fontId,
-				$fontUsed[$fontId],
-				//array_key_exists($fontId, $fonts['imported']) ? 'Importée' : '',
-				array_key_exists($fontId, $fonts['files']) ?  $fonts['files'][$fontId] : 'CDN Fonts',
-				array_key_exists($fontId, $fonts['imported']) || array_key_exists($fontId, $fonts['files'])
-					? 	template::button('themeFontDelete' . $fontId, [
-							'class' => 'themeFontDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $fontId . '/' . $_SESSION['csrf'],
-							'value' => template::ico('cancel'),
-							'disabled' => !empty($fontUsed[$fontId])
-						])
-					: ''
-			];
 		}
+		sort(self::$fontsDetail);
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Gestion des fontes',
@@ -602,54 +641,44 @@ class theme extends common {
 	public function fontAdd() {
 		// Soumission du formulaire
 		if ($this->isPost()) {
-
-			$fontId = $this->getInput('fontAddFontId', helper::FILTER_STRING_SHORT, true);
-			$fontName = $this->getInput('fontAddFontName',helper::FILTER_STRING_SHORT, true);
-			$filePath = $this->getInput('fontAddFile', helper::FILTER_STRING_SHORT);
+			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$e = explode ('/', $filePath);
-			$file = $e[count($e) - 1 ];
+			$typeFlip = $type === 'files' ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
+			$fontId = $this->getInput('fontAddFontId', null, true);
+			$fontName = $this->getInput('fontAddFontName', null, true);
+			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
 
-			// Vérifier l'existence de fontId et validité de family name si usage en ligne de cdnFonts
-			$data = helper::getUrlContents('https://www.cdnfonts.com/' . $fontId . '.font');
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
-			if ( $filePath === ''
-				 && $fontName !== ''
-				 && strpos($data, $fontName) === false
-			) {
-
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => 'Erreur de nom de fonte ou d\'identifiant',
-					'redirect' => helper::baseUrl() . 'theme/fontAdd',
-					'state' => false
-				]);
-
-			} else {
-
-				// Concaténation dans les tableaux existants
-				switch ($type) {
-					case 'imported':
-						$imported = $this->getData(['fonts', 'imported']);
-						$imported = array_merge([$fontId => $fontName], $imported);
-						$this->setData(['fonts', 'imported', $imported ]);
-						break;
-					case 'files':
-						$files = $this->getData(['fonts', 'files']);
-						$files = array_merge([$fontId => $file], $files);
-						$this->setData(['fonts', 'files', $files ]);
-						// Copier la fonte si le nom du fichier est fourni
-						copy ( self::FILE_DIR . 'source/' . $filePath, self::DATA_DIR . 'fonts/' . $file );
-						break;
-				}
-
-				// Valeurs en sortie
-				$this->addOutput([
-					'notification' => 'La fonte a été importée',
-					'redirect' => helper::baseUrl() . 'theme/fonts',
-					'state' => true
-				]);
+			// Supprime la fonte si elle existe dans le type inverse
+			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
+				$this->deleteData(['fonts', $typeFlip, $fontId ]);
 			}
+			// Stocker la fonte
+			$this->setData(['fonts',
+							$type,
+							$fontId, [
+								'name' => $fontName,
+								'font-family' => $fontFamilyName,
+								'resource' => $ressource
+			]]);
+
+
+			// Copier la fonte si le nom du fichier est fourni
+			if ( $type === 'files' &&
+					file_exists(self::FILE_DIR . 'source/' . $ressource)
+			) {
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'La fonte a été créée',
+				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'state' => true
+			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -658,12 +687,63 @@ class theme extends common {
 		]);
 	}
 
+
+	/**
+	 * Ajouter une fonte
+	 */
+	public function fontEdit() {
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			// Type d'import en ligne ou local
+			$type = $this->getInput('fontEditFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
+			$typeFlip = $type === 'files' ? 'imported' : 'files';
+			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', null) : $this->getInput('fontEditFile',  null);
+			$fontId = $this->getInput('fontEditFontId',  null, true);
+			$fontName = $this->getInput('fontEditFontName', null , true);
+			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
+
+			// Remplace les doubles quotes par des simples quotes
+			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
+
+			// Supprime la fonte si elle existe dans le type inverse
+			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
+				$this->deleteData(['fonts', $typeFlip, $fontId ]);
+			}
+			// Stocker les fontes
+			$this->setData(['fonts',
+							$type,
+							$fontId, [
+								'name' => $fontName,
+								'font-family' => $fontFamilyName,
+								'resource' => $ressource
+			]]);
+			// Copier la fonte si le nom du fichier est fourni
+			if ( $type === 'files' &&
+					file_exists(self::FILE_DIR . 'source/' . $ressource)
+			) {
+				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => 'La fonte a été actualisée',
+				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'state' => true
+			]);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => 'Editer une fonte',
+			'view' => 'fontEdit'
+		]);
+	}
+
 	/**
 	 * Effacer une fonte
 	 */
 	public function fontDelete() {
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
@@ -673,26 +753,19 @@ class theme extends common {
 		// Suppression
 		else {
 
-			// Charger les données des fontes
-			$files = $this->getData(['fonts', 'files']);
-			$imported = $this->getData(['fonts', 'imported']);
+			// Effacer la fonte de la base
+			$this->deleteData(['fonts', $this->getUrl(2), $this->getUrl(3)]);
 
 			// Effacer le fichier existant
-			if ( file_exists(self::DATA_DIR . $files[$this->getUrl(2)]) ) {
-				unlink(self::DATA_DIR . $files[$this->getUrl(2)]);
+			if ( $this->getUrl(2) === 'file' &&
+				file_exists(self::DATA_DIR . $this->getUrl(2)) ) {
+				unlink(self::DATA_DIR . $this->getUrl(2));
 			}
 
-			// Supprimer les entrées
-			unset($files[$this->getUrl(2)]);
-			unset($imported[$this->getUrl(2)]);
-
-			// Mettre à jour le fichier des fontes
-			$this->setData(['fonts', 'files', $files ]);
-			$this->setData(['fonts', 'imported', $imported ]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
-				'notification' => 'Fonte supprimée',
+				'notification' => 'La fonte a été supprimée',
 				'state' => true
 			]);
 		}
@@ -782,6 +855,10 @@ class theme extends common {
 				'state' => true
 			]);
 		}
+		// Lire les fontes installées
+		$this->enumFonts();
+		// Toutes les fontes installées sont chargées
+		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Personnalisation du site',
@@ -1002,7 +1079,6 @@ class theme extends common {
 
 						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
 					}
-
 					break;
 			}
 			$ret = $zip->close();
@@ -1011,7 +1087,8 @@ class theme extends common {
 	}
 
 	/**
-	 * Subsitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
+	 * Substitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
+	 * Cette fonction est utilisée par l'import.
 	 * @param string $file, nom du fichier json à convertir
 	 * @return int nombre de substitution effectuées
 	 */
@@ -1061,6 +1138,105 @@ class theme extends common {
 		}
 		// Retourner le nombre d'occurrences
 		return ($count);
+	}
+
+
+	// Retourne un tableau simple des fonts installées idfont avec le nom
+	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
+	public function enumFonts() {
+		/**
+		* Récupère la liste des fontes installées et construit deux tableaux
+		* id - nom
+		* id - font-family - resource
+		*/
+		$f ['files'] =  $this->getData(['fonts', 'files']);
+		$f ['imported'] =  $this->getData(['fonts', 'imported']);
+		$f ['websafe'] = self::$fontsWebSafe;
+		// Construit un tableau avec leur ID et leur famille
+		foreach(['websafe', 'imported', 'files'] as $type) {
+			if (is_array($f[$type]))  {
+				foreach ($f[$type] as $fontId => $fontValue ) {
+					self::$fonts['name'][$fontId] = $fontValue['name'];
+					self::$fonts['family'][$fontId] = $fontValue['font-family'];
+				}
+			}
+		}
+		// Liste des fontes pour les sélecteurs
+		ksort(self::$fonts['name']);
+		ksort(self::$fonts['family']);
+	}
+
+	/**
+	 * Création d'un fichier de liens d'appel des fontes
+	 * @param string $scope vaut all pour toutes les fontes ; 'user' pour les fontes utilisateurs
+	 */
+	private function setFonts($scope = 'all') {
+
+		// Filtrage par fontes installées
+		$fontsInstalled = [ $this->getData(['theme', 'text',  'font']),
+							$this->getData(['theme', 'title', 'font']),
+							$this->getData(['theme', 'header', 'font']),
+							$this->getData(['theme', 'menu', 'font']),
+							$this->getData(['theme', 'footer', 'font']),
+							$this->getData(['admin', 'fontText']),
+							$this->getData(['admin', 'fontTitle']),
+	   ];
+
+	   	// Compression
+		$fontsInstalled = array_unique($fontsInstalled);
+
+		/**
+		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+		*/
+		$gf = false;
+		$fileContent = '<!-- Fontes personnalisées -->';
+		foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
+			if (
+				 		( $scope === 'user' && in_array($fontId, $fontsInstalled) )
+					||  $scope === 'all'
+				) {
+				//Pré chargement à revoir
+				//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
+				$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+				// Pré connect pour api.google
+				$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+			}
+		}
+
+		// Ajoute le préconnect des fontes Googles.
+		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
+						: $fileContent;
+
+
+
+		/**
+		 * Fontes installées localement
+		 */
+		$fileContentCss = '';
+		foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
+			if (
+						( $scope === 'user' && in_array($fontId, $fontsInstalled) )
+					||  $scope === 'all'
+				) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
+						// Extension
+						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
+						// Chargement de la police
+						$fileContentCss .=  '@font-face {' ;
+						$fileContentCss .= 'font-family:"' . $fontId . '";';
+						$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
+						$fileContentCss .=  '}' ;
+						// Préchargement
+						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
+					}
+			}
+		}
+
+		// Enregistre la personnalisation
+		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
+		// Enregistre la personnalisation
+		file_put_contents(self::DATA_DIR.'fonts/fonts.css',  $fileContentCss);
+
 	}
 
 }

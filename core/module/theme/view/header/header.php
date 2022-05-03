@@ -106,10 +106,10 @@
                         ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeHeaderFont', self::$fonts, [
-							'label' => 'Police',
+                    <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
+							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'header', 'font']),
-							'fonts' => true
+							'fonts' => $module::$fonts['family']
 						]); ?>
                 </div>
                 <div class="col4">
@@ -154,40 +154,20 @@
                         $imageFile = file_exists(self::FILE_DIR.'source/'.$this->getData(['theme', 'header', 'image'])) ?
                                 $this->getData(['theme', 'header', 'image']) : "";
                         echo template::file('themeHeaderImage', [
-                            'help' => 'Sélectionner une image aux dimensions recommandées ci-dessous :',
                             'label' => 'Image',
                             'type' => 1,
                             'value' => $imageFile
                     ]); ?>
+                    <span  class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
+                        Largeur de l'image : <span id="themeHeaderImageWidth"></span> (largeur de site :  <?php echo $this->getData(['theme', 'site', 'width']); ?>)
+                        -
+                        Hauteur de l'image : <span id="themeHeaderImageHeight"></span>
+                        -
+                        Ratio : <span id="themeHeaderImageRatio"></span>
+                    </span>
                 </div>
             </div>
-            <div class="row">
-                <div class="col3 textAlignRight">
-                    Informations sur l'image : 
-                </div>
-                <div class="col2">                    
-                    <?php echo template::text('themeHeaderImageWidth', [
-                            'label' => 'Largeur',
-                            'class' => 'textAlignCenter',
-                            'disable' => true
-                    ]); ?>
-                </div>
-                <div class="col2">                    
-                    <?php echo template::text('themeHeaderImageHeight', [
-                            'label' => 'Hauteur',
-                            'class' => 'textAlignCenter',
-                            'disable' => true
-                    ]); ?>
-                </div>
-                <div class="col2">                    
-                    <?php echo template::text('themeHeaderImageRatio', [
-                            'label' => 'Ratio (L/H)',
-                            'class' => 'textAlignCenter',
-                            'disable' => true
-                    ]); ?>
-                </div>
-            </div>
-            <div id="themeHeaderImageOptions" class="displayNone">
+            <div class="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
                     <div class="col3">
                         <?php echo template::select('themeHeaderImageRepeat', $module::$repeats, [

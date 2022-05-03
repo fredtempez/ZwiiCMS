@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.3.07';
+	const ZWII_VERSION = '11.4.00';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -65,8 +65,8 @@ class common {
 		'theme',
 		'config',
 		'edit',
-		'config',
-		'translate'
+		'translate',
+		'addon'
 	];
 	public static $accessExclude = [
 		'login',
@@ -183,38 +183,79 @@ class common {
 
 	];
 
-	// Fontes
-	public static $fonts = [
-		'abril-fatface' => 'Abril Fatface',
-		'arimo' => 'Arimo',
-		'arvo' => 'Arvo',
-		'berkshire-swash' => 'Berkshire Swash',
-		'dancing-script' => 'Dancing Script',
-		'droid-sans-2' => 'Droid Sans',
-		'droid-serif-2' => 'Droid Serif',
-		'fira-sans' => 'Fira Sans',
-		'genera' => 'Genera',
-		'inconsolata-2' => 'Inconsolata',
-		'indie-flower' => 'Indie Flower',
-		'josefin-sans-std' => 'Josefin Sans',
-		'liberation-sans' => 'Liberation Sans',
-		'liberation-serif' => 'Liberation Serif',
-		'lobster-2' => 'Lobster',
-		'lora' => 'Lora',
-		'lato' => 'Lato',
-		'montserrat-ace' => 'Montserrat Ace',
-		'old-standard-tt-3' => 'Old Standard TT',
-		'open-sans' => 'Open Sans',
-		'oswald-4' => 'Oswald',
-		'pt-mono' => 'PT Mono',
-		'pt-serif' => 'PT Serif',
-		'raleway-5' => 'Raleway',
-		'rancho' => 'Rancho',
-		'roboto' => 'Roboto',
-		'signika' => 'Signika',
-		'ubuntu' => 'Ubuntu',
-		'vollkorn' => 'Vollkorn'
+	public static $fontsWebSafe = [
+		'arial'	=> [
+			'name' 			=> 'Arial',
+			'font-family' 	=> 'Arial, Helvetica, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'arvo'=> [
+			'name' => 'Arvo',
+			'font-family' => 'Arvo,  sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'courrier-new' 		=> [
+			'name'			=> 'Courier New',
+			'font-family' 	=> '\'Courier New\', Courier, monospace',
+			'resource' 		=> 'websafe'
+		],
+		'garamond' 			=> [
+			'name'			=> 'Garamond',
+			'font-family' 	=> 'Garamond, serif',
+			'resource' 		=> 'websafe'
+		],
+		'georgia' 			=> [
+			'name'			=> 'Geogia',
+			'font-family' 	=> 'Georgia, serif',
+			'resource' 		=> 'websafe'
+		],
+		'impact' 			=> [
+			'name' 			=> 'Impact',
+			'font-family'	=> 'Impact, Charcoal, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'lora'=> [
+			'name' => 'Lora',
+			'font-family' => 'Lora, serif',
+			'resource' 		=> 'websafe'
+		],
+		'lucida' 			=> [
+			'name'			=> 'Lucida',
+			'font-family' 	=> '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'roboto'=> [
+			'name' => 'Roboto',
+			'font-family' => 'Roboto, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'tahoma'			=> [
+			'name'			=> 'Tahoma',
+			'font-family'	=> 'Tahoma, Geneva, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'times-new-roman' 	=> [
+			'name'			=> 'Times New Roman',
+			'font-family'	=> '\'Times New Roman\', \'Liberation Serif\', serif',
+			'resource' 		=> 'websafe'
+		],
+		'trebuchet' 		=> [
+			'name'			=> 'Trebuchet',
+			'font-family'	=> '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'tahoma' 			=> [
+			'name'			=> 'Tahoma',
+			'font-family'	=> 'Tahoma, Geneva, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'verdana' 			=> [
+			'name'			=> 'Verdana',
+			'font-family'	=>	'Verdana, Geneva, sans-serif;',
+			'resource' 		=> 'websafe'
+		]
 	];
+
 
 	/**
 	 * Constructeur commun
@@ -250,7 +291,6 @@ class common {
 			]);;
 		}
 
-
 		// Import version 9
 		if (file_exists(self::DATA_DIR . 'core.json') === true &&
 		$this->getData(['core','dataVersion']) < 10000) {
@@ -267,7 +307,9 @@ class common {
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dataPath ($stageId, self::$i18n);
-			if (file_exists($folder . $stageId .'.json') === false) {
+			if ( file_exists($folder . $stageId .'.json') === false ||
+					$this->getData([$stageId]) === NULL
+				) {
 				$this->initData($stageId, self::$i18n);
 				common::$coreNotices [] = $stageId ;
 			}
@@ -517,7 +559,6 @@ class common {
 		if (
 				$this->getData(['page', $page, 'content']) !== ''
 				&& file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
-				&& is_file(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
 			) {
 				return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 			} else {
@@ -825,10 +866,9 @@ class common {
 
 
 	/**
-	 * Génère un fichier json avec la liste des pages
-	 *
+	 * Génère la liste des pages pour le plugin Link de TinyMCE
 	*/
-    public function pages2Json() {
+    public function listPages() {
     // Sauve la liste des pages pour TinyMCE
 		$parents = [];
         $rewrite = (helper::checkRewrite()) ? '' : '?';
@@ -913,8 +953,6 @@ class common {
 	*/
 
 	public function createSitemap($command = "all") {
-
-		//require_once "core/vendor/sitemap/SitemapGenerator.php";
 
 		$timezone = $this->getData(['config','timezone']);
 		$outputDir = getcwd();
@@ -1080,6 +1118,7 @@ class common {
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
 		$mail->CharSet = 'UTF-8';
+		$mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
 		// Mail
 		try{
 			// Paramètres SMTP
@@ -1129,10 +1168,10 @@ class common {
 			else {
 					return $mail->ErrorInfo;
 			}
-		} catch (phpmailerException $e) {
-			return $e->errorMessage();
 		} catch (Exception $e) {
-			return $e->getMessage();
+			echo $e->errorMessage();
+		} catch (\Exception $e) {
+			echo $e->getMessage();
 		}
 	}
 
@@ -1254,7 +1293,7 @@ class common {
 			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
-			$item .= '<form method="POST" action="" id="cookieForm">';
+			$item .= '<form method="POST" action="' . helper::baseUrl(false, true) . '" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
@@ -1342,9 +1381,6 @@ class common {
 				 */
 				echo '<div class="'. $content . '" id="contentSite">';
 				$this->showContent();
-				if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-						include(self::DATA_DIR . 'body.inc.html');
-				}
 				echo '</div>';
 				/**
 				 * Barre droite
@@ -1646,7 +1682,7 @@ class common {
 		) {
 			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR.'source/' . $faviconDark . '">';
 			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
-			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous" type="application/javascript"></script>';
+			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous"></script>';
 		}
 	}
 
@@ -2121,14 +2157,18 @@ class common {
 		// Import des styles liés à la page
 		if($this->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
+			// Import de la feuille de style des pages admin
 			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
 				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
-		// Import des fontes liées au thème
-		if (file_exists(self::DATA_DIR.'fonts/fonts.html')) {
-			include_once(self::DATA_DIR.'fonts/fonts.html');
+		// Import des fontes
+		if ( file_exists(self::DATA_DIR . 'fonts/fonts.html') ){
+			include_once(self::DATA_DIR . 'fonts/fonts.html');
+		}
+		if ( file_exists(self::DATA_DIR . 'fonts/fonts.css') ){
+			echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css?' . md5_file(self::DATA_DIR .'fonts/fonts.css') . '">';
 		}
 	}
 
@@ -2214,7 +2254,7 @@ class common {
 				   }
 
 					echo '<li>';
-					echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' class="flag" alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+					echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n',$key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
 					echo '</li>';
 			}
 		}
@@ -2277,17 +2317,6 @@ class core extends common {
 			}
 		}
 
-		// Importe les polices personnalisées
-		$fontsImported = $this->getData(['fonts', 'imported']);
-		if (is_array($fontsImported) &&
-			!empty ($fontsImported)
-		) {
-			// Fusionner les fonts avec les fontes installées
-			self::$fonts = array_merge(self::$fonts, $fontsImported);
-			// Tri Alphabétique
-			asort(self::$fonts);
-		}
-
 		// Crée le fichier de personnalisation avancée
 		if(file_exists(self::DATA_DIR.'custom.css') === false) {
 			file_put_contents(self::DATA_DIR.'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
@@ -2303,6 +2332,7 @@ class core extends common {
 			file_put_contents(self::DATA_DIR.'admin.css', '');
 			chmod(self::DATA_DIR.'admin.css', 0755);
 		}
+
 		// Check la version rafraichissement du theme
 		$cssVersion = preg_split('/\*+/', file_get_contents(self::DATA_DIR.'theme.css'));
 		if(empty($cssVersion[1]) OR $cssVersion[1] !== md5(json_encode($this->getData(['theme'])))) {
@@ -2311,55 +2341,24 @@ class core extends common {
 
 			/**
 			 * Import des polices de caractères
-			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
-			$fonts = [ $this->getData(['theme', 'text',  'font']),
-						  $this->getData(['theme', 'title', 'font']),
-						  $this->getData(['theme', 'header', 'font']),
-						  $this->getData(['theme', 'menu', 'font']),
-						  $this->getData(['theme', 'footer', 'font'])
-			];
-			// Suppression des polices identiques
-			$fonts = array_unique($fonts);
-			// Lire le fichier des fontes locales
-			$localFonts = $this->getData(['fonts', 'files']);
 
-			/**
-			* Chargement des polices en ligne dans un fichier séparé
-			*/
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if (!array_key_exists($fontId, $localFonts) ) {
-					$fontFile .= '<link href="https://fonts.cdnfonts.com/css/' . $fontId .'" rel="stylesheet">';
-					// Supprimer l'élément des fontes chargées en ligne
-					unset($fonts[$fontId]);
-				}
-			}
-
-			/**
-			 * Fontes installées localement
-			 */
-			if (  !empty($localFonts)
-			) {
-				foreach ($localFonts as $fontId => $fontName) {
-					// Validité du tableau :
-					if ( array_key_exists($fontId, self::$fonts) ||
-							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
-							// Chargement de la police
-							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
-							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
-					}  else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts [$fontId] = 'verdana';
+			$f ['files'] =  $this->getData(['fonts', 'files']);
+			$f ['imported'] =  $this->getData(['fonts', 'imported']);
+			$f ['websafe'] = self::$fontsWebSafe;
+			// Construit un tableau avec leur ID et leur famille
+			foreach(['websafe', 'imported', 'files'] as $type) {
+				if (is_array($f[$type]))  {
+					foreach ($f[$type] as $fontId => $fontValue ) {
+						$fonts[$fontId] = $fontValue['font-family'];
 					}
-
 				}
 			}
 
 			// Fond du body
 			$colors = helper::colorVariants($this->getData(['theme', 'body', 'backgroundColor']));
 			// Body
-			$css .= 'body{font-family:"' . self::$fonts[$this->getData(['theme', 'text', 'font'])] . '",sans-serif}';
+			$css .= 'body{font-family:' . $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			if($themeBodyImage = $this->getData(['theme', 'body', 'image'])) {
 				// Image dans html pour éviter les déformations.
 				$css .= 'html {background-image:url("../file/source/' . $themeBodyImage . '");background-position:' . $this->getData(['theme', 'body', 'imagePosition']) . ';background-attachment:' . $this->getData(['theme', 'body', 'imageAttachment']) . ';background-size:' . $this->getData(['theme', 'body', 'imageSize']) . ';background-repeat:' . $this->getData(['theme', 'body', 'imageRepeat']) . '}';
@@ -2377,7 +2376,7 @@ class core extends common {
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			// Couleurs de site dans TinyMCe
-			$css .= 'div.mce-edit-area {font-family:"' .  self::$fonts[$this->getData(['theme', 'text', 'font'])] . '",sans-serif}';
+			$css .= 'div.mce-edit-area {font-family:' .  $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
@@ -2418,7 +2417,7 @@ class core extends common {
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
 			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
-			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'title', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
+			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
@@ -2452,7 +2451,7 @@ class core extends common {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-				$css .= 'header span{color:' . $colors['normal'] . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'header', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
 			// Bannière au contenu personnalisé
@@ -2501,7 +2500,7 @@ class core extends common {
 					$css .= 'nav{padding:0 10px;}';
 			}
 
-			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:"' .  self::$fonts[$this->getData(['theme', 'menu', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
+			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:' .  $fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
 
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
@@ -2511,7 +2510,7 @@ class core extends common {
 				$css .= 'footer{padding:0}';
 			}
 
-			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:"' .  self::$fonts[$this->getData(['theme', 'footer', 'font'])] . '",sans-serif;font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
+			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:' .  $fonts[$this->getData(['theme', 'footer', 'font'])] . ';font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
@@ -2521,12 +2520,6 @@ class core extends common {
 			$css .= '#footerSocials{text-align:' . $this->getData(['theme', 'footer', 'socialsAlign']) . '}';
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
-
-			// Enregistre les fontes
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
-			}
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
@@ -2548,52 +2541,25 @@ class core extends common {
 
 			/**
 			 * Import des polices de caractères
-			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
-			$fonts = [ $this->getData(['admin', 'fontText']),
-						  $this->getData(['admin', 'fontTitle']),
-			];
-			// Suppression des polices identiques
-			$fonts = array_unique($fonts);
-			// Lire le fichier des fontes locales
-			$localFonts = $this->getData(['fonts', 'files']);
 
-			/**
-			* Chargement des polices en ligne
-			*/
-			foreach ($fonts as $fontId) {
-				if (!array_key_exists($fontId, $localFonts) ) {
-					$css .= '@import url("https://fonts.cdnfonts.com/css/' . $fontId . '");';
-					// Supprimer l'élément des fontes chargées en ligne
-					unset($fonts[$fontId]);
-				}
-			}
-
-			/**
-			 * Fontes installées localement
-			 */
-			if (  !empty($localFonts)
-			) {
-				foreach ($localFonts as $fontId => $fontName) {
-					// Validité du tableau :
-					if ( array_key_exists($fontId, self::$fonts) ||
-							file_exists(self::DATA_DIR . 'fonts/' . $fontName) ) {
-							// Chargement de la police
-							$css .= '@font-face {font-family:"' . self::$fonts[$fontId] . '";';
-							$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontName . '");}';
-					}  else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts [$fontId] = 'verdana';
+			$f ['files'] =  $this->getData(['fonts', 'files']);
+			$f ['imported'] =  $this->getData(['fonts', 'imported']);
+			$f ['websafe'] = self::$fontsWebSafe;
+			// Construit un tableau avec leur ID et leur famille
+			foreach(['websafe', 'imported', 'files'] as $type) {
+				if (is_array($f[$type]))  {
+					foreach ($f[$type] as $fontId => $fontValue ) {
+						$fonts[$fontId] = $fontValue['font-family'];
 					}
-
 				}
 			}
 
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal']. ';}';
-			$css .= '.row > div {font:' . $this->getData(['admin','fontSize']) . ' "' . self::$fonts[$this->getData(['admin','fontText'])]  . '", sans-serif;}';
-			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:"' .   self::$fonts[$this->getData(['admin','fontTitle'])] . '", sans-serif;color:' . $this->getData(['admin','colorTitle' ]) . ';}';
+			$css .= '.row > div {font:' . $fonts[$this->getData(['admin','fontText'])]  . ';font-size:' . $this->getData(['admin','fontSize']) .'}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $fonts[$this->getData(['admin','fontTitle'])] . ';color:' . $this->getData(['admin','colorTitle' ]) . ';}';
 
 			// TinyMCE
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $this->getData(['admin','colorText']) . ';}';
@@ -2921,9 +2887,9 @@ class core extends common {
 								]);
 							}
 							if ($output['style']) {
-								$this->addOutput([
-									'style' => $this->output['style'] . file_get_contents($output['style'])
-								]);
+									$this->addOutput([
+										'style' => $this->output['style'] . file_get_contents($output['style'])
+									]);
 							}
 							// JS
 							$scriptPath = $modulePath . 'module/' . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
@@ -3033,15 +2999,23 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				if ( $this->getData(['locale','page403']) !== 'none'
-					AND $this->getData(['page',$this->getData(['locale','page403'])]))
-				{
-					header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
+				// Redirige vers la page de connexion si page de gestion demandée
+				if ( $this->getData(['config', 'connect', 'redirectLogin']) === true
+					&& in_array($this->geturl(0), self::$accessList) )	{
+					http_response_code(302);
+					header('Location:' . helper::baseUrl() . 'user/login/');
+					exit();
 				} else {
-					$this->addOutput([
-						'title' => 'Accès interdit',
-						'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
-					]);
+					if ( $this->getData(['locale','page403']) !== 'none'
+						AND $this->getData(['page',$this->getData(['locale','page403'])]))
+					{
+						header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
+					} else {
+						$this->addOutput([
+							'title' => 'Accès interdit',
+							'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
+						]);
+					}
 				}
 			}
 		} elseif ($this->output['content'] === '') {

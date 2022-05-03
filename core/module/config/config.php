@@ -20,7 +20,7 @@ class config extends common {
 		'backup' => self::GROUP_ADMIN,
 		'copyBackups'=> self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
-		'generateFiles' => self::GROUP_ADMIN,
+		'siteMap' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
@@ -28,8 +28,7 @@ class config extends common {
 		'logReset' => self::GROUP_ADMIN,
 		'logDownload'=> self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
-		'blacklistDownload' => self::GROUP_ADMIN,
-
+		'blacklistDownload' => self::GROUP_ADMIN
 	];
 
 	public static $timezones = [
@@ -203,17 +202,15 @@ class config extends common {
 	 * Sitemap compressé et non compressé
 	 * Robots.txt
 	 */
-	public function generateFiles() {
+	public function siteMap() {
 
 		// Mettre à jour le site map
 		$successSitemap=$this->createSitemap();
 
 		// Valeurs en sortie
 		$this->addOutput([
-			/*'title' => 'Configuration',
-			'view' => 'index',*/
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? 'Mises à jour des fichiers sitemap et robots.txt' : 'Echec d\'écriture, le site map n\'a pas été mis à jour',
+			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour',
 			'state' => $successSitemap
 		]);
 	}
@@ -279,8 +276,6 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			/*'title' => 'Configuration',
-			'view' => 'index',*/
 			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
 			'state' => $success === false ? false : true
@@ -510,7 +505,8 @@ class config extends common {
 						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
 						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
 						'captchaType' => $this->getInput('connectCaptchaType'),
-						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN)
+						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN),
+						'redirectLogin' => $this->getInput('connectRedirectLogin',helper::FILTER_BOOLEAN)
 					],
 					'i18n' => [
 						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),
@@ -551,17 +547,21 @@ class config extends common {
 					AND helper::checkRewrite() === false
 				) {
 					// Ajout des lignes dans le .htaccess
+					$fileContent = file_get_contents('.htaccess');
+					$rewriteData = 	PHP_EOL .
+									'# URL rewriting' .  PHP_EOL .
+									'<IfModule mod_rewrite.c>' . PHP_EOL .
+									"\tRewriteEngine on" . PHP_EOL .
+									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+									'</IfModule>'. PHP_EOL .
+									'# URL rewriting' . PHP_EOL ;
+					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
 					file_put_contents(
 						'.htaccess',
-						PHP_EOL .
-						'<IfModule mod_rewrite.c>' . PHP_EOL .
-						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</IfModule>',
-						FILE_APPEND
+						$fileContent
 					);
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = true;
@@ -572,16 +572,19 @@ class config extends common {
 					AND helper::checkRewrite()
 				) {
 					// Suppression des lignes dans le .htaccess
-					$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
-					file_put_contents('.htaccess', $htaccess[0] . '# URL rewriting');
+					$fileContent = file_get_contents('.htaccess');
+					$fileContent = explode('# URL rewriting', $fileContent);
+					$fileContent = $fileContent[0] . '# URL rewriting' . $fileContent[2];
+					file_put_contents(
+						'.htaccess',
+						$fileContent
+					);
 					// Change le statut de la réécriture d'URL (pour le helper::baseUrl() de la redirection)
 					helper::$rewriteStatus = false;
 				}
-								// Met à jour la baseUrl
-								$this->setData(['core', 'baseUrl', helper::baseUrl(true,false) ]);
 			}
 			// Générer robots.txt et sitemap
-			$this->generateFiles();
+			$this->siteMap();
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => 'Configuration',
@@ -652,59 +655,6 @@ class config extends common {
 		]);
 	}
 
-	/**
-	 * Met à jour les données de site avec l'adresse transmise
-	 */
-	public function updateBaseUrl () {
-		// Supprimer l'information de redirection
-		$old = str_replace('?','',$this->getData(['core', 'baseUrl']));
-		$new = helper::baseUrl(false,false);
-		$c3 = 0;
-		$success = false ;
-		// Boucler sur les pages
-		foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-			$content = $this->getPage($parentId, self::$i18n);
-			$titre = $this->getData(['page', $parentId, 'title']);
-			$content =   $titre . ' ' . $content ;
-			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
-
-			if ($c1 > 0 || $c2 > 0) {
-				$success = true;
-				$this->setPage($parentId, $replace,  self::$i18n);
-				$c3 += $c1 + $c2;
-			}
-			foreach($childIds as $childId) {
-				$content = $this->getPage($childId, self::$i18n);
-				$content =   $titre . ' ' . $content ;
-				$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
-				$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
-				if ($c1 > 0 || $c2 > 0) {
-					$success = true;
-					$this->setPage($childId, $replace,  self::$i18n);
-					$c3 += $c1 + $c2;
-				}
-			}
-		}
-		// Traiter les modules dont la redirection
-		$content = $this->getdata(['module']);
-		$replace = $this->recursive_array_replace('href="' . $old , 'href="'. $new, $content, $c1);
-		$replace = $this->recursive_array_replace('src="' . $old , 'src="'. $new, $replace, $c2);
-		if ($content !== $replace) {
-			$this->setdata(['module',$replace]);
-			$c3 += $c1 + $c2;
-			$success = true;
-		}
-		// Mettre à jour la base URl
-		$this->setData(['core','baseUrl',helper::baseUrl(true,false)]);
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => 'Restaurer',
-			'view' => 'restore',
-			'notification' => $success ? $c3. ' conversion' . ($c3 > 1 ? 's' : '') . ' effectuée' . ($c3 > 1 ? 's' : '') : 'Aucune conversion',
-			'state' => $success ? true : false
-		]);
-	}
 
 	/**
 	 * Vider le fichier de log

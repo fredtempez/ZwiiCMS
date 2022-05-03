@@ -215,8 +215,7 @@ core.start = function() {
 		// Variables des cookies
 		var getUrl   = window.location;
 		var domain   = "domain=" + getUrl.host + ";";
-		var path     = "path=" + getUrl.pathname.split('/')[1] + ";";
-		
+		//var path     = "path=" + getUrl.pathname.split('/')[1] + ";";
 		var e = new Date();
 		e.setFullYear(e.getFullYear() + 1);
 		var expires = "expires=" + e.toUTCString();
@@ -225,18 +224,18 @@ core.start = function() {
 		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
 		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
 		if( analytics.length > 0){
-			// Traitement du retour de la checkbox			
+			// Traitement du retour de la checkbox
 			if ($("#googleAnalytics").is(":checked")) {
 				// L'URL du serveur faut TRUE
 
-				document.cookie = "ZWII_COOKIE_GA_CONSENT=true;samesite=strict;" + domain + path  +  expires;
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=true;samesite=strict;" + domain +  expires;
 			} else {
-				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;samesite=strict;" + domain + path +  expires;
+				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;samesite=strict;" + domain +  expires;
 			}
 
 		}
 		// Stocke le cookie d'acceptation
-		document.cookie = "ZWII_COOKIE_CONSENT=true;samesite=strict;" + domain +  path +  expires;
+		document.cookie = "ZWII_COOKIE_CONSENT=true;samesite=strict;" + domain +   expires;
 	});
 
 

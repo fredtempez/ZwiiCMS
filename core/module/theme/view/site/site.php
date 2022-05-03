@@ -141,7 +141,8 @@
                             <div class="row">
                                 <div class="col12">
                                     <div class="block preview">
-                                        <h4 class="preview">Bloc</h4>										<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        <h4 class="preview">Bloc</h4>
+										<p class="textPreview">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
 										<p><a href="#" class="urlPreview">Lorem ipsum dolor sit amet.</a></p>
 									</div>
 								</div>
@@ -158,10 +159,11 @@
 				<h4>Mise en forme du texte</h4>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::select('themeTextFont', self::$fonts, [
-							'label' => 'Police',
+						<?php 
+						echo template::select('themeTextFont', $module::$fonts['name'], [
+							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'text', 'font']),
-							'fonts' => true
+							'fonts' => $module::$fonts['family']
 						]); ?>
 					</div>
 					<div class="col6">
@@ -179,10 +181,10 @@
 				<h4>Mise en forme des titres</h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('themeTitleFont', self::$fonts, [
-							'label' => 'Police',
+						<?php echo template::select('themeTitleFont',  $module::$fonts['name'] , [
+							'label' => 'Fonte',
 							'selected' => $this->getData(['theme', 'title', 'font']),
-							'fonts' => true
+							'fonts' => $module::$fonts['family']
 						]); ?>
 					</div>
 					<div class="col4">

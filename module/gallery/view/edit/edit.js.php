@@ -51,7 +51,7 @@ directoryDOM.on("change", function() {
 	directoryOldDOM.val($(this).val());
 });
 
-$('.homePicture').click(function(){ 
+$('.homePicture').click(function(){
 	$('.homePicture').prop('checked', false);
 	$(this).prop('checked', true);
 });
@@ -62,14 +62,10 @@ $('.homePicture').click(function(){
 
 $( document ).ready(function() {
 
-	$("#galleryTable").tableDnD({		
+	$("#galleryTable").tableDnD({
 		onDrop: function(table, row) {
 			$("#galleryEditFormResponse").val($.tableDnD.serialize());
-		},
-		onDragStop : function(table, row) {		
-			// Sauvegarde le tri
 			sortPictures();
-			$("#galleryEditFormResponse").val("");
 		},
 		serializeRegexp:  ""
 	});
@@ -103,16 +99,20 @@ $("#galleryEditSort").change(function() {
  */
 
 function sortPictures() {
-	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortPictures";
+	var url = "<?php echo helper::baseUrl(true,true) . $this->getUrl(0); ?>/sortPictures";
 	var d1 = $("#galleryEditFormResponse").val();
 	var d2 = $("#galleryEditFormGalleryName").val();
-	//var data = $('#galleryEditForm').serialize();
 	$.ajax({
 		type: "POST",
 		url: url ,
 		data: {
 			response : d1,
 			gallery: d2
-		}
+		},/*
+		error: function (xhr, ajaxOptions, thrownError) {
+        	alert(xhr.status);
+        	alert(thrownError);
+      }
+	  */
 	});
 }

@@ -481,7 +481,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 	foreach ($pageList as $parentKey => $parent) {
 		//La page est un blog
 		if ($this->getData(['page',$parent,'moduleId']) === 'blog' ) {
-			$articleIds = array_keys(helper::arrayCollumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
+			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
 			foreach ($articleIds as $key => $article) {
 				// Droits les deux groupes
 				$this->setData(['module',  $parent, 'posts', $article,'editConsent', 3]);
@@ -809,7 +809,8 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 	$this->setData(['core', 'dataVersion', 11303]);
 }
 
-// Version 11.3.06
+
+	// Version 11.3.06
 if ($this->getData(['core', 'dataVersion']) < 11306) {
 
 	// Supprime les fontes déclarées en double par la version précédentes
@@ -821,4 +822,163 @@ if ($this->getData(['core', 'dataVersion']) < 11306) {
 	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11306]);
+}
+
+// Version 11.4.00
+if ($this->getData(['core', 'dataVersion']) < 11400) {
+
+	$fonts = [
+			'arimo'=> [
+				'name' => 'Arimo',
+				'font-family' => 'Arimo,  sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/arimo'
+			],
+			'dancing-script' => [
+				'name' => 'Dancing Script',
+				'font-family' => '\'Dancing Script\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/dancing-script'
+			],
+			'droid-sans-2'=> [
+				'name' => 'Droid Sans',
+				'font-family' =>  '\'Droid Sans\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
+			],
+			'droid-serif-2'=> [
+				'name' => 'Droid Serif',
+				'font-family' =>  '\'Droid Serif\', serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
+			],
+			'indie-flower'=> [
+				'name' => 'Indie Flower',
+				'font-family' => '\'Indie Flower\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
+			],
+			'fira-sans' => [
+				'name' => 'Fira Sans',
+				'font-family' => '\'Fira Sans\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/fira-sans'
+			],
+			'liberation-sans'=> [
+				'name' => 'Liberation Sans',
+				'font-family' => '\'Liberation Sans\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
+			],
+			'liberation-serif'=> [
+				'name' => 'Liberation Serif',
+				'font-family' => '\'Liberation Serif\', serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
+			],
+			'lobster-2'=> [
+				'name' => 'Lobster',
+				'font-family' => 'Lobster, sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/lobster-2'
+			],
+			'lato'=> [
+				'name' => 'lato',
+				'font-family' => 'Lato, sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/lato'
+			],
+			'old-standard-tt-3'=> [
+				'name' => 'Old Standard TT',
+				'font-family' => '\'Old Standard TT\', serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
+			],
+			'open-sans' => [
+				'name' => 'Open Sans',
+				'font-family' => '\'Open Sans\', sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/open-sans'
+			],
+			'oswald-4'=> [
+				'name' => 'Oswald',
+				'font-family' => 'Oswald, sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/oswald-4'
+			],
+			'pt-mono'=> [
+				'name' => 'PT Mono',
+				'font-family' => '\'PT Mono\', monospace',
+				'resource' => 'https://fonts.cdnfonts.com/css/pt-mono'
+			],
+			'pt-serif'=> [
+				'name' => 'PR Serif',
+				'font-family' => '\'PT Serif\', serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/pt-serif'
+			],
+			'rancho'=> [
+				'name' => 'Rancho',
+				'font-family' => 'Rancho, sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/rancho'
+			],
+			'ubuntu'=> [
+				'name' => 'Ubuntu',
+				'font-family' => 'Ubuntu, sans-serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/ubuntu'
+			],
+			'vollkorn'=> [
+				'name' => 'Vollkorn',
+				'font-family' => 'Vollkorn, serif',
+				'resource' => 'https://fonts.cdnfonts.com/css/vollkorn'
+			]
+	];
+
+	// Conversion des fontes locales
+	$files = $this->getData(['fonts', 'files']);
+	if (is_array($files)) {
+		foreach ($files as $fontId => $fontName) {
+			if ( gettype($fontName) === 'string'
+				&& file_exists(self::DATA_DIR . 'fonts/' . $fontName)) {
+				$this->setData(['fonts', 'files',  $fontId, [
+					'name' => ucfirst($fontId),
+					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
+					'resource' => $fontName
+				]]);
+			}
+		}
+	}
+
+	// Consersion des fontes importées
+	$imported = $this->getData(['fonts', 'imported']);
+	if (is_array($imported)) {
+		foreach ($imported as $fontId => $fontUrl) {
+			if ( gettype($fontUrl) === 'string' ) {
+				$this->setData(['fonts', 'imported',  $fontId, [
+					'name' => ucfirst($fontId),
+					'font-family'=> '\'' . ucfirst($fontId) . '\', sans-serif',
+					'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
+				]]);
+			}
+		}
+	}
+	// Importation des fontes exemples
+	$template = $fonts;
+	foreach ($template as $fontId => $fontValue) {
+		$this->setData(['fonts', 'imported', $fontId, $fontValue]);
+	}
+
+	// Redirection des pages d'administration vers la bannière de connexion
+	$this->setData(['config', 'connect', 'redirectLogin', true]);
+
+	// Transforme les URL en références relatives
+	/*
+	$baseUrl = $this->getData(['core', 'baseUrl']);
+	$baseUrl2 = str_replace('?', '', $baseUrl);
+	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
+		$pageList [] = $parentKey;
+		foreach ($parentValue as $childKey) {
+			$pageList [] = $childKey;
+		}
+	}
+	foreach ($pageList as $parentKey => $parent) {
+		$s = $this->getPage(  $parent, self::$i18n);
+		// Suppression des sous-dossiers
+		$s = str_replace ($baseUrl, './', $s);
+		$s = str_replace ($baseUrl2, './', $s);
+		$this->setPage( $parent, $s, self::$i18n);
+	}
+	*/
+
+	// Suppression de la variable URL dans core
+	$this->deleteData(['core', 'baseUrl']);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11400]);
 }

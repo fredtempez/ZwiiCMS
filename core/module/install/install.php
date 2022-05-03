@@ -54,11 +54,11 @@ class install extends common {
 				$userLastname = $this->getInput('installLastname', helper::FILTER_STRING_SHORT, true);
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
-					
+
 
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
-				
+
 				$success = $this->setData([
 					'user',
 					$userId,
@@ -73,7 +73,7 @@ class install extends common {
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
 					]
 				]);
-				
+
 				// Compte créé, envoi du mail et création des données du site
 				if ($success) { // Formulaire complété envoi du mail
 				// Envoie le mail
@@ -97,7 +97,7 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-				} 
+				}
 				// Images exemples livrées dans tous les cas
 				try {
 					// Décompression dans le dossier de fichier temporaires
@@ -120,11 +120,7 @@ class install extends common {
 				// Créer le dossier des fontes
 				if (!is_dir(self::DATA_DIR . 'fonts')) {
 					mkdir(self::DATA_DIR . 'fonts');
-				}				
-				// Stocker le dossier d'installation
-				$this->setData(['core', 'baseUrl', helper::baseUrl(false,false) ]);
-				// Créer sitemap
-				$this->createSitemap();
+				}
 
 				// Installation du thème sélectionné
 				$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
@@ -141,7 +137,7 @@ class install extends common {
 				}
 				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
 				unlink(self::FILE_DIR . 'source/theme/themes.json');
-				
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(false),
@@ -153,8 +149,13 @@ class install extends common {
 			// Récupération de la liste des thèmes
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);
-			self::$themes = helper::arrayCollumn($dataThemes, 'name');
-			
+			self::$themes = helper::arrayColumn($dataThemes, 'name');
+
+			// Créer sitemap
+			$this->createSitemap();
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->listPages();
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
@@ -251,19 +252,23 @@ class install extends common {
 				$success = true;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") {
-					$success = (file_put_contents(
+				if ($rewrite === "true") {					// Ajout des lignes dans le .htaccess
+					$fileContent = file_get_contents('.htaccess');
+					$rewriteData = 	PHP_EOL .
+									'# URL rewriting' .  PHP_EOL .
+									'<IfModule mod_rewrite.c>' . PHP_EOL .
+									"\tRewriteEngine on" . PHP_EOL .
+									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+									'</IfModule>'. PHP_EOL .
+									'# URL rewriting' . PHP_EOL ;
+					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
+					file_put_contents(
 						'.htaccess',
-						PHP_EOL .
-						'<IfModule mod_rewrite.c>' . PHP_EOL .
-						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</IfModule>',
-						FILE_APPEND
-					) !== false);
+						$fileContent
+					);
 				}
 				// Recopie htaccess
 				if ($this->getData(['config','autoUpdateHtaccess']) &&
@@ -271,7 +276,7 @@ class install extends common {
 				) {
 						// L'écraser avec le backup
 						$success = copy( '.htaccess.bak' ,'.htaccess' );
-						// Effacer l ebackup
+						// Effacer le backup
 						unlink('.htaccess.bak');
 				}
 				// Valeurs en sortie

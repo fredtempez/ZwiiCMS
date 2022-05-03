@@ -47,9 +47,9 @@ $("input, select").on("change", function() {
 		var tmpImg = new Image();
 		tmpImg.onload = function() {
 			// Informations affichées
-			$("#themeHeaderImageHeight").val(tmpImg.height + " px");
-			$("#themeHeaderImageWidth").val(tmpImg.width + " px");
-			$("#themeHeaderImageRatio").val(tmpImg.width / tmpImg.height);
+			$("#themeHeaderImageHeight").html(tmpImg.height + "px");
+			$("#themeHeaderImageWidth").html(tmpImg.width + "px");
+			$("#themeHeaderImageRatio").html(tmpImg.width / tmpImg.height);
 
 			// Limiter la hauteur à 600 px
 			if (tmpImg.height > 600) {
@@ -69,6 +69,9 @@ $("input, select").on("change", function() {
 				$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
 				// Modifier l'option
 				$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
+				$("#themeHeaderImageInfo").show();
+			} else {
+				$("#themeHeaderImageInfo").hide();
 			}
 		};
 
@@ -207,10 +210,10 @@ $("input, select").on("change", function() {
 // Affiche / Cache les options de l'image du fond
 $("#themeHeaderImage").on("change", function() {
 	if($(this).val()) {
-		$("#themeHeaderImageOptions").slideDown();
+		$(".themeHeaderImageOptions").slideDown();
 	}
 	else {
-		$("#themeHeaderImageOptions").slideUp(function() {
+		$(".themeHeaderImageOptions").slideUp(function() {
 			$("#themeHeaderTextHide").prop("checked", false).trigger("change");
 		});
 	}

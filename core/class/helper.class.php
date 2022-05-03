@@ -86,7 +86,7 @@ class helper {
 	 * @param string $sort Type de tri à appliquer au tableau (SORT_ASC, SORT_DESC, ou null)
 	 * @return array
 	 */
-	public static function arrayCollumn($array, $column, $sort = null) {
+	public static function arrayColumn($array, $column, $sort = null) {
 		$newArray = [];
 		if(empty($array) === false) {
 			$newArray = array_map(function($element) use($column) {
@@ -103,6 +103,14 @@ class helper {
 		}
 		return $newArray;
 	}
+
+	/**
+	 * Compatibilité avec les anciens modules
+	 */
+	public static function arrayCollumn($array, $column, $sort = null) {
+		return (helper::arrayColumn($array, $column, $sort));
+	}
+
 
 
 	/**
@@ -255,11 +263,15 @@ class helper {
 	 * @return bool
 	 */
 	public static function checkRewrite() {
-		if(self::$rewriteStatus === null) {
+		// N'interroge que le serveur Apache
+		if (strpos($_SERVER["SERVER_SOFTWARE"], 'Apache') > 0) {
+			self::$rewriteStatus === false;
+		} elseif(self::$rewriteStatus === null) {
 			// Ouvre et scinde le fichier .htaccess
 			$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
 			// Retourne un boolean en fonction du contenu de la partie réservée à l'URL rewriting
-			self::$rewriteStatus = (empty($htaccess[1]) === false);
+			//self::$rewriteStatus = (empty($htaccess[1]) === false);
+			self::$rewriteStatus = (strpos($htaccess[1], 'RewriteEngine on') > 0) ? true : false;
 		}
 		return self::$rewriteStatus;
 	}

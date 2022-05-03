@@ -38,7 +38,8 @@ class init extends common {
 				'captchaStrong' => false,
 				"captchaType" => 'num',
 				'autoDisconnect' => true,
-				'showPassword' => true
+				'showPassword' => true,
+				'redirectLogin' => true
 			],
 			'i18n' => [
 				'enable'=> true,
@@ -56,12 +57,11 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11300,
+			'dataVersion' => 11400,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
-			'updateAvailable' => false,
-			'baseUrl' => ''
+			'updateAvailable' => false
 		],
 		'locale' => [
 			'homePageId' => 'accueil',
@@ -87,7 +87,108 @@ class init extends common {
 		],
 		'fonts' => [
 			'files' => [],
-			'imported' => []
+			'imported'=> [
+				'arimo'=> [
+					'name' => 'Arimo',
+					'font-family' => 'Arimo,  sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/arimo'
+				],
+				'arvo'=> [
+					'name' => 'Arvo',
+					'font-family' => 'Arvo,  sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/arvo'
+				],
+				'dancing-script' => [
+					'name' => 'Dancing Script',
+					'font-family' => '\'Dancing Script\', sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/dancing-script'
+				],
+				'droid-sans-2'=> [
+					'name' => 'Droid Sans',
+					'font-family' =>  '\'Droid Sans\', sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
+				],
+				'droid-serif-2'=> [
+					'name' => 'Droid Serif',
+					'font-family' =>  '\'Droid Serif\', serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
+				],
+				'indie-flower'=> [
+					'name' => 'Indie Flower',
+					'font-family' => '\'Indie Flower\', sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
+				],
+				'liberation-sans'=> [
+					'name' => 'Liberation Sans',
+					'font-family' => '\'Liberation Sans\', sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
+				],
+				'liberation-serif'=> [
+					'name' => 'Liberation Serif',
+					'font-family' => '\'Liberation Serif\', serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
+				],
+				'lobster-2'=> [
+					'name' => 'Lobster',
+					'font-family' => 'Lobster, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/lobster-2'
+				],
+				'lato'=> [
+					'name' => 'lato',
+					'font-family' => 'Lato, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/lato'
+				],
+				'lora'=> [
+					'name' => 'Lora',
+					'font-family' => 'Lora, serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/lora'
+				],
+				'old-standard-tt-3'=> [
+					'name' => 'Old Standard TT',
+					'font-family' => '\'Old Standard TT\', serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
+				],
+				'open-sans' => [
+					'name' => 'Open Sans',
+					'font-family' => '\'Open Sans\', sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/open-sans'
+				],
+				'oswald-4'=> [
+					'name' => 'Oswald',
+					'font-family' => 'Oswald, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/oswald-4'
+				],
+				'pt-mono'=> [
+					'name' => 'PT Mono',
+					'font-family' => '\'PT Mono\', monospace',
+					'resource' => 'https://fonts.cdnfonts.com/css/pt-mono'
+				],
+				'pt-serif'=> [
+					'name' => 'PR Serif',
+					'font-family' => '\'PT Serif\', serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/pt-serif'
+				],
+				'rancho'=> [
+					'name' => 'Rancho',
+					'font-family' => 'Rancho, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/rancho'
+				],
+				'roboto'=> [
+					'name' => 'Roboto',
+					'font-family' => 'Roboto, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/roboto'
+				],
+				'ubuntu'=> [
+					'name' => 'Ubuntu',
+					'font-family' => 'Ubuntu, sans-serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/ubuntu'
+				],
+				'vollkorn'=> [
+					'name' => 'Vollkorn',
+					'font-family' => 'Vollkorn, serif',
+					'resource' => 'https://fonts.cdnfonts.com/css/vollkorn'
+				]
+			]
 		],
 		'page' => [
 			'accueil' => [
@@ -132,7 +233,7 @@ class init extends common {
 			],
 			'footer' => [
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
-				'font' => 'open-sans',
+				'font' => 'georgia',
 				'fontSize' => '.8em',
 				'fontWeight' => 'normal',
 				'height' => '5px',
@@ -159,7 +260,7 @@ class init extends common {
 			],
 			'header' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
-				'font' => 'oswald-4',
+				'font' => 'arial',
 				'fontSize' => '2em',
 				'fontWeight' => 'normal',
 				'height' => '150px',
@@ -182,7 +283,7 @@ class init extends common {
 			'menu' => [
 				'backgroundColor' => 'rgba(32, 59, 82, 1)',
 				'backgroundColorSub' => 'rgba(32, 59, 82, 1)',
-				'font' => 'open-sans',
+				'font' => 'arial',
 				'fontSize' => '1em',
 				'fontWeight' => 'normal',
 				'height' => '15px 10px',
@@ -213,13 +314,13 @@ class init extends common {
 				'borderColor' => 'rgba(236, 239, 241, 1)'
 			],
 			'text' => [
-				'font' => 'open-sans',
+				'font' => 'georgia',
 				'fontSize' => '13px',
 				'textColor' => 'rgba(33, 34, 35, 1)',
 				'linkColor' => 'rgba(74, 105, 189, 1)'
 			],
 			'title' => [
-				'font' => 'oswald-4',
+				'font' => 'arial',
 				'fontWeight' => 'normal',
 				'textColor' => 'rgba(74, 105, 189, 1)',
 				'textTransform' => 'none'
@@ -231,9 +332,9 @@ class init extends common {
 		],
 		'admin' => [
 			'backgroundColor' => 'rgba(255, 255, 255, 1)',
-			'fontText' => 'open-sans',
+			'fontText' => 'georgia',
 			'fontSize' => '13px',
-			'fontTitle' => 'oswald-4',
+			'fontTitle' => 'arial',
 			'colorText' => 'rgba(33, 34, 35, 1)',
 			'colorTitle' => 'rgba(74, 105, 189, 1)',
 			'backgroundColorButton' => 'rgba(74, 105, 189, 1)',

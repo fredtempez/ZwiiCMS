@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css');?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR.'theme.css'); ?>">
 		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR.'custom.css'); ?>">
+
 		<!-- Détection RSS -->
 		<?php if (  (  $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog'
 					OR $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'news' )
@@ -20,6 +21,7 @@
 			<link rel="alternate" type="application/rss+xml" href="'<?php echo helper::baseUrl(). $this->getUrl(0) . '/rss';?>" title="fLUX rss">
 		<?php endif; ?>
 		<?php $this->showStyle(); ?>
+		<!-- Script perso dans le header -->
 		<?php if (file_exists(self::DATA_DIR .'head.inc.html')) {
 			include(self::DATA_DIR .'head.inc.html');
 		}?>
@@ -85,11 +87,10 @@
 					<div id="featureContent">
 						<?php echo $this->getData(['theme','header','featureContent']);?>
 					</div>
-			<?php endif; ?>
+				<?php endif; ?>
+			<?php echo ($this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ?  '</a>' : '';?>
 			</header>
-			<?php echo ( $this->getData(['theme','header','linkHomePage']) && $this->getData(['theme','header','feature']) === 'wallpaper' ) ? '</a>' : ''; ?>
 		<?php endif; ?>
-
 		<!-- Menu dans le fond du site après la bannière -->
 		<?php if($this->getData(['theme', 'menu', 'position']) === 'body-second'): ?>
 
@@ -187,6 +188,10 @@
 		<?php $this->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php $this->showScript();?>
-
+		<!-- Script perso dans body -->
+		<?php if (file_exists(self::DATA_DIR . 'body.inc.html')) {
+					include(self::DATA_DIR . 'body.inc.html');
+				}
+		?>
 	</body>
 </html>

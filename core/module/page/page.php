@@ -146,7 +146,7 @@ class page extends common {
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
 				'title' => $pageTitle,
-				'shortTitle' => $pageTitle,
+				'shortTitle' => '',
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
@@ -164,6 +164,8 @@ class page extends common {
 		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18n);
 		// Met à jour le site map
 		$this->createSitemap('all');
+		// Mise à jour de la liste des pages pour TinyMCE
+		$this->listPages();
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . $pageId,
@@ -289,6 +291,8 @@ class page extends common {
 			$this->deleteData(['module', $url[0]]);
 			// Met à jour le site map
 			$this->createSitemap('all');
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->listPages();
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl(false),
@@ -388,19 +392,25 @@ class page extends common {
 					$lastPosition = 1;
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
+					$extraPosition = $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN);
 					foreach($hierarchy as $hierarchyPageId) {
-						// Ignore la page en cours de modification
-						if($hierarchyPageId === $this->getUrl(2)) {
-							continue;
-						}
-						// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
-						if($lastPosition === $position) {
+
+						// Ne traite que les pages du menu sélectionné
+						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition ) {
+							// Ignore la page en cours de modification 
+							if($hierarchyPageId === $this->getUrl(2) ) {
+								continue;
+							}
+							// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
+							if($lastPosition === $position) {
+								$lastPosition++;
+							}
+							// Change la position
+							$this->setData(['page', $hierarchyPageId, 'position', $lastPosition]);
+							// Incrémente pour la prochaine position
 							$lastPosition++;
 						}
-						// Change la position
-						$this->setData(['page', $hierarchyPageId, 'position', $lastPosition]);
-						// Incrémente pour la prochaine position
-						$lastPosition++;
+
 					}
 					if ($this->getinput('pageEditBlock') !== 'bar') {
 						$barLeft = $this->getinput('pageEditBarLeft');
@@ -476,7 +486,7 @@ class page extends common {
 							'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
-							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN)
+							'extraPosition' => $extraPosition
 						]
 					]);
 
@@ -487,9 +497,11 @@ class page extends common {
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
 					$this->setPage($pageId , $content, self::$i18n);
 
-
 					// Met à jour le site map
 					$this->createSitemap('all');
+					// Mise à jour de la liste des pages pour TinyMCE
+					$this->listPages();
+
 					// Redirection vers la configuration
 					if(
 						$this->getInput('pageEditModuleRedirect', helper::FILTER_BOOLEAN)
@@ -510,7 +522,7 @@ class page extends common {
 					}
 				}
 			}
-			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayCollumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
+			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayColumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
 			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
@@ -523,8 +535,6 @@ class page extends common {
 						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 					}
 			}
-			// Mise à jour de la liste des pages pour TinyMCE
-			$this->pages2Json();
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
