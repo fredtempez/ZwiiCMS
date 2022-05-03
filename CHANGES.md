@@ -46,6 +46,8 @@
     - Module galerie, option plein écran inopérante.
 ### Amélioration :
     - Module galerie, lorsque le module ne contient qu'une galerie, la page listant les galeries est omise.
+### Modification :
+    - Neutralisation du téléchargement depuis le catalogue.
 
 ## Version 11.3.06
 ### Corrections :
