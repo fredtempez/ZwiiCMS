@@ -15,7 +15,7 @@
 - Galerie, version 3.5 :
     - Nouvelle structure anticipée sur la version 12, le formulaire d'ajout de la galerie est séparé de la liste des galeries du module.
     - Lorsque la galerie n'en contient qu'**une seule galerie**, elle peut être affichée directement, la liste des galeries étant ignorée. Pour cela, activer cette option dans les options de la galerie.
-    - Le contenu de la page peut désormais être affiché avec le contenu de la galerie sélectionnée. Ce paramètre ce gère au niveau de chaque galerie.
+    - Le contenu de la page peut désormais être affiché avec le contenu de la galerie sélectionnée. Ce paramètre se gère au niveau de chaque galerie.
     - Déplacement du bouton de retour à la liste des galeries en bas de l'écran.
 ### Corrections :
 - URL Rewrite Apache, bug d'interprétation d'activation de la réécriture d'URL lorsque des données ont été inscrites après la ligne servant de délimiteur  *# URL rewriting* dans le fichier htaccess.
