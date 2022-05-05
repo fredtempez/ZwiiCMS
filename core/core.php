@@ -46,7 +46,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '12.0.00_dev';
+	const ZWII_VERSION = '12.0.00-dev';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -66,13 +66,14 @@ class common {
 		'theme',
 		'config',
 		'edit',
-		'translate',
-		'plugin'
+		'config',
+		'translate'
 	];
 	public static $accessExclude = [
 		'login',
 		'logout'
 	];
+	private $data = [];
 	private $hierarchy = [
 		'all' => [],
 		'visible' => [],
@@ -164,6 +165,7 @@ class common {
 	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
+	// Liste ici tous les fichiers de données
 	private $dataFiles = [
 		'admin' => '',
 		'blacklist' => '',
@@ -175,6 +177,7 @@ class common {
 		'page' => '',
 		'theme' => '',
 		'user' => ''
+
 	];
 
 	public static $fontsWebSafe = [
@@ -183,9 +186,14 @@ class common {
 			'font-family' 	=> 'Arial, Helvetica, sans-serif',
 			'resource' 		=> 'websafe'
 		],
-		'arvo'=> [
-			'name' => 'Arvo',
-			'font-family' => 'Arvo,  sans-serif',
+		'arial-black' => [
+			'name' 			=> 'Arial Black',
+			'font-family' 	=> '\'Arial Black\', Gadget, sans-serif',
+			'resource' 		=> 'websafe'
+		],
+		'courrier' => [
+			'name' 			=> 'Courier',
+			'font-family' 	=> 'Courier, \'Liberation Mono\', monospace',
 			'resource' 		=> 'websafe'
 		],
 		'courrier-new' 		=> [
@@ -208,19 +216,9 @@ class common {
 			'font-family'	=> 'Impact, Charcoal, sans-serif',
 			'resource' 		=> 'websafe'
 		],
-		'lora'=> [
-			'name' => 'Lora',
-			'font-family' => 'Lora, serif',
-			'resource' 		=> 'websafe'
-		],
 		'lucida' 			=> [
 			'name'			=> 'Lucida',
 			'font-family' 	=> '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
-			'resource' 		=> 'websafe'
-		],
-		'roboto'=> [
-			'name' => 'Roboto',
-			'font-family' => 'Roboto, sans-serif',
 			'resource' 		=> 'websafe'
 		],
 		'tahoma'			=> [
@@ -272,6 +270,29 @@ class common {
 
 		} else  {
 			self::$i18n = 'fr';
+		}
+
+		// Instanciation de la classe des entrées / sorties
+		// Récupère les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dataPath ($keys, self::$i18n),
+				'backup' => file_exists('site/data/.backup')
+			]);;
+		}
+
+		// Installation fraîche, initialisation des modules manquants
+		// La langue d'installation par défaut est fr
+		foreach ($this->dataFiles as $stageId => $item) {
+			$folder = $this->dataPath ($stageId, self::$i18n);
+			if ( file_exists($folder . $stageId .'.json') === false ||
+					$this->getData([$stageId]) === NULL
+				) {
+				$this->initData($stageId, self::$i18n);
+				common::$coreNotices [] = $stageId ;
+			}
 		}
 
 		// Utilisateur connecté
@@ -436,10 +457,6 @@ class common {
 	 * @param array $keys Clé(s) des données
 	 */
 	public function deleteData($keys) {
-
-		// Récupère le descripteur dans le tableau dataFiles si absent
-		$this->connectData($keys[0]);
-
 		// Descripteur de la base
 		$db = $this->dataFiles[$keys[0]];
 		// Initialisation de la requête par le nom de la base
@@ -469,9 +486,6 @@ class common {
 			return false;
 		}
 
-		// Récupère le descripteur dans le tableau dataFiles si absent
-		$this->connectData($keys[0]);
-
 		// Initialisation du retour en cas d'erreur de descripteur
 		$success = false;
 		// Construire la requête dans la base inf à 1 retourner toute la base
@@ -496,9 +510,6 @@ class common {
 	 * @return mixed
 	 */
 	public function getData($keys = []) {
-
-		// Récupère le descripteur dans le tableau dataFiles si absent
-		$this->connectData($keys[0]);
 
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
@@ -564,9 +575,6 @@ class common {
 	 * choix valides :  core config user theme page module
 	 */
 	public function initData($module, $lang = 'fr', $sampleSite = false) {
-
-		// Récupère le descripteur dans le tableau dataFiles si absent
-		$this->connectData($module);
 
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
@@ -741,36 +749,59 @@ class common {
 		return ($this->checkCSRF() AND $this->input['_POST'] !== []);
 	}
 
-
 	/**
-	 * Initialise un fichier de données absent.
-	 * Connecte la base de données si le descripteur est inconnu.
+	 * Import des données de la version 9
+	 * Convertit un fichier de données data.json puis le renomme
 	 */
-	private function connectData ($database) {
-
-		// Installation fraîche, initialisation des modules manquants
-		// La langue d'installation par défaut est fr
-		$folder = $this->dataPath ($database, self::$i18n);
-		if ( file_exists($folder . $database .'.json') === false
-			) {
-			$this->initData($database, self::$i18n);
-			common::$coreNotices [] = $database ;
+	public function importData($keepUsers = false) {
+		// Trois tentatives de lecture
+		for($i = 0; $i < 3; $i++) {
+			$tempData=json_decode(file_get_contents(self::DATA_DIR.'core.json'), true);
+			$tempTheme=json_decode(file_get_contents(self::DATA_DIR.'theme.json'), true);
+			if($tempData && $tempTheme) {
+				// Backup
+				rename (self::DATA_DIR.'core.json',self::DATA_DIR.'imported_core.json');
+				rename (self::DATA_DIR.'theme.json',self::DATA_DIR.'imported_theme.json');
+				break;
+			}
+			elseif($i === 2) {
+                throw new \ErrorException('Import des données impossible.');
+			}
+			// Pause de 10 millisecondes
+			usleep(10000);
 		}
 
-		// Instanciation de la classe des entrées / sorties
-		// Constructeur  JsonDB
-		if (!is_object($this->dataFiles[$database]) ) {
-			$this->dataFiles[$database] = new \Prowebcraft\JsonDb([
-				'name' => $database . '.json',
-				'dir' => $this->dataPath ($database, self::$i18n),
-				'backup' => file_exists('site/data/.backup')
-			]);;
+		// Dossier de langues
+		if (!file_exists(self::DATA_DIR . '/fr')) {
+			mkdir (self::DATA_DIR . '/fr', 0755);
+		}
+
+		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
+		$tempData = array_merge($tempData,$tempTheme);
+
+		// Ecriture des données
+		$this->setData(['config',$tempData['config']]);
+		$this->setData(['core',$tempData['core']]);
+		$this->setData(['page',$tempData['page']]);
+		$this->setData(['module',$tempData['module']]);
+		$this->setData(['theme',$tempData['theme']]);
+
+		// Import des users sauvegardés si option active
+		if ($keepUsers === false
+			AND $tempData['user'] !== NULL) {
+			$this->setData(['user',$tempData['user']]);
+		}
+
+		// Nettoyage du fichier de thème pour forcer une régénération
+		if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
+			unlink (self::DATA_DIR . '/theme.css');
 		}
 	}
 
 
 	/**
-	 * Génère la liste des pages pour le plugin Link de TinyMCE
+	 * Génère un fichier json avec la liste des pages
+	 *
 	*/
     public function listPages() {
     // Sauve la liste des pages pour TinyMCE
@@ -857,6 +888,8 @@ class common {
 	*/
 
 	public function createSitemap($command = "all") {
+
+		//require_once "core/vendor/sitemap/SitemapGenerator.php";
 
 		$timezone = $this->getData(['config','timezone']);
 		$outputDir = getcwd();
@@ -1017,7 +1050,6 @@ class common {
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
 		$mail->CharSet = 'UTF-8';
-		$mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
 		// Mail
 		try{
 			// Paramètres SMTP
@@ -1067,10 +1099,10 @@ class common {
 			else {
 					return $mail->ErrorInfo;
 			}
+		} catch (phpmailerException $e) {
+			return $e->errorMessage();
 		} catch (Exception $e) {
-			echo $e->errorMessage();
-		} catch (\Exception $e) {
-			echo $e->getMessage();
+			return $e->getMessage();
 		}
 	}
 
@@ -1316,9 +1348,6 @@ class common {
 						echo '</div>';
 						echo substr($contentLeft,$mark+6,strlen($contentLeft));
 					}
-					// Feuille de style et script de la barre
-					echo '<style type="text/css">' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'css']) . '</style>' ;
-					echo '<script>' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barLeft']),'js']) . '</script>';
 					echo  "</aside></div>";
 				}
 				/**
@@ -1326,6 +1355,9 @@ class common {
 				 */
 				echo '<div class="'. $content . '" id="contentSite">';
 				$this->showContent();
+				if (file_exists(self::DATA_DIR . 'body.inc.html')) {
+						include(self::DATA_DIR . 'body.inc.html');
+				}
 				echo '</div>';
 				/**
 				 * Barre droite
@@ -1347,9 +1379,6 @@ class common {
 						echo '</div>';
 						echo substr($contentRight,$mark+6,strlen($contentRight));
 					}
-					// Feuille de style et script de la barre
-					echo '<style type="text/css">' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'css']) . '</style>' ;
-					echo '<script>' . $this->getData(['page',$this->getData(['page',$this->getUrl(0),'barRight']),'js']) . '</script>';
 					echo '</aside></div>';
 				}
 			echo '</div>';
@@ -2107,18 +2136,14 @@ class common {
 		// Import des styles liés à la page
 		if($this->output['style']) {
 			echo '<base href="' . helper::baseUrl(true) .'">';
-			// Import de la feuille de style des pages admin
 			if (strpos($this->output['style'], 'admin.css') >= 1 ) {
 				echo '<link rel="stylesheet" href="' . self::DATA_DIR . 'admin.css?' . md5_file(self::DATA_DIR .'admin.css') . '">';
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
-		// Import des fontes
-		if ( file_exists(self::DATA_DIR . 'fonts/fonts.html') ){
-			include_once(self::DATA_DIR . 'fonts/fonts.html');
-		}
-		if ( file_exists(self::DATA_DIR . 'fonts/fonts.css') ){
-			echo '<link rel="stylesheet" href="' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/fonts.css?' . md5_file(self::DATA_DIR .'fonts/fonts.css') . '">';
+		// Import des fontes liées au thème
+		if (file_exists(self::DATA_DIR.'fonts/fonts.html')) {
+			include_once(self::DATA_DIR.'fonts/fonts.html');
 		}
 	}
 
@@ -2289,18 +2314,74 @@ class core extends common {
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['theme']))) . '*/';
 
+
 			/**
 			 * Import des polices de caractères
+			 * A partir du CDN
+			 * ou dans le dossier site/file/source/fonts
+			 * ou pas du tout si fonte webSafe
 			 */
 
-			$f ['files'] =  $this->getData(['fonts', 'files']);
-			$f ['imported'] =  $this->getData(['fonts', 'imported']);
-			$f ['websafe'] = self::$fontsWebSafe;
-			// Construit un tableau avec leur ID et leur famille
-			foreach(['websafe', 'imported', 'files'] as $type) {
-				if (is_array($f[$type]))  {
-					foreach ($f[$type] as $fontId => $fontValue ) {
-						$fonts[$fontId] = $fontValue['font-family'];
+			// Fonts disponibles
+			$fontsAvailable ['files'] =  $this->getData(['fonts', 'files']);
+			$fontsAvailable ['imported'] =  $this->getData(['fonts', 'imported']);
+			$fontsAvailable ['websafe'] = self::$fontsWebSafe;
+
+			// Fontes installées
+			$fonts = [ $this->getData(['theme', 'text',  'font']),
+						  $this->getData(['theme', 'title', 'font']),
+						  $this->getData(['theme', 'header', 'font']),
+						  $this->getData(['theme', 'menu', 'font']),
+						  $this->getData(['theme', 'footer', 'font'])
+			];
+			// Suppression des polices identiques
+			$fonts = array_unique($fonts);
+
+			/**
+			 * Charge les fontes websafe
+			 */
+			$fontFile = '';
+			foreach ($fonts as $fontId) {
+				if ( isset($fontsAvailable['websafe'][$fontId])) {
+					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
+				}
+			}
+
+			/**
+			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+			*/
+			$fontFile = '';
+			$gf = false;
+			foreach ($fonts as $fontId) {
+				if ( isset($fontsAvailable['imported'][$fontId])) {
+						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] .'" rel="stylesheet">';
+						// Tableau pour la construction de la feuille de style
+						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
+						$gf =  strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+				}
+			}
+			// Ajoute le préconnect des fontes Googles.
+			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
+							: $fontFile;
+			// Enregistre la personnalisation
+			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
+
+			/**
+			 * Fontes installées localement
+			 */
+			foreach ($fonts as $fontId) {
+				// Validité du tableau :
+				if ( isset($fontsAvailable['files'][$fontId]) ) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
+						// Chargement de la police
+						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
+						// Tableau pour la construction de la feuille de style
+						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
+					} else {
+						// Le fichier de font n'est pas disponible, fonte par défaut
+						$fonts [$fontId] = 'verdana';
 					}
 				}
 			}
@@ -2471,6 +2552,12 @@ class core extends common {
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
+			// Enregistre les fontes
+			if (!is_dir(self::DATA_DIR . 'fonts')) {
+				mkdir(self::DATA_DIR . 'fonts');
+			}
+			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
+
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR.'theme.css', $css);
 
@@ -2491,21 +2578,57 @@ class core extends common {
 
 			/**
 			 * Import des polices de caractères
+			 * A partir du CDN ou dans le dossier site/file/source/fonts
 			 */
+			$fonts = [ $this->getData(['admin', 'fontText']),
+						  $this->getData(['admin', 'fontTitle']),
+			];
+			// Suppression des polices identiques
+			$fonts = array_unique($fonts);
 
-			$f ['files'] =  $this->getData(['fonts', 'files']);
-			$f ['imported'] =  $this->getData(['fonts', 'imported']);
-			$f ['websafe'] = self::$fontsWebSafe;
-			// Construit un tableau avec leur ID et leur famille
-			foreach(['websafe', 'imported', 'files'] as $type) {
-				if (is_array($f[$type]))  {
-					foreach ($f[$type] as $fontId => $fontValue ) {
-						$fonts[$fontId] = $fontValue['font-family'];
-					}
+			/**
+			 * Charge les fontes websafe
+			 */
+			$fontFile = '';
+			foreach ($fonts as $fontId) {
+				if ( isset($fontsAvailable['websafe'][$fontId])) {
+					$fonts [$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
 				}
 			}
 
+			/**
+			* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+			*/
+			$fontFile = '';
+			foreach ($fonts as $fontId) {
+				if ( isset($fontsAvailable['imported'][$fontId])) {
+						$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] .'" rel="stylesheet">';
+						// Tableau pour la construction de la feuille de style
+						$fonts [$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
+				}
+			}
+			// Enregistre la personnalisation
+			file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fontFile);
 
+			/**
+			 * Fontes installées localement
+			 */
+			foreach ($fonts as $fontId) {
+				// Validité du tableau :
+				if ( isset($fontsAvailable['files'][$fontId]) ) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
+						// Chargement de la police
+						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
+						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
+						// Tableau pour la construction de la feuille de style
+						$fonts [$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
+					} else {
+						// Le fichier de font n'est pas disponible, fonte par défaut
+						$fonts [$fontId] = 'verdana';
+					}
+				}
+			}
 
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin','backgroundColor']));
@@ -2699,17 +2822,19 @@ class core extends common {
 				'title' => $title,
 				'content' => 	$this->getPage($this->getUrl(0), self::$i18n) .
 								// Concatène avec les paramètres avancés.
-								'<style type="text/css">' . $this->getData(['page', $this->getUrl(0), 'css']) . '</style>' .
-								'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>',
+								$this->getData(['page', $this->getUrl(0), 'css']) .
+								$this->getData(['page', $this->getUrl(0), 'js']),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
+									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 									: '',
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
+									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 									: ''
 			]);
@@ -2741,10 +2866,7 @@ class core extends common {
 										: ''
 				]);
 				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18n).
-								// Concatène avec les paramètres avancés.
-								'<style type="text/css">'  . $this->getData(['page', $this->getUrl(0), 'css']) . '</style>' .
-								'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>';
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
 			}
 			else {
 				$moduleId = $this->getUrl(0);
@@ -2955,23 +3077,15 @@ class core extends common {
 					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
 				]);
 			} else {
-				// Redirige vers la page de connexion si page de gestion demandée
-				if ( $this->getData(['config', 'connect', 'redirectLogin']) === true
-					&& in_array($this->geturl(0), self::$accessList) )	{
-					http_response_code(302);
-					header('Location:' . helper::baseUrl() . 'user/login/');
-					exit();
+				if ( $this->getData(['locale','page403']) !== 'none'
+					AND $this->getData(['page',$this->getData(['locale','page403'])]))
+				{
+					header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
 				} else {
-					if ( $this->getData(['locale','page403']) !== 'none'
-						AND $this->getData(['page',$this->getData(['locale','page403'])]))
-					{
-						header('Location:' . helper::baseUrl() . $this->getData(['locale','page403']));
-					} else {
-						$this->addOutput([
-							'title' => 'Accès interdit',
-							'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
-						]);
-					}
+					$this->addOutput([
+						'title' => 'Accès interdit',
+						'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
+					]);
 				}
 			}
 		} elseif ($this->output['content'] === '') {
