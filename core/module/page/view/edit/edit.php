@@ -43,7 +43,7 @@
 	<div class="tab">
 		<?php echo template::button('pageEditContentButton', [
 			'value' => 'Contenu',
-			'class' => 'buttonTab activeButton'
+			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('PageEditPositionButton', [
 			'value' => 'Menu',
@@ -52,15 +52,15 @@
 		<?php echo template::button('pageEditExtensionButton', [
 			'value' => 'Extension',
 			'class' => 'buttonTab'
-		]); ?>	
+		]); ?>
 		<?php echo template::button('pageEditLayoutButton', [
 			'value' => 'Mise en page',
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('pageEditPermissionButton', [
-			'value' => 'Référencement',
+			'value' => 'Permission',
 			'class' => 'buttonTab'
-		]); ?>	
+		]); ?>
 	</div>
 
 	<div id="pageEditContentContainer" class="tabContent">
@@ -244,7 +244,7 @@
 					</div>
 					<div class="row">
 						<div class="col12">
-							<?php echo template::select('configModulePosition', $module::$modulePosition,[
+							<?php echo template::select('pageModulePosition', $module::$modulePosition,[
 								'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
 								'label' => 'Position du module',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])

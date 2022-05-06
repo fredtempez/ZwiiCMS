@@ -52,15 +52,22 @@ function protectModule() {
 */
 $( document ).ready(function() {
 
-
 	/**
-	 * Position initiales des blocs
+	 * Sélection des onglets
 	 */
+	 var pageLayout = getCookie("pageLayout");
+	 if (pageLayout == null) {
+		 pageLayout = "content";
+		 setCookie("pageLayout", "content");
+	 }
+	 $("#pageEditContentContainer").hide();
 	 $("#pageEditExtensionContainer").hide();
 	 $("#pageEditPositionContainer").hide();
 	 $("#pageEditLayoutContainer").hide();
 	 $("#pageEditPermissionContainer").hide();
-	 $("#pageEditContentButton").addClass("activeButton");
+	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Container").show();
+	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Button").addClass("activeButton");
+	 
 
 	/*
 	* Enleve le menu fixe en édition de page
@@ -87,12 +94,12 @@ $( document ).ready(function() {
 	*/
 	if( $("#pageEditModuleId").val() === "redirection" ||
 		$("#pageEditModuleId").val() === "" ) {
-		$("#configModulePositionWrapper").removeClass("disabled");
-		$("#configModulePositionWrapper").slideUp();
+		$("#pageModulePositionWrapper").removeClass("disabled");
+		$("#pageModulePositionWrapper").slideUp();
 	}
 	else {
-		$("#configModulePositionWrapper").addClass("disabled");
-		$("#configModulePositionWrapper").slideDown();
+		$("#pageModulePositionWrapper").addClass("disabled");
+		$("#pageModulePositionWrapper").slideDown();
 	}
 
 
@@ -275,6 +282,7 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
+			setCookie("pageLayout", "content");
 		});
 		$("#pageEditExtensionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -287,6 +295,7 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
+			console.log("extension");
 		});
 		$("#PageEditPositionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -299,6 +308,7 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").addClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
+			setCookie("pageLayout", "position");
 		});
 		$("#pageEditLayoutButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -311,6 +321,7 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").addClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
+			setCookie("pageLayout", "layout");
 		});
 		$("#pageEditPermissionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -323,6 +334,7 @@ $( document ).ready(function() {
 			$("#pageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").addClass("activeButton");
+			setCookie("pageLayout", "permission");
 		});
 
 /**
@@ -381,12 +393,12 @@ var pageEditModuleIdDOM = $("#pageEditModuleId");
 pageEditModuleIdDOM.on("change", function() {
 	if( $(this).val() === "redirection" ||
 		$(this).val() === "") {
-		$("#configModulePositionWrapper").removeClass("disabled");
- 		$("#configModulePositionWrapper").slideUp();
+		$("#pageModulePositionWrapper").removeClass("disabled");
+ 		$("#pageModulePositionWrapper").slideUp();
 	}
 	else {
-		$("#configModulePositionWrapper").addClass("disabled");
-		$("#configModulePositionWrapper").slideDown();
+		$("#pageModulePositionWrapper").addClass("disabled");
+		$("#pageModulePositionWrapper").slideDown();
 	}
 });
 
@@ -691,3 +703,32 @@ function buildPagesList(extraPosition) {
 	// Sélectionne la bonne position
 	positionDOM.val(positionSelected);
 };
+
+/**
+ * Cookies
+ */
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; samesite=lax";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Define function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

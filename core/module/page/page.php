@@ -475,7 +475,7 @@ class page extends common {
 							'metaDescription' => $this->getInput('pageEditMetaDescription', helper::FILTER_STRING_LONG),
 							'metaTitle' => $this->getInput('pageEditMetaTitle'),
 							'moduleId' => $this->getInput('pageEditModuleId'),
-							'modulePosition' => $this->getInput('configModulePosition'),
+							'modulePosition' => $this->getInput('pageModulePosition'),
 							'parentPageId' => $this->getInput('pageEditParentPageId'),
 							'position' => $position,
 							'group' => $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0,
