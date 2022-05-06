@@ -45,7 +45,7 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_VERSION = '11.4.00';
+	const ZWII_VERSION = '11.4.01';
 	const ZWII_UPDATE_CHANNEL = "v11";
 
 	public static $actions = [];
@@ -1293,7 +1293,7 @@ class common {
 			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
-			$item .= '<form method="POST" action="' . helper::baseUrl(false, true) . '" id="cookieForm">';
+			$item .= '<form method="POST" action="' . helper::baseUrl() . $this->getUrl(0) . '" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {

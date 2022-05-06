@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.4.01
+### Correcion :
+- Un clic sur le bouton de validation du panneau RGPD envoyait vers la page d'accueil.
+
 ## Version 11.4.00
 ### Nouveautés :
 - Compatibilité avec PHP 8.1
