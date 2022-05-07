@@ -1223,7 +1223,7 @@ class theme extends common {
 						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
 						// Chargement de la police
 						$fileContentCss .=  '@font-face {' ;
-						$fileContentCss .= 'font-family:"' . $fontId . '";';
+						$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
 						$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
 						$fileContentCss .=  '}' ;
 						// Préchargement
