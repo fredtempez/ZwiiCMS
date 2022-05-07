@@ -22,10 +22,6 @@
             ]); ?>
       </div>
   </div>
-  <!-- Aide à propos de la gestion des modules, view upload -->
-  <div class="helpDisplayContent">
-    <?php echo file_get_contents( 'core/module/addon/view/upload/upload.help.html') ;?>
-  </div>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
