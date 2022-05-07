@@ -1,8 +1,10 @@
 # Changelog
 
 ## Version 11.4.01
-### Correcion :
+### Correcions :
+- Défaut de chargement des fontes locales (ex: fichiers woff).
 - Un clic sur le bouton de validation du panneau RGPD envoyait vers la page d'accueil.
+- Chargement des anciens fichiers d'aide absents.
 
 ## Version 11.4.00
 ### Nouveautés :
