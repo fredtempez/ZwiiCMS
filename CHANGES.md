@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.4.02
+### Modifications :
+- Liste des aperçus de fontes, contrôle de validité amélioré.
+
 ## Version 11.4.01
 ### Corrections :
 - Défaut de chargement des fontes locales (ex: fichiers woff).
