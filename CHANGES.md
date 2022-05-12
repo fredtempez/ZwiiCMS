@@ -2,7 +2,7 @@
 
 ## Version 11.4.02
 ### Modifications :
-- Liste des aperçus de fontes, contrôle de validité amélioré.
+- Liste des fontes, contrôle de validité amélioré.
 
 ## Version 11.4.01
 ### Corrections :
