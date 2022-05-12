@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version 11.4.02
-### Modifications :
+### Modification :
 - Liste des fontes, contrôle de validité amélioré.
 
 ## Version 11.4.01
