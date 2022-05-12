@@ -78,6 +78,8 @@ Pour revenir à la version 8, renommez ce fichier "data.json".
         [F] accueil.html   Exemple contenu de la page d'accueil
     [R] fonts              Dossier contenant les fontes installées
       [F] fonts.html       Fichier contenant les appels des fontes à charger sur cdnFonts
+      [F] fonts.css        Fichier contenant la feuille de style liée aux polices de caractères locales
+      [F] fontes.woff      Fichiers locaux des fontes (woff, etc..)
     [R] modules            Personnalisation des modules ou données propres
     [F] admin.css          Thème des pages d'administration
     [F] admin.json         Données de thème des pages d'administration

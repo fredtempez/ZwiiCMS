@@ -13,6 +13,15 @@
 - Suppression du support de l'import à partir d'une version 9, y compris pour la restauration des sauvegardes.
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 
+## Version 11.4.02
+### Modifications :
+- Liste des fontes, contrôle de validité amélioré.
+
+## Version 11.4.01
+### Corrections :
+- Défaut de chargement des fontes locales (ex: fichiers woff).
+- Un clic sur le bouton de validation du panneau RGPD envoyait systématiquement vers la page d'accueil.
+- Chargement des anciens fichiers d'aide absents.
 
 ## Version 11.4.00
 ### Nouveautés :
