@@ -31,7 +31,7 @@ class plugin extends common {
 
 	// URL des modules
 	const BASEURL_STORE = 'https://store.zwiicms.fr/';
-	const MODULE_STORE = 'modules-pour-zwii-v12/';
+	const MODULE_STORE = 'modules-pour-zwii-v115/';
 
 	// Gestion des modules
 	public static $modulesData = [];
@@ -208,7 +208,7 @@ class plugin extends common {
 						$zip->close();
 						return([
 							'success' => false,
-							'notification'=> 'La version installée est plus récente, la mise à jour peut être forcée en cochant l\'option.'
+							'notification'=> 'La version installée est plus récente.'
 						]);
 					}
 				}
