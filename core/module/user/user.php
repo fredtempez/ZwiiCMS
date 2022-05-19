@@ -438,11 +438,9 @@ class user extends common {
 					$this->setData(['user',$userId,'connectFail',0 ]);
 					$this->setData(['user',$userId,'connectTimeout',0 ]);
 					// Expiration
-					$expire = $this->getInput('userLoginLongTime') ? strtotime("+1 year") : 0;
-					$c = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? 'true' : 'false';
+					$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN ) === true ? strtotime("+1 year") : 0 ;
 					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
 					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-					setcookie('ZWII_USER_LONGTIME', $c, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 					// Accès multiples avec le même compte
 					$this->setData(['user',$userId,'accessCsrf',$_SESSION['csrf']]);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
@@ -504,9 +502,6 @@ class user extends common {
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
 			self::$userId = $_COOKIE['ZWII_USER_ID'];
 		}
-		if (!empty($_COOKIE['ZWII_USER_LONGTIME'])) {
-			self::$userLongtime = $_COOKIE['ZWII_USER_LONGTIME'] == 'true' ? true : false;
-		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
@@ -519,17 +514,12 @@ class user extends common {
 	 * Déconnexion
 	 */
 	public function logout() {
-		// Ne pas effacer l'identifiant mais seulement le mot de passe
-		if (array_key_exists('ZWII_USER_LONGTIME',$_COOKIE)
-			AND $_COOKIE['ZWII_USER_LONGTIME'] !== 'true' ) {
-			helper::deleteCookie('ZWII_USER_ID');
-			helper::deleteCookie('ZWII_USER_LONGTIME');
-		}
+		helper::deleteCookie('ZWII_USER_ID');
 		helper::deleteCookie('ZWII_USER_PASSWORD');
 		session_destroy();
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Déconnexion réussie',
+			'notification' => 'Vous avez été déconnecté',
 			'redirect' => helper::baseUrl(false),
 			'state' => true
 		]);
