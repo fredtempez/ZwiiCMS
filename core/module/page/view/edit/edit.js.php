@@ -67,7 +67,7 @@ $( document ).ready(function() {
 	 $("#pageEditPermissionContainer").hide();
 	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Container").show();
 	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Button").addClass("activeButton");
-	 
+
 
 	/*
 	* Enleve le menu fixe en édition de page
@@ -295,7 +295,7 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
-			console.log("extension");
+			setCookie("pageLayout", "extension");
 		});
 		$("#PageEditPositionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
