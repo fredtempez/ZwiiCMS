@@ -878,7 +878,7 @@ class gallery extends common {
 
 				// Sauver la configuration de la galerie
 				$this->setData(['module', $this->getUrl(0), 'config', [
-						'showUniqueGallery' => $this->getinput('galleryOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
+						'showUniqueGallery' => $this->getinput('galleriesOptionShowUniqueGallery', helper::FILTER_BOOLEAN),
 						'backPosition'		=> $this->getinput('galleryOptionBackPosition', null),
 						'backAlign'			=> $this->getinput('galleryOptionBackAlign', null)
 				]]);

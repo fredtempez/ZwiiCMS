@@ -18,7 +18,7 @@
             <h4>Options</h4>
             <div class="row">
                 <div class="col12">
-                    <?php echo template::checkbox('galleriesOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une galerie' , [
+                    <?php echo template::checkbox('galleriesOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une seule galerie' , [
                                 'checked' => count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
                                                 ? $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery'])
                                                 : false,
