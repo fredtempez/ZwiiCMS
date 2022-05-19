@@ -31,16 +31,16 @@
 	</div>
 </div>
 <div class="tab">
-	<?php echo template::button('configManageModuleButton', [
+	<?php echo template::button('configModuleButton', [
 		'value' => 'Modules installés',
-		'class' => ' buttonTab activeButton'
+		'class' => ' buttonTab'
 	]); ?>
-	<?php echo template::button('configManageDatasButton', [
+	<?php echo template::button('configDataButton', [
 		'value' => 'Données des modules',
 		'class' => 'buttonTab'
 	]); ?>
 </div>
-<div class="tabContent" id="manageModules">
+<div class="tabContent" id="moduleContainer">
 	<?php if($module::$modulesInstalled): ?>
 	<div class="row">
 		<div class="col12">
@@ -64,7 +64,7 @@
 	</div>
 	<?php endif; ?>
 </div>
-<div class="tabContent displayNone" id="manageDatas">
+<div class="tabContent displayNone" id="dataContainer">
 	<?php if($module::$modulesData): ?>
 	<div class="row">
 		<div class="col12">
