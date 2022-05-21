@@ -664,7 +664,10 @@ class gallery extends common {
 				// Définir les options
 				self::$config['homePicture'] =  $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','homePicture']);
 				self::$config['fullScreen'] = $this->getData(['module',$this->getUrl(0),'content', $gallery,'config','fullScreen']) === true ? 'fullScreen' : '';
-				self::$config['backPosition'] = $this->getData(['module', $this->getUrl(0), 'config','backPosition']) ;
+				self::$config['backPosition'] = ( $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true &&
+												  count($this->getData(['module', $this->getUrl(0), 'content'])) === 1 )
+												? 'displayNone'
+												:$this->getData(['module', $this->getUrl(0), 'config','backPosition']) ;
 				self::$config['backAlign'] = 'textAlign' . ucfirst($this->getData(['module', $this->getUrl(0), 'config','backAlign'])) ;
 				if(is_dir($directory) ) {
 					$iterator = new DirectoryIterator($directory);
