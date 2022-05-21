@@ -226,6 +226,7 @@ class gallery extends common {
 		if ( $this->getData(['module',  $this->getUrl(0), 'theme']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module',  $this->getUrl(0), 'theme', theme::$defaultTheme]);
+			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultConfig]);
 			// Nom de la feuille de style
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
