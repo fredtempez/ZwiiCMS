@@ -645,11 +645,10 @@ class gallery extends common {
 		// Mise à jour des données de module
 		$this->update();
 		// Une seule galerie, bifurquer sur celle-ci
-		$gallery =  $this->getData(['module', $this->getUrl(0), 'theme', 'showUniqueGallery']) === true &&
+		$gallery =  $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true &&
 					count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
 						? array_key_first($this->getData(['module', $this->getUrl(0), 'content']))
 						: $this->getUrl(1);
-		// Images d'une galerie
 		if($gallery) {
 			// La galerie n'existe pas
 			if($this->getData(['module', $this->getUrl(0), 'content', $gallery]) === null) {
