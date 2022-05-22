@@ -17,8 +17,6 @@ class news extends common {
 
 	const VERSION = '4.2';
 	const REALNAME = 'News';
-	const DELETE = true;
-	const UPDATE = '0.0';
 	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 
 	public static $actions = [

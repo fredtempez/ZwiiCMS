@@ -21,8 +21,6 @@ class search extends common {
 
 	const VERSION = '2.6';
 	const REALNAME = 'Recherche';
-	const DELETE = true;
-	const UPDATE = '0.0';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
 	public static $actions = [
