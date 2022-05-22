@@ -19,8 +19,6 @@ class gallery extends common {
 
 	const VERSION = '3.5';
 	const REALNAME = 'Galerie';
-	const DELETE = true;
-	const UPDATE = '0.0';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
 	const SORT_ASC = 'SORT_ASC';

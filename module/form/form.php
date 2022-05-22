@@ -18,8 +18,6 @@ class form extends common {
 
 	const VERSION = '2.11';
 	const REALNAME = 'Formulaire';
-	const DELETE = true;
-	const UPDATE = '0.0';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [

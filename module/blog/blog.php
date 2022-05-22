@@ -17,8 +17,6 @@ class blog extends common {
 
 	const VERSION = '5.2';
 	const REALNAME = 'Blog';
-	const DELETE = true;
-	const UPDATE = '0.0';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	const EDIT_OWNER = 'owner';
