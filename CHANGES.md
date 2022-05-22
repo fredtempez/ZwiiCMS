@@ -15,7 +15,7 @@
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
 
 ## Version 11.4.02
-### Modifications :
+### Modification :
 - Liste des fontes, contrôle de validité amélioré.
 
 ## Version 11.4.01
