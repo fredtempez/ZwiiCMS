@@ -450,7 +450,7 @@ class news extends common {
 							$content = substr($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content']), 0, $this->getData(['module', $this->getUrl(0), 'config', 'height']));
 							// Ne pas couper un mot
 							$lastSpace = strrpos($content, ' ', -1  );
-							self::$news[$newsIds[$i]]['content'] = substr(strip_tags($content,'<br><p>'),	0, $lastSpace) ;
+							self::$news[$newsIds[$i]]['content'] = substr(strip_tags($content,'<br><p><img>'),	0, $lastSpace) ;
 				}
 				// Mise en forme de la signature
 				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'userId']));
