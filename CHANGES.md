@@ -7,6 +7,7 @@
 ### Modifications :
 - Le module de recherche analyse les descriptions du module Download (Téléchargement).
 - Prise en compte des modifications liées à la mise à jour du module Download (Téléchargement), actualisation du changement de structure 'posts' remplace 'items'
+- Restauration de la fonction de téléchargement à partir du store.
 
 ## Version 11.4.02
 ### Modification :
