@@ -957,10 +957,17 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	// Redirection des pages d'administration vers la bannière de connexion
 	$this->setData(['config', 'connect', 'redirectLogin', true]);
 
-	// Transforme les URL en références relatives
-	/*
-	$baseUrl = $this->getData(['core', 'baseUrl']);
-	$baseUrl2 = str_replace('?', '', $baseUrl);
+	// Suppression de la variable URL dans core
+	$this->deleteData(['core', 'baseUrl']);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11400]);
+}
+
+// Version 11.4.03
+if ($this->getData(['core', 'dataVersion']) < 11403) {
+
+	// Modification de structure du module download
 	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
 		$pageList [] = $parentKey;
 		foreach ($parentValue as $childKey) {
@@ -968,17 +975,14 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		}
 	}
 	foreach ($pageList as $parentKey => $parent) {
-		$s = $this->getPage(  $parent, self::$i18n);
-		// Suppression des sous-dossiers
-		$s = str_replace ($baseUrl, './', $s);
-		$s = str_replace ($baseUrl2, './', $s);
-		$this->setPage( $parent, $s, self::$i18n);
+		if ($this->getData(['page', $parent, 'moduleId']) === 'download') {
+			$tempData = $this->getData(['module', $parent, 'items']);
+			$this->setData(['module', $parent, 'posts', $tempData]);
+			$this->deleteData(['module', $parent, 'items']);
+		}
 	}
-	*/
-
-	// Suppression de la variable URL dans core
-	$this->deleteData(['core', 'baseUrl']);
-
+	
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11400]);
+	$this->setData(['core', 'dataVersion', 11403]);
+
 }
