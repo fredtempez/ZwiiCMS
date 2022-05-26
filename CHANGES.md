@@ -3,6 +3,7 @@
 ## Version 11.4.03
 ### Corrections : 
 - Ajout d'un nouvelle page, le nom court n'est pas défini.
+- Bug de la fonction de copie interne utilisée lors de l'installation de la copie de thème, etc..
 ### Modifications :
 - Le module de recherche analyse les descriptions du module Download (Téléchargement).
 - Prise en compte des modifications liées à la mise à jour du module Download (Téléchargement), actualisation du changement de structure 'posts' remplace 'items'

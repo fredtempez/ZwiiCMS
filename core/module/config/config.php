@@ -778,17 +778,15 @@ class config extends common {
 	 * Récupération des backups auto dans le gestionnaire de fichiers
 	 */
 	public function copyBackups() {
-		// Créer le répertoire manquant
-		if (!is_dir(self::FILE_DIR.'source/backup')) {
-			mkdir(self::FILE_DIR.'source/backup', 0755);
-		}
-		$this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+
+		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+	
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration',
 			'view' => 'index',
-			'notification' => 'Copie terminée',
-			'state' => true
+			'notification' => 'Copie terminée' . ($success ? ' avec succès' : ' avec des erreurs'),
+			'state' => $success
 		]);
 	}
 

@@ -1208,17 +1208,19 @@ class common {
 		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
 		while( $success
 			   AND $file = readdir($dir) ) {
-			if (( $file != '.' ) && ( $file != '..' )) {
+
+			if (( $file != '.' ) && ( $file != '..' )) {				   
 				if ( is_dir($src . '/' . $file) ){
 					// Appel récursif des sous-dossiers
-					$success = $success OR $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+					$s =  $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+					$success = $s || $success;
 				}
 				else {
-					$success = $success OR copy($src . '/' . $file, $dst . '/' . $file);
+					$s = copy($src . '/' . $file, $dst . '/' . $file);
+					$success = $s || $success;
 				}
 			}
 		}
-		closedir($dir);
 		return $success;
 	}
 
