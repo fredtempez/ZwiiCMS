@@ -14,6 +14,15 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
 
+## Version 11.4.03
+### Corrections : 
+- Ajout d'un nouvelle page, le nom court n'est pas défini.
+- Bug de la fonction de copie interne utilisée lors de l'installation de la copie de thème, etc..
+### Modifications :
+- Le module de recherche analyse les descriptions du module Download (Téléchargement).
+- Prise en compte des modifications liées à la mise à jour du module Download (Téléchargement), actualisation du changement de structure 'posts' remplace 'items'
+- Restauration de la fonction de téléchargement à partir du store.
+
 ## Version 11.4.02
 ### Modification :
 - Liste des fontes, contrôle de validité amélioré.

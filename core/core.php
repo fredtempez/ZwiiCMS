@@ -1127,52 +1127,32 @@ class common {
 	* @param string $dst dossier destination
 	* @return bool
 	*/
-	function copyDir( string $sourceDirectory, string $destinationDirectory, string $childFolder = '') {
+	public function copyDir($src, $dst) {
+		// Ouvrir le dossier source
+		$dir = opendir($src);
+		// Créer le dossier de destination
+		if (!is_dir($dst))
+			$success = mkdir($dst, 0755, true);
+		else
+			$success = true;
 
-		$success = true;
-		$directory = opendir($sourceDirectory);
+		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
+		while( $success
+			   AND $file = readdir($dir) ) {
 
-		if (is_dir($destinationDirectory) === false) {
-			mkdir($destinationDirectory);
-		}
-
-		if ($childFolder !== '') {
-			if (is_dir("$destinationDirectory/$childFolder") === false) {
-				mkdir("$destinationDirectory/$childFolder");
-			}
-
-			while (($file = readdir($directory)) !== false) {
-				if ($file === '.' || $file === '..') {
-					continue;
+			if (( $file != '.' ) && ( $file != '..' )) {				   
+				if ( is_dir($src . '/' . $file) ){
+					// Appel récursif des sous-dossiers
+					$s =  $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+					$success = $s || $success;
 				}
-
-				if (is_dir("$sourceDirectory/$file") === true) {
-					$success = $success && $this->copyDir("$sourceDirectory/$file", "$destinationDirectory/$childFolder/$file");
-				} else {
-					$success = $success && copy("$sourceDirectory/$file", "$destinationDirectory/$childFolder/$file");
+				else {
+					$s = copy($src . '/' . $file, $dst . '/' . $file);
+					$success = $s || $success;
 				}
 			}
-
-			closedir($directory);
-
-			return;
 		}
-
-		while (($file = readdir($directory)) !== false) {
-			if ($file === '.' || $file === '..') {
-				continue;
-			}
-
-			if (is_dir("$sourceDirectory/$file") === true) {
-				$success = $success && $this->copyDir("$sourceDirectory/$file", "$destinationDirectory/$file");
-			}
-			else {
-				$success = $success && copy("$sourceDirectory/$file", "$destinationDirectory/$file");
-			}
-		}
-
-		closedir($directory);
-		return($success);
+		return $success;
 	}
 
 
