@@ -153,7 +153,8 @@ class page extends common {
 				'displayMenu' => '0',
 				'hideMenuSide' => false,
 				'hideMenuHead' => false,
-				'hideMenuChildren' => false
+				'hideMenuChildren' => false,
+				'shortTitle' => $pageTitle
 			]
 		]);
 		// Creation du contenu de la page

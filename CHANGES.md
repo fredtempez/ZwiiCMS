@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.4.03
+### Corrections : 
+- Ajout d'un nouvelle page, le nom court n'est pas défini.
+
 ## Version 11.4.02
 ### Modification :
 - Liste des fontes, contrôle de validité amélioré.
