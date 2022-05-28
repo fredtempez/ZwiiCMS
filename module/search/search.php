@@ -254,12 +254,7 @@ class search extends common {
 							}
 
 							// Articles d'une sous-page blog ou de news
-							if (
-								 ( $this->getData(['page', $childId, 'moduleId']) === 'blog' 
-								 || $this->getData(['page', $childId, 'moduleId']) === 'news'
-								 || $this->getData(['page', $childId, 'moduleId']) === 'download'
-								 )
-								&& $this->getData(['module',$childId,'posts']) 
+							if ( $this->getData([ 'module', $childId, 'posts', 'content']) 
 							) {
 								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
 									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
@@ -277,12 +272,7 @@ class search extends common {
                     }
 
 					// Articles d'un blog ou de news
-					if (
-						( $this->getData(['page', $parentId, 'moduleId']) === 'blog' 
-						|| $this->getData(['page', $parentId, 'moduleId']) === 'news'
-						|| $this->getData(['page', $parentId, 'moduleId']) === 'download'
-						)
-						&& $this->getData(['module',$parentId,'posts']) 
+					if ( $this->getData([ 'module', $parentId, 'posts', 'content']) 
 				   ) {					
 
 						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
