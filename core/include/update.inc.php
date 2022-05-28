@@ -838,29 +838,6 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$this->setData(['core', 'dataVersion', 11400]);
 }
 
-// Version 11.4.03
-if ($this->getData(['core', 'dataVersion']) < 11403) {
-
-	// Modification de structure du module download
-	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
-		$pageList [] = $parentKey;
-		foreach ($parentValue as $childKey) {
-			$pageList [] = $childKey;
-		}
-	}
-	foreach ($pageList as $parentKey => $parent) {
-		if ($this->getData(['page', $parent, 'moduleId']) === 'download') {
-			$tempData = $this->getData(['module', $parent, 'items']);
-			$this->setData(['module', $parent, 'posts', $tempData]);
-			$this->deleteData(['module', $parent, 'items']);
-		}
-	}
-	
-	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11403]);
-
-}
-
 // Version 12.0.00
 if ($this->getData(['core', 'dataVersion']) < 12000) {
 	// Supprime un cookie non nécessaire
