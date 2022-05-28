@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.5.01
+### Modifications :
+- Restauration du bouton d'installation d'une archive de module depuis le store.
+
 ## Version 11.5.00
 ### Corrections : 
 - Ajout d'une nouvelle page, le nom court n'est pas défini.
