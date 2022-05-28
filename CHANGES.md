@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 11.4.03
+## Version 11.5.00
 ### Corrections : 
 - Ajout d'un nouvelle page, le nom court n'est pas défini.
 - Bug de la fonction de copie interne utilisée lors de l'installation de la copie de thème, etc..
