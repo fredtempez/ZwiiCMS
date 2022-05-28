@@ -2,7 +2,7 @@
 
 ## Version 11.5.00
 ### Corrections : 
-- Ajout d'un nouvelle page, le nom court n'est pas défini.
+- Ajout d'une nouvelle page, le nom court n'est pas défini.
 - Bug de la fonction de copie interne utilisée lors de l'installation de la copie de thème, etc..
 ### Modifications :
 - Le module de recherche analyse les descriptions du module Download (Téléchargement).
