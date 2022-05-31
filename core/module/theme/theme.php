@@ -1190,8 +1190,8 @@ class theme extends common {
 		*/
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
-		if ( is_array($this->getData(['fonts', 'imported'])) &&
-			 !empty($this->getData(['fonts', 'imported'])) ) {
+		//if ( is_array($this->getData(['fonts', 'imported'])) &&
+		//	 !empty($this->getData(['fonts', 'imported'])) ) {
 			foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
 				if (
 							( $scope === 'user' && in_array($fontId, $fontsInstalled) )
@@ -1199,13 +1199,13 @@ class theme extends common {
 					) {
 					//Pré chargement à revoir
 					//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
-					$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+					$fileContent = '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
 					// Pré connect pour api.google
 					$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
 			}
-		}
-
+		//}
+		
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
 						: $fileContent;
@@ -1217,8 +1217,8 @@ class theme extends common {
 		 */
 		$fileContentCss = '';
 		$fileContent = '<!-- Fontes personnalisées -->';
-		if ( is_array($this->getData(['fonts', 'files'])) &&
-			 !empty($this->getData(['fonts', 'files'])) ) {
+		//if ( is_array($this->getData(['fonts', 'files'])) &&
+		//	 !empty($this->getData(['fonts', 'files'])) ) {
 			foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
 				if (
 							( $scope === 'user' && in_array($fontId, $fontsInstalled) )
@@ -1237,7 +1237,7 @@ class theme extends common {
 						}
 				}
 			}
-		}
+		//}
 
 		// Enregistre la personnalisation
 		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);

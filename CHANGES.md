@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.5.02
+### Correction : 
+- Bug de la génération des feuilles de style des fontes.
+
 ## Version 11.5.01
 ### Modifications :
 - Restauration du bouton d'installation d'une archive de module depuis le store.
