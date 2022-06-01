@@ -352,16 +352,13 @@ $get_params = http_build_query($get_params);
     </style>
     <![endif]-->
 
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+    <script src="../jquery/jquery.min.js"></script>
+    <script src="../jquery/jquery-ui.min.js"></script>
     <script src="js/plugins.js?v=<?php
     echo $version; ?>"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
-    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.0/fabric.js'></script>
-    <script type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
+    <script src="..js/jquery.jplayer.min.js"></script>
+    <script type='text/javascript' src='../js/fabric.min.js'></script>
+    <script type="text/javascript" src="../js/FileSaver.min.js"></script>
     <script src="js/modernizr.custom.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
