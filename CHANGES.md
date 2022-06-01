@@ -1,8 +1,9 @@
 # Changelog
 
 ## Version 11.5.02
-### Correction : 
+### Corrections : 
 - Bug de la génération des feuilles de style des fontes.
+- Bug dans le cookie de consentement lorsque le port n'est pas 80.
 
 ## Version 11.5.01
 ### Modifications :
