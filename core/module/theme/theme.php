@@ -1199,7 +1199,7 @@ class theme extends common {
 					) {
 					//Pré chargement à revoir
 					//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
-					$fileContent = '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+					$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
 					// Pré connect pour api.google
 					$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
@@ -1216,7 +1216,6 @@ class theme extends common {
 		 * Fontes installées localement
 		 */
 		$fileContentCss = '';
-		$fileContent = '<!-- Fontes personnalisées -->';
 		//if ( is_array($this->getData(['fonts', 'files'])) &&
 		//	 !empty($this->getData(['fonts', 'files'])) ) {
 			foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
