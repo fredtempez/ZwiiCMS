@@ -1,7 +1,9 @@
 # Changelog
 
 ## Version 11.5.03
-### Améliorations :
+### Correction : 
+- Bug de la génération des feuilles de style des fontes, nouvelle correction.
+### Amélioration :
 - Responsive File Manager (RFM), 4 scripts externes sont chargés à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer).
 
 ## Version 11.5.02
