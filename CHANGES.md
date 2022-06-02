@@ -5,6 +5,7 @@
 - Bug de la génération des feuilles de style des fontes, nouvelle correction.
 ### Amélioration :
 - Responsive File Manager (RFM), 4 scripts externes sont chargés à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer).
+- Edition d'une page contenant un module effacé sur le disque, la modification et l'effacement de la page sont autorisés.
 
 ## Version 11.5.02
 ### Corrections : 

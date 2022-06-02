@@ -2092,6 +2092,8 @@ class common {
 					$this->output['showBarEditButton']
 					// Sur une page sans module
 					OR $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
+					// Sur une page avec un module invalide
+					OR !class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
 					// Sur une page d'accueil
 					OR $this->getUrl(0) === ''
 				) {
@@ -2739,10 +2741,12 @@ class core extends common {
 						'</a> &#8250; '.
 						$this->getData(['page', $this->getUrl(0), 'title']);
 		}
-		// Importe la page
+		// Importe la page simple sans module ou avec un module inexistant
 		if(
 			$this->getData(['page', $this->getUrl(0)]) !== null
-			AND $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
+			AND ( $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
+				 OR !class_exists($this->getData(['page', $this->getUrl(0), 'moduleId']))
+				)
 			AND $access
 		) {
 			$this->addOutput([
