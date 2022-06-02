@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '5.2';
+	const VERSION = '5.3';
 	const REALNAME = 'Blog';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
