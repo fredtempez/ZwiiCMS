@@ -340,7 +340,7 @@ $get_params = http_build_query($get_params);
         <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
     </noscript>
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/skin/blue.monday/jplayer.blue.monday.min.css"/>
+          href="css/jplayer.blue.monday.min.css"/>
     <link href="css/style.css?v=<?php
     echo $version; ?>" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 8]>
@@ -356,9 +356,9 @@ $get_params = http_build_query($get_params);
     <script src="../jquery/jquery-ui.min.js"></script>
     <script src="js/plugins.js?v=<?php
     echo $version; ?>"></script>
-    <script src="..js/jquery.jplayer.min.js"></script>
-    <script type='text/javascript' src='../js/fabric.min.js'></script>
-    <script type="text/javascript" src="../js/FileSaver.min.js"></script>
+    <script src="js/jquery.jplayer.min.js"></script>
+    <script type='text/javascript' src='js/fabric.min.js'></script>
+    <script type="text/javascript" src="js/FileSaver.min.js"></script>
     <script src="js/modernizr.custom.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -368,14 +368,11 @@ $get_params = http_build_query($get_params);
     <!-- Only load TUI Libraries if we need it -->
     <?php
     if ($config['tui_active'] === true) { ?>
-        <link rel="stylesheet" href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css">
-        <link type="text/css" href="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.css"
-              rel="stylesheet">
-        <script type="text/javascript"
-                src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
-        <script type="text/javascript"
-                src="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.js"></script>
-        <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.js"></script>
+        <link rel="stylesheet" href="css/tui-image-editor.css">
+        <link type="text/css" href="css/tui-color-picker.css"  rel="stylesheet">
+        <script type="text/javascript" src="js/tui-code-snippet.min.js"></script>
+        <script type="text/javascript" src="js/tui-color-picker.js"></script>
+        <script src="js/tui-image-editor.js"></script>
         <?php
     } ?>
 
