@@ -214,7 +214,7 @@ core.start = function() {
 
 		// Variables des cookies
 		var getUrl   = window.location;
-		var domain   = "domain=" + getUrl.host + ";";
+		var domain   = "domain=" + getUrl.hostname + ";";
 		//var path     = "path=" + getUrl.pathname.split('/')[1] + ";";
 		var e = new Date();
 		e.setFullYear(e.getFullYear() + 1);

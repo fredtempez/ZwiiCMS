@@ -14,6 +14,19 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
 
+## Version 11.5.03
+### Correction : 
+- Bug de la génération des feuilles de style des fontes, nouvelle correction.
+### Améliorations :
+- Responsive File Manager (RFM), les scripts externes et les feuilles de style sont chargées à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer). Cette modification accélère le primo chargement de la fenêtre des fichiers.
+- Fenêtre Lity agrandie à 90% de la largeur de la page, ce réglage s'applique également à RFM ainsi qu'à l'éditeur d'image intégrée.
+- Edition d'une page contenant un module effacé sur le disque, la modification et l'effacement de la page sont autorisés.
+
+## Version 11.5.02
+### Corrections : 
+- Bug de la génération des feuilles de style des fontes.
+- Bug dans le cookie de consentement lorsque le port n'est pas 80.
+
 ## Version 11.5.01
 ### Modifications :
 - Restauration du bouton d'installation d'une archive de module depuis le store.
