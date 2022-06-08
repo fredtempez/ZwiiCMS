@@ -4,7 +4,7 @@
 ### Correction : 
 - Bug de la génération des feuilles de style des fontes, nouvelle correction.
 ### Améliorations :
-- Responsive File Manager (RFM), les scripts externes et les feuilles de style sont chargées à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer).
+- Responsive File Manager (RFM), les scripts externes et les feuilles de style sont chargées à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer). Cette modification accélère le primo chargement de la fenêtre des fichiers.
 - Fenêtre Lity agrandie à 90% de la largeur de la page, ce réglage s'applique également à RFM ainsi qu'à l'éditeur d'image intégrée.
 - Edition d'une page contenant un module effacé sur le disque, la modification et l'effacement de la page sont autorisés.
 
