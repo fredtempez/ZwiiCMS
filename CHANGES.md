@@ -3,7 +3,8 @@
 <
 ## Version 11.5.04
 ### Corrections :
-- Bug de sélection d'un module absent.
+- Edition d'une page : bug de sélection d'un module absent.
+- Rechercher dans le site : impossiblilité de rechercher dans le contenu des moduless (news, blog et download).
 
 ## Version 11.5.03
 ### Correction : 

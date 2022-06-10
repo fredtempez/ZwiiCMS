@@ -254,7 +254,7 @@ class search extends common {
 							}
 
 							// Articles d'une sous-page blog ou de news
-							if ( $this->getData([ 'module', $childId, 'posts', 'content']) 
+							if ( $this->getData([ 'module', $childId, 'posts']) 
 							) {
 								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
 									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
@@ -272,8 +272,8 @@ class search extends common {
                     }
 
 					// Articles d'un blog ou de news
-					if ( $this->getData([ 'module', $parentId, 'posts', 'content']) 
-				   ) {					
+					if ( $this->getData([ 'module', $parentId, 'posts']) 
+				    ) {					
 
 						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
 							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
@@ -289,7 +289,6 @@ class search extends common {
                         }
 					}
 				}
-
 				// Message de synthèse de la recherche
 				if (count($result) === 0) 	{
 					self::$resultTitle = 'Aucun résultat';
