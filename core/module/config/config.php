@@ -257,8 +257,18 @@ class config extends common {
 			$site = 'https://zwiicms.fr/'; } else {
 			$site = helper::baseUrl(false);	}
 
-		$success= false;
-		$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
+		// Succès de la'opération par défaut
+		$success = false;
+
+		// Tente de connecter 5 fois l'API Google
+		for ($i=0; $i < 5 ; $i++) { 
+			$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
+			if ($googlePagespeedData !== false) {
+				break;
+			}
+		}
+		
+		// Traitement des données reçues valides.  
 		if ($googlePagespeedData  !== false) {
 			$googlePagespeedData = json_decode($googlePagespeedData, true);
 			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
