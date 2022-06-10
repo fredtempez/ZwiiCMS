@@ -1,5 +1,10 @@
 # Changelog
 
+<
+## Version 11.5.04
+### Corrections :
+- Bug de sélection d'un module absent.
+
 ## Version 11.5.03
 ### Correction : 
 - Bug de la génération des feuilles de style des fontes, nouvelle correction.

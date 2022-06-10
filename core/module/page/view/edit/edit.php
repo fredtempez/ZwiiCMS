@@ -71,7 +71,7 @@
 								<?php echo template::select('pageEditModuleId', $module::$moduleIds, [
 									'help' => 'En cas de changement de module, les données du module précédent seront supprimées.',
 									'label' => 'Module',
-									'selected' => class_exists($this->getData(['page', $this->getUrl(2), 'moduleId'])) ? $this->getData(['page', $this->getUrl(2), 'moduleId']) : 0
+									'selected' => class_exists($this->getData(['page', $this->getUrl(2), 'moduleId'])) ? $this->getData(['page', $this->getUrl(2), 'moduleId']) : ''
 								]); ?>
 								<?php echo template::hidden('pageEditModuleIdOld',['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
 								<?php echo template::hidden('pageEditModuleIdOldText',[
