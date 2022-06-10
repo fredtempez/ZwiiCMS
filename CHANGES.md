@@ -5,6 +5,8 @@
 ### Corrections :
 - Edition d'une page : bug de sélection d'un module absent.
 - Rechercher dans le site : impossiblilité de rechercher dans le contenu des moduless (news, blog et download).
+### Amélioration : 
+- Récupération de la capture d'écran du site, 5 tentatives d'appels de l'API Google sont effectuées avant de retourner un échec.
 
 ## Version 11.5.03
 ### Correction : 
