@@ -16,7 +16,6 @@
 								<?php echo template::button('socialMetaImage', [
 								'href' => helper::baseUrl() . 'config/configMetaImage',
 								'value' => 'Générer une capture Open Graph'
-
 								]); ?>
 							</div>
 						</div>

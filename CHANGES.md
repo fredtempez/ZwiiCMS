@@ -13,6 +13,13 @@
 - Suppression du support de l'import à partir d'une version 9, y compris pour la restauration des sauvegardes.
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
+<
+## Version 11.5.04
+### Corrections :
+- Édition d'une page : bug de sélection d'un module absent.
+- Rechercher dans le site : impossibilité de rechercher dans le contenu des modules (news, blog et download).
+### Amélioration : 
+- Récupération de la capture d'écran du site, 5 tentatives d'appels de l'API Google sont effectuées avant de retourner un échec.
 
 ## Version 11.5.03
 ### Correction : 
