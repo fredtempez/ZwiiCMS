@@ -1295,7 +1295,7 @@ class common {
 			$item .= '<h3>'. $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
-			$item .= '<form method="POST" action="' . helper::baseUrl() . $this->getUrl(0) . '" id="cookieForm">';
+			$item .= '<form method="POST" action="' . helper::baseUrl() . $this->getUrl() . '" id="cookieForm">';
 			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
 			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
 			if( $analytics !== null AND $analytics !== '' ) {
