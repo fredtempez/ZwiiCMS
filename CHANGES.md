@@ -14,6 +14,13 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
 
+## Version 11.5.06
+### Corrections :
+- Défaut d'affichage de la barre des membres dans la zone de menu.
+- Chargement à l'unité des fichiers déposés dans le gestionnaire de fichiers suite à l'utilisation d'une dernière version de la librairie jquery. L'utilisation de la version 1.12.4 livrée avec le gestionnaire de fichiers corrige le problème. Cette librairie est néanmoins chargée en local par dialog.php
+### Amélioration :
+- Recherche d'une mise à jour en ligne effectuée réellement une fois pas jour lorsqu'un administrateur est connecté.
+
 ## Version 11.5.05
 ### Correction :
 - Validation de la fenêtre de consentement au cookie envoyant vers une page inconnue lorsque l'URL contient plusieurs éléments (exemple : article d'un blog)
