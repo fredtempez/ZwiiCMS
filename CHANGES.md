@@ -1,6 +1,9 @@
 # Changelog
 
-<
+## Version 11.5.05
+### Corrections :
+- Validation de la fenêtre de consentement au cookie envoyant vers une page inconnue lorsque l'URL contient plusieurs ékéments (exemple : article d'un blog)
+
 ## Version 11.5.04
 ### Corrections :
 - Édition d'une page : bug de sélection d'un module absent.
