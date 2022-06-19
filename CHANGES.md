@@ -13,7 +13,11 @@
 - Suppression du support de l'import à partir d'une version 9, y compris pour la restauration des sauvegardes.
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
-<
+
+## Version 11.5.05
+### Corrections :
+- Validation de la fenêtre de consentement au cookie envoyant vers une page inconnue lorsque l'URL contient plusieurs ékéments (exemple : article d'un blog)
+
 ## Version 11.5.04
 ### Corrections :
 - Édition d'une page : bug de sélection d'un module absent.
