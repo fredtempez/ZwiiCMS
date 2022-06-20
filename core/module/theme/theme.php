@@ -432,6 +432,7 @@ class theme extends common {
 			/**
 			* Stocker les images incluses dans la bannière perso dans un tableau
 			*/
+			$files = [];
 			preg_match_all('/<img[^>]+>/i',$featureContent, $results);
 			foreach($results[0] as $value) {
 				// Lire le contenu XML
@@ -462,7 +463,7 @@ class theme extends common {
 				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
 				'feature' => $this->getInput('themeHeaderFeature'),
 				'featureContent' => $featureContent,
-				'featureFiles' => 	$files
+				'featureFiles' => $files
 			]]);
 			// Modification de la position du menu selon la position de la bannière
 			if  ( $this->getData(['theme','header','position']) == 'site'  )
@@ -1190,21 +1191,20 @@ class theme extends common {
 		*/
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
-		//if ( is_array($this->getData(['fonts', 'imported'])) &&
-		//	 !empty($this->getData(['fonts', 'imported'])) ) {
-			foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
-				if (
-							( $scope === 'user' && in_array($fontId, $fontsInstalled) )
-						||  $scope === 'all'
-					) {
-					//Pré chargement à revoir
-					//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
-					$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
-					// Pré connect pour api.google
-					$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
-				}
+		if ( !empty($this->getData(['fonts', 'imported'])) ) {
+				foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
+					if (
+								( $scope === 'user' && in_array($fontId, $fontsInstalled) )
+							||  $scope === 'all'
+						) {
+						//Pré chargement à revoir
+						//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
+						$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
+						// Pré connect pour api.google
+						$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+					}
 			}
-		//}
+		}
 		
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
@@ -1216,27 +1216,26 @@ class theme extends common {
 		 * Fontes installées localement
 		 */
 		$fileContentCss = '';
-		//if ( is_array($this->getData(['fonts', 'files'])) &&
-		//	 !empty($this->getData(['fonts', 'files'])) ) {
-			foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
-				if (
+		if ( !empty($this->getData(['fonts', 'files'])) ) {
+				foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
+					if (
 							( $scope === 'user' && in_array($fontId, $fontsInstalled) )
-						||  $scope === 'all'
-					) {
-						if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
-							// Extension
-							$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
-							// Chargement de la police
-							$fileContentCss .=  '@font-face {' ;
-							$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
-							$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
-							$fileContentCss .=  '}' ;
-							// Préchargement
-							//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
-						}
+							||  $scope === 'all'
+						) {
+							if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
+								// Extension
+								$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
+								// Chargement de la police
+								$fileContentCss .=  '@font-face {' ;
+								$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
+								$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
+								$fileContentCss .=  '}' ;
+								// Préchargement
+								//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
+							}
+					}
 				}
-			}
-		//}
+		}
 
 		// Enregistre la personnalisation
 		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
