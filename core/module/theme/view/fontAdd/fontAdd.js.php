@@ -10,16 +10,6 @@
  */
 
 
-/** 
- * Option par défaut du sélecteur de mode
- */
- $(document).ready(function(){
-    $('input[name=fontAddFontImported]').prop('checked', true);
-    $('input[name=fontAddFontUrl]').prop('checked', false);
-    $('#containerFontAddFile').hide();
-});
-
-
 /**
  * Mode téléchargement en ligne de la fonte ou installation locale
  */

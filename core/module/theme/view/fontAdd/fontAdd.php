@@ -28,7 +28,9 @@
 				<h4>Identité de la fonte</h4>
 				<div class="row">
 					<div class="col6">
-							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte en ligne', []); ?>
+							<?php echo template::checkbox('fontAddFontImported', true, 'Fonte en ligne', [
+								'checked' => true
+							]); ?>
 					</div>
 					<div class="col6">
 							<?php echo template::checkbox('fontAddFontFile', true,'Fonte installée', []); ?>
