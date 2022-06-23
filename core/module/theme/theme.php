@@ -644,40 +644,49 @@ class theme extends common {
 			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$typeFlip = $type === 'files' ? 'imported' : 'files';
 			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
-			$fontId = $this->getInput('fontAddFontId', null, true);
-			$fontName = $this->getInput('fontAddFontName', null, true);
-			$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
+			if (!empty($ressource) ) {
+				$fontId = $this->getInput('fontAddFontId', null, true);
+				$fontName = $this->getInput('fontAddFontName', null, true);
+				$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
 
-			// Remplace les doubles quotes par des simples quotes
-			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
+				// Remplace les doubles quotes par des simples quotes
+				$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
-			// Supprime la fonte si elle existe dans le type inverse
-			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
-				$this->deleteData(['fonts', $typeFlip, $fontId ]);
+				// Supprime la fonte si elle existe dans le type inverse
+				if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
+					$this->deleteData(['fonts', $typeFlip, $fontId ]);
+				}
+				// Stocker la fonte
+				$this->setData(['fonts',
+								$type,
+								$fontId, [
+									'name' => $fontName,
+									'font-family' => $fontFamilyName,
+									'resource' => $ressource
+				]]);
+
+
+				// Copier la fonte si le nom du fichier est fourni
+				if ( $type === 'files' &&
+						file_exists(self::FILE_DIR . 'source/' . $ressource)
+				) {
+					copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+				}
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'La fonte a été créée',
+					'redirect' => helper::baseUrl() . 'theme/fonts',
+					'state' => true
+				]);
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'notification' => 'Fonte non créée, la ressource est manquante !',
+					'redirect' => helper::baseUrl() . 'theme/fontAdd',
+					'state' => false
+				]);
 			}
-			// Stocker la fonte
-			$this->setData(['fonts',
-							$type,
-							$fontId, [
-								'name' => $fontName,
-								'font-family' => $fontFamilyName,
-								'resource' => $ressource
-			]]);
-
-
-			// Copier la fonte si le nom du fichier est fourni
-			if ( $type === 'files' &&
-					file_exists(self::FILE_DIR . 'source/' . $ressource)
-			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
-			}
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => 'La fonte a été créée',
-				'redirect' => helper::baseUrl() . 'theme/fonts',
-				'state' => true
-			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
