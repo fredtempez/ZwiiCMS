@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.5.06
+### Amélioration :
+- Recherche d'une mise à jour en ligne effectuée réellement une fois pas jour lorsqu'un administrateur est connecté.
+
 ## Version 11.5.05
 ### Correction :
 - Validation de la fenêtre de consentement au cookie envoyant vers une page inconnue lorsque l'URL contient plusieurs éléments (exemple : article d'un blog)
@@ -10,11 +14,11 @@
 ### Corrections :
 - Édition d'une page : bug de sélection d'un module absent.
 - Rechercher dans le site : impossibilité de rechercher dans le contenu des modules (news, blog et download)
-### Amélioration : 
+### Amélioration :
 - Récupération de la capture d'écran du site, 5 tentatives d'appels de l'API Google sont effectuées avant de retourner un échec.
 
 ## Version 11.5.03
-### Correction : 
+### Correction :
 - Bug de la génération des feuilles de style des fontes, nouvelle correction.
 ### Améliorations :
 - Responsive File Manager (RFM), les scripts externes et les feuilles de style sont chargées à partir du site et non d'un CDN (jquery, fabric, filesaver et jplayer). Cette modification accélère le primo chargement de la fenêtre des fichiers.
@@ -22,7 +26,7 @@
 - Edition d'une page contenant un module effacé sur le disque, la modification et l'effacement de la page sont autorisés.
 
 ## Version 11.5.02
-### Corrections : 
+### Corrections :
 - Bug de la génération des feuilles de style des fontes.
 - Bug dans le cookie de consentement lorsque le port n'est pas 80.
 
@@ -31,7 +35,7 @@
 - Restauration du bouton d'installation d'une archive de module depuis le store.
 
 ## Version 11.5.00
-### Corrections : 
+### Corrections :
 - Ajout d'une nouvelle page, le nom court n'est pas défini.
 - Bug de la fonction de copie interne utilisée lors de l'installation de la copie de thème, etc..
 ### Modifications :
