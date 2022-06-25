@@ -15,8 +15,10 @@
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé. 
 
 ## Version 11.5.05
-### Corrections :
+### Correction :
 - Validation de la fenêtre de consentement au cookie envoyant vers une page inconnue lorsque l'URL contient plusieurs ékéments (exemple : article d'un blog)
+### Amélioration :
+- Traitement des erreurs dans la gestion des fontes et de l'ajout d'une nouvelle fonte.
 
 ## Version 11.5.04
 ### Corrections :
