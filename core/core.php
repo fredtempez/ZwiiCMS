@@ -2078,14 +2078,17 @@ class common {
 
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
-				// Une mise à jour est disponible + recherche auto activée + 1 jour de délais
-				if ( $this->getData(['config','autoUpdate']) === true
-					AND $today > $this->getData(['core','lastAutoUpdate']) + 86400 ) {
-						if ( helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL) ) {
-							$this->setData(['core','updateAvailable', true]);
-							$this->setData(['core','lastAutoUpdate',$today]);
-						}
+				$checkUpdate = (int) $this->getData(['core','lastAutoUpdate']);
+				// Recherche d'une mise à jour si active, si une mise à jour n'est pas déjà disponible et le délais journalier est dépassé.
+				if (
+						$this->getData(['config','autoUpdate']) === true
+						AND $this->getData(['core','updateAvailable']) === false
+						AND $today > $checkUpdate + 86400
+					) {
+						$this->setData(['core','updateAvailable', helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)]);
 				}
+				// Dernier auto controle
+				$this->setData(['core','lastAutoUpdate',$today]);
 				// Afficher le bouton : Mise à jour détectée + activée
 				if ( $this->getData(['core','updateAvailable']) === true &&
 					$this->getData(['config','autoUpdate']) === true  ) {
