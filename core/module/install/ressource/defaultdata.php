@@ -255,7 +255,7 @@ class init extends common {
 				'displayCookie' => false,
 				'displayLegal' => false,
 				'displaySearch' => false,
-				'displayMemberBar' => false,
+				'memberBar' => true,
 				'template' => '3'
 			],
 			'header' => [
@@ -298,7 +298,7 @@ class init extends common {
 				'activeColor' => 'rgba(255, 255, 255, 1)',
 				'activeTextColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
-				'memberBar' => true,
+				'memberBar' => false,
 				'burgerLogo' => '',
 				'burgerContent' => 'title',
 				'width' => 'container'

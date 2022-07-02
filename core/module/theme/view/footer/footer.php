@@ -118,8 +118,8 @@
                         ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('themeFooterDisplayMemberBar', true, 'Barre du membre', [
-                        'checked' =>  $this->getData(['theme', 'footer', 'displayMemberBar']),
+                    <?php echo template::checkbox('themeFooterMemberBar', true, 'Barre du membre', [
+                        'checked' =>  $this->getData(['theme', 'footer', 'memberBar']),
                         'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés, ne s\'applique pas aux éditeurs et administrateurs.'
                     ]); ?>
                 </div>

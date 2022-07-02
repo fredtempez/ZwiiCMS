@@ -1,6 +1,8 @@
 # Changelog
 
 ## Version 11.5.06
+### Correction :
+- Défaut d'affichage de la barre des membres dans la zone de menu.
 ### Amélioration :
 - Recherche d'une mise à jour en ligne effectuée réellement une fois pas jour lorsqu'un administrateur est connecté.
 

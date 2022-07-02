@@ -964,3 +964,15 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	$this->setData(['core', 'dataVersion', 11400]);
 }
 
+
+// Version 11.5.06
+if ($this->getData(['core', 'dataVersion']) < 11506) {	
+
+	// Renommage de la barre de membre dans le pied de page
+	$data = $this->getData(['theme', 'footer', 'displayMemberBar']);
+	$this->setData(['theme', 'footer', 'memberBar', $data]);
+	$this->deleteData(['theme', 'footer', 'displayMemberBar']);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 11506]);
+}
