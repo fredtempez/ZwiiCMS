@@ -379,7 +379,7 @@ class theme extends common {
 					'displayCookie' => $this->getInput('themefooterDisplayCookie', helper::FILTER_BOOLEAN),
 					'displayLegal' =>  $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
 					'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
-					'displayMemberBar'=> $this->getInput('themeFooterDisplayMemberBar', helper::FILTER_BOOLEAN),
+					'memberBar'=> $this->getInput('themeFooterMemberBar', helper::FILTER_BOOLEAN),
 					'template' => $this->getInput('themeFooterTemplate')
 				]]);
 
