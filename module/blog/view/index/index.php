@@ -130,8 +130,8 @@
 										: utf8_encode(strftime('%d %B %Y', $article['publishedOn']));  ?>
 						</div>
 						<p class="blogContent">
-								<?php $lenght =  $this->getData(['module',$this->getUrl(0), 'config', 'articlesLenght']) !== 0 ?  $this->getData(['module',$this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
-								<?php echo helper::subword(strip_tags($article['content'],'<br><p>'), 0, $lenght); ?>...
+								<?php $length =  $this->getData(['module',$this->getUrl(0), 'config', 'articlesLenght']) !== 0 ?  $this->getData(['module',$this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
+								<?php echo helper::subword(strip_tags($article['content'],'<br><p>'), 0, $length); ?>...
 								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">Lire la suite</a>
 							</p>
 					</div>
