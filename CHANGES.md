@@ -23,7 +23,7 @@
 ## Version 11.5.04
 ### Corrections :
 - Édition d'une page : bug de sélection d'un module absent.
-- Rechercher dans le site : impossibilité de rechercher dans le contenu des modules (news, blog et download).
+- Rechercher dans le site : impossibilité de rechercher dans le contenu des modules (news, blog et download)
 ### Amélioration : 
 - Récupération de la capture d'écran du site, 5 tentatives d'appels de l'API Google sont effectuées avant de retourner un échec.
 
