@@ -352,7 +352,7 @@ $get_params = http_build_query($get_params);
     </style>
     <![endif]-->
 
-    <script src="../jquery/jquery.min.js"></script>
+    <script src="js/jquery-1.12.4.min.js"></script> 
     <script src="../jquery/jquery-ui.min.js"></script>
     <script src="js/plugins.js?v=<?php
     echo $version; ?>"></script>

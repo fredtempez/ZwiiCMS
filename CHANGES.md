@@ -1,8 +1,9 @@
 # Changelog
 
 ## Version 11.5.06
-### Correction :
+### Corrections :
 - Défaut d'affichage de la barre des membres dans la zone de menu.
+- Chargement à l'unité des fichiers déposés dans le gestionnaire de fichiers suite à l'utilisation d'une dernière version de la librairie jquery. L'utilisation de la version 1.12.4 livrée avec le gestionnaire de fichiers corrige le problème. Cette librairie est néanmoins chargée en local par dialog.php
 ### Amélioration :
 - Recherche d'une mise à jour en ligne effectuée réellement une fois pas jour lorsqu'un administrateur est connecté.
 
