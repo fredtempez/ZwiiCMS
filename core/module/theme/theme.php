@@ -1214,7 +1214,7 @@ class theme extends common {
 					}
 			}
 		}
-		
+
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
 						: $fileContent;
@@ -1244,6 +1244,11 @@ class theme extends common {
 							}
 					}
 				}
+		}
+
+		// Créer le dossier des fontes
+		if (!is_dir(self::DATA_DIR . 'fonts')) {
+			mkdir(self::DATA_DIR . 'fonts');
 		}
 
 		// Enregistre la personnalisation

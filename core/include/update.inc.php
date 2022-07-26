@@ -938,7 +938,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	// Consersion des fontes importées
 	$imported = $this->getData(['fonts', 'imported']);
 	if (is_array($imported)) {
-		foreach ($imported as $fontId => $fontUrl) {
+		foreach ($imported as $fontsId => $fontUrl) {
 			if ( gettype($fontUrl) === 'string' ) {
 				$this->setData(['fonts', 'imported',  $fontId, [
 					'name' => ucfirst($fontId),
@@ -966,7 +966,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 
 
 // Version 11.5.06
-if ($this->getData(['core', 'dataVersion']) < 11506) {	
+if ($this->getData(['core', 'dataVersion']) < 11506) {
 
 	// Renommage de la barre de membre dans le pied de page
 	$data = $this->getData(['theme', 'footer', 'displayMemberBar']);

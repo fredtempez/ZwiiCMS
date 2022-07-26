@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 11.5.07
+### Correction :
+- Création du dossier des fontes personnalisées en cas d'absence.
+### Amélioration :
+- Détection d'une mise à jour.
+
 ## Version 11.5.06
 ### Corrections :
 - Défaut d'affichage de la barre des membres dans la zone de menu.

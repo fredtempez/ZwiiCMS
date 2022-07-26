@@ -290,8 +290,8 @@ class helper {
 	 * @return bool
 	 */
 	public static function checkNewVersion() {
-
-		if($version = helper::getOnlineVersion()) {
+		$version = helper::getOnlineVersion();
+		if( !empty($version) ) {
 			return ((version_compare(common::ZWII_VERSION, $version)) === -1);
 		}
 		else {
