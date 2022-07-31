@@ -2,7 +2,6 @@
 class init extends common {
 	public static $defaultData = [
 		'config' => [
-			'analyticsId' => '',
 			'autoBackup' => true,
 			'autoUpdate' => true,
 			'autoUpdateHtaccess' => false,
@@ -77,10 +76,8 @@ class init extends common {
 			'title' => 'Votre site en quelques clics !',
 			'cookies' => [
 				'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
-				'gaLabel' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.',
 				'titleLabel' => 'Gérer les cookies',
 				'linkLegalLabel' => 'Consulter  les mentions légales',
-				'checkboxGaLabel' => 'Autorisation des cookies Google Analytics',
 				'cookiesFooterText' => 'Cookies',
 				'buttonValidLabel' => 'J\'ai compris'
 			]

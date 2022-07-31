@@ -513,8 +513,7 @@ class config extends common {
 						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN),
-						'analyticsId' => $this->getInput('seoAnalyticsId')
+						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN)
 					],
 					'connect' => [
 						'attempt' => $this->getInput('connectAttempt',helper::FILTER_INT),

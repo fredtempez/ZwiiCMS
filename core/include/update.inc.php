@@ -519,10 +519,8 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Acceptation et paramétres des cookies RGPD
 	$this->setData(['locale', 'cookies', 'cookiesZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
-	$this->setData(['locale', 'cookies', 'cookiesGaText', 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.']);
 	$this->setData(['locale', 'cookies', 'cookiesTitleText', 'Gérer les cookies']);
 	$this->setData(['locale', 'cookies', 'cookiesLinkMlText', 'Consulter les mentions légales']);
-	$this->setData(['locale', 'cookies', 'cookiesCheckboxGaText', 'Autorisation des cookies Google Analytics']);
 	$this->setData(['locale', 'cookies', 'cookiesButtonText', 'J\'ai compris']);
 
 	// Supppression de l'option de traduction en mode connecté
@@ -850,14 +848,19 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 }
 // Version 12.0.00
 if ($this->getData(['core', 'dataVersion']) < 12000) {
+
 	// Supprime un cookie non nécessaire
 	helper::deleteCookie('ZWII_USER_LONGTIME');
 
-	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12000]);
 	// Suppression de la variable URL dans core
 	$this->deleteData(['core', 'baseUrl']);
 
+	// Suppression de GA
+	$this->deleteData(['config', 'seo' ,'analyticsId']);
+	$this->deleteData(['config','analyticsId']);
+	$this->deleteData(['locale', 'cookies', 'gaLabel']);
+	$this->deleteData(['locale', 'cookies', 'checkboxGaLabel']);
+
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11400]);
+	$this->setData(['core', 'dataVersion', 12000]);
 }

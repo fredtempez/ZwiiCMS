@@ -1211,23 +1211,6 @@ class common {
 	// Layout remplace la classe précédente
 
 	/**
-	 * Affiche le script Google Analytics
-	 */
-	 public function showAnalytics() {
- 		if( !empty($code = $this->getData(['config', 'seo', 'analyticsId'])) &&
- 		    $this->getInput('ZWII_COOKIE_GA_CONSENT') === 'true' )  {
- 			echo '<!-- Global site tag (gtag.js) - Google Analytics -->
- 				<script async src="https://www.googletagmanager.com/gtag/js?id='. $code .'"></script>
- 				<script>
- 					window.dataLayer = window.dataLayer || [];
- 					function gtag(){dataLayer.push(arguments);}
- 					gtag("js", new Date());
- 					gtag("config","'. $code .'",{ "anonymize_ip": true });
- 				</script>';
- 		}
- 	}
-
-	/**
 	 * Affiche le consentement aux cookies
 	 */
 	public function showCookies() {
@@ -1248,13 +1231,6 @@ class common {
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
 			$item .= '<form method="POST" action="' . helper::baseUrl() . $this->getUrl() . '" id="cookieForm">';
-			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
-			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
-			if( $analytics !== null AND $analytics !== '' ) {
-				$item .= '<p>' . $this->getData(['locale', 'cookies', 'gaLabel']) . '</p>';
-				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
-				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'checkboxGaLabel']) . '</label>';
-			}
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
 			$item .= '</form>';

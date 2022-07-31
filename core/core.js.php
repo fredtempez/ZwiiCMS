@@ -220,20 +220,6 @@ core.start = function() {
 		e.setFullYear(e.getFullYear() + 1);
 		var expires = "expires=" + e.toUTCString();
 
-		// Crée le cookie d'acceptation Google Analytics si l'ID a été saisie
-		var analytics = "<?php echo $this->getData(['config', 'seo', 'analyticsId']);?>";
-		// l'Id GA est défini dans la configuration, afficher la checkbox d'acceptation
-		if( analytics.length > 0){
-			// Traitement du retour de la checkbox
-			if ($("#googleAnalytics").is(":checked")) {
-				// L'URL du serveur faut TRUE
-
-				document.cookie = "ZWII_COOKIE_GA_CONSENT=true;samesite=strict;" + domain +  expires;
-			} else {
-				document.cookie = "ZWII_COOKIE_GA_CONSENT=false;samesite=strict;" + domain +  expires;
-			}
-
-		}
 		// Stocke le cookie d'acceptation
 		document.cookie = "ZWII_COOKIE_CONSENT=true;samesite=strict;" + domain +   expires;
 	});

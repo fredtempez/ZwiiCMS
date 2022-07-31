@@ -161,12 +161,19 @@
 					</span>
 				</h4>
 				<div class="row">
-					<div class="col12">
+					<div class="col6">
 						<?php echo template::text('localeCookiesTitleText', [
 							'help' => 'Saisissez le titre de la fenêtre de gestion des cookies.',
 							'label' => 'Titre de la fenêtre',
 							'value' => $this->getData(['locale', 'cookies', 'titleLabel']),
 							'placeHolder' => 'Gérer les cookies'
+						]); ?>
+					</div>
+					<div class="col6">
+						<?php echo template::text('localeCookiesButtonText', [
+							'label' => 'Bouton de validation',
+							'value' => $this->getData(['locale', 'cookies', 'buttonValidLabel']),
+							'placeHolder' => 'J\'ai compris'
 						]); ?>
 					</div>
 				</div>
@@ -186,34 +193,6 @@
 							'label' => 'Lien page des mentions légales.',
 							'value' => $this->getData(['locale', 'cookies', 'linkLegalLabel']),
 							'placeHolder' => 'Consulter  les mentions légales'
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col8">
-						<?php echo template::textarea('localeCookiesGaText', [
-							'help' => 'Saisissez le message pour les cookies déposés par Google Analytics, le consentement est requis.',
-							'label' => 'Cookies Google Analytics',
-							'value' => $this->getData(['locale', 'cookies', 'gaLabel']),
-							'placeHolder' => 'Il utilise également des cookies permettant de réaliser des statistiques de visites pour améliorer votre expérience utilisateur, ces cookies déposés par Google Analytics ont besoin de votre consentement.'
-						]); ?>
-					</div>
-
-					<div class="col4">
-						<?php echo template::text('localeCookiesCheckboxGaText', [
-							'help' => 'Saisissez le texte de la case à cocher Google Analytics.',
-							'label' => 'Checkbox Google Analytics',
-							'value' => $this->getData(['locale', 'cookies', 'checkboxGaLabel']),
-							'placeHolder' => 'Autorisation des cookies Google Analytics'
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col4 offset4">
-						<?php echo template::text('localeCookiesButtonText', [
-							'label' => 'Bouton de validation',
-							'value' => $this->getData(['locale', 'cookies', 'buttonValidLabel']),
-							'placeHolder' => 'J\'ai compris'
 						]); ?>
 					</div>
 				</div>
