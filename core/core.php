@@ -46,8 +46,13 @@ class common {
 
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
+<<<<<<< HEAD
 	const ZWII_VERSION = '12.0.00-dev';
 	const ZWII_UPDATE_CHANNEL = "test";
+=======
+	const ZWII_VERSION = '11.5.07';
+	const ZWII_UPDATE_CHANNEL = "v11";
+>>>>>>> 11507
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -1231,6 +1236,16 @@ class common {
 			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
 			// Formulaire de réponse
 			$item .= '<form method="POST" action="' . helper::baseUrl() . $this->getUrl() . '" id="cookieForm">';
+<<<<<<< HEAD
+=======
+			$analytics = $this->getData(['config', 'seo', 'analyticsId']);
+			$stateCookieGA = $this->getInput('ZWII_COOKIE_GA_CONSENT') ===  'true' ? 'checked="checked"' : '';
+			if( $analytics !== null AND $analytics !== '' ) {
+				$item .= '<p>' . $this->getData(['locale', 'cookies', 'gaLabel']) . '</p>';
+				$item .= '<input type="checkbox" id="googleAnalytics" name="googleAnalytics" value="GA" ' . $stateCookieGA . '>';
+				$item .= '<label for="googleAnalytics">' . $this->getData(['locale', 'cookies', 'checkboxGaLabel']) . '</label>';
+			}
+>>>>>>> 11507
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
 			$item .= '</form>';
