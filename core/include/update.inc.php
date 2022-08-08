@@ -938,7 +938,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	// Consersion des fontes importées
 	$imported = $this->getData(['fonts', 'imported']);
 	if (is_array($imported)) {
-		foreach ($imported as $fontsId => $fontUrl) {
+		foreach ($imported as $fontId => $fontUrl) {
 			if ( gettype($fontUrl) === 'string' ) {
 				$this->setData(['fonts', 'imported',  $fontId, [
 					'name' => ucfirst($fontId),
