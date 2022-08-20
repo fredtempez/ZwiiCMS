@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 12.0.00
+## Version 11.6.00
 ### Nouveautés :
 - Module addon refondu et renommé plugin.
 - Réorganisation des écrans pour éviter de mélanger des formulaires avec des champs d'information.
