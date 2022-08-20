@@ -850,8 +850,8 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 }
 
 
-// Version 12.0.00
-if ($this->getData(['core', 'dataVersion']) < 12000) {
+// Version 11.6.00
+if ($this->getData(['core', 'dataVersion']) < 11600) {
 
 	// Supprime un cookie non nécessaire
 	helper::deleteCookie('ZWII_USER_LONGTIME');
@@ -866,5 +866,5 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	$this->deleteData(['locale', 'cookies', 'checkboxGaLabel']);
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12000]);
+	$this->setData(['core', 'dataVersion', 11600]);
 }
