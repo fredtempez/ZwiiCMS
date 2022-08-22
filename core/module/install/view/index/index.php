@@ -78,12 +78,12 @@
 							'value' => $this->getData(['config', 'proxyPort'])
 						]); ?>
 					</div>
-					<div class="row">
-						<div class="col12">
-						<?php echo template::select('installTheme', $module::$themes, [
-								'label' => 'Thème'
-							]); ?>
-						</div>
+				</div>
+				<div class="row">
+					<div class="col12">
+					<?php echo template::select('installTheme', $module::$themes, [
+							'label' => 'Thème'
+						]); ?>
 					</div>
 				</div>
 			</div>
