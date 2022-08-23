@@ -67,15 +67,13 @@
 					<div  class="col6">
 						<?php echo template::text('installProxyUrl', [
 							'label' => 'Adresse du proxy',
-							'placeholder' => 'cache.proxy.fr',
-							'value' => $this->getData(['config', 'proxyUrl'])
+							'placeholder' => 'cache.proxy.fr'
 						]); ?>
 					</div>
 					<div  class="col3">
 						<?php echo template::text('installProxyPort', [
 							'label' => 'Port du proxy',
-							'placeholder' => '6060',
-							'value' => $this->getData(['config', 'proxyPort'])
+							'placeholder' => '6060'
 						]); ?>
 					</div>
 				</div>
