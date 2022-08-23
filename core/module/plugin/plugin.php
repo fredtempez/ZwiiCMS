@@ -501,12 +501,12 @@ class plugin extends common {
 
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
-		//foreach ($pagesInfos as $keyi18n=>$valueI18n) {
 
-			$keyi18n = self::$i18n;
-			$valueI18n = $pagesInfos[self::$i18n];
-			foreach ($valueI18n as $keyPage=>$value) {
-				// Construire le tableau de sortie
+		$keyi18n = self::$i18n;
+		$valueI18n = $pagesInfos[self::$i18n];
+		foreach ($valueI18n as $keyPage=>$value) {
+			if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
+				// Co[nstruire le tableau de sortie
 				self::$modulesData[] = [
 					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
 					$pagesInfos[$keyi18n][$keyPage]['moduleId'],
@@ -524,11 +524,10 @@ class plugin extends common {
 													'class' => 'buttonRed dataDelete',
 													'help' => 'Détacher le module de la page',
 													])
-
 				];
 			}
+		}
 
-		//}
 
 		// Valeurs en sortie
 		$this->addOutput([
