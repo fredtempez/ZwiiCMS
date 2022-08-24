@@ -1720,30 +1720,6 @@ th.col12 {
 	}
 
 
-/* Traduction auto */
-/*
-* Supprimer Le tooltip Google
-*
-.goog-tooltip {
-    display: none !important;
-}
-.goog-tooltip:hover {
-    display: none !important;
-}
-.goog-text-highlight {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-} */
-
-/* Emplacement des conditions d'utilisation */
-#googTransLogo {
-	float: right;
-}
-#googTransLogo img {
-	width: 60%;
-}
-
 /* Bannière masquable en petit écran*/
 @media screen and (max-width: 768px) {
 	.bannerDisplay{

@@ -865,6 +865,25 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['locale', 'cookies', 'gaLabel']);
 	$this->deleteData(['locale', 'cookies', 'checkboxGaLabel']);
 
+	// Suppression Google Translate
+	helper::deleteCookie('ZWII_I18N_SCRIPT');
+	$this->deleteData(['config','i18n', 'scriptGoogle']);
+	$this->deleteData(['config','i18n', 'showCredits']);
+	$this->deleteData(['config','i18n', 'autoDetect']);
+	$this->removeDir('core/vendor/i18n/css');
+	// Nettoyage
+	if (file_exists('core/module/translate/ressource/googtrans.png')){
+		unlink('core/module/translate/ressource/googtrans.png');
+	}
+	if (file_exists('core/vendor/i18n/inc.json')){
+		unlink('core/vendor/i18n/inc.json');
+	}
+	if (file_exits('core/vendor/i18n/translate.js')){
+		unlink('core/vendor/i18n/translate.js');}
+	if (file_exists('core/vendor/i18n/translation.js')){
+		unlink('core/vendor/i18n/translation.js');
+	}
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11600]);
 }

@@ -97,12 +97,6 @@ class translate extends common {
 
 		// Soumission du formulaire
 		if($this->isPost()) {
-			// Désactivation du script Google
-			$script = $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN);
-			if ($script === false) {
-				setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
-				$_SESSION['googtrans'] = '/fr/fr';
-			}
 			// Edition des langues
 			foreach (self::$i18nList as $keyi18n => $value) {
 				if ($keyi18n === 'fr') continue;
@@ -114,7 +108,6 @@ class translate extends common {
 						$this->removeDir( self::DATA_DIR . $keyi18n);
 						// Au cas ou la langue est sélectionnée
 						helper::deleteCookie('ZWII_I18N_SITE');
-						helper::deleteCookie('ZWII_I18N_SCRIPT');
 				}
 
 				// Active le script si une langue est en trad auto
@@ -127,10 +120,6 @@ class translate extends common {
 			// Enregistrement des données
 			$this->setData(['config','i18n', [
 				'enable'			=> $this->getData(['config', 'i18n', 'enable']),
-				'scriptGoogle'      => $script,
-				'showCredits' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateCredits', helper::FILTER_BOOLEAN) : false,
-				'autoDetect' 	 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAutoDetect', helper::FILTER_BOOLEAN) : false,
-				//'admin'			 	=> $this->getInput('translateScriptGoogle', helper::FILTER_BOOLEAN) ? $this->getInput('translateAdmin', helper::FILTER_BOOLEAN) : false,
 				'fr'		 		=> $this->getInput('translateFR'),
 				'de' 		 		=> $this->getInput('translateDE'),
 				'en' 			 	=> $this->getInput('translateEN'),
@@ -152,7 +141,6 @@ class translate extends common {
 			if ($this->getData(['config','i18n',$key]) === 'site') {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',
-					'script' => 'Traduction automatique',
 					'site'   => 'Traduction rédigée',
 					'delete' => 'Supprimer la traduction'
 				];
@@ -160,7 +148,6 @@ class translate extends common {
 			} else {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',
-					'script' => 'Traduction automatique',
 					'site'   => 'Traduction rédigée'
 				];
 			}
@@ -183,18 +170,11 @@ class translate extends common {
 		if ( $this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2) ) {
 			// Nettoyer et stocker le choix de l'utilisateur
 			helper::deleteCookie('ZWII_I18N_SITE');
-			helper::deleteCookie('ZWII_I18N_SCRIPT');
 			// Sélectionner
 			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)) , $this->getUrl(2), time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-			setrawcookie('googtrans', '/fr/' . $this->getUrl(2), time() + 3600, helper::baseUrl(false,false));
-			$_SESSION['googtrans'] = '/fr/' . $this->getUrl(2);
 		// Désactivation du drapeau, langue FR par défaut
 		} else {
 			setcookie('ZWII_I18N_SITE' , 'fr', time() + 3600, helper::baseUrl(false, false)  , '', helper::isHttps(), true);
-			helper::deleteCookie('ZWII_I18N_SCRIPT');
-			// Désactivation du script Google
-			setrawcookie('googtrans', '/fr/fr', time() + 3600, helper::baseUrl(false,false));
-			$_SESSION['googtrans'] = '/fr/fr';
 		}
 
 		// Valeurs en sortie
