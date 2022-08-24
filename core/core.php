@@ -1112,7 +1112,7 @@ class common {
 		while( $success
 			   AND $file = readdir($dir) ) {
 
-			if (( $file != '.' ) && ( $file != '..' )) {				   
+			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ){
 					// Appel récursif des sous-dossiers
 					$s =  $this->copyDir($src . '/' . $file, $dst . '/' . $file);
@@ -2118,7 +2118,7 @@ class common {
 	public function showi18n() {
 		foreach (self::$i18nList as $key => $value) {
 
-			if ($this->getData(['config', 'i18n', $key]) === 'site' ) 
+			if ($this->getData(['config', 'i18n', $key]) === 'site' )
 			{
 				if (
 					(isset($_COOKIE['ZWII_I18N_SITE'] )
