@@ -47,7 +47,7 @@ class common {
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '11.6.00-dev003';
+	const ZWII_VERSION = '11.6.00-dev004';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1532,9 +1532,9 @@ class common {
 			) {
 				$items .= '<span id="footerDisplayMemberAccount"';
 				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
-				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '"  >' . template::ico('user', 'all') . '</a>';
+				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '"  >' . template::ico('user', ['margin' => 'all']) . '</a>';
 				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'"  data-lity>' . template::ico('folder') . '</a>';
-				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" >' . template::ico('logout','left') . '</a>';
+				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" >' . template::ico('logout',['margin' => 'left']) . '</a>';
 				$items .= '</span>';
 		}
 		// Fermeture du bloc copyright
@@ -1649,7 +1649,7 @@ class common {
 			&&  $this->getData(['theme','menu','memberBar']) === true
 		) {
 			if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $itemsRight .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
-			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', 'right') . '</a></li>';
+			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', ['margin' => 'right']) . '</a></li>';
 			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 		}
 		// Retourne les items du menu
@@ -1731,7 +1731,7 @@ class common {
 			}
 			if($childrenPageIds && $disableChild !== $totalChild  &&
 				$this->getdata(['page',$parentPageId,'hideMenuChildren']) === false) {
-				$items .= template::ico('down', 'left');
+				$items .= template::ico('down', ['margin' => 'left']);
 			}
 			// ------------------------------------------------
 			$items .= '</a>';
@@ -2071,7 +2071,7 @@ class common {
 				}
 			}
 			if($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', 'right') . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
 			}
 			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
 			// Barre de membre

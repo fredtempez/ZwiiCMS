@@ -30,7 +30,7 @@ class template  {
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
             $attributes['help'] ? ' title="' . $attributes['help'] . '" ': '',
-            ($attributes['ico'] ? template::ico($attributes['ico'], 'right') : '') . $attributes['value']
+            ($attributes['ico'] ? template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
         );
     }
 
@@ -334,7 +334,7 @@ class template  {
                 %s
                 data-lity
             >
-                ' . self::ico('upload', 'right') . '
+                ' . self::ico('upload', ['margin' => 'right']) . '
                 <span class="inputFileLabel"></span>
             </a>',
             $attributes['class'],
@@ -423,7 +423,14 @@ class template  {
     * @param string $fontSize Taille de la police
     * @return string
     */
-    public static function ico($ico, $margin = '', $animate = false, $fontSize = '1em') {
+    // public static function ico($ico, $margin = '', $animate = false, $fontSize = '1em') {
+    public static function ico($ico, array $attributes = []) {
+        // Attributs par défaut
+        $attributes = array_merge([
+            'margin' => '',
+            'animate' => false, 
+            'fontSize' => '1em'
+        ], $attributes);
         return '<span class="zwiico-' . $ico . ($margin ? ' zwiico-margin-' . $margin : '') . ($animate ? ' animate-spin' : '') . '" style="font-size:' . $fontSize . '"><!----></span>';
     }
 
@@ -674,7 +681,7 @@ class template  {
     * @return string
     */
     public static function speech($text) {
-        return '<div class="speech"><div class="speechBubble">' . $text . '</div>' . template::ico('mimi speechMimi', '', false, '7em') . '</div>';
+        return '<div class="speech"><div class="speechBubble">' . $text . '</div>' . template::ico('mimi speechMimi', ['fontSize'=> '7em']) . '</div>';
     }
 
     /**
@@ -700,7 +707,7 @@ class template  {
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
             helper::sprintAttributes($attributes, ['class', 'ico', 'value']),
-            ($attributes['ico'] ? template::ico($attributes['ico'], 'right') : '') . $attributes['value']
+            ($attributes['ico'] ? template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
         );
     }
 

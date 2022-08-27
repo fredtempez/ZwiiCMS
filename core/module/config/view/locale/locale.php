@@ -20,7 +20,7 @@
 				<h4>Identité du site <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton"  title="Cliquer pour consulter l'aide en ligne">
 						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>
@@ -51,7 +51,7 @@
 				<h4>Assignation des pages spéciales <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton"  title="Cliquer pour consulter l'aide en ligne">
 						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>
@@ -111,7 +111,7 @@
 				<h4>Etiquettes des pages spéciales <?php echo template::flag('site', '20px');?>
 					<span id="labelHelpButton" class="helpDisplayButton"  title="Cliquer pour consulter l'aide en ligne">
 						<a href="https://doc.zwiicms.fr/etiquettes-des-pages-speciales" target="_blank">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>
@@ -156,7 +156,7 @@
 				<h4>Message d'acceptation des Cookies <?php echo template::flag('site', '20px');?>
 					<span id="specialeHelpButton" class="helpDisplayButton"  title="Cliquer pour consulter l'aide en ligne">
 						<a href="https://doc.zwiicms.fr/cookies" target="_blank">
-								<?php echo template::ico('help', 'left');?>
+								<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>

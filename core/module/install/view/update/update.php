@@ -3,18 +3,18 @@
 <div class="row">
 	<div class="col9 verticalAlignMiddle">
 		<div id="installUpdateProgress">
-			<?php echo template::ico('spin', '', true); ?>
+			<?php echo template::ico('spin', ['animate' => true]); ?>
 			<span class="installUpdateProgressText" data-id="1">1/4 : Préparation...</span>
 			<span class="installUpdateProgressText displayNone" data-id="2">2/4 : Téléchargement...</span>
 			<span class="installUpdateProgressText displayNone" data-id="3">3/4 : Installation...</span>
 			<span class="installUpdateProgressText displayNone" data-id="4">4/4 : Configuration...</span>
 		</div>
 		<div id="installUpdateError" class="colorRed displayNone">
-			<?php echo template::ico('cancel', ''); ?>
+			<?php echo template::ico('cancel'); ?>
 			<strong>Une erreur est survenue lors de l'étape : <span id="installUpdateErrorStep"> </span>.</strong>
 		</div>
 		<div id="installUpdateSuccess" class="colorGreen displayNone">
-			<?php echo template::ico('check', ''); ?>
+			<?php echo template::ico('check'); ?>
 			Mise à jour terminée avec succès.
 		</div>
 	</div>

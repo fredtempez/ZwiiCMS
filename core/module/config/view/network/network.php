@@ -5,7 +5,7 @@
 				<h4>Paramètres
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/reseau" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>
@@ -40,7 +40,7 @@
 				<h4>SMTP
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/smtp" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>

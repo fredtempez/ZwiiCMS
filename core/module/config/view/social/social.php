@@ -5,7 +5,7 @@
 				<h4>Paramètres
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>
@@ -54,7 +54,7 @@
 				<h4>Réseaux sociaux
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 				</h4>

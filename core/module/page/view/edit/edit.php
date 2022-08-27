@@ -70,7 +70,7 @@
 					<h4>Titres
 						<span id="infoHelpButton" class="helpDisplayButton">
 							<a href="https://doc.zwiicms.fr/informations-generales" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
+								<?php echo template::ico('help', ['margin' => 'left']);?>
 							</a>
 						</span>
 					</h4>
@@ -122,7 +122,7 @@
 					<h4>Emplacement dans le menu
 						<span id="positionHelpButton" class="helpDisplayButton">
 							<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
+								<?php echo template::ico('help', ['margin' => 'left']);?>
 							</a>
 						</span>
 					</h4>
@@ -177,7 +177,7 @@
 					<h4>Options avancées
 						<span id="advancedHelpButton" class="helpDisplayButton">
 							<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
+								<?php echo template::ico('help', ['margin' => 'left']);?>
 							</a>
 						</span>
 					</h4>
@@ -287,7 +287,7 @@
 					<h4>Mise en page
 						<span id="layoutHelpButton" class="helpDisplayButton">
 							<a href="https://doc.zwiicms.fr/mise-en-page-2" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', 'left');?>
+								<?php echo template::ico('help', ['margin' => 'left']);?>
 							</a>
 						</span>
 					</h4>
@@ -346,7 +346,7 @@
 					<h4>Permission et référencement
 					<span id="seoHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', 'left');?>
+							<?php echo template::ico('help', ['margin' => 'left']);?>
 						</a>
 					</span>
 					</h4>

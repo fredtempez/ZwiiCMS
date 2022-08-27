@@ -51,7 +51,7 @@
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
-				<?php echo template::ico('menu',null,null,'2em'); ?></div>
+				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<!-- fin du menu burger -->
 				<?php
 					$menuClass = $this->getData(['theme', 'menu', 'position']) === 'top' ? 'class="container-large"'  : 'class="container"';
@@ -98,7 +98,7 @@
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
-				<?php echo template::ico('menu',null,null,'2em'); ?></div>
+				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<!-- fin du menu burger -->
 				<?php
 					$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
@@ -116,7 +116,7 @@
 					<div id="toggle">
 					<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 					<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
-					<?php echo template::ico('menu',null,null,'2em'); ?></div>
+					<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 				</nav>
 			<?php endif; ?>
@@ -167,7 +167,7 @@
 				<div id="toggle">
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
 				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
-				<?php echo template::ico('menu',null,null,'2em'); ?></div>
+				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
 			<?php endif; ?>
