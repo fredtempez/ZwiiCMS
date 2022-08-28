@@ -49,8 +49,8 @@
 				?>
 				<!-- Menu Burger -->
 				<div id="toggle">
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<!-- fin du menu burger -->
 				<?php
@@ -78,7 +78,7 @@
 						// Affiche toujours le titre de la bannière pour l'édition du thème
 						OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 					): ?>
-							<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+							<span  id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 					<?php else: ?>
 							<span id="themeHeaderTitle">&nbsp;</span>
 					<?php endif; ?>
@@ -96,8 +96,8 @@
 			<nav>
 				<!-- Menu burger -->
 				<div id="toggle">
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<!-- fin du menu burger -->
 				<?php
@@ -114,8 +114,8 @@
 				<!-- Menu dans le site avant la bannière -->
 				<nav>
 					<div id="toggle">
-					<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
-					<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
+					<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
+					<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 					<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 					<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 				</nav>
@@ -141,7 +141,7 @@
 									// Affiche toujours le titre de la bannière pour l'édition du thème
 									OR ($this->getUrl(0) === 'theme' AND $this->getUrl(1) === 'header')
 								): ?>
-									<span class="notranslate" id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
+									<span  id="themeHeaderTitle"><?php echo $this->getData(['locale', 'title']); ?></span>
 								<?php else: ?>
 										<span id="themeHeaderTitle">&nbsp;</span>
 								<?php endif; ?>
@@ -165,8 +165,8 @@
 			<!-- Menu dans le site après la bannière -->
 			<nav <?php if($this->getData(['theme', 'menu', 'position']) === 'hide'): ?>class="displayNone"<?php endif; ?>>
 				<div id="toggle">
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div class="notranslate" id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
-				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div class="notranslate" id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : '' ;?>
+				<?php echo $this->getData(['theme','menu','burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="'.helper::baseUrl(false).self::FILE_DIR.'source/'. $this->getData(['theme', 'menu', 'burgerLogo']) .'"></div>' : '' ;?>
 				<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
 				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
 			</nav>
