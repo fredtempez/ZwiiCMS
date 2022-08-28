@@ -41,11 +41,6 @@ class init extends common {
 				'redirectLogin' => true
 			],
 			'i18n' => [
-				'enable'=> true,
-				'scriptGoogle'=> false,
-				'showCredits'=> false,
-				'autoDetect'=> false,
-				'admin'=> false,
 				'fr'=> 'none',
 				'de'=> 'none',
 				'en'=> 'none',

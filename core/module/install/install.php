@@ -89,7 +89,6 @@ class install extends common {
 				);
 				// Nettoyer les cookies de langue d'une précédente installation
 				helper::deleteCookie('ZWII_I18N_SITE');
-				helper::deleteCookie('ZWII_I18N_SCRIPT');
 				// Installation du site de test
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page','fr',true);

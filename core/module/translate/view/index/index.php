@@ -30,37 +30,6 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<div class="block">
-			<h4>Traduction automatique</h4>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('translateScriptGoogle', true, 'Active le script de traduction automatique', [
-								'checked' => $this->getData(['config','i18n', 'scriptGoogle']),
-								'help' => 'Le script Google Translate assure la traduction automatique du site.'
-							]); ?>
-					</div>
-					<div class="col6">
-						<?php echo template::checkbox('translateAutoDetect', true, 'Détection automatique de la langue du navigateur', [
-							'checked' => $this->getData(['config','i18n', 'autoDetect']),
-							'class' => 'translateGoogleScriptOption',
-							'help'   => 'Détecte la langue du navigateur, dans ce mode il n\'est pas nécessaire d\'afficher les drapeaux.'
-						]); ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col6">
-						<?php echo template::checkbox('translateCredits', true, 'Afficher les crédits du script Google', [
-							'checked' => $this->getData(['config','i18n', 'showCredits']),
-							'class' => 'translateGoogleScriptOption',
-							'help' => 'Option recommandée pour le respect du droit d\'auteur'
-						]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
 			<div class="block" id="flagsWrapper">
 			<h4>Mode de traduction et affichage des drapeaux</h4>
 				<div class="row">

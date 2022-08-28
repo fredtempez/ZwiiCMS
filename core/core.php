@@ -301,35 +301,6 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-		/**
-		 * Traduction du site par script
-		 * Traduction par clic sur le drapeau OU
-		 * Traduction automatisée
-		 *	- Exclure la traduction manuelle
-		 *	- La mangue du navigateur est lisible
-		 *	- L'auto-détection est active
-		 */
-
-		if ( $this->getData(['config', 'i18n', 'enable']) === true
-			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
-			 AND $this->getData(['config', 'i18n','autoDetect']) === true
-			 AND $this->getInput('ZWII_I18N_SITE') !== ''
-			 AND !empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
-		{
-			/**
-			 * Le cookie est prioritaire sur le navigateur
-			 * la traduction est celle de la langue du drapeau
-			 * */
-			if ( $this->getInput('ZWII_I18N_SCRIPT') !== substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ) ) {
-				setrawcookie('googtrans', '/fr/'.substr( $_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2 ), time() + 3600, helper::baseUrl(false, false));
-			} else {
-				// Langue du drapeau si elle est définie
-				if (  $this->getInput('ZWII_I18N_SCRIPT') !== '' )	{
-					// Paramètre du script
-					setrawcookie("googtrans", '/fr/'. $this->getInput('ZWII_I18N_SCRIPT') , time() + 3600, helper::baseUrl(false,false));
-				}
-			}
-		}
 
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
@@ -1361,23 +1332,6 @@ class common {
 
 		echo $this->output['content'];
 
-		/**
-		 * Affiche les crédits, conditions requis :
-		 * La traduction est active et le site n'est pas en français.
-		 * La fonction est activée.
-		 */
-		if ( $this->getData(['config', 'i18n', 'enable']) === true
-			 AND $this->getData(['config', 'i18n','scriptGoogle']) === true
-			 AND $this->getData(['config', 'i18n','showCredits']) === true
-			 AND
-				// et la traduction n'est pas manuelle
-				(  $this->getInput('ZWII_I18N_SCRIPT')
-					AND $this->getData(['config', 'i18n', $this->getInput('ZWII_I18N_SCRIPT')]) === 'script'
-				)
-           )
-		{
-		   echo '<div id="googTransLogo"><a href="//policies.google.com/terms#toc-content" data-lity><img src="core/module/translate/ressource/googtrans.png" /></a></div>';
-		}
 	}
 
 	/**
@@ -1694,9 +1648,7 @@ class common {
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
-		if ($this->getData(['config', 'i18n', 'enable']) === true) {
-			echo $this->showi18n();
-		}
+		echo $this->showi18n();
 		echo '</ul>';
 	}
 
@@ -2239,26 +2191,13 @@ class common {
 	 */
 	public function showi18n() {
 		foreach (self::$i18nList as $key => $value) {
-
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
-				OR (
-					// Le script de traduction est actif et la langue est traduite par script
-					$this->getData(['config', 'i18n','scriptGoogle']) === true
-					AND $this->getData(['config', 'i18n', $key]) === 'script'
-					// Le drapeau n'est pas actif pour les non admin en mode connecté.
-					AND
-						( $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-						OR $this->getUser('group') === self::GROUP_ADMIN )
-				)
 			) {
 				if (
 					(isset($_COOKIE['ZWII_I18N_SITE'] )
 					  AND $_COOKIE['ZWII_I18N_SITE'] === $key
 				    )
-					 OR
-					( isset($_COOKIE['ZWII_I18N_SCRIPT'])
-					  AND $_COOKIE['ZWII_I18N_SCRIPT'] === $key
-				   ) ) {
+				   ) {
 					   $select = ' class="i18nFlagSelected" ';
 				   } else {
 					   $select = ' class="i18nFlag" ';
@@ -3069,35 +3008,6 @@ class core extends common {
 						$access = false;
 					}
 				}
-			}
-		}
-
-		// Chargement de la bibliothèque googtrans
-
-		// Le script de traduction est sélectionné
-		if ($this->getData(['config', 'i18n', 'enable']) === true) {
-			if ( 	$this->getData(['config', 'i18n','scriptGoogle']) === true
-					// et la traduction de la langue courante est automatique
-				AND	(  $this->getInput('ZWII_I18N_SCRIPT') !== ''
-						// Ou traduction automatique
-						OR 	$this->getData(['config', 'i18n','autoDetect']) === true
-					)
-				// Cas  des pages d'administration
-				// Pas connecté
-				AND $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-				AND $this->getUrl(1) !== 'login'
-					// Ou connecté avec option active
-					OR ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						AND $this->getData(['config', 'i18n','admin']) === true
-					)
-
-				)	{
-
-						// Chargement de la librairie
-						$this->addOutput([
-							'vendor' => array_merge($this->output['vendor'], ['i18n'])
-						]);
-
 			}
 		}
 

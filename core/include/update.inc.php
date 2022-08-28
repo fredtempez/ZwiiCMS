@@ -870,6 +870,7 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['config', 'i18n', 'scriptGoogle']);
 	$this->deleteData(['config', 'i18n', 'showCredits']);
 	$this->deleteData(['config', 'i18n', 'autoDetect']);
+	helper::deleteCookie('ZWII_I18N_SCRIPT');
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11600]);
