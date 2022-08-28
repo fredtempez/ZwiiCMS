@@ -417,10 +417,14 @@ class template  {
 
     /**
     * Crée un icône
+    * @Array :
     * @param string $ico Classe de l'icône
     * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
     * @param bool $animate Ajoute une animation à l'icône
     * @param string $fontSize Taille de la police
+    * @param string $href lien vers une url
+    * @param string $help popup d'aide
+    * @param string $id de l'élement
     * @return string
     */
     // public static function ico($ico, $margin = '', $animate = false, $fontSize = '1em') {
@@ -428,10 +432,17 @@ class template  {
         // Attributs par défaut
         $attributes = array_merge([
             'margin' => '',
-            'animate' => false, 
-            'fontSize' => '1em'
+            'animate' => false,
+            'fontSize' => '1em',
+            'href' => '',
+            'attr' => '',
+            'help' => '',
+            'id' => ''
         ], $attributes);
-        return '<span class="zwiico-' . $ico . ($margin ? ' zwiico-margin-' . $margin : '') . ($animate ? ' animate-spin' : '') . '" style="font-size:' . $fontSize . '"><!----></span>';
+        $item = $attributes['href'] ? '<a data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr']. ' >' : '';
+        $item .= '<span id="' . $attributes['id']. '" class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
+        $item .= ($attributes['href']) ? '</a>' : '';
+        return $item;
     }
 
         /**

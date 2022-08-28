@@ -1520,21 +1520,43 @@ class common {
             )
             OR $this->getUrl(0) === 'theme'
         ) {
-			$items .= '<span id="footerLoginLink" ' .
-			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/login/' .
-			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'" rel="nofollow">' . template::ico('login') .'</a></span>';
+			$items .= 	'<span id="footerLoginLink" ' .
+						($this->getUrl(0) === 	'theme' ? 'class="displayNone">' : '>') .
+						'<wbr>&nbsp;|&nbsp;<wbr>'.
+						template::ico('login', [
+							'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())) ,
+							'attr' => 'rel="nofollow"',
+							'help' => 'Connexion',
+							'fontSize' => '1.5em'
+						]) . '</span>';
 		}
 		// Affichage de la barre de membre simple
 		if ( $this->getUser('group') === self::GROUP_MEMBER
 			 && $this->getData(['theme','footer','memberBar']) === true
 			) {
 				$items .= '<span id="footerDisplayMemberAccount"';
-				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone"' : '';
-				$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] .  '"  >' . template::ico('user', ['margin' => 'all']) . '</a>';
-				if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $items .= '<wbr><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'"  data-lity>' . template::ico('folder') . '</a>';
-				$items .= '<wbr><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" >' . template::ico('logout',['margin' => 'left']) . '</a>';
+				$items .= $this->getData(['theme','footer','displaymemberAccount']) ===  false ? ' class="displayNone">' : '>';
+				$items .= '<wbr>&nbsp;|&nbsp;' .
+							template::ico('user', [
+								'margin' => 'all',
+								'help' => 'Mon compte',
+								'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf']
+							]);
+				if (
+					$this->getData(['user', $this->getUser('id') , 'files']) === true
+				) {
+					$items .= '<wbr>' . template::ico('folder',	[
+						'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json'),
+						'margin' => 'all',
+						'attr' => 'data-lity',
+						'help' => 'Fichiers du site'
+					]);
+				}
+				$items .=  '<wbr>'. template::ico('logout', [
+					'margin' => 'all',
+					'help' => 'Déconnecter',
+					'href' => helper::baseUrl() . 'user/logout'
+				]);
 				$items .= '</span>';
 		}
 		// Fermeture du bloc copyright
@@ -1638,19 +1660,37 @@ class common {
 			)
 			OR $this->getUrl(0) === 'theme'
 		) {
-			$itemsRight .= '<li id="menuLoginLink" ' .
-			($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') .
-			'><a href="' . helper::baseUrl() . 'user/login/' .
-			strip_tags(str_replace('/', '_', $this->getUrl())) .
-			'">' . template::ico('login') .'</a></li>';
+			$itemsRight .= '<li id="menuLoginLink" ' .	($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') . '>' .
+							template::ico('login', [
+								'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
+								'help' => "Connexion"
+							]) .
+							'</li>';
 		}
 		// Commandes pour les membres simples
 		if($this->getUser('group') == self::GROUP_MEMBER
 			&&  $this->getData(['theme','menu','memberBar']) === true
 		) {
-			if( $this->getData(['user', $this->getUser('id') , 'files']) === true) $itemsRight .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
-			$itemsRight .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Gérer mon compte">' . template::ico('user', ['margin' => 'right']) . '</a></li>';
-			$itemsRight .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
+			if (
+				$this->getData(['user', $this->getUser('id') , 'files']) === true
+			) { 
+				$itemsRight .= '<li>' . template::ico('folder',	[
+					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json'),
+					'attr' => 'data-lity',
+					'help' => 'Fichiers du site'
+				]). '</li>';
+			}
+			$itemsRight .= '<li>' . template::ico('user', [
+								'help' => 'Mon compte',
+								'margin' => 'right',
+								'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf']
+							]) . '</li>';
+			$itemsRight .= '<li>' .
+							template::ico('logout', [
+								'help' => 'Déconnecter',
+								'href' => helper::baseUrl() . 'user/logout',
+								'id' => 'barLogout'
+							]) . '</li>';
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
@@ -2018,7 +2058,10 @@ class common {
 				}
 				$leftItems .= '</optgroup>';
 				$leftItems .= '</select></li>';
-				$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/add" data-tippy-content="Créer une page ou<br>une barre latérale">' . template::ico('plus') . '</a></li>';
+				$leftItems .= '<li>' . template::ico('plus', [
+							'href' => helper::baseUrl() . 'page/add',
+							'help' => 'Nouvelle page ou <br />nouvelle barre latérale'
+				]) . '</li>';
 				if(
 					// Sur un module de page qui autorise le bouton de modification de la page
 					$this->output['showBarEditButton']
@@ -2029,12 +2072,28 @@ class common {
 					// Sur une page d'accueil
 					OR $this->getUrl(0) === ''
 				) {
-					$leftItems .= '<li><a href="' . helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '" data-tippy-content="Modifier la page">' . template::ico('pencil') . '</a></li>';
+					$leftItems .= '<li>' . template::ico('pencil',  [
+											'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
+											'help' => 'Editer la page'
+					]) . '</li>';
 					if ($this->getData(['page', $this->getUrl(0),'moduleId'])) {
-						$leftItems .= '<li><a href="' . helper::baseUrl() . $this->getUrl(0) . '/config' . '" data-tippy-content="Configurer le module">' . template::ico('gear') . '</a></li>';
+						$leftItems .= '<li>' . template::ico('gear',  [
+												'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
+												'help' => 'Module de la page'
+						]) . '</li>';
 					}
-					$leftItems .= '<li><a id="pageDuplicate" href="' . helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Dupliquer la page">' . template::ico('clone') . '</a></li>';
-					$leftItems .= '<li><a id="pageDelete" href="' . helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'] . '" data-tippy-content="Effacer la page">' . template::ico('trash') . '</a></li>';
+					$leftItems .= '<li>' . template::ico('clone', [
+											'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+											'help' => 'Cloner la page'
+					])
+					. '</li>';
+
+					$leftItems .= '<li>' . template::ico('trash', [
+											'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+											'help' => 'Supprimer la page',
+											'id' => 'pageDelete'
+					])
+					. '</li>';
 				}
 			}
 			// Items de droite
@@ -2043,13 +2102,26 @@ class common {
 				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'theme" data-tippy-content="Personnaliser les thèmes">' . template::ico('brush') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'plugin" data-tippy-content="Gérer les modules">' . template::ico('puzzle') . '</a></li>';
-				if ($this->getData(['config', 'i18n', 'enable']) === true) {
-					$rightItems .= '<li><a href="' . helper::baseUrl() . 'translate" data-tippy-content="Gestion des langues">' . template::ico('flag') . '</a></li>';
-				}
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'config" data-tippy-content="Configurer le site">' . template::ico('cog-alt') . '</a></li>';
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user" data-tippy-content="Configurer les utilisateurs">' . template::ico('users') . '</a></li>';
+				$rightItems .= '<li>' .	template::ico('brush', [
+									'help' => 'Thème',
+									'href' => helper::baseUrl() . 'theme'
+				]) . '</li>';
+				$rightItems .= '<li>' .	template::ico('puzzle', [
+									'help' => 'Gérer les modules',
+									'href' => helper::baseUrl() . 'plugin'
+				]) . '</li>';
+				$rightItems .= '<li>' .	template::ico('flag', [
+									'help' => 'Traduction',
+									'href' => helper::baseUrl() . 'translate'
+				]) . '</li>';
+				$rightItems .= '<li>' .	template::ico('cog-alt', [
+									'help' => 'Configuration',
+									'href' => helper::baseUrl() . 'config'
+				]) . '</li>';
+				$rightItems .= '<li>' .	template::ico('users', [
+									'help' => 'Utilisateurs',
+									'href' => helper::baseUrl() . 'user'
+				]) . '</li>';
 
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
@@ -2073,7 +2145,11 @@ class common {
 			if($this->getUser('group') >= self::GROUP_MODERATOR) {
 				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id'). '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
 			}
-			$rightItems .= '<li><a id="barLogout" href="' . helper::baseUrl() . 'user/logout" data-tippy-content="Me déconnecter">' . template::ico('logout') . '</a></li>';
+			$rightItems .= '<li>' .	template::ico('logout', [
+									'help' => 'Déconnecter',
+									'href' => helper::baseUrl() . 'user/logout',
+									'id' => 'barLogout'
+			]) . '</li>';
 			// Barre de membre
 			echo '<div id="bar"><div class="container"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div></div>';
 		}
