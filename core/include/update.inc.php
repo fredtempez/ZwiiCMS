@@ -872,6 +872,22 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['config', 'i18n', 'autoDetect']);
 	helper::deleteCookie('ZWII_I18N_SCRIPT');
 
+	// Supprimer les fichier associés
+	if (is_dir('core/module/translate/ressource')) {
+		$this->removeDir('core/module/translate/ressource');
+	}
+	if (is_dir('core/vendor/i18n/css')) {
+		$this->removeDir('core/vendor/i18n/css');
+	}
+	if (file_exists('core/vendor/i18n/inc.json')) {
+		unlink('core/vendor/i18n/inc.json');
+	}
+	if (file_exists('core/vendor/i18n/translate.js')) {
+		unlink('core/vendor/i18n/translate.js');
+	}
+	if (file_exists('core/vendor/i18n/translation.js')) {
+		unlink('core/vendor/i18n/translation.js');
+	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11600]);
 }
