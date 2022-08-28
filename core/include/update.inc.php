@@ -865,6 +865,12 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['locale', 'cookies', 'gaLabel']);
 	$this->deleteData(['locale', 'cookies', 'checkboxGaLabel']);
 
+	// Suppression du booléen de langue, désormais toujours actif et de Google Translate
+	$this->deleteData(['config', 'i18n', 'enable']);
+	$this->deleteData(['config', 'i18n', 'scriptGoogle']);
+	$this->deleteData(['config', 'i18n', 'showCredits']);
+	$this->deleteData(['config', 'i18n', 'autoDetect']);
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11600]);
 }
