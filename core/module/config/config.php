@@ -259,24 +259,30 @@ class config extends common {
 		} else {
 			$site = helper::baseUrl(false);
 		}
+
 		// Clé de l'API
 		$token = $this->getData(['config', 'seo', 'keyApi']);
 
-		// Succès de la'opération par défaut
+		// Succès de l'opération par défaut
 		$success = false;
+		$data = false;
 
-		// Tente de connecter 5 fois l'API
-		for ($i=0; $i < 5 ; $i++) {
-			//$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
-			$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
-			if ($data !== false) {
-				break;
+		// lire l'API si le token est fourni
+		if (!empty($token) ) {
+			// Tente de connecter 5 fois l'API
+			for ($i=0; $i < 5 ; $i++) {
+				//$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
+				$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
+				if ($data !== false) {
+					break;
+				}
 			}
 		}
 
 
+
 		// Traitement des données reçues valides.
-		if ($data  !== false) {
+		if ( !empty($token) && $data  !== false) {
 			$data = json_decode($data, true);
 			$img = $data['screenshot'];
 			// Effacer l'image et la miniature png
@@ -288,11 +294,16 @@ class config extends common {
 			}
 			$success = copy ($img, self::FILE_DIR .'source/screenshot.jpg');
 		}
+
+		$notification =  empty($token)
+						? 'La clé de l\'API ne peut pas être vide'
+						: ($success === false  ? 'Problème avec le service en ligne' : 'Capture d\'écran générée avec succès');
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $success === false  ? 'Service inaccessible ou erreur d\'écriture de l\'image' : 'Image générée avec succès',
-			'state' => $success === false ? false : true
+			'notification' => $notification,
+			'state' => ($success === false OR empty($token)) ? false : true
 		]);
 	}
 
