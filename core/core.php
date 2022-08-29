@@ -2349,7 +2349,6 @@ class core extends common {
 				if ( isset($fontsAvailable['files'][$fontId]) ) {
 					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
 						// Chargement de la police
-						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
 						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
 						// Tableau pour la construction de la feuille de style
@@ -2373,8 +2372,6 @@ class core extends common {
 			} else {
 				// Pas d'image couleur du body
 				$css .= 'html {background-color:' . $colors['normal'] . ';}';
-				// Même couleur dans le fond de l'éditeur
-				//$css .= '{background-color:' . $colors['normal'] . ' !important}';
 			}
 			// Icône BacktoTop
 			$css .= '#backToTop {background-color:' .$this->getData(['theme', 'body', 'toTopbackgroundColor']). ';color:'.$this->getData(['theme', 'body', 'toTopColor']).';}';
@@ -2386,21 +2383,18 @@ class core extends common {
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
-			//$css .= 'a:hover:not(.inputFile, button){color:' . $colors['darken'] . '}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= 'select,input[type=\'password\'],input[type=\'email\'],input[type=\'text\'],.inputFile,select,textarea{color:' . $this->getData(['theme', 'text', 'textColor']) .';background-color:'.$this->getData(['theme', 'site', 'backgroundColor']).';}';
 			// spécifiques au module de blog
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
 			// Couleur fixée dans admin.css
-			//$css .= '.button.buttonGrey,.button.buttonGrey:hover{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
 			$css .= '.container {max-width:' . $this->getData(['theme', 'site', 'width']) . '}';
 			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
 			// Marge supplémentaire lorsque le pied de page est fixe
 			if ( $this->getData(['theme', 'footer', 'fixed']) === true &&
 			$this->getData(['theme', 'footer', 'position']) === 'body') {
-				//$css .= '@media (min-width: 769px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px}}';
-				//$css .= '@media (max-width: 768px) { #site {margin-bottom: ' . ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px}}';
+
 				$marginBottomLarge = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 31 ) . 'px';
 				$marginBottomSmall = ((str_replace ('px', '', $this->getData(['theme', 'footer', 'height']) ) * 2 ) + 93 ) . 'px';
 			} else {
@@ -2428,7 +2422,6 @@ class core extends common {
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
 			$css .= '.block {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .  ';}.block h4 {background-color:'. $colors['normal'] . ';color:' . $colors['text'] .';}';
-			//$css .= '.mce-tinymce {border: 1px solid ' . $this->getdata(['theme','block','borderColor']) .' !important;}';
 
 			// Bannière
 
@@ -2464,8 +2457,6 @@ class core extends common {
 			if ($this->getData(['theme','header','feature']) === 'feature' ) {
 				// Hauteur de la taille du contenu perso
 				$css .= 'header {height:'. $this->getData(['theme', 'header', 'height'])  . '; min-height:' . $this->getData(['theme', 'header', 'height'])  .  ';overflow: hidden;}';
-				//$css .= '.bannerDisplay img { width: auto;max-height:' . $this->getData(['theme', 'header', 'height']) . ';}';
-
 			}
 
 			// Menu
@@ -2478,8 +2469,6 @@ class core extends common {
 				$css .= 'nav a.active{background-color:' . $colors['veryDarken'] . '}';
 			} else {
 				$css .= 'nav a.active{background-color:' . $this->getData(['theme','menu','activeColor']) . '}';
-				/*$color2 = helper::colorVariants($this->getData(['theme', 'menu', 'textColor']));
-				$css .= 'nav a.active{color:' .  $color2['text'] . '}';*/
 			}
 			$css .= 'nav #burgerText{color:' .  $colors['text'] . '}';
 			// Sous menu
@@ -2508,7 +2497,6 @@ class core extends common {
 
 			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) .';font-family:' .  $fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
-
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
 			if($this->getData(['theme', 'footer', 'margin'])) {
 				$css .= 'footer{padding:0 20px;}';
@@ -2593,7 +2581,6 @@ class core extends common {
 				if ( isset($fontsAvailable['files'][$fontId]) ) {
 					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId) ) {
 						// Chargement de la police
-						//$formatFont = explode('.', self::DATA_DIR . 'fonts/' . $fontName);
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
 						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' .$fontsAvailable['files'][$fontId]['resource'] . '");}';
 						// Tableau pour la construction de la feuille de style
@@ -2807,11 +2794,9 @@ class core extends common {
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
-									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 									: '',
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
-									//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 									: ''
 			]);
@@ -2833,16 +2818,12 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
-										//file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barRight']), 'content']))
-										//? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']))
 										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
 										: '',
 					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
-										// ? file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getData(['page',$this->getUrl(0),'barLeft']), 'content']))
 										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
 										: ''
 				]);
-				//$pageContent = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $this->getUrl(0), 'content']));
 				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
 			}
 			else {
