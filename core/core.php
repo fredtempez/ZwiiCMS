@@ -1112,7 +1112,7 @@ class common {
 		while( $success
 			   AND $file = readdir($dir) ) {
 
-			if (( $file != '.' ) && ( $file != '..' )) {				   
+			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ){
 					// Appel récursif des sous-dossiers
 					$s =  $this->copyDir($src . '/' . $file, $dst . '/' . $file);

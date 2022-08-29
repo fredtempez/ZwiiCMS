@@ -22,6 +22,12 @@ class install extends common {
 		'update' => self::GROUP_ADMIN
 	];
 
+	// Type de proxy
+	public static $proxyType = [
+		'tcp://' => 'TCP',
+		'http://' => 'HTTP'
+	];
+
 	// Thèmes proposés à l'installation
 	public static $themes =   [];
 
@@ -97,6 +103,12 @@ class install extends common {
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 				}
+
+				// Sauvegarder la configuration du Proxy
+				$this->setData(['config', 'proxyType', $this->getInput('installProxyType') ]);
+				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl') ]);
+				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
+
 				// Images exemples livrées dans tous les cas
 				try {
 					// Décompression dans le dossier de fichier temporaires
