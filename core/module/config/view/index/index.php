@@ -26,12 +26,6 @@
         'value' => 'Configuration',
         'class' => 'buttonTab'
     ]); ?>
-
-    <?php echo template::button('configLocaleButton', [
-        'value' => 'Localisation',
-        'class' => 'buttonTab'
-    ]); ?>
-
     <?php echo template::button('configSocialButton', [
         'value' => 'Référencement',
         'class' => 'buttonTab'
@@ -48,10 +42,7 @@
     ]); ?>
 </div>
 
-
-
 <?php include ('core/module/config/view/setup/setup.php') ?>
-<?php include ('core/module/config/view/locale/locale.php') ?>
 <?php include ('core/module/config/view/social/social.php') ?>
 <?php include ('core/module/config/view/connect/connect.php') ?>
 <?php include ('core/module/config/view/network/network.php') ?>

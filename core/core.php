@@ -47,7 +47,7 @@ class common {
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '11.6.00-dev005';
+	const ZWII_VERSION = '11.6.00-dev006';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2067,7 +2067,7 @@ class common {
 									'href' => helper::baseUrl() . 'plugin'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('flag', [
-									'help' => 'Traduction',
+									'help' => 'Contenu multilangues',
 									'href' => helper::baseUrl() . 'translate'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('cog-alt', [

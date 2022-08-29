@@ -193,8 +193,6 @@ class config extends common {
 	public static $i18nSite = 'fr';
 
 	// Variable pour construire la liste des pages du site
-	public static $pagesList = [];
-	public static $orphansList = [];
 	public static $onlineVersion = '';
 	public static $updateButtonText = 'Réinstaller';
 
@@ -444,48 +442,6 @@ class config extends common {
 					$this->setData(['core','lastAutoUpdate',0]);
 				}
 
-			// Eviter déconnexion automatique après son activation
-			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
-				 AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
-				$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
-			}
-				// Répercuter la suppression de la page dans la configuration du footer
-				if ( $this->getData(['theme','footer','displaySearch']) === true
-				AND $this->getInput('configSearchPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displaySearch', false]);
-			}
-			if ( $this->getData(['theme','footer','displayLegal']) === true
-				AND $this->getInput('configLegalPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displayLegal', false]);
-			}
-
-			// Sauvegarder les locales
-			$this->setData([
-				'locale',
-				[
-					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('localePage404'),
-					'page403' => $this->getInput('localePage403'),
-					'page302' => $this->getInput('localePage302'),
-					'legalPageId' => $this->getInput('localeLegalPageId'),
-					'searchPageId' => $this->getInput('localeSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
-					'cookies' => [
-						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
-					]
-				]
-			]);
 
 			// Sauvegarder la configuration
 			$this->setData([
@@ -617,23 +573,6 @@ class config extends common {
 				'notification' => 'Modifications enregistrées ' ,
 				'state' => true
 			]);
-		}
-		// Générer la list des pages disponibles
-		self::$pagesList = $this->getData(['page']);
-		foreach(self::$pagesList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true) {
-				unset(self::$pagesList[$page]);
-			}
-		}
-
-		self::$orphansList =  $this->getData(['page']);
-		foreach(self::$orphansList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true ||
-				$this->getdata(['page',$page, 'position']) !== 0) {
-				unset(self::$orphansList[$page]);
-			}
 		}
 
 		// Variable de version
