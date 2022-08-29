@@ -255,35 +255,38 @@ class config extends common {
 	public function configMetaImage() {
 		// fonction désactivée pour un site local
 		if ( strpos(helper::baseUrl(false),'localhost') > 0 OR strpos(helper::baseUrl(false),'127.0.0.1') > 0)	{
-			$site = 'https://zwiicms.fr/'; } else {
-			$site = helper::baseUrl(false);	}
+			$site = 'https://zwiicms.fr/';
+		} else {
+			$site = helper::baseUrl(false);
+		}
+		// Clé de l'API
+		$token = $this->getData(['config', 'seo', 'keyApi']);
 
 		// Succès de la'opération par défaut
 		$success = false;
 
-		// Tente de connecter 5 fois l'API Google
-		for ($i=0; $i < 5 ; $i++) { 
-			$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
-			if ($googlePagespeedData !== false) {
+		// Tente de connecter 5 fois l'API
+		for ($i=0; $i < 5 ; $i++) {
+			//$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
+			$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
+			if ($data !== false) {
 				break;
 			}
 		}
-		
-		// Traitement des données reçues valides.  
-		if ($googlePagespeedData  !== false) {
-			$googlePagespeedData = json_decode($googlePagespeedData, true);
-			$data = str_replace('_','/',$googlePagespeedData['lighthouseResult']['audits']['final-screenshot']['details']['data']);
-			$data = str_replace('-','+',$data);
-			$img = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
-			// Effacer l'image et la miniature png
-			if (file_exists(self::FILE_DIR.'thumb/screenshot.jpg')) {
-				unlink (self::FILE_DIR.'thumb/screenshot.jpg');
-			}
-			if (file_exists(self::FILE_DIR.'source/screenshot.jpg')) {
-				unlink (self::FILE_DIR.'source/screenshot.jpg');
-			}
-			$success = file_put_contents( self::FILE_DIR.'source/screenshot.jpg',$img) ;
 
+
+		// Traitement des données reçues valides.
+		if ($data  !== false) {
+			$data = json_decode($data, true);
+			$img = $data['screenshot'];
+			// Effacer l'image et la miniature png
+			if (file_exists(self::FILE_DIR .'thumb/screenshot.jpg')) {
+				unlink (self::FILE_DIR .'thumb/screenshot.jpg');
+			}
+			if (file_exists(self::FILE_DIR .'source/screenshot.jpg')) {
+				unlink (self::FILE_DIR .'source/screenshot.jpg');
+			}
+			$success = copy ($img, self::FILE_DIR .'source/screenshot.jpg');
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -467,10 +470,8 @@ class config extends common {
 					'cookies' => [
 						// Les champs sont obligatoires si l'option consentement des cookies est active
 						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'gaLabel'	=> $this->getInput('localeCookiesGaText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
 						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
 						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'checkboxGaLabel'	=> $this->getInput('localeCookiesCheckboxGaText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
 						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
 						'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
 					]
@@ -513,7 +514,8 @@ class config extends common {
 						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN)
+						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN),
+						'keyApi' => $this->getInput('seoKeyApi',helper::FILTER_STRING_SHORT),
 					],
 					'connect' => [
 						'attempt' => $this->getInput('connectAttempt',helper::FILTER_INT),
@@ -799,7 +801,7 @@ class config extends common {
 	public function copyBackups() {
 
 		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
-	
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Configuration du site',

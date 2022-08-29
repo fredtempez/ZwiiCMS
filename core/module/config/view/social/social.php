@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres
+				<h4>Capture Open Graph
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>
@@ -13,24 +13,18 @@
 					<div class="col4 offset1">
 						<div class="row">
 							<div class="col12">
+								<?php echo template::text('seoKeyApi', [
+									'label' => 'Clé de l\'API <a href="https://app.screenshotapi.net/" target="_blank">ScreenShotApi</a>',
+									'value' => $this->getData(['config', 'seo', 'keyApi']),
+									'help' => 'Saisir la clé, puis valider le formulaire avant de cliquer sur le bouton de génération'
+								]); ?>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col12">
 								<?php echo template::button('socialMetaImage', [
 								'href' => helper::baseUrl() . 'config/configMetaImage',
 								'value' => 'Générer une capture Open Graph'
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col12">
-								<?php echo template::button('socialSiteMap', [
-									'href' => helper::baseUrl() . 'config/siteMap',
-									'value' => 'Générer sitemap.xml et robots.txt'
-								]); ?>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col12">
-								<?php echo template::checkbox('seoRobots', true, 'Autoriser les robots à référencer le site', [
-									'checked' => $this->getData(['config', 'seo','robots'])
 								]); ?>
 							</div>
 						</div>
@@ -51,7 +45,27 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Réseaux sociaux
+				<h4>Référencement</h4>
+				<div class="row">
+					<div class="col4 offset1">
+						<?php echo template::button('socialSiteMap', [
+							'href' => helper::baseUrl() . 'config/siteMap',
+							'value' => 'Générer sitemap.xml et robots.txt'
+						]); ?>
+					</div>
+					<div class="col4 offset1">
+						<?php echo template::checkbox('seoRobots', true, 'Autoriser les robots à référencer le site', [
+							'checked' => $this->getData(['config', 'seo','robots'])
+						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>Comptes des réseaux sociaux
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>

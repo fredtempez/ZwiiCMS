@@ -47,7 +47,7 @@ class common {
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '11.6.00-dev004';
+	const ZWII_VERSION = '11.6.00-dev005';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1913,7 +1913,11 @@ class common {
 	 * Affiche la meta image (site screenshot)
 	 */
 	public function showMetaImage() {
-		echo '<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
+		$items ='<meta property="og:image" content="' . helper::baseUrl() .self::FILE_DIR.'source/screenshot.jpg" />';
+		$items .= '<meta property="og:image:type" content="image/jpeg" />';
+		$items .= '<meta property="og:image:width" content="1200" />';
+		$items .= '<meta property="og:image:height" content="627" />';
+		echo $items;
 	}
 
 	/**
@@ -1927,7 +1931,7 @@ class common {
 		if(common::$inputNotices) {
 			$notification = 'Impossible de soumettre le formulaire, car il contient des erreurs';
 			$notificationClass = 'notificationError';
-			//var_dump(common::$inputNotices) ;
+			var_dump(common::$inputNotices) ;
 		}
 		if (common::$coreNotices) {
 			$notification = 'Données absentes, restauration de <p> | ';

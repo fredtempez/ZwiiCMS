@@ -26,7 +26,8 @@ class init extends common {
 				'enable' => false,
 			],
 			'seo' => [
-				'robots' => true
+				'robots' => true,
+				'keyApi' => 'Connecter https://app.screenshotapi.net/'
 			],
 			'connect' => [
 				'timeout' => 600,
