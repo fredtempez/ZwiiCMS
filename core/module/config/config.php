@@ -250,7 +250,6 @@ class config extends common {
 
 	/**
 	 * Réalise une copie d'écran du site
-	 *  https://www.codexworld.com/capture-screenshot-website-url-php-google-api/
 	 */
 	public function configMetaImage() {
 		// fonction désactivée pour un site local
@@ -271,7 +270,6 @@ class config extends common {
 		if (!empty($token) ) {
 			// Tente de connecter 5 fois l'API
 			for ($i=0; $i < 5 ; $i++) {
-				//$googlePagespeedData = helper::getUrlContents('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url='. $site .'&screenshot=true');
 				$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
 				if ($data !== false) {
 					break;
@@ -541,11 +539,6 @@ class config extends common {
 						'redirectLogin' => $this->getInput('connectRedirectLogin',helper::FILTER_BOOLEAN)
 					],
 					'i18n' => [
-						'enable' 			=> $this->getInput('localei18n',helper::FILTER_BOOLEAN),
-						'scriptGoogle'      => $this->getData(['config', 'i18n', 'scriptGoogle']),
-						'showCredits' 	 	=> $this->getData(['config', 'i18n', 'showCredits']),
-						'autoDetect' 	 	=> $this->getData(['config', 'i18n', 'autoDetect']),
-						//'admin'			 	=> $this->getData(['config', 'i18n', 'admin']),
 						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
 						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
 						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),

@@ -2,22 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Langues étrangères</h4>
-				<div class="row">
-					<div class="col12">
-						<?php echo template::checkbox('localei18n', true, 'Activer la gestion des langues étrangères', [
-								'checked' => $this->getData(['config', 'i18n', 'enable']),
-								'help'=> 'Une nouvelle icône apparaîtra dans la barre d\'administration. Consultez  l\'aide de la page concernée pour en apprendre plus.'
-							]); ?>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Identité du site <?php echo template::flag('site', '20px');?>
+				<h4>Identité du site en <?php echo template::flag('site', '20px');?>
 					<span id="localeHelpButton" class="helpDisplayButton"  title="Cliquer pour consulter l'aide en ligne">
 						<a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
 							<?php echo template::ico('help', ['margin' => 'left']);?>
