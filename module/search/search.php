@@ -217,7 +217,7 @@ class search extends common {
 							}
 
 							// Articles d'une sous-page blog ou de news
-							if ( $this->getData([ 'module', $childId, 'posts']) 
+							if ( $this->getData([ 'module', $childId, 'posts'])
 							) {
 								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
 									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
@@ -235,8 +235,8 @@ class search extends common {
                     }
 
 					// Articles d'un blog ou de news
-					if ( $this->getData([ 'module', $parentId, 'posts']) 
-				    ) {					
+					if ( $this->getData([ 'module', $parentId, 'posts'])
+				    ) {
 
 						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
 							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
@@ -273,8 +273,8 @@ class search extends common {
 				'view' => 'index',
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
-				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style'])) 
-							? $this->getData(['module', $this->getUrl(0), 'theme', 'style']) 
+				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
+							? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 							: ''
 			]);
 		} else {
@@ -337,9 +337,4 @@ class search extends common {
 		}
 	}
 
-	// Requête de traduction avec le script Google
-	private function translate($from_lan, $to_lan, $text) {
-		$arrayjson = json_decode(file_get_contents('https://translate.googleapis.com/translate_a/single?client=gtx&sl='.$from_lan.'&tl=fr&dt=t&q='.$text),true);
-		return $arrayjson[0][0][0];
-	}
 }
