@@ -70,7 +70,7 @@
 		<div class="col12" id="comment">
 			<h3>
 				<?php
-					echo template::ico('comment', 'right');
+					echo template::ico('comment', ['margin' => 'right']);
 					if ($module::$nbCommentsApproved > 0) {
 						echo $module::$nbCommentsApproved . ' commentaire' . ($module::$nbCommentsApproved > 1 ? 's' : '');
 					} else {

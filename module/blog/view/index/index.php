@@ -73,7 +73,7 @@
 							<p>Cet article ne reçoit pas de commentaire.</p>
 						<?php else: ?>
 							<p>
-								<?php echo template::ico('comment', 'right'); ?>
+								<?php echo template::ico('comment', ['margin' => 'right']); ?>
 								<?php
 									if ($module::$comments[$articleId] > 0) {
 										echo '<a href="'. helper::baseUrl() . $this->getUrl(0) . '/' . $articleId .'">';

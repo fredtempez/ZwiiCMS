@@ -73,7 +73,7 @@
 							<p>Cet sujet ne reçoit pas de Réponse.</p>
 						<?php else: ?>
 							<p>
-								<?php echo template::ico('comment', 'right'); ?>
+								<?php echo template::ico('comment', ['margin' => 'right']); ?>
 								<?php
 									if ($module::$comments[$sujetId] > 0) {
 										echo '<a href="'. helper::baseUrl() . $this->getUrl(0) . '/' . $sujetId .'">';
@@ -121,7 +121,7 @@
 									<?php echo count($sujet['comment']); ?>
 								<?php endif; ?>
 							</a>
-							<?php echo template::ico('comment', 'left'); ?>
+							<?php echo template::ico('comment', ['margin' => 'left']); ?>
 						</div>
 						<div class="blogDate">
 							<?php echo template::ico('calendar-empty'); ?>
