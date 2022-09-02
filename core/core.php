@@ -35,7 +35,7 @@ class common {
 	const DATA_DIR = 'site/data/';
 	const FILE_DIR = 'site/file/';
 	const TEMP_DIR = 'site/tmp/';
-	const I18N_DIR = 'site/i18n';
+	const I18N_DIR = 'site/i18n/';
 	const MODULE_DIR = 'module/';
 
 	// Miniatures de la galerie
