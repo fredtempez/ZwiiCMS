@@ -161,11 +161,11 @@ class page extends common {
 			]
 		]);
 		// Creation du contenu de la page
-		if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-			mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
+		if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
+			mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 		}
-		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
-		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18n);
+		//file_put_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18nContent);
 		// Met à jour le site map
 		$this->createSitemap('all');
 		// Mise à jour de la liste des pages pour TinyMCE
@@ -289,8 +289,8 @@ class page extends common {
 			}
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
-			if (file_exists(self::DATA_DIR . self::$i18n . '/content/' . $url[0] . '.html')) {
-				unlink(self::DATA_DIR . self::$i18n . '/content/' . $url[0] . '.html');
+			if (file_exists(self::DATA_DIR . self::$i18nContent . '/content/' . $url[0] . '.html')) {
+				unlink(self::DATA_DIR . self::$i18nContent . '/content/' . $url[0] . '.html');
 			}
 			$this->deleteData(['module', $url[0]]);
 			// Met à jour le site map
@@ -372,8 +372,8 @@ class page extends common {
 					// Supprime l'ancienne page si l'id a changée
 					if($pageId !== $this->getUrl(2)) {
 						$this->deleteData(['page', $this->getUrl(2)]);
-						if (file_exists(self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html')) {
-							unlink (self::DATA_DIR . self::$i18n . '/content/' . $this->getUrl(2) . '.html');
+						if (file_exists(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getUrl(2) . '.html')) {
+							unlink (self::DATA_DIR . self::$i18nContent . '/content/' . $this->getUrl(2) . '.html');
 						}
 					}
 					// Traitement des pages spéciales affectées dans la config :
@@ -496,11 +496,11 @@ class page extends common {
 					]);
 
 					// Creation du contenu de la page
-					if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-						mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
+					if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
+						mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 					}
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
-					$this->setPage($pageId , $content, self::$i18n);
+					$this->setPage($pageId , $content, self::$i18nContent);
 
 					// Met à jour le site map
 					$this->createSitemap('all');

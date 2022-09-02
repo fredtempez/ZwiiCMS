@@ -69,7 +69,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Modules configurés <?php echo template::flag( self::$i18n, '20px'); ?>  </h4>
+				<h4>Modules configurés <?php echo template::flag( self::$i18nContent, '20px'); ?>  </h4>
 				<div class="row">
 					<div class="col1 offset11">
 						<?php echo template::button('configModuledataImport', [

@@ -109,7 +109,7 @@
 			<div class="col12">
 				<?php echo template::textarea('pageEditContent', [
 					'class' => 'editorWysiwyg',
-					'value' => $this->getPage($this->getUrl(2), self::$i18n)
+					'value' => $this->getPage($this->getUrl(2), self::$i18nContent)
 				]); ?>
 			</div>
 		</div>

@@ -158,6 +158,7 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue du contenu courante
+	public static $i18nContent;
 	public static $i18n;
 	// Langue de l'interface, tableau des dialogues
 	public static $dialog;
@@ -267,14 +268,14 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Déterminer la langue sélectionnée pour le chargement des fichiers de données
+		// Déterminer la langue du contenu du site
 		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
 		) {
-			self::$i18n = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale (LC_TIME, self::$i18n . '_' . strtoupper (self::$i18n) );
+			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
 
 		} else  {
-			self::$i18n = 'fr';
+			self::$i18nContent = '';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -283,19 +284,26 @@ class common {
 			// Constructeur  JsonDB
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
-				'dir' => $this->dataPath ($keys, self::$i18n),
+				'dir' => $this->dataPath ($keys, self::$i18nContent),
 				'backup' => file_exists('site/data/.backup')
 			]);;
+		}
+
+		// Langue de l'administration
+		self::$i18n = $this->getData(['config', 'i18n', 'default']);
+		// La langue par défaut du contenu est celle du site si le cookie est absent.
+		if (self::$i18nContent === '') {
+			self::$i18nContent = self::$i18n;
 		}
 
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath ($stageId, self::$i18n);
+			$folder = $this->dataPath ($stageId, self::$i18nContent);
 			if ( file_exists($folder . $stageId .'.json') === false ||
 					$this->getData([$stageId]) === NULL
 				) {
-				$this->initData($stageId, self::$i18n);
+				$this->initData($stageId, self::$i18nContent);
 				common::$coreNotices [] = $stageId ;
 			}
 		}
@@ -1576,7 +1584,7 @@ class common {
 		) {
 			if (
 				$this->getData(['user', $this->getUser('id') , 'files']) === true
-			) { 
+			) {
 				$itemsRight .= '<li>' . template::ico('folder',	[
 					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json'),
 					'attr' => 'data-lity',
@@ -2737,7 +2745,7 @@ class core extends common {
 		) {
 			$this->addOutput([
 				'title' => $title,
-				'content' => 	$this->getPage($this->getUrl(0), self::$i18n) .
+				'content' => 	$this->getPage($this->getUrl(0), self::$i18nContent) .
 								// Concatène avec les paramètres avancés.
 								$this->getData(['page', $this->getUrl(0), 'css']) .
 								$this->getData(['page', $this->getUrl(0), 'js']),
@@ -2747,10 +2755,10 @@ class core extends common {
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
-									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18nContent)
 									: '',
 				'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
-									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
+									? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18nContent)
 									: ''
 			]);
 		}
@@ -2771,13 +2779,13 @@ class core extends common {
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page',$this->getUrl(0),'barRight'])
-										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18n)
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barRight']), self::$i18nContent)
 										: '',
 					'contentLeft'  => $this->getData(['page',$this->getUrl(0),'barLeft'])
-										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18n)
+										? $this->getPage($this->getData(['page',$this->getUrl(0),'barLeft']), self::$i18nContent)
 										: ''
 				]);
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18n);
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
 			}
 			else {
 				$moduleId = $this->getUrl(0);

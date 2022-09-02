@@ -438,8 +438,8 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	// Liste des pages dans pageList
 	$pageList = array();
 	// Creation du contenu de la page
-	if (!is_dir(self::DATA_DIR . self::$i18n . '/content')) {
-		mkdir(self::DATA_DIR . self::$i18n . '/content', 0755);
+	if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
+		mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 	}
 	foreach ($this->getHierarchy(null,null,null) as $parentKey=>$parentValue) {
 		$pageList [] = $parentKey;
@@ -449,7 +449,7 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	}
 	foreach ($pageList as $parentKey => $parent) {
 		$content = $this->getData(['page', $parent, 'content']);
-		//file_put_contents(self::DATA_DIR . self::$i18n . '/content/' . $parent . '.html', $content);
+		//file_put_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $parent . '.html', $content);
 		$this->setPage($parent, $content, 'fr');
 		$this->setData(['page', $parent, 'content', $parent . '.html']);
 	}
@@ -564,7 +564,7 @@ if ($this->getData(['core', 'dataVersion']) < 11203) {
 	$success = false ;
 	// Boucler sur les pages
 	foreach($this->getHierarchy(null,null,null) as $parentId => $childIds) {
-		$content = $this->getPage($parentId, self::$i18n);
+		$content = $this->getPage($parentId, self::$i18nContent);
 		$titre = $this->getData(['page', $parentId, 'title']);
 		$content =   $titre . ' ' . $content ;
 		$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
@@ -572,17 +572,17 @@ if ($this->getData(['core', 'dataVersion']) < 11203) {
 
 		if ($c1 > 0 || $c2 > 0) {
 			$success = true;
-			$this->setPage($parentId, $replace,  self::$i18n);
+			$this->setPage($parentId, $replace,  self::$i18nContent);
 			$c3 += $c1 + $c2;
 		}
 		foreach($childIds as $childId) {
-			$content = $this->getPage($childId, self::$i18n);
+			$content = $this->getPage($childId, self::$i18nContent);
 			$content =   $titre . ' ' . $content ;
 			$replace = str_replace( 'href="' . $old , 'href="'. $new , stripslashes($content),$c1) ;
 			$replace = str_replace( 'src="' . $old , 'src="'. $new , stripslashes($replace),$c2) ;
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
-				$this->setPage($childId, $replace,  self::$i18n);
+				$this->setPage($childId, $replace,  self::$i18nContent);
 				$c3 += $c1 + $c2;
 			}
 		}

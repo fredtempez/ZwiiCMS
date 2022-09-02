@@ -434,8 +434,8 @@ class addon extends common {
 				// Export des pages hébergeant le module
 				$pageParam[$pageId] = $this->getData(['page',$pageId]);
 				// Export du contenu de la page
-				//$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $pageId, 'content']));
-				$pageContent[$pageId] = $this->getPage($pageId, self::$i18n);
+				//$pageContent[$pageId] = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $pageId, 'content']));
+				$pageContent[$pageId] = $this->getPage($pageId, self::$i18nContent);
 				// Export de fr/module.json
 				$moduleId = 'fr/module.json';
 				$moduleDir = str_replace('site/data/','',$infoModules[$this->getUrl(2)]['dataDirectory']);

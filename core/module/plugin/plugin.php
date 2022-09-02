@@ -502,8 +502,8 @@ class plugin extends common {
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
 
-		$keyi18n = self::$i18n;
-		$valueI18n = $pagesInfos[self::$i18n];
+		$keyi18n = self::$i18nContent;
+		$valueI18n = $pagesInfos[self::$i18nContent];
 		foreach ($valueI18n as $keyPage=>$value) {
 			if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
 				// Co[nstruire le tableau de sortie

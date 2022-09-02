@@ -189,8 +189,8 @@ class search extends common {
                         $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
 						$url = $parentId;
 						$titre = $this->getData(['page', $parentId, 'title']);
-						//$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $parentId, 'content']));
-						$content = $this->getPage($parentId, self::$i18n);
+						//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $parentId, 'content']));
+						$content = $this->getPage($parentId, self::$i18nContent);
 						$content =   $titre . ' ' . $content ;
 						// Pages sauf pages filles et articles de blog
 						$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
@@ -206,8 +206,8 @@ class search extends common {
                                 $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
                                     $url = $childId;
                                     $titre = $this->getData(['page', $childId, 'title']);
-									//$content = file_get_contents(self::DATA_DIR . self::$i18n . '/content/' . $this->getData(['page', $childId, 'content']));
-									$content = $this->getPage($childId, self::$i18n);
+									//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $childId, 'content']));
+									$content = $this->getPage($childId, self::$i18nContent);
 									$content =   $titre . ' ' . $content ;
                                     //Pages filles
 									$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
