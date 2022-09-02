@@ -19,6 +19,14 @@ class helper {
 	const FILTER_URL = 11;
 
 
+	/**
+	 * Traduire le message dans la langue déterminée
+	 */
+
+	 public static function translate($text) {
+		$r = (array_key_exists($text, core::$dialog)) ? core::$dialog[$text] : $text;
+		return ($r);
+	}
 
 	/**
 	 * Récupérer l'adresse IP sans tenir compte du proxy
