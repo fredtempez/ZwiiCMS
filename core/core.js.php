@@ -53,7 +53,6 @@ core.colorVariants = function(rgba) {
 		"normal": "rgba(" + rgba[0] + "," + rgba[1] + "," + rgba[2] + "," + rgba[3] + ")",
 		"darken": "rgba(" + Math.max(0, rgba[0] - 15) + "," + Math.max(0, rgba[1] - 15) + "," + Math.max(0, rgba[2] - 15) + "," + rgba[3] + ")",
 		"veryDarken": "rgba(" + Math.max(0, rgba[0] - 20) + "," + Math.max(0, rgba[1] - 20) + "," + Math.max(0, rgba[2] - 20) + "," + rgba[3] + ")",
-		//"text": core.relativeLuminanceW3C(rgba) > .22 ? "inherit" : "white"
 		"text": core.relativeLuminanceW3C(rgba) > .22 ? "#222" : "#DDD"
 	};
 };
@@ -72,7 +71,7 @@ core.confirm = function(text, yesCallback, noCallback) {
 					.append(
 						$("<a>")
 							.addClass("button grey")
-							.text("Non")
+							.text("<?php echo helper::translate('Non');?>")
 							.on("click", function() {
 								lightbox.options('button', true);
 								lightbox.close();
@@ -82,7 +81,7 @@ core.confirm = function(text, yesCallback, noCallback) {
 						}),
 						$("<a>")
 							.addClass("button")
-							.text("Oui")
+							.text("<?php echo helper::translate('Oui');?>")
 							.on("click", function() {
 								lightbox.options('button', true);
 								lightbox.close();
@@ -130,7 +129,8 @@ core.end = function() {
 	var inputSerialize = inputsDOM.serialize();
 	$(window).on("beforeunload", function() {
 		if(inputsDOM.serialize() !== inputSerialize) {
-			return "Les modifications que vous avez apportées ne seront peut-être pas enregistrées.";
+			message = "<?php echo helper::translate('Les modifications que vous avez apportées ne seront peut-être pas enregistrées.');?>";
+			return message;
 		}
 	});
 	formDOM.submit(function() {
@@ -215,7 +215,6 @@ core.start = function() {
 		// Variables des cookies
 		var getUrl   = window.location;
 		var domain   = "domain=" + getUrl.hostname + ";";
-		//var path     = "path=" + getUrl.pathname.split('/')[1] + ";";
 		var e = new Date();
 		e.setFullYear(e.getFullYear() + 1);
 		var expires = "expires=" + e.toUTCString();
@@ -288,13 +287,15 @@ core.start = function() {
 	});
 	// Confirmation de mise à jour
 	$("#barUpdate").on("click", function() {
-		return core.confirm("Effectuer la mise à jour ?", function() {
+		message = "<?php echo helper::translate('Mettre à jour ?');?>";
+		return core.confirm(message, function() {
 			$(location).attr("href", $("#barUpdate").attr("href"));
 		});
 	});
 	// Confirmation de déconnexion
 	$("#barLogout").on("click", function() {
-		return core.confirm("Se déconnecter ?", function() {
+		message = "<?php echo helper::translate('Se déconnecter ?');?>";
+		return core.confirm(message, function() {
 			$(location).attr("href", $("#barLogout").attr("href"));
 		});
 	});
@@ -320,7 +321,8 @@ core.start = function() {
 			core.noticeRemove(_this.attr("id"));
 		}
 		else {
-			core.noticeAdd(_this.attr("id"), "Format incorrect");
+			message = "<?php echo helper::translate('Format incorrect');?>";
+			core.noticeAdd(_this.attr("id"), message);
 		}
 	});
 
@@ -360,11 +362,7 @@ core.start = function() {
 			var height = heightpx.substr(0,heightpx.length-2);
 			var ratio = width / height;
 			if ( ($(window).width() / ratio) <= height) {
-				//var feature = "<?php echo $this->getdata(['theme','header','feature']);?>";
 				$("header").height( $(window).width() / ratio );
-				//if( feature !== "feature"){
-				//	$("header").css("line-height", $(window).width() / ratio + "px");
-				//};
 			}
 		}
 	}).trigger("resize");
@@ -379,7 +377,8 @@ core.start();
  */
 $("#pageDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cette page ?", function() {
+	message = "<?php echo helper::translate('Confirmez-vous la suppression de cette page ?');?>";
+	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
@@ -475,18 +474,9 @@ $(document).ready(function(){
 		};
 	});
 
-
 	/**
 	* Remove ID Facebook from URL
 	 */
 	if(/^\?fbclid=/.test(location.search))
 		location.replace(location.href.replace(/\?fbclid.+/, ""));
-
-	/**
-	 * No translate Lity close
-	 */
-	 $(document).on('lity:ready', function(event, instance) {
-		$('.lity-close').addClass('notranslate');
-	});
-
 });
