@@ -35,6 +35,7 @@ class common {
 	const DATA_DIR = 'site/data/';
 	const FILE_DIR = 'site/file/';
 	const TEMP_DIR = 'site/tmp/';
+	const I18N_DIR = 'site/i18n';
 	const MODULE_DIR = 'module/';
 
 	// Miniatures de la galerie
@@ -156,8 +157,11 @@ class common {
 		'nl' 	=> 'Néerlandais (nl)',
 		'pt'	=> 'Portugais (pt)',
 	];
-	// Langue courante
+	// Langue du contenu courante
 	public static $i18n;
+	// Langue de l'interface, tableau des dialogues
+	public static $dialog;
+	// Zone de temps
 	public static $timezone;
 	private $url = '';
 	// Données de site
@@ -301,7 +305,6 @@ class common {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
 
-
 		// Construit la liste des pages parents/enfants
 		if($this->hierarchy['all'] === []) {
 			$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
@@ -356,6 +359,7 @@ class common {
 				}
 			}
 		}
+
 		// Construit l'url
 		if($this->url === '') {
 			if($url = $_SERVER['QUERY_STRING']) {
@@ -365,6 +369,9 @@ class common {
 				$this->url = $this->getData(['locale', 'homePageId']);
 			}
 		}
+
+		// Chargement des dialogues
+		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . 'en.json'), true);
 
 		// Mise à jour des données core
 		if( $this->getData(['core', 'dataVersion']) !== intval(str_replace('.','',self::ZWII_VERSION))) include( 'core/include/update.inc.php');
@@ -584,14 +591,6 @@ class common {
 		}
 	}
 
-	/*
-	* Dummy function
-	* Compatibilité des modules avec v8 et v9
-	*/
-	public function saveData() {
-		return;
-	}
-
 	/**
 	 * Accède à la liste des pages parents et de leurs enfants
 	 * @param int $parentId Id de la page parent
@@ -720,56 +719,6 @@ class common {
 	public function isPost() {
 		return ($this->checkCSRF() AND $this->input['_POST'] !== []);
 	}
-
-	/**
-	 * Import des données de la version 9
-	 * Convertit un fichier de données data.json puis le renomme
-	 */
-	public function importData($keepUsers = false) {
-		// Trois tentatives de lecture
-		for($i = 0; $i < 3; $i++) {
-			$tempData=json_decode(file_get_contents(self::DATA_DIR.'core.json'), true);
-			$tempTheme=json_decode(file_get_contents(self::DATA_DIR.'theme.json'), true);
-			if($tempData && $tempTheme) {
-				// Backup
-				rename (self::DATA_DIR.'core.json',self::DATA_DIR.'imported_core.json');
-				rename (self::DATA_DIR.'theme.json',self::DATA_DIR.'imported_theme.json');
-				break;
-			}
-			elseif($i === 2) {
-                throw new \ErrorException('Import des données impossible.');
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
-		}
-
-		// Dossier de langues
-		if (!file_exists(self::DATA_DIR . '/fr')) {
-			mkdir (self::DATA_DIR . '/fr', 0755);
-		}
-
-		// Un seul fichier pour éviter les erreurs de sauvegarde des v9
-		$tempData = array_merge($tempData,$tempTheme);
-
-		// Ecriture des données
-		$this->setData(['config',$tempData['config']]);
-		$this->setData(['core',$tempData['core']]);
-		$this->setData(['page',$tempData['page']]);
-		$this->setData(['module',$tempData['module']]);
-		$this->setData(['theme',$tempData['theme']]);
-
-		// Import des users sauvegardés si option active
-		if ($keepUsers === false
-			AND $tempData['user'] !== NULL) {
-			$this->setData(['user',$tempData['user']]);
-		}
-
-		// Nettoyage du fichier de thème pour forcer une régénération
-		if (file_exists(self::DATA_DIR . '/theme.css')) { // On ne sait jamais
-			unlink (self::DATA_DIR . '/theme.css');
-		}
-	}
-
 
 	/**
 	 * Génère un fichier json avec la liste des pages
