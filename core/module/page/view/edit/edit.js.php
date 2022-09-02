@@ -14,7 +14,7 @@
 
 /**
  * Confirmation de suppression
- */
+*/
  $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
 	return core.confirm("Confirmez-vous la suppression de cette page ?", function() {
