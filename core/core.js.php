@@ -374,7 +374,7 @@ core.start();
 
 /**
  * Confirmation de suppression
-
+*/
 $("#pageDelete").on("click", function() {
 	var _this = $(this);
 	message = "<?php echo helper::translate('Confirmez-vous la suppression de cette page ?');?>";
@@ -382,7 +382,7 @@ $("#pageDelete").on("click", function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
-*/
+
 
 /**
  * Calcul de la luminance relative d'une couleur
