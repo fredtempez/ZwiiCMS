@@ -15,8 +15,10 @@
 
 class blog extends common {
 
-	const VERSION = '6.0';
+	const VERSION = '6.1';
 	const REALNAME = 'Blog';
+	const DELETE = true;
+	const UPDATE = '0.0';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	const EDIT_OWNER = 'owner';
@@ -868,7 +870,11 @@ class blog extends common {
 				if($articlePublishedOn <= time() AND $articleIdsStates[$articleId]) {
 					$articleIds[] = $articleId;
 					// Nombre de commentaires approuvés par article
-					self::$comments [$articleId] = count ( $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']));
+					if ( is_array($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment'])) ) {
+						self::$comments [$articleId] = count ( $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']));
+					} else {
+						self::$comments [$articleId] = '0';
+ 					}
 				}
 			}
 			// Pagination
