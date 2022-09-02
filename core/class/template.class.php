@@ -22,6 +22,9 @@ class template  {
             'value' => 'Bouton',
             'help' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
         return  sprintf(
             '<a %s class="button %s %s %s" %s>%s</a>',
@@ -52,67 +55,69 @@ class template  {
             'limit' => false, // captcha simple
             'type'=> 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['help'] = helper::translate($attributes['help']);
+        // Captcha quatre opérations
+        // Limite addition et soustraction selon le type de captcha
+        $numbers = [0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20];
+        $letters = ['u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'];
+        $limit = $attributes['limit']  ? count($letters)-1 : 10;
 
-   // Captcha quatre opérations
-    // Limite addition et soustraction selon le type de captcha
-    $numbers = [0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20];
-    $letters = ['u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'];
-    $limit = $attributes['limit']  ? count($letters)-1 : 10;
+        // Tirage de l'opération
+        mt_srand((float) microtime()*1000000);
+        // Captcha simple limité à l'addition
+        $operator = $attributes['limit'] ?  mt_rand (1, 4) : 1;
 
-    // Tirage de l'opération
-    mt_srand((float) microtime()*1000000);
-    // Captcha simple limité à l'addition
-    $operator = $attributes['limit'] ?  mt_rand (1, 4) : 1;
+        // Limite si multiplication ou division
+        if ($operator > 2) {
+            $limit = 10;
+            }
 
-    // Limite si multiplication ou division
-    if ($operator > 2) {
-        $limit = 10;
+        // Tirage des nombres
+        mt_srand((float) microtime()*1000000);
+        $firstNumber = mt_rand (1, $limit);
+        mt_srand((float) microtime()*1000000);
+        $secondNumber = mt_rand (1, $limit);
+
+        // Permutation si addition ou soustraction
+        if (($operator < 3) and ($firstNumber < $secondNumber)) {
+            $temp = $firstNumber;
+            $firstNumber = $secondNumber;
+            $secondNumber = $temp;
         }
 
-    // Tirage des nombres
-    mt_srand((float) microtime()*1000000);
-    $firstNumber = mt_rand (1, $limit);
-    mt_srand((float) microtime()*1000000);
-    $secondNumber = mt_rand (1, $limit);
-
-    // Permutation si addition ou soustraction
-    if (($operator < 3) and ($firstNumber < $secondNumber)) {
-        $temp = $firstNumber;
-        $firstNumber = $secondNumber;
-        $secondNumber = $temp;
+        // Icône de l'opérateur et calcul du résultat
+        switch ($operator) {
+            case 1:
+                $operator = template::ico('plus');
+                $result =  $firstNumber + $secondNumber;
+                break;
+            case 2:
+                $operator = template::ico('minus');
+                $result =  $firstNumber - $secondNumber;
+                break;
+            case 3:
+                $operator = template::ico('cancel');
+                $result =  $firstNumber * $secondNumber;
+                break;
+            case 4:
+                $operator = template::ico('divide');
+                $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
+                for ($i = 1; $i <= $firstNumber; $i++) {
+                    $limit = $limit2[$i-1];
+                    }
+                mt_srand((float) microtime()*1000000);
+                $secondNumber = mt_rand(1, $limit);
+                $firstNumber =  $firstNumber * $secondNumber;
+                $result = $firstNumber / $secondNumber;
+                break;
         }
 
-    // Icône de l'opérateur et calcul du résultat
-    switch ($operator) {
-        case 1:
-            $operator = template::ico('plus');
-            $result =  $firstNumber + $secondNumber;
-            break;
-        case 2:
-            $operator = template::ico('minus');
-            $result =  $firstNumber - $secondNumber;
-            break;
-        case 3:
-            $operator = template::ico('cancel');
-            $result =  $firstNumber * $secondNumber;
-            break;
-        case 4:
-            $operator = template::ico('divide');
-            $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
-            for ($i = 1; $i <= $firstNumber; $i++) {
-                $limit = $limit2[$i-1];
-                }
-            mt_srand((float) microtime()*1000000);
-            $secondNumber = mt_rand(1, $limit);
-            $firstNumber =  $firstNumber * $secondNumber;
-            $result = $firstNumber / $secondNumber;
-            break;
-    }
-
-	// Hashage du résultat
+	    // Hashage du résultat
         $result = password_hash($result, PASSWORD_BCRYPT);
 
-	// Codage des valeurs de l'opération
+	    // Codage des valeurs de l'opération
         $firstLetter = uniqid();
         $secondLetter = uniqid();
 
@@ -176,6 +181,9 @@ class template  {
             'id' => $nameId,
             'name' => $nameId
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $label = helper::translate($label);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['checked'] = (bool) common::$inputBefore[$attributes['id']];
@@ -228,6 +236,9 @@ class template  {
             'readonly' => true,
             'value' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -292,6 +303,9 @@ class template  {
             'type' => 2,
             'value' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -385,6 +399,8 @@ class template  {
     * @return string
     */
     public static function help($text) {
+        // Traduction de l'étiquette
+        $text = helper::translate($text);
         return '<span class="helpButton" data-tippy-content="' . $text . '">' . self::ico('help') . '<!----></span>';
     }
 
@@ -439,8 +455,9 @@ class template  {
             'help' => '',
             'id' => ''
         ], $attributes);
-
+        // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
+        // Contenu de l'icône
         $item = $attributes['href'] ? '<a data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr']. ' >' : '';
         $item .= '<span id="' . $attributes['id']. '" class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
@@ -490,7 +507,9 @@ class template  {
             'for' => $for,
             'help' => ''
         ], $attributes);
-        // Ajout d'une aide
+        // Traduction de l'aide et de l'étiquette
+        $text = helper::translate($text);
+        $attributes['help'] = helper::translate($attributes['help']);
         if($attributes['help'] !== '') {
             $text = $text . self::help($attributes['help']);
         }
@@ -526,6 +545,9 @@ class template  {
             'readonly' => false,
             'value' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -588,6 +610,10 @@ class template  {
             'placeholder' => '',
             'readonly' => false
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
@@ -636,6 +662,9 @@ class template  {
             'selected' => '',
             'fonts' =>  []
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
         if (empty($attributes['fonts']) === false) {
             $fonts = $attributes['fonts'];
@@ -806,6 +835,9 @@ class template  {
             'readonly' => false,
             'value' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -858,6 +890,9 @@ class template  {
             'readonly' => false,
             'value' => ''
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
