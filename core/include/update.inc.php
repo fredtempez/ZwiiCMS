@@ -888,6 +888,9 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	if (file_exists('core/vendor/i18n/translation.js')) {
 		unlink('core/vendor/i18n/translation.js');
 	}
+	// Langue de l'interface
+	$this->setData(['config', 'i18n', 'default', 'fr']);
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 11600]);
 }

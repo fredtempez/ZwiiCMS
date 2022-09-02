@@ -42,6 +42,7 @@ class init extends common {
 				'redirectLogin' => true
 			],
 			'i18n' => [
+				'default' => 'fr',
 				'fr'=> 'none',
 				'de'=> 'none',
 				'en'=> 'none',
@@ -52,7 +53,7 @@ class init extends common {
 			]
 		],
 		'core' => [
-			'dataVersion' => 11400,
+			'dataVersion' => 11600,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
