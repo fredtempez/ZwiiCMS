@@ -56,7 +56,7 @@ class template  {
             'type'=> 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
+        // $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Captcha quatre opérations
         // Limite addition et soustraction selon le type de captcha
