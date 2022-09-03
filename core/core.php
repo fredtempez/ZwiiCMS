@@ -1973,7 +1973,7 @@ class common {
 				$leftItems .= '</select></li>';
 				$leftItems .= '<li>' . template::ico('plus', [
 							'href' => helper::baseUrl() . 'page/add',
-							'help' => 'Nouvelle page ou <br />nouvelle barre latérale'
+							'help' => 'Nouvelle page ou barre latérale'
 				]) . '</li>';
 				if(
 					// Sur un module de page qui autorise le bouton de modification de la page
