@@ -347,13 +347,13 @@ class user extends common {
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/'. $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
-						'help' => 'Editer ' . $userId
+						'help' => 'Editer'
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
 						'href' => helper::baseUrl() . 'user/delete/' . $userId. '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
-						'help' => 'Supprimer ' . $userId
+						'help' => 'Supprimer'
 					])
 				];
 			}

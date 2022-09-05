@@ -23,7 +23,7 @@ class template  {
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
+        //$attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
         return  sprintf(
@@ -239,6 +239,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -399,8 +400,6 @@ class template  {
     * @return string
     */
     public static function help($text) {
-        // Traduction de l'étiquette
-        $text = helper::translate($text);
         return '<span class="helpButton" data-tippy-content="' . $text . '">' . self::ico('help') . '<!----></span>';
     }
 
@@ -507,9 +506,12 @@ class template  {
             'for' => $for,
             'help' => ''
         ], $attributes);
-        // Traduction de l'aide et de l'étiquette
-        $text = helper::translate($text);
-        $attributes['help'] = helper::translate($attributes['help']);
+        // Traduction de l'étiquette si déjà appelée par une fonction de template
+;        if (
+            get_called_class() !== 'template'
+        ) {
+            $attributes['help'] = helper::translate($attributes['help']);
+        }
         if($attributes['help'] !== '') {
             $text = $text . self::help($attributes['help']);
         }
@@ -548,6 +550,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -838,6 +841,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
