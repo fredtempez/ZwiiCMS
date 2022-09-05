@@ -239,7 +239,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
-        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -507,7 +507,7 @@ class template  {
             'help' => ''
         ], $attributes);
         // Traduction de l'étiquette si déjà appelée par une fonction de template
-;        if (
+;       if (
             get_called_class() !== 'template'
         ) {
             $attributes['help'] = helper::translate($attributes['help']);
@@ -550,7 +550,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
-        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -615,7 +615,7 @@ class template  {
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
@@ -841,7 +841,7 @@ class template  {
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
-        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
         if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];

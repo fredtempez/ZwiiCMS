@@ -24,15 +24,16 @@ class helper {
 	 */
 
 	 public static function translate($text) {
-		$r = (array_key_exists($text, core::$dialog)) ? core::$dialog[$text] : $text;
+
 		// Captation
 		$data = json_decode(file_get_contents('site/i18n/template.json'), true);
-		if (!array_key_exists($text, $data)
-			&& !empty($text)
-		) {
-			$data = array_merge($data,[$text => ''] );
-			file_put_contents ('site/i18n/template.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
+		if (!array_key_exists($text, $data) ) {
+			if ($text !== '' ) {
+				$data = array_merge($data,[$text => ''] );
+				file_put_contents ('site/i18n/template.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
+			}
 		}
+		$r = (array_key_exists($text, core::$dialog)) ? core::$dialog[$text] : $text;
 		return ($r);
 	}
 
