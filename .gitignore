@@ -1,6 +1,9 @@
 core/class/phpmailer/.DS_Store
 site/.DS_Store
-site/*
+site/data/*
+site/tmp/*
+site/backup/*
+site/file/*
 .DS_Store
 core/vendor/tinymce/link_list.json
 robots.txt
