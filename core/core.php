@@ -158,8 +158,8 @@ class common {
 		'pt'	=> 'Portugais (pt)',
 	];
 	// Langue du contenu courante
-	public static $i18nContent;
-	public static $i18n;
+	public static $i18nContent = 'fr';
+	//public static $i18n = 'fr';
 	// Langue de l'interface, tableau des dialogues
 	public static $dialog;
 	// Zone de temps
@@ -275,7 +275,7 @@ class common {
 			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
 
 		} else  {
-			self::$i18nContent = '';
+			self::$i18nContent = 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -290,11 +290,11 @@ class common {
 		}
 
 		// Langue de l'administration
-		self::$i18n = $this->getData(['config', 'i18n', 'default']);
+		//self::$i18n = $this->getData(['config', 'i18n', 'default']);
 		// La langue par défaut du contenu est celle du site si le cookie est absent.
-		if (self::$i18nContent === '') {
-			self::$i18nContent = self::$i18n;
-		}
+		//if (self::$i18nContent === '') {
+		//	self::$i18nContent = self::$i18n;
+		//}
 
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
@@ -561,7 +561,7 @@ class common {
 	 * @param array $module : nom du module à générer
 	 * choix valides :  core config user theme page module
 	 */
-	public function initData($module, $lang = 'fr', $sampleSite = false) {
+	public function initData($module, $lang , $sampleSite = false) {
 
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');

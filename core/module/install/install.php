@@ -97,8 +97,8 @@ class install extends common {
 				helper::deleteCookie('ZWII_I18N_SITE');
 				// Installation du site de test
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
-					$this->initData('page','fr',true);
-					$this->initData('module','fr',true);
+					$this->initData('page', self::$i18nContent, true);
+					$this->initData('module',self::$i18nContent, true);
 					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
