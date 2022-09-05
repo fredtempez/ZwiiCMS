@@ -62,6 +62,8 @@
 			</div>
 		</div>
 	</div>
+	<?php else: ?>
+	<?php echo template::speech('Aucun module orphelin.'); ?>
 	<?php endif; ?>
 </div>
 <div class="tabContent displayNone" id="dataContainer">
@@ -87,5 +89,7 @@
 			</div>
 		</div>
 	</div>
+	<?php else: ?>
+	<?php echo template::speech('Aucune donnée de module.'); ?>
 	<?php endif; ?>
 </div>

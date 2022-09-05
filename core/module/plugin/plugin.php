@@ -503,30 +503,37 @@ class plugin extends common {
 		// Avec les commandes de sauvegarde et de restauration
 
 		$keyi18n = self::$i18nContent;
-		$valueI18n = $pagesInfos[self::$i18nContent];
-		foreach ($valueI18n as $keyPage=>$value) {
-			if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
-				// Co[nstruire le tableau de sortie
-				self::$modulesData[] = [
-					$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
-					$pagesInfos[$keyi18n][$keyPage]['moduleId'],
-					$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
-					//template::flag($keyi18n, '20px'),
-					'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')</a>',
-					template::button('dataExport' . $keyPage, [
-													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-													'value' => template::ico('download'),
-													'help' => 'Exporter les données du module'
-					]),
-					template::button('dataDelete' . $keyPage, [
-													'href' => helper::baseUrl(). $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
-													'value' => template::ico('trash'),
-													'class' => 'buttonRed dataDelete',
-													'help' => 'Détacher le module de la page',
-													])
-				];
+		if (isset($pagesInfos) &&
+			is_array($pagesInfos[self::$i18nContent]) )
+		{
+			foreach ($pagesInfos[self::$i18nContent] as $keyPage=>$value) {
+				if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]))
+				{
+					// Co[nstruire le tableau de sortie
+					self::$modulesData[] = [
+						$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']] ['realName'],
+						$pagesInfos[$keyi18n][$keyPage]['moduleId'],
+						$infoModules[$pagesInfos [$keyi18n][$keyPage]['moduleId']] ['version'],
+						//template::flag($keyi18n, '20px'),
+						'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos [$keyi18n][$keyPage]['title'] . ' (' .$keyPage . ')</a>',
+						template::button('dataExport' . $keyPage, [
+														'href' => helper::baseUrl(). $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+														'value' => template::ico('download'),
+														'help' => 'Exporter les données du module'
+						]),
+						template::button('dataDelete' . $keyPage, [
+														'href' => helper::baseUrl(). $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],// appel de fonction vaut exécution, utiliser un paramètre
+														'value' => template::ico('trash'),
+														'class' => 'buttonRed dataDelete',
+														'help' => 'Détacher le module de la page',
+														])
+					];
+				} else {
+					self::$modulesData[] = [];
+				}
 			}
 		}
+
 
 
 		// Valeurs en sortie
