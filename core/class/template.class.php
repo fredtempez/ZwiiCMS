@@ -457,8 +457,8 @@ class template  {
         // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
         // Contenu de l'icône
-        $item = $attributes['href'] ? '<a data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr']. ' >' : '';
-        $item .= '<span id="' . $attributes['id']. '" class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
+        $item = $attributes['href'] ? '<a id="' . $attributes['id']. '" data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr']. ' >' : '';
+        $item .= '<span class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
         return $item;
     }
