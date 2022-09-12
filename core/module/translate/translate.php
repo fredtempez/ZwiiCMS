@@ -30,6 +30,8 @@ class translate extends common {
 	public static $languagesInstalled = [];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
+	// Fichiers des langues de l'interface
+	public static $i18nFiles = [];
 	// Activation du bouton de copie
 	public static $siteTranslate = true;
 
@@ -175,13 +177,16 @@ class translate extends common {
 				]
 			]);
 			// Sauvegarder les langues de contenu
-			$this->setData(['config', 'i18n', 'fr', $this->getInput('translateFR') ]);
-			$this->setData(['config', 'i18n', 'de', $this->getInput('translateDE')]);
-			$this->setData(['config', 'i18n', 'en', $this->getInput('translateEN')]);
-			$this->setData(['config', 'i18n', 'es', $this->getInput('translateES')]);
-			$this->setData(['config', 'i18n', 'it', $this->getInput('translateIT')]);
-			$this->setData(['config', 'i18n', 'nl', $this->getInput('translateNL')]);
-			$this->setData(['config', 'i18n', 'pt', $this->getInput('translatePT')]);
+			$this->setData(['config', 'i18n', [
+				'default' 	=> $this->getInput('translateI18n'),
+				'fr' 		=> $this->getInput('translateFR'),
+				'de' 		=> $this->getInput('translateDE'),
+				'en' 		=> $this->getInput('translateEN'),
+				'es'		=> $this->getInput('translateES'),
+				'it' 		=> $this->getInput('translateIT'),
+				'nl' 		=> $this->getInput('translateNL'),
+				'pt' 		=> $this->getInput('translatePT')
+			]]);
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -190,6 +195,20 @@ class translate extends common {
 				'state' => true
 			]);
 		}
+		// Préparation de l'affichage du formulaire
+
+		// Liste des langues disponibles
+		if (is_dir(self::I18N_DIR)) {
+			$dir = getcwd();
+			chdir(self::I18N_DIR);
+			$files = glob('*.json');
+			// Ajouter une clé au tableau avec le code de langue
+			foreach( $files as $file) {
+				self::$i18nFiles[basename($file, '.json')] = $file;
+			}
+			chdir($dir);
+		}
+
 		// Modification des options de suppression de la langue installée.
 		foreach (self::$i18nList as $key => $value) {
 			if ($this->getData(['config','i18n',$key]) === 'site') {
@@ -225,7 +244,7 @@ class translate extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Contenu du site multilangues',
+			'title' => 'Multilangues',
 			'view' => 'index'
 		]);
 	}

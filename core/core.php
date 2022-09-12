@@ -159,7 +159,7 @@ class common {
 	];
 	// Langue du contenu courante
 	public static $i18nContent = 'fr';
-	//public static $i18n = 'fr';
+	public static $i18n = 'fr';
 	// Langue de l'interface, tableau des dialogues
 	public static $dialog;
 	// Zone de temps
@@ -289,12 +289,7 @@ class common {
 			]);;
 		}
 
-		// Langue de l'administration
-		//self::$i18n = $this->getData(['config', 'i18n', 'default']);
-		// La langue par défaut du contenu est celle du site si le cookie est absent.
-		//if (self::$i18nContent === '') {
-		//	self::$i18nContent = self::$i18n;
-		//}
+
 
 		// Installation fraîche, initialisation des modules manquants
 		// La langue d'installation par défaut est fr
@@ -306,6 +301,16 @@ class common {
 				$this->initData($stageId, self::$i18nContent);
 				common::$coreNotices [] = $stageId ;
 			}
+		}
+
+		// Langue de l'administration
+		self::$i18n = $this->getData(['config', 'i18n', 'default']);
+		// La langue par défaut du contenu est celle du site si le cookie est absent.
+		self::$i18n =  (empty(self::$i18n) || is_null(self::$i18n)) ? self::$i18n = 'fr' : self::$i18n ;
+
+		// Le fichier existe-t-il ?
+		if (!file_exists(self::I18N_DIR . self::$i18n . '.json')) {
+			self::$i18n = 'fr';
 		}
 
 		// Utilisateur connecté
