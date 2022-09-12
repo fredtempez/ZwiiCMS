@@ -17,7 +17,9 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Paramètres de la sauvegarde</h4>
+			<h4>
+				<?php echo template::header('Paramètres de la sauvegarde'); ?>
+			</h4>
 			<div class="row">
 				<div class="col12">
 					<?php echo template::checkbox('configBackupOption', true, 'Inclure le contenu du gestionnaire de fichiers', [

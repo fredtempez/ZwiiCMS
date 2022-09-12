@@ -3,6 +3,14 @@
 class template  {
 
     /**
+     * Créer un header de niveau 4 uniquement pour la traduction des titres
+     */
+    public static function header($text) {
+        $text = helper::translate($text);
+        return $text ;
+    }
+
+    /**
     * Crée un bouton
     * @param string $nameId Nom et id du champ
     * @param array $attributes Attributs ($key => $value)
