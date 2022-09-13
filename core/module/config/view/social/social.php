@@ -2,7 +2,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Capture Open Graph
+				<h4>
+					<?php echo template::header('Capture d\'écran Open Graph');?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>
@@ -45,7 +46,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Référencement</h4>
+				<h4>
+					<?php echo template::header('Référencement');?>
+				</h4>
 				<div class="row">
 					<div class="col4 offset1">
 						<?php echo template::button('socialSiteMap', [
@@ -65,7 +68,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Comptes des réseaux sociaux
+				<h4>
+					<?php echo template::header('Réseaux sociaux');?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>

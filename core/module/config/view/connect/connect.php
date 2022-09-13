@@ -90,7 +90,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Journalisation
+				<h4><?php echo template::header('Journalisation');?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/journalisation" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>

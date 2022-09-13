@@ -18,7 +18,9 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Archive à restaurer</h4>
+			<h4>
+				<?php echo template::header('Archive à restaurer');?>
+			</h4>
 			<div class="row">
 				<div class="col10 offset1">
 					<div class="row">
