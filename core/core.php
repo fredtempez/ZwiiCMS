@@ -900,7 +900,9 @@ class common {
 		// Update robots.txt file in output directory
 
 		if ($this->getData(['config','seo', 'robots']) === true) {
-			unlink('robots.txt');
+			if (file_exists('robots.txt')) {
+				unlink('robots.txt');
+			}
 			$sitemap->updateRobots();
 		} else {
 			file_put_contents('robots.txt','User-agent: *' .  PHP_EOL . 'Disallow: /');
