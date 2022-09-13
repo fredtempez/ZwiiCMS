@@ -221,9 +221,20 @@
     "SMTP": "",
     "Archive à restaurer": "",
     "Mise à jour automatisée": "", 
-    "Capture d\/'écran Open Graph": "", 
+    "Capture d'écran Open Graph": "", 
     "Référencement": "",
-    "Réseaux sociaux": ""
-
+    "Réseaux sociaux": "",
+    "Renseignez les champs ci-dessous pour finaliser l'installation.": "",
+    "Compte administrateur": "",
+    "Options avancées": "",
+    "Mise à jour de ZwiiCMS": "", 
+    "vers ZwiiCMS": "",
+    "Afin d'assurer le bon fonctionnement de Zwii, veuillez ne pas fermer cette page avant la fin de l'opération.": "",
+    "1/4 : Préparation...": "", 
+    "2/4 : Téléchargement...": "",
+    "3/4 : Installation...": "", 
+    "4/4 : Configuration...": "", 
+    "Une erreur est survenue lors de l'étape :": "", 
+    "Mise à jour terminée avec succès.": ""
 
 }

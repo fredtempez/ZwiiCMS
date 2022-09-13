@@ -1,8 +1,12 @@
-<p>Renseignez les champs ci-dessous pour finaliser l'installation.</p>
+<p>
+	<?php echo template::transcribe('Renseignez les champs ci-dessous pour finaliser l\'installation.'); ?>
+</p>
 <?php echo template::formOpen('installForm'); ?>
 	<ul class="accordion" data-speed="150">
 		<li class="accordion-item active">
-			<h3 class="accordion-title">Compte administrateur</h3>
+			<h3 class="accordion-title">
+				<?php echo template::transcribe('Compte administrateur'); ?>
+			</h3>
 			<div class="accordion-content">
 				<div class="row">
 					<div class="col12">
@@ -47,7 +51,9 @@
 			</div>
 		</li>
 		<li class="accordion-item">
-			<h3 class="accordion-title">Options avancées</h3>
+			<h3 class="accordion-title">
+				<?php echo template::transcribe('Options avancées'); ?>
+			</h3>
 			<div class="accordion-content">
 				<div class="row">
 					<div class="col12">
