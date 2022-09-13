@@ -26,7 +26,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Installer ou mettre à jour un module téléchargé </h4>
+			  <h4>  
+          <?php echo template::transcribe('Installer ou mettre à jour un module téléchargé'); ?>
+        </h4>
 				<div class="row">
 					<div class="col6 offset3">
 						<?php echo template::file('configModulesInstallation', [

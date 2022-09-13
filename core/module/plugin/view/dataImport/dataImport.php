@@ -16,7 +16,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-        <h4>Installer des données de module</h4>
+            <h4>
+                <?php echo template::transcribe('Installer les données d\'un module'); ?>
+            </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::file('pluginImportFile', [

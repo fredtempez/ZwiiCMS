@@ -45,7 +45,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Sauvegarde</h4>
+				<h4>
+				<?php echo template::transcribe('Sauvegarde'); ?>
+				</h4>
 				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Modules', 'moduleId', 'Versions', '', '', '']); ?>
 			</div>
 		</div>
@@ -57,7 +59,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Modules orphelins</h4>
+				<h4>
+					<?php echo template::transcribe('Modules orphelins'); ?>
+				</h4>
 				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Modules', 'moduleId', 'Versions', '', '']); ?>
 			</div>
 		</div>
@@ -71,7 +75,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Modules configurés <?php echo template::flag( self::$i18nContent, '20px'); ?>  </h4>
+				<h4>
+				<?php echo template::transcribe('Modules configurés'); ?>
+				&nbsp;
+				<?php echo template::flag( self::$i18nContent, '20px'); ?>  
+				</h4>
 				<div class="row">
 					<div class="col1 offset11">
 						<?php echo template::button('configModuledataImport', [

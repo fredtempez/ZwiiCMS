@@ -16,25 +16,28 @@
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo 'Version n°' .  $module::$storeItem['fileVersion']; ?>
+            <?php echo template::transcribe('Version n°') . $module::$storeItem['fileVersion']; ?>
         </div>
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo ' du ' .  $module::$storeItem['fileDate']; ?>
+            &nbsp;<?php echo template::transcribe('du') . '&nbsp;' .  $module::$storeItem['fileDate']; ?>
         </div>
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <span>Auteur :
-            <?php echo $module::$storeItem['fileAuthor']; ?>
+            <span>
+                <?php echo template::transcribe('Auteur :'); ?>
+                <?php echo $module::$storeItem['fileAuthor']; ?>
             </span>
         </div>
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <span>Licence :
-            <?php echo $module::$storeItem['fileLicense']; ?>
+            <span>
+                <?php echo template::transcribe('Licence :'); ?>
+                &nbsp;
+                <?php echo $module::$storeItem['fileLicense']; ?>
             </span>
         </div>
     </div>
