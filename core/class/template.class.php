@@ -3,9 +3,9 @@
 class template  {
 
     /**
-     * Créer un header de niveau 4 uniquement pour la traduction des titres
+     * retourne un texte traduit
      */
-    public static function header($text) {
+    public static function transcribe($text) {
         $text = helper::translate($text);
         return $text ;
     }

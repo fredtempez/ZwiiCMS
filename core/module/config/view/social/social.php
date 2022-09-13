@@ -3,7 +3,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::header('Capture d\'écran Open Graph');?>
+					<?php echo template::transcribe('Capture d\'écran Open Graph');?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>
@@ -47,7 +47,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::header('Référencement');?>
+					<?php echo template::transcribe('Référencement');?>
 				</h4>
 				<div class="row">
 					<div class="col4 offset1">
@@ -69,7 +69,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::header('Réseaux sociaux');?>
+					<?php echo template::transcribe('Réseaux sociaux');?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']);?>
