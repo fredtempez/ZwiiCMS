@@ -24,7 +24,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Installer un thème archivé (site ou administration)</h4>
+				<h4>
+					<?php template::transcribe('Installer un thème archivé (site ou administration)'); ?>
+				</h4>
 				<div class="row">
 					<div class="col6 offset3">
 						<?php echo template::file('themeManageImport', [
@@ -39,7 +41,12 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-			<h4>Sauvegarde du thème dans les <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>fichiers</a> du site</h4>
+				<h4>
+					<?php template::transcribe('Sauvegarde du thème dans le'); ?>
+					<a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>
+					<?php template::transcribe('gestionnaire de fichiers'); ?>
+					</a>
+				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::button('themeSave', [
@@ -61,7 +68,9 @@
 
 		<div class="col6">
 			<div class="block">
-			<h4>Télécharger le thème</h4>
+				<h4>
+					<?php template::transcribe('Télécharger le thème'); ?>
+				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::button('themeExport', [

@@ -22,7 +22,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Paramètres</h4>
+            <h4>
+                <?php template::transcribe('Paramètres'); ?>
+            </h4>
             <div class="row">
                 <div class="col4">
                     <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
@@ -73,7 +75,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Couleurs</h4>
+            <h4>
+                <?php template::transcribe('Couleurs'); ?>
+            </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::text('themeHeaderBackgroundColor', [
@@ -98,7 +102,9 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4>Mise en forme du titre</h4>
+            <h4>
+                <?php template::transcribe('Mise en forme du titre'); ?>
+            </h4>
             <div class="row">
                 <div class="col4">
                     <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le titre du site', [
@@ -147,7 +153,9 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4>Papier peint</h4>
+            <h4>
+                <?php template::transcribe('Papier peint'); ?>
+            </h4>
             <div class="row">
                 <div class="col12">
                     <?php
@@ -159,11 +167,11 @@
                             'value' => $imageFile
                     ]); ?>
                     <span  class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        Largeur de l'image : <span id="themeHeaderImageWidth"></span> (largeur de site :  <?php echo $this->getData(['theme', 'site', 'width']); ?>)
+                        <?php template::transcribe('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php template::transcribe('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
                         -
-                        Hauteur de l'image : <span id="themeHeaderImageHeight"></span>
+                        <?php template::transcribe('Hargeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
                         -
-                        Ratio : <span id="themeHeaderImageRatio"></span>
+                        <?php template::transcribe('Ratio :'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
             </div>

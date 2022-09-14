@@ -22,7 +22,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Paramètres</h4>
+				<h4>
+					<?php template::transcribe('Paramètres'); ?>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
@@ -56,7 +58,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Couleurs</h4>
+				<h4>
+					<?php template::transcribe('Couleurs'); ?>
+				</h4>
 				<div class="row">
 					<div class="col8">
 						<div class="row">
@@ -156,7 +160,9 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4>Mise en forme du texte</h4>
+				<h4>
+					<?php template::transcribe('Mise en forme du texte'); ?>
+				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php 
@@ -178,7 +184,9 @@
 		</div>
 		<div class="col6">
 			<div class="block">
-				<h4>Mise en forme des titres</h4>
+				<h4>
+					<?php template::transcribe('Mise en forme des titres'); ?>
+				</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('themeTitleFont',  $module::$fonts['name'] , [

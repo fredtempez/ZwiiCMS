@@ -14,7 +14,9 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4>Informations générales</h4>
+				<h4>
+					<?php template::transcribe('Identité'); ?>
+				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('userAddFirstname', [
@@ -51,29 +53,27 @@
 							'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
 					]); ?>
 				</div>
-				Autorisations :
+				<div id="userAddLabelAuth">
+					<?php template::transcribe('Permissions :'); ?>
+				</div>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
-					<li>Accès aux pages privées membres</li>
+					<li><?php template::transcribe('Accès aux pages privées'); ?></li>
 				</ul>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
-					<li>Accès aux pages privées membres et éditeurs</li>
-					<li>Ajout / Édition / Suppression de pages</li>
-					<li>Ajout / Édition / Suppression de fichiers</li>
+					<li><?php template::transcribe('Accès aux pages privées'); ?></li>
+					<li><?php template::transcribe('Ajout / Édition / Suppression de pages'); ?></li>
+					<li><?php template::transcribe('Ajout / Édition / Suppression de fichiers'); ?></li>
 				</ul>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
-					<li>Accès à toutes les pages privées</li>
-					<li>Ajout / Édition / Suppression de pages</li>
-					<li>Ajout / Édition / Suppression de fichiers</li>
-					<li>Ajout / Édition / Suppression de dossiers</li>
-					<li>Ajout / Édition / Suppression d'utilisateurs</li>
-					<li>Configuration du site</li>
-					<li>Personnalisation du thème</li>
+					<li><?php template::transcribe('Administration complète du site'); ?></li>
 				</ul>
 			</div>
 		</div>
 		<div class="col6">
 			<div class="block">
-				<h4>Authentification</h4>
+				<h4>
+					<?php template::transcribe('Authentification'); ?>
+				</h4>
 				<?php echo template::text('userAddId', [
 					'autocomplete' => 'off',
 					'label' => 'Identifiant'

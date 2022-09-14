@@ -16,7 +16,8 @@
  */
 $(".userDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?", function() {
+	message = "<?php echo helper::transcribe('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');?>";
+	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });

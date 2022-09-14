@@ -31,7 +31,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block" id="flagsWrapper">
-			<h4>Traduite ZwiiCMS</h4>
+				<h4>
+					<?php template::transcribe('Traduire ZwiiCMS'); ?>
+				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::select('translateI18n', $module::$i18nFiles, [
@@ -46,7 +48,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block" id="flagsWrapper">
-			<h4>Activation des langues du contenu</h4>
+				<h4>
+					<?php template::transcribe('Traduction du contenu'); ?>
+				</h4>
 				<div class="row">
 					<div class="col3">
 						<?php echo template::select('translateFR', ['none'=>'Drapeau masqué','site'=>'Drapeau affiché'], [

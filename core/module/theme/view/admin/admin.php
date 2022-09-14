@@ -32,7 +32,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-					<h4>Couleurs</h4>
+					<h4>
+						<?php template::transcribe('Couleurs'); ?>
+					</h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::text('adminBackgroundColor', [
@@ -125,7 +127,9 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-					<h4>Mise en forme du texte</h4>
+					<h4>
+						<?php template::transcribe('Mise en forme du texte'); ?>
+					</h4>
 					<div class="row">
 						<div class="col4">
 							<?php echo template::select('adminFontText', $module::$fonts['name'], [

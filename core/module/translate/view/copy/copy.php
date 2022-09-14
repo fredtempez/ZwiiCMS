@@ -16,7 +16,9 @@
 <div class="row">
    <div class="col12"> 
         <div class="block">
-        <h4>Copie de site (traductions rédigées)</h4>
+            <h4>
+                <?php template::transcribe('Copie des traductions rédigées'); ?>
+            </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('translateFormCopySource', $module::$languagesInstalled, [

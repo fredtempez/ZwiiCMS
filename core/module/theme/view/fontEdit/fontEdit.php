@@ -25,7 +25,10 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Identité de la fonte</h4>
+				<h4>
+					<?php template::transcribe('Identité de la fonte'); ?>
+					
+				</h4>
 				<div class="row">
 					<div class="col6">
 							<?php echo template::checkbox('fontEditFontImported', true, 'Fonte en ligne', [

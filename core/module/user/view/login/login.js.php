@@ -12,9 +12,9 @@
 $(document).ready(function(){
 
     $(".zwiico-eye").mouseenter(function() {
-        $("#userLoginPassword").attr("type", 'text');    
+        $("#userLoginPassword").attr("type", 'text');
     });
     $(".zwiico-eye").mouseleave(function() {
-        $("#userLoginPassword").attr("type", 'password');    
+        $("#userLoginPassword").attr("type", 'password');
     });
 });

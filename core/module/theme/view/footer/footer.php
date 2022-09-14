@@ -168,7 +168,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Mise en forme du texte</h4>
+            <h4>
+                <?php template::transcribe('Mise en forme du texte'); ?>
+            </h4>
             <div class="row">
                 <div class="col3">
                     <?php echo template::select('themeFooterFont', $module::$fonts['name'], [
@@ -203,7 +205,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Dispositions</h4>
+            <h4>
+                <?php template::transcribe('Disposition'); ?>
+            </h4>
             <div class="row">
                 <div class="col4">
                     <?php $footerBlockPosition =  is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks [$this->getData(['theme', 'footer', 'template'])] ;?>
@@ -215,7 +219,11 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <p><strong>Contenu personnalisé</strong></p>
+                    <p>
+                        <strong>
+                            <?php template::transcribe('Contenu personnalisé'); ?>
+                        </strong>
+                    </p>
                     <div class="row">
                         <div class="col12">
                             <?php echo template::select('themeFooterTextPosition', $footerBlockPosition, [
@@ -235,7 +243,11 @@
                     </div>
                 </div>
                 <div class="col4">
-                    <p><strong>Réseaux sociaux</strong></p>
+                    <p>
+                        <strong>
+                          <?php template::transcribe('Réseaux sociaux'); ?>
+                        </strong>
+                    </p>
                     <div class="row">
                         <div class="col12">
                             <?php echo template::select('themeFooterSocialsPosition', $footerBlockPosition, [
@@ -255,7 +267,11 @@
                     </div>
                 </div>
                 <div class="col4">
-                    <p><strong>Informations</strong></p>
+                    <p>
+                        <strong>
+                            <?php template::transcribe('Informations'); ?>
+                        </strong>
+                    </p>
                     <div class="row">
                         <div class="col12">
                             <?php echo template::select('themeFooterCopyrightPosition', $footerBlockPosition, [

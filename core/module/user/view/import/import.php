@@ -25,7 +25,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-        <h4>Importation de fichier plat CSV</h4>
+            <h4>
+              <?php template::transcribe('Importation de fichier plat CSV'); ?>
+            </h4>
             <div class="row">
                 <div class="col10">
                       <?php echo template::file('userImportCSVFile', [
