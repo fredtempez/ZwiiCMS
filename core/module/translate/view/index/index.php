@@ -32,7 +32,7 @@
 		<div class="col12">
 			<div class="block" id="flagsWrapper">
 				<h4>
-					<?php template::transcribe('Traduire ZwiiCMS'); ?>
+					<?php template::topic('Traduire ZwiiCMS'); ?>
 				</h4>
 				<div class="row">
 					<div class="col3">
@@ -49,7 +49,7 @@
 		<div class="col12">
 			<div class="block" id="flagsWrapper">
 				<h4>
-					<?php template::transcribe('Traduction du contenu'); ?>
+					<?php template::topic('Traduction du contenu'); ?>
 				</h4>
 				<div class="row">
 					<div class="col3">

@@ -46,7 +46,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-				<?php echo template::transcribe('Sauvegarde'); ?>
+				<?php echo template::topic('Sauvegarde'); ?>
 				</h4>
 				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Modules', 'moduleId', 'Versions', '', '', '']); ?>
 			</div>
@@ -60,7 +60,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::transcribe('Modules orphelins'); ?>
+					<?php echo template::topic('Modules orphelins'); ?>
 				</h4>
 				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Modules', 'moduleId', 'Versions', '', '']); ?>
 			</div>
@@ -76,7 +76,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-				<?php echo template::transcribe('Modules configurés'); ?>
+				<?php echo template::topic('Modules configurés'); ?>
 				&nbsp;
 				<?php echo template::flag( self::$i18nContent, '20px'); ?>  
 				</h4>

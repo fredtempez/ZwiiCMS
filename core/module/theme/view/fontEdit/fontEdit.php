@@ -26,7 +26,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php template::transcribe('Identité de la fonte'); ?>
+					<?php template::topic('Identité de la fonte'); ?>
 					
 				</h4>
 				<div class="row">

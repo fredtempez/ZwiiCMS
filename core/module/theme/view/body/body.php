@@ -58,7 +58,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php template::transcribe('Image'); ?>
+				<?php template::topic('Image'); ?>
 			</h4>
 			<div class="row">
 				<div class="col12">

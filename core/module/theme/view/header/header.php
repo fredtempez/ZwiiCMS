@@ -23,7 +23,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Paramètres'); ?>
+                <?php template::topic('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -76,7 +76,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Couleurs'); ?>
+                <?php template::topic('Couleurs'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
@@ -103,7 +103,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Mise en forme du titre'); ?>
+                <?php template::topic('Mise en forme du titre'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -154,7 +154,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Papier peint'); ?>
+                <?php template::topic('Papier peint'); ?>
             </h4>
             <div class="row">
                 <div class="col12">
@@ -167,11 +167,11 @@
                             'value' => $imageFile
                     ]); ?>
                     <span  class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php template::transcribe('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php template::transcribe('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
+                        <?php template::topic('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php template::topic('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
                         -
-                        <?php template::transcribe('Hargeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
+                        <?php template::topic('Hargeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
                         -
-                        <?php template::transcribe('Ratio :'); ?> <span id="themeHeaderImageRatio"></span>
+                        <?php template::topic('Ratio :'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
             </div>

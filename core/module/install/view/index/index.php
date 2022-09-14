@@ -1,11 +1,11 @@
 <p>
-	<?php echo template::transcribe('Renseignez les champs ci-dessous pour finaliser l\'installation.'); ?>
+	<?php echo template::topic('Renseignez les champs ci-dessous pour finaliser l\'installation.'); ?>
 </p>
 <?php echo template::formOpen('installForm'); ?>
 	<ul class="accordion" data-speed="150">
 		<li class="accordion-item active">
 			<h3 class="accordion-title">
-				<?php echo template::transcribe('Compte administrateur'); ?>
+				<?php echo template::topic('Compte administrateur'); ?>
 			</h3>
 			<div class="accordion-content">
 				<div class="row">
@@ -52,7 +52,7 @@
 		</li>
 		<li class="accordion-item">
 			<h3 class="accordion-title">
-				<?php echo template::transcribe('Options avancées'); ?>
+				<?php echo template::topic('Options avancées'); ?>
 			</h3>
 			<div class="accordion-content">
 				<div class="row">

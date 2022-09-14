@@ -169,7 +169,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Mise en forme du texte'); ?>
+                <?php template::topic('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -206,7 +206,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::transcribe('Disposition'); ?>
+                <?php template::topic('Disposition'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -221,7 +221,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php template::transcribe('Contenu personnalisé'); ?>
+                            <?php template::topic('Contenu personnalisé'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -245,7 +245,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                          <?php template::transcribe('Réseaux sociaux'); ?>
+                          <?php template::topic('Réseaux sociaux'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -269,7 +269,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php template::transcribe('Informations'); ?>
+                            <?php template::topic('Informations'); ?>
                         </strong>
                     </p>
                     <div class="row">

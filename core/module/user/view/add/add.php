@@ -15,7 +15,7 @@
 		<div class="col6">
 			<div class="block">
 				<h4>
-					<?php template::transcribe('Identité'); ?>
+					<?php template::topic('Identité'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -54,25 +54,25 @@
 					]); ?>
 				</div>
 				<div id="userAddLabelAuth">
-					<?php template::transcribe('Permissions :'); ?>
+					<?php template::topic('Permissions :'); ?>
 				</div>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
-					<li><?php template::transcribe('Accès aux pages privées'); ?></li>
+					<li><?php template::topic('Accès aux pages privées'); ?></li>
 				</ul>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
-					<li><?php template::transcribe('Accès aux pages privées'); ?></li>
-					<li><?php template::transcribe('Ajout / Édition / Suppression de pages'); ?></li>
-					<li><?php template::transcribe('Ajout / Édition / Suppression de fichiers'); ?></li>
+					<li><?php template::topic('Accès aux pages privées'); ?></li>
+					<li><?php template::topic('Ajout / Édition / Suppression de pages'); ?></li>
+					<li><?php template::topic('Ajout / Édition / Suppression de fichiers'); ?></li>
 				</ul>
 				<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
-					<li><?php template::transcribe('Administration complète du site'); ?></li>
+					<li><?php template::topic('Administration complète du site'); ?></li>
 				</ul>
 			</div>
 		</div>
 		<div class="col6">
 			<div class="block">
 				<h4>
-					<?php template::transcribe('Authentification'); ?>
+					<?php template::topic('Authentification'); ?>
 				</h4>
 				<?php echo template::text('userAddId', [
 					'autocomplete' => 'off',

@@ -5,7 +5,7 @@ class template  {
     /**
      * retourne un texte traduit
      */
-    public static function transcribe($text) {
+    public static function topic($text) {
         $text = helper::translate($text);
         return $text ;
     }
