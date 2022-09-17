@@ -17,7 +17,8 @@
 */
  $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Confirmez-vous la suppression de cette page ?", function() {
+	var message_delete = "<?php echo template::topic('Confirmer la suppression de la page'); ?>";
+	return core.confirm(message_delete, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
@@ -33,7 +34,8 @@ function protectModule() {
 	if ( oldModule !== "" &&
 		 oldModule !== newModule) {
 		var _this = $(this);
-		core.confirm("Les données du module " + oldModuleText + " seront effacées. Confirmez-vous ?",
+		var message_delete = "<?php echo template::topic('Confirmer la suppression des données du module'); ?>";
+		core.confirm(message_delete + " " + oldModuleText,
 				function() {
 					$(location).attr("href", _this.attr("href"));
 					return true;
@@ -646,9 +648,12 @@ function buildPagesList(extraPosition) {
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 	var extraPosition = $("#pageEditExtraPosition").val();
 	var positionDOM = $("#pageEditPosition");
+	var message_none = "<?php echo template::topic('Ne pas afficher'); ?>";
+	var message_begin = "<?php echo template::topic('Au début'); ?>";
+	var message_after = "<?php echo template::topic('Après'); ?>";
 	positionDOM.empty().append(
-		$("<option>").val(0).text("Ne pas afficher"),
-		$("<option>").val(1).text("Au début")
+		$("<option>").val(0).text(message_none),
+		$("<option>").val(1).text(message_begin)
 	);
 	var parentSelected = $("#pageEditParentPageId").val();
 	var positionSelected = 0;
@@ -670,7 +675,7 @@ function buildPagesList(extraPosition) {
 						positionPrevious++;
 						// Ajout à la liste
 						positionDOM.append(
-							$("<option>").val(positionPrevious).html("Après \"" + (pages[key].title) + "\"")
+							$("<option>").val(positionPrevious).html(message_after + " \"" + (pages[key].title) + "\"")
 						);
 					}
 
@@ -695,7 +700,7 @@ function buildPagesList(extraPosition) {
 				positionPrevious++;
 				// Ajout à la liste
 				positionDOM.append(
-					$("<option>").val(positionPrevious).html("Après \"" + (pages[hierarchy[parentSelected][i]].title) + "\"")
+					$("<option>").val(positionPrevious).html(message_after + " \"" + (pages[hierarchy[parentSelected][i]].title) + "\"")
 				);
 			}
 		}
