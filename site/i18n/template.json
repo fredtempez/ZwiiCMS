@@ -276,5 +276,11 @@
     "Ajout / Édition / Suppression de fichiers": "",
     "Administration complète du site": "",
     "Importation de fichier plat CSV": "",
-    "Êtes-vous sûr de vouloir supprimer cet utilisateur ?": ""
+    "Êtes-vous sûr de vouloir supprimer cet utilisateur ?": "",
+    "Sauvegarde générée avec succès.": "",
+    "Erreur : sauvegarde non générée !": "",
+    "Sauvegarder": "",
+    "La sauvegarde des fichiers peut prendre du temps. Continuer ?": "",
+    "Supprimer toutes les sauvegardes automatiques ?": ""
+
 }
