@@ -32,7 +32,8 @@
  */
 $(".moduleDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir désinstaller ce module ?", function() {
+    var message_delete = "<?php echo template::topic('Confirmer la désinstallation du module'); ?>";
+	return core.confirm(message_delete, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
@@ -42,7 +43,8 @@ $(".moduleDelete").on("click", function() {
  */
  $(".dataDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer le module de cette page ?", function() {
+    var message_unlink = "<?php echo template::topic('Confirmer la dissociation du module de cette page'); ?>";
+	return core.confirm(message_unlink, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
