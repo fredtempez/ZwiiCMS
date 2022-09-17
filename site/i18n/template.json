@@ -281,6 +281,10 @@
     "Erreur : sauvegarde non générée !": "",
     "Sauvegarder": "",
     "La sauvegarde des fichiers peut prendre du temps. Continuer ?": "",
-    "Supprimer toutes les sauvegardes automatiques ?": ""
+    "Supprimer toutes les sauvegardes automatiques ?": "",
+    "Préparation de la mise à jour": "",
+    "Téléchargement et validation de l'archive": "",
+    "Installation": "",
+    "Configuration": ""
 
 }

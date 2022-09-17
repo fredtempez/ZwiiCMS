@@ -3,7 +3,12 @@
  */
 function step(i, data) {
 	// tableau des erreurs
-	var errors = ['préparation de la mise à jour', 'téléchargement et validation de l\'archive', 'installation', 'configuration'];
+	var errors = [
+		"<?php echo template::topic('Préparation de la mise à jour'); ?>",
+		"<?php echo template::topic('Téléchargement et validation de l\'archive'); ?>",
+		"<?php echo template::topic('Installation'); ?>",
+		"<?php echo template::topic('Configuration'); ?>"
+	];
 	// Affiche le texte de progression
 	$(".installUpdateProgressText").hide();
 	$(".installUpdateProgressText[data-id=" + i + "]").show();
