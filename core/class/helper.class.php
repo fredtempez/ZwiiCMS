@@ -36,7 +36,7 @@ class helper {
 		}
 		*/
 		$r = (array_key_exists($text, core::$dialog)) ? core::$dialog[$text] : $text;
-		return ($r);
+		return $r;
 	}
 
 	/**

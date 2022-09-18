@@ -169,7 +169,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::topic('Mise en forme du texte'); ?>
+                <?php echo template::topic('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -206,7 +206,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php template::topic('Disposition'); ?>
+                <?php echo template::topic('Disposition'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -221,7 +221,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php template::topic('Contenu personnalisé'); ?>
+                            <?php echo template::topic('Contenu personnalisé'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -245,7 +245,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                          <?php template::topic('Réseaux sociaux'); ?>
+                          <?php echo template::topic('Réseaux sociaux'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -269,7 +269,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php template::topic('Informations'); ?>
+                            <?php echo template::topic('Informations'); ?>
                         </strong>
                     </p>
                     <div class="row">
