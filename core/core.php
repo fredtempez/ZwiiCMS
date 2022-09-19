@@ -157,11 +157,14 @@ class common {
 		'nl' 	=> 'Néerlandais (nl)',
 		'pt'	=> 'Portugais (pt)',
 	];
-	// Langue du contenu courante
+	// Sélection de langue de l'interface
 	public static $i18nContent = 'fr';
-	public static $i18n = 'fr';
+
 	// Langue de l'interface, tableau des dialogues
 	public static $dialog;
+	// Langue de l'interface sélectionnée
+	public static $i18n = 'fr_FR';
+
 	// Zone de temps
 	public static $timezone;
 	private $url = '';
@@ -274,7 +277,7 @@ class common {
 			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
 
 		} else  {
-			self::$i18nContent = 'fr';
+			self::$i18nContent = 'fr_FR';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -309,7 +312,7 @@ class common {
 
 		// Le fichier existe-t-il ?
 		if (!file_exists(self::I18N_DIR . self::$i18n . '.json')) {
-			self::$i18n = 'fr';
+			self::$i18n = 'fr_FR';
 		}
 
 		// Utilisateur connecté
