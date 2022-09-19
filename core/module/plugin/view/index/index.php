@@ -48,7 +48,7 @@
 				<h4>
 				<?php echo template::topic('Sauvegarde'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Modules', 'moduleId', 'Versions', '', '', '']); ?>
+				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Module', 'Identifiant', 'Version', '', '', '']); ?>
 			</div>
 		</div>
 	</div>
@@ -62,7 +62,7 @@
 				<h4>
 					<?php echo template::topic('Modules orphelins'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Modules', 'moduleId', 'Versions', '', '']); ?>
+				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Module', 'Identifiant', 'Version', '', '']); ?>
 			</div>
 		</div>
 	</div>
@@ -91,7 +91,7 @@
 				</div>
 				<div class="row">
 					<div class="col12">
-						<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Modules', 'moduleId', 'Versions', 'Pages (pageId)', '', '']); ?>
+						<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Module', 'Identifiant', 'Version', 'Page', '', '']); ?>
 					</div>
 				</div>
 			</div>
