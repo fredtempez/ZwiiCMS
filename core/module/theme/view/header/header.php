@@ -213,7 +213,7 @@
         <div class="row">
             <div class="col12">
                 <?php echo template::textarea('themeHeaderText', [
-                    'label' => '<div class="titleWysiwygContent">Contenu personnalisé</div>',
+                    'label' => '<div class="titleWysiwygContent">' . template::topic('Contenu personnalisé') .'</div>',
                     'class' => 'editorWysiwyg',
                     'value' => $this->getData(['theme', 'header', 'featureContent'])
                 ]); ?>

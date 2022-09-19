@@ -46,7 +46,7 @@
 			<div class="col12">
 				<div class="block" id="flagsWrapper">
 					<h4>
-						<?php echo template::topic('Traduire ZwiiCMS'); ?>
+						<?php echo template::topic('Interface de Zwii'); ?>
 					</h4>
 					<div class="row">
 						<div class="col4 offset4">

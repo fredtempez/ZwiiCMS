@@ -754,6 +754,8 @@ class template  {
             'uniqueSubmission' => false, //true avant 9.1.08
             'value' => 'Enregistrer'
         ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        $attributes['value'] = helper::translate($attributes['value']);
         // Retourne le html
         return  sprintf(
             '<button type="submit" class="%s%s" %s>%s</button>',
@@ -780,6 +782,10 @@ class template  {
 			'classWrapper' => '',
 			'id' => ''
 		], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        foreach($head as $value) {
+            $head[array_search($value,$head)] =  helper::translate($value);
+        }
 		// Début du wrapper
 		$html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper']. '">';
 		// Début tableau
