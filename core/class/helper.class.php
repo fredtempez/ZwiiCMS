@@ -35,7 +35,7 @@ class helper {
 			}
 		}
 		*/
-		$r = (array_key_exists($text, core::$dialog)) ? core::$dialog[$text] : $text;
+		$r = array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text;
 		return $r;
 	}
 
