@@ -183,7 +183,6 @@ class common {
 		'page' => '',
 		'theme' => '',
 		'user' => ''
-
 	];
 
 	public static $fontsWebSafe = [
@@ -384,7 +383,7 @@ class common {
 		}
 
 		// Chargement des dialogues
-		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . 'en.json'), true);
+		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18n . '.json'), true);
 
 		// Mise à jour des données core
 		if( $this->getData(['core', 'dataVersion']) !== intval(str_replace('.','',self::ZWII_VERSION))) include( 'core/include/update.inc.php');
