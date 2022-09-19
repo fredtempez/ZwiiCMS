@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '5.3';
+	const VERSION = '5.4';
 	const REALNAME = 'Blog';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -202,7 +202,7 @@ class blog extends common {
 				$this->getUrl(0),
 				'posts',
 				$articleId, [
-					'comment' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2), 'comment']),
+					'comment' => [],
 					'content' => $this->getInput('blogAddContent', null),
 					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT, true),
 					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
