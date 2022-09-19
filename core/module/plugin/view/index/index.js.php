@@ -21,7 +21,7 @@
     $("#moduleContainer").hide();
     $("#dataContainer").hide();
     $("#" + configLayout + "Container").show();
-    $("#config" + capitalizeFirstLetter(configLayout) + "Button").addClass("activeButton");
+    $("#config" + capitalizeFirstLetter(pluginLayout) + "Button").addClass("activeButton");
 
  });
 
@@ -52,7 +52,6 @@ $(".moduleDelete").on("click", function() {
 // Sélecteur de fonctions
 
 $("#configModuleButton").on("click", function () {
-	console.log("clic");
 	$("#dataContainer").hide();
 	$("#moduleContainer").show();
 	$("#configModuleButton").addClass("activeButton");
