@@ -25,7 +25,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php template::topic('Installer un thème archivé (site ou administration)'); ?>
+					<?php echo template::topic('Installer un thème archivé (site ou administration)'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6 offset3">
@@ -42,9 +42,9 @@
 		<div class="col6">
 			<div class="block">
 				<h4>
-					<?php template::topic('Sauvegarde du thème dans le'); ?>
+					<?php echo template::topic('Sauvegarde du thème dans le'); ?>
 					<a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=theme&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>
-					<?php template::topic('gestionnaire de fichiers'); ?>
+					<?php echo template::topic('gestionnaire de fichiers'); ?>
 					</a>
 				</h4>
 				<div class="row">
@@ -69,7 +69,7 @@
 		<div class="col6">
 			<div class="block">
 				<h4>
-					<?php template::topic('Télécharger le thème'); ?>
+					<?php echo template::topic('Télécharger le thème'); ?>
 				</h4>
 				<div class="row">
 					<div class="col6">
