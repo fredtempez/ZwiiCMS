@@ -52,5 +52,5 @@
 
 .activeButton {
 
-    filter : brightness(70%);
+    filter: contrast(200%);
 }

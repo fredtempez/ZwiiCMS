@@ -13,33 +13,33 @@
 
 
 $(document).ready(function () {
-	var configLayout = getCookie("translateLayout");
-    if (configLayout == null) {
-        configLayout = "module";
-        setCookie("translateLayout", "module");
+	var translateLayout = getCookie("translateLayout");
+    if (translateLayout == null) {
+        translateLayout = "ui";
+        setCookie("translateLayout", "ui");
     }
-    $("#translateContainer").hide();
-    $("#UIContainer").hide();
-    $("#" + configLayout + "Container").show();
-    $("#config" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
+    $("#contentContainer").hide();
+    $("#uiContainer").hide();
+    $("#" + translateLayout + "Container").show();
+    $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
 
  });
 
  // Sélecteur de fonctions
 
-$("#translateFormUIButton").on("click", function () {
-	$("#translateContainer").hide();
-	$("#UIContainer").show();
-	$("#translateFormUIButton").addClass("activeButton");
-	$("#translateFormContentButton").removeClass("activeButton");
-	setCookie("translateLayout", "module");
+$("#translateUiButton").on("click", function () {
+	$("#contentContainer").hide();
+	$("#uiContainer").show();
+	$(this).addClass("activeButton");
+	$("#translateContentButton").removeClass("activeButton");
+	setCookie("translateLayout", "ui");
 });
-$("#translateFormContentButton").on("click", function () {
-	$("#translateContainer").hide();
-	$("#dataContainer").show();
-	$("#translateFormContentButton").removeClass("activeButton");
-	$("#translateFormUIButton").addClass("activeButton");
-	setCookie("translateLayout", "data");
+$("#translateContentButton").on("click", function () {
+	$("#uiContainer").hide();
+	$("#contentContainer").show();
+    $(this).addClass("activeButton");
+	$("#translateUiButton").removeClass("activeButton");
+	setCookie("translateLayout", "content");
 });
 
 
