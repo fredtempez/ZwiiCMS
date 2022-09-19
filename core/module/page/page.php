@@ -552,7 +552,7 @@ class page extends common {
 	}
 
 	/**
-	 * Editeur de feuille de style
+	 * Éditeur de feuille de style
 	 */
 	public function cssEditor() {
 		// Soumission du formulaire
@@ -579,7 +579,7 @@ class page extends common {
 	}
 
 		/**
-	 * Editeur de feuille de style
+	 * Éditeur de feuille de style
 	 */
 	public function jsEditor() {
 		// Soumission du formulaire

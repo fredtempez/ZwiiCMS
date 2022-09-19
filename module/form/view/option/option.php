@@ -104,7 +104,7 @@
                             <?php echo template::select('formOptionGroup', $groupMembers, [
                                 'label' => 'Aux groupes à partir de',
                                 'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'group']),
-                                'help' => 'Editeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
+                                'help' => 'Éditeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
                             ]); ?>
                         </div>
                         <div class="col4">

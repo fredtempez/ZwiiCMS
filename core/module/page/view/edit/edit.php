@@ -261,7 +261,7 @@
 						<div class="col6 offset3">
 							<?php echo template::button('pageEditCssEditor', [
 								'href' => helper::baseUrl() . 'page/cssEditor/' . $this->getUrl(2),
-								'value' => 'Editeur CSS',
+								'value' => 'Éditeur CSS',
 								'help' => 'Feuille de style spécifique à la page.'
 							]); ?>
 						</div>
@@ -270,7 +270,7 @@
 						<div class="col6 offset3">
 							<?php echo template::button('pageEditJsEditor', [
 								'href' => helper::baseUrl() . 'page/jsEditor/' . $this->getUrl(2),
-								'value' => 'Editeur JS',
+								'value' => 'Éditeur JS',
 								'help' => 'Instructions JS ou jquery spécifiques à la page.'
 							]); ?>
 						</div>
