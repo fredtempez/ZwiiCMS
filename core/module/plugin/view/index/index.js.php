@@ -13,15 +13,16 @@
 
 
  $(document).ready(function () {
-	var configLayout = getCookie("pluginLayout");
-    if (configLayout == null) {
-        configLayout = "module";
+	var pluginLayout = getCookie("pluginLayout");
+    if (pluginLayout == null) {
+        pluginLayout = "module";
         setCookie("pluginLayout", "module");
     }
+    console.log(pluginLayout);
     $("#moduleContainer").hide();
     $("#dataContainer").hide();
-    $("#" + configLayout + "Container").show();
-    $("#config" + capitalizeFirstLetter(pluginLayout) + "Button").addClass("activeButton");
+    $("#" + pluginLayout + "Container").show();
+    $("#plugin" + capitalizeFirstLetter(pluginLayout) + "Button").addClass("activeButton");
 
  });
 
@@ -51,18 +52,18 @@ $(".moduleDelete").on("click", function() {
 
 // Sélecteur de fonctions
 
-$("#configModuleButton").on("click", function () {
+$("#pluginModuleButton").on("click", function () {
 	$("#dataContainer").hide();
 	$("#moduleContainer").show();
-	$("#configModuleButton").addClass("activeButton");
-	$("#configDataButton").removeClass("activeButton");
+	$("#pluginModuleButton").addClass("activeButton");
+	$("#pluginDataButton").removeClass("activeButton");
 	setCookie("pluginLayout", "module");
 });
-$("#configDataButton").on("click", function () {
+$("#pluginDataButton").on("click", function () {
 	$("#moduleContainer").hide();
 	$("#dataContainer").show();
-	$("#configModuleButton").removeClass("activeButton");
-	$("#configDataButton").addClass("activeButton");
+	$("#pluginModuleButton").removeClass("activeButton");
+	$("#pluginDataButton").addClass("activeButton");
 	setCookie("pluginLayout", "data");
 });
 

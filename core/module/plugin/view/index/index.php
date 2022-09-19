@@ -7,7 +7,7 @@
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('configModulesHelp', [
+		<?php echo template::button('pluginHelp', [
 			'href' => 'https://doc.zwiicms.fr/gestion-des-modules',
 			'target' => '_blank',
 			'value' => template::ico('help'),
@@ -16,14 +16,14 @@
 		]); ?>
 	</div>
 	<div class="col1 offset8">
-		<?php echo template::button('configModulesStore', [
+		<?php echo template::button('pluginModulesStore', [
 			'href' => helper::baseUrl() . 'plugin/store',
 			'value' => template::ico('shopping-basket'),
 			'help' => 'Installer depuis le catalogue en ligne'
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('configStoreUpload', [
+		<?php echo template::button('pluginStoreUpload', [
 			'href' => helper::baseUrl() . 'plugin/upload',
 			'value' => template::ico('file-archive'),
 			'help' => 'Installer depuis une archive'
@@ -31,11 +31,11 @@
 	</div>
 </div>
 <div class="tab">
-	<?php echo template::button('configModuleButton', [
+	<?php echo template::button('pluginModuleButton', [
 		'value' => 'Modules installés',
 		'class' => ' buttonTab'
 	]); ?>
-	<?php echo template::button('configDataButton', [
+	<?php echo template::button('pluginDataButton', [
 		'value' => 'Données des modules',
 		'class' => 'buttonTab'
 	]); ?>
