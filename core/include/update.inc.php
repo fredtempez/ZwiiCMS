@@ -872,6 +872,11 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['config', 'i18n', 'autoDetect']);
 	helper::deleteCookie('ZWII_I18N_SCRIPT');
 
+	// Nettoyage de fichiers inutiles
+	if (file_exists('core\module\user\view\import\import.help.html')) {
+		unlink('core\module\user\view\import\import.help.html');
+	}
+
 	// Supprimer les fichier associés
 	if (is_dir('core/module/translate/ressource')) {
 		$this->removeDir('core/module/translate/ressource');
