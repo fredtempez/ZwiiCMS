@@ -31,7 +31,7 @@ class template  {
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        //$attributes['value'] = helper::translate($attributes['value']);
+        $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
         return  sprintf(
