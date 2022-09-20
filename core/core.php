@@ -277,7 +277,7 @@ class common {
 			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
 
 		} else  {
-			self::$i18nContent = 'fr_FR';
+			self::$i18nContent = 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
