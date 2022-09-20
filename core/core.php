@@ -306,7 +306,7 @@ class common {
 		}
 
 		// Langue de l'administration
-		self::$i18n = $this->getData(['config', 'i18n', 'default']);
+		self::$i18n = $this->getData(['config', 'i18n', 'interface']);
 		// La langue par défaut du contenu est celle du site si le cookie est absent.
 		self::$i18n =  (empty(self::$i18n) || is_null(self::$i18n)) ? self::$i18n = 'fr' : self::$i18n ;
 
@@ -1466,7 +1466,7 @@ class common {
 					$this->getData(['user', $this->getUser('id') , 'files']) === true
 				) {
 					$items .= '<wbr>' . template::ico('folder',	[
-						'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json'),
+						'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') . '&lang=' . $this->getData(['config', 'i18n', 'interface']),
 						'margin' => 'all',
 						'attr' => 'data-lity',
 						'help' => 'Fichiers du site'
@@ -1595,7 +1595,7 @@ class common {
 				$this->getData(['user', $this->getUser('id') , 'files']) === true
 			) {
 				$itemsRight .= '<li>' . template::ico('folder',	[
-					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json'),
+					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json')  . '&lang=' . $this->getData(['config', 'i18n', 'interface']),
 					'attr' => 'data-lity',
 					'help' => 'Fichiers du site'
 				]). '</li>';
@@ -2021,7 +2021,7 @@ class common {
 			// Items de droite
 			$rightItems = '';
 			if($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') .'" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR.'core.json') . '&lang=' . $this->getData(['config', 'i18n', 'interface']) . '" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li>' .	template::ico('brush', [

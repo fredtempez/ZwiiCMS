@@ -218,7 +218,7 @@ class translate extends common {
 			]);
 			// Sauvegarder les langues de contenu
 			$this->setData(['config', 'i18n', [
-				'default' 	=> $this->getInput('translateI18n'),
+				'interface'	=> $this->getInput('translateI18n'),
 				'fr' 		=> $this->getInput('translateFR'),
 				'de' 		=> $this->getInput('translateDE'),
 				'en' 		=> $this->getInput('translateEN'),

@@ -495,7 +495,7 @@ class config extends common {
 						'redirectLogin' => $this->getInput('connectRedirectLogin',helper::FILTER_BOOLEAN)
 					],
 					'i18n' => [
-						'default'			=> $this->getData(['config', 'i18n', 'default']),
+						'interface'			=> $this->getData(['config', 'i18n', 'default']),
 						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
 						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
 						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),

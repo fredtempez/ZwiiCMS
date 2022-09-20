@@ -11,12 +11,15 @@ if (function_exists('mb_regex_encoding')) {
 }
 ob_start('mb_output_handler');
 date_default_timezone_set('Europe/Paris');
-setlocale(LC_CTYPE, 'fr_FR'); //correct transliteration
+
+// Lire la langue installée
+$tab = json_decode(file_get_contents('../../../site/data/config.json'), true);
+$lang = $tab['config']['i18n']['interface'];
+setlocale(LC_CTYPE, $lang); //correct transliteration
 
 /* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
 $userId = $_COOKIE['ZWII_USER_ID'];
-$json = file_get_contents('../../../site/data/user.json');
-$tab = json_decode($json, true);
+$tab = json_decode(file_get_contents('../../../site/data/user.json'), true);
 $group = $tab['user'][$userId]['group'];
 $uploadDir = '/site/file/source/';
 $currentPath = '../../../site/file/source/';
@@ -300,7 +303,7 @@ $config = array(
 	| default language file name
 	|--------------------------------------------------------------------------
 	*/
-	'default_language' => "fr_FR",
+	'default_language' => 'fr_FR',
 
 	/*
 	|--------------------------------------------------------------------------

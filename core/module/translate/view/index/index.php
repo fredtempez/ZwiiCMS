@@ -46,13 +46,13 @@
 			<div class="col12">
 				<div class="block" id="flagsWrapper">
 					<h4>
-						<?php echo template::topic('Interface de Zwii'); ?>
+						<?php echo template::topic('Interface'); ?>
 					</h4>
 					<div class="row">
 						<div class="col4 offset4">
 							<?php echo template::select('translateI18n', $module::$i18nFiles, [
 								'label' =>  'Traductions installées',
-								'selected' => $this->getData(['config', 'i18n' , 'default']),
+								'selected' => $this->getData(['config', 'i18n' , 'interface']),
 							]); ?>
 						</div>
 					</div>
