@@ -47,9 +47,10 @@
 }
 
 .buttonTab:hover {
-    filter : brightness(140%);
+    filter: saturate(200%);
 }
 
 .activeButton {
-    filter: contrast(200%);
+    background-color: #00BFFF;
 }
+
