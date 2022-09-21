@@ -408,7 +408,7 @@ class plugin extends common {
 	public function index() {
 
 		// Tableau des langues rédigées
-		foreach (self::$i18nList as $key => $value) {
+		foreach (self::$languagesContent as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site' ||
 				$key === 'fr') {
 				$i18nSites[$key] = $value;

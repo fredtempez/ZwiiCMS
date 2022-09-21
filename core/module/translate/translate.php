@@ -37,46 +37,6 @@ class translate extends common {
 	//UI 
 	// Fichiers des langues de l'interface
 	public static $i18nFiles = [];
-	// Langues de l'interface acceptées
-	public static $languagesUI = [
-		'az_AZ' => 'Azərbaycan dili',
-		'bg_BG' => 'български език',
-		'ca' => 'Català, valencià',
-		'cs' => 'čeština, český jazyk',
-		'da' => 'Dansk',
-		'de' => 'Deutsch',
-		'el_GR' => 'ελληνικά',
-		'en_EN' => 'English',
-		'es' => 'Español',
-		'fa' => 'فارسی',
-		'fr_FR' => 'Français',
-		'he_IL' => 'Hebrew (Israel)',
-		'hr' => 'Hrvatski jezik',
-		'hu_HU' => 'Magyar',
-		'id' => 'Bahasa Indonesia',
-		'it' => 'Italiano',
-		'ja' => '日本',
-		'lt' => 'Lietuvių kalba',
-		'mn_MN' => 'монгол',
-		'nb_NO' => 'Norsk bokmål',
-		'nn_NO' => 'Norsk nynorsk',
-		'nl' => 'Nederlands, Vlaams',
-		'pl' => 'Język polski, polszczyzna',
-		'pt_BR' => 'Português(Brazil)',
-		'pt_PT' => 'Português',
-		'ro' => 'Română',
-		'ru' => 'Pусский язык',
-		'sk' => 'Slovenčina',
-		'sl' => 'Slovenski jezik',
-		'sv_SE' => 'Svenska',
-		'th_TH' => 'ไทย',
-		'tr_TR' => 'Türkçe',
-		'uk_UA' => 'Yкраїнська мова',
-		'vi' => 'Tiếng Việt',
-		'zh_CN' => '中文 (Zhōngwén), 汉语, 漢語',
-	
-		// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
-	];
 
 	/**
 	 * Configuration avancée des langues
@@ -105,7 +65,7 @@ class translate extends common {
 				// Enregistrer la langue
 				if ($success) {
 					$this->setData(['config', 'i18n', $toCreate, 'site' ]);
-					$notification = 'Données ' . self::$i18nList[$copyFrom] . ' copiées vers ' .  self::$i18nList[$toCreate];
+					$notification = 'Données ' . self::$languagesContent[$copyFrom] . ' copiées vers ' .  self::$languagesContent[$toCreate];
 				} else {
 					$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
 				}
@@ -122,7 +82,7 @@ class translate extends common {
 			]);
 		}
 		// Tableau des langues installées
-		foreach (self::$i18nList as $key => $value) {
+		foreach (self::$languagesContent as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site') {
 				self::$languagesTarget[$key] = $value;
 			}
@@ -145,7 +105,7 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Edition des langues
-			foreach (self::$i18nList as $keyi18n => $value) {
+			foreach (self::$languagesContent as $keyi18n => $value) {
 				if ($keyi18n === 'fr') continue;
 
 				// Effacement d'une langue installée
@@ -257,7 +217,7 @@ class translate extends common {
 		}
 
 		// Modification des options de suppression de la langue installée.
-		foreach (self::$i18nList as $key => $value) {
+		foreach (self::$languagesContent as $key => $value) {
 			if ($this->getData(['config','i18n',$key]) === 'site') {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',

@@ -147,8 +147,54 @@ class common {
 		self::GROUP_MODERATOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
-	// Langues proposées
-	public static $i18nList = [
+
+	//Langues de l'UI
+	// Langue de l'interface, tableau des dialogues
+	public static $dialog;
+	// Langue de l'interface sélectionnée
+	public static $i18nUI = 'fr_FR';
+	public static $languagesUI = [
+		'az_AZ' => 'Azərbaycan dili',
+		'bg_BG' => 'български език',
+		'ca' => 'Català, valencià',
+		'cs' => 'čeština, český jazyk',
+		'da' => 'Dansk',
+		'de' => 'Deutsch',
+		'el_GR' => 'ελληνικά',
+		'en_EN' => 'English',
+		'es' => 'Español',
+		'fa' => 'فارسی',
+		'fr_FR' => 'Français',
+		'he_IL' => 'Hebrew (Israel)',
+		'hr' => 'Hrvatski jezik',
+		'hu_HU' => 'Magyar',
+		'id' => 'Bahasa Indonesia',
+		'it' => 'Italiano',
+		'ja' => '日本',
+		'lt' => 'Lietuvių kalba',
+		'mn_MN' => 'монгол',
+		'nb_NO' => 'Norsk bokmål',
+		'nn_NO' => 'Norsk nynorsk',
+		'nl' => 'Nederlands, Vlaams',
+		'pl' => 'Język polski, polszczyzna',
+		'pt_BR' => 'Português(Brazil)',
+		'pt_PT' => 'Português',
+		'ro' => 'Română',
+		'ru' => 'Pусский язык',
+		'sk' => 'Slovenčina',
+		'sl' => 'Slovenski jezik',
+		'sv_SE' => 'Svenska',
+		'th_TH' => 'ไทย',
+		'tr_TR' => 'Türkçe',
+		'uk_UA' => 'Yкраїнська мова',
+		'vi' => 'Tiếng Việt',
+		'zh_CN' => '中文 (Zhōngwén), 汉语, 漢語',
+	
+		// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
+	];
+
+	// Langues de contenu
+	public static $languagesContent = [
 		'fr'	=> 'Français (fr)',
 		'de' 	=> 'Allemand (de)',
 		'en'	=> 'Anglais (en)',
@@ -159,11 +205,6 @@ class common {
 	];
 	// Sélection de langue de l'interface
 	public static $i18nContent = 'fr';
-
-	// Langue de l'interface, tableau des dialogues
-	public static $dialog;
-	// Langue de l'interface sélectionnée
-	public static $i18n = 'fr_FR';
 
 	// Zone de temps
 	public static $timezone;
@@ -256,6 +297,8 @@ class common {
 		]
 	];
 
+	
+
 
 	/**
 	 * Constructeur commun
@@ -268,16 +311,6 @@ class common {
 		}
 		if(isset($_COOKIE)) {
 			$this->input['_COOKIE'] = $_COOKIE;
-		}
-
-		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
-		) {
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
-
-		} else  {
-			self::$i18nContent = 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -306,14 +339,27 @@ class common {
 		}
 
 		// Langue de l'administration
-		self::$i18n = $this->getData(['config', 'i18n', 'interface']);
+		self::$i18nUI = $this->getData(['config', 'i18n', 'interface']);
 		// La langue par défaut du contenu est celle du site si le cookie est absent.
-		self::$i18n =  (empty(self::$i18n) || is_null(self::$i18n)) ? self::$i18n = 'fr' : self::$i18n ;
+		self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI ;
+	
 
 		// Le fichier existe-t-il ?
-		if (!file_exists(self::I18N_DIR . self::$i18n . '.json')) {
-			self::$i18n = 'fr_FR';
+		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
+			self::$i18nUI = 'fr_FR';
 		}
+
+		// Déterminer la langue du contenu du site
+		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
+		) {
+			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
+
+		} else  {
+			self::$i18nContent = substr(self::$i18nUI, 0, 2);
+		}
+
+
 
 		// Utilisateur connecté
 		if($this->user === []) {
@@ -386,7 +432,7 @@ class common {
 		}
 
 		// Chargement des dialogues
-		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18n . '.json'), true);
+		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
 
 		// Mise à jour des données core
 		if( $this->getData(['core', 'dataVersion']) !== intval(str_replace('.','',self::ZWII_VERSION))) include( 'core/include/update.inc.php');
@@ -2160,7 +2206,7 @@ class common {
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
 	public function showi18n() {
-		foreach (self::$i18nList as $key => $value) {
+		foreach (self::$languagesContent as $key => $value) {
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
 			) {
 				if (
