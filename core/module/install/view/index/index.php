@@ -64,8 +64,7 @@
 			<div class="row">
 				<div class="col3">
 					<?php echo template::select('installProxyType', $module::$proxyType, [
-						'label' => 'Type de proxy',
-						'selected' => $this->getData(['config', 'proxyType'])
+						'label' => 'Type de proxy'
 						]); ?>
 					</div>
 				<div  class="col6">
