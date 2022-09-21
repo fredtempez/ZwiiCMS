@@ -172,6 +172,8 @@ class common {
 	];
 
 	// Langues de contenu
+	// Sélection de langue de l'interface
+	public static $i18nContent = 'fr';
 	public static $languagesContent = [
 		'fr'	=> 'Français (fr)',
 		'de' 	=> 'Deutsch (de)',
@@ -182,8 +184,7 @@ class common {
 		'pt'	=> 'Português (pt)',
 		'tr' 	=> 'Türkçe'
 	];
-	// Sélection de langue de l'interface
-	public static $i18nContent = 'fr';
+
 
 	// Zone de temps
 	public static $timezone;
@@ -292,6 +293,16 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Déterminer la langue du contenu du site
+		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
+		) {
+			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
+
+		} else  {
+			self::$i18nContent = substr(self::$i18nUI, 0, 2);
+		}
+
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
 		foreach ($this->dataFiles as $keys => $value) {
@@ -302,7 +313,6 @@ class common {
 				'backup' => file_exists('site/data/.backup')
 			]);;
 		}
-
 
 
 		// Installation fraîche, initialisation des modules manquants
@@ -327,18 +337,6 @@ class common {
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
 			self::$i18nUI = 'fr_FR';
 		}
-
-		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
-		) {
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
-
-		} else  {
-			self::$i18nContent = substr(self::$i18nUI, 0, 2);
-		}
-
-
 
 		// Utilisateur connecté
 		if($this->user === []) {
