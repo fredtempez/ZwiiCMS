@@ -22,6 +22,7 @@ class translate extends common {
 		'i18n' => self::GROUP_VISITOR
 	];
 
+	// Language content
 	public static $translateOptions = [];
 	// Page pour la configuration dans la langue 
 	public static $pagesList = [];
@@ -30,12 +31,14 @@ class translate extends common {
 	public static $languagesInstalled = [];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
-	// Fichiers des langues de l'interface
-	public static $i18nFiles = [];
 	// Activation du bouton de copie
 	public static $siteTranslate = true;
 
-	public static $languagesContent = [
+	//UI 
+	// Fichiers des langues de l'interface
+	public static $i18nFiles = [];
+	// Langues de l'interface acceptées
+	public static $languagesUI = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
 		'ca' => 'Català, valencià',
@@ -246,8 +249,8 @@ class translate extends common {
 			// Ajouter une clé au tableau avec le code de langue
 			foreach( $files as $file) {
 				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languagesContent)) {
-				     self::$i18nFiles[basename($file, '.json')] = self::$languagesContent[basename($file, '.json')];
+				if (array_key_exists(basename($file, '.json'), self::$languagesUI)) {
+				     self::$i18nFiles[basename($file, '.json')] = self::$languagesUI[basename($file, '.json')];
 				}
 			}
 			chdir($dir);
