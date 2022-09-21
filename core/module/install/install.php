@@ -18,6 +18,7 @@ class install extends common {
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
+		"postinstall" => self::GROUP_VISITOR,
 		'steps' => self::GROUP_ADMIN,
 		'update' => self::GROUP_ADMIN
 	];
@@ -75,11 +76,55 @@ class install extends common {
 			// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 		];
 
-
 	/**
-	 * Installation
+	 * Pré-installation - choix de la langue
 	 */
 	public function index() {
+		// Accès refusé
+		if($this->getData(['user']) !== []) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		}
+		// Accès autorisé
+		else {	
+			// Soumission du formulaire
+			if($this->isPost()) {
+				$this->setData(['config', 'i18n', 'interface', $this->getInput('installLanguage')]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'install/postinstall'
+				]);
+			}
+		}
+
+		// Liste des langues UI disponibles
+		if (is_dir(self::I18N_DIR)) {
+			$dir = getcwd();
+			chdir(self::I18N_DIR);
+			$files = glob('*.json');
+			// Ajouter une clé au tableau avec le code de langue
+			foreach( $files as $file) {
+				// La langue est-elle référencée ?
+				if (array_key_exists(basename($file, '.json'), self::$languagesUI)) {
+					self::$i18nFiles[basename($file, '.json')] = self::$languagesUI[basename($file, '.json')];
+				}
+			}
+			chdir($dir);
+		}
+
+		$this->addOutput([
+			'display' => self::DISPLAY_LAYOUT_LIGHT,
+			'title' => 'Installation',
+			'view' => 'index'
+		]);
+	}
+
+	/**
+	 * post Installation
+	 */
+	public function postInstall() {
 		// Accès refusé
 		if($this->getData(['user']) !== []) {
 			// Valeurs en sortie
@@ -204,21 +249,6 @@ class install extends common {
 			$dataThemes = json_decode($dataThemes, true);
 			self::$themes = helper::arrayColumn($dataThemes, 'name');
 
-			// Liste des langues UI disponibles
-			if (is_dir(self::I18N_DIR)) {
-				$dir = getcwd();
-				chdir(self::I18N_DIR);
-				$files = glob('*.json');
-				// Ajouter une clé au tableau avec le code de langue
-				foreach( $files as $file) {
-					// La langue est-elle référencée ?
-					if (array_key_exists(basename($file, '.json'), self::$languagesUI)) {
-						self::$i18nFiles[basename($file, '.json')] = self::$languagesUI[basename($file, '.json')];
-					}
-				}
-				chdir($dir);
-			}
-
 			// Créer sitemap
 			$this->createSitemap();
 			// Mise à jour de la liste des pages pour TinyMCE
@@ -228,7 +258,7 @@ class install extends common {
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
 				'title' => 'Installation',
-				'view' => 'index'
+				'view' => 'postinstall'
 			]);
 		}
 	}
