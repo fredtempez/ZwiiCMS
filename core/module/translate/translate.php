@@ -221,7 +221,7 @@ class translate extends common {
 			]);
 			// Sauvegarder les langues de contenu
 			$this->setData(['config', 'i18n', [
-				'interface'	=> $this->getInput('translateI18n'),
+				'interface'	=> $this->getInput('translateUI'),
 				'fr' 		=> $this->getInput('translateFR'),
 				'de' 		=> $this->getInput('translateDE'),
 				'en' 		=> $this->getInput('translateEN'),
@@ -272,7 +272,7 @@ class translate extends common {
 				];
 			}
 		}
-		// Générer la list des pages disponibles
+		// Générer la liste des pages disponibles
 		self::$pagesList = $this->getData(['page']);
 		foreach(self::$pagesList as $page => $pageId) {
 			if ($this->getData(['page',$page,'block']) === 'bar' ||
