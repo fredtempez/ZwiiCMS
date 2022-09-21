@@ -35,7 +35,7 @@ class install extends common {
 	public static $newVersion;
 
 	// Fichiers des langues de l'interface
-	public static $i18nFiles = [];	
+	public static $i18nFiles = [];
 
 
 	/**
@@ -50,10 +50,11 @@ class install extends common {
 			]);
 		}
 		// Accès autorisé
-		else {	
+		else {
 			// Soumission du formulaire
 			if($this->isPost()) {
-				$this->setData(['config', 'i18n', 'interface', $this->getInput('installLanguage')]);
+				self::$i18nUI = $this->getInput('installLanguage');
+				$this->setData(['config', 'i18n', 'interface', self::$i18nUI]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'install/postinstall'
@@ -142,8 +143,21 @@ class install extends common {
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null
 				);
+
 				// Nettoyer les cookies de langue d'une précédente installation
 				helper::deleteCookie('ZWII_I18N_SITE');
+
+				// Créer le contenu dans la langue sélectionnée
+				self::$i18nContent = substr(self::$i18nUI, 0, 2);
+
+				// Effacer le dossier de contenu fr créé par défaut si la langue est différente.
+
+				if (self::$i18nContent !== 'fr_FR'
+					&& is_dir('site/data/fr')
+				) {
+					$this->removeDir('site/data/fr');
+				}
+
 				// Installation du site de test
 				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
 					$this->initData('page', self::$i18nContent, true);
@@ -206,6 +220,9 @@ class install extends common {
 				]);
 				}
 			}
+
+			// Affichage du formulaire
+
 			// Récupération de la liste des thèmes
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);

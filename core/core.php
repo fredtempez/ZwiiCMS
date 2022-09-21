@@ -48,7 +48,7 @@ class common {
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '11.6.00-dev007';
+	const ZWII_VERSION = '11.6.00-dev008';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -277,8 +277,6 @@ class common {
 		]
 	];
 
-	
-
 
 	/**
 	 * Constructeur commun
@@ -293,14 +291,19 @@ class common {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Lire la langue de l'UI sans passer par les méthodes
+		$t = json_decode(file_get_contents('site/data/config.json'), true);
+		self::$i18nUI = $t['config']['i18n']['interface'];
+
 		// Déterminer la langue du contenu du site
 		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])
 		) {
+			// Déterminé par le cookie
 			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
 			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
-
 		} else  {
-			self::$i18nContent = substr(self::$i18nUI, 0, 2);
+			// Absence du cookie, la langue par défaut est celle de l'interface.
+			self::$i18nContent = (isset(self::$i18nUI)) ? substr(self::$i18nUI, 0, 2) : 'fr';
 		}
 
 		// Instanciation de la classe des entrées / sorties
