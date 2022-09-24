@@ -410,7 +410,7 @@ class plugin extends common {
 		// Tableau des langues rédigées
 		foreach (self::$languagesUI as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site' ||
-				$key === 'fr') {
+				$key === 'fr_FR') {
 				$i18nSites[$key] = $value;
 			}
 		}

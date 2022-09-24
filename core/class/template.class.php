@@ -482,7 +482,7 @@ class template  {
             case '':
                 $lang = 'fr';
                 break;
-            case in_array($langId,['fr', 'de', 'en', 'es', 'it', 'nl', 'pt']):
+            case in_array($langId,['fr_FR', 'de', 'en', 'es', 'it', 'nl', 'pt']):
                 $lang = $langId;
                 break;
             case 'site':
@@ -490,7 +490,7 @@ class template  {
     	        ) {
                     $lang = $_COOKIE['ZWII_I18N_SITE'];
                 } else {
-                    $lang = 'fr';
+                    $lang = 'fr_FR';
                 }
         }
         return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"

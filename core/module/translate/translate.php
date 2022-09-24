@@ -106,7 +106,7 @@ class translate extends common {
 		if($this->isPost()) {
 			// Edition des langues
 			foreach (self::$languagesUI as $keyi18n => $value) {
-				if ($keyi18n === 'fr') continue;
+				if ($keyi18n === 'fr_FR') continue;
 
 				// Effacement d'une langue installée
 				if ( is_dir( self::DATA_DIR . $keyi18n ) === true
@@ -125,6 +125,7 @@ class translate extends common {
 			}
 
 			// Enregistrement des données
+			/*
 			$this->setData(['config','i18n', [
 				'fr'		 		=> $this->getInput('translateFR'),
 				'de' 		 		=> $this->getInput('translateDE'),
@@ -133,10 +134,10 @@ class translate extends common {
 				'it' 			 	=> $this->getInput('translateIT'),
 				'nl' 			 	=> $this->getInput('translateNL'),
 				'pt' 			 	=> $this->getInput('translatePT')
-
 			]]);
+			*/
 
-			// Coonfiguration dans des langues spécifiques
+			// Configuration dans des langues spécifiques
 			// Eviter déconnexion automatique après son activation
 			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
 				 AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
@@ -181,14 +182,14 @@ class translate extends common {
 			]);
 			// Sauvegarder les langues de contenu
 			$this->setData(['config', 'i18n', [
-				'interface'	=> $this->getInput('translateUI'),
+				'interface'	=> $this->getInput('translateUI'),/*
 				'fr' 		=> $this->getInput('translateFR'),
 				'de' 		=> $this->getInput('translateDE'),
 				'en' 		=> $this->getInput('translateEN'),
 				'es'		=> $this->getInput('translateES'),
 				'it' 		=> $this->getInput('translateIT'),
 				'nl' 		=> $this->getInput('translateNL'),
-				'pt' 		=> $this->getInput('translatePT')
+				'pt' 		=> $this->getInput('translatePT')*/
 			]]);
 
 			// Valeurs en sortie
@@ -200,7 +201,7 @@ class translate extends common {
 		}
 
 		// Préparation de l'affichage du formulaire
-
+		//-----------------------------------------
 		// Liste des langues disponibles
 		if (is_dir(self::I18N_DIR)) {
 			$dir = getcwd();
@@ -224,7 +225,7 @@ class translate extends common {
 					'site'   => 'Traduction rédigée',
 					'delete' => 'Supprimer la traduction'
 				];
-				self::$siteTranslate = $key !== 'fr' ? false : true;
+				self::$siteTranslate = $key !== 'fr_FR' ? false : true;
 			} else {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',
