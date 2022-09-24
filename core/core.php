@@ -154,37 +154,46 @@ class common {
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
 	public static $languagesUI = [
-		'ca' => 'Català, valencià',
-		'da' => 'Dansk',
+		'az_AZ' => 'Azərbaycan dili',
+		'bg_BG' => 'български език',
+		//'ca' => 'Català, valencià',
+		//'cs' => 'čeština, český jazyk',
+		//'da' => 'Dansk',
 		'de' => 'Deutsch',
 		'en_EN' => 'English',
 		'es' => 'Español',
+		//'fa' => 'فارسی',
 		'fr_FR' => 'Français',
+		//'he_IL' => 'Hebrew (Israel)',
+		'hr' => 'Hrvatski jezik',
+		'hu_HU' => 'Magyar',
+		'id' => 'Bahasa Indonesia',
 		'it' => 'Italiano',
+		'ja' => '日本',
+		'lt' => 'Lietuvių kalba',
+		//'mn_MN' => 'монгол',
+		'nb_NO' => 'Norsk bokmål',
+		'nn_NO' => 'Norsk nynorsk',
 		'nl' => 'Nederlands, Vlaams',
 		'pl' => 'Język polski, polszczyzna',
+		'pt_BR' => 'Português(Brazil)',
 		'pt_PT' => 'Português',
 		'ro' => 'Română',
+		'ru' => 'Pусский язык',
+		'sk' => 'Slovenčina',
+		'sl' => 'Slovenski jezik',
 		'sv_SE' => 'Svenska',
-		'tr_TR' => 'Türkçe'
-	
+		'th_TH' => 'ไทย',
+		'tr_TR' => 'Türkçe',
+		'uk_UA' => 'Yкраїнська мова',
+		'vi' => 'Tiếng Việt',
+		'zh_CN' => '中文 (Zhōngwén), 汉语, 漢語',
+
 		// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 	];
 
 	// Langues de contenu
-	// Sélection de langue de l'interface
-	public static $i18nContent = 'fr';
-	public static $languagesContent = [
-		'fr'	=> 'Français (fr)',
-		'de' 	=> 'Deutsch (de)',
-		'en'	=> 'English (en)',
-		'es'	=> 'Español (es)',
-		'it'	=> 'Italiano (it)',
-		'nl' 	=> 'Nederlands, Vlaams (nl)',
-		'pt'	=> 'Português (pt)',
-		'tr' 	=> 'Türkçe'
-	];
-
+	public static $i18nContent = 'fr_FR';
 
 	// Zone de temps
 	public static $timezone;
@@ -303,7 +312,7 @@ class common {
 			setlocale (LC_TIME, self::$i18nContent . '_' . strtoupper (self::$i18nContent) );
 		} else  {
 			// Absence du cookie, la langue par défaut est celle de l'interface.
-			self::$i18nContent = (isset(self::$i18nUI)) ? substr(self::$i18nUI, 0, 2) : 'fr';
+			self::$i18nContent = (isset(self::$i18nUI)) ? self::$i18nUI : 'fr_FR';
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -334,7 +343,7 @@ class common {
 		self::$i18nUI = $this->getData(['config', 'i18n', 'interface']);
 		// La langue par défaut du contenu est celle du site si le cookie est absent.
 		self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI ;
-	
+
 
 		// Le fichier existe-t-il ?
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
@@ -2186,7 +2195,7 @@ class common {
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
 	public function showi18n() {
-		foreach (self::$languagesContent as $key => $value) {
+		foreach (self::$languagesUI as $key => $value) {
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
 			) {
 				if (

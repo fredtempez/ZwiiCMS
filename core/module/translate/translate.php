@@ -24,7 +24,7 @@ class translate extends common {
 
 	// Language content
 	public static $translateOptions = [];
-	// Page pour la configuration dans la langue 
+	// Page pour la configuration dans la langue
 	public static $pagesList = [];
 	public static $orphansList = [];
 	// Liste des langues installées
@@ -34,7 +34,7 @@ class translate extends common {
 	// Activation du bouton de copie
 	public static $siteTranslate = true;
 
-	//UI 
+	//UI
 	// Fichiers des langues de l'interface
 	public static $i18nFiles = [];
 
@@ -65,7 +65,7 @@ class translate extends common {
 				// Enregistrer la langue
 				if ($success) {
 					$this->setData(['config', 'i18n', $toCreate, 'site' ]);
-					$notification = 'Données ' . self::$languagesContent[$copyFrom] . ' copiées vers ' .  self::$languagesContent[$toCreate];
+					$notification = 'Données ' . self::$languagesUI[$copyFrom] . ' copiées vers ' .  self::$languagesUI[$toCreate];
 				} else {
 					$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
 				}
@@ -82,7 +82,7 @@ class translate extends common {
 			]);
 		}
 		// Tableau des langues installées
-		foreach (self::$languagesContent as $key => $value) {
+		foreach (self::$languagesUI as $key => $value) {
 			if ($this->getData(['config','i18n', $key]) === 'site') {
 				self::$languagesTarget[$key] = $value;
 			}
@@ -105,7 +105,7 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Edition des langues
-			foreach (self::$languagesContent as $keyi18n => $value) {
+			foreach (self::$languagesUI as $keyi18n => $value) {
 				if ($keyi18n === 'fr') continue;
 
 				// Effacement d'une langue installée
@@ -198,7 +198,7 @@ class translate extends common {
 				'state' => true
 			]);
 		}
-		
+
 		// Préparation de l'affichage du formulaire
 
 		// Liste des langues disponibles
@@ -217,7 +217,7 @@ class translate extends common {
 		}
 
 		// Modification des options de suppression de la langue installée.
-		foreach (self::$languagesContent as $key => $value) {
+		foreach (self::$languagesUI as $key => $value) {
 			if ($this->getData(['config','i18n',$key]) === 'site') {
 				self::$translateOptions [$key] = [
 					'none'   => 'Drapeau masqué',

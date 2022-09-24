@@ -60,7 +60,7 @@
 			</div>
 		</div>
 	</div>
-
+	<?php  /** ?>
 	<div id="contentContainer" class="tabContent">
 		<div class="row">
 			<div class="col12">
@@ -318,4 +318,5 @@
 			</div>
 		</div>
 	</div>
+	**/ ?>
 <?php echo template::formClose(); ?>
