@@ -44,7 +44,7 @@
 	<div id="uiContainer" class="tabContent">
 		<div class="row">
 			<div class="col12">
-				<div class="block" id="flagsWrapper">
+				<div class="block">
 					<h4>
 						<?php echo template::topic('Langue de l\'administration'); ?>
 					</h4>
@@ -61,11 +61,27 @@
 		</div>
 	</div>
 	<div id="contentContainer" class="tabContent">
-		<?php if($module::$languagesInstalled): ?>
-			<?php echo template::table([10, 1, 1], $module::$languagesInstalled, ['Langue', '', '']); ?>
-		<?php else: ?>
-			<?php echo template::speech('Aucune news.'); ?>
-		<?php endif; ?>
-	</div>	
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+				<h4>
+					<?php echo template::topic('Ajouter une langue'); ?>
+				</h4>
+					<div class="row">
+						<div class="col12">
+								Poouet !
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col12">
+				<?php if($module::$languagesInstalled): ?>
+					<?php echo template::table([2, 2, 6, 1, 1], $module::$languagesInstalled, ['Langue', '', '', '', '']); ?>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
 
 <?php echo template::formClose(); ?>

@@ -21,7 +21,7 @@ class translate extends common {
 		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
 		'edit' => self::GROUP_ADMIN, 	// Editer une langue de contenu
 		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
-		'i18n' => self::GROUP_VISITOR,	
+		'i18n' => self::GROUP_VISITOR,
 	];
 
 	// Language content
@@ -121,30 +121,31 @@ class translate extends common {
 		// Préparation du formulaire
 		// -------------------------
 
+		// Onglet des langues de contenu
 		foreach (self::$languages as $keyi18n => $value) {
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $keyi18n) ) {
 				self::$languagesInstalled [] = [
-					$value . '(' . $keyi18n . ')' ,
+					$value . ' (' . $keyi18n . ')' ,
+					self::$i18nUI === $keyi18n ? '(langue de l\'interface)' : '',
+					'',
 					template::button('translateContentLanguageEdit' . $keyi18n, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $keyi18n. '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
 						'help' => 'Editer les locales'
 					]),
 					template::button('translateContentLanguageDelete' .$keyi18n, [
-						'class' => 'buttonRed',
+						'class' => 'buttonRed' . (self::$i18nUI === $keyi18n ? ' disabled' : '')  ,
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $keyi18n . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer cette langue'
 					])
 				];
 			}
-			
+
 		}
-		
 
-
-		// Liste des langues disponibles
+		// Langues de l'UI disponibles
 		if (is_dir(self::I18N_DIR)) {
 			$dir = getcwd();
 			chdir(self::I18N_DIR);
@@ -174,7 +175,7 @@ class translate extends common {
 
 	public function add() {
 
-		
+
 		// Soumission du formulaire
 		if($this->isPost()) {
 
@@ -347,7 +348,7 @@ class translate extends common {
 	}
 
 	/***
-	 * Effacer une langue de contenu 
+	 * Effacer une langue de contenu
 	 */
 	public function delete() {
 		// Edition des langues
