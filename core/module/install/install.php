@@ -70,8 +70,8 @@ class install extends common {
 			// Ajouter une clé au tableau avec le code de langue
 			foreach( $files as $file) {
 				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languagesUI)) {
-					self::$i18nFiles[basename($file, '.json')] = self::$languagesUI[basename($file, '.json')];
+				if (array_key_exists(basename($file, '.json'), self::$languages)) {
+					self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
 				}
 			}
 			chdir($dir);
