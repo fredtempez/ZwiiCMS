@@ -153,7 +153,7 @@ class common {
 	public static $dialog;
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
-	public static $languagesUI = [
+	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
 		//'ca' => 'Català, valencià',
@@ -2195,7 +2195,7 @@ class common {
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
 	public function showi18n() {
-		foreach (self::$languagesUI as $key => $value) {
+		foreach (self::$languages as $key => $value) {
 			if ($this->getData(['config', 'i18n', $key]) === 'site'
 			) {
 				if (
