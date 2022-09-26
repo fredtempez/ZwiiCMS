@@ -794,11 +794,11 @@ class theme extends common {
 			$redirect ='';
 			switch ($url[0]) {
 				case 'admin':
-					$this->initData('admin');
+					$this->initData('admin', self::$i18nUI);
 					$redirect = helper::baseUrl() . 'theme/admin';
 					break;
 				case 'manage':
-					$this->initData('theme');
+					$this->initData('theme', self::$i18nUI);
 					$redirect = helper::baseUrl() . 'theme/manage';
 					break;
 				case 'custom':
@@ -1212,7 +1212,7 @@ class theme extends common {
 					}
 			}
 		}
-		
+
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
 						: $fileContent;
