@@ -24,7 +24,7 @@ class translate extends common {
 		'i18n' => self::GROUP_VISITOR,
 	];
 
-	// Language content
+	// Language contents
 	public static $translateOptions = [];
 	// Page pour la configuration dans la langue
 	public static $pagesList = [];
@@ -35,6 +35,8 @@ class translate extends common {
 	public static $languagesTarget = [];
 	// Activation du bouton de copie
 	public static $siteTranslate = true;
+	// Localisation en cours d'édition
+	public static $locales = [];
 
 	//UI
 	// Fichiers des langues de l'interface
@@ -264,6 +266,16 @@ class translate extends common {
 
 	public function edit() {
 
+		// Jeton incorrect
+		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'translate',
+				'state' => false,
+				'notification' => 'Action non autorisée'
+			]);
+		}
+
 		// Soumission du formulaire
 		if($this->isPost()) {
 
@@ -322,6 +334,22 @@ class translate extends common {
 		// Préparation de l'affichage du formulaire
 		//-----------------------------------------
 
+		// Récupération des locales de la langue sélectionnée
+		// Lire les locales sans passer par les méthodes
+
+		// Vérifier la conformité de l'URL
+		if (array_key_exists($this->getUrl(2), self::$languages) ) {
+			self::$locales [$this->getUrl(2)] = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json'), true);
+		} else {
+			// Bidouillage de l'URL, on sort
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'translate',
+				'notification' => 'URL incorrecte',
+				'state' => false
+			]);
+		}
+
 		// Générer la liste des pages disponibles
 		self::$pagesList = $this->getData(['page']);
 		foreach(self::$pagesList as $page => $pageId) {
@@ -342,7 +370,7 @@ class translate extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Edition',
+			'title' => 'Paramètres de la localisation ' . self::$languages[$this->getUrl(2)],
 			'view' => 'edit'
 		]);
 	}

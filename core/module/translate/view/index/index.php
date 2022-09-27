@@ -26,7 +26,7 @@
 			</div>
 			<div class="col1">
 				<?php echo template::button('translateButton', [
-					'href' => helper::baseUrl() . 'translate/copy',
+					'href' => helper::baseUrl() . 'translate/add',
 					'value' => template::ico('plus'),
 					'class' => 'buttonGreen',
 					'help' => 'Ajouter une langue de contenu'
