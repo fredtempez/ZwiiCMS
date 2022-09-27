@@ -26,6 +26,7 @@
 		<?php echo template::button('userAdd', [
 			'href' => helper::baseUrl() . 'user/add',
 			'value' => template::ico('plus'),
+			'class' => 'buttonGreen',
 			'help' => 'Ajouter un utilisateur'
 		]); ?>
 	</div>

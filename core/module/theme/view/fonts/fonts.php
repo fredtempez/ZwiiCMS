@@ -18,6 +18,7 @@
 		<?php echo template::button('themeFontAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/fontAdd',
 			'value' => template::ico('plus'),
+			'class' => 'buttonGreen',
 			'help' => 'Ajouter une fonte'
 		]); ?>
 	</div>

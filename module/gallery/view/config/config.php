@@ -23,6 +23,7 @@
 		<?php echo template::button('galleryAdd', [
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/add/',
 			'value' => template::ico('plus'),
+			'class' => 'buttonGreen',
 			'class' => 'buttonGreen'
 		]); ?>
 	</div>

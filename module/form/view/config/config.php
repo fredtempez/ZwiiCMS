@@ -85,6 +85,7 @@
 		<div class="col1 offset11">
 			<?php echo template::button('formConfigAdd', [
 				'value' => template::ico('plus'),
+				'class' => 'buttonGreen',
 				'class' => 'buttonGreen'
 			]); ?>
 		</div>
