@@ -133,11 +133,11 @@ class translate extends common {
 					'',
 					template::button('translateContentLanguageEdit' . $keyi18n, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $keyi18n. '/' . $_SESSION['csrf'],
-						'value' => template::ico('pencil'),
+						'value' => template::ico('flag'),
 						'help' => 'Editer les locales'
 					]),
 					template::button('translateContentLanguageDelete' .$keyi18n, [
-						'class' => 'buttonRed' . (self::$i18nUI === $keyi18n ? ' disabled' : '')  ,
+						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $keyi18n ? ' disabled' : '')  ,
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $keyi18n . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer cette langue'
@@ -172,32 +172,14 @@ class translate extends common {
 
 
 	/***
-	 * Ajouter unelangue de contenu
+	 * Ajouter une langue de contenu
 	 */
 
 	public function add() {
 
-
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Configuration dans des langues spécifiques
-			// Eviter déconnexion automatique après son activation
-			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
-			AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
-			$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
-			}
-				// Répercuter la suppression de la page dans la configuration du footer
-				if ( $this->getData(['theme','footer','displaySearch']) === true
-				AND $this->getInput('configSearchPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displaySearch', false]);
-			}
-			if ( $this->getData(['theme','footer','displayLegal']) === true
-				AND $this->getInput('configLegalPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displayLegal', false]);
-			}
 
 			// Sauvegarder les locales
 			$this->setData([
@@ -263,11 +245,12 @@ class translate extends common {
 
 	}
 
-
 	public function edit() {
 
-		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		if ( $this->getUrl(3) !== $_SESSION['csrf']
+			|| !array_key_exists($this->getUrl(2), self::$languages)
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'translate',
@@ -279,49 +262,59 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Configuration dans des langues spécifiques
-			// Eviter déconnexion automatique après son activation
-			if ( $this->getData(['config','connect', 'autoDisconnect']) === false
-			AND $this->getInput('configAutoDisconnect',helper::FILTER_BOOLEAN) === true ) {
-			$this->setData(['user',$this->getuser('id'),'accessCsrf',$_SESSION['csrf']]);
-			}
-				// Répercuter la suppression de la page dans la configuration du footer
-				if ( $this->getData(['theme','footer','displaySearch']) === true
-				AND $this->getInput('configSearchPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displaySearch', false]);
-			}
-			if ( $this->getData(['theme','footer','displayLegal']) === true
-				AND $this->getInput('configLegalPageId') === 'none'
-				){
-					$this->setData(['theme', 'footer', 'displayLegal', false]);
-			}
-
-			// Sauvegarder les locales
-			$this->setData([
-				'locale',
-				[
-					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('localePage404'),
-					'page403' => $this->getInput('localePage403'),
-					'page302' => $this->getInput('localePage302'),
-					'legalPageId' => $this->getInput('localeLegalPageId'),
-					'searchPageId' => $this->getInput('localeSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
-					'cookies' => [
-						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
+			// Sauvegarder les locales si identique à la langue de l'UI
+			if ( $this->getUrl(2) === self::$i18nUI ) {
+				// Enregistrer les données par lecture directe du formulaire
+				$this->setData([
+					'locale',
+					[
+						'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+						'page404' => $this->getInput('localePage404'),
+						'page403' => $this->getInput('localePage403'),
+						'page302' => $this->getInput('localePage302'),
+						'legalPageId' => $this->getInput('localeLegalPageId'),
+						'searchPageId' => $this->getInput('localeSearchPageId'),
+						'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+						'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
+						'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+						'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
+						'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+						'cookies' => [
+							// Les champs sont obligatoires si l'option consentement des cookies est active
+							'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+							'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+							'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+							'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+							'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
+						]
 					]
-				]
-			]);
+				]);
+			} else {
+				$data = ['locale' => [
+							'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+							'page404' => $this->getInput('localePage404'),
+							'page403' => $this->getInput('localePage403'),
+							'page302' => $this->getInput('localePage302'),
+							'legalPageId' => $this->getInput('localeLegalPageId'),
+							'searchPageId' => $this->getInput('localeSearchPageId'),
+							'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+							'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
+							'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+							'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
+							'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+							'cookies' => [
+								// Les champs sont obligatoires si l'option consentement des cookies est active
+								'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+								'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+								'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+								'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+								'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
+							]
+					]
+				];
+				// Sauver sur le disque
+				file_put_contents (self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
+			}
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -335,12 +328,9 @@ class translate extends common {
 		//-----------------------------------------
 
 		// Récupération des locales de la langue sélectionnée
-		// Lire les locales sans passer par les méthodes
 
 		// Vérifier la conformité de l'URL
-		if (array_key_exists($this->getUrl(2), self::$languages) ) {
-			self::$locales [$this->getUrl(2)] = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json'), true);
-		} else {
+		if ( !array_key_exists($this->getUrl(2), self::$languages)) {
 			// Bidouillage de l'URL, on sort
 			// Valeurs en sortie
 			$this->addOutput([
@@ -348,6 +338,14 @@ class translate extends common {
 				'notification' => 'URL incorrecte',
 				'state' => false
 			]);
+		}
+		//Lecture des données pour transmission au formulaire
+		// La locale est-elle celle de la langue de l'UI ?
+		if ( $this->getUrl(2) === self::$i18nUI) {
+			self::$locales [$this->getUrl(2)]['locale']  = $this->getData(['locale']);
+		} else {
+			// Lire les locales sans passer par les méthodes
+			self::$locales [$this->getUrl(2)] = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json'), true);
 		}
 
 		// Générer la liste des pages disponibles
@@ -379,19 +377,27 @@ class translate extends common {
 	 * Effacer une langue de contenu
 	 */
 	public function delete() {
-		// Edition des langues
-		foreach (self::$languages as $keyi18n => $value) {
-			if ($keyi18n === 'fr_FR') continue;
-
-			// Effacement d'une langue installée
-			if ( is_dir( self::DATA_DIR . $keyi18n ) === true
-				AND  $this->getInput('translate' . strtoupper($keyi18n)) === 'delete')
-			{
-					$this->removeDir( self::DATA_DIR . $keyi18n);
-					// Au cas ou la langue est sélectionnée
-					helper::deleteCookie('ZWII_I18N_SITE');
-			}
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		if ( $this->getUrl(3) !== $_SESSION['csrf']
+			|| !array_key_exists($this->getUrl(2), self::$languages) ) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl()  . 'translate',
+					'state' => false,
+					'notification' => 'Action non autorisée'
+				]);
 		}
+
+		// Effacement d'une langue installée
+		if ( is_dir( self::DATA_DIR . $this->getUrl(2) ) === true ) {
+			$success = $this->removeDir( self::DATA_DIR . $this->getUrl(2));
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'translate',
+			'notification' => $success ? 'La traduction a été supprimée' : 'Une erreur s\'est produite',
+			'state' => $success
+		]);
 	}
 
 	/*

@@ -43,7 +43,7 @@
 			'class' => 'buttonTab'
 		]); ?>
 		<?php echo template::button('translateContentButton', [
-			'value' => 'Langues de contenu',
+			'value' => 'Langues du contenu',
 			'class' => 'buttonTab'
 		]); ?>
 

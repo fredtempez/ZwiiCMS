@@ -42,6 +42,16 @@ $("#translateContentButton").on("click", function () {
 	setCookie("translateLayout", "content");
 });
 
+/**
+ * Confirmation de suppression
+ */
+ $(".translateDelete").on("click", function() {
+	var _this = $(this);
+    var message_delete = "<?php echo template::topic('Confirmer la suppression de cette traduction du site'); ?>";
+	return core.confirm(message_delete, function() {
+		$(location).attr("href", _this.attr("href"));
+	});
+});
 
 
 
