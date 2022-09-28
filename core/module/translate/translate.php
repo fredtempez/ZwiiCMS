@@ -92,7 +92,7 @@ class translate extends common {
 			}
 		}
 		// Langues cibles fr en plus
-		self::$languagesInstalled = array_merge(['fr'	=> 'Français (fr)'],self::$languagesTarget);
+		self::$languagesInstalled = array_merge(['fr_FR'	=> 'Français (fr_FR)'], self::$languagesTarget);
 
 		// Valeurs en sortie
 		$this->addOutput([

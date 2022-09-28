@@ -190,7 +190,7 @@ class config extends common {
 	];
 
 	// Langue traduite courante
-	public static $i18nSite = 'fr';
+	public static $i18nSite = 'fr_FR';
 
 	// Variable pour construire la liste des pages du site
 	public static $onlineVersion = '';
@@ -493,16 +493,6 @@ class config extends common {
 						'captchaType' => $this->getInput('connectCaptchaType'),
 						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN),
 						'redirectLogin' => $this->getInput('connectRedirectLogin',helper::FILTER_BOOLEAN)
-					],
-					'i18n' => [
-						'interface'			=> $this->getData(['config', 'i18n', 'default']),
-						'fr'		 		=> $this->getData(['config', 'i18n', 'fr']),
-						'de' 		 		=> $this->getData(['config', 'i18n', 'de']),
-						'en' 			 	=> $this->getData(['config', 'i18n', 'en']),
-						'es' 			 	=> $this->getData(['config', 'i18n', 'es']),
-						'it' 			 	=> $this->getData(['config', 'i18n', 'it']),
-						'nl' 			 	=> $this->getData(['config', 'i18n', 'nl']),
-						'pt' 			 	=> $this->getData(['config', 'i18n', 'pt'])
 					]
 				]
 			]);

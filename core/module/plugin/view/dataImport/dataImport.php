@@ -28,7 +28,7 @@
                 </div>
                 <div class="col6">
                     <?php echo template::select('pluginImportPage', $module::$pagesList, [
-                            'label' => 'Importer le module dans la page ' . template::flag('site', '20px')
+                            'label' => 'Importer le module dans la page ' . template::flag('selected', '20px')
                         ]); ?>
                 </div>
             </div>

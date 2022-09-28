@@ -471,21 +471,21 @@ class template  {
         return $item;
     }
 
-        /**
+    /**
     * Crée un drapeau du site courante
-    * @param string $langId Id de la langue à affiche ou site pour la langue traduite courante
+    * @param string $langId Id de la langue à affiche ou selected pour la langue courante
     * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
     * @return string
     */
     public static function flag($langId, $size = 'auto') {
         switch ($langId) {
             case '':
-                $lang = 'fr';
+                $lang = 'fr_FR';
                 break;
-            case in_array($langId,['fr_FR', 'de', 'en', 'es', 'it', 'nl', 'pt']):
+            case in_array($langId,core::$languages):
                 $lang = $langId;
                 break;
-            case 'site':
+            case 'selected':
                 if ( isset($_COOKIE['ZWII_I18N_SITE'])
     	        ) {
                     $lang = $_COOKIE['ZWII_I18N_SITE'];
