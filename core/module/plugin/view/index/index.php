@@ -7,13 +7,13 @@
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('pluginHelp', [
+		<?php /**echo template::button('pluginHelp', [
 			'href' => 'https://doc.zwiicms.fr/gestion-des-modules',
 			'target' => '_blank',
 			'value' => template::ico('help'),
 			'class' => 'buttonHelp',
 			'help' => 'Consulter l\'aide en ligne'
-		]); ?>
+		]);*/ ?>
 	</div>
 	<div class="col1 offset8">
 		<?php echo template::button('pluginModulesStore', [

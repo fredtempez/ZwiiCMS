@@ -8,13 +8,13 @@
         ]); ?>
     </div>
 	<div class="col1">
-		<?php echo template::button('userHelp', [
+		<?php /**echo template::button('userHelp', [
 			'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
 			'target' => '_blank',
             'value' => template::ico('help'),
 			'class' => 'buttonHelp',
 			'help' => 'Consulter l\'aide en ligne'
-		]); ?>
+		]);*/ ?>
 	</div>
     <div class="col2 offset8">
 		<?php echo template::submit('userImportSubmit', [

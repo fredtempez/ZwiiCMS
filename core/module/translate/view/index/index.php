@@ -8,13 +8,13 @@
 			]); ?>
 		</div>
 		<div class="col1">
-			<?php echo template::button('translateHelp', [
+			<?php /**echo template::button('translateHelp', [
 				'href' => 'https://doc.zwiicms.fr/prise-en-charge-des-langues-etrangeres',
 				'target' => '_blank',
 				'value' => template::ico('help'),
 				'class' => 'buttonHelp',
 				'help' => 'Consulter l\'aide en ligne'
-			]); ?>
+			]);*/ ?>
 		</div>
 		<div class="col1 offset6">
 				<?php echo template::button('translateButton', [
