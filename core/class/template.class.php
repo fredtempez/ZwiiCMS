@@ -474,7 +474,7 @@ class template  {
     /**
     * Crée un drapeau du site courante
     * @param string $langId Id de la langue à affiche ou selected pour la langue courante
-    * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
+    * @param string size en pixels ou en rem
     * @return string
     */
     public static function flag($langId, $size = 'auto') {
@@ -493,11 +493,11 @@ class template  {
                     $lang = 'fr_FR';
                 }
         }
-        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"
+        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $langId . '.png"
                 width="' . $size .'"
                 height="' . $size .'"
-                title="' . $lang .'"
-                alt="(' . $lang . ')"/>';
+                title="' . $langId .'"
+                alt="(' . $langId . ')"/>';
     }
 
     /**

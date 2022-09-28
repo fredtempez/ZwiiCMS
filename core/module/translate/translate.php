@@ -128,6 +128,7 @@ class translate extends common {
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $keyi18n) ) {
 				self::$languagesInstalled [] = [
+					template::flag($keyi18n, '50%') ,
 					$value . ' (' . $keyi18n . ')' ,
 					self::$i18nUI === $keyi18n ? '(langue de l\'interface)' : '',
 					'',
@@ -209,7 +210,7 @@ class translate extends common {
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
+				'redirect' => helper::baseUrl() . 'translate',
 				'notification' => 'Modifications enregistrées',
 				'state' => true
 			]);

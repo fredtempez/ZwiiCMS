@@ -72,7 +72,7 @@
 		<div class="row">
 			<div class="col12">
 				<?php if($module::$languagesInstalled): ?>
-					<?php echo template::table([2, 2, 6, 1, 1], $module::$languagesInstalled, ['Langue', '', '', '', '']); ?>
+					<?php echo template::table([1, 3, 2, 4, 1, 1], $module::$languagesInstalled, ['Langue', '', '', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
