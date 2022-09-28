@@ -34,7 +34,7 @@ class translate extends common {
 	// Liste des langues cibles
 	public static $languagesTarget = [];
 	// Activation du bouton de copie
-	public static $siteTranslate = true;
+	public static $siteCopy = true;
 	// Localisation en cours d'édition
 	public static $locales = [];
 
@@ -147,6 +147,8 @@ class translate extends common {
 			}
 
 		}
+		// Activation du bouton de copie
+		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
 
 		// Langues de l'UI disponibles
 		if (is_dir(self::I18N_DIR)) {

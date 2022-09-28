@@ -20,7 +20,7 @@
 				<?php echo template::button('translateButton', [
 					'href' => helper::baseUrl() . 'translate/copy',
 					'value' => template::ico('docs'),
-					'disabled' => $module::$siteTranslate,
+					'disabled' => $module::$siteCopy,
 					'help' => 'Copie de sites inter-langues'
 				]); ?>
 			</div>
