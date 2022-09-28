@@ -262,56 +262,36 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
-			// Sauvegarder les locales si identique à la langue de l'UI
+			// Sauvegarder les locales
+			$data = ['locale' => [
+				'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
+				'page404' => $this->getInput('localePage404'),
+				'page403' => $this->getInput('localePage403'),
+				'page302' => $this->getInput('localePage302'),
+				'legalPageId' => $this->getInput('localeLegalPageId'),
+				'searchPageId' => $this->getInput('localeSearchPageId'),
+				'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+				'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
+				'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+				'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
+				'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
+				'cookies' => [
+					// Les champs sont obligatoires si l'option consentement des cookies est active
+					'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+					'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+					'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+					'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+					'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
+						]
+				]
+			];
+			echo "<pre>";
+			var_dump($data);
+			// Sauvegarde hors méthodes si la langue n'est pas celle de l'UI
 			if ( $this->getUrl(2) === self::$i18nUI ) {
 				// Enregistrer les données par lecture directe du formulaire
-				$this->setData([
-					'locale',
-					[
-						'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
-						'page404' => $this->getInput('localePage404'),
-						'page403' => $this->getInput('localePage403'),
-						'page302' => $this->getInput('localePage302'),
-						'legalPageId' => $this->getInput('localeLegalPageId'),
-						'searchPageId' => $this->getInput('localeSearchPageId'),
-						'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-						'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-						'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-						'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-						'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
-						'cookies' => [
-							// Les champs sont obligatoires si l'option consentement des cookies est active
-							'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-							'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-							'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-							'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-							'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
-						]
-					]
-				]);
+				$this->setData(['locale', $data['locale'] ]);
 			} else {
-				$data = ['locale' => [
-							'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
-							'page404' => $this->getInput('localePage404'),
-							'page403' => $this->getInput('localePage403'),
-							'page302' => $this->getInput('localePage302'),
-							'legalPageId' => $this->getInput('localeLegalPageId'),
-							'searchPageId' => $this->getInput('localeSearchPageId'),
-							'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-							'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-							'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-							'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-							'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
-							'cookies' => [
-								// Les champs sont obligatoires si l'option consentement des cookies est active
-								'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-								'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-								'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-								'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-								'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
-							]
-					]
-				];
 				// Sauver sur le disque
 				file_put_contents (self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
 			}
