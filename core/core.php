@@ -613,12 +613,14 @@ class common {
 			mkdir (self::DATA_DIR .$lang, 0755);
 		}
 		$db = $this->dataFiles[$module];
+
 		if ($sampleSite === true) {
 			$db->set($module,init::$siteData[$module]);
 		} else {
 			$db->set($module,init::$defaultData[$module]);
 		}
 		$db->save;
+
 
 		// Dossier des pages
 		if (!is_dir(self::DATA_DIR . $lang . '/content')) {

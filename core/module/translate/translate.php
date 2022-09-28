@@ -162,7 +162,6 @@ class translate extends common {
 			chdir($dir);
 		}
 
-
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => 'Multilangues',
@@ -180,32 +179,33 @@ class translate extends common {
 		// Soumission du formulaire
 		if($this->isPost()) {
 
+			// Création du contenu
+			$lang = $this->getInput('translateAddContent');
 
-			// Sauvegarder les locales
-			$this->setData([
-				'locale',
-				[
-					'homePageId' => $this->getInput('localeHomePageId', helper::FILTER_ID, true),
-					'page404' => $this->getInput('localePage404'),
-					'page403' => $this->getInput('localePage403'),
-					'page302' => $this->getInput('localePage302'),
-					'legalPageId' => $this->getInput('localeLegalPageId'),
-					'searchPageId' => $this->getInput('localeSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
-					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
-					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
-					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
-					'cookies' => [
-						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'buttonValidLabel' =>$this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
-					]
-				]
-			]);
+			// Tableau avec les données vierges
+			require_once('core/module/install/ressource/defaultdata.php');
+
+			// Créer la structure
+			foreach (['page', 'module', 'locale'] as $key) {
+
+				// Sus-dossier localisé
+				if (!file_exists(self::DATA_DIR .  $lang)) {
+					mkdir (self::DATA_DIR . $lang, 0755);
+				}
+
+				// Initialiser la classe
+				$db = new \Prowebcraft\JsonDb([
+					'name' => $key . '.json',
+					'dir' => self::DATA_DIR . $lang,
+					'backup' => file_exists('site/data/.backup')
+				]);;
+
+				// Capturer et sauver
+				$db->set($key,init::$defaultData[$key]);
+				$db->save;
+
+			}
+
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -219,22 +219,10 @@ class translate extends common {
 		// Préparation de l'affichage du formulaire
 		//-----------------------------------------
 
-		// Générer la liste des pages disponibles
-		self::$pagesList = $this->getData(['page']);
-		foreach(self::$pagesList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true) {
-				unset(self::$pagesList[$page]);
-			}
-		}
-
-		self::$orphansList =  $this->getData(['page']);
-		foreach(self::$orphansList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true ||
-				$this->getdata(['page',$page, 'position']) !== 0) {
-				unset(self::$orphansList[$page]);
-			}
+		// Tableau des langues non installées
+		foreach (self::$languages as $key => $value) {
+			if (!is_dir( self::DATA_DIR . $key))
+				self::$i18nFiles [$key] = $value;
 		}
 
 		// Valeurs en sortie
@@ -285,8 +273,7 @@ class translate extends common {
 						]
 				]
 			];
-			echo "<pre>";
-			var_dump($data);
+
 			// Sauvegarde hors méthodes si la langue n'est pas celle de l'UI
 			if ( $this->getUrl(2) === self::$i18nUI ) {
 				// Enregistrer les données par lecture directe du formulaire
