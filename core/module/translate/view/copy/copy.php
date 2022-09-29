@@ -14,7 +14,7 @@
     </div>
 </div>
 <div class="row">
-   <div class="col12"> 
+    <div class="col12">
         <div class="block">
             <h4>
                 <?php echo template::topic('Copie des traductions rédigées'); ?>
@@ -23,12 +23,12 @@
                 <div class="col6">
                     <?php echo template::select('translateFormCopySource', $module::$languagesInstalled, [
                         'label' => 'Pages et les modules de'
-                        ]); ?>
+                    ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('translateFormCopyTarget', $module::$languagesTarget, [
                         'label' => 'Vers'
-                        ]); ?>
+                    ]); ?>
                 </div>
             </div>
         </div>

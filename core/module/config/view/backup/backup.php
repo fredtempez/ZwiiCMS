@@ -2,13 +2,13 @@
 <div class="row">
 	<div class="col1">
 		<?php echo template::button('configBackupBack', [
-				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'config',
-				'value' => template::ico('left')
+			'class' => 'buttonGrey',
+			'href' => helper::baseUrl() . 'config',
+			'value' => template::ico('left')
 		]); ?>
 	</div>
 	<div class="col2 offset9">
-		<?php echo template::submit('configBackupSubmit',[
+		<?php echo template::submit('configBackupSubmit', [
 			'value' => 'Sauvegarder',
 			'uniqueSubmission' => true
 		]); ?>
@@ -28,7 +28,7 @@
 					]); ?>
 				</div>
 				<div class="col12">
-					<em>L'archive est générée dans <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=backup&type=0&akey=<?php echo md5_file(self::DATA_DIR.'core.json'); ?>"  data-lity>le dossier Backup</a> du gestionnaire de fichiers.</em>
+					<em>L'archive est générée dans <a href="<?php echo helper::baseUrl(false); ?>core/vendor/filemanager/dialog.php?fldr=backup&type=0&akey=<?php echo md5_file(self::DATA_DIR . 'core.json'); ?>" data-lity>le dossier Backup</a> du gestionnaire de fichiers.</em>
 				</div>
 			</div>
 		</div>

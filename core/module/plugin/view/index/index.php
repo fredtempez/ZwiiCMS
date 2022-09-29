@@ -41,63 +41,63 @@
 	]); ?>
 </div>
 <div class="tabContent" id="moduleContainer">
-	<?php if($module::$modulesInstalled): ?>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>
-				<?php echo template::topic('Sauvegarde'); ?>
-				</h4>
-				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, [ 'Module', 'Identifiant', 'Version', '', '', '']); ?>
+	<?php if ($module::$modulesInstalled) : ?>
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>
+						<?php echo template::topic('Sauvegarde'); ?>
+					</h4>
+					<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
+				</div>
 			</div>
 		</div>
-	</div>
-	<?php else: ?>
-	<?php echo template::speech('Aucun module installé.'); ?>
+	<?php else : ?>
+		<?php echo template::speech('Aucun module installé.'); ?>
 	<?php endif; ?>
-	<?php if($module::$modulesOrphan): ?>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>
-					<?php echo template::topic('Modules orphelins'); ?>
-				</h4>
-				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, [ 'Module', 'Identifiant', 'Version', '', '']); ?>
+	<?php if ($module::$modulesOrphan) : ?>
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>
+						<?php echo template::topic('Modules orphelins'); ?>
+					</h4>
+					<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
+				</div>
 			</div>
 		</div>
-	</div>
-	<?php else: ?>
-	<?php echo template::speech('Aucun module orphelin.'); ?>
+	<?php else : ?>
+		<?php echo template::speech('Aucun module orphelin.'); ?>
 	<?php endif; ?>
 </div>
 <div class="tabContent displayNone" id="dataContainer">
-	<?php if($module::$modulesData): ?>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>
-				<?php echo template::topic('Modules configurés'); ?>
-				&nbsp;
-				<?php echo template::flag( self::$i18nContent, '20px'); ?>  
-				</h4>
-				<div class="row">
-					<div class="col1 offset11">
-						<?php echo template::button('configModuledataImport', [
-					'href' => helper::baseUrl() . 'plugin/dataImport',
-					'value' => template::ico('upload'),
-					"help" => 'Importer des données de module dans une page libre'
-					]); ?>
+	<?php if ($module::$modulesData) : ?>
+		<div class="row">
+			<div class="col12">
+				<div class="block">
+					<h4>
+						<?php echo template::topic('Modules configurés'); ?>
+						&nbsp;
+						<?php echo template::flag(self::$i18nContent, '20px'); ?>
+					</h4>
+					<div class="row">
+						<div class="col1 offset11">
+							<?php echo template::button('configModuledataImport', [
+								'href' => helper::baseUrl() . 'plugin/dataImport',
+								'value' => template::ico('upload'),
+								"help" => 'Importer des données de module dans une page libre'
+							]); ?>
+						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col12">
-						<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, [ 'Module', 'Identifiant', 'Version', 'Page', '', '']); ?>
+					<div class="row">
+						<div class="col12">
+							<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesData, ['Module', 'Identifiant', 'Version', 'Page', '', '']); ?>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<?php else: ?>
-	<?php echo template::speech('Aucune donnée de module.'); ?>
+	<?php else : ?>
+		<?php echo template::speech('Aucune donnée de module.'); ?>
 	<?php endif; ?>
 </div>

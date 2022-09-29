@@ -14,7 +14,8 @@
  * @copyright Copyright (C) 2018-2022, Frédéric Tempez
  */
 
-class theme extends common {
+class theme extends common
+{
 
 	public static $actions = [
 		'advanced' => self::GROUP_ADMIN,
@@ -51,21 +52,25 @@ class theme extends common {
 	public static $footerblocks = [
 		1 => [
 			'hide' => 'Masqué',
-			'center' => 'Affiché' ],
+			'center' => 'Affiché'
+		],
 		2 => [
 			'hide' => 'Masqué',
 			'left' => 'À gauche',
-			'right' => 'À droite' ],
+			'right' => 'À droite'
+		],
 		3 => [
 			'hide' => 'Masqué',
 			'left' => 'À gauche',
 			'center' => 'Au centre',
-			'right' => 'À droite' ],
+			'right' => 'À droite'
+		],
 		4 => [
 			'hide' => 'Masqué',
 			'left' => 'En haut',
 			'center' => 'Au milieu',
-			'right' => 'En bas' ]
+			'right' => 'En bas'
+		]
 	];
 
 	public static $fontWeights = [
@@ -232,7 +237,7 @@ class theme extends common {
 	// Variable pour construire la liste des pages du site
 	public static $pagesList = [];
 	// Variable pour construire la liste des fontes installées
-	public static $fontsNames= [];
+	public static $fontsNames = [];
 	public static $fonts = [];
 	// Variable pour détailler les fontes installées
 	public static $fontsDetail = [];
@@ -240,9 +245,10 @@ class theme extends common {
 	/**
 	 * Thème des écrans d'administration
 	 */
-	public function admin() {
+	public function admin()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			$this->setData(['admin', [
 				'backgroundColor' 	=> $this->getInput('adminBackgroundColor'),
 				'colorTitle' 		=> $this->getInput('adminColorTitle'),
@@ -251,8 +257,8 @@ class theme extends common {
 				'backgroundColorButton' 	=> $this->getInput('adminColorButton'),
 				'backgroundColorButtonGrey'	=> $this->getInput('adminColorGrey'),
 				'backgroundColorButtonRed'	=> $this->getInput('adminColorRed'),
-				'backgroundColorButtonGreen'=> $this->getInput('adminColorGreen'),
-				'backgroundColorButtonHelp'=> $this->getInput('adminColorHelp'),
+				'backgroundColorButtonGreen' => $this->getInput('adminColorGreen'),
+				'backgroundColorButtonHelp' => $this->getInput('adminColorHelp'),
 				'fontText' 		=> $this->getInput('adminFontText'),
 				'fontSize' 	=> $this->getInput('adminFontTextSize'),
 				'fontTitle' => $this->getInput('adminFontTitle'),
@@ -283,11 +289,12 @@ class theme extends common {
 	/**
 	 * Mode avancé
 	 */
-	public function advanced() {
+	public function advanced()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Enregistre le CSS
-			file_put_contents(self::DATA_DIR.'custom.css', $this->getInput('themeAdvancedCss', null));
+			file_put_contents(self::DATA_DIR . 'custom.css', $this->getInput('themeAdvancedCss', null));
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => 'Modifications enregistrées',
@@ -308,9 +315,10 @@ class theme extends common {
 	/**
 	 * Options de l'arrière plan
 	 */
-	public function body() {
+	public function body()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			$this->setData(['theme', 'body', [
 				'backgroundColor' => $this->getInput('themeBodyBackgroundColor'),
 				'image' => $this->getInput('themeBodyImage'),
@@ -341,12 +349,15 @@ class theme extends common {
 	/**
 	 * Options du pied de page
 	 */
-	public function footer() {
+	public function footer()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
-			if ( $this->getInput('themeFooterCopyrightPosition') === 'hide' &&
-				 $this->getInput('themeFooterSocialsPosition') === 'hide' &&
-				 $this->getInput('themeFooterTextPosition') === 'hide' 	) {
+		if ($this->isPost()) {
+			if (
+				$this->getInput('themeFooterCopyrightPosition') === 'hide' &&
+				$this->getInput('themeFooterSocialsPosition') === 'hide' &&
+				$this->getInput('themeFooterTextPosition') === 'hide'
+			) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'notification' => 'Sélectionnez au moins un contenu à afficher',
@@ -379,13 +390,13 @@ class theme extends common {
 					'displayCookie' => $this->getInput('themefooterDisplayCookie', helper::FILTER_BOOLEAN),
 					'displayLegal' =>  $this->getInput('themeFooterDisplayLegal', helper::FILTER_BOOLEAN),
 					'displaySearch' =>  $this->getInput('themeFooterDisplaySearch', helper::FILTER_BOOLEAN),
-					'memberBar'=> $this->getInput('themeFooterMemberBar', helper::FILTER_BOOLEAN),
+					'memberBar' => $this->getInput('themeFooterMemberBar', helper::FILTER_BOOLEAN),
 					'template' => $this->getInput('themeFooterTemplate')
 				]]);
 
 				// Sauvegarder la configuration localisée
-				$this->setData(['locale','legalPageId', $this->getInput('configLegalPageId')]);
-				$this->setData(['locale','searchPageId', $this->getInput('configSearchPageId')]);
+				$this->setData(['locale', 'legalPageId', $this->getInput('configLegalPageId')]);
+				$this->setData(['locale', 'searchPageId', $this->getInput('configSearchPageId')]);
 
 				// Valeurs en sortie
 				$this->addOutput([
@@ -398,9 +409,11 @@ class theme extends common {
 
 		// Liste des pages
 		self::$pagesList = $this->getData(['page']);
-		foreach(self::$pagesList as $page => $pageId) {
-			if ($this->getData(['page',$page,'block']) === 'bar' ||
-				$this->getData(['page',$page,'disable']) === true) {
+		foreach (self::$pagesList as $page => $pageId) {
+			if (
+				$this->getData(['page', $page, 'block']) === 'bar' ||
+				$this->getData(['page', $page, 'disable']) === true
+			) {
 				unset(self::$pagesList[$page]);
 			}
 		}
@@ -422,21 +435,22 @@ class theme extends common {
 	/**
 	 * Options de la bannière
 	 */
-	public function header() {
+	public function header()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Modification des URL des images dans la bannière perso
 			$featureContent = $this->getInput('themeHeaderText', null);
 			/**
-			* Stocker les images incluses dans la bannière perso dans un tableau
-			*/
+			 * Stocker les images incluses dans la bannière perso dans un tableau
+			 */
 			$files = [];
-			preg_match_all('/<img[^>]+>/i',$featureContent, $results);
-			foreach($results[0] as $value) {
+			preg_match_all('/<img[^>]+>/i', $featureContent, $results);
+			foreach ($results[0] as $value) {
 				// Lire le contenu XML
 				$sx = simplexml_load_string($value);
 				// Élément à remplacer
-				$files [] = str_replace('./site/file/source/','',(string) $sx[0]['src']);
+				$files[] = str_replace('./site/file/source/', '', (string) $sx[0]['src']);
 			}
 
 			// Sauvegarder
@@ -456,7 +470,7 @@ class theme extends common {
 				'textColor' => $this->getInput('themeHeaderTextColor'),
 				'textHide' => $this->getInput('themeHeaderTextHide', helper::FILTER_BOOLEAN),
 				'textTransform' => $this->getInput('themeHeaderTextTransform'),
-				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage',helper::FILTER_BOOLEAN),
+				'linkHomePage' => $this->getInput('themeHeaderlinkHomePage', helper::FILTER_BOOLEAN),
 				'imageContainer' => $this->getInput('themeHeaderImageContainer'),
 				'tinyHidden' => $this->getInput('themeHeaderTinyHidden', helper::FILTER_BOOLEAN),
 				'feature' => $this->getInput('themeHeaderFeature'),
@@ -464,19 +478,18 @@ class theme extends common {
 				'featureFiles' => $files
 			]]);
 			// Modification de la position du menu selon la position de la bannière
-			if  ( $this->getData(['theme','header','position']) == 'site'  )
-				{
-					$this->setData(['theme', 'menu', 'position',str_replace ('body-','site-',$this->getData(['theme','menu','position']))]);
+			if ($this->getData(['theme', 'header', 'position']) == 'site') {
+				$this->setData(['theme', 'menu', 'position', str_replace('body-', 'site-', $this->getData(['theme', 'menu', 'position']))]);
 			}
-			if  ( $this->getData(['theme','header','position']) == 'body')
-				{
-					$this->setData(['theme', 'menu', 'position',str_replace ('site-','body-',$this->getData(['theme','menu','position']))]);
+			if ($this->getData(['theme', 'header', 'position']) == 'body') {
+				$this->setData(['theme', 'menu', 'position', str_replace('site-', 'body-', $this->getData(['theme', 'menu', 'position']))]);
 			}
 			// Menu accroché à la bannière qui devient cachée
-			if  ( $this->getData(['theme','header','position']) == 'hide' &&
-				  in_array( $this->getData(['theme','menu','position']) , ['body-first', 'site-first', 'body-first' , 'site-second'])
-				 ) {
-					$this->setData(['theme', 'menu', 'position','site']);
+			if (
+				$this->getData(['theme', 'header', 'position']) == 'hide' &&
+				in_array($this->getData(['theme', 'menu', 'position']), ['body-first', 'site-first', 'body-first', 'site-second'])
+			) {
+				$this->setData(['theme', 'menu', 'position', 'site']);
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -503,7 +516,8 @@ class theme extends common {
 	/**
 	 * Accueil de la personnalisation
 	 */
-	public function index() {
+	public function index()
+	{
 
 		// Restaurer les fontes utilisateurs
 		$this->setFonts('user');
@@ -518,9 +532,10 @@ class theme extends common {
 	/**
 	 * Options du menu
 	 */
-	public function menu() {
+	public function menu()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			$this->setData(['theme', 'menu', [
 				'backgroundColor' => $this->getInput('themeMenuBackgroundColor'),
 				'backgroundColorSub' => $this->getInput('themeMenuBackgroundColorSub'),
@@ -569,27 +584,28 @@ class theme extends common {
 	/**
 	 * Options des fontes
 	 */
-	public function fonts() {
+	public function fonts()
+	{
 
 		// Toutes les fontes installées sont chargées
 		$this->setFonts('all');
 
 		// Polices liées au thème
 		$used = [
-			'Bannière' 		=> $this->getData (['theme', 'header', 'font']),
-			'Menu' 			=> $this->getData (['theme', 'menu', 'font']),
-			'Titre ' 		=> $this->getData (['theme', 'title', 'font']),
-			'Texte'   		=> $this->getData (['theme', 'text', 'font']),
-			'Pied de page' 	=> $this->getData (['theme', 'footer', 'font']),
-			'Titre (admin)' => $this->getData (['admin', 'fontTitle' ]),
-			'Admin (texte)' => $this->getData (['admin', 'fontText' ])
+			'Bannière' 		=> $this->getData(['theme', 'header', 'font']),
+			'Menu' 			=> $this->getData(['theme', 'menu', 'font']),
+			'Titre ' 		=> $this->getData(['theme', 'title', 'font']),
+			'Texte'   		=> $this->getData(['theme', 'text', 'font']),
+			'Pied de page' 	=> $this->getData(['theme', 'footer', 'font']),
+			'Titre (admin)' => $this->getData(['admin', 'fontTitle']),
+			'Admin (texte)' => $this->getData(['admin', 'fontText'])
 		];
 
 		// Récupérer le détail des fontes installées
 		//$f = $this->getFonts();
-		$f ['files'] =  $this->getData(['fonts', 'files']);
-		$f ['imported'] =  $this->getData(['fonts', 'imported']);
-		$f ['websafe'] = self::$fontsWebSafe;
+		$f['files'] =  $this->getData(['fonts', 'files']);
+		$f['imported'] =  $this->getData(['fonts', 'imported']);
+		$f['websafe'] = self::$fontsWebSafe;
 
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
 		foreach ($f as $type => $typeValue) {
@@ -598,30 +614,30 @@ class theme extends common {
 					// Fontes utilisées par les thèmes
 					$fontUsed[$fontId] = '';
 					foreach ($used as $key => $value) {
-						if ( $value === $fontId) {
+						if ($value === $fontId) {
 							$fontUsed[$fontId] .=  $key . '<br/>';
 						}
 					}
-					self::$fontsDetail [] = [
+					self::$fontsDetail[] = [
 						$fontId,
-						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>' ,
+						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>',
 						$f[$type][$fontId]['font-family'],
 						$fontUsed[$fontId],
 						$type,
 						$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
-													'class' => 'themeFontEdit',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-													'value' => template::ico('pencil'),
-													'disabled' => !empty($fontUsed[$fontId])
-												])
-											: '',
+							'class' => 'themeFontEdit',
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+							'value' => template::ico('pencil'),
+							'disabled' => !empty($fontUsed[$fontId])
+						])
+							: '',
 						$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
-													'class' => 'themeFontDelete buttonRed',
-													'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
-													'value' => template::ico('cancel'),
-													'disabled' => !empty($fontUsed[$fontId])
-												])
-											: ''
+							'class' => 'themeFontDelete buttonRed',
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+							'value' => template::ico('cancel'),
+							'disabled' => !empty($fontUsed[$fontId])
+						])
+							: ''
 					];
 				}
 			}
@@ -637,14 +653,15 @@ class theme extends common {
 	/**
 	 * Ajouter une fonte
 	 */
-	public function fontAdd() {
+	public function fontAdd()
+	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddFontImported', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$typeFlip = $type === 'files' ? 'imported' : 'files';
 			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
-			if (!empty($ressource) ) {
+			if (!empty($ressource)) {
 				$fontId = $this->getInput('fontAddFontId', null, true);
 				$fontName = $this->getInput('fontAddFontName', null, true);
 				$fontFamilyName = $this->getInput('fontAddFontFamilyName',  null, true);
@@ -653,24 +670,27 @@ class theme extends common {
 				$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 				// Supprime la fonte si elle existe dans le type inverse
-				if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
-					$this->deleteData(['fonts', $typeFlip, $fontId ]);
+				if (is_array($this->getData(['fonts', $typeFlip, $fontId]))) {
+					$this->deleteData(['fonts', $typeFlip, $fontId]);
 				}
 				// Stocker la fonte
-				$this->setData(['fonts',
-								$type,
-								$fontId, [
-									'name' => $fontName,
-									'font-family' => $fontFamilyName,
-									'resource' => $ressource
-				]]);
+				$this->setData([
+					'fonts',
+					$type,
+					$fontId, [
+						'name' => $fontName,
+						'font-family' => $fontFamilyName,
+						'resource' => $ressource
+					]
+				]);
 
 
 				// Copier la fonte si le nom du fichier est fourni
-				if ( $type === 'files' &&
-						file_exists(self::FILE_DIR . 'source/' . $ressource)
+				if (
+					$type === 'files' &&
+					file_exists(self::FILE_DIR . 'source/' . $ressource)
 				) {
-					copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+					copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource);
 				}
 
 				// Valeurs en sortie
@@ -699,7 +719,8 @@ class theme extends common {
 	/**
 	 * Ajouter une fonte
 	 */
-	public function fontEdit() {
+	public function fontEdit()
+	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
@@ -707,29 +728,32 @@ class theme extends common {
 			$typeFlip = $type === 'files' ? 'imported' : 'files';
 			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', null) : $this->getInput('fontEditFile',  null);
 			$fontId = $this->getInput('fontEditFontId',  null, true);
-			$fontName = $this->getInput('fontEditFontName', null , true);
+			$fontName = $this->getInput('fontEditFontName', null, true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName',  null, true);
 
 			// Remplace les doubles quotes par des simples quotes
 			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
-			if (is_array($this->getData(['fonts', $typeFlip, $fontId])) ) {
-				$this->deleteData(['fonts', $typeFlip, $fontId ]);
+			if (is_array($this->getData(['fonts', $typeFlip, $fontId]))) {
+				$this->deleteData(['fonts', $typeFlip, $fontId]);
 			}
 			// Stocker les fontes
-			$this->setData(['fonts',
-							$type,
-							$fontId, [
-								'name' => $fontName,
-								'font-family' => $fontFamilyName,
-								'resource' => $ressource
-			]]);
+			$this->setData([
+				'fonts',
+				$type,
+				$fontId, [
+					'name' => $fontName,
+					'font-family' => $fontFamilyName,
+					'resource' => $ressource
+				]
+			]);
 			// Copier la fonte si le nom du fichier est fourni
-			if ( $type === 'files' &&
-					file_exists(self::FILE_DIR . 'source/' . $ressource)
+			if (
+				$type === 'files' &&
+				file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy ( self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource );
+				copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource);
 			}
 
 			// Valeurs en sortie
@@ -749,7 +773,8 @@ class theme extends common {
 	/**
 	 * Effacer une fonte
 	 */
-	public function fontDelete() {
+	public function fontDelete()
+	{
 		// Jeton incorrect
 		if ($this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
@@ -765,8 +790,10 @@ class theme extends common {
 			$this->deleteData(['fonts', $this->getUrl(2), $this->getUrl(3)]);
 
 			// Effacer le fichier existant
-			if ( $this->getUrl(2) === 'file' &&
-				file_exists(self::DATA_DIR . $this->getUrl(2)) ) {
+			if (
+				$this->getUrl(2) === 'file' &&
+				file_exists(self::DATA_DIR . $this->getUrl(2))
+			) {
 				unlink(self::DATA_DIR . $this->getUrl(2));
 			}
 
@@ -783,15 +810,17 @@ class theme extends common {
 	/**
 	 * Réinitialisation de la personnalisation avancée
 	 */
-	public function reset() {
+	public function reset()
+	{
 		// $url prend l'adresse sans le token
-		$url = explode('&',$this->getUrl(2));
+		$url = explode('&', $this->getUrl(2));
 
-		if  ( isset($_GET['csrf'])
-			 AND $_GET['csrf'] === $_SESSION['csrf']
-			) {
+		if (
+			isset($_GET['csrf'])
+			and $_GET['csrf'] === $_SESSION['csrf']
+		) {
 			// Réinitialisation
-			$redirect ='';
+			$redirect = '';
 			switch ($url[0]) {
 				case 'admin':
 					$this->initData('admin', self::$i18nUI);
@@ -802,10 +831,10 @@ class theme extends common {
 					$redirect = helper::baseUrl() . 'theme/manage';
 					break;
 				case 'custom':
-					unlink(self::DATA_DIR.'custom.css');
+					unlink(self::DATA_DIR . 'custom.css');
 					$redirect = helper::baseUrl() . 'theme/advanced';
 					break;
-				default :
+				default:
 					$redirect = helper::baseUrl() . 'theme';
 			}
 
@@ -827,9 +856,10 @@ class theme extends common {
 	/**
 	 * Options du site
 	 */
-	public function site() {
+	public function site()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			$this->setData(['theme', 'title', [
 				'font' => $this->getInput('themeTitleFont'),
 				'textColor' => $this->getInput('themeTitleTextColor'),
@@ -840,14 +870,14 @@ class theme extends common {
 				'font' => $this->getInput('themeTextFont'),
 				'fontSize' => $this->getInput('themeTextFontSize'),
 				'textColor' => $this->getInput('themeTextTextColor'),
-				'linkColor'=> $this->getInput('themeTextLinkColor')
+				'linkColor' => $this->getInput('themeTextLinkColor')
 			]]);
 			$this->setData(['theme', 'site', [
 				'backgroundColor' => $this->getInput('themeSiteBackgroundColor'),
 				'radius' => $this->getInput('themeSiteRadius'),
 				'shadow' => $this->getInput('themeSiteShadow'),
 				'width' => $this->getInput('themeSiteWidth'),
-				'margin' => $this->getInput('themeSiteMargin',helper::FILTER_BOOLEAN)
+				'margin' => $this->getInput('themeSiteMargin', helper::FILTER_BOOLEAN)
 			]]);
 			$this->setData(['theme', 'button', [
 				'backgroundColor' => $this->getInput('themeButtonBackgroundColor')
@@ -881,11 +911,12 @@ class theme extends common {
 	/**
 	 * Import du thème
 	 */
-	public function manage() {
-		if($this->isPost() ) {
+	public function manage()
+	{
+		if ($this->isPost()) {
 
 			$zipFilename =	$this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
-			$data = $this->import(self::FILE_DIR.'source/' . $zipFilename);
+			$data = $this->import(self::FILE_DIR . 'source/' . $zipFilename);
 			if ($data['success']) {
 				header("Refresh:0");
 			} else {
@@ -911,10 +942,13 @@ class theme extends common {
 	 * @param @return array contenant $success = true ou false ; $ notification string message à afficher
 	 */
 
-	public function import($zipName = '') {
+	public function import($zipName = '')
+	{
 
-		if ($zipName !== '' &&
-			file_exists($zipName)) {
+		if (
+			$zipName !== '' &&
+			file_exists($zipName)
+		) {
 			// Init variables de retour
 			$success = false;
 			$notification = '';
@@ -923,26 +957,24 @@ class theme extends common {
 			// Ouvrir le zip
 			$zip = new ZipArchive();
 			if ($zip->open($zipName) === TRUE) {
-				mkdir (self::TEMP_DIR . $tempFolder, 0755);
-				$zip->extractTo(self::TEMP_DIR . $tempFolder );
+				mkdir(self::TEMP_DIR . $tempFolder, 0755);
+				$zip->extractTo(self::TEMP_DIR . $tempFolder);
 				$modele = '';
 				// Archive de thème ?
 				if (
 					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
-					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
-					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
-					) {
-						$modele = 'theme';
+					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
+					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
+				) {
+					$modele = 'theme';
 				}
-				if(
+				if (
 					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
-					AND file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
+					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
 				) {
-						$modele = 'admin';
-
+					$modele = 'admin';
 				}
-				if (!empty($modele)
-				) {
+				if (!empty($modele)) {
 					// traiter l'archive
 					$success = $zip->extractTo('.');
 
@@ -950,26 +982,26 @@ class theme extends common {
 					if ($modele = 'theme') {
 						$c = $this->subFonts(self::DATA_DIR . 'theme.json');
 						// Un remplacement nécessite la régénération de la feuille de style
-						if ($c > 0
-							AND file_exists(self::DATA_DIR . 'theme.css')
+						if (
+							$c > 0
+							and file_exists(self::DATA_DIR . 'theme.css')
 						) {
-								unlink(self::DATA_DIR . 'theme.css');
+							unlink(self::DATA_DIR . 'theme.css');
 						}
 					}
 					if ($modele = 'admin') {
 						$c = $this->subFonts(self::DATA_DIR . 'admin.json');
 						// Un remplacement nécessite la régénération de la feuille de style
-						if ($c > 0
-							AND file_exists(self::DATA_DIR . 'admin.css')
-							) {
-								unlink(self::DATA_DIR . 'admin.css');
+						if (
+							$c > 0
+							and file_exists(self::DATA_DIR . 'admin.css')
+						) {
+							unlink(self::DATA_DIR . 'admin.css');
 						}
 					}
 
 					// traitement d'erreur
 					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
-
-
 				} else {
 					// pas une archive de thème
 					$success = false;
@@ -994,37 +1026,39 @@ class theme extends common {
 	/**
 	 * Export du thème
 	 */
-	public function export() {
+	public function export()
+	{
 		// Make zip
-			$zipFilename = $this->zipTheme($this->getUrl(2));
-			// Téléchargement du ZIP
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Transfer-Encoding: binary');
-			header('Content-Disposition: attachment; filename="' . $zipFilename . '"');
-			header('Content-Length: ' . filesize(self::TEMP_DIR . $zipFilename));
-			readfile(self::TEMP_DIR . $zipFilename);
-			// Nettoyage du dossier
-			unlink (self::TEMP_DIR . $zipFilename);
-			exit();
+		$zipFilename = $this->zipTheme($this->getUrl(2));
+		// Téléchargement du ZIP
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Disposition: attachment; filename="' . $zipFilename . '"');
+		header('Content-Length: ' . filesize(self::TEMP_DIR . $zipFilename));
+		readfile(self::TEMP_DIR . $zipFilename);
+		// Nettoyage du dossier
+		unlink(self::TEMP_DIR . $zipFilename);
+		exit();
 	}
 
 	/**
 	 * Export du thème
 	 */
-	public function save() {
+	public function save()
+	{
 		// Make zip
 		$zipFilename = $this->zipTheme($this->getUrl(2));
 		// Téléchargement du ZIP
-		if (!is_dir(self::FILE_DIR.'source/theme')) {
-			mkdir(self::FILE_DIR.'source/theme', 0755);
+		if (!is_dir(self::FILE_DIR . 'source/theme')) {
+			mkdir(self::FILE_DIR . 'source/theme', 0755);
 		}
-		copy (self::TEMP_DIR . $zipFilename , self::FILE_DIR.'source/theme/' . $zipFilename);
+		copy(self::TEMP_DIR . $zipFilename, self::FILE_DIR . 'source/theme/' . $zipFilename);
 		// Nettoyage du dossier
-		unlink (self::TEMP_DIR . $zipFilename);
+		unlink(self::TEMP_DIR . $zipFilename);
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Archive <b>'.$zipFilename.'</b> sauvegardée avec succès',
+			'notification' => 'Archive <b>' . $zipFilename . '</b> sauvegardée avec succès',
 			'redirect' => helper::baseUrl() . 'theme/manage',
 			'state' => true
 		]);
@@ -1034,58 +1068,63 @@ class theme extends common {
 	 * construction du zip Fonction appelée par export() et save()
 	 * @param string $modele theme ou admin
 	 */
-	private function zipTheme($modele) {
+	private function zipTheme($modele)
+	{
 		// Creation du dossier
 		$zipFilename  =  $modele . date('Y-m-d-H-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
-		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE ) === TRUE) {
+		if ($zip->open(self::TEMP_DIR . $zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
 			switch ($modele) {
 				case 'admin':
-					$zip->addFile(self::DATA_DIR.'admin.json',self::DATA_DIR.'admin.json');
-					$zip->addFile(self::DATA_DIR.'admin.css',self::DATA_DIR.'admin.css');
+					$zip->addFile(self::DATA_DIR . 'admin.json', self::DATA_DIR . 'admin.json');
+					$zip->addFile(self::DATA_DIR . 'admin.css', self::DATA_DIR . 'admin.css');
 					// Ajoute les fontes
-					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$zip->addEmptyDir(self::DATA_DIR . 'fonts');
 					$fonts = $this->getData(['fonts', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
-						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+					if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
 
-						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+						$zip->addFile(self::DATA_DIR . 'fonts/fonts.html', self::DATA_DIR . 'fonts/fonts.html');
 					}
 					break;
 				case 'theme':
-					$zip->addFile(self::DATA_DIR.'theme.json',self::DATA_DIR.'theme.json');
-					$zip->addFile(self::DATA_DIR.'theme.css',self::DATA_DIR.'theme.css');
-					$zip->addFile(self::DATA_DIR.'custom.css',self::DATA_DIR.'custom.css');
+					$zip->addFile(self::DATA_DIR . 'theme.json', self::DATA_DIR . 'theme.json');
+					$zip->addFile(self::DATA_DIR . 'theme.css', self::DATA_DIR . 'theme.css');
+					$zip->addFile(self::DATA_DIR . 'custom.css', self::DATA_DIR . 'custom.css');
 					// Traite l'image dans le body
-					if ($this->getData(['theme','body','image']) !== '' ) {
-					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','body','image']),
-								self::FILE_DIR.'source/'.$this->getData(['theme','body','image'])
-								);
+					if ($this->getData(['theme', 'body', 'image']) !== '') {
+						$zip->addFile(
+							self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image']),
+							self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image'])
+						);
 					}
 					// Traite l'image dans le header
-					if ($this->getData(['theme','header','image']) !== '' ) {
-					$zip->addFile(self::FILE_DIR.'source/'.$this->getData(['theme','header','image']),
-								  self::FILE_DIR.'source/'.$this->getData(['theme','header','image'])
-								);
+					if ($this->getData(['theme', 'header', 'image']) !== '') {
+						$zip->addFile(
+							self::FILE_DIR . 'source/' . $this->getData(['theme', 'header', 'image']),
+							self::FILE_DIR . 'source/' . $this->getData(['theme', 'header', 'image'])
+						);
 					}
 					// Traite les images du header perso
-					if (!empty($this->getData(['theme','header','featureFiles'])) ) {
-						foreach($this->getData(['theme','header','featureFiles']) as $value) {
-							$zip->addFile(self::FILE_DIR . 'source/' . $value,
-										  self::FILE_DIR . 'source/' . $value );
+					if (!empty($this->getData(['theme', 'header', 'featureFiles']))) {
+						foreach ($this->getData(['theme', 'header', 'featureFiles']) as $value) {
+							$zip->addFile(
+								self::FILE_DIR . 'source/' . $value,
+								self::FILE_DIR . 'source/' . $value
+							);
 						}
 					}
 					// Ajoute les fontes
-					$zip->addEmptyDir(self::DATA_DIR .'fonts');
+					$zip->addEmptyDir(self::DATA_DIR . 'fonts');
 					$fonts = $this->getData(['fonts', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
-						$zip->addFile(self::DATA_DIR .'fonts/' . $fontName, self::DATA_DIR.'fonts/' . $fontName);
+						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR .'fonts/fonts.html')) {
+					if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
 
-						$zip->addFile(self::DATA_DIR .'fonts/fonts.html', self::DATA_DIR .'fonts/fonts.html');
+						$zip->addFile(self::DATA_DIR . 'fonts/fonts.html', self::DATA_DIR . 'fonts/fonts.html');
 					}
 					break;
 			}
@@ -1100,7 +1139,8 @@ class theme extends common {
 	 * @param string $file, nom du fichier json à convertir
 	 * @return int nombre de substitution effectuées
 	 */
-	private function subFonts($file)   {
+	private function subFonts($file)
+	{
 		// Tableau de substitution des fontes
 		$fonts = [
 			'Abril+Fatface' => 'abril-fatface',
@@ -1113,19 +1153,19 @@ class theme extends common {
 			'Droid+Serif' => 'droid-serif-2',
 			'Fira+Sans' => 'fira-sans',
 			'Inconsolata' => 'inconsolata-2',
-			'Indie+Flower' =>'indie-flower',
+			'Indie+Flower' => 'indie-flower',
 			'Josefin+Slab' => 'josefin-sans-std',
 			'Lobster' => 'lobster-2',
 			'Lora' => 'lora',
-			'Lato' =>'lato',
+			'Lato' => 'lato',
 			'Marvel' => 'montserrat-ace',
 			'Old+Standard+TT' => 'old-standard-tt-3',
-			'Open+Sans' =>'open-sans',
-				// Corriger l'erreur de nom de police installée par défaut, il manquait un O en majuscule
-			'open+Sans' =>'open-sans',
-			'Oswald' =>'oswald-4',
+			'Open+Sans' => 'open-sans',
+			// Corriger l'erreur de nom de police installée par défaut, il manquait un O en majuscule
+			'open+Sans' => 'open-sans',
+			'Oswald' => 'oswald-4',
 			'PT+Mono' => 'pt-mono',
-			'PT+Serif' =>'pt-serif',
+			'PT+Serif' => 'pt-serif',
 			'Raleway' => 'raleway-5',
 			'Rancho' => 'rancho',
 			'Roboto' => 'Roboto',
@@ -1136,7 +1176,7 @@ class theme extends common {
 
 		$data = file_get_contents($file);
 		$count = 0;
-		foreach ($fonts as $oldId => $newId){
+		foreach ($fonts as $oldId => $newId) {
 			$data = str_replace($oldId, $newId, $data, $c);
 			$count = $count + (int) $c;
 		}
@@ -1151,19 +1191,20 @@ class theme extends common {
 
 	// Retourne un tableau simple des fonts installées idfont avec le nom
 	// Cette fonction est utile aux sélecteurs de fonts dans les formulaires.
-	public function enumFonts() {
+	public function enumFonts()
+	{
 		/**
-		* Récupère la liste des fontes installées et construit deux tableaux
-		* id - nom
-		* id - font-family - resource
-		*/
-		$f ['files'] =  $this->getData(['fonts', 'files']);
-		$f ['imported'] =  $this->getData(['fonts', 'imported']);
-		$f ['websafe'] = self::$fontsWebSafe;
+		 * Récupère la liste des fontes installées et construit deux tableaux
+		 * id - nom
+		 * id - font-family - resource
+		 */
+		$f['files'] =  $this->getData(['fonts', 'files']);
+		$f['imported'] =  $this->getData(['fonts', 'imported']);
+		$f['websafe'] = self::$fontsWebSafe;
 		// Construit un tableau avec leur ID et leur famille
-		foreach(['websafe', 'imported', 'files'] as $type) {
-			if (is_array($f[$type]))  {
-				foreach ($f[$type] as $fontId => $fontValue ) {
+		foreach (['websafe', 'imported', 'files'] as $type) {
+			if (is_array($f[$type])) {
+				foreach ($f[$type] as $fontId => $fontValue) {
 					self::$fonts['name'][$fontId] = $fontValue['name'];
 					self::$fonts['family'][$fontId] = $fontValue['font-family'];
 				}
@@ -1178,44 +1219,46 @@ class theme extends common {
 	 * Création d'un fichier de liens d'appel des fontes
 	 * @param string $scope vaut all pour toutes les fontes ; 'user' pour les fontes utilisateurs
 	 */
-	private function setFonts($scope = 'all') {
+	private function setFonts($scope = 'all')
+	{
 
 		// Filtrage par fontes installées
-		$fontsInstalled = [ $this->getData(['theme', 'text',  'font']),
-							$this->getData(['theme', 'title', 'font']),
-							$this->getData(['theme', 'header', 'font']),
-							$this->getData(['theme', 'menu', 'font']),
-							$this->getData(['theme', 'footer', 'font']),
-							$this->getData(['admin', 'fontText']),
-							$this->getData(['admin', 'fontTitle']),
-	   ];
+		$fontsInstalled = [
+			$this->getData(['theme', 'text',  'font']),
+			$this->getData(['theme', 'title', 'font']),
+			$this->getData(['theme', 'header', 'font']),
+			$this->getData(['theme', 'menu', 'font']),
+			$this->getData(['theme', 'footer', 'font']),
+			$this->getData(['admin', 'fontText']),
+			$this->getData(['admin', 'fontTitle']),
+		];
 
-	   	// Compression
+		// Compression
 		$fontsInstalled = array_unique($fontsInstalled);
 
 		/**
-		* Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
-		*/
+		 * Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+		 */
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
-		if ( !empty($this->getData(['fonts', 'imported'])) ) {
-				foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
-					if (
-								( $scope === 'user' && in_array($fontId, $fontsInstalled) )
-							||  $scope === 'all'
-						) {
-						//Pré chargement à revoir
-						//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
-						$fileContent .= '<link href="' . $fontValue['resource'] .'" rel="stylesheet">';
-						// Pré connect pour api.google
-						$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
-					}
+		if (!empty($this->getData(['fonts', 'imported']))) {
+			foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
+				if (
+					($scope === 'user' && in_array($fontId, $fontsInstalled))
+					||  $scope === 'all'
+				) {
+					//Pré chargement à revoir
+					//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
+					$fileContent .= '<link href="' . $fontValue['resource'] . '" rel="stylesheet">';
+					// Pré connect pour api.google
+					$gf =  strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+				}
 			}
 		}
 
 		// Ajoute le préconnect des fontes Googles.
 		$fileContent = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fileContent
-						: $fileContent;
+			: $fileContent;
 
 
 
@@ -1223,32 +1266,30 @@ class theme extends common {
 		 * Fontes installées localement
 		 */
 		$fileContentCss = '';
-		if ( !empty($this->getData(['fonts', 'files'])) ) {
-				foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
-					if (
-							( $scope === 'user' && in_array($fontId, $fontsInstalled) )
-							||  $scope === 'all'
-						) {
-							if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource']) ) {
-								// Extension
-								$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
-								// Chargement de la police
-								$fileContentCss .=  '@font-face {' ;
-								$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
-								$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
-								$fileContentCss .=  '}' ;
-								// Préchargement
-								//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
-							}
+		if (!empty($this->getData(['fonts', 'files']))) {
+			foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
+				if (
+					($scope === 'user' && in_array($fontId, $fontsInstalled))
+					||  $scope === 'all'
+				) {
+					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource'])) {
+						// Extension
+						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
+						// Chargement de la police
+						$fileContentCss .=  '@font-face {';
+						$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
+						$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
+						$fileContentCss .=  '}';
+						// Préchargement
+						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
 					}
 				}
+			}
 		}
 
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR.'fonts/fonts.html', $fileContent);
+		file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fileContent);
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR.'fonts/fonts.css',  $fileContentCss);
-
+		file_put_contents(self::DATA_DIR . 'fonts/fonts.css',  $fileContentCss);
 	}
-
 }

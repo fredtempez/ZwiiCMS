@@ -10,8 +10,8 @@
  * @link http://zwiicms.fr/
  */
 
-$( document).ready(function() {
-    $("#configBackupForm").submit( function(e){
+$(document).ready(function () {
+    $("#configBackupForm").submit(function (e) {
         //$("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
@@ -22,15 +22,15 @@ $( document).ready(function() {
             type: "POST",
             url: url,
             data: $("form").serialize(),
-            success: function(data){
+            success: function (data) {
                 $('body, .button').css('cursor', 'default');
                 core.alert(message_success);
             },
-            error: function(data){
+            error: function (data) {
                 $('body, .button').css('cursor', 'default');
                 core.alert(message_error);
             },
-            complete: function(){
+            complete: function () {
                 $("#configBackupSubmit").removeClass("disabled").prop("disabled", false);
                 $("#configBackupSubmit").removeClass("uniqueSubmission").prop("uniqueSubmission", false);
                 $("#configBackupSubmit span").removeClass("zwiico-spin animate-spin");
@@ -43,10 +43,10 @@ $( document).ready(function() {
     /**
      * Confirmation de sauvegarde complète
      */
-    $("#configBackupSubmit").on("click", function() {
+    $("#configBackupSubmit").on("click", function () {
         if ($("input[name=configBackupOption]").is(':checked')) {
             var message_warning = "<?php echo template::topic('La sauvegarde des fichiers peut prendre du temps. Continuer ?'); ?>";
-            return core.confirm(message_warning, function() {
+            return core.confirm(message_warning, function () {
                 //$(location).attr("href", _this.attr("href"));
                 $('body, .button').css('cursor', 'wait');
                 $('form#configBackupForm').submit();

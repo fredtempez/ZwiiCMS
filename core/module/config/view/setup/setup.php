@@ -2,10 +2,10 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo template::topic('Paramétres');?>
+				<h4><?php echo template::topic('Paramétres'); ?>
 					<span id="setupHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/parametres" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/parametres" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
@@ -36,10 +36,10 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-							<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
-								'checked' => $this->getData(['config', 'cookieConsent']),
-								'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
-							]); ?>
+						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
+							'checked' => $this->getData(['config', 'cookieConsent']),
+							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
+						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
@@ -56,33 +56,33 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::topic('Mise à jour automatisée');?>
+					<?php echo template::topic('Mise à jour automatisée'); ?>
 					<span id="updateHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
-								'checked' => $this->getData(['config', 'autoUpdate']),
-								'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
-								'disabled' => !$module::$onlineVersion
-							]); ?>
+							'checked' => $this->getData(['config', 'autoUpdate']),
+							'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
+							'disabled' => !$module::$onlineVersion
+						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
-								'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
-								'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-								'disabled' => !$module::$onlineVersion
-							]); ?>
+							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
+							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
+							'disabled' => !$module::$onlineVersion
+						]); ?>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php 	echo  '<pre>Version installée : <strong>' . common::ZWII_VERSION . '</strong></pre>' ; ?>
-						<?php	echo  $module::$onlineVersion ? '<pre>Version en ligne  : <strong>'  . $module::$onlineVersion . '</strong></pre>' : '' ;?>
+						<?php echo  '<pre>Version installée : <strong>' . common::ZWII_VERSION . '</strong></pre>'; ?>
+						<?php echo  $module::$onlineVersion ? '<pre>Version en ligne  : <strong>'  . $module::$onlineVersion . '</strong></pre>' : ''; ?>
 					</div>
 					<div class="col4 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
@@ -102,17 +102,17 @@
 			<div class="block">
 				<h4>Maintenance
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
-								'checked' => $this->getData(['config', 'autoBackup']),
-								'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
-							]); ?>
+							'checked' => $this->getData(['config', 'autoBackup']),
+							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
+						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('configMaintenance', true, 'Site en maintenance', [
@@ -161,8 +161,8 @@
 			<div class="block">
 				<h4>Scripts externes
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-								<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
@@ -179,7 +179,7 @@
 							'href' => helper::baseUrl() . 'config/script/body',
 							'value' => 'Script dans body',
 							'ico' => 'pencil'
-					]); ?>
+						]); ?>
 					</div>
 				</div>
 			</div>

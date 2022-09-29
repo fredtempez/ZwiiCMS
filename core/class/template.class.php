@@ -1,22 +1,25 @@
 <?php
 
-class template  {
+class template
+{
 
     /**
      * retourne un texte traduit
      */
-    public static function topic($text) {
+    public static function topic($text)
+    {
         $text = helper::translate($text);
-        return $text ;
+        return $text;
     }
 
     /**
-    * Crée un bouton
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function button($nameId, array $attributes = []) {
+     * Crée un bouton
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function button($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
@@ -40,18 +43,19 @@ class template  {
             $attributes['disabled'] ? 'disabled' : '',
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
-            $attributes['help'] ? ' title="' . $attributes['help'] . '" ': '',
+            $attributes['help'] ? ' title="' . $attributes['help'] . '" ' : '',
             ($attributes['ico'] ? template::ico($attributes['ico'], ['margin' => 'right']) : '') . $attributes['value']
         );
     }
 
-   /**
-    * Crée un champ captcha
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function captcha($nameId, array $attributes = []) {
+    /**
+     * Crée un champ captcha
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function captcha($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
@@ -61,32 +65,32 @@ class template  {
             'name' => $nameId,
             'value' => '',
             'limit' => false, // captcha simple
-            'type'=> 'alpha' // num(érique) ou alpha(bétique)
+            'type' => 'alpha' // num(érique) ou alpha(bétique)
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         // $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Captcha quatre opérations
         // Limite addition et soustraction selon le type de captcha
-        $numbers = [0,1,2,3,4,5,6,7,8,9,10,12,13,14,15,16,17,18,19,20];
-        $letters = ['u','t','s','r','q','p','o','n','m','l','k','j','i','h','g','f','e','d','c','b','a'];
-        $limit = $attributes['limit']  ? count($letters)-1 : 10;
+        $numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+        $letters = ['u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
+        $limit = $attributes['limit']  ? count($letters) - 1 : 10;
 
         // Tirage de l'opération
-        mt_srand((float) microtime()*1000000);
+        mt_srand((float) microtime() * 1000000);
         // Captcha simple limité à l'addition
-        $operator = $attributes['limit'] ?  mt_rand (1, 4) : 1;
+        $operator = $attributes['limit'] ?  mt_rand(1, 4) : 1;
 
         // Limite si multiplication ou division
         if ($operator > 2) {
             $limit = 10;
-            }
+        }
 
         // Tirage des nombres
-        mt_srand((float) microtime()*1000000);
-        $firstNumber = mt_rand (1, $limit);
-        mt_srand((float) microtime()*1000000);
-        $secondNumber = mt_rand (1, $limit);
+        mt_srand((float) microtime() * 1000000);
+        $firstNumber = mt_rand(1, $limit);
+        mt_srand((float) microtime() * 1000000);
+        $secondNumber = mt_rand(1, $limit);
 
         // Permutation si addition ou soustraction
         if (($operator < 3) and ($firstNumber < $secondNumber)) {
@@ -113,38 +117,41 @@ class template  {
                 $operator = template::ico('divide');
                 $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
                 for ($i = 1; $i <= $firstNumber; $i++) {
-                    $limit = $limit2[$i-1];
-                    }
-                mt_srand((float) microtime()*1000000);
+                    $limit = $limit2[$i - 1];
+                }
+                mt_srand((float) microtime() * 1000000);
                 $secondNumber = mt_rand(1, $limit);
                 $firstNumber =  $firstNumber * $secondNumber;
                 $result = $firstNumber / $secondNumber;
                 break;
         }
 
-	    // Hashage du résultat
+        // Hashage du résultat
         $result = password_hash($result, PASSWORD_BCRYPT);
 
-	    // Codage des valeurs de l'opération
+        // Codage des valeurs de l'opération
         $firstLetter = uniqid();
         $secondLetter = uniqid();
 
         // Masquage image source pour éviter un décodage
-        copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
-        copy ('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
+        copy('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
+        copy('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
 
 
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="captcha inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        $html .= self::label($attributes['id'],
-                 '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?', [
-                        'help' => $attributes['help']
-                ]);
+        $html .= self::label(
+            $attributes['id'],
+            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?',
+            [
+                'help' => $attributes['help']
+            ]
+        );
 
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -170,14 +177,15 @@ class template  {
     }
 
     /**
-    * Crée une case à cocher à sélection multiple
-    * @param string $nameId Nom et id du champ
-    * @param string $value Valeur de la case à cocher
-    * @param string $label Label de la case à cocher
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function checkbox($nameId, $value, $label, array $attributes = []) {
+     * Crée une case à cocher à sélection multiple
+     * @param string $nameId Nom et id du champ
+     * @param string $value Valeur de la case à cocher
+     * @param string $label Label de la case à cocher
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function checkbox($nameId, $value, $label, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
@@ -193,14 +201,14 @@ class template  {
         $label = helper::translate($label);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['checked'] = (bool) common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -222,12 +230,13 @@ class template  {
     }
 
     /**
-    * Crée un champ date
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function date($nameId, array $attributes = []) {
+     * Crée un champ date
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function date($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'autocomplete' => 'on',
@@ -249,23 +258,22 @@ class template  {
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
-        }
-        else {
+        } else {
             $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], helper::FILTER_TIMESTAMP) : '');
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -290,12 +298,13 @@ class template  {
     }
 
     /**
-    * Crée un champ d'upload de fichier
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function file($nameId, array $attributes = []) {
+     * Crée un champ d'upload de fichier
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function file($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
@@ -316,20 +325,20 @@ class template  {
         $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
@@ -346,12 +355,12 @@ class template  {
         $html .= sprintf(
             '<a
                 href="' .
-                    helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
-                    '?relative_url=1' .
-                    '&field_id=' . $attributes['id'] .
-                    '&type=' . $attributes['type'] .
-                    '&akey=' . md5_file(core::DATA_DIR.'core.json') .
-                    ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
+                helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
+                '?relative_url=1' .
+                '&field_id=' . $attributes['id'] .
+                '&type=' . $attributes['type'] .
+                '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
+                ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
                 . '"
                 class="inputFile %s %s"
                 %s
@@ -377,19 +386,21 @@ class template  {
     }
 
     /**
-    * Ferme un formulaire
-    * @return string
-    */
-    public static function formClose() {
+     * Ferme un formulaire
+     * @return string
+     */
+    public static function formClose()
+    {
         return '</form>';
     }
 
     /**
-    * Ouvre un formulaire protégé par CSRF
-    * @param string $id Id du formulaire
-    * @return string
-    */
-    public static function formOpen($id) {
+     * Ouvre un formulaire protégé par CSRF
+     * @param string $id Id du formulaire
+     * @return string
+     */
+    public static function formOpen($id)
+    {
         // Ouverture formulaire
         $html = '<form id="' . $id . '" method="post">';
         // Stock le token CSRF
@@ -403,21 +414,23 @@ class template  {
 
 
     /**
-    * Crée une aide qui s'affiche au survole
-    * @param string $text Texte de l'aide
-    * @return string
-    */
-    public static function help($text) {
+     * Crée une aide qui s'affiche au survole
+     * @param string $text Texte de l'aide
+     * @return string
+     */
+    public static function help($text)
+    {
         return '<span class="helpButton" data-tippy-content="' . $text . '">' . self::ico('help') . '<!----></span>';
     }
 
     /**
-    * Crée un champ caché
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function hidden($nameId, array $attributes = []) {
+     * Crée un champ caché
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function hidden($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
@@ -429,7 +442,7 @@ class template  {
             'value' => ''
         ], $attributes);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
         // Texte
@@ -439,19 +452,20 @@ class template  {
     }
 
     /**
-    * Crée un icône
-    * @Array :
-    * @param string $ico Classe de l'icône
-    * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
-    * @param bool $animate Ajoute une animation à l'icône
-    * @param string $fontSize Taille de la police
-    * @param string $href lien vers une url
-    * @param string $help popup d'aide
-    * @param string $id de l'élement
-    * @return string
-    */
+     * Crée un icône
+     * @Array :
+     * @param string $ico Classe de l'icône
+     * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
+     * @param bool $animate Ajoute une animation à l'icône
+     * @param string $fontSize Taille de la police
+     * @param string $href lien vers une url
+     * @param string $help popup d'aide
+     * @param string $id de l'élement
+     * @return string
+     */
     // public static function ico($ico, $margin = '', $animate = false, $fontSize = '1em') {
-    public static function ico($ico, array $attributes = []) {
+    public static function ico($ico, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'margin' => '',
@@ -465,62 +479,64 @@ class template  {
         // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
         // Contenu de l'icône
-        $item = $attributes['href'] ? '<a id="' . $attributes['id']. '" data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr']. ' >' : '';
+        $item = $attributes['href'] ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
         $item .= '<span class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
         return $item;
     }
 
     /**
-    * Crée un drapeau du site courante
-    * @param string $langId Id de la langue à affiche ou selected pour la langue courante
-    * @param string size en pixels ou en rem
-    * @return string
-    */
-    public static function flag($langId, $size = 'auto') {
+     * Crée un drapeau du site courante
+     * @param string $langId Id de la langue à affiche ou selected pour la langue courante
+     * @param string size en pixels ou en rem
+     * @return string
+     */
+    public static function flag($langId, $size = 'auto')
+    {
         switch ($langId) {
             case '':
                 $lang = 'fr_FR';
                 break;
-            case in_array($langId,core::$languages):
+            case in_array($langId, core::$languages):
                 $lang = $langId;
                 break;
             case 'selected':
-                if ( isset($_COOKIE['ZWII_I18N_SITE'])
-    	        ) {
+                if (isset($_COOKIE['ZWII_I18N_SITE'])) {
                     $lang = $_COOKIE['ZWII_I18N_SITE'];
                 } else {
                     $lang = 'fr_FR';
                 }
         }
         return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $langId . '.png"
-                width="' . $size .'"
-                height="' . $size .'"
-                title="' . $langId .'"
+                width="' . $size . '"
+                height="' . $size . '"
+                title="' . $langId . '"
                 alt="(' . $langId . ')"/>';
     }
 
     /**
-    * Crée un label
-    * @param string $for For du label
-    * @param array $attributes Attributs ($key => $value)
-    * @param string $text Texte du label
-    * @return string
-    */
-    public static function label($for, $text, array $attributes = []) {
+     * Crée un label
+     * @param string $for For du label
+     * @param array $attributes Attributs ($key => $value)
+     * @param string $text Texte du label
+     * @return string
+     */
+    public static function label($for, $text, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
             'for' => $for,
             'help' => ''
         ], $attributes);
-        // Traduction de l'étiquette si déjà appelée par une fonction de template
-;       if (
+            // Traduction de l'étiquette si déjà appelée par une fonction de template
+        ;
+        if (
             get_called_class() !== 'template'
         ) {
             $attributes['help'] = helper::translate($attributes['help']);
         }
-        if($attributes['help'] !== '') {
+        if ($attributes['help'] !== '') {
             $text = $text . self::help($attributes['help']);
         }
         // Retourne le html
@@ -532,12 +548,13 @@ class template  {
     }
 
     /**
-    * Crée un champ mail
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function mail($nameId, array $attributes = []) {
+     * Crée un champ mail
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function mail($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'autocomplete' => 'on',
@@ -560,20 +577,20 @@ class template  {
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -590,22 +607,24 @@ class template  {
     }
 
     /**
-    * Crée une notice
-    * @param string $id Id du champ
-    * @param string $notice Notice
-    * @return string
-    */
-    public static function notice($id, $notice) {
+     * Crée une notice
+     * @param string $id Id du champ
+     * @param string $notice Notice
+     * @return string
+     */
+    public static function notice($id, $notice)
+    {
         return ' <span id="' . $id . 'Notice" class="notice ' . ($notice ? '' : 'displayNone') . '">' . $notice . '</span>';
     }
 
     /**
-    * Crée un champ mot de passe
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function password($nameId, array $attributes = []) {
+     * Crée un champ mot de passe
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function password($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'autocomplete' => 'on',
@@ -628,14 +647,14 @@ class template  {
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -652,13 +671,14 @@ class template  {
     }
 
     /**
-    * Crée un champ sélection
-    * @param string $nameId Nom et id du champ
-    * @param array $options Liste des options du champ de sélection ($value => $text)
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function select($nameId, array $options, array $attributes = []) {
+     * Crée un champ sélection
+     * @param string $nameId Nom et id du champ
+     * @param array $options Liste des options du champ de sélection ($value => $text)
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function select($nameId, array $options, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
@@ -682,43 +702,44 @@ class template  {
             $attributes['fonts'] = [];
         }
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['selected'] = common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
-         // Notice
+        // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
         // Début sélection
-        $html .= sprintf('<select %s>',
+        $html .= sprintf(
+            '<select %s>',
             helper::sprintAttributes($attributes)
         );
-        foreach($options as $value => $text) {
+        foreach ($options as $value => $text) {
             // Select des liste de fontes
             $html .=   isset($fonts)  ? sprintf(
-                    '<option value="%s"%s style="font-family: %s;">%s</option>',
-                    $value,
-                    $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                    $fonts[$value],
-                    $text
+                '<option value="%s"%s style="font-family: %s;">%s</option>',
+                $value,
+                $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
+                $fonts[$value],
+                $text
                 // Select standard
-                ) : sprintf(
-                    '<option value="%s"%s>%s</option>',
-                        $value,
-                        $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
-                        $text
-                );
+            ) : sprintf(
+                '<option value="%s"%s>%s</option>',
+                $value,
+                $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
+                $text
+            );
         }
         // Fin sélection
         $html .= '</select>';
@@ -729,21 +750,23 @@ class template  {
     }
 
     /**
-    * Crée une bulle de dialogue
-    * @param string $text Texte de la bulle
-    * @return string
-    */
-    public static function speech($text) {
-        return '<div class="speech"><div class="speechBubble">' . $text . '</div>' . template::ico('mimi speechMimi', ['fontSize'=> '7em']) . '</div>';
+     * Crée une bulle de dialogue
+     * @param string $text Texte de la bulle
+     * @return string
+     */
+    public static function speech($text)
+    {
+        return '<div class="speech"><div class="speechBubble">' . $text . '</div>' . template::ico('mimi speechMimi', ['fontSize' => '7em']) . '</div>';
     }
 
     /**
-    * Crée un bouton validation
-    * @param string $nameId Nom & id du bouton validation
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function submit($nameId, array $attributes = []) {
+     * Crée un bouton validation
+     * @param string $nameId Nom & id du bouton validation
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function submit($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'class' => '',
@@ -767,74 +790,76 @@ class template  {
     }
 
     /**
-	 * Crée un tableau
-	 * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
-	 * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
-	 * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
+     * Crée un tableau
+     * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
+     * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
+     * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
      * @param array $rowsId Id pour la numérotation des rows (format : [id colonne1, id colonne2, etc])
-	 * @param array $attributes Attributs ($key => $value)
-	 * @return string
-	 */
-	public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $rowsId = []) {
-		// Attributs par défaut
-		$attributes = array_merge([
-			'class' => '',
-			'classWrapper' => '',
-			'id' => ''
-		], $attributes);
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $rowsId = [])
+    {
+        // Attributs par défaut
+        $attributes = array_merge([
+            'class' => '',
+            'classWrapper' => '',
+            'id' => ''
+        ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        foreach($head as $value) {
-            $head[array_search($value,$head)] =  helper::translate($value);
+        foreach ($head as $value) {
+            $head[array_search($value, $head)] =  helper::translate($value);
         }
-		// Début du wrapper
-		$html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper']. '">';
-		// Début tableau
-		$html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class']. '">';
-		// Entêtes
-		if($head) {
-			// Début des entêtes
-			$html .= '<thead>';
-			$html .= '<tr class="nodrag">';
-			$i = 0;
-			foreach($head as $th) {
-				$html .= '<th class="col' . $cols[$i++] . '">' . $th . '</th>';
-			}
-			// Fin des entêtes
-			$html .= '</tr>';
-			$html .= '</thead>';
+        // Début du wrapper
+        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
+        // Début tableau
+        $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
+        // Entêtes
+        if ($head) {
+            // Début des entêtes
+            $html .= '<thead>';
+            $html .= '<tr class="nodrag">';
+            $i = 0;
+            foreach ($head as $th) {
+                $html .= '<th class="col' . $cols[$i++] . '">' . $th . '</th>';
+            }
+            // Fin des entêtes
+            $html .= '</tr>';
+            $html .= '</thead>';
         }
         // Pas de tableau d'Id transmis, générer une numérotation
         if (empty($rowsId)) {
-            $rowsId = range(0,count($body));
+            $rowsId = range(0, count($body));
         }
-		// Début contenu
-		$j = 0;
-		foreach($body as $tr) {
-			// Id de ligne pour les tableaux drag and drop
-			$html .= '<tr id="' . $rowsId[$j++] . '">';
-			$i = 0;
-			foreach($tr as $td) {
-				$html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
-			}
-			$html .= '</tr>';
-		}
-		// Fin contenu
-		$html .= '</tbody>';
-		// Fin tableau
-		$html .= '</table>';
-		// Fin container
-		$html .= '</div>';
-		// Retourne le html
-		return $html;
-	}
+        // Début contenu
+        $j = 0;
+        foreach ($body as $tr) {
+            // Id de ligne pour les tableaux drag and drop
+            $html .= '<tr id="' . $rowsId[$j++] . '">';
+            $i = 0;
+            foreach ($tr as $td) {
+                $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
+            }
+            $html .= '</tr>';
+        }
+        // Fin contenu
+        $html .= '</tbody>';
+        // Fin tableau
+        $html .= '</table>';
+        // Fin container
+        $html .= '</div>';
+        // Retourne le html
+        return $html;
+    }
 
     /**
-    * Crée un champ texte court
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function text($nameId, array $attributes = []) {
+     * Crée un champ texte court
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function text($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'autocomplete' => 'on',
@@ -857,20 +882,20 @@ class template  {
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }
@@ -887,12 +912,13 @@ class template  {
     }
 
     /**
-    * Crée un champ texte long
-    * @param string $nameId Nom et id du champ
-    * @param array $attributes Attributs ($key => $value)
-    * @return string
-    */
-    public static function textarea($nameId, array $attributes = []) {
+     * Crée un champ texte long
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function textarea($nameId, array $attributes = [])
+    {
         // Attributs par défaut
         $attributes = array_merge([
             'before' => true,
@@ -912,20 +938,20 @@ class template  {
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Sauvegarde des données en cas d'erreur
-        if($attributes['before'] AND array_key_exists($attributes['id'], common::$inputBefore)) {
+        if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
-        if($attributes['label']) {
+        if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
                 'help' => $attributes['help']
             ]);
         }
         // Notice
         $notice = '';
-        if(array_key_exists($attributes['id'], common::$inputNotices)) {
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
             $notice = common::$inputNotices[$attributes['id']];
             $attributes['class'] .= ' notice';
         }

@@ -14,12 +14,13 @@
  * @link http://zwiicms.fr/
  */
 
-class config extends common {
+class config extends common
+{
 
 	public static $actions = [
 		'backup' => self::GROUP_ADMIN,
-		'copyBackups'=> self::GROUP_ADMIN,
-		'delBackups'=> self::GROUP_ADMIN,
+		'copyBackups' => self::GROUP_ADMIN,
+		'delBackups' => self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
 		'siteMap' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
@@ -27,7 +28,7 @@ class config extends common {
 		'updateBaseUrl' => self::GROUP_ADMIN,
 		'script' => self::GROUP_ADMIN,
 		'logReset' => self::GROUP_ADMIN,
-		'logDownload'=> self::GROUP_ADMIN,
+		'logDownload' => self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
 		'blacklistDownload' => self::GROUP_ADMIN
 	];
@@ -201,7 +202,8 @@ class config extends common {
 	 * Sitemap compressé et non compressé
 	 * Robots.txt
 	 */
-	public function siteMap() {
+	public function siteMap()
+	{
 
 		// Mettre à jour le site map
 		$successSitemap = $this->createSitemap();
@@ -218,18 +220,19 @@ class config extends common {
 	/**
 	 * Sauvegarde des données
 	 */
-	public function backup() {
+	public function backup()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Creation du ZIP
-			$filter = $this->getInput('configBackupOption',helper::FILTER_BOOLEAN) === true ? ['backup','tmp'] : ['backup','tmp','file'];
-			$fileName = helper::autoBackup(self::TEMP_DIR,$filter);
+			$filter = $this->getInput('configBackupOption', helper::FILTER_BOOLEAN) === true ? ['backup', 'tmp'] : ['backup', 'tmp', 'file'];
+			$fileName = helper::autoBackup(self::TEMP_DIR, $filter);
 			// Créer le répertoire manquant
-			if (!is_dir(self::FILE_DIR.'source/backup')) {
-				mkdir(self::FILE_DIR.'source/backup', 0755);
+			if (!is_dir(self::FILE_DIR . 'source/backup')) {
+				mkdir(self::FILE_DIR . 'source/backup', 0755);
 			}
 			// Copie dans les fichiers
-			$success = copy (self::TEMP_DIR . $fileName , self::FILE_DIR.'source/backup/' . $fileName);
+			$success = copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/backup/' . $fileName);
 			// Détruire le temporaire
 			unlink(self::TEMP_DIR . $fileName);
 			// Valeurs en sortie
@@ -249,9 +252,10 @@ class config extends common {
 	/**
 	 * Réalise une copie d'écran du site
 	 */
-	public function configMetaImage() {
+	public function configMetaImage()
+	{
 		// fonction désactivée pour un site local
-		if ( strpos(helper::baseUrl(false),'localhost') > 0 OR strpos(helper::baseUrl(false),'127.0.0.1') > 0)	{
+		if (strpos(helper::baseUrl(false), 'localhost') > 0 or strpos(helper::baseUrl(false), '127.0.0.1') > 0) {
 			$site = 'https://zwiicms.fr/';
 		} else {
 			$site = helper::baseUrl(false);
@@ -265,9 +269,9 @@ class config extends common {
 		$data = false;
 
 		// lire l'API si le token est fourni
-		if (!empty($token) ) {
+		if (!empty($token)) {
 			// Tente de connecter 5 fois l'API
-			for ($i=0; $i < 5 ; $i++) {
+			for ($i = 0; $i < 5; $i++) {
 				$data = helper::getUrlContents('https://shot.screenshotapi.net/screenshot?token=' . $token . '&url=' . $site . '&width=1200&height=627&output=json&file_type=jpeg&no_cookie_banners=true&wait_for_event=load');
 				if ($data !== false) {
 					break;
@@ -278,41 +282,42 @@ class config extends common {
 
 
 		// Traitement des données reçues valides.
-		if ( !empty($token) && $data  !== false) {
+		if (!empty($token) && $data  !== false) {
 			$data = json_decode($data, true);
 			$img = $data['screenshot'];
 			// Effacer l'image et la miniature png
-			if (file_exists(self::FILE_DIR .'thumb/screenshot.jpg')) {
-				unlink (self::FILE_DIR .'thumb/screenshot.jpg');
+			if (file_exists(self::FILE_DIR . 'thumb/screenshot.jpg')) {
+				unlink(self::FILE_DIR . 'thumb/screenshot.jpg');
 			}
-			if (file_exists(self::FILE_DIR .'source/screenshot.jpg')) {
-				unlink (self::FILE_DIR .'source/screenshot.jpg');
+			if (file_exists(self::FILE_DIR . 'source/screenshot.jpg')) {
+				unlink(self::FILE_DIR . 'source/screenshot.jpg');
 			}
-			$success = copy ($img, self::FILE_DIR .'source/screenshot.jpg');
+			$success = copy($img, self::FILE_DIR . 'source/screenshot.jpg');
 		}
 
 		$notification =  empty($token)
-						? 'La clé de l\'API ne peut pas être vide'
-						: ($success === false  ? 'Problème avec le service en ligne' : 'Capture d\'écran générée avec succès');
+			? 'La clé de l\'API ne peut pas être vide'
+			: ($success === false  ? 'Problème avec le service en ligne' : 'Capture d\'écran générée avec succès');
 
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config',
 			'notification' => $notification,
-			'state' => ($success === false OR empty($token)) ? false : true
+			'state' => ($success === false or empty($token)) ? false : true
 		]);
 	}
 
 	/**
 	 * Procédure d'importation
 	 */
-	public function restore() {
+	public function restore()
+	{
 		// Soumission du formulaire
-		if($this->isPost() ) {
+		if ($this->isPost()) {
 
 			$success = false;
 
-			if ($this->getInput('configRestoreImportFile', null, true) ) {
+			if ($this->getInput('configRestoreImportFile', null, true)) {
 
 				$fileZip = $this->getInput('configRestoreImportFile');
 				$file_parts = pathinfo($fileZip);
@@ -325,7 +330,7 @@ class config extends common {
 						'view' => 'restore',
 						'notification' => 'Le fichier n\'est pas une archive valide',
 						'state' => false
-						]);
+					]);
 				}
 				$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
 				if ($successOpen === FALSE) {
@@ -335,23 +340,23 @@ class config extends common {
 						'view' => 'restore',
 						'notification' => 'Impossible de lire l\'archive',
 						'state' => false
-						]);
+					]);
 				}
 				// Lire le contenu de l'archive dans le tableau files
-				for( $i = 0; $i < $zip->numFiles; $i++ ){
-					$stat = $zip->statIndex( $i );
-					$files [] = ( basename( $stat['name'] ));
+				for ($i = 0; $i < $zip->numFiles; $i++) {
+					$stat = $zip->statIndex($i);
+					$files[] = (basename($stat['name']));
 				}
 
 				// Lire la dataversion
 				$tmpDir = uniqid(4);
-				$success = $zip->extractTo( self::TEMP_DIR . $tmpDir );
-				$data = file_get_contents( self::TEMP_DIR . $tmpDir . '/data/core.json');
+				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
+				$data = file_get_contents(self::TEMP_DIR . $tmpDir . '/data/core.json');
 				$obj = json_decode($data);
-				$dataVersion = strval ($obj->core->dataVersion);
+				$dataVersion = strval($obj->core->dataVersion);
 				switch (strlen($dataVersion)) {
 					case 4:
-						if (substr($dataVersion,0,1) === '9' ) {
+						if (substr($dataVersion, 0, 1) === '9') {
 							// Valeurs en sortie erreur
 							$this->addOutput([
 								'title' => 'Restaurer',
@@ -364,49 +369,53 @@ class config extends common {
 						}
 						break;
 					case 5:
-						$version = substr($dataVersion,0,2);
+						$version = substr($dataVersion, 0, 2);
 						break;
 					default:
 						$version = 0;
 						break;
 				}
-				$this->removeDir(self::TEMP_DIR . $tmpDir );
+				$this->removeDir(self::TEMP_DIR . $tmpDir);
 
-				if ($version >= 10 )	{
+				if ($version >= 10) {
 					// Option active, les users sont stockées
-					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ) {
+					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
 						$users = $this->getData(['user']);
 					}
 				} elseif ($version === 0) { // Version invalide
-							// Valeurs en sortie erreur
-							$this->addOutput([
-								'title' => 'Restaurer',
-								'view' => 'restore',
-								'notification' => 'Cette archive n\'est pas une sauvegarde valide',
-								'state' => false
-							]);
+					// Valeurs en sortie erreur
+					$this->addOutput([
+						'title' => 'Restaurer',
+						'view' => 'restore',
+						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
+						'state' => false
+					]);
 				}
 				// Extraire le zip ou 'site/'
 				$this->removeDir(self::DATA_DIR);
-				$success = $zip->extractTo( 'site/' );
+				$success = $zip->extractTo('site/');
 				// Fermer l'archive
 				$zip->close();
 
 				// Restaurer les users originaux d'une v10 si option cochée
-				if (!empty($users) &&
+				if (
+					!empty($users) &&
 					$version >= 10 &&
-					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
-						$this->setData(['user',$users]);
+					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true
+				) {
+					$this->setData(['user', $users]);
 				}
 			}
+
 			// Conversion vers des Url relatives
+			/*
 			if ($this->getData(['core', 'baseUrl'])) {
-				$url = str_replace('?','',$this->getData(['core', 'baseUrl']));
-				// Suppresion de la base Url
+				$url = str_replace('?', '', $this->getData(['core', 'baseUrl']));
+				// Suppression de la base Url
 				$this->updateBaseUrl($url);
 				// Effacer la baseUrl
 				$this->deleteData(['core', 'baseUrl']);
-			}
+			}*/
 
 			// Message de notification
 			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
@@ -432,15 +441,18 @@ class config extends common {
 	/**
 	 * Configuration
 	 */
-	public function index() {
+	public function index()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 
 			// Basculement en mise à jour auto,  remise à 0 du compteur
-			if ($this->getData(['config','autoUpdate']) === false &&
-				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true) {
-					$this->setData(['core','lastAutoUpdate',0]);
-				}
+			if (
+				$this->getData(['config', 'autoUpdate']) === false &&
+				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true
+			) {
+				$this->setData(['core', 'lastAutoUpdate', 0]);
+			}
 
 
 			// Sauvegarder la configuration
@@ -457,7 +469,7 @@ class config extends common {
 					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
-					'proxyPort' => $this->getInput('configProxyPort',helper::FILTER_INT),
+					'proxyPort' => $this->getInput('configProxyPort', helper::FILTER_INT),
 					'social' => [
 						'facebookId' => $this->getInput('socialFacebookId'),
 						'linkedinId' => $this->getInput('socialLinkedinId'),
@@ -469,30 +481,30 @@ class config extends common {
 						'githubId' => $this->getInput('socialGithubId')
 					],
 					'smtp' => [
-						'enable' => $this->getInput('smtpEnable',helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('smtpHost',helper::FILTER_STRING_SHORT,$this->getInput('smtpEnable',helper::FILTER_BOOLEAN)),
-						'port' => $this->getInput('smtpPort',helper::FILTER_INT,$this->getInput('smtpEnable',helper::FILTER_BOOLEAN)),
-						'auth' => $this->getInput('smtpAuth',helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('smtpSecure',helper::FILTER_BOOLEAN),
-						'username' => $this->getInput('smtpUsername',helper::FILTER_STRING_SHORT,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN)),
-						'password' =>helper::encrypt($this->getData(['config','smtp','username']),$this->getInput('smtpPassword',null,$this->getInput('smtpAuth',helper::FILTER_BOOLEAN))),
-						'sender' => $this->getInput('smtpSender',helper::FILTER_MAIL)
+						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
+						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
+						'port' => $this->getInput('smtpPort', helper::FILTER_INT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
+						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure', helper::FILTER_BOOLEAN),
+						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
+						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
+						'sender' => $this->getInput('smtpSender', helper::FILTER_MAIL)
 					],
 					'seo' => [
-						'robots' => $this->getInput('seoRobots',helper::FILTER_BOOLEAN),
-						'keyApi' => $this->getInput('seoKeyApi',helper::FILTER_STRING_SHORT),
+						'robots' => $this->getInput('seoRobots', helper::FILTER_BOOLEAN),
+						'keyApi' => $this->getInput('seoKeyApi', helper::FILTER_STRING_SHORT),
 					],
 					'connect' => [
-						'attempt' => $this->getInput('connectAttempt',helper::FILTER_INT),
-						'timeout' => $this->getInput('connectTimeout',helper::FILTER_INT),
-						'log' => $this->getInput('connectLog',helper::FILTER_BOOLEAN),
-						'anonymousIp' => $this->getInput('connectAnonymousIp',helper::FILTER_INT),
-						'captcha' => $this->getInput('connectCaptcha',helper::FILTER_BOOLEAN),
-						'captchaStrong' => $this->getInput('connectCaptchaStrong',helper::FILTER_BOOLEAN),
-						'autoDisconnect' => $this->getInput('connectAutoDisconnect',helper::FILTER_BOOLEAN),
+						'attempt' => $this->getInput('connectAttempt', helper::FILTER_INT),
+						'timeout' => $this->getInput('connectTimeout', helper::FILTER_INT),
+						'log' => $this->getInput('connectLog', helper::FILTER_BOOLEAN),
+						'anonymousIp' => $this->getInput('connectAnonymousIp', helper::FILTER_INT),
+						'captcha' => $this->getInput('connectCaptcha', helper::FILTER_BOOLEAN),
+						'captchaStrong' => $this->getInput('connectCaptchaStrong', helper::FILTER_BOOLEAN),
+						'autoDisconnect' => $this->getInput('connectAutoDisconnect', helper::FILTER_BOOLEAN),
 						'captchaType' => $this->getInput('connectCaptchaType'),
-						'showPassword' => $this->getInput('connectShowPassword',helper::FILTER_BOOLEAN),
-						'redirectLogin' => $this->getInput('connectRedirectLogin',helper::FILTER_BOOLEAN)
+						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
+						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN)
 					]
 				]
 			]);
@@ -500,9 +512,8 @@ class config extends common {
 			// Efface les fichiers de backup lorsque l'option est désactivée
 			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
-				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-				{
-					if (strpos($filename,'backup.json')) {
+				foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+					if (strpos($filename, 'backup.json')) {
 						unlink($filename);
 					}
 				}
@@ -511,25 +522,25 @@ class config extends common {
 				touch('site/data/.backup');
 			}
 			// Notice
-			if(self::$inputNotices === []) {
+			if (self::$inputNotices === []) {
 				// Active la réécriture d'URL
 				$rewrite = $this->getInput('configRewrite', helper::FILTER_BOOLEAN);
-				if(
+				if (
 					$rewrite
-					AND helper::checkRewrite() === false
+					and helper::checkRewrite() === false
 				) {
 					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
 					$rewriteData = 	PHP_EOL .
-									'# URL rewriting' .  PHP_EOL .
-									'<IfModule mod_rewrite.c>' . PHP_EOL .
-									"\tRewriteEngine on" . PHP_EOL .
-									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-									'</IfModule>'. PHP_EOL .
-									'# URL rewriting' . PHP_EOL ;
+						'# URL rewriting' .  PHP_EOL .
+						'<IfModule mod_rewrite.c>' . PHP_EOL .
+						"\tRewriteEngine on" . PHP_EOL .
+						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+						'</IfModule>' . PHP_EOL .
+						'# URL rewriting' . PHP_EOL;
 					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
 					file_put_contents(
 						'.htaccess',
@@ -539,9 +550,9 @@ class config extends common {
 					helper::$rewriteStatus = true;
 				}
 				// Désactive la réécriture d'URL
-				elseif(
+				elseif (
 					$rewrite === false
-					AND helper::checkRewrite()
+					and helper::checkRewrite()
 				) {
 					// Suppression des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
@@ -561,7 +572,7 @@ class config extends common {
 			$this->addOutput([
 				'title' => 'Configuration du site',
 				'view' => 'index',
-				'notification' => 'Modifications enregistrées ' ,
+				'notification' => 'Modifications enregistrées ',
 				'state' => true
 			]);
 		}
@@ -569,7 +580,7 @@ class config extends common {
 		// Variable de version
 		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		if (self::$onlineVersion > common::ZWII_VERSION) {
-			self::$updateButtonText = "Mettre à jour" ;
+			self::$updateButtonText = "Mettre à jour";
 		}
 
 		// Valeurs en sortie
@@ -580,19 +591,20 @@ class config extends common {
 	}
 
 
-	public function script() {
+	public function script()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Ecrire les fichiers de script
 			if ($this->geturl(2) === 'head') {
-				file_put_contents(self::DATA_DIR . 'head.inc.html',$this->getInput('configScriptHead',null));
+				file_put_contents(self::DATA_DIR . 'head.inc.html', $this->getInput('configScriptHead', null));
 			}
 			if ($this->geturl(2) === 'body') {
-				file_put_contents(self::DATA_DIR . 'body.inc.html',$this->getInput('configScriptBody',null));
+				file_put_contents(self::DATA_DIR . 'body.inc.html', $this->getInput('configScriptBody', null));
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)) ,
+				'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)),
 				'vendor' => [
 					'codemirror'
 				],
@@ -602,7 +614,7 @@ class config extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)) ,
+			'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)),
 			'vendor' => [
 				'codemirror'
 			],
@@ -615,14 +627,15 @@ class config extends common {
 	 * Vider le fichier de log
 	 */
 
-	public function logReset() {
-		if ( file_exists(self::DATA_DIR . 'journal.log') ) {
+	public function logReset()
+	{
+		if (file_exists(self::DATA_DIR . 'journal.log')) {
 			unlink(self::DATA_DIR . 'journal.log');
 			// Créer les en-têtes des journaux
 			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-			file_put_contents(self::DATA_DIR . 'journal.log',$d);
+			file_put_contents(self::DATA_DIR . 'journal.log', $d);
 			// Valeurs en sortie
-				$this->addOutput([
+			$this->addOutput([
 				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
@@ -637,15 +650,15 @@ class config extends common {
 				'state' => false
 			]);
 		}
-
-	 }
-
+	}
 
 
-	 /**
-	  * Télécharger le fichier de log
-	  */
-	  public function logDownload() {
+
+	/**
+	 * Télécharger le fichier de log
+	 */
+	public function logDownload()
+	{
 		$fileName = self::DATA_DIR . 'journal.log';
 		if (file_exists($fileName)) {
 			ob_start();
@@ -654,7 +667,7 @@ class config extends common {
 			header('Content-Length: ' . filesize($fileName));
 			ob_clean();
 			ob_end_flush();
-			readfile( $fileName);
+			readfile($fileName);
 			exit();
 		} else {
 			// Valeurs en sortie
@@ -670,27 +683,28 @@ class config extends common {
 	/**
 	 * Tableau des IP blacklistés
 	 */
-	public function blacklistDownload () {
+	public function blacklistDownload()
+	{
 		ob_start();
 		$fileName = self::TEMP_DIR . 'blacklist.log';
 		$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
-		file_put_contents($fileName,$d);
-		if ( file_exists($fileName) ) {
+		file_put_contents($fileName, $d);
+		if (file_exists($fileName)) {
 			$d = $this->getData(['blacklist']);
 			$data = '';
 			foreach ($d as $key => $item) {
-				$data .= mb_detect_encoding(strftime('%d/%m/%y',$item['lastFail']), 'UTF-8', true)
-						? strftime('%d/%m/%y',$item['lastFail']) . ';' . utf8_encode(strftime('%R',$item['lastFail'])) . ';'
-						: utf8_encode(strftime('%d/%m/%y',$item['lastFail'])) . ';' . utf8_encode(strftime('%R',$item['lastFail'])) . ';' ;
+				$data .= mb_detect_encoding(strftime('%d/%m/%y', $item['lastFail']), 'UTF-8', true)
+					? strftime('%d/%m/%y', $item['lastFail']) . ';' . utf8_encode(strftime('%R', $item['lastFail'])) . ';'
+					: utf8_encode(strftime('%d/%m/%y', $item['lastFail'])) . ';' . utf8_encode(strftime('%R', $item['lastFail'])) . ';';
 				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
 			}
-			file_put_contents($fileName,$data,FILE_APPEND);
+			file_put_contents($fileName, $data, FILE_APPEND);
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
 			header('Content-Length: ' . filesize($fileName));
 			ob_clean();
 			ob_end_flush();
-			readfile( $fileName);
+			readfile($fileName);
 			unlink(self::TEMP_DIR . 'blacklist.log');
 			exit();
 		} else {
@@ -708,11 +722,12 @@ class config extends common {
 	 * Réinitialiser les ip blacklistées
 	 */
 
-	public function blacklistReset() {
-		if ( file_exists(self::DATA_DIR . 'blacklist.json') ) {
-			$this->setData(['blacklist',[]]);
+	public function blacklistReset()
+	{
+		if (file_exists(self::DATA_DIR . 'blacklist.json')) {
+			$this->setData(['blacklist', []]);
 			// Valeurs en sortie
-				$this->addOutput([
+			$this->addOutput([
 				'title' => 'Configuration du site',
 				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
@@ -732,9 +747,10 @@ class config extends common {
 	/**
 	 * Récupération des backups auto dans le gestionnaire de fichiers
 	 */
-	public function copyBackups() {
+	public function copyBackups()
+	{
 
-		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup' );
+		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup');
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -748,15 +764,15 @@ class config extends common {
 	/**
 	 * Vider le dosser des sauvegardes automatisées
 	 */
-	public function delBackups() {
+	public function delBackups()
+	{
 		$path = realpath(self::BACKUP_DIR);
 		$success = $fail = 0;
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename)
-		{
-			if (strpos($filename,'.zip')) {
+		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+			if (strpos($filename, '.zip')) {
 
 				$r = unlink($filename);
-				$success = $r === true ? $succes + 1 : $success;
+				$success = $r === true ? $success + 1 : $success;
 				$fail = $r === false ? $fail + 1 : $fail;
 			}
 		}
@@ -768,7 +784,4 @@ class config extends common {
 			'state' => true
 		]);
 	}
-
-
-
 }

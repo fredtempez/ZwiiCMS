@@ -9,7 +9,7 @@
 		]); ?>
 	</div>
 	<div class="col2 offset8">
-		<?php echo template::submit('configRestoreSubmit',[
+		<?php echo template::submit('configRestoreSubmit', [
 			'value' => 'Restaurer',
 			'uniqueSubmission' => true,
 		]); ?>
@@ -19,7 +19,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo template::topic('Archive à restaurer');?>
+				<?php echo template::topic('Archive à restaurer'); ?>
 			</h4>
 			<div class="row">
 				<div class="col10 offset1">

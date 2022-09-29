@@ -14,7 +14,8 @@
  */
 
 
-class install extends common {
+class install extends common
+{
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
@@ -41,9 +42,10 @@ class install extends common {
 	/**
 	 * Pré-installation - choix de la langue
 	 */
-	public function index() {
+	public function index()
+	{
 		// Accès refusé
-		if($this->getData(['user']) !== []) {
+		if ($this->getData(['user']) !== []) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -52,7 +54,7 @@ class install extends common {
 		// Accès autorisé
 		else {
 			// Soumission du formulaire
-			if($this->isPost()) {
+			if ($this->isPost()) {
 				self::$i18nUI = $this->getInput('installLanguage');
 				$this->setData(['config', 'i18n', 'interface', self::$i18nUI]);
 				// Valeurs en sortie
@@ -68,7 +70,7 @@ class install extends common {
 			chdir(self::I18N_DIR);
 			$files = glob('*.json');
 			// Ajouter une clé au tableau avec le code de langue
-			foreach( $files as $file) {
+			foreach ($files as $file) {
 				// La langue est-elle référencée ?
 				if (array_key_exists(basename($file, '.json'), self::$languages)) {
 					self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
@@ -87,9 +89,10 @@ class install extends common {
 	/**
 	 * post Installation
 	 */
-	public function postInstall() {
+	public function postInstall()
+	{
 		// Accès refusé
-		if($this->getData(['user']) !== []) {
+		if ($this->getData(['user']) !== []) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -98,10 +101,10 @@ class install extends common {
 		// Accès autorisé
 		else {
 			// Soumission du formulaire
-			if($this->isPost()) {
+			if ($this->isPost()) {
 				$success = true;
 				// Double vérification pour le mot de passe
-				if($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
+				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
 					$success = false;
 				}
@@ -132,92 +135,93 @@ class install extends common {
 
 				// Compte créé, envoi du mail et création des données du site
 				if ($success) { // Formulaire complété envoi du mail
-				// Envoie le mail
-				// Sent contient true si réussite sinon code erreur d'envoi en clair
-				$sent = $this->sendMail(
-					$userMail,
-					'Installation de votre site',
-					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Voici les détails de votre installation.<br><br>' .
-					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-					null
-				);
+					// Envoie le mail
+					// Sent contient true si réussite sinon code erreur d'envoi en clair
+					$sent = $this->sendMail(
+						$userMail,
+						'Installation de votre site',
+						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
+							'Voici les détails de votre installation.<br><br>' .
+							'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+							'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+						null
+					);
 
-				// Nettoyer les cookies de langue d'une précédente installation
-				helper::deleteCookie('ZWII_I18N_SITE');
+					// Nettoyer les cookies de langue d'une précédente installation
+					helper::deleteCookie('ZWII_I18N_SITE');
 
-				// Créer le contenu dans la langue sélectionnée
-				self::$i18nContent = substr(self::$i18nUI, 0, 2);
+					// Créer le contenu dans la langue sélectionnée
+					self::$i18nContent = substr(self::$i18nUI, 0, 2);
 
-				// Effacer le dossier de contenu fr créé par défaut si la langue est différente.
+					// Effacer le dossier de contenu fr créé par défaut si la langue est différente.
 
-				if (self::$i18nContent !== 'fr_FR'
-					&& is_dir('site/data/fr')
-				) {
-					$this->removeDir('site/data/fr');
-				}
-
-				// Installation du site de test
-				if ($this->getInput('installDefaultData',helper::FILTER_BOOLEAN) === FALSE) {
-					$this->initData('page', self::$i18nContent, true);
-					$this->initData('module',self::$i18nContent, true);
-					$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
-					$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
-					$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-				}
-
-				// Sauvegarder la configuration du Proxy
-				$this->setData(['config', 'proxyType', $this->getInput('installProxyType') ]);
-				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl') ]);
-				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
-
-				// Images exemples livrées dans tous les cas
-				try {
-					// Décompression dans le dossier de fichier temporaires
-					if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
-						unlink(self::TEMP_DIR . 'files.tar.gz');
+					if (
+						self::$i18nContent !== 'fr_FR'
+						&& is_dir('site/data/fr')
+					) {
+						$this->removeDir('site/data/fr');
 					}
-					if (file_exists(self::TEMP_DIR . 'files.tar')) {
-						unlink(self::TEMP_DIR . 'files.tar');
-					}
-					copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
-					$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
-					$pharData->decompress();
-					// Installation
-					$pharData->extractTo(__DIR__ . '/../../../', null, true);
-				} catch (Exception $e) {
-					$success = $e->getMessage();
-				}
-				unlink(self::TEMP_DIR . 'files.tar.gz');
-				unlink(self::TEMP_DIR . 'files.tar');
-				// Créer le dossier des fontes
-				if (!is_dir(self::DATA_DIR . 'fonts')) {
-					mkdir(self::DATA_DIR . 'fonts');
-				}
 
-				// Installation du thème sélectionné
-				$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
-				$dataThemes = json_decode($dataThemes, true);
-				$themeId = $dataThemes [$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
-				if ($themeId !== 'default' ) {
+					// Installation du site de test
+					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === FALSE) {
+						$this->initData('page', self::$i18nContent, true);
+						$this->initData('module', self::$i18nContent, true);
+						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
+						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
+						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
+					}
+
+					// Sauvegarder la configuration du Proxy
+					$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
+					$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);
+					$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
+
+					// Images exemples livrées dans tous les cas
+					try {
+						// Décompression dans le dossier de fichier temporaires
+						if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
+							unlink(self::TEMP_DIR . 'files.tar.gz');
+						}
+						if (file_exists(self::TEMP_DIR . 'files.tar')) {
+							unlink(self::TEMP_DIR . 'files.tar');
+						}
+						copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
+						$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
+						$pharData->decompress();
+						// Installation
+						$pharData->extractTo(__DIR__ . '/../../../', null, true);
+					} catch (Exception $e) {
+						$success = $e->getMessage();
+					}
+					unlink(self::TEMP_DIR . 'files.tar.gz');
+					unlink(self::TEMP_DIR . 'files.tar');
+					// Créer le dossier des fontes
+					if (!is_dir(self::DATA_DIR . 'fonts')) {
+						mkdir(self::DATA_DIR . 'fonts');
+					}
+
+					// Installation du thème sélectionné
+					$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
+					$dataThemes = json_decode($dataThemes, true);
+					$themeId = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
+					if ($themeId !== 'default') {
 						$theme = new theme;
 						$theme->import('core/module/install/ressource/themes/' . $themeId);
-				}
+					}
 
-				// Copie des thèmes dans les fichiers
-				if (!is_dir(self::FILE_DIR . 'source/theme' )) {
-					mkdir(self::FILE_DIR . 'source/theme');
-				}
-				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
-				unlink(self::FILE_DIR . 'source/theme/themes.json');
+					// Copie des thèmes dans les fichiers
+					if (!is_dir(self::FILE_DIR . 'source/theme')) {
+						mkdir(self::FILE_DIR . 'source/theme');
+					}
+					$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
+					unlink(self::FILE_DIR . 'source/theme/themes.json');
 
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl(false),
-					'notification' => $sent === true ? 'Installation terminée' : $sent,
-					'state' => ($sent === true &&  $success === true) ? true : null
-				]);
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl(false),
+						'notification' => $sent === true ? 'Installation terminée' : $sent,
+						'state' => ($sent === true &&  $success === true) ? true : null
+					]);
 				}
 			}
 
@@ -245,25 +249,26 @@ class install extends common {
 	/**
 	 * Étapes de mise à jour
 	 */
-	public function steps() {
-		switch($this->getInput('step', helper::FILTER_INT)) {
-			// Préparation
+	public function steps()
+	{
+		switch ($this->getInput('step', helper::FILTER_INT)) {
+				// Préparation
 			case 1:
 				$success = true;
 				// RAZ la mise à jour auto
-				$this->setData(['core','updateAvailable', false]);
+				$this->setData(['core', 'updateAvailable', false]);
 				// Backup du dossier Data
-				helper::autoBackup(self::BACKUP_DIR,['backup','tmp','file']);
+				helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
 				// Sauvegarde htaccess
-				if ($this->getData(['config','autoUpdateHtaccess'])) {
+				if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 					$success = copy('.htaccess', '.htaccess' . '.bak');
 				}
 				// Nettoyage des fichiers d'installation précédents
-				if(file_exists(self::TEMP_DIR.'update.tar.gz') && $success) {
-					$success = unlink(self::TEMP_DIR.'update.tar.gz');
+				if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
+					$success = unlink(self::TEMP_DIR . 'update.tar.gz');
 				}
-				if(file_exists(self::TEMP_DIR.'update.tar') && $success) {
-					$success = unlink(self::TEMP_DIR.'update.tar');
+				if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
+					$success = unlink(self::TEMP_DIR . 'update.tar');
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -274,12 +279,12 @@ class install extends common {
 					]
 				]);
 				break;
-			// Téléchargement
+				// Téléchargement
 			case 2:
-				file_put_contents(self::TEMP_DIR.'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
+				file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
-				$md5origin = (explode(' ',$md5origin));
-				$md5target = md5_file(self::TEMP_DIR.'update.tar.gz');
+				$md5origin = (explode(' ', $md5origin));
+				$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
@@ -289,7 +294,7 @@ class install extends common {
 					]
 				]);
 				break;
-			// Installation
+				// Installation
 			case 3:
 				$success = true;
 				// Check la réécriture d'URL avant d'écraser les fichiers
@@ -297,7 +302,7 @@ class install extends common {
 				// Décompression et installation
 				try {
 					// Décompression dans le dossier de fichier temporaires
-					$pharData = new PharData(self::TEMP_DIR.'update.tar.gz');
+					$pharData = new PharData(self::TEMP_DIR . 'update.tar.gz');
 					$pharData->decompress();
 					// Installation
 					$pharData->extractTo(__DIR__ . '/../../../', null, true);
@@ -305,11 +310,11 @@ class install extends common {
 					$success = $e->getMessage();
 				}
 				// Nettoyage du dossier
-				if(file_exists(self::TEMP_DIR.'update.tar.gz')) {
-					unlink(self::TEMP_DIR.'update.tar.gz');
+				if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
+					unlink(self::TEMP_DIR . 'update.tar.gz');
 				}
-				if(file_exists(self::TEMP_DIR.'update.tar')) {
-					unlink(self::TEMP_DIR.'update.tar');
+				if (file_exists(self::TEMP_DIR . 'update.tar')) {
+					unlink(self::TEMP_DIR . 'update.tar');
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -320,7 +325,7 @@ class install extends common {
 					]
 				]);
 				break;
-			// Configuration
+				// Configuration
 			case 4:
 				$success = true;
 				$rewrite = $this->getInput('data');
@@ -328,15 +333,15 @@ class install extends common {
 				if ($rewrite === "true") {					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
 					$rewriteData = 	PHP_EOL .
-									'# URL rewriting' .  PHP_EOL .
-									'<IfModule mod_rewrite.c>' . PHP_EOL .
-									"\tRewriteEngine on" . PHP_EOL .
-									"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-									"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-									"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-									"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-									'</IfModule>'. PHP_EOL .
-									'# URL rewriting' . PHP_EOL ;
+						'# URL rewriting' .  PHP_EOL .
+						'<IfModule mod_rewrite.c>' . PHP_EOL .
+						"\tRewriteEngine on" . PHP_EOL .
+						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+						'</IfModule>' . PHP_EOL .
+						'# URL rewriting' . PHP_EOL;
 					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
 					file_put_contents(
 						'.htaccess',
@@ -344,13 +349,14 @@ class install extends common {
 					);
 				}
 				// Recopie htaccess
-				if ($this->getData(['config','autoUpdateHtaccess']) &&
-					$success && file_exists( '.htaccess.bak')
+				if (
+					$this->getData(['config', 'autoUpdateHtaccess']) &&
+					$success && file_exists('.htaccess.bak')
 				) {
-						// L'écraser avec le backup
-						$success = copy( '.htaccess.bak' ,'.htaccess' );
-						// Effacer le backup
-						unlink('.htaccess.bak');
+					// L'écraser avec le backup
+					$success = copy('.htaccess.bak', '.htaccess');
+					// Effacer le backup
+					unlink('.htaccess.bak');
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -367,7 +373,8 @@ class install extends common {
 	/**
 	 * Mise à jour
 	 */
-	public function update() {
+	public function update()
+	{
 		// Nouvelle version
 		self::$newVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		// Valeurs en sortie
@@ -377,6 +384,4 @@ class install extends common {
 			'view' => 'update'
 		]);
 	}
-
-
 }

@@ -3,10 +3,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::topic('Capture d\'écran Open Graph');?>
+					<?php echo template::topic('Capture d\'écran Open Graph'); ?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/referencement" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
@@ -24,20 +24,20 @@
 						<div class="row">
 							<div class="col12">
 								<?php echo template::button('socialMetaImage', [
-								'href' => helper::baseUrl() . 'config/configMetaImage',
-								'value' => 'Générer une capture Open Graph'
+									'href' => helper::baseUrl() . 'config/configMetaImage',
+									'value' => 'Générer une capture Open Graph'
 								]); ?>
 							</div>
 						</div>
 					</div>
 					<div class="col6 offset1">
-						<?php if (file_exists(self::FILE_DIR.'source/screenshot.jpg')): ?>
+						<?php if (file_exists(self::FILE_DIR . 'source/screenshot.jpg')) : ?>
 							<div class="row">
 								<div class="col8 offset2 textAlignCenter">
-									<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR.'source/screenshot.jpg';?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
+									<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR . 'source/screenshot.jpg'; ?>" data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
 								</div>
-						</div>
-						<?php endif;?>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</div>
@@ -47,7 +47,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::topic('Référencement');?>
+					<?php echo template::topic('Référencement'); ?>
 				</h4>
 				<div class="row">
 					<div class="col4 offset1">
@@ -58,7 +58,7 @@
 					</div>
 					<div class="col4 offset1">
 						<?php echo template::checkbox('seoRobots', true, 'Autoriser les robots à référencer le site', [
-							'checked' => $this->getData(['config', 'seo','robots'])
+							'checked' => $this->getData(['config', 'seo', 'robots'])
 						]); ?>
 					</div>
 				</div>
@@ -69,10 +69,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::topic('Réseaux sociaux');?>
+					<?php echo template::topic('Réseaux sociaux'); ?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank"  title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']);?>
+						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank" title="Cliquer pour consulter l'aide en ligne">
+							<?php echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
 				</h4>
@@ -108,9 +108,9 @@
 				</div>
 				<div class="row">
 					<div class="col3">
-							<?php echo template::text('socialTwitterId', [
-								'help' => 'Saisissez votre ID : https://twitter.com/[ID].',
-								'label' => 'Twitter',
+						<?php echo template::text('socialTwitterId', [
+							'help' => 'Saisissez votre ID : https://twitter.com/[ID].',
+							'label' => 'Twitter',
 							'value' => $this->getData(['config', 'social', 'twitterId'])
 						]); ?>
 					</div>
@@ -129,11 +129,11 @@
 						]); ?>
 					</div>
 					<div class="col3">
-							<?php echo template::text('socialGithubId', [
-								'help' => 'Saisissez votre ID Github : https://github.com/[ID].',
-								'label' => 'Github',
-								'value' => $this->getData(['config', 'social', 'githubId'])
-							]); ?>
+						<?php echo template::text('socialGithubId', [
+							'help' => 'Saisissez votre ID Github : https://github.com/[ID].',
+							'label' => 'Github',
+							'value' => $this->getData(['config', 'social', 'githubId'])
+						]); ?>
 					</div>
 				</div>
 			</div>

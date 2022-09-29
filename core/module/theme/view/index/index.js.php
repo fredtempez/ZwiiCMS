@@ -60,7 +60,7 @@ $("<a>")
 /**
  * Affiche les zones cachées
  */
-$("#themeShowAll").on("click", function() {
+$("#themeShowAll").on("click", function () {
 	$("header.displayNone, nav.displayNone, footer.displayNone").slideToggle();
 });
 
@@ -68,9 +68,9 @@ $("#themeShowAll").on("click", function() {
  * Simule un survole du site lors du survole de la section
  */
 $("section")
-	.on("mouseover", function() {
+	.on("mouseover", function () {
 		$("#themeOverlaySite:not(.themeOverlayTriggerHover)").addClass("themeOverlayTriggerHover");
 	})
-	.on("mouseleave", function() {
+	.on("mouseleave", function () {
 		$("#themeOverlaySite.themeOverlayTriggerHover").removeClass("themeOverlayTriggerHover");
 	});

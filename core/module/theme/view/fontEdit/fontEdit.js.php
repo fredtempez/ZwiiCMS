@@ -13,8 +13,8 @@
 /**
  * Option par défaut du sélecteur de mode
  */
- $(document).ready(function(){
-    if( $('input[name=fontEditFontImported]').is(':checked') ){
+$(document).ready(function () {
+    if ($('input[name=fontEditFontImported]').is(':checked')) {
         $('#containerfontEditFile').hide();
         $('#containerfontEditUrl').show();
         $('#fontEditFontFileWrapper').hide();
@@ -23,7 +23,7 @@
     }
 
 
-    if( $('input[name=fontEditFontFile]').is(':checked') ){
+    if ($('input[name=fontEditFontFile]').is(':checked')) {
         $('#containerfontEditFile').show();
         $('#containerfontEditUrl').hide();
         $('#fontEditFontImportedWrapper').hide();

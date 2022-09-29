@@ -13,7 +13,8 @@
  * @link http://zwiicms.fr/
  */
 
-class maintenance extends common {
+class maintenance extends common
+{
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR
@@ -22,24 +23,27 @@ class maintenance extends common {
 	/**
 	 * Maintenance
 	 */
-	public function index() {
+	public function index()
+	{
 		// Redirection vers l'accueil après rafraîchissement et que la maintenance est terminée.
-		if($this->getData(['config', 'maintenance']) == False){
+		if ($this->getData(['config', 'maintenance']) == False) {
 			header('Location:' . helper::baseUrl());
 			exit();
 		}
 		// Page perso définie et existante
-		if ($this->getData(['locale','page302']) !== 'none'
-			AND $this->getData(['page',$this->getData(['locale','page302'])]) ) {
-				$this->addOutput([
-					'display' => self::DISPLAY_LAYOUT_LIGHT,
-					'title' => $this->getData(['page',$this->getData(['locale','page302']),'hideTitle'])
-								? ''
-								: $this->getData(['page',$this->getData(['locale','page302']),'title']),
-					//'content' => $this->getdata(['page',$this->getData(['locale','page302']),'content']),
-					'content' => $this->getPage($this->getData(['locale','page302']), self::$i18nContent),
-					'view' => 'index'
-				]);
+		if (
+			$this->getData(['locale', 'page302']) !== 'none'
+			and $this->getData(['page', $this->getData(['locale', 'page302'])])
+		) {
+			$this->addOutput([
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
+				'title' => $this->getData(['page', $this->getData(['locale', 'page302']), 'hideTitle'])
+					? ''
+					: $this->getData(['page', $this->getData(['locale', 'page302']), 'title']),
+				//'content' => $this->getdata(['page',$this->getData(['locale','page302']),'content']),
+				'content' => $this->getPage($this->getData(['locale', 'page302']), self::$i18nContent),
+				'view' => 'index'
+			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -49,5 +53,4 @@ class maintenance extends common {
 			]);
 		}
 	}
-
 }

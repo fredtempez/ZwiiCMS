@@ -14,9 +14,9 @@
 /**
  * Confirmation de réinitialisation
  */
-$("#configManageReset").on("click", function() {
+$("#configManageReset").on("click", function () {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine le thème du site ?", function() {
+	return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine le thème du site ?", function () {
 		$(location).attr("href", _this.attr("href"));
 	});
 });

@@ -13,9 +13,9 @@
 /**
  * Confirmation de suppression
  */
- $(".themeFontDelete").on("click", function() {
+$(".themeFontDelete").on("click", function () {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", function() {
+	return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", function () {
 		$(location).attr("href", _this.attr("href"));
 	});
 });

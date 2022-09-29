@@ -14,7 +14,8 @@
  * @link http://zwiicms.fr/
  */
 
-class page extends common {
+class page extends common
+{
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
@@ -68,24 +69,24 @@ class page extends common {
 	/**
 	 * Duplication
 	 */
-	public function duplicate() {
+	public function duplicate()
+	{
 		// Adresse sans le token
-		$url = explode('&',$this->getUrl(2));
+		$url = explode('&', $this->getUrl(2));
 		// La page n'existe pas
-		if($this->getData(['page', $url[0]]) === null) {
+		if ($this->getData(['page', $url[0]]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
 		} // Jeton incorrect
-		elseif(!isset($_GET['csrf'])) {
+		elseif (!isset($_GET['csrf'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
 				'notification' => 'Jeton invalide'
 			]);
-		}
-		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
@@ -93,7 +94,7 @@ class page extends common {
 			]);
 		}
 		// Duplication de la page
-		$pageTitle = $this->getData(['page',$url[0],'title']);
+		$pageTitle = $this->getData(['page', $url[0], 'title']);
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
 		$pageId = helper::increment($pageId, self::$coreModuleIds);
 		$pageId = helper::increment($pageId, self::$moduleIds);
@@ -102,16 +103,16 @@ class page extends common {
 			$url[0]
 		]);
 		// Ecriture
-		$this->setData (['page',$pageId,$data]);
+		$this->setData(['page', $pageId, $data]);
 		$notification = 'La page a été dupliquée';
 		// Duplication du module présent
-		if ($this->getData(['page',$url[0],'moduleId'])) {
+		if ($this->getData(['page', $url[0], 'moduleId'])) {
 			$data = $this->getData([
 				'module',
 				$url[0]
 			]);
 			// Ecriture
-			$this->setData (['module',$pageId,$data]);
+			$this->setData(['module', $pageId, $data]);
 			$notification = 'La page et son module ont été dupliqués';
 		}
 		// Valeurs en sortie
@@ -126,7 +127,8 @@ class page extends common {
 	/**
 	 * Création
 	 */
-	public function add() {
+	public function add()
+	{
 		$pageTitle = 'Nouvelle page';
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
 		$this->setData([
@@ -135,7 +137,7 @@ class page extends common {
 			[
 				'typeMenu' => 'text',
 				'iconUrl' => '',
-                'disable' => false,
+				'disable' => false,
 				'content' =>  $pageId . '.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
@@ -181,24 +183,24 @@ class page extends common {
 	/**
 	 * Suppression
 	 */
-	public function delete() {
+	public function delete()
+	{
 		// $url prend l'adresse sans le token
-		$url = explode('&',$this->getUrl(2));
+		$url = explode('&', $this->getUrl(2));
 		// La page n'existe pas
-		if($this->getData(['page', $url[0]]) === null) {
+		if ($this->getData(['page', $url[0]]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
 		}		// Jeton incorrect
-		elseif(!isset($_GET['csrf'])) {
+		elseif (!isset($_GET['csrf'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
 				'notification' => 'Jeton invalide'
 			]);
-		}
-		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
@@ -206,7 +208,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page d'accueil
-		elseif($url[0] === $this->getData(['locale', 'homePageId'])) {
+		elseif ($url[0] === $this->getData(['locale', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
@@ -214,7 +216,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page de recherche affectée
-		elseif($url[0] === $this->getData(['locale', 'searchPageId'])) {
+		elseif ($url[0] === $this->getData(['locale', 'searchPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
@@ -222,7 +224,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['locale', 'legalPageId'])) {
+		elseif ($url[0] === $this->getData(['locale', 'legalPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -230,7 +232,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['locale', 'page404'])) {
+		elseif ($url[0] === $this->getData(['locale', 'page404'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -238,7 +240,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['locale', 'page403'])) {
+		elseif ($url[0] === $this->getData(['locale', 'page403'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -246,7 +248,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
-		elseif($url[0] === $this->getData(['locale', 'page302'])) {
+		elseif ($url[0] === $this->getData(['locale', 'page302'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
@@ -254,14 +256,13 @@ class page extends common {
 			]);
 		}
 		// Jeton incorrect
-		elseif(!isset($_GET['csrf'])) {
+		elseif (!isset($_GET['csrf'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
 				'notification' => 'Jeton invalide'
 			]);
-		}
-		elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
+		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
@@ -269,7 +270,7 @@ class page extends common {
 			]);
 		}
 		// Impossible de supprimer une page contenant des enfants
-		elseif($this->getHierarchy($url[0],null)) {
+		elseif ($this->getHierarchy($url[0], null)) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
@@ -280,12 +281,13 @@ class page extends common {
 		else {
 
 			// Effacer le dossier du module
-			$moduleId = $this->getData(['page',$url[0],'moduleId']);
+			$moduleId = $this->getData(['page', $url[0], 'moduleId']);
 			$modulesData = helper::getModules();
-			if (	array_key_exists($moduleId, $modulesData)
+			if (
+				array_key_exists($moduleId, $modulesData)
 				&&  is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
 			) {
-				$this->removeDir( $modulesData[$moduleId]['dataDirectory']. $url[0] );
+				$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $url[0]);
 			}
 			// Effacer la page
 			$this->deleteData(['page', $url[0]]);
@@ -310,9 +312,10 @@ class page extends common {
 	/**
 	 * Édition
 	 */
-	public function edit() {
+	public function edit()
+	{
 		// La page n'existe pas
-		if($this->getData(['page', $this->getUrl(2)]) === null) {
+		if ($this->getData(['page', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -321,11 +324,11 @@ class page extends common {
 		// La page existe
 		else {
 			// Soumission du formulaire
-			if($this->isPost()) {
+			if ($this->isPost()) {
 				// Si le Title n'est pas vide, premier test pour positionner la notification du champ obligatoire
-				if( $this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '' ){
+				if ($this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '') {
 					// Génére l'ID si le titre de la page a changé
-					if ( $this->getInput('pageEditTitle') !== $this->getData(['page',$this->getUrl(2),'title']) ) {
+					if ($this->getInput('pageEditTitle') !== $this->getData(['page', $this->getUrl(2), 'title'])) {
 						$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
 					} else {
 						$pageId = $this->getUrl(2);
@@ -337,76 +340,76 @@ class page extends common {
 					// Si l'id a changée
 					if ($pageId !== $this->getUrl(2)) {
 						// Incrémente le nouvel id de la page
-							$pageId = helper::increment($pageId, $this->getData(['page']));
-							$pageId = helper::increment($pageId, self::$coreModuleIds);
-							$pageId = helper::increment($pageId, self::$moduleIds);
+						$pageId = helper::increment($pageId, $this->getData(['page']));
+						$pageId = helper::increment($pageId, self::$coreModuleIds);
+						$pageId = helper::increment($pageId, self::$moduleIds);
 						// Met à jour les enfants
-						foreach($this->getHierarchy($this->getUrl(2),null) as $childrenPageId) {
+						foreach ($this->getHierarchy($this->getUrl(2), null) as $childrenPageId) {
 							$this->setData(['page', $childrenPageId, 'parentPageId', $pageId]);
 						}
 						// Change l'id de page dans les données des modules
-						if ($this->getData(['module', $this->getUrl(2)]) !== null ) {
+						if ($this->getData(['module', $this->getUrl(2)]) !== null) {
 							$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
 							$this->deleteData(['module', $this->getUrl(2)]);
 							// Renommer le dossier du module
-							$moduleId = $this->getData(['page',$this->getUrl(2),'moduleId']);
+							$moduleId = $this->getData(['page', $this->getUrl(2), 'moduleId']);
 							$modulesData = helper::getModules();
-							if (is_dir($modulesData[$moduleId]['dataDirectory']. $this->getUrl(2))) {
+							if (is_dir($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2))) {
 								// Placer la feuille de style dans un dossier au nom de la nouvelle instance
-								mkdir( $modulesData[$moduleId]['dataDirectory']. $pageId, 0755 );
-								copy( $modulesData[$moduleId]['dataDirectory']. $this->getUrl(2), $modulesData[$moduleId]['dataDirectory']. $pageId);
-								$this->removeDir($modulesData[$moduleId]['dataDirectory']. $this->getUrl(2));
+								mkdir($modulesData[$moduleId]['dataDirectory'] . $pageId, 0755);
+								copy($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2), $modulesData[$moduleId]['dataDirectory'] . $pageId);
+								$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2));
 								// Mettre à jour le nom de la feuille de style
-								$this->setData(['module',$pageId,'theme','style', $modulesData[$moduleId]['dataDirectory']. $pageId]);
+								$this->setData(['module', $pageId, 'theme', 'style', $modulesData[$moduleId]['dataDirectory'] . $pageId]);
 							}
 						}
 						// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
-						if($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
+						if ($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
 							$this->setData(['locale', 'homePageId', $pageId]);
 						}
 					}
 					// Supprime les données du module en cas de changement de module
-					if($this->getInput('pageEditModuleId') !== $this->getData(['page', $this->getUrl(2), 'moduleId'])) {
+					if ($this->getInput('pageEditModuleId') !== $this->getData(['page', $this->getUrl(2), 'moduleId'])) {
 						$this->deleteData(['module', $pageId]);
 					}
 					// Supprime l'ancienne page si l'id a changée
-					if($pageId !== $this->getUrl(2)) {
+					if ($pageId !== $this->getUrl(2)) {
 						$this->deleteData(['page', $this->getUrl(2)]);
 						if (file_exists(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getUrl(2) . '.html')) {
-							unlink (self::DATA_DIR . self::$i18nContent . '/content/' . $this->getUrl(2) . '.html');
+							unlink(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getUrl(2) . '.html');
 						}
 					}
 					// Traitement des pages spéciales affectées dans la config :
-					if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId']) ) {
-						$this->setData(['locale','legalPageId', $pageId]);
+					if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId'])) {
+						$this->setData(['locale', 'legalPageId', $pageId]);
 					}
-					if ($this->getUrl(2) === $this->getData(['locale', 'searchPageId']) ) {
-						$this->setData(['locale','searchPageId', $pageId]);
+					if ($this->getUrl(2) === $this->getData(['locale', 'searchPageId'])) {
+						$this->setData(['locale', 'searchPageId', $pageId]);
 					}
-					if ($this->getUrl(2) === $this->getData(['locale', 'page404']) ) {
-						$this->setData(['locale','page404', $pageId]);
+					if ($this->getUrl(2) === $this->getData(['locale', 'page404'])) {
+						$this->setData(['locale', 'page404', $pageId]);
 					}
-					if ($this->getUrl(2) === $this->getData(['locale', 'page403']) ) {
-						$this->setData(['locale','page403', $pageId]);
+					if ($this->getUrl(2) === $this->getData(['locale', 'page403'])) {
+						$this->setData(['locale', 'page403', $pageId]);
 					}
-					if ($this->getUrl(2) === $this->getData(['locale', 'page302']) ) {
-						$this->setData(['locale','page302', $pageId]);
+					if ($this->getUrl(2) === $this->getData(['locale', 'page302'])) {
+						$this->setData(['locale', 'page302', $pageId]);
 					}
 					// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 					$lastPosition = 1;
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
 					$extraPosition = $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN);
-					foreach($hierarchy as $hierarchyPageId) {
+					foreach ($hierarchy as $hierarchyPageId) {
 
 						// Ne traite que les pages du menu sélectionné
-						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition ) {
+						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition) {
 							// Ignore la page en cours de modification 
-							if($hierarchyPageId === $this->getUrl(2) ) {
+							if ($hierarchyPageId === $this->getUrl(2)) {
 								continue;
 							}
 							// Incrémente de +1 pour laisser la place à la position de la page en cours de modification
-							if($lastPosition === $position) {
+							if ($lastPosition === $position) {
 								$lastPosition++;
 							}
 							// Change la position
@@ -414,13 +417,11 @@ class page extends common {
 							// Incrémente pour la prochaine position
 							$lastPosition++;
 						}
-
 					}
 					if ($this->getinput('pageEditBlock') !== 'bar') {
 						$barLeft = $this->getinput('pageEditBarLeft');
 						$barRight = $this->getinput('pageEditBarRight');
 						$hideTitle = $this->getInput('pageEditHideTitle', helper::FILTER_BOOLEAN);
-
 					} else {
 						// Une barre ne peut pas avoir de barres
 						$barLeft = "";
@@ -430,33 +431,33 @@ class page extends common {
 						$hideTitle = true;
 					}
 					// Une page parent devient orpheline, les pages enfants le devienne pour éviter une incohérence
-					if ( 
+					if (
 						$position === 0 &&
 						$position !==  $this->getData(['page', $this->getUrl(2), 'position']) &&
 						$this->getinput('pageEditBlock') !== 'bar'
-						) {
-							foreach ($this->getHierarchy($pageId) as $parentId=>$childId) {
-								if ($this->getData(['page',$childId,'parentPageId']) === $pageId) {
-									$this->setData(['page',$childId,'position', 0]);
-								}
+					) {
+						foreach ($this->getHierarchy($pageId) as $parentId => $childId) {
+							if ($this->getData(['page', $childId, 'parentPageId']) === $pageId) {
+								$this->setData(['page', $childId, 'position', 0]);
 							}
+						}
 					}
 
 					// La page est une barre latérale qui a été renommée : changer le nom de la barre dans les pages qui l'utilisent
 					if ($this->getinput('pageEditBlock') === 'bar') {
-						foreach ($this->getHierarchy() as $eachPageId=>$parentId) {
-							if ($this->getData(['page',$eachPageId,'barRight']) === $this->getUrl(2)) {
-								$this->setData(['page',$eachPageId,'barRight',$pageId]);
+						foreach ($this->getHierarchy() as $eachPageId => $parentId) {
+							if ($this->getData(['page', $eachPageId, 'barRight']) === $this->getUrl(2)) {
+								$this->setData(['page', $eachPageId, 'barRight', $pageId]);
 							}
-							if ($this->getData(['page',$eachPageId,'barLeft']) === $this->getUrl(2)) {
-								$this->setData(['page',$eachPageId,'barLeft',$pageId]);
+							if ($this->getData(['page', $eachPageId, 'barLeft']) === $this->getUrl(2)) {
+								$this->setData(['page', $eachPageId, 'barLeft', $pageId]);
 							}
 							foreach ($parentId as $childId) {
-								if ($this->getData(['page',$childId,'barRight']) === $this->getUrl(2)) {
-									$this->setData(['page',$childId,'barRight',$pageId]);
+								if ($this->getData(['page', $childId, 'barRight']) === $this->getUrl(2)) {
+									$this->setData(['page', $childId, 'barRight', $pageId]);
 								}
-								if ($this->getData(['page',$childId,'barLeft']) === $this->getUrl(2)) {
-									$this->setData(['page',$childId,'barLeft',$pageId]);
+								if ($this->getData(['page', $childId, 'barLeft']) === $this->getUrl(2)) {
+									$this->setData(['page', $childId, 'barLeft', $pageId]);
 								}
 							}
 						}
@@ -468,7 +469,7 @@ class page extends common {
 						[
 							'typeMenu' => $this->getinput('pageTypeMenu'),
 							'iconUrl' => $this->getinput('pageIconUrl'),
-							'disable'=> $this->getinput('pageEditDisable', helper::FILTER_BOOLEAN),
+							'disable' => $this->getinput('pageEditDisable', helper::FILTER_BOOLEAN),
 							'content' => $pageId . '.html',
 							'hideTitle' => $hideTitle,
 							'breadCrumb' => $this->getInput('pageEditbreadCrumb', helper::FILTER_BOOLEAN),
@@ -500,7 +501,7 @@ class page extends common {
 						mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 					}
 					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
-					$this->setPage($pageId , $content, self::$i18nContent);
+					$this->setPage($pageId, $content, self::$i18nContent);
 
 					// Met à jour le site map
 					$this->createSitemap('all');
@@ -508,16 +509,16 @@ class page extends common {
 					$this->listPages();
 
 					// Redirection vers la configuration
-					if(
+					if (
 						$this->getInput('pageEditModuleRedirect', helper::FILTER_BOOLEAN)
-						) {
-							// Valeurs en sortie
-							$this->addOutput([
-								'redirect' => helper::baseUrl() . $pageId . '/config',
-								'state' => true
-							]);
+					) {
+						// Valeurs en sortie
+						$this->addOutput([
+							'redirect' => helper::baseUrl() . $pageId . '/config',
+							'state' => true
+						]);
 						// Redirection vers la page
-						} else {
+					} else {
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $pageId,
@@ -527,18 +528,20 @@ class page extends common {
 					}
 				}
 			}
-			self::$moduleIds = array_merge( ['' => 'Aucun'] , helper::arrayColumn(helper::getModules(),'realName','SORT_ASC'));			// Pages sans parent
-			foreach($this->getHierarchy() as $parentPageId => $childrenPageIds) {
-				if($parentPageId !== $this->getUrl(2)) {
+			self::$moduleIds = array_merge(['' => 'Aucun'], helper::arrayColumn(helper::getModules(), 'realName', 'SORT_ASC'));			// Pages sans parent
+			foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+				if ($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 				}
 			}
 			// Pages barre latérales
-			foreach($this->getHierarchy(null,false,true) as $parentPageId => $childrenPageIds) {
-					if($parentPageId !== $this->getUrl(2) &&
-						$this->getData(['page', $parentPageId, 'block']) === 'bar') {
-						self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
-					}
+			foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
+				if (
+					$parentPageId !== $this->getUrl(2) &&
+					$this->getData(['page', $parentPageId, 'block']) === 'bar'
+				) {
+					self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
+				}
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -554,11 +557,13 @@ class page extends common {
 	/**
 	 * Éditeur de feuille de style
 	 */
-	public function cssEditor() {
+	public function cssEditor()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Enregistre le CSS
-			$this->setData(['page', $this->getUrl(2), 'css',
+			$this->setData([
+				'page', $this->getUrl(2), 'css',
 				$this->getInput('pageCssEditorContent', null)
 			]);
 			// Valeurs en sortie
@@ -578,15 +583,17 @@ class page extends common {
 		]);
 	}
 
-		/**
+	/**
 	 * Éditeur de feuille de style
 	 */
-	public function jsEditor() {
+	public function jsEditor()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Enregistre le JS
-			$this->setData(['page', $this->getUrl(2), 'js',
-					$this->getInput('pageJsEditorContent', null)
+			$this->setData([
+				'page', $this->getUrl(2), 'js',
+				$this->getInput('pageJsEditorContent', null)
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -604,5 +611,4 @@ class page extends common {
 			'view' => 'jsEditor'
 		]);
 	}
-
 }
