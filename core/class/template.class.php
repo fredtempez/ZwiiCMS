@@ -501,8 +501,8 @@ class template
                 $lang = $langId;
                 break;
             case 'selected':
-                if (isset($_COOKIE['ZWII_I18N_SITE'])) {
-                    $lang = $_COOKIE['ZWII_I18N_SITE'];
+                if (isset($_COOKIE['ZWII_CONTENT'])) {
+                    $lang = $_COOKIE['ZWII_CONTENT'];
                 } else {
                     $lang = 'fr_FR';
                 }

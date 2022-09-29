@@ -22,7 +22,7 @@ class translate extends common
 		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
 		'edit' => self::GROUP_ADMIN, 	// Editer une langue de contenu
 		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
-		'i18n' => self::GROUP_VISITOR,
+		'content' => self::GROUP_VISITOR,
 	];
 
 	// Language contents
@@ -92,7 +92,7 @@ class translate extends common
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
-					self::$languagesTarget[$key] = self::$languages[$key];
+				self::$languagesTarget[$key] = self::$languages[$key];
 			}
 		}
 
@@ -388,19 +388,18 @@ class translate extends common
 	 * Traitement du changement de langue
 	 * Fonction utilisée par le noyau
 	 */
-	public function i18n()
+	public function content()
 	{
-
 		// Activation du drapeau
-		if ($this->getInput('ZWII_I18N_' . strtoupper($this->getUrl(3))) !== $this->getUrl(2)) {
-			// Nettoyer et stocker le choix de l'utilisateur
-			helper::deleteCookie('ZWII_I18N_SITE');
-			// Sélectionner
-			setcookie('ZWII_I18N_' . strtoupper($this->getUrl(3)), $this->getUrl(2), time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
-			// Désactivation du drapeau, langue FR par défaut
-		} else {
-			setcookie('ZWII_I18N_SITE', 'fr', time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+		$lang = $this->getUrl(2);
+		// Changement ?
+		if ($this->getInput('ZWII_CONTENT') !== $lang) {
+			// Nettoyer le cookie
+			helper::deleteCookie('ZWII_CONTENT');
+			// Stocker le choix
+			setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' 	=> 	helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])

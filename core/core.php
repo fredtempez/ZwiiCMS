@@ -307,9 +307,9 @@ class common
 		self::$i18nUI = $t['config']['i18n']['interface'];
 
 		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])) {
+		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_I18N_SITE'];
+			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
 			setlocale(LC_TIME, self::$i18nContent . '_' . strtoupper(self::$i18nContent));
 		} else {
 			// Absence du cookie, la langue par défaut est celle de l'interface.
@@ -1256,7 +1256,8 @@ class common
 		// Récupérer la config de la page courante
 		$blocks = explode('-', $this->getData(['page', $this->getUrl(0), 'block']));
 		// Initialiser
-		$blockleft = $blockright = "";
+		$blockleft = '';
+		$blockright = '';
 		switch (sizeof($blocks)) {
 			case 1:  // une colonne
 				$content    = 'col' . $blocks[0];
@@ -2267,11 +2268,11 @@ class common
 	{
 		foreach (self::$languages as $key => $value) {
 			if (
-				$this->getData(['config', 'i18n', $key]) === 'site'
+				is_dir(self::DATA_DIR . $key)
 			) {
 				if (
-					(isset($_COOKIE['ZWII_I18N_SITE'])
-						and $_COOKIE['ZWII_I18N_SITE'] === $key
+					(isset($_COOKIE['ZWII_CONTENT'])
+						and $_COOKIE['ZWII_CONTENT'] === $key
 					)
 				) {
 					$select = ' class="i18nFlagSelected" ';
@@ -2280,7 +2281,7 @@ class common
 				}
 
 				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/i18n/' . $key . '/' . $this->getData(['config', 'i18n', $key]) . '/' . $this->getUrl(0) . '"><img ' . $select . ' alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
+				echo '<a href="' . helper::baseUrl() . 'translate/content/' . $key  . '"><img ' . $select . ' alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
 				echo '</li>';
 			}
 		}

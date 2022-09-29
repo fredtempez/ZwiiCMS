@@ -890,7 +890,7 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->deleteData(['config', 'i18n', 'scriptGoogle']);
 	$this->deleteData(['config', 'i18n', 'showCredits']);
 	$this->deleteData(['config', 'i18n', 'autoDetect']);
-	helper::deleteCookie('ZWII_I18N_SCRIPT');
+	helper::deleteCookie('ZWII_CONTENTSCRIPT');
 
 	// Nettoyage de fichiers inutiles
 	if (file_exists('core\module\user\view\import\import.help.html')) {

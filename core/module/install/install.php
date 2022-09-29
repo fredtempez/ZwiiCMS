@@ -148,7 +148,7 @@ class install extends common
 					);
 
 					// Nettoyer les cookies de langue d'une précédente installation
-					helper::deleteCookie('ZWII_I18N_SITE');
+					helper::deleteCookie('ZWII_CONTENT');
 
 					// Créer le contenu dans la langue sélectionnée
 					self::$i18nContent = substr(self::$i18nUI, 0, 2);
