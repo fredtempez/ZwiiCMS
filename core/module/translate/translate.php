@@ -63,7 +63,7 @@ class translate extends common
 				} else {
 					$success = true;
 				}
-				// Copier les données par défaut avec gestion des erreurs
+				// Copier les données par défaut
 				$success  = (copy(self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
 				$success  = (copy(self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
 				$success  = (copy(self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
@@ -87,14 +87,17 @@ class translate extends common
 				'state' 		=>  $success
 			]);
 		}
+
 		// Tableau des langues installées
 		foreach (self::$languages as $key => $value) {
-			if ($this->getData(['config', 'i18n', $key]) === 'site') {
-				self::$languagesTarget[$key] = $value;
+			// tableau des langues installées
+			if (is_dir(self::DATA_DIR . $key)) {
+					self::$languagesTarget[$key] = self::$languages[$key];
 			}
 		}
+
 		// Langues cibles fr en plus
-		self::$languagesInstalled = array_merge(['fr_FR'	=> 'Français (fr_FR)'], self::$languagesTarget);
+		self::$languagesInstalled = self::$languagesTarget;
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -127,22 +130,22 @@ class translate extends common
 		// -------------------------
 
 		// Onglet des langues de contenu
-		foreach (self::$languages as $keyi18n => $value) {
+		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $keyi18n)) {
+			if (is_dir(self::DATA_DIR . $key)) {
 				self::$languagesInstalled[] = [
-					template::flag($keyi18n, '50%'),
-					$value . ' (' . $keyi18n . ')',
-					self::$i18nUI === $keyi18n ? '(langue de l\'interface)' : '',
+					template::flag($key, '50%'),
+					$value . ' (' . $key . ')',
+					self::$i18nUI === $key ? '(langue de l\'interface)' : '',
 					'',
-					template::button('translateContentLanguageEdit' . $keyi18n, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $keyi18n . '/' . $_SESSION['csrf'],
+					template::button('translateContentLanguageEdit' . $key, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('flag'),
 						'help' => 'Editer les locales'
 					]),
-					template::button('translateContentLanguageDelete' . $keyi18n, [
-						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $keyi18n ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $keyi18n . '/' . $_SESSION['csrf'],
+					template::button('translateContentLanguageDelete' . $key, [
+						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $key ? ' disabled' : ''),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer cette langue'
 					])
