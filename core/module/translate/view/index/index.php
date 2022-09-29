@@ -54,7 +54,7 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo template::topic('Langue de l\'administration'); ?>
+					<?php echo helper::translate('Langue de l\'administration'); ?>
 				</h4>
 				<div class="row">
 					<div class="col4 offset4">

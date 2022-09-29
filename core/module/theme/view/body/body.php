@@ -58,7 +58,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo template::topic('Image'); ?>
+				<?php echo helper::translate('Image'); ?>
 			</h4>
 			<div class="row">
 				<div class="col12">

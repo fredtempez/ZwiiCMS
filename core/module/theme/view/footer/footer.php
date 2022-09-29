@@ -159,7 +159,7 @@
 <div class="row">
     <div class="col12">
         <?php echo template::textarea('themeFooterText', [
-            'label' => '<div class="titleWysiwygContent">' . template::topic('Contenu personnalisé') . '</div>',
+            'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu personnalisé') . '</div>',
             'value' => $this->getData(['theme', 'footer', 'text']),
             'class' => 'editorWysiwyg'
         ]); ?>
@@ -169,7 +169,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo template::topic('Mise en forme du texte'); ?>
+                <?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -206,7 +206,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo template::topic('Disposition'); ?>
+                <?php echo helper::translate('Disposition'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -221,7 +221,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php echo template::topic('Contenu personnalisé'); ?>
+                            <?php echo helper::translate('Contenu personnalisé'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -245,7 +245,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php echo template::topic('Réseaux sociaux'); ?>
+                            <?php echo helper::translate('Réseaux sociaux'); ?>
                         </strong>
                     </p>
                     <div class="row">
@@ -269,7 +269,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php echo template::topic('Informations'); ?>
+                            <?php echo helper::translate('Informations'); ?>
                         </strong>
                     </p>
                     <div class="row">

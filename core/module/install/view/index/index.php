@@ -1,6 +1,6 @@
 <?php echo template::formOpen('installForm'); ?>
 <h3>
-	<?php echo template::topic('Dans quelle langue utiliserez-vous Zwii ?'); ?>
+	<?php echo helper::translate('Dans quelle langue utiliserez-vous Zwii ?'); ?>
 </h3>
 <div class="row">
     <div class="col6 offset3">

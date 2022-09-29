@@ -23,7 +23,7 @@
 	<div class="col6">
 		<div class="block">
 			<h4>
-				<?php echo template::topic('Identité'); ?>
+				<?php echo helper::translate('Identité'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
@@ -71,18 +71,18 @@
 					]); ?>
 				</div>
 				<div id="userEditLabelAuth">
-					<?php echo template::topic('Permissions :'); ?>
+					<?php echo helper::translate('Permissions :'); ?>
 				</div>
 				<ul id="userEditGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo template::topic('Accès aux pages privées'); ?></li>
+					<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
 				</ul>
 				<ul id="userEditGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo template::topic('Accès aux pages privées'); ?></li>
-					<li><?php echo template::topic('Ajout / Édition / Suppression de pages'); ?></li>
-					<li><?php echo template::topic('Ajout / Édition / Suppression de fichiers'); ?></li>
+					<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
+					<li><?php echo helper::translate('Ajout / Édition / Suppression de pages'); ?></li>
+					<li><?php echo helper::translate('Ajout / Édition / Suppression de fichiers'); ?></li>
 				</ul>
 				<ul id="userEditGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo template::topic('Administration complète du site'); ?></li>
+					<li><?php echo helper::translate('Administration complète du site'); ?></li>
 				</ul>
 			<?php endif; ?>
 		</div>
@@ -90,7 +90,7 @@
 	<div class="col6">
 		<div class="block">
 			<h4>
-				<?php echo template::topic('Authentification'); ?>
+				<?php echo helper::translate('Authentification'); ?>
 			</h4>
 			<?php echo template::text('userEditId', [
 				'autocomplete' => 'off',

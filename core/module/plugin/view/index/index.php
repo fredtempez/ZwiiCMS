@@ -46,7 +46,7 @@
 			<div class="col12">
 				<div class="block">
 					<h4>
-						<?php echo template::topic('Sauvegarde'); ?>
+						<?php echo helper::translate('Sauvegarde'); ?>
 					</h4>
 					<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
 				</div>
@@ -60,7 +60,7 @@
 			<div class="col12">
 				<div class="block">
 					<h4>
-						<?php echo template::topic('Modules orphelins'); ?>
+						<?php echo helper::translate('Modules orphelins'); ?>
 					</h4>
 					<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
 				</div>
@@ -76,7 +76,7 @@
 			<div class="col12">
 				<div class="block">
 					<h4>
-						<?php echo template::topic('Modules configurés'); ?>
+						<?php echo helper::translate('Modules configurés'); ?>
 						&nbsp;
 						<?php echo template::flag(self::$i18nContent, '20px'); ?>
 					</h4>

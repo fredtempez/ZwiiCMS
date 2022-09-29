@@ -26,7 +26,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo template::topic('Importation de fichier plat CSV'); ?>
+                <?php echo helper::translate('Importation de fichier plat CSV'); ?>
             </h4>
             <div class="row">
                 <div class="col10">

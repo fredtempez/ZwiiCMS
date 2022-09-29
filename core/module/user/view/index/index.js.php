@@ -16,7 +16,7 @@
  */
 $(".userDelete").on("click", function() {
 	var _this = $(this);
-	message = "<?php echo template::topic('Confirmer  la suppression de cet utilisateur');?>";
+	message = "<?php echo helper::translate('Confirmer  la suppression de cet utilisateur');?>";
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});

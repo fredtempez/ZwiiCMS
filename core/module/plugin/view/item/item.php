@@ -16,18 +16,18 @@
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo template::topic('Version n°') . $module::$storeItem['fileVersion']; ?>
+            <?php echo helper::translate('Version n°') . $module::$storeItem['fileVersion']; ?>
         </div>
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            &nbsp;<?php echo template::topic('du') . '&nbsp;' .  $module::$storeItem['fileDate']; ?>
+            &nbsp;<?php echo helper::translate('du') . '&nbsp;' .  $module::$storeItem['fileDate']; ?>
         </div>
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
             <span>
-                <?php echo template::topic('Auteur :'); ?>
+                <?php echo helper::translate('Auteur :'); ?>
                 <?php echo $module::$storeItem['fileAuthor']; ?>
             </span>
         </div>
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col12 textAlignCenter">
             <span>
-                <?php echo template::topic('Licence :'); ?>
+                <?php echo helper::translate('Licence :'); ?>
                 &nbsp;
                 <?php echo $module::$storeItem['fileLicense']; ?>
             </span>

@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo template::topic('Sécurité de la connexion'); ?>
+				<h4><?php echo helper::translate('Sécurité de la connexion'); ?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/connexion" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -91,7 +91,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo template::topic('Journalisation'); ?>
+				<h4><?php echo helper::translate('Journalisation'); ?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/journalisation" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>

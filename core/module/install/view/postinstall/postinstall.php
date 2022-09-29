@@ -1,9 +1,9 @@
 <p>
-	<?php echo template::topic('Renseignez les champs ci-dessous pour finaliser l\'installation.'); ?>
+	<?php echo helper::translate('Renseignez les champs ci-dessous pour finaliser l\'installation.'); ?>
 </p>
 <?php echo template::formOpen('installForm'); ?>
 <h3>
-	<?php echo template::topic('Compte administrateur'); ?>
+	<?php echo helper::translate('Compte administrateur'); ?>
 </h3>
 <div>
 	<div class="row">
@@ -50,7 +50,7 @@
 <ul class="accordion" data-speed="150">
 	<li class="accordion-item">
 		<h3 class="accordion-title">
-			<?php echo template::topic('&#9655; Options avancées'); ?>
+			<?php echo helper::translate('&#9655; Options avancées'); ?>
 		</h3>
 		<div class="accordion-content">
 			<div class="row">

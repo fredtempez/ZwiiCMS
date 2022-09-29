@@ -17,7 +17,7 @@
 */
  $("#pageEditDelete").on("click", function() {
 	var _this = $(this);
-	var message_delete = "<?php echo template::topic('Confirmer la suppression de la page'); ?>";
+	var message_delete = "<?php echo helper::translate('Confirmer la suppression de la page'); ?>";
 	return core.confirm(message_delete, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
@@ -34,7 +34,7 @@ function protectModule() {
 	if ( oldModule !== "" &&
 		 oldModule !== newModule) {
 		var _this = $(this);
-		var message_delete = "<?php echo template::topic('Confirmer la suppression des données du module'); ?>";
+		var message_delete = "<?php echo helper::translate('Confirmer la suppression des données du module'); ?>";
 		core.confirm(message_delete + " " + oldModuleText,
 				function() {
 					$(location).attr("href", _this.attr("href"));
@@ -648,9 +648,9 @@ function buildPagesList(extraPosition) {
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 	var extraPosition = $("#pageEditExtraPosition").val();
 	var positionDOM = $("#pageEditPosition");
-	var message_none = "<?php echo template::topic('Ne pas afficher'); ?>";
-	var message_begin = "<?php echo template::topic('Au début'); ?>";
-	var message_after = "<?php echo template::topic('Après'); ?>";
+	var message_none = "<?php echo helper::translate('Ne pas afficher'); ?>";
+	var message_begin = "<?php echo helper::translate('Au début'); ?>";
+	var message_after = "<?php echo helper::translate('Après'); ?>";
 	positionDOM.empty().append(
 		$("<option>").val(0).text(message_none),
 		$("<option>").val(1).text(message_begin)

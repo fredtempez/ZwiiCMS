@@ -15,9 +15,9 @@ $(document).ready(function () {
         //$("#configBackupSubmit").addClass("disabled").prop("disabled", true);
         e.preventDefault();
         var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/backup";
-        var message_success = "<?php echo template::topic('Sauvegarde générée avec succès.'); ?>";
-        var message_error = "<?php echo template::topic('Erreur : sauvegarde non générée !'); ?>";
-        var message_title = "<?php echo template::topic('Sauvegarder'); ?>";
+        var message_success = "<?php echo helper::translate('Sauvegarde générée avec succès.'); ?>";
+        var message_error = "<?php echo helper::translate('Erreur : sauvegarde non générée !'); ?>";
+        var message_title = "<?php echo helper::translate('Sauvegarder'); ?>";
         $.ajax({
             type: "POST",
             url: url,
@@ -45,7 +45,7 @@ $(document).ready(function () {
      */
     $("#configBackupSubmit").on("click", function () {
         if ($("input[name=configBackupOption]").is(':checked')) {
-            var message_warning = "<?php echo template::topic('La sauvegarde des fichiers peut prendre du temps. Continuer ?'); ?>";
+            var message_warning = "<?php echo helper::translate('La sauvegarde des fichiers peut prendre du temps. Continuer ?'); ?>";
             return core.confirm(message_warning, function () {
                 //$(location).attr("href", _this.attr("href"));
                 $('body, .button').css('cursor', 'wait');

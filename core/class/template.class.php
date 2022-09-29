@@ -4,15 +4,6 @@ class template
 {
 
     /**
-     * retourne un texte traduit
-     */
-    public static function topic($text)
-    {
-        $text = helper::translate($text);
-        return $text;
-    }
-
-    /**
      * Crée un bouton
      * @param string $nameId Nom et id du champ
      * @param array $attributes Attributs ($key => $value)

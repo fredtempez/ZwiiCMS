@@ -19,7 +19,7 @@
 	<div class="col12">
 		<div class="block">
 			<h4>
-				<?php echo template::topic('Archive à restaurer'); ?>
+				<?php echo helper::translate('Archive à restaurer'); ?>
 			</h4>
 			<div class="row">
 				<div class="col10 offset1">
