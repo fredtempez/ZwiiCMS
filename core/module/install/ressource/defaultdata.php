@@ -42,8 +42,7 @@ class init extends common {
 				'redirectLogin' => true
 			],
 			'i18n' => [
-				'interface' => 'fr_FR',
-				'content' => []
+				'interface' => 'fr_FR'
 			]
 		],
 		'core' => [

@@ -136,7 +136,7 @@ class translate extends common
 				self::$languagesInstalled[] = [
 					template::flag($key, '50%'),
 					$value . ' (' . $key . ')',
-					self::$i18nUI === $key ? '(langue de l\'interface)' : '',
+					self::$i18nUI === $key ? 'Interface' : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $key . '/' . $_SESSION['csrf'],
