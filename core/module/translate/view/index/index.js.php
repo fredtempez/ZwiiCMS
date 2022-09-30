@@ -33,6 +33,9 @@ $("#translateUiButton").on("click", function () {
 	$(this).addClass("activeButton");
 	$("#translateContentButton").removeClass("activeButton");
 	setCookie("translateLayout", "ui");
+    // Cacher les boutons liés au contenu
+    $("#translateButtonAddContent").hide();
+    $("#translateButtonCopyContent").hide();
 });
 $("#translateContentButton").on("click", function () {
 	$("#uiContainer").hide();
@@ -40,6 +43,9 @@ $("#translateContentButton").on("click", function () {
     $(this).addClass("activeButton");
 	$("#translateUiButton").removeClass("activeButton");
 	setCookie("translateLayout", "content");
+    // Afficher les boutons liés au contenu
+    $("#translateButtonAddContent").show();
+    $("#translateButtonCopyContent").show();
 });
 
 /**

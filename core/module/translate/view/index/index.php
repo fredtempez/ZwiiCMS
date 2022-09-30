@@ -17,19 +17,19 @@
 			]);*/ ?>
 	</div>
 	<div class="col1 offset6">
-		<?php echo template::button('translateButton', [
-			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => template::ico('docs'),
-			'disabled' => $module::$siteCopy,
-			'help' => 'Copie de sites inter-langues'
-		]); ?>
-	</div>
-	<div class="col1">
-		<?php echo template::button('translateButton', [
+		<?php echo template::button('translateButtonAddContent', [
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
 			'class' => 'buttonGreen',
 			'help' => 'Ajouter une langue de contenu'
+		]); ?>
+	</div>
+	<div class="col1">
+		<?php echo template::button('translateButtonCopyContent', [
+			'href' => helper::baseUrl() . 'translate/copy',
+			'value' => template::ico('docs'),
+			'disabled' => $module::$siteCopy,
+			'help' => 'Copie de sites inter-langues'
 		]); ?>
 	</div>
 	<div class="col2">
@@ -46,7 +46,6 @@
 		'value' => 'Langues du contenu',
 		'class' => 'buttonTab'
 	]); ?>
-
 </div>
 
 <div id="uiContainer" class="tabContent">
