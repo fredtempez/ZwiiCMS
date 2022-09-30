@@ -235,7 +235,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Ajouter un contenu localisé',
+			'title' => 'Nouveau contenu localisé',
 			'view' => 'add'
 		]);
 	}

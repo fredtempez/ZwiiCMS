@@ -21,7 +21,7 @@
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
 			'class' => 'buttonGreen',
-			'help' => 'Ajouter un contenu localisé'
+			'help' => 'Nouveau contenu localisé'
 		]); ?>
 	</div>
 	<div class="col1">
