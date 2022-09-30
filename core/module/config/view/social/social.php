@@ -11,18 +11,19 @@
 					</span>
 				</h4>
 				<div class="row">
-					<div class="col4 offset1">
+					<div class="col7">
 						<div class="row">
 							<div class="col12">
 								<?php echo template::text('seoKeyApi', [
 									'label' => 'Clé de l\'API <a href="https://app.screenshotapi.net/" target="_blank">ScreenShotApi</a>',
 									'value' => $this->getData(['config', 'seo', 'keyApi']),
-									'help' => 'Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération'
+									'help' => 'Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération',
+									'placeholder' => 'XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX'
 								]); ?>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col12">
+							<div class="col6 offset3">
 								<?php echo template::button('socialMetaImage', [
 									'href' => helper::baseUrl() . 'config/configMetaImage',
 									'value' => 'Générer une capture Open Graph'
@@ -30,7 +31,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col6 offset1">
+					<div class="col5">
 						<?php if (file_exists(self::FILE_DIR . 'source/screenshot.jpg')) : ?>
 							<div class="row">
 								<div class="col8 offset2 textAlignCenter">
