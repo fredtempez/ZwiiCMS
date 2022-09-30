@@ -21,7 +21,7 @@
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
 			'class' => 'buttonGreen',
-			'help' => 'Ajouter une langue de contenu'
+			'help' => 'Ajouter un contenu localisé'
 		]); ?>
 	</div>
 	<div class="col1">
@@ -29,7 +29,7 @@
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('docs'),
 			'disabled' => $module::$siteCopy,
-			'help' => 'Copie de sites inter-langues'
+			'help' => 'Copie de contenus localisés'
 		]); ?>
 	</div>
 	<div class="col2">

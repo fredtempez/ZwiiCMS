@@ -101,7 +101,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Utilitaire de copie',
+			'title' => 'Copie de contenus localisés',
 			'view' => 'copy'
 		]);
 	}
@@ -134,20 +134,20 @@ class translate extends common
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
 				self::$languagesInstalled[] = [
-					template::flag($key, '50%'),
+					template::flag($key, '20 %'),
 					$value . ' (' . $key . ')',
 					self::$i18nUI === $key ? 'Interface' : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('flag'),
-						'help' => 'Editer les locales'
+						'help' => 'Editer'
 					]),
 					template::button('translateContentLanguageDelete' . $key, [
 						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $key ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
-						'help' => 'Supprimer cette langue'
+						'help' => 'Supprimer'
 					])
 				];
 			}
@@ -172,7 +172,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Multilangues',
+			'title' => 'Langues',
 			'view' => 'index'
 		]);
 	}
@@ -235,7 +235,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Ajouter',
+			'title' => 'Ajouter un contenu localisé',
 			'view' => 'add'
 		]);
 	}
@@ -349,7 +349,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Paramètres de la localisation ' . self::$languages[$this->getUrl(2)],
+			'title' => 'Paramètres de la localisation&nbsp;' . template::flag($this->getUrl(2), '20 %'),
 			'view' => 'edit'
 		]);
 	}

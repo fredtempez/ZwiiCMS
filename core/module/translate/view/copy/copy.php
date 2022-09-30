@@ -17,12 +17,12 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Copie des traductions rédigées'); ?>
+                <?php echo helper::translate('Sélectionnez la langue à copier vers une langue cible'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('translateFormCopySource', $module::$languagesInstalled, [
-                        'label' => 'Pages et les modules de'
+                        'label' => 'De'
                     ]); ?>
                 </div>
                 <div class="col6">
