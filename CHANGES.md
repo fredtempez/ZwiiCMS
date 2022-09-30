@@ -3,17 +3,25 @@
 ## Version 11.6.00
 ### Nouveautés :
 - Module addon refondu et renommé plugin.
-- Réorganisation des écrans pour éviter de mélanger des formulaires avec des champs d'information.
+- Gestion des langues :
+    - Définition de la langue de l'interface à l'installation.
+    - Définition de la langue du site parmi 28 langues.
+    - Module de gestion des langues refondu.
 - Edition des pages :
     - Nouvelle présentation de l'édition des pages et de la configuration du site.
     - Feuille de style et script attachés à la page.
+- Réorganisation des formulaires de saisie.
+- Google :
+    - Suppression du script Google Analytics
+    - Remplacement du script de génération de la capture d'écran par ScreenshotAPI https://app.screenshotapi.net/
+    - Suppression de la traduction automatique par le script Google Translate
 ### Modifications :
 - Amélioration du thème admin de base, modifications du jeu d'icônes.
 - Mise à jour automatisée, affichage de l'erreur en cas d'échec.
 - Suppression du support de l'import à partir d'une version 9, y compris pour la restauration des sauvegardes.
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
-- Suppression du Google Analytics.
+
 
 ## Version 11.5.07
 ### Correction :

@@ -17,7 +17,7 @@
 								<?php echo template::text('seoKeyApi', [
 									'label' => 'Clé de l\'API <a href="https://app.screenshotapi.net/" target="_blank">ScreenShotApi</a>',
 									'value' => $this->getData(['config', 'seo', 'keyApi']),
-									'help' => 'Saisir la clé, puis valider le formulaire avant de cliquer sur le bouton de génération'
+									'help' => 'Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération'
 								]); ?>
 							</div>
 						</div>
