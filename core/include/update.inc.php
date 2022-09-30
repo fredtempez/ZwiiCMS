@@ -857,7 +857,7 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 
 
 // Version 11.6.00
-if ($this->getData(['core', 'dataVersion']) < 11600) {
+if ($this->getData(['core', 'dataVersion']) < 12000) {
 
 	// Correspondance pour les dossiers de langue à convertir
 	$languages = [
@@ -917,5 +917,5 @@ if ($this->getData(['core', 'dataVersion']) < 11600) {
 	$this->setData(['config', 'i18n', 'interface', 'fr_FR']);
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 11600]);
+	$this->setData(['core', 'dataVersion', 12000]);
 }
