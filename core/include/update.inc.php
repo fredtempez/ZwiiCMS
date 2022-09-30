@@ -913,9 +913,13 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	if (file_exists('core/vendor/i18n/translation.js')) {
 		unlink('core/vendor/i18n/translation.js');
 	}
+	// Copier les fichiers de l'interface
+	if (!is_dir(self::$I18N_DIR)) {
+		// Créer le dossier 
+		$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+	}
 	// Langue de l'interface
 	$this->setData(['config', 'i18n', 'interface', 'fr_FR']);
-
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
 }
