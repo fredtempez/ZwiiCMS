@@ -8,27 +8,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-
-/**
- * Mode téléchargement en ligne de la fonte ou installation locale
- */
-$("input[name=fontAddFontImported]").on("click", function() {
-    if( $('input[name=fontAddFontImported]').is(':checked') ){
-        $('input[name=fontAddFontFile]').prop('checked', false);
-    } else {
-        $('input[name=fontAddFontFile]').prop('checked', true);
-    }
-    $('#containerFontAddFile').hide();
-    $('#containerFontAddUrl').show();
-});
-
-$("input[name=fontAddFontFile]").on("click", function() {
-    if( $('input[name=fontAddFontFile]').is(':checked') ){
-        $('input[name=fontAddFontImported]').prop('checked', false);
-    } else {
-        $('input[name=fontAddFontImported]').prop('checked', true);
-    }
-    $('#containerFontAddFile').show();
-    $('#containerFontAddUrl').hide();
-});
+$("input[name=fontAddFontImported]").on("click",(function(){$("input[name=fontAddFontImported]").is(":checked")?$("input[name=fontAddFontFile]").prop("checked",!1):$("input[name=fontAddFontFile]").prop("checked",!0),$("#containerFontAddFile").hide(),$("#containerFontAddUrl").show()})),$("input[name=fontAddFontFile]").on("click",(function(){$("input[name=fontAddFontFile]").is(":checked")?$("input[name=fontAddFontImported]").prop("checked",!1):$("input[name=fontAddFontImported]").prop("checked",!0),$("#containerFontAddFile").show(),$("#containerFontAddUrl").hide()}));

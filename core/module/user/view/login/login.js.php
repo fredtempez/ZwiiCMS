@@ -8,13 +8,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-$(document).ready(function(){
-
-    $(".zwiico-eye").mouseenter(function() {
-        $("#userLoginPassword").attr("type", 'text');
-    });
-    $(".zwiico-eye").mouseleave(function() {
-        $("#userLoginPassword").attr("type", 'password');
-    });
-});
+$(document).ready((function(){$(".zwiico-eye").mouseenter((function(){$("#userLoginPassword").attr("type","text")})),$(".zwiico-eye").mouseleave((function(){$("#userLoginPassword").attr("type","password")}))}));

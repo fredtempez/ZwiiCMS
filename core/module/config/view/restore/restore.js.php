@@ -9,14 +9,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-$( document).ready(function() {
-
-    /**
-     * Aspect de la souris
-    */
-     $("#configRestoreSubmit").click(function(event) {
-        $('body, .button').css('cursor', 'wait');
-    });
-    
-});
+$(document).ready((function(){$("#configRestoreSubmit").click((function(event){$("body, .button").css("cursor","wait")}))}));

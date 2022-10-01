@@ -10,13 +10,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-/**
- * Confirmation de réinitialisation
- */
-$("#configManageReset").on("click", function () {
-	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine le thème du site ?", function () {
-		$(location).attr("href", _this.attr("href"));
-	});
-});
+$("#configManageReset").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine le thème du site ?",(function(){$(location).attr("href",_this.attr("href"))}))}));

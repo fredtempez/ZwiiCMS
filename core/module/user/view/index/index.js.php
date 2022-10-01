@@ -10,14 +10,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-/**
- * Confirmation de suppression
- */
-$(".userDelete").on("click", function() {
-	var _this = $(this);
-	message = "<?php echo helper::translate('Confirmer  la suppression de cet utilisateur');?>";
-	return core.confirm(message, function() {
-		$(location).attr("href", _this.attr("href"));
-	});
-});
+$(".userDelete").on("click",(function(){var _this=$(this);return message="<?php echo helper::translate('Confirmer  la suppression de cet utilisateur');?>",core.confirm(message,(function(){$(location).attr("href",_this.attr("href"))}))}));

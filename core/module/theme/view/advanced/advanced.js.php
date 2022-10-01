@@ -10,26 +10,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-/**
- * Aperçu en direct
- */
-$("#themeAdvancedCss").on("change keydown keyup", function () {
-	// Ajout du css au DOM
-	$("#themePreview").remove();
-	$("<style>")
-		.attr("type", "text/css")
-		.attr("id", "themePreview")
-		.text($(this).val())
-		.appendTo("head");
-});
-
-/**
- * Confirmation de réinitialisation
- */
-$("#themeAdvancedReset").on("click", function () {
-	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine la personnalisation avancée ?", function () {
-		$(location).attr("href", _this.attr("href"));
-	});
-});
+$("#themeAdvancedCss").on("change keydown keyup",(function(){$("#themePreview").remove(),$("<style>").attr("type","text/css").attr("id","themePreview").text($(this).val()).appendTo("head")})),$("#themeAdvancedReset").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine la personnalisation avancée ?",(function(){$(location).attr("href",_this.attr("href"))}))}));

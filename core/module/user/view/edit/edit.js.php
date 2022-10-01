@@ -10,40 +10,4 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-
-/**
- * Droits des groupes
- */
-$("#userEditGroup").on("change", function() {
-	$(".userEditGroupDescription").hide();
-	$("#userEditGroupDescription" + $(this).val()).show();
-	if ($("#userEditGroup option:selected").val() < 0) {
-		$("#userEditLabelAuth").css("display","none");
-	} else {
-		$("#userEditLabelAuth").css("display","inline-block");
-	}
-}).trigger("change");
-
-$(document).ready(function(){
-	// Membre avec ou sans gestion de fichiers
-	if($("#userEditGroup").val() === '1') {
-		$("#userEditMemberFiles").slideDown();
-	}
-	else {
-		$("#userEditMemberFiles").slideUp(function() {
-			$("#userEditFiles").prop("checked", false).trigger("change");
-		});
-	}
-});
-
-$("#userEditGroup").on("change", function() {
-	// Membre avec ou sans gestion de fichiers
-	if($("#userEditGroup").val() === '1') {
-		$("#userEditMemberFiles").slideDown();
-	}
-	else {
-		$("#userEditMemberFiles").slideUp(function() {
-			$("#userEditFiles").prop("checked", false).trigger("change");
-		});
-	}
-}).trigger("change");
+$("#userEditGroup").on("change",(function(){$(".userEditGroupDescription").hide(),$("#userEditGroupDescription"+$(this).val()).show(),$("#userEditGroup option:selected").val()<0?$("#userEditLabelAuth").css("display","none"):$("#userEditLabelAuth").css("display","inline-block")})).trigger("change"),$(document).ready((function(){"1"===$("#userEditGroup").val()?$("#userEditMemberFiles").slideDown():$("#userEditMemberFiles").slideUp((function(){$("#userEditFiles").prop("checked",!1).trigger("change")}))})),$("#userEditGroup").on("change",(function(){"1"===$("#userEditGroup").val()?$("#userEditMemberFiles").slideDown():$("#userEditMemberFiles").slideUp((function(){$("#userEditFiles").prop("checked",!1).trigger("change")}))})).trigger("change");
