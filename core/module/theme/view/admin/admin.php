@@ -40,7 +40,7 @@
 					<?php echo template::text('adminBackgroundColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-						'label' => 'Arrière-plan',
+						'label' => 'Arrière plan',
 						'value' => $this->getData(['admin', 'backgroundColor'])
 					]); ?>
 				</div>
@@ -66,7 +66,7 @@
 					<?php echo template::text('adminBackGroundBlockColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.',
-						'label' => 'Arrière-plan des champs',
+						'label' => 'Arrière plan des champs',
 						'value' => $this->getData(['admin', 'backgroundBlockColor'])
 					]); ?>
 				</div>

@@ -81,7 +81,7 @@ class install extends common
 
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => 'Installation',
+			'title' => helper::translate('Installation'),
 			'view' => 'index'
 		]);
 	}
@@ -240,7 +240,7 @@ class install extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => 'Installation',
+				'title' => helper::translate('Installation'),
 				'view' => 'postinstall'
 			]);
 		}
@@ -380,7 +380,7 @@ class install extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => 'Mise à jour',
+			'title' => helper::translate('Mise à jour'),
 			'view' => 'update'
 		]);
 	}

@@ -480,12 +480,12 @@ class forum extends common {
 					'class' => ($toApprove || $approved ) > 0 ?  '' : 'buttonGrey' ,
 					'href' => ($toApprove || $approved ) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $sujetIds[$i] : '',
 					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved,
-					'help' =>  ($toApprove || $approved ) > 0 ?  'Editer  / Approuver les réponses' : ''
+					'help' =>  ($toApprove || $approved ) > 0 ?  'Éditer  / Approuver les réponses' : ''
 				]),
 				template::button('blogConfigEdit' . $sujetIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $sujetIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil'),
-					'help' => 'Editer l\'sujet'
+					'help' => 'Éditer l\'sujet'
 				]),
 				template::button('blogConfigDelete' . $sujetIds[$i], [
 					'class' => 'blogConfigDelete buttonRed',

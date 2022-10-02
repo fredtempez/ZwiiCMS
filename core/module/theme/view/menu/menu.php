@@ -143,7 +143,7 @@
                     <?php echo template::text('themeMenuBackgroundColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                        'label' => 'Arrière-plan',
+                        'label' => 'Arrière plan',
                         'value' => $this->getData(['theme', 'menu', 'backgroundColor'])
                     ]); ?>
                 </div>

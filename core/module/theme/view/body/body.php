@@ -28,7 +28,7 @@
 					<?php echo template::text('themeBodyBackgroundColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-						'label' => 'Arrière-plan',
+						'label' => 'Arrière plan',
 						'value' => $this->getData(['theme', 'body', 'backgroundColor'])
 					]); ?>
 				</div>
@@ -66,7 +66,7 @@
 					$imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
 					echo template::file('themeBodyImage', [
 						'help' => 'Sélectionner une image',
-						'label' => 'Arrière-plan',
+						'label' => 'Arrière plan',
 						'type' => 1,
 						'value' => $imageFile
 					]); ?>

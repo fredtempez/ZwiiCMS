@@ -575,7 +575,7 @@ class page extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Éditeur CSS',
+			'title' => helper::translate('Éditeur CSS'),
 			'vendor' => [
 				'codemirror'
 			],
@@ -604,7 +604,7 @@ class page extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Éditeur Js',
+			'title' => helper::translate('Éditeur Js'),
 			'vendor' => [
 				'codemirror'
 			],

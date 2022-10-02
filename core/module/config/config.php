@@ -243,7 +243,7 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Sauvegarder',
+				'title' => helper::translate('Sauvegarder'),
 				'view' => 'backup'
 			]);
 		}
@@ -326,7 +326,7 @@ class config extends common
 				if ($file_parts['extension'] !== 'zip') {
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => 'Restaurer',
+						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
 						'notification' => 'Le fichier n\'est pas une archive valide',
 						'state' => false
@@ -336,7 +336,7 @@ class config extends common
 				if ($successOpen === FALSE) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => 'Restaurer',
+						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
 						'notification' => 'Impossible de lire l\'archive',
 						'state' => false
@@ -359,7 +359,7 @@ class config extends common
 						if (substr($dataVersion, 0, 1) === '9') {
 							// Valeurs en sortie erreur
 							$this->addOutput([
-								'title' => 'Restaurer',
+								'title' => helper::translate('Restaurer'),
 								'view' => 'restore',
 								'notification' => 'Cette archive est trop ancienne, elle ne peut être restaurée',
 								'state' => false
@@ -385,7 +385,7 @@ class config extends common
 				} elseif ($version === 0) { // Version invalide
 					// Valeurs en sortie erreur
 					$this->addOutput([
-						'title' => 'Restaurer',
+						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
 						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
 						'state' => false
@@ -432,7 +432,7 @@ class config extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Restaurer',
+			'title' => helper::translate('Restaurer'),
 			'view' => 'restore'
 		]);
 	}
@@ -570,7 +570,7 @@ class config extends common
 			$this->siteMap();
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Modifications enregistrées ',
 				'state' => true
@@ -585,7 +585,7 @@ class config extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du site',
+			'title' => helper::translate('Configuration'),
 			'view' => 'index'
 		]);
 	}
@@ -604,7 +604,7 @@ class config extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)),
+				'title' => helper::translate('Éditeur de script dans ' . ucfirst($this->geturl(2))),
 				'vendor' => [
 					'codemirror'
 				],
@@ -614,7 +614,7 @@ class config extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Éditeur de script dans ' . ucfirst($this->geturl(2)),
+			'title' => helper::translate('Éditeur de script dans ' . ucfirst($this->geturl(2))),
 			'vendor' => [
 				'codemirror'
 			],
@@ -636,7 +636,7 @@ class config extends common
 			file_put_contents(self::DATA_DIR . 'journal.log', $d);
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Journal réinitialisé avec succès',
 				'state' => true
@@ -644,7 +644,7 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Aucun journal à effacer',
 				'state' => false
@@ -672,7 +672,7 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Aucun fichier journal à télécharger',
 				'state' => false
@@ -710,7 +710,7 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Aucune liste noire à télécharger',
 				'state' => false
@@ -728,7 +728,7 @@ class config extends common
 			$this->setData(['blacklist', []]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Liste noire réinitialisée avec succès',
 				'state' => true
@@ -736,7 +736,7 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration du site',
+				'title' => helper::translate('Configuration'),
 				'view' => 'index',
 				'notification' => 'Pas de liste à effacer',
 				'state' => false
@@ -754,7 +754,7 @@ class config extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du site',
+			'title' => helper::translate('Configuration'),
 			'view' => 'index',
 			'notification' => 'Copie terminée' . ($success ? ' avec succès' : ' avec des erreurs'),
 			'state' => $success
@@ -778,7 +778,7 @@ class config extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du site',
+			'title' => helper::translate('Configuration'),
 			'view' => 'index',
 			'notification' => 'Suppression terminée :<br />' . $success . ' fichiers effacé(s) <br />' . $fail . ' échec(s)',
 			'state' => true

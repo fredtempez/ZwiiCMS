@@ -116,7 +116,7 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Nouvel utilisateur',
+			'title' => helper::translate('Nouvel utilisateur'),
 			'view' => 'add'
 		]);
 	}
@@ -328,9 +328,9 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => helper::translate('Mot de passe oublié'),
+			'view' => 'forgot',
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => 'Mot de passe oublié',
-			'view' => 'forgot'
 		]);
 	}
 
@@ -350,7 +350,7 @@ class user extends common
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
-						'help' => 'Editer'
+						'help' => 'Éditer'
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
@@ -363,7 +363,7 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Liste des utilisateurs',
+			'title' => helper::translate('Utilisateurs'),
 			'view' => 'index'
 		]);
 	}
@@ -512,9 +512,9 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
+			'title' => helper::translate('Connexion'),
+			'view' => 'login',
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => 'Connexion',
-			'view' => 'login'
 		]);
 	}
 
@@ -584,9 +584,10 @@ class user extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
+				'title' => helper::translate('Réinitialisation du mot de passe'),
+				'view' => 'reset',
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => 'Réinitialisation du mot de passe',
-				'view' => 'reset'
+
 			]);
 		}
 	}
@@ -716,7 +717,7 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Importation',
+			'title' => 'Importation d\'utilisateurs',
 			'view' => 'import',
 			'notification' => $notification,
 			'state' => $success

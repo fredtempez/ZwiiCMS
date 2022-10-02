@@ -25,7 +25,7 @@
             )
             ): ?>
                 <a href ="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1) . '/' . $_SESSION['csrf'];?>">
-                    <?php echo template::ico('pencil');?> Editer
+                    <?php echo template::ico('pencil');?> Éditer
                 </a>
             <?php endif; ?>
 		<!-- Bloc RSS-->

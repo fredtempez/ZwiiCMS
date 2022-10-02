@@ -20,7 +20,7 @@ class translate extends common
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
 		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
-		'edit' => self::GROUP_ADMIN, 	// Editer une langue de contenu
+		'edit' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
 		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
 		'content' => self::GROUP_VISITOR,
 	];
@@ -101,7 +101,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Copie de contenus localisés',
+			'title' => helper::translate('Copie de contenus localisés'),
 			'view' => 'copy'
 		]);
 	}
@@ -141,7 +141,7 @@ class translate extends common
 					template::button('translateContentLanguageEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('flag'),
-						'help' => 'Editer'
+						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageDelete' . $key, [
 						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $key ? ' disabled' : ''),
@@ -172,7 +172,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Langues',
+			'title' => helper::translate('Langues'),
 			'view' => 'index'
 		]);
 	}
@@ -235,7 +235,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Nouveau contenu localisé',
+			'title' => helper::translate('Nouveau contenu localisé'),
 			'view' => 'add'
 		]);
 	}
@@ -349,7 +349,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Paramètres de la localisation&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'title' => helper::translate('Paramètres de la localisation') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
 			'view' => 'edit'
 		]);
 	}

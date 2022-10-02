@@ -394,7 +394,7 @@ Corrections :
 - Corrections :
     - Thème : aperçu du site amélioré.
     - Thème : rétablissement du contrôle de l'import d'une version ancienne d'un thème.
-    - Éditeur de texte : couleur de fond parasite quand une image en arrière-plan est sélectionnée.
+    - Éditeur de texte : couleur de fond parasite quand une image en Arrière plan est sélectionnée.
 
 ## version 10.4.01
 Corrections :
@@ -405,7 +405,7 @@ Corrections :
 Corrections :
     - Bug de pages non accessibles dans le menu suite à la création d'entrées fantômes dans le fichier de données de modules.
     - Nettoyage du fichier des données de modules des entrées fantômes.
-    - Thème : déformation des images en arrière-plan dans les modes responsives cover et contain lorsque la longueur de la page change. L'image en arrière-plan est désormais placée dans la balise html et l'option fixe s'active lorsque cover ou contain sont sélectionnés.
+    - Thème : déformation des images en Arrière plan dans les modes responsives cover et contain lorsque la longueur de la page change. L'image en Arrière plan est désormais placée dans la balise html et l'option fixe s'active lorsque cover ou contain sont sélectionnés.
     - Thème : déformation du sélecteur de fichiers dans certains formats de page.
     - Module Form : mauvais affichage du guillemet et de l'apostrophe dans les noms des champs lors de l'édition.
     - Thème : faille CSRF, protection de la réinitialisation des fichiers de thème.
@@ -495,7 +495,7 @@ Corrections :
     - Thème : import d'un thème, d'administration impossible.
     - Thème : import d'un thème, nettoyage du dossier tmp.
     - Thème administration : modification de l'appel du code CSS permettant une mise à jour du thème sans vider le cache.
-    - Thème du menu : alignement inopérant ; arrière-plan semi-transparent non uniforme.
+    - Thème du menu : alignement inopérant ; Arrière plan semi-transparent non uniforme.
     - Supprime les warning lors d'une primo installation.
     - Inversion des icônes + et - dans la configuration
 - Améliorations :

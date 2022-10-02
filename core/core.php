@@ -2096,7 +2096,7 @@ class common
 				) {
 					$leftItems .= '<li>' . template::ico('pencil',  [
 						'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-						'help' => 'Editer la page'
+						'help' => 'Éditer la page'
 					]) . '</li>';
 					if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 						$leftItems .= '<li>' . template::ico('gear',  [

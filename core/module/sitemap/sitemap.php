@@ -109,7 +109,7 @@ class sitemap extends common
 
         // Valeurs en sortie
         $this->addOutput([
-            'title' => 'Plan du site',
+            'title' => helper::translate('Plan du site'),
             'view' => 'index'
         ]);
     }

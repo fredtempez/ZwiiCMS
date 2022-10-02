@@ -48,7 +48,7 @@ class maintenance extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => 'Maintenance en cours...',
+				'title' => helper::translate('Maintenance en cours...'),
 				'view' => 'index'
 			]);
 		}

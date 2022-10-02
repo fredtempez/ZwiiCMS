@@ -68,7 +68,7 @@
 							<?php echo template::text('themeSiteBackgroundColor', [
 								'class' => 'colorPicker',
 								'help' => 'Le curseur horizontal règle le niveau de transparence.',
-								'label' => 'Arrière-plan',
+								'label' => 'Arrière plan',
 								'value' => $this->getData(['theme', 'site', 'backgroundColor'])
 							]); ?>
 						</div>
@@ -104,7 +104,7 @@
 							<?php echo template::text('themeBlockBackgroundColor', [
 								'class' => 'colorPicker',
 								'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
-								'label' => 'Arrière-plan des blocs',
+								'label' => 'Arrière plan des blocs',
 								'value' => $this->getData(['theme', 'block', 'backgroundColor'])
 							]); ?>
 						</div>

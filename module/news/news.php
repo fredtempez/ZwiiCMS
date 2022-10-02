@@ -220,7 +220,7 @@ class news extends common {
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i]. '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil'),
-					'help' => 'Editer cette nouvelle'
+					'help' => 'Éditer cette nouvelle'
 				]),
 				template::button('newsConfigDelete' . $newsIds[$i], [
 					'class' => 'newsConfigDelete buttonRed',

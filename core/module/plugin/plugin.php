@@ -275,7 +275,7 @@ class plugin extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Installer un module',
+			'title' => helper::translate('Installer un module'),
 			'view' => 'upload'
 		]);
 	}
@@ -328,7 +328,7 @@ class plugin extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Catalogue de modules',
+			'title' => helper::translate('Catalogue de modules'),
 			'view' => 'store'
 		]);
 	}
@@ -385,7 +385,7 @@ class plugin extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Catalogue de modules en ligne',
+			'title' => helper::translate('Catalogue de modules'),
 			'view' => 'store'
 		]);
 	}
@@ -402,7 +402,7 @@ class plugin extends common
 			: utf8_encode(strftime('%d %B %Y', self::$storeItem['fileDate']));
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Module ' . self::$storeItem['title'],
+			'title' => helper::translate('Module ' . self::$storeItem['title']),
 			'view' => 'item'
 		]);
 	}
@@ -545,7 +545,7 @@ class plugin extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des modules',
+			'title' => helper::translate('Gestion des modules'),
 			'view' => 'index'
 		]);
 	}
@@ -793,7 +793,7 @@ class plugin extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Importer des données de module',
+			'title' => helper::translate('Importer des données de module'),
 			'view' => 'dataImport'
 		]);
 	}

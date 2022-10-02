@@ -278,7 +278,7 @@ class theme extends common
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Administration',
+			'title' => helper::translate('Thème de l\'administration'),
 			'view' => 'admin',
 			'vendor' => [
 				'tinycolorpicker'
@@ -304,7 +304,7 @@ class theme extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Éditeur CSS',
+			'title' => helper::translate('Éditeur CSS'),
 			'vendor' => [
 				'codemirror'
 			],
@@ -338,7 +338,7 @@ class theme extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation de l\'arrière plan',
+			'title' => helper::translate('Arrière plan'),
 			'vendor' => [
 				'tinycolorpicker'
 			],
@@ -423,7 +423,7 @@ class theme extends common
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation du pied de page',
+			'title' => helper::translate('Pied de page'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -504,7 +504,7 @@ class theme extends common
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation de la bannière',
+			'title' => helper::translate('Bannière'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -524,7 +524,7 @@ class theme extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation des thèmes',
+			'title' => helper::translate('Thèmes'),
 			'view' => 'index'
 		]);
 	}
@@ -573,7 +573,7 @@ class theme extends common
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation du menu',
+			'title' => helper::translate('Menu'),
 			'vendor' => [
 				'tinycolorpicker'
 			],
@@ -645,7 +645,7 @@ class theme extends common
 		sort(self::$fontsDetail);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des fontes',
+			'title' => helper::translate('Fontes'),
 			'view' => 'fonts'
 		]);
 	}
@@ -710,7 +710,7 @@ class theme extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Ajouter une fonte',
+			'title' => helper::translate('Ajouter une fonte'),
 			'view' => 'fontAdd'
 		]);
 	}
@@ -765,7 +765,7 @@ class theme extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Editer une fonte',
+			'title' => helper::translate('Éditer une fonte'),
 			'view' => 'fontEdit'
 		]);
 	}
@@ -899,7 +899,7 @@ class theme extends common
 		$this->setFonts('all');
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Personnalisation du site',
+			'title' => helper::translate('Site'),
 			'vendor' => [
 				'tinycolorpicker',
 				'tinymce'
@@ -922,16 +922,16 @@ class theme extends common
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
+					'title' => helper::translate('Gestion des thèmes'),
 					'notification' => $data['notification'],
 					'state' => $data['success'],
-					'title' => 'Gestion des thèmes',
 					'view' => 'manage'
 				]);;
 			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des thèmes',
+			'title' => helper::translate('Gestion des thèmes'),
 			'view' => 'manage'
 		]);
 	}
