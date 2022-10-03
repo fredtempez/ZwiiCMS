@@ -65,7 +65,7 @@
 					</div>
 					<div class="col3">
 						<?php echo template::select('newsThemeBorderWidth', $module::$borderWidth, [
-							'label' => 'Epaisseur',
+							'label' => 'Épaisseur',
 							'selected' => $this->getData(['module', $this->getUrl(0),'theme', 'borderWidth'])
 						]); ?>
 					</div>
