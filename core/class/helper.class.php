@@ -27,10 +27,41 @@ class helper
 	public static function translate($text)
 	{
 
+		helper::googleTranslate('fr_FR', 'fr_FR', $text);
+
 		$r = array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text;
-		
 		return $r;
 	}
+
+	/**
+	 * Fonction pour assurer la traduction des messages
+	 */
+	public static function googleTranslate($from, $to, $text){
+		if (!empty($text)) {
+			//Lecture des données en ligne
+			$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
+			// Mode traduction
+			if ($to !== 'fr_FR') {
+				$arrayjson = json_decode(file_get_contents('https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=' . $to . '&q=' . rawurlencode($text)),true);
+				$response =  $arrayjson[0][0];
+				// Captation
+				if ($data !== '') {
+					if (array_key_exists($text, $data) ) {
+						$data[$text] = $response;
+					} else {
+						$data = array_merge($data,[$text =>  $response]);
+					}
+				}
+			// Mode alimentation des chaines
+			} else {
+				// Créer la variable
+				$data = array_merge($data,[$text =>  '']);
+			}
+			file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE, JSON_UNESCAPED_SLASHES), LOCK_EX);
+
+		}
+	}
+
 
 
 
