@@ -27,19 +27,13 @@ class helper
 	public static function translate($text)
 	{
 
-		// Captation
-		/*
-		$data = json_decode(file_get_contents('site/i18n/template.json'), true);
-		if (!array_key_exists($text, $data) ) {
-			if ($text !== '' ) {
-				$data = array_merge($data,[$text => ''] );
-				file_put_contents ('site/i18n/template.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
-			}
-		}
-		*/
 		$r = array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text;
+		
 		return $r;
 	}
+
+
+
 
 	/**
 	 * Récupérer l'adresse IP sans tenir compte du proxy

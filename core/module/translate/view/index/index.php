@@ -29,7 +29,7 @@
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('docs'),
 			'disabled' => $module::$siteCopy,
-			'help' => 'Copie de contenus localisés'
+			'help' =>'Copie de contenus localisés'
 		]); ?>
 	</div>
 	<div class="col2">
