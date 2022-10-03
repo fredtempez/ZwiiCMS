@@ -422,13 +422,14 @@ class common
 
 		// Traduction des dialogues
 		// --- A COMMENTER --------
-
+		/*
 		$l = 'pt_PT';
 		if (file_exists(self::I18N_DIR . $l . '.json')) {
 			foreach (self::$dialog as $key => $value) {
 				helper::googleTranslate('fr', $l, $key);
 			}
 		}
+		*/
 
 
 
