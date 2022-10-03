@@ -445,7 +445,7 @@
     "Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l'afficher directement, cette option est utile dans ce cas précis.": "The content of the page is always displayed in the list of galleries. When only one gallery is available, it is possible to display it directly, this option is useful in this specific case.",
     "Lien de redirection": "Redirection link",
     "Le lien de redirection peut contenir une URL standard, ou pointer vers l'ancre d'une page du site <em>(/page#ancre)</em> ; <em>(/?page#ancre)</em>": "The redirection link may contain a standard URL, or point to the anchor of a site on the <em> (/page#anchor) </em> site; <em> (/? Page#anchre) </em>",
-    "Nombre de redirection": "Redirection name",
+    "Nombre de redirections": "Redirection name",
     "Les modifications que vous avez apportées ne seront peut-tre pas enregistrées.": "The changes you have made may not be recorded.",
     "Il apparat dans la barre de titre et les partages sur les réseaux sociaux.": "He appears in the title bar and sharing on social networks."
 }

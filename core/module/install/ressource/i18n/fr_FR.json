@@ -444,5 +444,5 @@
     "Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l'afficher directement, cette option est utile dans ce cas précis.": "",
     "Lien de redirection": "",
     "Le lien de redirection peut contenir une URL standard, ou pointer vers l'ancre d'une page du site <em>(/page#ancre)</em> ; <em>(/?page#ancre)</em>": "",
-    "Nombre de redirection": ""
+    "Nombre de redirections": ""
 }

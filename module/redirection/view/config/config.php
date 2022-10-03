@@ -28,7 +28,7 @@
 				<h4>Statistiques</h4>
 				<?php echo template::text('redirectionConfigCount', [
 					'disabled' => true,
-					'label' => 'Nombre de redirection',
+					'label' => 'Nombre de redirections',
 					'value' => helper::filter($this->getData(['module', $this->getUrl(0), 'count']), helper::FILTER_INT)
 				]); ?>
 			</div>

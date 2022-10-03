@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Identité du site
+            <h4><?php helper::translate('Identité du site'); ?>
                 <span id="localeHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
                     <a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
                         <?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -46,7 +46,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Assignation des pages spéciales
+            <h4><?php helper::translate('Assignation des pages spéciales') ?>
                 <span id="localeHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
                     <a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
                         <?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -106,7 +106,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Etiquettes des pages spéciales
+            <h4><?php helper::translate('Étiquettes des pages spéciales'); ?>
                 <span id="labelHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
                     <a href="https://doc.zwiicms.fr/etiquettes-des-pages-speciales" target="_blank">
                         <?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -151,7 +151,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Message d'acceptation des Cookies
+            <h4><?php helper::translate('Message d\'acceptation des Cookies'); ?>
                 <span id="specialeHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
                     <a href="https://doc.zwiicms.fr/cookies" target="_blank">
                         <?php echo template::ico('help', ['margin' => 'left']); ?>
