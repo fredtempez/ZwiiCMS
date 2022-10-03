@@ -422,11 +422,11 @@ class common
 
 		// Traduction des dialogues
 		// --- A SUPPRIMER --------
-		/*
+
 		foreach (self::$dialog as $key => $value) {
-			$this->googleTranslate('fr', 'it', $key);
+			$this->googleTranslate('fr', 'en', $key);
 		}
-		*/
+
 			
 
 		// Mise à jour des données core
