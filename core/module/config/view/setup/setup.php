@@ -55,8 +55,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>
-					<?php echo helper::translate('Mise à jour automatisée'); ?>
+				<h4><?php echo helper::translate('Mise à jour automatisée'); ?>
 					<span id="updateHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>

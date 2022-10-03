@@ -22,7 +22,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>Couleurs</h4>
+			<h4><?php echo helper::translate('Couleurs'); ?></h4>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::text('themeBodyBackgroundColor', [
@@ -57,8 +57,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Image'); ?>
+			<h4><?php echo helper::translate('Image'); ?>
 			</h4>
 			<div class="row">
 				<div class="col12">

@@ -32,8 +32,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Couleurs'); ?>
+			<h4><?php echo helper::translate('Couleurs'); ?>
 			</h4>
 			<div class="row">
 				<div class="col4">
@@ -127,8 +126,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Mise en forme du texte'); ?>
+			<h4><?php echo helper::translate('Mise en forme du texte'); ?>
 			</h4>
 			<div class="row">
 				<div class="col4">

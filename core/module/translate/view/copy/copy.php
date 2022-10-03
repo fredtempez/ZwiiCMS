@@ -16,8 +16,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Sélectionnez la langue à copier vers une langue cible'); ?>
+            <h4><?php echo helper::translate('Sélectionnez la langue à copier vers une langue cible'); ?>
             </h4>
             <div class="row">
                 <div class="col6">

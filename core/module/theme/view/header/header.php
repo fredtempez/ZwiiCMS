@@ -22,8 +22,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Paramètres'); ?>
+            <h4><?php echo helper::translate('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -75,8 +74,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Couleurs'); ?>
+            <h4><?php echo helper::translate('Couleurs'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
@@ -102,8 +100,7 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Mise en forme du titre'); ?>
+            <h4><?php echo helper::translate('Mise en forme du titre'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -153,8 +150,7 @@
 <div class="row wallpaperContainer">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Papier peint'); ?>
+            <h4><?php echo helper::translate('Papier peint'); ?>
             </h4>
             <div class="row">
                 <div class="col12">

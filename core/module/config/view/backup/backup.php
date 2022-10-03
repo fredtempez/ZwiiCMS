@@ -17,8 +17,7 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Paramètres de la sauvegarde'); ?>
+			<h4><?php echo helper::translate('Paramètres de la sauvegarde'); ?>
 			</h4>
 			<div class="row">
 				<div class="col12">

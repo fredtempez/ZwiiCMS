@@ -14,8 +14,7 @@
 <div class="row">
 	<div class="col6">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Identité'); ?>
+			<h4><?php echo helper::translate('Identité'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
@@ -71,8 +70,7 @@
 	</div>
 	<div class="col6">
 		<div class="block">
-			<h4>
-				<?php echo helper::translate('Authentification'); ?>
+			<h4><?php echo helper::translate('Authentification'); ?>
 			</h4>
 			<?php echo template::text('userAddId', [
 				'autocomplete' => 'off',

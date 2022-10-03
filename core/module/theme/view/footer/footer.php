@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Paramètres</h4>
+            <h4><?php echo helper::translate('Paramètres'); ?></h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('themeFooterPosition', $module::$footerPositions, [
@@ -59,7 +59,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Couleurs</h4>
+            <h4><?php echo helper::translate('Couleurs'); ?></h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::text('themeFooterTextColor', [
@@ -83,7 +83,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Contenu</h4>
+        <?php echo helper::translate('Contenu'); ?></h4>
             <div class="row">
                 <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayCopyright', true, 'Motorisé par', [
@@ -168,8 +168,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Mise en forme du texte'); ?>
+            <h4><?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -205,8 +204,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Disposition'); ?>
+            <h4><?php echo helper::translate('Disposition'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
