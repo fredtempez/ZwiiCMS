@@ -3,11 +3,11 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Sécurité de la connexion'); ?>
-					<span id="specialeHelpButton" class="helpDisplayButton">
+					<!--<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/connexion" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
+							<?php // echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
-					</span>
+					</span>-->
 				</h4>
 
 				<div class="row">
@@ -44,7 +44,7 @@
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">
-						<label id="helpBlacklist">Liste noire :
+						<label id="helpBlacklist"><?php echo helper::translate('Liste noire'); ?>
 							<?php echo template::help(
 								'La liste noire énumère les tentatives de connexion à partir de comptes inexistants. Sont stockés : la date, l\'heure, le nom du compte et l\'IP.
 							Après le nombre de tentatives autorisées, l\'IP et le compte sont bloqués.'
@@ -92,11 +92,12 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Journalisation'); ?>
-					<span id="specialeHelpButton" class="helpDisplayButton">
+					<!--<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/journalisation" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
+							<?php // echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
 					</span>
+					-->
 				</h4>
 				<div class="row">
 					<div class="col3">

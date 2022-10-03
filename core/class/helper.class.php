@@ -29,8 +29,7 @@ class helper
 
 		//helper::googleTranslate('fr_FR', 'fr_FR', $text);
 
-		$r = array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text;
-		return $r;
+		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
 	/**

@@ -3,10 +3,10 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Paramètres'); ?>
-					<span id="setupHelpButton" class="helpDisplayButton">
+					<!--<span id="setupHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/parametres" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
-						</a>
+							<?php //echo template::ico('help', ['margin' => 'left']); ?>
+						</a>-->
 					</span>
 				</h4>
 				<div class="row">
@@ -56,11 +56,11 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Mise à jour automatisée'); ?>
-					<span id="updateHelpButton" class="helpDisplayButton">
+					<!--<span id="updateHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
-					</span>
+					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -100,11 +100,11 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Maintenance'); ?>
-					<span id="maintenanceHelpButton" class="helpDisplayButton">
+					<!--<span id="maintenanceHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
-					</span>
+					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -159,11 +159,11 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Scripts externes'); ?>
-					<span id="specialeHelpButton" class="helpDisplayButton">
+					<!--<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); ?>
 						</a>
-					</span>
+					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col4 offset1 verticalAlignBottom">

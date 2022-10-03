@@ -66,7 +66,7 @@
     "Captcha à la connexion": "Captcha in connection",
     "Captcha complexe": "Captcha complexe",
     "Option recommandée pour sécuriser la connexion. S'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.": "Recommended option to secure the connection. Applies to all the Captchas of the site. Simple Captcha is limited to an addition of numbers from 0 to 10. The complex captha uses four numbers of 0 to 20. Recommended activation.",
-    "Type de captcha": "Type de captcha",
+    "Type de captcha": "Captcha",
     "Activer la journalisation": "Activate journalization",
     "Anonymat des adresses IP": "Anonymity of IP addresses",
     "La réglementation française impose un anonymat de niveau 2": "French regulations require level 2 anonymity",
@@ -448,8 +448,11 @@
     "Nombre de redirections": "Redirection name",
     "Les modifications que vous avez apportées ne seront peut-tre pas enregistrées.": "The changes you have made may not be recorded.",
     "Il apparat dans la barre de titre et les partages sur les réseaux sociaux.": "He appears in the title bar and sharing on social networks.",
-    "Réseau": "",
-    "Étiquettes des pages spéciales": "",
-    "Identité du site": "",
-    "Message d'acceptation des Cookies": ""
+    "Réseau": "Network",
+    "Étiquettes des pages spéciales": "Labels special pages",
+    "Identité du site": "Site identity",
+    "Message d'acceptation des Cookies": "Cookie Message",
+    "Favicon thème sombre": "",
+    "Apache URL intelligent": "",
+    "Liste noire": ""
 }
