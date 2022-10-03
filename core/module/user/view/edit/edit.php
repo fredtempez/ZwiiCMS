@@ -79,7 +79,7 @@
 				<ul id="userEditGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userEditGroupDescription displayNone">
 					<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
 					<li><?php echo helper::translate('Ajout / Édition / Suppression de pages'); ?></li>
-					<li><?php echo helper::translate('Ajout / Édition / Suppression de fichiers'); ?></li>
+					<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
 				</ul>
 				<ul id="userEditGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userEditGroupDescription displayNone">
 					<li><?php echo helper::translate('Administration complète du site'); ?></li>
