@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Paramétres'); ?>
+				<h4><?php echo helper::translate('Paramètres'); ?>
 					<span id="setupHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/parametres" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -100,7 +100,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Maintenance
+				<h4><?php echo helper::translate('Maintenance'); ?>
 					<span id="maintenanceHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -159,7 +159,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Scripts externes
+				<h4><?php echo helper::translate('Scripts externes'); ?>
 					<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>

@@ -67,7 +67,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Titres
+				<h4><?php echo helper::translate('Titres'); ?>
 					<span id="infoHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/informations-generales" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -119,7 +119,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Emplacement dans le menu
+				<h4><?php echo helper::translate('Emplacement dans le menu'); ?>
 					<span id="positionHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -174,7 +174,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Options avancées
+				<h4><?php echo helper::translate('Options avancées'); ?>
 					<span id="advancedHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -220,7 +220,8 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4>Module</h4>
+				<h4><?php echo helper::translate('Module'); ?>
+				</h4>
 				<div class="row">
 					<div class="col10">
 						<?php echo template::hidden('pageEditModuleRedirect'); ?>
@@ -256,7 +257,7 @@
 		</div>
 		<div class="col6">
 			<div class="block">
-				<h4>Contenu avancé</h4>
+				<h4><?php echo helper::translate('Contenu avancé');?></h4>
 				<div class="row">
 					<div class="col6 offset3">
 						<?php echo template::button('pageEditCssEditor', [
@@ -284,7 +285,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Mise en page
+				<h4><?php echo helper::translate('Mise en page'); ?>
 					<span id="layoutHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mise-en-page-2" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
@@ -343,7 +344,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Permission et référencement
+				<h4><?php echo helper::translate('Permission et référencement');?>
 					<span id="seoHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php echo template::ico('help', ['margin' => 'left']); ?>
