@@ -108,7 +108,7 @@
 						<?php echo template::select('connectAnonymousIp', $module::$anonIP, [
 							'label' => 'Anonymat des adresses IP',
 							'selected' => $this->getData(['config', 'connect', 'anonymousIp']),
-							'help' => 'La règlementation française impose un anonymat de niveau 2'
+							'help' => 'La réglementation française impose un anonymat de niveau 2'
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">
