@@ -68,7 +68,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::select('blogAddConsent', $module::$sujetConsent  , [
-							'label' => 'Edition /  Suppression',
+							'label' => 'Edition - Suppression',
 							'selected' => $module::EDIT_ALL,
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'sujet sans restriction'
 						]); ?>

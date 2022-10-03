@@ -99,7 +99,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::select('blogEditConsent', $module::$articleConsent  , [
-							'label' => 'Edition /  Suppression',
+							'label' => 'Edition - Suppression',
 							'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? $module::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'editConsent']),
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>
