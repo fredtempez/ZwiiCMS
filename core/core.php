@@ -421,13 +421,17 @@ class common
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
 
 		// Traduction des dialogues
-		// --- A SUPPRIMER --------
+		// --- A COMMENTER --------
 
-		foreach (self::$dialog as $key => $value) {
-			$this->googleTranslate('fr', 'en', $key);
+		$l = 'pt_PT';
+		if (file_exists(self::I18N_DIR . $l . '.json')) {
+			foreach (self::$dialog as $key => $value) {
+				helper::googleTranslate('fr', $l, $key);
+			}
 		}
 
-			
+
+
 
 		// Mise à jour des données core
 		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION))) include('core/include/update.inc.php');
@@ -454,24 +458,6 @@ class common
 		}
 	}
 
-
-	/**
-	 * Fonction pour assurer la traduction des messages
-	 */
-	public function googleTranslate($from, $to, $text){
-		$arrayjson = json_decode(file_get_contents('https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=' . $to . '&q=' . rawurlencode($text)),true);
-		$response =  $arrayjson[0][0];
-		sleep(0.5);
-		// Captation
-		$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
-		if ($data  && array_key_exists($text, $data) ) {
-			if ($text !== '' ) {
-				$data = array_merge($data,[$text =>  $response] );
-				file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
-			}
-		}
-
-	}
 
 
 	/**

@@ -27,7 +27,7 @@ class helper
 	public static function translate($text)
 	{
 
-		helper::googleTranslate('fr_FR', 'fr_FR', $text);
+		//helper::googleTranslate('fr_FR', 'fr_FR', $text);
 
 		$r = array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text;
 		return $r;
@@ -57,13 +57,10 @@ class helper
 				// Créer la variable
 				$data = array_merge($data,[$text =>  '']);
 			}
-			file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE, JSON_UNESCAPED_SLASHES), LOCK_EX);
+			file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 		}
 	}
-
-
-
 
 
 	/**

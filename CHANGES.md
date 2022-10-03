@@ -266,7 +266,7 @@
         - Pied de page, sélection directe d'une page spéciale sans passer par la configuration du site.
         - Bannière, masquage de la bannière sur les écrans inférieurs à 768px.
         - Menu, affichage du titre ou d'un logo sur les écrans inférieurs à 768px.
-    - Configuration avancée / journalisation : une nouvelle option de mise en conformité avec la règlementation française qui impose de tronquer les adresses IP enregistrées dans les journaux. 4 options sont proposées : pas de troncage, troncages niveaux 1, 2 et 3.
+    - Configuration avancée / journalisation : une nouvelle option de mise en conformité avec la réglementation française qui impose de tronquer les adresses IP enregistrées dans les journaux. 4 options sont proposées : pas de troncage, troncages niveaux 1, 2 et 3.
     - Module galerie version 3.3, modification de l’initialisation du module.
     - URL intelligentes, ajout de la redirection vers le protocole HTTPS pour éviter les problèmes d'affichage de la barre d'administration.
     - Optimisation du script main.php
