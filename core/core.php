@@ -2113,7 +2113,10 @@ class common
 					// Sur une page sans module
 					or $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
 					// Sur une page avec un module invalide
-					or !class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
+					OR (
+						!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) &&
+						!class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
+					) 
 					// Sur une page d'accueil
 					or $this->getUrl(0) === ''
 				) {
