@@ -379,10 +379,10 @@ class helper {
 				$text = password_hash($text, PASSWORD_BCRYPT);
 				break;
 			case self::FILTER_STRING_LONG:
-				$text = mb_substr(filter_var($text, FILTER_SANITIZE_STRING), 0, 500000);
+				$text = mb_substr(filter_var($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS), 0, 500000);
 				break;
 			case self::FILTER_STRING_SHORT:
-				$text = mb_substr(filter_var($text, FILTER_SANITIZE_STRING), 0, 500);
+				$text = mb_substr(filter_var($text, FILTER_SANITIZE_FULL_SPECIAL_CHARS), 0, 500);
 				break;
 			case self::FILTER_TIMESTAMP:
 				$text = date('Y-m-d H:i:s', $text);
