@@ -2711,9 +2711,13 @@ class core extends common {
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
+
 		foreach($this->getData(['user']) as $userId => $userIds){
-			$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
-			if ( $this->getUser('id') &&
+			if (!is_null($this->getData(['user', $userId, 'accessUrl'])) ) {
+				$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
+			} 			
+			if ( isset($t) &&
+				$this->getUser('id') &&
 				$userId !== $this->getUser('id') &&
 				$this->getData(['user', $userId,'accessUrl']) === $this->getUrl() &&
 				array_intersect($t,self::$accessList)  &&
@@ -2725,6 +2729,7 @@ class core extends common {
 					$accessInfo['pageId'] = end($t);
 			}
 		}
+			
 		// Accès concurrent stocke la page visitée
 		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			AND $this->getUser('id') ) {
