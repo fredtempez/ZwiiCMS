@@ -333,6 +333,7 @@ class helper {
 	 * @return string
 	 */
 	public static function filter($text, $filter) {
+		$text = trim($text);
 		switch($filter) {
 			case self::FILTER_BOOLEAN:
 				$text = (bool) $text;
