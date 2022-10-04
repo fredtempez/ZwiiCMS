@@ -1324,7 +1324,8 @@ class common {
 	public function showSection() {
 		echo '<section>';
 		// Récupérer la config de la page courante
-		$blocks = explode('-',$this->getData(['page',$this->getUrl(0),'block']));
+		$blocks = is_null($this->getData(['page',$this->getUrl(0),'block'])) ? '12' : $this->getData(['page',$this->getUrl(0),'block']);
+		$blocks = explode('-', $blocks);
 		// Initialiser
 		$blockleft=$blockright="";
 		switch (sizeof($blocks)) {
