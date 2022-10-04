@@ -2946,12 +2946,15 @@ class core extends common
 				// Check l'existence de l'action
 				$action = '';
 				$ignore = true;
-				foreach (explode('-', $this->getUrl(1)) as $actionPart) {
-					if ($ignore) {
-						$action .= $actionPart;
-						$ignore = false;
-					} else {
-						$action .= ucfirst($actionPart);
+				if (!is_null($this->getUrl(1))) {
+					foreach(explode('-', $this->getUrl(1)) as $actionPart) {
+						if($ignore) {
+							$action .= $actionPart;
+							$ignore = false;
+						}
+						else {
+							$action .= ucfirst($actionPart);
+						}
 					}
 				}
 				$action = array_key_exists($action, $module::$actions) ? $action : 'index';
