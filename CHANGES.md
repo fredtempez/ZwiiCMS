@@ -2,7 +2,7 @@
 
 ## Version 11.5.08
 ### Corrections : 
-- Bug divers et dépréciation PHP 8.1
+- Bugs divers et dépréciation PHP 8.1
 
 ## Version 11.5.07
 ### Correction :
