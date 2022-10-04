@@ -60,7 +60,7 @@
 			</ul>
 			<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
 				<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-				<li><?php echo helper::translate('Ajout / Édition / Suppression de pages'); ?></li>
+				<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
 				<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
 			</ul>
 			<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
