@@ -46,7 +46,7 @@
 			]); ?>
 		</div>
 	</div>
-</div>		
+</div>
 <ul class="accordion" data-speed="150">
 	<li class="accordion-item">
 		<h3 class="accordion-title">

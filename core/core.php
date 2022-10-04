@@ -329,7 +329,6 @@ class common
 
 
 		// Installation fraîche, initialisation des modules manquants
-		// La langue d'installation par défaut est fr
 		foreach ($this->dataFiles as $stageId => $item) {
 			$folder = $this->dataPath($stageId, self::$i18nContent);
 			if (

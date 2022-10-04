@@ -55,7 +55,10 @@ class install extends common
 		else {
 			// Soumission du formulaire
 			if ($this->isPost()) {
+				// Langue de l'UI
 				self::$i18nUI = $this->getInput('installLanguage');
+				// Par défaut la langue du contenu est celle du site
+				self::$i18nContent = self::$i18nUI;
 				$this->setData(['config', 'i18n', 'interface', self::$i18nUI]);
 				// Valeurs en sortie
 				$this->addOutput([
@@ -150,19 +153,19 @@ class install extends common
 					// Nettoyer les cookies de langue d'une précédente installation
 					helper::deleteCookie('ZWII_CONTENT');
 
-					// Créer le contenu dans la langue sélectionnée
-					self::$i18nContent = substr(self::$i18nUI, 0, 2);
 
 					// Effacer le dossier de contenu fr créé par défaut si la langue est différente.
 
-					if (
+					/*if (
 						self::$i18nContent !== 'fr_FR'
 						&& is_dir('site/data/fr')
 					) {
 						$this->removeDir('site/data/fr');
-					}
+					}*/
 
 					// Installation du site de test
+					var_dump($this->getInput('installDefaultData', helper::FILTER_BOOLEAN));
+					die();
 					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === FALSE) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
