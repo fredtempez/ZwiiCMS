@@ -27,7 +27,7 @@ class helper
 	public static function translate($text)
 	{
 
-		//helper::googleTranslate('fr_FR', 'fr_FR', $text);
+		helper::googleTranslate('fr_FR', 'fr_FR', $text);
 
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
