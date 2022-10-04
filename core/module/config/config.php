@@ -693,9 +693,9 @@ class config extends common
 			$d = $this->getData(['blacklist']);
 			$data = '';
 			foreach ($d as $key => $item) {
-				$data .= mb_detect_encoding(strftime('%d/%m/%y', $item['lastFail']), 'UTF-8', true)
-					? strftime('%d/%m/%y', $item['lastFail']) . ';' . utf8_encode(strftime('%R', $item['lastFail'])) . ';'
-					: utf8_encode(strftime('%d/%m/%y', $item['lastFail'])) . ';' . utf8_encode(strftime('%R', $item['lastFail'])) . ';';
+				$data .= mb_detect_encoding(PHP81_BC\strftime('%d/%m/%y', $item['lastFail']), 'UTF-8', true)
+					? PHP81_BC\strftime('%d/%m/%y', $item['lastFail']) . ';' . utf8_encode(PHP81_BC\strftime('%R', $item['lastFail'])) . ';'
+					: utf8_encode(PHP81_BC\strftime('%d/%m/%y', $item['lastFail'])) . ';' . utf8_encode(PHP81_BC\strftime('%R', $item['lastFail'])) . ';';
 				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
 			}
 			file_put_contents($fileName, $data, FILE_APPEND);

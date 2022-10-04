@@ -14,12 +14,12 @@
 		<!-- bloc signature et date -->
 		<?php echo $module::$sujetSignature . ' - ';?>
 		<?php echo template::ico('calendar-empty'); ?>
-		<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
-						? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
-						: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
-				$heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
-						? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
-						:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
+		<?php $date = mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
+						? PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
+						: utf8_encode(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
+				$heure =  mb_detect_encoding(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
+						? PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))
+						:  utf8_encode(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])));
 				echo $date . ' à ' . $heure;
 		?>
 		<!-- Bloc edition -->
@@ -151,9 +151,9 @@
 		<?php foreach($module::$comments as $commentId => $comment): ?>
 			<div class="block">
 				<h4><?php echo $module::$commentsSignature[$commentId]; ?>
-				le <?php  echo mb_detect_encoding(strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
-										? strftime('%d %B %Y - %H:%M', $comment['createdOn'])
-										: utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn']));
+				le <?php  echo mb_detect_encoding(PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
+										? PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn'])
+										: utf8_encode(PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn']));
 				?>
 				</h4>
 				<?php echo $comment['content']; ?>

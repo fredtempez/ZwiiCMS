@@ -31,12 +31,12 @@
 						<?php echo $module->signature($this->getData(['module', $this->getUrl(0),  'posts', $sujetId, 'userId']));?>
 						<?php echo ' - ';?>
 						<?php echo template::ico('calendar-empty'); ?>
-						<?php $date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])), 'UTF-8', true)
-										? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn']))
-										: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])));
-								$heure =  mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])), 'UTF-8', true)
-										? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn']))
-										:  utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])));
+						<?php $date = mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])), 'UTF-8', true)
+										? PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn']))
+										: utf8_encode(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])));
+								$heure =  mb_detect_encoding(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])), 'UTF-8', true)
+										? PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn']))
+										:  utf8_encode(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetId, 'publishedOn'])));
 								echo $date . ' à ' . $heure;
 						?>
 						<!-- Bloc edition -->
@@ -125,9 +125,9 @@
 						</div>
 						<div class="blogDate">
 							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo mb_detect_encoding(strftime('%d %B %Y - %H:%M',  $sujet['publishedOn']), 'UTF-8', true)
-										? strftime('%d %B %Y', $sujet['publishedOn'])
-										: utf8_encode(strftime('%d %B %Y', $sujet['publishedOn']));  ?>
+							<?php echo mb_detect_encoding(PHP81_BC\strftime('%d %B %Y - %H:%M',  $sujet['publishedOn']), 'UTF-8', true)
+										? PHP81_BC\strftime('%d %B %Y', $sujet['publishedOn'])
+										: utf8_encode(PHP81_BC\strftime('%d %B %Y', $sujet['publishedOn']));  ?>
 						</div>
 						<p class="blogContent">
 								<?php $lenght =  $this->getData(['module',$this->getUrl(0), 'config', 'sujetsLenght']) !== 0 ?  $this->getData(['module',$this->getUrl(0), 'config', 'sujetsLenght']) : 500 ?>

@@ -24,7 +24,8 @@
 
 ## Version 11.5.08
 ### Corrections : 
-- Bugs divers et dépréciation PHP 8.1
+- Bugs divers et dépréciations PHP 8.1
+- Ajout d'une classe spécifique PHP81_BC\strftime suite à sa dépréciation.
 
 ## Version 11.5.07
 ### Correction :

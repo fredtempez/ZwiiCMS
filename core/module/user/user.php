@@ -495,9 +495,9 @@ class user extends common
 			}
 		}
 		// Journalisation
-		$dataLog = mb_detect_encoding(strftime('%d/%m/%y', time()), 'UTF-8', true)
-			? strftime('%d/%m/%y', time()) . ';' . strftime('%R', time()) . ';'
-			: utf8_encode(strftime('%d/%m/%y', time())) . ';' . utf8_encode(strftime('%R', time())) . ';';
+		$dataLog = mb_detect_encoding(PHP81_BC\strftime('%d/%m/%y', time()), 'UTF-8', true)
+			? PHP81_BC\strftime('%d/%m/%y', time()) . ';' . PHP81_BC\strftime('%R', time()) . ';'
+			: utf8_encode(PHP81_BC\strftime('%d/%m/%y', time())) . ';' . utf8_encode(PHP81_BC\strftime('%R', time())) . ';';
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= $this->getInput('userLoginId', helper::FILTER_ID) . ';';
 		$dataLog .= $this->getUrl() . ';';

@@ -301,9 +301,9 @@ class forum extends common {
 				]);
 			}
 			self::$comments[] = [
-				mb_detect_encoding(strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
-				? strftime('%d %B %Y - %H:%M', $comment['createdOn'])
-				: utf8_encode(strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
+				mb_detect_encoding(PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
+				? PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn'])
+				: utf8_encode(PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				$buttonApproval,
@@ -463,12 +463,12 @@ class forum extends common {
 				$approved = count($this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i],'comment']));
 			}
 			// Met en forme le tableau
-			$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
-				: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
-			$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
-			? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
-			: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
+			$date = mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
+				: utf8_encode(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
+			$heure =   mb_detect_encoding(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
+			? PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
+			: utf8_encode(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
 			self::$sujets[] = [
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $sujetIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'title']) .
@@ -564,12 +564,12 @@ class forum extends common {
 					$approved = count($this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i],'comment']));
 				}
 				// Met en forme le tableau
-				$date = mb_detect_encoding(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
-					? strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
-					: utf8_encode(strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
-				$heure =   mb_detect_encoding(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
-				: utf8_encode(strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
+				$date = mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
+					? PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
+					: utf8_encode(PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
+				$heure =   mb_detect_encoding(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])), 'UTF-8', true)
+				? PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn']))
+				: utf8_encode(PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $sujetIds[$i], 'publishedOn'])));
 				self::$sujets[] = [
 					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $sujetIds[$i] . '" target="_blank" >' .
 					$this->getData(['module', $this->getUrl(0),  'posts', $sujetIds[$i], 'title']) .
