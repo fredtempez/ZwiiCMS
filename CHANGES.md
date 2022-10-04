@@ -22,6 +22,9 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
 
+## Version 11.5.08
+### Corrections : 
+- Bugs divers et dépréciation PHP 8.1
 
 ## Version 11.5.07
 ### Correction :
