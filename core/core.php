@@ -2846,7 +2846,9 @@ class core extends common
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
 		foreach ($this->getData(['user']) as $userId => $userIds) {
-			$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
+			if (!is_null($this->getData(['user', $userId, 'accessUrl'])) ) {
+				$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
+			}
 			if (
 				$this->getUser('id') &&
 				$userId !== $this->getUser('id') &&
