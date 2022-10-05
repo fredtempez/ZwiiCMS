@@ -367,6 +367,7 @@ class gallery extends common {
 				// définir une vignette par défaut
 				$directory = $this->getInput('galleryConfigDirectory', helper::FILTER_STRING_SHORT, true);
 				$iterator = new DirectoryIterator($directory);
+				$homePicture = '';
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
 						// Créer la miniature si manquante
@@ -422,6 +423,7 @@ class gallery extends common {
 				// définir une vignette par défaut
 				$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
 				$iterator = new DirectoryIterator($directory);
+				$homePicture = '';
 				foreach($iterator as $fileInfos) {
 					if($fileInfos->isDot() === false AND $fileInfos->isFile() AND @getimagesize($fileInfos->getPathname())) {
 						// Créer la miniature si manquante
