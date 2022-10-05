@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 11.5.09
+### Corrections : 
+- Problème de génération de l'exemple du site.
+- Dépréciations de fonctions PHP 8.1
+
 ## Version 11.5.08
 ### Corrections : 
 - Bugs divers et dépréciations PHP 8.1

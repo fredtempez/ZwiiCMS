@@ -45,7 +45,7 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<?php echo template::checkbox('installDefaultData',true , 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [
+			<?php echo template::checkbox('installDefaultData', true, 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [
 				'checked' => false
 			]);
 			?>
