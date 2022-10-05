@@ -777,8 +777,8 @@ class common
 				}
 			}
 		}
-		// Sinon retourne null
-		return null;
+		// Sinon retourne une chaine vide
+		return helper::filter(null, $filter);
 	}
 
 	/**
