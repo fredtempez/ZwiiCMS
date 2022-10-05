@@ -16,12 +16,10 @@ class theme extends gallery {
             'legendTextColor'   => 'rgba(255, 255, 255, 1)',
             'legendBgColor'     => 'rgba(0, 0, 0, .6)'
     ];
-    public static $defaultConfig = [
+    public static $defaultData = [
             "showUniqueGallery" => false,
             "backPosition"      => "top",
-            "backAlign"         => "center"
-    ];
-    public static $defaultData = [
-            'versionData'      => '3.0'
+            "backAlign"         => "center",
+            'versionData'       => '3.0'
     ];
 }

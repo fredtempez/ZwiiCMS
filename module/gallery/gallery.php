@@ -254,6 +254,7 @@ class gallery extends common {
 			$content = str_replace('#legendHeight#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendHeight']),$content );
 			$content = str_replace('#legendTextColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendTextColor']),$content );
 			$content = str_replace('#legendBgColor#',$this->getData(['module',  $this->getUrl(0), 'theme', 'legendBgColor']),$content );
+
 			// Ecriture de la feuille de style
 			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $content . $themeCss);
 			// Nom de la feuille de style
@@ -261,9 +262,12 @@ class gallery extends common {
 		}
 
 		// Check la présence de la config
-		if ( $this->getData(['module',  $this->getUrl(0), 'config']) === null ) {
-			require_once('module/gallery/ressource/defaultdata.php');
-			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultData]);
+		require_once('module/gallery/ressource/defaultdata.php');
+		if (   is_null($this->getData(['module',  $this->getUrl(0), 'config', 'showUniqueGallery']))
+			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backPosition']))
+			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backAlign']))
+		) {
+			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultConfig]);
 		}
 
 		// Contenu vide de la galerie
