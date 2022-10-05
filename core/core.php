@@ -777,7 +777,7 @@ class common
 				}
 			}
 		}
-		// Sinon retourne une chaine vide
+		//Sinon retourne null
 		return helper::filter(null, $filter);
 	}
 
