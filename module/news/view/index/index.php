@@ -14,9 +14,9 @@
 				</div>
 				<div class="newsSignature">
 					<?php echo template::ico('calendar-empty'); ?>
-					<?php echo mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $news['publishedOn']), 'UTF-8', true)
-								? PHP81_BC\strftime('%d %B %Y', $news['publishedOn'])
-								: utf8_encode(PHP81_BC\strftime('%d %B %Y', $news['publishedOn'])); ?>
+					<?php echo mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $news['publishedOn']), 'UTF-8', true)
+								? \PHP81_BC\strftime('%d %B %Y', $news['publishedOn'])
+								: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $news['publishedOn'])); ?>
 							- <?php echo $news['userId']; ?>
 							<!-- Bloc edition -->
 							<?php if (
