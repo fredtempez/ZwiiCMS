@@ -124,12 +124,9 @@ class blog extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
-		// Eviter valeur null
-		if (is_null($this->getData(['module', $this->getUrl(0), 'config', 'versionData'])) ){
-			return;
-		}
 		// Initialisation
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '0.0', '<') ) {
+		if (is_null($this->getData(['module', $this->getUrl(0), 'config', 'versionData'])) ||
+			version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '0.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'feeds', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'feedsLabel', 'Flux RSS']);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','4.0']);
