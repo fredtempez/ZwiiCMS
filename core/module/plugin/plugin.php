@@ -369,9 +369,9 @@ class plugin extends common
 					$store[$key]['category'],
 					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >' . $store[$key]['title'] . '</a>',
 					$store[$key]['version'],
-					mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)
-						? PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate'])
-						: utf8_encode(PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate'])),
+					mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate']), 'UTF-8', true)
+						? \PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate'])
+						: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $store[$key]['versionDate'])),
 					implode(', ', array_keys($pagesInfos, $key)),
 					template::button('moduleExport' . $key, [
 						'class' => $class,
@@ -397,9 +397,9 @@ class plugin extends common
 	{
 		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
 		self::$storeItem = $store[$this->getUrl(2)];
-		self::$storeItem['fileDate'] = mb_detect_encoding(PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate']), 'UTF-8', true)
-			? PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate'])
-			: utf8_encode(PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate']));
+		self::$storeItem['fileDate'] = mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate']), 'UTF-8', true)
+			? \PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate'])
+			: utf8_encode(\PHP81_BC\strftime('%d %B %Y', self::$storeItem['fileDate']));
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Module ' . self::$storeItem['title']),
