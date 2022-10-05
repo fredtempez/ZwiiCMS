@@ -109,7 +109,8 @@ class blog extends common {
 	 */
 	private function update() {
 		// Version 5.0
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '5.0', '<') ) {
+		if (is_null($this->getData(['module', $this->getUrl(0), 'config', 'versionData'])) ||
+			version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '5.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'itemsperPage', 6]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData','5.0']);
 		}
