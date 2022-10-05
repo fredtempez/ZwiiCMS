@@ -224,7 +224,6 @@ class gallery extends common {
 		if ( $this->getData(['module',  $this->getUrl(0), 'theme']) === null ) {
 			require_once('module/gallery/ressource/defaultdata.php');
 			$this->setData(['module',  $this->getUrl(0), 'theme', theme::$defaultTheme]);
-			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultConfig]);
 			// Nom de la feuille de style
 			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
@@ -267,7 +266,7 @@ class gallery extends common {
 			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backPosition']))
 			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backAlign']))
 		) {
-			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultConfig]);
+			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultData]);
 		}
 
 		// Contenu vide de la galerie
