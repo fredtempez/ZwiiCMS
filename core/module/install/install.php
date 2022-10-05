@@ -105,6 +105,7 @@ class install extends common
 		else {
 			// Soumission du formulaire
 			if ($this->isPost()) {
+
 				$success = true;
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -164,8 +165,7 @@ class install extends common
 					}*/
 
 					// Installation du site de test
-					var_dump($this->getInput('installDefaultData', helper::FILTER_BOOLEAN));
-					die();
+
 					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === FALSE) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
