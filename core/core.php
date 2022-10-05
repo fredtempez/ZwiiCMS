@@ -747,7 +747,7 @@ class common
 			}
 		}
 		// Sinon retourne null
-		return null;
+		return helper::filter(null, $filter);
 	}
 
 	/**
