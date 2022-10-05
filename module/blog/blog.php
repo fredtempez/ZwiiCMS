@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '6.1';
+	const VERSION = '6.2';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -124,6 +124,10 @@ class blog extends common {
 	 * Appelée par les fonctions index et config
 	 */
 	private function update() {
+		// Eviter valeur null
+		if (is_null($this->getData(['module', $this->getUrl(0), 'config', 'versionData'])) ){
+			return;
+		}
 		// Initialisation
 		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '0.0', '<') ) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'feeds', true]);
