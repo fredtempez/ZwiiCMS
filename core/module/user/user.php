@@ -491,7 +491,7 @@ class user extends common {
 				? PHP81_BC\strftime('%d/%m/%y',time()) . ';' . PHP81_BC\strftime('%R',time()) . ';'
 				: utf8_encode(PHP81_BC\strftime('%d/%m/%y',time())) . ';' . utf8_encode(PHP81_BC\strftime('%R',time())) . ';' ;
 		$dataLog .= helper::getIp($this->getData(['config','connect','anonymousIp'])) . ';';
-		$dataLog .= $this->getInput('userLoginId', helper::FILTER_ID) . ';' ;
+		$dataLog .= is_null($this->getInput('userLoginId')) ? ';' : $this->getInput('userLoginId', helper::FILTER_ID)  . ';' ;
 		$dataLog .= $this->getUrl() .';' ;
 		$dataLog .= $logStatus ;
 		$dataLog .= PHP_EOL;
