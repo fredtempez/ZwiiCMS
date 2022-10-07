@@ -15,7 +15,7 @@
 
 class blog extends common {
 
-	const VERSION = '6.2';
+	const VERSION = '6.21';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -96,11 +96,11 @@ class blog extends common {
 	];
 
 	public static $articlesLenght = [
-		0 => 'Intégralité des articles,  disposition moderne',
-		200 => '200 signes',
-		400 => '400 signes',
-		600 => '600 signes',
-		800 => '800 signes'
+		0 => 'Article complet en pleine page',
+		200 => 'En tableau, 200 signes',
+		400 => 'En tableau, 400 signes',
+		600 => 'En tableau, 600 signes',
+		800 => 'En tableau, 800 signes'
 	];
 
 	// Permissions d'un article

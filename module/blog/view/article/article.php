@@ -12,7 +12,8 @@
 <div class="row verticalAlignMiddle">
 	<div class="col12 blogDate">
 		<!-- bloc signature et date -->
-		<?php echo $module::$articleSignature . ' - ';?>
+		<?php echo template::ico('user'); ?>
+		<?php echo $module::$articleSignature;?>
 		<?php echo template::ico('calendar-empty'); ?>
 		<?php $date = mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])), 'UTF-8', true)
 						? \PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']))

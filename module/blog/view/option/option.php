@@ -14,11 +14,11 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Disposition de la liste des articles</h4>
+				<h4>Index des articles</h4>
 				<div class="row">
 					<div class="col6">
 					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
-							'label' => 'Longueur des articles',
+							'label' => 'Disposition',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
 						]); ?>
 					</div>
