@@ -2033,7 +2033,13 @@ class common
 	{
 		echo '<title>' . $this->output['metaTitle'] . '</title>';
 		echo '<meta property="og:title" content="' . $this->output['metaTitle'] . '" />';
-		echo '<link rel="canonical" href="' . helper::baseUrl(true) . $this->getUrl() . '" />';
+		if (
+			$this->getData(['locale', 'homePageId']) === $this->getUrl(0)
+		) {
+			echo '<link rel="canonical" href="' . helper::baseUrl(false) . '" />';
+		} else {
+			echo '<link rel="canonical" href="' . helper::baseUrl(true) . $this->getUrl() . '" />';
+		}
 	}
 
 	/**
