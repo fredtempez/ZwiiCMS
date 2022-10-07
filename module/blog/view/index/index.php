@@ -13,7 +13,7 @@
 								$this->makeThumb(  self::FILE_DIR . 'source/' . $article['picture'],
 												self::FILE_DIR . 'thumb/' . $thumb,
 												self::THUMBS_WIDTH);
-							}	
+							}
 						?>
 						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
 							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $article['picture']; ?>">
@@ -36,9 +36,16 @@
 						</div>
 						<div class="blogDate">
 							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y - %H:%M',  $article['publishedOn']), 'UTF-8', true)
-										? \PHP81_BC\strftime('%d %B %Y', $article['publishedOn'])
-										: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $article['publishedOn']));  ?>
+							<?php
+								// Date et heure
+								echo mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $article['publishedOn']), 'UTF-8', true)
+											? \PHP81_BC\strftime('%d %B %Y', $article['publishedOn'])
+											: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $article['publishedOn']));
+								echo ' - ';
+								echo mb_detect_encoding(\PHP81_BC\strftime('%H:%M',$article['publishedOn']), 'UTF-8', true)
+											? \PHP81_BC\strftime('%H:%M', $article['publishedOn'])
+											: utf8_encode(\PHP81_BC\strftime('%H:%M', $article['publishedOn']));
+							?>
 						</div>
 						<p class="blogContent">
 							<?php echo helper::subword(strip_tags($article['content'],'<br><p>'), 0, 400); ?>...
