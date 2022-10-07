@@ -307,10 +307,16 @@ class blog extends common {
 					'value' => $comment['approval'] === true ? 'A' : 'R'
 				]);
 			}
+			//Date et heure
+			$gdh = mb_detect_encoding(\PHP81_BC\strftime('%d/%m/%y', $comment['createdOn']), 'UTF-8', true)
+						? \PHP81_BC\strftime('%d/%m/%y', $comment['createdOn'])
+						: utf8_encode(\PHP81_BC\strftime('%d/%m/%y', $comment['createdOn']));
+			$gdh .= ' - ';
+			$gdh .=	mb_detect_encoding(\PHP81_BC\strftime('%H:%M', $comment['createdOn']), 'UTF-8', true)
+						? \PHP81_BC\strftime('%H:%M', $comment['createdOn'])
+						: utf8_encode(\PHP81_BC\strftime('%H:%M', $comment['createdOn']));
 			self::$comments[] = [
-				mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn']), 'UTF-8', true)
-				? \PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn'])
-				: utf8_encode(\PHP81_BC\strftime('%d %B %Y - %H:%M', $comment['createdOn'])),
+				$gdh,
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				$buttonApproval,
@@ -471,11 +477,11 @@ class blog extends common {
 			}
 			// Met en forme le tableau
 			$date = mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-				? \PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
-				: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+					? \PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+					: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
 			$heure =   mb_detect_encoding(\PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])), 'UTF-8', true)
-			? \PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
-			: utf8_encode(\PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
+					? \PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']))
+					: utf8_encode(\PHP81_BC\strftime('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])));
 			self::$articles[] = [
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'title']) .
