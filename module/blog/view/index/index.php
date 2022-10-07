@@ -29,7 +29,6 @@
 					<div class="col6 blogDate">
 						<!-- bloc signature et date -->
 						<?php echo $module->signature($this->getData(['module', $this->getUrl(0),  'posts', $articleId, 'userId']));?>
-						<?php echo ' - ';?>
 						<?php echo template::ico('calendar-empty'); ?>
 						<?php $date = mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])), 'UTF-8', true)
 										? \PHP81_BC\strftime('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']))
