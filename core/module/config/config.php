@@ -505,6 +505,9 @@ class config extends common
 						'captchaType' => $this->getInput('connectCaptchaType'),
 						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
 						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN)
+					],
+					'i18n' => [
+						'interface' => $this->getData(['config', 'i18n', 'interface'])
 					]
 				]
 			]);

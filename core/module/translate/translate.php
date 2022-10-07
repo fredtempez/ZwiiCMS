@@ -293,6 +293,9 @@ class translate extends common
 				file_put_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
 			}
 
+			// Sauvegarde la langue de l'UI
+			$this->setData(['config', 'i18n', 'interface', $this->getInput('translateUI', null)]);
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
