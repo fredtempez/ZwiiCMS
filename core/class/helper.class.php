@@ -33,6 +33,18 @@ class helper
 	}
 
 	/**
+	 * Formate la date avec le script strftime en UTF8
+	 * Date au format time()
+	 * $format strftime
+	 */
+	public static function dateUTF8($format, $date)
+	{
+		return mb_detect_encoding(\PHP81_BC\strftime($format, $date), 'UTF-8', true)
+						? \PHP81_BC\strftime($format, $date)
+						: utf8_encode(\PHP81_BC\strftime($format, $date));
+	}
+
+	/**
 	 * Fonction pour assurer la traduction des messages
 	 */
 	public static function googleTranslate($from, $to, $text){

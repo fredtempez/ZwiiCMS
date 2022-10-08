@@ -1,3 +1,7 @@
+# version 6.22
+- mise en oeuvre du helper dateUTF8
+# version 6.2
+- date des commentaires
 # version 6.1
 - Icône RSS, lien incorrectd ans l'article.
 # version 6
