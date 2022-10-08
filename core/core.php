@@ -350,6 +350,7 @@ class common
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
 			self::$i18nUI = 'fr_FR';
 		}
+		\setlocale(LC_TIME,  self::$i18nUI . '.UTF-8');
 
 		// Utilisateur connecté
 		if ($this->user === []) {
