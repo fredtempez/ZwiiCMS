@@ -275,9 +275,10 @@ class common
 		// Déterminer la langue sélectionnée pour le chargement des fichiers de données
 		if (isset($this->input['_COOKIE']['ZWII_I18N_SITE'])) {
 			self::$i18n = $this->input['_COOKIE']['ZWII_I18N_SITE'];
-			setlocale(LC_TIME, self::$i18n . '_' . strtoupper(self::$i18n));
+			\setlocale(LC_TIME, self::$i18n . '_' . strtoupper(self::$i18n) . '.UTF-8');
 		} else {
 			self::$i18n = 'fr';
+			\setlocale(LC_TIME, 'fr_FR.UTF-8');
 		}
 
 		// Instanciation de la classe des entrées / sorties
