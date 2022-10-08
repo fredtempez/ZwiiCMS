@@ -310,10 +310,11 @@ class common
 		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
 			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
-			setlocale(LC_TIME, self::$i18nContent . '_' . strtoupper(self::$i18nContent));
+			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		} else {
 			// Absence du cookie, la langue par défaut est celle de l'interface.
 			self::$i18nContent = (isset(self::$i18nUI)) ? self::$i18nUI : 'fr_FR';
+			\setlocale(LC_TIME, self::$i18nUI . '.UTF8');
 		}
 
 		// Instanciation de la classe des entrées / sorties
