@@ -472,7 +472,7 @@ class blog extends common {
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'title']) .
 				'</a>',
-				helper::dateUTF8('%d %B %Y',$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])) . ' à ' . helper::dateUTF8('%H:%M',$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])),
+				helper::dateUTF8('%d %B %Y',$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M',$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])),
 				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [
@@ -567,7 +567,7 @@ class blog extends common {
 					'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 					$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'title']) .
 					'</a>',
-					helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])) . ' à ' . helper::dateUTF8('%H:%M', $$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])),
+					helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $$this->getData(['module', $this->getUrl(0),  'posts', $articleIds[$i], 'publishedOn'])),
 					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 					// Bouton pour afficher les commentaires de l'article
 					template::button('blogConfigComment' . $articleIds[$i], [
