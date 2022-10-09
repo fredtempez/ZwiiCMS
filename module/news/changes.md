@@ -1,3 +1,5 @@
+# Version 4.21
+    - Prise en compte de la classe strftime et du helper dateUTF8
 # Version 4.2
     - Config : le nombre d'objet est fixe, constante dans news.php
     - Ecran layout réservé à la configuration et au thème
