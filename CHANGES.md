@@ -1,12 +1,16 @@
 # Changelog
 
+## Version 11.5.10
+### Correction :
+- Dysfonctionnement de la classe strftime, setlocale mal défini.
+
 ## Version 11.5.09
-### Corrections : 
+### Corrections :
 - Problème de génération de l'exemple du site.
 - Dépréciations de fonctions PHP 8.1
 
 ## Version 11.5.08
-### Corrections : 
+### Corrections :
 - Bugs divers et dépréciations PHP 8.1
 - Ajout d'une classe spécifique strftime suite à sa dépréciation.
 
