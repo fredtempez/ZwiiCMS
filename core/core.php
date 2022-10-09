@@ -1024,7 +1024,7 @@ class common
 			case 'gif':
 				$source_image = imagecreatefromgif($src);
 				break;
-			case 'webp' :
+			case 'webp':
 				$source_image = imagecreatefromwebp($src);
 				break;
 		}
@@ -1049,7 +1049,7 @@ class common
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
 					break;
-				case 'webp' :
+				case 'webp':
 					$source_image = imagecreatefromwebp($src);
 					break;
 			}
@@ -1260,7 +1260,7 @@ class common
 			) {
 				$item .= '<form method="POST" action="' . helper::baseUrl(false) . '" id="cookieForm">';
 			} else {
-				$item .= '<form method="POST" action="' . helper::baseUrl(true) . $this->getUrl(). '" id="cookieForm">';
+				$item .= '<form method="POST" action="' . helper::baseUrl(true) . $this->getUrl() . '" id="cookieForm">';
 			}
 			$item .= '<br><br>';
 			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
@@ -1283,7 +1283,7 @@ class common
 	{
 		echo '<section>';
 		// Récupérer la config de la page courante
-		$blocks = is_null($this->getData(['page',$this->getUrl(0),'block'])) ? '12' : $this->getData(['page',$this->getUrl(0),'block']);
+		$blocks = is_null($this->getData(['page', $this->getUrl(0), 'block'])) ? '12' : $this->getData(['page', $this->getUrl(0), 'block']);
 		$blocks = explode('-', $blocks);
 		// Initialiser
 		$blockleft = '';
@@ -2126,10 +2126,9 @@ class common
 					// Sur une page sans module
 					or $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
 					// Sur une page avec un module invalide
-					OR (
-						!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) &&
+					or (!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) &&
 						!class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
-					) 
+					)
 					// Sur une page d'accueil
 					or $this->getUrl(0) === ''
 				) {
@@ -2783,9 +2782,7 @@ class core extends common
 			exit();
 		}
 		// Journalisation
-		$dataLog = mb_detect_encoding(\PHP81_BC\strftime('%d/%m/%y', time()), 'UTF-8', true)
-			? \PHP81_BC\strftime('%d/%m/%y', time()) . ';' . \PHP81_BC\strftime('%R', time()) . ';'
-			: utf8_encode(\PHP81_BC\strftime('%d/%m/%y', time())) . ';' . utf8_encode(\PHP81_BC\strftime('%R', time())) . ';';
+		$dataLog =  helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
 		$dataLog .= $this->getUrl();
@@ -2863,8 +2860,8 @@ class core extends common
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
 		foreach ($this->getData(['user']) as $userId => $userIds) {
-			if (!is_null($this->getData(['user', $userId, 'accessUrl'])) ) {
-				$t = explode('/',$this->getData(['user', $userId, 'accessUrl']));
+			if (!is_null($this->getData(['user', $userId, 'accessUrl']))) {
+				$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
 			}
 			if (
 				$this->getUser('id') &&
@@ -2964,12 +2961,11 @@ class core extends common
 				$action = '';
 				$ignore = true;
 				if (!is_null($this->getUrl(1))) {
-					foreach(explode('-', $this->getUrl(1)) as $actionPart) {
-						if($ignore) {
+					foreach (explode('-', $this->getUrl(1)) as $actionPart) {
+						if ($ignore) {
 							$action .= $actionPart;
 							$ignore = false;
-						}
-						else {
+						} else {
 							$action .= ucfirst($actionPart);
 						}
 					}

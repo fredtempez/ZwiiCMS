@@ -12,6 +12,5 @@ class autoload {
         require_once 'core/class/phpmailer/SMTP.class.php';
         require_once 'core/class/jsondb/Dot.class.php';
         require_once 'core/class/jsondb/JsonDb.class.php';
-        require_once 'core/class/strftime/php-8.1-strftime.class.php';
     }
 }
