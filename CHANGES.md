@@ -22,6 +22,10 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
 
+## Version 11.5.10
+### Correction :
+- Dysfonctionnement de la classe strftime, setlocale mal défini.
+
 ## Version 11.5.09
 ### Corrections : 
 - Problème de génération de l'exemple du site.
