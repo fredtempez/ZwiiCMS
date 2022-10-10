@@ -1,5 +1,5 @@
 <?php
-class init extends search {
+class init extends news {
     public static $defaultData = [
         'feeds'              => false,
         'feedsLabel'         => '',
