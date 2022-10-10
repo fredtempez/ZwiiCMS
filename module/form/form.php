@@ -28,7 +28,9 @@ class form extends common {
 		'deleteall' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'export2csv' => self::GROUP_MODERATOR,
-		'output2csv' => self::GROUP_MODERATOR
+		'output2csv' => self::GROUP_MODERATOR,
+		'init'  => self::GROUP_MODERATOR,
+		'update'  => self::GROUP_MODERATOR,
 	];
 
 	public static $data = [];
@@ -104,6 +106,10 @@ class form extends common {
 	 * Configuration
 	 */
 	public function config() {
+
+		// Mise à jour des données de module
+		$this->update();
+
 		// Liste des utilisateurs
 		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
@@ -375,6 +381,10 @@ class form extends common {
 	 * Accueil
 	 */
 	public function index() {
+
+		// Mise à jour des données de module
+		$this->update();
+
 		// Soumission du formulaire
 		if($this->isPost()) {
 			// Check la captcha
@@ -491,4 +501,28 @@ class form extends common {
 			],
 		]);
 	}
+
+	/**
+	 * Mise à jour du module
+	 * Appelée par les fonctions index et config
+	 */
+	private function update() {
+
+		// le module n'est pas initialisé
+		if ( $this->getData(['module',$this->getUrl(0), 'config']) === NULL ) {
+			$this->init();
+		}
+	}
+
+		/**
+	 * Initialisation du thème d'un nouveau module
+	 */
+	private function init() {
+		// Données du module absentes
+		require_once('module/form/ressource/defaultdata.php');
+		if ($this->getData(['module', $this->getUrl(0), 'config' ]) === null) {
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
+		}
+	}
+
 }
