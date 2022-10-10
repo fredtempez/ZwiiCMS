@@ -27,7 +27,7 @@ class helper
 	public static function translate($text)
 	{
 
-		//helper::googleTranslate('fr_FR', 'fr_FR', $text);
+		//helper::googleTranslate('fr_FR', 'fr_FR', $text, 'form');
 
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
@@ -48,10 +48,13 @@ class helper
 	/**
 	 * Fonction pour assurer la traduction des messages
 	 */
-	public static function googleTranslate($from, $to, $text){
+	public static function googleTranslate($from, $to, $text, $target){
+		if (!file_exists('site/i18n/' . $target . '.json')) {
+			file_put_contents ('site/i18n/' . $target . '.json', json_encode([]));
+		}
 		if (!empty($text)) {
 			//Lecture des données en ligne
-			$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
+			$data = json_decode(file_get_contents('site/i18n/' . $target . '.json'), true);
 			// Mode traduction
 			if ($to !== 'fr_FR') {
 				$arrayjson = json_decode(file_get_contents('https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=' . $to . '&q=' . rawurlencode($text)),true);
@@ -69,7 +72,7 @@ class helper
 				// Créer la variable
 				$data = array_merge($data,[$text =>  '']);
 			}
-			file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			file_put_contents ('site/i18n/' . $target . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 		}
 	}
