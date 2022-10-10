@@ -1347,16 +1347,6 @@ input[type='checkbox']:disabled+label:before {
 	/* À cause du padding ajouté aux selects */
 }
 
-/* Paramètres de l'étiquette dans form */
-.formLabel {
-	margin-top: 20px;
-}
-
-.formLabel hr {
-	border: 1px solid;
-	margin: 5px 0 5px;
-}
-
 
 /**
  * Grille
