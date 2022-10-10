@@ -526,9 +526,10 @@ class news extends common {
 	private function update() {
 
 		// le module n'est pas initialisé
-		if ( $this->getData(['module',$this->getUrl(0)]) === NULL 
+		if ( $this->getData(['module',$this->getUrl(0), 'config']) === NULL 
+			|| $this->getData(['module',$this->getUrl(0), 'theme']) === NULL
 		  	|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')		
-		) {
+		) { 
 			$this->init();
 		}
 
