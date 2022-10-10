@@ -211,7 +211,7 @@ class config extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? 'La carte du site a été mise à jour' : 'Echec d\'écriture, la carte du site n\'a pas été mise à jour',
+			'notification' => $successSitemap ? helper::translate('La carte du site a été mise à jour') : helper::translate('Echec de l\'écriture, vérifiez les permissions'),
 			'state' => $successSitemap
 		]);
 	}
@@ -297,12 +297,12 @@ class config extends common
 
 		$notification =  empty($token)
 			? 'La clé de l\'API ne peut pas être vide'
-			: ($success === false  ? 'Problème avec le service en ligne' : 'Capture d\'écran générée avec succès');
+			: ($success === false  ? 'Service en ligne inaccessible' : 'Capture d\'écran générée avec succès');
 
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $notification,
+			'notification' => helper::translate($notification),
 			'state' => ($success === false or empty($token)) ? false : true
 		]);
 	}
@@ -328,7 +328,7 @@ class config extends common
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => 'Le fichier n\'est pas une archive valide',
+						'notification' => helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -338,7 +338,7 @@ class config extends common
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => 'Impossible de lire l\'archive',
+						'notification' => helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -361,7 +361,7 @@ class config extends common
 							$this->addOutput([
 								'title' => helper::translate('Restaurer'),
 								'view' => 'restore',
-								'notification' => 'Cette archive est trop ancienne, elle ne peut être restaurée',
+								'notification' => helper::translate('Archive invalide'),
 								'state' => false
 							]);
 						} else {
@@ -387,7 +387,7 @@ class config extends common
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
 						'view' => 'restore',
-						'notification' => 'Cette archive n\'est pas une sauvegarde valide',
+						'notification' => helper::translate('Archive invalide'),
 						'state' => false
 					]);
 				}
@@ -407,25 +407,15 @@ class config extends common
 				}
 			}
 
-			// Conversion vers des Url relatives
-			/*
-			if ($this->getData(['core', 'baseUrl'])) {
-				$url = str_replace('?', '', $this->getData(['core', 'baseUrl']));
-				// Suppression de la base Url
-				$this->updateBaseUrl($url);
-				// Effacer la baseUrl
-				$this->deleteData(['core', 'baseUrl']);
-			}*/
-
 			// Message de notification
-			$notification  = $success === true ? 'Restaurer effectuée avec succès' : 'Erreur inconnue';
+			$notification  = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
 				/*'title' => 'Restaurer',
 				'view' => 'restore',*/
 				'redirect' => $redirect,
-				'notification' => $notification,
+				'notification' => helper::translate($notification),
 				'state' => $success
 			]);
 		}
@@ -575,7 +565,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Modifications enregistrées ',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -583,7 +573,7 @@ class config extends common
 		// Variable de version
 		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
 		if (self::$onlineVersion > common::ZWII_VERSION) {
-			self::$updateButtonText = "Mettre à jour";
+			self::$updateButtonText = helper::translate('Mettre à jour');
 		}
 
 		// Valeurs en sortie
@@ -617,7 +607,7 @@ class config extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Éditeur de script dans ' . ucfirst($this->geturl(2))),
+			'title' => helper::translate('Éditeur de script'. ' ' . ucfirst($this->geturl(2))),
 			'vendor' => [
 				'codemirror'
 			],
@@ -641,7 +631,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Journal réinitialisé avec succès',
+				'notification' => helper::translate('Journal réinitialisé avec succès'),
 				'state' => true
 			]);
 		} else {
@@ -649,7 +639,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Aucun journal à effacer',
+				'notification' => helper::translate('Aucun journal à effacer'),
 				'state' => false
 			]);
 		}
@@ -677,7 +667,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Aucun fichier journal à télécharger',
+				'notification' => helper::translate('Aucun fichier journal à télécharger'),
 				'state' => false
 			]);
 		}
@@ -711,9 +701,9 @@ class config extends common
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
+				'title' => helper::translate('Confighelper::translate(uration'),
 				'view' => 'index',
-				'notification' => 'Aucune liste noire à télécharger',
+				'notification' => helper::translate('Aucune liste noire à télécharger'),
 				'state' => false
 			]);
 		}
@@ -731,7 +721,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Liste noire réinitialisée avec succès',
+				'notification' => helper::translate('Liste noire réinitialisée avec succès'),
 				'state' => true
 			]);
 		} else {
@@ -739,7 +729,7 @@ class config extends common
 			$this->addOutput([
 				'title' => helper::translate('Configuration'),
 				'view' => 'index',
-				'notification' => 'Pas de liste à effacer',
+				'notification' => helper::translate('Aucune liste noire à effacer'),
 				'state' => false
 			]);
 		}
@@ -757,7 +747,7 @@ class config extends common
 		$this->addOutput([
 			'title' => helper::translate('Configuration'),
 			'view' => 'index',
-			'notification' => 'Copie terminée' . ($success ? ' avec succès' : ' avec des erreurs'),
+			'notification' => $success ? helper::translate('Copie terminée avec succès') : helper::translate('Copie terminée avec des erreurs'),
 			'state' => $success
 		]);
 	}
@@ -781,7 +771,7 @@ class config extends common
 		$this->addOutput([
 			'title' => helper::translate('Configuration'),
 			'view' => 'index',
-			'notification' => 'Suppression terminée :<br />' . $success . ' fichiers effacé(s) <br />' . $fail . ' échec(s)',
+			'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': '. $fail,
 			'state' => true
 		]);
 	}
