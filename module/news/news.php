@@ -15,7 +15,7 @@
 
 class news extends common {
 
-	const VERSION = '4.21';
+	const VERSION = '4.22';
 	const REALNAME = 'News';
 	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 
@@ -525,15 +525,14 @@ class news extends common {
 	 */
 	private function update() {
 
-		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
-
 		// le module n'est pas initialisé
-		if (	$versionData === NULL
+		if ( $this->getData(['module',$this->getUrl(0)]) === NULL 
 		  	|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')		
 		) {
 			$this->init();
 		}
 
+		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
 		// Mise à jour 3.2
 		if (version_compare($versionData, '3.1', '<') ) {
 			$this->setData(['module',$this->getUrl(0),'theme', 'itemsBlur', '0%' ]);

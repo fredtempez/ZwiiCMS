@@ -1,3 +1,5 @@
+# Version 4.22
+    - Initialisation du module
 # Version 4.21
     - Prise en compte de la classe strftime et du helper dateUTF8
 # Version 4.2
