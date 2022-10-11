@@ -2952,10 +2952,22 @@ class core extends common
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
 			}
+
 			// Check l'existence du module
 			if (class_exists($moduleId)) {
 				/** @var common $module */
 				$module = new $moduleId;
+
+				// Chargement les dialogues du modules
+				// Check l'existence du dossier et de la langue de l'interface
+				if (
+					is_dir(self::MODULE_DIR . $moduleId . '/ressource') &&
+					file_exists(self::MODULE_DIR . $moduleId . '/ressource' . self::$i18nUI . 'json')
+				) {
+
+					self::$dialog[] = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
+				}
+
 
 				// Check l'existence de l'action
 				$action = '';
