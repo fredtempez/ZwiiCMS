@@ -628,7 +628,7 @@ class plugin extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
-				'notification' => strintf( helper::translate('Le module %s de la page %s a été supprimé'), $this->getUrl(3), $this->getUrl(4) ),
+				'notification' => sprintf( helper::translate('Le module %s de la page %s a été supprimé'), $this->getUrl(3), $this->getUrl(4) ),
 				'state' => true
 			]);
 		}
