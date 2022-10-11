@@ -331,7 +331,7 @@ class news extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		}
 		// Suppression

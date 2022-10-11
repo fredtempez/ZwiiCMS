@@ -222,7 +222,7 @@ class install extends common
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl(false),
-						'notification' => $sent === true ? 'Installation terminée' : $sent,
+						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
 						'state' => ($sent === true &&  $success === true) ? true : null
 					]);
 				}

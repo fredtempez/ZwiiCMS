@@ -110,7 +110,7 @@ class user extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => $sent === true ? 'Utilisateur créé' : $sent,
+				'notification' => $sent === true ? helper::translate('Utilisateur créé') : $sent,
 				'state' => $sent === true ? true : null
 			]);
 		}
@@ -143,7 +143,7 @@ class user extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Bloque la suppression de son propre compte
@@ -151,7 +151,7 @@ class user extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => 'Impossible de supprimer votre propre compte'
+				'notification' => helper::translate('Impossible de supprimer votre propre compte')
 			]);
 		}
 		// Suppression
@@ -160,7 +160,7 @@ class user extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => 'Utilisateur supprimé',
+				'notification' => helper::translate('Utilisateur supprimé'),
 				'state' => true
 			]);
 		}
@@ -178,7 +178,7 @@ class user extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => 'Action  non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Accès refusé
@@ -218,10 +218,10 @@ class user extends common
 								helper::deleteCookie('ZWII_USER_PASSWORD');
 							}
 						} else {
-							self::$inputNotices['userEditConfirmPassword'] = 'Incorrect';
+							self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
 						}
 					} else {
-						self::$inputNotices['userEditOldPassword'] = 'Incorrect';
+						self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
 					}
 				}
 				// Modification du groupe
@@ -277,7 +277,7 @@ class user extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
-					'notification' => 'Modifications enregistrées',
+					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
 			}
@@ -314,7 +314,7 @@ class user extends common
 				);
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => ($sent === true ? 'Un mail vous a été envoyé afin de continuer la réinitialisation' : $sent),
+					'notification' => ($sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : $sent),
 					'state' => ($sent === true ? true : null)
 				]);
 			}
@@ -322,7 +322,7 @@ class user extends common
 			else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Cet utilisateur n\'existe pas'
+					'notification' =>  helper::translate('Utilisateur inexistant')
 				]);
 			}
 		}
@@ -391,7 +391,7 @@ class user extends common
 			 * Aucun compte existant
 			 */
 			if (!$this->getData(['user', $userId])) {
-				$logStatus = 'Compte inconnu';
+				$logStatus ='Compte inconnu';
 				//Stockage de l'IP
 				$this->setData([
 					'blacklist',
@@ -411,14 +411,14 @@ class user extends common
 					$logStatus = 'Compte inconnu verrouillé';
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => 'Compte verrouillé',
+						'notification' => helper::translate('Compte verrouillé'),
 						'redirect' => helper::baseUrl(),
 						'state' => false
 					]);
 				} else {
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => 'Captcha, identifiant ou mot de passe incorrects'
+						'notification' => helper::translate('Captcha, identifiant ou mot de passe incorrects')
 					]);
 				}
 				/**
@@ -457,7 +457,7 @@ class user extends common
 						and $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
 					) {
 						$this->addOutput([
-							'notification' => 'Seul un administrateur peut se connecter lors d\'une maintenance',
+							'notification' => helper::translate('Seul un administrateur peut se connecter lors d\'une maintenance'),
 							'redirect' => helper::baseUrl(),
 							'state' => false
 						]);
@@ -465,14 +465,14 @@ class user extends common
 						$logStatus = 'Connexion réussie';
 						// Valeurs en sortie
 						$this->addOutput([
-							'notification' => 'Bienvenue ' . $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']),
+							'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
 							'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
 							'state' => true
 						]);
 					}
 					// Sinon notification d'échec
 				} else {
-					$notification = 'Captcha, identifiant ou mot de passe incorrects';
+					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
 					$logStatus = $captcha === true ? 'Erreur de mot de passe' : 'Erreur de captcha';
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
 					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
@@ -484,7 +484,7 @@ class user extends common
 					}
 					// Cas 3 le délai de bloquage court
 					if ($this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification = 'Accès bloqué ' . ($this->getData(['config', 'connect', 'timeout']) / 60) . ' minutes.';
+						$notification =  sprintf(helper::translate('Accès bloqué %d minutes', ($this->getData(['config', 'connect', 'timeout']) / 60) ));
 					}
 
 					// Valeurs en sortie
@@ -526,7 +526,7 @@ class user extends common
 		session_destroy();
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Vous avez été déconnecté',
+			'notification' =>helper::translate('Déconnexion !'),
 			'redirect' => helper::baseUrl(false),
 			'state' => true
 		]);
@@ -573,7 +573,7 @@ class user extends common
 					$this->setData(['user', $this->getUrl(2), 'connectTimeout', 0]);
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => 'Nouveau mot de passe enregistré',
+						'notification' => helper::translate('Nouveau mot de passe enregistré'),
 						//'redirect' => helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl()),
 						'redirect' => helper::baseUrl(),
 						'state' => true
@@ -702,14 +702,14 @@ class user extends common
 					}
 				}
 				if (empty(self::$users)) {
-					$notification =  'Rien à importer, erreur de format ou fichier incorrect';
+					$notification =  helper::translate('Rien à importer, erreur de format ou fichier incorrect');
 					$success = false;
 				} else {
-					$notification =  'Importation effectuée';
+					$notification =  helper::translate('Importation effectuée');
 					$success = true;
 				}
 			} else {
-				$notification = 'Erreur de lecture, vérifiez les permissions';
+				$notification = helper::translate('Erreur de lecture, vérifiez les permissions');
 				$success = false;
 			}
 		}

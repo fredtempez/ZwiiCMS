@@ -62,7 +62,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			// Suppression des dossiers
@@ -77,12 +77,12 @@ class plugin extends common
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
 						&& !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
-						$notification = 'Module ' . $module . ' désinstallé, il reste des données dans ' . $infoModules[$this->getUrl(2)]['dataDirectory'];
+						$notification = sprintf( helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
 					}
 				}
 			} else {
 				$success = false;
-				$notification = 'La suppression a échouée';
+				$notification = helper::translate('La suppression a échoué');
 			}
 
 			// Valeurs en sortie
@@ -136,7 +136,7 @@ class plugin extends common
 				$zip->close();
 				return ([
 					'success' => false,
-					'notification' => 'Archive invalide, le descripteur est absent.'
+					'notification' => helper::translate('Archive invalide, le descripteur est absent')
 				]);
 			}
 
@@ -151,7 +151,7 @@ class plugin extends common
 					$zip->close();
 					return ([
 						'success' => false,
-						'notification' => 'Archive invalide, les dossiers ne correspondent pas au descripteur.'
+						'notification' => helper::translate('Archive invalide, les dossiers ne correspondent pas au descripteur')
 					]);
 				}
 				// Interdire l'écriture dans le dossier core
@@ -161,7 +161,7 @@ class plugin extends common
 					$zip->close();
 					return ([
 						'success' => false,
-						'notification' => 'Archive invalide, l\'écriture dans le dossier core est interdite'
+						'notification' => helper::translate('Archive invalide, l\'écriture dans le dossier core est interdite')
 					]);
 				}
 			}
@@ -175,7 +175,7 @@ class plugin extends common
 				$zip->close();
 				return ([
 					'success' => false,
-					'notification' => 'Cette archive est invalide, le fichier de classe est absent.'
+					'notification' => helper::translate('Archive invalide, le fichier de classe est absent')
 				]);
 			}
 
@@ -208,7 +208,7 @@ class plugin extends common
 						$zip->close();
 						return ([
 							'success' => false,
-							'notification' => 'La version installée est plus récente.'
+							'notification' => helper::translate('La version installée est plus récente')
 						]);
 					}
 				}
@@ -224,18 +224,18 @@ class plugin extends common
 					$success = $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
 				}
 				// Message de retour
-				$t = isset($versionInstalled) ? ' actualisé' : 'installé';
+				$t = isset($versionInstalled) ? helper::translate('actualisé') : helper::translate('installé');
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => $success,
-					'notification' => $success ? 'Le module ' . $module['name'] . ' a été ' . $t
-						: 'Erreur inconnue, le module n\'est pas installé'
+					'notification' => $success ? sprintf( helper::translate('Le module %s a été %s'), $module['name'], $t)
+						: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
 				return ([
 					'success' => false,
-					'notification' => 'Une erreur inconnue s\est produite !'
+					'notification' => helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 				// Supprimer le dossier temporaire
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
@@ -245,7 +245,7 @@ class plugin extends common
 			// Message de retour
 			return ([
 				'success' => false,
-				'notification' => 'Impossible d\'ouvrir l\'archive'
+				'notification' => helper::translate('Impossible d\'ouvrir l\'archive')
 			]);
 		}
 	}
@@ -291,7 +291,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'store',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			// Récupérer le module en ligne
@@ -316,7 +316,7 @@ class plugin extends common
 			if (file_exists(self::FILE_DIR . 'source/modules/' . $moduleFile)) {
 				$r = $this->install(self::FILE_DIR . 'source/modules/' . $moduleFile, false);
 			} else {
-				$r['notification'] = 'Un problème est survenu, le module n\'est pas installé';
+				$r['notification'] =helper::translate('Erreur inconnue, le module n\'est pas installé');
 				$r['success'] = false;
 			}
 			// Valeurs en sortie
@@ -559,7 +559,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 
@@ -583,7 +583,7 @@ class plugin extends common
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl() . 'plugin',
-						'notification' => $success ? $this->getUrl(3) . '.zip copié dans le dossier Module du gestionnaire de fichier' : 'Erreur de copie',
+						'notification' => $success ? $this->getUrl(3) . helper::translate('Archive copiée dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
 					break;
@@ -620,7 +620,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			$this->setData(['page', $this->getUrl(4), 'moduleId', '']);
@@ -628,7 +628,7 @@ class plugin extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
-				'notification' => 'Le module ' .  $this->getUrl(3) . ' de la page ' .  $this->getUrl(4) . ' a été supprimé.',
+				'notification' => strintf( helper::translate('Le module %s de la page %s a été supprimé'), $this->getUrl(3), $this->getUrl(4) ),
 				'state' => true
 			]);
 		}
@@ -651,7 +651,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 
@@ -698,7 +698,7 @@ class plugin extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'plugin',
-					'notification' => 'Quelque chose s\'est mal passé',
+					'notification' => helper::translate('Erreur inconnue'),
 					'state' => false
 				]);
 			}
@@ -745,7 +745,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => true,
-				'notification' => 'Import des données effectué'
+				'notification' => helper::translate('Données importées')
 			]);
 		}
 		// Bouton d'importation des données d'un module spécifique
@@ -756,7 +756,7 @@ class plugin extends common
 				$this->addOutput([
 					'redirect' => helper::baseUrl()  . 'plugin',
 					'state' => false,
-					'notification' => 'Action non autorisée'
+					'notification' => helper::translate('Action interdite')
 				]);
 			}
 
@@ -766,7 +766,7 @@ class plugin extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
 				'state' => true,
-				'notification' => 'Okay'
+				'notification' => helper::translate('Données importées')
 			]);
 		}
 

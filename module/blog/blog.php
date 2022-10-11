@@ -342,7 +342,7 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		}
 		// Suppression
@@ -366,7 +366,7 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		}
 		// Suppression
@@ -397,7 +397,7 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		}
 		// Inversion du statut
@@ -543,7 +543,7 @@ class blog extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		}
 		// Suppression

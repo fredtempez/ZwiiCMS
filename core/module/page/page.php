@@ -84,13 +84,13 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Jeton invalide'
+				'notification' => helper::translate('Jeton invalide')
 			]);
 		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Suppression non autorisée'
+				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Duplication de la page
@@ -104,7 +104,7 @@ class page extends common
 		]);
 		// Ecriture
 		$this->setData(['page', $pageId, $data]);
-		$notification = 'La page a été dupliquée';
+		$notification = helper::translate('Page dupliquée');
 		// Duplication du module présent
 		if ($this->getData(['page', $url[0], 'moduleId'])) {
 			$data = $this->getData([
@@ -113,7 +113,7 @@ class page extends common
 			]);
 			// Ecriture
 			$this->setData(['module', $pageId, $data]);
-			$notification = 'La page et son module ont été dupliqués';
+			$notification = helper::translate('Page et module dupliqués');
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -175,7 +175,7 @@ class page extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . $pageId,
-			'notification' => 'Nouvelle page créée',
+			'notification' => helper::translate('Nouvelle page créée'),
 			'state' => true
 		]);
 	}
@@ -198,13 +198,13 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Jeton invalide'
+				'notification' => helper::translate('Jeton invalide')
 			]);
 		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Suppression non autorisée'
+				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Impossible de supprimer la page d'accueil
@@ -212,7 +212,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Impossible de supprimer la page de recherche affectée
@@ -220,7 +220,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
@@ -228,7 +228,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
@@ -236,7 +236,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
@@ -244,7 +244,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Impossible de supprimer la page des mentions légales affectée
@@ -252,7 +252,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
-				'notification' => 'Désactiver la page dans la configuration avant de la supprimer'
+				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
 		// Jeton incorrect
@@ -260,13 +260,13 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Jeton invalide'
+				'notification' =>  helper::translate('Jeton invalide')
 			]);
 		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Suppression non autorisée'
+				'notification' =>  helper::translate('Suppression interdite')
 			]);
 		}
 		// Impossible de supprimer une page contenant des enfants
@@ -274,7 +274,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => 'Impossible de supprimer une page contenant des enfants'
+				'notification' =>  helper::translate('Impossible de supprimer une page contenant des pages enfants')
 			]);
 		}
 		// Suppression
@@ -302,7 +302,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl(false),
-				'notification' => 'Page supprimée',
+				'notification' => helper::translate('Page supprimée'),
 				'state' => true
 			]);
 		}
@@ -522,7 +522,7 @@ class page extends common
 						// Valeurs en sortie
 						$this->addOutput([
 							'redirect' => helper::baseUrl() . $pageId,
-							'notification' => 'Modifications enregistrées',
+							'notification' => helper::translate('Modifications enregistrées'),
 							'state' => true
 						]);
 					}
@@ -568,7 +568,7 @@ class page extends common
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2),
 				'state' => true
 			]);
@@ -597,7 +597,7 @@ class page extends common
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2),
 				'state' => true
 			]);

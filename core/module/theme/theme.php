@@ -267,7 +267,7 @@ class theme extends common
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme/admin',
 				'state' => true
 			]);
@@ -297,7 +297,7 @@ class theme extends common
 			file_put_contents(self::DATA_DIR . 'custom.css', $this->getInput('themeAdvancedCss', null));
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme/advanced',
 				'state' => true
 			]);
@@ -331,7 +331,7 @@ class theme extends common
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme',
 				'state' => true
 			]);
@@ -360,7 +360,7 @@ class theme extends common
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Sélectionnez au moins un contenu à afficher',
+					'notification' => helper::translate('Sélectionnez au moins un contenu à afficher'),
 					'redirect' => helper::baseUrl() . 'theme/footer',
 					'state' => false
 				]);
@@ -400,7 +400,7 @@ class theme extends common
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Modifications enregistrées',
+					'notification' => helper::translate('Modifications enregistrées'),
 					'redirect' => helper::baseUrl() . 'theme',
 					'state' => true
 				]);
@@ -493,7 +493,7 @@ class theme extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme',
 				'state' => true
 			]);
@@ -562,7 +562,7 @@ class theme extends common
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme',
 				'state' => true
 			]);
@@ -695,14 +695,14 @@ class theme extends common
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'La fonte a été créée',
+					'notification' => helper::translate('Fonte créée'),
 					'redirect' => helper::baseUrl() . 'theme/fonts',
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Fonte non créée, la ressource est manquante !',
+					'notification' => helper::translate('Fonte non créée, ressource absente !'),
 					'redirect' => helper::baseUrl() . 'theme/fontAdd',
 					'state' => false
 				]);
@@ -758,7 +758,7 @@ class theme extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'La fonte a été actualisée',
+				'notification' => helper::translate('Fonte actualisée'),
 				'redirect' => helper::baseUrl() . 'theme/fonts',
 				'state' => true
 			]);
@@ -780,7 +780,7 @@ class theme extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Suppression
@@ -800,7 +800,7 @@ class theme extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',
-				'notification' => 'La fonte a été supprimée',
+				'notification' => helper::translate('Fonte supprimée'),
 				'state' => true
 			]);
 		}
@@ -840,14 +840,14 @@ class theme extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Réinitialisation effectuée',
+				'notification' => helper::translate('Thème réinitialisé'),
 				'redirect' => $redirect,
 				'state' => true
 			]);
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Jeton incorrect'
+				'notification' => helper::translate('Jeton incorrect')
 			]);
 		}
 	}
@@ -888,7 +888,7 @@ class theme extends common
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'theme',
 				'state' => true
 			]);
@@ -1001,11 +1001,11 @@ class theme extends common
 					}
 
 					// traitement d'erreur
-					$notification = $success ? 'Le thème  a été importé' : 'Erreur lors de l\'extraction, vérifiez les permissions.';
+					$notification = $success ? helper::translate('Thème importé') : helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
 				} else {
 					// pas une archive de thème
 					$success = false;
-					$notification = 'Ce n\'est pas l\'archive d\'un thème !';
+					$notification = helper::translate('Archive de thème invalide');
 				}
 				// Supprimer le dossier temporaire même si le thème est invalide
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
@@ -1013,12 +1013,12 @@ class theme extends common
 			} else {
 				// erreur à l'ouverture
 				$success = false;
-				$notification = 'Impossible d\'ouvrir l\'archive';
+				$notification = helper::translate('Impossible d\'ouvrir l\'archive');
 			}
 			return (['success' => $success, 'notification' => $notification]);
 		}
 
-		return (['success' => false, 'notification' => 'Archive non spécifiée ou introuvable']);
+		return (['success' => false, 'notification' => helper::translate('Archive non spécifiée ou introuvable')]);
 	}
 
 
@@ -1058,7 +1058,7 @@ class theme extends common
 		unlink(self::TEMP_DIR . $zipFilename);
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' => 'Archive <b>' . $zipFilename . '</b> sauvegardée avec succès',
+			'notification' => '<b>' . $zipFilename . '</b>'. helper::translate('sauvegardé avec succès'),
 			'redirect' => helper::baseUrl() . 'theme/manage',
 			'state' => true
 		]);

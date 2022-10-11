@@ -71,13 +71,13 @@ class translate extends common
 				// Enregistrer la langue
 				if ($success) {
 					$this->setData(['config', 'i18n', $toCreate, 'site']);
-					$notification = 'Données ' . self::$languages[$copyFrom] . ' copiées vers ' .  self::$languages[$toCreate];
+					$notification = sprintf(helper::translate('Données %s copiées vers %s'),  self::$languages[$copyFrom], self::$languages[$toCreate]);
 				} else {
-					$notification = "Quelque chose n\'a pas fonctionné, vérifiez les permissions.";
+					$notification = helper::translate('Erreur de copie, vérifiez les permissions');
 				}
 			} else {
 				$success = false;
-				$notification = 'Les langues doivent être différentes.';
+				$notification = helper::translate('Les langues sélectionnées sont identiques');
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -121,7 +121,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -218,7 +218,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'translate',
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -252,7 +252,7 @@ class translate extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'translate',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 
@@ -299,7 +299,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -315,7 +315,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'translate',
-				'notification' => 'URL incorrecte',
+				'notification' => helper::translate('Erreur d\'URL'),
 				'state' => false
 			]);
 		}
@@ -371,7 +371,7 @@ class translate extends common
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'translate',
 				'state' => false,
-				'notification' => 'Action non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 
@@ -382,7 +382,7 @@ class translate extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'translate',
-			'notification' => $success ? 'La traduction a été supprimée' : 'Une erreur s\'est produite',
+			'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
 			'state' => $success
 		]);
 	}

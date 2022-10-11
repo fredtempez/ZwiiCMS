@@ -607,7 +607,7 @@ class config extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Éditeur de script'. ' ' . ucfirst($this->geturl(2))),
+			'title' => sprintf( helper::translate('Éditeur de script %s'), ucfirst($this->geturl(2))),
 			'vendor' => [
 				'codemirror'
 			],

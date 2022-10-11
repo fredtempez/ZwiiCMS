@@ -276,7 +276,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		} else {
 			$data = $this->getData(['module', $this->getUrl(0), 'data']);
@@ -316,7 +316,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		} else {
 			$data = ($this->getData(['module', $this->getUrl(0), 'data']));
@@ -351,7 +351,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action non autorisée'
+				'notification' => 'Action interdite'
 			]);
 		} else {
 			// La donnée n'existe pas
