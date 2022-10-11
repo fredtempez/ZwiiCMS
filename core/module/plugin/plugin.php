@@ -77,7 +77,7 @@ class plugin extends common
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
 						&& !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
-						$notification = sprintf( helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
+						$notification = sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
 					}
 				}
 			} else {
@@ -229,7 +229,7 @@ class plugin extends common
 				$zip->close();
 				return ([
 					'success' => $success,
-					'notification' => $success ? sprintf( helper::translate('Le module %s a été %s'), $module['name'], $t)
+					'notification' => $success ? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
 						: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
@@ -316,7 +316,7 @@ class plugin extends common
 			if (file_exists(self::FILE_DIR . 'source/modules/' . $moduleFile)) {
 				$r = $this->install(self::FILE_DIR . 'source/modules/' . $moduleFile, false);
 			} else {
-				$r['notification'] =helper::translate('Erreur inconnue, le module n\'est pas installé');
+				$r['notification'] = helper::translate('Erreur inconnue, le module n\'est pas installé');
 				$r['success'] = false;
 			}
 			// Valeurs en sortie
@@ -628,7 +628,7 @@ class plugin extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
-				'notification' => sprintf( helper::translate('Le module %s de la page %s a été supprimé'), $this->getUrl(3), $this->getUrl(4) ),
+				'notification' => sprintf(helper::translate('Le module %s de la page %s a été supprimé'), $this->getUrl(3), $this->getUrl(4)),
 				'state' => true
 			]);
 		}
