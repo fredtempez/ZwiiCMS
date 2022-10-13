@@ -19,7 +19,7 @@
 
 class search extends common {
 
-	const VERSION = '2.6';
+	const VERSION = '2.7';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
@@ -254,11 +254,11 @@ class search extends common {
 				}
 				// Message de synthèse de la recherche
 				if (count($result) === 0) 	{
-					self::$resultTitle = 'Aucun résultat';
-					self::$resultError = 'Avez-vous pens&eacute; aux accents ?';
+					self::$resultTitle = helper::translate('Aucun résultat');
+					self::$resultError = helper::translate('Avez-vous pensé aux accents ?');
 				} else  {
 					self::$resultError = '';
-					self::$resultTitle = ' Résultat de votre recherche';
+					//self::$resultTitle = sprintf(' %s',helper::translate('Résultat de votre recherche'));
 					rsort($result);
 					foreach ($result as $key => $value) {
 						$r [] = $value['preview'];
@@ -315,7 +315,7 @@ class search extends common {
 		$valid = preg_match_all($keywords,$contenu,$matches,PREG_OFFSET_CAPTURE);
 		if ($valid > 0 ) {
 			if (($matches[0][0][1]) > 0) {
-				$resultat = '<h2><a  href="./?'.$url.'" target="_blank" rel="noopener">' . $titre .  '</a></h2>';
+				$resultat =  sprintf('<h2><a  href="./?%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $url, $titre, count($matches[0]));
 				// Création de l'aperçu
 				// Eviter de découper avec une valeur négative
 				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;
@@ -327,7 +327,7 @@ class search extends common {
 				$t = preg_replace($keywords, '<span class= "keywordColor">\1</span>',$t);
 				// Sauver résultat
 				$resultat .= '<p class="searchResult">'.$t.'...</p>';
-				$resultat .= '<p class="searchTitle">' . count($matches[0]) . (count($matches[0]) === 1 ? ' correspondance<p>' : ' correspondances<p>');
+
 				//}
 				return ([
 					'matches' => count($matches[0]),

@@ -455,5 +455,7 @@
     "Nouveau mot de passe enregistré": "Nueva contraseña guardada",
     "'Rien à importer, erreur de format ou fichier incorrect": "'Nada que importar, error de formato o archivo incorrecto",
     "Importation effectuée": "Importación realizada",
-    "Erreur de lecture, vérifiez les permissions": "Error de lectura, verifique los permisos"
+    "Erreur de lecture, vérifiez les permissions": "Error de lectura, verifique los permisos",
+    "Avez-vous pensé aux accents ?": "¿Has pensado en los acentos?",
+    "Aucun résultat": "Sin resultados"
 }
