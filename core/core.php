@@ -1568,8 +1568,7 @@ class common
 				template::ico('login', [
 					'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
 					'attr' => 'rel="nofollow"',
-					'help' => 'Connexion',
-					'fontSize' => '1.5em'
+					'help' => 'Connexion'
 				]) . '</span>';
 		}
 		// Affichage de la barre de membre simple
