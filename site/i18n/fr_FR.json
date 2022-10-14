@@ -423,7 +423,7 @@
     "Fonte créée": "",
     "Fonte non créée, ressource absente !": "",
     "Fonte actualisée": "",
-    "Fonte supprimée": "" ,
+    "Fonte supprimée": "",
     "Thème importé": "",
     "Erreur d'extraction, vérifiez les permissions": "",
     "Archive de thème invalide": "",
@@ -456,7 +456,7 @@
     "5 minutes": "",
     "10 minutes": "",
     "15 minutes": "",
-    "En clair": "",
+    "Complète": "",
     "Niveau 1 (192.168.12.x)": "",
     "Niveau 2 (192.168.x.x)": "",
     "Niveau 3 (192.x.x.x)": "",
@@ -480,5 +480,6 @@
     "Le menu horizontal intégral": "",
     "Le sous-menu de la page parente": "",
     "Menu standard": "",
-    "Menu accessoire": ""
+    "Menu accessoire": "",
+    "Activer": ""
 }

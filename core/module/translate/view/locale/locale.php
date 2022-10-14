@@ -1,5 +1,4 @@
 <?php echo template::formOpen('translateLocaleForm'); ?>
-
 <div class="row">
     <div class="col1">
         <?php echo template::button('translateFormBack', [

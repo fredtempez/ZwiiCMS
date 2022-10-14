@@ -10,4 +10,80 @@
  * @license GNU General Public License, version 3
  * @link http://zwiicms.fr/
  */
-function setCookie(name,value,days){var expires="";if(days){var date=new Date;date.setTime(date.getTime()+24*days*60*60*1e3),expires="; expires="+date.toUTCString()}document.cookie=name+"="+(value||"")+expires+"; path=/; samesite=lax"}function getCookie(name){for(var nameEQ=name+"=",ca=document.cookie.split(";"),i=0;i<ca.length;i++){for(var c=ca[i];" "==c.charAt(0);)c=c.substring(1,c.length);if(0==c.indexOf(nameEQ))return c.substring(nameEQ.length,c.length)}return null}function capitalizeFirstLetter(string){return string.charAt(0).toUpperCase()+string.slice(1)}$(document).ready((function(){var translateLayout=getCookie("translateLayout");null==translateLayout&&(translateLayout="ui",setCookie("translateLayout","ui")),$("#contentContainer").hide(),$("#uiContainer").hide(),$("#"+translateLayout+"Container").show(),$("#translate"+capitalizeFirstLetter(translateLayout)+"Button").addClass("activeButton")})),$("#translateUiButton").on("click",(function(){$("#contentContainer").hide(),$("#uiContainer").show(),$(this).addClass("activeButton"),$("#translateContentButton").removeClass("activeButton"),setCookie("translateLayout","ui"),$("#translateButtonAddContent").hide(),$("#translateButtonCopyContent").hide()})),$("#translateContentButton").on("click",(function(){$("#uiContainer").hide(),$("#contentContainer").show(),$(this).addClass("activeButton"),$("#translateUiButton").removeClass("activeButton"),setCookie("translateLayout","content"),$("#translateButtonAddContent").show(),$("#translateButtonCopyContent").show()})),$(".translateDelete").on("click",(function(){var _this=$(this),message_delete="<?php echo helper::translate('Confirmer la suppression de cette traduction du site'); ?>";return core.confirm(message_delete,(function(){$(location).attr("href",_this.attr("href"))}))}));
+
+
+$(document).ready(function() {
+    var translateLayout = getCookie("translateLayout");
+    if (translateLayout == null) {
+        translateLayout = "ui";
+        setCookie("translateLayout", "ui");
+    }
+    $("#contentContainer").hide();
+    $("#uiContainer").hide();
+    $("#" + translateLayout + "Container").show();
+    $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
+
+});
+
+// Sélecteur de fonctions
+
+$("#translateUiButton").on("click", function() {
+    $("#contentContainer").hide();
+    $("#uiContainer").show();
+    $(this).addClass("activeButton");
+    $("#translateContentButton").removeClass("activeButton");
+    setCookie("translateLayout", "ui");
+    // Cacher les boutons liés au contenu
+    $("#translateButtonAddContent").hide();
+    $("#translateButtonCopyContent").hide();
+});
+$("#translateContentButton").on("click", function() {
+    $("#uiContainer").hide();
+    $("#contentContainer").show();
+    $(this).addClass("activeButton");
+    $("#translateUiButton").removeClass("activeButton");
+    setCookie("translateLayout", "content");
+    // Afficher les boutons liés au contenu
+    $("#translateButtonAddContent").show();
+    $("#translateButtonCopyContent").show();
+});
+
+/**
+ * Confirmation de suppression
+ */
+$(".translateDelete").on("click", function() {
+    var _this = $(this);
+    var message_delete = "<?php echo helper::translate('Confirmer la suppression de cette traduction du site'); ?>";
+    return core.confirm(message_delete, function() {
+        $(location).attr("href", _this.attr("href"));
+    });
+});
+
+
+
+// Fonctions
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; samesite=lax";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Define function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

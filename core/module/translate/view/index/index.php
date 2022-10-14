@@ -16,7 +16,7 @@
 				'help' => 'Consulter l\'aide en ligne'
 			]);*/ ?>
 	</div>
-	<div class="col1 offset6">
+	<div class="col1 offset8">
 		<?php echo template::button('translateButtonAddContent', [
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
@@ -29,21 +29,18 @@
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('docs'),
 			'disabled' => $module::$siteCopy,
-			'help' =>'Copie de contenus localisés'
+			'help' => 'Copie de contenus localisés'
 		]); ?>
-	</div>
-	<div class="col2">
-		<?php echo template::submit('translateFormSubmit'); ?>
 	</div>
 </div>
 
 <div class="tab">
-	<?php echo template::button('translateUiButton', [
-		'value' => 'Interface',
+<?php echo template::button('translateContentButton', [
+		'value' => 'Langues du contenu',
 		'class' => 'buttonTab'
 	]); ?>
-	<?php echo template::button('translateContentButton', [
-		'value' => 'Langues du contenu',
+	<?php echo template::button('translateUiButton', [
+		'value' => 'Interface',
 		'class' => 'buttonTab'
 	]); ?>
 </div>
@@ -51,18 +48,9 @@
 <div id="uiContainer" class="tabContent">
 	<div class="row">
 		<div class="col12">
-			<div class="block">
-				<h4><?php echo helper::translate('Langue de l\'administration'); ?>
-				</h4>
-				<div class="row">
-					<div class="col4 offset4">
-						<?php echo template::select('translateUI', $module::$i18nFiles, [
-							'label' =>  'Traductions installées',
-							'selected' => $this->getData(['config', 'i18n', 'interface']),
-						]); ?>
-					</div>
-				</div>
-			</div>
+			<?php if ($module::$languagesUiInstalled) : ?>
+				<?php echo template::table([2, 1, 1, 6, 1, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '', '']); ?>
+			<?php endif; ?>
 		</div>
 	</div>
 </div>

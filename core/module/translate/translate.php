@@ -20,7 +20,8 @@ class translate extends common
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
 		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
-		'edit' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
+		'ui' => self::GROUP_ADMIN, 	// Éditer une langue de l'UI
+		'locale' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
 		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
 		'content' => self::GROUP_VISITOR,
 	];
@@ -31,6 +32,7 @@ class translate extends common
 	public static $pagesList = [];
 	public static $orphansList = [];
 	// Liste des langues installées
+	public static $languagesUiInstalled = [];
 	public static $languagesInstalled = [];
 	// Liste des langues cibles
 	public static $languagesTarget = [];
@@ -113,17 +115,21 @@ class translate extends common
 	{
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		if (
+			$this->getUrl(3) === $_SESSION['csrf']
+			|| array_key_exists($this->getUrl(2), self::$languages) ) {
 
 			// Sauvegarder les langues de contenu
-			$this->setData(['config', 'i18n', 'interface', $this->getInput('translateUI')]);
+			$this->setData(['config', 'i18n', 'interface', $this->getUrl(2)]);
 
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => helper::translate('Modifications enregistrées'),
-				'state' => true
-			]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => helper::translate('Langues'),
+			'view' => 'index',
+			'notification' => helper::translate('Modifications enregistrées'),
+			'state' => true
+		]);
 		}
 
 		// Préparation du formulaire
@@ -139,8 +145,8 @@ class translate extends common
 					self::$i18nUI === $key ? 'Interface' : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $key . '/' . $_SESSION['csrf'],
-						'value' => template::ico('flag'),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key . '/' . $_SESSION['csrf'],
+						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageDelete' . $key, [
@@ -154,20 +160,39 @@ class translate extends common
 		}
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
-
-		// Langues de l'UI disponibles
+		// Onglet des langues de l'interface
 		if (is_dir(self::I18N_DIR)) {
 			$dir = getcwd();
 			chdir(self::I18N_DIR);
 			$files = glob('*.json');
-			// Ajouter une clé au tableau avec le code de langue
-			foreach ($files as $file) {
-				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languages)) {
-					self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				}
-			}
 			chdir($dir);
+		}
+		// Construit le tableau des langues de l'UI
+		foreach ($files as $file) {
+			// La langue est-elle référencée ?
+			if (array_key_exists(basename($file, '.json'), self::$languages)) {
+				//self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
+				$selected = basename($file, '.json');
+				self::$languagesUiInstalled[$file] =  [
+					self::$languages[$selected ],
+					template::flag($selected, '20 %'),
+					self::$i18nUI === $selected ? 'Interface' : '',
+					'',
+					template::button('translateContentLanguageEdit' . $file, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected . '/' . $_SESSION['csrf'],
+						'value' => template::ico('pencil'),
+						'help' => 'Éditer',
+						'disabled' => 'fr_FR' === $selected
+					]),
+					template::button('translateContentLanguageEnable' . $file, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/index/' . $selected . '/' . $_SESSION['csrf'],
+						'value' => template::ico('check'),
+						'help' => 'Activer',
+						'class' => 'buttonGreen',
+						'disabled' => self::$i18nUI === $selected
+					]),
+				];
+			}
 		}
 
 		// Valeurs en sortie
@@ -240,9 +265,11 @@ class translate extends common
 		]);
 	}
 
-	public function edit()
+	/**
+	 * Edition des paramètres de la langue de contenu
+	 */
+	public function locale()
 	{
-
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
 			$this->getUrl(3) !== $_SESSION['csrf']
@@ -353,7 +380,67 @@ class translate extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Paramètres de la localisation') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
-			'view' => 'edit'
+			'view' => 'locale'
+		]);
+	}
+
+	/**
+	 * Edition de la langue de l'interface
+	 */
+	public function ui()
+	{
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		if (
+			$this->getUrl(3) !== $_SESSION['csrf']
+			|| !array_key_exists($this->getUrl(2), self::$languages)
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'translate',
+				'state' => false,
+				'notification' => helper::translate('Action interdite')
+			]);
+		}
+		// Soumission du formulaire
+		if ($this->isPost()) {
+
+			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
+			foreach ($data as $key => $value) {
+				$data[$key] = $this->getInput('translateString' . array_search($key ,array_keys($data), helper::FILTER_STRING_SHORT));
+			}
+
+			file_put_contents (self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => helper::translate('Modifications enregistrées'),
+				'state' => true
+			]);
+		}
+
+		// Construction du formulaire
+
+		// Ajout des champs absents selon la langue de référence
+		$dataFr = json_decode(file_get_contents(self::I18N_DIR . 'fr_FR.json'), true);
+		foreach($dataFr as $key => $value)  {
+			if (!array_key_exists($key, $data)) {
+				$data[$key] = '';
+			}
+		}
+		file_put_contents (self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+
+		//  Tableau des chaines à traduire dans la langue sélectionnée
+		if (!isset($data)) {
+			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
+		}
+		foreach ($data as $key => $value) {
+			self::$languagesUiInstalled[$key] = $value;
+		}
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => helper::translate('Paramètres') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'view' => 'ui'
 		]);
 	}
 
