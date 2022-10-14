@@ -150,7 +150,7 @@
 							<?php echo template::select('pageEditExtraPosition', $module::$extraPosition, [
 								'label' => 'Emplacement :',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']),
-								'help' => 'Le petit accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
+								'help' => 'Le menu accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
 							]); ?>
 						</div>
 					</div>

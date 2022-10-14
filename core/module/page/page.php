@@ -40,24 +40,24 @@ class page extends common
 	];
 	// Position du module
 	public static $modulePosition = [
-		'bottom' => 'Après le contenu de page',
-		'top'    => 'Avant le contenu de page',
-		'free'   => 'Libre, à l\'emplacement de [MODULE] dans la page'
+		'bottom' => 'Après le contenu de la page',
+		'top'    => 'Avant le contenu de la page',
+		'free'   => 'À l\'emplacement du mot clé [MODULE] dans la page'
 	];
 	public static $pageBlocks = [
 		'12'    => 'Page standard',
+		'bar'	=> 'Barre latérale',
 		'4-8'   => 'Barre 1/3 - page 2/3',
 		'8-4'   => 'Page 2/3 - barre 1/3',
 		'3-9'   => 'Barre 1/4 - page 3/4',
 		'9-3'   => 'Page 3/4 - barre 1/4',
 		'3-6-3' => 'Barre 1/4 - page 1/2 - barre 1/4',
-		'2-7-3' => 'Barre 2/12 - page 7/12 - barre 3/12 ',
-		'3-7-2' => 'Barre 3/12 - page 7/12 - barre 2/12 ',
-		'bar'	=> 'Barre latérale'
+		'2-7-3' => 'Barre 2/12 - page 7/12 - barre 3/12',
+		'3-7-2' => 'Barre 3/12 - page 7/12 - barre 2/12',
 	];
 	public static $displayMenu = [
-		'none'		=> 'Aucun',
-		'parents' 	=> 'Le menu',
+		'none'		=> 'Aucun menu',
+		'parents' 	=> 'Le menu horizontal intégral',
 		'children'	=> 'Le sous-menu de la page parente'
 	];
 	public static $extraPosition = [

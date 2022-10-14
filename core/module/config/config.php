@@ -180,7 +180,7 @@ class config extends common
 	];
 	// Anonymisation des IP du journal
 	public static $anonIP = [
-		4 => 'Non tronquées',
+		4 => 'Non tronquée',
 		3 => 'Niveau 1 (192.168.12.x)',
 		2 => 'Niveau 2 (192.168.x.x)',
 		1 => 'Niveau 3 (192.x.x.x)',
