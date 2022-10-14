@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-dev010';
+	const ZWII_VERSION = '12.0.00-dev011';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -420,6 +420,16 @@ class common
 
 		// Chargement des dialogues
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
+		// Dialogue du module
+		if ( $this->getData(['page', $this->getUrl(0), 'moduleId']) ) {
+			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+			if ( is_dir(self::MODULE_DIR . $moduleId . '/i18n')
+					&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+			) {
+				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
+				self::$dialog = array_merge (self::$dialog, $d );
+			}
+		}
 
 		// Traduction des dialogues
 		// --- A COMMENTER --------
@@ -2957,17 +2967,6 @@ class core extends common
 			if (class_exists($moduleId)) {
 				/** @var common $module */
 				$module = new $moduleId;
-
-				// Chargement les dialogues du modules
-				// Check l'existence du dossier et de la langue de l'interface
-				if (
-					is_dir(self::MODULE_DIR . $moduleId . '/ressource') &&
-					file_exists(self::MODULE_DIR . $moduleId . '/ressource' . self::$i18nUI . 'json')
-				) {
-
-					self::$dialog[] = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
-				}
-
 
 				// Check l'existence de l'action
 				$action = '';

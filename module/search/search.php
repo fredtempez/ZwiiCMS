@@ -145,7 +145,7 @@ class search extends common {
 		}
 		// Valeurs en sortie, affichage du formulaire
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => helper::translate('Configuration du module'),
 			'view' => 'config',
 			'vendor' => [
 				'tinycolorpicker'

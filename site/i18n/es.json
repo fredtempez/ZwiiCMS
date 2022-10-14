@@ -362,11 +362,6 @@
     "Échecs": "Fracasos",
     "Erreur inconnue": "error desconocido",
     "Archive invalide": "Archivo no válido",
-    "Texte du bouton": "Botón de texto",
-    "Dimension de l'aperçu": "Tamaño de la vista previa",
-    "Aide dans la zone de saisie": "Ayuda en el área de entrada",
-    "Masquer le contenu de la page dans les résultats": "Ocultar el contenido de la página de los resultados",
-    "Surlignement": "Destacar",
     "Le curseur horizontal règle le niveau de transparence, le placer tout à la gauche pour un surlignement invisible.": "El control deslizante horizontal establece el nivel de transparencia, colóquelo completamente hacia la izquierda para obtener un resaltado invisible.",
     "Contenu multilangues": "Contenido multilingüe",
     "Extension": "Extensión",
@@ -455,7 +450,5 @@
     "Nouveau mot de passe enregistré": "Nueva contraseña guardada",
     "'Rien à importer, erreur de format ou fichier incorrect": "'Nada que importar, error de formato o archivo incorrecto",
     "Importation effectuée": "Importación realizada",
-    "Erreur de lecture, vérifiez les permissions": "Error de lectura, verifique los permisos",
-    "Avez-vous pensé aux accents ?": "¿Has pensado en los acentos?",
-    "Aucun résultat": "Sin resultados"
+    "Erreur de lecture, vérifiez les permissions": "Error de lectura, verifique los permisos"
 }

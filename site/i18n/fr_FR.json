@@ -358,11 +358,6 @@
     "Contenu avancé": "",
     "Mise en page": "",
     "Permission et référencement": "",
-    "Texte du bouton": "",
-    "Dimension de l'aperçu": "",
-    "Aide dans la zone de saisie": "",
-    "Masquer le contenu de la page dans les résultats": "",
-    "Surlignement": "",
     "Le curseur horizontal règle le niveau de transparence, le placer tout à la gauche pour un surlignement invisible.": "",
     "Contenu multilangues": "",
     "Extension": "",
@@ -453,7 +448,5 @@
     "Nouveau mot de passe enregistré": "",
     "'Rien à importer, erreur de format ou fichier incorrect": "",
     "Importation effectuée": "",
-    "Erreur de lecture, vérifiez les permissions": "",
-    "Avez-vous pensé aux accents ?": "",
-    "Aucun résultat": ""
+    "Erreur de lecture, vérifiez les permissions": ""
 }

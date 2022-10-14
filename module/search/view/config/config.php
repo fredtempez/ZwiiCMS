@@ -14,7 +14,9 @@
 	<div class='row'>
 		<div class="col12">
 			<div class="block">
-			<h4>Paramètres du module</h4>
+			<h4>
+				<?php echo helper::translate('Paramètres de recherche'); ?>
+			</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('searchSubmitText', [
@@ -48,9 +50,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Thème
-				<?php echo template::help('Les paramètres du thème sont communs aux modules du même type.'); 
-				?>
+			<h4>
+				<?php echo helper::translate('Thème'); ?>
 			</h4>
 				<div class="row">
 					<div class="col4">
