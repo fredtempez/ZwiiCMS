@@ -420,6 +420,11 @@ class translate extends common
 
 		// Construction du formulaire
 
+		// Chargement des dialogue de la langue cible
+		if (!isset($data)) {
+			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
+		}
+
 		// Ajout des champs absents selon la langue de référence
 		$dataFr = json_decode(file_get_contents(self::I18N_DIR . 'fr_FR.json'), true);
 		foreach($dataFr as $key => $value)  {
@@ -430,9 +435,6 @@ class translate extends common
 		file_put_contents (self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 		//  Tableau des chaines à traduire dans la langue sélectionnée
-		if (!isset($data)) {
-			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
-		}
 		foreach ($data as $key => $value) {
 			self::$languagesUiInstalled[$key] = $value;
 		}
