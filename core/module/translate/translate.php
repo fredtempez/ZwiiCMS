@@ -118,18 +118,18 @@ class translate extends common
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
 			$this->getUrl(3) === $_SESSION['csrf']
-			|| array_key_exists($this->getUrl(2), self::$languages) ) {
+			|| array_key_exists($this->getUrl(2), self::$languages)
+		) {
 
 			// Sauvegarder les langues de contenu
 			$this->setData(['config', 'i18n', 'interface', $this->getUrl(2)]);
 
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => helper::translate('Langues'),
-			'view' => 'index',
-			'notification' => helper::translate('Modifications enregistrées'),
-			'state' => true
-		]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'translate',
+				'notification' => helper::translate('Modifications enregistrées'),
+				'state' => true
+			]);
 		}
 
 		// Préparation du formulaire
@@ -142,7 +142,7 @@ class translate extends common
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %'),
 					$value . ' (' . $key . ')',
-					self::$i18nUI === $key ? 'Interface' : '',
+					self::$i18nUI === $key ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key . '/' . $_SESSION['csrf'],
@@ -174,9 +174,9 @@ class translate extends common
 				//self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
 				$selected = basename($file, '.json');
 				self::$languagesUiInstalled[$file] =  [
-					self::$languages[$selected ],
+					self::$languages[$selected],
 					template::flag($selected, '20 %'),
-					self::$i18nUI === $selected ? 'Interface' : '',
+					self::$i18nUI === $selected ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $file, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected . '/' . $_SESSION['csrf'],
@@ -197,7 +197,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Langues'),
+			'title' => helper::translate('Multilangue'),
 			'view' => 'index'
 		]);
 	}
@@ -317,7 +317,7 @@ class translate extends common
 				$this->setData(['locale', $data['locale']]);
 			} else {
 				// Sauver sur le disque
-				file_put_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE), LOCK_EX);
+				file_put_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 			}
 
 			// Sauvegarde la langue de l'UI
@@ -406,14 +406,15 @@ class translate extends common
 
 			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
 			foreach ($data as $key => $value) {
-				$data[$key] = $this->getInput('translateString' . array_search($key ,array_keys($data), helper::FILTER_STRING_SHORT));
+				$data[$key] = $this->getInput('translateString' . array_search($key, array_keys($data), helper::FILTER_STRING_SHORT));
 			}
 
-			file_put_contents (self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			file_put_contents(self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
+				'redirect' => helper::baseUrl() . 'translate',
 				'state' => true
 			]);
 		}
@@ -427,12 +428,12 @@ class translate extends common
 
 		// Ajout des champs absents selon la langue de référence
 		$dataFr = json_decode(file_get_contents(self::I18N_DIR . 'fr_FR.json'), true);
-		foreach($dataFr as $key => $value)  {
+		foreach ($dataFr as $key => $value) {
 			if (!array_key_exists($key, $data)) {
 				$data[$key] = '';
 			}
 		}
-		file_put_contents (self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+		file_put_contents(self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 		//  Tableau des chaines à traduire dans la langue sélectionnée
 		foreach ($data as $key => $value) {
@@ -441,7 +442,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Paramètres') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'title' => helper::translate('Traduction de l\'interface') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
 			'view' => 'ui'
 		]);
 	}

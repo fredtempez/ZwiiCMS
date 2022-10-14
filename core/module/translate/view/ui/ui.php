@@ -14,9 +14,6 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>
-                <?php echo helper::translate('Interface'); ?>
-            </h4>
             <div class="row">
                 <?php foreach ($module::$languagesUiInstalled as $key => $value) : ?>
                     <div class="col6">
