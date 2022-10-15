@@ -406,7 +406,7 @@ class translate extends common
 
 			$data = json_decode(file_get_contents(self::I18N_DIR . $this->getUrl(2) . '.json'), true);
 			foreach ($data as $key => $value) {
-				$data[$key] = $this->getInput('translateString' . array_search($key, array_keys($data), helper::FILTER_STRING_SHORT));
+				$data[$key] = $this->getInput('translateString' . array_search($key, array_keys($data)), false, null);
 			}
 
 			file_put_contents(self::I18N_DIR . $this->getUrl(2) . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
@@ -442,7 +442,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Traduction de l\'interface') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'title' => helper::translate('Traduction des dialogues') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
 			'view' => 'ui'
 		]);
 	}
