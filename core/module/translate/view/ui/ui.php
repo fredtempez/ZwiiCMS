@@ -17,6 +17,7 @@
             <div class="row">
                 <?php foreach ($module::$languagesUiInstalled as $key => $value) : ?>
                     <div class="col6">
+                        <?php echo sprintf('%g -', array_search($key, array_keys($module::$languagesUiInstalled))); ?>
                         <?php echo $key; ?>
                     </div>
                     <div class="col6">

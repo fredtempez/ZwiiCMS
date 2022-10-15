@@ -110,7 +110,7 @@
 					<div class="col6">
 						<?php echo template::checkbox('configAutoBackup', true, 'Sauvegarde automatique quotidienne du site', [
 							'checked' => $this->getData(['config', 'autoBackup']),
-							'help' => 'Une archive contenant le dossier /site/data est copiée dans le dossier \'site/backup\'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.'
+							'help' => 'Une archive du dossier /site/data est conservée pendant 30 jours. Activation recommandée'
 						]); ?>
 					</div>
 					<div class="col6">
