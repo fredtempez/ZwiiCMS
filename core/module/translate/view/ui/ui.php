@@ -17,17 +17,19 @@
             <div class="row">
                 <?php foreach ($module::$languagesUiInstalled as $key => $value) : ?>
                     <div class="col6">
-                        <?php echo sprintf('%g -', array_search($key, array_keys($module::$languagesUiInstalled))); ?>
-                        <?php echo $key; ?>
+                        <?php echo sprintf('%g -', $key); ?>
+                        <?php echo $value['source']; ?>
                     </div>
                     <div class="col6">
-                        <?php echo template::text('translateString' . array_search($key ,array_keys($module::$languagesUiInstalled)), [
+                        <?php echo template::text('translateString' . array_search($value['target'], array_keys($module::$languagesUiInstalled)), [
                             'label' => '',
-                            'value' => $value
+                            'value' => $value['target']
                         ]);  ?>
                     </div>
                 <?php endforeach; ?>
             </div>
+            <?php echo $module::$pages; ?>
         </div>
     </div>
-    <?php echo template::formClose(); ?>
+</div>
+<?php echo template::formClose(); ?>

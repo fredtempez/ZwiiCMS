@@ -26,18 +26,26 @@ class translate extends common
 		'content' => self::GROUP_VISITOR,
 	];
 
+	const PAGINATION = '20';
+
 	// Language contents
 	public static $translateOptions = [];
+
 	// Page pour la configuration dans la langue
 	public static $pagesList = [];
 	public static $orphansList = [];
+	public static $pages = '';
+
 	// Liste des langues installées
 	public static $languagesUiInstalled = [];
 	public static $languagesInstalled = [];
+
 	// Liste des langues cibles
 	public static $languagesTarget = [];
+
 	// Activation du bouton de copie
 	public static $siteCopy = true;
+
 	// Localisation en cours d'édition
 	public static $locales = [];
 
@@ -145,7 +153,7 @@ class translate extends common
 					self::$i18nUI === $key ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
@@ -179,7 +187,7 @@ class translate extends common
 					self::$i18nUI === $selected ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $selected
@@ -272,7 +280,7 @@ class translate extends common
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			 !array_key_exists($this->getUrl(2), self::$languages)
+			!array_key_exists($this->getUrl(2), self::$languages)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -390,7 +398,7 @@ class translate extends common
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-				!array_key_exists($this->getUrl(2), self::$languages)
+			!array_key_exists($this->getUrl(2), self::$languages)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -435,7 +443,19 @@ class translate extends common
 
 		//  Tableau des chaines à traduire dans la langue sélectionnée
 		foreach ($data as $key => $value) {
-			self::$languagesUiInstalled[$key] = $value;
+			$dialogues[] = ['source' => $key, 'target' => $value];
+		}
+
+		// Pagination
+		$pagination = helper::pagination($dialogues, $this->getUrl(), self::PAGINATION);
+
+		// Liste des pages
+		self::$pages = $pagination['pages'];
+
+
+		// Articles en fonction de la pagination
+		for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			self::$languagesUiInstalled[$i] =  $dialogues[$i];
 		}
 
 		// Valeurs en sortie
