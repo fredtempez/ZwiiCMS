@@ -431,7 +431,7 @@ class common
 			}
 		}
 
-		// Traduction des dialogues
+		// Éditer les dialogues
 		// --- A COMMENTER --------
 		/*
 		$l = 'pt_PT';

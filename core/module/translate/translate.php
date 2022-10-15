@@ -442,7 +442,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Traduction des dialogues') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'title' => helper::translate('Éditer les dialogues') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
 			'view' => 'ui'
 		]);
 	}
