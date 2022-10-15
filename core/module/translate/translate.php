@@ -145,7 +145,7 @@ class translate extends common
 					self::$i18nUI === $key ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key ,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
@@ -179,7 +179,7 @@ class translate extends common
 					self::$i18nUI === $selected ? helper::translate('Interface') : '',
 					'',
 					template::button('translateContentLanguageEdit' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected ,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $selected
@@ -272,8 +272,7 @@ class translate extends common
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
-			|| !array_key_exists($this->getUrl(2), self::$languages)
+			 !array_key_exists($this->getUrl(2), self::$languages)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -391,8 +390,7 @@ class translate extends common
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
-			|| !array_key_exists($this->getUrl(2), self::$languages)
+				!array_key_exists($this->getUrl(2), self::$languages)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
