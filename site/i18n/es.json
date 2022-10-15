@@ -34,7 +34,7 @@
     "Préserver le fichier htaccess racine": "Conservar archivo ra&iacute;z htaccess",
     "Lors d'une mise à jour automatique, conserve le fichier htaccess de la racine du site.": "Durante una actualizaci&oacute;n autom&aacute;tica, mantenga el archivo htaccess de la ra&iacute;z del sitio.",
     "Sauvegarde automatique quotidienne du site": "Copia de seguridad diaria autom&aacute;tica del sitio",
-    "Une archive contenant le dossier /site/data est copiée dans le dossier 'site/backup'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.": "Un archivo que contiene la carpeta /site/data se copia en la carpeta &#039;site/backup&#039;. La copia de seguridad se conserva durante 30 d&iacute;as.&lt;/p&gt;&lt;p&gt;Los archivos del sitio no se copian autom&aacute;ticamente. Activaci&oacute;n recomendada .",
+    "Une archive du dossier /site/data est conservée pendant 30 jours. Activation recommandée": "Un archivo que contiene la carpeta /site/data se conserva durante 30 d&iacute;as. Activaci&oacute;n recomendada .",
     "Site en maintenance": "Sitio en mantenimiento",
     "Clé de l'API <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>": "Clave API &lt;a href=&#039;https://app.screenshotapi.net/&#039; target=&#039;_blank&#039;&gt;ScreenShotApi&lt;/a&gt;",
     "Saisir la clé, puis valider le formulaire avant de cliquer sur le bouton de génération": "Ingrese la clave, luego valide el formulario antes de hacer clic en el bot&oacute;n generar",
@@ -346,7 +346,6 @@
     "Mise en page": "Dise&ntilde;o",
     "Permission et référencement": "Permiso y referenciaci&oacute;n",
     "Les modifications que vous avez apportées ne seront peut-tre pas enregistrées.": "Es posible que los cambios que haya realizado no se guarden.",
-    "Une archive contenant le dossier /site/data est copiée dans le dossier /'site/backup'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.": "Un archivo que contiene la carpeta /site/data se copia en la carpeta /&#039;site/backup&#039;. La copia de seguridad se mantiene durante 30 d&iacute;as.&lt;/p&gt;&lt;p&gt;Los archivos del sitio no se copian autom&aacute;ticamente. Se recomienda activaci&oacute;n.",
     "Il apparat dans la barre de titre et les partages sur les réseaux sociaux.": "Aparece en la barra de t&iacute;tulo y en las redes sociales.",
     "Éditeur de script %s": "Editor de script %s",
     "Journal réinitialisé avec succès": "Registro reiniciado con &eacute;xito",
@@ -484,5 +483,6 @@
     "Menu standard": "Men&uacute; est&aacute;ndar",
     "Menu accessoire": "Men&uacute; accesorio",
     "Activer": "Activar",
-    "Interface": "Interfaz"
+    "Interface": "Interfaz",
+    "Une archive contenant le dossier /site/data est copiée dans le dossier 'site/backup'. La sauvegarde est conservée pendant 30 jours.</p><p>Les fichiers du site ne sont pas sauvegardés automatiquement. Activation recommandée.": ""
 }
