@@ -569,31 +569,34 @@ class plugin extends common
 				mkdir($tmpFolder, 0755);
 			}
 
+			$target = $this->getUrl(2);
+			$moduleId = $this->getUrl(3);
+
 			// Descripteur de l'archive
 			$infoModule = helper::getModules();
 
 			//Nom de l'archive
-			$fileName =  $this->getUrl(3) . $infoModule [$this->getUrl(3)]['version'] .  '.zip';
+			$fileName =  $moduleId . $infoModule[$moduleId]['version'] .  '.zip';
 
 			// Création du descripteur si absent
-			if (!file_exists(self::MODULE_DIR . $this->getUrl(3) . '/enum.json')) {
-				$success = file_put_contents(self::MODULE_DIR . $this->getUrl(3) . '/enum.json', json_encode([$this->getUrl(3) => $infoModule[$this->getUrl(3)]]));
+			if (!file_exists(self::MODULE_DIR . $moduleId . '/enum.json')) {
+				$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode([$moduleId => $infoModule[$moduleId]]));
 			}
 
 			// Construire l'archive
-			$this->makeZip($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $this->getUrl(3));
+			$this->makeZip($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $moduleId);
 
-			switch ($this->getUrl(2)) {
+			switch ($target) {
 				case 'filemanager':
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
 					}
-					$success .= copy($tmpFolder . '/' . $fileName, self::FILE_DIR . 'source/modules/' . $this->getUrl(3) . '.zip');
+					$success .= copy($tmpFolder . '/' . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
 
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl() . 'plugin',
-						'notification' => $success ? $this->getUrl(3) . helper::translate('Archive copiée dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
+						'notification' => $success ? $moduleId . helper::translate('Archive copiée dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
 					// Nettoyage
@@ -673,22 +676,29 @@ class plugin extends common
 				mkdir($tmpFolder, 0755);
 			}
 
+			$moduleId = $this->getUrl(3);
+			$pageId = $this->getUrl(4);
 
-			// Copie des infos sur le module
-			$modulesData = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/module.json'), true);
-			$moduleData = $modulesData['module'][$this->getUrl(4)];
+			// DOnnèes du module de la page sléectionnée
+			$moduleData = $this->getData(['module', $pageId]);
+
+			// Descripteur du module
+			$infoModules = helper::getModules();
+			$infoModule = $infoModules[$moduleId];
+
+			// Copier les données et le descripteur
 			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData));
+			$success .= file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleData]));
 
 			// Le dossier du module s'il existe
-			if (is_dir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4))) {
+			if (is_dir(self::DATA_DIR . $pageId . '/' . $moduleId)) {
 				// Copier le dossier des données
-				$success .= $this->copyDir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4), $tmpFolder);
+				$success .= $this->copyDir(self::DATA_DIR . $pageId . '/' . $moduleId, $tmpFolder);
 			}
-
 
 			// création du zip
 			if ($success) {
-				$fileName =  $this->getUrl(2) . '-' .  $this->getUrl(3) . '-' . $this->getUrl(4) . '.zip';
+				$fileName =  $this->getUrl(2) . '-' .  $moduleId . '-' . $pageId . '.zip';
 				$this->makeZip($fileName, $tmpFolder);
 				if (file_exists($fileName)) {
 					ob_start();
