@@ -1,5 +1,6 @@
 # version 6.22
 - mise en oeuvre du helper dateUTF8
+- Réglage de l'initialisaion de la configuration
 # version 6.2
 - date des commentaires
 # version 6.1
