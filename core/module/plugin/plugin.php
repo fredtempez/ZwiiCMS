@@ -576,8 +576,8 @@ class plugin extends common
 			$fileName =  $this->getUrl(3) . $infoModule [$this->getUrl(3)]['version'] .  '.zip';
 
 			// Création du descripteur si absent
-			if (!file_exists(self::MODULE_DIR . $this->getUrl(3) . '/descripteur.json')) {
-				$success = file_put_contents(self::MODULE_DIR . $this->getUrl(3) . '/descripteur.json', json_encode([$this->getUrl(3) => $infoModule[$this->getUrl(3)]]));
+			if (!file_exists(self::MODULE_DIR . $this->getUrl(3) . '/enum.json')) {
+				$success = file_put_contents(self::MODULE_DIR . $this->getUrl(3) . '/enum.json', json_encode([$this->getUrl(3) => $infoModule[$this->getUrl(3)]]));
 			}
 
 			// Construire l'archive
@@ -734,7 +734,7 @@ class plugin extends common
 			}
 
 			// Lire le descripteur
-			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/descripteur.json'), true);
+			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/enum.json'), true);
 
 			// Lecture des données du module
 			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true);
