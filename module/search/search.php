@@ -17,7 +17,8 @@
  *
  */
 
-class search extends common {
+class search extends common
+{
 
 	const VERSION = '2.7';
 	const REALNAME = 'Recherche';
@@ -48,88 +49,94 @@ class search extends common {
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
 	 */
-	private function update() {
+	private function update()
+	{
 
-
-		$versionData = $this->getData(['module',$this->getUrl(0),'config', 'versionData' ]);
 
 		// le module n'est pas initialisé
-		if ($versionData === NULL) {
+		if (
+			$this->getData(['module', $this->getUrl(0), 'config']) === NULL
+			|| $this->getData(['module', $this->getUrl(0), 'theme']) === NULL
+			|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')
+		) {
 			$this->init();
 		}
 
+		$versionData = $this->getData(['module', $this->getUrl(0), 'config', 'versionData']);
+
 		// Mise à jour 2.2
-		if (version_compare($versionData, '2.2', '<') ) {
+		if (version_compare($versionData, '2.2', '<')) {
 			if (is_dir(self::DATADIRECTORY . 'pages/')) {
 				// Déplacer les données du dossier Pages
 				$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
 				$this->removeDir(self::DATADIRECTORY . 'pages/');
 			}
 			// Mettre à jour la version
-			$this->setData(['module',$this->getUrl(0),'config', 'versionData', '2.2' ]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '2.2']);
 		}
 	}
 
 	/**
 	 * Initialisation du module
 	 */
-	private function init(){
+	private function init()
+	{
 
 
-		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ;
+		$fileCSS = self::DATADIRECTORY . $this->getUrl(0) . '/theme.css';
 
 		if ($this->getData(['module', $this->getUrl(0)]) === null) {
 			// Données du module
 			require_once('module/search/ressource/defaultdata.php');
-			$this->setData(['module', $this->getUrl(0), 'config',init::$defaultConfig ]);
+			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultConfig]);
 			// Données de thème
-			$this->setData(['module', $this->getUrl(0), 'theme',init::$defaultTheme ]);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' ]);
+			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
 			// Recharger la page pour éviter une config vide
 			header("Refresh:0");
 		}
 
 		// Dossier de l'instance
 		if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
-			mkdir (self::DATADIRECTORY . $this->getUrl(0), 0755, true);
+			mkdir(self::DATADIRECTORY . $this->getUrl(0), 0755, true);
 		}
 
 		// Check la présence de la feuille de style
-		if ( !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
+		if (!file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
 			// Générer la feuille de CSS
-			$style = '.keywordColor {background: ' . $this->getData([ 'module', $this->getUrl(0), 'theme', 'keywordColor'  ]) . ';}';
+			$style = '.keywordColor {background: ' . $this->getData(['module', $this->getUrl(0), 'theme', 'keywordColor']) . ';}';
 			// Sauver la feuille de style
-			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style );
+			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style);
 			// Stocker le nom de la feuille de style
-			$this->setData(['module', $this->getUrl(0) , 'theme', 'style', $fileCSS]);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', $fileCSS]);
 		}
-
 	}
 
 
 	// Configuration vide
-	public function config() {
+	public function config()
+	{
 
 		// Mise à jour des données de module
 		$this->update();
 
-		if($this->isPost())  {
+		if ($this->isPost()) {
 
 			// Générer la feuille de CSS
 			$style = '.keywordColor {background:' . $this->getInput('searchKeywordColor') . ';}';
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' , $style );
+			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style);
 			// Fin feuille de style
 
 			// Soumission du formulaire
-			$this->setData(['module', $this->getUrl(0), 'config',[
+			$this->setData(['module', $this->getUrl(0), 'config', [
 				'submitText' => $this->getInput('searchSubmitText'),
 				'placeHolder' => $this->getInput('searchPlaceHolder'),
-				'resultHideContent' => $this->getInput('searchResultHideContent',helper::FILTER_BOOLEAN),
-				'previewLength' => $this->getInput('searchPreviewLength',helper::FILTER_INT),
+				'resultHideContent' => $this->getInput('searchResultHideContent', helper::FILTER_BOOLEAN),
+				'previewLength' => $this->getInput('searchPreviewLength', helper::FILTER_INT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 			]]);
-			$this->setData(['module', $this->getUrl(0), 'theme',[
+			$this->setData(['module', $this->getUrl(0), 'theme', [
 				'keywordColor' => $this->getInput('searchKeywordColor'),
 				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
 			]]);
@@ -141,7 +148,6 @@ class search extends common {
 				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
 				'state' => $success !== FALSE
 			]);
-
 		}
 		// Valeurs en sortie, affichage du formulaire
 		$this->addOutput([
@@ -153,118 +159,120 @@ class search extends common {
 		]);
 	}
 
-	public function index() {
+	public function index()
+	{
 
 		// Mise à jour des données de module
 		$this->update();
 
-		if($this->isPost())  {
+		if ($this->isPost()) {
 			//Initialisations variables
 			$success = true;
 			$result = [];
 			$notification = '';
-			$total='';
+			$total = '';
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
-			self::$motclef=$this->getInput('searchMotphraseclef');
+			self::$motclef = $this->getInput('searchMotphraseclef');
 			// Variable de travail, on conserve la variable globale pour l'affichage du résultat
 			$motclef = self::$motclef;
 
 			// Suppression des mots < 3  caractères et des articles > 2 caractères de la chaîne $motclef
 			$arraymotclef = explode(' ', $motclef);
 			$motclef = '';
-			foreach($arraymotclef as $key=>$value){
-				if( strlen($value)>2 && $value!=='les' && $value!=='des' && $value!=='une' && $value!=='aux') $motclef.=$value.' ';
+			foreach ($arraymotclef as $key => $value) {
+				if (strlen($value) > 2 && $value !== 'les' && $value !== 'des' && $value !== 'une' && $value !== 'aux') $motclef .= $value . ' ';
 			}
 			// Suppression du dernier ' '
-			if($motclef !== '') $motclef = substr($motclef,0, strlen($motclef)-1);
+			if ($motclef !== '') $motclef = substr($motclef, 0, strlen($motclef) - 1);
 
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
-			self::$motentier=$this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
+			self::$motentier = $this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
 
-			if ($motclef !== '' ) {
-				foreach($this->getHierarchy(null,false,null) as $parentId => $childIds) {
-					if ($this->getData(['page', $parentId, 'disable']) === false  &&
-                        $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
-                        $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
+			if ($motclef !== '') {
+				foreach ($this->getHierarchy(null, false, null) as $parentId => $childIds) {
+					if (
+						$this->getData(['page', $parentId, 'disable']) === false  &&
+						$this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
+						$this->getData(['page', $parentId, 'block']) !== 'bar'
+					) {
 						$url = $parentId;
 						$titre = $this->getData(['page', $parentId, 'title']);
 						//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $parentId, 'content']));
 						$content = $this->getPage($parentId, self::$i18nContent);
-						$content =   $titre . ' ' . $content ;
+						$content =   $titre . ' ' . $content;
 						// Pages sauf pages filles et articles de blog
 						$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
-						if (is_array($tempData) ) {
-							$result [] = $tempData;
+						if (is_array($tempData)) {
+							$result[] = $tempData;
 						}
 					}
 
-					foreach($childIds as $childId) {
-							// Sous page
-							if ($this->getData(['page', $childId, 'disable']) === false &&
-                                $this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
-                                $this->getData(['page', $parentId, 'block']) !== 'bar') 	{
-                                    $url = $childId;
-                                    $titre = $this->getData(['page', $childId, 'title']);
-									//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $childId, 'content']));
-									$content = $this->getPage($childId, self::$i18nContent);
-									$content =   $titre . ' ' . $content ;
-                                    //Pages filles
-									$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
-									if (is_array($tempData) ) {
-										$result [] = $tempData;
-									}
+					foreach ($childIds as $childId) {
+						// Sous page
+						if (
+							$this->getData(['page', $childId, 'disable']) === false &&
+							$this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
+							$this->getData(['page', $parentId, 'block']) !== 'bar'
+						) {
+							$url = $childId;
+							$titre = $this->getData(['page', $childId, 'title']);
+							//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $childId, 'content']));
+							$content = $this->getPage($childId, self::$i18nContent);
+							$content =   $titre . ' ' . $content;
+							//Pages filles
+							$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
+							if (is_array($tempData)) {
+								$result[] = $tempData;
 							}
+						}
 
-							// Articles d'une sous-page blog ou de news
-							if ( $this->getData([ 'module', $childId, 'posts'])
-							) {
-								foreach($this->getData(['module',$childId,'posts']) as $articleId => $article) {
-									if($this->getData(['module',$childId,'posts',$articleId,'state']) === true)  {
-										$url = $childId . '/' . $articleId;
-										$titre = $article['title'];
-										$contenu = ' ' . $titre . ' ' . $article['content'];
-										// Articles de sous-page de type blog
-										$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
-										if (is_array($tempData) ) {
-											$result [] = $tempData;
-										}
+						// Articles d'une sous-page blog ou de news
+						if ($this->getData(['module', $childId, 'posts'])) {
+							foreach ($this->getData(['module', $childId, 'posts']) as $articleId => $article) {
+								if ($this->getData(['module', $childId, 'posts', $articleId, 'state']) === true) {
+									$url = $childId . '/' . $articleId;
+									$titre = $article['title'];
+									$contenu = ' ' . $titre . ' ' . $article['content'];
+									// Articles de sous-page de type blog
+									$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+									if (is_array($tempData)) {
+										$result[] = $tempData;
 									}
-                                }
+								}
 							}
-                    }
+						}
+					}
 
 					// Articles d'un blog ou de news
-					if ( $this->getData([ 'module', $parentId, 'posts'])
-				    ) {
+					if ($this->getData(['module', $parentId, 'posts'])) {
 
-						foreach($this->getData(['module',$parentId,'posts']) as $articleId => $article) {
-							if($this->getData(['module',$parentId,'posts',$articleId,'state']) === true)
-							{
-								$url = $parentId. '/' . $articleId;
+						foreach ($this->getData(['module', $parentId, 'posts']) as $articleId => $article) {
+							if ($this->getData(['module', $parentId, 'posts', $articleId, 'state']) === true) {
+								$url = $parentId . '/' . $articleId;
 								$titre = $article['title'];
 								$contenu = ' ' . $titre . ' ' . $article['content'];
 								$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
-								if (is_array($tempData) ) {
-									$result [] = $tempData;
+								if (is_array($tempData)) {
+									$result[] = $tempData;
 								}
 							}
-                        }
+						}
 					}
 				}
 				// Message de synthèse de la recherche
-				if (count($result) === 0) 	{
+				if (count($result) === 0) {
 					self::$resultTitle = helper::translate('Aucun résultat');
 					self::$resultError = helper::translate('Avez-vous pensé aux accents ?');
-				} else  {
+				} else {
 					self::$resultError = '';
 					//self::$resultTitle = sprintf(' %s',helper::translate('Résultat de votre recherche'));
 					rsort($result);
 					foreach ($result as $key => $value) {
-						$r [] = $value['preview'];
+						$r[] = $value['preview'];
 					}
 					// Générer une chaine de caractères
-					self::$resultList= implode("", $r);
+					self::$resultList = implode("", $r);
 				}
 			}
 
@@ -274,8 +282,8 @@ class search extends common {
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
 				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
-							? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
-							: ''
+					? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+					: ''
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
@@ -293,7 +301,7 @@ class search extends common {
 	private function occurrence($url, $titre, $contenu, $motclef, $motentier)
 	{
 		// Nettoyage de $contenu : on enlève tout ce qui est inclus entre < et >
-		$contenu = preg_replace ('/<[^>]*>/', ' ', $contenu);
+		$contenu = preg_replace('/<[^>]*>/', ' ', $contenu);
 		// Accentuation
 		$contenu = html_entity_decode($contenu);
 
@@ -305,28 +313,28 @@ class search extends common {
 
 		foreach ($a as $key => $value) {
 
-			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|' ;
+			$keywords .= $motentier === true ? $value . '|' : '\b' . $value . '\b|';
 		}
-		$keywords = substr($keywords,0,strlen($keywords) - 1);
+		$keywords = substr($keywords, 0, strlen($keywords) - 1);
 		$keywords .= ')/i';
-		$keywords = str_replace ('+', ' ',$keywords);
+		$keywords = str_replace('+', ' ', $keywords);
 
 		// Rechercher
-		$valid = preg_match_all($keywords,$contenu,$matches,PREG_OFFSET_CAPTURE);
-		if ($valid > 0 ) {
+		$valid = preg_match_all($keywords, $contenu, $matches, PREG_OFFSET_CAPTURE);
+		if ($valid > 0) {
 			if (($matches[0][0][1]) > 0) {
 				$resultat =  sprintf('<h2><a  href="./?%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $url, $titre, count($matches[0]));
 				// Création de l'aperçu
 				// Eviter de découper avec une valeur négative
 				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;
 				// Rechercher l'espace le plus proche
-				$d = $d >= 1 ? strpos($contenu,' ',$d) : $d;
+				$d = $d >= 1 ? strpos($contenu, ' ', $d) : $d;
 				// Découper l'aperçu
-				$t = substr($contenu, $d ,$this->getData(['module',$this->getUrl(0), 'config', 'previewLength']));
+				$t = substr($contenu, $d, $this->getData(['module', $this->getUrl(0), 'config', 'previewLength']));
 				// Applique une mise en évidence
-				$t = preg_replace($keywords, '<span class= "keywordColor">\1</span>',$t);
+				$t = preg_replace($keywords, '<span class= "keywordColor">\1</span>', $t);
 				// Sauver résultat
-				$resultat .= '<p class="searchResult">'.$t.'...</p>';
+				$resultat .= '<p class="searchResult">' . $t . '...</p>';
 
 				//}
 				return ([
@@ -336,5 +344,4 @@ class search extends common {
 			}
 		}
 	}
-
 }
