@@ -569,8 +569,18 @@ class plugin extends common
 				mkdir($tmpFolder, 0755);
 			}
 
+			// Descripteur de l'archive
+			$infoModule = helper::getModules();
+
 			//Nom de l'archive
-			$fileName =  $this->getUrl(3) . '.zip';
+			$fileName =  $this->getUrl(3) . $infoModule [$this->getUrl(3)]['version'] .  '.zip';
+
+			// Création du descripteur si absent
+			if (!file_exists(self::MODULE_DIR . $this->getUrl(3) . '/descripteur.json')) {
+				$success = file_put_contents(self::MODULE_DIR . $this->getUrl(3) . '/descripteur.json', json_encode([$this->getUrl(3) => $infoModule[$this->getUrl(3)]]));
+			}
+
+			// Construire l'archive
 			$this->makeZip($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $this->getUrl(3));
 
 			switch ($this->getUrl(2)) {
@@ -578,7 +588,7 @@ class plugin extends common
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
 					}
-					$success = copy($tmpFolder . '/' . $fileName, self::FILE_DIR . 'source/modules/' . $this->getUrl(3) . '.zip');
+					$success .= copy($tmpFolder . '/' . $fileName, self::FILE_DIR . 'source/modules/' . $this->getUrl(3) . '.zip');
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -586,6 +596,9 @@ class plugin extends common
 						'notification' => $success ? $this->getUrl(3) . helper::translate('Archive copiée dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
+					// Nettoyage
+					unlink($tmpFolder . '/' . $fileName);
+					$this->removeDir($tmpFolder);
 					break;
 				case 'download':
 				default:
@@ -595,12 +608,11 @@ class plugin extends common
 					ob_clean();
 					ob_end_flush();
 					readfile($tmpFolder . '/' . $fileName);
+					// Nettoyage
+					unlink($tmpFolder . '/' . $fileName);
+					$this->removeDir($tmpFolder);
 					exit();
-					break;
 			}
-			// Nettoyage
-			unlink($tmpFolder . '/' . $fileName);
-			$this->removeDir($tmpFolder);
 		}
 	}
 
@@ -672,10 +684,6 @@ class plugin extends common
 				// Copier le dossier des données
 				$success .= $this->copyDir(self::DATA_DIR . $this->getUrl(3) . '/' . $this->getUrl(4), $tmpFolder);
 			}
-
-			// Descripteur de l'archive
-			$infoModule = helper::getModules();
-			$success .= file_put_contents($tmpFolder . '/descripteur.json', json_encode([$this->getUrl(3) => $infoModule[$this->getUrl(3)]]));
 
 
 			// création du zip
