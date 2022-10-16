@@ -419,7 +419,12 @@ class common
 		}
 
 		// Chargement des dialogues
+		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json') ) {
+			// Copie des fichiers de langue par défaut fr_FR si pas initialisé
+			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR );
+		}
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
+
 		// Dialogue du module
 		if ( $this->getData(['page', $this->getUrl(0), 'moduleId']) ) {
 			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
@@ -441,9 +446,6 @@ class common
 			}
 		}
 		*/
-
-
-
 
 		// Mise à jour des données core
 		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION))) include('core/include/update.inc.php');

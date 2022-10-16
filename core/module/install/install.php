@@ -196,8 +196,11 @@ class install extends common
 					} catch (Exception $e) {
 						$success = $e->getMessage();
 					}
+
+					// Nettoyage
 					unlink(self::TEMP_DIR . 'files.tar.gz');
 					unlink(self::TEMP_DIR . 'files.tar');
+
 					// Créer le dossier des fontes
 					if (!is_dir(self::DATA_DIR . 'fonts')) {
 						mkdir(self::DATA_DIR . 'fonts');
