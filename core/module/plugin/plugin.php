@@ -688,12 +688,12 @@ class plugin extends common
 
 			// Copier les données et le descripteur
 			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData));
-			$success .= file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleData]));
+			$success .= file_put_contents($tmpFolder . '/enum.json', json_encode( [$moduleId => $infoModule]));
 
 			// Le dossier du module s'il existe
-			if (is_dir(self::DATA_DIR . $pageId . '/' . $moduleId)) {
+			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId )) {
 				// Copier le dossier des données
-				$success .= $this->copyDir(self::DATA_DIR . $pageId . '/' . $moduleId, $tmpFolder);
+				$success .= $this->copyDir(self::DATA_DIR . $moduleId  . '/' . $pageId, $tmpFolder);
 			}
 
 			// création du zip
@@ -733,31 +733,39 @@ class plugin extends common
 		if ($this->isPost()) {
 			// Récupérer le fichier et le décompacter
 			$zipFilename =	$this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
-			$targetPage = $this->getInput('pluginImportPage', helper::FILTER_STRING_SHORT, true);
-			$tempFolder = uniqid();
+			$pageId = $this->getInput('pluginImportPage', null, true);
+			$tmpFolder = uniqid();
 
 			// Extraction dans un dossier temporaire
-			mkdir(self::TEMP_DIR . $tempFolder, 0755);
+			mkdir(self::TEMP_DIR . $tmpFolder, 0755);
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
-				$zip->extractTo(self::TEMP_DIR  . $tempFolder);
+				$zip->extractTo(self::TEMP_DIR  . $tmpFolder);
 			}
 
 			// Lire le descripteur
-			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/enum.json'), true);
+			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tmpFolder . '/enum.json'), true);
+			$moduleId = array_key_first($descripteur);
 
 			// Lecture des données du module
-			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tempFolder . '/module.json'), true);
+			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tmpFolder . '/module.json'), true);
+
 			// Chargement des données du module importé
-			$this->setData(['module', $targetPage, $moduleData]);
+			$this->setData(['module', $pageId, $moduleData]);
+
 			// Intégration des données du module importé dans la page
-			$this->setData(['page', $targetPage, 'moduleId', array_key_first($descripteur)]);
+			$this->setData(['page', $pageId, 'moduleId', $moduleId]);
+
+			// Copie des fichiers d'accompagnement
+			// Le dossier du module s'il existe
+			if (is_dir($tmpFolder . $moduleId  . '/' . $pageId )) {
+				// Copier le dossier des données
+				$this->copyDir($tmpFolder . $moduleId  . '/' . $pageId, self::DATA_DIR);
+			}
 
 			// Supprimer le dossier temporaire
-			$this->removeDir(self::TEMP_DIR . $tempFolder);
+			$this->removeDir(self::TEMP_DIR . $tmpFolder);
 			$zip->close();
-
-
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -794,16 +802,17 @@ class plugin extends common
 		 * et ne sont pas des barres latérales
 		 */
 		self::$pagesList = $this->getHierarchy(null, null, null);
-		foreach (self::$pagesList as $page => $pageId) {
+		foreach (self::$pagesList as $page => $value) {
 			if (
 				$this->getData(['page', $page, 'block']) === 'bar' ||
 				//$this->getData(['page',$page,'disable']) === true ||
 				$this->getData(['page', $page, 'moduleId']) !== ''
 			) {
 				unset(self::$pagesList[$page]);
+			} else {
+				self::$pagesList[$page] = $page;
 			}
 		}
-		self::$pagesList = array_keys(self::$pagesList);
 
 		// Valeurs en sortie
 		$this->addOutput([
