@@ -78,9 +78,9 @@ class template
         }
 
         // Tirage des nombres
-        mt_srand((float) microtime() * 1000000);
+        mt_srand( microtime(true) * 1000000);
         $firstNumber = mt_rand(1, $limit);
-        mt_srand((float) microtime() * 1000000);
+        mt_srand( microtime(true) * 1000000);
         $secondNumber = mt_rand(1, $limit);
 
         // Permutation si addition ou soustraction
