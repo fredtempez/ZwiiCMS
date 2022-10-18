@@ -569,7 +569,7 @@ class plugin extends common
 				mkdir($tmpFolder, 0755);
 			}
 
-			$target = $this->getUrl(2);
+			$action = $this->getUrl(2);
 			$moduleId = $this->getUrl(3);
 
 			// Descripteur de l'archive
@@ -586,7 +586,7 @@ class plugin extends common
 			// Construire l'archive
 			$this->makeZip($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $moduleId);
 
-			switch ($target) {
+			switch ($action) {
 				case 'filemanager':
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
@@ -661,7 +661,7 @@ class plugin extends common
 	public function dataExport()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(5) !== $_SESSION['csrf']) {
+		if ($this->getUrl(6) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'plugin',
@@ -676,8 +676,10 @@ class plugin extends common
 				mkdir($tmpFolder, 0755);
 			}
 
-			$moduleId = $this->getUrl(3);
-			$pageId = $this->getUrl(4);
+			$action = $this->getUrl(2);
+			$lang = $this->getUrl(3);
+			$moduleId = $this->getUrl(4);
+			$pageId = $this->getUrl(5);
 
 			// DOnnèes du module de la page sléectionnée
 			$moduleData = $this->getData(['module', $pageId]);
@@ -697,19 +699,25 @@ class plugin extends common
 
 			// création du zip
 			if ($success) {
-				$fileName =  $this->getUrl(2) . '-' .  $moduleId . '-' . $pageId . '.zip';
-				$this->makeZip($fileName, $tmpFolder);
-				if (file_exists($fileName)) {
-					ob_start();
-					header('Content-Type: application/octet-stream');
-					header('Content-Disposition: attachment; filename="' . $fileName . '"');
-					header('Content-Length: ' . filesize($fileName));
-					ob_clean();
-					ob_end_flush();
-					readfile($fileName);
-					unlink($fileName);
-					$this->removeDir($tmpFolder);
-					exit();
+				switch ($action) {
+					case 'filemanager':
+						
+					case 'download':
+					default:
+						$fileName =  $lang . '-' .  $moduleId . '-' . $pageId . '.zip';
+						$this->makeZip($fileName, $tmpFolder);
+						if (file_exists($fileName)) {
+							ob_start();
+							header('Content-Type: application/octet-stream');
+							header('Content-Disposition: attachment; filename="' . $fileName . '"');
+							header('Content-Length: ' . filesize($fileName));
+							ob_clean();
+							ob_end_flush();
+							readfile($fileName);
+							unlink($fileName);
+							$this->removeDir($tmpFolder);
+							exit();
+						}
 				}
 			} else {
 				// Valeurs en sortie
