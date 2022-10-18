@@ -518,7 +518,12 @@ class plugin extends common
 							$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
 							template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
 							template::button('dataExport' . $keyPage, [
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+								'value' => template::ico('download-cloud'),
+								'help' => 'Exporter les données du module'
+							]),
+							template::button('dataExport' . $keyPage, [
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
 								'value' => template::ico('download'),
 								'help' => 'Exporter les données du module'
 							]),

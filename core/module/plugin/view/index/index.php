@@ -87,7 +87,7 @@
 					</div>
 					<div class="row">
 						<div class="col12">
-							<?php echo template::table([4, 1, 5, 1, 1], $module::$modulesData, ['Module', 'Version', 'Page associée', '', '']); ?>
+							<?php echo template::table([4, 1, 4, 1, 1, 1], $module::$modulesData, ['Module', 'Version', 'Page associée', '', '', '']); ?>
 						</div>
 					</div>
 				</div>
