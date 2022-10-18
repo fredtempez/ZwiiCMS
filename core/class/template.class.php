@@ -484,9 +484,9 @@ class template
      */
     public static function flag($langId, $size = 'auto')
     {
+        $lang = 'fr_FR';
         switch ($langId) {
             case '':
-                $lang = 'fr_FR';
                 break;
             case in_array($langId, core::$languages):
                 $lang = $langId;
@@ -498,11 +498,11 @@ class template
                     $lang = 'fr_FR';
                 }
         }
-        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $langId . '.png"
+        return '<img class="flag" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"
                 width="' . $size . '"
                 height="' . $size . '"
-                title="' . $langId . '"
-                alt="(' . $langId . ')"/>';
+                title="' . $lang . '"
+                alt="(' . $lang . ')"/>';
     }
 
     /**
