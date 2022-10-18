@@ -21,13 +21,13 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::file('pluginImportFile', [
-                        'label' => 'Archive ZIP :',
+                        'label' => 'Archive ZIP',
                         'type' => 2
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('pluginImportPage', $module::$pagesList, [
-                        'label' => 'Importer le module dans la page ' . template::flag('selected', '20px')
+                        'label' => 'Importer dans' . template::flag('selected', '20px')
                     ]); ?>
                 </div>
             </div>
