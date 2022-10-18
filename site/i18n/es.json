@@ -317,6 +317,7 @@
     "Version": "Versión",
     "Catégorie": "Categoría",
     "Page": "Página",
+    "Page associée": "Página asociada",
     "Copie de contenus localisés": "Copia de contenidos localizados",
     "Nouveau contenu localisé": "Nuevo contenido localizado",
     "Sélectionnez une langue": "Seleccione un idioma",
@@ -483,5 +484,7 @@
     "Menu standard": "Menú estándar",
     "Menu accessoire": "Menú accesorio",
     "Activer": "Activar",
-    "Interface": "Interfaz"
+    "Interface": "Interfaz",
+    "Importer dans": "Importar a",
+    "Archive ZIP": "Archivo ZIP"
 }

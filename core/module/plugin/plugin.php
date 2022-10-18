@@ -433,13 +433,13 @@ class plugin extends common
 			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
 				if (!empty($value)) {
+
 					$pagesInfos[$keyi18n][$key]['pageId'] = $key;
-					$pagesInfos[$keyi18n][$key]['title'] = $this->getData(['page', $key, 'shortTitle']);
+					$pagesInfos[$keyi18n][$key]['title'] = $pages['page'][$key]['title'];
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
 				}
 			}
 		}
-
 
 		// Recherche des modules orphelins dans toutes les langues
 		$orphans = $installed = array_flip(array_keys($infoModules));
@@ -504,38 +504,35 @@ class plugin extends common
 
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
+		self::$modulesData[] = [];
 		if (
-			isset($pagesInfos) &&
-			array_key_exists(self::$i18nContent, $pagesInfos)
+			isset($pagesInfos) //&&
+			//array_key_exists(self::$i18nContent, $pagesInfos)
 		) {
-			foreach ($pagesInfos[self::$i18nContent] as $keyPage => $value) {
-				if (isset($infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']])) {
-					// Co[nstruire le tableau de sortie
-					self::$modulesData[] = [
-						$infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']]['realName'],
-						$pagesInfos[self::$i18nContent][$keyPage]['moduleId'],
-						$infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']]['version'],
-						//template::flag(self::$i18nContent, '20px'),
-						'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[self::$i18nContent][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
-						template::button('dataExport' . $keyPage, [
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/' . self::$i18nContent . '/' . $pagesInfos[self::$i18nContent][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
-							'value' => template::ico('download'),
-							'help' => 'Exporter les données du module'
-						]),
-						template::button('dataDelete' . $keyPage, [
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[self::$i18nContent][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
-							'value' => template::ico('trash'),
-							'class' => 'buttonRed dataDelete',
-							'help' => 'Détacher le module de la page',
-						])
-					];
-				} else {
-					self::$modulesData[] = [];
+			foreach ($i18nSites as $keyi18n => $valuei18n) {
+				foreach ($pagesInfos[$keyi18n] as $keyPage => $value) {
+					if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
+						// Co[nstruire le tableau de sortie
+						self::$modulesData[] = [
+							$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'] . '&nbsp(' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . ')',
+							$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
+							template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
+							template::button('dataExport' . $keyPage, [
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+								'value' => template::ico('download'),
+								'help' => 'Exporter les données du module'
+							]),
+							template::button('dataDelete' . $keyPage, [
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+								'value' => template::ico('trash'),
+								'class' => 'buttonRed dataDelete',
+								'help' => 'Détacher le module de la page',
+							])
+						];
+					}
 				}
 			}
 		}
-
-
 
 		// Valeurs en sortie
 		$this->addOutput([

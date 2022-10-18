@@ -316,6 +316,7 @@
     "Version": "",
     "Catégorie": "",
     "Page": "",
+    "Page associée": "",
     "Copie de contenus localisés": "",
     "Nouveau contenu localisé": "",
     "Sélectionnez une langue": "",
@@ -481,5 +482,7 @@
     "Le sous-menu de la page parente": "",
     "Menu standard": "",
     "Menu accessoire": "",
-    "Activer": ""
+    "Activer": "",
+    "Importer dans": "",
+    "Archive": ""
 }
