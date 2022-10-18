@@ -488,7 +488,7 @@ class template
         switch ($langId) {
             case '':
                 break;
-            case in_array($langId, core::$languages):
+            case array_key_exists($langId, core::$languages):
                 $lang = $langId;
                 break;
             case 'selected':
