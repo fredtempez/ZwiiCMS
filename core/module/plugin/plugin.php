@@ -689,11 +689,10 @@ class plugin extends common
 			// Copier les données et le descripteur
 			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData));
 			$success .= file_put_contents($tmpFolder . '/enum.json', json_encode( [$moduleId => $infoModule]));
-
 			// Le dossier du module s'il existe
 			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId )) {
 				// Copier le dossier des données
-				$success .= $this->copyDir(self::DATA_DIR . $moduleId  . '/' . $pageId, $tmpFolder);
+				$success .= $this->copyDir(self::DATA_DIR . '/'. $moduleId . '/' . $pageId  , $tmpFolder . '/dataDirectory'  );
 			}
 
 			// création du zip
@@ -758,9 +757,9 @@ class plugin extends common
 
 			// Copie des fichiers d'accompagnement
 			// Le dossier du module s'il existe
-			if (is_dir($tmpFolder . $moduleId  . '/' . $pageId )) {
+			if (is_dir($tmpFolder  . '/dataDirectory' )) {
 				// Copier le dossier des données
-				$this->copyDir($tmpFolder . $moduleId  . '/' . $pageId, self::DATA_DIR);
+				$this->copyDir($tmpFolder  . '/dataDirectory' , self::DATA_DIR . '/' . $moduleId  . '/'. $pageId );
 			}
 
 			// Supprimer le dossier temporaire
