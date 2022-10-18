@@ -168,6 +168,7 @@ class translate extends common
 		}
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
+		
 		// Onglet des langues de l'interface
 		if (is_dir(self::I18N_DIR)) {
 			$dir = getcwd();
@@ -175,6 +176,7 @@ class translate extends common
 			$files = glob('*.json');
 			chdir($dir);
 		}
+		
 		// Construit le tableau des langues de l'UI
 		foreach ($files as $file) {
 			// La langue est-elle référencée ?

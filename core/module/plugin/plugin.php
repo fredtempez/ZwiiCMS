@@ -411,17 +411,17 @@ class plugin extends common
 
 		// Tableau des langues rédigées
 		foreach (self::$languages as $key => $value) {
-			if (
-				$this->getData(['config', 'i18n', $key]) === 'site' ||
-				$key === 'fr_FR'
-			) {
+			// tableau des langues installées
+			if (is_dir(self::DATA_DIR . $key)) {
 				$i18nSites[$key] = $value;
 			}
 		}
+
 		// Lister les modules installés
 		$infoModules = helper::getModules();
 
 		// Parcourir les langues du site traduit et recherche les modules affectés à des pages
+		$pagesInfos = [];
 		foreach ($i18nSites as $keyi18n => $valuei18n) {
 
 			// Clés moduleIds dans les pages de la langue
@@ -430,11 +430,11 @@ class plugin extends common
 			// Extraire les clés des modules
 			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pages['page'], 'moduleId', 'SORT_DESC'), 'strlen');
 
-			// Générer ls liste des pages avec module pour la sauvegarde ou le backup
+			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
 				if (!empty($value)) {
 					$pagesInfos[$keyi18n][$key]['pageId'] = $key;
-					$pagesInfos[$keyi18n][$key]['title'] = $this->getData(['page', $key, 'title']);
+					$pagesInfos[$keyi18n][$key]['title'] = $this->getData(['page', $key, 'shortTitle']);
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
 				}
 			}
@@ -504,28 +504,26 @@ class plugin extends common
 
 		// Mise en forme du tableau des modules employés dans les pages
 		// Avec les commandes de sauvegarde et de restauration
-
-		$keyi18n = self::$i18nContent;
 		if (
 			isset($pagesInfos) &&
-			is_array($pagesInfos[self::$i18nContent])
+			array_key_exists(self::$i18nContent, $pagesInfos)
 		) {
 			foreach ($pagesInfos[self::$i18nContent] as $keyPage => $value) {
-				if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
+				if (isset($infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']])) {
 					// Co[nstruire le tableau de sortie
 					self::$modulesData[] = [
-						$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'],
-						$pagesInfos[$keyi18n][$keyPage]['moduleId'],
-						$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
-						//template::flag($keyi18n, '20px'),
-						'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
+						$infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']]['realName'],
+						$pagesInfos[self::$i18nContent][$keyPage]['moduleId'],
+						$infoModules[$pagesInfos[self::$i18nContent][$keyPage]['moduleId']]['version'],
+						//template::flag(self::$i18nContent, '20px'),
+						'<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[self::$i18nContent][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
 						template::button('dataExport' . $keyPage, [
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/' . self::$i18nContent . '/' . $pagesInfos[self::$i18nContent][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
 							'value' => template::ico('download'),
 							'help' => 'Exporter les données du module'
 						]),
 						template::button('dataDelete' . $keyPage, [
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . $keyi18n . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[self::$i18nContent][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
 							'value' => template::ico('trash'),
 							'class' => 'buttonRed dataDelete',
 							'help' => 'Détacher le module de la page',
