@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version 11.5.11
-### Correction :
+### Corrections :
 - Génération du flux RSS dans le module blog, URL des miniatures incorrects.
 - Login, dépréciation de fonction avec php 8.1
 
