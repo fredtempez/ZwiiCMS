@@ -520,12 +520,12 @@ class plugin extends common
 							template::button('dataExport' . $keyPage, [
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
 								'value' => template::ico('download-cloud'),
-								'help' => 'Exporter les données du module'
+								'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
 							]),
 							template::button('dataExport' . $keyPage, [
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
 								'value' => template::ico('download'),
-								'help' => 'Exporter les données du module'
+								'help' => 'Sauvegarder et télécharger les données du module'
 							]),
 							template::button('dataDelete' . $keyPage, [
 								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
@@ -550,7 +550,6 @@ class plugin extends common
 	/**
 	 * Sauvegarde un module sans les données
 	 */
-
 	public function save()
 	{
 		// Jeton incorrect
@@ -584,14 +583,14 @@ class plugin extends common
 			}
 
 			// Construire l'archive
-			$this->makeZip($tmpFolder . '/' . $fileName, self::MODULE_DIR .  $moduleId);
+			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR .  $moduleId);
 
 			switch ($action) {
 				case 'filemanager':
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
 					}
-					$success .= copy($tmpFolder . '/' . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
+					$success = $success && copy(self::TEMP_DIR .  $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -600,19 +599,19 @@ class plugin extends common
 						'state' => $success
 					]);
 					// Nettoyage
-					unlink($tmpFolder . '/' . $fileName);
+					unlink(self::TEMP_DIR . $fileName);
 					$this->removeDir($tmpFolder);
 					break;
 				case 'download':
 				default:
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
-					header('Content-Length: ' . filesize($tmpFolder . '/' . $fileName));
+					header('Content-Length: ' . filesize(self::TEMP_DIR .  $fileName));
 					ob_clean();
 					ob_end_flush();
-					readfile($tmpFolder . '/' . $fileName);
+					readfile(self::TEMP_DIR .  $fileName);
 					// Nettoyage
-					unlink($tmpFolder . '/' . $fileName);
+					unlink(self::TEMP_DIR .  $fileName);
 					$this->removeDir($tmpFolder);
 					exit();
 			}
@@ -689,32 +688,50 @@ class plugin extends common
 			$infoModule = $infoModules[$moduleId];
 
 			// Copier les données et le descripteur
-			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData));
-			$success .= file_put_contents($tmpFolder . '/enum.json', json_encode( [$moduleId => $infoModule]));
+			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData)) === false ? false : true;
+			
+			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode( [$moduleId => $infoModule])));
 			// Le dossier du module s'il existe
 			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId )) {
 				// Copier le dossier des données
-				$success .= $this->copyDir(self::DATA_DIR . '/'. $moduleId . '/' . $pageId  , $tmpFolder . '/dataDirectory'  );
+				$success =  $success && $this->copyDir(self::DATA_DIR . '/'. $moduleId . '/' . $pageId  , $tmpFolder . '/dataDirectory'  );
 			}
-
-			// création du zip
+			
+			// Création du zip
+			$fileName =  $lang . '-' .  $moduleId . '-' . $pageId . '.zip';
+			$this->makeZip(self::TEMP_DIR . $fileName, $tmpFolder);
+			
+			// Gestin de l'action
 			if ($success) {
 				switch ($action) {
 					case 'filemanager':
-						
+						if (!file_exists(self::FILE_DIR . 'source/modules')) {
+							mkdir(self::FILE_DIR . 'source/modules');
+						}
+						if (file_exists(self::TEMP_DIR . $fileName)) {
+							$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/data' . $moduleId . '.zip'); 
+							// Valeurs en sortie
+							$this->addOutput([
+								'redirect' => helper::baseUrl() . 'plugin',
+								'notification' => $success ? helper::translate('Données copiées dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
+								'state' => $success
+							]);
+							// Nettoyage
+							unlink(self::TEMP_DIR . $fileName);
+							$this->removeDir($tmpFolder);
+						}
+						break;
 					case 'download':
 					default:
-						$fileName =  $lang . '-' .  $moduleId . '-' . $pageId . '.zip';
-						$this->makeZip($fileName, $tmpFolder);
-						if (file_exists($fileName)) {
+						if (file_exists(self::TEMP_DIR .  $fileName)) {
 							ob_start();
 							header('Content-Type: application/octet-stream');
-							header('Content-Disposition: attachment; filename="' . $fileName . '"');
-							header('Content-Length: ' . filesize($fileName));
+							header('Content-Disposition: attachment; filename="' . self::TEMP_DIR .  $fileName . '"');
+							header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
 							ob_clean();
 							ob_end_flush();
-							readfile($fileName);
-							unlink($fileName);
+							readfile(self::TEMP_DIR . $fileName);
+							unlink(self::TEMP_DIR . $fileName);
 							$this->removeDir($tmpFolder);
 							exit();
 						}

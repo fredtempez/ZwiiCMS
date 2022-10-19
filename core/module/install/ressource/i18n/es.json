@@ -130,6 +130,8 @@
     "Supprimer le module": "Eliminar módulo",
     "Sauvegarder le module dans le gestionnaire de fichiers": "Guardar módulo en el administrador de archivos",
     "Sauvegarder et télécharger le module": "Guardar y descargar módulo",
+    "Sauvegarder les données du module dans le gestionnaire de fichiers": "Guardar de los datos del módulo en el administrador de archivos", 
+    "'Sauvegarder et télécharger les données du module": "Guardar y descargar de los datos del módulo",
     "Installer depuis le catalogue en ligne": "Instalar desde el archivo en línea",
     "Installer depuis une archive": "Instalar desde un archivo",
     "Mettre à jour le module orphelin": "Actualizar módulo huérfano",
