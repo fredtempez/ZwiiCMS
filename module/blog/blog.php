@@ -144,8 +144,8 @@ class blog extends common {
 		foreach( $articleIdsPublishedOns as $articleId => $articlePublishedOn ) {
 			if( $articlePublishedOn <= time() AND $articleIdsStates[$articleId]			 ) {
 				// Miniature
-				$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
-				$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+				$thumb = 'mini_' . $parts['basename'];
 				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
 				// Signature de l'article
@@ -153,7 +153,7 @@ class blog extends common {
 				$newsArticle->addElementArray([
 					'title' 		=> $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']),
 					'link' 			=> helper::baseUrl() .$this->getUrl(0) . '/' . $articleId,
-					'description' 	=> '<img src="' . helper::baseUrl() . self::FILE_DIR . $thumb
+					'description' 	=> '<img src="' . helper::baseUrl(false) . self::FILE_DIR . $thumb
 									 . '" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
 									 . '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
 									 . '" />' .

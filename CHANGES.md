@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 11.5.11
+### Correction :
+- Génération du flux RSS dans le module blog, URL des miniatures incorrects.
+
 ## Version 11.5.10
 ### Correction :
 - Dysfonctionnement de la classe strftime, setlocale mal défini.
