@@ -41,7 +41,7 @@
 	<div class="row">
 		<div class="col3 offset6">
 			<?php echo template::button('userLoginBack', [
-				'href' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+				'href' => $this->getUrl(2) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))) : helper::baseUrl(),
 				'ico' => 'left',
 				'value' => 'Annuler'
 			]); ?>

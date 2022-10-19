@@ -3,6 +3,7 @@
 ## Version 11.5.11
 ### Correction :
 - Génération du flux RSS dans le module blog, URL des miniatures incorrects.
+- Login, dépréciation de fonction avec php 8.1
 
 ## Version 11.5.10
 ### Correction :
