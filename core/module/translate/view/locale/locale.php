@@ -163,7 +163,7 @@
                         'help' => 'Saisissez le titre de la fenêtre de gestion des cookies.',
                         'label' => 'Titre de la fenêtre',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['cookies']['titleLabel'],
-                        'placeHolder' => 'Gérer les cookies'
+                        'placeHolder' => 'Cookies essentiels'
                     ]); ?>
                 </div>
                 <div class="col6">

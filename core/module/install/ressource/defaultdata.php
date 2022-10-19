@@ -66,7 +66,7 @@ class init extends common {
 			'title' => 'Votre site en quelques clics !',
 			'cookies' => [
 				'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
-				'titleLabel' => 'Gérer les cookies',
+				'titleLabel' => 'Cookies essentiels',
 				'linkLegalLabel' => 'Consulter  les mentions légales',
 				'cookiesFooterText' => 'Cookies',
 				'buttonValidLabel' => 'J\'ai compris'

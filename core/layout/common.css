@@ -990,7 +990,7 @@ footer #footerSocials .zwiico-github:hover {
 
 /* Message sur les cookies */
 #cookieConsent {
-	width: 60%;
+	width: 40%;
 	margin: auto;
 	opacity: .95;
 	background: #212223;
@@ -1003,6 +1003,7 @@ footer #footerSocials .zwiico-github:hover {
 	z-index: 60;
 	text-align: center;
 	font-size: 1em;
+	border-radius: 5% 5% 5% 5%;
 }
 
 #cookieConsentConfirm {
