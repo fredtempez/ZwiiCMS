@@ -1,7 +1,8 @@
 # Changelog
 
-## Version 11.6.00
+## Version 12.0.00
 ### Nouveautés :
+- Compatiblité PHP 8.1
 - Module addon refondu et renommé plugin.
 - Gestion des langues :
     - Définition de la langue de l'interface à l'installation.
