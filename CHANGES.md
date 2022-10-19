@@ -22,6 +22,11 @@
 - Optimisation du chargement des base de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
 
+## Version 11.5.11
+### Correction :
+- Génération du flux RSS dans le module blog, URL des miniatures incorrects.
+- Login, dépréciation de fonction avec php 8.1
+
 ## Version 11.5.10
 ### Correction :
 - Dysfonctionnement de la classe strftime, setlocale mal défini.
