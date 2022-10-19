@@ -93,8 +93,8 @@
 					) : ?>
 						<div class="col3">
 							<?php // Déterminer le nom de la miniature
-							$parts = explode('/', $article['picture']);
-							$thumb = str_replace($parts[(count($parts) - 1)], 'mini_' . $parts[(count($parts) - 1)], $article['picture']);
+							$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+							$thumb = 'mini_' . $parts['basename'];
 							// Créer la miniature si manquante
 							if (!file_exists(self::FILE_DIR . 'thumb/' . $thumb)) {
 								$this->makeThumb(

@@ -1,3 +1,8 @@
+# version 6.31
+- Miniature de l'image dans le flux RSS
+# version 6.3
+- Nettoyage de fonction inutile
+- Initialisation
 # version 6.22
 - mise en oeuvre du helper dateUTF8
 - Réglage de l'initialisaion de la configuration
