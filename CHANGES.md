@@ -23,7 +23,7 @@
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
 
 ## Version 11.5.11
-### Correction :
+### Corrections :
 - Génération du flux RSS dans le module blog, URL des miniatures incorrects.
 - Login, dépréciation de fonction avec php 8.1
 
