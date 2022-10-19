@@ -1,3 +1,5 @@
+# Version 4.23
+    - Corrige le retour de $success  en lecture écriture de fichier
 # Version 4.22
     - Initialisation du module
 # Version 4.21

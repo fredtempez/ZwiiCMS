@@ -1,3 +1,5 @@
+# Version 2.71
+    - Corrige le retour de $success  en lecture écriture de fichier
 # Version 2.7 
     - Traduction
     - Suppression du cadre de présentation des résultats

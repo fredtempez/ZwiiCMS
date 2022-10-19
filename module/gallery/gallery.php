@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.6';
+	const VERSION = '3.61';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
@@ -843,12 +843,12 @@ class gallery extends common {
 			$content = str_replace('#legendHeight#',$this->getinput('galleryThemeLegendHeight'),$content );
 			$content = str_replace('#legendTextColor#',$this->getinput('galleryThemeLegendTextColor'),$content );
 			$content = str_replace('#legendBgColor#',$this->getinput('galleryThemeLegendBgColor'),$content );
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $content . $themeCss);
+			$success = is_int(file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $content . $themeCss));
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl() . '/theme',
-				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
-				'state' => $success !== FALSE
+				'notification' => $success ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
+				'state' => $success
 			]);
 		}
 		// Valeurs en sortie

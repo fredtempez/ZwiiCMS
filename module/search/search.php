@@ -20,7 +20,7 @@
 class search extends common
 {
 
-	const VERSION = '2.7';
+	const VERSION = '2.71';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
@@ -125,7 +125,7 @@ class search extends common
 			// Générer la feuille de CSS
 			$style = '.keywordColor {background:' . $this->getInput('searchKeywordColor') . ';}';
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style);
+			$success = is_int(file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style));
 			// Fin feuille de style
 
 			// Soumission du formulaire
@@ -145,8 +145,8 @@ class search extends common
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $success !== FALSE ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
-				'state' => $success !== FALSE
+				'notification' => $success  ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
+				'state' => $success
 			]);
 		}
 		// Valeurs en sortie, affichage du formulaire

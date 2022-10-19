@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '4.22';
+	const VERSION = '4.23';
 	const REALNAME = 'News';
 	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 
@@ -249,7 +249,7 @@ class news extends common
 				mkdir(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', 0755, true);
 			}
 
-			$success = file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style);
+			$success = is_int(file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style));
 
 			// Fin feuille de style
 
