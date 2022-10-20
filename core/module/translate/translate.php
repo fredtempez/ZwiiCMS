@@ -80,7 +80,6 @@ class translate extends common
 				$success  = ($this->copyDir(self::DATA_DIR . $copyFrom . '/content', self::DATA_DIR . $toCreate . '/content') === true && $success  === true) ? true : false;
 				// Enregistrer la langue
 				if ($success) {
-					$this->setData(['config', 'i18n', $toCreate, 'site']);
 					$notification = sprintf(helper::translate('Données %s copiées vers %s'),  self::$languages[$copyFrom], self::$languages[$toCreate]);
 				} else {
 					$notification = helper::translate('Erreur de copie, vérifiez les permissions');
@@ -122,23 +121,6 @@ class translate extends common
 	public function index()
 	{
 
-		// Soumission du formulaire
-		// Jeton incorrect ou URl avec le code langue incorrecte
-		if (
-			$this->getUrl(3) === $_SESSION['csrf']
-			|| array_key_exists($this->getUrl(2), self::$languages)
-		) {
-
-			// Sauvegarder les langues de contenu
-			$this->setData(['config', 'i18n', 'interface', $this->getUrl(2)]);
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
-				'notification' => helper::translate('Modifications enregistrées'),
-				'state' => true
-			]);
-		}
 
 		// Préparation du formulaire
 		// -------------------------
@@ -193,14 +175,7 @@ class translate extends common
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $selected
-					]),
-					template::button('translateContentLanguageEnable' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/index/' . $selected . '/' . $_SESSION['csrf'],
-						'value' => template::ico('check'),
-						'help' => 'Activer',
-						'class' => 'buttonGreen',
-						'disabled' => self::$i18nUI === $selected
-					]),
+					])
 				];
 			}
 		}
@@ -328,9 +303,6 @@ class translate extends common
 				// Sauver sur le disque
 				file_put_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 			}
-
-			// Sauvegarde la langue de l'UI
-			$this->setData(['config', 'i18n', 'interface', $this->getInput('translateUI', null)]);
 
 			// Valeurs en sortie
 			$this->addOutput([

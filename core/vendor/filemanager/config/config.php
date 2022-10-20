@@ -13,9 +13,7 @@ ob_start('mb_output_handler');
 date_default_timezone_set('Europe/Paris');
 
 // Lire la langue installée
-$tab = json_decode(file_get_contents('../../../site/data/config.json'), true);
-$lang = $tab['config']['i18n']['interface'];
-setlocale(LC_CTYPE, $lang); //correct transliteration
+setlocale(LC_CTYPE, $_GET['lang']); //correct transliteration
 
 /* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
 $userId = $_COOKIE['ZWII_USER_ID'];

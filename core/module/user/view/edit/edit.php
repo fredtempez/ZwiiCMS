@@ -56,34 +56,6 @@
 				'label' => 'Adresse mail',
 				'value' => $this->getData(['user', $this->getUrl(2), 'mail'])
 			]); ?>
-			<?php if ($this->getUser('group') === self::GROUP_ADMIN) : ?>
-				<?php echo template::select('userEditGroup', self::$groupEdits, [
-					'disabled' => ($this->getUrl(2) === $this->getUser('id')),
-					'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre groupe.' : ''),
-					'label' => 'Groupe',
-					'selected' => $this->getData(['user', $this->getUrl(2), 'group'])
-				]); ?>
-				<div id="userEditMemberFiles" class="displayNone">
-					<?php echo template::checkbox('userEditFiles', true, 'Partage de fichiers autorisé', [
-						'checked' => $this->getData(['user', $this->getUrl(2), 'files']),
-						'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
-					]); ?>
-				</div>
-				<div id="userEditLabelAuth">
-					<?php echo helper::translate('Permissions :'); ?>
-				</div>
-				<ul id="userEditGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-				</ul>
-				<ul id="userEditGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-					<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
-					<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
-				</ul>
-				<ul id="userEditGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userEditGroupDescription displayNone">
-					<li><?php echo helper::translate('Administration complète du site'); ?></li>
-				</ul>
-			<?php endif; ?>
 		</div>
 	</div>
 	<div class="col6">
@@ -109,6 +81,52 @@
 				'autocomplete' => 'off',
 				'label' => 'Confirmation'
 			]); ?>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4><?php echo helper::translate('Paramètres'); ?>
+			</h4>
+			<div class="row">
+			<div class="col6">
+				<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
+					'label' =>  'Langues',
+					'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
+				]); ?>
+			</div>
+			<div class="col6">
+				<?php if ($this->getUser('group') === self::GROUP_ADMIN) : ?>
+					<?php echo template::select('userEditGroup', self::$groupEdits, [
+						'disabled' => ($this->getUrl(2) === $this->getUser('id')),
+						'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre groupe.' : ''),
+						'label' => 'Groupe',
+						'selected' => $this->getData(['user', $this->getUrl(2), 'group'])
+					]); ?>
+					<div id="userEditMemberFiles" class="displayNone">
+						<?php echo template::checkbox('userEditFiles', true, 'Partage de fichiers autorisé', [
+							'checked' => $this->getData(['user', $this->getUrl(2), 'files']),
+							'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
+						]); ?>
+					</div>
+					<div id="userEditLabelAuth">
+						<?php echo helper::translate('Permissions :'); ?>
+					</div>
+					<ul id="userEditGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userEditGroupDescription displayNone">
+						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
+					</ul>
+					<ul id="userEditGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userEditGroupDescription displayNone">
+						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
+						<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
+						<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
+					</ul>
+					<ul id="userEditGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userEditGroupDescription displayNone">
+						<li><?php echo helper::translate('Administration complète du site'); ?></li>
+					</ul>
+				<?php endif; ?>
+			</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -48,6 +48,8 @@ class user extends common
 		':' => ':'
 	];
 
+	public static $languagesInstalled = [];
+
 	/**
 	 * Ajout
 	 */
@@ -90,7 +92,8 @@ class user extends common
 					"accessUrl" => null,
 					"accessTimer" => null,
 					"accessCsrf" => null,
-					"files" => $this->getInput('userAddFiles', helper::FILTER_BOOLEAN)
+					"files" => $this->getInput('userAddFiles', helper::FILTER_BOOLEAN),
+					'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
 				]
 			]);
 
@@ -113,6 +116,19 @@ class user extends common
 				'notification' => $sent === true ? helper::translate('Utilisateur créé') : $sent,
 				'state' => $sent === true ? true : null
 			]);
+		}
+		// Langues disponibles pour l'interface de l'utilisateur
+		if (is_dir(self::I18N_DIR)) {
+			$dir = getcwd();
+			chdir(self::I18N_DIR);
+			$files = glob('*.json');
+			chdir($dir);
+		}
+		foreach ($files as $file) {
+			// La langue est-elle référencée ?
+			if (array_key_exists(basename($file, '.json'), self::$languages)) {
+				self::$languagesInstalled[basename($file, '.json')] = self::$languages[basename($file, '.json')];
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -172,9 +188,9 @@ class user extends common
 	public function edit()
 	{
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf'] &&
-			$this->getUrl(4) !== $_SESSION['csrf']
+			$this->getUrl(3) !== $_SESSION['csrf']
 		) {
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
@@ -259,7 +275,8 @@ class user extends common
 						'accessUrl' => $this->getData(['user', $this->getUrl(2), 'accessUrl']),
 						'accessTimer' => $this->getData(['user', $this->getUrl(2), 'accessTimer']),
 						'accessCsrf' => $this->getData(['user', $this->getUrl(2), 'accessCsrf']),
-						'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN)
+						'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
+						'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
 					]
 				]);
 				// Redirection spécifique si l'utilisateur change son mot de passe
@@ -280,6 +297,20 @@ class user extends common
 					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
+			}
+
+			// Langues disponibles pour l'interface de l'utilisateur
+			if (is_dir(self::I18N_DIR)) {
+				$dir = getcwd();
+				chdir(self::I18N_DIR);
+				$files = glob('*.json');
+				chdir($dir);
+			}
+			foreach ($files as $file) {
+				// La langue est-elle référencée ?
+				if (array_key_exists(basename($file, '.json'), self::$languages)) {
+					self::$languagesInstalled[basename($file, '.json')] = self::$languages[basename($file, '.json')];
+				}
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -348,7 +379,7 @@ class user extends common
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
 					self::$groups[$this->getData(['user', $userId, 'group'])],
 					template::button('userEdit' . $userId, [
-						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/back/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
@@ -391,7 +422,7 @@ class user extends common
 			 * Aucun compte existant
 			 */
 			if (!$this->getData(['user', $userId])) {
-				$logStatus ='Compte inconnu';
+				$logStatus = 'Compte inconnu';
 				//Stockage de l'IP
 				$this->setData([
 					'blacklist',
@@ -484,7 +515,7 @@ class user extends common
 					}
 					// Cas 3 le délai de bloquage court
 					if ($this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification =  sprintf(helper::translate('Accès bloqué %d minutes', ($this->getData(['config', 'connect', 'timeout']) / 60) ));
+						$notification =  sprintf(helper::translate('Accès bloqué %d minutes', ($this->getData(['config', 'connect', 'timeout']) / 60)));
 					}
 
 					// Valeurs en sortie
@@ -526,7 +557,7 @@ class user extends common
 		session_destroy();
 		// Valeurs en sortie
 		$this->addOutput([
-			'notification' =>helper::translate('Déconnexion !'),
+			'notification' => helper::translate('Déconnexion !'),
 			'redirect' => helper::baseUrl(false),
 			'state' => true
 		]);

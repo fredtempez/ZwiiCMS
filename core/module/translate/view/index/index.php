@@ -49,7 +49,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesUiInstalled) : ?>
-				<?php echo template::table([2, 1, 1, 6, 1, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '', '']); ?>
+				<?php echo template::table([3, 1, 1, 6, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>

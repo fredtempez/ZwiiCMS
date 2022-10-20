@@ -59,7 +59,6 @@ class install extends common
 				self::$i18nUI = $this->getInput('installLanguage');
 				// Par défaut la langue du contenu est celle du site
 				self::$i18nContent = self::$i18nUI;
-				$this->setData(['config', 'i18n', 'interface', self::$i18nUI]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'install/postinstall'

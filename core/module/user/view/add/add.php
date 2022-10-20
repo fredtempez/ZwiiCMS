@@ -42,30 +42,6 @@
 				'autocomplete' => 'off',
 				'label' => 'Adresse mail'
 			]); ?>
-			<?php echo template::select('userAddGroup', self::$groupNews, [
-				'label' => 'Groupe',
-				'selected' => self::GROUP_MEMBER
-			]); ?>
-			<div id="userAddMemberFiles" class="displayNone">
-				<?php echo template::checkbox('userAddFiles', true, 'Partage de fichiers autorisé', [
-					'checked' => false,
-					'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
-				]); ?>
-			</div>
-			<div id="userAddLabelAuth">
-				<?php echo helper::translate('Permissions :'); ?>
-			</div>
-			<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
-				<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-			</ul>
-			<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
-				<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-				<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
-				<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
-			</ul>
-			<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
-				<li><?php echo helper::translate('Administration complète du site'); ?></li>
-			</ul>
 		</div>
 	</div>
 	<div class="col6">
@@ -90,6 +66,47 @@
 				'Prévenir l\'utilisateur par mail'
 			);
 			?>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col12">
+		<div class="block">
+			<h4><?php echo helper::translate('Paramètres'); ?>
+			</h4>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::select('userAddLanguage', $module::$languagesInstalled, [
+						'label' =>  'Langues'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::select('userAddGroup', self::$groupNews, [
+						'label' => 'Groupe',
+						'selected' => self::GROUP_MEMBER
+					]); ?>
+					<div id="userAddMemberFiles" class="displayNone">
+						<?php echo template::checkbox('userAddFiles', true, 'Partage de fichiers autorisé', [
+							'checked' => false,
+							'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
+						]); ?>
+					</div>
+					<div id="userAddLabelAuth">
+						<?php echo helper::translate('Permissions :'); ?>
+					</div>
+					<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
+						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
+					</ul>
+					<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
+						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
+						<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
+						<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
+					</ul>
+					<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
+						<li><?php echo helper::translate('Administration complète du site'); ?></li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

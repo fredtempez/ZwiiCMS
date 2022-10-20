@@ -40,9 +40,6 @@ class init extends common {
 				'autoDisconnect' => true,
 				'showPassword' => true,
 				'redirectLogin' => true
-			],
-			'i18n' => [
-				'interface' => 'fr_FR'
 			]
 		],
 		'core' => [

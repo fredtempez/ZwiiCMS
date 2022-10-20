@@ -302,19 +302,15 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Lire la langue de l'UI sans passer par les méthodes
-		$t = json_decode(file_get_contents('site/data/config.json'), true);
-		self::$i18nUI = $t['config']['i18n']['interface'];
-
 		// Déterminer la langue du contenu du site
 		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
 			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
 			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		} else {
-			// Absence du cookie, la langue par défaut est celle de l'interface.
-			self::$i18nContent = (isset(self::$i18nUI)) ? self::$i18nUI : 'fr_FR';
-			\setlocale(LC_TIME, self::$i18nUI . '.UTF8');
+			// Absence du cookie, la langue par défaut est fr
+			self::$i18nContent = 'fr_FR';
+			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -342,10 +338,9 @@ class common
 		}
 
 		// Langue de l'administration
-		self::$i18nUI = $this->getData(['config', 'i18n', 'interface']);
+		self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 		// La langue par défaut du contenu est celle du site si le cookie est absent.
 		self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI;
-
 
 		// Le fichier existe-t-il ?
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
@@ -1590,7 +1585,7 @@ class common
 				$this->getData(['user', $this->getUser('id'), 'files']) === true
 			) {
 				$items .= '<wbr>' . template::ico('folder',	[
-					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['config', 'i18n', 'interface']),
+					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
 					'margin' => 'all',
 					'attr' => 'data-lity',
 					'help' => 'Fichiers du site'
@@ -1724,7 +1719,7 @@ class common
 				$this->getData(['user', $this->getUser('id'), 'files']) === true
 			) {
 				$itemsRight .= '<li>' . template::ico('folder',	[
-					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json')  . '&lang=' . $this->getData(['config', 'i18n', 'interface']),
+					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json')  . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
 					'attr' => 'data-lity',
 					'help' => 'Fichiers du site'
 				]) . '</li>';
@@ -2170,7 +2165,7 @@ class common
 			// Items de droite
 			$rightItems = '';
 			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['config', 'i18n', 'interface']) . '" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']) . '" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if ($this->getUser('group') >= self::GROUP_ADMIN) {
 				$rightItems .= '<li>' .	template::ico('brush', [

@@ -919,7 +919,8 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 		$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 	}
 	// Langue de l'interface
-	$this->setData(['config', 'i18n', 'interface', 'fr_FR']);
+	$this->deleteData(['config', 'i18n']);
+	$this->setData(['user', $this->getUser('id'), 'language', 'fr_FR']);
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
 }

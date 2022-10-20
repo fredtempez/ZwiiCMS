@@ -5,8 +5,7 @@
 <div class="row">
     <div class="col6 offset3">
             <?php echo template::select('installLanguage', $module::$i18nFiles, [
-                'label' =>  'Langues installées',
-                'selected' => $this->getData(['config', 'i18n', 'interface'])
+                'label' =>  'Langues installées'
             ]); ?>
     </div>
 </div>
