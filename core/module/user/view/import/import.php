@@ -30,6 +30,7 @@
             <div class="row">
                 <div class="col10">
                     <?php echo template::file('userImportCSVFile', [
+                        'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'label' => 'Liste d\'utilisateurs :'
                     ]); ?>
                 </div>

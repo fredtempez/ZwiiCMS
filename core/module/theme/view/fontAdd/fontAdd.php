@@ -66,6 +66,7 @@
 			<div class="row" id="containerFontAddFile">
 				<div class="col12">
 					<?php echo template::file('fontAddFile', [
+						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Fichier de fonte (Format WOFF)'
 					]); ?>
 				</div>

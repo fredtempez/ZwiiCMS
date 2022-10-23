@@ -21,6 +21,7 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::file('pluginImportFile', [
+                        'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'label' => 'Archive ZIP',
                         'type' => 2
                     ]); ?>

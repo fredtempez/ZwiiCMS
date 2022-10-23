@@ -192,6 +192,7 @@
 						<div class="col9">
 							<?php echo template::file('pageIconUrl', [
 								'help' => 'Sélectionnez une image ou une icône de petite dimension',
+								'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 								'label' => 'Icône',
 								'value' => $this->getData(['page', $this->getUrl(2), 'iconUrl'])
 							]); ?>

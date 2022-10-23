@@ -310,7 +310,8 @@ class template
             'maxlength' => '500',
             'name' => $nameId,
             'type' => 2,
-            'value' => ''
+            'value' => '',
+            'language' => 'fr_FR'
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['value'] = helper::translate($attributes['value']);
@@ -348,6 +349,7 @@ class template
                 href="' .
                 helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
                 '?relative_url=1' .
+                '&lang=' . $attributes['language'] .
                 '&field_id=' . $attributes['id'] .
                 '&type=' . $attributes['type'] .
                 '&akey=' . md5_file(core::DATA_DIR . 'core.json') .

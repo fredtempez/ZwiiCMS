@@ -13,6 +13,7 @@
 					<div class="col4">
 						<?php echo template::file('configFavicon', [
 							'type' => 1,
+							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon',
 							'value' => $this->getData(['config', 'favicon'])
@@ -21,6 +22,7 @@
 					<div class="col4">
 						<?php echo template::file('configFaviconDark', [
 							'type' => 1,
+							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon thème sombre',
 							'value' => $this->getData(['config', 'faviconDark'])

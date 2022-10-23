@@ -154,14 +154,14 @@
             </h4>
             <div class="row">
                 <div class="col12">
-                    <?php
-                    $imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'header', 'image'])) ?
-                        $this->getData(['theme', 'header', 'image']) : "";
-                    echo template::file('themeHeaderImage', [
+                    <?php $imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'header', 'image'])) ? $this->getData(['theme', 'header', 'image']) : ""; ?>
+                    <?php echo template::file('themeHeaderImage', [
                         'label' => 'Image',
+                        'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'type' => 1,
                         'value' => $imageFile
-                    ]); ?>
+                    ]);
+                    ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
                         <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
                         -

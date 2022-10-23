@@ -44,6 +44,7 @@
 				<div class="row">
 					<div class="col6">
 						<?php echo template::file('blogEditPicture', [
+							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => $this->getData(['theme', 'site', 'width']) !== '100%' ? 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.' : '',
 							'label' => 'Image de couverture',
 							'type' => 1,

@@ -42,6 +42,7 @@
 				<div class="row">
 					<div class="col4">
 						<?php echo template::file('blogAddPicture', [
+							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => 'Taille optimale de l\'image de couverture : ' . ((int) substr($this->getData(['theme', 'site', 'width']), 0, -2) - (20 * 2)) . ' x 350 pixels.',
 							'label' => 'Image de couverture',
 							'type' => 1

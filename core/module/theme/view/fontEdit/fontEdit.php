@@ -68,6 +68,7 @@
 				<div class="col12">
 					<?php echo template::file('fontEditFile', [
 						'label' => 'Fichier de fonte (Format WOFF)',
+						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'value' => $this->getUrl(2) === 'files' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 					]); ?>
 				</div>
