@@ -276,7 +276,7 @@ if (isset($_GET['editor'])) {
     $editor = $_GET['type'] == 0 ? null : 'tinymce';
 }
 
-$field_id = isset($_GET['field_id']) ? fix_get_params($_GET['field_id']) : null;
+$field_id = isset($_GET['field_id']) ? fix_get_params($_GET['field_id']) : '';
 $type_param = fix_get_params($_GET['type']);
 $apply = null;
 
