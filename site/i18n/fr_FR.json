@@ -305,13 +305,12 @@
     "Gestion": "",
     "Administration": "",
     "Langues": "",
-    "Traductions de l'interface": "",
+    "Langues de l'interface": "",
     "Éditer les dialogues": "",
-    "Traductions installées": "",
-    "Traductions du site": "",
+    "Langues installées": "",
+    "Langues du site": "",
     "Interface": "",
     "Langue de l'administration": "",
-    "Langues installées": "",
     "Dans quelle langue utiliserez-vous Zwii ?": "",
     "Maintenance": "",
     "Scripts externes": "",
@@ -486,5 +485,7 @@
     "Menu accessoire": "",
     "Activer": "",
     "Importer dans": "",
-    "Archive": ""
+    "Archive": "",
+    "Langue par défaut": "",
+    "Langue du site sélectionnée": ""
 }

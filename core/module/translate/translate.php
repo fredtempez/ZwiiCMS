@@ -129,21 +129,27 @@ class translate extends common
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
+				if (self::$i18nUI === $key) {
+				 	$message = helper::translate('Langue par défaut');
+				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
+					$message = helper::translate('Langue du site sélectionnée');
+				} else {
+				 	 $message = '';
+				}
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %'),
 					$value . ' (' . $key . ')',
-					self::$i18nUI === $key ? helper::translate('Interface') : '',
-					'',
+					$message,
 					template::button('translateContentLanguageEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageDelete' . $key, [
-						'class' => 'translateDelete buttonRed' . (self::$i18nUI === $key ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . ($message ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
-						'help' => 'Supprimer'
+						'help' => 'Supprimer',
 					])
 				];
 			}
@@ -445,9 +451,10 @@ class translate extends common
 	public function delete()
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
+		$lang = $this->getUrl(2);
 		if (
 			$this->getUrl(3) !== $_SESSION['csrf']
-			|| !array_key_exists($this->getUrl(2), self::$languages)
+			|| !array_key_exists($lang, self::$languages)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -456,10 +463,9 @@ class translate extends common
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
-
 		// Effacement d'une langue installée
-		if (is_dir(self::DATA_DIR . $this->getUrl(2)) === true) {
-			$success = $this->removeDir(self::DATA_DIR . $this->getUrl(2));
+		if (is_dir(self::DATA_DIR . $lang) === true) {
+			$success = $this->removeDir(self::DATA_DIR . $lang);
 		}
 		// Valeurs en sortie
 		$this->addOutput([

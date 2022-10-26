@@ -130,7 +130,7 @@
     "Supprimer le module": "Eliminar módulo",
     "Sauvegarder le module dans le gestionnaire de fichiers": "Guardar módulo en el administrador de archivos",
     "Sauvegarder et télécharger le module": "Guardar y descargar módulo",
-    "Sauvegarder les données du module dans le gestionnaire de fichiers": "Guardar de los datos del módulo en el administrador de archivos",
+    "Sauvegarder les données du module dans le gestionnaire de fichiers": "Guardar de los datos del módulo en el administrador de archivos", 
     "'Sauvegarder et télécharger les données du module": "Guardar y descargar de los datos del módulo",
     "Installer depuis le catalogue en ligne": "Instalar desde el archivo en línea",
     "Installer depuis une archive": "Instalar desde un archivo",
@@ -306,11 +306,10 @@
     "Gestion": "Administrar",
     "Administration": "Administración",
     "Langues": "Idiomas",
-    "Traductions de l'interface": "Idiomas interfaz",
+    "Langues de l'interface": "Idiomas interfaz",
     "Éditer les dialogues": "Editar los diálogos",
-    "Traductions installées": "Idiomas instalados",
+    "Langues du site": "Idiomas instalados",
     "Traduction supprimée": "Traducción eliminada",
-    "Traductions du site": "Idiomas sitio",
     "Langue de l'administration": "Idioma de la administración",
     "Langues installées": "Idiomas instalados",
     "Dans quelle langue utiliserez-vous Zwii ?": "¿En qué idioma usará Zwii?",
@@ -489,5 +488,7 @@
     "Interface": "Interfaz",
     "Importer dans": "Importar a",
     "Archive ZIP": "Archivo ZIP",
-    "Archive": "Archivo"
+    "Archive": "Archivo",
+    "Langue par défaut": "Idioma predeterminado",
+    "Langue du site sélectionnée": "Idioma del sitio web seleccionado"
 }

@@ -36,11 +36,11 @@
 
 <div class="tab">
 <?php echo template::button('translateContentButton', [
-		'value' => 'Traductions du site',
+		'value' => 'Langues du site',
 		'class' => 'buttonTab'
 	]); ?>
 	<?php echo template::button('translateUiButton', [
-		'value' => 'Traductions de l\'interface',
+		'value' => 'Langues de l\'interface',
 		'class' => 'buttonTab'
 	]); ?>
 </div>
@@ -58,7 +58,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesInstalled) : ?>
-				<?php echo template::table([1, 3, 2, 4, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '', '', '']); ?>
+				<?php echo template::table([1, 3, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>

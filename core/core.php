@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-dev017';
+	const ZWII_VERSION = '12.0.00-dev018';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -1680,7 +1680,6 @@ class common
 			file_exists(self::FILE_DIR . 'source/' . $faviconDark)
 		) {
 			echo '<link rel="shortcut icon" media="(prefers-color-scheme:dark)" href="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $faviconDark . '">';
-			//echo '<script src="https://unpkg.com/favicon-switcher@1.2.2/dist/index.js" crossorigin="anonymous" type="application/javascript"></script>';
 			echo '<script src="' . helper::baseUrl(false) . 'core/vendor/favicon-switcher/favicon-switcher.js" crossorigin="anonymous"></script>';
 		}
 	}
@@ -1738,7 +1737,18 @@ class common
 		}
 		// Retourne les items du menu
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
-		echo $this->showi18n();
+		// Drapeau les langues des langues selon l'existance des dossiers
+		foreach (self::$languages as $key => $value) {
+			if ( is_dir(self::DATA_DIR . $key) ) {
+				$t [] =  $this->showi18n($key);
+			}
+		}
+		// Pas de drapeau si la langu eest unique
+		if (count ($t) > 1 ) {
+			foreach($t as $key) {
+				echo $key;
+			}
+		}
 		echo '</ul>';
 	}
 
@@ -2308,27 +2318,26 @@ class common
 	/**
 	 * Affiche le cadre avec les drapeaux sélectionnés
 	 */
-	public function showi18n()
+	public function showi18n($lang)
 	{
-		foreach (self::$languages as $key => $value) {
+		if (
+			is_dir(self::DATA_DIR . $lang)
+		) {
 			if (
-				is_dir(self::DATA_DIR . $key)
+				(isset($_COOKIE['ZWII_CONTENT'])
+					and $_COOKIE['ZWII_CONTENT'] === $lang
+				)
 			) {
-				if (
-					(isset($_COOKIE['ZWII_CONTENT'])
-						and $_COOKIE['ZWII_CONTENT'] === $key
-					)
-				) {
-					$select = ' class="i18nFlagSelected" ';
-				} else {
-					$select = ' class="i18nFlag" ';
-				}
-
-				echo '<li>';
-				echo '<a href="' . helper::baseUrl() . 'translate/content/' . $key  . '"><img ' . $select . ' alt="' .  $value . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $key . '.png"/></a>';
-				echo '</li>';
+				$select = ' class="i18nFlagSelected" ';
+			} else {
+				$select = ' class="i18nFlag" ';
 			}
+
+			$items = '<li>';
+			$items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang  . '"><img ' . $select . ' alt="' .  self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+			$items .= '</li>';
 		}
+		return $items;
 	}
 }
 
@@ -2464,6 +2473,9 @@ class core extends common
 			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
 				: $fontFile;
 			// Enregistre la personnalisation
+			if (!is_dir(self::DATA_DIR . 'fonts')) {
+				mkdir(self::DATA_DIR . 'fonts');
+			}
 			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
 			/**
@@ -2885,7 +2897,7 @@ class core extends common
 		// Accès concurrent stocke la page visitée
 		if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			and $this->getUser('id')
+			&& $this->getUser('id')
 		) {
 			$this->setData(['user', $this->getUser('id'), 'accessUrl', $this->getUrl()]);
 			$this->setData(['user', $this->getUser('id'), 'accessTimer', time()]);

@@ -132,7 +132,8 @@ class install extends common
 						'pseudo' => 'Admin',
 						'signature' => 1,
 						'mail' => $userMail,
-						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true)
+						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
+						 'language' => self::$i18nUI
 					]
 				]);
 

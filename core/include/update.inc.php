@@ -920,7 +920,10 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	}
 	// Langue de l'interface
 	$this->deleteData(['config', 'i18n']);
-	$this->setData(['user', $this->getUser('id'), 'language', 'fr_FR']);
+	// Pas à l'installation
+	if ($this->getUser('id')) {
+		$this->setData(['user', $this->getUser('id'), 'language', 'fr_FR']);
+	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
 }
