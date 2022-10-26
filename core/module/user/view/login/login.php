@@ -47,7 +47,8 @@
 	</div>
 	<div class="col3 offset7">
 		<?php echo template::submit('userLoginSubmit', [
-			'value' => 'Connexion'
+			'value' => 'Connexion',
+			'ico' => ''
 		]); ?>
 	</div>
 </div>

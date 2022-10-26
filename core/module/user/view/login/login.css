@@ -9,6 +9,12 @@
  * @link http://zwiicms.fr/
  */
 
+ /** @import url("site/data/admin.css"); */
+
+/** NE PAS EFFACER
+* admin.css
+*/
+
 #passwordLabel, #passwordIcon {
     display: inline-flex;
 }

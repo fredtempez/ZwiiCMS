@@ -133,7 +133,7 @@ class install extends common
 						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						 'language' => self::$i18nUI
+						'language' => self::$i18nUI
 					]
 				]);
 
