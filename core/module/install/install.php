@@ -55,13 +55,11 @@ class install extends common
 		else {
 			// Soumission du formulaire
 			if ($this->isPost()) {
-				// Langue de l'UI
-				self::$i18nUI = $this->getInput('installLanguage');
-				// Par défaut la langue du contenu est celle du site
-				self::$i18nContent = self::$i18nUI;
+				$lang = $this->getInput('installLanguage');
+				setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'install/postinstall'
+					'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
 				]);
 			}
 		}
@@ -106,6 +104,10 @@ class install extends common
 			if ($this->isPost()) {
 
 				$success = true;
+
+				// Validation de la langue transmise
+				$lang = array_key_exists($this->getUrl(2), self::$languages) ? $this->getUrl(2) : 'fr_FR';
+
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
@@ -117,10 +119,8 @@ class install extends common
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
 
-
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
-
 				$success = $this->setData([
 					'user',
 					$userId,
@@ -133,7 +133,7 @@ class install extends common
 						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'language' => self::$i18nUI
+						'language' => $lang
 					]
 				]);
 
@@ -165,7 +165,6 @@ class install extends common
 					}*/
 
 					// Installation du site de test
-
 					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === FALSE) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);

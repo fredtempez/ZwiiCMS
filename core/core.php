@@ -338,9 +338,16 @@ class common
 		}
 
 		// Langue de l'administration
-		self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
-		// La langue par défaut du contenu est celle du site si le cookie est absent.
-		self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI;
+		if ($this->getData(['user']) === []) {
+			// Installation en cours
+			self::$i18nUI = array_key_exists($this->getInput('ZWII_UI'), self::$languages) ? $this->getInput('ZWII_UI') : 'fr_FR';
+			helper::deleteCookie('ZWII_UI');
+		} else {
+			// Langue sélectionnée dans le compte
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
+			// Validation de la langue
+			self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI;
+		}
 
 		// Le fichier existe-t-il ?
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
@@ -2739,7 +2746,6 @@ class core extends common
 			// TinyMCE
 			$colors = helper::colorVariants($this->getData(['admin', 'colorText']));
 			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $colors['normal'] . ';}';
-			echo $colors['invert'];
 			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:' . $colors['normal'] . '; color:' . $colors['text'] . ';}';
 			$css .= 'table thead th { color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
