@@ -341,12 +341,11 @@ class common
 		if ($this->getData(['user']) === []) {
 			// Installation en cours
 			self::$i18nUI = array_key_exists($this->getInput('ZWII_UI'), self::$languages) ? $this->getInput('ZWII_UI') : 'fr_FR';
-			helper::deleteCookie('ZWII_UI');
 		} else {
 			// Langue sélectionnée dans le compte
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
-			self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? self::$i18nUI = 'fr_FR' : self::$i18nUI;
+			self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? 'fr_FR' : self::$i18nUI;
 		}
 
 		// Le fichier existe-t-il ?

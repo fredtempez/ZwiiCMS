@@ -199,6 +199,7 @@ class install extends common
 					// Nettoyage
 					unlink(self::TEMP_DIR . 'files.tar.gz');
 					unlink(self::TEMP_DIR . 'files.tar');
+					helper::deleteCookie('ZWII_UI');
 
 					// Créer le dossier des fontes
 					if (!is_dir(self::DATA_DIR . 'fonts')) {
@@ -221,6 +222,11 @@ class install extends common
 					$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
 					unlink(self::FILE_DIR . 'source/theme/themes.json');
 
+					// Créer sitemap
+					$this->createSitemap();
+					// Mise à jour de la liste des pages pour TinyMCE
+					$this->listPages();
+
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl(false),
@@ -236,11 +242,6 @@ class install extends common
 			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
 			$dataThemes = json_decode($dataThemes, true);
 			self::$themes = helper::arrayColumn($dataThemes, 'name');
-
-			// Créer sitemap
-			$this->createSitemap();
-			// Mise à jour de la liste des pages pour TinyMCE
-			$this->listPages();
 
 			// Valeurs en sortie
 			$this->addOutput([

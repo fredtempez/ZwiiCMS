@@ -65,15 +65,15 @@
 				<div class="col3">
 					<?php echo template::select('installProxyType', $module::$proxyType, [
 						'label' => 'Type de proxy'
-						]); ?>
-					</div>
-				<div  class="col6">
+					]); ?>
+				</div>
+				<div class="col6">
 					<?php echo template::text('installProxyUrl', [
 						'label' => 'Adresse du proxy',
 						'placeholder' => 'cache.proxy.fr'
 					]); ?>
 				</div>
-				<div  class="col3">
+				<div class="col3">
 					<?php echo template::text('installProxyPort', [
 						'label' => 'Port du proxy',
 						'placeholder' => '6060'
@@ -82,10 +82,14 @@
 			</div>
 			<div class="row">
 				<div class="col12">
-				<?php echo template::select('installTheme', $module::$themes, [
+					<?php echo template::select('installTheme', $module::$themes, [
 						'label' => 'Thème'
 					]); ?>
+					<?php echo template::hidden('installLanguage', [
+						'value' => $this->getUrl(2)
+					]); ?>
 				</div>
+
 			</div>
 		</div>
 	</li>

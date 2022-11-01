@@ -29,12 +29,12 @@
 	</div>
 <?php endif; ?>
 <div class="row">
-	<div class="col6">
+	<div class="col9">
 		<?php echo template::checkbox('userLoginLongTime', true, 'Rester connecté sur ce navigateur', [
 			'checked' => $module::$userLongtime
 		]);	?>
 	</div>
-	<div class="col6 textAlignRight">
+	<div class="col3 textAlignRight">
 		<a href="<?php echo helper::baseUrl(); ?>user/forgot/<?php echo $this->getUrl(2); ?>">Mot de passe perdu ?</a>
 	</div>
 </div>
