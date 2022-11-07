@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '3.0';
+	const VERSION = '3.2';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -40,7 +40,7 @@ class form extends common {
 	public static $pagination;
 
 	// Nombre d'articles dans la page de config:
-	public static $itemperPage = 20;
+	public static $itemsperPage = 20;
 
 
 	// Objets
@@ -236,7 +236,7 @@ class form extends common {
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
 		if($data) {
 			// Pagination
-			$pagination = helper::pagination($data, $this->getUrl(), self::$itemsperPages);
+			$pagination = helper::pagination($data, $this->getUrl(), self::$itemsperPage);
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Inverse l'ordre du tableau
