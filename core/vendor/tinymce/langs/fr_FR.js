@@ -267,7 +267,7 @@ tinymce.addI18n('fr_FR',{
 "Words: {0}": "Mots : {0}",
 "{0} words": "{0} mots",
 "File": "Fichier",
-"Edit": "Éditer",
+"Edit": "Editer",
 "Insert": "Ins\u00e9rer",
 "View": "Voir",
 "Format": "Format",

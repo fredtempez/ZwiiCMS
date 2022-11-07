@@ -354,6 +354,9 @@ class common
 		}
 		\setlocale(LC_TIME,  self::$i18nUI . '.UTF-8');
 
+		// Stocker le cookie de langue pour l'éditeur de texte
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
 		// Utilisateur connecté
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
@@ -420,20 +423,21 @@ class common
 		}
 
 		// Chargement des dialogues
-		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json') ) {
+		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
 			// Copie des fichiers de langue par défaut fr_FR si pas initialisé
-			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR );
+			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 		}
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
 
 		// Dialogue du module
-		if ( $this->getData(['page', $this->getUrl(0), 'moduleId']) ) {
+		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
-			if ( is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-					&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+			if (
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
+				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
-				self::$dialog = array_merge (self::$dialog, $d );
+				self::$dialog = array_merge(self::$dialog, $d);
 			}
 		}
 
@@ -1745,13 +1749,13 @@ class common
 		echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
 		// Drapeau les langues des langues selon l'existance des dossiers
 		foreach (self::$languages as $key => $value) {
-			if ( is_dir(self::DATA_DIR . $key) ) {
-				$t [] =  $this->showi18n($key);
+			if (is_dir(self::DATA_DIR . $key)) {
+				$t[] =  $this->showi18n($key);
 			}
 		}
 		// Pas de drapeau si la langu eest unique
-		if (count ($t) > 1 ) {
-			foreach($t as $key) {
+		if (count($t) > 1) {
+			foreach ($t as $key) {
 				echo $key;
 			}
 		}

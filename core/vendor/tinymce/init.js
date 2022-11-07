@@ -4,53 +4,54 @@
 
  */
 
- /**
-  * Quand tinyMCE est invoqué hors connexion, initialiser privateKey
-  */
- if ( typeof(privateKey) == 'undefined') {
+/**
+ * Quand tinyMCE est invoqué hors connexion, initialiser privateKey
+ */
+if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
 
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwyg",
-		// Aperçu dans le pied de page
-		setup:function(ed) {
-			ed.on('change', function(e) {
-				if (ed.id === 'themeFooterText') {
-					$("#footerText").html(tinyMCE.get('themeFooterText').getContent());
-				}
-				if (ed.id === 'themeHeaderText') {
-					$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
-				}
+	// Aperçu dans le pied de page
+	setup: function (ed) {
+		ed.on('change', function (e) {
+			if (ed.id === 'themeFooterText') {
+				$("#footerText").html(tinyMCE.get('themeFooterText').getContent());
+			}
+			if (ed.id === 'themeHeaderText') {
+				$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
+			}
 
-			});
-		},
+		});
+	},
 	// Langue
-	language: "fr_FR",
+	language: getCookie('ZWII_UI') === null ?  "fr_FR": getCookie('ZWII_UI'),
+	language: 'es',
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
+	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks fullscreen code",
-    toolbar_groups: {
-        formatgroup: {
-            icon: 'format',
-            tooltip: 'Format du texte',
-            items: 'forecolor backcolor | superscript subscript | removeformat'
-        },
-        paragraphgroup: {
-            icon: 'paragraph',
-            tooltip: 'Format des paragraphes',
-            items: 'bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
-        },
-        insertgroup: {
-            icon: 'plus',
-            tooltip: 'Insérer',
-            items: 'emoticons charmap hr table template'
-        }
-    },
+	toolbar_groups: {
+		formatgroup: {
+			icon: 'format',
+			tooltip: 'Format du texte',
+			items: 'forecolor backcolor | superscript subscript | removeformat'
+		},
+		paragraphgroup: {
+			icon: 'paragraph',
+			tooltip: 'Format des paragraphes',
+			items: 'bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
+		},
+		insertgroup: {
+			icon: 'plus',
+			tooltip: 'Insérer',
+			items: 'emoticons charmap hr table template'
+		}
+	},
 	fontsize_formats:
-    "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
+		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
 	max_height: 500,
 	contextmenu: false,
@@ -85,14 +86,14 @@ tinymce.init({
 	},
 	// Cibles de la target
 	target_list: [
-		{title: 'None', value: ''},
-		{title: 'Nouvel onglet', value: '_blank'}
-		],
+		{ title: 'None', value: '' },
+		{ title: 'Nouvel onglet', value: '_blank' }
+	],
 	// Target pour lightbox
 	rel_list: [
-		{title: 'None', value: ''},
-		{title: 'Une popup (Lity)', value: 'data-lity'},
-		{title: 'Une galerie d\'images (SimpleLightbox)', value: 'gallery'}
+		{ title: 'None', value: '' },
+		{ title: 'Une popup (Lity)', value: 'data-lity' },
+		{ title: 'Une galerie d\'images (SimpleLightbox)', value: 'gallery' }
 	],
 	// Titre des image
 	image_title: true,
@@ -107,7 +108,7 @@ tinymce.init({
 		baseUrl + "site/data/theme.css",
 		baseUrl + "site/data/custom.css"
 	],
-// Classe à ajouter à la balise body dans l'iframe
+	// Classe à ajouter à la balise body dans l'iframe
 	body_class: "editorWysiwyg",
 	// Cache les menus
 	menubar: true,
@@ -122,7 +123,7 @@ tinymce.init({
 		return img.hasAttribute('internal-blob');
 	},*/
 	// Autoriser tous les éléments
-	valid_elements : '*[*]',
+	valid_elements: '*[*]',
 	// Autorise l'ajout de script
 	extended_valid_elements: "script[language|type|src]",
 	// Conserver les styles
@@ -147,33 +148,41 @@ tinymce.init({
 	insert_button_items: "anchor hr table",
 	// Contenu du bouton formats
 	style_formats: [
-		{title: "Headers", items: [
-			{title: "Header 1", format: "h1"},
-			{title: "Header 2", format: "h2"},
-			{title: "Header 3", format: "h3"},
-			{title: "Header 4", format: "h4"}
-		]},
-		{title: "Inline", items: [
-			{title: "Bold", icon: "bold", format: "bold"},
-			{title: "Italic", icon: "italic", format: "italic"},
-			{title: "Underline", icon: "underline", format: "underline"},
-			{title: "Strikethrough", icon: "strikethrough", format: "strikethrough"},
-			{title: "Superscript", icon: "superscript", format: "superscript"},
-			{title: "Subscript", icon: "subscript", format: "subscript"},
-			{title: "Code", icon: "code", format: "code"}
-		]},
-		{title: "Blocks", items: [
-			{title: "Paragraph", format: "p"},
-			{title: "Blockquote", format: "blockquote"},
-			{title: "Div", format: "div"},
-			{title: "Pre", format: "pre"}
-		]},
-		{title: "Alignment", items: [
-			{title: "Left", icon: "alignleft", format: "alignleft"},
-			{title: "Center", icon: "aligncenter", format: "aligncenter"},
-			{title: "Right", icon: "alignright", format: "alignright"},
-			{title: "Justify", icon: "alignjustify", format: "alignjustify"}
-		]}
+		{
+			title: "Headers", items: [
+				{ title: "Header 1", format: "h1" },
+				{ title: "Header 2", format: "h2" },
+				{ title: "Header 3", format: "h3" },
+				{ title: "Header 4", format: "h4" }
+			]
+		},
+		{
+			title: "Inline", items: [
+				{ title: "Bold", icon: "bold", format: "bold" },
+				{ title: "Italic", icon: "italic", format: "italic" },
+				{ title: "Underline", icon: "underline", format: "underline" },
+				{ title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
+				{ title: "Superscript", icon: "superscript", format: "superscript" },
+				{ title: "Subscript", icon: "subscript", format: "subscript" },
+				{ title: "Code", icon: "code", format: "code" }
+			]
+		},
+		{
+			title: "Blocks", items: [
+				{ title: "Paragraph", format: "p" },
+				{ title: "Blockquote", format: "blockquote" },
+				{ title: "Div", format: "div" },
+				{ title: "Pre", format: "pre" }
+			]
+		},
+		{
+			title: "Alignment", items: [
+				{ title: "Left", icon: "alignleft", format: "alignleft" },
+				{ title: "Center", icon: "aligncenter", format: "aligncenter" },
+				{ title: "Right", icon: "alignright", format: "alignright" },
+				{ title: "Justify", icon: "alignjustify", format: "alignjustify" }
+			]
+		}
 	],
 	// Templates
 	templates: [
@@ -229,57 +238,57 @@ tinymce.init({
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwygComment",
-		setup:function(ed) {
-			// Aperçu dans le pied de page
-			ed.on('change', function(e) {
-				if (ed.id === 'themeFooterText') {
-					$("#footerText").html(tinyMCE.get('themeFooterText').getContent());
-				}
-			});
-			// Limitation du nombre de caractères des commentaires à maxlength
-			var alarmCaraMin = 200; // alarme sur le nombre de caractères restants à partir de...
-			var maxlength = parseInt($("#" + (ed.id)).attr("maxlength"));
-			var id_alarm = "#blogArticleContentAlarm"
-			var contentLength = 0;
-			ed.on("keydown", function(e) {
-				contentLength = ed.getContent({format : 'text'}).length;
-				if (contentLength > maxlength) {
-					$(id_alarm).html("Vous avez atteint le maximum de "  + maxlength + " caractères ! ");
-					if(e.keyCode != 8 && e.keyCode != 46){
-						e.preventDefault();
-						e.stopPropagation();
-						return false;
-					}
-				}
-				else{
-					if(maxlength - contentLength < alarmCaraMin){
-						$(id_alarm).html((maxlength - contentLength) + " caractères restants");
-					}
-					else{
-						$(id_alarm).html(" ");
-					}
-				}
-			});
-			// Limitation y compris lors d'un copier/coller
-			ed.on("paste", function(e){
-				contentLeng = ed.getContent({format : 'text'}).length - 16;
-				var data = e.clipboardData.getData('Text');
-				if (data.length > (maxlength - contentLeng)) {
-					$(id_alarm).html("Vous alliez dépasser le maximum de "  + maxlength + " caractères ! ");
+	setup: function (ed) {
+		// Aperçu dans le pied de page
+		ed.on('change', function (e) {
+			if (ed.id === 'themeFooterText') {
+				$("#footerText").html(tinyMCE.get('themeFooterText').getContent());
+			}
+		});
+		// Limitation du nombre de caractères des commentaires à maxlength
+		var alarmCaraMin = 200; // alarme sur le nombre de caractères restants à partir de...
+		var maxlength = parseInt($("#" + (ed.id)).attr("maxlength"));
+		var id_alarm = "#blogArticleContentAlarm"
+		var contentLength = 0;
+		ed.on("keydown", function (e) {
+			contentLength = ed.getContent({ format: 'text' }).length;
+			if (contentLength > maxlength) {
+				$(id_alarm).html("Vous avez atteint le maximum de " + maxlength + " caractères ! ");
+				if (e.keyCode != 8 && e.keyCode != 46) {
+					e.preventDefault();
+					e.stopPropagation();
 					return false;
-				} else {
-					if(maxlength - contentLeng < alarmCaraMin){
-						$(id_alarm).html((maxlength - contentLeng - data.length) + " caractères restants");
-					}
-					else{
-						$(id_alarm).html(" ");
-					}
-					return true;
 				}
-			});
-		},
+			}
+			else {
+				if (maxlength - contentLength < alarmCaraMin) {
+					$(id_alarm).html((maxlength - contentLength) + " caractères restants");
+				}
+				else {
+					$(id_alarm).html(" ");
+				}
+			}
+		});
+		// Limitation y compris lors d'un copier/coller
+		ed.on("paste", function (e) {
+			contentLeng = ed.getContent({ format: 'text' }).length - 16;
+			var data = e.clipboardData.getData('Text');
+			if (data.length > (maxlength - contentLeng)) {
+				$(id_alarm).html("Vous alliez dépasser le maximum de " + maxlength + " caractères ! ");
+				return false;
+			} else {
+				if (maxlength - contentLeng < alarmCaraMin) {
+					$(id_alarm).html((maxlength - contentLeng - data.length) + " caractères restants");
+				}
+				else {
+					$(id_alarm).html(" ");
+				}
+				return true;
+			}
+		});
+	},
 	// Langue
-	language: "fr_FR",
+	language: getCookie('ZWII_UI') === null ?  "fr_FR": getCookie('ZWII_UI'),
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace stickytoolbar tabfocus template textcolor visualblocks",
 	// Contenu de la barre d'outils
@@ -297,7 +306,7 @@ tinymce.init({
 		baseUrl + "site/data/theme.css",
 		baseUrl + "site/data/custom.css"
 	],
-// Classe à ajouter à la balise body dans l'iframe
+	// Classe à ajouter à la balise body dans l'iframe
 	body_class: "editorWysiwyg",
 	// Cache les menus
 	menubar: false,
@@ -319,127 +328,147 @@ tinymce.init({
 	document_base_url: baseUrl,
 	// Contenu du bouton formats
 	style_formats: [
-		{title: "Headers", items: [
-			{title: "Header 1", format: "h1"},
-			{title: "Header 2", format: "h2"},
-			{title: "Header 3", format: "h3"},
-			{title: "Header 4", format: "h4"}
-		]},
-		{title: "Inline", items: [
-			{title: "Bold", icon: "bold", format: "bold"},
-			{title: "Italic", icon: "italic", format: "italic"},
-			{title: "Underline", icon: "underline", format: "underline"},
-			{title: "Strikethrough", icon: "strikethrough", format: "strikethrough"},
-			{title: "Superscript", icon: "superscript", format: "superscript"},
-			{title: "Subscript", icon: "subscript", format: "subscript"},
-			{title: "Code", icon: "code", format: "code"}
-		]},
-		{title: "Blocks", items: [
-			{title: "Paragraph", format: "p"},
-			{title: "Blockquote", format: "blockquote"},
-			{title: "Div", format: "div"},
-			{title: "Pre", format: "pre"}
-		]},
-		{title: "Alignment", items: [
-			{title: "Left", icon: "alignleft", format: "alignleft"},
-			{title: "Center", icon: "aligncenter", format: "aligncenter"},
-			{title: "Right", icon: "alignright", format: "alignright"},
-			{title: "Justify", icon: "alignjustify", format: "alignjustify"}
-		]}
+		{
+			title: "Headers", items: [
+				{ title: "Header 1", format: "h1" },
+				{ title: "Header 2", format: "h2" },
+				{ title: "Header 3", format: "h3" },
+				{ title: "Header 4", format: "h4" }
+			]
+		},
+		{
+			title: "Inline", items: [
+				{ title: "Bold", icon: "bold", format: "bold" },
+				{ title: "Italic", icon: "italic", format: "italic" },
+				{ title: "Underline", icon: "underline", format: "underline" },
+				{ title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
+				{ title: "Superscript", icon: "superscript", format: "superscript" },
+				{ title: "Subscript", icon: "subscript", format: "subscript" },
+				{ title: "Code", icon: "code", format: "code" }
+			]
+		},
+		{
+			title: "Blocks", items: [
+				{ title: "Paragraph", format: "p" },
+				{ title: "Blockquote", format: "blockquote" },
+				{ title: "Div", format: "div" },
+				{ title: "Pre", format: "pre" }
+			]
+		},
+		{
+			title: "Alignment", items: [
+				{ title: "Left", icon: "alignleft", format: "alignleft" },
+				{ title: "Center", icon: "aligncenter", format: "aligncenter" },
+				{ title: "Right", icon: "alignright", format: "alignright" },
+				{ title: "Justify", icon: "alignjustify", format: "alignjustify" }
+			]
+		}
 	]
 });
 
-
-
-tinymce.PluginManager.add('stickytoolbar', function(editor, url) {
-	editor.on('init', function() {
-	  setSticky();
+/**
+tinymce.PluginManager.add('stickytoolbar', function (editor, url) {
+	editor.on('init', function () {
+		setSticky();
 	});
 
-	$(window).on('scroll', function() {
-	  setSticky();
+	$(window).on('scroll', function () {
+		setSticky();
 	});
 
 	function setSticky() {
-	  var container = editor.editorContainer;
-	  var toolbars = $(container).find('.mce-toolbar-grp');
-	  var statusbar = $(container).find('.mce-statusbar');
-	  var menubar = $(container).find('.mce-menubar');
+		var container = editor.editorContainer;
+		var toolbars = $(container).find('.mce-toolbar-grp');
+		var statusbar = $(container).find('.mce-statusbar');
+		var menubar = $(container).find('.mce-menubar');
 
-	  if (isSticky()) {
-		$(container).css({
-		  paddingTop: menubar.outerHeight()
-		});
-
-		if (isAtBottom()) {
-		  toolbars.css({
-			top: 'auto',
-			bottom: statusbar.outerHeight(),
-			position: 'absolute',
-			width: '100%',
-			borderBottom: 'none'
-		  });
-		} else {
-			menubar.css({
-				top: 45,
-				bottom: 'auto',
-				position: 'fixed',
-				width: $(container).width(),
-				borderBottom: '1px solid rgba(0,0,0,0.2)',
-				background: '#fff'
+		if (isSticky()) {
+			$(container).css({
+				paddingTop: menubar.outerHeight()
 			});
-		  	toolbars.css({
-				top: 78,
-				bottom: 'auto',
-				position: 'fixed',
-				width: $(container).width(),
-				borderBottom: '1px solid rgba(0,0,0,0.2)'
-		  	});
-		}
-	  } else {
-		$(container).css({
-		  paddingTop: 0
-		});
 
-		toolbars.css({
-  		top:0,
-		  position: 'relative',
-		  width: 'auto',
-		  borderBottom: 'none'
-		});
-		menubar.css({
-			top:0,
-			position: 'relative',
-			width: 'auto',
-			borderBottom: 'none'
-		  });
-	  }
+			if (isAtBottom()) {
+				toolbars.css({
+					top: 'auto',
+					bottom: statusbar.outerHeight(),
+					position: 'absolute',
+					width: '100%',
+					borderBottom: 'none'
+				});
+			} else {
+				menubar.css({
+					top: 45,
+					bottom: 'auto',
+					position: 'fixed',
+					width: $(container).width(),
+					borderBottom: '1px solid rgba(0,0,0,0.2)',
+					background: '#fff'
+				});
+				toolbars.css({
+					top: 78,
+					bottom: 'auto',
+					position: 'fixed',
+					width: $(container).width(),
+					borderBottom: '1px solid rgba(0,0,0,0.2)'
+				});
+			}
+		} else {
+			$(container).css({
+				paddingTop: 0
+			});
+
+			toolbars.css({
+				top: 0,
+				position: 'relative',
+				width: 'auto',
+				borderBottom: 'none'
+			});
+			menubar.css({
+				top: 0,
+				position: 'relative',
+				width: 'auto',
+				borderBottom: 'none'
+			});
+		}
 	}
 
 	function isSticky() {
-	  var container = editor.editorContainer,
-		editorTop = container.getBoundingClientRect().top;
+		var container = editor.editorContainer,
+			editorTop = container.getBoundingClientRect().top;
 
-	  if (editorTop < 0) {
-		return true;
-	  }
+		if (editorTop < 0) {
+			return true;
+		}
 
-	  return false;
+		return false;
 	}
 
 	function isAtBottom() {
-	  var container = editor.editorContainer,
-		editorTop = container.getBoundingClientRect().top;
+		var container = editor.editorContainer,
+			editorTop = container.getBoundingClientRect().top;
 
-	  var toolbarHeight = $(container).find('.mce-toolbar-grp').outerHeight();
-	  var footerHeight = $(container).find('.mce-statusbar').outerHeight();
+		var toolbarHeight = $(container).find('.mce-toolbar-grp').outerHeight();
+		var footerHeight = $(container).find('.mce-statusbar').outerHeight();
 
-	  var hiddenHeight = -($(container).outerHeight() - toolbarHeight - footerHeight);
+		var hiddenHeight = -($(container).outerHeight() - toolbarHeight - footerHeight);
 
-  	  if (editorTop < hiddenHeight) {
-		return true;
-	  }
+		if (editorTop < hiddenHeight) {
+			return true;
+		}
 
-	  return false;
+		return false;
 	}
-  });
+});
+
+*/
+
+function getCookie(name) {
+	var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+	for (var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+	}
+	return null;
+}
