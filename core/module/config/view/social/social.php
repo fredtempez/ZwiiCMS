@@ -50,7 +50,7 @@
 				<div class="row">
 					<div class="col4 offset1">
 						<?php echo template::button('socialSiteMap', [
-							'href' => helper::baseUrl() . 'config/siteMap',
+							'href' => helper::baseUrl() . 'config/sitemap',
 							'value' => 'Générer sitemap.xml et robots.txt'
 						]); ?>
 					</div>
