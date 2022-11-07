@@ -4,6 +4,8 @@
 
  */
 
+console.log(getCookie("ZWII_UI"));
+
 /**
  * Quand tinyMCE est invoqué hors connexion, initialiser privateKey
  */
@@ -27,8 +29,7 @@ tinymce.init({
 		});
 	},
 	// Langue
-	language: getCookie('ZWII_UI') === null ?  "fr_FR": getCookie('ZWII_UI'),
-	language: 'es',
+	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
@@ -288,7 +289,7 @@ tinymce.init({
 		});
 	},
 	// Langue
-	language: getCookie('ZWII_UI') === null ?  "fr_FR": getCookie('ZWII_UI'),
+	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace stickytoolbar tabfocus template textcolor visualblocks",
 	// Contenu de la barre d'outils
@@ -366,101 +367,6 @@ tinymce.init({
 	]
 });
 
-/**
-tinymce.PluginManager.add('stickytoolbar', function (editor, url) {
-	editor.on('init', function () {
-		setSticky();
-	});
-
-	$(window).on('scroll', function () {
-		setSticky();
-	});
-
-	function setSticky() {
-		var container = editor.editorContainer;
-		var toolbars = $(container).find('.mce-toolbar-grp');
-		var statusbar = $(container).find('.mce-statusbar');
-		var menubar = $(container).find('.mce-menubar');
-
-		if (isSticky()) {
-			$(container).css({
-				paddingTop: menubar.outerHeight()
-			});
-
-			if (isAtBottom()) {
-				toolbars.css({
-					top: 'auto',
-					bottom: statusbar.outerHeight(),
-					position: 'absolute',
-					width: '100%',
-					borderBottom: 'none'
-				});
-			} else {
-				menubar.css({
-					top: 45,
-					bottom: 'auto',
-					position: 'fixed',
-					width: $(container).width(),
-					borderBottom: '1px solid rgba(0,0,0,0.2)',
-					background: '#fff'
-				});
-				toolbars.css({
-					top: 78,
-					bottom: 'auto',
-					position: 'fixed',
-					width: $(container).width(),
-					borderBottom: '1px solid rgba(0,0,0,0.2)'
-				});
-			}
-		} else {
-			$(container).css({
-				paddingTop: 0
-			});
-
-			toolbars.css({
-				top: 0,
-				position: 'relative',
-				width: 'auto',
-				borderBottom: 'none'
-			});
-			menubar.css({
-				top: 0,
-				position: 'relative',
-				width: 'auto',
-				borderBottom: 'none'
-			});
-		}
-	}
-
-	function isSticky() {
-		var container = editor.editorContainer,
-			editorTop = container.getBoundingClientRect().top;
-
-		if (editorTop < 0) {
-			return true;
-		}
-
-		return false;
-	}
-
-	function isAtBottom() {
-		var container = editor.editorContainer,
-			editorTop = container.getBoundingClientRect().top;
-
-		var toolbarHeight = $(container).find('.mce-toolbar-grp').outerHeight();
-		var footerHeight = $(container).find('.mce-statusbar').outerHeight();
-
-		var hiddenHeight = -($(container).outerHeight() - toolbarHeight - footerHeight);
-
-		if (editorTop < hiddenHeight) {
-			return true;
-		}
-
-		return false;
-	}
-});
-
-*/
 
 function getCookie(name) {
 	var nameEQ = name + "=";
