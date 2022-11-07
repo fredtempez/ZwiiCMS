@@ -31,22 +31,22 @@ tinymce.init({
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace stickytoolbar tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
-	toolbar: "formatgroup paragraphgroup insertgroup | visualblocks fullscreen code",
+	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks fullscreen code",
     toolbar_groups: {
         formatgroup: {
             icon: 'format',
             tooltip: 'Format du texte',
-            items: 'bold italic underline strikethrough | forecolor backcolor | superscript subscript | removeformat'
+            items: 'forecolor backcolor | superscript subscript | removeformat'
         },
         paragraphgroup: {
             icon: 'paragraph',
             tooltip: 'Format des paragraphes',
-            items: 'h1 h2 h3 | bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
+            items: 'bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
         },
         insertgroup: {
             icon: 'plus',
             tooltip: 'Insérer',
-            items: 'link image emoticons charmap hr table template'
+            items: 'emoticons charmap hr table template'
         }
     },
 	fontsize_formats:
