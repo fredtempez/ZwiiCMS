@@ -5,7 +5,8 @@
 <div class="row">
     <div class="col6 offset3">
             <?php echo template::select('installLanguage', $module::$i18nFiles, [
-                'label' =>  'Langues installées'
+                'label' =>  'Langues installées',
+				'selected' => array_key_exists ('fr_FR', $module::$i18nFiles) ? 'fr_FR': reset($module::$i18nFiles),
             ]); ?>
     </div>
 </div>
