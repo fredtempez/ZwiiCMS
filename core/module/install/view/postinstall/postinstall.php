@@ -28,10 +28,14 @@
 			]); ?>
 		</div>
 	</div>
-	<?php echo template::mail('installMail', [
-		'autocomplete' => 'off',
-		'label' => 'Adresse mail'
-	]); ?>
+	<div class="row">
+		<div class="col12">
+			<?php echo template::mail('installMail', [
+				'autocomplete' => 'off',
+				'label' => 'Adresse électronique'
+			]); ?>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col6">
 			<?php echo template::text('installFirstname', [
@@ -50,7 +54,7 @@
 <ul class="accordion" data-speed="150">
 	<li class="accordion-item">
 		<h3 class="accordion-title">
-			<?php echo helper::translate('&#9655; Options avancées'); ?>
+			<?php echo '&#9655; ' . helper::translate('Options avancées'); ?>
 		</h3>
 		<div class="accordion-content">
 			<div class="row">

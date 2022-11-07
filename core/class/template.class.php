@@ -566,7 +566,7 @@ class template
             'value' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         // Sauvegarde des données en cas d'erreur
