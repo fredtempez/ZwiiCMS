@@ -33,7 +33,7 @@ tinymce.init({
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
-	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks fullscreen code",
+	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks code fullscreen",
 	toolbar_groups: {
 		formatgroup: {
 			icon: 'format',
