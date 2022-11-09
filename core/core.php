@@ -444,13 +444,12 @@ class common
 		// Éditer les dialogues
 		// --- A COMMENTER --------
 		/*
-		$l = 'pt_PT';
+		$l = 'en';
 		if (file_exists(self::I18N_DIR . $l . '.json')) {
 			foreach (self::$dialog as $key => $value) {
-				helper::googleTranslate('fr', $l, $key);
+				helper::googleTranslate($l, $key);
 			}
-		}
-		*/
+		}*/
 
 		// Mise à jour des données core
 		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION))) include('core/include/update.inc.php');
