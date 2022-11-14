@@ -14,7 +14,7 @@
 					<div class="col4">
 						<?php echo template::checkbox('connectShowPassword', true, 'Dévoiler le mot de passe', [
 							'checked' => $this->getData(['config', 'connect', 'showPassword']),
-							'help' => 'Le survom d\'une icône de l\'écran de connexion affiche temporairement le mot de passe.'
+							'help' => 'Le survol d\'une icône de l\'écran de connexion affiche temporairement le mot de passe.'
 						]); ?>
 					</div>
 					<div class="col4">
