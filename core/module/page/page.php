@@ -462,6 +462,7 @@ class page extends common
 							}
 						}
 					}
+
 					// Modifie la page ou en crée une nouvelle si l'id a changé
 					$this->setData([
 						'page',
@@ -492,7 +493,7 @@ class page extends common
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN),
 							'css' => $this->getData(['page', $this->getUrl(2), 'css']),
-							'js' =>  $this->getData(['page', $this->getUrl(2), 'js'])
+							'js' => $this->getData(['page', $this->getUrl(2), 'js']),
 						]
 					]);
 
@@ -561,10 +562,14 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
+			// Supprime les balises styles si elles ont été saisies
+			$css = $this->getInput('pageCssEditorContent', null);
+			$css = str_replace('<style>', '', $css);
+			$css = str_replace('</style>', '', $css);
 			// Enregistre le CSS
 			$this->setData([
 				'page', $this->getUrl(2), 'css',
-				$this->getInput('pageCssEditorContent', null)
+				$css
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -589,11 +594,15 @@ class page extends common
 	public function jsEditor()
 	{
 		// Soumission du formulaire
+		// Supprime les balises scripts si elles ont été saisies
+		$js = $this->getInput('pageJsEditorContent', null);
+		$js = str_replace('<script>', '', $js);
+		$js = str_replace('<script>', '', $js);
 		if ($this->isPost()) {
 			// Enregistre le JS
 			$this->setData([
 				'page', $this->getUrl(2), 'js',
-				$this->getInput('pageJsEditorContent', null)
+				$js
 			]);
 			// Valeurs en sortie
 			$this->addOutput([

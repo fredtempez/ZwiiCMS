@@ -12,6 +12,9 @@
 	</div>
 </div>
 <div class="row">
+<div class="col12">
+		<?php echo helper::translate('Ne pas saisir les balises') . htmlentities(' <style></style>'); ?>
+	</div>
 	<div class="col12">
 		<?php echo template::textarea('pageCssEditorContent', [
 			'value' => empty($this->getData(['page', $this->getUrl(2), 'css'])) ? '' : $this->getData(['page', $this->getUrl(2), 'css']),

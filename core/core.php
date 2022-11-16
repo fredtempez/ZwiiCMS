@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-dev020';
+	const ZWII_VERSION = '12.0.00-dev021';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2935,8 +2935,7 @@ class core extends common
 				'title' => $title,
 				'content' => 	$this->getPage($this->getUrl(0), self::$i18nContent) .
 					// Concatène avec les paramètres avancés.
-					$this->getData(['page', $this->getUrl(0), 'css']) .
-					$this->getData(['page', $this->getUrl(0), 'js']),
+					'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>',
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
