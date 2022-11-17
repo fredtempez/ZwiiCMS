@@ -114,7 +114,9 @@ tinymce.init({
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
 	// Urls absolues
-	relative_urls: true,
+	relative_urls: false,
+	// Conversion URL
+	convert_urls : false,
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
@@ -294,7 +296,9 @@ tinymce.init({
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
 	// Urls absolues
-	relative_urls: true,
+	relative_urls: false,
+	// Conversion URL
+	convert_urls : false,
 	// Url de base
 	document_base_url: baseUrl,
 	// Contenu du bouton formats

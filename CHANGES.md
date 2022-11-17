@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 11.5.12
+- TinyMCE, les URL sont absolues, et la transformation automatiques des URL inactivée. Les URL relatives peuvent poser des problèmes lorsque le contenu de la page est lu hors l'URL de base.
+
 ## Version 11.5.11
 ### Corrections :
 - Génération du flux RSS dans le module blog, URL des miniatures incorrects.
