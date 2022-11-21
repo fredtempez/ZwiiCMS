@@ -13,7 +13,8 @@ ob_start('mb_output_handler');
 date_default_timezone_set('Europe/Paris');
 
 // Lire la langue installée
-setlocale(LC_CTYPE, $_GET['lang']); //correct transliteration
+$lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
+setlocale(LC_CTYPE, $lang);
 
 /* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
 $userId = $_COOKIE['ZWII_USER_ID'];
@@ -455,9 +456,9 @@ $config = array(
 	//**********************
 	//Allowed extensions (lowercase insert)
 	//**********************
-	'ext_img'                                 => array( 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff','svg', 'ico', 'webp' ), //Images
+	'ext_img'                                 => array( 'jpg', 'jpeg', 'png', 'gif', 'bmp', 'tiff','svg', 'ico', 'webp', 'avif' ), //Images
 	'ext_file'                                => array( 'doc', 'docx', 'rtf', 'pdf', 'xls', 'xlsx', 'txt', 'csv', 'html', 'xhtml', 'psd', 'sql', 'log', 'fla', 'xml', 'ade', 'adp', 'mdb', 'accdb', 'ppt', 'pptx', 'odt', 'ots', 'ott', 'odb', 'odg', 'otp', 'otg', 'odf', 'ods', 'odp', 'css', 'ai', 'kmz','dwg', 'dxf', 'hpgl', 'plt', 'spl', 'step', 'stp', 'iges', 'igs', 'sat', 'cgm', 'ics', 'gpx', 'kml', ''), //Files
-	'ext_video'                               => array( 'mov', 'mpeg', 'm4v', 'mp4', 'avi', 'mpg', 'wma', "flv", "webm" ), //Video
+	'ext_video'                               => array( 'mov', 'mpeg', 'm4v', 'mp4', 'avi', 'mpg', 'wma', 'flv', 'webm' ), //Video
 	'ext_music'                               => array( 'mp3', 'mpga', 'm4a', 'ac3', 'aiff', 'mid', 'ogg', 'wav' ), //Audio
 	'ext_misc'                                => array( 'zip', 'rar', 'gz', 'tar', 'iso', 'dmg', 'woff' ), //Archives et polices de caractères
 
