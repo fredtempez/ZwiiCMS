@@ -327,8 +327,7 @@ class common
 			// COnvertit les dossiers vers la nouvelle structure
 			foreach ($languages as $key => $value) {
 				if (is_dir(self::DATA_DIR . $key)) {
-					$this->copyDir(self::DATA_DIR . $key, self::DATA_DIR . $value);
-					$this->removeDir(self::DATA_DIR . $key);
+					rename(self::DATA_DIR . $key, self::DATA_DIR . $value);
 				}
 			}
 			self::$i18nUI = 'fr_FR';
