@@ -4,6 +4,7 @@ site/data/*
 site/tmp/*
 site/backup/*
 site/file/*
+site/i18n/*
 .DS_Store
 core/vendor/tinymce/link_list.json
 robots.txt
