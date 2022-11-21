@@ -313,18 +313,7 @@ class common
 			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		}
 
-		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath($keys, self::$i18nContent),
-				'backup' => file_exists('site/data/.backup')
-			]);;
-		}
-
-		/**
+				/**
 		 * Mise à jour  à partir de la version 11.5.12
 		 * */
 		if ($this->getData(['core', 'dataVersion']) < 12000) {
@@ -342,6 +331,20 @@ class common
 					$this->removeDir(self::DATA_DIR . $key);
 				}
 			}
+			self::$i18nUI = 'fr_FR';
+			self::$i18nContent = 'fr_FR';
+			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
+		}
+
+		// Instanciation de la classe des entrées / sorties
+		// Récupère les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dataPath($keys, self::$i18nContent),
+				'backup' => file_exists('site/data/.backup')
+			]);;
 		}
 
 		// Installation fraîche, initialisation des modules manquants
