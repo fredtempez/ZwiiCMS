@@ -859,19 +859,6 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 // Version 11.6.00
 if ($this->getData(['core', 'dataVersion']) < 12000) {
 
-	// Correspondance pour les dossiers de langue à convertir
-	$languages = [
-		'fr'	=> 'fr_FR',
-		'en'	=> 'en_EN',
-		'pt'	=> 'pt_PT'
-	];
-	// COnvertit les dossiers vers la nouvelle structure
-	foreach ($languages as $key => $value) {
-		if (is_dir(self::DATA_DIR . $key)) {
-			$this->copyDir(self::DATA_DIR . $key, self::DATA_DIR . $value);
-			$this->removeDir(self::DATA_DIR . $key);
-		}
-	}
 
 	// Supprime un cookie non nécessaire
 	helper::deleteCookie('ZWII_USER_LONGTIME');
@@ -920,6 +907,7 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	}
 	// Langue de l'interface
 	$this->deleteData(['config', 'i18n']);
+	
 	// Pas à l'installation
 	if ($this->getUser('id')) {
 		$this->setData(['user', $this->getUser('id'), 'language', 'fr_FR']);
