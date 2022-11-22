@@ -2190,7 +2190,7 @@ class common
 					}
 					$leftItems .= '<li>' . template::ico('clone', [
 						'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
-						'help' => 'Cloner la page'
+						'help' => 'Dupliquer la page'
 					])
 						. '</li>';
 
