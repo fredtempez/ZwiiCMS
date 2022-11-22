@@ -313,7 +313,7 @@ class common
 			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		}
 
-				/**
+		/**
 		 * Mise à jour  à partir de la version 11.5.12
 		 * */
 		$version = json_decode(file_get_contents('site/data/core.json'), true);
@@ -334,6 +334,19 @@ class common
 			self::$i18nContent = 'fr_FR';
 			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		}
+
+		/**
+		 * A masquer, comparaison des fichiers de langues
+		 */
+		/*
+		$fr = json_decode(file_get_contents('site/i18n/fr_FR.json'), true);
+		$pt = json_decode(file_get_contents('site/i18n/pt_PT.json'), true);
+		$intersec = array_intersect_key($pt, $fr);
+		$dif = array_diff_key($fr, $pt);
+		$merge = array_merge($dif, $intersec);
+		file_put_contents('site/i18n/pt.json', json_encode($merge, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+		exit();
+		*/
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
