@@ -35,7 +35,7 @@ class install extends common
 
 	public static $newVersion;
 
-	// Fichiers des langues de l'interface
+	// Fichiers des Interface
 	public static $i18nFiles = [];
 
 

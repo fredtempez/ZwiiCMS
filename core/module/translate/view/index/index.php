@@ -36,11 +36,11 @@
 
 <div class="tab">
 <?php echo template::button('translateContentButton', [
-		'value' => 'Langues du site',
+		'value' => 'Site',
 		'class' => 'buttonTab'
 	]); ?>
 	<?php echo template::button('translateUiButton', [
-		'value' => 'Langues de l\'interface',
+		'value' => 'Interface',
 		'class' => 'buttonTab'
 	]); ?>
 </div>
