@@ -291,9 +291,9 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace tabfocus template textcolor visualblocks",
+	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor",
 	// Contenu de la barre d'outils
-	toolbar: "formatselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | visualblocks fullscreen",
+	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	// Titre des images
 	image_title: true,
 	// Pages internes
@@ -329,6 +329,7 @@ tinymce.init({
 	convert_urls : false,
 	// Url de base
 	document_base_url: baseUrl,
+	max_height: 200,
 	// Contenu du bouton formats
 	style_formats: [
 		{
