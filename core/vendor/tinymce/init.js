@@ -29,7 +29,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
+	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks code fullscreen",
 	toolbar_groups: {
@@ -52,8 +52,7 @@ tinymce.init({
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
-	max_height: 500,
-	contextmenu: false,
+	max_height: 600,
 	// CodeMirror
 	codemirror: {
 		indentOnInit: true, // Whether or not to indent code on init.
