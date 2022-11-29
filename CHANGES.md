@@ -1,6 +1,13 @@
 # Changelog
 
+## Version 11.5.13
+### Correction :
+- Erreur de lien metaImages
+### Modification
+-TinyMCE, URL absolues mais transormation autorisée en URL relative si effectuée manuellement.
+
 ## Version 11.5.12
+### Modifications
 - TinyMCE, Les URL relatives posent des problèmes lorsque le contenu de la page est lu hors l'URL de base. Les URL deviennent absolues, la transformation automatique inactivée.
 
 ## Version 11.5.11
