@@ -2073,7 +2073,7 @@ class common
 	 */
 	public function showMetaImage()
 	{
-		$items = '<meta property="og:image" content="' . helper::baseUrl() . self::FILE_DIR . 'source/screenshot.jpg" />';
+		$items = '<meta property="og:image" content="' . helper::baseUrl(false) . self::FILE_DIR . 'source/screenshot.jpg" />';
 		$items .= '<meta property="og:image:type" content="image/jpeg" />';
 		$items .= '<meta property="og:image:width" content="1200" />';
 		$items .= '<meta property="og:image:height" content="627" />';

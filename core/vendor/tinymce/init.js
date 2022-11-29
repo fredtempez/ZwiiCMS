@@ -136,7 +136,7 @@ tinymce.init({
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
 	// Urls absolues
-	relative_urls: false,
+	relative_urls: true,
 	// Conversion des URLs
 	convert_urls : false,
 	// Url de base
@@ -326,7 +326,7 @@ tinymce.init({
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
 	// Urls absolues
-	relative_urls: false,
+	relative_urls: true,
 	// Conversion des URLs
 	convert_urls : false,
 	// Url de base
