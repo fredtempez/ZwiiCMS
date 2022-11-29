@@ -293,7 +293,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace stickytoolbar tabfocus template textcolor visualblocks",
+	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu fullscreen hr lists paste searchreplace tabfocus template textcolor visualblocks",
 	// Contenu de la barre d'outils
 	toolbar: "formatselect bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist | visualblocks fullscreen",
 	// Titre des images
