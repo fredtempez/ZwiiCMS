@@ -2560,7 +2560,7 @@ class core extends common
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:' .  $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			// Site dans TinyMCE
-			$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			//$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
