@@ -79,9 +79,9 @@
     "Sécurité": "Security",
     "Nouvelle page ou barre latérale": "New page or sidebar",
     "Éditer la page": "Edit the page",
-    "Cloner la page": "Clone the page",
     "Supprimer la page": "Delete the page",
     "Gérer les modules": "Manage modules",
+    "Catalogue de modules": "Modules store",
     "Configuration": "Configuration",
     "Utilisateurs": "Users",
     "Déconnecter": "Disconnect",
@@ -485,6 +485,7 @@
     "Menu accessoire": "Accessory menu",
     "Activer": "Enable",
     "Importer dans": "Import into",
+    "Archive ZIP": "Zip archive",
     "Archive": "Archive",
     "Langue par défaut": "Default language",
     "Langue du site sélectionnée": "Selected site language"
