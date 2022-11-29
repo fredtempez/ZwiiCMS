@@ -4,8 +4,6 @@
 
  */
 
-console.log(getCookie("ZWII_UI"));
-
 /**
  * Quand tinyMCE est invoqué hors connexion, initialiser privateKey
  */
