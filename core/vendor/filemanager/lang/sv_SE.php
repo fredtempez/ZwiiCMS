@@ -79,7 +79,7 @@ return array(
 	'Show_url' => 'visa sökväg', // show URL
 	'Extract' => 'packa upp här', // extract here
 	'File_info' => 'fil information', // file info
-	'Edit_image' => 'editera bild', // edit image
+	'Edit_image' => 'Éditera bild', // edit image
 	'Duplicate' => 'Duplicera', // Duplicate
 	'Folders' => 'Folders', // Folders
 	'Copy' => 'Kopiera', // Copy
