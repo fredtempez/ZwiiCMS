@@ -3,9 +3,13 @@
  */
 
 /* Fix les problèmes de couleurs et de taille de police */
-.editorWysiwyg {	
+.editorWysiwyg {
 	/*font-size: 14px !important;*/
 	background-image: none;
+}
+
+html {
+	background-color: unset !important;
 }
 
 

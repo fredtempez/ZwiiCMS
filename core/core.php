@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-beta03';
+	const ZWII_VERSION = '12.0.00-beta04';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -2560,7 +2560,7 @@ class core extends common
 			// Couleurs de site dans TinyMCe
 			$css .= 'div.mce-edit-area {font-family:' .  $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			// Site dans TinyMCE
-			//$css .= '.editorWysiwyg {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= '.editorWysiwyg, .editorWysiwygComment {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
@@ -2780,7 +2780,7 @@ class core extends common
 
 			// TinyMCE
 			$colors = helper::colorVariants($this->getData(['admin', 'colorText']));
-			$css .= 'body:not(.editorWysiwyg),span .zwiico-help {color:' . $colors['normal'] . ';}';
+			$css .= 'body:not(.editorWysiwyg), body:not(editorWysiwygComment),span .zwiico-help {color:' . $colors['normal'] . ';}';
 			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:' . $colors['normal'] . '; color:' . $colors['text'] . ';}';
 			$css .= 'table thead th { color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
@@ -2797,7 +2797,7 @@ class core extends common
 			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  . ';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']   . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
 			$css .= '.buttonTab, .block {border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}.buttonTab, .block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
-			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
+			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation
