@@ -1,8 +1,9 @@
 # Changelog
 
 ## Version 11.5.13
-### Correction :
-- Erreur de lien metaImages
+### Corrections :
+- Erreur de lien metaImages.
+- Compatibilité PHP 8.1 du gestionnaire de fichiers.
 ### Modification
 -TinyMCE, URL absolues mais transormation autorisée en URL relative si effectuée manuellement.
 
