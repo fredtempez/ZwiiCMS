@@ -23,6 +23,13 @@
 - Optimisation du chargement des bases de données, mise à jour des scripts jsonDB et dot.
 - Connexion persistante, l'activation de la case à cocher *Rester connecté sur ce navigateur* ne ferme pas la session lorsque le navigateur est fermé.
 
+## Version 11.5.13
+### Corrections :
+- Erreur de lien metaImages.
+- Compatibilité PHP 8.1 du gestionnaire de fichiers.
+### Modification
+-TinyMCE, URL absolues mais transormation autorisée en URL relative si effectuée manuellement.
+
 ## Version 11.5.12
 - TinyMCE, Les URL relatives posent des problèmes lorsque le contenu de la page est lu hors l'URL de base. Les URL deviennent absolues, la transformation automatique inactivée.
 
