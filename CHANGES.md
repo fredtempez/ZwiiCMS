@@ -5,7 +5,7 @@
 - Erreur de lien metaImages.
 - Compatibilité PHP 8.1 du gestionnaire de fichiers.
 ### Modification
--TinyMCE, URL absolues mais transormation autorisée en URL relative si effectuée manuellement.
+- TinyMCE, URL absolues, transformation autorisée en URL relative si effectuée manuellement.
 
 ## Version 11.5.12
 ### Modifications
