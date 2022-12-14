@@ -321,8 +321,7 @@ class config extends common
 
 				$fileZip = $this->getInput('configRestoreImportFile');
 				$file_parts = pathinfo($fileZip);
-				$folder = date('Y-m-d-h-i-s', time());
-				$zip = new ZipArchive();
+				// Validité du nom du fichier sélectionné
 				if ($file_parts['extension'] !== 'zip') {
 					// Valeurs en sortie erreur
 					$this->addOutput([
@@ -332,8 +331,9 @@ class config extends common
 						'state' => false
 					]);
 				}
-				$successOpen = $zip->open(self::FILE_DIR . 'source/' . $fileZip);
-				if ($successOpen === FALSE) {
+				// Ouverture de l'archive
+				$zip = new ZipArchive();
+				if ($zip->open(self::FILE_DIR . 'source/' . $fileZip) === FALSE) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
@@ -343,46 +343,19 @@ class config extends common
 					]);
 				}
 				// Lire le contenu de l'archive dans le tableau files
+				/*
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 					$stat = $zip->statIndex($i);
 					$files[] = (basename($stat['name']));
-				}
-
-				// Lire la dataversion
-				$tmpDir = uniqid(4);
+				}*/
+				// Extraction de l'archive dans un dossier temporaire
+				$tmpDir = uniqid(8);
 				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
-				$data = file_get_contents(self::TEMP_DIR . $tmpDir . '/data/core.json');
-				$obj = json_decode($data);
-				$dataVersion = strval($obj->core->dataVersion);
-				switch (strlen($dataVersion)) {
-					case 4:
-						if (substr($dataVersion, 0, 1) === '9') {
-							// Valeurs en sortie erreur
-							$this->addOutput([
-								'title' => helper::translate('Restaurer'),
-								'view' => 'restore',
-								'notification' => helper::translate('Archive invalide'),
-								'state' => false
-							]);
-						} else {
-							$version = 0;
-						}
-						break;
-					case 5:
-						$version = substr($dataVersion, 0, 2);
-						break;
-					default:
-						$version = 0;
-						break;
-				}
-				$this->removeDir(self::TEMP_DIR . $tmpDir);
-
-				if ($version >= 10) {
-					// Option active, les users sont stockées
-					if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
-						$users = $this->getData(['user']);
-					}
-				} elseif ($version === 0) { // Version invalide
+				// Version de l'archive
+				$data = json_decode(file_get_contents(self::TEMP_DIR . $tmpDir . '/data/core.json'), true);
+				$dataVersion = $data['core']['dataVersion'];
+				// Version non prises en charge <9 ou erreur d'extraction
+				if (intval(substr($dataVersion, 0, 1)) <=  9 or !$success) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
@@ -391,16 +364,21 @@ class config extends common
 						'state' => false
 					]);
 				}
-				// Extraire le zip ou 'site/'
-				$this->removeDir(self::DATA_DIR);
-				$success = $zip->extractTo('site/');
-				// Fermer l'archive
+
+				// Fermer le zip
 				$zip->close();
+
+				// Option active, préservation des utilisateurs
+				if ($this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true) {
+					$users = $this->getData(['user']);
+				}
+
+				// Copie dans le dossier /site/data
+				$success = $this->copyDir(self::TEMP_DIR . $tmpDir, 'site/');
+				$this->removeDir(self::TEMP_DIR . $tmpDir);
 
 				// Restaurer les users originaux d'une v10 si option cochée
 				if (
-					!empty($users) &&
-					$version >= 10 &&
 					$this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true
 				) {
 					$this->setData(['user', $users]);
@@ -412,8 +390,6 @@ class config extends common
 			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
-				/*'title' => 'Restaurer',
-				'view' => 'restore',*/
 				'redirect' => $redirect,
 				'notification' => helper::translate($notification),
 				'state' => $success
@@ -604,7 +580,7 @@ class config extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => sprintf( helper::translate('Éditeur de script %s'), ucfirst($this->geturl(2))),
+			'title' => sprintf(helper::translate('Éditeur de script %s'), ucfirst($this->geturl(2))),
 			'vendor' => [
 				'codemirror'
 			],
@@ -768,7 +744,7 @@ class config extends common
 		$this->addOutput([
 			'title' => helper::translate('Configuration'),
 			'view' => 'index',
-			'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': '. $fail,
+			'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': ' . $fail,
 			'state' => true
 		]);
 	}

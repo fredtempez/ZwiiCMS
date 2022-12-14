@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-beta05';
+	const ZWII_VERSION = '12.0.00-beta06';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -324,9 +324,10 @@ class common
 				'en'	=> 'en_EN',
 				'pt'	=> 'pt_PT'
 			];
-			// COnvertit les dossiers vers la nouvelle structure
+			// Convertit les dossiers vers la nouvelle structure
 			foreach ($languages as $key => $value) {
-				if (is_dir(self::DATA_DIR . $key)) {
+				if (is_dir(self::DATA_DIR . $key) && 
+					!is_dir(self::DATA_DIR . $value)) {
 					rename(self::DATA_DIR . $key, self::DATA_DIR . $value);
 				}
 			}
