@@ -57,6 +57,7 @@
 			<?php echo '&#9655; ' . helper::translate('Options avancées'); ?>
 		</h3>
 		<div class="accordion-content">
+			<?php if ($this->getUrl(2) === 'fr_FR'): ?>
 			<div class="row">
 				<div class="col12">
 					<?php echo template::checkbox('installDefaultData', true, 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [
@@ -65,6 +66,7 @@
 					?>
 				</div>
 			</div>
+			<?php endif;?>
 			<div class="row">
 				<div class="col3">
 					<?php echo template::select('installProxyType', $module::$proxyType, [

@@ -38,7 +38,6 @@ class install extends common
 	// Fichiers des Interface
 	public static $i18nFiles = [];
 
-
 	/**
 	 * Pré-installation - choix de la langue
 	 */
@@ -165,7 +164,8 @@ class install extends common
 					}*/
 
 					// Installation du site de test
-					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === FALSE) {
+					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
+						&& $lang === 'fr_FR' ) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
