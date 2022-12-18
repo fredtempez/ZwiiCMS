@@ -130,11 +130,11 @@ class translate extends common
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
 				if (self::$i18nUI === $key) {
-				 	$message = helper::translate('Langue par défaut');
+					$message = helper::translate('Langue par défaut');
 				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
 					$message = helper::translate('Langue du site sélectionnée');
 				} else {
-				 	 $message = '';
+					$message = '';
 				}
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %'),
@@ -156,7 +156,7 @@ class translate extends common
 		}
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
-		
+
 		// Onglet des langues de l'interface
 		if (is_dir(self::I18N_DIR)) {
 			$dir = getcwd();
@@ -164,7 +164,7 @@ class translate extends common
 			$files = glob('*.json');
 			chdir($dir);
 		}
-		
+
 		// Construit le tableau des langues de l'UI
 		foreach ($files as $file) {
 			// La langue est-elle référencée ?
@@ -207,29 +207,10 @@ class translate extends common
 			// Création du contenu
 			$lang = $this->getInput('translateAddContent');
 
-			// Tableau avec les données vierges
-			require_once('core/module/install/ressource/defaultdata.php');
-
-			// Créer la structure
-			foreach (['page', 'module', 'locale'] as $key) {
-
-				// Sus-dossier localisé
-				if (!file_exists(self::DATA_DIR .  $lang)) {
-					mkdir(self::DATA_DIR . $lang, 0755);
-				}
-
-				// Initialiser la classe
-				$db = new \Prowebcraft\JsonDb([
-					'name' => $key . '.json',
-					'dir' => self::DATA_DIR . $lang,
-					'backup' => file_exists('site/data/.backup')
-				]);;
-
-				// Capturer et sauver
-				$db->set($key, init::$defaultData[$key]);
-				$db->save;
+			// Stockage dans un sous-dossier localisé
+			if (!file_exists(self::DATA_DIR .  $lang)) {
+				mkdir(self::DATA_DIR . $lang, 0755);
 			}
-
 
 			// Valeurs en sortie
 			$this->addOutput([

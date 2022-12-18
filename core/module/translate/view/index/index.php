@@ -17,6 +17,15 @@
 			]);*/ ?>
 	</div>
 	<div class="col1 offset8">
+		<?php echo template::button('translateButtonCopyContent', [
+			'href' => helper::baseUrl() . 'translate/copy',
+			'value' => template::ico('docs'),
+			'disabled' => $module::$siteCopy,
+			'help' => 'Copie de contenus localisés'
+		]); ?>
+
+	</div>
+	<div class="col1">
 		<?php echo template::button('translateButtonAddContent', [
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
@@ -24,18 +33,10 @@
 			'help' => 'Nouveau contenu localisé'
 		]); ?>
 	</div>
-	<div class="col1">
-		<?php echo template::button('translateButtonCopyContent', [
-			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => template::ico('docs'),
-			'disabled' => $module::$siteCopy,
-			'help' => 'Copie de contenus localisés'
-		]); ?>
-	</div>
 </div>
 
 <div class="tab">
-<?php echo template::button('translateContentButton', [
+	<?php echo template::button('translateContentButton', [
 		'value' => 'Site',
 		'class' => 'buttonTab'
 	]); ?>

@@ -1,5 +1,6 @@
 <?php
-class init extends common {
+class init extends common
+{
 	public static $defaultData = [
 		'config' => [
 			'autoBackup' => true,
@@ -71,13 +72,13 @@ class init extends common {
 		],
 		'fonts' => [
 			'files' => [],
-			'imported'=> [
-				'arimo'=> [
+			'imported' => [
+				'arimo' => [
 					'name' => 'Arimo',
 					'font-family' => 'Arimo,  sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/arimo'
 				],
-				'arvo'=> [
+				'arvo' => [
 					'name' => 'Arvo',
 					'font-family' => 'Arvo,  sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/arvo'
@@ -87,47 +88,47 @@ class init extends common {
 					'font-family' => '\'Dancing Script\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/dancing-script'
 				],
-				'droid-sans-2'=> [
+				'droid-sans-2' => [
 					'name' => 'Droid Sans',
 					'font-family' =>  '\'Droid Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 				],
-				'droid-serif-2'=> [
+				'droid-serif-2' => [
 					'name' => 'Droid Serif',
 					'font-family' =>  '\'Droid Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 				],
-				'indie-flower'=> [
+				'indie-flower' => [
 					'name' => 'Indie Flower',
 					'font-family' => '\'Indie Flower\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/indie-flower'
 				],
-				'liberation-sans'=> [
+				'liberation-sans' => [
 					'name' => 'Liberation Sans',
 					'font-family' => '\'Liberation Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/liberation-sans'
 				],
-				'liberation-serif'=> [
+				'liberation-serif' => [
 					'name' => 'Liberation Serif',
 					'font-family' => '\'Liberation Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/liberation-serif'
 				],
-				'lobster-2'=> [
+				'lobster-2' => [
 					'name' => 'Lobster',
 					'font-family' => 'Lobster, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/lobster-2'
 				],
-				'lato'=> [
+				'lato' => [
 					'name' => 'lato',
 					'font-family' => 'Lato, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/lato'
 				],
-				'lora'=> [
+				'lora' => [
 					'name' => 'Lora',
 					'font-family' => 'Lora, serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/lora'
 				],
-				'old-standard-tt-3'=> [
+				'old-standard-tt-3' => [
 					'name' => 'Old Standard TT',
 					'font-family' => '\'Old Standard TT\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/old-standard-tt-3'
@@ -137,37 +138,37 @@ class init extends common {
 					'font-family' => '\'Open Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/open-sans'
 				],
-				'oswald-4'=> [
+				'oswald-4' => [
 					'name' => 'Oswald',
 					'font-family' => 'Oswald, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/oswald-4'
 				],
-				'pt-mono'=> [
+				'pt-mono' => [
 					'name' => 'PT Mono',
 					'font-family' => '\'PT Mono\', monospace',
 					'resource' => 'https://fonts.cdnfonts.com/css/pt-mono'
 				],
-				'pt-serif'=> [
+				'pt-serif' => [
 					'name' => 'PR Serif',
 					'font-family' => '\'PT Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/pt-serif'
 				],
-				'rancho'=> [
+				'rancho' => [
 					'name' => 'Rancho',
 					'font-family' => 'Rancho, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/rancho'
 				],
-				'roboto'=> [
+				'roboto' => [
 					'name' => 'Roboto',
 					'font-family' => 'Roboto, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/roboto'
 				],
-				'ubuntu'=> [
+				'ubuntu' => [
 					'name' => 'Ubuntu',
 					'font-family' => 'Ubuntu, sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/ubuntu'
 				],
-				'vollkorn'=> [
+				'vollkorn' => [
 					'name' => 'Vollkorn',
 					'font-family' => 'Vollkorn, serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/vollkorn'
@@ -176,32 +177,32 @@ class init extends common {
 		],
 		'page' => [
 			'accueil' => [
-			'typeMenu' => 'text',
-			'iconUrl' => '',
-			'disable' => false,
-			'content' => 'accueil.html',
-			'hideTitle' => false,
-			'homePageId' => true,
-			'breadCrumb' => false,
-			'metaDescription' => '',
-			'metaTitle' => '',
-			'moduleId' => '',
-			'modulePosition' => 'bottom',
-			'parentPageId' => '',
-			'position' => 1,
-			'group' => self::GROUP_VISITOR,
-			'targetBlank' => false,
-			'title' => 'Accueil',
-			'shortTitle' => 'Accueil',
-			'block' => '12',
-			'barLeft' => '',
-			'barRight' => '',
-			'displayMenu' => 'none',
-			'hideMenuSide' => false,
-			'hideMenuChildren' =>false,
-			'extraPosition' => false,
-			'css' => '',
-			'js' => ''
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
+				'content' => 'accueil.html',
+				'hideTitle' => false,
+				'homePageId' => true,
+				'breadCrumb' => false,
+				'metaDescription' => '',
+				'metaTitle' => '',
+				'moduleId' => '',
+				'modulePosition' => 'bottom',
+				'parentPageId' => '',
+				'position' => 1,
+				'group' => self::GROUP_VISITOR,
+				'targetBlank' => false,
+				'title' => 'Accueil',
+				'shortTitle' => 'Accueil',
+				'block' => '12',
+				'barLeft' => '',
+				'barRight' => '',
+				'displayMenu' => 'none',
+				'hideMenuSide' => false,
+				'hideMenuChildren' => false,
+				'extraPosition' => false,
+				'css' => '',
+				'js' => ''
 			]
 		],
 		'module' => [],
@@ -332,43 +333,98 @@ class init extends common {
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
 		'blacklist' => []
-    ];
+	];
+	public static $defaultDataI18n = [
+		'en_EN' => [
+			'locale' => [
+				'homePageId' => 'home',
+				'page302' => 'none',
+				'page403' => 'none',
+				'page404' => 'none',
+				'legalPageId' => 'none',
+				'searchPageId' => 'none',
+				'searchPageLabel' => 'none',
+				'sitemapPageLabel' => 'none',
+				'legalPageLabel' => 'legals',
+				'metaDescription' => 'Zwii is a database-free CMS that makes it easy to create and manage a website without any programming knowledge.',
+				'title' => 'Your site in a few clicks!',
+				'cookies' => [
+					'mainLabel' => 'This site uses cookies necessary for its operation, they make it possible to streamline its operation for example by memorizing the connection data, the language you have chosen or the validation of this message.',
+					'titleLabel' => 'Essential cookies',
+					'linkLegalLabel' => 'Consult the legal notice',
+					'cookiesFooterText' => 'Cookies',
+					'buttonValidLabel' => 'Ok'
+				]
+			],
+			'page' => [
+				'home' => [
+					'typeMenu' => 'text',
+					'iconUrl' => '',
+					'disable' => false,
+					'content' => 'home.html',
+					'hideTitle' => false,
+					'homePageId' => true,
+					'breadCrumb' => false,
+					'metaDescription' => '',
+					'metaTitle' => '',
+					'moduleId' => '',
+					'modulePosition' => 'bottom',
+					'parentPageId' => '',
+					'position' => 1,
+					'group' => self::GROUP_VISITOR,
+					'targetBlank' => false,
+					'title' => 'HomePage',
+					'shortTitle' => 'Home',
+					'block' => '12',
+					'barLeft' => '',
+					'barRight' => '',
+					'displayMenu' => 'none',
+					'hideMenuSide' => false,
+					'hideMenuChildren' => false,
+					'extraPosition' => false,
+					'css' => '',
+					'js' => ''
+				]
+			],
+			'html' => 'Welcome in this ZiiCMS, this is you first page !'
+		]
+	];
 
 
-    public static $siteData = [
+	public static $siteData = [
 		'page' => [
 			'accueil' => [
-			'typeMenu' => 'text',
-			'iconUrl' => '',
-			'disable' => false,
-			'content' => 'accueil.html',
-			'hideTitle' => false,
-			'homePageId' => true,
-			'breadCrumb' => false,
-			'metaDescription' => '',
-			'metaTitle' => '',
-			'moduleId' => '',
-			'modulePosition' => 'bottom',
-			'parentPageId' => '',
-			'position' => 1,
-			'group' => self::GROUP_VISITOR,
-			'targetBlank' => false,
-			'title' => 'Accueil',
-			'shortTitle' => 'Accueil',
-			'block' => '12',
-			'barLeft' => '',
-			'barRight' => '',
-			'displayMenu' => 'none',
-			'hideMenuSide' => false,
-			'hideMenuChildren' =>false,
-			'extraPosition' => false,
-			'css' => '',
-			'js' => ''
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
+				'content' => 'accueil.html',
+				'hideTitle' => false,
+				'homePageId' => true,
+				'breadCrumb' => false,
+				'metaDescription' => '',
+				'metaTitle' => '',
+				'moduleId' => '',
+				'modulePosition' => 'bottom',
+				'parentPageId' => '',
+				'position' => 1,
+				'group' => self::GROUP_VISITOR,
+				'targetBlank' => false,
+				'title' => 'Accueil',
+				'shortTitle' => 'Accueil',
+				'block' => '12',
+				'barLeft' => '',
+				'barRight' => '',
+				'displayMenu' => 'none',
+				'hideMenuSide' => false,
+				'hideMenuChildren' => false,
+				'extraPosition' => false,
+				'css' => '',
+				'js' => ''
 			],
 			'enfant' => [
-					'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'enfant.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
@@ -387,15 +443,15 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
 			],
 			'privee' => [
-					'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'privee.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
@@ -414,15 +470,15 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
 			],
 			'mise-en-page' => [
 				'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'mise-en-page.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
@@ -441,15 +497,15 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
 			],
 			'menu-lateral' => [
 				'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'menu-lateral.html',
 				'hideTitle' => false,
 				'breadCrumb' => true,
@@ -468,15 +524,15 @@ class init extends common {
 				'barRight' => 'barrelateraleavecmenu',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
-				],
+			],
 			'blog' => [
 				'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'blog.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
@@ -495,15 +551,15 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
 			],
 			'galeries' => [
 				'typeMenu' => 'text',
-						'iconUrl' => '',
-						'disable' => false,
+				'iconUrl' => '',
+				'disable' => false,
 				'content' => 'galeries.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
@@ -522,38 +578,38 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' =>  'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
 			],
 			'site-de-zwii' => [
-			'typeMenu' => 'text',
-					'iconUrl' => '',
-					'disable' => false,
-			'content' => '',
-			'hideTitle' => false,
-			'homePageId' => false,
-			'breadCrumb' => false,
-			'metaDescription' => '',
-			'metaTitle' => '',
-			'moduleId' => 'redirection',
-			'modulePosition' => 'bottom',
-			'parentPageId' => '',
-			'position' => 5,
-			'group' => self::GROUP_VISITOR,
-			'targetBlank' => true,
-			'title' => 'Site de Zwii',
-			'shortTitle' => 'Site de Zwii',
-			'block' => '12',
-			'barLeft' => '',
-			'barRight' => '',
-			'displayMenu' => 'none',
-			'hideMenuSide' => false,
-			'hideMenuChildren' =>false,
-			'extraPosition' => false,
-			'css' => '',
-			'js' => ''
+				'typeMenu' => 'text',
+				'iconUrl' => '',
+				'disable' => false,
+				'content' => '',
+				'hideTitle' => false,
+				'homePageId' => false,
+				'breadCrumb' => false,
+				'metaDescription' => '',
+				'metaTitle' => '',
+				'moduleId' => 'redirection',
+				'modulePosition' => 'bottom',
+				'parentPageId' => '',
+				'position' => 5,
+				'group' => self::GROUP_VISITOR,
+				'targetBlank' => true,
+				'title' => 'Site de Zwii',
+				'shortTitle' => 'Site de Zwii',
+				'block' => '12',
+				'barLeft' => '',
+				'barRight' => '',
+				'displayMenu' => 'none',
+				'hideMenuSide' => false,
+				'hideMenuChildren' => false,
+				'extraPosition' => false,
+				'css' => '',
+				'js' => ''
 			],
 			'contact' => [
 				'typeMenu' => 'text',
@@ -577,7 +633,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
@@ -594,7 +650,7 @@ class init extends common {
 				'moduleId' => '',
 				'modulePosition' => 'bottom',
 				'parentPageId' => '',
-				'position' => 0 ,
+				'position' => 0,
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
 				'title' => 'Barre latérale',
@@ -604,7 +660,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
@@ -621,7 +677,7 @@ class init extends common {
 				'moduleId' => '',
 				'modulePosition' => 'bottom',
 				'parentPageId' => '',
-				'position' => 0 ,
+				'position' => 0,
 				'group' => self::GROUP_VISITOR,
 				'targetBlank' => false,
 				'title' => 'Barre latérale avec menu',
@@ -631,7 +687,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'parents',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
@@ -691,7 +747,7 @@ class init extends common {
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
-				],
+			],
 			'erreur403' => [
 				'typeMenu' => 'text',
 				'iconUrl' => '',
@@ -741,7 +797,7 @@ class init extends common {
 				'barRight' => '',
 				'displayMenu' => 'none',
 				'hideMenuSide' => false,
-				'hideMenuChildren' =>false,
+				'hideMenuChildren' => false,
 				'extraPosition' => false,
 				'css' => '',
 				'js' => ''
@@ -857,7 +913,7 @@ class init extends common {
 					'beaux-paysages' => [
 						'config' => [
 							'name' => 'Beaux paysages',
-							'directory' => self::FILE_DIR.'source/galerie/landscape',
+							'directory' => self::FILE_DIR . 'source/galerie/landscape',
 							'homePicture' => 'iceberg.jpg',
 							'sort' => 'SORT_ASC',
 							'position' => 1
@@ -876,7 +932,7 @@ class init extends common {
 					'espace' => [
 						'config' => [
 							'name' => 'Espace',
-							'directory' => self::FILE_DIR.'source/galerie/space',
+							'directory' => self::FILE_DIR . 'source/galerie/space',
 							'homePicture' => 'nebula.jpg',
 							'sort' => 'SORT_ASC',
 							'position' => 2
@@ -903,7 +959,7 @@ class init extends common {
 					'thumbBorderColor' => 'rgba(221, 221, 221, 1)',
 					'thumbRadius'      => '.3em',
 					'thumbShadows'     => '1px 1px 10px',
-					'thumbShadowsColor'=> 'rgba(125, 125, 125, 1)',
+					'thumbShadowsColor' => 'rgba(125, 125, 125, 1)',
 					'legendHeight'	   => '.375em',
 					'legendAlign'	   => 'center',
 					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
@@ -962,7 +1018,7 @@ class init extends common {
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
 			'title' => 'Votre site en quelques clics !'
 		]
-    ];
+	];
 
 	public static $siteContent = [
 		'accueil' => [
@@ -979,7 +1035,7 @@ class init extends common {
 						<div class="col4"><p>Principium autem unde latius se funditabat, emersit ex negotio tali. Chilo ex vicario et coniux eius Maxima nomine, questi apud Olybrium ea tempestate urbi praefectum, vitamque suam venenis petitam adseverantes inpetrarunt ut hi, quos suspectati sunt, ilico rapti conpingerentur in vincula, organarius Sericus et Asbolius palaestrita et aruspex Campensis.</p></div>
 						</div>'
 		],
-		'privee'=> [
+		'privee' => [
 			'content' => '<p>Cette page n\'est visible que des membres de votre site !</p>
 						<div class="row">
 							<div class="col6"><p>Eius populus ab incunabulis primis ad usque pueritiae tempus extremum, quod annis circumcluditur fere trecentis, circummurana pertulit bella, deinde aetatem ingressus adultam post multiplices bellorum aerumnas Alpes transcendit et fretum, in iuvenem erectus et virum ex omni plaga quam orbis ambit inmensus, reportavit laureas et triumphos, iamque vergens in senium et nomine solo aliquotiens vincens ad tranquilliora vitae discessit.</p></div>
@@ -1067,7 +1123,7 @@ class init extends common {
 			<p justify="">Pour toute question relative &agrave; l&rsquo;application des pr&eacute;sentes CGU, vous pouvez joindre l&rsquo;&eacute;diteur aux coordonn&eacute;es inscrites &agrave; l&rsquo;ARTICLE 1.</p>'
 		],
 		'erreur302' => [
-			'content' =>'<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
+			'content' => '<p>Notre site est actuellement en maintenance. Nous sommes d&eacute;sol&eacute;s pour la g&ecirc;ne occasionn&eacute;e et faisons notre possible pour &ecirc;tre rapidement de retour.</p>
 			<div class="row"><div class="col4 offset8 textAlignCenter"><a href="./?user/login" id="maintenanceLogin" name="maintenanceLogin" class="button"><span class="zwiico-lock zwiico-margin-right"></span>Administration</a></div></div>'
 		],
 		'erreur403' => [

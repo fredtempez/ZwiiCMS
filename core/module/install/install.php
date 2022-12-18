@@ -173,6 +173,12 @@ class install extends common
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 					}
 
+					// Jeu réduit pour les pages étrangères
+					if ( $lang !== 'fr_FR') {
+						$this->initData('page', self::$i18nContent, false);
+						$this->initData('module', self::$i18nContent, false);
+					}
+
 					// Sauvegarder la configuration du Proxy
 					$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
 					$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);

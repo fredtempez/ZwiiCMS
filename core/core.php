@@ -49,7 +49,7 @@ class common
 	// Numéro de version
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
-	const ZWII_VERSION = '12.0.00-beta06';
+	const ZWII_VERSION = '12.0.00-beta07';
 	const ZWII_UPDATE_CHANNEL = "test";
 
 	public static $actions = [];
@@ -326,8 +326,10 @@ class common
 			];
 			// Convertit les dossiers vers la nouvelle structure
 			foreach ($languages as $key => $value) {
-				if (is_dir(self::DATA_DIR . $key) && 
-					!is_dir(self::DATA_DIR . $value)) {
+				if (
+					is_dir(self::DATA_DIR . $key) &&
+					!is_dir(self::DATA_DIR . $value)
+				) {
 					rename(self::DATA_DIR . $key, self::DATA_DIR . $value);
 				}
 			}
@@ -689,31 +691,46 @@ class common
 		}
 		$db = $this->dataFiles[$module];
 
-		if ($sampleSite === true) {
+		if ($sampleSite === true && $lang === 'fr_FR') {
 			$db->set($module, init::$siteData[$module]);
 		} else {
 			$db->set($module, init::$defaultData[$module]);
 		}
 		$db->save;
 
-
-		// Dossier des pages
-		if (!is_dir(self::DATA_DIR . $lang . '/content')) {
-			mkdir(self::DATA_DIR . $lang . '/content', 0755);
-		}
 		// Créer le jeu de pages du site de test
 		if ($module === 'page') {
+			$langFolder = $lang . '/content/';
+			// Dossier des pages
+			if (!is_dir(self::DATA_DIR . $langFolder)) {
+				mkdir(self::DATA_DIR . $langFolder, 0755);
+			}
 			// Site de test ou page simple
-			if ($sampleSite === true) {
-				foreach (init::$siteContent as $key => $value) {
-					// Creation du contenu de la page
-					if (!empty($this->getData(['page', $key, 'content']))) {
-						file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
+			if ($lang === 'fr_FR') {
+				if ($sampleSite === true) {
+					foreach (init::$siteContent as $key => $value) {
+						// Creation du contenu de la page
+						if (!empty($this->getData(['page', $key, 'content']))) {
+							file_put_contents(self::DATA_DIR . $langFolder . $this->getData(['page', $key, 'content']), $value);
+						}
 					}
+				} else {
+					// Créer la page d'accueil
+					file_put_contents(self::DATA_DIR .$langFolder . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
 				}
 			} else {
+				// En_EN si le contenu localisé n'est pas traduit
+				if (!isset(init::$defaultDataI18n[$lang])) {
+					$lang = 'en_EN';
+				}
+				// Messages localisés
+				$this->setData(['locale', init::$defaultDataI18n[$lang]['locale']]);
+				// Page dans une autre langue, page d'accueil
+				$this->setData(['page', init::$defaultDataI18n[$lang]['page']]);
 				// Créer la page d'accueil
-				file_put_contents(self::DATA_DIR . $lang . '/content/' . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
+				$pageId  = init::$defaultDataI18n[$lang]['locale']['homePageId'];
+				$content = init::$defaultDataI18n[$lang]['html'];
+				file_put_contents(self::DATA_DIR . $langFolder . init::$defaultDataI18n[$lang]['page'][$pageId]['content'], $content);
 			}
 		}
 	}
