@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 12.0.00
+## Version 12.0.08
 ### Nouveautés :
 - Compatiblité PHP 8.1
 - Module addon refondu et renommé plugin.

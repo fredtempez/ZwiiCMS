@@ -506,34 +506,35 @@ class plugin extends common
 		// Avec les commandes de sauvegarde et de restauration
 		self::$modulesData[] = [];
 		if (
-			isset($pagesInfos) //&&
-			//array_key_exists(self::$i18nContent, $pagesInfos)
+			isset($pagesInfos)
 		) {
 			foreach ($i18nSites as $keyi18n => $valuei18n) {
-				foreach ($pagesInfos[$keyi18n] as $keyPage => $value) {
-					if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
-						// Co[nstruire le tableau de sortie
-						self::$modulesData[] = [
-							$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'] . '&nbsp(' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . ')',
-							$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
-							template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
-							template::button('dataExport' . $keyPage, [
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
-								'value' => template::ico('download-cloud'),
-								'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
-							]),
-							template::button('dataExport' . $keyPage, [
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
-								'value' => template::ico('download'),
-								'help' => 'Sauvegarder et télécharger les données du module'
-							]),
-							template::button('dataDelete' . $keyPage, [
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
-								'value' => template::ico('trash'),
-								'class' => 'buttonRed dataDelete',
-								'help' => 'Détacher le module de la page',
-							])
-						];
+				if (isset($pagesInfos[$keyi18n])) {
+					foreach ($pagesInfos[$keyi18n] as $keyPage => $value) {
+						if (isset($infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']])) {
+							// Construire le tableau de sortie
+							self::$modulesData[] = [
+								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'] . '&nbsp(' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . ')',
+								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
+								template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
+								template::button('dataExport' . $keyPage, [
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'value' => template::ico('download-cloud'),
+									'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
+								]),
+								template::button('dataExport' . $keyPage, [
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'value' => template::ico('download'),
+									'help' => 'Sauvegarder et télécharger les données du module'
+								]),
+								template::button('dataDelete' . $keyPage, [
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'value' => template::ico('trash'),
+									'class' => 'buttonRed dataDelete',
+									'help' => 'Détacher le module de la page',
+								])
+							];
+						}
 					}
 				}
 			}
@@ -689,18 +690,18 @@ class plugin extends common
 
 			// Copier les données et le descripteur
 			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData)) === false ? false : true;
-			
-			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode( [$moduleId => $infoModule])));
+
+			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule])));
 			// Le dossier du module s'il existe
-			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId )) {
+			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId)) {
 				// Copier le dossier des données
-				$success =  $success && $this->copyDir(self::DATA_DIR . '/'. $moduleId . '/' . $pageId  , $tmpFolder . '/dataDirectory'  );
+				$success =  $success && $this->copyDir(self::DATA_DIR . '/' . $moduleId . '/' . $pageId, $tmpFolder . '/dataDirectory');
 			}
-			
+
 			// Création du zip
 			$fileName =  $lang . '-' .  $moduleId . '-' . $pageId . '.zip';
 			$this->makeZip(self::TEMP_DIR . $fileName, $tmpFolder);
-			
+
 			// Gestin de l'action
 			if ($success) {
 				switch ($action) {
@@ -709,7 +710,7 @@ class plugin extends common
 							mkdir(self::FILE_DIR . 'source/modules');
 						}
 						if (file_exists(self::TEMP_DIR . $fileName)) {
-							$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/data' . $moduleId . '.zip'); 
+							$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/data' . $moduleId . '.zip');
 							// Valeurs en sortie
 							$this->addOutput([
 								'redirect' => helper::baseUrl() . 'plugin',
@@ -782,9 +783,9 @@ class plugin extends common
 
 			// Copie des fichiers d'accompagnement
 			// Le dossier du module s'il existe
-			if (is_dir($tmpFolder  . '/dataDirectory' )) {
+			if (is_dir($tmpFolder  . '/dataDirectory')) {
 				// Copier le dossier des données
-				$this->copyDir($tmpFolder  . '/dataDirectory' , self::DATA_DIR . '/' . $moduleId  . '/'. $pageId );
+				$this->copyDir($tmpFolder  . '/dataDirectory', self::DATA_DIR . '/' . $moduleId  . '/' . $pageId);
 			}
 
 			// Supprimer le dossier temporaire
