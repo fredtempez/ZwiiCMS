@@ -50,7 +50,7 @@ class common
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
 	const ZWII_VERSION = '12.0.08';
-	const ZWII_UPDATE_CHANNEL = "test";
+	const ZWII_UPDATE_CHANNEL = "v12";
 
 	public static $actions = [];
 	public static $coreModuleIds = [
