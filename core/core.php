@@ -716,7 +716,7 @@ class common
 					}
 				} else {
 					// Créer la page d'accueil
-					file_put_contents(self::DATA_DIR .$langFolder . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
+					file_put_contents(self::DATA_DIR . $langFolder . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
 				}
 			} else {
 				// En_EN si le contenu localisé n'est pas traduit
@@ -1308,39 +1308,40 @@ class common
 	 */
 	public function showCookies()
 	{
-
-		// Gestion des cookies intégrée
-		if ($this->getData(['config', 'cookieConsent']) === true) {
-			// Détermine si le bloc doit être affiché selon la validité du cookie
-			// L'URL du serveur faut TRUE
-			$item  = '<div id="cookieConsent"';
-			$item .= $this->getInput('ZWII_COOKIE_CONSENT') !==  'true' ? '>' : ' class="displayNone">';
-			// Bouton de fermeture
-			$item .= '<div class="cookieClose">';
-			$item .= template::ico('cancel');
-			$item .= '</div>';
-			// Texte de la popup
-			$item .= '<h3>' . $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
-			$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
-			// Formulaire de réponse
-			if (
-				$this->getData(['locale', 'homePageId']) === $this->getUrl(0)
-			) {
-				$item .= '<form method="POST" action="' . helper::baseUrl(false) . '" id="cookieForm">';
-			} else {
-				$item .= '<form method="POST" action="' . helper::baseUrl(true) . $this->getUrl() . '" id="cookieForm">';
-			}
-			$item .= '<br><br>';
-			$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
-			$item .= '</form>';
-			// mentions légales si la page est définie
-			$legalPage = $this->getData(['locale', 'legalPageId']);
-			if ($legalPage !== 'none') {
-				$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'linkLegalLabel']) . '</a></p>';
-			}
-			$item .= '</div>';
-			echo $item;
+		// La gestion des cookies est externalisée
+		if ($this->getData(['config', 'cookieConsent']) === false) {
+			return;
 		}
+		// Le cookie est déjà validé
+		if ($this->getInput('ZWII_COOKIE_CONSENT') ===  'true') {
+			return;
+		}
+		$item  = '<div id="cookieConsent">';
+		// Bouton de fermeture
+		$item .= '<div class="cookieClose">';
+		$item .= template::ico('cancel');
+		$item .= '</div>';
+		// Texte de la popup
+		$item .= '<h3>' . $this->getData(['locale', 'cookies', 'titleLabel']) . '</h3>';
+		$item .= '<p>' . $this->getData(['locale', 'cookies', 'mainLabel']) . '</p>';
+		// Formulaire de réponse
+		if (
+			$this->getData(['locale', 'homePageId']) === $this->getUrl(0)
+		) {
+			$item .= '<form method="POST" action="' . helper::baseUrl(false) . '" id="cookieForm">';
+		} else {
+			$item .= '<form method="POST" action="' . helper::baseUrl(true) . $this->getUrl() . '" id="cookieForm">';
+		}
+		$item .= '<br><br>';
+		$item .= '<input type="submit" id="cookieConsentConfirm" value="' . $this->getData(['locale', 'cookies', 'buttonValidLabel']) . '">';
+		$item .= '</form>';
+		// mentions légales si la page est définie
+		$legalPage = $this->getData(['locale', 'legalPageId']);
+		if ($legalPage !== 'none') {
+			$item .= '<p><a href="' . helper::baseUrl() . $legalPage . '">' . $this->getData(['locale', 'cookies', 'linkLegalLabel']) . '</a></p>';
+		}
+		$item .= '</div>';
+		echo $item;
 	}
 
 	/**
