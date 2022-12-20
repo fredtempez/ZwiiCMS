@@ -1,5 +1,12 @@
 # Changelog
 
+## Version 12.0.09
+### Corrections :
+- Gestion des extensions (plugin)
+    - Impossibilité d'effectuer uen installation depuis le store
+    - Erreur d'affichage du statut des modules installés dans la page du store.
+
+
 ## Version 12.0.08
 ### Nouveautés :
 - Compatiblité PHP 8.1
