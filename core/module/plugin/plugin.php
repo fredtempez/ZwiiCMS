@@ -357,7 +357,7 @@ class plugin extends common
 					$help = 'Mettre à jour le module orphelin';
 				}
 				// Le module est installé et utilisé
-				if (in_array($key, $inPages) === true) {
+				if (array_key_exists($key, $inPages) === true) {
 					$class = 'buttonRed';
 					$ico =  template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
