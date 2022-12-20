@@ -7,7 +7,8 @@
     - Erreur d'affichage du statut des modules installés dans la page du store.
 ### Améliorations :
 - Langues de l'interface
-    - Ajoute un utilitaire permettant leur mise à jour à partir des modèles livrés. A venir, un fonction gérant les langues modifiées.
+    - Ajoute un utilitaire permettant leur mise à jour à partir des modèles livrés. A venir, une fonction gérant les langues modifiées.
+    - Corrige des langues de l'interface, italien et portuguais.
 
 ## Version 12.0.08
 ### Nouveautés :
