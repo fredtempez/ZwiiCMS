@@ -22,6 +22,11 @@ $(document).ready(function() {
     $("#uiContainer").hide();
     $("#" + translateLayout + "Container").show();
     $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
+    // Afficher les boutons liés au contenu
+    $(".translateButtonAddContent").show();
+    $(".translateButtonCopyContent").show();
+    // Cacher le bouton de mise à jour
+    $(".translateButtonUpdateContent").hide();
 
 });
 
@@ -34,8 +39,11 @@ $("#translateUiButton").on("click", function() {
     $("#translateContentButton").removeClass("activeButton");
     setCookie("translateLayout", "ui");
     // Cacher les boutons liés au contenu
-    $("#translateButtonAddContent").hide();
-    $("#translateButtonCopyContent").hide();
+    $(".translateButtonAddContent").hide();
+    $(".translateButtonCopyContent").hide();
+    // Afficher le bouton de mise à jour
+    $(".translateButtonUpdateContent").show();
+    
 });
 $("#translateContentButton").on("click", function() {
     $("#uiContainer").hide();
@@ -44,8 +52,10 @@ $("#translateContentButton").on("click", function() {
     $("#translateUiButton").removeClass("activeButton");
     setCookie("translateLayout", "content");
     // Afficher les boutons liés au contenu
-    $("#translateButtonAddContent").show();
-    $("#translateButtonCopyContent").show();
+    $(".translateButtonAddContent").show();
+    $(".translateButtonCopyContent").show();
+    // Cacher le bouton de mise à jour
+    $(".translateButtonUpdateContent").hide();
 });
 
 /**

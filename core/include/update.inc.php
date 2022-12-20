@@ -856,9 +856,8 @@ if ($this->getData(['core', 'dataVersion']) < 11506) {
 }
 
 
-// Version 11.6.00
+// Version 12.0.00
 if ($this->getData(['core', 'dataVersion']) < 12000) {
-
 
 	// Supprime un cookie non nécessaire
 	helper::deleteCookie('ZWII_USER_LONGTIME');
@@ -902,12 +901,12 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	}
 	// Copier les fichiers de l'interface
 	if (!is_dir(self::I18N_DIR)) {
-		// Créer le d$ossier 
+		// Créer le d$ossier
 		$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 	}
 	// Langue de l'interface
 	$this->deleteData(['config', 'i18n']);
-	
+
 	// Pas à l'installation
 	if ($this->getUser('id')) {
 		$this->setData(['user', $this->getUser('id'), 'language', 'fr_FR']);

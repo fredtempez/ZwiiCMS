@@ -24,6 +24,7 @@ class translate extends common
 		'locale' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
 		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
 		'content' => self::GROUP_VISITOR,
+		'update' => self::GROUP_ADMIN,
 	];
 
 	const PAGINATION = '20';
@@ -52,6 +53,21 @@ class translate extends common
 	//UI
 	// Fichiers des langues de l'interface
 	public static $i18nFiles = [];
+
+	/**
+	 * Met à jour les traduction du site
+	 */
+	public function update()
+	{
+		$response = $this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'translate',
+			'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+			'state' => $response
+		]);
+
+	}
 
 	/**
 	 * Configuration avancée des langues

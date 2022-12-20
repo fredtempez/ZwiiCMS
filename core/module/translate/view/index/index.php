@@ -16,21 +16,27 @@
 				'help' => 'Consulter l\'aide en ligne'
 			]);*/ ?>
 	</div>
-	<div class="col1 offset8">
+	<div class="col1 offset8 translateButtonCopyContent">
 		<?php echo template::button('translateButtonCopyContent', [
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('docs'),
 			'disabled' => $module::$siteCopy,
 			'help' => 'Copie de contenus localisés'
 		]); ?>
-
 	</div>
-	<div class="col1">
+	<div class="col1 translateButtonAddContent">
 		<?php echo template::button('translateButtonAddContent', [
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
 			'class' => 'buttonGreen',
 			'help' => 'Nouveau contenu localisé'
+		]); ?>
+	</div>
+	<div class="col1 offset9 translateButtonUpdateContent">
+		<?php echo template::button('translateButtonUpdateContent', [
+			'href' => helper::baseUrl() . 'translate/update',
+			'value' => template::ico('update'),
+			'help' => 'Mise à jour des langues de l\'interface'
 		]); ?>
 	</div>
 </div>
