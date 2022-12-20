@@ -415,7 +415,7 @@
     "installé": "instalado",
     "Erreur inconnue, le module n'est pas installé": "Error desconocido, el módulo no está instalado",
     "Impossible d'ouvrir l'archive": "No se puede abrir el archivo",
-    "Archive copiée dans le dossier Module du gestionnaire de fichier": "Archivo copiado a la carpeta Módulo del administrador de archivos",
+    "Archive copiée dans le dossier Modules du gestionnaire de fichier": "Archivo copiado a la carpeta Módulos del administrador de archivos",
     "Erreur de copie": "Error de copia",
     "Le module %s de la page %s a été supprimé": "Se eliminó el módulo de la página",
     "Le module %s a été %s": "El módulo ha sido",
