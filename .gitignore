@@ -4,12 +4,8 @@ site/data/*
 site/tmp/*
 site/backup/*
 site/file/*
-site/i18n/*
+site/i18n/*.*
 .DS_Store
 core/vendor/tinymce/link_list.json
 robots.txt
 sitemap.xml
-
-site/i18n/en_EN.json
-site/i18n/es.json
-site/i18n/fr_FR.json
