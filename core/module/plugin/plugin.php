@@ -590,7 +590,7 @@ class plugin extends common
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl() . 'plugin',
-						'notification' => $success ? $moduleId . helper::translate('Archive copiée dans le dossier Module du gestionnaire de fichier') : helper::translate('Erreur de copie'),
+						'notification' => $success ? helper::translate('Archive copiée dans le dossier Modules du gestionnaire de fichier') : helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
 					// Nettoyage
