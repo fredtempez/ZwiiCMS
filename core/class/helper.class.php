@@ -263,6 +263,7 @@ class helper
 					}
 					// Affection
 					$modules[$value]  = [
+						'name' => $value,
 						'realName' => $realName,
 						'version' => $version,
 						'update' => $update,

@@ -32,7 +32,7 @@ class plugin extends common
 
 	// URL des modules
 	const BASEURL_STORE = 'https://store.zwiicms.fr/';
-	const MODULE_STORE = 'modules-pour-zwii-v115/';
+	const MODULE_STORE = 'modules/';
 
 	// Gestion des modules
 	public static $modulesData = [];
@@ -103,14 +103,12 @@ class plugin extends common
 
 		// Dossier temporaire
 		$tempFolder = uniqid() . '/';
-		//$tempFolder = 'truc/';
 
 		/**
 		 * Désarchivage
 		 */
 		$zip = new ZipArchive();
-		if ($zip->open($moduleFileName) === TRUE) {
-
+		if ($zip->open($moduleFileName) === true) {
 
 			//Création du dossier temporaire et extraction
 			if (!is_dir(self::TEMP_DIR . $tempFolder)) {
@@ -128,8 +126,8 @@ class plugin extends common
 			 * 		'download" => 'module/download'
 			 */
 
-			if (file_exists(self::TEMP_DIR . $tempFolder . 'desc.json')) {
-				$module = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'desc.json'), true);
+			if (file_exists(self::TEMP_DIR . $tempFolder . 'enum.json')) {
+				$module = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'enum.json'), true);
 			} else {
 				// Message de retour
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
@@ -139,37 +137,38 @@ class plugin extends common
 					'notification' => helper::translate('Archive invalide, le descripteur est absent')
 				]);
 			}
-
 			/**
 			 * Validation des informations du descripteur
 			 */
-			foreach ($module['dirs'] as $src => $dest) {
-				// Vérification de la présence des dossier décrits
-				if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
-					// Message de retour
-					$this->removeDir(self::TEMP_DIR . $tempFolder);
-					$zip->close();
-					return ([
-						'success' => false,
-						'notification' => helper::translate('Archive invalide, les dossiers ne correspondent pas au descripteur')
-					]);
-				}
-				// Interdire l'écriture dans le dossier core
-				if (strstr($dest, 'core') !== false) {
-					// Message de retour
-					$this->removeDir(self::TEMP_DIR . $tempFolder);
-					$zip->close();
-					return ([
-						'success' => false,
-						'notification' => helper::translate('Archive invalide, l\'écriture dans le dossier core est interdite')
-					]);
+			if (isset($module['dirs'])) {
+				foreach ($module['dirs'] as $src => $dest) {
+					// Vérification de la présence des dossier décrits
+					if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
+						// Message de retour
+						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$zip->close();
+						return ([
+							'success' => false,
+							'notification' => helper::translate('Archive invalide, les dossiers ne correspondent pas au descripteur')
+						]);
+					}
+					// Interdire l'écriture dans le dossier core
+					if (strstr($dest, 'core') !== false) {
+						// Message de retour
+						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$zip->close();
+						return ([
+							'success' => false,
+							'notification' => helper::translate('Archive invalide, l\'écriture dans le dossier core est interdite')
+						]);
+					}
 				}
 			}
 
 			/**
 			 * Validation de la présence du fichier de base du module
 			 */
-			if (!file_exists(self::TEMP_DIR . $tempFolder . $module['name'] . '/' . $module['name'] . '.php')) {
+			if (!file_exists(self::TEMP_DIR . $tempFolder . $module['name'] . '.php')) {
 				// Message de retour
 				$this->removeDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
@@ -216,12 +215,14 @@ class plugin extends common
 
 			// Installation ou mise à jour du module valides
 			if ($installOk) {
-				// Copie récursive des dossiers
+				// Copie du module
+				$success = $this->copyDir(self::TEMP_DIR . $tempFolder, self::MODULE_DIR . $module['name']);
+				// Copie récursive des dossiers externes
 				foreach ($module['dirs'] as $src => $dest) {
 					if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
 						mkdir(self::TEMP_DIR . $tempFolder . $src);
 					}
-					$success = $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
+					$success = $success && $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
 				}
 				// Message de retour
 				$t = isset($versionInstalled) ? helper::translate('actualisé') : helper::translate('installé');
@@ -261,10 +262,6 @@ class plugin extends common
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
 			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
 			if ($zipFilename !== '') {
-				$success = [
-					'success' => false,
-					'notification' => ''
-				];
 				$state = $this->install(self::FILE_DIR . 'source/' . $zipFilename, $checkValidMaj);
 			}
 			$this->addOutput([
@@ -574,14 +571,11 @@ class plugin extends common
 
 			// Descripteur de l'archive
 			$infoModule = helper::getModules();
-
 			//Nom de l'archive
 			$fileName =  $moduleId . $infoModule[$moduleId]['version'] .  '.zip';
 
-			// Création du descripteur si absent
-			if (!file_exists(self::MODULE_DIR . $moduleId . '/enum.json')) {
-				$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode([$moduleId => $infoModule[$moduleId]]));
-			}
+			// Régénération du module
+			$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId]));
 
 			// Construire l'archive
 			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR .  $moduleId);
