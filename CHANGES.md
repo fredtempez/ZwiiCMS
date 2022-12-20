@@ -8,7 +8,7 @@
 ### Améliorations :
 - Langues de l'interface
     - Ajoute un utilitaire permettant leur mise à jour à partir des modèles livrés. A venir, une fonction gérant les langues modifiées.
-    - Corrige des langues de l'interface, italien et portuguais.
+    - Corrige des langues de l'interface, italien et portugais.
 
 ## Version 12.0.08
 ### Nouveautés :
