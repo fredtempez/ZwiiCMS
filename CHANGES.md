@@ -1,5 +1,7 @@
 # Changelog
 
+## Version 12.0.10
+
 ## Version 12.0.09
 ### Corrections :
 - Gestion des extensions (plugin)
