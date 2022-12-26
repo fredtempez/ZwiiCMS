@@ -204,7 +204,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Multilangue'),
+			'title' => helper::translate('Multilingue'),
 			'view' => 'index'
 		]);
 	}

@@ -2248,7 +2248,7 @@ class common
 					'href' => helper::baseUrl() . 'plugin'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('flag', [
-					'help' => 'Contenu multilangues',
+					'help' => 'Contenu Multilingues',
 					'href' => helper::baseUrl() . 'translate'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('cog-alt', [
