@@ -22,7 +22,7 @@ class translate extends common
 		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
 		'ui' => self::GROUP_ADMIN, 	// Éditer une langue de l'UI
 		'locale' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
-		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu
+		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu ou de l'interface
 		'content' => self::GROUP_VISITOR,
 		'update' => self::GROUP_ADMIN,
 	];
@@ -66,7 +66,6 @@ class translate extends common
 			'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
 			'state' => $response
 		]);
-
 	}
 
 	/**
@@ -146,24 +145,24 @@ class translate extends common
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
 				if (self::$i18nUI === $key) {
-					$message = helper::translate('Langue par défaut');
+					$messageLocale = helper::translate('Langue par défaut');
 				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
-					$message = helper::translate('Langue du site sélectionnée');
+					$messageLocale = helper::translate('Langue du site sélectionnée');
 				} else {
-					$message = '';
+					$messageLocale = '';
 				}
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %'),
 					$value . ' (' . $key . ')',
-					$message,
-					template::button('translateContentLanguageEdit' . $key, [
+					$messageLocale,
+					template::button('translateContentLanguageLocaleEdit' . $key, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
-					template::button('translateContentLanguageDelete' . $key, [
-						'class' => 'translateDelete buttonRed' . ($message ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
+					template::button('translateContentLanguageLocaleDelete' . $key, [
+						'class' => 'translateDeleteLocale buttonRed' . ($messageLocale ? ' disabled' : ''),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					])
@@ -182,21 +181,35 @@ class translate extends common
 		}
 
 		// Construit le tableau des langues de l'UI
+		$usersUI = [];
+		$users = $this->getData(['user']);
+		foreach ($users as $key => $value) {
+			array_push($usersUI, $this->getData(['user', $key, 'language']));
+		}
+
+		// Construction du tableau
 		foreach ($files as $file) {
+
 			// La langue est-elle référencée ?
 			if (array_key_exists(basename($file, '.json'), self::$languages)) {
+
 				//self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
 				$selected = basename($file, '.json');
 				self::$languagesUiInstalled[$file] =  [
-					self::$languages[$selected],
 					template::flag($selected, '20 %'),
+					self::$languages[$selected],
 					self::$i18nUI === $selected ? helper::translate('Interface') : '',
-					'',
-					template::button('translateContentLanguageEdit' . $file, [
+					template::button('translateContentLanguageUIEdit' . basename($file, '.json'), [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $selected
+					]),
+					template::button('translateContentLanguageUIDelete' . basename($file, '.json'), [
+						'class' => 'translateDeleteUI buttonRed' . (in_array(basename($file, '.json'), $usersUI) ? ' disabled' : ''),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . basename($file, '.json') . '/' . $_SESSION['csrf'],
+						'value' => template::ico('trash'),
+						'help' => 'Supprimer',
 					])
 				];
 			}
@@ -448,9 +461,10 @@ class translate extends common
 	public function delete()
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
-		$lang = $this->getUrl(2);
+		$target = $this->getUrl(2);
+		$lang = $this->getUrl(3);
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->getUrl(4) !== $_SESSION['csrf']
 			|| !array_key_exists($lang, self::$languages)
 		) {
 			// Valeurs en sortie
@@ -460,16 +474,36 @@ class translate extends common
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
-		// Effacement d'une langue installée
-		if (is_dir(self::DATA_DIR . $lang) === true) {
-			$success = $this->removeDir(self::DATA_DIR . $lang);
+		switch ($target) {
+			case 'locale':
+				// Effacement d'une site dans une langue
+				if (is_dir(self::DATA_DIR . $lang) === true) {
+					$success = $this->removeDir(self::DATA_DIR . $lang);
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'translate',
+					'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
+					'state' => $success
+				]);
+				break;
+
+			case 'ui' :
+				// Effacement d'une langue de l'interface
+				if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
+					$success =unlink(self::I18N_DIR . $lang . '.json');
+				}
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'translate',
+					'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
+					'state' => $success
+				]);
+				break;
+			default:
+				# Do nothing
+				break;
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'translate',
-			'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
-			'state' => $success
-		]);
 	}
 
 	/*

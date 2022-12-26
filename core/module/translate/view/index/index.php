@@ -56,7 +56,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesUiInstalled) : ?>
-				<?php echo template::table([3, 1, 1, 6, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '']); ?>
+				<?php echo template::table([1, 4, 5, 1, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>
@@ -65,7 +65,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesInstalled) : ?>
-				<?php echo template::table([1, 3, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '', '']); ?>
+				<?php echo template::table([1, 4, 5, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>
