@@ -1,6 +1,9 @@
 # Changelog
 
 ## Version 12.0.10
+### Améliorations :
+- Changement du nom de formulaire de gestion des langues (multilangue devient multilingue).
+- Traduction de l'interface d'administration, un bouton permet d'effacer les langues inutiles.
 
 ## Version 12.0.09
 ### Corrections :
