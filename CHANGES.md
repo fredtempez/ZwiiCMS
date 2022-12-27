@@ -8,7 +8,8 @@
 - Traductions de l'interface d'administration, ajout de nouvelles fonctionnalités :
     - Installation et mise à jour d'une langue depuis un magasin en ligne
     - Téléchargement d'une langue modifiée avec l'éditeur intégré
-    - Suppression d'une langue
+    - Suppression d'une langues
+- Langues disponibles pour l'interface, ajout du Grec et de l'Hébreu.
 
 ## Version 12.0.09
 ### Corrections :
