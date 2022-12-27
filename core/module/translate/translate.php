@@ -55,16 +55,37 @@ class translate extends common
 	public static $i18nFiles = [];
 
 	/**
-	 * Met à jour les traduction du site
+	 * Met à jour les traduction du site depuis le store
 	 */
 	public function update()
 	{
-		$response = $this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		if (
+			$this->getUrl(3) !== $_SESSION['csrf']
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl()  . 'translate',
+				'state' => false,
+				'notification' => helper::translate('Action interdite')
+			]);
+		}
+
+		// Upload et sauver le fichier de langue
+		$response = helper::getUrlContents(common::ZWII_UI_URL . $this->getUrl(2) . '.json');
+		if ($response !== false) {
+			$response = file_put_contents(self::I18N_DIR . $this->getUrl(2) . '.json', $response);
+			// Régénère le descripteur
+			unlink(self::I18N_DIR . 'enum.json');
+			$this->getUiLanguages();
+		}
+
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'translate',
-			'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
-			'state' => $response
+			'notification' => is_int($response) ?  helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+			'state' => is_int($response)
 		]);
 	}
 
@@ -191,7 +212,7 @@ class translate extends common
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($storeUI as $file => $value) {
 			// La langue est-elle référencée ?
-			if (array_key_exists(basename($file, '.json'), self::$languages)) {
+			if (array_key_exists(basename($file, '.json'), $installedUI)) {
 				// La langue est déjà installée
 				self::$languagesUiInstalled[$file] =  [
 					template::flag($file, '20 %'),
@@ -204,23 +225,38 @@ class translate extends common
 						'disabled' => 'fr_FR' === $file
 					]),
 					template::button('translateContentLanguageUIDownload' . $file, [
-						'class' => 'translateDownloadUI',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/download/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('download'),
 						'help' => 'Télécharger',
 					]),
 					template::button('translateContentLanguageUIDownload' . $file, [
-						'class' => 'translateDownloadUI',
+						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('update'),
-						'help' => 'Actualiser',
+						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
-						'class' => 'translateDeleteUI buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
+						'class' => 'buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					]),
+				];
+			} else {
+				// La langue n'est pas installée
+				self::$languagesUiInstalled[$file] =  [
+					template::flag($file, '20 %'),
+					self::$languages[$file],
+					self::$i18nUI === $file ? helper::translate('Interface') : '',
+					'',
+					'',
+					template::button('translateContentLanguageUIDownload' . $file, [
+						'class' => 'buttonGreen',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'value' => template::ico('shopping-basket'),
+						'help' => 'Installer',
+					]),
+					''
 				];
 			}
 		}
@@ -274,40 +310,6 @@ class translate extends common
 			'title' => helper::translate('Nouveau contenu localisé'),
 			'view' => 'add'
 		]);
-	}
-
-	/***
-	 * Ajouter des langues de l'UI depuis le dépôt
-	 */
-	public function store()
-	{
-
-
-
-		// Préparation du formulaire
-
-		// Récupérer la liste des langues disponibles en ligne
-		$storeUI = helper::getUrlContents(common::ZWII_UI_URL . '/enum.json');
-
-		// Récupérer les langues installées
-		$installedUI = $this->getUiLanguages();
-
-		echo "<pre>";
-		var_dump($storeUI);
-		var_dump($installedUI);
-		die();
-		// Parcourir le tableau des langues installées
-		foreach ($installedUI as $key => $value) {
-			// La langue est installée, la mise à jour détermine la couleur de l'icône
-			if (array_key_exists($key, $installedUI)) {
-				$update = $installedUI;
-				self::$languagesUiInstalled[$key] = [
-					template::flag($key, '20 %'),
-					self::$languages[$key],
-
-				];
-			}
-		}
 	}
 
 

@@ -24,7 +24,6 @@ $(document).ready(function() {
     $("#uiContainer").hide();
     $(".contentButtonContainer").hide();
     $("#" + translateLayout + "Container").show();
-    $("." + translateLayout + "ButtonContainer").show();
     $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
 
 
