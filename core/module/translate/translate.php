@@ -172,45 +172,55 @@ class translate extends common
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
 
+		// --------------------------------------------------------------------------------------------------
 		// Onglet des langues de l'interface
-		if (is_dir(self::I18N_DIR)) {
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-		}
 
-		// Construit le tableau des langues de l'UI
+		// Langues attachées à des utilisateurs non effaçables
 		$usersUI = [];
 		$users = $this->getData(['user']);
 		foreach ($users as $key => $value) {
 			array_push($usersUI, $this->getData(['user', $key, 'language']));
 		}
 
-		// Construction du tableau
-		foreach ($files as $file) {
+		// Langues installées
+		$installedUI = $this->getUiLanguages();
 
+		// Récupérer la liste des langues disponibles en ligne
+		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . '/enum.json'), true);
+
+		// Construction du tableau à partir des langues disponibles dans le store
+		foreach ($storeUI as $file => $value) {
 			// La langue est-elle référencée ?
 			if (array_key_exists(basename($file, '.json'), self::$languages)) {
-
-				//self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				$selected = basename($file, '.json');
+				// La langue est déjà installée
 				self::$languagesUiInstalled[$file] =  [
-					template::flag($selected, '20 %'),
-					self::$languages[$selected],
-					self::$i18nUI === $selected ? helper::translate('Interface') : '',
-					template::button('translateContentLanguageUIEdit' . basename($file, '.json'), [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $selected,
+					template::flag($file, '20 %'),
+					self::$languages[$file],
+					self::$i18nUI === $file ? helper::translate('Interface') : '',
+					template::button('translateContentLanguageUIEdit' . $file, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/ui/' . $file,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
-						'disabled' => 'fr_FR' === $selected
+						'disabled' => 'fr_FR' === $file
 					]),
-					template::button('translateContentLanguageUIDelete' . basename($file, '.json'), [
-						'class' => 'translateDeleteUI buttonRed' . (in_array(basename($file, '.json'), $usersUI) ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . basename($file, '.json') . '/' . $_SESSION['csrf'],
+					template::button('translateContentLanguageUIDownload' . $file, [
+						'class' => 'translateDownloadUI',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/download/' . $file . '/' . $_SESSION['csrf'],
+						'value' => template::ico('download'),
+						'help' => 'Télécharger',
+					]),
+					template::button('translateContentLanguageUIDownload' . $file, [
+						'class' => 'translateDownloadUI',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'value' => template::ico('update'),
+						'help' => 'Actualiser',
+					]),
+					template::button('translateContentLanguageUIDelete' . $file, [
+						'class' => 'translateDeleteUI buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
-					])
+					]),
 				];
 			}
 		}
@@ -265,6 +275,41 @@ class translate extends common
 			'view' => 'add'
 		]);
 	}
+
+	/***
+	 * Ajouter des langues de l'UI depuis le dépôt
+	 */
+	public function store()
+	{
+
+
+
+		// Préparation du formulaire
+
+		// Récupérer la liste des langues disponibles en ligne
+		$storeUI = helper::getUrlContents(common::ZWII_UI_URL . '/enum.json');
+
+		// Récupérer les langues installées
+		$installedUI = $this->getUiLanguages();
+
+		echo "<pre>";
+		var_dump($storeUI);
+		var_dump($installedUI);
+		die();
+		// Parcourir le tableau des langues installées
+		foreach ($installedUI as $key => $value) {
+			// La langue est installée, la mise à jour détermine la couleur de l'icône
+			if (array_key_exists($key, $installedUI)) {
+				$update = $installedUI;
+				self::$languagesUiInstalled[$key] = [
+					template::flag($key, '20 %'),
+					self::$languages[$key],
+
+				];
+			}
+		}
+	}
+
 
 	/**
 	 * Edition des paramètres de la langue de contenu
@@ -488,10 +533,10 @@ class translate extends common
 				]);
 				break;
 
-			case 'ui' :
+			case 'ui':
 				// Effacement d'une langue de l'interface
 				if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
-					$success =unlink(self::I18N_DIR . $lang . '.json');
+					$success = unlink(self::I18N_DIR . $lang . '.json');
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -499,12 +544,15 @@ class translate extends common
 					'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
 					'state' => $success
 				]);
+				unlink(self::I18N_DIR . 'enum.json');
+				$this->getUiLanguages();
 				break;
 			default:
 				# Do nothing
 				break;
 		}
 	}
+
 
 	/*
 	 * Traitement du changement de langue
@@ -526,5 +574,37 @@ class translate extends common
 		$this->addOutput([
 			'redirect' 	=> 	helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])
 		]);
+	}
+
+	/**
+	 * Génère un fichier d'énumération des langues de l'UI
+	 */
+	private function getUiLanguages()
+	{
+		$enums = json_decode(helper::getUrlContents(self::I18N_DIR . '/enum.json'), true);
+
+		// Générer une énumération absente
+		if (is_array($enums) === false) {
+			if (is_dir(self::I18N_DIR) === false) {
+				mkdir(self::I18N_DIR);
+			}
+			$dir = getcwd();
+			chdir(self::I18N_DIR);
+			$files = glob('*.json');
+			chdir($dir);
+			$enums = [];
+			foreach ($files as $file => $value) {
+				if (basename($value, '.json') === 'enum.json') {
+					continue;
+				}
+				$enums[basename($value, '.json')] = [
+					'version' => 1.0,
+					'date' => 1672052400
+				];
+			}
+			file_put_contents(self::I18N_DIR . 'enum.json', json_encode($enums));
+		}
+
+		return ($enums);
 	}
 }

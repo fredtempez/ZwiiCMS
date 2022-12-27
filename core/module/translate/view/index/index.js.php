@@ -15,18 +15,18 @@
 $(document).ready(function() {
     var translateLayout = getCookie("translateLayout");
     if (translateLayout == null) {
-        translateLayout = "ui";
-        setCookie("translateLayout", "ui");
+        translateLayout = "content";
+        setCookie("translateLayout", "content");
+        // Afficher les boutons liés au contenu
+        $(".contentButtonContainer").show();
     }
     $("#contentContainer").hide();
     $("#uiContainer").hide();
+    $(".contentButtonContainer").hide();
     $("#" + translateLayout + "Container").show();
+    $("." + translateLayout + "ButtonContainer").show();
     $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
-    // Afficher les boutons liés au contenu
-    $(".translateButtonAddContent").show();
-    $(".translateButtonCopyContent").show();
-    // Cacher le bouton de mise à jour
-    $(".translateButtonUpdateContent").hide();
+
 
 });
 
@@ -39,11 +39,8 @@ $("#translateUiButton").on("click", function() {
     $("#translateContentButton").removeClass("activeButton");
     setCookie("translateLayout", "ui");
     // Cacher les boutons liés au contenu
-    $(".translateButtonAddContent").hide();
-    $(".translateButtonCopyContent").hide();
-    // Afficher le bouton de mise à jour
-    $(".translateButtonUpdateContent").show();
-    
+    $(".contentButtonContainer").hide();
+
 });
 $("#translateContentButton").on("click", function() {
     $("#uiContainer").hide();
@@ -52,10 +49,7 @@ $("#translateContentButton").on("click", function() {
     $("#translateUiButton").removeClass("activeButton");
     setCookie("translateLayout", "content");
     // Afficher les boutons liés au contenu
-    $(".translateButtonAddContent").show();
-    $(".translateButtonCopyContent").show();
-    // Cacher le bouton de mise à jour
-    $(".translateButtonUpdateContent").hide();
+    $(".contentButtonContainer").show();
 });
 
 /**

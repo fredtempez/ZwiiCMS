@@ -46,9 +46,13 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 
-	// Numéro de version
+	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 
+	// URL langues de l'UI en ligne
+	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
+
+	// Numéro de version et branche pour l'autoupdate
 	const ZWII_VERSION = '12.0.10';
 	const ZWII_UPDATE_CHANNEL = "v12";
 

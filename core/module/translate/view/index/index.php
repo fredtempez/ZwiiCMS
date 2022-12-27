@@ -16,7 +16,7 @@
 				'help' => 'Consulter l\'aide en ligne'
 			]);*/ ?>
 	</div>
-	<div class="col1 offset8 translateButtonCopyContent">
+	<div class="col1 offset8 contentButtonContainer">
 		<?php echo template::button('translateButtonCopyContent', [
 			'href' => helper::baseUrl() . 'translate/copy',
 			'value' => template::ico('docs'),
@@ -24,19 +24,12 @@
 			'help' => 'Copie de contenus localisés'
 		]); ?>
 	</div>
-	<div class="col1 translateButtonAddContent">
+	<div class="col1 contentButtonContainer">
 		<?php echo template::button('translateButtonAddContent', [
 			'href' => helper::baseUrl() . 'translate/add',
 			'value' => template::ico('plus'),
 			'class' => 'buttonGreen',
 			'help' => 'Nouveau contenu localisé'
-		]); ?>
-	</div>
-	<div class="col1 offset9 translateButtonUpdateContent">
-		<?php echo template::button('translateButtonUpdateContent', [
-			'href' => helper::baseUrl() . 'translate/update',
-			'value' => template::ico('update'),
-			'help' => 'Mise à jour des langues de l\'interface'
 		]); ?>
 	</div>
 </div>
@@ -56,7 +49,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesUiInstalled) : ?>
-				<?php echo template::table([1, 4, 5, 1, 1], $module::$languagesUiInstalled, ['Langues', '', '', '', '']); ?>
+				<?php echo template::table([1, 4, 4, 1, 1, 1, 1], $module::$languagesUiInstalled, ['Langues', '', '','', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>
