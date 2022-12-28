@@ -153,19 +153,11 @@ class install extends common
 					// Nettoyer les cookies de langue d'une précédente installation
 					helper::deleteCookie('ZWII_CONTENT');
 
-
-					// Effacer le dossier de contenu fr créé par défaut si la langue est différente.
-
-					/*if (
-						self::$i18nContent !== 'fr_FR'
-						&& is_dir('site/data/fr')
-					) {
-						$this->removeDir('site/data/fr');
-					}*/
-
 					// Installation du site de test
-					if ($this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& $lang === 'fr_FR' ) {
+					if (
+						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
+						&& $lang === 'fr_FR'
+					) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
@@ -174,7 +166,7 @@ class install extends common
 					}
 
 					// Jeu réduit pour les pages étrangères
-					if ( $lang !== 'fr_FR') {
+					if ($lang !== 'fr_FR') {
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
 					}
@@ -227,6 +219,15 @@ class install extends common
 					}
 					$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
 					unlink(self::FILE_DIR . 'source/theme/themes.json');
+
+					// Copie des langues de l'UI et génération de la base de données
+					if (is_dir(self::I18N_DIR) === false) {
+						mkdir(self::I18N_DIR);
+					}
+					$enums = json_decode(file_get_contents('core/module/install/ressource/i18n/enum.json'), true);
+					$this->setData(['languages', $enums]);
+					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+					unlink(self::I18N_DIR . 'enum.json');
 
 					// Créer sitemap
 					$this->createSitemap();
