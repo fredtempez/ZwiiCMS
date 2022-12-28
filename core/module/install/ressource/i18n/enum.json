@@ -1,22 +1,26 @@
 {
     "fr_FR":  {
-        "version": 1.0,
+        "version": "1.0",
         "date": 1672052400
     },
     "es":  {
-        "version": 1.0,
+        "version": "1.0",
         "date": 1672052400
     },
     "it":  {
-        "version": 1.0,
+        "version": "1.0",
         "date": 1672052400
     },
     "pt_PT":  {
-        "version": 1.0,
+        "version": "1.0",
         "date": 1672052400
     },
     "en_EN":  {
-        "version": 1.0,
+        "version": "1.0",
+        "date": 1672052400
+    },
+    "gr_GR": {
+        "version": "1.0",
         "date": 1672052400
     }
 }
