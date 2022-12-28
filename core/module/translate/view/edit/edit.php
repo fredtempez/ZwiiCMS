@@ -14,17 +14,40 @@
 <div class="row">
     <div class="col12">
         <div class="block">
+            <h4>
+                <?php echo helper::translate('Paramètres'); ?>
+            </h4>
             <div class="row">
-                <?php foreach ($module::$languagesUiInstalled as $key => $value) : ?>
+                <div class="col6">
+                    <?php echo template::text('translateEditVersion', [
+                        'label' => 'Version n°',
+                        'value' => $this->getData(['languages', $this->getUrl(2), 'version'])
+                    ]); ?>
+                </div>
+                <div class="col6">
+						<?php echo template::date('translateEditDate', [
+							'label' => 'Date de publication',
+							'value' => $this->getData(['languages', $this->getUrl(2), 'date'])
+						]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <div class="row">
+                <?php  foreach ($module::$dialogues as $key => $value) : ?>
                     <div class="col6">
                         <?php echo sprintf('%g -', $key); ?>
                         <?php echo $value['source']; ?>
                     </div>
                     <div class="col6">
-                        <?php echo template::text('translateString' . array_search($value['target'], array_keys($module::$languagesUiInstalled)), [
+                        <?php  echo template::text('translateString' . $key, [
                             'label' => '',
                             'value' => $value['target']
-                        ]);  ?>
+                        ]); ?>
                     </div>
                 <?php endforeach; ?>
             </div>

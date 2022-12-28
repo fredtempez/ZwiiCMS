@@ -332,7 +332,8 @@ class init extends common
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
-		'blacklist' => []
+		'blacklist' => [],
+		'languages'=> [],
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [
