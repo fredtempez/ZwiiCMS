@@ -231,11 +231,6 @@ class translate extends common
 						'disabled' => 'fr_FR' === $file
 					]),
 					template::button('translateContentLanguageUIDownload' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/download/' . $file . '/' . $_SESSION['csrf'],
-						'value' => template::ico('download'),
-						'help' => 'Télécharger',
-					]),
-					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('update'),
