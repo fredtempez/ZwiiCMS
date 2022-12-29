@@ -52,7 +52,7 @@
 				<h4><?php echo helper::translate('Langues installées'); ?>
 				</h4>
 				<?php if ($module::$languagesUiInstalled) : ?>
-					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], $module::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
+					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], $module::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -73,7 +73,7 @@
 	<div class="row">
 		<div class="col12">
 			<?php if ($module::$languagesInstalled) : ?>
-				<?php echo template::table([2, 4, 4, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '', '']); ?>
+				<?php echo template::table([2, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '']); ?>
 			<?php endif; ?>
 		</div>
 	</div>
