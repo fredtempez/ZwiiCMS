@@ -6,9 +6,10 @@
 ### Améliorations :
 - Changement du nom de formulaire de gestion des langues (multilangue devient multilingue).
 - Traductions de l'interface d'administration, ajout de nouvelles fonctionnalités :
-    - Installation et mise à jour d'une langue depuis un magasin en ligne
-    - Téléchargement d'une langue modifiée avec l'éditeur intégré
-    - Suppression d'une langue
+    - Installation et mise à jour d'une langue depuis un magasin en ligne ;
+    - Téléchargement d'une langue modifiée avec l'éditeur intégré ;
+    - Suppression d'une langue ;
+    - Ajout du Grec.
 - Langues disponibles pour l'interface, ajout du Grec et de l'Hébreu.
 
 ## Version 12.0.09
