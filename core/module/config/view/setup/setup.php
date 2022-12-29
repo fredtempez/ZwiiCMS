@@ -5,7 +5,8 @@
 				<h4><?php echo helper::translate('Paramètres'); ?>
 					<!--<span id="setupHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/parametres" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); 
+							?>
 						</a>-->
 					</span>
 				</h4>
@@ -60,7 +61,8 @@
 				<h4><?php echo helper::translate('Mise à jour automatisée'); ?>
 					<!--<span id="updateHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); 
+							?>
 						</a>
 					</span>-->
 				</h4>
@@ -104,7 +106,8 @@
 				<h4><?php echo helper::translate('Maintenance'); ?>
 					<!--<span id="maintenanceHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); 
+							?>
 						</a>
 					</span>-->
 				</h4>
@@ -163,7 +166,8 @@
 				<h4><?php echo helper::translate('Scripts externes'); ?>
 					<!--<span id="specialeHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
+							<?php //echo template::ico('help', ['margin' => 'left']); 
+							?>
 						</a>
 					</span>-->
 				</h4>
@@ -181,6 +185,21 @@
 							'value' => 'Script dans body',
 							'ico' => 'pencil'
 						]); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4><?php echo helper::translate('Licence'); ?>
+				</h4>
+				<div class="row textAlignCenter">
+					<div class="col12">
+						<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+						<p>Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d&#39;Utilisation Commerciale - Pas de Modification 4.0 International.</a></p>
+						<p>Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
 					</div>
 				</div>
 			</div>
