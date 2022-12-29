@@ -6,7 +6,7 @@
  *
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2022, Frédéric Tempez
- * @license GNU General Public License, version 3
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
 $(document).ready((function(){$("#configRestoreSubmit").click((function(event){$("body, .button").css("cursor","wait")}))}));

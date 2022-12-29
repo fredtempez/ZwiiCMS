@@ -5,7 +5,7 @@
  *
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2022, Frédéric Tempez
- * @license GNU General Public License, version 3
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
 $(".themeFontDelete").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?",(function(){$(location).attr("href",_this.attr("href"))}))}));
