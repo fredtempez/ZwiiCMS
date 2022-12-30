@@ -193,7 +193,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Licence'); ?>
+				<h4>ZwiiCMS <a href="https://zwiicms.fr" target="_blank">Site Web</a> - <a href="https://forum.zwiicms.fr" target="_blank">Forum</a>
 				</h4>
 				<div class="row textAlignCenter">
 					<div class="col12">
