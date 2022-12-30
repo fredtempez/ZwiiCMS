@@ -64,7 +64,8 @@ class translate extends common
 		$lang = $this->getUrl(2);
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->getUrl(3) !== $_SESSION['csrf'] &&
+			array_key_exists($lang, self::$languages) ==  false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -80,7 +81,7 @@ class translate extends common
 			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response,  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			// Mettre à jour le descripteur
 			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-			$enums = $this->getData(['languages']);
+			$enums = $this->getUiLanguages();
 			$enums = array_merge($enums, [
 				$lang => $enumsStore[$lang]
 			]);
@@ -181,12 +182,13 @@ class translate extends common
 					template::flag($key, '20 %') . '&nbsp;' .  $value . ' (' . $key . ')',
 					$messageLocale,
 					template::button('translateContentLanguageLocaleEdit' . $key, [
+						'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageLocaleDelete' . $key, [
-						'class' => 'translateDeleteLocale buttonRed' . ($messageLocale ? ' disabled' : ''),
+						'class' => ' buttonRed' . ($messageLocale ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
@@ -289,7 +291,6 @@ class translate extends common
 			if (!file_exists(self::DATA_DIR .  $lang)) {
 				mkdir(self::DATA_DIR . $lang, 0755);
 			}
-
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'translate',
@@ -322,8 +323,9 @@ class translate extends common
 	public function locale()
 	{
 		// Jeton incorrect ou URl avec le code langue incorrecte
+		$lang = $this->getUrl(2);
 		if (
-			!array_key_exists($this->getUrl(2), self::$languages)
+			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -362,12 +364,12 @@ class translate extends common
 			];
 
 			// Sauvegarde hors méthodes si la langue n'est pas celle de l'UI
-			if ($this->getUrl(2) === self::$i18nUI) {
+			if ($lang === self::$i18nUI) {
 				// Enregistrer les données par lecture directe du formulaire
 				$this->setData(['locale', $data['locale']]);
 			} else {
 				// Sauver sur le disque
-				file_put_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+				file_put_contents(self::DATA_DIR . $lang . '/locale.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 			}
 
 			// Valeurs en sortie
@@ -381,25 +383,12 @@ class translate extends common
 		// Préparation de l'affichage du formulaire
 		//-----------------------------------------
 
-		// Récupération des locales de la langue sélectionnée
-
-		// Vérifier la conformité de l'URL
-		if (!array_key_exists($this->getUrl(2), self::$languages)) {
-			// Bidouillage de l'URL, on sort
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
-				'notification' => helper::translate('Erreur d\'URL'),
-				'state' => false
-			]);
-		}
-		//Lecture des données pour transmission au formulaire
 		// La locale est-elle celle de la langue de l'UI ?
-		if ($this->getUrl(2) === self::$i18nUI) {
-			self::$locales[$this->getUrl(2)]['locale']  = $this->getData(['locale']);
+		if ($lang === self::$i18nUI) {
+			self::$locales[$lang]['locale']  = $this->getData(['locale']);
 		} else {
 			// Lire les locales sans passer par les méthodes
-			self::$locales[$this->getUrl(2)] = json_decode(file_get_contents(self::DATA_DIR . $this->getUrl(2) . '/locale.json'), true);
+			self::$locales[$lang] = json_decode(file_get_contents(self::DATA_DIR . $lang . '/locale.json'), true);
 		}
 
 		// Générer la liste des pages disponibles
@@ -426,7 +415,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Paramètres de la localisation') . '&nbsp;' . template::flag($this->getUrl(2), '20 %'),
+			'title' => helper::translate('Paramètres de la localisation') . '&nbsp;' . template::flag($lang, '20 %'),
 			'view' => 'locale'
 		]);
 	}
@@ -439,7 +428,7 @@ class translate extends common
 		$lang =  $this->getUrl(2);
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			!array_key_exists($lang, self::$languages)
+			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -527,7 +516,7 @@ class translate extends common
 		$lang = $this->getUrl(3);
 		if (
 			$this->getUrl(4) !== $_SESSION['csrf']
-			|| !array_key_exists($lang, self::$languages)
+			|| array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -601,7 +590,7 @@ class translate extends common
 		$enums = $this->getData(['languages']);
 
 		// Générer une énumération absente
-		if (empty($enums) ) {
+		if (empty($enums)) {
 			if (is_dir(self::I18N_DIR) === false) {
 				mkdir(self::I18N_DIR);
 			}
