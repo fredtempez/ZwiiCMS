@@ -318,7 +318,6 @@ class common
 			self::$i18nContent = 'fr_FR';
 			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
 		}
-
 		/**
 		 * Mise à jour  à partir de la version 11.5.12
 		 * */
@@ -1798,7 +1797,7 @@ class common
 				$t[] =  $this->showi18n($key);
 			}
 		}
-		// Pas de drapeau si la langu eest unique
+		// Pas de drapeau si la langue est unique
 		if (count($t) > 1) {
 			foreach ($t as $key) {
 				echo $key;
@@ -2135,9 +2134,28 @@ class common
 		if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
 			// Items de gauche
 			$leftItems = '';
+			// Sélecteur de langues
+			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
+				$c = 0;
+				$leftItem = '';
+				foreach (self::$languages as $key => $value) {
+					if (is_dir(self::DATA_DIR . $key)) {
+						$c++;
+						$location = helper::baseUrl() . 'translate/content/' . $key ;
+						$leftItem .= '<option value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
+					}
+				}
+				if ($c > 1 ) {
+					$leftItems .= '<li><select id="barSelectLanguage">';
+					$leftItems .= $leftItem;
+					$leftItems .= '</select></li>';
+				}
+
+			}
+			// Liste des pages
 			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
 				$leftItems .= '<li><select id="barSelectPage">';
-				$leftItems .= '<option value="">Choisissez une page</option>';
+				$leftItems .= '<option value="">Pages du site</option>';
 				$leftItems .= '<optgroup label="Pages orphelines">';
 				$orpheline = true;
 				$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
@@ -2241,7 +2259,7 @@ class common
 					'href' => helper::baseUrl() . 'plugin'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('flag', [
-					'help' => 'Contenu Multilingues',
+					'help' => 'Multilingue',
 					'href' => helper::baseUrl() . 'translate'
 				]) . '</li>';
 				$rightItems .= '<li>' .	template::ico('cog-alt', [
@@ -2809,7 +2827,7 @@ class core extends common
 			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  . ';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']   . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
 			$css .= '.buttonTab, .block {border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}.buttonTab, .block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
-			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
+			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectLanguage),select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation

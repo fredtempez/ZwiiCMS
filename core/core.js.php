@@ -253,6 +253,16 @@ core.start = function() {
 	 });
 
 	/**
+	 * Sélection d'une langue du site
+	 */
+	$("#barSelectLanguage").on("change", function() {
+		var lang = $(this).val();
+		console.log (lang);
+		if(lang) {
+			$(location).attr("href", lang);
+		}
+	});
+	/**
 	 * Choix de page dans la barre de membre
 	 */
 	$("#barSelectPage").on("change", function() {
@@ -261,6 +271,7 @@ core.start = function() {
 			$(location).attr("href", pageUrl);
 		}
 	});
+
 	/**
 	 * Champs d'upload de fichiers
 	 */

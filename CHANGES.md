@@ -5,6 +5,7 @@
 - Corrige une erreur fatale avec un argument float au lieu d'int dans mt_srand.
 ### Améliorations :
 - Changement du nom de formulaire de gestion des langues (multilangue devient multilingue).
+- Présence d'un sélecteur de langue de contenu dans la barre d'administration.
 - Traductions de l'interface d'administration, ajout de nouvelles fonctionnalités :
     - Installation et mise à jour d'une langue depuis un magasin en ligne ;
     - Téléchargement d'une langue modifiée avec l'éditeur intégré ;

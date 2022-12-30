@@ -411,14 +411,16 @@ td>.col12 {
 }
 
 #bar select {
-	width: 250px;
+	width: 150px;
 	border: 0;
 	color: #111112;
 	font-size: 12px;
 	background-color: rgba(255, 255, 255, 1);
+	padding : 8px;
+	margin-left: 5px;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 800px) {
 	#bar #barLeft {
 		float: left;
 	}
@@ -429,7 +431,7 @@ td>.col12 {
 	}
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 799px) {
 	#bar {
 		text-align: center;
 		padding: 0 1;
@@ -440,10 +442,12 @@ td>.col12 {
 		height: auto;
 	}
 
-	#bar #barSelectPage {
-		width: 40%;
-		font-size: 1em;
+	#bar select {
+		font-size: 1.3em;
+		width: 100%;
+		margin: 10px;
 	}
+
 
 	#bar #barLeft {
 		font-size: 1.2em;
@@ -469,7 +473,7 @@ td>.col12 {
 	#site {
 		margin: 20px auto;
 	}
-}
+}#barSelectPage
 */
 
 /* Bannière */
@@ -502,7 +506,7 @@ header .container {
 	height: 100%;
 }
 
-/* Marges au cotenu de la bannière personnalisée
+/* Marges au contenu de la bannière personnalisée
 header:not(.container) #featureContent {
 	margin: 0 10px;
 }*/
