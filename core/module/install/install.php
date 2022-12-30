@@ -224,10 +224,10 @@ class install extends common
 					if (is_dir(self::I18N_DIR) === false) {
 						mkdir(self::I18N_DIR);
 					}
-					$enums = json_decode(file_get_contents('core/module/install/ressource/i18n/enum.json'), true);
+					$enums = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
 					$this->setData(['languages', $enums]);
 					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-					unlink(self::I18N_DIR . 'enum.json');
+					unlink(self::I18N_DIR . 'languages.json');
 
 					// Créer sitemap
 					$this->createSitemap();
