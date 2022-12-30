@@ -17,12 +17,10 @@ $(document).ready(function() {
     if (translateLayout == null) {
         translateLayout = "content";
         setCookie("translateLayout", "content");
-        // Afficher les boutons liés au contenu
-        $(".contentButtonContainer").show();
+
     }
     $("#contentContainer").hide();
     $("#uiContainer").hide();
-    $(".contentButtonContainer").hide();
     $("#" + translateLayout + "Container").show();
     $("#translate" + capitalizeFirstLetter(translateLayout) + "Button").addClass("activeButton");
 
@@ -37,8 +35,6 @@ $("#translateUiButton").on("click", function() {
     $(this).addClass("activeButton");
     $("#translateContentButton").removeClass("activeButton");
     setCookie("translateLayout", "ui");
-    // Cacher les boutons liés au contenu
-    $(".contentButtonContainer").hide();
 
 });
 $("#translateContentButton").on("click", function() {

@@ -16,22 +16,7 @@
 				'help' => 'Consulter l\'aide en ligne'
 			]);*/ ?>
 	</div>
-	<div class="col1 offset8 contentButtonContainer">
-		<?php echo template::button('translateButtonCopyContent', [
-			'href' => helper::baseUrl() . 'translate/copy',
-			'value' => template::ico('docs'),
-			'disabled' => $module::$siteCopy,
-			'help' => 'Copie de contenus localisés'
-		]); ?>
-	</div>
-	<div class="col1 contentButtonContainer">
-		<?php echo template::button('translateButtonAddContent', [
-			'href' => helper::baseUrl() . 'translate/add',
-			'value' => template::ico('plus'),
-			'class' => 'buttonGreen',
-			'help' => 'Nouveau contenu localisé'
-		]); ?>
-	</div>
+
 </div>
 
 <div class="tab">
@@ -72,11 +57,40 @@
 <div id="contentContainer" class="tabContent">
 	<div class="row">
 		<div class="col12">
-			<?php if ($module::$languagesInstalled) : ?>
-				<?php echo template::table([2, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '']); ?>
-			<?php endif; ?>
+			<div class="block">
+				<h4>
+					<?php echo helper::translate('Paramètres'); ?>
+				</h4>
+				<div class="col4 offset2">
+					<?php echo template::button('translateButtonCopyContent', [
+						'href' => helper::baseUrl() . 'translate/copy',
+						'ico' =>'docs',
+						'disabled' => $module::$siteCopy,
+						'value' => 'Copie de contenus localisés'
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::button('translateButtonAddContent', [
+						'href' => helper::baseUrl() . 'translate/add',
+						'ico' => 'plus',
+						'class' => 'buttonGreen',
+						'value' => 'Nouveau contenu localisé'
+					]); ?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4>
+					<?php echo helper::translate('Langues installées'); ?>
+				</h4>
+				<?php if ($module::$languagesInstalled) : ?>
+					<?php echo template::table([2, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '']); ?>
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 </div>
-
 <?php echo template::formClose(); ?>
