@@ -523,8 +523,10 @@ class template
             'for' => $for,
             'help' => ''
         ], $attributes);
-            // Traduction de l'étiquette si déjà appelée par une fonction de template
-        ;
+        // Traduction de l'aide et de l'étiquette
+        $text = helper::translate($text);
+        $attributes['help'] = helper::translate($attributes['help']);
+
         if (
             get_called_class() !== 'template'
         ) {
