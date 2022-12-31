@@ -253,14 +253,19 @@ core.start = function() {
 
     /**
      * Sélection d'une langue du site
-     
-    $("#barSelectLanguage").on("change", function() {
+     */
+    $("select#barSelectLanguage").on("change", function() {
         var langUrl = $(this).val();
+        // Récupère la langue sélectionnée dans l'élément 6 d'un tableau
+        var lang = langUrl.split("/");
+        // Lit le cookie de langue
         var langCookie = getCookie('ZWII_CONTENT');
-        if (langUrl !== langCookie) {
+        // Change si différent, corrige le problème avec le thème et le rechargement de la langue.
+        if (lang[6] !== langCookie) {
             $(location).attr("href", langUrl);
         }
-    });*/
+    });
+
     /**
      * Choix de page dans la barre de membre
      */

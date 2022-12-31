@@ -2142,13 +2142,13 @@ class common
 					if (is_dir(self::DATA_DIR . $key)) {
 						$c++;
 						$location = helper::baseUrl() . 'translate/content/' . $key ;
-						$leftItem .= '<option value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
+						$leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
 					}
 				}
 				if ($c > 1 ) {
-					//$leftItems .= '<li><select id="barSelectLanguage">';
-					//$leftItems .= $leftItem;
-					//$leftItems .= '</select></li>';
+					$leftItems .= '<li><select id="barSelectLanguage">';
+					$leftItems .= $leftItem;
+					$leftItems .= '</select></li>';
 				}
 
 			}
