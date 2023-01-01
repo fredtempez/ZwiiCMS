@@ -1,14 +1,16 @@
 {
-    "fr_FR":  {
-        "version": "1.0",
-        "date": 1672052400
-    },
-    "es":  {
-        "version": "1.0",
-        "date": 1672052400
-    },
-    "en_EN":  {
-        "version": "1.0",
-        "date": 1672052400
+    "languages": {
+        "en_EN": {
+            "version": "1.0",
+            "date": 1672052400
+        },
+        "es": {
+            "version": "1.0",
+            "date": 1672052400
+        },
+        "fr_FR": {
+            "version": "1.0",
+            "date": 1672052400
+        }
     }
 }

@@ -81,7 +81,7 @@ class translate extends common
 			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response,  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			// Mettre à jour le descripteur
 			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-			$enums = $this->getUiLanguages();
+			$enums = $this->getData(['languages']);
 			$enums = array_merge($enums, [
 				$lang => $enumsStore[$lang]
 			]);
@@ -210,7 +210,7 @@ class translate extends common
 		}
 
 		// Langues installées
-		$installedUI = $this->getUiLanguages();
+		$installedUI = $this->getData(['languages']);
 
 		// Langues disponibles en ligne
 		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);

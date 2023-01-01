@@ -690,6 +690,14 @@ class common
 		}
 		$db->save;
 
+
+		// Créer la base de données des langues
+		if ($module === 'languages') {
+			copy('core/module/install/ressource/i18n/languages.json', self::DATA_DIR . 'languages.json');
+			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+			unlink(self::I18N_DIR . 'languages.json');
+		}
+
 		// Créer le jeu de pages du site de test
 		if ($module === 'page') {
 			$langFolder = $lang . '/content/';
@@ -2141,16 +2149,15 @@ class common
 				foreach (self::$languages as $key => $value) {
 					if (is_dir(self::DATA_DIR . $key)) {
 						$c++;
-						$location = helper::baseUrl() . 'translate/content/' . $key ;
+						$location = helper::baseUrl() . 'translate/content/' . $key;
 						$leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
 					}
 				}
-				if ($c > 1 ) {
+				if ($c > 1) {
 					$leftItems .= '<li><select id="barSelectLanguage">';
 					$leftItems .= $leftItem;
 					$leftItems .= '</select></li>';
 				}
-
 			}
 			// Liste des pages
 			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
