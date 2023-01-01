@@ -1,7 +1,7 @@
 # Bloque l'accès aux données temporaires
 Order deny,allow
 Deny from all
-# Sauf l'accès aux images pour le captcha
+# Autorise l'accès aux images pour le captcha
 <Files *.png>
 Order Allow,Deny
     Allow from all

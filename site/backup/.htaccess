@@ -1,3 +1,3 @@
-# Bloque l'accès aux sauvegardes
+# Bloque le dossier
 Order deny,allow
 Deny from all

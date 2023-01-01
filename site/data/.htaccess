@@ -1,4 +1,4 @@
-# Bloque l'accès aux données
+# Bloque l'accès aux données et aux log
 <Files ~ "\.(htaccess|json|log)$">
 	Order deny,allow
 	Deny from all
