@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col12">
                     <?php echo template::textarea('localeMetaDescription', [
-                        'label' => 'Description du site',
+                        'label' => 'Description',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['metaDescription'],
                         'help'  => 'La description d\'une page participe à son référencement, chaque page doit disposer d\'une description différente.'
                     ]); ?>
