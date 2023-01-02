@@ -284,7 +284,8 @@ core.start = function() {
         var inputFileHiddenDOM = $(this);
         var fileName = inputFileHiddenDOM.val();
         if (fileName === "") {
-            fileName = "Choisissez un fichier";
+            //fileName = "Sélectionner un fichier";
+            fileName = "<?php echo helper::translate('Sélectionner un fichier');?>";
             $(inputFileHiddenDOM).addClass("disabled");
         } else {
             $(inputFileHiddenDOM).removeClass("disabled");
