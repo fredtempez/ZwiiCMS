@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col4">
                     <?php echo template::select('localeHomePageId', helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC'), [
-                        'label' => 'Accueil du site',
+                        'label' => 'Accueil',
                         'selected' => $module::$locales[$this->getUrl(2)]['locale']['homePageId'],
                         'help' => 'La première page que vos visiteurs verront.'
                     ]); ?>
