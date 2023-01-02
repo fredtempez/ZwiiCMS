@@ -229,7 +229,7 @@ class theme extends common
 	];
 	public static $burgerContent = [
 		'none' => 'Aucun',
-		'title' => 'Titre du site',
+		'title' => 'Titre',
 		'logo' => 'Logo du site'
 	];
 

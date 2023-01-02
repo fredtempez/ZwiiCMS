@@ -24,7 +24,7 @@
             <div class="row">
                 <div class="col12">
                     <?php echo template::text('localeTitle', [
-                        'label' => 'Titre du site',
+                        'label' => 'Titre',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['title'],
                         'help'  => 'Il apparaît dans la barre de titre et les partages sur les réseaux sociaux.'
                     ]); ?>
@@ -160,8 +160,8 @@
             <div class="row">
                 <div class="col6">
                     <?php echo template::text('localeCookiesTitleText', [
-                        'help' => 'Saisissez le titre de la fenêtre de gestion des cookies.',
-                        'label' => 'Titre de la fenêtre',
+                        'help' => 'Saisissez le Titre de gestion des cookies.',
+                        'label' => 'Titre',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['cookies']['titleLabel'],
                         'placeHolder' => 'Cookies essentiels'
                     ]); ?>

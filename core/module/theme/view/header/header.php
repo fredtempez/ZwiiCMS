@@ -104,7 +104,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le titre du site', [
+                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le Titre', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>
