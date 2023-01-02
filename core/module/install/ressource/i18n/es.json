@@ -1,4 +1,13 @@
 {
+    "Pages du site": "Páginas del sitio",
+    "Pages orphelines": "Páginas huérfanas",
+    "Pages dans le menu": "Páginas del menú",
+    "Barres latérales": "Barras laterales",
+    "Gérer les fichiers": "Gestión de archivos",
+    "Configurer mon compte": "Configurar mi cuenta",
+    "Télécharger la liste": "Descargar la revista",
+    "Télécharger le journal": "Descargar la revista",
+    "Sélectionner un fichier": "Seleccione un archivo",
     "'Ne pas afficher' crée une page orpheline non accessible par le biais des menus.": "'No mostrar' crea una página huérfana a la que no se puede acceder a través de los menús.",
     "'Sauvegarder et télécharger les données du module": "Guardar y descargar de los datos del módulo",
     "1/4 : Préparation...": "1/4: Preparando...",
