@@ -2172,7 +2172,7 @@ class common
 						$orpheline
 					) {
 						$orpheline = false;
-						$leftItems .= '<optgroup label="Pages du menu">';
+						$leftItems .= '<optgroup label="Pages dans le menu">';
 					}
 					// Exclure les barres
 					if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
