@@ -1380,9 +1380,6 @@ class common
 		if ((sizeof($blocks) === 1 ||
 			in_array($this->getUrl(1), $pattern))) { // Pleine page en mode configuration
 			$this->showContent();
-			if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-				include(self::DATA_DIR . 'body.inc.html');
-			}
 		} else {
 			echo '<div class="row siteContainer">';
 			/**
@@ -1412,9 +1409,6 @@ class common
 			 */
 			echo '<div class="' . $content . '" id="contentSite">';
 			$this->showContent();
-			if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-				include(self::DATA_DIR . 'body.inc.html');
-			}
 			echo '</div>';
 			/**
 			 * Barre droite
