@@ -187,5 +187,10 @@
 		<?php $this->showCookies(); ?>
 		<!-- Les scripts -->
 		<?php $this->showScript();?>
+		<!-- Script perso dans body -->
+		<?php if (file_exists(self::DATA_DIR . 'body.inc.html')) {
+					include(self::DATA_DIR . 'body.inc.html');
+				}
+		?>
 	</body>
 </html>
