@@ -597,7 +597,7 @@ class page extends common
 		// Supprime les balises scripts si elles ont été saisies
 		$js = $this->getInput('pageJsEditorContent', null);
 		$js = str_replace('<script>', '', $js);
-		$js = str_replace('<script>', '', $js);
+		$js = str_replace('</script>', '', $js);
 		if ($this->isPost()) {
 			// Enregistre le JS
 			$this->setData([
