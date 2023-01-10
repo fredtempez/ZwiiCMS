@@ -25,7 +25,10 @@ class template
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        $attributes['value'] = helper::translate($attributes['value']);
+        if (strpos($attributes['value'], '<span>') === 0 ) {
+            // Le contenu n'est pas une icône
+            $attributes['value'] = helper::translate($attributes['value']);
+        }
         $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
         return  sprintf(
@@ -752,7 +755,7 @@ class template
      */
     public static function speech($text)
     {
-        return '<div class="speech"><div class="speechBubble">' . $text . '</div>' . template::ico('mimi speechMimi', ['fontSize' => '7em']) . '</div>';
+        return '<div class="speech"><div class="speechBubble">' . helper::translate($text) . '</div>' . template::ico('mimi speechMimi', ['fontSize' => '7em']) . '</div>';
     }
 
     /**
