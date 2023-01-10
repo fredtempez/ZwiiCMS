@@ -26,7 +26,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Informations générales</h4>
+				<h4><?php echo helper::translate('Informations générales');?></h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::text('blogAddTitle', [
@@ -62,7 +62,7 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image dans l\'article', [
+						<?php echo template::checkbox('blogAddHidePicture', true, 'Masquer l\'image de couverture dans l\'article', [
 							'checked' => true
 						]); ?>
 					</div>
@@ -76,7 +76,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Options de publication</h4>
+				<h4><?php echo helper::translate('Options de publication'); ?></h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('blogAddUserId', $module::$users, [
@@ -106,7 +106,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Commentaires</h4>
+				<h4><?php echo helper::translate('Commentaires');?></h4>
 				<div class="row">
 					<div class="col4 ">
 						<?php echo template::checkbox('blogAddCommentClose', true, 'Fermer les commentaires'); ?>
