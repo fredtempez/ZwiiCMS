@@ -2,6 +2,7 @@
 
 ## Version 12.1.00
 ### Corrections :
+- Corrige un problème de prise en compte des scripts et des feuilles de style intégrés à la page ou au site.
 - Corrige une erreur fatale avec un argument float au lieu d'int dans mt_srand.
 ### Améliorations :
 - Changement du nom de formulaire de gestion des langues (multilangue devient multilingue).

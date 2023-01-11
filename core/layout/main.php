@@ -24,9 +24,7 @@
 	<?php $this->showStyle(); ?>
 	<!-- Script perso dans le header -->
 	<?php if (file_exists(self::DATA_DIR . 'head.inc.html')) {
-		echo '<script>';
 		include(self::DATA_DIR . 'head.inc.html');
-		echo '</script>';
 	} ?>
 </head>
 
@@ -194,9 +192,7 @@
 		<?php $this->showScript(); ?>
 		<!-- Script perso dans body -->
 		<?php if (file_exists(self::DATA_DIR . 'body.inc.html')) {
-			echo '<script>';
 			include(self::DATA_DIR . 'body.inc.html');
-			echo '</script>';
 		}?>
 </body>
 

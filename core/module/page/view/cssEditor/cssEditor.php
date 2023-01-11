@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col12">
 		<?php echo template::textarea('pageCssEditorContent', [
-			'value' => empty($this->getData(['page', $this->getUrl(2), 'css'])) ? '' : $this->getData(['page', $this->getUrl(2), 'css']),
+			'value' => is_null($this->getData(['page', $this->getUrl(2), 'css'])) ? '' : $this->getData(['page', $this->getUrl(2), 'css']),
 			'class' => 'editor'
 		]); ?>
 	</div>

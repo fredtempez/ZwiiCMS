@@ -564,8 +564,6 @@ class page extends common
 		if ($this->isPost()) {
 			// Supprime les balises styles si elles ont été saisies
 			$css = $this->getInput('pageCssEditorContent', null);
-			$css = str_replace('<style>', '', $css);
-			$css = str_replace('</style>', '', $css);
 			// Enregistre le CSS
 			$this->setData([
 				'page', $this->getUrl(2), 'css',
@@ -594,11 +592,9 @@ class page extends common
 	public function jsEditor()
 	{
 		// Soumission du formulaire
-		// Supprime les balises scripts si elles ont été saisies
-		$js = $this->getInput('pageJsEditorContent', null);
-		$js = str_replace('<script>', '', $js);
-		$js = str_replace('</script>', '', $js);
 		if ($this->isPost()) {
+			// Supprime les balises scripts si elles ont été saisies
+			$js = $this->getInput('pageJsEditorContent', null);
 			// Enregistre le JS
 			$this->setData([
 				'page', $this->getUrl(2), 'js',

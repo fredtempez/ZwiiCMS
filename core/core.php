@@ -2999,8 +2999,8 @@ class core extends common
 				'title' => $title,
 				'content' => 	$this->getPage($this->getUrl(0), self::$i18nContent) .
 					// Concatène avec les paramètres avancés.
-					'<style>' . $this->getData(['page', $this->getUrl(0), 'css']) . '</style>' .
-					'<script>' . $this->getData(['page', $this->getUrl(0), 'js']) . '</script>',
+					$this->getData(['page', $this->getUrl(0), 'css']) .
+					$this->getData(['page', $this->getUrl(0), 'js']),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -3008,13 +3008,13 @@ class core extends common
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
 					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
-					'<style>' . $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) . '</style>' .
-					'<script>' . $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) . '</script>'
+					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) .
+					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js'])
 					: '',
 				'contentLeft'  => $this->getData(['page', $this->getUrl(0), 'barLeft'])
 					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
-					'<style>' . $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) . '</style>' .
-					'<script>' . $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) . '</script>'
+					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) .
+					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js'])
 					: ''
 			]);
 		}
