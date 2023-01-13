@@ -26,7 +26,7 @@ class helper
 
 	public static function translate($text)
 	{
-		$target = 'form';
+		$target = 'search';
 		/** Collecte des dialogues des modules */
 		$url = $_SERVER['QUERY_STRING'];
 		$module = explode('/', $url);		
