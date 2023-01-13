@@ -26,6 +26,21 @@ class helper
 
 	public static function translate($text)
 	{
+		/*
+		$target = 'redirection';
+		$url = $_SERVER['QUERY_STRING'];
+		$module = explode('/', $url);		
+		if ( $module[0] === $target)
+		{ 
+			// La traduction existe déjà dans le core
+			if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+				$dialogues = json_decode(file_get_contents('module/' . $target . '/i18n/fr_FR.json' ), true);
+				$data = array_merge($dialogues,[$text =>  '']);
+				file_put_contents ('module/' . $target . '/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			}
+			
+		}
+		*/
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
