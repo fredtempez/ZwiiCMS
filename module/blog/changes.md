@@ -1,3 +1,5 @@
+# version 6.4
+- Multilingisme
 # version 6.31
 - Miniature de l'image dans le flux RSS
 # version 6.3

@@ -1,3 +1,5 @@
+# Version 3.3
+- Multilinguisme
 # Version 3.2
 - Bug variable non initialisée
 # Version 3.1

@@ -154,5 +154,5 @@
 		</div>
 	<?php endif; ?>
 <?php else : ?>
-	<?php echo template::speech('Aucun article.'); ?>
+	<?php echo template::speech('Aucun article'); ?>
 <?php endif; ?>

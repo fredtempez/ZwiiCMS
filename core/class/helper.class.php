@@ -26,8 +26,8 @@ class helper
 
 	public static function translate($text)
 	{
-		/*
-		$target = 'redirection';
+		
+		$target = 'blog';
 		$url = $_SERVER['QUERY_STRING'];
 		$module = explode('/', $url);		
 		if ( $module[0] === $target)
@@ -40,7 +40,7 @@ class helper
 			}
 			
 		}
-		*/
+		
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 

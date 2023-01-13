@@ -29,7 +29,7 @@
 	<?php echo template::table([4, 4, 1, 1, 1, 1], $module::$articles, ['Titre', 'Date de publication', 'État', 'Commentaires', '','']); ?>
 	<?php echo $module::$pages; ?>
 <?php else: ?>
-	<?php echo template::speech('Aucun article.'); ?>
+	<?php echo template::speech('Aucun article'); ?>
 <?php endif; ?>
 <div class="moduleVersion">Version n°
 	<?php echo $module::VERSION; ?>

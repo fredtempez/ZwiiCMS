@@ -23,7 +23,7 @@
                 </div>
                 <div class="col6">
                     <?php echo template::text('formOptionButton', [
-                        'help' => 'Laissez vide afin de conserver le texte par défaut.',
+                        'help' => 'Vide affiche le texte par défaut',
                         'label' => 'Etiquette du bouton de soumission',
                         'value' => $this->getData(['module', $this->getUrl(0), 'config', 'button'])
                     ]); ?>
@@ -38,7 +38,7 @@
                 <div class="col5">
                     <?php echo template::select('formOptionPageId', $module::$pages, [
                         'classWrapper' => 'displayNone',
-                        'label' => 'Page du site :',
+                        'label' => 'Page du site',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'pageId'])
                     ]); ?>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="row">
                     <div class="col12">
                         <?php echo template::text('formOptionSubject', [
-                            'help' => 'Laissez vide afin de conserver le texte par défaut.',
+                            'help' => 'Vide affiche le texte par défaut',
                             'label' => 'Sujet du mail',
                             'value' => $this->getData(['module', $this->getUrl(0), 'config', 'subject'])
                         ]); ?>
@@ -102,9 +102,8 @@
                 <div class="row">
                     <div class="col4">
                         <?php echo template::select('formOptionGroup', $groupMembers, [
-                            'label' => 'Aux groupes à partir de',
+                            'label' => 'A tous les groupes depuis',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'group']),
-                            'help' => 'Éditeurs = éditeurs + administrateurs<br/> Membres = membres + éditeurs + administrateurs'
                         ]); ?>
                     </div>
                     <div class="col4">
@@ -117,28 +116,27 @@
                         <?php echo template::text('formOptionMail', [
                             'label' => 'A une adresse email',
                             'value' => $this->getData(['module', $this->getUrl(0), 'config', 'mail']),
-                            'help' => 'Un email ou une liste de diffusion'
                         ]); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col4">
                         <?php echo template::select('formOptionSignature', $module::$signature, [
-                            'label' => 'Sélectionner le type de signature',
+                            'label' => 'Type de signature',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'signature'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::file('formOptionLogo', [
-                            'help' => 'Sélectionnez le logo du site',
+
                             'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-                            'label' => 'Logo',
+                            'label' => 'Logo du site',
                             'value' => $this->getData(['module', $this->getUrl(0), 'config', 'logoUrl'])
                         ]); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::select('formOptionLogoWidth', $module::$logoWidth, [
-                            'label' => 'Sélectionner la largeur du logo',
+                            'label' => 'Largeur du logo',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth'])
                         ]); ?>
                     </div>
