@@ -2,6 +2,7 @@
 
 ## Version 12.1.00
 ### Corrections :
+- Corrige l'activation non autorisée d'une version en langue étrangère du site.
 - Corrige un problème de prise en compte des scripts et des feuilles de style intégrés à la page ou au site.
 - Corrige une erreur fatale avec un argument float au lieu d'int dans mt_srand.
 ### Améliorations :

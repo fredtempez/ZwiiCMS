@@ -65,7 +65,7 @@ class translate extends common
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
 			$this->getUrl(3) !== $_SESSION['csrf'] &&
-			array_key_exists($lang, self::$languages) ==  false
+			array_key_exists($lang, self::$languages) ===  false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -566,10 +566,21 @@ class translate extends common
 	 */
 	public function content()
 	{
-		// Activation du drapeau
+		// Langue sélectionnée
 		$lang = $this->getUrl(2);
-		// Changement ?
-		if ($this->getInput('ZWII_CONTENT') !== $lang) {
+		/**
+		 * Changement de la langue si
+		 * différe de la langue active
+		 * déjà initialisée
+		 * fait partie des lnagues installées
+		 */
+		if ( $this->getInput('ZWII_CONTENT') !== $lang
+			&&
+			is_dir(self::DATA_DIR . $lang)
+			&&
+			array_key_exists($lang, self::$languages) ===  true
+
+		) {
 			// Nettoyer le cookie
 			helper::deleteCookie('ZWII_CONTENT');
 			// Stocker le choix
