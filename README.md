@@ -1,109 +1,112 @@
 # ZwiiCMS 12.1.00
 
-Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.
+Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge.
 
-ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remijean.fr/). Il est désormais maintenu par Frédéric Tempez.
+ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/). It is now maintained by Frédéric Tempez.
 
-[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
+[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
 
-## Configuration recommandée
+## Recommended configuration
 
-* PHP 7.2 ou plus
-* Support de .htaccess
+* PHP 7.2 or higher
+* .htaccess support
 
-## Licence
+## License
 
-Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International. 
+This work is licensed under the Attribution-Noncommercial-No Derivative Works 4.0 International License. 
 
-Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or write to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-## Téléchargement de ZwiiCMS
+## Downloading ZwiiCMS
 
-Pour télécharger la dernière version publiée, rendez-vous :
-- sur [la page des mises à jour](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
-- ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargement) 
+To download the latest released version, go to :
+- [the Updates page](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
+- or at [the site download page](https://zwiicms.fr/telechargement) 
 
 
 ## Installation
 
-Décompressez l'archive de Zwii et téléversez son contenu à la racine de votre serveur ou dans un sous-répertoire. C'est tout !
+Unzip the Zwii archive and upload its contents to the root of your server or to a subdirectory. That's all!
 
-Vous trouverez de plus amples explications, en particulier pour une installation chez Free, dans la rubrique "Téléchargements" du forum.
-
-
-## Procédures de mise à jour
-
-A l'occasion de l'installation d'une verion majeure, il est recommandé de réaliser une copie de sauvegarde.
-
-### Automatique
-
-* Connectez-vous à votre site.
-* Si une mise à jour est disponible, elle vous est proposée dans la barre d'administration.
-* Cliquez sur le bouton "Mettre à jour".
-
-### Manuelle
-
-* Sauvegardez l'intégralité de votre site, spécialement le répertoire "site".
-* Décompressez la nouvelle version sur votre ordinateur.
-* Transférez son contenu sur votre serveur en activant le remplacement des fichiers.
+You will find more explanations, in particular for an installation at Free, in the "Downloads" section of the forum.
 
 
-## Arborescence générale
+## Update procedures
 
-*Légende : [R] Répertoire - [F] Fichier*
+When installing a major version, it is recommended to make a backup copy.
 
-```text
-[R] core                   Cœur du système
-  [R] class                Classes
-  [R] layout               Mise en page
-  [R] module               Modules du cœur
-  [R] vendor               Librairies extérieures
-  [F] core.js.php          Cœur javascript
-  [F] core.php             Cœur PHP
+### Automatic
 
-[R] module                 Modules de page
-  [R] blog                 Blog
-  [R] form                 Gestionnaire de formulaires
-  [R] gallery              Galerie
-  [R] news                 Nouvelles
-  [R] redirection          Redirection
+* Connect to your site.
+* If an update is available, it is proposed in the administration bar.
+* Click on the "Update" button.
 
-[R] site                   Contenu du site
-  [R] backup               Sauvegardes automatiques
-  [R] data                 Répertoire des données
-    [R] fr                 Dossier localisé
-      [F] page.json        Données des pages
-      [F] module.json      Données des modules de pages
-      [F] local.json       Données du site propres à la langue
-      [R] content          Dossier des contenus de page
-        [F] accueil.html   Exemple contenu de la page d'accueil
-    [R] fonts              Dossier contenant les fontes installées
-      [F] fonts.html       Fichier contenant les appels des fontes à charger sur cdnFonts
-      [F] fonts.css        Fichier contenant la feuille de style liée aux polices de caractères locales
-      [F] fontes.woff      Fichiers locaux des fontes (woff, etc..)
-    [R] modules            Personnalisation des modules ou données propres
-    [F] admin.css          Thème des pages d'administration
-    [F] admin.json         Données de thème des pages d'administration
-    [F] blacklist.json     Journalisation des tentatives de connexion avec des comptes inconnus
-    [F] config.json        Configuration du site
-    [F] core.json          Configuration du noyau
-    [F] custom.css         Feuille de style de la personnalisation avancée
-    [F] fonts.json         Descripteur des fontes personnalisées
-    [F] journal.log        Journalisation des actions
-    [F] theme.css          Thème du site
-    [F] theme.json         Données du site
-    [F] user.json          Données des utilisateurs
-    [F] .backup            Marqueur de la sauvegarde des fichiers si présent
-  [R] file                 Répertoire d'upload du gestionnaire de fichiers
-    [R] source             Ressources diverses
-    [R] thumb              Miniatures des images
-  [R] tmp                  Répertoire temporaire
+### Manual
 
-[F] index.php              Fichier d'initialisation de ZwiiCMS
-[F] robots.txt             Filtrage des répertoires accessibles aux robots des moteurs de recherche
-[F] sitemap.xml            Plan du site
-[F] sitemap.xml.gz         Version compressée
+* Save your entire site, especially the "site" directory.
+* Unzip the new version on your computer.
+* Transfer its content to your server by activating the file replacement.
 
-Le fichiers .htaccess contribuent à la sécurité en filtrant l'accès aux répertoires sensibles.
+
+## General tree structure
+
+*Legend: [R] Directory - [F] File
+
+text
+[R] core Core of the system
+  [R] class Classes
+  [R] layout Layout
+  [R] module Core modules
+  [R] vendor External libraries
+  [F] core.js.php Javascript core
+  [F] core.php PHP core
+
+[R] module Page modules
+  [R] blog Blog
+  [R] form Form manager
+  [R] gallery Gallery
+  [R] news News
+  [R] redirection Redirection
+
+[R] site Site content
+  [R] backup Automatic backups
+  [R] data Data directory
+    [R] en Localized folder
+      [F] page.json Page data
+      [F] module.json Page module data
+      [F] local.json Language-specific site data
+      [R] content Folder of page contents
+        [F] home.html Sample home page content
+    [R] fonts Folder containing the installed fonts
+      [F] fonts.html File containing the fonts calls to load on cdnFonts
+      [F] fonts.css File containing the style sheet linked to the local fonts
+      [F] fonts.woff Local font files (woff, etc..)
+    [R] modules Customization of modules or own data
+    [F] admin.css Theme of administration pages
+    [F] admin.json Theme data for administration pages
+    [F] blacklist.json Logging of login attempts with unknown accounts
+    [F] config.json Site configuration
+    [F] core.json Core configuration
+    [F] custom.css Advanced customization stylesheet
+    [F] fonts.json Custom font descriptor
+    [F] journal.log Action logging
+    [F] theme.css Site theme
+    [F] theme.json Site data
+    [F] user.json User data
+    [F] .backup Marker for file backup if present
+  [R] file File manager upload directory
+    [R] source Various resources
+    [R] thumb Image thumbnails
+  [R] tmp Temporary directory
+
+[F] index.php ZwiiCMS initialization file
+[F] robots.txt Filtering of directories accessible to search engine robots
+[F] sitemap.xml Sitemap
+[F] sitemap.xml.gz Compressed version
+
+The .htaccess files contribute to security by filtering access to sensitive directories.
 
 ```
+
+
+Translated with www.DeepL.com/Translator (free version)
