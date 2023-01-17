@@ -11,11 +11,18 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 * PHP 7.2 ou plus
 * Support de .htaccess
 
+## Licence
+
+Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International. 
+
+Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+
 ## Téléchargement de ZwiiCMS
 
-Pour télécharger la dernière version publiée, il faut vous rendre sur la page de téléchargement du [site](https://zwiicms.fr/telechargement)
+Pour télécharger la dernière version publiée, rendez-vous :
+- sur [la page des mises à jour](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
+- ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargement) 
 
-La version github est une **version de développement** qui peut encore contenir des bugs mais elle vous permet de tester les dernières nouveautés. Cette version n'est pas recommandée en production.
 
 ## Installation
 
@@ -25,6 +32,8 @@ Vous trouverez de plus amples explications, en particulier pour une installation
 
 
 ## Procédures de mise à jour
+
+A l'occasion de l'installation d'une verion majeure, il est recommandé de réaliser une copie de sauvegarde.
 
 ### Automatique
 
@@ -38,14 +47,6 @@ Vous trouverez de plus amples explications, en particulier pour une installation
 * Décompressez la nouvelle version sur votre ordinateur.
 * Transférez son contenu sur votre serveur en activant le remplacement des fichiers.
 
-En cas de difficulté avec la nouvelle version, il suffira de téléverser la sauvegarde pour remettre votre site dans son état initial.
-
-**Remarques :**
-
-* La mise à jour manuelle désactive la réécriture d'URL. À vous de la réactiver depuis la page de configuration du site.
-* La mise à niveau de la version 8 vers la version 9 crée deux fichiers de données distincts ("core.json" et "theme.json") à partir du fichier "data.json" de la version 8, puis le renomme "data_imported.json".
-
-Pour revenir à la version 8, renommez ce fichier "data.json".
 
 ## Arborescence générale
 
