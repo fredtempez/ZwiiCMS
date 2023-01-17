@@ -3210,7 +3210,8 @@ class core extends common
 			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech('La page <strong>' . $accessInfo['pageId'] . '</strong> est ouverte par l\'utilisateur <strong>' . $accessInfo['userName'] . '</strong>')
+					'content' => template::speech(sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s') , $accessInfo['pageId'], $accessInfo['userName']))
+												
 				]);
 			} else {
 				if (
@@ -3221,7 +3222,7 @@ class core extends common
 				} else {
 					$this->addOutput([
 						'title' => 'Accès interdit',
-						'content' => template::speech('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)')
+						'content' => template::speech(helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)'))
 					]);
 				}
 			}
@@ -3235,7 +3236,7 @@ class core extends common
 			} else {
 				$this->addOutput([
 					'title' => 'Page indisponible',
-					'content' => template::speech('Oups ! La page demandée n\'existe pas ou est introuvable (erreur 404)')
+					'content' => template::speech(helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)'))
 				]);
 			}
 		}
