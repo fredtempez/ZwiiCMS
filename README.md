@@ -106,8 +106,3 @@ text
 [F] sitemap.xml.gz Compressed version
 
 The .htaccess files contribute to security by filtering access to sensitive directories.
-
-```
-
-
-Translated with www.DeepL.com/Translator (free version)
