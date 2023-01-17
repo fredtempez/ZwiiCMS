@@ -50,5 +50,5 @@
 		</div>
 	<?php endif; ?>
 <?php else : ?>
-	<?php echo template::speech('Aucune news.'); ?>
+	<?php echo template::speech('Aucune news'); ?>
 <?php endif; ?>

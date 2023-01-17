@@ -19,7 +19,7 @@
 					'label' => 'Lien de redirection',
 					'placeholder' => 'http://',
 					'value' => $this->getData(['module', $this->getUrl(0), 'url']),
-					'help' => 'Le lien de redirection peut contenir une URL standard, ou pointer vers l\'ancre d\'une page du site <em>(/page#ancre)</em> ; <em>(/?page#ancre)</em>'
+					'help' => 'Le lien de redirection peut contenir une URL standard, ou pointer vers l\'ancre d\'une page du site'
 				]); ?>
 			</div>
 		</div>

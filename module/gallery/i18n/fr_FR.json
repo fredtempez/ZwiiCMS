@@ -1,8 +1,7 @@
 {
-    "Aucune galerie.": "",
+    "Aucune galerie": "",
     "Masquer l'index des galeries lorsque le module ne contient qu'une seule galerie": "",
     "Cette option est active lorsque le module ne contient qu'une seule galerie, elle permet d'éviter la page listant toutes les galeries et affiche directement la galerie": "",
-    "<span>Masquer l'index des galeries lorsque le module ne contient qu'une seule galerie</span>": "",
     "Position du bouton de retour à l'index des galeries": "",
     "Masqué": "",
     "Au-dessus": "",
@@ -60,7 +59,6 @@
     "Manuel": "",
     "Mode plein écran automatique": "",
     "A l'ouverture de la galerie, la première image est affichée en plein écran.": "",
-    "<span>Mode plein écran automatique</span>": "",
     "Afficher le contenu de la page avec la galerie": "",
     "Le contenu de la page est toujours affiché dans la liste des galeries. Quand une seule galerie est disponible, il est possible de l'afficher directement, cette option est utile dans ce cas précis.": ""
 }

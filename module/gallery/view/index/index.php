@@ -13,5 +13,5 @@
 	<?php endforeach; ?>
 	</div>
 <?php else: ?>
-	<?php echo template::speech('Aucune galerie.'); ?>
+	<?php echo template::speech('Aucune galerie'); ?>
 <?php endif; ?>
