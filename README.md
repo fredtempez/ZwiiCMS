@@ -52,6 +52,7 @@ When installing a major version, it is recommended to make a backup copy.
 
 *Legend: [R] Directory - [F] File
 
+````
 text
 [R] core Core of the system
   [R] class Classes
