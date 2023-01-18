@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 12.1.01
+### Correction :
+- Défaut d'initialisation du générateur de nombre aléatoire utilisé pour le choix des nombres du captcha.
+
 ## Version 12.1.00
 ### Corrections :
 - Corrige l'activation non autorisée d'une version en langue étrangère du site.
