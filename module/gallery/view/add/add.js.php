@@ -39,7 +39,8 @@
 	 */
 	$(".galleryAddDelete").on("click", function() {
 		var _this = $(this);
-		return core.confirm("Êtes-vous sûr de vouloir supprimer cette galerie ?", function() {
+		var message = "<?php echo helper::translate('Supprimer cette galerie ?'); ?>";
+		return core.confirm(message, function() {
 			$(location).attr("href", _this.attr("href"));
 		});
 	});
