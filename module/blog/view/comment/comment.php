@@ -18,5 +18,5 @@
 	<?php echo $module::$pages.'<br/>'; ?>
 <?php else: ?>
 </div>
-	<?php echo template::speech('Aucun commentaire.'); ?>
+	<?php echo template::speech('Aucun commentaire'); ?>
 <?php endif; ?>
