@@ -76,7 +76,7 @@
 		</div>
 </div>
 <div class="block">
-	<h4>Liste des champs</h4>
+	<h4><?php echo helper::translate('Liste des champs');?></h4></h4>
 	<div id="formConfigNoInput">
 		<?php echo template::speech('Le formulaire ne contient aucun champ.'); ?>
 	</div>

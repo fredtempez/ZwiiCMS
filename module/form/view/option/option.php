@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Validation du formulaire</h4>
+            <h4><?php echo helper::translate('Validation du formulaire');?></h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::checkbox('formOptionCaptcha', true, 'Captcha', [
@@ -49,7 +49,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Gabarit</h4>
+            <h4><?php echo helper::translate('Gabarit');?></h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('formOptionAlign', $module::$optionAlign, [
@@ -78,7 +78,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Courriel</h4>
+            <h4><?php echo helper::translate('Courriel');?></h4>
             <?php echo template::checkbox('formOptionMailOptionsToggle', true, 'Envoyer par mail les données saisies :', [
                 'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'group']) ||
                     !empty($this->getData(['module', $this->getUrl(0), 'config', 'user'])) ||
