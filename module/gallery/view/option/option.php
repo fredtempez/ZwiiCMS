@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4>Options</h4>
+            <h4><?php echo helper::translate('Paramétres des galeries');?></h4>
             <div class="row">
                 <div class="col12">
                     <?php echo template::checkbox('galleriesOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une seule galerie' , [
@@ -58,7 +58,7 @@
     <div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4>Paramètres de la galerie</h4>
+			<h4><?php echo helper::translate('Paramétres de la galerie');?></h4>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::text('galleryEditName', [

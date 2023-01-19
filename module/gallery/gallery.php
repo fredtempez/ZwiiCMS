@@ -853,7 +853,7 @@ class gallery extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => "Thème",
+			'title' => "Thème des galeries",
 			'view' => 'theme',
 			'vendor' => [
 				'tinycolorpicker'
