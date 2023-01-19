@@ -1,5 +1,5 @@
 {
-    "Aucune news": "",
+    "Aucun article": "",
     "Options de configuration": "",
     "Rédiger une news": "",
     "Lien du flux RSS": "",
@@ -37,7 +37,8 @@
     "Auteur": "",
     "test test": "",
     "Date de publication": "",
-    "La news est consultable à partir du moment ou la date de publication est passée.": "",
+    "L'article est consultable à partir du moment ou la date de publication est passée.": "",
     "Date de dépublication": "",
-    "La news est consultable Jusqu'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.": ""
+    "L'article est consultable Jusqu'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.": "",
+    "Supprimer cet article ?": ""
 }
