@@ -15,8 +15,9 @@
 
  if (document.referrer.indexOf("edit") === -1)
  {
+	var message = "<?php echo helper::translate('OUI : éditer la page | NON : tester la redirection'); ?>";
   	core.confirm(
-  		"OUI : éditer la page | NON : tester la redirection.",
+  		message,
    		function() {
   			$(location).attr("href", "<?php echo helper::baseUrl(); ?>page/edit/<?php echo $this->getUrl(0); ?>");
   		},
