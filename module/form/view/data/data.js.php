@@ -16,7 +16,8 @@
  */
 $(".formDataDelete").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer cette donnée ?", function() {
+	var message = "<?php echo helper::translate('Supprimer cet enregistrement'); ?>";
+	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
@@ -26,7 +27,8 @@ $(".formDataDelete").on("click", function() {
  */
 $(".formDataDeleteAll").on("click", function() {
 	var _this = $(this);
-	return core.confirm("Êtes-vous sûr de vouloir supprimer toutes les données ?", function() {
+	var message = "<?php echo helper::translate('Supprimer tous les enregistrements ?'); ?>";
+	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
 	});
 });
