@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4>Redirection</h4>
+				<h4><?php echo helper::translate('Paramètres');?></h4>
 				<?php echo template::text('redirectionConfigUrl', [
 					'label' => 'Lien de redirection',
 					'placeholder' => 'http://',

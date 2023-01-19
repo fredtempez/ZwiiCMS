@@ -521,7 +521,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	// Option des cookies dans le footer
 	$this->setData(['theme', 'footer', 'displayCookie', false]);
 
-	// Acceptation et paramétres des cookies RGPD
+	// Acceptation et Paramètres des cookies RGPD
 	$this->setData(['locale', 'cookies', 'cookiesZwiiText', 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.']);
 	$this->setData(['locale', 'cookies', 'cookiesTitleText', 'Gérer les cookies']);
 	$this->setData(['locale', 'cookies', 'cookiesLinkMlText', 'Consulter les mentions légales']);
