@@ -71,7 +71,7 @@ class template
         $limit = $attributes['limit']  ? count($letters) - 1 : 10;
 
         // Tirage de l'opération
-        mt_srand((int) microtime() * 1000000);
+        mt_srand();
         // Captcha simple limité à l'addition
         $operator = $attributes['limit'] ?  mt_rand(1, 4) : 1;
 
@@ -81,9 +81,9 @@ class template
         }
 
         // Tirage des nombres
-        mt_srand( (int) microtime(true) * 1000000);
+        mt_srand();
         $firstNumber = mt_rand(1, $limit);
-        mt_srand( (int) microtime(true) * 1000000);
+        mt_srand();
         $secondNumber = mt_rand(1, $limit);
 
         // Permutation si addition ou soustraction
@@ -113,7 +113,7 @@ class template
                 for ($i = 1; $i <= $firstNumber; $i++) {
                     $limit = $limit2[$i - 1];
                 }
-                mt_srand((int) microtime() * 1000000);
+                mt_srand();
                 $secondNumber = mt_rand(1, $limit);
                 $firstNumber =  $firstNumber * $secondNumber;
                 $result = $firstNumber / $secondNumber;
