@@ -70,13 +70,13 @@
 
 	<!-- Bannière dans le fond du site -->
 	<?php if ($this->getData(['theme', 'header', 'position']) === 'body') : ?>
+		<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
 		<?php
 		$headerClass =  $this->getData(['theme', 'header', 'position']) === 'hide' ? 'displayNone' : '';
 		$headerClass .= $this->getData(['theme', 'header', 'tinyHidden']) ? ' bannerDisplay ' : '';
 		$headerClass .= $this->getData(['theme', 'header', 'wide']) === 'none' ? '' : 'container';
 		?>
 		<header <?php echo empty($headerClass) ? '' : 'class="' . $headerClass . '"'; ?>>
-			<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
 			<?php if ($this->getData(['theme', 'header', 'feature']) === 'wallpaper') : ?>
 				<?php if (
 					$this->getData(['theme', 'header', 'textHide']) === false
@@ -92,8 +92,8 @@
 					<?php echo $this->getData(['theme', 'header', 'featureContent']); ?>
 				</div>
 			<?php endif; ?>
-			<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ?  '</a>' : ''; ?>
 		</header>
+		<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ?  '</a>' : ''; ?>
 	<?php endif; ?>
 	<!-- Menu dans le fond du site après la bannière -->
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-second') : ?>

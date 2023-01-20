@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 12.1.02
+### Correction :
+- Corrige une bannière non cliquable lorsque placée hors du site.
+
 ## Version 12.1.01
 ### Correction :
 - Défaut d'initialisation du générateur de nombre aléatoire utilisé pour le choix des nombres du captcha.
