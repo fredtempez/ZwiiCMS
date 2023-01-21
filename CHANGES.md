@@ -3,6 +3,8 @@
 ## Version 12.1.02
 ### Correction :
 - Corrige une bannière non cliquable lorsque placée hors du site.
+### Amélioration :
+- Aspect des menus affichés sur les écrans de petites tailles.
 
 ## Version 12.1.01
 ### Correction :
