@@ -460,14 +460,14 @@ td>.col12 {
         height: auto;
     }
     #bar select {
-        font-size: 1.2em;
         width: 95%;
         margin: 10px;
+        text-align-last: center;
     }
     #bar #barLeft {
-        font-size: 2em;
         float: none;
     }
+    #bar #barLeft,
     #bar #barRight {
         font-size: 1.6em;
     }
