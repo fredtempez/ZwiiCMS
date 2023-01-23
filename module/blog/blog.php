@@ -308,7 +308,7 @@ class blog extends common
 					'class' => $comment['approval'] === true ? 'blogCommentRejected buttonGreen' : 'blogCommentApproved buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => $comment['approval'] === true ? 'A' : 'R',
-					'help' => $comment['approval'] === true ? 'Approuvé' : 'Rejetté',
+					'help' => $comment['approval'] === true ? 'Approuvé' : 'Rejeté',
 				]);
 			}
 			self::$comments[] = [
