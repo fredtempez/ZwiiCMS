@@ -219,7 +219,7 @@ class form extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Options de configuration',
+				'title' => helper::translate('Options de configuration'),
 				'vendor' => [
 					'html-sortable',
 					'flatpickr'

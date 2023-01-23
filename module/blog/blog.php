@@ -255,7 +255,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Nouvel article créé',
+				'notification' => helper::translate('Nouvel article créé'),
 				'state' => true
 			]);
 		}
@@ -268,7 +268,7 @@ class blog extends common
 		unset($userFirstname);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Nouvel article',
+			'title' => helper::translate('Rédiger un article'),
 			'vendor' => [
 				'flatpickr',
 				'tinymce',
@@ -287,7 +287,6 @@ class blog extends common
 		self::$commentsDelete =	template::button('blogCommentDeleteAll', [
 			'class' => 'blogCommentDeleteAll buttonRed',
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2) . '/' . $_SESSION['csrf'],
-			'ico' => 'trash',
 			'value' => 'Tout effacer'
 		]);
 		// Ids des commentaires par ordre de création
@@ -308,7 +307,8 @@ class blog extends common
 				$buttonApproval = template::button('blogCommentApproved' . $commentIds[$i], [
 					'class' => $comment['approval'] === true ? 'blogCommentRejected buttonGreen' : 'blogCommentApproved buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => $comment['approval'] === true ? 'A' : 'R'
+					'value' => $comment['approval'] === true ? 'A' : 'R',
+					'help' => $comment['approval'] === true ? 'Approuvé' : 'Rejetté',
 				]);
 			}
 			self::$comments[] = [
@@ -325,7 +325,7 @@ class blog extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Gestion des commentaires : ' . $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(2), 'title']),
+			'title' => helper::translate('Gestion des commentaires'),
 			'view' => 'comment'
 		]);
 	}
@@ -347,7 +347,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Suppression
@@ -356,7 +356,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/' . $this->getUrl(2),
-				'notification' => 'Commentaire supprimé',
+				'notification' => helper::translate('Commentaire supprimé'),
 				'state' => true
 			]);
 		}
@@ -381,7 +381,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment',
-				'notification' => 'Commentaires supprimés',
+				'notification' => helper::translate('Commentaires supprimés'),
 				'state' => true
 			]);
 		}
@@ -404,7 +404,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Inversion du statut
@@ -421,7 +421,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/comment/' . $this->getUrl(2),
-				'notification' =>  $approved ?  'Commentaire approuvé' : 'Commentaire rejeté',
+				'notification' =>  $approved ?  helper::translate('Commentaire approuvé') : helper::translate('Commentaire rejeté'),
 				'state' => $approved
 			]);
 		}
@@ -491,20 +491,18 @@ class blog extends common
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('pencil'),
-					'help' => 'Éditer l\'article'
+					'value' => template::ico('pencil')
 				]),
 				template::button('blogConfigDelete' . $articleIds[$i], [
 					'class' => 'blogConfigDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('trash'),
-					'help' => 'Effacer l\'article'
+					'value' => template::ico('trash')
 				])
 			];
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => helper::translate('Configuration du module'),
 			'view' => 'config'
 		]);
 	}
@@ -525,13 +523,13 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Options de configuration',
+			'title' => helper::translate('Paramètres'),
 			'view' => 'option'
 		]);
 	}
@@ -553,7 +551,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Suppression
@@ -562,7 +560,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Article supprimé',
+				'notification' => helper::translate('Article supprimé'),
 				'state' => true
 			]);
 		}
@@ -578,7 +576,7 @@ class blog extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Action  non autorisée'
+				'notification' =>  helper::translate('Action interdite')
 			]);
 		}
 		// L'article n'existe pas
@@ -634,7 +632,7 @@ class blog extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => 'Modifications enregistrées',
+					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
 			}

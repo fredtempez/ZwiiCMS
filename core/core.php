@@ -458,6 +458,18 @@ class common
 		}
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
 		
+		// Dialogue du module
+		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
+			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+			if (
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
+				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+			) {
+				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
+				self::$dialog = array_merge(self::$dialog, $d);
+			}
+		}
+
 		// Mise à jour des données core
 		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION))) include('core/include/update.inc.php');
 
@@ -3047,14 +3059,6 @@ class core extends common
 				if (array_key_exists($action, $module::$actions)) {
 					$module->$action();
 					$output = $module->output;
-					// Dialogues du module
-					if (
-						is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-						&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
-					) {
-						$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
-						self::$dialog = array_merge(self::$dialog, $d);
-					}
 					// Check le groupe de l'utilisateur
 					if (
 						($module::$actions[$action] === self::GROUP_VISITOR
