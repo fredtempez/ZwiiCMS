@@ -25,10 +25,7 @@ class template
             'help' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
-        if (strpos($attributes['value'], '<span>') === 0 ) {
-            // Le contenu n'est pas une icône
-            $attributes['value'] = helper::translate($attributes['value']);
-        }
+        $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
         return  sprintf(
