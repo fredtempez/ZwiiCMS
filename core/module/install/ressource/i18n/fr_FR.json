@@ -491,5 +491,9 @@
     "Configurer mon compte": "",
     "Télécharger la liste": "",
     "Télécharger le journal": "",
-    "Sélectionner un fichier": ""
+    "Sélectionner un fichier": "",
+    "La page %s est ouverte par l'utilisateur %s": "",
+    "Vous n'êtes pas autorisé à consulter cette page (erreur 403)": "",
+    "La page demandée n'existe pas ou est introuvable (erreur 404)": "",
+    "Brouillon": ""
 }
