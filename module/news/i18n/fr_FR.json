@@ -39,5 +39,9 @@
     "L'article est consultable à partir du moment ou la date de publication est passée.": "",
     "Date de dépublication": "",
     "L'article est consultable Jusqu'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.": "",
-    "Supprimer cet article ?": ""
+    "Supprimer cet article ?": "",
+    "Rédiger un article": "",
+    "Nouvel article créé": "",
+    "Permanent": "",
+    "Article supprimé": ""
 }

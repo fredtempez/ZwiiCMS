@@ -158,7 +158,7 @@ class news extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Nouvelle news créée',
+				'notification' => helper::translate('Nouvel article créé'),
 				'state' => true
 			]);
 		}
@@ -171,7 +171,7 @@ class news extends common
 		unset($userFirstname);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Nouvelle news',
+			'title' => helper::translate('Nouvel article'),
 			'vendor' => [
 				'flatpickr',
 				'tinymce'
@@ -211,20 +211,18 @@ class news extends common
 				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])],
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('pencil'),
-					'help' => 'Éditer cette nouvelle'
+					'value' => template::ico('pencil')
 				]),
 				template::button('newsConfigDelete' . $newsIds[$i], [
 					'class' => 'newsConfigDelete buttonRed',
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
-					'value' => template::ico('trash'),
-					'help' => 'Effacer cette nouvelle'
+					'value' => template::ico('trash')
 				])
 			];
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => helper::translate('Configuration du module'),
 			'view' => 'config',
 			'vendor' => [
 				'tinycolorpicker'
@@ -274,7 +272,7 @@ class news extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		} else {
@@ -291,7 +289,7 @@ class news extends common
 				if ($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) {
 					$dateOff = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
 				} else {
-					$dateOff = 'Permanent';
+					$dateOff = helper::translate('Permanent');
 				}
 				self::$news[] = [
 					$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'title']),
@@ -311,7 +309,7 @@ class news extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Options de configuration',
+				'title' => helper::translate('Options de configuration'),
 				'view' => 'option',
 				'vendor' => [
 					'tinycolorpicker'
@@ -337,7 +335,7 @@ class news extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Suppression
@@ -346,7 +344,7 @@ class news extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'News supprimée',
+				'notification' => helper::translate('Article supprimé'),
 				'state' => true
 			]);
 		}
@@ -362,7 +360,7 @@ class news extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Action  non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// La news n'existe pas
@@ -397,7 +395,7 @@ class news extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => 'Modifications enregistrées',
+					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
 			}
