@@ -383,7 +383,7 @@ class gallery extends common {
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration des galeries du module',
+			'title' => helper::translate('Configuration des galeries'),
 			'view' => 'config',
 			'vendor' => [
 				'tablednd'
@@ -446,13 +446,13 @@ class gallery extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => 'La galerie a été ajoutée',
+					'notification' => helper::translate('Galerie ajoutée'),
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => 'Ajout d\'une galerie',
+					'title' => helper::translate('Création d\'une galerie'),
 					'view' => 'add'
 				]);
 			}
@@ -460,7 +460,7 @@ class gallery extends common {
 		} else {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Ajout d\'une galerie',
+				'title' => helper::translate('Création d\'une galerie'),
 				'view' => 'add'
 			]);
 		}
@@ -482,7 +482,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Suppression  non autorisée'
+				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Suppression
@@ -491,7 +491,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Galerie supprimée',
+				'notification' => helper::translate('Galerie effacée'),
 				'state' => true
 			]);
 		}
@@ -517,7 +517,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Action  non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Soumission du formulaire
@@ -555,7 +555,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' .$this->getUrl(2) . '/' . $_SESSION['csrf'] ,
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
@@ -629,7 +629,7 @@ class gallery extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => 'Configuration de la galerie ' . $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name']),
+				'title' => sprintf(helper::translate('Configuration de la galerie %s '), $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'name'])),
 				'view' => 'edit',
 				'vendor' => [
 					'tablednd'
@@ -798,7 +798,7 @@ class gallery extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Action  non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Soumission du formulaire
@@ -853,7 +853,7 @@ class gallery extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => "Thème des galeries",
+			'title' => helper::translate('Thème des galeries'),
 			'view' => 'theme',
 			'vendor' => [
 				'tinycolorpicker'
@@ -874,7 +874,7 @@ class gallery extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => 'Action  non autorisée'
+					'notification' => helper::translate('Action interdite')
 				]);
 			}
 			// Soumission du formulaire
@@ -898,7 +898,7 @@ class gallery extends common {
 			self::$formOptionSelect = 'galleries';
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => "Options des galeries",
+				'title' => helper::translate('Options des galeries'),
 				'view' => 'option'
 			]);
 			/**
@@ -910,7 +910,7 @@ class gallery extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit',
-					'notification' => 'Action  non autorisée'
+					'notification' => helper::translate('Action interdite')
 				]);
 			}
 			// Soumission du formulaire
@@ -953,7 +953,7 @@ class gallery extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId  . '/' . $_SESSION['csrf'] ,
-					'notification' => 'Modifications enregistrées',
+					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);
 			}
@@ -961,14 +961,14 @@ class gallery extends common {
 			self::$formOptionSelect = 'gallery';
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => "Options",
+				'title' => sprintf(helper::translate('Options de la galerie %s'), $this->getUrl(3)),
 				'view' => 'option'
 			]);
 		} else {
 			// Valeurs en sortie par défaut
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Action  non autorisée'
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 	}
