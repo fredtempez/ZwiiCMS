@@ -35,13 +35,13 @@ class redirection extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => helper::translate('Configuration du module'),
 			'view' => 'config'
 		]);
 	}
