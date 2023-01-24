@@ -137,7 +137,7 @@ class form extends common {
 			$this->setData(['module', $this->getUrl(0), 'input', $inputs]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées',
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'state' => true
 			]);
@@ -151,7 +151,7 @@ class form extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Configuration du module',
+			'title' => self::translate('Configuration du module'),
 			'vendor' => [
 				'html-sortable',
 				'flatpickr'
@@ -205,7 +205,7 @@ class form extends common {
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => 'Modifications enregistrées' ,
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'state' => true
 			]);
@@ -260,7 +260,7 @@ class form extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Données enregistrées',
+			'title' => helper::translate('Modifications enregistrées'),
 			'view' => 'data'
 		]);
 	}
@@ -276,7 +276,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			$data = $this->getData(['module', $this->getUrl(0), 'data']);
@@ -293,13 +293,13 @@ class form extends common {
 				fclose($fp);
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => 'Export CSV effectué dans le gestionnaire de fichiers<br />sous le nom '.$csvfilename,
+					'notification' => sprintf(helper::translate('Export CSV effectué dans %1 '), $csvfilename),
 					'redirect' => helper::baseUrl() . $this->getUrl(0) .'/data',
 					'state' => true
 				]);
 			} else {
 				$this->addOutput([
-					'notification' => 'Aucune donnée à exporter',
+					'notification' => helper::translate('Aucune donnée à exporter'),
 					'redirect' => helper::baseUrl() . $this->getUrl(0) .'/data'
 				]);
 			}
@@ -316,7 +316,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			$data = ($this->getData(['module', $this->getUrl(0), 'data']));
@@ -328,14 +328,14 @@ class form extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
-					'notification' => 'Données supprimées',
+					'notification' => helper::translate('Données effacées'),
 					'state' => true
 				]);
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
-					'notification' => 'Aucune donnée à supprimer'
+					'notification' => helper::translate('Aucune donnée à effacer')
 				]);
 			}
 		}
@@ -351,7 +351,7 @@ class form extends common {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
-				'notification' => 'Action interdite'
+				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			// La donnée n'existe pas
@@ -367,7 +367,7 @@ class form extends common {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
-					'notification' => 'Donnée supprimée',
+					'notification' => helper::translate('Donnée effacée'),
 					'state' => true
 				]);
 			}
@@ -393,7 +393,7 @@ class form extends common {
 				// AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
 				AND password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult') ) === false )
 			{
-				self::$inputNotices['formCaptcha'] = 'Incorrect';
+				self::$inputNotices['formCaptcha'] = helper::translate('Captcha incorrect');
 
 			}
 			// Préparation le contenu du mail
@@ -483,7 +483,7 @@ class form extends common {
 			$redirect = $this->getData(['module', $this->getUrl(0), 'config', 'pageId']);
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => ($sent === true ? 'Formulaire soumis' : $sent),
+				'notification' => ($sent === true ? helper::translate('Formulaire soumis') : $sent),
 				'redirect' => $redirect ? helper::baseUrl() . $redirect : '',
 				'state' => ($sent === true ? true : null),
 				'vendor' => [

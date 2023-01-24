@@ -55,5 +55,11 @@
     "Logo": "Logotipo",
     "Largeur du logo": "Ancho del logotipo",
     "Répondre à l'expéditeur depuis le mail de notification": "Responder al remitente desde el correo electrónico de notificación",
-    "Cette option permet de répondre directement à l'expéditeur du message si celui-ci a indiqué un email valide.": "Esta opción le permite responder directamente al remitente del mensaje si este último ha indicado un correo electrónico válido"
+    "Cette option permet de répondre directement à l'expéditeur du message si celui-ci a indiqué un email valide.": "Esta opción le permite responder directamente al remitente del mensaje si este último ha indicado un correo electrónico válido",
+    "Export CSV effectué dans %1 ": "Exportación CSV realizada en %1 ",
+    "Aucune donnée à exporter": "No hay datos para exportar",
+    "Données effacées": "Datos borrados",
+    "Aucune donnée à effacer": "No hay datos que borrar",
+    "Captcha incorrect": "Captcha incorrecto",
+    "Formulaire soumis": "Formulario enviado"
 }
