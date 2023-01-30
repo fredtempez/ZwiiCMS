@@ -1,8 +1,9 @@
 # Changelog
 
 ## Version 12.1.02
-### Correction :
+### Corrections :
 - Corrige une bannière non cliquable lorsque placée hors du site.
+- Module form 3.4, débordement dans le pied de page.
 ### Amélioration :
 - Aspect des menus affichés sur les écrans de petites tailles.
 
