@@ -1285,7 +1285,7 @@ class common
 			if (!$file->isDir()) {
 				$filePath = $file->getRealPath();
 				$relativePath = substr($filePath, strlen(realpath($folder)) + 1);
-				$zip->addFile($filePath, $relativePath);
+				$zip->addFile($filePath, str_replace("\\", "/", $relativePath));
 			}
 		}
 		$zip->close();

@@ -20,13 +20,18 @@ class plugin extends common
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'delete' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN, // Sauvegarde le module dans un fichier ZIP ou dans le gestionnaire
-		'dataExport' => self::GROUP_ADMIN, // Fonction muette d'exportation
-		'dataImport' => self::GROUP_ADMIN, // les données d'un module
+		'save' => self::GROUP_ADMIN,
+		// Sauvegarde le module dans un fichier ZIP ou dans le gestionnaire
+		'dataExport' => self::GROUP_ADMIN,
+		// Fonction muette d'exportation
+		'dataImport' => self::GROUP_ADMIN,
+		// les données d'un module
 		'dataDelete' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
-		'item' => self::GROUP_ADMIN, // détail d'un objet
-		'upload' => self::GROUP_ADMIN, // Téléverser catalogue
+		'item' => self::GROUP_ADMIN,
+		// détail d'un objet
+		'upload' => self::GROUP_ADMIN,
+		// Téléverser catalogue
 		'uploadItem' => self::GROUP_ADMIN // Téléverser par archive
 	];
 
@@ -51,8 +56,8 @@ class plugin extends common
 
 
 	/*
-	* Effacement d'un module installé et non utilisé
-	*/
+	 * Effacement d'un module installé et non utilisé
+	 */
 	public function delete()
 	{
 
@@ -60,7 +65,7 @@ class plugin extends common
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -183,7 +188,7 @@ class plugin extends common
 			 * Le module est-il déjà installé ?
 			 * Si oui lire le numéro de version et le stocker dans $versionInstalled
 			 */
-			if (is_file(self::MODULE_DIR .  $module['name'] . '/' .  $module['name'] . '.php')) {
+			if (is_file(self::MODULE_DIR . $module['name'] . '/' . $module['name'] . '.php')) {
 				$c = helper::getModules();
 				if (array_key_exists($module['name'], $c)) {
 					$versionInstalled = $c[$module['name']]['version'];
@@ -231,7 +236,7 @@ class plugin extends common
 				return ([
 					'success' => $success,
 					'notification' => $success ? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
-						: helper::translate('Erreur inconnue, le module n\'est pas installé')
+					: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
 				return ([
@@ -260,7 +265,7 @@ class plugin extends common
 		if ($this->isPost()) {
 			// Installation d'un module
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
-			$zipFilename =	$this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
+			$zipFilename = $this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
 			if ($zipFilename !== '') {
 				$state = $this->install(self::FILE_DIR . 'source/' . $zipFilename, $checkValidMaj);
 			}
@@ -286,7 +291,7 @@ class plugin extends common
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'store',
+				'redirect' => helper::baseUrl() . 'store',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -318,7 +323,7 @@ class plugin extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin/store',
+				'redirect' => helper::baseUrl() . 'plugin/store',
 				'notification' => $r['notification'],
 				'state' => $r['success']
 			]);
@@ -359,7 +364,7 @@ class plugin extends common
 				// Le module est installé et utilisé
 				if (array_key_exists($key, $inPages) === true) {
 					$class = 'buttonRed';
-					$ico =  template::ico('update');
+					$ico = template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
 				}
 				self::$storeList[] = [
@@ -370,7 +375,8 @@ class plugin extends common
 					implode(', ', array_keys($pagesInfos, $key)),
 					template::button('moduleExport' . $key, [
 						'class' => $class,
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key . '/' . $_SESSION['csrf'],
+						// appel de fonction vaut exécution, utiliser un paramètre
 						'value' => $ico,
 						'help' => $help
 					])
@@ -461,13 +467,13 @@ class plugin extends common
 					$infoModules[$key]['version'],
 					'',
 					$infoModules[$key]['delete'] === true
-						? template::button('moduleDelete' . $key, [
-							'class' => 'moduleDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
-							'value' => template::ico('trash'),
-							'help' => 'Supprimer le module'
-						])
-						: '',
+					? template::button('moduleDelete' . $key, [
+						'class' => 'moduleDelete buttonRed',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key . '/' . $_SESSION['csrf'],
+						'value' => template::ico('trash'),
+						'help' => 'Supprimer le module'
+					])
+					: '',
 
 				];
 			}
@@ -513,19 +519,22 @@ class plugin extends common
 							self::$modulesData[] = [
 								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['realName'] . '&nbsp(' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . ')',
 								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
-								template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage .  '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
+								template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage . '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
 								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],
+									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('download-cloud'),
 									'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
 								]),
 								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],
+									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('download'),
 									'help' => 'Sauvegarder et télécharger les données du module'
 								]),
 								template::button('dataDelete' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'], // appel de fonction vaut exécution, utiliser un paramètre
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage . '/' . $_SESSION['csrf'],
+									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('trash'),
 									'class' => 'buttonRed dataDelete',
 									'help' => 'Détacher le module de la page',
@@ -554,7 +563,7 @@ class plugin extends common
 		if ($this->getUrl(4) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -572,20 +581,20 @@ class plugin extends common
 			// Descripteur de l'archive
 			$infoModule = helper::getModules();
 			//Nom de l'archive
-			$fileName =  $moduleId . $infoModule[$moduleId]['version'] .  '.zip';
+			$fileName = $moduleId . $infoModule[$moduleId]['version'] . '.zip';
 
 			// Régénération du module
 			$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId]));
 
 			// Construire l'archive
-			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR .  $moduleId);
+			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR . $moduleId);
 
 			switch ($action) {
 				case 'filemanager':
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
 					}
-					$success = $success && copy(self::TEMP_DIR .  $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
+					$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -599,15 +608,16 @@ class plugin extends common
 					break;
 				case 'download':
 				default:
+
+					// Téléchargement du ZIP
+					header('Content-Description: File Transfer');
 					header('Content-Type: application/octet-stream');
+					header('Content-Transfer-Encoding: binary');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
-					header('Content-Length: ' . filesize(self::TEMP_DIR .  $fileName));
-					ob_clean();
-					ob_end_flush();
-					readfile(self::TEMP_DIR .  $fileName);
-					// Nettoyage
-					unlink(self::TEMP_DIR .  $fileName);
-					$this->removeDir($tmpFolder);
+					header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
+					readfile(self::TEMP_DIR . $fileName);
+					// Nettoyage du dossier
+					unlink(self::TEMP_DIR . $fileName);
 					exit();
 			}
 		}
@@ -615,19 +625,19 @@ class plugin extends common
 
 
 	/*
-	* Détacher un module d'une page en supprimant les données du module
-	* 2 : i18n id
-	* 3 : moduleId
-	* 4 : pageId
-	* 5 : CSRF
-	*/
+	 * Détacher un module d'une page en supprimant les données du module
+	 * 2 : i18n id
+	 * 3 : moduleId
+	 * 4 : pageId
+	 * 5 : CSRF
+	 */
 	public function dataDelete()
 	{
 		// Jeton incorrect
 		if ($this->getUrl(5) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -645,20 +655,20 @@ class plugin extends common
 
 
 	/*
-	* Export des données d'un module
-	* Structure de l'adresse reçue
-	* 2 : i18n id
-	* 3 : moduleId
-	* 4 : pageId
-	* 5 : CSRF
-	*/
+	 * Export des données d'un module
+	 * Structure de l'adresse reçue
+	 * 2 : i18n id
+	 * 3 : moduleId
+	 * 4 : pageId
+	 * 5 : CSRF
+	 */
 	public function dataExport()
 	{
 		// Jeton incorrect
 		if ($this->getUrl(6) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -675,7 +685,7 @@ class plugin extends common
 			$moduleId = $this->getUrl(4);
 			$pageId = $this->getUrl(5);
 
-			// DOnnèes du module de la page sléectionnée
+			// DOnnèes du module de la page sélectionnée
 			$moduleData = $this->getData(['module', $pageId]);
 
 			// Descripteur du module
@@ -687,16 +697,16 @@ class plugin extends common
 
 			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule])));
 			// Le dossier du module s'il existe
-			if (is_dir(self::DATA_DIR . $moduleId  . '/' . $pageId)) {
+			if (is_dir(self::DATA_DIR . $moduleId . '/' . $pageId)) {
 				// Copier le dossier des données
-				$success =  $success && $this->copyDir(self::DATA_DIR . '/' . $moduleId . '/' . $pageId, $tmpFolder . '/dataDirectory');
+				$success = $success && $this->copyDir(self::DATA_DIR . '/' . $moduleId . '/' . $pageId, $tmpFolder . '/dataDirectory');
 			}
 
 			// Création du zip
-			$fileName =  $lang . '-' .  $moduleId . '-' . $pageId . '.zip';
+			$fileName = $lang . '-' . $moduleId . '-' . $pageId . '.zip';
 			$this->makeZip(self::TEMP_DIR . $fileName, $tmpFolder);
 
-			// Gestin de l'action
+			// Gestion de l'action
 			if ($success) {
 				switch ($action) {
 					case 'filemanager':
@@ -718,16 +728,16 @@ class plugin extends common
 						break;
 					case 'download':
 					default:
-						if (file_exists(self::TEMP_DIR .  $fileName)) {
-							ob_start();
+						if (file_exists(self::TEMP_DIR . $fileName)) {
+							// Téléchargement du ZIP
+							header('Content-Description: File Transfer');
 							header('Content-Type: application/octet-stream');
-							header('Content-Disposition: attachment; filename="' . self::TEMP_DIR .  $fileName . '"');
+							header('Content-Transfer-Encoding: binary');
+							header('Content-Disposition: attachment; filename="' . $fileName . '"');
 							header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
-							ob_clean();
-							ob_end_flush();
 							readfile(self::TEMP_DIR . $fileName);
+							// Nettoyage du dossier
 							unlink(self::TEMP_DIR . $fileName);
-							$this->removeDir($tmpFolder);
 							exit();
 						}
 				}
@@ -743,15 +753,15 @@ class plugin extends common
 	}
 
 	/*
-	* Importer des données d'un module externes ou interne à module.json
-	*/
+	 * Importer des données d'un module externes ou interne à module.json
+	 */
 	public function dataImport()
 	{
 
 		// Soumission du formulaire d'importation du module dans une page libre
 		if ($this->isPost()) {
 			// Récupérer le fichier et le décompacter
-			$zipFilename =	$this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
+			$zipFilename = $this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
 			$pageId = $this->getInput('pluginImportPage', null, true);
 			$tmpFolder = uniqid();
 
@@ -759,15 +769,15 @@ class plugin extends common
 			mkdir(self::TEMP_DIR . $tmpFolder, 0755);
 			$zip = new ZipArchive();
 			if ($zip->open(self::FILE_DIR . 'source/' . $zipFilename) === TRUE) {
-				$zip->extractTo(self::TEMP_DIR  . $tmpFolder);
+				$zip->extractTo(self::TEMP_DIR . $tmpFolder);
 			}
 
 			// Lire le descripteur
-			$descripteur = json_decode(file_get_contents(self::TEMP_DIR  . $tmpFolder . '/enum.json'), true);
+			$descripteur = json_decode(file_get_contents(self::TEMP_DIR . $tmpFolder . '/enum.json'), true);
 			$moduleId = array_key_first($descripteur);
 
 			// Lecture des données du module
-			$moduleData = json_decode(file_get_contents(self::TEMP_DIR  . $tmpFolder . '/module.json'), true);
+			$moduleData = json_decode(file_get_contents(self::TEMP_DIR . $tmpFolder . '/module.json'), true);
 
 			// Chargement des données du module importé
 			$this->setData(['module', $pageId, $moduleData]);
@@ -777,9 +787,9 @@ class plugin extends common
 
 			// Copie des fichiers d'accompagnement
 			// Le dossier du module s'il existe
-			if (is_dir($tmpFolder  . '/dataDirectory')) {
+			if (is_dir($tmpFolder . '/dataDirectory')) {
 				// Copier le dossier des données
-				$this->copyDir($tmpFolder  . '/dataDirectory', self::DATA_DIR . '/' . $moduleId  . '/' . $pageId);
+				$this->copyDir($tmpFolder . '/dataDirectory', self::DATA_DIR . '/' . $moduleId . '/' . $pageId);
 			}
 
 			// Supprimer le dossier temporaire
@@ -799,7 +809,7 @@ class plugin extends common
 			if ($this->getUrl(3) !== $_SESSION['csrf']) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl()  . 'plugin',
+					'redirect' => helper::baseUrl() . 'plugin',
 					'state' => false,
 					'notification' => helper::translate('Action interdite')
 				]);
@@ -809,7 +819,7 @@ class plugin extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'plugin',
+				'redirect' => helper::baseUrl() . 'plugin',
 				'state' => true,
 				'notification' => helper::translate('Données importées')
 			]);

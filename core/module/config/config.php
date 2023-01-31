@@ -628,6 +628,7 @@ class config extends common
 		$fileName = self::DATA_DIR . 'journal.log';
 		if (file_exists($fileName)) {
 			ob_start();
+			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
 			header('Content-Length: ' . filesize($fileName));
@@ -663,7 +664,9 @@ class config extends common
 				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
 			}
 			file_put_contents($fileName, $data, FILE_APPEND);
+			header('Content-Description: File Transfer');
 			header('Content-Type: application/octet-stream');
+			header('Content-Transfer-Encoding: binary');
 			header('Content-Disposition: attachment; filename="' . $fileName . '"');
 			header('Content-Length: ' . filesize($fileName));
 			ob_clean();
