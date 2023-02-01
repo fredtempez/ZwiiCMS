@@ -1,11 +1,15 @@
 # Changelog
 
-## Version 12.1.02
-### Corrections :
-- Corrige une bannière non cliquable lorsque placée hors du site.
-- Module form 3.4, débordement dans le pied de page.
+## Version 12.2.00
+### Nouveautés :
+- Traduction des modules en anglais, grec, espagnol, italien et portugais.
 ### Amélioration :
 - Aspect des menus affichés sur les écrans de petites tailles.
+### Corrections :
+- Corrige une bannière non cliquable lorsque placée hors du site.
+- Corrige un débordement dans le pied de page le module form 3.4.
+- Corrige une erreur de génération des archives des modules lorsque Zwii est exécuté sur une machine Windows.
+
 
 ## Version 12.1.01
 ### Correction :
