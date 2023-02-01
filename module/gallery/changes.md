@@ -1,3 +1,5 @@
+# Version 3.8
+- Version compare null, dataversion not initialize
 # Version 3.7
 - Multilinguisme
 # Version 3.61

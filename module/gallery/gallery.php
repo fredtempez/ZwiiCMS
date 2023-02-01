@@ -17,7 +17,7 @@
 class gallery extends common {
 
 
-	const VERSION = '3.7';
+	const VERSION = '3.8';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
@@ -265,6 +265,7 @@ class gallery extends common {
 		if (   is_null($this->getData(['module',  $this->getUrl(0), 'config', 'showUniqueGallery']))
 			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backPosition']))
 			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'backAlign']))
+			|| is_null($this->getData(['module',  $this->getUrl(0), 'config', 'versionData']))
 		) {
 			$this->setData(['module',  $this->getUrl(0), 'config', theme::$defaultData]);
 		}
