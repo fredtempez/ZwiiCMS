@@ -136,7 +136,20 @@ class JsonDb extends \Prowebcraft\Dot
      * Save database
      */
     public function save() {
-        file_put_contents($this->db, json_encode($this->data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX)); // Multi user get a locker
+        $lenght = strlen(json_encode($this->data));
+        $try = 0;
+        while ($try < 5) {
+            $written = file_put_contents($this->db, json_encode($this->data), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX); // Multi user get a locker
+            if ($written == $lenght) {
+                break;
+            }
+            $try++;
+            sleep(1);
+        }
+        if ($written !== $lenght) {
+            exit('Erreur d\'écriture, les données n\'ont pas été sauvegardées');
+        }
+
     }
 
 

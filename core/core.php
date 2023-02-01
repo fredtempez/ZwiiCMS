@@ -53,7 +53,7 @@ class common
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
 
 	// Numéro de version et branche pour l'autoupdate
-	const ZWII_VERSION = '12.2.00';
+	const ZWII_VERSION = '12.2.01';
 	const ZWII_UPDATE_CHANNEL = "v12";
 
 	public static $actions = [];
