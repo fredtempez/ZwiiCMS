@@ -871,7 +871,8 @@ class template
             'name' => $nameId,
             'placeholder' => '',
             'readonly' => false,
-            'value' => ''
+            'value' => '',
+            'type' => 'text'
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -898,7 +899,7 @@ class template
         $html .= self::notice($attributes['id'], $notice);
         // Texte
         $html .= sprintf(
-            '<input type="text" %s>',
+            '<input type="' . $attributes['type']. '" %s>',
             helper::sprintAttributes($attributes)
         );
         // Fin du wrapper
