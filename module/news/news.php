@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '4.23';
+	const VERSION = '4.3';
 	const REALNAME = 'News';
 	const DATADIRECTORY =  self::DATA_DIR . 'news/';
 

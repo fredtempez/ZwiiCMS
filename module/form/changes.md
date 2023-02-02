@@ -1,3 +1,5 @@
+# Version 3.5
+- Multilingue
 # Version 3.4
 - Bug de présentation, une div en trop.
 # Version 3.3
