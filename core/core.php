@@ -52,7 +52,7 @@ class common
 	// URL langues de l'UI en ligne
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
 
-	// Numéro de version et branche pour l'autoupdate
+	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.2.01';
 	const ZWII_UPDATE_CHANNEL = "v12";
 
@@ -110,7 +110,8 @@ class common
 		'showPageContent' => false,
 		'state' => false,
 		'style' => '',
-		'title' => null, // Null car un titre peut être vide
+		'title' => null,
+		// Null car un titre peut être vide
 		// Trié par ordre d'exécution
 		'vendor' => [
 			'jquery',
@@ -226,70 +227,70 @@ class common
 	];
 
 	public static $fontsWebSafe = [
-		'arial'	=> [
-			'name' 			=> 'Arial',
-			'font-family' 	=> 'Arial, Helvetica, sans-serif',
-			'resource' 		=> 'websafe'
+		'arial' => [
+			'name' => 'Arial',
+			'font-family' => 'Arial, Helvetica, sans-serif',
+			'resource' => 'websafe'
 		],
 		'arial-black' => [
-			'name' 			=> 'Arial Black',
-			'font-family' 	=> '\'Arial Black\', Gadget, sans-serif',
-			'resource' 		=> 'websafe'
+			'name' => 'Arial Black',
+			'font-family' => '\'Arial Black\', Gadget, sans-serif',
+			'resource' => 'websafe'
 		],
 		'courrier' => [
-			'name' 			=> 'Courier',
-			'font-family' 	=> 'Courier, \'Liberation Mono\', monospace',
-			'resource' 		=> 'websafe'
+			'name' => 'Courier',
+			'font-family' => 'Courier, \'Liberation Mono\', monospace',
+			'resource' => 'websafe'
 		],
-		'courrier-new' 		=> [
-			'name'			=> 'Courier New',
-			'font-family' 	=> '\'Courier New\', Courier, monospace',
-			'resource' 		=> 'websafe'
+		'courrier-new' => [
+			'name' => 'Courier New',
+			'font-family' => '\'Courier New\', Courier, monospace',
+			'resource' => 'websafe'
 		],
-		'garamond' 			=> [
-			'name'			=> 'Garamond',
-			'font-family' 	=> 'Garamond, serif',
-			'resource' 		=> 'websafe'
+		'garamond' => [
+			'name' => 'Garamond',
+			'font-family' => 'Garamond, serif',
+			'resource' => 'websafe'
 		],
-		'georgia' 			=> [
-			'name'			=> 'Geogia',
-			'font-family' 	=> 'Georgia, serif',
-			'resource' 		=> 'websafe'
+		'georgia' => [
+			'name' => 'Geogia',
+			'font-family' => 'Georgia, serif',
+			'resource' => 'websafe'
 		],
-		'impact' 			=> [
-			'name' 			=> 'Impact',
-			'font-family'	=> 'Impact, Charcoal, sans-serif',
-			'resource' 		=> 'websafe'
+		'impact' => [
+			'name' => 'Impact',
+			'font-family' => 'Impact, Charcoal, sans-serif',
+			'resource' => 'websafe'
 		],
-		'lucida' 			=> [
-			'name'			=> 'Lucida',
-			'font-family' 	=> '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
-			'resource' 		=> 'websafe'
+		'lucida' => [
+			'name' => 'Lucida',
+			'font-family' => '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+			'resource' => 'websafe'
 		],
-		'tahoma'			=> [
-			'name'			=> 'Tahoma',
-			'font-family'	=> 'Tahoma, Geneva, sans-serif',
-			'resource' 		=> 'websafe'
+		'tahoma' => [
+			'name' => 'Tahoma',
+			'font-family' => 'Tahoma, Geneva, sans-serif',
+			'resource' => 'websafe'
 		],
-		'times-new-roman' 	=> [
-			'name'			=> 'Times New Roman',
-			'font-family'	=> '\'Times New Roman\', \'Liberation Serif\', serif',
-			'resource' 		=> 'websafe'
+		'times-new-roman' => [
+			'name' => 'Times New Roman',
+			'font-family' => '\'Times New Roman\', \'Liberation Serif\', serif',
+			'resource' => 'websafe'
 		],
-		'trebuchet' 		=> [
-			'name'			=> 'Trebuchet',
-			'font-family'	=> '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
-			'resource' 		=> 'websafe'
+		'trebuchet' => [
+			'name' => 'Trebuchet',
+			'font-family' => '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
+			'resource' => 'websafe'
 		],
-		'tahoma' 			=> [
-			'name'			=> 'Tahoma',
-			'font-family'	=> 'Tahoma, Geneva, sans-serif',
-			'resource' 		=> 'websafe'
+		'tahoma' => [
+			'name' => 'Tahoma',
+			'font-family' => 'Tahoma, Geneva, sans-serif',
+			'resource' => 'websafe'
 		],
-		'verdana' 			=> [
-			'name'			=> 'Verdana',
-			'font-family'	=>	'Verdana, Geneva, sans-serif;',
-			'resource' 		=> 'websafe'
+		'verdana' => [
+			'name' => 'Verdana',
+			'font-family' => 'Verdana, Geneva, sans-serif;',
+			'resource' => 'websafe'
 		]
 	];
 
@@ -325,9 +326,9 @@ class common
 		if ($version['core']['dataVersion'] < 12000) {
 			// Correspondance pour les dossiers de langue à convertir
 			$languages = [
-				'fr'	=> 'fr_FR',
-				'en'	=> 'en_EN',
-				'pt'	=> 'pt_PT'
+				'fr' => 'fr_FR',
+				'en' => 'en_EN',
+				'pt' => 'pt_PT'
 			];
 			// Convertit les dossiers vers la nouvelle structure
 			foreach ($languages as $key => $value) {
@@ -351,7 +352,8 @@ class common
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath($keys, self::$i18nContent),
 				'backup' => file_exists('site/data/.backup')
-			]);;
+			]);
+			;
 		}
 
 		// Installation fraîche, initialisation des modules manquants
@@ -374,14 +376,14 @@ class common
 			// Langue sélectionnée dans le compte
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
-			self::$i18nUI =  (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? 'fr_FR' : self::$i18nUI;
+			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? 'fr_FR' : self::$i18nUI;
 		}
 
 		// Le fichier existe-t-il ?
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
 			self::$i18nUI = 'fr_FR';
 		}
-		\setlocale(LC_TIME,  self::$i18nUI . '.UTF-8');
+		\setlocale(LC_TIME, self::$i18nUI . '.UTF-8');
 
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, '/', '', false, false);
@@ -457,7 +459,7 @@ class common
 			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 		}
 		self::$dialog = json_decode(file_get_contents(self::I18N_DIR . self::$i18nUI . '.json'), true);
-		
+
 		// Dialogue du module
 		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
@@ -471,7 +473,8 @@ class common
 		}
 
 		// Mise à jour des données core
-		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION))) include('core/include/update.inc.php');
+		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION)))
+			include('core/include/update.inc.php');
 
 		// Données de proxy
 		$proxy = $this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']);
@@ -483,7 +486,7 @@ class common
 				'http' => array(
 					'proxy' => $proxy,
 					'request_fulluri' => true,
-					'verify_peer'      => false,
+					'verify_peer' => false,
 					'verify_peer_name' => false,
 				),
 				"ssl" => array(
@@ -664,11 +667,19 @@ class common
 	public function initData($module, $lang, $sampleSite = false)
 	{
 
+		// Créer la base de données des langues
+		if ($module === 'languages') {
+			copy('core/module/install/ressource/i18n/languages.json', self::DATA_DIR . 'languages.json');
+			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+			unlink(self::I18N_DIR . 'languages.json');
+			return;
+		}
+
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
 		// Stockage dans un sous-dossier localisé
-		if (!file_exists(self::DATA_DIR .  $lang)) {
+		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
 		}
 		$db = $this->dataFiles[$module];
@@ -679,14 +690,6 @@ class common
 			$db->set($module, init::$defaultData[$module]);
 		}
 		$db->save;
-
-
-		// Créer la base de données des langues
-		if ($module === 'languages') {
-			copy('core/module/install/ressource/i18n/languages.json', self::DATA_DIR . 'languages.json');
-			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-			unlink(self::I18N_DIR . 'languages.json');
-		}
 
 		// Créer le jeu de pages du site de test
 		if ($module === 'page') {
@@ -718,7 +721,7 @@ class common
 				// Page dans une autre langue, page d'accueil
 				$this->setData(['page', init::$defaultDataI18n[$lang]['page']]);
 				// Créer la page d'accueil
-				$pageId  = init::$defaultDataI18n[$lang]['locale']['homePageId'];
+				$pageId = init::$defaultDataI18n[$lang]['locale']['homePageId'];
 				$content = init::$defaultDataI18n[$lang]['html'];
 				file_put_contents(self::DATA_DIR . $langFolder . init::$defaultDataI18n[$lang]['page'][$pageId]['content'], $content);
 			}
@@ -880,12 +883,12 @@ class common
 				if (empty($childIds)) {
 					// Pas d'enfant, uniquement l'entrée du parent
 					$parents[] = [
-						'title' =>   html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
+						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
 						'value' => $rewrite . $parentId
 					];
 				} else {
 					// Des enfants, on ajoute la page parent en premier
-					array_unshift($children,  [
+					array_unshift($children, [
 						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
 						'value' => $rewrite . $parentId
 					]);
@@ -935,7 +938,7 @@ class common
 		// Sauf pour les pages et les modules
 		if (
 			$id === 'page' ||
-			$id === 'module'  ||
+			$id === 'module' ||
 			$id === 'locale'
 		) {
 			$folder = self::DATA_DIR . $lang . '/';
@@ -983,7 +986,7 @@ class common
 		foreach ($this->getHierarchy(null, null, null) as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
 			if (
-				$this->getData(['page', $parentPageId, 'group']) !== 0  ||
+				$this->getData(['page', $parentPageId, 'group']) !== 0 ||
 				$this->getData(['page', $parentPageId, 'block']) === 'bar'
 			) {
 				continue;
@@ -1002,7 +1005,7 @@ class common
 				foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
 					if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
 						$date = $this->getData(['module', $parentPageId, 'posts', $articleId, 'publishedOn']);
-						$sitemap->addUrl('/' .  $parentPageId . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
 					}
 				}
 			}
@@ -1044,7 +1047,7 @@ class common
 			}
 			$sitemap->updateRobots();
 		} else {
-			file_put_contents('robots.txt', 'User-agent: *' .  PHP_EOL . 'Disallow: /');
+			file_put_contents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
 		}
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
@@ -1056,12 +1059,12 @@ class common
 	}
 
 	/*
-	* Création d'une miniature
-	* Fonction utilisée lors de la mise à jour d'une version 9 à une version 10
-	* @param string $src image source
-	* @param string $dets image destination
-	* @param integer $desired_width largeur demandée
-	*/
+	 * Création d'une miniature
+	 * Fonction utilisée lors de la mise à jour d'une version 9 à une version 10
+	 * @param string $src image source
+	 * @param string $dets image destination
+	 * @param integer $desired_width largeur demandée
+	 */
 	function makeThumb($src, $dest, $desired_width)
 	{
 		// Vérifier l'existence du dossier de destination.
@@ -1193,19 +1196,21 @@ class common
 	public function removeDir($path)
 	{
 		foreach (new DirectoryIterator($path) as $item) {
-			if ($item->isFile()) @unlink($item->getRealPath());
-			if (!$item->isDot() && $item->isDir()) $this->removeDir($item->getRealPath());
+			if ($item->isFile())
+				@unlink($item->getRealPath());
+			if (!$item->isDot() && $item->isDir())
+				$this->removeDir($item->getRealPath());
 		}
 		return (rmdir($path));
 	}
 
 
 	/*
-	* Copie récursive de dossiers
-	* @param string $src dossier source
-	* @param string $dst dossier destination
-	* @return bool
-	*/
+	 * Copie récursive de dossiers
+	 * @param string $src dossier source
+	 * @param string $dst dossier destination
+	 * @return bool
+	 */
 	public function copyDir($src, $dst)
 	{
 		// Ouvrir le dossier source
@@ -1225,7 +1230,7 @@ class common
 			if (($file != '.') && ($file != '..')) {
 				if (is_dir($src . '/' . $file)) {
 					// Appel récursif des sous-dossiers
-					$s =  $this->copyDir($src . '/' . $file, $dst . '/' . $file);
+					$s = $this->copyDir($src . '/' . $file, $dst . '/' . $file);
 					$success = $s || $success;
 				} else {
 					$s = copy($src . '/' . $file, $dst . '/' . $file);
@@ -1270,11 +1275,11 @@ class common
 		$zip = new ZipArchive();
 		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		//$directory = 'site/';
-		$files =  new RecursiveIteratorIterator(
+		$files = new RecursiveIteratorIterator(
 			new RecursiveCallbackFilterIterator(
 				new RecursiveDirectoryIterator(
 					$folder,
-					RecursiveDirectoryIterator::SKIP_DOTS
+						RecursiveDirectoryIterator::SKIP_DOTS
 				),
 				function ($fileInfo, $key, $iterator) use ($filter) {
 					return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
@@ -1303,10 +1308,10 @@ class common
 			return;
 		}
 		// Le cookie est déjà validé
-		if ($this->getInput('ZWII_COOKIE_CONSENT') ===  'true') {
+		if ($this->getInput('ZWII_COOKIE_CONSENT') === 'true') {
 			return;
 		}
-		$item  = '<div id="cookieConsent">';
+		$item = '<div id="cookieConsent">';
 		// Bouton de fermeture
 		$item .= '<div class="cookieClose">';
 		$item .= template::ico('cancel');
@@ -1348,27 +1353,29 @@ class common
 		$blockleft = '';
 		$blockright = '';
 		switch (sizeof($blocks)) {
-			case 1:  // une colonne
-				$content    = 'col' . $blocks[0];
+			case 1: // une colonne
+				$content = 'col' . $blocks[0];
 				break;
-			case 2:  // 2 blocs
+			case 2: // 2 blocs
 				if ($blocks[0] < $blocks[1]) { // détermine la position de la colonne
 					$blockleft = 'col' . $blocks[0];
-					$content    = 'col' . $blocks[1];
+					$content = 'col' . $blocks[1];
 				} else {
-					$content    = 'col' . $blocks[0];
-					$blockright  = 'col' . $blocks[1];
+					$content = 'col' . $blocks[0];
+					$blockright = 'col' . $blocks[1];
 				}
 				break;
-			case 3:  // 3 blocs
-				$blockleft  = 'col' . $blocks[0];
-				$content    = 'col' . $blocks[1];
+			case 3: // 3 blocs
+				$blockleft = 'col' . $blocks[0];
+				$content = 'col' . $blocks[1];
 				$blockright = 'col' . $blocks[2];
 		}
 		// Page pleine pour la configuration des modules et l'édition des pages sauf l'affichage d'un article de blog
 		$pattern = ['config', 'edit', 'add', 'comment', 'data'];
-		if ((sizeof($blocks) === 1 ||
-			in_array($this->getUrl(1), $pattern))) { // Pleine page en mode configuration
+		if (
+			(sizeof($blocks) === 1 ||
+				in_array($this->getUrl(1), $pattern))
+		) { // Pleine page en mode configuration
 			$this->showContent();
 		} else {
 			echo '<div class="row siteContainer">';
@@ -1385,14 +1392,14 @@ class common
 					// $mark contient 0 le menu est positionné à la fin du contenu
 					$contentLeft = str_replace('[]', '[MENU]', $this->output['contentLeft']);
 					$contentLeft = str_replace('[menu]', '[MENU]', $contentLeft);
-					$mark = strrpos($contentLeft, '[MENU]')  !== false ? strrpos($contentLeft, '[MENU]') : strlen($contentLeft);
+					$mark = strrpos($contentLeft, '[MENU]') !== false ? strrpos($contentLeft, '[MENU]') : strlen($contentLeft);
 					echo substr($contentLeft, 0, $mark);
 					echo '<div id="menuSideLeft">';
 					echo $this->showMenuSide($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'displayMenu']) === 'parents' ? false : true);
 					echo '</div>';
 					echo substr($contentLeft, $mark + 6, strlen($contentLeft));
 				}
-				echo  "</aside></div>";
+				echo "</aside></div>";
 			}
 			/**
 			 * Contenu de page
@@ -1413,7 +1420,7 @@ class common
 					// $mark contient 0 le menu est positionné à la fin du contenu
 					$contentRight = str_replace('[]', '[MENU]', $this->output['contentRight']);
 					$contentRight = str_replace('[menu]', '[MENU]', $contentRight);
-					$mark = strrpos($contentRight, '[MENU]')  !== false ? strrpos($contentRight, '[MENU]') : strlen($contentRight);
+					$mark = strrpos($contentRight, '[MENU]') !== false ? strrpos($contentRight, '[MENU]') : strlen($contentRight);
 					echo substr($contentRight, 0, $mark);
 					echo '<div id="menuSideRight">';
 					echo $this->showMenuSide($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'displayMenu']) === 'parents' ? false : true);
@@ -1471,36 +1478,36 @@ class common
 		}
 
 		echo $this->getData(['theme', 'footer', 'position']) === 'hide' ? '<footer class="displayNone">' : '<footer>';
-		echo ($position === 'site') ? '<div class="container"><div class="row" id="footersite">' : '<div class="container-large' .  $positionFixed . '"><div class="row" id="footerbody">';
+		echo ($position === 'site') ? '<div class="container"><div class="row" id="footersite">' : '<div class="container-large' . $positionFixed . '"><div class="row" id="footerbody">';
 		/**
 		 * Calcule la dimension des blocs selon la configuration
 		 */
 		switch ($this->getData(['theme', 'footer', 'template'])) {
 			case '1':
-				$class['left'] 	 = "displayNone";
+				$class['left'] = "displayNone";
 				$class['center'] = "col12";
-				$class['right']  = "displayNone";
+				$class['right'] = "displayNone";
 				break;
 			case '2':
-				$class['left'] 	 = "col6";
+				$class['left'] = "col6";
 				$class['center'] = "displayNone";
-				$class['right']  = "col6";
+				$class['right'] = "col6";
 				break;
 			case '3':
-				$class['left'] 	 = "col4";
+				$class['left'] = "col4";
 				$class['center'] = "col4";
-				$class['right']  = "col4";
+				$class['right'] = "col4";
 				break;
 			case '4':
-				$class['left'] 	 = "col12";
+				$class['left'] = "col12";
 				$class['center'] = "col12";
-				$class['right']  = "col12";
+				$class['right'] = "col12";
 				break;
 		}
 		/**
 		 * Affiche les blocs
 		 */
-		echo '<div class="' . $class['left'] . '" id="footer' .  $position . 'Left">';
+		echo '<div class="' . $class['left'] . '" id="footer' . $position . 'Left">';
 		if ($this->getData(['theme', 'footer', 'textPosition']) === 'left') {
 			$this->showFooterText();
 		}
@@ -1572,30 +1579,30 @@ class common
 		$items .= '</span>';
 		// Affichage du sitemap
 		$items .= '<span id="footerDisplaySiteMap"';
-		$items .= $this->getData(['theme', 'footer', 'displaySiteMap']) ===  false ? ' class="displayNone"' : '';
+		$items .= $this->getData(['theme', 'footer', 'displaySiteMap']) === false ? ' class="displayNone"' : '';
 		$label = empty($this->getData(['locale', 'sitemapPageLabel'])) ? 'Plan du site' : $this->getData(['locale', 'sitemapPageLabel']);
-		$items .=  '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() .  'sitemap"  >' . $label . '</a>';
+		$items .= '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'sitemap"  >' . $label . '</a>';
 		$items .= '</span>';
 		// Affichage du module de recherche
 		$items .= '<span id="footerDisplaySearch"';
-		$items .= $this->getData(['theme', 'footer', 'displaySearch']) ===  false ? ' class="displayNone" >' : '>';
+		$items .= $this->getData(['theme', 'footer', 'displaySearch']) === false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale', 'searchPageLabel'])) ? 'Rechercher' : $this->getData(['locale', 'searchPageLabel']);
 		if ($this->getData(['locale', 'searchPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'searchPageId']) . '"  >' . $label . '</a>';
+			$items .= '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'searchPageId']) . '"  >' . $label . '</a>';
 		}
 		$items .= '</span>';
 		// Affichage des mentions légales
 		$items .= '<span id="footerDisplayLegal"';
-		$items .= $this->getData(['theme', 'footer', 'displayLegal']) ===  false ? ' class="displayNone" >' : '>';
+		$items .= $this->getData(['theme', 'footer', 'displayLegal']) === false ? ' class="displayNone" >' : '>';
 		$label = empty($this->getData(['locale', 'legalPageLabel'])) ? 'Mentions Légales' : $this->getData(['locale', 'legalPageLabel']);
 		if ($this->getData(['locale', 'legalPageId']) !== 'none') {
-			$items .=  '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'legalPageId']) . '"  >' . $label . '</a>';
+			$items .= '<wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . $this->getData(['locale', 'legalPageId']) . '"  >' . $label . '</a>';
 		}
 		$items .= '</span>';
 		// Affichage de la gestion des cookies
 		$items .= '<span id="footerDisplayCookie"';
 		$items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie']) === true) ? '>' : ' class="displayNone" >';
-		$label  = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Cookies' : $this->getData(['locale', 'cookies', 'cookiesFooterText']);
+		$label = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Cookies' : $this->getData(['locale', 'cookies', 'cookiesFooterText']);
 		$items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" class="skiptranslate" id="footerLinkCookie">' . $label . '</a>';
 		$items .= '</span>';
 		// Affichage du lien de connexion
@@ -1605,8 +1612,8 @@ class common
 			)
 			or $this->getUrl(0) === 'theme'
 		) {
-			$items .= 	'<span id="footerLoginLink" ' .
-				($this->getUrl(0) === 	'theme' ? 'class="displayNone">' : '>') .
+			$items .= '<span id="footerLoginLink" ' .
+				($this->getUrl(0) === 'theme' ? 'class="displayNone">' : '>') .
 				'<wbr>&nbsp;|&nbsp;<wbr>' .
 				template::ico('login', [
 					'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
@@ -1620,7 +1627,7 @@ class common
 			&& $this->getData(['theme', 'footer', 'memberBar']) === true
 		) {
 			$items .= '<span id="footerDisplayMemberAccount"';
-			$items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) ===  false ? ' class="displayNone">' : '>';
+			$items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
 			$items .= '<wbr>&nbsp;|&nbsp;' .
 				template::ico('user', [
 					'margin' => 'all',
@@ -1630,14 +1637,14 @@ class common
 			if (
 				$this->getData(['user', $this->getUser('id'), 'files']) === true
 			) {
-				$items .= '<wbr>' . template::ico('folder',	[
+				$items .= '<wbr>' . template::ico('folder', [
 					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
 					'margin' => 'all',
 					'attr' => 'data-lity',
 					'help' => 'Fichiers du site'
 				]);
 			}
-			$items .=  '<wbr>' . template::ico('logout', [
+			$items .= '<wbr>' . template::ico('logout', [
 				'margin' => 'all',
 				'help' => 'Déconnecter',
 				'href' => helper::baseUrl() . 'user/logout'
@@ -1748,7 +1755,7 @@ class common
 			)
 			or $this->getUrl(0) === 'theme'
 		) {
-			$itemsRight .= '<li id="menuLoginLink" ' .	($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') . '>' .
+			$itemsRight .= '<li id="menuLoginLink" ' . ($this->getUrl(0) === 'theme' ? 'class="displayNone"' : '') . '>' .
 				template::ico('login', [
 					'href' => helper::baseUrl() . 'user/login/' . strip_tags(str_replace('/', '_', $this->getUrl())),
 					'help' => "Connexion"
@@ -1758,13 +1765,13 @@ class common
 		// Commandes pour les membres simples
 		if (
 			$this->getUser('group') == self::GROUP_MEMBER
-			&&  $this->getData(['theme', 'menu', 'memberBar']) === true
+			&& $this->getData(['theme', 'menu', 'memberBar']) === true
 		) {
 			if (
 				$this->getData(['user', $this->getUser('id'), 'files']) === true
 			) {
-				$itemsRight .= '<li>' . template::ico('folder',	[
-					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json')  . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
+				$itemsRight .= '<li>' . template::ico('folder', [
+					'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
 					'attr' => 'data-lity',
 					'help' => 'Fichiers du site'
 				]) . '</li>';
@@ -1786,7 +1793,7 @@ class common
 		// Drapeau les langues des langues selon l'existance des dossiers
 		foreach (self::$languages as $key => $value) {
 			if (is_dir(self::DATA_DIR . $key)) {
-				$t[] =  $this->showi18n($key);
+				$t[] = $this->showi18n($key);
 			}
 		}
 		// Pas de drapeau si la langue est unique
@@ -1811,7 +1818,7 @@ class common
 			// Menu extra ou standard
 
 			if (
-				// Absence de la position extra, la page est toujours affichée à gauche.
+					// Absence de la position extra, la page est toujours affichée à gauche.
 				($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true)
 				&&
 				$this->getData(['page', $parentPageId, 'extraPosition']) !== $extra
@@ -1822,19 +1829,20 @@ class common
 			$active = ($parentPageId === $currentPageId or in_array($currentPageId, $childrenPageIds)) ? 'active ' : '';
 			$targetBlank = $this->getData(['page', $parentPageId, 'targetBlank']) ? ' target="_blank"' : '';
 			// Mise en page de l'item
-			$items .= '<li id="' . $parentPageId  . '">';
+			$items .= '<li id="' . $parentPageId . '">';
 
-			if (($this->getData(['page', $parentPageId, 'disable']) === true
+			if (
+				($this->getData(['page', $parentPageId, 'disable']) === true
 					and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				) or ($this->getData(['page', $parentPageId, 'disable']) === true
 					and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					and $this->getUser('group') < self::GROUP_MODERATOR
 				)
 			) {
-				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
+				$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
 				$items .= '<a href="' . $pageUrl . '">';
 			} else {
-				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false)  :  helper::baseUrl() . $parentPageId;
+				$pageUrl = ($this->getData(['locale', 'homePageId']) === $parentPageId) ? helper::baseUrl(false) : helper::baseUrl() . $parentPageId;
 				$items .= '<a class="' . $active . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 			}
 
@@ -1869,7 +1877,7 @@ class common
 				$totalChild += 1;
 			}
 			if (
-				$childrenPageIds && $disableChild !== $totalChild  &&
+				$childrenPageIds && $disableChild !== $totalChild &&
 				$this->getdata(['page', $parentPageId, 'hideMenuChildren']) === false
 			) {
 				$items .= template::ico('down', ['margin' => 'left']);
@@ -1889,18 +1897,19 @@ class common
 				$targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
 				// Mise en page du sous-item
 				$items .= '<li id=' . $childKey . '>';
-				if (($this->getData(['page', $childKey, 'disable']) === true
+				if (
+					($this->getData(['page', $childKey, 'disable']) === true
 						and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 					) or ($this->getData(['page', $childKey, 'disable']) === true
 						and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 						and $this->getUser('group') < self::GROUP_MODERATOR
 					)
 				) {
-					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false)  :  helper::baseUrl() . $this->getUrl(0);
+					$pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
 					$items .= '<a href="' . $pageUrl . '">';
 				} else {
-					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false)  :  helper::baseUrl() . $childKey;
-					$items .= '<a class="' . $active . ' ' .  $parentPageId . '" href="' .  $pageUrl . '"' . $targetBlank  . '>';
+					$pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false) : helper::baseUrl() . $childKey;
+					$items .= '<a class="' . $active . ' ' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
 				}
 
 				switch ($this->getData(['page', $childKey, 'typeMenu'])) {
@@ -1990,7 +1999,7 @@ class common
 				) {
 					$items .= '<a href="' . $this->getUrl(1) . '">';
 				} else {
-					$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank .  $active . '>';
+					$items .= '<a href="' . helper::baseUrl() . $parentPageId . '"' . $targetBlank . $active . '>';
 				}
 				$items .= $this->getData(['page', $parentPageId, 'shortTitle']);
 				$items .= '</a>';
@@ -2033,7 +2042,7 @@ class common
 			$items .= '</ul>';
 		}
 		// Retourne les items du menu
-		echo  $items;
+		echo $items;
 	}
 
 
@@ -2098,7 +2107,8 @@ class common
 		}
 		if (common::$coreNotices) {
 			$notification = 'Données absentes, restauration de <p> | ';
-			foreach (common::$coreNotices as $item) $notification .= $item . ' | ';
+			foreach (common::$coreNotices as $item)
+				$notification .= $item . ' | ';
 			$notificationClass = 'notificationError';
 		} elseif (empty($_SESSION['ZWII_NOTIFICATION_SUCCESS']) === false) {
 			$notification = $_SESSION['ZWII_NOTIFICATION_SUCCESS'];
@@ -2152,7 +2162,7 @@ class common
 				$currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
 				foreach ($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
 					if (
-						$this->getData(['page', $parentPageId, 'position']) !== 0  &&
+						$this->getData(['page', $parentPageId, 'position']) !== 0 &&
 						$orpheline
 					) {
 						$orpheline = false;
@@ -2211,12 +2221,12 @@ class common
 					// Sur une page d'accueil
 					or $this->getUrl(0) === ''
 				) {
-					$leftItems .= '<li>' . template::ico('pencil',  [
+					$leftItems .= '<li>' . template::ico('pencil', [
 						'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
 						'help' => 'Éditer la page'
 					]) . '</li>';
 					if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
-						$leftItems .= '<li>' . template::ico('gear',  [
+						$leftItems .= '<li>' . template::ico('gear', [
 							'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 							'help' => 'Module de la page'
 						]) . '</li>';
@@ -2241,23 +2251,23 @@ class common
 				$rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']) . '" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
 			}
 			if ($this->getUser('group') >= self::GROUP_ADMIN) {
-				$rightItems .= '<li>' .	template::ico('brush', [
+				$rightItems .= '<li>' . template::ico('brush', [
 					'help' => 'Thème',
 					'href' => helper::baseUrl() . 'theme'
 				]) . '</li>';
-				$rightItems .= '<li>' .	template::ico('puzzle', [
+				$rightItems .= '<li>' . template::ico('puzzle', [
 					'help' => 'Gérer les modules',
 					'href' => helper::baseUrl() . 'plugin'
 				]) . '</li>';
-				$rightItems .= '<li>' .	template::ico('flag', [
+				$rightItems .= '<li>' . template::ico('flag', [
 					'help' => 'Multilingue',
 					'href' => helper::baseUrl() . 'translate'
 				]) . '</li>';
-				$rightItems .= '<li>' .	template::ico('cog-alt', [
+				$rightItems .= '<li>' . template::ico('cog-alt', [
 					'help' => 'Configuration',
 					'href' => helper::baseUrl() . 'config'
 				]) . '</li>';
-				$rightItems .= '<li>' .	template::ico('users', [
+				$rightItems .= '<li>' . template::ico('users', [
 					'help' => 'Utilisateurs',
 					'href' => helper::baseUrl() . 'user'
 				]) . '</li>';
@@ -2284,9 +2294,9 @@ class common
 				}
 			}
 			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' .  $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
+				$rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
 			}
-			$rightItems .= '<li>' .	template::ico('logout', [
+			$rightItems .= '<li>' . template::ico('logout', [
 				'help' => 'Déconnecter',
 				'href' => helper::baseUrl() . 'user/logout',
 				'id' => 'barLogout'
@@ -2397,7 +2407,7 @@ class common
 			}
 
 			$items = '<li>';
-			$items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang  . '"><img ' . $select . ' alt="' .  self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+			$items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
 			$items .= '</li>';
 		}
 		return $items;
@@ -2494,13 +2504,13 @@ class core extends common
 			 */
 
 			// Fonts disponibles
-			$fontsAvailable['files'] =  $this->getData(['fonts', 'files']);
-			$fontsAvailable['imported'] =  $this->getData(['fonts', 'imported']);
+			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
 			$fontsAvailable['websafe'] = self::$fontsWebSafe;
 
 			// Fontes installées
 			$fonts = [
-				$this->getData(['theme', 'text',  'font']),
+				$this->getData(['theme', 'text', 'font']),
 				$this->getData(['theme', 'title', 'font']),
 				$this->getData(['theme', 'header', 'font']),
 				$this->getData(['theme', 'menu', 'font']),
@@ -2529,7 +2539,7 @@ class core extends common
 					$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] . '" rel="stylesheet">';
 					// Tableau pour la construction de la feuille de style
 					$fonts[$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
-					$gf =  strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
+					$gf = strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
 			}
 			// Ajoute le préconnect des fontes Googles.
@@ -2579,7 +2589,7 @@ class core extends common
 			$colors = helper::colorVariants($this->getData(['theme', 'text', 'linkColor']));
 			$css .= 'a{color:' . $colors['normal'] . '}';
 			// Couleurs de site dans TinyMCe
-			$css .= 'div.mce-edit-area {font-family:' .  $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
+			$css .= 'div.mce-edit-area {font-family:' . $fonts[$this->getData(['theme', 'text', 'font'])] . ';}';
 			// Site dans TinyMCE
 			$css .= '.editorWysiwyg, .editorWysiwygComment {background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			$css .= 'span.mce-text{background-color: unset !important;}';
@@ -2605,7 +2615,7 @@ class core extends common
 			}
 			$css .= $this->getData(['theme', 'site', 'width']) === '100%'
 				? '@media (min-width: 769px) {#site{margin:0 auto ' . $marginBottomLarge . ' 0 !important;}}@media (max-width: 768px) {#site{margin:0 auto ' . $marginBottomSmall . ' 0 !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
-				: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge .  ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall .  ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
+				: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge . ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall . ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
 			$css .= $this->getData(['theme', 'site', 'width']) === '750px'
 				? '.button, button{font-size:0.8em;}'
 				: '';
@@ -2619,11 +2629,11 @@ class core extends common
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
 			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
-			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
+			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' . $fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
-			$css .= '.block {border: 1px solid ' . $this->getdata(['theme', 'block', 'borderColor']) .  ';}.block h4 {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
+			$css .= '.block {border: 1px solid ' . $this->getdata(['theme', 'block', 'borderColor']) . ';}.block h4 {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 
 			// Bannière
 
@@ -2646,18 +2656,18 @@ class core extends common
 				// Valeur de hauteur traditionnelle
 				$css .= ';height:' . $this->getData(['theme', 'header', 'height']) . ';line-height:' . $this->getData(['theme', 'header', 'height']);
 
-				$css .=  ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
+				$css .= ';text-align:' . $this->getData(['theme', 'header', 'textAlign']) . '}';
 				if ($themeHeaderImage = $this->getData(['theme', 'header', 'image'])) {
 					$css .= 'header{background-image:url("../file/source/' . $themeHeaderImage . '");background-position:' . $this->getData(['theme', 'header', 'imagePosition']) . ';background-repeat:' . $this->getData(['theme', 'header', 'imageRepeat']) . '}';
 				}
 				$colors = helper::colorVariants($this->getData(['theme', 'header', 'textColor']));
-				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' .  $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
+				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' . $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
 			// Bannière au contenu personnalisé
 			if ($this->getData(['theme', 'header', 'feature']) === 'feature') {
 				// Hauteur de la taille du contenu perso
-				$css .= 'header {height:' . $this->getData(['theme', 'header', 'height'])  . '; min-height:' . $this->getData(['theme', 'header', 'height'])  .  ';overflow: hidden;}';
+				$css .= 'header {height:' . $this->getData(['theme', 'header', 'height']) . '; min-height:' . $this->getData(['theme', 'header', 'height']) . ';overflow: hidden;}';
 			}
 
 			// Menu
@@ -2671,7 +2681,7 @@ class core extends common
 			} else {
 				$css .= 'nav a.active{background-color:' . $this->getData(['theme', 'menu', 'activeColor']) . '}';
 			}
-			$css .= 'nav #burgerText{color:' .  $colors['text'] . '}';
+			$css .= 'nav #burgerText{color:' . $colors['text'] . '}';
 			// Sous menu
 			$colors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColorSub']));
 			$css .= 'nav .navSub a{background-color:' . $colors['normal'] . '}';
@@ -2695,7 +2705,7 @@ class core extends common
 				$css .= 'nav{padding:0 10px;}';
 			}
 
-			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) . ';font-family:' .  $fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
+			$css .= '#toggle span,#menu a{padding:' . $this->getData(['theme', 'menu', 'height']) . ';font-family:' . $fonts[$this->getData(['theme', 'menu', 'font'])] . ';font-weight:' . $this->getData(['theme', 'menu', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'menu', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'menu', 'textTransform']) . '}';
 			// Pied de page
 			$colors = helper::colorVariants($this->getData(['theme', 'footer', 'backgroundColor']));
 			if ($this->getData(['theme', 'footer', 'margin'])) {
@@ -2704,7 +2714,7 @@ class core extends common
 				$css .= 'footer{padding:0}';
 			}
 
-			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:' .  $fonts[$this->getData(['theme', 'footer', 'font'])] . ';font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
+			$css .= 'footer span, #footerText > p {color:' . $this->getData(['theme', 'footer', 'textColor']) . ';font-family:' . $fonts[$this->getData(['theme', 'footer', 'font'])] . ';font-weight:' . $this->getData(['theme', 'footer', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'footer', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'footer', 'textTransform']) . '}';
 			$css .= 'footer {background-color:' . $colors['normal'] . ';color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer a{color:' . $this->getData(['theme', 'footer', 'textColor']) . '}';
 			$css .= 'footer #footersite > div {margin:' . $this->getData(['theme', 'footer', 'height']) . ' 0}';
@@ -2796,8 +2806,8 @@ class core extends common
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal'] . ';}';
-			$css .= '.row > div {font:' . $fonts[$this->getData(['admin', 'fontText'])]  . ';font-size:' . $this->getData(['admin', 'fontSize']) . '}';
-			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' .   $fonts[$this->getData(['admin', 'fontTitle'])] . ';color:' . $this->getData(['admin', 'colorTitle']) . ';}';
+			$css .= '.row > div {font:' . $fonts[$this->getData(['admin', 'fontText'])] . ';font-size:' . $this->getData(['admin', 'fontSize']) . '}';
+			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' . $fonts[$this->getData(['admin', 'fontTitle'])] . ';color:' . $this->getData(['admin', 'colorTitle']) . ';}';
 
 			// TinyMCE
 			$colors = helper::colorVariants($this->getData(['admin', 'colorText']));
@@ -2805,17 +2815,17 @@ class core extends common
 			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:' . $colors['normal'] . '; color:' . $colors['text'] . ';}';
 			$css .= 'table thead th { color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
-			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' .  $colors['text'] . ';}';
+			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
-			$css .= '.button {background-color:' . $colors['normal'] . ';color:' . $colors['text']   . ';}.button:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
+			$css .= '.button {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}.button:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text'] . ';}.button:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGrey']));
-			$css .= '.button.buttonGrey {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']  . ';}.button.buttonGrey:hover {background-color:' . $colors['darken']  . ';color:' . $colors['text']  .  ';}.button.buttonGrey:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
+			$css .= '.button.buttonGrey {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGrey:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text'] . ';}.button.buttonGrey:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonRed']));
-			$css .= '.button.buttonRed {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonRed:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonRed:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
+			$css .= '.button.buttonRed {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonRed:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text'] . ';}.button.buttonRed:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonHelp']));
-			$css .= '.button.buttonHelp {background-color: ' . $colors['normal'] . ';color: ' . $colors['text']   . ';}.button.buttonHelp:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text']  . ';}.button.buttonHelp:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text']  . ';}';
+			$css .= '.button.buttonHelp {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonHelp:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text'] . ';}.button.buttonHelp:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGreen']));
-			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']  . ';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $colors['text']   . ';}';
+			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
 			$css .= '.buttonTab, .block {border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}.buttonTab, .block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectLanguage),select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
@@ -2862,7 +2872,7 @@ class core extends common
 			exit();
 		}
 		// Journalisation
-		$dataLog =  helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
+		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
 		$dataLog .= $this->getUrl();
@@ -2918,7 +2928,8 @@ class core extends common
 				}
 			}
 			// Empêcher l'accès aux pages désactivées par URL directe
-			if (($this->getData(['page', $this->getUrl(0), 'disable']) === true
+			if (
+				($this->getData(['page', $this->getUrl(0), 'disable']) === true
 					and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
 				) or ($this->getData(['page', $this->getUrl(0), 'disable']) === true
 					and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
@@ -2947,12 +2958,12 @@ class core extends common
 				$this->getUser('id') &&
 				$userId !== $this->getUser('id') &&
 				$this->getData(['user', $userId, 'accessUrl']) === $this->getUrl() &&
-				array_intersect($t, self::$accessList)  &&
-				array_intersect($t, self::$accessExclude) !== false	 &&
+				array_intersect($t, self::$accessList) &&
+				array_intersect($t, self::$accessExclude) !== false &&
 				time() < $this->getData(['user', $userId, 'accessTimer']) + self::ACCESS_TIMER
 			) {
 				$access = false;
-				$accessInfo['userName']	= $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+				$accessInfo['userName'] = $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
 				$accessInfo['pageId'] = end($t);
 			}
 		}
@@ -2987,25 +2998,25 @@ class core extends common
 		) {
 			$this->addOutput([
 				'title' => $title,
-				'content' => 	$this->getPage($this->getUrl(0), self::$i18nContent) .
-					// Concatène avec les paramètres avancés.
-					$this->getData(['page', $this->getUrl(0), 'css']) .
-					$this->getData(['page', $this->getUrl(0), 'js']),
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) .
+				// Concatène avec les paramètres avancés.
+				$this->getData(['page', $this->getUrl(0), 'css']) .
+				$this->getData(['page', $this->getUrl(0), 'js']),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
-					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) .
-					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js'])
-					: '',
-				'contentLeft'  => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
-					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) .
-					$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js'])
-					: ''
+				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
+				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) .
+				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js'])
+				: '',
+				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
+				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
+				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) .
+				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js'])
+				: ''
 			]);
 		}
 		// Importe le module
@@ -3018,18 +3029,18 @@ class core extends common
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
 					'metaDescription' => $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
-						? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
-						: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
+					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
+					: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-						? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
-						: '',
-					'contentLeft'  => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-						? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
-						: ''
+					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
+					: '',
+					'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
+					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
+					: ''
 				]);
 				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
 			} else {
@@ -3210,8 +3221,8 @@ class core extends common
 			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech(sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s') , $accessInfo['pageId'], $accessInfo['userName']))
-												
+					'content' => template::speech(sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s'), $accessInfo['pageId'], $accessInfo['userName']))
+
 				]);
 			} else {
 				if (
@@ -3256,31 +3267,32 @@ class core extends common
 			$this->addOutput([
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
-		};
+		}
+		;
 		switch ($this->output['display']) {
-				// Layout brut
+			// Layout brut
 			case self::DISPLAY_RAW:
 				echo $this->output['content'];
 				break;
-				// Layout vide
+			// Layout vide
 			case self::DISPLAY_LAYOUT_BLANK:
 				require 'core/layout/blank.php';
 				break;
-				// Affichage en JSON
+			// Affichage en JSON
 			case self::DISPLAY_JSON:
 				header('Content-Type: application/json');
 				echo json_encode($this->output['content']);
 				break;
-				// RSS feed
+			// RSS feed
 			case self::DISPLAY_RSS:
 				header('Content-type: application/rss+xml; charset=UTF-8');
 				echo $this->output['content'];
 				break;
-				// Layout allégé
+			// Layout allégé
 			case self::DISPLAY_LAYOUT_LIGHT:
 				require 'core/layout/light.php';
 				break;
-				// Layout principal
+			// Layout principal
 			case self::DISPLAY_LAYOUT_MAIN:
 				require 'core/layout/main.php';
 				break;
