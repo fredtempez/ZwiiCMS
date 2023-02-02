@@ -341,6 +341,7 @@ class plugin extends common
 	public function store()
 	{
 		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
@@ -348,7 +349,8 @@ class plugin extends common
 			$inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
 			foreach ($inPages as $key => $value) {
 				$pagesInfos[$this->getData(['page', $key, 'title'])] = $value;
-			}
+			}		
+			
 			// Parcourir les données des modules
 			foreach ($store as $key => $value) {
 				// Module non installé
@@ -376,12 +378,12 @@ class plugin extends common
 					template::button('moduleExport' . $key, [
 						'class' => $class,
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key . '/' . $_SESSION['csrf'],
-						// appel de fonction vaut exécution, utiliser un paramètre
 						'value' => $ico,
 						'help' => $help
 					])
 				];
 			}
+
 		}
 
 		// Valeurs en sortie
@@ -584,7 +586,7 @@ class plugin extends common
 			$fileName = $moduleId . $infoModule[$moduleId]['version'] . '.zip';
 
 			// Régénération du module
-			$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId]));
+			$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId], JSON_UNESCAPED_UNICODE));
 
 			// Construire l'archive
 			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR . $moduleId);
@@ -693,9 +695,9 @@ class plugin extends common
 			$infoModule = $infoModules[$moduleId];
 
 			// Copier les données et le descripteur
-			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData)) === false ? false : true;
+			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData, JSON_UNESCAPED_UNICODE)) === false ? false : true;
 
-			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule])));
+			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule], JSON_UNESCAPED_UNICODE)));
 			// Le dossier du module s'il existe
 			if (is_dir(self::DATA_DIR . $moduleId . '/' . $pageId)) {
 				// Copier le dossier des données
