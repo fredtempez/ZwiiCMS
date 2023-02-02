@@ -4,7 +4,7 @@
 ### Correction :
 - Bug majeur lors de l'installation d'une version fraiche, erreur lors de la création de la base de données des langues.
 ### Amélioration :
-- Gestion des erreurs d'écritures à l'aide dun contrôle des données écrites sur le disque. Cinq tentatives se terminent par un arrêt en cas d'impossibilité d'enregistrer les données.
+- Gestion des erreurs d'écritures à l'aide d'un contrôle des données écrites sur le disque. Cinq tentatives se terminent par un arrêt en cas d'impossibilité d'enregistrer les données.
 
 ## Version 12.2.00
 ### Nouveautés :
