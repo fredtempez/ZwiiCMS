@@ -224,11 +224,13 @@ class plugin extends common
 				// Copie du module
 				$success = $this->copyDir(self::TEMP_DIR . $tempFolder, self::MODULE_DIR . $module['name']);
 				// Copie récursive des dossiers externes
-				foreach ($module['dirs'] as $src => $dest) {
-					if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
-						mkdir(self::TEMP_DIR . $tempFolder . $src);
+				if (is_array($module['dataDirectory'])) {
+					foreach ($module['dataDirectory'] as $src => $dest) {
+						if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
+							mkdir(self::TEMP_DIR . $tempFolder . $src);
+						}
+						$success = $success && $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
 					}
-					$success = $success && $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
 				}
 				// Message de retour
 				$t = isset($versionInstalled) ? helper::translate('actualisé') : helper::translate('installé');
@@ -236,8 +238,9 @@ class plugin extends common
 				$zip->close();
 				return ([
 					'success' => $success,
-					'notification' => $success ? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
-					: helper::translate('Erreur inconnue, le module n\'est pas installé')
+					'notification' => $success 
+										? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
+										: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
 				return ([
@@ -355,7 +358,7 @@ class plugin extends common
 				if (empty($key)) {
 					continue;
 				}
-				$pageInfos =  array_keys($inPages, $key);
+				$pageInfos = array_keys($inPages, $key);
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
