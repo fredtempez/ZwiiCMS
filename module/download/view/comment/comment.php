@@ -1,15 +1,14 @@
 <div class="row">
-	<div class="col2">
+	<div class="col1">
 		<?php echo template::button('downloadCommentBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-			'ico' => 'left',
-			'value' => 'Retour'
+			'value' => template::ico('left'),
 		]); ?>
 	</div>
 
 <?php if($module::$comments): ?>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 			<?php echo $module::$commentsDelete; ?>
 	</div>
 

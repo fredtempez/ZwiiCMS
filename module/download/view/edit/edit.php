@@ -1,14 +1,13 @@
 <?php echo template::formOpen('downloadEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('downloadEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'ico' => 'left',
-				'value' => 'Retour'
+				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col3 offset5">
+		<div class="col3 offset6">
 			<?php echo template::button('downloadEditDraft', [
 				'uniqueSubmission' => true,
 				'value' => 'Enregistrer en brouillon'
