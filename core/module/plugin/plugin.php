@@ -349,14 +349,9 @@ class plugin extends common
 			$infoModules = helper::getModules();
 			// Clés moduleIds dans les pages
 			$inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
-			foreach ($inPages as $key => $value) {
-				$pagesInfos[$this->getData(['page', $key, 'title'])] = $value;
-			}
-		
 			// Parcourir les données des modules
 			foreach ($store as $key => $value) {
-				//echo "<hr>";
-				//var_dump($value);
+				$pageInfos = empty($key) ? [] : array_keys($inPages, $key);
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
@@ -373,13 +368,12 @@ class plugin extends common
 					$ico = template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
 				}
-			
 				self::$storeList[] = [
 					$store[$key]['category'],
 					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >' . $store[$key]['title'] . '</a>',
 					$store[$key]['version'],
 					helper::dateUTF8('%d %B %Y', $store[$key]['versionDate']),
-					implode(', ', array_keys($pagesInfos, $key)),
+					implode(' - ', $pageInfos),
 					template::button('moduleExport' . $key, [
 						'class' => $class,
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key . '/' . $_SESSION['csrf'],
