@@ -33,4 +33,13 @@ Options -Indexes
 </IfModule>
 
 # ne pas supprimer la ligne URL rewriting !
+
+# URL rewriting
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /ZwiiCMS/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php?$1 [L]
+</IfModule>
 # URL rewriting

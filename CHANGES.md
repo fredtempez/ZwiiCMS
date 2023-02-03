@@ -1,6 +1,10 @@
 # Changelog
 
-## Version 12.2.01
+## Version 12.2.02
+### Correction : 
+- Corrrrige un bug dans l'acquisition des données du store
+
+## Version 12.2.02
 ### Correction :
 - Bug majeur lors de l'installation d'une version fraiche, erreur lors de la création de la base de données des langues.
 ### Amélioration :

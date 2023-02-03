@@ -36,8 +36,10 @@ class plugin extends common
 	];
 
 	// URL des modules
-	const BASEURL_STORE = 'https://store.zwiicms.fr/';
-	const MODULE_STORE = 'modules/';
+	//const BASEURL_STORE = 'https://store.zwiicms.fr/';
+	const BASEURL_STORE = 'http://localhost/ZwiiCMS/';
+	const MODULE_STORE = '?modules/';
+
 
 	// Gestion des modules
 	public static $modulesData = [];
@@ -349,10 +351,12 @@ class plugin extends common
 			$inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
 			foreach ($inPages as $key => $value) {
 				$pagesInfos[$this->getData(['page', $key, 'title'])] = $value;
-			}		
-			
+			}
+		
 			// Parcourir les données des modules
 			foreach ($store as $key => $value) {
+				//echo "<hr>";
+				//var_dump($value);
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
@@ -369,6 +373,7 @@ class plugin extends common
 					$ico = template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
 				}
+			
 				self::$storeList[] = [
 					$store[$key]['category'],
 					'<a href="' . self::BASEURL_STORE . self::MODULE_STORE . $key . '" target="_blank" >' . $store[$key]['title'] . '</a>',
@@ -383,7 +388,6 @@ class plugin extends common
 					])
 				];
 			}
-
 		}
 
 		// Valeurs en sortie
