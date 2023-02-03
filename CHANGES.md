@@ -1,10 +1,14 @@
 # Changelog
 
 ## Version 12.2.02
-### Correction : 
-- Corrrrige un bug dans l'acquisition des données du store
+### Corrections :
+- Gestion des plugins (modules) :
+    - Corrige un bug dans l'acquisition des données du store.
+    - Corrige un bug d'analyse des modules installés.
+    - Corrige un bug dans l'installation d'un module (dataDirectory).
+- Langues étrangères (v4) : corrige l'absence de spécificateur %s dans les traductions occasionnant des plantages lorsqu'une langue étrangère est active.
 
-## Version 12.2.02
+## Version 12.2.01
 ### Correction :
 - Bug majeur lors de l'installation d'une version fraiche, erreur lors de la création de la base de données des langues.
 ### Amélioration :
