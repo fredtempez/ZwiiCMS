@@ -347,11 +347,16 @@ class plugin extends common
 		if ($store) {
 			// Modules installés
 			$infoModules = helper::getModules();
+
 			// Clés moduleIds dans les pages
 			$inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
+
 			// Parcourir les données des modules
 			foreach ($store as $key => $value) {
-				$pageInfos = empty($key) ? [] : array_keys($inPages, $key);
+				if (empty($key)) {
+					continue;
+				}
+				$pageInfos =  array_keys($inPages, $key);
 				// Module non installé
 				$ico = template::ico('download');
 				$class = '';
@@ -363,7 +368,7 @@ class plugin extends common
 					$help = 'Mettre à jour le module orphelin';
 				}
 				// Le module est installé et utilisé
-				if (array_key_exists($key, $inPages) === true) {
+				if (in_array($key, $inPages) === true) {
 					$class = 'buttonRed';
 					$ico = template::ico('update');
 					$help = 'Mettre à jour le module attaché, une sauvegarde des données de module est recommandée !';
