@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '3.5';
+	const VERSION = '3.6';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -151,7 +151,7 @@ class form extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => self::translate('Configuration du module'),
+			'title' => helper::translate('Configuration du module'),
 			'vendor' => [
 				'html-sortable',
 				'flatpickr'

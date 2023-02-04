@@ -1,3 +1,5 @@
+# Version 3.6
+- Appel de fonction incorrect
 # Version 3.5
 - Multilingue
 # Version 3.4

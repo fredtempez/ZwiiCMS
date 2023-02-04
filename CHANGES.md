@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.2.03
+- Corrections de bugs consécutifs au chnagement de formats de languages.json
+
 ## Version 12.2.02
 ### Corrections :
 - Gestion des plugins (modules) :
