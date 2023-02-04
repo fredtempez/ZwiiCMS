@@ -353,7 +353,6 @@ class common
 				'dir' => $this->dataPath($keys, self::$i18nContent),
 				'backup' => file_exists('site/data/.backup')
 			]);
-			;
 		}
 
 		// Installation fraîche, initialisation des modules manquants
