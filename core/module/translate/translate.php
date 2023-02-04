@@ -19,10 +19,14 @@ class translate extends common
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
-		'add' => self::GROUP_ADMIN, 	// Ajouter une langue de contenu
-		'edit' => self::GROUP_ADMIN, 	// Éditer une langue de l'UI
-		'locale' => self::GROUP_ADMIN, 	// Éditer une langue de contenu
-		'delete' => self::GROUP_ADMIN, 	// Effacer une langue de contenu ou de l'interface
+		'add' => self::GROUP_ADMIN,
+		// Ajouter une langue de contenu
+		'edit' => self::GROUP_ADMIN,
+		// Éditer une langue de l'UI
+		'locale' => self::GROUP_ADMIN,
+		// Éditer une langue de contenu
+		'delete' => self::GROUP_ADMIN,
+		// Effacer une langue de contenu ou de l'interface
 		'content' => self::GROUP_VISITOR,
 		'update' => self::GROUP_ADMIN,
 	];
@@ -65,11 +69,11 @@ class translate extends common
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
 			$this->getUrl(3) !== $_SESSION['csrf'] &&
-			array_key_exists($lang, self::$languages) ===  false
+			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'translate',
+				'redirect' => helper::baseUrl() . 'translate',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -83,15 +87,15 @@ class translate extends common
 			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
 			$enums = $this->getData(['languages']);
 			$enums = array_merge($enums, [
-				$lang => $enumsStore[$lang]
+				$lang => $enumsStore['languages'][$lang]
 			]);
 			$response = (bool) $response && $this->setData(['languages', $enums]);
 		}
-
+		
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'translate',
-			'notification' => $response ?  helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+			'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
 			'state' => $response
 		]);
 	}
@@ -111,19 +115,19 @@ class translate extends common
 			if ($copyFrom !== $toCreate) {
 				// Création du dossier
 				if (is_dir(self::DATA_DIR . $toCreate) === false) { // Si le dossier est déjà créé
-					$success  = mkdir(self::DATA_DIR . $toCreate, 0755);
-					$success  = mkdir(self::DATA_DIR . $toCreate . '/content', 0755);
+					$success = mkdir(self::DATA_DIR . $toCreate, 0755);
+					$success = mkdir(self::DATA_DIR . $toCreate . '/content', 0755);
 				} else {
 					$success = true;
 				}
 				// Copier les données par défaut
-				$success  = (copy(self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success  === true) ? true : false;
-				$success  = (copy(self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success  === true) ? true : false;
-				$success  = (copy(self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success  === true) ? true : false;
-				$success  = ($this->copyDir(self::DATA_DIR . $copyFrom . '/content', self::DATA_DIR . $toCreate . '/content') === true && $success  === true) ? true : false;
+				$success = (copy(self::DATA_DIR . $copyFrom . '/locale.json', self::DATA_DIR . $toCreate . '/locale.json') === true && $success === true) ? true : false;
+				$success = (copy(self::DATA_DIR . $copyFrom . '/module.json', self::DATA_DIR . $toCreate . '/module.json') === true && $success === true) ? true : false;
+				$success = (copy(self::DATA_DIR . $copyFrom . '/page.json', self::DATA_DIR . $toCreate . '/page.json') === true && $success === true) ? true : false;
+				$success = ($this->copyDir(self::DATA_DIR . $copyFrom . '/content', self::DATA_DIR . $toCreate . '/content') === true && $success === true) ? true : false;
 				// Enregistrer la langue
 				if ($success) {
-					$notification = sprintf(helper::translate('Données %s copiées vers %s'),  self::$languages[$copyFrom], self::$languages[$toCreate]);
+					$notification = sprintf(helper::translate('Données %s copiées vers %s'), self::$languages[$copyFrom], self::$languages[$toCreate]);
 				} else {
 					$notification = helper::translate('Erreur de copie, vérifiez les permissions');
 				}
@@ -133,10 +137,10 @@ class translate extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification'  =>  $notification,
-				'title' 		=> 'Utilitaire de copie',
-				'view' 			=> 'index',
-				'state' 		=>  $success
+				'notification' => $notification,
+				'title' => 'Utilitaire de copie',
+				'view' => 'index',
+				'state' => $success
 			]);
 		}
 
@@ -179,7 +183,7 @@ class translate extends common
 					$messageLocale = '';
 				}
 				self::$languagesInstalled[] = [
-					template::flag($key, '20 %') . '&nbsp;' .  $value . ' (' . $key . ')',
+					template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
 					$messageLocale,
 					template::button('translateContentLanguageLocaleEdit' . $key, [
 						'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
@@ -214,13 +218,14 @@ class translate extends common
 
 		// Langues disponibles en ligne
 		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
+		$storeUI = $storeUI['languages'];
 
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($installedUI as $file => $value) {
 			// La langue est-elle référencée ?
 			if (array_key_exists(basename($file, '.json'), $installedUI)) {
 				// La langue est déjà installée
-				self::$languagesUiInstalled[$file] =  [
+				self::$languagesUiInstalled[$file] = [
 					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 					$value['version'],
 					helper::dateUTF8('%d/%m/%Y', $value['date']),
@@ -246,26 +251,28 @@ class translate extends common
 					]),
 				];
 			}
-			// Construction du tableau à partir des langues disponibles dans le store
-			foreach ($storeUI as $file => $value) {
-				// La langue est-elle installée ?
-				if (array_key_exists($file, $installedUI) === false) {
-					self::$languagesStore[$file] =  [
-						template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
-						$value['version'],
-						helper::dateUTF8('%d/%m/%Y', $value['date']),
-						'',
-						template::button('translateContentLanguageUIDownload' . $file, [
-							'class' => 'buttonGreen',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
-							'value' => template::ico('shopping-basket'),
-							'help' => 'Installer',
-						])
-					];
-				}
+		}
+		// Construction du tableau à partir des langues disponibles dans le store
+		foreach ($storeUI as $file => $value) {
+
+			// La langue est-elle installée ?
+			if (array_key_exists($file, $installedUI) === false) {
+				self::$languagesStore[$file] = [
+					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
+					$value['version'],
+					helper::dateUTF8('%d/%m/%Y', $value['date']),
+					'',
+					template::button('translateContentLanguageUIDownload' . $file, [
+						'class' => 'buttonGreen',
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'value' => template::ico('shopping-basket'),
+						'help' => 'Installer',
+					])
+				];
 			}
 		}
 
+	
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Multilingue'),
@@ -288,7 +295,7 @@ class translate extends common
 			$lang = $this->getInput('translateAddContent');
 
 			// Stockage dans un sous-dossier localisé
-			if (!file_exists(self::DATA_DIR .  $lang)) {
+			if (!file_exists(self::DATA_DIR . $lang)) {
 				mkdir(self::DATA_DIR . $lang, 0755);
 			}
 			// Valeurs en sortie
@@ -329,7 +336,7 @@ class translate extends common
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'translate',
+				'redirect' => helper::baseUrl() . 'translate',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -347,17 +354,17 @@ class translate extends common
 					'page302' => $this->getInput('localePage302'),
 					'legalPageId' => $this->getInput('localeLegalPageId'),
 					'searchPageId' => $this->getInput('localeSearchPageId'),
-					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT))  ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
+					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT)) ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
 					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
-					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT))  ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
+					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT)) ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
 					'metaDescription' => $this->getInput('localeMetaDescription', helper::FILTER_STRING_LONG, true),
 					'title' => $this->getInput('localeTitle', helper::FILTER_STRING_SHORT, true),
 					'cookies' => [
 						// Les champs sont obligatoires si l'option consentement des cookies est active
-						'mainLabel'	=> $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'titleLabel'	=> $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'linkLegalLabel'	=> $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
-						'cookiesFooterText' =>  $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+						'mainLabel' => $this->getInput('localeCookiesZwiiText', helper::FILTER_STRING_LONG, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+						'titleLabel' => $this->getInput('localeCookiesTitleText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+						'linkLegalLabel' => $this->getInput('localeCookiesLinkMlText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
+						'cookiesFooterText' => $this->getInput('localeCookiesFooterText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN)),
 						'buttonValidLabel' => $this->getInput('localeCookiesButtonText', helper::FILTER_STRING_SHORT, $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN))
 					]
 				]
@@ -385,7 +392,7 @@ class translate extends common
 
 		// La locale est-elle celle de la langue de l'UI ?
 		if ($lang === self::$i18nUI) {
-			self::$locales[$lang]['locale']  = $this->getData(['locale']);
+			self::$locales[$lang]['locale'] = $this->getData(['locale']);
 		} else {
 			// Lire les locales sans passer par les méthodes
 			self::$locales[$lang] = json_decode(file_get_contents(self::DATA_DIR . $lang . '/locale.json'), true);
@@ -402,7 +409,7 @@ class translate extends common
 			}
 		}
 
-		self::$orphansList =  $this->getData(['page']);
+		self::$orphansList = $this->getData(['page']);
 		foreach (self::$orphansList as $page => $pageId) {
 			if (
 				$this->getData(['page', $page, 'block']) === 'bar' ||
@@ -425,14 +432,14 @@ class translate extends common
 	 */
 	public function edit()
 	{
-		$lang =  $this->getUrl(2);
+		$lang = $this->getUrl(2);
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
 			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'translate',
+				'redirect' => helper::baseUrl() . 'translate',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -451,10 +458,14 @@ class translate extends common
 			file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 			// Mettre à jour le descripteur
-			$this->setData(['languages', $lang, [
-				'version' => $this->getInput('translateEditVersion'),
-				'date' => $this->getInput('translateEditDate', helper::FILTER_DATETIME),
-			]]);
+			$this->setData([
+				'languages',
+				$lang,
+				[
+					'version' => $this->getInput('translateEditVersion'),
+					'date' => $this->getInput('translateEditDate', helper::FILTER_DATETIME),
+				]
+			]);
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -493,7 +504,7 @@ class translate extends common
 
 		// Articles en fonction de la pagination
 		for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
-			self::$dialogues[$i] =  $dialogues[$i];
+			self::$dialogues[$i] = $dialogues[$i];
 		}
 
 		// Valeurs en sortie
@@ -520,13 +531,14 @@ class translate extends common
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'translate',
+				'redirect' => helper::baseUrl() . 'translate',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		switch ($target) {
 			case 'locale':
+				$success = false;
 				// Effacement d'une site dans une langue
 				if (is_dir(self::DATA_DIR . $lang) === true) {
 					$success = $this->removeDir(self::DATA_DIR . $lang);
@@ -534,22 +546,23 @@ class translate extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'translate',
-					'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
+					'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
 					'state' => $success
 				]);
 				break;
 
 			case 'ui':
+				$success = false;
 				// Effacement d'une langue de l'interface
 				if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
+					$this->deleteData(['languages', $lang]);
 					$success = unlink(self::I18N_DIR . $lang . '.json');
 				}
 				// Effacer la langue dans la base
-				$this->deleteData(['languages', $lang]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'translate',
-					'notification' => $success ? helper::translate('Traduction supprimée') :  helper::translate('Erreur inconnue'),
+					'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
 					'state' => $success
 				]);
 				break;
@@ -574,11 +587,12 @@ class translate extends common
 		 * déjà initialisée
 		 * fait partie des lnagues installées
 		 */
-		if ( $this->getInput('ZWII_CONTENT') !== $lang
+		if (
+			$this->getInput('ZWII_CONTENT') !== $lang
 			&&
 			is_dir(self::DATA_DIR . $lang)
 			&&
-			array_key_exists($lang, self::$languages) ===  true
+			array_key_exists($lang, self::$languages) === true
 
 		) {
 			// Nettoyer le cookie
@@ -589,7 +603,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' 	=> 	helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])
+			'redirect' => helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])
 		]);
 	}
 
