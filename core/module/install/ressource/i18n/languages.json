@@ -1,26 +1,28 @@
 {
-    "fr_FR": {
-        "version": "4",
-        "date": 1675459590
-    },
-    "es": {
-        "version": "4",
-        "date": 1675459590
-    },
-    "it": {
-        "version": "4",
-        "date": 1675459590
-    },
-    "pt_PT": {
-        "version": "4",
-        "date": 1675459590
-    },
-    "en_EN": {
-        "version": "4",
-        "date": 1675459590
-    },
-    "gr_GR": {
-        "version": "4",
-        "date": 1675459590
+    "languages": {
+        "fr_FR": {
+            "version": "4",
+            "date": 1675459590
+        },
+        "es": {
+            "version": "4",
+            "date": 1675459590
+        },
+        "it": {
+            "version": "4",
+            "date": 1675459590
+        },
+        "pt_PT": {
+            "version": "4",
+            "date": 1675459590
+        },
+        "en_EN": {
+            "version": "4",
+            "date": 1675459590
+        },
+        "gr_GR": {
+            "version": "4",
+            "date": 1675459590
+        }
     }
 }
