@@ -84,8 +84,8 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo  '<pre>Version installée : <strong>' . common::ZWII_VERSION . '</strong></pre>'; ?>
-						<?php echo  $module::$onlineVersion ? '<pre>Version en ligne  : <strong>'  . $module::$onlineVersion . '</strong></pre>' : ''; ?>
+						<pre>Version installée : <strong><?php echo common::ZWII_VERSION ; ?></strong></pre>
+						<pre>Version en ligne  : <strong><?php echo  $module::$onlineVersion ; ?></strong></pre>
 					</div>
 					<div class="col4 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
@@ -93,7 +93,6 @@
 							'href' => helper::baseUrl() . 'install/update',
 							'value' => $module::$updateButtonText,
 							'class' => 'buttonRed',
-							'disabled' => !$module::$onlineVersion
 						]); ?>
 					</div>
 				</div>

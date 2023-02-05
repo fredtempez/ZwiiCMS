@@ -82,7 +82,7 @@ class translate extends common
 		// Upload et sauver le fichier de langue
 		$response = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
 		if ($response !== false) {
-			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response,  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			// Mettre à jour le descripteur
 			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
 			$enums = $this->getData(['languages']);
@@ -91,7 +91,7 @@ class translate extends common
 			]);
 			$response = (bool) $response && $this->setData(['languages', $enums]);
 		}
-		
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'translate',
@@ -272,7 +272,7 @@ class translate extends common
 			}
 		}
 
-	
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Multilingue'),

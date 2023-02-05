@@ -53,7 +53,8 @@ class common
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
 
 	// Numéro de version et branche pour l'auto-update
-	const ZWII_VERSION = '12.2.03';
+	const ZWII_VERSION = '12.2.04';
+	const ZWII_DATAVERSION = 12000;
 	const ZWII_UPDATE_CHANNEL = "v12";
 
 	public static $actions = [];
@@ -471,9 +472,12 @@ class common
 			}
 		}
 
-		// Mise à jour des données core
-		if ($this->getData(['core', 'dataVersion']) !== intval(str_replace('.', '', self::ZWII_VERSION)))
+		// Mise à jour des données core selon la version du jeu de données
+		if ( $this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION  )  {
+			die();
 			include('core/include/update.inc.php');
+		}
+			
 
 		// Données de proxy
 		$proxy = $this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']);
@@ -2270,11 +2274,11 @@ class common
 					'help' => 'Utilisateurs',
 					'href' => helper::baseUrl() . 'user'
 				]) . '</li>';
-
+				
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
 				$checkUpdate = (int) $this->getData(['core', 'lastAutoUpdate']);
-				// Recherche d'une mise à jour si active, si une mise à jour n'est pas déjà disponible et le délais journalier est dépassé.
+				// Recherche d'une mise à jour si active, si une mise à jour n'est pas déjà disponible et le délai journalier est dépassé.
 				if (
 					$this->getData(['config', 'autoUpdate']) === true
 					and $this->getData(['core', 'updateAvailable']) === false

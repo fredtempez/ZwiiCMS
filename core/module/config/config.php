@@ -420,7 +420,6 @@ class config extends common
 				$this->setData(['core', 'lastAutoUpdate', 0]);
 			}
 
-
 			// Sauvegarder la configuration
 			$this->setData([
 				'config',
@@ -545,7 +544,8 @@ class config extends common
 
 		// Variable de version
 		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
-		if (self::$onlineVersion > common::ZWII_VERSION) {
+		if (version_compare(self::$onlineVersion, common::ZWII_VERSION ) == 1) {
+			$this->setData(['core', 'updateAvailable', true]);
 			self::$updateButtonText = helper::translate('Mettre à jour');
 		}
 

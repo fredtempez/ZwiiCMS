@@ -1,9 +1,13 @@
 # Changelog
 
+## Version 12.2.04
+### Amélioration :
+- Prise en charge des mises à jour en ligne
+
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
 
-## Version 12.2.02
+## Version 12.2.02 (version non publiée)
 ### Corrections :
 - Gestion des plugins (modules) :
     - Corrige un bug dans l'acquisition des données du store.
@@ -11,13 +15,13 @@
     - Corrige un bug dans l'installation d'un module (dataDirectory).
 - Langues étrangères (v4) : corrige l'absence de spécificateur %s dans les traductions occasionnant des plantages lorsqu'une langue étrangère est active.
 
-## Version 12.2.01
+## Version 12.2.01 (version non publiée)
 ### Correction :
 - Bug majeur lors de l'installation d'une version fraiche, erreur lors de la création de la base de données des langues.
 ### Amélioration :
 - Gestion des erreurs d'écritures à l'aide d'un contrôle des données écrites sur le disque. Cinq tentatives se terminent par un arrêt en cas d'impossibilité d'enregistrer les données.
 
-## Version 12.2.00
+## Version 12.2.00 (version non publiée)
 ### Nouveautés :
 - Traduction des modules en anglais, grec, espagnol, italien et portugais.
 ### Amélioration :
