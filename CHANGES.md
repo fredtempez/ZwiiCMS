@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version 12.2.03
-- Corrections de bugs consécutifs au chnagement de formats de languages.json
+- Corrections de bugs consécutifs au changement de format de languages.json
 
 ## Version 12.2.02
 ### Corrections :
