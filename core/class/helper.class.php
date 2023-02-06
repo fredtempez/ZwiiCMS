@@ -361,9 +361,9 @@ class helper
 	 * Renvoie le numéro de version de Zwii est en ligne
 	 * @return string
 	 */
-	public static function getOnlineVersion()
+	public static function getOnlineVersion($channel)
 	{
-		return (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version'));
+		return (helper::getUrlContents(common::ZWII_UPDATE_URL . $channel . '/version'));
 	}
 
 
@@ -371,9 +371,9 @@ class helper
 	 * Check si une nouvelle version de Zwii est disponible
 	 * @return bool
 	 */
-	public static function checkNewVersion()
+	public static function checkNewVersion($channel)
 	{
-		$version = helper::getOnlineVersion();
+		$version = helper::getOnlineVersion($channel);
 		if (!empty($version)) {
 			return ((version_compare(common::ZWII_VERSION, $version)) === -1);
 		} else {
