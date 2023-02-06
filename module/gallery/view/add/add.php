@@ -22,7 +22,7 @@
 						]); ?>
 					</div>
 					<div class="col6">
-						<div class="noDisplay">
+						<div class="displayNone">
 							<?php echo template::hidden('galleryAddDirectoryOld', [
 								'noDirty' => true // Désactivé à cause des modifications en ajax
 							]); ?>

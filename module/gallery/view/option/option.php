@@ -67,7 +67,7 @@
 					]); ?>
 				</div>
 				<div class="col6">
-                    <div class="noDisplay">
+                    <div class="displayNone">
                     <?php echo template::hidden('galleryEditDirectoryOld', [
                         'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']),
                         'noDirty' => true // Désactivé à cause des modifications en ajax
