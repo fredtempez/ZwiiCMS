@@ -543,8 +543,7 @@ class config extends common
 		}
 
 		// Variable de version
-		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
-		if (version_compare(self::$onlineVersion, common::ZWII_VERSION ) == 1) {
+		if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
 			$this->setData(['core', 'updateAvailable', true]);
 			self::$updateButtonText = helper::translate('Mettre à jour');
 		}
