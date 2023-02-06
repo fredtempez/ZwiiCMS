@@ -48,14 +48,20 @@ class common
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
+	const ZWII_UPDATE_CHANNEL = "v12";
+	
+	// Constantes de test
+	//const ZWII_UPDATE_CHANNEL = "test";
+	//const ZWII_UPDATE_URL = 'http://localhost/update/';
 
 	// URL langues de l'UI en ligne
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
 
 	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.2.04';
+
 	const ZWII_DATAVERSION = 12000;
-	const ZWII_UPDATE_CHANNEL = "v12";
+
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -283,11 +289,6 @@ class common
 			'font-family' => '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
 			'resource' => 'websafe'
 		],
-		'tahoma' => [
-			'name' => 'Tahoma',
-			'font-family' => 'Tahoma, Geneva, sans-serif',
-			'resource' => 'websafe'
-		],
 		'verdana' => [
 			'name' => 'Verdana',
 			'font-family' => 'Verdana, Geneva, sans-serif;',
@@ -474,7 +475,6 @@ class common
 
 		// Mise à jour des données core selon la version du jeu de données
 		if ( $this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION  )  {
-			die();
 			include('core/include/update.inc.php');
 		}
 			
@@ -621,7 +621,7 @@ class common
 	 * Lire les données de la page
 	 * @param string pageId
 	 * @param string langue
-	 * @param return contenu de la page
+	 * @return string contenu de la page
 	 */
 	public function getPage($page, $lang)
 	{
@@ -641,7 +641,7 @@ class common
 	 * Ecrire les données de la page
 	 * @param string pageId
 	 * @param string contenu de la page
-	 * @param return nombre d'octets écrits ou erreur
+	 * @return int nombre d'octets écrits ou erreur
 	 */
 	public function setPage($page, $value, $lang)
 	{
@@ -654,7 +654,7 @@ class common
 	/**
 	 * Effacer les données de la page
 	 * @param string pageId
-	 * @param return statut de l'effacement
+	 * @return bool statut de l'effacement
 	 */
 	public function deletePage($page, $lang)
 	{
@@ -2277,23 +2277,28 @@ class common
 				
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
-				$checkUpdate = (int) $this->getData(['core', 'lastAutoUpdate']);
+				$checkUpdate =  $this->getData(['core', 'lastAutoUpdate']);
 				// Recherche d'une mise à jour si active, si une mise à jour n'est pas déjà disponible et le délai journalier est dépassé.
 				if (
-					$this->getData(['config', 'autoUpdate']) === true
-					and $this->getData(['core', 'updateAvailable']) === false
-					and $today > $checkUpdate + 86400
-				) {
-					$this->setData(['core', 'updateAvailable', helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)]);
+					$this->getData(['config', 'autoUpdate'])
+					) {
+					if ( 
+						$today > $checkUpdate + 86400 
+						) {		
+						// Dernier auto controle
+						$this->setData(['core', 'lastAutoUpdate', $today]);
+						if (
+							helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
+						) {
+							$this->setData(['core', 'updateAvailable', true]);
+						}
+					}
 				}
-				// Dernier auto controle
-				$this->setData(['core', 'lastAutoUpdate', $today]);
+
+
 				// Afficher le bouton : Mise à jour détectée + activée
-				if (
-					$this->getData(['core', 'updateAvailable']) === true &&
-					$this->getData(['config', 'autoUpdate']) === true
-				) {
-					$rightItems .= '<li><a id="barUpdate" href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
+				if ($this->getData(['core', 'updateAvailable']) ) {
+					$rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
 				}
 			}
 			if ($this->getUser('group') >= self::GROUP_MODERATOR) {
