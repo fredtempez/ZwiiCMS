@@ -31,7 +31,7 @@ class install extends common
 	];
 
 	// Thèmes proposés à l'installation
-	public static $themes =   [];
+	public static $themes = [];
 
 	public static $newVersion;
 
@@ -144,9 +144,9 @@ class install extends common
 						$userMail,
 						'Installation de votre site',
 						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-							'Voici les détails de votre installation.<br><br>' .
-							'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-							'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+						'Voici les détails de votre installation.<br><br>' .
+						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 						null
 					);
 
@@ -240,7 +240,7 @@ class install extends common
 					$this->addOutput([
 						'redirect' => helper::baseUrl(false),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
-						'state' => ($sent === true &&  $success === true) ? true : null
+						'state' => ($sent === true && $success === true) ? true : null
 					]);
 				}
 			}
@@ -267,7 +267,7 @@ class install extends common
 	public function steps()
 	{
 		switch ($this->getInput('step', helper::FILTER_INT)) {
-				// Préparation
+			// Préparation
 			case 1:
 				$success = true;
 				// RAZ la mise à jour auto
@@ -294,7 +294,7 @@ class install extends common
 					]
 				]);
 				break;
-				// Téléchargement
+			// Téléchargement
 			case 2:
 				file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
@@ -309,7 +309,7 @@ class install extends common
 					]
 				]);
 				break;
-				// Installation
+			// Installation
 			case 3:
 				$success = true;
 				// Check la réécriture d'URL avant d'écraser les fichiers
@@ -340,15 +340,15 @@ class install extends common
 					]
 				]);
 				break;
-				// Configuration
+			// Configuration
 			case 4:
 				$success = true;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") {					// Ajout des lignes dans le .htaccess
+				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
-					$rewriteData = 	PHP_EOL .
-						'# URL rewriting' .  PHP_EOL .
+					$rewriteData = PHP_EOL .
+						'# URL rewriting' . PHP_EOL .
 						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
@@ -373,6 +373,25 @@ class install extends common
 					// Effacer le backup
 					unlink('.htaccess.bak');
 				}
+
+				/**
+				 * Met à jour les dictionnaires des langues depuis les modèles installés
+				 */
+
+				// Langues installées
+				$installedUI = $this->getData(['languages']);
+
+				// Langues disponibles avec la mise à jour
+				$store = json_decode(file_get_contents('core\module\install\ressource\i18n\languages.json'), true);
+				$store = $store['languages'];
+
+				foreach ($installedUI as $key => $value) {
+					if ($store[$key]['version'] > $value['version']) {
+						echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+						$this->setData(['languages', $key, $store[$key]]);
+					}
+				}
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
@@ -381,7 +400,6 @@ class install extends common
 						'data' => null
 					]
 				]);
-				break;
 		}
 	}
 
@@ -400,32 +418,4 @@ class install extends common
 		]);
 	}
 
-		/**
-	 * Génère un fichier d'énumération des langues de l'UI
-	 */
-	private function makeUiLanguages()
-	{
-		// Générer une énumération absente
-		if (empty($enums)) {
-			if (is_dir(self::I18N_DIR) === false) {
-				mkdir(self::I18N_DIR);
-			}
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-			$enums = [];
-			foreach ($files as $file => $value) {
-				if (basename($value, '.json') === 'languages') {
-					continue;
-				}
-				$enums[basename($value, '.json')] = [
-					'version' => "?",
-					'date' => 1672052400
-				];
-			}
-			$this->setData(['languages', $enums]);
-		}
-
-	}
 }
