@@ -627,34 +627,4 @@ class translate extends common
 		]);
 	}
 
-	/**
-	 * Génère un fichier d'énumération des langues de l'UI
-	 */
-	private function getUiLanguages()
-	{
-		$enums = $this->getData(['languages']);
-
-		// Générer une énumération absente
-		if (empty($enums)) {
-			if (is_dir(self::I18N_DIR) === false) {
-				mkdir(self::I18N_DIR);
-			}
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-			$enums = [];
-			foreach ($files as $file => $value) {
-				if (basename($value, '.json') === 'languages') {
-					continue;
-				}
-				$enums[basename($value, '.json')] = [
-					'version' => "?",
-					'date' => 1672052400
-				];
-			}
-			$this->setData(['languages', $enums]);
-		}
-		return ($enums);
-	}
 }
