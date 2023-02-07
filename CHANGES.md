@@ -4,6 +4,10 @@
 ### Améliorations :
 - Amélioration de la prise en charge des mises à jour en ligne.
 - Activation du bouton de mise à jour dans la barre d'administration lorsque le menu de configuration est ouvert est qu'une mise à jour en ligne est détectée.
+- Gestion des langues :
+    - Le numéro de version d'une langue est le numéro de version de base de données
+    - A l'installation ou lors de l'accès à la fenêtre des langues, les dialogues sont actualisés.
+    - La fonction d'édition des langues de l'UI est neutralisée.
 ### Nouveautés :
 - Paramètrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
 
