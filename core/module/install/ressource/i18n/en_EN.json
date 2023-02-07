@@ -494,5 +494,8 @@
     "Éditeur de script %s": "Script editor %s",
     "Éditeur de script dans Body": "Script editor in Body",
     "Éditeur de script dans Head": "Script editor in Head",
-    "Étiquettes des pages spéciales": "Special pages labels"
+    "Étiquettes des pages spéciales": "Special pages labels",  
+    "Fréquence de recherche": "Search frequency",
+    "jour" : "day",
+    "jours" : "days"
 }

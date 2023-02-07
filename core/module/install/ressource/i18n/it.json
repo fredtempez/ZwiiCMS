@@ -494,5 +494,8 @@
     "Éditeur de script %s": "Script Editor %s",
     "Éditeur de script dans Body": "Editor di script in Body",
     "Éditeur de script dans Head": "Editor di script in Head.",
-    "Étiquettes des pages spéciales": "Etichette di pagina speciali"
+    "Étiquettes des pages spéciales": "Etichette di pagina speciali",
+    "Fréquence de recherche": "Frequenza di ricerca",
+    "jour" : "giorno",
+    "jours" : "giorni"
 }

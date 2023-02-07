@@ -914,3 +914,11 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
 }
+
+// Version 12.2.04
+if ($this->getData(['core', 'dataVersion']) < 12204) {
+	// Valeur par défaut du délai de recherche de mise à joru en ligne
+	$this->setData(['config', 'autoUpdateDelay', 86400]);
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12204]);
+}

@@ -49,15 +49,15 @@ class common
 	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.2.04';
 
-	const ZWII_DATAVERSION = 12000;
+	const ZWII_DATAVERSION = 12204;
 
 	// URL autoupdate
-	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_UPDATE_CHANNEL = "v12";
+	//const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
+	//const ZWII_UPDATE_CHANNEL = "v12";
 	
 	// Constantes de test
-	//const ZWII_UPDATE_URL = 'http://localhost/update/';
-	//const ZWII_UPDATE_CHANNEL = "test";
+	const ZWII_UPDATE_URL = 'http://localhost/update/';
+	const ZWII_UPDATE_CHANNEL = "test";
 
 	// URL langues de l'UI en ligne
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
@@ -2283,7 +2283,7 @@ class common
 					$this->getData(['config', 'autoUpdate'])
 					) {
 					if ( 
-						$today > $checkUpdate + 86400 
+						$today > $checkUpdate + $this->getData(['config', 'autoUpdateDelay', 86400])
 						) {		
 						// Dernier auto controle
 						$this->setData(['core', 'lastAutoUpdate', $today]);

@@ -189,6 +189,13 @@ class config extends common
 		'num' => 'Chiffres',
 		'alpha'	  => 'Lettres'
 	];
+	public static $updateDelay = [
+		86400 => '1',
+		172800 => '2',
+		345600 => '4',
+		604800 => '7',
+		1209600 => '14',
+	];
 
 	// Langue traduite courante
 	public static $i18nSite = 'fr_FR';
@@ -435,6 +442,7 @@ class config extends common
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort', helper::FILTER_INT),
+					'autoUpdateDelay' => $this->getInput('configAutoUpdateDelay', helper::FILTER_INT),
 					'social' => [
 						'facebookId' => $this->getInput('socialFacebookId'),
 						'linkedinId' => $this->getInput('socialLinkedinId'),
@@ -542,10 +550,28 @@ class config extends common
 			]);
 		}
 
+		// Activation du bouton de mise à jour
+		if (
+			helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
+			&& $this->getData(['core', 'updateAvailable']) === false
+			&& $this->getData(['config', 'autoUpdate'])
+		) {
+			$this->setData(['core', 'updateAvailable', true]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+			]);
+
+		}
+
 		// Variable de version
 		if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-			$this->setData(['core', 'updateAvailable', true]);
 			self::$updateButtonText = helper::translate('Mettre à jour');
+		}
+
+		// Sélecteur de délais, compléter avec la traduction en jours
+		foreach(self::$updateDelay as $key => $value) {			
+			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
 		}
 
 		// Valeurs en sortie

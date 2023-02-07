@@ -1,8 +1,11 @@
 # Changelog
 
 ## Version 12.2.04
-### Amélioration :
-- Prise en charge des mises à jour en ligne
+### Améliorations :
+- Amélioration de la prise en charge des mises à jour en ligne.
+- Activation du bouton de mise à jour dans la barre d'administration lorsque le menu de configuration est ouvert est qu'une mise à jour en ligne est détectée.
+### Nouveautés :
+- Paramètrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
 
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
