@@ -168,6 +168,24 @@ class translate extends common
 	public function index()
 	{
 
+		/**
+		 * Met à jour les dictionnaires des langues depuis les modèles installés
+		 */
+
+		// Langues installées
+		$installedUI = $this->getData(['languages']);
+
+		// Langues disponibles avec la mise à jour
+		$store = json_decode(file_get_contents('core\module\install\ressource\i18n\languages.json'), true);
+		$store = $store['languages'];
+
+		foreach($installedUI as $key => $value) {
+			if ($store[$key]['version'] > $value['version'])  {
+				echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+				$this->setData(['languages', $key, $store[$key]]);
+			}
+		}
+
 		// Préparation du formulaire
 		// -------------------------
 
