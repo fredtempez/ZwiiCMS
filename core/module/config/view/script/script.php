@@ -1,11 +1,10 @@
 <?php echo template::formOpen('configScript'); ?>
 <div class="row">
-    <div class="col2">
+    <div class="col1">
         <?php echo template::button('configManageBack', [
             'class' => 'buttonGrey',
             'href' => helper::baseUrl() . 'config',
-            'ico' => 'left',
-            'value' => 'Retour'
+			'value' => template::ico('left')
         ]); ?>
     </div>
     <div class="col2 offset8">
