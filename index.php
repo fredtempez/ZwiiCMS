@@ -25,8 +25,12 @@ session_start();
 /**
  * Vérification de la version de PHP
  */
-if(version_compare(PHP_VERSION, '7.2.0', '<')) {
-	exit('PHP 7.2+ required.');
+if(version_compare(PHP_VERSION, '7.2.0', '<') ) {
+	exit('PHP 7.2+ mini required');
+}
+
+if ( version_compare(PHP_VERSION, '8.1.999', '>') ) {
+	exit('PHP 8.2 not yet supported, install PHP 7.n or PHP 8.1.n');
 }
 
 /*
