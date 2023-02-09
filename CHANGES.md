@@ -8,8 +8,9 @@
     - Le numéro de version d'une langue est le numéro de version de base de données
     - A l'installation ou lors de l'accès à la fenêtre des langues, les dialogues sont actualisés.
     - La fonction d'édition des langues de l'UI est neutralisée.
+- Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé.
 ### Nouveautés :
-- Paramètrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
+- Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
 
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
