@@ -353,8 +353,8 @@ class imageLib {
         // *** Get optimal width and height - based on $option
         $dimensionsArray = $this->getDimensions($newWidth, $newHeight, $option);
 
-        $optimalWidth = $dimensionsArray['optimalWidth'];
-        $optimalHeight = $dimensionsArray['optimalHeight'];
+        $optimalWidth = (int) $dimensionsArray['optimalWidth'];
+        $optimalHeight = (int) $dimensionsArray['optimalHeight'];
 
         // *** Resample - create image canvas of x, y size
         $this->imageResized = imagecreatetruecolor($optimalWidth, $optimalHeight);
@@ -463,7 +463,7 @@ class imageLib {
         else
         {
             $color = imagecolorallocate($im, $this->fillColorArray['r'], $this->fillColorArray['g'], $this->fillColorArray['b']);
-            imagefilledrectangle($im, 0, 0, $width, $height, $color);
+            imagefilledrectangle($im, 0, 0, (int)$width, (int)$height, $color);
         }
     }
 
@@ -483,8 +483,8 @@ class imageLib {
 
         // *** Get cropping co-ordinates
         $cropArray = $this->getCropPlacing($optimalWidth, $optimalHeight, $newWidth, $newHeight, $cropPos);
-        $cropStartX = $cropArray['x'];
-        $cropStartY = $cropArray['y'];
+        $cropStartX = (int)$cropArray['x'];
+        $cropStartY = (int)$cropArray['y'];
 
         // *** Crop this bad boy
         $crop = imagecreatetruecolor($newWidth, $newHeight);

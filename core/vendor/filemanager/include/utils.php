@@ -735,8 +735,9 @@ function fix_filename($str, $config, $is_folder = false)
     }
 
     if ($config['transliteration']) {
+        // Le site est en UTF8
         if (!mb_detect_encoding($str, 'UTF-8', true)) {
-            $str = utf8_encode($str);
+            $str =  mb_convert_encoding($str, 'UTF-8', mb_list_encodings());
         }
         if (function_exists('transliterator_transliterate')) {
             $str = transliterator_transliterate('Any-Latin; Latin-ASCII', $str);
