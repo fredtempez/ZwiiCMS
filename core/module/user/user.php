@@ -21,11 +21,12 @@ class user extends common
 		'delete' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
+		'template' => self::GROUP_ADMIN,
 		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
-		'reset' => self::GROUP_VISITOR
+		'reset' => self::GROUP_VISITOR,
 	];
 
 	public static $users = [];
@@ -751,5 +752,21 @@ class user extends common
 			'notification' => $notification,
 			'state' => $success
 		]);
+	}
+
+	/** 
+	 * Télécharge un modèle
+	*/
+	public function template() {
+		$file = 'template.csv';
+		$path = 'core/module/user/ressource/';
+		// Téléchargement du CSV
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Disposition: attachment; filename="' . $file . '"');
+		header('Content-Length: ' . filesize($path . $file));
+		readfile($path . $file);
+		exit();
 	}
 }
