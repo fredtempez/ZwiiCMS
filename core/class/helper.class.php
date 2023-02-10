@@ -57,7 +57,7 @@ class helper
 						? \PHP81_BC\strftime($format, $date)
 						: utf8_encode(\PHP81_BC\strftime($format, $date));
 						*/
-		return \PHP81_BC\strftime($format, $date);
+		return mb_convert_encoding(\PHP81_BC\strftime($format, $date), 'UTF-8', mb_list_encodings());
 	}
 
 	/**
