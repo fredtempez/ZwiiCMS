@@ -16,13 +16,13 @@
 			<div class="block">
 				<h4><?php echo helper::translate('Paramètres');?></h4>
 				<div class="row">
-					<div class="col3">
+					<div class="col4">
 					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
 							'label' => 'Disposition',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
 						]); ?>
 					</div>
-					<div class="col3">
+					<div class="col2">
 						<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])

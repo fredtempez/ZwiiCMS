@@ -15,7 +15,7 @@
 		<?php echo template::ico('user'); ?>
 		<?php echo $module::$articleSignature; ?>
 		<?php echo template::ico('calendar-empty'); ?>
-		<?php echo helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])); ?>
+		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])); ?>
 		<!-- Bloc edition -->
 		<?php if (
 
@@ -147,7 +147,7 @@
 					<?php echo template::ico('user'); ?>
 					<?php echo $module::$commentsSignature[$commentId]; ?>
 					<?php echo template::ico('calendar-empty'); ?>
-					<?php echo helper::dateUTF8('%d %B %Y', $comment['createdOn']) . ' - ' . helper::dateUTF8('%H:%M', $comment['createdOn']); ?>
+					<?php echo helper::dateUTF8($module::$dateFormat, $comment['createdOn']) . ' - ' . helper::dateUTF8($module::$timeFormat, $comment['createdOn']); ?>
 				</h4>
 				<?php echo $comment['content']; ?>
 			</div>
