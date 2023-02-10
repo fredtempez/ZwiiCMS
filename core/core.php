@@ -54,7 +54,7 @@ class common
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 	const ZWII_UPDATE_CHANNEL = "v12";
-	
+
 	// Constantes de test
 	//const ZWII_UPDATE_URL = 'http://localhost/update/';
 	//const ZWII_UPDATE_CHANNEL = "test";
@@ -166,6 +166,8 @@ class common
 	public static $dialog;
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
+	// Langues de contenu
+	public static $i18nContent = 'fr_FR';
 	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
@@ -206,8 +208,6 @@ class common
 		// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 	];
 
-	// Langues de contenu
-	public static $i18nContent = 'fr_FR';
 
 	// Zone de temps
 	public static $timezone;
@@ -315,35 +315,7 @@ class common
 		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
 			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
-			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
-		} else {
-			// Absence du cookie, la langue par défaut est fr
-			self::$i18nContent = 'fr_FR';
-			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
-		}
-		/**
-		 * Mise à jour  à partir de la version 11.5.12
-		 * */
-		$version = json_decode(file_get_contents('site/data/core.json'), true);
-		if ($version['core']['dataVersion'] < 12000) {
-			// Correspondance pour les dossiers de langue à convertir
-			$languages = [
-				'fr' => 'fr_FR',
-				'en' => 'en_EN',
-				'pt' => 'pt_PT'
-			];
-			// Convertit les dossiers vers la nouvelle structure
-			foreach ($languages as $key => $value) {
-				if (
-					is_dir(self::DATA_DIR . $key) &&
-					!is_dir(self::DATA_DIR . $value)
-				) {
-					rename(self::DATA_DIR . $key, self::DATA_DIR . $value);
-				}
-			}
-			self::$i18nUI = 'fr_FR';
-			self::$i18nContent = 'fr_FR';
-			\setlocale(LC_TIME, self::$i18nContent . '.UTF8');
+			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
 
 		// Instanciation de la classe des entrées / sorties
@@ -377,14 +349,11 @@ class common
 			// Langue sélectionnée dans le compte
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
-			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI)) ? 'fr_FR' : self::$i18nUI;
+			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
+							&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
+								? 'fr_FR'
+								: self::$i18nUI;
 		}
-
-		// Le fichier existe-t-il ?
-		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
-			self::$i18nUI = 'fr_FR';
-		}
-		\setlocale(LC_TIME, self::$i18nUI . '.UTF-8');
 
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, '/', '', false, false);
@@ -474,10 +443,10 @@ class common
 		}
 
 		// Mise à jour des données core selon la version du jeu de données
-		if ( $this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION  )  {
+		if ($this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION) {
 			include('core/include/update.inc.php');
 		}
-			
+
 
 		// Données de proxy
 		$proxy = $this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']);
@@ -499,6 +468,7 @@ class common
 			);
 			stream_context_set_default($context);
 		}
+
 	}
 
 
@@ -1299,6 +1269,35 @@ class common
 		$zip->close();
 	}
 
+	/**
+	 * Summary of dateUTF8
+	 * @param mixed $format
+	 * @param mixed $date time()
+	 * @param mixed $scope UI ou Content
+	 * @return string Date formatée
+	 */
+	public static function showDate($format, $date, $scope = "UI")
+	{
+		$d = new DateTime(time());
+		$d->format($format);
+
+		/*
+		$d = datefmt_create(
+		self::$i18nUI,
+		IntlDateFormatter::FULL,
+		IntlDateFormatter::FULL,
+		self::$timezone,
+		IntlDateFormatter::GREGORIAN,
+		$format
+		);
+		exit (datefmt_format($d, $date));
+		//return datefmt_format($d, $date);
+		*/
+
+	}
+
+
+
 	// Layout remplace la classe précédente
 
 	/**
@@ -1957,7 +1956,7 @@ class common
 	/**
 	 * Générer un menu pour la barre latérale
 	 * Uniquement texte
-	 * @param onlyChildren n'affiche les sous-pages de la page actuelle
+	 * @param $onlyChildren n'affiche les sous-pages de la page actuelle
 	 */
 	private function showMenuSide($onlyChildren = null)
 	{
@@ -2274,17 +2273,17 @@ class common
 					'help' => 'Utilisateurs',
 					'href' => helper::baseUrl() . 'user'
 				]) . '</li>';
-				
+
 				// Mise à jour automatique
 				$today = mktime(0, 0, 0);
-				$checkUpdate =  $this->getData(['core', 'lastAutoUpdate']);
+				$checkUpdate = $this->getData(['core', 'lastAutoUpdate']);
 				// Recherche d'une mise à jour si active, si une mise à jour n'est pas déjà disponible et le délai journalier est dépassé.
 				if (
 					$this->getData(['config', 'autoUpdate'])
-					) {
-					if ( 
+				) {
+					if (
 						$today > $checkUpdate + $this->getData(['config', 'autoUpdateDelay', 86400])
-						) {		
+					) {
 						// Dernier auto controle
 						$this->setData(['core', 'lastAutoUpdate', $today]);
 						if (
@@ -2297,7 +2296,7 @@ class common
 
 
 				// Afficher le bouton : Mise à jour détectée + activée
-				if ($this->getData(['core', 'updateAvailable']) ) {
+				if ($this->getData(['core', 'updateAvailable'])) {
 					$rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
 				}
 			}

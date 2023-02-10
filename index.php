@@ -25,8 +25,11 @@ session_start();
 // Contrôle des conditions de fonctionnement
 include_once('core/include/checkup.php');
 
+// Mise à jour du système de BDD
+include_once('core/include/pre-update.php');
+
 /*
- *Localisation
+ *Localisation par défaut 
 
  * Locales :
  * french : free.fr
@@ -34,7 +37,7 @@ include_once('core/include/checkup.php');
  * fr_FR.utf8 : la majorité
 */
 date_default_timezone_set('Europe/Paris');
-setlocale (LC_ALL,'french','fr_Fr','fr_FR.utf8');
+setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french');
 
 /**
  * Chargement des classes
