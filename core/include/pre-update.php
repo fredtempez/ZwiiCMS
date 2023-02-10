@@ -17,7 +17,7 @@ if ($version['core']['dataVersion'] < 12000) {
             is_dir('site/data/' . $key) &&
             !is_dir('site/data/' . $value)
         ) {
-            rename('site/data/' . $key, self::DATA_DIR . $value);
+            rename('site/data/' . $key, 'site/data/' . $value);
         }
     }
 }
