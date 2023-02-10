@@ -531,7 +531,7 @@ class page extends common
 			}
 			// Construction du formulaire
 
-			// Création du sélecteur de modules
+			// Création du sélecteur de modules	
 			self::$moduleIds = [];
 			foreach (helper::getModules() as $key => $values) {
 				self::$moduleIds[$key] = $values['realName'] . ' (' . $key . ')';

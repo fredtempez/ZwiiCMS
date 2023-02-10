@@ -23,7 +23,7 @@
 	});
 });
 
-$("#pageEditModuleId").on("click", function() {
+$("#pageEditModuleId").on("change", function() {
 	protectModule();
 });
 
