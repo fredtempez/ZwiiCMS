@@ -35,9 +35,9 @@
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::select('blogOptionDateFormat', $module::$timeFormats, [
+						<?php echo template::select('blogOptionTimeFormat', $module::$timeFormats, [
 							'label' => 'Format des heures',
-							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat'])
 						]); ?>
 					</div>
 				</div>

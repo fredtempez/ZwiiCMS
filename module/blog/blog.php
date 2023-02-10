@@ -125,7 +125,7 @@ class blog extends common
 	];
 	public static $timeFormats = [
 		'%H:%M' => 'HH:MM',
-		'%I:%M:%S %p' => "HH:MM tt",
+		'%I:%M %p' => "HH:MM tt",
 	];
 
 	public static $timeFormat = '';
@@ -161,7 +161,14 @@ class blog extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'articlesLenght', 0]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '6.0']);
 		}
+		// Version 6.5
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '6.5', '<')) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'dateFormat', '%d %B %Y']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'timeFormat', '%H:%M']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '6.5']);
+		}
 	}
+
 
 
 
@@ -538,8 +545,8 @@ class blog extends common
 				'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT, true),
 				'articlesLenght' => $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
-				'dateFormat' => $this->getInput('blogOptionDateFormat', helper::FILTER_STRING_SHORT),
-				'timeFormat' => $this->getInput('blogOptionTimeFormat', helper::FILTER_STRING_SHORT),
+				'dateFormat' => $this->getInput('blogOptionDateFormat'),
+				'timeFormat' => $this->getInput('blogOptionTimeFormat'),
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
