@@ -14,21 +14,32 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Index des articles');?></h4>
+				<h4><?php echo helper::translate('Paramètres');?></h4>
 				<div class="row">
-					<div class="col6">
+					<div class="col3">
 					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
 							'label' => 'Disposition',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col3">
 						<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
 							'label' => 'Articles par page',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])
 						]); ?>
 					</div>
-
+					<div class="col3">
+						<?php echo template::select('blogOptionDateFormat', $module::$dateFormats, [
+							'label' => 'Format des dates',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::select('blogOptionDateFormat', $module::$timeFormats, [
+							'label' => 'Format des heures',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
+						]); ?>
+					</div>
 				</div>
 			</div>
 		</div>

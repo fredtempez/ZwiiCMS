@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '6.4';
+	const VERSION = '6.5';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -111,6 +111,25 @@ class blog extends common
 		self::EDIT_OWNER       => 'Propriétaire'
 	];
 
+
+	public static $dateFormats = [
+		'%d %B %Y' => 'DD MMMM YYYY',
+		'%d/%m/%Y' => 'DD/MM/YYYY',
+		'%m/%d/%Y' => 'MM/DD/YYYY',	
+		'%d/%m/%y' => 'DD/MM/YY',
+		'%m/%d/%y' => 'MM/DD/YY',
+		'%d-%m-%Y' => 'DD-MM-YYYY',
+		'%m-%d-%Y' => 'MM-DD-YYYY',	
+		'%d-%m-%y' => 'DD-MM-YY',
+		'%m-%d-%y' => 'MM-DD-YY',		
+	];
+	public static $timeFormats = [
+		'%H:%M' => 'HH:MM',
+		'%I:%M:%S %p' => "HH:MM tt",
+	];
+
+	public static $timeFormat = '';
+	public static $dateFormat = '';
 
 	// Nombre d'articles dans la page de config:
 	public static $itemsperPage = 8;
@@ -519,6 +538,8 @@ class blog extends common
 				'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT, true),
 				'articlesLenght' => $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT),
 				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
+				'dateFormat' => $this->getInput('blogOptionDateFormat', helper::FILTER_STRING_SHORT),
+				'timeFormat' => $this->getInput('blogOptionTimeFormat', helper::FILTER_STRING_SHORT),
 			]]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -812,6 +833,9 @@ class blog extends common
 			for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				self::$articles[$articleIds[$i]] = $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i]]);
 			}
+			// Format de temps
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,
