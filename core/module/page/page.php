@@ -41,28 +41,28 @@ class page extends common
 	// Position du module
 	public static $modulePosition = [
 		'bottom' => 'Après le contenu de la page',
-		'top'    => 'Avant le contenu de la page',
-		'free'   => 'À l\'emplacement du mot clé [MODULE] dans la page'
+		'top' => 'Avant le contenu de la page',
+		'free' => 'À l\'emplacement du mot clé [MODULE] dans la page'
 	];
 	public static $pageBlocks = [
-		'12'    => 'Page standard',
-		'bar'	=> 'Barre latérale',
-		'4-8'   => 'Barre 1/3 - page 2/3',
-		'8-4'   => 'Page 2/3 - barre 1/3',
-		'3-9'   => 'Barre 1/4 - page 3/4',
-		'9-3'   => 'Page 3/4 - barre 1/4',
+		'12' => 'Page standard',
+		'bar' => 'Barre latérale',
+		'4-8' => 'Barre 1/3 - page 2/3',
+		'8-4' => 'Page 2/3 - barre 1/3',
+		'3-9' => 'Barre 1/4 - page 3/4',
+		'9-3' => 'Page 3/4 - barre 1/4',
 		'3-6-3' => 'Barre 1/4 - page 1/2 - barre 1/4',
 		'2-7-3' => 'Barre 2/12 - page 7/12 - barre 3/12',
 		'3-7-2' => 'Barre 3/12 - page 7/12 - barre 2/12',
 	];
 	public static $displayMenu = [
-		'none'		=> 'Aucun menu',
-		'parents' 	=> 'Le menu horizontal intégral',
-		'children'	=> 'Le sous-menu de la page parente'
+		'none' => 'Aucun menu',
+		'parents' => 'Le menu horizontal intégral',
+		'children' => 'Le sous-menu de la page parente'
 	];
 	public static $extraPosition = [
-		false 	=> 'Menu standard',
-		true 	=> 'Menu accessoire'
+		false => 'Menu standard',
+		true => 'Menu accessoire'
 	];
 
 
@@ -138,7 +138,7 @@ class page extends common
 				'typeMenu' => 'text',
 				'iconUrl' => '',
 				'disable' => false,
-				'content' =>  $pageId . '.html',
+				'content' => $pageId . '.html',
 				'hideTitle' => false,
 				'breadCrumb' => false,
 				'metaDescription' => '',
@@ -193,7 +193,7 @@ class page extends common
 			$this->addOutput([
 				'access' => false
 			]);
-		}		// Jeton incorrect
+		} // Jeton incorrect
 		elseif (!isset($_GET['csrf'])) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -211,7 +211,7 @@ class page extends common
 		elseif ($url[0] === $this->getData(['locale', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'config',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
@@ -219,7 +219,7 @@ class page extends common
 		elseif ($url[0] === $this->getData(['locale', 'searchPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . 'config',
+				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
@@ -260,13 +260,13 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' =>  helper::translate('Jeton invalide')
+				'notification' => helper::translate('Jeton invalide')
 			]);
 		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' =>  helper::translate('Suppression interdite')
+				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Impossible de supprimer une page contenant des enfants
@@ -274,7 +274,7 @@ class page extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' =>  helper::translate('Impossible de supprimer une page contenant des pages enfants')
+				'notification' => helper::translate('Impossible de supprimer une page contenant des pages enfants')
 			]);
 		}
 		// Suppression
@@ -285,7 +285,7 @@ class page extends common
 			$modulesData = helper::getModules();
 			if (
 				array_key_exists($moduleId, $modulesData)
-				&&  is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
+				&& is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
 			) {
 				$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $url[0]);
 			}
@@ -433,7 +433,7 @@ class page extends common
 					// Une page parent devient orpheline, les pages enfants le devienne pour éviter une incohérence
 					if (
 						$position === 0 &&
-						$position !==  $this->getData(['page', $this->getUrl(2), 'position']) &&
+						$position !== $this->getData(['page', $this->getUrl(2), 'position']) &&
 						$this->getinput('pageEditBlock') !== 'bar'
 					) {
 						foreach ($this->getHierarchy($pageId) as $parentId => $childId) {
@@ -529,7 +529,16 @@ class page extends common
 					}
 				}
 			}
-			self::$moduleIds = array_merge(['' => 'Aucun'], helper::arrayColumn(helper::getModules(), 'realName', 'SORT_ASC'));			// Pages sans parent
+			// Construction du formulaire
+
+			// Création du sélecteur de modules
+			self::$moduleIds = [];
+			foreach (helper::getModules() as $key => $values) {
+				self::$moduleIds[$key] = $values['realName'] . ' (' . $key . ')';
+			}
+			self::$moduleIds = array_merge(['' => 'Aucun'], self::$moduleIds);
+
+			// Pages sans parent
 			foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 				if ($parentPageId !== $this->getUrl(2)) {
 					self::$pagesNoParentId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
@@ -566,7 +575,8 @@ class page extends common
 			$css = $this->getInput('pageCssEditorContent', null);
 			// Enregistre le CSS
 			$this->setData([
-				'page', $this->getUrl(2), 'css',
+				'page', $this->getUrl(2),
+				'css',
 				$css
 			]);
 			// Valeurs en sortie
@@ -597,7 +607,8 @@ class page extends common
 			$js = $this->getInput('pageJsEditorContent', null);
 			// Enregistre le JS
 			$this->setData([
-				'page', $this->getUrl(2), 'js',
+				'page', $this->getUrl(2),
+				'js',
 				$js
 			]);
 			// Valeurs en sortie

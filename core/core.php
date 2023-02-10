@@ -1269,35 +1269,6 @@ class common
 		$zip->close();
 	}
 
-	/**
-	 * Summary of dateUTF8
-	 * @param mixed $format
-	 * @param mixed $date time()
-	 * @param mixed $scope UI ou Content
-	 * @return string Date formatée
-	 */
-	public static function showDate($format, $date, $scope = "UI")
-	{
-		$d = new DateTime(time());
-		$d->format($format);
-
-		/*
-		$d = datefmt_create(
-		self::$i18nUI,
-		IntlDateFormatter::FULL,
-		IntlDateFormatter::FULL,
-		self::$timezone,
-		IntlDateFormatter::GREGORIAN,
-		$format
-		);
-		exit (datefmt_format($d, $date));
-		//return datefmt_format($d, $date);
-		*/
-
-	}
-
-
-
 	// Layout remplace la classe précédente
 
 	/**
