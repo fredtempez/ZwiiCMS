@@ -1,7 +1,8 @@
 # Changelog
 
-## Version 12.2.04
+## Version 12.3.00
 ### Améliorations :
+- Prise en charge PHP 8.2
 - Amélioration de la prise en charge des mises à jour en ligne.
 - Activation du bouton de mise à jour dans la barre d'administration lorsque le menu de configuration est ouvert est qu'une mise à jour en ligne est détectée.
 - Gestion des langues :
