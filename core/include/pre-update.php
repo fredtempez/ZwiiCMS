@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Mise à jour  à partir de la version 11.5.12
+ * Mise à jour  à partir de la version 11.5.13
  * */
 $version = json_decode(file_get_contents('site/data/core.json'), true);
 if ($version['core']['dataVersion'] < 12000) {
@@ -17,7 +17,8 @@ if ($version['core']['dataVersion'] < 12000) {
             is_dir('site/data/' . $key) &&
             !is_dir('site/data/' . $value)
         ) {
-            rename('site/data/' . $key, 'site/data/' . $value);
+           $end = rename('site/data/' . $key, 'site/data/' . $value);
         }
     }
+    sleep(2);
 }
