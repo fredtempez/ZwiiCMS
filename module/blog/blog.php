@@ -338,8 +338,10 @@ class blog extends common
 					'help' => $comment['approval'] === true ? 'Approuvé' : 'Rejeté',
 				]);
 			}
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			self::$comments[] = [
-				helper::dateUTF8('%d %B %Y', $comment['createdOn']) . ' - ' . helper::dateUTF8('%H:%M', $comment['createdOn']),
+				helper::dateUTF8(self::$dateFormat, $comment['createdOn']) . ' - ' . helper::dateUTF8(self::$timeFormat, $comment['createdOn']),
 				$comment['content'],
 				$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 				$buttonApproval,
@@ -495,6 +497,9 @@ class blog extends common
 		$pagination = helper::pagination($articleIds, $this->getUrl(), self::$itemsperPage);
 		// Liste des pages
 		self::$pages = $pagination['pages'];
+		// Format de temps
+		self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+		self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 		// Articles en fonction de la pagination
 		for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Nombre de commentaires à approuver et approuvés
@@ -512,7 +517,7 @@ class blog extends common
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'title']) .
 				'</a>',
-				helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])),
+				helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn'])),
 				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [
