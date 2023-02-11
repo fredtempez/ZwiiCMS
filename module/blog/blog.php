@@ -111,7 +111,6 @@ class blog extends common
 		self::EDIT_OWNER => 'Propriétaire'
 	];
 
-
 	public static $dateFormats = [
 		'%d %B %Y' => 'DD MMMM YYYY',
 		'%d/%m/%Y' => 'DD/MM/YYYY',

@@ -1,5 +1,5 @@
 # version 6.5
-- Formats de date
+- Intl dates formats
 # version 6.4
 - Multilingisme
 # version 6.31

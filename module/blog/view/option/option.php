@@ -41,13 +41,6 @@
 						]); ?>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col12">
-			<div class="block">
-				<h4>Flux RSS</h4>
 				<div class="row">
 					<div class="col6">
 						<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
