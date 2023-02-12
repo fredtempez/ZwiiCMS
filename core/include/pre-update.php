@@ -1,10 +1,13 @@
 <?php
 
-/**
- * Mise à jour  à partir de la version 11.5.13
- * */
 $version = json_decode(file_get_contents('site/data/core.json'), true);
-if ($version['core']['dataVersion'] < 12000) {
+
+
+/**
+ * Mise à jour avant v12
+ * */
+if ($version['core']['dataVersion'] < 12000) 
+{
     // Correspondance pour les dossiers de langue à convertir
     $languages = [
         'fr' => 'fr_FR',
