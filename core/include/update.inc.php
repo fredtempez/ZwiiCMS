@@ -937,7 +937,7 @@ if ($this->getData(['core', 'dataVersion']) < 12204) {
 		unlink('core\module\install\ressource\i18n\gr_GR.json');
 	}
 	if (file_exists(self::I18N_DIR . 'gr_GR.json')) {
-		copy(self::I18N_DIR . 'gr_GR.json',self::I18N_DIR . 'el_GR.json');
+		copy(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');
 		unlink(self::I18N_DIR . 'gr_GR.json');
 	}
 	$d = $this->getData(['languages', 'gr_GR']);
