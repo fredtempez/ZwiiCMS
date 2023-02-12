@@ -937,12 +937,19 @@ if ($this->getData(['core', 'dataVersion']) < 12204) {
 		unlink('core\module\install\ressource\i18n\gr_GR.json');
 	}
 	if (file_exists(self::I18N_DIR . 'gr_GR.json')) {
-		copy(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');
-		unlink(self::I18N_DIR . 'gr_GR.json');
+		rename(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');
 	}
 	$d = $this->getData(['languages', 'gr_GR']);
 	$this->setData(['languages', 'el_GR', $d]);
 	$this->deleteData(['languages', 'gr_GR']);
+	// Idem pour les modules
+	$moduleIds = ['blog', 'news', 'gallery', 'search', 'redirection', 'form'];
+	foreach($moduleIds as $key => $value) {
+		if (file_exists('module/' . $value . '/i18n/gr_GR.json' )) 
+		{
+			rename ('module/' . $value . '/i18n/gr_GR.json', 'module/' . $value . '/i18n/el_GR.json');
+		}
+	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12204]);
 }

@@ -181,7 +181,6 @@ class translate extends common
 
 		foreach($installedUI as $key => $value) {
 			if ($store[$key]['version'] > $value['version'])  {
-				echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 				$this->setData(['languages', $key, $store[$key]]);
 			}
 		}
