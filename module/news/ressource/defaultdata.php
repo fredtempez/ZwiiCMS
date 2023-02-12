@@ -6,7 +6,9 @@ class init extends news {
         'itemsperPage'       => 8,
         'itemsperCol'        => 12,
         'height'             => -1,
-        'versionData'        => '3.4'
+        'versionData'        => '3.5',
+        'dateFormat'         => '%d %B %Y',
+        'timeFormat'         =>'%H:%M',
     ];
 
     public static $defaultTheme = [

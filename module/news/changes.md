@@ -1,3 +1,5 @@
+# Version 4.4
+- Intl date Formats
 # Version 4.3
 - Multilinguisme
 # Version 4.23
