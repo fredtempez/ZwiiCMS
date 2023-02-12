@@ -321,12 +321,15 @@ class news extends common
 			$pagination = helper::pagination($newsIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
+			// Format de temps
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			// News en fonction de la pagination
 			for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Met en forme le tableau
-				$dateOn = $dateOn = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
+				$dateOn = $dateOn = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
 				if ($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) {
-					$dateOff = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
+					$dateOff = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
 				} else {
 					$dateOff = helper::translate('Permanent');
 				}
@@ -621,7 +624,7 @@ class news extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'dateFormat', '%d %B %Y']);
 			$this->setData(['module', $this->getUrl(0), 'config', 'timeFormat', '%H:%M']);
 			// Mettre à jour la version
-			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.4']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '4.4']);
 		}
 
 	}
