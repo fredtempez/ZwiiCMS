@@ -854,7 +854,7 @@ class gallery extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Thème des galeries'),
+			'title' => helper::translate('Options du thème'),
 			'view' => 'theme',
 			'vendor' => [
 				'tinycolorpicker'
@@ -899,7 +899,7 @@ class gallery extends common {
 			self::$formOptionSelect = 'galleries';
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Options des galeries'),
+				'title' => helper::translate('Options de configuration'),
 				'view' => 'option'
 			]);
 			/**
