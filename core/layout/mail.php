@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo substr(self::$i18nContent, 0, 2); ?>>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
