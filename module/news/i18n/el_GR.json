@@ -40,8 +40,10 @@
     "Rédiger un article": "",
     "Rédiger une news": "Γράψε μια είδηση",
     "Supprimer cet article ?": "Να διαγράψετε αυτό το άρθρο;",
-    "Tiret": "παύλας",
+    "Trait": "παύλας",
     "Très fine": "Πολύ λεπτή γραμμή",
     "Très petite": "Πολύ μικρη",
-    "Épaisseur": "Πάχος"
+    "Épaisseur": "Πάχος",
+    "Informations générales": "Γενικές πληροφορίες",
+    "Options de publication": "Επιλογές δημοσίευσης"
 }

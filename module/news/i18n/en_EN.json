@@ -19,8 +19,8 @@
     "Articles par page": "Articles per page",
     "Aucun article": "No article",
     "Aucune": "None",
-    "Auteur": "Auteur",
-    "Bordure": "Bordure",
+    "Auteur": "Author",
+    "Bordure": "Border",
     "Couleur de la bordure": "Border color",
     "Couleur du fond": "Bottom color",
     "Date de dépublication": "Date of depublication",
@@ -40,8 +40,10 @@
     "Rédiger un article": "Write an article",
     "Rédiger une news": "Write a news",
     "Supprimer cet article ?": "Delete this article?",
-    "Tiret": "Hyphen",
+    "Trait": "Line",
     "Très fine": "Very fine",
     "Très petite": "Very small",
-    "Épaisseur": "Thickness"
+    "Épaisseur": "Thickness",
+    "Informations générales": "General informations",
+    "Options de publication": "Publication options"
 }
