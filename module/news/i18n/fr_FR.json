@@ -21,6 +21,7 @@
     "Aucune": "",
     "Auteur": "",
     "Bordure": "",
+    "Brouillon": "",
     "Couleur de la bordure": "",
     "Couleur du fond": "",
     "Date de dépublication": "",
@@ -28,12 +29,14 @@
     "Etiquette RSS": "",
     "Fine": "",
     "Flux limité aux articles de la première page.": "",
+    "Informations générales": "",
     "L'article est consultable Jusqu'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.": "",
     "L'article est consultable à partir du moment ou la date de publication est passée.": "",
     "Lien du flux RSS": "",
     "Nombre de colonnes": "",
     "Nouvel article créé": "",
     "Options de configuration": "",
+    "Options de publication": "",
     "Permanent": "",
     "Petite": "",
     "Publier": "",
@@ -43,8 +46,5 @@
     "Trait": "",
     "Très fine": "",
     "Très petite": "",
-    "Épaisseur": "",
-    "Informations générales": "",
-    "Options de publication": "",
-    "Brouillon": ""
+    "Épaisseur": ""
 }

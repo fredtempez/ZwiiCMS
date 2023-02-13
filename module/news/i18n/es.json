@@ -21,6 +21,7 @@
     "Aucune": "Ninguno",
     "Auteur": "Autor",
     "Bordure": "Bordillo",
+    "Brouillon": "Borrador",
     "Couleur de la bordure": "Color de bordillo",
     "Couleur du fond": "Color de fondo",
     "Date de dépublication": "Fecha no publicada",
@@ -28,12 +29,14 @@
     "Etiquette RSS": "",
     "Fine": "Fino",
     "Flux limité aux articles de la première page.": "Alimento limitado a artículos en la primera página.",
+    "Informations générales": "Información general",
     "L'article est consultable Jusqu'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.": "El artículo se puede buscar hasta esta fecha si se especifica. Para anular la fecha de despublicación, seleccione una fecha anterior a la publicación.",
     "L'article est consultable à partir du moment ou la date de publication est passée.": "El artículo puede consultarse a partir de la fecha de publicación.",
     "Lien du flux RSS": "Enlace de fuente RSS",
     "Nombre de colonnes": "Número de columnas",
     "Nouvel article créé": "Nuevo artículo creado",
     "Options de configuration": "Opciones de configuración",
+    "Options de publication": "Opciones de publicación",
     "Permanent": "Permanente",
     "Petite": "Pequeña",
     "Publier": "Publicar",
@@ -43,8 +46,5 @@
     "Trait": "Guión",
     "Très fine": "Muy fino",
     "Très petite": "Muy pequeña",
-    "Épaisseur": "Espesor",
-    "Informations générales": "Información general",
-    "Options de publication": "Opciones de publicación",
-    "Brouillon": "Borrador"
+    "Épaisseur": "Espesor"
 }
