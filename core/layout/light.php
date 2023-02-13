@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="<?php echo self::$i18nContent;?>">
+<html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$i18nContent, 0, 2); ?>">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
