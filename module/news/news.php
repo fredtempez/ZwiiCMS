@@ -197,7 +197,7 @@ class news extends common
 		unset($userFirstname);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Nouvel article'),
+			'title' => helper::translate('Rédiger un article'),
 			'vendor' => [
 				'flatpickr',
 				'tinymce'

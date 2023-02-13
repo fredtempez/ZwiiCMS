@@ -571,7 +571,7 @@ class blog extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Paramètres'),
+			'title' => helper::translate('Options de configuration'),
 			'view' => 'option'
 		]);
 	}

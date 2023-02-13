@@ -33,7 +33,6 @@
     "Lien du flux RSS": "Lien du Flux RSS",
     "Nombre de colonnes": "Number of columns",
     "Nouvel article créé": "New article created",
-    "Options de configuration": "Options de configuration",
     "Permanent": "Permanent",
     "Petite": "Petite",
     "Publier": "Publish",
@@ -46,5 +45,6 @@
     "Épaisseur": "Thickness",
     "Informations générales": "General informations",
     "Options de publication": "Publication options",
-    "Brouillon": "Draft copy"
+    "Brouillon": "Draft copy",
+    "Options de configuration": "Configuration options"
 }
