@@ -47,6 +47,7 @@
     "Membre": "Miembro",
     "Notification par email": "Notificación por correo electrónico",
     "Nouvel article créé": "Nuevo artículo creado",
+    "Options de configuration": "Opciones de configuración",
     "Options de publication": "Opciones de publicación",
     "Permalink": "Enlace permanente",
     "Petite": "Pequeña",
@@ -74,6 +75,5 @@
     "Éditer  / Approuver les commentaires": "Editar / Aprobar comentarios",
     "Éditer l'article": "Editar artículo",
     "Éditeur": "Editor",
-    "État": "Estado",
-    "Options de configuration": "Opciones de configuración"
+    "État": "Estado"
 }

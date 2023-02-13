@@ -47,6 +47,7 @@
     "Membre": "Member",
     "Notification par email": "Notification par email",
     "Nouvel article créé": "New article created",
+    "Options de configuration": "Configuration options",
     "Options de publication": "Publication options",
     "Permalink": "Permalink",
     "Petite": "Petite",
@@ -74,6 +75,5 @@
     "Éditer  / Approuver les commentaires": "Edit / approve comments",
     "Éditer l'article": "Edit the article",
     "Éditeur": "Editor",
-    "État": "État",
-    "Options de configuration": "Configuration options"
+    "État": "État"
 }
