@@ -1,5 +1,4 @@
 {
-    "Options de la galerie %s ": "Επιλογές γκαλερί %s ",
     "A droite": "Δεξιά",
     "A gauche": "Αριστερά",
     "A l'ouverture de la galerie, la première image est affichée en plein écran.": "Όταν ανοίγει η γκαλερί, η πρώτη εικόνα εμφανίζεται σε πλήρη οθόνη.",
@@ -51,8 +50,7 @@
     "Ombre": "Σκιά",
     "Opacité au survol": "Αδιαφάνεια στο mouse-over",
     "Options de configuration": "Επιλογές διαμόρφωσης",
-    "Paramètres de la galerie": "",
-    "Paramètres des galeries": "",
+    "Options de la galerie %s ": "Επιλογές γκαλερί %s ",
     "Petite": "μικρή ",
     "Position du bouton de retour à l'index des galeries": "Θέση του κουμπιού Ευθυγράμμιση κουμπιού πίσω στο ευρετήριο της γκαλερί",
     "Proportionnelle": "Αναλογική",

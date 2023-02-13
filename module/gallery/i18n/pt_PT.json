@@ -1,5 +1,4 @@
 {
-    "Options de configuration": "",
     "A droite": "Para a direita",
     "A gauche": "Para a esquerda",
     "A l'ouverture de la galerie, la première image est affichée en plein écran.": "Na abertura da galeria, a primeira imagem é exibida em tela cheia.",
@@ -50,9 +49,8 @@
     "Moyenne": "Médio",
     "Ombre": "Ombre",
     "Opacité au survol": "Opacidade em Overflight",
-    "Options de la galerie %s ": "Opções de galeria %s",
-    "Paramètres de la galerie": "Configurações da galeria",
-    "Paramètres des galeries": "Parâmetros de galerias",
+    "Options de configuration": "",
+    "Options de la galerie %s ": "Opções de galeria %s ",
     "Petite": "Petite",
     "Position du bouton de retour à l'index des galeries": "Posição do botão de retorno para o índice de galerias",
     "Proportionnelle": "Proporcional",
