@@ -10,6 +10,9 @@
     - A l'installation ou lors de l'accès à la fenêtre des langues, les dialogues sont actualisés.
     - La fonction d'édition des langues de l'UI est neutralisée.
 - Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé.
+### Corrections : 
+- Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dont TUI-image.
+- Correction de petits bugs.
 ### Nouveautés :
 - Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
 
