@@ -10,7 +10,7 @@
 		<div class="col2 offset7">
 			<?php echo template::button('newsAddDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Brouillon'
+				'value' => helper::translate('Brouillon')
 			]); ?>
 			<?php echo template::hidden('newsAddState', [
 				'value' => true
