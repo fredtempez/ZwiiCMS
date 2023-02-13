@@ -180,7 +180,10 @@
     "Fonte non créée, ressource absente !": "¡Fuente no creada, por falta recurso!",
     "Fonte supprimée": "Fuente eliminada",
     "Fontes": "Tipografias",
+    "Format des dates": "Formato de fecha",
+    "Format des heures": "Formato de hora",
     "Format incorrect": "Formato incorrecto",
+    "Fréquence de recherche": "Frecuencia de búsqueda",
     "Fuseau horaire": "Zona horaria",
     "Gabarits de page - Barre latérale": "Patrón de página - Barra lateral",
     "Gestion": "Administrar",
@@ -479,6 +482,8 @@
     "faviconDark.ico": "faviconDark.ico",
     "gestionnaire de fichiers": "administrador de archivos",
     "installé": "instalado",
+    "jour": "día",
+    "jours": "días",
     "largeur de site :": "ancho del sitio",
     "largeur du site": "ancho del sitio",
     "sauvegardé avec succès": "Guardado exitosamente",
@@ -494,8 +499,5 @@
     "Éditeur de script %s": "Editor de script %s",
     "Éditeur de script dans Body": "Éditor del script en el Body",
     "Éditeur de script dans Head": "Éditor del script en el Head",
-    "Étiquettes des pages spéciales": "Etiquetas de página especiales",
-    "Fréquence de recherche": "Frecuencia de búsqueda",
-    "jour" : "día",
-    "jours" : "días"
+    "Étiquettes des pages spéciales": "Etiquetas de página especiales"
 }

@@ -180,7 +180,10 @@
     "Fonte non créée, ressource absente !": "",
     "Fonte supprimée": "",
     "Fontes": "",
+    "Format des dates": "",
+    "Format des heures": "",
     "Format incorrect": "",
+    "Fréquence de recherche": "",
     "Fuseau horaire": "",
     "Gabarits de page - Barre latérale": "",
     "Gestion": "",
@@ -479,6 +482,8 @@
     "faviconDark.ico": "",
     "gestionnaire de fichiers": "",
     "installé": "",
+    "jour": "",
+    "jours": "",
     "largeur de site :": "",
     "largeur du site": "",
     "sauvegardé avec succès": "",
@@ -494,8 +499,5 @@
     "Éditeur de script %s": "",
     "Éditeur de script dans Body": "",
     "Éditeur de script dans Head": "",
-    "Étiquettes des pages spéciales": "",
-    "Fréquence de recherche": "",
-    "jour" : "",
-    "jours" : ""
+    "Étiquettes des pages spéciales": ""
 }

@@ -180,7 +180,10 @@
     "Fonte non créée, ressource absente !": "Font non creato, risorsa non presente!",
     "Fonte supprimée": "Font cancellato",
     "Fontes": "Caratteri",
+    "Format des dates": "Formato della data",
+    "Format des heures": "Formato dell'ora",
     "Format incorrect": "Formato non corretto",
+    "Fréquence de recherche": "Frequenza di ricerca",
     "Fuseau horaire": "Fuso orario",
     "Gabarits de page - Barre latérale": "Modelli di pagina - Barra laterale",
     "Gestion": "Gestione",
@@ -479,6 +482,8 @@
     "faviconDark.ico": "faviconDark.ico",
     "gestionnaire de fichiers": "File manager",
     "installé": "installato",
+    "jour": "giorno",
+    "jours": "giorni",
     "largeur de site :": "larghezza del sito:",
     "largeur du site": "Larghezza del sito",
     "sauvegardé avec succès": "backup riuscito",
@@ -494,8 +499,5 @@
     "Éditeur de script %s": "Script Editor %s",
     "Éditeur de script dans Body": "Editor di script in Body",
     "Éditeur de script dans Head": "Editor di script in Head.",
-    "Étiquettes des pages spéciales": "Etichette di pagina speciali",
-    "Fréquence de recherche": "Frequenza di ricerca",
-    "jour" : "giorno",
-    "jours" : "giorni"
+    "Étiquettes des pages spéciales": "Etichette di pagina speciali"
 }

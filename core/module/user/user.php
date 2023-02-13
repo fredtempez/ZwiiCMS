@@ -301,18 +301,11 @@ class user extends common
 			}
 
 			// Langues disponibles pour l'interface de l'utilisateur
-			if (is_dir(self::I18N_DIR)) {
-				$dir = getcwd();
-				chdir(self::I18N_DIR);
-				$files = glob('*.json');
-				chdir($dir);
+			self::$languagesInstalled = $this->getData(['languages']);
+			foreach (self::$languagesInstalled as $lang => $datas) {
+				self::$languagesInstalled[$lang] = self::$languages[$lang];
 			}
-			foreach ($files as $file) {
-				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languages)) {
-					self::$languagesInstalled[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				}
-			}
+			
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
