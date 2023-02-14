@@ -81,7 +81,7 @@ class news extends common
 
 	public static $borderStyle = [
 		'none' => 'Aucune',
-		'solid' => 'Tiret'
+		'solid' => 'Bordure'
 	];
 
 	// Signature de l'article
@@ -231,13 +231,13 @@ class news extends common
 			if ($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) {
 				$dateOff = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
 			} else {
-				$dateOff = 'Permanent';
+				$dateOff = helper::translate('Permanent');
 			}
 			self::$news[] = [
 				$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'title']),
 				$dateOn,
 				$dateOff,
-				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])],
+				helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])]),
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil')
@@ -337,7 +337,7 @@ class news extends common
 					$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'title']),
 					$dateOn,
 					$dateOff,
-					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])],
+					helper::translate(helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])])),
 					template::button('newsConfigEdit' . $newsIds[$i], [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil')

@@ -24,8 +24,8 @@
     "Brouillon": "",
     "Couleur de la bordure": "",
     "Couleur du fond": "",
-    "Date de dépublication": "",
-    "Date de publication": "",
+    "Fin de dépublication": "",
+    "Publication": "",
     "Etiquette RSS": "",
     "Fine": "",
     "Flux limité aux articles de la première page.": "",
@@ -43,8 +43,8 @@
     "Rédiger un article": "",
     "Rédiger une news": "",
     "Supprimer cet article ?": "",
-    "Trait": "",
     "Très fine": "",
     "Très petite": "",
-    "Épaisseur": ""
+    "Épaisseur": "",
+    "Publié": ""
 }

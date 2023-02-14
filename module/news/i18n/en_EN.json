@@ -24,8 +24,8 @@
     "Brouillon": "Draft copy",
     "Couleur de la bordure": "Border color",
     "Couleur du fond": "Bottom color",
-    "Date de dépublication": "Date of depublication",
-    "Date de publication": "Publication date",
+    "Fin de publication": "End of publication",
+    "Dublication": "Publication date",
     "Etiquette RSS": "RSS label",
     "Fine": "Fine",
     "Flux limité aux articles de la première page.": "Flow limited to articles on the first page.",
@@ -43,8 +43,8 @@
     "Rédiger un article": "Write an article",
     "Rédiger une news": "Write a news",
     "Supprimer cet article ?": "Delete this article?",
-    "Trait": "Line",
     "Très fine": "Very fine",
     "Très petite": "Very small",
-    "Épaisseur": "Thickness"
+    "Épaisseur": "Thickness",
+    "Publié": "Published"
 }

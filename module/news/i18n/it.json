@@ -24,8 +24,8 @@
     "Brouillon": "Progetto di copia",
     "Couleur de la bordure": "Colore del bordo",
     "Couleur du fond": "Colore inferiore",
-    "Date de dépublication": "Data di depubblicazione",
-    "Date de publication": "Data di pubblicazione",
+    "Fin de publication": "Fine della pubblicazione",
+    "Publication": "Data di pubblicazione",
     "Etiquette RSS": "Etichetta RSS",
     "Fine": "Bene",
     "Flux limité aux articles de la première page.": "Flusso limitato agli articoli nella prima pagina.",
@@ -43,8 +43,8 @@
     "Rédiger un article": "Scrivi un articolo",
     "Rédiger une news": "Scrivi una notizia",
     "Supprimer cet article ?": "Elimina questo articolo?",
-    "Trait": "Trattino",
     "Très fine": "Molto bene",
     "Très petite": "Molto piccolo",
-    "Épaisseur": "Spessore"
+    "Épaisseur": "Spessore",
+    "Publié": "Pubblicato"
 }

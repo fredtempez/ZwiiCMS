@@ -24,8 +24,8 @@
     "Brouillon": "Borrador",
     "Couleur de la bordure": "Color de bordillo",
     "Couleur du fond": "Color de fondo",
-    "Date de dépublication": "Fecha no publicada",
-    "Date de publication": "Fecha de publicación",
+    "Fin de publication": "Fecha no publicada",
+    "Publication": "Fecha de publicación",
     "Etiquette RSS": "",
     "Fine": "Fino",
     "Flux limité aux articles de la première page.": "Alimento limitado a artículos en la primera página.",
@@ -43,8 +43,8 @@
     "Rédiger un article": "Escribe un artículo",
     "Rédiger une news": "Escribir una noticia",
     "Supprimer cet article ?": "¿Borrar este artículo?",
-    "Trait": "Guión",
     "Très fine": "Muy fino",
     "Très petite": "Muy pequeña",
-    "Épaisseur": "Espesor"
+    "Épaisseur": "Espesor",
+    "Publié": "publicado"
 }

@@ -24,8 +24,8 @@
     "Brouillon": "Cópia rascunho",
     "Couleur de la bordure": "Cor da borda",
     "Couleur du fond": "Cor inferior",
-    "Date de dépublication": "Data da depublicação",
-    "Date de publication": "Data de publicação",
+    "Fin de publication": "Fin da publicação",
+    "Publication": "Data de publicação",
     "Etiquette RSS": "Rótulo RSS",
     "Fine": "Multar",
     "Flux limité aux articles de la première page.": "Fluxo limitado a artigos na primeira página.",
@@ -43,8 +43,8 @@
     "Rédiger un article": "Escrever um artigo",
     "Rédiger une news": "Escreva uma notícia",
     "Supprimer cet article ?": "Excluir este artigo?",
-    "Trait": "Hífen",
     "Très fine": "Muito bem",
     "Très petite": "Muito pequeno",
-    "Épaisseur": "Espessura"
+    "Épaisseur": "Espessura",
+    "Publié": "Publicado"
 }

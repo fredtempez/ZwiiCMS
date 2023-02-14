@@ -28,7 +28,7 @@
     "Commentaire supprimé": "Deleted comment",
     "Commentaires": "Comments",
     "Commentaires supprimés": "Deleted comments",
-    "Date de publication": "Publication date",
+    "Publication": "Publication",
     "Edition - Suppression": "Edition - Suppression",
     "Effacer l'article": "Erase the article",
     "Fermer les commentaires": "Turn off the comments",
@@ -75,5 +75,5 @@
     "Éditer  / Approuver les commentaires": "Edit / approve comments",
     "Éditer l'article": "Edit the article",
     "Éditeur": "Editor",
-    "État": "État"
+    "État": "Status"
 }
