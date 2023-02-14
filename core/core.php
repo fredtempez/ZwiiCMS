@@ -3003,12 +3003,13 @@ class core extends common
 			)
 			and $access
 		) {
+
+
 			$this->addOutput([
 				'title' => $title,
 				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) .
-				// Concatène avec les paramètres avancés.
-				$this->getData(['page', $this->getUrl(0), 'css']) .
-				$this->getData(['page', $this->getUrl(0), 'js']),
+							($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
+							($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) ),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -3016,15 +3017,16 @@ class core extends common
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
 				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js'])
+				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) == null ?'' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css'])) .
+				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']))
 				: '',
 				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
 				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js'])
+				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) ===  null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css'])) .
+				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']))
 				: ''
 			]);
+
 		}
 		// Importe le module
 		else {
@@ -3043,13 +3045,15 @@ class core extends common
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
-					: '',
+										? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
+										: '',
 					'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
-					: ''
+										? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
+										: ''
 				]);
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent) .
+				($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
+				($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
 			} else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
