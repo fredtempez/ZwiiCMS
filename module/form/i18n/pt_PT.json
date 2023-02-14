@@ -3,7 +3,7 @@
     "A gauche": "Para a esquerda",
     "A tous les groupes depuis": "Para todos os grupos desde",
     "A un membre": "Um membre",
-    "A une adresse email": "Em um endereço de e -mail",
+    "A une Adresse électronique": "Em um endereço de e -mail",
     "Administrateur": "Administrador",
     "Alignement du formulaire": "Alinhamento de forma",
     "Au centre": "No centro",
@@ -27,8 +27,8 @@
     "Effacer toutes les données": "Apague todos os dados",
     "Envoyer": "Mandar",
     "Envoyer par mail les données saisies :": "Envie os dados inseridos por e -mail:",
-    "Etiquette": "Etiqueta",
-    "Etiquette du bouton de soumission": "Etiqueta do botão de envio",
+    "Étiquette": "Etiqueta",
+    "Étiquette du bouton de soumission": "Etiqueta do botão de envio",
     "Export CSV effectué dans %1 ": "Exportação de CSV feita em %1",
     "Exporter toutes les données": "Exportar todos os dados",
     "Formulaire soumis": "Formulário enviado",
@@ -61,5 +61,6 @@
     "Validation du formulaire": "Validação do formulário",
     "Vide affiche le texte par défaut": "A vácuo exibe o texto padrão",
     "Voir et exporter les données du formulaire": "Ver e exportar dados de formulário",
-    "Éditeur": "editor"
+    "Éditeur": "editor",
+    "Export des données": "Exportação de dados"
 }

@@ -1,5 +1,6 @@
 {
     "Le lien de redirection peut contenir une URL standard, ou pointer vers l'ancre d'une page du site": "The redirection link may contain a standard URL, or point to the anchor of a site page",
     "Lien de redirection": "Redirection link",
-    "Nombre de redirections": "Number of redirects"
+    "Nombre de redirections": "Number of redirects",
+    "Statistiques": "Statistics"
 }

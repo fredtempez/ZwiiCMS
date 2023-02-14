@@ -3,7 +3,7 @@
     "A gauche": "Στοίχιση φόρμας",
     "A tous les groupes depuis": "Προς όλες τις ομάδες από την",
     "A un membre": "Προς ένα μέλος",
-    "A une adresse email": "Σε μια διεύθυνση email",
+    "A une Adresse électronique": "Σε μια διεύθυνση email",
     "Administrateur": "Διαχειριστής",
     "Alignement du formulaire": "Στοίχιση φόρμας",
     "Au centre": "Στοίχιση φόρμας",
@@ -27,8 +27,8 @@
     "Effacer toutes les données": "Διαγραφή όλων των δεδομένων",
     "Envoyer": "Στείλετε",
     "Envoyer par mail les données saisies :": "Στείλτε τα καταχωρημένα δεδομένα μέσω email",
-    "Etiquette": "ετικέτα",
-    "Etiquette du bouton de soumission": "Ετικέτα κουμπιού υποβολής",
+    "Étiquette": "ετικέτα",
+    "Étiquette du bouton de soumission": "Ετικέτα κουμπιού υποβολής",
     "Export CSV effectué dans %1 ": "",
     "Exporter toutes les données": "Εξαγωγή όλων των δεδομένων",
     "Formulaire soumis": "",
@@ -61,5 +61,6 @@
     "Validation du formulaire": "Επικύρωση της φόρμας",
     "Vide affiche le texte par défaut": "Το κενό εμφανίζει προεπιλεγμένο κείμενο",
     "Voir et exporter les données du formulaire": "Προβολή και εξαγωγή δεδομένων φόρμας",
-    "Éditeur": "Επιμελητής"
+    "Éditeur": "Επιμελητής",
+    "Export des données": "ξαγωγή δεδομένων"
 }

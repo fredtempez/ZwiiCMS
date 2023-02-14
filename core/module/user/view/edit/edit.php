@@ -53,7 +53,7 @@
 			]); ?>
 			<?php echo template::mail('userEditMail', [
 				'autocomplete' => 'off',
-				'label' => 'Adresse mail',
+				'label' => 'Adresse électronique',
 				'value' => $this->getData(['user', $this->getUrl(2), 'mail'])
 			]); ?>
 		</div>

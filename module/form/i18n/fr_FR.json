@@ -3,7 +3,7 @@
     "A gauche": "",
     "A tous les groupes depuis": "",
     "A un membre": "",
-    "A une adresse email": "",
+    "A une Adresse électronique": "",
     "Administrateur": "",
     "Alignement du formulaire": "",
     "Au centre": "",
@@ -27,8 +27,8 @@
     "Effacer toutes les données": "",
     "Envoyer": "",
     "Envoyer par mail les données saisies :": "",
-    "Etiquette": "",
-    "Etiquette du bouton de soumission": "",
+    "Étiquette": "",
+    "Étiquette du bouton de soumission": "",
     "Export CSV effectué dans %1 ": "",
     "Exporter toutes les données": "",
     "Formulaire soumis": "",
@@ -61,5 +61,6 @@
     "Validation du formulaire": "",
     "Vide affiche le texte par défaut": "",
     "Voir et exporter les données du formulaire": "",
-    "Éditeur": ""
+    "Éditeur": "",
+    "Export des données": ""
 }
