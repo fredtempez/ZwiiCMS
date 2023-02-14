@@ -13,7 +13,7 @@
     "Aucun": "None",
     "Aucune": "None",
     "Aucune galerie": "No gallery",
-    "Bordure": "Bordure",
+    "Bordure": "Border",
     "Cette option est active lorsque le module ne contient qu'une seule galerie, elle permet d'éviter la page listant toutes les galeries et affiche directement la galerie": "This option is active when the module contains only one gallery, it avoids the page listing all the galleries and displays the gallery directly",
     "Configuration de la galerie %s ": "Gallery settings %s ",
     "Configuration des galeries": "Galleries's settings",
@@ -50,7 +50,7 @@
     "Ombre": "Ombre",
     "Opacité au survol": "Opacity in overflight",
     "Options de configuration": "Configuration options",
-    "Options de la galerie %s ": "",
+    "Options de la galerie %s": "%s gallery's options",
     "Petite": "Petite",
     "Position du bouton de retour à l'index des galeries": "Position of the return button to the galleries index",
     "Proportionnelle": "Proportional",
@@ -69,5 +69,8 @@
     "Très épaisse": "Very thick",
     "Vignettes": "Vignettes",
     "À droite": "To the right",
-    "À gauche": "To the left"
+    "À gauche": "To the left",
+    "Image": "Picture",
+    "Couverture": "Cover",
+    "Légende": "Caption"
 }

@@ -50,7 +50,7 @@
     "Ombre": "Ombre",
     "Opacité au survol": "Opacidade em Overflight",
     "Options de configuration": "",
-    "Options de la galerie %s ": "Opções de galeria %s ",
+    "Options de la galerie %s ": "Opções de galeria %s",
     "Petite": "Petite",
     "Position du bouton de retour à l'index des galeries": "Posição do botão de retorno para o índice de galerias",
     "Proportionnelle": "Proporcional",
@@ -69,5 +69,8 @@
     "Très épaisse": "Muito espesso",
     "Vignettes": "Vinhetas",
     "À droite": "Para a direita",
-    "À gauche": "Para a esquerda"
+    "À gauche": "Para a esquerda",
+    "Image": "Imagem",
+    "Couverture": "Capa",
+    "Légende": "Legenda"
 }

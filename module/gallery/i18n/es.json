@@ -50,7 +50,7 @@
     "Ombre": "Sombra",
     "Opacité au survol": "Opacidad de desplazamiento",
     "Options de configuration": "Opciones de configuración",
-    "Options de la galerie %s ": "",
+    "Options de la galerie %s": "Opciones de la galería %s",
     "Petite": "Pequeña",
     "Position du bouton de retour à l'index des galeries": "Posición del botón Atrás del índice de galería",
     "Proportionnelle": "Proporcional",
@@ -69,5 +69,8 @@
     "Très épaisse": "Muy grueso",
     "Vignettes": "Viñetas",
     "À droite": "A la derecha",
-    "À gauche": "A la izquierda"
+    "À gauche": "A la izquierda",
+    "Image": "Imagen",
+    "Couverture": "Portada ",
+    "Légende": "Pie"
 }

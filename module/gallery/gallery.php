@@ -854,7 +854,7 @@ class gallery extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Options du thème'),
+			'title' => helper::translate('Thème'),
 			'view' => 'theme',
 			'vendor' => [
 				'tinycolorpicker'
@@ -962,7 +962,7 @@ class gallery extends common {
 			self::$formOptionSelect = 'gallery';
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => sprintf(helper::translate('Options de la galerie %s'), $this->getUrl(3)),
+				'title' => sprintf(helper::translate('Options de la galerie %s'), ucfirst( $this->getUrl(3)) ),
 				'view' => 'option'
 			]);
 		} else {

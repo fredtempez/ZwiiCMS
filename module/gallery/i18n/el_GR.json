@@ -50,7 +50,7 @@
     "Ombre": "Σκιά",
     "Opacité au survol": "Αδιαφάνεια στο mouse-over",
     "Options de configuration": "Επιλογές διαμόρφωσης",
-    "Options de la galerie %s ": "Επιλογές γκαλερί %s ",
+    "Options de la galerie %s": "Επιλογές γκαλερί %s",
     "Petite": "μικρή ",
     "Position du bouton de retour à l'index des galeries": "Θέση του κουμπιού Ευθυγράμμιση κουμπιού πίσω στο ευρετήριο της γκαλερί",
     "Proportionnelle": "Αναλογική",
@@ -69,5 +69,8 @@
     "Très épaisse": "πολύ παχιά γραμμή",
     "Vignettes": "",
     "À droite": "Δεξιά",
-    "À gauche": "Αριστερά"
+    "À gauche": "Αριστερά",
+    "Image": "Εικόνα",
+    "Couverture": "Κάλυψη ",
+    "Légende": "Λεζάντα εικόνας"
 }
