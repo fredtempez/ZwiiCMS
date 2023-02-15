@@ -3010,10 +3010,9 @@ class core extends common
 			and $access
 		) {
 
-
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
+				//'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -3022,7 +3021,15 @@ class core extends common
 				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '',
 				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : ''
 			]);
-			// ($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
+			// Importe le CSS dans la page
+			$css =  $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+			$css = strpos($css, '<style>') == null ? $css : '<style>' . $css . '</style>';
+			//var_dump($css);
+			//die();
+			$this->addOutput([
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css
+			]);
+
 		}
 		// Importe le module
 		else {
