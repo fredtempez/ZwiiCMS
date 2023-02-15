@@ -2342,7 +2342,8 @@ class common
 	/**
 	 * Importe les polices de carcatères
 	 */
-	public function showFonts() {
+	public function showFonts()
+	{
 		// Import des fontes liées au thème
 		if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
 			include_once(self::DATA_DIR . 'fonts/fonts.html');
@@ -3002,6 +3003,21 @@ class core extends common
 				$this->getData(['page', $this->getUrl(0), 'title']);
 		}
 		// Importe la page simple sans module ou avec un module inexistant
+
+		// Importe le CSS de la page principale
+		$css = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+		$css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>' : $css;
+		$pageContent =  $this->getPage($this->getUrl(0), self::$i18nContent) . $css;
+
+		// Importe le CSS des barres
+		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
+		$cssRight = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
+		$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>' : $cssRight;
+
+		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
+		$cssLeft = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
+		$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>' : $cssLeft;
+
 		if (
 			$this->getData(['page', $this->getUrl(0)]) !== null
 			and ($this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
@@ -3010,22 +3026,9 @@ class core extends common
 			and $access
 		) {
 
-			// Importe le CSS de la page principale
-			$css = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
-			$css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>': $css;
-
-			// Importe le CSS des barres
-			$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
-			$cssRight = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '': $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
-			$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>': $cssRight;
-
-			$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
-			$cssLeft = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
-			$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>': $cssLeft;
-
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css,
+				'content' => $pageContent,
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -3038,26 +3041,28 @@ class core extends common
 		}
 		// Importe le module
 		else {
-			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
+			// Id du module, et valeurs en sortie de la page s'il s'agit d'un module de page
 
 			if ($access and $this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 				$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+
+				// Construit un meta absent
+				$metaDescription = $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
+					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
+					: $this->getData(['page', $this->getUrl(0), 'metaDescription']);
+
 				$this->addOutput([
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
-					'metaDescription' => $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
-					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
-					: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
+					'content' => $pageContent,
+					'metaDescription' => $metaDescription,
+					'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css,
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-					'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
-					: '',
-					'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
-					: ''
+					'contentRight' => $contentRight . $cssRight,
+					'contentLeft' => $contentLeft . $cssLeft,
 				]);
 			} else {
 				$moduleId = $this->getUrl(0);
