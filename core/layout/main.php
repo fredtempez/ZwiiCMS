@@ -22,6 +22,7 @@
 		<link rel="alternate" type="application/rss+xml" href="'<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" title="fLUX rss">
 	<?php endif; ?>
 	<?php $this->showStyle(); ?>
+	<?php $this->showInlineStyle(); ?>
 	<!-- Script perso dans le header -->
 	<?php if (file_exists(self::DATA_DIR . 'head.inc.html')) {
 		include(self::DATA_DIR . 'head.inc.html');

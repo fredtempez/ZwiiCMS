@@ -1,8 +1,0 @@
-// Créer les styles externes
-if ($this->getData(['page', $this->getUrl(0), 'css' ])) {
-    $stylePath = self::TEMP_DIR . uniqid() . '.css';
-    file_put_contents($stylePath, html_entity_decode($this->getData(['page', $this->getUrl(0), 'css'])));
-    $this->addOutput([
-        'style' => $stylePath
-    ]);
-}

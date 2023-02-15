@@ -117,6 +117,7 @@ class common
 		'showPageContent' => false,
 		'state' => false,
 		'style' => '',
+		'inlineStyle' => '',
 		'title' => null,
 		// Null car un titre peut être vide
 		// Trié par ordre d'exécution
@@ -1269,34 +1270,6 @@ class common
 		$zip->close();
 	}
 
-	/**
-	 * Summary of dateUTF8
-	 * @param mixed $format
-	 * @param mixed $date time()
-	 * @param mixed $scope UI ou Content
-	 * @return string Date formatée
-	 */
-	public static function showDate($format, $date, $scope = "UI")
-	{
-		$d = new DateTime(time());
-		$d->format($format);
-
-		/*
-		$d = datefmt_create(
-		self::$i18nUI,
-		IntlDateFormatter::FULL,
-		IntlDateFormatter::FULL,
-		self::$timezone,
-		IntlDateFormatter::GREGORIAN,
-		$format
-		);
-		exit (datefmt_format($d, $date));
-		//return datefmt_format($d, $date);
-		*/
-
-	}
-
-
 
 	// Layout remplace la classe précédente
 
@@ -2340,6 +2313,19 @@ class common
 	}
 
 	/**
+	 * Affiche le style interne des pages
+	 */
+	public function showInlineStyle()
+	{
+		// Import des styles liés à la page
+		if ($this->output['inlineStyle']) {
+			foreach($this->output['inlineStyle'] as $style) {
+				echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+			}
+		}
+	}
+
+	/**
 	 * Importe les polices de carcatères
 	 */
 	public function showFonts()
@@ -3005,18 +2991,18 @@ class core extends common
 		// Importe la page simple sans module ou avec un module inexistant
 
 		// Importe le CSS de la page principale
-		$css = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
-		$css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>' : $css;
-		$pageContent =  $this->getPage($this->getUrl(0), self::$i18nContent) . $css;
+		$pageContent =  $this->getPage($this->getUrl(0), self::$i18nContent);
+		$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+		// $css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>' : $css;
 
 		// Importe le CSS des barres
 		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
-		$cssRight = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
-		$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>' : $cssRight;
+		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
+		//$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>' : $cssRight;
 
 		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
-		$cssLeft = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
-		$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>' : $cssLeft;
+		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
+		//$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>' : $cssLeft;
 
 		if (
 			$this->getData(['page', $this->getUrl(0)]) !== null
@@ -3034,8 +3020,9 @@ class core extends common
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $contentRight . $cssRight,
-				'contentLeft' => $contentLeft . $cssLeft,
+				'contentRight' => $contentRight,
+				'contentLeft' => $contentLeft,
+				'inlineStyle' => $inlineStyle,
 			]);
 
 		}
@@ -3056,13 +3043,13 @@ class core extends common
 					// Meta description = 160 premiers caractères de l'article
 					'content' => $pageContent,
 					'metaDescription' => $metaDescription,
-					'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css,
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-					'contentRight' => $contentRight . $cssRight,
-					'contentLeft' => $contentLeft . $cssLeft,
+					'contentRight' => $contentRight,
+					'contentLeft' => $contentLeft,
+					'inlineStyle' => $inlineStyle,
 				]);
 			} else {
 				$moduleId = $this->getUrl(0);
@@ -3231,7 +3218,6 @@ class core extends common
 				}
 			}
 		}
-
 		// Erreurs
 		if ($access === 'login') {
 			http_response_code(302);
@@ -3290,7 +3276,6 @@ class core extends common
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
-		;
 		switch ($this->output['display']) {
 			// Layout brut
 			case self::DISPLAY_RAW:
