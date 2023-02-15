@@ -350,9 +350,9 @@ class common
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
-							&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
-								? 'fr_FR'
-								: self::$i18nUI;
+				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
+				? 'fr_FR'
+				: self::$i18nUI;
 		}
 
 		// Stocker le cookie de langue pour l'éditeur de texte
@@ -2337,6 +2337,12 @@ class common
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
+	}
+
+	/**
+	 * Importe les polices de carcatères
+	 */
+	public function showFonts() {
 		// Import des fontes liées au thème
 		if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
 			include_once(self::DATA_DIR . 'fonts/fonts.html');
@@ -3007,26 +3013,16 @@ class core extends common
 
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) .
-							($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
-							($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) ),
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
-				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) == null ?'' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css'])) .
-				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']))
-				: '',
-				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
-				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) ===  null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css'])) .
-				($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']))
-				: ''
+				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '',
+				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : ''
 			]);
-
+			// ($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
 		}
 		// Importe le module
 		else {
@@ -3045,15 +3041,15 @@ class core extends common
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
 					'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-										? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
-										: '',
+					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
+					: '',
 					'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-										? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
-										: ''
+					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
+					: ''
 				]);
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent) .
-				($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
-				($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
+				//$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent) .
+				//($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
+				//($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
 			} else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
@@ -3148,7 +3144,8 @@ class core extends common
 							}
 							if ($output['style']) {
 								$this->addOutput([
-									'style' => $this->output['style'] . file_get_contents($output['style'])
+									//'style' => $this->output['style'] . file_get_contents($output['style'])
+									'style' => file_get_contents($output['style'])
 								]);
 							}
 
