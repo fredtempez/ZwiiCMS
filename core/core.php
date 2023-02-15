@@ -1077,16 +1077,12 @@ class common
 				case 'image/jpeg':
 				case 'image/jpg':
 					return (imagejpeg($virtual_image, $dest));
-					break;
 				case 'image/png':
 					return (imagepng($virtual_image, $dest));
-					break;
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
-					break;
 				case 'webp':
 					$source_image = imagecreatefromwebp($src);
-					break;
 			}
 		} else {
 			return (false);
@@ -2319,7 +2315,7 @@ class common
 	{
 		// Import des styles liés à la page
 		if ($this->output['inlineStyle']) {
-			foreach($this->output['inlineStyle'] as $style) {
+			foreach ($this->output['inlineStyle'] as $style) {
 				echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
 			}
 		}
@@ -2988,22 +2984,15 @@ class core extends common
 				'</a> &#8250; ' .
 				$this->getData(['page', $this->getUrl(0), 'title']);
 		}
-		// Importe la page simple sans module ou avec un module inexistant
-
-		// Importe le CSS de la page principale
-		$pageContent =  $this->getPage($this->getUrl(0), self::$i18nContent);
-		$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
-		// $css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>' : $css;
+		
 
 		// Importe le CSS des barres
 		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
-		//$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>' : $cssRight;
-
 		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
-		//$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>' : $cssLeft;
 
+		// Importe la page simple sans module ou avec un module inexistant
 		if (
 			$this->getData(['page', $this->getUrl(0)]) !== null
 			and ($this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
@@ -3011,6 +3000,10 @@ class core extends common
 			)
 			and $access
 		) {
+
+			// Importe le CSS de la page principale
+			$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
+			$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
 
 			$this->addOutput([
 				'title' => $title,
@@ -3037,6 +3030,10 @@ class core extends common
 				$metaDescription = $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
 					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
 					: $this->getData(['page', $this->getUrl(0), 'metaDescription']);
+
+				// Importe le CSS de la page principale
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
+				$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
 
 				$this->addOutput([
 					'title' => $title,
