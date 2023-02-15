@@ -3010,24 +3010,29 @@ class core extends common
 			and $access
 		) {
 
+			// Importe le CSS de la page principale
+			$css = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+			$css = strpos($css, '<style>') == null ? '<style>' . $css . '</style>': $css;
+
+			// Importe le CSS des barres
+			$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
+			$cssRight = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '': $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
+			$cssRight = strpos($cssRight, '<style>') == null ? '<style>' . $cssRight . '</style>': $cssRight;
+
+			$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
+			$cssLeft = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
+			$cssLeft = strpos($cssRight, '<style>') == null ? '<style>' . $cssLeft . '</style>': $cssLeft;
+
 			$this->addOutput([
 				'title' => $title,
-				//'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css,
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '',
-				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : ''
-			]);
-			// Importe le CSS dans la page
-			$css =  $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
-			$css = strpos($css, '<style>') == null ? $css : '<style>' . $css . '</style>';
-			//var_dump($css);
-			//die();
-			$this->addOutput([
-				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) . $css
+				'contentRight' => $contentRight . $cssRight,
+				'contentLeft' => $contentLeft . $cssLeft,
 			]);
 
 		}
@@ -3054,9 +3059,6 @@ class core extends common
 					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
 					: ''
 				]);
-				//$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent) .
-				//($this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']) ).
-				//($this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']) );
 			} else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
