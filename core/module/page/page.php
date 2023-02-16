@@ -492,8 +492,8 @@ class page extends common
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN),
-							'css' => $this->getData(['page', $this->getUrl(2), 'css']),
-							'js' => $this->getData(['page', $this->getUrl(2), 'js']),
+							'css' => $this->getData(['page', $this->getUrl(2), 'css']) == null ? '' : $this->getData(['page', $this->getUrl(2), 'css']),
+							'js' => $this->getData(['page', $this->getUrl(2), 'js']) == null ? '' : $this->getData(['page', $this->getUrl(2), 'js']),
 						]
 					]);
 

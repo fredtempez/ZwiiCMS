@@ -117,7 +117,8 @@ class common
 		'showPageContent' => false,
 		'state' => false,
 		'style' => '',
-		'inlineStyle' => '',
+		'inlineStyle' => [],
+		'inlineScript' => [],
 		'title' => null,
 		// Null car un titre peut être vide
 		// Trié par ordre d'exécution
@@ -2286,11 +2287,14 @@ class common
 	 * Affiche le script
 	 */
 	public function showScript()
-	{
+	{		
 		ob_start();
 		require 'core/core.js.php';
 		$coreScript = ob_get_clean();
-		echo '<script>' . helper::minifyJs($coreScript . $this->output['script']) . '</script>';
+		if ($this->output['inlineScript']) {
+			$inlineScript = implode($this->output['inlineScript']);
+		}
+		echo '<script>' . helper::minifyJs( $coreScript . $this->output['script'] . htmlspecialchars_decode($inlineScript) ) . '</script>';
 	}
 
 	/**
@@ -2316,13 +2320,16 @@ class common
 		// Import des styles liés à la page
 		if ($this->output['inlineStyle']) {
 			foreach ($this->output['inlineStyle'] as $style) {
-				echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+				if ($style) {
+					echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+				}
+				
 			}
 		}
 	}
 
 	/**
-	 * Importe les polices de carcatères
+	 * Importe les polices de caractères
 	 */
 	public function showFonts()
 	{
@@ -2984,13 +2991,21 @@ class core extends common
 				'</a> &#8250; ' .
 				$this->getData(['page', $this->getUrl(0), 'title']);
 		}
-		
 
-		// Importe le CSS des barres
+
+		// Importe le style de la page principale
+		$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+		// Importe le script de la page principale
+		$inlineScript[] = $this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']);
+
+		// Importe le contenu, le CSS et le script des barres
 		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
+		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']);
 		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
 		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
+		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']);
+
 
 		// Importe la page simple sans module ou avec un module inexistant
 		if (
@@ -3002,12 +3017,10 @@ class core extends common
 		) {
 
 			// Importe le CSS de la page principale
-			$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
-			$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
 
 			$this->addOutput([
 				'title' => $title,
-				'content' => $pageContent,
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
@@ -3016,6 +3029,7 @@ class core extends common
 				'contentRight' => $contentRight,
 				'contentLeft' => $contentLeft,
 				'inlineStyle' => $inlineStyle,
+				'inlineScript' => $inlineScript,
 			]);
 
 		}
@@ -3033,7 +3047,6 @@ class core extends common
 
 				// Importe le CSS de la page principale
 				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
-				$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
 
 				$this->addOutput([
 					'title' => $title,
@@ -3047,6 +3060,7 @@ class core extends common
 					'contentRight' => $contentRight,
 					'contentLeft' => $contentLeft,
 					'inlineStyle' => $inlineStyle,
+					'inlineScript' => $inlineScript,
 				]);
 			} else {
 				$moduleId = $this->getUrl(0);
