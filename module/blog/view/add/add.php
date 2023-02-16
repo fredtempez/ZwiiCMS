@@ -94,7 +94,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::select('blogAddConsent', $module::$articleConsent  , [
-							'label' => 'Edition - Suppression',
+							'label' => 'Édition - Suppression',
 							'selected' => $module::EDIT_ALL,
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>

@@ -15,10 +15,6 @@
  */
 $(function() {
 	$(".datepicker").flatpickr({
-		altInput: true,
-		altFormat: "d/m/Y",
 		enableTime: false,
-		locale: "fr",
-		dateFormat: "d/m/Y"
 	});
 });
