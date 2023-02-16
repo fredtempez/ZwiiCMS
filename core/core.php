@@ -2290,6 +2290,7 @@ class common
 		ob_start();
 		require 'core/core.js.php';
 		$coreScript = ob_get_clean();
+		$inlineScript = '';
 		if ($this->output['inlineScript']) {
 			$inlineScript = implode($this->output['inlineScript']);
 		}
