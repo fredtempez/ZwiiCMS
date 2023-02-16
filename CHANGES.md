@@ -11,12 +11,11 @@
     - La fonction d'édition des langues de l'UI est neutralisée.
 - Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé.
 ### Corrections : 
-- Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dont TUI-image.
+- Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dans TUI-image.
+- Mauvais affichage du script ou du CSS déclarés dans une page.
 - Correction de petits bugs.
 ### Nouveautés :
 - Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
-### Corrections : 
-- Mauvais affichage du script ou du CSS déclaré dans une page.
 
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
