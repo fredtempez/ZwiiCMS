@@ -117,6 +117,8 @@ class common
 		'showPageContent' => false,
 		'state' => false,
 		'style' => '',
+		'inlineStyle' => [],
+		'inlineScript' => [],
 		'title' => null,
 		// Null car un titre peut être vide
 		// Trié par ordre d'exécution
@@ -350,9 +352,9 @@ class common
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
-							&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
-								? 'fr_FR'
-								: self::$i18nUI;
+				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
+				? 'fr_FR'
+				: self::$i18nUI;
 		}
 
 		// Stocker le cookie de langue pour l'éditeur de texte
@@ -1076,16 +1078,12 @@ class common
 				case 'image/jpeg':
 				case 'image/jpg':
 					return (imagejpeg($virtual_image, $dest));
-					break;
 				case 'image/png':
 					return (imagepng($virtual_image, $dest));
-					break;
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
-					break;
 				case 'webp':
 					$source_image = imagecreatefromwebp($src);
-					break;
 			}
 		} else {
 			return (false);
@@ -2288,11 +2286,14 @@ class common
 	 * Affiche le script
 	 */
 	public function showScript()
-	{
+	{		
 		ob_start();
 		require 'core/core.js.php';
 		$coreScript = ob_get_clean();
-		echo '<script>' . helper::minifyJs($coreScript . $this->output['script']) . '</script>';
+		if ($this->output['inlineScript']) {
+			$inlineScript = implode($this->output['inlineScript']);
+		}
+		echo '<script>' . helper::minifyJs( $coreScript . $this->output['script'] . htmlspecialchars_decode($inlineScript) ) . '</script>';
 	}
 
 	/**
@@ -2308,6 +2309,29 @@ class common
 			}
 			echo '<style type="text/css">' . helper::minifyCss($this->output['style']) . '</style>';
 		}
+	}
+
+	/**
+	 * Affiche le style interne des pages
+	 */
+	public function showInlineStyle()
+	{
+		// Import des styles liés à la page
+		if ($this->output['inlineStyle']) {
+			foreach ($this->output['inlineStyle'] as $style) {
+				if ($style) {
+					echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+				}
+				
+			}
+		}
+	}
+
+	/**
+	 * Importe les polices de caractères
+	 */
+	public function showFonts()
+	{
 		// Import des fontes liées au thème
 		if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
 			include_once(self::DATA_DIR . 'fonts/fonts.html');
@@ -2966,6 +2990,22 @@ class core extends common
 				'</a> &#8250; ' .
 				$this->getData(['page', $this->getUrl(0), 'title']);
 		}
+
+
+		// Importe le style de la page principale
+		$inlineStyle[] = $this->getData(['page', $this->getUrl(0), 'css']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'css']);
+		// Importe le script de la page principale
+		$inlineScript[] = $this->getData(['page', $this->getUrl(0), 'js']) === null ? '' : $this->getData(['page', $this->getUrl(0), 'js']);
+
+		// Importe le contenu, le CSS et le script des barres
+		$contentRight = $this->getData(['page', $this->getUrl(0), 'barRight']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) : '';
+		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']);
+		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js']);
+		$contentLeft = $this->getData(['page', $this->getUrl(0), 'barLeft']) ? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) : '';
+		$inlineStyle[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']);
+		$inlineScript[] = $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']) === null ? '' : $this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js']);
+
+
 		// Importe la page simple sans module ou avec un module inexistant
 		if (
 			$this->getData(['page', $this->getUrl(0)]) !== null
@@ -2974,53 +3014,53 @@ class core extends common
 			)
 			and $access
 		) {
+
+			// Importe le CSS de la page principale
+
 			$this->addOutput([
 				'title' => $title,
-				'content' => $this->getPage($this->getUrl(0), self::$i18nContent) .
-				// Concatène avec les paramètres avancés.
-				$this->getData(['page', $this->getUrl(0), 'css']) .
-				$this->getData(['page', $this->getUrl(0), 'js']),
+				'content' => $this->getPage($this->getUrl(0), self::$i18nContent),
 				'metaDescription' => $this->getData(['page', $this->getUrl(0), 'metaDescription']),
 				'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 				'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 				'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 				'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-				'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'css']) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'js'])
-				: '',
-				'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-				? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'css']) .
-				$this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'js'])
-				: ''
+				'contentRight' => $contentRight,
+				'contentLeft' => $contentLeft,
+				'inlineStyle' => $inlineStyle,
+				'inlineScript' => $inlineScript,
 			]);
+
 		}
 		// Importe le module
 		else {
-			// Id du module, et valeurs en sortie de la page si il s'agit d'un module de page
+			// Id du module, et valeurs en sortie de la page s'il s'agit d'un module de page
 
 			if ($access and $this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 				$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+
+				// Construit un meta absent
+				$metaDescription = $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
+					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
+					: $this->getData(['page', $this->getUrl(0), 'metaDescription']);
+
+				// Importe le CSS de la page principale
+				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
+
 				$this->addOutput([
 					'title' => $title,
 					// Meta description = 160 premiers caractères de l'article
-					'metaDescription' => $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog' && !empty($this->getUrl(1)) && in_array($this->getUrl(1), $this->getData(['module']))
-					? strip_tags(substr($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'content']), 0, 159))
-					: $this->getData(['page', $this->getUrl(0), 'metaDescription']),
+					'content' => $pageContent,
+					'metaDescription' => $metaDescription,
 					'metaTitle' => $this->getData(['page', $this->getUrl(0), 'metaTitle']),
 					'typeMenu' => $this->getData(['page', $this->getUrl(0), 'typeMenu']),
 					'iconUrl' => $this->getData(['page', $this->getUrl(0), 'iconUrl']),
 					'disable' => $this->getData(['page', $this->getUrl(0), 'disable']),
-					'contentRight' => $this->getData(['page', $this->getUrl(0), 'barRight'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barRight']), self::$i18nContent)
-					: '',
-					'contentLeft' => $this->getData(['page', $this->getUrl(0), 'barLeft'])
-					? $this->getPage($this->getData(['page', $this->getUrl(0), 'barLeft']), self::$i18nContent)
-					: ''
+					'contentRight' => $contentRight,
+					'contentLeft' => $contentLeft,
+					'inlineStyle' => $inlineStyle,
+					'inlineScript' => $inlineScript,
 				]);
-				$pageContent = $this->getPage($this->getUrl(0), self::$i18nContent);
 			} else {
 				$moduleId = $this->getUrl(0);
 				$pageContent = '';
@@ -3115,7 +3155,8 @@ class core extends common
 							}
 							if ($output['style']) {
 								$this->addOutput([
-									'style' => $this->output['style'] . file_get_contents($output['style'])
+									//'style' => $this->output['style'] . file_get_contents($output['style'])
+									'style' => file_get_contents($output['style'])
 								]);
 							}
 
@@ -3187,7 +3228,6 @@ class core extends common
 				}
 			}
 		}
-
 		// Erreurs
 		if ($access === 'login') {
 			http_response_code(302);
@@ -3246,7 +3286,6 @@ class core extends common
 				'metaDescription' => $this->getData(['locale', 'metaDescription'])
 			]);
 		}
-		;
 		switch ($this->output['display']) {
 			// Layout brut
 			case self::DISPLAY_RAW:
