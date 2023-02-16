@@ -13,6 +13,7 @@
 ### Corrections : 
 - Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dans TUI-image.
 - Mauvais affichage du script ou du CSS déclarés dans une page.
+- Choix de la langue dans TinyMCE et CodeMirror.
 - Correction de petits bugs.
 ### Nouveautés :
 - Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.

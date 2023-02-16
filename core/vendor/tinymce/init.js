@@ -10,7 +10,18 @@
 if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
-
+const langInstalled = ['de', 'es', 'fr_FR', 'it', 'pt_BR'];
+var l = getCookie('ZWII_UI');
+var language;
+switch (l) {
+	case null :
+		language = "fr_FR";
+		break;
+	case "en_EN":
+		break;
+	case langInstalled.includes(lang):
+		language = lang;
+}
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwyg",
@@ -27,7 +38,7 @@ tinymce.init({
 		});
 	},
 	// Langue
-	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
+	language: language,
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu de la barre d'outils
@@ -288,7 +299,7 @@ tinymce.init({
 		});
 	},
 	// Langue
-	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
+	language: language,
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor",
 	// Contenu de la barre d'outils
