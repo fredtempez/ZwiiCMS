@@ -52,7 +52,7 @@
 							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
 							'label' => 'Date de publication',
 							'type' => 'datetime-local',
-							'value' => time()
+							'value' => floor(strtotime('now') / 60) * 60
 						]); ?>
 					</div>
 					<div class="col4">
@@ -60,7 +60,7 @@
 							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.',
 							'label' => 'Date de dépublication',
 							'type' => 'datetime-local',
-							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff'])
+							'value' => ''
 						]); ?>
 					</div>
 				</div>
