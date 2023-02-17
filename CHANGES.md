@@ -16,6 +16,7 @@
 - Choix de la langue dans TinyMCE et CodeMirror.
 - Correction de petits bugs.
 ### Nouveautés :
+- Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.
 - Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
 
 ## Version 12.2.03
