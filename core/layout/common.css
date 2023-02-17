@@ -217,7 +217,7 @@ Signature dans les articles blog et news
 
 .table tbody tr {
     background: #F6F7F8;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 .table tbody tr:nth-child(2n + 2) {
@@ -418,7 +418,7 @@ td>.col12 {
     display: inline-block;
     padding: 0 12px;
     color: #FFF;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 #bar a:hover {
@@ -617,7 +617,7 @@ nav li:hover ul {
 
 nav a {
     display: inherit;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 nav a:hover {
@@ -892,7 +892,7 @@ footer #footerSocials span {
     margin: 0 5px;
     display: inline-block;
     border-radius: 2px;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 footer #footerSocials .zwiico-facebook {
@@ -973,7 +973,7 @@ footer #footerSocials .zwiico-github:hover {
     margin: 16px auto;
     text-align: left;
     border-radius: 2px;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 .speechBubble:before {
@@ -1001,7 +1001,7 @@ footer #footerSocials .zwiico-github:hover {
     cursor: pointer;
     display: none;
     border-radius: 50%;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 #backToTop:hover {
@@ -1041,7 +1041,7 @@ footer #footerSocials .zwiico-github:hover {
     margin-left: 10px;
     padding: 4px 8px;
     display: inline-block;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 #cookieConsentConfirm:hover {
@@ -1134,6 +1134,11 @@ footer #footerSocials .zwiico-github:hover {
 input[type='email'],
 input[type='text'],
 input[type='password'],
+input[type='date'],
+input[type='datetime-local'],
+input[type='time'],
+input[type='month'],
+input[type='week'],
 .inputFile,
 select,
 textarea {
@@ -1154,6 +1159,11 @@ select {
 input[type='email']:hover,
 input[type='text']:hover,
 input[type='password']:hover,
+input[type='date']:hover,
+input[type='datetime-local']:hover,
+input[type='time']:hover,
+input[type='month']:hover,
+input[type='week']:hover,
 .inputFile:hover,
 select:hover,
 textarea:hover {
@@ -1163,6 +1173,11 @@ textarea:hover {
 input[type='email'].notice,
 input[type='text'].notice,
 input[type='password'].notice,
+input[type='date'].notice,
+input[type='datetime-local'].notice,
+input[type='time'].notice,
+input[type='month'].notice,
+input[type='week'].notice,
 .inputFile.notice,
 select.notice,
 textarea.notice {
@@ -1172,7 +1187,12 @@ textarea.notice {
 
 input[type='email'].notice:hover,
 input[type='text'].notice:hover,
-input[type='password'].notice:hover,
+input[type='password'].notice:hover
+input[type='date'].notice:hover,
+input[type='datetime-local'].notice:hover,
+input[type='time'].notice:hover,
+input[type='month'].notice:hover,
+input[type='week'].notice:hover,
 .inputFile.notice:hover,
 select.notice:hover,
 textarea.notice:hover {
@@ -1199,7 +1219,7 @@ button {
     cursor: pointer;
     font-family: inherit;
     border-radius: 2px;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 textarea {
@@ -1244,7 +1264,7 @@ label {
     user-select: none;
     cursor: pointer;
     border-radius: 2px;
-    transition: background .3s ease-out;
+    transition: background-color .3s ease-out;
 }
 
 
@@ -1269,15 +1289,20 @@ label {
 
 /* Upload de fichiers */
 
-.inputFile,
-.datepicker {
+.inputFile {
     margin: 0;
     display: inline-block;
     width: 88% !important;
 }
+/*
+.datepicker {
+    margin: 0;
+    display: inline-block;
+    width: 100% !important;
+}
+*/
 
-.inputFileDelete,
-.inputDateDelete {
+.inputFileDelete {
     display: block;
     width: 10%;
     padding: 10px 0;
@@ -1294,13 +1319,11 @@ label {
 
 /* Empêche le débordement et les sauts de ligne */
 
-.inputFileManagerWrapper,
-.inputDateManagerWrapper {
+.inputFileManagerWrapper {
     display: inline;
 }
 
-.inputFileManagerWrapper>.inputFile,
-.inputDateManagerWrapper>.inputFile {
+.inputFileManagerWrapper>.inputFile {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

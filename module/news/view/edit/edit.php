@@ -53,6 +53,7 @@
 						<?php echo template::date('newsEditPublishedOn', [
 							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
 							'label' => 'Date de publication',
+							'type' => 'datetime-local',
 							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOn'])
 						]); ?>
 					</div>
@@ -60,6 +61,7 @@
 						<?php echo template::date('newsEditPublishedOff', [
 							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.',
 							'label' => 'Date de dépublication',
+							'type' => 'datetime-local',
 							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff'])
 						]); ?>
 					</div>

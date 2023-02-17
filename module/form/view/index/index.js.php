@@ -12,9 +12,10 @@
 
 /**
  * Paramétrage du format de date
- */
+
 $(function() {
 	$(".datepicker").flatpickr({
 		enableTime: false,
 	});
 });
+ */

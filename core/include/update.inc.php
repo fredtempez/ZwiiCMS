@@ -948,6 +948,10 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 			unlink ('module/' . $value . '/i18n/gr_GR.json');
 		}
 	}
+
+	// Nettoyage de flatPickr
+	$this->removeDir('core\vendor\flatpickr');
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
 }
