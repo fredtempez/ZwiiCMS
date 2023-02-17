@@ -178,10 +178,11 @@ class translate extends common
 		// Langues disponibles avec la mise à jour
 		$store = json_decode(file_get_contents('core\module\install\ressource\i18n\languages.json'), true);
 		$store = $store['languages'];
-
-		foreach($installedUI as $key => $value) {
-			if ($store[$key]['version'] > $value['version'])  {
-				$this->setData(['languages', $key, $store[$key]]);
+		if ($installedUI) {
+			foreach($installedUI as $key => $value) {
+				if ($store[$key]['version'] > $value['version'])  {
+					$this->setData(['languages', $key, $store[$key]]);
+				}
 			}
 		}
 
