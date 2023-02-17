@@ -89,6 +89,7 @@
 						<?php echo template::date('blogAddPublishedOn', [
 							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
 							'label' => 'Date de publication',
+							'type' => 'datetime-local',
 							'value' => time()
 						]); ?>
 					</div>

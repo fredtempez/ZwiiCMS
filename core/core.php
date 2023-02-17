@@ -127,7 +127,6 @@ class common
 			'normalize',
 			'lity',
 			'filemanager',
-			//'flatpickr', Appelé par les modules désactivé par défaut
 			// 'tinycolorpicker', Désactivé par défaut
 			// 'tinymce', Désactivé par défaut
 			// 'codemirror', // Désactivé par défaut
@@ -2598,7 +2597,7 @@ class core extends common
 			$css .= 'span.mce-text{background-color: unset !important;}';
 			$css .= 'body,.row > div{font-size:' . $this->getData(['theme', 'text', 'fontSize']) . '}';
 			$css .= 'body{color:' . $this->getData(['theme', 'text', 'textColor']) . '}';
-			$css .= 'select,input[type=\'password\'],input[type=\'email\'],input[type=\'text\'],.inputFile,select,textarea{color:' . $this->getData(['theme', 'text', 'textColor']) . ';background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
+			$css .= 'select,input[type=password],input[type=email],input[type=text],input[type=date],input[type=time],input[type=week],input[type=month],input[type=datetime-local],.inputFile,select,textarea{color:' . $this->getData(['theme', 'text', 'textColor']) . ';background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';}';
 			// spécifiques au module de blog
 			$css .= '.blogDate {color:' . $this->getData(['theme', 'text', 'textColor']) . ';}.blogPicture img{border:1px solid ' . $this->getData(['theme', 'text', 'textColor']) . '; box-shadow: 1px 1px 5px ' . $this->getData(['theme', 'text', 'textColor']) . ';}';
 			// Couleur fixée dans admin.css
@@ -2624,13 +2623,13 @@ class core extends common
 				: '';
 			$css .= '#site{background-color:' . $this->getData(['theme', 'site', 'backgroundColor']) . ';border-radius:' . $this->getData(['theme', 'site', 'radius']) . ';box-shadow:' . $this->getData(['theme', 'site', 'shadow']) . ' #212223;}';
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
-			$css .= '.speechBubble,.button,.button:hover,button[type=\'submit\'],.pagination a,.pagination a:hover,input[type=\'checkbox\']:checked + label:before,input[type=\'radio\']:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
+			$css .= '.speechBubble,.button,.button:hover,button[type=submit],.pagination a,.pagination a:hover,input[type=checkbox]:checked + label:before,input[type=radio]:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
 			$css .= '.helpButton span{color:' . $colors['normal'] . '}';
-			$css .= 'input[type=\'text\']:hover,input[type=\'password\']:hover,.inputFile:hover,select:hover,textarea:hover{border-color:' . $colors['normal'] . '}';
+			$css .= 'input[type=text]:hover,input[type=date]:hover,input[type=time\']:hover,input[type=week]:hover,input[type=month]:hover,input[type=datetime-local]:hover,input[type=password]:hover,.inputFile:hover,select:hover,textarea:hover{border-color:' . $colors['normal'] . '}';
 			$css .= '.speechBubble:before{border-color:' . $colors['normal'] . ' transparent transparent transparent}';
-			$css .= '.button:hover,button[type=\'submit\']:hover,.pagination a:hover,input[type=\'checkbox\']:not(:active):checked:hover + label:before,input[type=\'checkbox\']:active + label:before,input[type=\'radio\']:checked:hover + label:before,input[type=\'radio\']:not(:checked):active + label:before{background-color:' . $colors['darken'] . '}';
+			$css .= '.button:hover,button[type=submit]:hover,.pagination a:hover,input[type=checkbox]:not(:active):checked:hover + label:before,input[type=checkbox]:active + label:before,input[type=radio\:checked:hover + label:before,input[type=radio]:not(:checked):active + label:before{background-color:' . $colors['darken'] . '}';
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
-			$css .= '.button:active,button[type=\'submit\']:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
+			$css .= '.button:active,button[type=submit]:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
 			$css .= 'h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a{color:' . $colors['normal'] . ';font-family:' . $fonts[$this->getData(['theme', 'title', 'font'])] . ';font-weight:' . $this->getData(['theme', 'title', 'fontWeight']) . ';text-transform:' . $this->getData(['theme', 'title', 'textTransform']) . '}';
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
@@ -2818,7 +2817,7 @@ class core extends common
 			$css .= 'table thead tr, table thead tr .zwiico-help{ background-color:' . $colors['normal'] . '; color:' . $colors['text'] . ';}';
 			$css .= 'table thead th { color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButton']));
-			$css .= 'input[type="checkbox"]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
+			$css .= 'input[type=checkbox]:checked + label::before,.speechBubble{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 			$css .= '.speechBubble::before {border-color:' . $colors['normal'] . ' transparent transparent transparent;}';
 			$css .= '.button {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}.button:hover {background-color:' . $colors['darken'] . ';color:' . $colors['text'] . ';}.button:active {background-color:' . $colors['veryDarken'] . ';color:' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColorButtonGrey']));
@@ -2831,7 +2830,7 @@ class core extends common
 			$css .= '.button.buttonGreen, button[type=submit] {background-color: ' . $colors['normal'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:hover, button[type=submit]:hover {background-color: ' . $colors['darken'] . ';color: ' . $colors['text'] . ';}.button.buttonGreen:active, button[type=submit]:active {background-color: ' . $colors['darken'] . ';color: ' . $colors['text'] . ';}';
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundBlockColor']));
 			$css .= '.buttonTab, .block {border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}.buttonTab, .block h4 {background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
-			$css .= 'table tr,input[type=email],input[type=text],input[type=password],select:not(#barSelectLanguage),select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
+			$css .= 'table tr,input[type=email],input[type=date],input[type=time],input[type=month],input[type=week],input[type=datetime-local],input[type=text],input[type=password],select:not(#barSelectLanguage),select:not(#barSelectPage),textarea:not(.editorWysiwyg), textarea:not(.editorWysiwygComment),.inputFile{background-color: ' . $colors['normal'] . ';color:' . $colors['text'] . ';border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . ';}';
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation

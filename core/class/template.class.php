@@ -224,6 +224,7 @@ class template
      * Crée un champ date
      * @param string $nameId Nom et id du champ
      * @param array $attributes Attributs ($key => $value)
+     * @param string type date time datetime-local month week
      * @return string
      */
     public static function date($nameId, array $attributes = [])
@@ -241,8 +242,9 @@ class template
             'label' => '',
             'name' => $nameId,
             'placeholder' => '',
-            'readonly' => true,
-            'value' => ''
+            'readonly' => false,
+            'value' => '',
+            'type'=> 'date',
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -272,21 +274,18 @@ class template
         // Date visible
         $html .= '<div class="inputDateManagerWrapper">';
         $html .= sprintf(
-            '<input type="text" class="datepicker %s" value="%s" %s>',
+            '<input type="' . $attributes['type'] . '" class="datepicker %s" value="%s" %s>',
             $attributes['class'],
             $attributes['value'],
             helper::sprintAttributes($attributes, ['class', 'value'])
         );
-        $html .= self::button($attributes['id'] . 'Delete', [
-            'class' => 'inputDateDelete',
-            'value' => self::ico('cancel')
-        ]);
         $html .= '</div>';
         // Fin du wrapper
         $html .= '</div>';
         // Retourne le html
         return $html;
-    }
+    }    
+
 
     /**
      * Crée un champ d'upload de fichier
