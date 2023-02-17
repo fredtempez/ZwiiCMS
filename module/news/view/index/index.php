@@ -10,7 +10,7 @@
 						<?php echo template::ico('user'); ?>
 						<?php echo $news['userId']; ?>
 						<?php echo template::ico('calendar-empty'); ?>
-						<?php echo helper::dateUTF8('%d %B %Y', $news['publishedOn']) . ' - ' . helper::dateUTF8('%H:%M', $news['publishedOn']); ?>
+						<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn']) . ' - ' . helper::dateUTF8($module::$timeFormat, $news['publishedOn']); ?>
 						<!-- Bloc edition -->
 						<?php if (
 

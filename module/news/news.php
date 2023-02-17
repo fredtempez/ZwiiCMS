@@ -539,6 +539,8 @@ class news extends common
 				// Mise en forme de la signature
 				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'userId']));
 			}
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,
