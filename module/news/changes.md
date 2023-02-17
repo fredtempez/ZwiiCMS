@@ -1,5 +1,6 @@
 # Version 4.4
 - Intl date Formats
+- Modification liées à la suppression de flatpickr
 # Version 4.3
 - Multilinguisme
 # Version 4.23
