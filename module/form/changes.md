@@ -1,3 +1,5 @@
+# Version 3.7
+- Modification liées à la suppression de flatpickr
 # Version 3.6
 - Appel de fonction incorrect
 # Version 3.5
