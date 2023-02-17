@@ -73,9 +73,9 @@ tinymce.init({
 		config: {           // CodeMirror config object
 			fullscreen: true,
 			/*mode: 'application/x-httpd-php',*/
-			indentUnit: 4,
 			lineNumbers: true,
-			mode: "htmlmixed",
+			indentUnit: 4,
+			mode: "htmlmixed"
 		},
 		jsFiles: [
 			'mode/php/php.js',
