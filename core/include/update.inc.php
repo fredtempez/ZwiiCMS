@@ -891,8 +891,8 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	helper::deleteCookie('ZWII_CONTENTSCRIPT');
 
 	// Nettoyage de fichiers inutiles
-	if (file_exists('core\module\user\view\import\import.help.html')) {
-		unlink('core\module\user\view\import\import.help.html');
+	if (file_exists('core/module/user/view/import/import.help.html')) {
+		unlink('core/module/user/view/import/import.help.html');
 	}
 
 	// Supprimer les fichier associés
@@ -932,8 +932,8 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	// Valeur par défaut du délai de recherche de mise à jour en ligne
 	$this->setData(['config', 'autoUpdateDelay', 86400]);
 	// Changement de nom des fichiers de langue greque
-	if (file_exists('core\module\install\ressource\i18n\gr_GR.json')) {
-		unlink('core\module\install\ressource\i18n\gr_GR.json');
+	if (file_exists('core/module/install/ressource/i18n/gr_GR.json')) {
+		unlink('core/module/install/ressource/i18n/gr_GR.json');
 	}
 	if (file_exists(self::I18N_DIR . 'gr_GR.json')) {
 		rename(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');

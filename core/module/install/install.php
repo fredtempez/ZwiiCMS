@@ -382,7 +382,7 @@ class install extends common
 				$installedUI = $this->getData(['languages']);
 
 				// Langues disponibles avec la mise à jour
-				$store = json_decode(file_get_contents('core\module\install\ressource\i18n\languages.json'), true);
+				$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
 				$store = $store['languages'];
 
 				foreach ($installedUI as $key => $value) {

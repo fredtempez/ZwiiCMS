@@ -176,7 +176,7 @@ class translate extends common
 		$installedUI = $this->getData(['languages']);
 
 		// Langues disponibles avec la mise à jour
-		$store = json_decode(file_get_contents('core\module\install\ressource\i18n\languages.json'), true);
+		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
 		$store = $store['languages'];
 		if ($installedUI) {
 			foreach($installedUI as $key => $value) {
@@ -202,7 +202,7 @@ class translate extends common
 				}
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
-					$messageLocale,		 
+					$messageLocale,
 					template::button('translateContentLanguageLocaleEdit' . $key, [
 						'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
