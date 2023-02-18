@@ -943,14 +943,16 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	$this->deleteData(['languages', 'gr_GR']);
 	// Idem pour les modules
 	$moduleIds = ['blog', 'news', 'gallery', 'search', 'redirection', 'form'];
-	foreach($moduleIds as $key => $value) {
-		if (file_exists('module/' . $value . '/i18n/gr_GR.json' )) {
-			unlink ('module/' . $value . '/i18n/gr_GR.json');
+	foreach ($moduleIds as $key => $value) {
+		if (file_exists('module/' . $value . '/i18n/gr_GR.json')) {
+			unlink('module/' . $value . '/i18n/gr_GR.json');
 		}
 	}
 
 	// Nettoyage de flatPickr
-	$this->removeDir('core/vendor/flatpickr');
+	if (is_dir('core/vendor/flatpickr')) {
+		$this->removeDir('core/vendor/flatpickr');
+	}
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
