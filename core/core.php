@@ -2625,9 +2625,9 @@ class core extends common
 			$colors = helper::colorVariants($this->getData(['theme', 'button', 'backgroundColor']));
 			$css .= '.speechBubble,.button,.button:hover,button[type=submit],.pagination a,.pagination a:hover,input[type=checkbox]:checked + label:before,input[type=radio]:checked + label:before,.helpContent{background-color:' . $colors['normal'] . ';color:' . $colors['text'] . '}';
 			$css .= '.helpButton span{color:' . $colors['normal'] . '}';
-			$css .= 'input[type=text]:hover,input[type=date]:hover,input[type=time\']:hover,input[type=week]:hover,input[type=month]:hover,input[type=datetime-local]:hover,input[type=password]:hover,.inputFile:hover,select:hover,textarea:hover{border-color:' . $colors['normal'] . '}';
+			$css .= 'input[type=text]:hover,input[type=date]:hover,input[type=time]:hover,input[type=week]:hover,input[type=month]:hover,input[type=datetime-local]:hover,input[type=password]:hover,.inputFile:hover,select:hover,textarea:hover{border-color:' . $colors['normal'] . '}';
 			$css .= '.speechBubble:before{border-color:' . $colors['normal'] . ' transparent transparent transparent}';
-			$css .= '.button:hover,button[type=submit]:hover,.pagination a:hover,input[type=checkbox]:not(:active):checked:hover + label:before,input[type=checkbox]:active + label:before,input[type=radio\:checked:hover + label:before,input[type=radio]:not(:checked):active + label:before{background-color:' . $colors['darken'] . '}';
+			$css .= '.button:hover,button[type=submit]:hover,.pagination a:hover,input[type=checkbox]:not(:active):checked:hover + label:before,input[type=checkbox]:active + label:before,input[type=radio]:checked:hover + label:before,input[type=radio]:not(:checked):active + label:before{background-color:' . $colors['darken'] . '}';
 			$css .= '.helpButton span:hover{color:' . $colors['darken'] . '}';
 			$css .= '.button:active,button[type=submit]:active,.pagination a:active{background-color:' . $colors['veryDarken'] . '}';
 			$colors = helper::colorVariants($this->getData(['theme', 'title', 'textColor']));
