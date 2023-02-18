@@ -96,7 +96,7 @@
 							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
 							'type' => 'datetime-local',
 							'label' => 'Publication',
-							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'publishedOn'])
+							'value' => floor($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'publishedOn']) / 60) * 60
 						]); ?>
 					</div>
 					<div class="col4">
