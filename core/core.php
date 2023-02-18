@@ -2118,7 +2118,7 @@ class common
 					}
 				}
 				if ($c > 1) {
-					$leftItems .= '<li><select id="barSelectLanguage">';
+					$leftItems .= '<li><select id="barSelectLanguage" >';
 					$leftItems .= $leftItem;
 					$leftItems .= '</select></li>';
 				}
