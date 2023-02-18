@@ -8,12 +8,12 @@
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('themeBodyHelp', [
+		<?php /* echo template::button('themeBodyHelp', [
 			'href' => 'https://doc.zwiicms.fr/arriere-plan',
 			'target' => '_blank',
 			'value' => template::ico('help'),
 			'class' => 'buttonHelp'
-		]); ?>
+		]); */ ?>
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('themeBodySubmit'); ?>

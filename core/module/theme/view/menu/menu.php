@@ -8,12 +8,12 @@
         ]); ?>
     </div>
     <div class="col1">
-        <?php echo template::button('themeMenuHelp', [
+        <?php /* echo template::button('themeMenuHelp', [
             'href' => 'https://doc.zwiicms.fr/menu',
             'target' => '_blank',
             'value' => template::ico('help'),
             'class' => 'buttonHelp'
-        ]); ?>
+        ]); */?>
     </div>
     <div class="col2 offset8">
         <?php echo template::submit('themeMenuSubmit'); ?>
