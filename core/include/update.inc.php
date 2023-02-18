@@ -950,7 +950,7 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	}
 
 	// Nettoyage de flatPickr
-	$this->removeDir('core\vendor\flatpickr');
+	$this->removeDir('core/vendor/flatpickr');
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
