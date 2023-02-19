@@ -387,7 +387,7 @@ class init extends common
 					'js' => ''
 				]
 			],
-			'html' => 'Welcome in this ZiiCMS, this is you first page !'
+			'html' => 'Welcome in this ZwiiCMS, congratulations this is you first page !'
 		]
 	];
 
