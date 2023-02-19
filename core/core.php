@@ -491,12 +491,12 @@ class common
 			$firstKey = explode('[', $key)[0];
 			$secondKey = $secondKey[1];
 			if (empty($this->input['_POST'][$firstKey][$secondKey])) {
-				common::$inputNotices[$firstKey . '_' . $secondKey] = 'Obligatoire';
+				common::$inputNotices[$firstKey . '_' . $secondKey] = helper::translate('Obligatoire');
 			}
 		}
 		// La clef est une chaine
 		elseif (empty($this->input['_POST'][$key])) {
-			common::$inputNotices[$key] = 'Obligatoire';
+			common::$inputNotices[$key] = helper::translate('Obligatoire');
 		}
 	}
 
