@@ -180,8 +180,6 @@
     "Fonte non créée, ressource absente !": "Font non creato, risorsa non presente!",
     "Fonte supprimée": "Font cancellato",
     "Fontes": "Caratteri",
-    "Format des dates": "Formato della data",
-    "Format des heures": "Formato dell'ora",
     "Format incorrect": "Formato non corretto",
     "Fréquence de recherche": "Frequenza di ricerca",
     "Fuseau horaire": "Fuso orario",
@@ -305,6 +303,7 @@
     "Modules orphelins": "Moduli orfani",
     "Mot de passe": "Password",
     "Mot de passe oublié": "Password dimenticata",
+    "Mot de passe perdu": "Password persa",
     "Multilingue": "Multilingua",
     "Méta-description": "Meta descrizione",
     "Méta-titre": "Meta titolo",
@@ -499,5 +498,6 @@
     "Éditeur de script %s": "Script Editor %s",
     "Éditeur de script dans Body": "Editor di script in Body",
     "Éditeur de script dans Head": "Editor di script in Head.",
-    "Étiquettes des pages spéciales": "Etichette di pagina speciali"
+    "Étiquettes des pages spéciales": "Etichette di pagina speciali",
+    "Obligatoire": "Obbligatorio"
 }

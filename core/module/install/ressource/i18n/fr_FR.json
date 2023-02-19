@@ -180,8 +180,6 @@
     "Fonte non créée, ressource absente !": "",
     "Fonte supprimée": "",
     "Fontes": "",
-    "Format des dates": "",
-    "Format des heures": "",
     "Format incorrect": "",
     "Fréquence de recherche": "",
     "Fuseau horaire": "",
@@ -305,6 +303,7 @@
     "Modules orphelins": "",
     "Mot de passe": "",
     "Mot de passe oublié": "",
+    "Mot de passe perdu": "",
     "Multilingue": "",
     "Méta-description": "",
     "Méta-titre": "",
@@ -499,5 +498,6 @@
     "Éditeur de script %s": "",
     "Éditeur de script dans Body": "",
     "Éditeur de script dans Head": "",
-    "Étiquettes des pages spéciales": ""
+    "Étiquettes des pages spéciales": "",
+    "Obligatoire": ""
 }

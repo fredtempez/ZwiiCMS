@@ -25,7 +25,7 @@
     "Administration complète du site": "Complete site administration",
     "Adresse SMTP": "SMTP Address",
     "Adresse du proxy": "Proxy address",
-    "Adresse électronique": "eMail address",
+    "Adresse électronique": "email address",
     "Affectation": "Assignment",
     "Affiche le nom de la page parente suivi du nom de la page, le titre ne doit pas être masqué.": "Displays the name of the parent page followed by the page name, the title should not be hidden.",
     "Afin d'assurer le bon fonctionnement de Zwii, veuillez ne pas fermer cette page avant la fin de l'opération.": "In order to ensure the proper functioning of Zwii, please do not close this page before the end of the operation.",
@@ -180,8 +180,6 @@
     "Fonte non créée, ressource absente !": "Font not created, absent resource!",
     "Fonte supprimée": "Font deleted",
     "Fontes": "Fonts",
-    "Format des dates": "Date format",
-    "Format des heures": "Time format",
     "Format incorrect": "Wrong format",
     "Fréquence de recherche": "Search frequency",
     "Fuseau horaire": "Time zone",
@@ -305,6 +303,7 @@
     "Modules orphelins": "Orphaned modules",
     "Mot de passe": "Password",
     "Mot de passe oublié": "Forgot your password",
+    "Mot de passe perdu": "Lost password",
     "Multilingue": "Multilanguage",
     "Méta-description": "Meta-description",
     "Méta-titre": "Meta title",
@@ -499,5 +498,6 @@
     "Éditeur de script %s": "Script editor %s",
     "Éditeur de script dans Body": "Script editor in Body",
     "Éditeur de script dans Head": "Script editor in Head",
-    "Étiquettes des pages spéciales": "Special pages labels"
+    "Étiquettes des pages spéciales": "Special pages labels",
+    "Obligatoire": "Missing"
 }

@@ -180,8 +180,6 @@
     "Fonte non créée, ressource absente !": "Ο χυτοσίδηρος δεν δημιουργήθηκε, ο πόρος δεν είναι διαθέσιμος!",
     "Fonte supprimée": "Διαγράφεται χυτοσίδηρος",
     "Fontes": "Γραμματοσειρές",
-    "Format des dates": "Μορφή ημερομηνίας",
-    "Format des heures": "Μορφή ώρας",
     "Format incorrect": "Λάθος μορφή",
     "Fréquence de recherche": "Συχνότητα αναζήτησης",
     "Fuseau horaire": "Ζώνη ώρας",
@@ -305,6 +303,7 @@
     "Modules orphelins": "ορφανά πρόσθετα",
     "Mot de passe": "Κωδικός πρόσβασης",
     "Mot de passe oublié": "Ξεχάσατε τον κωδικό σας;",
+    "Mot de passe perdu": "χαμένος κωδικός πρόσβασης",
     "Multilingue": "Πολύγλωσσο",
     "Méta-description": "Μετα- περιγραφή",
     "Méta-titre": "Μετα-τίτλος",
@@ -499,5 +498,6 @@
     "Éditeur de script %s": "Συντάκτης του script %s",
     "Éditeur de script dans Body": "Επεξεργαστής script στο Body",
     "Éditeur de script dans Head": "Επεξεργαστής script στο Head",
-    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων"
+    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων",
+    "Obligatoire": "Υποχρεωτικός "
 }
