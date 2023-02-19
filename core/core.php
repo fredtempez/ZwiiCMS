@@ -343,12 +343,9 @@ class common
 		}
 
 		// Langue de l'administration
-		if ($this->getData(['user']) === []) {
-			// Installation en cours
-			self::$i18nUI = array_key_exists($this->getInput('ZWII_UI'), self::$languages) ? $this->getInput('ZWII_UI') : 'fr_FR';
-		} else {
-			// Langue sélectionnée dans le compte
-			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
+		if ($this->getData(['user']) !== []) {
+			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $this->getInput('ZWII_UI');	
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
 				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
