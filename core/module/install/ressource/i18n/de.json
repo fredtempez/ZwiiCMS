@@ -499,5 +499,7 @@
     "Éditeur de script %s": "Skripteditor %s",
     "Éditeur de script dans Body": "Skripteditor im Körper",
     "Éditeur de script dans Head": "Skripteditor im Kopf",
-    "Étiquettes des pages spéciales": "Spezielle Seiten Beschriftungen"
+    "Étiquettes des pages spéciales": "Spezielle Seiten Beschriftungen",
+    "Restauration des bases de données absentes": "Wiederherstellung fehlender Datenbanken",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Das Formular kann nicht übermittelt werden, da es Fehler enthält"
 }

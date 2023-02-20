@@ -499,5 +499,7 @@
     "Éditeur de script dans Body": "Éditor del script en el Body",
     "Éditeur de script dans Head": "Éditor del script en el Head",
     "Étiquettes des pages spéciales": "Etiquetas de página especiales",
-    "Obligatoire": "Obligatorio"
+    "Obligatoire": "Obligatorio",
+    "Restauration des bases de données absentes": "Restauración de bases de datos faltantes",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "No se puede enviar el formulario porque contiene errores"
 }

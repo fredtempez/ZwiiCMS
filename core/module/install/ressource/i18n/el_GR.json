@@ -499,5 +499,7 @@
     "Éditeur de script dans Body": "Επεξεργαστής script στο Body",
     "Éditeur de script dans Head": "Επεξεργαστής script στο Head",
     "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων",
-    "Obligatoire": "Υποχρεωτικός "
+    "Obligatoire": "Υποχρεωτικός",
+    "Restauration des bases de données absentes": "Ανάκτηση λείποντων βάσεων δεδομένων",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Αδυναμία υποβολής της φόρμας, λόγω σφαλμάτων"
 }

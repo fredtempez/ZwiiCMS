@@ -498,5 +498,7 @@
     "Éditeur de script %s": "Editor de script %s",
     "Éditeur de script dans Body": "Éditor do script no Body",
     "Éditeur de script dans Head": "Éditor do script no Head",
-    "Étiquettes des pages spéciales": "Tags de página especiais"
+    "Étiquettes des pages spéciales": "Tags de página especiais",
+    "Restauration des bases de données absentes": "Restauração de bancos de dados ausentes",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Não é possível enviar o formulário, pois contém erros"
 }

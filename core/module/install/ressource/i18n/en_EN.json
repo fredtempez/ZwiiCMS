@@ -499,5 +499,7 @@
     "Éditeur de script dans Body": "Script editor in Body",
     "Éditeur de script dans Head": "Script editor in Head",
     "Étiquettes des pages spéciales": "Special pages labels",
-    "Obligatoire": "Missing"
+    "Obligatoire": "Missing",
+    "Restauration des bases de données absentes": "Restoring missing databases",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Unable to submit the form, as it contains errors"
 }
