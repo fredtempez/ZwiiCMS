@@ -253,31 +253,6 @@ core.start = function () {
         }
     });
 
-    /**
-     * Sélection d'une langue du site
-     */
-    $("select#barSelectLanguage").on("change", function () {
-        // La langue courante ne déclenche pas de chargement
-        var langSelected = $(this).val();
-        var langSelected = langSelected.split("/");
-        // Lit le cookie de langue
-        var langCookie = getCookie('ZWII_CONTENT');
-        // Découpe l'URL pour exclure le changement de page avec le thème
-        var url = window.location;
-        var currentUrl = url.href.split("/");
-        // Change si différent, corrige le problème avec le thème et le rechargement de la langue.
-        if ((   currentUrl !== "?theme" ||
-                currentUrl !== "theme") &&
-                langSelected[6] !== langCookie
-            ) {
-            //$(location).attr("href", langUrl);
-            var select = document.getElementById("barSelectLanguage");
-            var selectedOption = select.options[select.selectedIndex];
-            if (selectedOption.value !== "") {
-                window.location = selectedOption.value;
-            }
-        }
-    });
 
 
     /**
@@ -544,7 +519,34 @@ $(document).ready(function () {
     /**
      * Remove ID Facebook from URL
      */
-    if (/^\?fbclid=/.test(location.search))
+    if (/^\?fbclid=/.test(location.search)) {
         location.replace(location.href.replace(/\?fbclid.+/, ""));
+    };
+
+
+    /**
+     * Sélection d'une langue du site
+     */
+    $("select#barSelectLanguage").on("change", function () {
+        // La langue courante ne déclenche pas de chargement
+        var langSelected = $(this).val();
+        var langSelected = langSelected.split("/");
+        // Lit le cookie de langue
+        var langCookie = getCookie('ZWII_CONTENT');
+        // Découpe l'URL pour exclure le changement de page avec le thème
+        var url = window.location;
+        var currentUrl = url.href.split("/");
+        // Change si différent, corrige le problème avec le thème et le rechargement de la langue.
+        if ((currentUrl !== "?theme" ||
+                currentUrl !== "theme") &&
+            langSelected[6] !== langCookie
+        ) {
+            //$(location).attr("href", langUrl);
+            var select = document.getElementById("barSelectLanguage");
+            var selectedOption = select.options[select.selectedIndex];
+            if (selectedOption.value !== "") {
+                window.location = selectedOption.value;            }
+        }
+    });
 
 });
