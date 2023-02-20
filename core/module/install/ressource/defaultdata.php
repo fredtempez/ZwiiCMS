@@ -374,7 +374,7 @@ class init extends common
 					'position' => 1,
 					'group' => self::GROUP_VISITOR,
 					'targetBlank' => false,
-					'title' => 'HomePage',
+					'title' => 'Home page',
 					'shortTitle' => 'Home',
 					'block' => '12',
 					'barLeft' => '',
