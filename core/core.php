@@ -351,10 +351,13 @@ class common
 				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
 				? 'fr_FR'
 				: self::$i18nUI;
+		} else {
+			// Installation
+			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR' ;
 		}
 
 		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, '/', '', false, false);
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, '/', '', helper::isHttps(), false);
 
 		// Utilisateur connecté
 		if ($this->user === []) {
@@ -1547,7 +1550,7 @@ class common
 		// Affichage du sitemap
 		$items .= '<span id="footerDisplaySiteMap"';
 		$items .= $this->getData(['theme', 'footer', 'displaySiteMap']) === false ? ' class="displayNone"' : '';
-		$label = empty($this->getData(['locale', 'sitemapPageLabel'])) ? 'Plan du site' : $this->getData(['locale', 'sitemapPageLabel']);
+		$label = ($this->getData(['locale', 'sitemapPageLabel']) === 'none') ? 'Plan du site' : $this->getData(['locale', 'sitemapPageLabel']);
 		$items .= '><wbr>&nbsp;|&nbsp;<a href="' . helper::baseUrl() . 'sitemap"  >' . $label . '</a>';
 		$items .= '</span>';
 		// Affichage du module de recherche
@@ -2073,7 +2076,7 @@ class common
 			$notificationClass = 'notificationError';
 		}
 		if (common::$coreNotices) {
-			$notification = 'Données absentes, restauration de <p> | ';
+			$notification = sprintf('%s <p> | ',  helper::translate( 'Restauration des bases de données absentes'));
 			foreach (common::$coreNotices as $item)
 				$notification .= $item . ' | ';
 			$notificationClass = 'notificationError';

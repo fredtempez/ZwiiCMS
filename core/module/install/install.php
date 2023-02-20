@@ -55,7 +55,8 @@ class install extends common
 			// Soumission du formulaire
 			if ($this->isPost()) {
 				$lang = $this->getInput('installLanguage');
-				setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+				// Place le cookie pour la suite de  l'installation
+				//setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
@@ -66,7 +67,8 @@ class install extends common
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
 			foreach ($this->getData(['languages']) as $lang => $value) {
-				self::$i18nFiles [$lang] = self::$languages[$lang];;
+				self::$i18nFiles[$lang] = self::$languages[$lang];
+				;
 			}
 		}
 
@@ -97,8 +99,12 @@ class install extends common
 				$success = true;
 
 				// Validation de la langue transmise
-				$lang = array_key_exists($this->getUrl(2), self::$languages) ? $this->getUrl(2) : 'fr_FR';
-				setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+				self::$i18nUI = $this->getUrl(2);
+				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+
+				// par défaut le contenu est la langue d'installation
+				self::$i18nContent = self::$i18nUI;
+				setcookie('ZWII_CONTENT', self::$i18nContent, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
 
 				// Double vérification pour le mot de passe
@@ -126,7 +132,7 @@ class install extends common
 						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'language' => $lang
+						'language' => self::$i18nUI
 					]
 				]);
 
@@ -147,7 +153,7 @@ class install extends common
 					// Installation du site de test
 					if (
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& $lang === 'fr_FR'
+						&& self::$i18nContent === 'fr_FR'
 					) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
@@ -157,9 +163,11 @@ class install extends common
 					}
 
 					// Jeu réduit pour les pages étrangères
-					if ($lang !== 'fr_FR') {
+					if (self::$i18nContent !== 'fr_FR') {
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
+						// Supprime l'installation FR générée par défaut.
+						$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy
@@ -188,8 +196,6 @@ class install extends common
 					// Nettoyage
 					unlink(self::TEMP_DIR . 'files.tar.gz');
 					unlink(self::TEMP_DIR . 'files.tar');
-					helper::deleteCookie('ZWII_UI');
-
 
 					// Créer le dossier des fontes
 					if (!is_dir(self::DATA_DIR . 'fonts')) {
@@ -223,13 +229,14 @@ class install extends common
 					unlink(self::I18N_DIR . 'languages.json');
 
 					// Créer sitemap
-					$this->createSitemap();
+					// $this->createSitemap();
+
 					// Mise à jour de la liste des pages pour TinyMCE
 					$this->listPages();
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl(false),
+						'redirect' => helper::baseUrl(true) . $this->getData(['locale', 'homePageId']),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
 						'state' => ($sent === true && $success === true) ? true : null
 					]);

@@ -939,8 +939,10 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 		rename(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');
 	}
 	$d = $this->getData(['languages', 'gr_GR']);
-	$this->setData(['languages', 'el_GR', $d]);
-	$this->deleteData(['languages', 'gr_GR']);
+	if ($d) {
+		$this->setData(['languages', 'el_GR', $d]);
+		$this->deleteData(['languages', 'gr_GR']);
+	}
 	// Idem pour les modules
 	$moduleIds = ['blog', 'news', 'gallery', 'search', 'redirection', 'form'];
 	foreach ($moduleIds as $key => $value) {
