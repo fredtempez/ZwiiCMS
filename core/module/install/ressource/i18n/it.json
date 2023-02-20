@@ -213,6 +213,7 @@
     "Importer des utilisateurs en masse": "Importazione di utenti in blocco",
     "Impossible d'ouvrir l'archive": "Impossibile aprire l'archivio",
     "Impossible de modifier votre propre groupe.": "Impossibile modificare il proprio gruppo",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Impossibile inviare il modulo perché contiene errori",
     "Impossible de supprimer une page contenant des pages enfants": "Impossibile cancellare una pagina contenente pagine figlio",
     "Impossible de supprimer votre propre compte": "Impossibile eliminare il proprio account",
     "Inclure le contenu du gestionnaire de fichiers": "Includi il contenuto del gestore del sito",
@@ -323,6 +324,7 @@
     "Nouvel utilisateur": "Nuovo utente",
     "Nouvelle page créée": "Nuova pagina creata",
     "Nouvelle page ou barre latérale": "Nuova pagina o barra laterale",
+    "Obligatoire": "Obbligatorio",
     "Option active en mode déconnecté uniquement, les pages enfants sont visibles et accessibles.": "Opzione attiva solo in modalità offline, le pagine dei bambini sono visibili e accessibili",
     "Option recommandée pour sécuriser la connexion. S'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.": "Opzione consigliata per proteggere la connessione. Si applica a tutti i captchas del sito. Il captcha semplice si limita all'aggiunta di numeri da 0 a 10. Il captcha complesso utilizza quattro operazioni su numeri da 0 a 20. Attivazione consigliata.",
     "Options avancées": "Opzioni avanzate",
@@ -376,6 +378,7 @@
     "Rechercher une mise à jour en ligne": "Cercare un aggiornamento online",
     "Redirection vers la connexion": "Reindirizzamento al login",
     "Renseignez les champs ci-dessous pour finaliser l'installation.": "Compilare i campi sottostanti per completare l'installazione.",
+    "Restauration des bases de données absentes": "Ripristino di database mancanti",
     "Restauration effectuée avec succès": "Ripristino completato con successo",
     "Restaurer": "Ripristino",
     "Restaurer les données du site": "Ripristino dei dati del sito",
@@ -498,8 +501,5 @@
     "Éditeur de script %s": "Script Editor %s",
     "Éditeur de script dans Body": "Editor di script in Body",
     "Éditeur de script dans Head": "Editor di script in Head.",
-    "Étiquettes des pages spéciales": "Etichette di pagina speciali",
-    "Obligatoire": "Obbligatorio",
-    "Restauration des bases de données absentes": "Ripristino di database mancanti",
-    "Impossible de soumettre le formulaire, car il contient des erreurs": "Impossibile inviare il modulo perché contiene errori"
+    "Étiquettes des pages spéciales": "Etichette di pagina speciali"
 }

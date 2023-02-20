@@ -213,6 +213,7 @@
     "Importer des utilisateurs en masse": "Εισαγωγή μεγάλου αριθμού χρηστών",
     "Impossible d'ouvrir l'archive": "Άγνωστο σφάλμα, το πρόσθετο δεν έχει εγκατασταθεί",
     "Impossible de modifier votre propre groupe.": "Δεν μπορείτε να αλλάξετε τη δική σας ομάδα.",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Αδυναμία υποβολής της φόρμας, λόγω σφαλμάτων",
     "Impossible de supprimer une page contenant des pages enfants": "Αδυναμία διαγραφής μιας σελίδας που περιέχει παιδικές σελίδες",
     "Impossible de supprimer votre propre compte": "Αδυναμία διαγραφής του δικού σας λογαριασμού",
     "Inclure le contenu du gestionnaire de fichiers": "Συμπεριλάβετε τα περιεχόμενα του διαχειριστή αρχείων",
@@ -323,6 +324,7 @@
     "Nouvel utilisateur": "Καινούργιος χρήστης",
     "Nouvelle page créée": "Δημιουργία νέας σελίδας",
     "Nouvelle page ou barre latérale": "Νέα σελίδα ή sidebar",
+    "Obligatoire": "Υποχρεωτικός",
     "Option active en mode déconnecté uniquement, les pages enfants sont visibles et accessibles.": "Επιλογή ενεργή μόνο σε λειτουργία εκτός σύνδεσης, οι παιδικές σελίδες είναι ορατές και προσβάσιμες",
     "Option recommandée pour sécuriser la connexion. S'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.": "Synistómeni epilogí gia na asfalísete ti sýndesi. Ischýei gia óla ta captcha ston istótopo. I aplí captcha periorízetai se mia prosthíki arithmón apó to 0 éos to 10. Tο Πολύπλοκο Captcha chrisimopoieí tésseris leitourgíes arithmón apó to 0 éos to 20. ",
     "Options avancées": "Προηγμένες επιλογές",
@@ -376,6 +378,7 @@
     "Rechercher une mise à jour en ligne": "Ελέγξτε για ενημέρωση online",
     "Redirection vers la connexion": "Ανακατεύθυνση στη σύνδεση",
     "Renseignez les champs ci-dessous pour finaliser l'installation.": "Συμπληρώστε τα παρακάτω πεδία για να ολοκληρώσετε την εγκατάσταση.",
+    "Restauration des bases de données absentes": "Ανάκτηση λείποντων βάσεων δεδομένων",
     "Restauration effectuée avec succès": "Η αποκατάσταση ολοκληρώθηκε με επιτυχία",
     "Restaurer": "αποκατάσταση",
     "Restaurer les données du site": "Επαναφορά δεδομένων ιστότοπου",
@@ -498,8 +501,5 @@
     "Éditeur de script %s": "Συντάκτης του script %s",
     "Éditeur de script dans Body": "Επεξεργαστής script στο Body",
     "Éditeur de script dans Head": "Επεξεργαστής script στο Head",
-    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων",
-    "Obligatoire": "Υποχρεωτικός",
-    "Restauration des bases de données absentes": "Ανάκτηση λείποντων βάσεων δεδομένων",
-    "Impossible de soumettre le formulaire, car il contient des erreurs": "Αδυναμία υποβολής της φόρμας, λόγω σφαλμάτων"
+    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων"
 }

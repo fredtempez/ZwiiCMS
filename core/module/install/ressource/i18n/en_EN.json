@@ -213,6 +213,7 @@
     "Importer des utilisateurs en masse": "Import mass users",
     "Impossible d'ouvrir l'archive": "Impossible to open the archive",
     "Impossible de modifier votre propre groupe.": "Unable to modify your own group.",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "Unable to submit the form, as it contains errors",
     "Impossible de supprimer une page contenant des pages enfants": "Unable to delete a page containing children's pages",
     "Impossible de supprimer votre propre compte": "Unable to delete your own account",
     "Inclure le contenu du gestionnaire de fichiers": "Include the content of the file manager",
@@ -323,6 +324,7 @@
     "Nouvel utilisateur": "New user",
     "Nouvelle page créée": "New page created",
     "Nouvelle page ou barre latérale": "New page or sidebar",
+    "Obligatoire": "Missing",
     "Option active en mode déconnecté uniquement, les pages enfants sont visibles et accessibles.": "Active option in disconnected mode only, children's pages are visible and accessible.",
     "Option recommandée pour sécuriser la connexion. S'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.": "Recommended option to secure the connection. Applies to all the Captchas of the site. Simple Captcha is limited to an addition of numbers from 0 to 10. Complex Captcha uses four numbers of 0 to 20. Recommended activation.",
     "Options avancées": "Advanced options",
@@ -376,6 +378,7 @@
     "Rechercher une mise à jour en ligne": "Search for an online update",
     "Redirection vers la connexion": "Redirection to connection",
     "Renseignez les champs ci-dessous pour finaliser l'installation.": "Fill in the fields below to finalize the installation.",
+    "Restauration des bases de données absentes": "Restoring missing databases",
     "Restauration effectuée avec succès": "Restoration successfully completed",
     "Restaurer": "Restore",
     "Restaurer les données du site": "Restore site data",
@@ -498,8 +501,5 @@
     "Éditeur de script %s": "Script editor %s",
     "Éditeur de script dans Body": "Script editor in Body",
     "Éditeur de script dans Head": "Script editor in Head",
-    "Étiquettes des pages spéciales": "Special pages labels",
-    "Obligatoire": "Missing",
-    "Restauration des bases de données absentes": "Restoring missing databases",
-    "Impossible de soumettre le formulaire, car il contient des erreurs": "Unable to submit the form, as it contains errors"
+    "Étiquettes des pages spéciales": "Special pages labels"
 }

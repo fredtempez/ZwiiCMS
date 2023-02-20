@@ -65,17 +65,9 @@ class install extends common
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			// Ajouter une clé au tableau avec le code de langue
-			foreach ($files as $file) {
-				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languages)) {
-					self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				}
+			foreach ($this->getData(['languages']) as $lang => $value) {
+				self::$i18nFiles [$lang] = self::$languages[$lang];;
 			}
-			chdir($dir);
 		}
 
 		$this->addOutput([
@@ -106,6 +98,8 @@ class install extends common
 
 				// Validation de la langue transmise
 				$lang = array_key_exists($this->getUrl(2), self::$languages) ? $this->getUrl(2) : 'fr_FR';
+				setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
 
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -149,9 +143,6 @@ class install extends common
 						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 						null
 					);
-
-					// Nettoyer les cookies de langue d'une précédente installation
-					helper::deleteCookie('ZWII_CONTENT');
 
 					// Installation du site de test
 					if (

@@ -213,6 +213,7 @@
     "Importer des utilisateurs en masse": "",
     "Impossible d'ouvrir l'archive": "",
     "Impossible de modifier votre propre groupe.": "",
+    "Impossible de soumettre le formulaire, car il contient des erreurs": "",
     "Impossible de supprimer une page contenant des pages enfants": "",
     "Impossible de supprimer votre propre compte": "",
     "Inclure le contenu du gestionnaire de fichiers": "",
@@ -323,6 +324,7 @@
     "Nouvel utilisateur": "",
     "Nouvelle page créée": "",
     "Nouvelle page ou barre latérale": "",
+    "Obligatoire": "",
     "Option active en mode déconnecté uniquement, les pages enfants sont visibles et accessibles.": "",
     "Option recommandée pour sécuriser la connexion. S'applique à tous les captchas du site. Le captcha simple se limite à une addition de nombres de 0 à 10. Le captcha complexe utilise quatre opérations de nombres de 0 à 20. Activation recommandée.": "",
     "Options avancées": "",
@@ -376,6 +378,7 @@
     "Rechercher une mise à jour en ligne": "",
     "Redirection vers la connexion": "",
     "Renseignez les champs ci-dessous pour finaliser l'installation.": "",
+    "Restauration des bases de données absentes": "",
     "Restauration effectuée avec succès": "",
     "Restaurer": "",
     "Restaurer les données du site": "",
@@ -498,8 +501,5 @@
     "Éditeur de script %s": "",
     "Éditeur de script dans Body": "",
     "Éditeur de script dans Head": "",
-    "Étiquettes des pages spéciales": "",
-    "Obligatoire": "",
-    "Restauration des bases de données absentes": "",
-    "Impossible de soumettre le formulaire, car il contient des erreurs": ""
+    "Étiquettes des pages spéciales": ""
 }
