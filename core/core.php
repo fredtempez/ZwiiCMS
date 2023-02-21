@@ -261,7 +261,7 @@ class common
 			'resource' => 'websafe'
 		],
 		'georgia' => [
-			'name' => 'Geogia',
+			'name' => 'Georgia',
 			'font-family' => 'Georgia, serif',
 			'resource' => 'websafe'
 		],
@@ -345,7 +345,7 @@ class common
 		// Langue de l'administration
 		if ($this->getData(['user']) !== []) {
 			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
-			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $this->getInput('ZWII_UI');	
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $this->getInput('ZWII_UI');
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
 				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
@@ -353,7 +353,7 @@ class common
 				: self::$i18nUI;
 		} else {
 			// Installation
-			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR' ;
+			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR';
 		}
 
 		// Stocker le cookie de langue pour l'éditeur de texte
@@ -2076,7 +2076,7 @@ class common
 			$notificationClass = 'notificationError';
 		}
 		if (common::$coreNotices) {
-			$notification = sprintf('%s <p> | ',  helper::translate( 'Restauration des bases de données absentes'));
+			$notification = sprintf('%s <p> | ', helper::translate('Restauration des bases de données absentes'));
 			foreach (common::$coreNotices as $item)
 				$notification .= $item . ' | ';
 			$notificationClass = 'notificationError';
@@ -2285,7 +2285,7 @@ class common
 	 * Affiche le script
 	 */
 	public function showScript()
-	{		
+	{
 		ob_start();
 		require 'core/core.js.php';
 		$coreScript = ob_get_clean();
@@ -2293,7 +2293,7 @@ class common
 		if ($this->output['inlineScript']) {
 			$inlineScript = implode($this->output['inlineScript']);
 		}
-		echo '<script>' . helper::minifyJs( $coreScript . $this->output['script'] . htmlspecialchars_decode($inlineScript) ) . '</script>';
+		echo '<script>' . helper::minifyJs($coreScript . $this->output['script'] . htmlspecialchars_decode($inlineScript)) . '</script>';
 	}
 
 	/**
@@ -2322,7 +2322,7 @@ class common
 				if ($style) {
 					echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
 				}
-				
+
 			}
 		}
 	}
@@ -2751,6 +2751,11 @@ class core extends common
 			// Version
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
+			// Fonts disponibles
+			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
+			$fontsAvailable['websafe'] = self::$fontsWebSafe;
+
 			/**
 			 * Import des polices de caractères
 			 * A partir du CDN ou dans le dossier site/file/source/fonts
@@ -2808,7 +2813,8 @@ class core extends common
 			// Thème Administration
 			$colors = helper::colorVariants($this->getData(['admin', 'backgroundColor']));
 			$css .= '#site{background-color:' . $colors['normal'] . ';}';
-			$css .= '.row > div {font:' . $fonts[$this->getData(['admin', 'fontText'])] . ';font-size:' . $this->getData(['admin', 'fontSize']) . '}';
+			$css .= 'p, div, label, select, input, table, span {font-family:' . $fonts[$this->getData(['admin', 'fontText'])] . '}';
+			$css .= 'body,.row > div {font-size:' . $this->getData(['admin', 'fontSize']) . '}';
 			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' . $fonts[$this->getData(['admin', 'fontTitle'])] . ';color:' . $this->getData(['admin', 'colorTitle']) . ';}';
 
 			// TinyMCE

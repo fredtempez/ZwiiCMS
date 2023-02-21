@@ -14,6 +14,7 @@
 - Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dans TUI-image.
 - Mauvais affichage du script ou du CSS déclarés dans une page.
 - Choix de la langue dans TinyMCE et CodeMirror.
+- Mauvaise application des fontes dans l'administration du thème.
 - Correction de petits bugs.
 ### Nouveautés :
 - Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.

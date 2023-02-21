@@ -253,7 +253,6 @@ class theme extends common
 				'backgroundColor' 	=> $this->getInput('adminBackgroundColor'),
 				'colorTitle' 		=> $this->getInput('adminColorTitle'),
 				'colorText'			=> $this->getInput('adminColorText'),
-				'colorButtonText' 	=> $this->getInput('adminColorButtonText'),
 				'backgroundColorButton' 	=> $this->getInput('adminColorButton'),
 				'backgroundColorButtonGrey'	=> $this->getInput('adminColorGrey'),
 				'backgroundColorButtonRed'	=> $this->getInput('adminColorRed'),
