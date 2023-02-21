@@ -51,19 +51,20 @@ class install extends common
 			]);
 		}
 		// Accès autorisé
-		else {
-			// Soumission du formulaire
-			if ($this->isPost()) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'install/postinstall/' . $this->getInput('installLanguage')
-				]);
-			}
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			$lang = $this->getInput('installLanguage');
+			// Place le cookie pour la suite de  l'installation
+			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
+			]);
 		}
 
 		//Nettoyage anciennes installations
 		helper::deleteCookie('ZWII_CONTENT');
-		helper::deleteCookie('ZWII_UI');
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {

@@ -356,8 +356,9 @@ class common
 			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR';
 		}
 
+
 		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, '/', '', helper::isHttps(), false);
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
 		// Utilisateur connecté
 		if ($this->user === []) {
