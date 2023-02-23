@@ -51,7 +51,7 @@
 						<?php echo template::text('smtpFrom', [
 							'label' => 'Expéditeur',
 							'placeholder' => 'no-reply@host.fr',
-							'value' => is_null($this->getData(['config', 'smtp', 'from'])) ? 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST']) : $this->getData(['config', 'smtp', 'from']),
+							'value' => $this->getData(['config', 'smtp', 'from']),
 						]); ?>
 					</div>
 					<div class="row">

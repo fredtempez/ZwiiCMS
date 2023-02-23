@@ -231,8 +231,11 @@ class install extends common
 					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 					unlink(self::I18N_DIR . 'languages.json');
 
+					// Fixe l'adresse from pour les envois d'email
+					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
+
 					// Créer sitemap
-					// $this->createSitemap();
+					$this->createSitemap();
 
 					// Mise à jour de la liste des pages pour TinyMCE
 					$this->listPages();
@@ -249,8 +252,8 @@ class install extends common
 			// Affichage du formulaire
 
 			// Récupération de la liste des thèmes
-			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
-			$dataThemes = json_decode($dataThemes, true);
+			$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
+			$dataThemes = $dataThemes['themes'];
 			self::$themes = helper::arrayColumn($dataThemes, 'name');
 
 			// Valeurs en sortie
