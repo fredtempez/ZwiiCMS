@@ -391,7 +391,7 @@ class blog extends common
 	}
 
 	/**
-	 * Suppression de tous les commentaires de l'article $this->getUrl(2)
+	 * Suppression de tous les commentairess de l'article $this->getUrl(2)
 	 */
 	public function commentDeleteAll()
 	{

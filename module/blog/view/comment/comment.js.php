@@ -53,7 +53,7 @@ $(".blogCommentDeleteAll").on("click", function() {
 	if( nombre === "1"){
 		var message = "<?php echo helper::translate('Supprimer le commentaire ?'); ?>";
 	} else {
-		var message = "<?php echo helper::translate('Supprimer tous les commentaires ?'); ?>";
+		var message = "<?php echo helper::translate('Supprimer tous les commentairess ?'); ?>";
 	}
 	return core.confirm(message, function() {
 		$(location).attr("href", _this.attr("href"));
