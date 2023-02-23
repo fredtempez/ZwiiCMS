@@ -206,8 +206,8 @@ class install extends common
 					}
 
 					// Installation du thème sélectionné
-					$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
-					$dataThemes = json_decode($dataThemes, true);
+					$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
+					$dataThemes = $dataThemes['themes'];
 					$themeId = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
 					if ($themeId !== 'default') {
 						$theme = new theme;

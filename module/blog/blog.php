@@ -466,6 +466,8 @@ class blog extends common
 	public function config()
 	{
 
+		// Mise à jour des données de module
+		$this->update();
 		// Ids des articles par ordre de publication
 		$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'publishedOn', 'SORT_DESC'));
 		// Gestion des droits d'accès
@@ -545,8 +547,7 @@ class blog extends common
 
 	public function option()
 	{
-		// Mise à jour des données de module
-		$this->update();
+
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$this->setData([
