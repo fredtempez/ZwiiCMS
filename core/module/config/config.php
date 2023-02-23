@@ -461,7 +461,7 @@ class config extends common
 						'secure' => $this->getInput('smtpSecure', helper::FILTER_BOOLEAN),
 						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
 						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
-						'sender' => $this->getInput('smtpSender', helper::FILTER_MAIL)
+						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [
 						'robots' => $this->getInput('seoRobots', helper::FILTER_BOOLEAN),

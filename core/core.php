@@ -1098,7 +1098,7 @@ class common
 	 * @param string $content Contenu
 	 * @return bool
 	 */
-	public function sendMail($to, $subject, $content, $replyTo = null)
+	public function sendMail($to, $subject, $content, $replyTo = null, $from = '')
 	{
 		// Layout
 		ob_start();

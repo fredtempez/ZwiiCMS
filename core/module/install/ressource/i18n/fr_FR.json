@@ -18,7 +18,7 @@
     "Action interdite": "",
     "Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.": "",
     "Activer": "",
-    "Activer SMTP": "",
+    "SMTP personnalisé": "",
     "Activer la journalisation": "",
     "Actualiser": "",
     "Administration": "",
@@ -501,5 +501,6 @@
     "Éditeur de script %s": "",
     "Éditeur de script dans Body": "",
     "Éditeur de script dans Head": "",
-    "Étiquettes des pages spéciales": ""
+    "Étiquettes des pages spéciales": "",
+    "Expéditeur": ""
 }

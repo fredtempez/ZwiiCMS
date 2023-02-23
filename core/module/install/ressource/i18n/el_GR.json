@@ -18,7 +18,7 @@
     "Action interdite": "Απαγορευμένη ενέργεια",
     "Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.": "Υποχρεωτική ενεργοποίηση σύμφωνα με τη γαλλική νομοθεσία, εκτός αν χρησιμοποιείτε το δικό σας σύστημα συγκατάθεσης.",
     "Activer": "Ενεργοποίηση",
-    "Activer SMTP": "Ενεργοποίηση SMTP",
+    "SMTP personnalisé": "Προσαρμοσμένο SMTP",
     "Activer la journalisation": "Ενεργοποίηση ημερήσιας καταγραφής συμβάντων",
     "Actualiser": "Ενημέρωση",
     "Administration": "Θέμα διαχείρισης",
@@ -501,5 +501,6 @@
     "Éditeur de script %s": "Συντάκτης του script %s",
     "Éditeur de script dans Body": "Επεξεργαστής script στο Body",
     "Éditeur de script dans Head": "Επεξεργαστής script στο Head",
-    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων"
+    "Étiquettes des pages spéciales": "Ειδικές ετικέτες σελίδων",
+    "Expéditeur": "Αποστολέας"
 }

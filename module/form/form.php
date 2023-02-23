@@ -475,7 +475,8 @@ class form extends common {
 						$subject,
 						'Nouveau message en provenance de la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>' .
 						$content,
-						$replyTo
+						$replyTo,
+						$this->getData(['config', 'smtp', 'from']),
 					);
 				}
 			}

@@ -18,7 +18,7 @@
     "Action interdite": "ação não permitida",
     "Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.": "Ativação obrigatória de acordo com as leis francesas, a menos que você use seu próprio sistema de consentimento.",
     "Activer": "Permitir",
-    "Activer SMTP": "Ativar SMTP",
+    "SMTP personnalisé": "SMTP personalizzato",
     "Activer la journalisation": "Ativar registro",
     "Actualiser": "Actualizar",
     "Administration": "Gestão",
@@ -501,5 +501,6 @@
     "Éditeur de script %s": "Editor de script %s",
     "Éditeur de script dans Body": "Éditor do script no Body",
     "Éditeur de script dans Head": "Éditor do script no Head",
-    "Étiquettes des pages spéciales": "Tags de página especiais"
+    "Étiquettes des pages spéciales": "Tags de página especiais",
+    "Expéditeur": "Remetente"
 }

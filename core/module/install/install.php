@@ -149,7 +149,8 @@ class install extends common
 						'Voici les détails de votre installation.<br><br>' .
 						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
 						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-						null
+						null,
+						$this->getData(['config', 'smtp', 'from']),
 					);
 
 					// Installation du site de test

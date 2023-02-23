@@ -108,7 +108,8 @@ class user extends common
 						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 						'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
 						'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
-					null
+					null,
+					$this->getData(['config', 'smtp', 'from']),
 				);
 			}
 			// Valeurs en sortie
@@ -335,7 +336,8 @@ class user extends common
 						'Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.<br><br>' .
 						'<a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a><br><br>' .
 						'<small>Si nous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</small>',
-					null
+					null,
+					$this->getData(['config', 'smtp', 'from']),
 				);
 				// Valeurs en sortie
 				$this->addOutput([
@@ -706,7 +708,9 @@ class user extends common
 									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
 										'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 										'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-										'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+										'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
+										null,
+										$this->getData(['config', 'smtp', 'from']),
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône

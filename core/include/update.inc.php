@@ -956,6 +956,10 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 		$this->removeDir('core/vendor/flatpickr');
 	}
 
+	// email reply
+	$this->deleteData(['config', 'smtp', 'sender']);
+	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
 }
