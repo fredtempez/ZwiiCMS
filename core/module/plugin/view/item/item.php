@@ -21,7 +21,7 @@
     </div>
     <div class="row">
         <div class="col12 textAlignCenter">
-            &nbsp;<?php echo helper::translate('du') . '&nbsp;' .  $module::$storeItem['fileDate']; ?>
+            &nbsp;<?php echo helper::translate('date') . '&nbsp;' .  $module::$storeItem['fileDate']; ?>
         </div>
     </div>
     <div class="row">

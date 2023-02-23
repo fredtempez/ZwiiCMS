@@ -135,13 +135,11 @@
     "Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération": "",
     "Dans quelle langue utiliserez-vous Zwii ?": "",
     "Date": "",
-    "De": "",
     "Description": "",
     "Disposition": "",
     "Données %s copiées vers %s": "",
     "Données des modules": "",
     "Données importées": "",
-    "Du": "",
     "Dupliquer la page": "",
     "Déconnecte les sessions ouvertes précédemment sur d'autres navigateurs ou terminaux. Activation recommandée.": "",
     "Déconnecter": "",
@@ -473,7 +471,6 @@
     "Utilisateur supprimé": "",
     "Utilisateurs": "",
     "Valider": "",
-    "Vers": "",
     "Version": "",
     "Version n°": "",
     "Vider dossier sauvegardes auto": "",
@@ -489,7 +486,6 @@
     "largeur de site :": "",
     "largeur du site": "",
     "sauvegardé avec succès": "",
-    "vers": "",
     "vers ZwiiCMS": "",
     "À l'emplacement du mot clé [MODULE] dans la page": "",
     "Échecs": "",
@@ -502,5 +498,7 @@
     "Éditeur de script dans Body": "",
     "Éditeur de script dans Head": "",
     "Étiquettes des pages spéciales": "",
-    "Expéditeur": ""
+    "Expéditeur": "",
+    "Source": "",
+    "Cible": ""
 }
