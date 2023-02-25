@@ -1108,36 +1108,34 @@ class common
 		$mail->CharSet = 'UTF-8';
 		// Mail
 		try {
-			// Paramètres SMTP
+			// Paramètres SMTP perso
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
 				//$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
-				
 				if ($this->getData(['config', 'smtp', 'auth'])) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
 					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-					if (is_null($replyTo)) {
-						$mail->addReplyTo($this->getData(['config', 'smtp', 'username']));
-					} else {
-						$mail->addReplyTo($replyTo);
-					}
-				}
-				// Fin SMTP
-			} else {
-				$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				$from = $from ? $from : 'no-reply@' . $host;
-				$mail->setFrom($from, $this->getData(['locale', 'title']));
-				if (is_null($replyTo)) {
-					$mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
-				} else {
-					$mail->addReplyTo($replyTo);
 				}
 			}
+
+			// Expéditeur
+			$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+			$from = $from ? $from : 'no-reply@' . $host;
+			$mail->setFrom($from, $this->getData(['locale', 'title']));
+
+			// répondre à
+			if (is_null($replyTo)) {
+				$mail->addReplyTo($from, $this->getData(['locale', 'title']));
+			} else {
+				$mail->addReplyTo($replyTo);
+			}
+
+			// Destinataires
 			if (is_array($to)) {
 				foreach ($to as $userMail) {
 					$mail->addAddress($userMail);
