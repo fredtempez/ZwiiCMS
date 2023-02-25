@@ -1115,12 +1115,12 @@ class common
 				$mail->SMTPAutoTLS = false;
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
+				
 				if ($this->getData(['config', 'smtp', 'auth'])) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
 					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-					$mail->setFrom($this->getData(['config', 'smtp', 'username']));
 					if (is_null($replyTo)) {
 						$mail->addReplyTo($this->getData(['config', 'smtp', 'username']));
 					} else {
@@ -1130,7 +1130,8 @@ class common
 				// Fin SMTP
 			} else {
 				$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				$mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
+				$from = $from ? $from : 'no-reply@' . $host;
+				$mail->setFrom($from, $this->getData(['locale', 'title']));
 				if (is_null($replyTo)) {
 					$mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
 				} else {
