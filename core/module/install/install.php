@@ -173,6 +173,15 @@ class install extends common
 						$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
+					// Création de la liste des pages et du sitemap uniquement en FR, autres sites sont vides.
+					if (self::$i18nContent === 'fr_FR') {
+						// Mise à jour de la liste des pages pour TinyMCE
+						$this->listPages();
+
+						// Créer sitemap
+						$this->createSitemap();
+					}
+
 					// Sauvegarder la configuration du Proxy
 					$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
 					$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);
@@ -233,12 +242,6 @@ class install extends common
 
 					// Fixe l'adresse from pour les envois d'email
 					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
-
-					// Créer sitemap
-					$this->createSitemap();
-
-					// Mise à jour de la liste des pages pour TinyMCE
-					$this->listPages();
 
 					// Valeurs en sortie
 					$this->addOutput([

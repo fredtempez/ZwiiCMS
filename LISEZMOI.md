@@ -70,6 +70,7 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
 
 [R] site                   Contenu du site
   [R] backup               Sauvegardes automatiques
+  [R] i18N                 Langues de l'interface de Zwii
   [R] data                 Répertoire des données
     [R] fr                 Dossier localisé
       [F] page.json        Données des pages
@@ -90,6 +91,7 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
     [F] custom.css         Feuille de style de la personnalisation avancée
     [F] fonts.json         Descripteur des fontes personnalisées
     [F] journal.log        Journalisation des actions
+    [F] languages.json     Configuration des langues de l'interface
     [F] theme.css          Thème du site
     [F] theme.json         Données du site
     [F] user.json          Données des utilisateurs
