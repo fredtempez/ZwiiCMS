@@ -3,7 +3,11 @@
 ## Version 12.3.00
 ### Améliorations :
 - Prise en charge PHP 8.2
-- Personnalisation de l'adresse d'envoi SMTP
+- Envoi d'eMail, PHPMailer : 
+    - Mise à jour PHPMailer 6.7.1, support PHP 8 ;
+    - Personnalisation de l'adresse de l'expéditeur ;
+    - Prise en charge des langues de l'interface ;
+    - Correction d'un mauvais fonctionnement de la configuration  d'un serveur SMTP personnalisée différent de celui de l'hôte.
 - Amélioration de la prise en charge des mises à jour en ligne.
 - Activation du bouton de mise à jour dans la barre d'administration lorsque le menu de configuration est ouvert est qu'une mise à jour en ligne est détectée.
 - Gestion des langues :
@@ -16,7 +20,6 @@
 - Mauvais affichage du script ou du CSS déclarés dans une page.
 - Choix de la langue dans TinyMCE et CodeMirror.
 - Mauvaise application des fontes dans l'administration du thème.
-- Mauvais stockage de la configuration personnalisé SMTP.
 - Correction de petits bugs.
 ### Nouveautés :
 - Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.
