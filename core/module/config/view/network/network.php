@@ -97,7 +97,7 @@
 									<?php echo template::password('smtpPassword', [
 										'label' => 'Mot de passe',
 										'autocomplete' => 'off',
-										'value' => $this->getData(['config', 'smtp', 'username']) ? helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password'])) : ''
+										'value' =>  $this->getData(['config', 'smtp', 'password'])
 									]); ?>
 								</div>
 								<div class="col2">
