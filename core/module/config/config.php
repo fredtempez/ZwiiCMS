@@ -458,7 +458,7 @@ class config extends common
 						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
 						'port' => $this->getInput('smtpPort', helper::FILTER_INT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('smtpSecure', helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
 						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
 						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
 						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),

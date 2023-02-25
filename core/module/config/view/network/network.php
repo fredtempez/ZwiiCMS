@@ -50,7 +50,7 @@
 					<div class="col6">
 						<?php echo template::text('smtpFrom', [
 							'label' => 'Expéditeur',
-							'placeholder' => 'no-reply@host.fr',
+							'placeholder' => 'no-reply@host',
 							'value' => $this->getData(['config', 'smtp', 'from']),
 						]); ?>
 					</div>
