@@ -1106,6 +1106,7 @@ class common
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
 		$mail->CharSet = 'UTF-8';
+		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
 		// Mail
 		try {
 			// Paramètres SMTP perso
