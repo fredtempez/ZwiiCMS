@@ -51,7 +51,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::date('newsEditPublishedOn', [
-							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
+							'help' => 'La news est consultable à partir du moment où la date de publication est passée.',
 							'label' => 'Date de publication',
 							'type' => 'datetime-local',
 							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOn'])

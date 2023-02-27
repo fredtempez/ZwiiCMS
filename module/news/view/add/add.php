@@ -49,7 +49,7 @@
 					</div>
 					<div class="col4">
 						<?php echo template::date('newsAddPublishedOn', [
-							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
+							'help' => 'La news est consultable à partir du moment où la date de publication est passée.',
 							'label' => 'Date de publication',
 							'type' => 'datetime-local',
 							'value' => floor(strtotime('now') / 60) * 60
