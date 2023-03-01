@@ -70,7 +70,7 @@ class init extends common
 				'buttonValidLabel' => 'J\'ai compris'
 			]
 		],
-		'fonts' => [
+		'font' => [
 			'files' => [],
 			'imported' => [
 				'arimo' => [
@@ -333,7 +333,7 @@ class init extends common
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
 		'blacklist' => [],
-		'languages'=> [],
+		'language'=> [],
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [

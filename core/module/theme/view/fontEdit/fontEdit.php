@@ -51,7 +51,7 @@
 					<?php echo template::text('fontEditFontName', [
 						'autocomplete' => 'off',
 						'label' => 'Nom',
-						'value' => $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'name'])
+						'value' => $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'name'])
 					]); ?>
 				</div>
 			</div>
@@ -60,7 +60,7 @@
 					<?php echo template::text('fontEditFontFamilyName', [
 						'autocomplete' => 'off',
 						'label' => 'Famille',
-						'value' => stripslashes($this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'font-family']))
+						'value' => stripslashes($this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'font-family']))
 					]); ?>
 				</div>
 			</div>
@@ -69,7 +69,7 @@
 					<?php echo template::file('fontEditFile', [
 						'label' => 'Fichier de fonte (Format WOFF)',
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-						'value' => $this->getUrl(2) === 'files' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
+						'value' => $this->getUrl(2) === 'files' ? $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 					]); ?>
 				</div>
 			</div>
@@ -77,7 +77,7 @@
 				<div class="col12">
 					<?php echo template::text('fontEditUrl', [
 						'label' => 'Url du fichier de fonte',
-						'value' => $this->getUrl(2) === 'imported' ? $this->getData(['fonts', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
+						'value' => $this->getUrl(2) === 'imported' ? $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
 					]); ?>
 				</div>
 			</div>

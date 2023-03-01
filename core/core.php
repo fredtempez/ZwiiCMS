@@ -47,7 +47,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version et branche pour l'auto-update
-	const ZWII_VERSION = '12.3.00';
+	const ZWII_VERSION = '12.4.00';
 
 	const ZWII_DATAVERSION = 12300;
 
@@ -225,13 +225,13 @@ class common
 		'blacklist' => '',
 		'config' => '',
 		'core' => '',
-		'fonts' => '',
+		'font' => '',
 		'module' => '',
 		'locale' => '',
 		'page' => '',
 		'theme' => '',
 		'user' => '',
-		'languages' => '',
+		'language' => '',
 	];
 
 	public static $fontsWebSafe = [
@@ -643,10 +643,10 @@ class common
 	{
 
 		// Créer la base de données des langues
-		if ($module === 'languages') {
-			copy('core/module/install/ressource/i18n/languages.json', self::DATA_DIR . 'languages.json');
+		if ($module === 'language') {
+			copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
 			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-			unlink(self::I18N_DIR . 'languages.json');
+			unlink(self::I18N_DIR . 'language.json');
 			return;
 		}
 
@@ -2507,8 +2507,8 @@ class core extends common
 			 */
 
 			// Fonts disponibles
-			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
-			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
+			$fontsAvailable['files'] = $this->getData(['font', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['font', 'imported']);
 			$fontsAvailable['websafe'] = self::$fontsWebSafe;
 
 			// Fontes installées
@@ -2549,8 +2549,8 @@ class core extends common
 			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
 				: $fontFile;
 			// Enregistre la personnalisation
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
+			if (!is_dir(self::DATA_DIR . 'font')) {
+				mkdir(self::DATA_DIR . 'font');
 			}
 			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
@@ -2729,8 +2729,8 @@ class core extends common
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
 			// Enregistre les fontes
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
+			if (!is_dir(self::DATA_DIR . 'font')) {
+				mkdir(self::DATA_DIR . 'font');
 			}
 			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
@@ -2753,8 +2753,8 @@ class core extends common
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
 			// Fonts disponibles
-			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
-			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
+			$fontsAvailable['files'] = $this->getData(['font', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['font', 'imported']);
 			$fontsAvailable['websafe'] = self::$fontsWebSafe;
 
 			/**

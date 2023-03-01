@@ -686,15 +686,15 @@ class template
             'label' => '',
             'name' => $nameId,
             'selected' => '',
-            'fonts' =>  []
+            'font' =>  []
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
-        if (empty($attributes['fonts']) === false) {
-            $fonts = $attributes['fonts'];
-            $attributes['fonts'] = [];
+        if (empty($attributes['font']) === false) {
+            $fonts = $attributes['font'];
+            $attributes['font'] = [];
         }
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {

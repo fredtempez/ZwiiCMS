@@ -175,7 +175,7 @@
                     <?php echo template::select('themeFooterFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'footer', 'font']),
-                        'fonts' => $module::$fonts['family']
+                        'font' => $module::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col3">

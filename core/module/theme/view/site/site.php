@@ -166,7 +166,7 @@
 					echo template::select('themeTextFont', $module::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'text', 'font']),
-						'fonts' => $module::$fonts['family']
+						'font' => $module::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col6">
@@ -188,7 +188,7 @@
 					<?php echo template::select('themeTitleFont',  $module::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'title', 'font']),
-						'fonts' => $module::$fonts['family']
+						'font' => $module::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col4">

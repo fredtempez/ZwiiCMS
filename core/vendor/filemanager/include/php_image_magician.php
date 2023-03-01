@@ -191,7 +191,7 @@ class imageLib {
 
     private $captionBoxPositionArray = array();
 
-    private $fontDir = 'fonts';
+    private $fontDir = 'font';
 
     private $cropFromTopPercent = 10;
 

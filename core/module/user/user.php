@@ -302,7 +302,7 @@ class user extends common
 			}
 
 			// Langues disponibles pour l'interface de l'utilisateur
-			self::$languagesInstalled = $this->getData(['languages']);
+			self::$languagesInstalled = $this->getData(['language']);
 			foreach (self::$languagesInstalled as $lang => $datas) {
 				self::$languagesInstalled[$lang] = self::$languages[$lang];
 			}

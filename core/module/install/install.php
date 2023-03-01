@@ -68,7 +68,7 @@ class install extends common
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
-			foreach ($this->getData(['languages']) as $lang => $value) {
+			foreach ($this->getData(['language']) as $lang => $value) {
 				self::$i18nFiles[$lang] = self::$languages[$lang];
 				;
 			}
@@ -201,8 +201,8 @@ class install extends common
 					unlink(self::TEMP_DIR . 'files.tar');
 
 					// Créer le dossier des fontes
-					if (!is_dir(self::DATA_DIR . 'fonts')) {
-						mkdir(self::DATA_DIR . 'fonts');
+					if (!is_dir(self::DATA_DIR . 'font')) {
+						mkdir(self::DATA_DIR . 'font');
 					}
 
 					// Installation du thème sélectionné
@@ -227,9 +227,9 @@ class install extends common
 					}
 
 					// Créer la base de données des langues
-					copy('core/module/install/ressource/i18n/languages.json', self::DATA_DIR . 'languages.json');
+					copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
 					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-					unlink(self::I18N_DIR . 'languages.json');
+					unlink(self::I18N_DIR . 'language.json');
 
 					// Fixe l'adresse from pour les envois d'email
 					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
@@ -384,16 +384,16 @@ class install extends common
 				 */
 
 				// Langues installées
-				$installedUI = $this->getData(['languages']);
+				$installedUI = $this->getData(['language']);
 
 				// Langues disponibles avec la mise à jour
-				$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
-				$store = $store['languages'];
+				$store = json_decode(file_get_contents('core/module/install/ressource/i18n/language.json'), true);
+				$store = $store['language'];
 
 				foreach ($installedUI as $key => $value) {
 					if ($store[$key]['version'] > $value['version']) {
 						echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-						$this->setData(['languages', $key, $store[$key]]);
+						$this->setData(['language', $key, $store[$key]]);
 					}
 				}
 

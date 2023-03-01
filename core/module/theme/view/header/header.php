@@ -112,7 +112,7 @@
                     <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'header', 'font']),
-                        'fonts' => $module::$fonts['family']
+                        'font' => $module::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col4">

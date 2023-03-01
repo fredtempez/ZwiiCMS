@@ -84,12 +84,12 @@ class translate extends common
 		if ($response !== false) {
 			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			// Mettre à jour le descripteur
-			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-			$enums = $this->getData(['languages']);
+			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
+			$enums = $this->getData(['language']);
 			$enums = array_merge($enums, [
-				$lang => $enumsStore['languages'][$lang]
+				$lang => $enumsStore['language'][$lang]
 			]);
-			$response = (bool) $response && $this->setData(['languages', $enums]);
+			$response = (bool) $response && $this->setData(['language', $enums]);
 		}
 
 		// Valeurs en sortie
@@ -173,15 +173,20 @@ class translate extends common
 		 */
 
 		// Langues installées
-		$installedUI = $this->getData(['languages']);
+		$installedUI = $this->getData(['language']);
 
 		// Langues disponibles avec la mise à jour
-		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
-		$store = $store['languages'];
+		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/language.json'), true);
+		if (array_key_exists('languages', $store )) {
+			$store = $store['languages'];
+		}
+		if (array_key_exists('language', $store )) {
+			$store = $store['language'];
+		}
 		if ($installedUI) {
 			foreach($installedUI as $key => $value) {
 				if ($store[$key]['version'] > $value['version'])  {
-					$this->setData(['languages', $key, $store[$key]]);
+					$this->setData(['language', $key, $store[$key]]);
 				}
 			}
 		}
@@ -232,11 +237,23 @@ class translate extends common
 		}
 
 		// Langues installées
-		$installedUI = $this->getData(['languages']);
-
+		$installedUI = $this->getData(['language']);
+		if (array_key_exists('languages', $installedUI )) {
+			$installedUI = $installedUI['languages'];
+		}
+		if (array_key_exists('language', $installedUI )) {
+			$installedUI = $installedUI['language'];
+		}
 		// Langues disponibles en ligne
-		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-		$storeUI = $storeUI['languages'];
+		$storeUI = is_null (json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true))
+						? json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true)
+						: json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
+		if (array_key_exists('languages', $storeUI )) {
+			$storeUI = $storeUI['languages'];
+		}
+		if (array_key_exists('language', $storeUI )) {
+			$storeUI = $storeUI['language'];
+		}
 
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($installedUI as $file => $value) {
@@ -479,7 +496,7 @@ class translate extends common
 
 			// Mettre à jour le descripteur
 			$this->setData([
-				'languages',
+				'language',
 				$lang,
 				[
 					'version' => $this->getInput('translateEditVersion'),
@@ -575,7 +592,7 @@ class translate extends common
 				$success = false;
 				// Effacement d'une langue de l'interface
 				if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
-					$this->deleteData(['languages', $lang]);
+					$this->deleteData(['language', $lang]);
 					$success = unlink(self::I18N_DIR . $lang . '.json');
 				}
 				// Effacer la langue dans la base

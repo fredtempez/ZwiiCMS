@@ -602,8 +602,8 @@ class theme extends common
 
 		// Récupérer le détail des fontes installées
 		//$f = $this->getFonts();
-		$f['files'] =  $this->getData(['fonts', 'files']);
-		$f['imported'] =  $this->getData(['fonts', 'imported']);
+		$f['files'] =  $this->getData(['font', 'files']);
+		$f['imported'] =  $this->getData(['font', 'imported']);
 		$f['websafe'] = self::$fontsWebSafe;
 
 		// Parcourir les fontes disponibles et construire le tableau pour le formulaire
@@ -669,12 +669,12 @@ class theme extends common
 				$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 				// Supprime la fonte si elle existe dans le type inverse
-				if (is_array($this->getData(['fonts', $typeFlip, $fontId]))) {
-					$this->deleteData(['fonts', $typeFlip, $fontId]);
+				if (is_array($this->getData(['font', $typeFlip, $fontId]))) {
+					$this->deleteData(['font', $typeFlip, $fontId]);
 				}
 				// Stocker la fonte
 				$this->setData([
-					'fonts',
+					'font',
 					$type,
 					$fontId, [
 						'name' => $fontName,
@@ -734,12 +734,12 @@ class theme extends common
 			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
-			if (is_array($this->getData(['fonts', $typeFlip, $fontId]))) {
-				$this->deleteData(['fonts', $typeFlip, $fontId]);
+			if (is_array($this->getData(['font', $typeFlip, $fontId]))) {
+				$this->deleteData(['font', $typeFlip, $fontId]);
 			}
 			// Stocker les fontes
 			$this->setData([
-				'fonts',
+				'font',
 				$type,
 				$fontId, [
 					'name' => $fontName,
@@ -786,7 +786,7 @@ class theme extends common
 		else {
 
 			// Effacer la fonte de la base
-			$this->deleteData(['fonts', $this->getUrl(2), $this->getUrl(3)]);
+			$this->deleteData(['font', $this->getUrl(2), $this->getUrl(3)]);
 
 			// Effacer le fichier existant
 			if (
@@ -1078,8 +1078,8 @@ class theme extends common
 					$zip->addFile(self::DATA_DIR . 'admin.json', self::DATA_DIR . 'admin.json');
 					$zip->addFile(self::DATA_DIR . 'admin.css', self::DATA_DIR . 'admin.css');
 					// Ajoute les fontes
-					$zip->addEmptyDir(self::DATA_DIR . 'fonts');
-					$fonts = $this->getData(['fonts', 'files']);
+					$zip->addEmptyDir(self::DATA_DIR . 'font');
+					$fonts = $this->getData(['font', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
 						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
@@ -1116,8 +1116,8 @@ class theme extends common
 						}
 					}
 					// Ajoute les fontes
-					$zip->addEmptyDir(self::DATA_DIR . 'fonts');
-					$fonts = $this->getData(['fonts', 'files']);
+					$zip->addEmptyDir(self::DATA_DIR . 'font');
+					$fonts = $this->getData(['font', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
 						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
@@ -1197,8 +1197,8 @@ class theme extends common
 		 * id - nom
 		 * id - font-family - resource
 		 */
-		$f['files'] =  $this->getData(['fonts', 'files']);
-		$f['imported'] =  $this->getData(['fonts', 'imported']);
+		$f['files'] =  $this->getData(['font', 'files']);
+		$f['imported'] =  $this->getData(['font', 'imported']);
 		$f['websafe'] = self::$fontsWebSafe;
 		// Construit un tableau avec leur ID et leur famille
 		foreach (['websafe', 'imported', 'files'] as $type) {
@@ -1240,8 +1240,8 @@ class theme extends common
 		 */
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
-		if (!empty($this->getData(['fonts', 'imported']))) {
-			foreach ($this->getData(['fonts', 'imported']) as $fontId => $fontValue) {
+		if (!empty($this->getData(['font', 'imported']))) {
+			foreach ($this->getData(['font', 'imported']) as $fontId => $fontValue) {
 				if (
 					($scope === 'user' && in_array($fontId, $fontsInstalled))
 					||  $scope === 'all'
@@ -1265,8 +1265,8 @@ class theme extends common
 		 * Fontes installées localement
 		 */
 		$fileContentCss = '';
-		if (!empty($this->getData(['fonts', 'files']))) {
-			foreach ($this->getData(['fonts', 'files']) as $fontId => $fontValue) {
+		if (!empty($this->getData(['font', 'files']))) {
+			foreach ($this->getData(['font', 'files']) as $fontId => $fontValue) {
 				if (
 					($scope === 'user' && in_array($fontId, $fontsInstalled))
 					||  $scope === 'all'

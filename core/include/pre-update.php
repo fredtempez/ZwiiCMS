@@ -25,4 +25,13 @@ if (file_exists('site/data/core.json')) {
         }
         sleep(2);
     }
+    if ($version['core']['dataVersion'] < 12400) {
+        if (file_exists('core/module/install/ressource/i18n/languages.json'))
+            rename('core/module/install/ressource/i18n/languages.json', 'core/module/install/ressource/i18n/language.json');
+        if (file_exists('site/data/languages.json'))
+            rename('site/data/languages.json', 'site/data/language.json');
+        if (file_exists('site/data/fonts.json')) 
+        rename('site/data/fonts.json', 'site/data/font.json');
+    }
+
 }
