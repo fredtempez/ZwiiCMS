@@ -232,6 +232,7 @@ class common
 		'theme' => '',
 		'user' => '',
 		'language' => '',
+		'group'=> '',
 	];
 
 	public static $fontsWebSafe = [

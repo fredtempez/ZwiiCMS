@@ -27,6 +27,7 @@ class user extends common
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR,
+		'group' => self::GROUP_ADMIN,
 	];
 
 	public static $users = [];
@@ -766,4 +767,11 @@ class user extends common
 		readfile($path . $file);
 		exit();
 	}
+
+	/**
+	 * Table des groupes
+	 */
+	public function group() {
+
+	} 
 }

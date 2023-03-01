@@ -15,11 +15,18 @@
 			'help' => 'Consulter l\'aide en ligne'
 		]);*/ ?>
 	</div>
-	<div class="col1 offset8">
+	<div class="col1 offset7">
 		<?php echo template::button('userImport', [
 			'href' => helper::baseUrl() . 'user/import',
 			'value' => template::ico('upload'),
 			'help' => 'Importer des utilisateurs en masse'
+		]); ?>
+	</div>
+	<div class="col1">
+		<?php echo template::button('userGroup', [
+			'href' => helper::baseUrl() . 'user/group',
+			'value' => template::ico('users'),
+			'help' => 'Gestion des groupes'
 		]); ?>
 	</div>
 	<div class="col1">

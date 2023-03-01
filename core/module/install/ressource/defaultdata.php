@@ -334,6 +334,7 @@ class init extends common
 		],
 		'blacklist' => [],
 		'language'=> [],
+		'group' => [],
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [
