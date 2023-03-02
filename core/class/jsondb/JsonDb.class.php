@@ -52,7 +52,8 @@ class JsonDb extends \Prowebcraft\Dot
     public function set($key, $value = null, $save = true)
     {
         parent::set($key, $value);
-        if ($save) $this->save();
+        if ($save)
+            $this->save();
         return $this;
     }
 
@@ -68,7 +69,8 @@ class JsonDb extends \Prowebcraft\Dot
     public function add($key, $value = null, $pop = false, $save = true)
     {
         parent::add($key, $value, $pop);
-        if ($save) $this->save();
+        if ($save)
+            $this->save();
         return $this;
     }
 
@@ -82,7 +84,8 @@ class JsonDb extends \Prowebcraft\Dot
     public function delete($key, $save = true)
     {
         parent::delete($key);
-        if ($save) $this->save();
+        if ($save)
+            $this->save();
         return $this;
     }
 
@@ -98,7 +101,8 @@ class JsonDb extends \Prowebcraft\Dot
     public function clear($key = null, $format = false, $save = true)
     {
         parent::clear($key, $format);
-        if ($save) $this->save();
+        if ($save)
+            $this->save();
         return $this;
     }
 
@@ -108,19 +112,20 @@ class JsonDb extends \Prowebcraft\Dot
      * @param bool $reload Reboot data?
      * @return array|mixed|null
      */
-    protected function loadData($reload = false) {
+    protected function loadData($reload = false)
+    {
         if ($this->data === null || $reload) {
             $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
             if (!file_exists($this->db)) {
                 return null; // Rebuild database manage by CMS
             } else {
                 if ($this->config['backup']) {
-                   try {
-                       //todo make backup of database
-                       copy ($this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'], $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup');
-                   } catch (\Exception $e) {
+                    try {
+                        //todo make backup of database
+                        copy($this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'], $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup');
+                    } catch (\Exception $e) {
 
-                   }
+                    }
                 }
             }
             $this->data = json_decode(file_get_contents($this->db), true);
@@ -135,11 +140,12 @@ class JsonDb extends \Prowebcraft\Dot
     /**
      * Save database
      */
-    public function save() {
+    public function save()
+    {
         $lenght = strlen(json_encode($this->data));
         $try = 0;
         while ($try < 5) {
-            $written = file_put_contents($this->db, json_encode($this->data), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT|LOCK_EX); // Multi user get a locker
+            $written = file_put_contents($this->db, json_encode($this->data), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | LOCK_EX); // Multi user get a locker
             if ($written == $lenght) {
                 break;
             }
