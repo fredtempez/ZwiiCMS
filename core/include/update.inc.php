@@ -931,25 +931,7 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 if ($this->getData(['core', 'dataVersion']) < 12300) {
 	// Valeur par défaut du délai de recherche de mise à jour en ligne
 	$this->setData(['config', 'autoUpdateDelay', 86400]);
-	// Changement de nom des fichiers de langue greque
-	if (file_exists('core/module/install/ressource/i18n/gr_GR.json')) {
-		unlink('core/module/install/ressource/i18n/gr_GR.json');
-	}
-	if (file_exists(self::I18N_DIR . 'gr_GR.json')) {
-		rename(self::I18N_DIR . 'gr_GR.json', self::I18N_DIR . 'el_GR.json');
-	}
-	$d = $this->getData(['languages', 'gr_GR']);
-	if ($d) {
-		$this->setData(['languages', 'el_GR', $d]);
-		$this->deleteData(['languages', 'gr_GR']);
-	}
-	// Idem pour les modules
-	$moduleIds = ['blog', 'news', 'gallery', 'search', 'redirection', 'form'];
-	foreach ($moduleIds as $key => $value) {
-		if (file_exists('module/' . $value . '/i18n/gr_GR.json')) {
-			unlink('module/' . $value . '/i18n/gr_GR.json');
-		}
-	}
+
 
 	// Nettoyage de flatPickr
 	if (is_dir('core/vendor/flatpickr')) {
