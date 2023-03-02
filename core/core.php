@@ -181,7 +181,7 @@ class common
 		//'fa' => 'فارسی',
 		'fr_FR' => 'Français',
 		'he_IL' => 'Hebrew (Israel)',
-		'el_GR' => 'Ελληνικά',
+		'gr_GR' => 'Ελληνικά',
 		'hr' => 'Hrvatski jezik',
 		'hu_HU' => 'Magyar',
 		'id' => 'Bahasa Indonesia',

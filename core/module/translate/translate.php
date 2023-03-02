@@ -175,6 +175,14 @@ class translate extends common
 		// Langues installées
 		$installedUI = $this->getData(['language']);
 
+		// Check si la langue est bien disponible sinon la supprime de la BDD
+		if ($installedUI) {
+			foreach ($installedUI as $key => $value)
+			if (file_exists(self::I18N_DIR . $key . '.json' )	=== false ) {
+				$this->deleteData(['languages', $key]);
+			}
+		}
+
 		// Langues disponibles avec la mise à jour
 		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/language.json'), true);
 		if (array_key_exists('languages', $store )) {

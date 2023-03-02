@@ -234,13 +234,6 @@ class install extends common
 					// Fixe l'adresse from pour les envois d'email
 					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
-					// Création de la liste des pages et du sitemap uniquement en FR, autres sites sont vides.
-					// Mise à jour de la liste des pages pour TinyMCE
-					$this->listPages();
-
-					// Créer sitemap
-					$this->createSitemap();
-
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl(true) . $this->getData(['locale', 'homePageId']),

@@ -2,7 +2,7 @@
 
 return array(
 	'de' => 'Deutsch',
-	'el_GR' => 'ελληνικά',
+	'gr_GR' => 'ελληνικά',
 	'en_EN' => 'English',
 	'es' => 'Español',
 	'fr_FR' => 'Français',
