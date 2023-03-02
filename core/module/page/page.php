@@ -553,6 +553,13 @@ class page extends common
 					self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 				}
 			}
+
+			// Met à jour le site map
+			$this->createSitemap('all');
+
+			// Mise à jour de la liste des pages pour TinyMCE
+			$this->listPages();
+			
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
@@ -571,7 +578,7 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$css = $this->getInput('pageCssEditorContent') ===  null ? '': $this->getInput('pageCssEditorContent');	
+			$css = $this->getInput('pageCssEditorContent') === null ? '' : $this->getInput('pageCssEditorContent');
 			// Enregistre le CSS
 			$this->setData([
 				'page', $this->getUrl(2),
