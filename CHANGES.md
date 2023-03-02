@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.2.04
+- Référencement incorrect de la langue grecque dans la base centrale
+
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
 
