@@ -8,7 +8,7 @@ return array(
 	'cs' => 'čeština, český jazyk',
 	'da' => 'Dansk',
 	'de' => 'Deutsch',
-	'el_GR' => 'ελληνικά',
+	'gr_GR' => 'ελληνικά',
 	'en_EN' => 'English',
 	'es' => 'Español',
 	'fa' => 'فارسی',
