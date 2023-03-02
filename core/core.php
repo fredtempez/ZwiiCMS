@@ -330,15 +330,16 @@ class common
 			]);
 		}
 
-		// Installation fraîche, initialisation des modules manquants
-		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath($stageId, self::$i18nContent);
-			if (
-				file_exists($folder . $stageId . '.json') === false ||
-				$this->getData([$stageId]) === NULL
-			) {
-				$this->initData($stageId, self::$i18nContent);
-				common::$coreNotices[] = $stageId;
+		// Installation fraîche, initialisation des modules
+		if ($this->user === []) {
+			foreach ($this->dataFiles as $stageId => $item) {
+				$folder = $this->dataPath($stageId, self::$i18nContent);
+				if (
+					file_exists($folder . $stageId . '.json') === false
+				) {
+					$this->initData($stageId, self::$i18nContent);
+					common::$coreNotices[] = $stageId;
+				}
 			}
 		}
 
