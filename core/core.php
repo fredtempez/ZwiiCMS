@@ -359,7 +359,7 @@ class common
 
 
 		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
 		// Utilisateur connecté
 		if ($this->user === []) {

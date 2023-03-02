@@ -55,7 +55,7 @@ class install extends common
 		if ($this->isPost()) {
 			$lang = $this->getInput('installLanguage');
 			// Place le cookie pour la suite de  l'installation
-			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
 			// Valeurs en sortie
 			$this->addOutput([
