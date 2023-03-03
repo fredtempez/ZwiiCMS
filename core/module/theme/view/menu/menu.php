@@ -22,7 +22,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate(' Paramètres'); ?>
+            <h4><?php echo helper::translate('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
@@ -158,7 +158,7 @@
                     <?php echo template::text('themeMenuActiveTextColor', [
                         'class' => 'colorPicker',
                         'help' => 'Le curseur horizontal règle le niveau de transparence.',
-                        'label' => 'Texte page active',
+                        'label' => 'Couleur texte page active',
                         'value' => $this->getData(['theme', 'menu', 'activeTextColor'])
                     ]); ?>
                 </div>

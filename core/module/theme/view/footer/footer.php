@@ -124,7 +124,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('themeFooterMemberBar', true, 'Barre du membre', [
+                    <?php echo template::checkbox('themeFooterMemberBar', true, 'Barre de membre', [
                         'checked' => $this->getData(['theme', 'footer', 'memberBar']),
                         'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés, ne s\'applique pas aux éditeurs et administrateurs.'
                     ]); ?>
@@ -140,13 +140,13 @@
                 </div>
                 <div class="col3">
                     <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC')), [
-                        'label' => 'Page "Mentions légales" ' . template::flag('selected', '20px'),
+                        'label' =>  helper::translate('Mentions légales') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'legalPageId'])
                     ]); ?>
                 </div>
 
                 <div class="col3">
-                    <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
+                    <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
                         'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                         'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
                         'help' => 'Option active si une page a été sélectionnée.'
@@ -154,7 +154,7 @@
                 </div>
                 <div class="col3">
                     <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC')), [
-                        'label' => 'Page "Rechercher" ' . template::flag('selected', '20px'),
+                        'label' =>  helper::translate('Rechercher dans le site') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
                 </div>

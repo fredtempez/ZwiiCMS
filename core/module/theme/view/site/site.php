@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col4">
 					<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
-						'label' => 'Largeur du site',
+						'label' => 'Largeur de site',
 						'selected' => $this->getData(['theme', 'site', 'width'])
 					]); ?>
 				</div>
@@ -46,7 +46,7 @@
 			</div>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::checkbox('themeSiteMargin', true, 'Pas de marge au-dessus et en-dessous du site', [
+					<?php echo template::checkbox('themeSiteMargin', true, 'Pas de marge au-dessus et en dessous du site', [
 						'checked' => $this->getData(['theme', 'site', 'margin'])
 					]); ?>
 				</div>
