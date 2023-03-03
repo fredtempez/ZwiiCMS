@@ -119,7 +119,7 @@ class theme extends common
 	];
 	public static $headerFeatures = [
 		'wallpaper' => 'Couleur unie ou papier-peint',
-		'feature'   => 'Contenu personnalisé'
+		'feature'   => 'Contenu HTML'
 	];
 	public static $imagePositions = [
 		'top left' => 'En haut à gauche',

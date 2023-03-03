@@ -2668,7 +2668,7 @@ class core extends common
 				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' . $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
-			// Bannière au contenu personnalisé
+			// Bannière au Contenu HTML
 			if ($this->getData(['theme', 'header', 'feature']) === 'feature') {
 				// Hauteur de la taille du contenu perso
 				$css .= 'header {height:' . $this->getData(['theme', 'header', 'height']) . '; min-height:' . $this->getData(['theme', 'header', 'height']) . ';overflow: hidden;}';
