@@ -331,15 +331,16 @@ class common
 			]);
 		}
 
-		// Installation fraîche, initialisation des modules manquants
-		foreach ($this->dataFiles as $stageId => $item) {
-			$folder = $this->dataPath($stageId, self::$i18nContent);
-			if (
-				file_exists($folder . $stageId . '.json') === false ||
-				$this->getData([$stageId]) === NULL
-			) {
-				$this->initData($stageId, self::$i18nContent);
-				common::$coreNotices[] = $stageId;
+		// Installation fraîche, initialisation des modules
+		if ($this->user === []) {
+			foreach ($this->dataFiles as $stageId => $item) {
+				$folder = $this->dataPath($stageId, self::$i18nContent);
+				if (
+					file_exists($folder . $stageId . '.json') === false
+				) {
+					$this->initData($stageId, self::$i18nContent);
+					common::$coreNotices[] = $stageId;
+				}
 			}
 		}
 
@@ -2668,7 +2669,7 @@ class core extends common
 				$css .= 'header span{color:' . $colors['normal'] . ';font-family:' . $fonts[$this->getData(['theme', 'header', 'font'])] . ';font-weight:' . $this->getData(['theme', 'header', 'fontWeight']) . ';font-size:' . $this->getData(['theme', 'header', 'fontSize']) . ';text-transform:' . $this->getData(['theme', 'header', 'textTransform']) . '}';
 			}
 
-			// Bannière au contenu personnalisé
+			// Bannière au Contenu HTML
 			if ($this->getData(['theme', 'header', 'feature']) === 'feature') {
 				// Hauteur de la taille du contenu perso
 				$css .= 'header {height:' . $this->getData(['theme', 'header', 'height']) . '; min-height:' . $this->getData(['theme', 'header', 'height']) . ';overflow: hidden;}';
