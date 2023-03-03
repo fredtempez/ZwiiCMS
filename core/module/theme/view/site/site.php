@@ -39,7 +39,7 @@
 				</div>
 				<div class="col4">
 					<?php echo template::select('themeSiteShadow', $module::$shadows, [
-						'label' => 'Ombre sur les bords du site',
+						'label' => 'Ombre',
 						'selected' => $this->getData(['theme', 'site', 'shadow'])
 					]); ?>
 				</div>

@@ -33,7 +33,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
-                        'label' => 'Nature de contenu',
+                        'label' => 'Contenu',
                         'selected' => $this->getData(['theme', 'header', 'feature'])
                     ]); ?>
                 </div>
@@ -104,7 +104,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le Titre', [
+                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>

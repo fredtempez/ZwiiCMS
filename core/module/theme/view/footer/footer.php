@@ -9,11 +9,11 @@
     </div>
     <div class="col1">
         <?php /* echo template::button('themeFooterHelp', [
-            'href' => 'https://doc.zwiicms.fr/pied-de-page',
-            'target' => '_blank',
-            'value' => template::ico('help'),
-            'class' => 'buttonHelp'
-        ]); */ ?>
+         'href' => 'https://doc.zwiicms.fr/pied-de-page',
+         'target' => '_blank',
+         'value' => template::ico('help'),
+         'class' => 'buttonHelp'
+         ]); */?>
     </div>
     <div class="col2 offset8">
         <?php echo template::submit('themeFooterSubmit'); ?>
@@ -22,7 +22,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Paramètres'); ?></h4>
+            <h4>
+                <?php echo helper::translate('Paramètres'); ?>
+            </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::select('themeFooterPosition', $module::$footerPositions, [
@@ -59,7 +61,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Couleurs'); ?></h4>
+            <h4>
+                <?php echo helper::translate('Couleurs'); ?>
+            </h4>
             <div class="row">
                 <div class="col6">
                     <?php echo template::text('themeFooterTextColor', [
@@ -73,7 +77,7 @@
                         'class' => 'colorPicker',
                         'label' => 'Arrière plan',
                         'value' => $this->getData(['theme', 'footer', 'backgroundColor']),
-                        'help'  => 'Quand le pied de page est dans le site, l\'arrière plan transparent montre le fond de la page. Quand le pied de page est hors du site, l\'arrière plan transparent montre le fond du site.'
+                        'help' => 'Quand le pied de page est dans le site, l\'arrière plan transparent montre le fond de la page. Quand le pied de page est hors du site, l\'arrière plan transparent montre le fond du site.'
                     ]); ?>
                 </div>
             </div>
@@ -83,7 +87,9 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-        <?php echo helper::translate('Contenu'); ?></h4>
+            <h4>
+                <?php echo helper::translate('Éléments'); ?>
+            </h4>
             <div class="row">
                 <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayCopyright', true, 'Motorisé par', [
@@ -119,7 +125,7 @@
                 </div>
                 <div class="col3">
                     <?php echo template::checkbox('themeFooterMemberBar', true, 'Barre du membre', [
-                        'checked' =>  $this->getData(['theme', 'footer', 'memberBar']),
+                        'checked' => $this->getData(['theme', 'footer', 'memberBar']),
                         'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés, ne s\'applique pas aux éditeurs et administrateurs.'
                     ]); ?>
                 </div>
@@ -159,7 +165,7 @@
 <div class="row">
     <div class="col12">
         <?php echo template::textarea('themeFooterText', [
-            'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu personnalisé') . '</div>',
+            'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu HTML') . '</div>',
             'value' => $this->getData(['theme', 'footer', 'text']),
             'class' => 'editorWysiwyg'
         ]); ?>
@@ -168,7 +174,8 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Mise en forme du texte'); ?>
+            <h4>
+                <?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -204,11 +211,12 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Disposition'); ?>
+            <h4>
+                <?php echo helper::translate('Disposition'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php $footerBlockPosition =  is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks[$this->getData(['theme', 'footer', 'template'])]; ?>
+                    <?php $footerBlockPosition = is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks[$this->getData(['theme', 'footer', 'template'])]; ?>
                     <?php echo template::select('themeFooterTemplate', $module::$footerTemplate, [
                         'label' => 'Répartition',
                         'selected' => is_null($this->getData(['theme', 'footer', 'template'])) ? 4 : $this->getData(['theme', 'footer', 'template'])
@@ -219,7 +227,7 @@
                 <div class="col4">
                     <p>
                         <strong>
-                            <?php echo helper::translate('Contenu personnalisé'); ?>
+                            <?php echo helper::translate('Contenu HTML'); ?>
                         </strong>
                     </p>
                     <div class="row">
