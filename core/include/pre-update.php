@@ -26,16 +26,5 @@ if (file_exists('site/data/core.json')) {
         }
         sleep(1);
     }
-
-    // Avant version 12.3.00
-    if ($version['core']['dataVersion'] < 12300) {
-        // Nettoyage du dossier de langue de TinyMCE
-        unlink('core/vendor/tinymce/langs/*.js');
-        unlink('core/vendor/tinymce/langs/langs.zip');
-        unlink('core/module/install/ressource/i18n/de.json');
-        unlink('core/module/install/ressource/i18n/it.json');
-        unlink('core/module/install/ressource/i18n/pt_PT.json');
-        unlink('core/module/install/ressource/i18n/gr_GR.json');
-    }
 }
 
