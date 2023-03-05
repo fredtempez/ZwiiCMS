@@ -942,6 +942,18 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	$this->deleteData(['config', 'smtp', 'sender']);
 	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
+
+	// Nettoyage du dossier de langue d'installation'
+	unlink('core/vendor/tinymce/langs/langs.zip');
+	if (file_exists('core/module/install/ressource/i18n/de.json'))
+		unlink('core/module/install/ressource/i18n/de.json');
+	if (file_exists('core/module/install/ressource/i18n/it.json'))
+		unlink('core/module/install/ressource/i18n/it.json');
+	if (file_exists('core/module/install/ressource/i18n/pt_PT.json'))
+		unlink('core/module/install/ressource/i18n/pt_PT.json');
+	if (file_exists('core/module/install/ressource/i18n/gr_GR.json'))
+		unlink('core/module/install/ressource/i18n/gr_GR.json');
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
 }
