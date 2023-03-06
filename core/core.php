@@ -3309,11 +3309,18 @@ class core extends common
 				break;
 			// Layout allégé
 			case self::DISPLAY_LAYOUT_LIGHT:
+				ob_start();
 				require 'core/layout/light.php';
+				$content = preg_replace('/\s+/', ' ', ob_get_clean());
+				echo $content;
 				break;
 			// Layout principal
 			case self::DISPLAY_LAYOUT_MAIN:
+				ob_start();
 				require 'core/layout/main.php';
+				// Supprime les espaces et les sauts de ligne inutiles
+				$content = preg_replace('/\s+/', ' ', ob_get_clean());
+				echo $content;
 				break;
 		}
 	}
