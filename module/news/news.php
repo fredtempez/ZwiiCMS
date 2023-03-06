@@ -266,8 +266,7 @@ class news extends common
 
 			// Générer la feuille de CSS
 			$style = '.newsFrame {';
-			$style .= 'border-right:' . $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor') . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
-			$style .= 'border-left:' . $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor') . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
+			$style .= 'border:' . $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor') . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
 			$style .= 'background-color:' . $this->getInput('newsThemeBackgroundColor') . ';';
 			$style .= '}';
 
@@ -546,9 +545,6 @@ class news extends common
 				'showBarEditButton' => true,
 				'showPageContent' => true,
 				'view' => 'index',
-				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
-				? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
-				: ''
 			]);
 		}
 	}

@@ -3162,12 +3162,6 @@ class core extends common
 									'style' => file_get_contents($stylePath)
 								]);
 							}
-							if ($output['style']) {
-								$this->addOutput([
-									//'style' => $this->output['style'] . file_get_contents($output['style'])
-									'style' => file_get_contents($output['style'])
-								]);
-							}
 
 							// JS
 							$scriptPath = $modulePath . self::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
