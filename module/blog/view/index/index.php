@@ -1,4 +1,14 @@
 <?php if ($module::$articles) : ?>
+	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])) : ?>
+		<div id="rssFeed">
+			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" target="_blank">
+				<img src='module/blog/ressource/feed-icon-16.gif' />
+				<?php
+				echo $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel']) ? '<p>' . $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel']) . '</p>' : '';
+				?>
+			</a>
+		</div>
+	<?php endif; ?>
 	<article>
 		<?php foreach ($module::$articles as $articleId => $article) : ?>
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) === 0) : ?>
@@ -143,16 +153,6 @@
 				<?php endforeach; ?>
 	</article>
 	<?php echo $module::$pages; ?>
-	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])) : ?>
-		<div id="rssFeed">
-			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" target="_blank">
-				<img src='module/blog/ressource/feed-icon-16.gif' />
-				<?php
-				echo '<p>' . $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel']) . '</p>';
-				?>
-			</a>
-		</div>
-	<?php endif; ?>
 <?php else : ?>
 	<?php echo template::speech('Aucun article'); ?>
 <?php endif; ?>
