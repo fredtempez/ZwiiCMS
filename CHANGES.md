@@ -3,6 +3,7 @@
 ## Version 12.3.00
 ### Améliorations :
 - Prise en charge PHP 8.2
+- Nettoyage de la sortie HTML.
 - Envoi d'eMail, PHPMailer : 
     - Mise à jour PHPMailer 6.7.1, support PHP 8 ;
     - Personnalisation de l'adresse de l'expéditeur ;
