@@ -742,6 +742,11 @@ class core extends common
 									'style' => file_get_contents($stylePath)
 								]);
 							}
+							if ($output['style']) {
+								$this->addOutput([
+									'style' => file_get_contents($output['style'])
+								]);
+							}
 
 							// JS
 							$scriptPath = $modulePath . self::MODULE_DIR . $moduleId . '/view/' . $output['view'] . '/' . $output['view'] . '.js.php';
@@ -890,26 +895,11 @@ class core extends common
 				break;
 			// Layout allégé
 			case self::DISPLAY_LAYOUT_LIGHT:
-				ob_start();
 				require 'core/layout/light.php';
-
-				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
-
-				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
-				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
-				echo $content;
 				break;
 			// Layout principal
 			case self::DISPLAY_LAYOUT_MAIN:
-				ob_start();
 				require 'core/layout/main.php';
-				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
-
-				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
-				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
-				echo $content;
 				break;
 		}
 	}
