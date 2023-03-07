@@ -1,3 +1,4 @@
+<?php $layout = new layout($this); ?>
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$i18nContent, 0, 2); ?>">
 <head>
@@ -6,13 +7,13 @@
 	<meta meta="description=" content="ZwiiCMS le CMS multilingue sans base de données">
 	<meta name="generator" content="ZiiCMS https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<?php $this->showMetaTitle(); ?>
-	<?php $this->showMetaDescription(); ?>
-	<?php $this->showMetaType(); ?>
-	<?php $this->showMetaImage(); ?>
-	<?php $this->showFavicon(); ?>
-	<?php $this->showVendor(); ?>
-	<?php $this->showFonts(); ?>
+	<?php $layout->showMetaTitle(); ?>
+	<?php $layout->showMetaDescription(); ?>
+	<?php $layout->showMetaType(); ?>
+	<?php $layout->showMetaImage(); ?>
+	<?php $layout->showFavicon(); ?>
+	<?php $layout->showVendor(); ?>
+	<?php $layout->showFonts(); ?>
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css'); ?>">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR . 'theme.css'); ?>">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR . 'custom.css'); ?>">
@@ -24,8 +25,8 @@
 	) : ?>
 		<link rel="alternate" type="application/rss+xml" href="'<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" title="fLUX rss">
 	<?php endif; ?>
-	<?php $this->showStyle(); ?>
-	<?php $this->showInlineStyle(); ?>
+	<?php $layout->showStyle(); ?>
+	<?php $layout->showInlineStyle(); ?>
 	<!-- Script perso dans le header -->
 	<?php if (file_exists(self::DATA_DIR . 'head.inc.html')) {
 		include(self::DATA_DIR . 'head.inc.html');
@@ -35,11 +36,11 @@
 <body>
 	<!-- Barre d'administration -->
 	<?php if ($this->getUser('group') > self::GROUP_MEMBER) : ?>
-		<?php $this->showBar(); ?>
+		<?php $layout->showBar(); ?>
 	<?php endif; ?>
 
 	<!-- Notifications -->
-	<?php $this->showNotification(); ?>
+	<?php $layout->showNotification(); ?>
 
 	<!-- Menu dans le fond du site avant la bannière -->
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top') : ?>
@@ -67,7 +68,7 @@
 		$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
 		?>
 		<div id="menu" <?php echo $menuClass; ?>>
-			<?php $this->showMenu(); ?>
+			<?php $layout->showMenu(); ?>
 		</div> <!--fin menu -->
 		</nav>
 	<?php endif; ?>
@@ -113,7 +114,7 @@
 			$menuClass = $this->getData(['theme', 'menu', 'wide']) === 'none' ? 'class="container-large"'  : 'class="container"';
 			?>
 			<div id="menu" <?php echo $menuClass; ?>>
-				<?php $this->showMenu(); ?></div>
+				<?php $layout->showMenu(); ?></div>
 		</nav>
 	<?php endif; ?>
 
@@ -126,7 +127,7 @@
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 					<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
-				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
+				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
 		<?php if (
@@ -175,15 +176,15 @@
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'title'  ? '<div  id="burgerText">' . $this->getData(['locale', 'title']) . '</div>' : ''; ?>
 					<?php echo $this->getData(['theme', 'menu', 'burgerContent']) === 'logo'   ? '<div  id="burgerLogo"><img src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo']) . '"></div>' : ''; ?>
 					<?php echo template::ico('menu', ['fontSize' => '2em']); ?></div>
-				<div id="menu" class="container"><?php $this->showMenu(); ?></div>
+				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
 
 		<!-- Corps de page -->
-		<?php $this->showSection(); ?>
+		<?php $layout->showSection(); ?>
 
 		<!-- footer -->
-		<?php $this->showFooter(); ?>
+		<?php $layout->showFooter(); ?>
 
 		<!-- Fin du site -->
 		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site' ? '</div>' : ''; ?>
@@ -191,9 +192,9 @@
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
 		<!-- Affichage du consentement aux cookies-->
-		<?php $this->showCookies(); ?>
+		<?php $layout->showCookies(); ?>
 		<!-- Les scripts -->
-		<?php $this->showScript(); ?>
+		<?php $layout->showScript(); ?>
 		<!-- Script perso dans body -->
 		<?php if (file_exists(self::DATA_DIR . 'body.inc.html')) {
 			include(self::DATA_DIR . 'body.inc.html');
