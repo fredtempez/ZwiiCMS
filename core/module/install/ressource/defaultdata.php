@@ -917,7 +917,9 @@ class init extends common
 							'directory' => self::FILE_DIR . 'source/galerie/landscape',
 							'homePicture' => 'iceberg.jpg',
 							'sort' => 'SORT_ASC',
-							'position' => 1
+							'position' => 1,
+							'showPageContent' => false,
+							'fullScreen' => false
 						],
 						'legend' => [
 							'desertjpg' => 'Un désert',
@@ -936,7 +938,9 @@ class init extends common
 							'directory' => self::FILE_DIR . 'source/galerie/space',
 							'homePicture' => 'nebula.jpg',
 							'sort' => 'SORT_ASC',
-							'position' => 2
+							'position' => 2,
+							'showPageContent' => false,
+							'fullScreen' => false
 						],
 						'legend' => [
 							'earthjpg' => 'La Terre et la Lune',
