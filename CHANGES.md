@@ -3,7 +3,7 @@
 ## Version 12.3.00
 ### Améliorations :
 - Prise en charge PHP 8.2
-- Nettoyage de la sortie HTML.
+- "Minification" de la sortie HTML.
 - Envoi d'eMail, PHPMailer : 
     - Mise à jour PHPMailer 6.7.1, support PHP 8 ;
     - Personnalisation de l'adresse de l'expéditeur ;
@@ -15,7 +15,7 @@
     - Le numéro de version d'une langue est le numéro de version de base de données
     - A l'installation ou lors de l'accès à la fenêtre des langues, les dialogues sont actualisés.
     - La fonction d'édition des langues de l'UI est neutralisée.
-- Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé.
+- Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé, si les fichiers de sécurité htaccess sont manquants.
 ### Corrections : 
 - Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dans TUI-image.
 - Mauvais affichage du script ou du CSS déclarés dans une page.
@@ -25,6 +25,9 @@
 ### Nouveautés :
 - Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.
 - Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
+
+## Version 12.2.04
+- Référencement incorrect de la langue grecque dans la base centrale.
 
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json

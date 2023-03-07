@@ -38,4 +38,19 @@ foreach ($e as $k => $v) {
     }
 }
 if ($b)
-    exit('<pre><p>ZwiiCMS ne peut pas démarrer ; activez les extensions requises - ZwiiCMS cannot run, enabled missing extensions.</p></pre>');
+    exit('<pre><p>ZwiiCMS ne peut pas démarrer ; activez les extensions requises - ZwiiCMS cannot start, enabled missing extensions.</p></pre>');
+/**
+ * Contrôle les htacess
+ */
+
+$d = [
+    '',
+    'site/data/',
+    'site/backup/',
+    'site/tmp/',
+    'site/i18n/'
+];
+foreach ($d as $key) {
+    if (file_exists($key . '.htaccess') === false)
+        exit('<pre>ZwiiCMS ne peut pas démarrer, le fichier ' .$key . '.htaccess est manquant.<br />ZwiiCMS cannot start, file ' . $key . '.htaccess is missing manquant.</pre>' );
+}
