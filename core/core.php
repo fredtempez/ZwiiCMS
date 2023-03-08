@@ -1278,11 +1278,3 @@ class common
 		$zip->close();
 	}
 }
-
-/**
- * Chargement des classes
- * layout : composition des écrans
- * router : aiguillage des pages
- */
-require_once('include/layout.class.php');
-require_once('include/router.class.php');
