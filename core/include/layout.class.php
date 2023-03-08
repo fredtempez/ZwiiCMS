@@ -961,7 +961,11 @@ class layout extends common
             // Items de droite
             $rightItems = '';
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-                $rightItems .= '<li><a href="' . helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']) . '" data-tippy-content="Gérer les fichiers" data-lity>' . template::ico('folder') . '</a></li>';
+                $rightItems .= '<li>' . template::ico('folder', [
+                    'help' => 'Gérer les fichiers',
+                    'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
+                    'attr' => 'data-lity'
+                ]) . '</li>';   
             }
             if ($this->getUser('group') >= self::GROUP_ADMIN) {
                 $rightItems .= '<li>' . template::ico('brush', [

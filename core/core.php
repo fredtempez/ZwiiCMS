@@ -13,6 +13,15 @@
  * @link http://zwiicms.fr/
  */
 
+/**
+ * Chargement des classes filles
+ * layout : composition des écrans
+ * router : aiguillage des pages
+ */
+require_once('include/layout.class.php');
+require_once('include/router.class.php');
+
+
 class common
 {
 
