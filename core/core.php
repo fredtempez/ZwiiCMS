@@ -18,8 +18,8 @@
  * layout : composition des écrans
  * router : aiguillage des pages
  */
-require_once('include/layout.class.php');
-require_once('include/router.class.php');
+require_once('class/layout.class.php');
+require_once('class/router.class.php');
 
 
 class common
