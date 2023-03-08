@@ -68,7 +68,7 @@ $("input, select").on("change",function() {
 	} else {
 		css += ".button, button{font-size:1em;}";
 	}
-	// Largeur de site
+	// Largeur
 	var margin = $("#themeSiteMargin").is(":checked") ? 0 : '20px' ;
 	css += ".container{max-width:" + $("#themeSiteWidth").val() + "}";
 	if ($("#themeSiteWidth").val() === "100%") {

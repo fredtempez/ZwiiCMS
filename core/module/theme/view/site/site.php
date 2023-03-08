@@ -27,7 +27,7 @@
 			<div class="row">
 				<div class="col4">
 					<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
-						'label' => 'Largeur de site',
+						'label' => 'Largeur',
 						'selected' => $this->getData(['theme', 'site', 'width'])
 					]); ?>
 				</div>

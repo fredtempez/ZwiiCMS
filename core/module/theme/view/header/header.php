@@ -163,7 +163,7 @@
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
+                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('Largeur :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
                         -
                         <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
                         -
