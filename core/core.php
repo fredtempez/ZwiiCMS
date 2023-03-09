@@ -15,12 +15,9 @@
 
 /**
  * Chargement des classes filles
- * layout : composition des écrans
  * router : aiguillage des pages
  */
-require_once('class/layout.class.php');
-require_once('class/router.class.php');
-
+require_once('core/class/router.class.php');
 
 class common
 {

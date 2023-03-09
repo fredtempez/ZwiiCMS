@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * Chargement des classes filles
+ * router : aiguillage des pages
+ */
+
+require_once('core/class/layout.class.php');
+
 class core extends common
 {
 
@@ -453,6 +461,10 @@ class core extends common
 	 */
 	public function router()
 	{
+
+		// 		
+		$layout = new layout($this);
+
 		// Installation
 		if (
 			$this->getData(['user']) === []
