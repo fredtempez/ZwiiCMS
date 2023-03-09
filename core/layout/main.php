@@ -1,4 +1,3 @@
-<?php $layout = new layout($this); ?>
 <!DOCTYPE html>
 <html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$i18nContent, 0, 2); ?>">
 <head>
