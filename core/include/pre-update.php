@@ -31,20 +31,20 @@ if (file_exists('site/data/core.json')) {
     if ($version['core']['dataVersion'] < 12400) {
         // Renommage les fichiers de données au pluriel
         $t = [
-            'core/module/install/ressource/i18n/languages.json' => 'core/module/install/ressource/i18n/language.json',
             'site/data/languages.json' => 'site/data/language.json',
             'site/data/fonts.json' => 'site/data/font.json'
         ];
-        foreach ($d as $k => $v) {
+        foreach ($t as $k => $v) {
             if (file_exists($k)) {
-                rename($k, $v);
-                $d = file_get_contents($v);
-                $d = str_replace(basename($k,'.json'), basename($v, '.json'));
-                file_put_contents($v);
+                $d = file_get_contents($k);
+                $d = str_replace(basename($k,'.json'), basename($v, '.json'), $d);
+                file_put_contents($v, $d);
 
             }
         }
-
+        if (file_exists('core/module/install/ressource/i18n/languages.json')) {
+            unlink ('core/module/install/ressource/i18n/languages.json');
+        }
     }
 
 }
