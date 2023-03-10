@@ -962,7 +962,7 @@ class layout extends common
             $rightItems = '';
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
                 $rightItems .= '<li>' . template::ico('folder', [
-                    'help' => 'Gérer les fichiers',
+                    'help' => 'Fichiers',
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
                     'attr' => 'data-lity'
                 ]) . '</li>';   
@@ -973,7 +973,7 @@ class layout extends common
                     'href' => helper::baseUrl() . 'theme'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('puzzle', [
-                    'help' => 'Gérer les modules',
+                    'help' => 'Modules',
                     'href' => helper::baseUrl() . 'plugin'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('flag', [
