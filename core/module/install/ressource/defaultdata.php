@@ -353,7 +353,9 @@ class init extends common
 			"2" => [
 				'name' => 'Editeur',
 				'readonly' => false,
-				'comment' => 'Edition des pages'
+				'comment' => 'Edition des pages',
+				'file' => [],
+				'folder' => []
 			],
 			"99" => [
 				'name' => 'Administrateur',

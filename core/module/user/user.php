@@ -443,6 +443,43 @@ class user extends common
 	 */
 	public function groupEdit()
 	{
+		if (
+			$this->getUrl(3) !== $_SESSION['csrf']
+		) {
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'user',
+				'notification' => helper::translate('Action interdite')
+			]);
+		}
+		$group = $this->getUrl(2);
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			$this->setData(['group',
+				$group,
+				'file' => [
+					'download' => $this->getInput('groupEditDownload', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('groupEditEdit', helper::FILTER_BOOLEAN),
+					'create' => $this->getInput('groupEditCreate', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('groupEditRename', helper::FILTER_BOOLEAN),
+					'upload' => $this->getInput('groupEditUpload', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('groupEditDelete', helper::FILTER_BOOLEAN),
+					'preview' => $this->getInput('groupEditPreview', helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('groupEditDuplicate', helper::FILTER_BOOLEAN),
+					'extract' => $this->getInput('groupEditExtract', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('groupEditCopycut', helper::FILTER_BOOLEAN),
+					'permission' => $this->getInput('groupEditPermission', helper::FILTER_BOOLEAN),
+				],
+				'folder' => [
+					'create' => $this->getInput('groupEditFolderCreate', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('groupEditFolderDelete', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
+					'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+				]
+			]);
+		}
 
 		// Valeurs en sortie
 		$this->addOutput([
