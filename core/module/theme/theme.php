@@ -658,7 +658,7 @@ class theme extends common
 		if ($this->isPost()) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$typeFlip = $type === 'files' ? 'imported' : 'files';
+			$type === 'files' ? 'imported' : 'files';
 			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
 			if (!empty($ressource)) {
 				$fontId = $this->getInput('fontAddFontId', null, true);
@@ -669,8 +669,8 @@ class theme extends common
 				$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 				// Supprime la fonte si elle existe dans le type inverse
-				if (is_array($this->getData(['fonts', $typeFlip, $fontId]))) {
-					$this->deleteData(['fonts', $typeFlip, $fontId]);
+				if (is_array($this->getData(['fonts', $type, $fontId]))) {
+					$this->deleteData(['fonts', $type, $fontId]);
 				}
 				// Stocker la fonte
 				$this->setData([
