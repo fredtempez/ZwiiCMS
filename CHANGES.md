@@ -21,6 +21,7 @@
 - Mauvais affichage du script ou du CSS déclarés dans une page.
 - Choix de la langue dans TinyMCE et CodeMirror.
 - Mauvaise application des fontes dans l'administration du thème.
+- Corrige une mauvaise lecture du type de fonte éditée.
 - Correction de petits bugs.
 ### Nouveautés :
 - Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.
