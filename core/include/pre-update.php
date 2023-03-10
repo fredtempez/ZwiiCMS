@@ -39,7 +39,7 @@ if (file_exists('site/data/core.json')) {
                 $d = file_get_contents($k);
                 $d = str_replace(basename($k,'.json'), basename($v, '.json'), $d);
                 file_put_contents($v, $d);
-
+                unlink($k);
             }
         }
         if (file_exists('core/module/install/ressource/i18n/languages.json')) {
