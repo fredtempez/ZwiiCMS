@@ -335,27 +335,27 @@ class init extends common
 		'blacklist' => [],
 		'language'=> [],
 		'group' => [
-			-1 => [
+			"-1" => [
 				'name' => 'Banni',
 				'readonly' => true,
-				'comment' => 'Inscription désactivée'
+				'comment' => 'Accès désactivé'
 			],
-			0 => [
+			"0" => [
 				'name' => 'Visiteur',
 				'readonly' => true,
-				'comment' => 'Accès aux pages privées'
+				'comment' => 'Accède au site'
 			],
-			1 => [
+			"1" => [
 				'name' => 'Membre',
 				'readonly' => true,
 				'comment' => 'Accède aux pages réservées'
 			],
-			2 => [
+			"2" => [
 				'name' => 'Editeur',
 				'readonly' => false,
 				'comment' => 'Edition des pages'
 			],
-			99 => [
+			"99" => [
 				'name' => 'Administrateur',
 				'readonly' => true,
 				'comment' => 'Contrôle total'

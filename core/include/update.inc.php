@@ -969,9 +969,6 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 		}
 	}
 	
-	// Création des modèles de groupe 
-	
-
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12400]);
 

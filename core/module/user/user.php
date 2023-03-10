@@ -28,6 +28,8 @@ class user extends common
 		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR,
 		'group' => self::GROUP_ADMIN,
+		'groupAdd' => self::GROUP_ADMIN,
+		'groupEdit' => self::GROUP_ADMIN,
 	];
 
 	public static $users = [];
@@ -41,6 +43,8 @@ class user extends common
 	];
 
 	public static $userId = '';
+
+	public static $userGroups = [];
 
 	public static $userLongtime = false;
 
@@ -303,10 +307,14 @@ class user extends common
 			}
 
 			// Langues disponibles pour l'interface de l'utilisateur
+
 			self::$languagesInstalled = $this->getData(['language']);
-			foreach (self::$languagesInstalled as $lang => $datas) {
-				self::$languagesInstalled[$lang] = self::$languages[$lang];
+			if (self::$languagesInstalled) {
+				foreach (self::$languagesInstalled as $lang => $datas) {
+					self::$languagesInstalled[$lang] = self::$languages[$lang];
+				}
 			}
+
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -401,14 +409,45 @@ class user extends common
 	 */
 	public function group()
 	{
-		$groups = $this->getData(['group']);
-		foreach ($groups as $key => $value) {
+		$g = $this->getData(['group']);
+		foreach ($g as $groupId => $groupData) {
 
+			self::$userGroups[$groupId] = [
+				$groupId,
+				$groupData['name'],
+				$groupData['comment'],
+				template::button('groupEdit' . $groupId, [
+					'href' => helper::baseUrl() . 'user/groupEdit/' . $groupId . '/' . $_SESSION['csrf'],
+					'value' => template::ico('pencil'),
+					'help' => 'Éditer',
+					'disabled' => $groupData['readonly'],
+				]),
+				template::button('userDelete' . $groupId, [
+					'class' => 'userDelete buttonRed',
+					'href' => helper::baseUrl() . 'user/groupDelete/' . $groupId . '/' . $_SESSION['csrf'],
+					'value' => template::ico('trash'),
+					'help' => 'Supprimer',
+					'disabled' => $groupData['readonly'],
+				])
+			];
 		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Groupes'),
 			'view' => 'group'
+		]);
+	}
+
+	/**
+	 * Edition d'un groupe
+	 */
+	public function groupEdit()
+	{
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'title' => helper::translate('Editer groupe'),
+			'view' => 'groupEdit'
 		]);
 	}
 

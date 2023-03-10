@@ -6,7 +6,5 @@
             'value' => template::ico('left')
         ]); ?>
 	</div>
-	<div class="col2 offset9">
-		<?php echo template::submit('userGroupSubmit'); ?>
-	</div>
 </div>
+<?php echo template::table([1, 3, 6, 1, 1], $module::$userGroups, ['#', 'Nom', 'Commentaire', '', '']); ?>
