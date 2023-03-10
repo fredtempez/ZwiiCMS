@@ -334,7 +334,33 @@ class init extends common
 		],
 		'blacklist' => [],
 		'language'=> [],
-		'group' => [],
+		'group' => [
+			-1 => [
+				'name' => 'Banni',
+				'readonly' => true,
+				'comment' => 'Inscription désactivée'
+			],
+			0 => [
+				'name' => 'Visiteur',
+				'readonly' => true,
+				'comment' => 'Accès aux pages privées'
+			],
+			1 => [
+				'name' => 'Membre',
+				'readonly' => true,
+				'comment' => 'Accède aux pages réservées'
+			],
+			2 => [
+				'name' => 'Editeur',
+				'readonly' => false,
+				'comment' => 'Edition des pages'
+			],
+			99 => [
+				'name' => 'Administrateur',
+				'readonly' => true,
+				'comment' => 'Contrôle total'
+			]
+		],
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [

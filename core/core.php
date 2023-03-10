@@ -32,7 +32,7 @@ class common
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
 	const GROUP_MODERATOR = 2;
-	const GROUP_ADMIN = 3;
+	const GROUP_ADMIN = 99;
 	const SIGNATURE_ID = 1;
 	const SIGNATURE_PSEUDO = 2;
 	const SIGNATURE_FIRSTLASTNAME = 3;
@@ -55,7 +55,7 @@ class common
 	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.4.00';
 
-	const ZWII_DATAVERSION = 12300;
+	const ZWII_DATAVERSION = 12400;
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';

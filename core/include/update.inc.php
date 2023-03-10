@@ -957,3 +957,22 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12300]);
 }
+
+// Version 12.4.00
+if ($this->getData(['core', 'dataVersion']) < 12400) {
+
+	// Affecter le groupe 99 aux admins
+	$users = $this->getData(['user']);
+	foreach ($users as $key => $value) {
+		if ($value['group'] === 3) {
+			$this->setData(['user', $key, 'group', 99]);
+		}
+	}
+	
+	// Création des modèles de groupe 
+	
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12400]);
+
+}
