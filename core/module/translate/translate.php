@@ -188,7 +188,7 @@ class translate extends common
 		$store = $store['languages'];
 
 		foreach($installedUI as $key => $value) {
-			if ($store[$key]['version'] > $value['version'])  {
+			if (isset($store[$key]) && $store[$key]['version'] > $value['version'])  {
 				$this->setData(['languages', $key, $store[$key]]);
 			}
 		}
