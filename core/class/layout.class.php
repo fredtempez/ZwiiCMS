@@ -1016,7 +1016,10 @@ class layout extends common
                 }
             }
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] . '" data-tippy-content="Configurer mon compte">' . template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</span></a></li>';
+                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] . 
+                                '" data-tippy-content="'. helper::translate('Configurer mon compte') . '">' . 
+                                template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . 
+                                '</span></a></li>';
             }
             $rightItems .= '<li>' . template::ico('logout', [
                 'help' => 'Déconnecter',

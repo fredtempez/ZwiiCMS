@@ -167,7 +167,7 @@
                         -
                         <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
                         -
-                        <?php echo helper::translate('Ratio :'); ?> <span id="themeHeaderImageRatio"></span>
+                        <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
             </div>
