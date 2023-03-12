@@ -927,8 +927,8 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	$this->setData(['core', 'dataVersion', 12000]);
 }
 
-// Version 12.3.00
-if ($this->getData(['core', 'dataVersion']) < 12300) {
+// Version 12.3.01
+if ($this->getData(['core', 'dataVersion']) < 12301) {
 	// Valeur par défaut du délai de recherche de mise à jour en ligne
 	$this->setData(['config', 'autoUpdateDelay', 86400]);
 
@@ -943,5 +943,5 @@ if ($this->getData(['core', 'dataVersion']) < 12300) {
 	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12300]);
+	$this->setData(['core', 'dataVersion', 12301]);
 }

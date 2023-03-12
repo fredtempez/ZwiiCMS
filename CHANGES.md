@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 12.3.00
+## Version 12.3.01
 ### Améliorations :
 - Prise en charge PHP 8.2
 - "Minification" de la sortie HTML.
