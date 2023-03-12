@@ -1,4 +1,4 @@
-# ZwiiCMS 12.2.04
+# ZwiiCMS 12.3.01
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge.
 
@@ -50,59 +50,61 @@ When installing a major version, it is recommended to make a backup copy.
 
 ## General tree structure
 
-*Legend: [R] Directory - [F] File
+*Legend: [D] Directory - [FILE] File
 
 ````
 text
-[R] core Core of the system
-  [R] class Classes
-  [R] layout Layout
-  [R] module Core modules
-  [R] vendor External libraries
-  [F] core.js.php Javascript core
-  [F] core.php PHP core
+[DIR] core Core of the system
+  [DIR] class         Classes
+  [DIR] layout        Layout
+  [DIR] module        Core modules
+  [DIR] vendor        External libraries
+  [FILE] core.js.php  Javascript core
+  [FILE] core.php PHP core
 
-[R] module Page modules
-  [R] blog Blog
-  [R] form Form manager
-  [R] gallery Gallery
-  [R] news News
-  [R] redirection Redirection
+[DIR] module          Page modules
+  [DIR] blog          Blog
+  [DIR] form          Form manager
+  [DIR] gallery       Gallery
+  [DIR] news          News
+  [DIR] redirection   Redirection
 
-[R] site Site content
-  [R] backup Automatic backups
-  [R] data Data directory
-    [R] en Localized folder
-      [F] page.json Page data
-      [F] module.json Page module data
-      [F] local.json Language-specific site data
-      [R] content Folder of page contents
-        [F] home.html Sample home page content
-    [R] fonts Folder containing the installed fonts
-      [F] fonts.html File containing the fonts calls to load on cdnFonts
-      [F] fonts.css File containing the style sheet linked to the local fonts
-      [F] fonts.woff Local font files (woff, etc..)
-    [R] modules Customization of modules or own data
-    [F] admin.css Theme of administration pages
-    [F] admin.json Theme data for administration pages
-    [F] blacklist.json Logging of login attempts with unknown accounts
-    [F] config.json Site configuration
-    [F] core.json Core configuration
-    [F] custom.css Advanced customization stylesheet
-    [F] fonts.json Custom font descriptor
-    [F] journal.log Action logging
-    [F] theme.css Site theme
-    [F] theme.json Site data
-    [F] user.json User data
-    [F] .backup Marker for file backup if present
-  [R] file File manager upload directory
-    [R] source Various resources
-    [R] thumb Image thumbnails
-  [R] tmp Temporary directory
+[DIR] site                Site content
+  [DIR] backup            Automatic backups
+  [DIR] i18N              Zwii Interface languages
+  [DIR] data              Data directory
+    [DIR] en              Localized folder
+      [FILE] page.json    Page data
+      [FILE] module.json  Page module data
+      [FILE] local.json   Language-specific site data
+      [DIR] content       Folder of page contents
+        [FILE] home.html  Sample home page content
+    [DIR] fonts           Folder containing the installed fonts
+      [FILE] fonts.html   File containing the fonts calls to load on cdnFonts
+      [FILE] fonts.css    File containing the style sheet linked to the local fonts
+      [FILE] fonts.woff   Local font files (woff, etc..)
+    [DIR] modules         Customization of modules or own data
+    [FILE] admin.css      Theme of administration pages
+    [FILE] admin.json     Theme data for administration pages
+    [FILE] blacklist.json Logging of login attempts with unknown accounts
+    [FILE] config.json    Site configuration
+    [FILE] core.json      Core configuration
+    [FILE] custom.css     Advanced customization stylesheet
+    [FILE] fonts.json     Custom font descriptor
+    [FILE] journal.log    Action logging
+    [FILE] languages.json Interface database languages
+    [FILE] theme.css      Site theme
+    [FILE] theme.json     Site data
+    [FILE] user.json      User data
+    [FILE] .backup Marker for file backup if present
+  [DIR] file              File manager upload directory
+    [DIR] source          Various resources
+    [DIR] thumb           Image thumbnails
+  [DIR] tmp               Temporary directory
 
-[F] index.php ZwiiCMS initialization file
-[F] robots.txt Filtering of directories accessible to search engine robots
-[F] sitemap.xml Sitemap
-[F] sitemap.xml.gz Compressed version
+[FILE] index.php          ZwiiCMS initialization file
+[FILE] robots.txt         Filtering of directories accessible to search engine robots
+[FILE] sitemap.xml        Sitemap
+[FILE] sitemap.xml.gz     Compressed version
 
 The .htaccess files contribute to security by filtering access to sensitive directories.

@@ -71,29 +71,34 @@
 						<?php echo template::checkbox('configAutoUpdate', true, 'Rechercher une mise à jour en ligne', [
 							'checked' => $this->getData(['config', 'autoUpdate']),
 							'help' => 'La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.',
-							'disabled' => !$module::$onlineVersion
+							'disabled' => empty(helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL))
 						]); ?>
 					</div>
 					<div class="col6">
 						<?php echo template::checkbox('configAutoUpdateHtaccess', true, 'Préserver le fichier htaccess racine', [
 							'checked' => $this->getData(['config', 'autoUpdateHtaccess']),
 							'help' => 'Lors d\'une mise à jour automatique, conserve le fichier htaccess de la racine du site.',
-							'disabled' => !$module::$onlineVersion
+							'disabled' => empty(helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL))
 						]); ?>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col6">
-						<?php echo  '<pre>Version installée : <strong>' . common::ZWII_VERSION . '</strong></pre>'; ?>
-						<?php echo  $module::$onlineVersion ? '<pre>Version en ligne  : <strong>'  . $module::$onlineVersion . '</strong></pre>' : ''; ?>
+					<div class="col3">
+						<?php echo template::select('configAutoUpdateDelay', $module::$updateDelay, [
+							'label' => 'Fréquence de recherche',
+							'selected' => $this->getData(['config', 'autoUpdateDelay']),
+						]); ?>
 					</div>
-					<div class="col4 verticalAlignBottom">
+					<div class="col3 offset2 verticalAlignBottom">
+						<pre>Version installée : <strong><?php echo common::ZWII_VERSION ; ?></strong></pre>
+						<pre>Version en ligne  : <strong><?php echo helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) ; ?></strong></pre>
+					</div>
+					<div class="col3 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
 							'value' => $module::$updateButtonText,
 							'class' => 'buttonRed',
-							'disabled' => !$module::$onlineVersion
 						]); ?>
 					</div>
 				</div>

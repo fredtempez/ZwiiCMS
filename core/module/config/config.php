@@ -189,6 +189,13 @@ class config extends common
 		'num' => 'Chiffres',
 		'alpha'	  => 'Lettres'
 	];
+	public static $updateDelay = [
+		86400 => '1',
+		172800 => '2',
+		345600 => '4',
+		604800 => '7',
+		1209600 => '14',
+	];
 
 	// Langue traduite courante
 	public static $i18nSite = 'fr_FR';
@@ -420,7 +427,6 @@ class config extends common
 				$this->setData(['core', 'lastAutoUpdate', 0]);
 			}
 
-
 			// Sauvegarder la configuration
 			$this->setData([
 				'config',
@@ -436,6 +442,7 @@ class config extends common
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
 					'proxyPort' => $this->getInput('configProxyPort', helper::FILTER_INT),
+					'autoUpdateDelay' => $this->getInput('configAutoUpdateDelay', helper::FILTER_INT),
 					'social' => [
 						'facebookId' => $this->getInput('socialFacebookId'),
 						'linkedinId' => $this->getInput('socialLinkedinId'),
@@ -451,10 +458,10 @@ class config extends common
 						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
 						'port' => $this->getInput('smtpPort', helper::FILTER_INT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
-						'secure' => $this->getInput('smtpSecure', helper::FILTER_BOOLEAN),
+						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
 						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
 						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
-						'sender' => $this->getInput('smtpSender', helper::FILTER_MAIL)
+						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [
 						'robots' => $this->getInput('seoRobots', helper::FILTER_BOOLEAN),
@@ -543,10 +550,28 @@ class config extends common
 			]);
 		}
 
+		// Activation du bouton de mise à jour
+		if (
+			helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
+			&& $this->getData(['core', 'updateAvailable']) === false
+			&& $this->getData(['config', 'autoUpdate'])
+		) {
+			$this->setData(['core', 'updateAvailable', true]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+			]);
+
+		}
+
 		// Variable de version
-		self::$onlineVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
-		if (self::$onlineVersion > common::ZWII_VERSION) {
+		if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
 			self::$updateButtonText = helper::translate('Mettre à jour');
+		}
+
+		// Sélecteur de délais, compléter avec la traduction en jours
+		foreach(self::$updateDelay as $key => $value) {			
+			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
 		}
 
 		// Valeurs en sortie

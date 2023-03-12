@@ -31,7 +31,7 @@ class install extends common
 	];
 
 	// Thèmes proposés à l'installation
-	public static $themes =   [];
+	public static $themes = [];
 
 	public static $newVersion;
 
@@ -51,31 +51,27 @@ class install extends common
 			]);
 		}
 		// Accès autorisé
-		else {
-			// Soumission du formulaire
-			if ($this->isPost()) {
-				$lang = $this->getInput('installLanguage');
-				setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
-				]);
-			}
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			$lang = $this->getInput('installLanguage');
+			// Place le cookie pour la suite de  l'installation
+			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
+			]);
 		}
+
+		//Nettoyage anciennes installations
+		helper::deleteCookie('ZWII_CONTENT');
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			// Ajouter une clé au tableau avec le code de langue
-			foreach ($files as $file) {
-				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languages)) {
-					self::$i18nFiles[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				}
+			foreach ($this->getData(['languages']) as $lang => $value) {
+				self::$i18nFiles[$lang] = self::$languages[$lang];
+				;
 			}
-			chdir($dir);
 		}
 
 		$this->addOutput([
@@ -105,7 +101,13 @@ class install extends common
 				$success = true;
 
 				// Validation de la langue transmise
-				$lang = array_key_exists($this->getUrl(2), self::$languages) ? $this->getUrl(2) : 'fr_FR';
+				self::$i18nUI = $this->getUrl(2);
+				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+
+				// par défaut le contenu est la langue d'installation
+				self::$i18nContent = self::$i18nUI;
+				setcookie('ZWII_CONTENT', self::$i18nContent, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
 
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -132,7 +134,7 @@ class install extends common
 						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'language' => $lang
+						'language' => self::$i18nUI
 					]
 				]);
 
@@ -144,19 +146,17 @@ class install extends common
 						$userMail,
 						'Installation de votre site',
 						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-							'Voici les détails de votre installation.<br><br>' .
-							'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-							'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-						null
+						'Voici les détails de votre installation.<br><br>' .
+						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+						null,
+						$this->getData(['config', 'smtp', 'from']),
 					);
-
-					// Nettoyer les cookies de langue d'une précédente installation
-					helper::deleteCookie('ZWII_CONTENT');
 
 					// Installation du site de test
 					if (
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& $lang === 'fr_FR'
+						&& self::$i18nContent === 'fr_FR'
 					) {
 						$this->initData('page', self::$i18nContent, true);
 						$this->initData('module', self::$i18nContent, true);
@@ -166,9 +166,11 @@ class install extends common
 					}
 
 					// Jeu réduit pour les pages étrangères
-					if ($lang !== 'fr_FR') {
+					if (self::$i18nContent !== 'fr_FR') {
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
+						// Supprime l'installation FR générée par défaut.
+						$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy
@@ -197,8 +199,6 @@ class install extends common
 					// Nettoyage
 					unlink(self::TEMP_DIR . 'files.tar.gz');
 					unlink(self::TEMP_DIR . 'files.tar');
-					helper::deleteCookie('ZWII_UI');
-
 
 					// Créer le dossier des fontes
 					if (!is_dir(self::DATA_DIR . 'fonts')) {
@@ -206,12 +206,12 @@ class install extends common
 					}
 
 					// Installation du thème sélectionné
-					$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
-					$dataThemes = json_decode($dataThemes, true);
-					$themeId = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
-					if ($themeId !== 'default') {
+					$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
+					$dataThemes = $dataThemes['themes'];
+					$themeFilename = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
+					if ($themeFilename !== '') {
 						$theme = new theme;
-						$theme->import('core/module/install/ressource/themes/' . $themeId);
+						$theme->import('core/module/install/ressource/themes/' . $themeFilename);
 					}
 
 					// Copie des thèmes dans les fichiers
@@ -231,16 +231,14 @@ class install extends common
 					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 					unlink(self::I18N_DIR . 'languages.json');
 
-					// Créer sitemap
-					$this->createSitemap();
-					// Mise à jour de la liste des pages pour TinyMCE
-					$this->listPages();
+					// Fixe l'adresse from pour les envois d'email
+					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl(false),
+						'redirect' => helper::baseUrl(true) . $this->getData(['locale', 'homePageId']),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
-						'state' => ($sent === true &&  $success === true) ? true : null
+						'state' => ($sent === true && $success === true) ? true : null
 					]);
 				}
 			}
@@ -248,8 +246,8 @@ class install extends common
 			// Affichage du formulaire
 
 			// Récupération de la liste des thèmes
-			$dataThemes = file_get_contents('core/module/install/ressource/themes/themes.json');
-			$dataThemes = json_decode($dataThemes, true);
+			$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
+			$dataThemes = $dataThemes['themes'];
 			self::$themes = helper::arrayColumn($dataThemes, 'name');
 
 			// Valeurs en sortie
@@ -267,7 +265,7 @@ class install extends common
 	public function steps()
 	{
 		switch ($this->getInput('step', helper::FILTER_INT)) {
-				// Préparation
+			// Préparation
 			case 1:
 				$success = true;
 				// RAZ la mise à jour auto
@@ -294,7 +292,7 @@ class install extends common
 					]
 				]);
 				break;
-				// Téléchargement
+			// Téléchargement
 			case 2:
 				file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
@@ -309,7 +307,7 @@ class install extends common
 					]
 				]);
 				break;
-				// Installation
+			// Installation
 			case 3:
 				$success = true;
 				// Check la réécriture d'URL avant d'écraser les fichiers
@@ -340,15 +338,15 @@ class install extends common
 					]
 				]);
 				break;
-				// Configuration
+			// Configuration
 			case 4:
 				$success = true;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") {					// Ajout des lignes dans le .htaccess
+				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
-					$rewriteData = 	PHP_EOL .
-						'# URL rewriting' .  PHP_EOL .
+					$rewriteData = PHP_EOL .
+						'# URL rewriting' . PHP_EOL .
 						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
@@ -373,6 +371,25 @@ class install extends common
 					// Effacer le backup
 					unlink('.htaccess.bak');
 				}
+
+				/**
+				 * Met à jour les dictionnaires des langues depuis les modèles installés
+				 */
+
+				// Langues installées
+				$installedUI = $this->getData(['languages']);
+
+				// Langues disponibles avec la mise à jour
+				$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
+				$store = $store['languages'];
+
+				foreach ($installedUI as $key => $value) {
+					if ($store[$key]['version'] > $value['version']) {
+						echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+						$this->setData(['languages', $key, $store[$key]]);
+					}
+				}
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
@@ -381,7 +398,6 @@ class install extends common
 						'data' => null
 					]
 				]);
-				break;
 		}
 	}
 
@@ -400,32 +416,4 @@ class install extends common
 		]);
 	}
 
-		/**
-	 * Génère un fichier d'énumération des langues de l'UI
-	 */
-	private function makeUiLanguages()
-	{
-		// Générer une énumération absente
-		if (empty($enums)) {
-			if (is_dir(self::I18N_DIR) === false) {
-				mkdir(self::I18N_DIR);
-			}
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-			$enums = [];
-			foreach ($files as $file => $value) {
-				if (basename($value, '.json') === 'languages') {
-					continue;
-				}
-				$enums[basename($value, '.json')] = [
-					'version' => "?",
-					'date' => 1672052400
-				];
-			}
-			$this->setData(['languages', $enums]);
-		}
-
-	}
 }

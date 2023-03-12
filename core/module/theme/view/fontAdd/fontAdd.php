@@ -8,12 +8,12 @@
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('fontAddHelp', [
+		<?php /* echo template::button('fontAddHelp', [
 			'href' => 'https://doc.zwiicms.fr/fontes#add',
 			'target' => '_blank',
 			'value' => template::ico('help'),
 			'class' => 'buttonHelp'
-		]); ?>
+		]); */ ?>
 	</div>
 	<div class="col2 offset8">
 		<?php echo template::submit('fontAddPublish', [

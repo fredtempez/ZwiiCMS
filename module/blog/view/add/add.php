@@ -89,12 +89,14 @@
 						<?php echo template::date('blogAddPublishedOn', [
 							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
 							'label' => 'Date de publication',
-							'value' => time()
+							'type' => 'datetime-local',
+							'format' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']) . $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']),
+							'value' => floor(strtotime('now') / 60) * 60
 						]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::select('blogAddConsent', $module::$articleConsent  , [
-							'label' => 'Edition - Suppression',
+							'label' => 'Édition - Suppression',
 							'selected' => $module::EDIT_ALL,
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>

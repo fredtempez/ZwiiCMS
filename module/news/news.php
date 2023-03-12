@@ -18,12 +18,14 @@ class news extends common
 
 	const VERSION = '4.3';
 	const REALNAME = 'News';
-	const DATADIRECTORY =  self::DATA_DIR . 'news/';
+	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
 	public static $actions = [
 		'add' => self::GROUP_MODERATOR,
-		'config' => self::GROUP_MODERATOR, // Edition des news
-		'option' => self::GROUP_MODERATOR,  // paramétrage des news
+		'config' => self::GROUP_MODERATOR,
+		// Edition des news
+		'option' => self::GROUP_MODERATOR,
+		// paramétrage des news
 		'delete' => self::GROUP_MODERATOR,
 		'edit' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
@@ -61,31 +63,50 @@ class news extends common
 	public static $nbrCol = 1;
 
 	public static $height = [
-		-1		=> 'Article complet',
-		1000 	=> '1000 caractères',
-		800 	=> '800 caractères',
-		600 	=> '600 caractères',
-		400 	=> '400 caractères',
-		200 	=> '200 caractères',
+		-1 => 'Article complet',
+		1000 => '1000 caractères',
+		800 => '800 caractères',
+		600 => '600 caractères',
+		400 => '400 caractères',
+		200 => '200 caractères',
 	];
 
 	public static $borderWidth = [
-		0 			=> 'Aucune',
-		'0.1em' 	=> 'Très fine',
-		'0.15em'	=> 'Fine',
-		'0.2em'		=> 'Très petite',
-		'0.25em'	=> 'Petite',
+		0 => 'Aucune',
+		'0.1em' => 'Très fine',
+		'0.15em' => 'Fine',
+		'0.2em' => 'Très petite',
+		'0.25em' => 'Petite',
 	];
 
 	public static $borderStyle = [
-		'none'	=> 'Aucune',
-		'solid' => 'Tiret'
+		'none' => 'Aucune',
+		'solid' => 'Bordure'
 	];
 
 	// Signature de l'article
 	public static $articleSignature = '';
 	// Nombre d'articles dans la page de config:
 	public static $itemsperPage = 8;
+
+	public static $dateFormats = [
+		'%d %B %Y' => 'DD MMMM YYYY',
+		'%d/%m/%Y' => 'DD/MM/YYYY',
+		'%m/%d/%Y' => 'MM/DD/YYYY',
+		'%d/%m/%y' => 'DD/MM/YY',
+		'%m/%d/%y' => 'MM/DD/YY',
+		'%d-%m-%Y' => 'DD-MM-YYYY',
+		'%m-%d-%Y' => 'MM-DD-YYYY',
+		'%d-%m-%y' => 'DD-MM-YY',
+		'%m-%d-%y' => 'MM-DD-YY',
+	];
+	public static $timeFormats = [
+		'%H:%M' => 'HH:MM',
+		'%I:%M %p' => "HH:MM tt",
+	];
+
+	public static $timeFormat = '';
+	public static $dateFormat = '';
 
 	/**
 	 * Flux RSS
@@ -115,11 +136,11 @@ class news extends common
 		foreach ($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if ($newsPublishedOn <= time() and $newsIdsStates[$newsId]) {
 				$newsArticle = $feeds->createNewItem();
-				$author = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $newsId, 'userId']));
+				$author = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'userId']));
 				$newsArticle->addElementArray([
-					'title' 		=> $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'title']),
-					'link' 			=> helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
-					'description' 	=> $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'content'])
+					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'title']),
+					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
+					'description' => $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'content'])
 				]);
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId);
@@ -147,14 +168,19 @@ class news extends common
 			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0), 'posts']));
 			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
 			$publishedOff = $this->getInput('newsAddPublishedOff') ? $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME) : '';
-			$this->setData(['module', $this->getUrl(0), 'posts', $newsId, [
-				'content' => $this->getInput('newsAddContent', null),
-				'publishedOn' => $publishedOn,
-				'publishedOff' => $publishedOff,
-				'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
-				'title' => $this->getInput('newsAddTitle', helper::FILTER_STRING_SHORT, true),
-				'userId' => $this->getInput('newsAddUserId', helper::FILTER_ID, true)
-			]]);
+			$this->setData([
+				'module', $this->getUrl(0),
+				'posts',
+				$newsId,
+				[
+					'content' => $this->getInput('newsAddContent', null),
+					'publishedOn' => $publishedOn,
+					'publishedOff' => $publishedOff,
+					'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
+					'title' => $this->getInput('newsAddTitle', helper::FILTER_STRING_SHORT, true),
+					'userId' => $this->getInput('newsAddUserId', helper::FILTER_ID, true)
+				]
+			]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -171,7 +197,7 @@ class news extends common
 		unset($userFirstname);
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Nouvel article'),
+			'title' => helper::translate('Rédiger un article'),
 			'vendor' => [
 				'flatpickr',
 				'tinymce'
@@ -195,20 +221,23 @@ class news extends common
 		$pagination = helper::pagination($newsIds, $this->getUrl(), self::$itemsperPage);
 		// Liste des pages
 		self::$pages = $pagination['pages'];
+		// Format de temps
+		self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+		self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 		// News en fonction de la pagination
 		for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 			// Met en forme le tableau
-			$dateOn = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
+			$dateOn = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
 			if ($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) {
-				$dateOff = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
+				$dateOff = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
 			} else {
-				$dateOff = 'Permanent';
+				$dateOff = helper::translate('Permanent');
 			}
 			self::$news[] = [
 				$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'title']),
 				$dateOn,
 				$dateOff,
-				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])],
+				helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])]),
 				template::button('newsConfigEdit' . $newsIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil')
@@ -236,9 +265,8 @@ class news extends common
 		if ($this->isPost()) {
 
 			// Générer la feuille de CSS
-			$style =  '.newsFrame {';
-			$style .= 'border-right:' .  $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
-			$style .= 'border-left:' .  $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor')  . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
+			$style = '.newsFrame {';
+			$style .= 'border:' . $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT) . ' ' . $this->getInput('newsThemeBorderColor') . ' ' . $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT) . ';';
 			$style .= 'background-color:' . $this->getInput('newsThemeBackgroundColor') . ';';
 			$style .= '}';
 
@@ -251,22 +279,32 @@ class news extends common
 
 			// Fin feuille de style
 
-			$this->setData(['module', $this->getUrl(0), 'theme', [
-				'style'       => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
-				'borderStyle' => $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT),
-				'borderColor' => $this->getInput('newsThemeBorderColor'),
-				'borderWidth'	  => $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT),
-				'backgroundColor' => $this->getInput('newsThemeBackgroundColor')
-			]]);
+			$this->setData([
+				'module', $this->getUrl(0),
+				'theme',
+				[
+					'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
+					'borderStyle' => $this->getInput('newsThemeBorderStyle', helper::FILTER_STRING_SHORT),
+					'borderColor' => $this->getInput('newsThemeBorderColor'),
+					'borderWidth' => $this->getInput('newsThemeBorderWidth', helper::FILTER_STRING_SHORT),
+					'backgroundColor' => $this->getInput('newsThemeBackgroundColor')
+				]
+			]);
 
-			$this->setData(['module', $this->getUrl(0), 'config', [
-				'feeds' 	 => $this->getInput('newsOptionShowFeeds', helper::FILTER_BOOLEAN),
-				'feedsLabel' => $this->getInput('newsOptionFeedslabel', helper::FILTER_STRING_SHORT),
-				'itemsperPage' => $this->getInput('newsOptionItemsperPage', helper::FILTER_INT, true),
-				'itemsperCol' => $this->getInput('newsOptionItemsperCol', helper::FILTER_INT, true),
-				'height' => $this->getInput('newsOptionHeight', helper::FILTER_INT, true),
-				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
-			]]);
+			$this->setData([
+				'module', $this->getUrl(0),
+				'config',
+				[
+					'feeds' => $this->getInput('newsOptionShowFeeds', helper::FILTER_BOOLEAN),
+					'feedsLabel' => $this->getInput('newsOptionFeedslabel', helper::FILTER_STRING_SHORT),
+					'itemsperPage' => $this->getInput('newsOptionItemsperPage', helper::FILTER_INT, true),
+					'itemsperCol' => $this->getInput('newsOptionItemsperCol', helper::FILTER_INT, true),
+					'height' => $this->getInput('newsOptionHeight', helper::FILTER_INT, true),
+					'dateFormat' => $this->getInput('newsOptionDateFormat'),
+					'timeFormat' => $this->getInput('newsOptionTimeFormat'),
+					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+				]
+			]);
 
 
 			// Valeurs en sortie
@@ -282,12 +320,15 @@ class news extends common
 			$pagination = helper::pagination($newsIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']));
 			// Liste des pages
 			self::$pages = $pagination['pages'];
+			// Format de temps
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			// News en fonction de la pagination
 			for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				// Met en forme le tableau
-				$dateOn = $dateOn = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
+				$dateOn = $dateOn = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOn']));
 				if ($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) {
-					$dateOff = helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
+					$dateOff = helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff'])) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'publishedOff']));
 				} else {
 					$dateOff = helper::translate('Permanent');
 				}
@@ -295,7 +336,7 @@ class news extends common
 					$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'title']),
 					$dateOn,
 					$dateOff,
-					self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])],
+					helper::translate(helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])])),
 					template::button('newsConfigEdit' . $newsIds[$i], [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil')
@@ -334,7 +375,7 @@ class news extends common
 		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/config',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
@@ -384,14 +425,19 @@ class news extends common
 				}
 				$publishedOn = $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true);
 				$publishedOff = $this->getInput('newsEditPublishedOff') ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
-				$this->setData(['module', $this->getUrl(0), 'posts', $newsId, [
-					'content' => $this->getInput('newsEditContent', null),
-					'publishedOn' => $publishedOn,
-					'publishedOff' => $publishedOff < $publishedOn ? '' : $publishedOff,
-					'state' => $this->getInput('newsEditState', helper::FILTER_BOOLEAN),
-					'title' => $this->getInput('newsEditTitle', helper::FILTER_STRING_SHORT, true),
-					'userId' => $this->getInput('newsEditUserId', helper::FILTER_ID, true)
-				]]);
+				$this->setData([
+					'module', $this->getUrl(0),
+					'posts',
+					$newsId,
+					[
+						'content' => $this->getInput('newsEditContent', null),
+						'publishedOn' => $publishedOn,
+						'publishedOff' => $publishedOff < $publishedOn ? '' : $publishedOff,
+						'state' => $this->getInput('newsEditState', helper::FILTER_BOOLEAN),
+						'title' => $this->getInput('newsEditTitle', helper::FILTER_STRING_SHORT, true),
+						'userId' => $this->getInput('newsEditUserId', helper::FILTER_ID, true)
+					]
+				]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -442,11 +488,11 @@ class news extends common
 			}
 			// L'article existe
 			else {
-				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'userId']));
+				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']));
 				// Valeurs en sortie
 				$this->addOutput([
 					'showBarEditButton' => true,
-					'title' => $this->getData(['module', $this->getUrl(0),  'posts', $this->getUrl(1), 'title']),
+					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'title']),
 					'view' => 'article'
 				]);
 			}
@@ -461,7 +507,7 @@ class news extends common
 				if (
 					$newsPublishedOn <= time() and
 					$newsIdsStates[$newsId] and
-					// date de péremption tenant des champs non définis
+						// date de péremption tenant des champs non définis
 					(!is_integer($newsIdsPublishedOff) or
 						$newsIdsPublishedOff > time()
 					)
@@ -487,19 +533,18 @@ class news extends common
 					$content = substr($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'content']), 0, $this->getData(['module', $this->getUrl(0), 'config', 'height']));
 					// Ne pas couper un mot
 					$lastSpace = strrpos($content, ' ', -1);
-					self::$news[$newsIds[$i]]['content'] = substr(strip_tags($content, '<br><p><img>'),	0, $lastSpace);
+					self::$news[$newsIds[$i]]['content'] = substr(strip_tags($content, '<br><p><img>'), 0, $lastSpace);
 				}
 				// Mise en forme de la signature
 				self::$news[$newsIds[$i]]['userId'] = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'userId']));
 			}
+			self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+			self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 			// Valeurs en sortie
 			$this->addOutput([
 				'showBarEditButton' => true,
 				'showPageContent' => true,
 				'view' => 'index',
-				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
-					? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
-					: ''
 			]);
 		}
 	}
@@ -538,7 +583,7 @@ class news extends common
 		if (
 			$this->getData(['module', $this->getUrl(0), 'config']) === NULL
 			|| $this->getData(['module', $this->getUrl(0), 'theme']) === NULL
-			|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')
+			|| !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')
 		) {
 			$this->init();
 		}
@@ -562,7 +607,7 @@ class news extends common
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.3']);
 		}
-		// Mise à jour 3.4
+		// Mise à jour 4.4
 		if (version_compare($versionData, '3.4', '<')) {
 			// Effacer le style précédent
 			unlink(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css');
@@ -572,6 +617,14 @@ class news extends common
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.4']);
 		}
+		// Mise à jour 3.4
+		if (version_compare($versionData, '4.4', '<')) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'dateFormat', '%d %B %Y']);
+			$this->setData(['module', $this->getUrl(0), 'config', 'timeFormat', '%H:%M']);
+			// Mettre à jour la version
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '4.4']);
+		}
+
 	}
 
 	/**
@@ -590,7 +643,7 @@ class news extends common
 		if ($this->getData(['module', $this->getUrl(0), 'theme']) === null) {
 			// Données de thème
 			$this->setData(['module', $this->getUrl(0), 'theme', init::$defaultTheme]);
-			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY .   $this->getUrl(0) . '/theme.css']);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
 		}
 
 		// Dossier de l'instance
@@ -599,17 +652,17 @@ class news extends common
 		}
 
 		// Check la présence de la feuille de style
-		if (!file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')) {
+		if (!file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')) {
 			// Générer la feuille de CSS
-			$style =  '.newsFrame {';
-			$style .= 'border:' .  $this->getData(['module', $this->getUrl(0), 'theme', 'borderStyle']) . ' ' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderColor'])  . ' ' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderWidth']) . ';';
+			$style = '.newsFrame {';
+			$style .= 'border:' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderStyle']) . ' ' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderColor']) . ' ' . $this->getData(['module', $this->getUrl(0), 'theme', 'borderWidth']) . ';';
 			$style .= 'background-color:' . $this->getData(['module', $this->getUrl(0), 'theme', 'backgroundColor']) . ';';
 			$style .= '}';
 
 			// Sauver la feuille de style
 			file_put_contents(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css', $style);
 			// Stocker le nom de la feuille de style
-			$this->setData(['module',  $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
+			$this->setData(['module', $this->getUrl(0), 'theme', 'style', self::DATADIRECTORY . $this->getUrl(0) . '/theme.css']);
 		}
 	}
 }

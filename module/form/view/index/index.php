@@ -35,7 +35,7 @@
 					<?php echo template::date('formInput[' . $index . ']', [
 						'id' => 'formInput_' . $index,
 						'label' => $input['name'],
-						'vendor' => 'flatpickr'
+						'type' => 'date',
 					]); ?>
 				<?php elseif ($input['type'] === $module::TYPE_CHECKBOX): ?>
 					<?php echo template::checkbox(

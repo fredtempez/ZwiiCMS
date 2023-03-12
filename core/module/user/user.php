@@ -21,11 +21,12 @@ class user extends common
 		'delete' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
+		'template' => self::GROUP_ADMIN,
 		'edit' => self::GROUP_MEMBER,
 		'logout' => self::GROUP_MEMBER,
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
-		'reset' => self::GROUP_VISITOR
+		'reset' => self::GROUP_VISITOR,
 	];
 
 	public static $users = [];
@@ -107,7 +108,8 @@ class user extends common
 						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 						'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
 						'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
-					null
+					null,
+					$this->getData(['config', 'smtp', 'from']),
 				);
 			}
 			// Valeurs en sortie
@@ -300,18 +302,11 @@ class user extends common
 			}
 
 			// Langues disponibles pour l'interface de l'utilisateur
-			if (is_dir(self::I18N_DIR)) {
-				$dir = getcwd();
-				chdir(self::I18N_DIR);
-				$files = glob('*.json');
-				chdir($dir);
+			self::$languagesInstalled = $this->getData(['languages']);
+			foreach (self::$languagesInstalled as $lang => $datas) {
+				self::$languagesInstalled[$lang] = self::$languages[$lang];
 			}
-			foreach ($files as $file) {
-				// La langue est-elle référencée ?
-				if (array_key_exists(basename($file, '.json'), self::$languages)) {
-					self::$languagesInstalled[basename($file, '.json')] = self::$languages[basename($file, '.json')];
-				}
-			}
+			
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
@@ -341,7 +336,8 @@ class user extends common
 						'Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.<br><br>' .
 						'<a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a><br><br>' .
 						'<small>Si nous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</small>',
-					null
+					null,
+					$this->getData(['config', 'smtp', 'from']),
 				);
 				// Valeurs en sortie
 				$this->addOutput([
@@ -377,7 +373,7 @@ class user extends common
 				self::$users[] = [
 					$userId,
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-					self::$groups[$this->getData(['user', $userId, 'group'])],
+					helper::translate(self::$groups[$this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
@@ -712,7 +708,9 @@ class user extends common
 									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
 										'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 										'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-										'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>'
+										'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
+										null,
+										$this->getData(['config', 'smtp', 'from']),
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône
@@ -751,5 +749,21 @@ class user extends common
 			'notification' => $notification,
 			'state' => $success
 		]);
+	}
+
+	/** 
+	 * Télécharge un modèle
+	*/
+	public function template() {
+		$file = 'template.csv';
+		$path = 'core/module/user/ressource/';
+		// Téléchargement du CSV
+		header('Content-Description: File Transfer');
+		header('Content-Type: application/octet-stream');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Disposition: attachment; filename="' . $file . '"');
+		header('Content-Length: ' . filesize($path . $file));
+		readfile($path . $file);
+		exit();
 	}
 }

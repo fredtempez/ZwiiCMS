@@ -1,28 +1,16 @@
 {
     "languages": {
         "fr_FR": {
-            "version": "4",
-            "date": 1675459590
+            "version": 12300,
+            "date": 1677838293
         },
         "es": {
-            "version": "4",
-            "date": 1675459590
-        },
-        "it": {
-            "version": "4",
-            "date": 1675459590
-        },
-        "pt_PT": {
-            "version": "4",
-            "date": 1675459590
+            "version": 12300,
+            "date": 1677838293
         },
         "en_EN": {
-            "version": "4",
-            "date": 1675459590
-        },
-        "gr_GR": {
-            "version": "4",
-            "date": 1675459590
+            "version": 12300,
+            "date": 1677838293
         }
     }
 }

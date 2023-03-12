@@ -1,12 +1,39 @@
 # Changelog
 
+## Version 12.3.01
+### Améliorations :
+- Prise en charge PHP 8.2
+- "Minification" de la sortie HTML.
+- Envoi d'eMail, PHPMailer : 
+    - Mise à jour PHPMailer 6.7.1, support PHP 8 ;
+    - Personnalisation de l'adresse de l'expéditeur ;
+    - Prise en charge des langues de l'interface ;
+    - Correction d'un mauvais fonctionnement de la configuration  d'un serveur SMTP personnalisée différent de celui de l'hôte.
+- Amélioration de la prise en charge des mises à jour en ligne.
+- Activation du bouton de mise à jour dans la barre d'administration lorsque le menu de configuration est ouvert est qu'une mise à jour en ligne est détectée.
+- Gestion des langues :
+    - Le numéro de version d'une langue est le numéro de version de base de données
+    - A l'installation ou lors de l'accès à la fenêtre des langues, les dialogues sont actualisés.
+    - La fonction d'édition des langues de l'UI est neutralisée.
+- Contrôle des prérequis, Zwii ne démarre pas si la version de PHP n'est pas conforme ou si un module PHP nécessaire n'est pas installé, si les fichiers de sécurité htaccess sont manquants.
+### Corrections : 
+- Suppression des appels Google Analytics lors du chargement du gestionnaire de fichiers (RFM) dans TUI-image.
+- Mauvais affichage du script ou du CSS déclarés dans une page.
+- Choix de la langue dans TinyMCE et CodeMirror.
+- Mauvaise application des fontes dans l'administration du thème.
+- Corrige une mauvaise lecture du type de fonte éditée.
+- Correction de petits bugs.
+### Nouveautés :
+- Remplacement du sélecteur de date Flatpickr par le sélecteur HTML 5 qui autorise les formats suivants : date, time, week, month, datetime-local.
+- Paramétrage du délai de recherche automatique d'une mise à jour, tous les jours, deux jours, quatre jours, toutes les semaines, tous les mois.
+
 ## Version 12.2.04
 - Référencement incorrect de la langue grecque dans la base centrale.
 
 ## Version 12.2.03
 - Corrections de bugs consécutifs au changement de format de languages.json
 
-## Version 12.2.02
+## Version 12.2.02 (version non publiée)
 ### Corrections :
 - Gestion des plugins (modules) :
     - Corrige un bug dans l'acquisition des données du store.
@@ -14,13 +41,13 @@
     - Corrige un bug dans l'installation d'un module (dataDirectory).
 - Langues étrangères (v4) : corrige l'absence de spécificateur %s dans les traductions occasionnant des plantages lorsqu'une langue étrangère est active.
 
-## Version 12.2.01
+## Version 12.2.01 (version non publiée)
 ### Correction :
 - Bug majeur lors de l'installation d'une version fraiche, erreur lors de la création de la base de données des langues.
 ### Amélioration :
 - Gestion des erreurs d'écritures à l'aide d'un contrôle des données écrites sur le disque. Cinq tentatives se terminent par un arrêt en cas d'impossibilité d'enregistrer les données.
 
-## Version 12.2.00
+## Version 12.2.00 (version non publiée)
 ### Nouveautés :
 - Traduction des modules en anglais, grec, espagnol, italien et portugais.
 ### Amélioration :

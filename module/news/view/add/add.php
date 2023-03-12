@@ -10,7 +10,7 @@
 		<div class="col2 offset7">
 			<?php echo template::button('newsAddDraft', [
 				'uniqueSubmission' => true,
-				'value' => 'Brouillon'
+				'value' => helper::translate('Brouillon')
 			]); ?>
 			<?php echo template::hidden('newsAddState', [
 				'value' => true
@@ -26,7 +26,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Informations générales</h4>
+				<h4><?php echo helper::translate('Informations générales');?></h4>
 				<?php echo template::text('newsAddTitle', [
 					'label' => 'Titre'
 				]); ?>
@@ -39,7 +39,7 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>Options de publication</h4>
+				<h4><?php echo helper::translate('Options de publication');?></h4>
 				<div class="row">
 					<div class="col4">
 						<?php echo template::select('newsAddUserId', $module::$users, [
@@ -49,16 +49,18 @@
 					</div>
 					<div class="col4">
 						<?php echo template::date('newsAddPublishedOn', [
-							'help' => 'La news est consultable à partir du moment ou la date de publication est passée.',
+							'help' => 'La news est consultable à partir du moment où la date de publication est passée.',
 							'label' => 'Date de publication',
-							'value' => time()
+							'type' => 'datetime-local',
+							'value' => floor(strtotime('now') / 60) * 60
 						]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::date('newsAddPublishedOff', [
 							'help' => 'La news est consultable Jusqu\'à cette date si elle est spécifiée. Pour annuler la date de dépublication, sélectionnez une date antérieure à la publication.',
 							'label' => 'Date de dépublication',
-							'value' => $this->getData(['module', $this->getUrl(0),'posts', $this->getUrl(2), 'publishedOff'])
+							'type' => 'datetime-local',
+							'value' => ''
 						]); ?>
 					</div>
 				</div>

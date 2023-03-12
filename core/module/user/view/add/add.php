@@ -40,7 +40,7 @@
 			]); ?>
 			<?php echo template::mail('userAddMail', [
 				'autocomplete' => 'off',
-				'label' => 'Adresse mail'
+				'label' => 'Adresse électronique'
 			]); ?>
 		</div>
 	</div>

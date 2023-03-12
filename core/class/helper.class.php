@@ -42,6 +42,15 @@ class helper
 			
 		}
 		*/
+
+		// La traduction existe déjà dans le core
+		/*
+		if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+			$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+			$data = array_merge($dialogues,[$text =>  '']);
+			file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+		}
+		*/
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
@@ -53,9 +62,7 @@ class helper
 	public static function dateUTF8($format, $date)
 	{
 		require_once 'core/class/strftime/php-8.1-strftime.class.php';
-		return mb_detect_encoding(\PHP81_BC\strftime($format, $date), 'UTF-8', true)
-						? \PHP81_BC\strftime($format, $date)
-						: utf8_encode(\PHP81_BC\strftime($format, $date));
+		return mb_convert_encoding(\PHP81_BC\strftime($format, $date), 'UTF-8', mb_list_encodings());
 	}
 
 	/**
@@ -361,9 +368,9 @@ class helper
 	 * Renvoie le numéro de version de Zwii est en ligne
 	 * @return string
 	 */
-	public static function getOnlineVersion()
+	public static function getOnlineVersion($channel)
 	{
-		return (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version'));
+		return (helper::getUrlContents(common::ZWII_UPDATE_URL . $channel . '/version'));
 	}
 
 
@@ -371,9 +378,9 @@ class helper
 	 * Check si une nouvelle version de Zwii est disponible
 	 * @return bool
 	 */
-	public static function checkNewVersion()
+	public static function checkNewVersion($channel)
 	{
-		$version = helper::getOnlineVersion();
+		$version = helper::getOnlineVersion($channel);
 		if (!empty($version)) {
 			return ((version_compare(common::ZWII_VERSION, $version)) === -1);
 		} else {

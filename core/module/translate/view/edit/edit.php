@@ -27,6 +27,7 @@
                 <div class="col6">
 						<?php echo template::date('translateEditDate', [
 							'label' => 'Date de publication',
+                            'type' => 'datetime-local',
 							'value' => $this->getData(['languages', $this->getUrl(2), 'date'])
 						]); ?>
                 </div>

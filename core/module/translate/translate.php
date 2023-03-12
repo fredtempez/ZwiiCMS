@@ -82,7 +82,7 @@ class translate extends common
 		// Upload et sauver le fichier de langue
 		$response = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
 		if ($response !== false) {
-			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response,  JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			// Mettre à jour le descripteur
 			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
 			$enums = $this->getData(['languages']);
@@ -91,7 +91,7 @@ class translate extends common
 			]);
 			$response = (bool) $response && $this->setData(['languages', $enums]);
 		}
-		
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'translate',
@@ -168,6 +168,31 @@ class translate extends common
 	public function index()
 	{
 
+		/**
+		 * Met à jour les dictionnaires des langues depuis les modèles installés
+		 */
+
+		// Langues installées
+		$installedUI = $this->getData(['languages']);
+
+		// Check si la langue est bien disponible sinon la supprime de la BDD
+		if ($installedUI) {
+			foreach ($installedUI as $key => $value)
+			if (file_exists(self::I18N_DIR . $key . '.json' )	=== false ) {
+				$this->deleteData(['languages', $key]);
+			}
+		}
+
+		// Langues disponibles avec la mise à jour
+		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
+		$store = $store['languages'];
+
+		foreach($installedUI as $key => $value) {
+			if (isset($store[$key]) && $store[$key]['version'] > $value['version'])  {
+				$this->setData(['languages', $key, $store[$key]]);
+			}
+		}
+
 		// Préparation du formulaire
 		// -------------------------
 
@@ -231,12 +256,14 @@ class translate extends common
 					helper::dateUTF8('%d/%m/%Y', $value['date']),
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
+					/*
 					template::button('translateContentLanguageUIEdit' . $file, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $file
 					]),
+					*/
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
@@ -272,7 +299,7 @@ class translate extends common
 			}
 		}
 
-	
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Multilingue'),
@@ -607,34 +634,4 @@ class translate extends common
 		]);
 	}
 
-	/**
-	 * Génère un fichier d'énumération des langues de l'UI
-	 */
-	private function getUiLanguages()
-	{
-		$enums = $this->getData(['languages']);
-
-		// Générer une énumération absente
-		if (empty($enums)) {
-			if (is_dir(self::I18N_DIR) === false) {
-				mkdir(self::I18N_DIR);
-			}
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-			$enums = [];
-			foreach ($files as $file => $value) {
-				if (basename($value, '.json') === 'languages') {
-					continue;
-				}
-				$enums[basename($value, '.json')] = [
-					'version' => "?",
-					'date' => 1672052400
-				];
-			}
-			$this->setData(['languages', $enums]);
-		}
-		return ($enums);
-	}
 }

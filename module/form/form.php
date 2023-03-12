@@ -16,7 +16,7 @@
 
 class form extends common {
 
-	const VERSION = '3.6';
+	const VERSION = '3.7';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -55,10 +55,10 @@ class form extends common {
 
 
 	public static $types = [
-		self::TYPE_LABEL => 'Etiquette',
+		self::TYPE_LABEL => 'Étiquette',
 		self::TYPE_TEXT => 'Champ texte',
 		self::TYPE_TEXTAREA => 'Grand champ texte',
-		self::TYPE_MAIL => 'Champ mail',
+		self::TYPE_MAIL => 'Adresse électronique',
 		self::TYPE_SELECT => 'Sélection',
 		self::TYPE_CHECKBOX => 'Case à cocher',
 		self::TYPE_DATETIME => 'Date'
@@ -260,7 +260,7 @@ class form extends common {
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Modifications enregistrées'),
+			'title' => helper::translate('Export des données'),
 			'view' => 'data'
 		]);
 	}
@@ -475,7 +475,8 @@ class form extends common {
 						$subject,
 						'Nouveau message en provenance de la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>' .
 						$content,
-						$replyTo
+						$replyTo,
+						$this->getData(['config', 'smtp', 'from']),
 					);
 				}
 			}

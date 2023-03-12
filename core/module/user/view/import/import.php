@@ -7,7 +7,7 @@
             'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col1">
+    
         <?php /**echo template::button('userHelp', [
 			'href' => 'https://doc.zwiicms.fr/importation-d-une-liste-d-utilisateurs',
 			'target' => '_blank',
@@ -15,8 +15,13 @@
 			'class' => 'buttonHelp',
 			'help' => 'Consulter l\'aide en ligne'
 		]);*/ ?>
+    <div class="col1 offset8">
+    <?php echo template::button('userImporTemplate', [
+            'href' => helper::baseUrl() . 'user/template',
+            'value' => template::ico('table')
+        ]); ?>      
     </div>
-    <div class="col2 offset8">
+    <div class="col2">
         <?php echo template::submit('userImportSubmit', [
             'value' => 'Importer'
         ]); ?>

@@ -1,2 +1,5 @@
 id;nom;prenom;email;groupe
-jbon;Bon;Jean;jean.bon@email.fr;1
+jm1;Membre1;Jean;jean.membre1@email.fr;1
+am2;Membre2;Albert;albert.membre2@email.fr;1
+jrediteur;Editeur;Robert;robert.editeur@email.fr;2
+padmin;Dupuis;Admin;paul.admin@email.fr;3

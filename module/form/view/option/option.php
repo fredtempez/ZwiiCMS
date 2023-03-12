@@ -24,7 +24,7 @@
                 <div class="col6">
                     <?php echo template::text('formOptionButton', [
                         'help' => 'Vide affiche le texte par défaut',
-                        'label' => 'Etiquette du bouton de soumission',
+                        'label' => 'Étiquette du bouton de soumission',
                         'value' => $this->getData(['module', $this->getUrl(0), 'config', 'button'])
                     ]); ?>
                 </div>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="col4">
                         <?php echo template::text('formOptionMail', [
-                            'label' => 'A une adresse email',
+                            'label' => 'A une Adresse électronique',
                             'value' => $this->getData(['module', $this->getUrl(0), 'config', 'mail']),
                         ]); ?>
                     </div>

@@ -94,13 +94,14 @@
 					<div class="col4">
 						<?php echo template::date('blogEditPublishedOn', [
 							'help' => 'L\'article n\'est visible qu\'après la date de publication prévue.',
-							'label' => 'Date de publication',
-							'value' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'publishedOn'])
+							'type' => 'datetime-local',
+							'label' => 'Publication',
+							'value' => floor($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'publishedOn']) / 60) * 60
 						]); ?>
 					</div>
 					<div class="col4">
 						<?php echo template::select('blogEditConsent', $module::$articleConsent  , [
-							'label' => 'Edition - Suppression',
+							'label' => 'Édition - Suppression',
 							'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? $module::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'editConsent']),
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>

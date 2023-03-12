@@ -44,7 +44,7 @@ class init extends common
 			]
 		],
 		'core' => [
-			'dataVersion' => 11600,
+			'dataVersion' => 12300,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,
@@ -374,7 +374,7 @@ class init extends common
 					'position' => 1,
 					'group' => self::GROUP_VISITOR,
 					'targetBlank' => false,
-					'title' => 'HomePage',
+					'title' => 'Home page',
 					'shortTitle' => 'Home',
 					'block' => '12',
 					'barLeft' => '',
@@ -387,7 +387,7 @@ class init extends common
 					'js' => ''
 				]
 			],
-			'html' => 'Welcome in this ZiiCMS, this is you first page !'
+			'html' => 'Welcome in this ZwiiCMS, congratulations this is you first page !'
 		]
 	];
 
@@ -917,7 +917,9 @@ class init extends common
 							'directory' => self::FILE_DIR . 'source/galerie/landscape',
 							'homePicture' => 'iceberg.jpg',
 							'sort' => 'SORT_ASC',
-							'position' => 1
+							'position' => 1,
+							'showPageContent' => false,
+							'fullScreen' => false
 						],
 						'legend' => [
 							'desertjpg' => 'Un désert',
@@ -936,7 +938,9 @@ class init extends common
 							'directory' => self::FILE_DIR . 'source/galerie/space',
 							'homePicture' => 'nebula.jpg',
 							'sort' => 'SORT_ASC',
-							'position' => 2
+							'position' => 2,
+							'showPageContent' => false,
+							'fullScreen' => false
 						],
 						'legend' => [
 							'earthjpg' => 'La Terre et la Lune',
@@ -986,7 +990,7 @@ class init extends common
 				'data' => [],
 				'input' => [
 					[
-						'name' => 'Adresse mail',
+						'name' => 'Adresse électronique',
 						'position' => 1,
 						'required' => true,
 						'type' => 'mail',
@@ -1091,11 +1095,11 @@ class init extends common
 			<p justify="">Le site internet propose les services suivants :</p>
 			<p justify="">Publication</p>
 			<p justify="">Le site est accessible gratuitement en tout lieu &agrave; tout Utilisateur ayant un acc&egrave;s &agrave; Internet. Tous les frais support&eacute;s par l\'Utilisateur pour acc&eacute;der au service (mat&eacute;riel informatique, logiciels, connexion Internet, etc.) sont &agrave; sa charge.</p>
-			<p justify="">L&rsquo;Utilisateur non membre n\'a pas acc&egrave;s aux services r&eacute;serv&eacute;s. Pour cela, il doit s&rsquo;inscrire en remplissant le formulaire. En acceptant de s&rsquo;inscrire aux services r&eacute;serv&eacute;s, l&rsquo;Utilisateur membre s&rsquo;engage &agrave; fournir des informations sinc&egrave;res et exactes concernant son &eacute;tat civil et ses coordonn&eacute;es, notamment son adresse email.</p>
+			<p justify="">L&rsquo;Utilisateur non membre n\'a pas acc&egrave;s aux services r&eacute;serv&eacute;s. Pour cela, il doit s&rsquo;inscrire en remplissant le formulaire. En acceptant de s&rsquo;inscrire aux services r&eacute;serv&eacute;s, l&rsquo;Utilisateur membre s&rsquo;engage &agrave; fournir des informations sinc&egrave;res et exactes concernant son &eacute;tat civil et ses coordonn&eacute;es, notamment son Adresse électronique.</p>
 			<p justify="">Pour acc&eacute;der aux services, l&rsquo;Utilisateur doit ensuite s\'identifier &agrave; l\'aide de son identifiant et de son mot de passe qui lui seront communiqu&eacute;s apr&egrave;s son inscription.</p>
 			<p justify="">Tout Utilisateur membre r&eacute;guli&egrave;rement inscrit pourra &eacute;galement solliciter sa d&eacute;sinscription en se rendant &agrave; la page d&eacute;di&eacute;e sur son espace personnel. Celle-ci sera effective dans un d&eacute;lai raisonnable.</p>
 			<p justify="">Tout &eacute;v&eacute;nement d&ucirc; &agrave; un cas de force majeure ayant pour cons&eacute;quence un dysfonctionnement du site ou serveur et sous r&eacute;serve de toute interruption ou modification en cas de maintenance, n\'engage pas la responsabilit&eacute; de www.site.com. Dans ces cas, l&rsquo;Utilisateur accepte ainsi ne pas tenir rigueur &agrave; l&rsquo;&eacute;diteur de toute interruption ou suspension de service, m&ecirc;me sans pr&eacute;avis.</p>
-			<p justify="">L\'Utilisateur a la possibilit&eacute; de contacter le site par messagerie &eacute;lectronique &agrave; l&rsquo;adresse email de l&rsquo;&eacute;diteur communiqu&eacute; &agrave; l&rsquo;ARTICLE 1.</p>
+			<p justify="">L\'Utilisateur a la possibilit&eacute; de contacter le site par messagerie &eacute;lectronique &agrave; l&rsquo;Adresse électronique de l&rsquo;&eacute;diteur communiqu&eacute; &agrave; l&rsquo;ARTICLE 1.</p>
 			<h2>ARTICLE 3 : Collecte des donn&eacute;es</h2>
 			<p justify="">Le site est exempt&eacute; de d&eacute;claration &agrave; la Commission Nationale Informatique et Libert&eacute;s (CNIL) dans la mesure o&ugrave; il ne collecte aucune donn&eacute;e concernant les Utilisateurs.</p>
 			<h2>ARTICLE 4&nbsp;: Propri&eacute;t&eacute; intellectuelle</h2>

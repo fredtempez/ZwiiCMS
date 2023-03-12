@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Paramètres des galeries');?></h4>
+            <h4><?php echo helper::translate('Paramètres');?></h4>
             <div class="row">
                 <div class="col12">
                     <?php echo template::checkbox('galleriesOptionShowUniqueGallery', true, 'Masquer l\'index des galeries lorsque le module ne contient qu\'une seule galerie' , [
@@ -58,7 +58,7 @@
     <div class="row">
 		<div class="col12">
 			<div class="block">
-			<h4><?php echo helper::translate('Paramètres de la galerie');?></h4>
+			<h4><?php echo helper::translate('Paramètres');?></h4>
 			<div class="row">
 				<div class="col6">
 					<?php echo template::text('galleryEditName', [
@@ -67,7 +67,7 @@
 					]); ?>
 				</div>
 				<div class="col6">
-                    <div class="noDisplay">
+                    <div class="displayNone">
                     <?php echo template::hidden('galleryEditDirectoryOld', [
                         'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'directory']),
                         'noDirty' => true // Désactivé à cause des modifications en ajax

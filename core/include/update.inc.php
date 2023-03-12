@@ -26,7 +26,7 @@ if ($this->getData(['core', 'dataVersion']) < 10000) {
 		//La page a une galerie
 		if ($this->getData(['page', $parent, 'moduleId']) === 'gallery') {
 			// Parcourir les dossiers de la galerie
-			$tempData =  $this->getData(['module', $parent]);
+			$tempData = $this->getData(['module', $parent]);
 			$i = 1;
 			foreach ($tempData as $galleryKey => $galleryItem) {
 				// Ordre de tri des galeries
@@ -58,7 +58,7 @@ if ($this->getData(['core', 'dataVersion']) < 10000) {
 		}
 	}
 	// Contrôle des options php.ini pour la mise à jour auto
-	if (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') ===  false) {
+	if (helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version') === false) {
 		$this->setData(['config', 'autoUpdate', false]);
 	}
 
@@ -71,7 +71,8 @@ if ($this->getData(['core', 'dataVersion']) < 10092) {
 		$dir = getcwd();
 		chdir('core/vendor/fullpage');
 		$files = glob('*');
-		foreach ($files as $file) unlink($file);
+		foreach ($files as $file)
+			unlink($file);
 		chdir($dir);
 		rmdir('core/vendor/fullpage/');
 	}
@@ -163,7 +164,8 @@ if ($this->getData(['core', 'dataVersion']) < 10300) {
 		$dir = getcwd();
 		chdir('core/module/search');
 		$files = glob('*');
-		foreach ($files as $file) unlink($file);
+		foreach ($files as $file)
+			unlink($file);
 		chdir($dir);
 		rmdir('core/module/search/');
 	}
@@ -173,8 +175,7 @@ if ($this->getData(['core', 'dataVersion']) < 10300) {
 	$this->setData(['config', 'searchPageId', '']);
 
 	// Mettre à jour les données des galeries
-	$pageList = array();
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	$pageList = array(); foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -307,22 +308,22 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
 			foreach ($articleIds as $key => $article) {
 				// Droits les deux groupes
-				$this->setData(['module',  $parent, 'posts', $article, 'editConsent', 3]);
+				$this->setData(['module', $parent, 'posts', $article, 'editConsent', 3]);
 				// Limite de taille 500
-				$this->setData(['module',  $parent, 'posts', $article, 'commentMaxlength', '500']);
+				$this->setData(['module', $parent, 'posts', $article, 'commentMaxlength', '500']);
 				// Pas d'approbation des commentaires
-				$this->setData(['module',  $parent, 'posts', $article, 'commentApproved', false]);
+				$this->setData(['module', $parent, 'posts', $article, 'commentApproved', false]);
 				// pas de notification
-				$this->setData(['module',  $parent, 'posts', $article, 'commentNotification', false]);
+				$this->setData(['module', $parent, 'posts', $article, 'commentNotification', false]);
 				// groupe de notification
-				$this->setData(['module',  $parent, 'posts', $article, 'commentGroupNotification', 3]);
+				$this->setData(['module', $parent, 'posts', $article, 'commentGroupNotification', 3]);
 			}
 
 			// Traitement des commentaires
-			if (is_array($this->getData(['module',  $parent, 'posts', $article, 'comment']))) {
-				foreach ($this->getData(['module',  $parent, 'posts', $article, 'comment']) as $commentId => $comment) {
+			if (is_array($this->getData(['module', $parent, 'posts', $article, 'comment']))) {
+				foreach ($this->getData(['module', $parent, 'posts', $article, 'comment']) as $commentId => $comment) {
 					// Approbation
-					$this->setData(['module',  $parent, 'posts', $article, 'comment', $commentId, 'approval', true]);
+					$this->setData(['module', $parent, 'posts', $article, 'comment', $commentId, 'approval', true]);
 				}
 			}
 		}
@@ -430,7 +431,8 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	$this->setData(['config', 'i18n', 'pt', 'none']);
 
 	// Supprimer les fichiers de backup
-	if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+	if (file_exists('site/data/.backup'))
+		unlink('site/data/.backup');
 	$path = realpath('site/data');
 	foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
 		if (strpos($filename, 'backup.json')) {
@@ -541,10 +543,10 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 if ($this->getData(['core', 'dataVersion']) < 11202) {
 
 	// Renommer les champs
-	$this->setData(['locale', 'cookies', 'mainLabel', 		$this->getData(['locale', 'cookies', 'cookiesZwiiText'])]);
-	$this->setData(['locale', 'cookies', 'gaLabel', 		$this->getData(['locale', 'cookies', 'cookiesGaText'])]);
-	$this->setData(['locale', 'cookies', 'titleLabel', 		$this->getData(['locale', 'cookies', 'cookiesTitleText'])]);
-	$this->setData(['locale', 'cookies', 'linkLegalLabel', 	$this->getData(['locale', 'cookies', 'cookiesLinkMlText'])]);
+	$this->setData(['locale', 'cookies', 'mainLabel', $this->getData(['locale', 'cookies', 'cookiesZwiiText'])]);
+	$this->setData(['locale', 'cookies', 'gaLabel', $this->getData(['locale', 'cookies', 'cookiesGaText'])]);
+	$this->setData(['locale', 'cookies', 'titleLabel', $this->getData(['locale', 'cookies', 'cookiesTitleText'])]);
+	$this->setData(['locale', 'cookies', 'linkLegalLabel', $this->getData(['locale', 'cookies', 'cookiesLinkMlText'])]);
 	$this->setData(['locale', 'cookies', 'checkboxGaLabel', $this->getData(['locale', 'cookies', 'cookiesCheckboxGaText'])]);
 	$this->setData(['locale', 'cookies', 'buttonValidLabel', $this->getData(['locale', 'cookies', 'cookiesButtonText'])]);
 	// Effacer les anciens champs
@@ -570,23 +572,23 @@ if ($this->getData(['core', 'dataVersion']) < 11203) {
 	foreach ($this->getHierarchy(null, null, null) as $parentId => $childIds) {
 		$content = $this->getPage($parentId, self::$i18nContent);
 		$titre = $this->getData(['page', $parentId, 'title']);
-		$content =   $titre . ' ' . $content;
+		$content = $titre . ' ' . $content;
 		$replace = str_replace('href="' . $old, 'href="' . $new, stripslashes($content), $c1);
 		$replace = str_replace('src="' . $old, 'src="' . $new, stripslashes($replace), $c2);
 
 		if ($c1 > 0 || $c2 > 0) {
 			$success = true;
-			$this->setPage($parentId, $replace,  self::$i18nContent);
+			$this->setPage($parentId, $replace, self::$i18nContent);
 			$c3 += $c1 + $c2;
 		}
 		foreach ($childIds as $childId) {
 			$content = $this->getPage($childId, self::$i18nContent);
-			$content =   $titre . ' ' . $content;
+			$content = $titre . ' ' . $content;
 			$replace = str_replace('href="' . $old, 'href="' . $new, stripslashes($content), $c1);
 			$replace = str_replace('src="' . $old, 'src="' . $new, stripslashes($replace), $c2);
 			if ($c1 > 0 || $c2 > 0) {
 				$success = true;
-				$this->setPage($childId, $replace,  self::$i18nContent);
+				$this->setPage($childId, $replace, self::$i18nContent);
 				$c3 += $c1 + $c2;
 			}
 		}
@@ -646,11 +648,11 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 
 	$this->setData(['theme', 'footer', 'font', $fonts[$this->getData(['theme', 'footer', 'font'])]]);
 	$this->setData(['theme', 'header', 'font', $fonts[$this->getData(['theme', 'header', 'font'])]]);
-	$this->setData(['theme', 'menu', 'font',   $fonts[$this->getData(['theme', 'menu', 'font'])]]);
-	$this->setData(['theme', 'text', 'font',   $fonts[$this->getData(['theme', 'text', 'font'])]]);
-	$this->setData(['theme', 'title', 'font',  $fonts[$this->getData(['theme', 'title', 'font'])]]);
-	$this->setData(['admin', 'fontTitle',  $fonts[$this->getData(['admin', 'fontTitle'])]]);
-	$this->setData(['admin', 'fontText',   $fonts[$this->getData(['admin', 'fontText'])]]);
+	$this->setData(['theme', 'menu', 'font', $fonts[$this->getData(['theme', 'menu', 'font'])]]);
+	$this->setData(['theme', 'text', 'font', $fonts[$this->getData(['theme', 'text', 'font'])]]);
+	$this->setData(['theme', 'title', 'font', $fonts[$this->getData(['theme', 'title', 'font'])]]);
+	$this->setData(['admin', 'fontTitle', $fonts[$this->getData(['admin', 'fontTitle'])]]);
+	$this->setData(['admin', 'fontText', $fonts[$this->getData(['admin', 'fontText'])]]);
 
 	unlink(self::DATA_DIR . 'admin.css');
 	unlink(self::DATA_DIR . 'theme.css');
@@ -714,12 +716,12 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 		],
 		'droid-sans-2' => [
 			'name' => 'Droid Sans',
-			'font-family' =>  '\'Droid Sans\', sans-serif',
+			'font-family' => '\'Droid Sans\', sans-serif',
 			'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 		],
 		'droid-serif-2' => [
 			'name' => 'Droid Serif',
-			'font-family' =>  '\'Droid Serif\', serif',
+			'font-family' => '\'Droid Serif\', serif',
 			'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 		],
 		'indie-flower' => [
@@ -802,11 +804,16 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				gettype($fontName) === 'string'
 				&& file_exists(self::DATA_DIR . 'fonts/' . $fontName)
 			) {
-				$this->setData(['fonts', 'files',  $fontId, [
-					'name' => ucfirst($fontId),
-					'font-family' => '\'' . ucfirst($fontId) . '\', sans-serif',
-					'resource' => $fontName
-				]]);
+				$this->setData([
+					'fonts',
+					'files',
+					$fontId,
+					[
+						'name' => ucfirst($fontId),
+						'font-family' => '\'' . ucfirst($fontId) . '\', sans-serif',
+						'resource' => $fontName
+					]
+				]);
 			}
 		}
 	}
@@ -816,11 +823,16 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	if (is_array($imported)) {
 		foreach ($imported as $fontId => $fontUrl) {
 			if (gettype($fontUrl) === 'string') {
-				$this->setData(['fonts', 'imported',  $fontId, [
-					'name' => ucfirst($fontId),
-					'font-family' => '\'' . ucfirst($fontId) . '\', sans-serif',
-					'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
-				]]);
+				$this->setData([
+					'fonts',
+					'imported',
+					$fontId,
+					[
+						'name' => ucfirst($fontId),
+						'font-family' => '\'' . ucfirst($fontId) . '\', sans-serif',
+						'resource' => 'https:\\fonts.cdnfonts.com\css' . $fontUrl
+					]
+				]);
 			}
 		}
 	}
@@ -879,8 +891,8 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	helper::deleteCookie('ZWII_CONTENTSCRIPT');
 
 	// Nettoyage de fichiers inutiles
-	if (file_exists('core\module\user\view\import\import.help.html')) {
-		unlink('core\module\user\view\import\import.help.html');
+	if (file_exists('core/module/user/view/import/import.help.html')) {
+		unlink('core/module/user/view/import/import.help.html');
 	}
 
 	// Supprimer les fichier associés
@@ -913,4 +925,23 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12000]);
+}
+
+// Version 12.3.01
+if ($this->getData(['core', 'dataVersion']) < 12301) {
+	// Valeur par défaut du délai de recherche de mise à jour en ligne
+	$this->setData(['config', 'autoUpdateDelay', 86400]);
+
+
+	// Nettoyage de flatPickr
+	if (is_dir('core/vendor/flatpickr')) {
+		$this->removeDir('core/vendor/flatpickr');
+	}
+
+	// email reply
+	$this->deleteData(['config', 'smtp', 'sender']);
+	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12301]);
 }

@@ -10,7 +10,7 @@
 if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
-
+console.log(getCookie('ZWII_UI'));
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwyg",
@@ -30,6 +30,17 @@ tinymce.init({
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
 	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
+	// Contenu du menu
+	menu: {
+		file: { title: 'File', items: 'newdocument restoredraft | preview | export print | deleteallconversations' },
+		edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
+		view: { title: 'View', items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
+		insert: { title: 'Insert', items: 'image link media addcomment pageembed template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime' },
+		//format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | removeformat' },
+		tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
+		table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
+		help: { title: 'Help', items: 'help' }
+	},
 	// Contenu de la barre d'outils
 	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks code fullscreen",
 	toolbar_groups: {
@@ -49,6 +60,7 @@ tinymce.init({
 			items: 'emoticons charmap hr table template'
 		}
 	},
+	toolbar_sticky: true,
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
@@ -61,9 +73,9 @@ tinymce.init({
 		config: {           // CodeMirror config object
 			fullscreen: true,
 			/*mode: 'application/x-httpd-php',*/
-			indentUnit: 4,
 			lineNumbers: true,
-			mode: "htmlmixed",
+			indentUnit: 4,
+			mode: "htmlmixed"
 		},
 		jsFiles: [
 			'mode/php/php.js',
@@ -113,7 +125,7 @@ tinymce.init({
 	// URL menu contextuel
 	link_context_toolbar: true,
 	// Cache la barre de statut
-	statusbar: false,
+	statusbar: true,
 	// Coller images blob
 	paste_data_images: true,
 	/* Eviter BLOB à tester
@@ -135,7 +147,7 @@ tinymce.init({
 	// Urls absolues
 	relative_urls: true,
 	// Conversion des URLs
-	convert_urls : false,
+	convert_urls: false,
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
@@ -157,30 +169,11 @@ tinymce.init({
 			]
 		},
 		{
-			title: "Inline", items: [
-				{ title: "Bold", icon: "bold", format: "bold" },
-				{ title: "Italic", icon: "italic", format: "italic" },
-				{ title: "Underline", icon: "underline", format: "underline" },
-				{ title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
-				{ title: "Superscript", icon: "superscript", format: "superscript" },
-				{ title: "Subscript", icon: "subscript", format: "subscript" },
-				{ title: "Code", icon: "code", format: "code" }
-			]
-		},
-		{
 			title: "Blocks", items: [
 				{ title: "Paragraph", format: "p" },
 				{ title: "Blockquote", format: "blockquote" },
 				{ title: "Div", format: "div" },
 				{ title: "Pre", format: "pre" }
-			]
-		},
-		{
-			title: "Alignment", items: [
-				{ title: "Left", icon: "alignleft", format: "alignleft" },
-				{ title: "Center", icon: "aligncenter", format: "aligncenter" },
-				{ title: "Right", icon: "alignright", format: "alignright" },
-				{ title: "Justify", icon: "alignjustify", format: "alignjustify" }
 			]
 		}
 	],
@@ -325,48 +318,10 @@ tinymce.init({
 	// Urls absolues
 	relative_urls: true,
 	// Conversion des URLs
-	convert_urls : false,
+	convert_urls: false,
 	// Url de base
 	document_base_url: baseUrl,
 	max_height: 200,
-	// Contenu du bouton formats
-	style_formats: [
-		{
-			title: "Headers", items: [
-				{ title: "Header 1", format: "h1" },
-				{ title: "Header 2", format: "h2" },
-				{ title: "Header 3", format: "h3" },
-				{ title: "Header 4", format: "h4" }
-			]
-		},
-		{
-			title: "Inline", items: [
-				{ title: "Bold", icon: "bold", format: "bold" },
-				{ title: "Italic", icon: "italic", format: "italic" },
-				{ title: "Underline", icon: "underline", format: "underline" },
-				{ title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
-				{ title: "Superscript", icon: "superscript", format: "superscript" },
-				{ title: "Subscript", icon: "subscript", format: "subscript" },
-				{ title: "Code", icon: "code", format: "code" }
-			]
-		},
-		{
-			title: "Blocks", items: [
-				{ title: "Paragraph", format: "p" },
-				{ title: "Blockquote", format: "blockquote" },
-				{ title: "Div", format: "div" },
-				{ title: "Pre", format: "pre" }
-			]
-		},
-		{
-			title: "Alignment", items: [
-				{ title: "Left", icon: "alignleft", format: "alignleft" },
-				{ title: "Center", icon: "aligncenter", format: "aligncenter" },
-				{ title: "Right", icon: "alignright", format: "alignright" },
-				{ title: "Justify", icon: "alignjustify", format: "alignjustify" }
-			]
-		}
-	]
 });
 
 
@@ -376,6 +331,7 @@ function getCookie(name) {
 	for (var i = 0; i < ca.length; i++) {
 		var c = ca[i];
 		while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+		if (c.indexOf(nameEQ) == 0) console.log(c.substring(nameEQ.length, c.length));
 		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
 	}
 	return null;

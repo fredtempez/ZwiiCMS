@@ -8,12 +8,12 @@
         ]); ?>
     </div>
     <div class="col1">
-        <?php echo template::button('themeHeaderHelp', [
+        <?php /* echo template::button('themeHeaderHelp', [
             'href' => 'https://doc.zwiicms.fr/banniere',
             'target' => '_blank',
             'value' => template::ico('help'),
             'class' => 'buttonHelp'
-        ]); ?>
+        ]); */?>
     </div>
     <div class="col2 offset8">
         <?php echo template::submit('themeHeaderSubmit'); ?>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
-                        'label' => 'Nature de contenu',
+                        'label' => 'Contenu',
                         'selected' => $this->getData(['theme', 'header', 'feature'])
                     ]); ?>
                 </div>
@@ -104,7 +104,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Masquer le Titre', [
+                    <?php echo template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>
@@ -163,11 +163,11 @@
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('largeur de site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
+                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('Largeur :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
                         -
-                        <?php echo helper::translate('Hargeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
+                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
                         -
-                        <?php echo helper::translate('Ratio :'); ?> <span id="themeHeaderImageRatio"></span>
+                        <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
             </div>
@@ -209,7 +209,7 @@
         <div class="row">
             <div class="col12">
                 <?php echo template::textarea('themeHeaderText', [
-                    'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu personnalisé') . '</div>',
+                    'label' => '<div class="titleWysiwygContent">' . helper::translate('Contenu HTML') . '</div>',
                     'class' => 'editorWysiwyg',
                     'value' => $this->getData(['theme', 'header', 'featureContent'])
                 ]); ?>

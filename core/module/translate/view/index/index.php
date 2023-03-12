@@ -38,7 +38,7 @@
 					<?php echo helper::translate('Langues installées'); ?>
 				</h4>
 				<?php if ($module::$languagesUiInstalled): ?>
-					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], $module::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
+					<?php echo template::table([2, 1, 1, 5, 1, 1], $module::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
