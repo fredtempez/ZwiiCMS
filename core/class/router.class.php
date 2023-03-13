@@ -907,23 +907,23 @@ class core extends common
 				break;
 			// Layout allégé
 			case self::DISPLAY_LAYOUT_LIGHT:
-				ob_start();
+				//ob_start();
 				require 'core/layout/light.php';
 				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
+				//$content = preg_replace('/\s{2,}/u', ' ', ob_get_clean());
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
-				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
-				echo $content;
+				//$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+				//echo $content;
 				break;
 			// Layout principal
 			case self::DISPLAY_LAYOUT_MAIN:
-				ob_start();
+				//ob_start();
 				require 'core/layout/main.php';
 				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
+				//$content = preg_replace('/\s{2,}/u', ' ', ob_get_clean());
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
-				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
-				echo $content;
+				//$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+				//echo $content;
 				break;
 		}
 	}
