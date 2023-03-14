@@ -1,7 +1,7 @@
 
 # version 6.5
 - Intl dates formats
-- Modification liées à la suppression de flatpickr
+- Modifications liées à la suppression de flatpickr
 # version 6.4
 - Multilingisme
 # version 6.31
