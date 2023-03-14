@@ -2,7 +2,7 @@
 
 ## Version 12.3.02
 - Amélioration de l'obfuscation.
-- Supprime un paramètre injecté dans le head : baseUrlQs
+- Supprime une variable JS injectée dans le head : baseUrlQs
 
 ## Version 12.3.01
 ### Améliorations :
