@@ -1095,7 +1095,7 @@ class layout extends common
     {
         // Variables partagées
         $vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
-        $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
+        //$vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
         if (
             $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
             and $this->getUser('group') >= self::GROUP_MODERATOR
