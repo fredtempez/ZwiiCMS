@@ -139,8 +139,7 @@ class common
 			'tippy',
 			'zwiico',
 			'imagemap',
-			'simplelightbox',
-			'tarteaucitron'
+			'simplelightbox'
 		],
 		'view' => ''
 	];
