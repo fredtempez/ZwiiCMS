@@ -278,10 +278,10 @@ class install extends common
 				}
 				// Nettoyage des fichiers d'installation précédents
 				if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
-					$success = unlink(self::TEMP_DIR . 'update.tar.gz');
+					$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
 				}
 				if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
-					$success = unlink(self::TEMP_DIR . 'update.tar');
+					$success = $success || unlink(self::TEMP_DIR . 'update.tar');
 				}
 				// Valeurs en sortie
 				$this->addOutput([
@@ -356,10 +356,11 @@ class install extends common
 						'</IfModule>' . PHP_EOL .
 						'# URL rewriting' . PHP_EOL;
 					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-					file_put_contents(
+					$r = file_put_contents(
 						'.htaccess',
 						$fileContent
 					);
+					$success = $r === false ? false : true;
 				}
 				// Recopie htaccess
 				if (
@@ -367,7 +368,7 @@ class install extends common
 					$success && file_exists('.htaccess.bak')
 				) {
 					// L'écraser avec le backup
-					$success = copy('.htaccess.bak', '.htaccess');
+					$success = $success || copy('.htaccess.bak', '.htaccess');
 					// Effacer le backup
 					unlink('.htaccess.bak');
 				}

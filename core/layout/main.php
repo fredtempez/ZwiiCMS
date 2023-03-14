@@ -16,7 +16,6 @@
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css'); ?>">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR . 'theme.css'); ?>">
 	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR . 'custom.css'); ?>">
-
 	<!-- Détection RSS -->
 	<?php if (($this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog'
 			or $this->getData(['page', $this->getUrl(0), 'moduleId']) === 'news')
@@ -31,16 +30,13 @@
 		include(self::DATA_DIR . 'head.inc.html');
 	} ?>
 </head>
-
 <body>
 	<!-- Barre d'administration -->
 	<?php if ($this->getUser('group') > self::GROUP_MEMBER) : ?>
 		<?php $layout->showBar(); ?>
 	<?php endif; ?>
-
 	<!-- Notifications -->
 	<?php $layout->showNotification(); ?>
-
 	<!-- Menu dans le fond du site avant la bannière -->
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-first' || $this->getData(['theme', 'menu', 'position']) === 'top') : ?>
 		<!-- Détermine si le menu est fixe en haut de page lorsque l'utilisateur n'est pas connecté -->
@@ -71,7 +67,6 @@
 		</div> <!--fin menu -->
 		</nav>
 	<?php endif; ?>
-
 	<!-- Bannière dans le fond du site -->
 	<?php if ($this->getData(['theme', 'header', 'position']) === 'body') : ?>
 		<?php echo ($this->getData(['theme', 'header', 'linkHomePage']) && $this->getData(['theme', 'header', 'feature']) === 'wallpaper') ?  '<a href="' . helper::baseUrl(false) . '">' : ''; ?>
@@ -101,7 +96,6 @@
 	<?php endif; ?>
 	<!-- Menu dans le fond du site après la bannière -->
 	<?php if ($this->getData(['theme', 'menu', 'position']) === 'body-second') : ?>
-
 		<nav>
 			<!-- Menu burger -->
 			<div id="toggle">
@@ -116,7 +110,6 @@
 				<?php $layout->showMenu(); ?></div>
 		</nav>
 	<?php endif; ?>
-
 	<!-- Site -->
 	<div id="site" class="container">
 		<?php if ($this->getData(['theme', 'menu', 'position']) === 'site-first') : ?>
@@ -178,16 +171,12 @@
 				<div id="menu" class="container"><?php $layout->showMenu(); ?></div>
 			</nav>
 		<?php endif; ?>
-
 		<!-- Corps de page -->
 		<?php $layout->showSection(); ?>
-
 		<!-- footer -->
 		<?php $layout->showFooter(); ?>
-
 		<!-- Fin du site -->
 		<?php echo $this->getData(['theme', 'footer', 'position']) === 'site' ? '</div>' : ''; ?>
-
 		<!-- Lien remonter en haut -->
 		<div id="backToTop"><?php echo template::ico('up'); ?></div>
 		<!-- Affichage du consentement aux cookies-->

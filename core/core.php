@@ -53,7 +53,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version et branche pour l'auto-update
-	const ZWII_VERSION = '12.3.01';
+	const ZWII_VERSION = '12.3.02';
 
 	const ZWII_DATAVERSION = 12301;
 

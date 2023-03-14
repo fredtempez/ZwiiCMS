@@ -910,7 +910,7 @@ class core extends common
 				ob_start();
 				require 'core/layout/light.php';
 				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
+				$content = preg_replace('/[\t ]+/u', ' ', ob_get_clean());
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
 				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
 				echo $content;
@@ -920,7 +920,7 @@ class core extends common
 				ob_start();
 				require 'core/layout/main.php';
 				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/\s+/u', ' ', ob_get_clean());
+				$content = preg_replace('/[\t ]+/u', ' ', ob_get_clean());
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
 				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
 				echo $content;
