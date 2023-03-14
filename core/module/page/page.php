@@ -559,7 +559,7 @@ class page extends common
 
 			// Mise à jour de la liste des pages pour TinyMCE
 			$this->listPages();
-			
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),
@@ -578,7 +578,7 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$css = $this->getInput('pageCssEditorContent') === null ? '' : $this->getInput('pageCssEditorContent');
+			$css = $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le CSS
 			$this->setData([
 				'page', $this->getUrl(2),
@@ -609,7 +609,7 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$js = $this->getInput('pageJsEditorContent') === null ? '' : $this->getInput('pageJsEditorContent');
+			$js = $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le JS
 			$this->setData([
 				'page', $this->getUrl(2),

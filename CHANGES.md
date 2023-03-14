@@ -2,6 +2,7 @@
 
 ## Version 12.3.02
 - Amélioration de l'obfuscation.
+- Corrige la limitation de 500 caractères des scripts JS et du style CSS stockés avec la page.
 
 ## Version 12.3.01
 ### Améliorations :
