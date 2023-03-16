@@ -453,11 +453,17 @@ class user extends common
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
-		$group = $this->getUrl(2);
+
 		// Soumission du formulaire
 		if ($this->isPost()) {
+			$group = $this->getUrl(2);
+			var_dump( $group );
+			die();
 			$this->setData(['group',
-				$group,
+				$group, [
+				'name'=> $this->getData(['group', $group, 'name']),
+				'readonly' => $this->getData(['group', $group, 'readonly']),
+				'comment'=> $this->getData(['group', $group, 'comment']),
 				'file' => [
 					'download' => $this->getInput('groupEditDownload', helper::FILTER_BOOLEAN),
 					'edit' => $this->getInput('groupEditEdit', helper::FILTER_BOOLEAN),
@@ -477,6 +483,7 @@ class user extends common
 					'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
 					'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
 					'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+				]
 				]
 			]);
 		}
