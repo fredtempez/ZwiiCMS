@@ -268,6 +268,7 @@ class install extends common
 			// Préparation
 			case 1:
 				$success = true;
+				$message = '';
 				// RAZ la mise à jour auto
 				$this->setData(['core', 'updateAvailable', false]);
 				// Backup du dossier Data
@@ -275,20 +276,23 @@ class install extends common
 				// Sauvegarde htaccess
 				if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 					$success = copy('.htaccess', '.htaccess' . '.bak');
+					$message = 'Erreur de copie du fichier htaccess';
 				}
 				// Nettoyage des fichiers d'installation précédents
 				if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
 					$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
+					$message = 'Impossible d\'effacer la précédente mise à jour';
 				}
 				if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
 					$success = $success || unlink(self::TEMP_DIR . 'update.tar');
+					$message = 'Impossible d\'effacer la précédente mise à jour';
 				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => null
+						'data' => $success ? null : json_encode($message)
 					]
 				]);
 				break;
@@ -303,7 +307,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $md5origin[0] === $md5target,
-						'data' => $md5origin[0] === $md5target ? null : json_encode("Checksum error")
+						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contôle')
 					]
 				]);
 				break;

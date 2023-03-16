@@ -36,8 +36,12 @@ function showError(step, message, errors) {
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
-    console.error(message);
-    $("#installUpdateErrorMessage").text(message.replace(/<[^p].*?>/g, ""));
+    if (typeof message === 'object' && message.data) {
+        var errorMessage = message.data.replace(/"/g, "");
+        $("#installUpdateErrorMessage").text(errorMessage);
+    } else {
+        $("#installUpdateErrorMessage").text(message.replace(/<[^p].*?>/g, ""));
+    }
 }
 
 $(window).on("load", function() {
