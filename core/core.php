@@ -59,7 +59,7 @@ class common
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_UPDATE_CHANNEL = "v12";
+	const ZWII_UPDATE_CHANNEL = "test";
 
 	// Constantes de test
 	//const ZWII_UPDATE_URL = 'http://localhost/update/';
