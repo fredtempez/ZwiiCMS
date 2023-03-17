@@ -345,6 +345,7 @@ class install extends common
 			// Configuration
 			case 4:
 				$success = true;
+				$message = null;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
 				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
@@ -365,7 +366,7 @@ class install extends common
 						$fileContent
 					);
 					$success = $r === false ? false : true;
-					$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : '';
+					$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : null;
 				}
 				// Recopie htaccess
 				if (
@@ -401,7 +402,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $success ? $message : null
+						'data' => $message
 					]
 				]);
 		}
