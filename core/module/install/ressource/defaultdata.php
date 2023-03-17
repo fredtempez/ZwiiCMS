@@ -335,32 +335,93 @@ class init extends common
 		'blacklist' => [],
 		'language'=> [],
 		'group' => [
-			"-1" => [
+			'-1' => [
 				'name' => 'Banni',
 				'readonly' => true,
 				'comment' => 'Accès désactivé'
 			],
-			"0" => [
+			'0' => [
 				'name' => 'Visiteur',
 				'readonly' => true,
 				'comment' => 'Accède au site'
 			],
-			"1" => [
+			'1' => [
 				'name' => 'Membre',
 				'readonly' => true,
-				'comment' => 'Accède aux pages réservées'
+				'comment' => 'Accède aux pages réservées et à un dossier partagé',
+				'path' => '/site/file/source/partage/',
+				'file' => [
+					'download' => false,
+					'edit' => false,
+					'create' => false,
+					'rename' => false,
+					'upload' => false,
+					'delete' => false,
+					'preview' => false,
+					'duplicate' => false,
+					'extract' => false,
+					'copycut' => false,
+					'permission' => false
+				],
+				'folder' => [
+					'create' => false,
+					'delete' => false,
+					'rename' => false,
+					'copycut' => false,
+					'permission' => false
+				]
 			],
-			"2" => [
+			'2' => [
 				'name' => 'Editeur',
 				'readonly' => false,
 				'comment' => 'Edition des pages',
-				'file' => [],
-				'folder' => []
+				'path' => '/site/file/source/',
+				'file' => [
+					'download' => true,
+					'edit' => true,
+					'create' => true,
+					'rename' => true,
+					'upload' => true,
+					'delete' => false,
+					'preview' => true,
+					'duplicate' => false,
+					'extract' => false,
+					'copycut' => false,
+					'permission' => false
+				],
+				'folder' => [
+					'create' => true,
+					'delete' => true,
+					'rename' => true,
+					'copycut' => false,
+					'permission' => false
+				]
 			],
-			"99" => [
+			'99' => [
 				'name' => 'Administrateur',
 				'readonly' => true,
-				'comment' => 'Contrôle total'
+				'comment' => 'Contrôle total',
+				'path' => '/site/file/source/',
+				'file' => [
+					'download' => true,
+					'edit' => true,
+					'create' => true,
+					'rename' => true,
+					'upload' => true,
+					'delete' => true,
+					'preview' => true,
+					'duplicate' => true,
+					'extract' => true,
+					'copycut' => true,
+					'permission' => true
+				],
+				'folder' => [
+					'create' => true,
+					'delete' => true,
+					'rename' => true,
+					'copycut' => true,
+					'permission' => false
+				]
 			]
 		],
 	];
@@ -884,7 +945,6 @@ class init extends common
 						'picturePosition' => 'left',
 						'hidePicture' => false,
 						'pictureSize' => 20,
-						'picturePosition' => 'left',
 						'publishedOn' => 1548790902,
 						'state' => true,
 						'title' => 'Mon premier article',
@@ -904,7 +964,6 @@ class init extends common
 						'hidePicture' => false,
 						'picturePosition' => 'right',
 						'pictureSize' => 40,
-						'picturePosition' => 'right',
 						'publishedOn' => 1550432502,
 						'state' => true,
 						'title' => 'Mon deuxième article',
@@ -924,7 +983,6 @@ class init extends common
 						'hidePicture' => false,
 						'picturePosition' => 'left',
 						'pictureSize' => 100,
-						'picturePosition' => 'left',
 						'publishedOn' => 1550864502,
 						'state' => true,
 						'title' => 'Mon troisième article',

@@ -94,27 +94,27 @@
                     <div class="row">
                         <div class="col2">
                             <?php echo template::checkbox('groupEditFolderCreate', true, 'Création', [
-                                'checked' => $this->getData(['group', $this->getUrl(2), 'file', 'create'])
+                                'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'create'])
                             ]); ?>
                         </div>
                         <div class="col2">
                             <?php echo template::checkbox('groupEditFolderDelete', true, 'Effacement', [
-                                'checked' => $this->getData(['group', $this->getUrl(2), 'file', 'delete'])
+                                'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'delete'])
                             ]); ?>
                         </div>
                         <div class="col2">
                             <?php echo template::checkbox('groupEditFolderRename', true, 'Nommage', [
-                                'checked' => $this->getData(['group', $this->getUrl(2), 'file', 'rename'])
+                                'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'rename'])
                             ]); ?>
                         </div>
                         <div class="col2">
                             <?php echo template::checkbox('groupEditFolderCopycut', true, 'Coupé collé', [
-                                'checked' => $this->getData(['group', $this->getUrl(2), 'file', 'copycut'])
+                                'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'copycut'])
                             ]); ?>
                         </div>
                         <div class="col2">
                             <?php echo template::checkbox('groupEditFolderPermission', true, 'Permissions', [
-                                'checked' => $this->getData(['group', $this->getUrl(2), 'file', 'permission'])
+                                'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'permission'])
                             ]); ?>
                         </div>
                     </div>

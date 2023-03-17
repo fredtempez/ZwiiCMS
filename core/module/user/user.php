@@ -457,34 +457,40 @@ class user extends common
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$group = $this->getUrl(2);
-			var_dump( $group );
-			die();
-			$this->setData(['group',
-				$group, [
-				'name'=> $this->getData(['group', $group, 'name']),
-				'readonly' => $this->getData(['group', $group, 'readonly']),
-				'comment'=> $this->getData(['group', $group, 'comment']),
-				'file' => [
-					'download' => $this->getInput('groupEditDownload', helper::FILTER_BOOLEAN),
-					'edit' => $this->getInput('groupEditEdit', helper::FILTER_BOOLEAN),
-					'create' => $this->getInput('groupEditCreate', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('groupEditRename', helper::FILTER_BOOLEAN),
-					'upload' => $this->getInput('groupEditUpload', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('groupEditDelete', helper::FILTER_BOOLEAN),
-					'preview' => $this->getInput('groupEditPreview', helper::FILTER_BOOLEAN),
-					'duplicate' => $this->getInput('groupEditDuplicate', helper::FILTER_BOOLEAN),
-					'extract' => $this->getInput('groupEditExtract', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('groupEditCopycut', helper::FILTER_BOOLEAN),
-					'permission' => $this->getInput('groupEditPermission', helper::FILTER_BOOLEAN),
-				],
-				'folder' => [
-					'create' => $this->getInput('groupEditFolderCreate', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('groupEditFolderDelete', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
-					'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+			$this->setData([
+				'group',
+				$group,
+				[
+					'name' => $this->getData(['group', $group, 'name']),
+					'readonly' => $this->getData(['group', $group, 'readonly']),
+					'comment' => $this->getData(['group', $group, 'comment']),
+					'file' => [
+						'download' => $this->getInput('groupEditDownload', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('groupEditEdit', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('groupEditCreate', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('groupEditRename', helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('groupEditUpload', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('groupEditDelete', helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('groupEditPreview', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('groupEditDuplicate', helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('groupEditExtract', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('groupEditCopycut', helper::FILTER_BOOLEAN),
+						'permission' => $this->getInput('groupEditPermission', helper::FILTER_BOOLEAN),
+					],
+					'folder' => [
+						'create' => $this->getInput('groupEditFolderCreate', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('groupEditFolderDelete', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
+						'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+					]
 				]
-				]
+			]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' =>  helper::baseUrl() . 'user/group',
+				'notification' => helper::translate('Modifications enregistrées'),
+				'state' => true
 			]);
 		}
 
