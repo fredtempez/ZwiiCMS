@@ -1118,15 +1118,19 @@ class common
 		try {
 			// Paramètres SMTP perso
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
-				//$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+				$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
+				$mail->SMTPSecure = false;
+				$mail->SMTPAuth  = false;
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
 				if ($this->getData(['config', 'smtp', 'auth'])) {
+					$mail->SMTPAutoTLS = true;
+					$mail->SMTPSecure = true;
+					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
 					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
-					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
 				}
 			}
