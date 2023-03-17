@@ -307,7 +307,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $md5origin[0] === $md5target,
-						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contôle')
+						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle')
 					]
 				]);
 				break;
@@ -365,6 +365,7 @@ class install extends common
 						$fileContent
 					);
 					$success = $r === false ? false : true;
+					$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : '';
 				}
 				// Recopie htaccess
 				if (
@@ -400,7 +401,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => null
+						'data' => $success ? $message : null
 					]
 				]);
 		}
