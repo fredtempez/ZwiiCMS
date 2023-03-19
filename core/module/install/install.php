@@ -268,6 +268,7 @@ class install extends common
 			// Préparation
 			case 1:
 				$success = true;
+				$message = '';
 				// RAZ la mise à jour auto
 				$this->setData(['core', 'updateAvailable', false]);
 				// Backup du dossier Data
@@ -275,20 +276,23 @@ class install extends common
 				// Sauvegarde htaccess
 				if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 					$success = copy('.htaccess', '.htaccess' . '.bak');
+					$message = 'Erreur de copie du fichier htaccess';
 				}
 				// Nettoyage des fichiers d'installation précédents
 				if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
 					$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
+					$message = 'Impossible d\'effacer la mise à jour précédente';
 				}
 				if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
 					$success = $success || unlink(self::TEMP_DIR . 'update.tar');
+					$message = 'Impossible d\'effacer la mise à jour précédente';
 				}
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => null
+						'data' => $success ? null : json_encode($message)
 					]
 				]);
 				break;
@@ -296,14 +300,14 @@ class install extends common
 			case 2:
 				file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
-				$md5origin = (explode(' ', $md5origin));
+				$md5origin = explode(' ', $md5origin);
 				$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
 				// Valeurs en sortie
 				$this->addOutput([
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $md5origin[0] === $md5target,
-						'data' => null
+						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle')
 					]
 				]);
 				break;
@@ -341,6 +345,7 @@ class install extends common
 			// Configuration
 			case 4:
 				$success = true;
+				$message = null;
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
 				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
@@ -361,6 +366,7 @@ class install extends common
 						$fileContent
 					);
 					$success = $r === false ? false : true;
+					$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : null;
 				}
 				// Recopie htaccess
 				if (
@@ -396,7 +402,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => null
+						'data' => $message
 					]
 				]);
 		}

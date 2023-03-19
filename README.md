@@ -1,4 +1,4 @@
-# ZwiiCMS 12.3.02
+# ZwiiCMS 12.3.03
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge.
 

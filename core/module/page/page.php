@@ -632,4 +632,18 @@ class page extends common
 			'view' => 'jsEditor'
 		]);
 	}
+
+	/**
+	 * Retourne les informations sur les pages en omettant les clés CSS et JS qui occasionnent des bugs d'affichage dans l'éditeur de page
+	 * @return array tableau associatif des pages dans le menu 
+	 */
+	public function getPageInfo() {
+		$p = $this->getData(['page']);
+		$d = array_map(function($d) {
+			unset($d["css"], $d["js"]);
+			return $d;
+		}, $p);
+		return  json_encode($d);
+
+	}
 }
