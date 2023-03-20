@@ -644,7 +644,7 @@ $("#pageEditParentPageId").on("change", function() {
 
 function buildPagesList(extraPosition) {
 	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
-	var pages = <?php echo json_encode($this->getData(['page'])); ?>;
+	var pages = <?php echo $module->getPageInfo(); ?>;
 	var positionInitial = <?php echo $this->getData(['page',$this->getUrl(2),"position"]); ?>;
 	var extraPosition = $("#pageEditExtraPosition").val();
 	var positionDOM = $("#pageEditPosition");

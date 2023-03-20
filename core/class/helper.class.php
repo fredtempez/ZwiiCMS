@@ -539,6 +539,10 @@ class helper
 		$css = preg_replace(['(( )+{)', '({( )+)'], '{', $css);
 		$css = preg_replace(['(( )+})', '(}( )+)', '(;( )*})'], '}', $css);
 		$css = preg_replace(['(;( )+)', '(( )+;)'], ';', $css);
+		// Convertir les codes entités
+		$css = htmlspecialchars_decode($css);
+		// Supprime les balises HTML
+		$css = strip_tags($css);
 		// Retourne le css minifié
 		return $css;
 	}

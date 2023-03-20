@@ -10,7 +10,6 @@
 if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
-console.log(getCookie('ZWII_UI'));
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwyg",
