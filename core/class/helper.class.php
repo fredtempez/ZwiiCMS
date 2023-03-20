@@ -27,28 +27,28 @@ class helper
 	public static function translate($text)
 	{
 		/*
-		 * 
+		* 
 		$target = 'redirection';
 		$url = $_SERVER['QUERY_STRING'];
 		$module = explode('/', $url);		
 		if ( $module[0] === $target)
 		{ 
-			// La traduction existe déjà dans le core
-			if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-				$dialogues = json_decode(file_get_contents('module/' . $target . '/i18n/fr_FR.json' ), true);
-				$data = array_merge($dialogues,[$text =>  '']);
-				file_put_contents ('module/' . $target . '/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-			}
-			
+		// La traduction existe déjà dans le core
+		if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+		$dialogues = json_decode(file_get_contents('module/' . $target . '/i18n/fr_FR.json' ), true);
+		$data = array_merge($dialogues,[$text =>  '']);
+		file_put_contents ('module/' . $target . '/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+		}
+		
 		}
 		*/
 
 		// La traduction existe déjà dans le core
 		/*
 		if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-			$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-			$data = array_merge($dialogues,[$text =>  '']);
-			file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+		$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+		$data = array_merge($dialogues,[$text =>  '']);
+		file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 		}
 		*/
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
@@ -68,31 +68,32 @@ class helper
 	/**
 	 * Fonction pour assurer la traduction des messages
 	 */
-	public static function googleTranslate($to, $text){
+	public static function googleTranslate($to, $text)
+	{
 		if (!file_exists('site/i18n/' . $to . '.json')) {
-			file_put_contents ('site/i18n/' . $to . '.json', json_encode([]));
+			file_put_contents('site/i18n/' . $to . '.json', json_encode([]));
 		}
 		if (!empty($text)) {
 			//Lecture des données en ligne
 			$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
 			// Mode traduction
 			if ($to !== 'fr_FR') {
-				$arrayjson = json_decode(file_get_contents('https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=' . $to . '&q=' . rawurlencode($text)),true);
-				$response =  $arrayjson[0][0];
+				$arrayjson = json_decode(file_get_contents('https://clients5.google.com/translate_a/t?client=dict-chrome-ex&sl=auto&tl=' . $to . '&q=' . rawurlencode($text)), true);
+				$response = $arrayjson[0][0];
 				// Captation
 				if ($data !== '') {
-					if (array_key_exists($text, $data) ) {
+					if (array_key_exists($text, $data)) {
 						$data[$text] = $response;
 					} else {
-						$data = array_merge($data,[$text =>  $response]);
+						$data = array_merge($data, [$text => $response]);
 					}
 				}
-			// Mode alimentation des chaines
+				// Mode alimentation des chaines
 			} else {
 				// Créer la variable
-				$data = array_merge($data,[$text =>  '']);
+				$data = array_merge($data, [$text => '']);
 			}
-			file_put_contents ('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			file_put_contents('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 
 		}
 	}
@@ -209,12 +210,12 @@ class helper
 		// Creation du ZIP
 		$baseName = str_replace('/', '', helper::baseUrl(false, false));
 		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
-		$fileName =  $baseName . '-backup-' . date('Y-m-d-H-i-s', time()) . '.zip';
+		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 		$directory = 'site/';
 		//$filter = array('backup','tmp','file');
-		$files =  new RecursiveIteratorIterator(
+		$files = new RecursiveIteratorIterator(
 			new RecursiveCallbackFilterIterator(
 				new RecursiveDirectoryIterator(
 					$directory,
@@ -243,7 +244,7 @@ class helper
 	 * du nom réel
 	 * du numéro de version
 	 */
-	public  static function getModules()
+	public static function getModules()
 	{
 		$modules = array();
 		$dirs = array_diff(scandir('module'), array('..', '.'));
@@ -285,7 +286,7 @@ class helper
 						$dataDirectory = '';
 					}
 					// Affection
-					$modules[$value]  = [
+					$modules[$value] = [
 						'name' => $value,
 						'realName' => $realName,
 						'version' => $version,
@@ -403,12 +404,12 @@ class helper
 			'darken' => 'rgba(' . max(0, $rgba[0] - 15) . ',' . max(0, $rgba[1] - 15) . ',' . max(0, $rgba[2] - 15) . ',' . $rgba[3] . ')',
 			'veryDarken' => 'rgba(' . max(0, $rgba[0] - 20) . ',' . max(0, $rgba[1] - 20) . ',' . max(0, $rgba[2] - 20) . ',' . $rgba[3] . ')',
 			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "#222" : "#DDD",
-			'rgb' => 'rgb(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2]  . ')',
+			'rgb' => 'rgb(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ')',
 			'invert' => 'rgba (' .
-				($rgba[0]  < 128 ? 255 : 0) . ',' .
-				($rgba[1]  < 128 ? 255 : 0) . ',' .
-				($rgba[1]  < 128 ? 255 : 0) . ',' .
-				($rgba[0]  < 128 ? 255 : 0) . ')'
+			($rgba[0] < 128 ? 255 : 0) . ',' .
+			($rgba[1] < 128 ? 255 : 0) . ',' .
+			($rgba[1] < 128 ? 255 : 0) . ',' .
+			($rgba[0] < 128 ? 255 : 0) . ')'
 		];
 	}
 
@@ -447,11 +448,13 @@ class helper
 				break;
 			case self::FILTER_ID:
 				$text = mb_strtolower($text, 'UTF-8');
-				$text = strip_tags(str_replace(
-					explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", '),
-					explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-'),
-					$text
-				));
+				$text = strip_tags(
+					str_replace(
+						explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", '),
+						explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-'),
+						$text
+					)
+				);
 				$text = preg_replace('/([^a-z0-9-])/', '', $text);
 				// Supprime les emoji
 				$text = preg_replace('/[[:^print:]]/', '', $text);
@@ -539,6 +542,10 @@ class helper
 		$css = preg_replace(['(( )+{)', '({( )+)'], '{', $css);
 		$css = preg_replace(['(( )+})', '(}( )+)', '(;( )*})'], '}', $css);
 		$css = preg_replace(['(;( )+)', '(( )+;)'], ';', $css);
+		// Convertir les codes entités
+		$css = htmlspecialchars_decode($css);
+		// Supprime les balises HTML
+		$css = strip_tags($css);
 		// Retourne le css minifié
 		return $css;
 	}
@@ -697,7 +704,7 @@ class helper
 	 * @param string $garble la chaine à décoder
 	 * @return string
 	 */
-	public static  function decrypt($key, $garble)
+	public static function decrypt($key, $garble)
 	{
 		list($encrypted_data, $iv) = explode('::', base64_decode($garble), 2);
 		return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
