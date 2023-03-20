@@ -562,8 +562,6 @@ class helper
 		// Supprime les tabulations, espaces, nouvelles lignes, etc...
 		$js = str_replace(["\r\n", "\r", "\t", "\n", '  ', '    ', '     '], '', $js);
 		$js = preg_replace(['(( )+\))', '(\)( )+)'], ')', $js);
-		// Convertir les codes entités
-		$js = htmlspecialchars_decode($js);
 		// Retourne le js minifié
 		return $js;
 	}

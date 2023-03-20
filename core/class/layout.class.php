@@ -1043,8 +1043,9 @@ class layout extends common
         if ($this->core->output['inlineScript']) {
             $inlineScript = implode($this->core->output['inlineScript']);
         }
-        echo '<script defer>' . helper::minifyJs( $coreScript) . '</script>';
-        echo '<script defer>' . helper::minifyJs( $inlineScript) . '</script>';
+        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script'] . htmlspecialchars_decode($inlineScript)) . '</script>';
+
+        
     }
 
     /**
