@@ -1070,7 +1070,7 @@ class layout extends common
         if ($this->core->output['inlineStyle']) {
             foreach ($this->core->output['inlineStyle'] as $style) {
                 if ($style) {
-                    echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+                    echo '<style type="text/css">' . helper::minifyCss(htmlspecialchars_decode($style)) . '</style>';
                 }
 
             }
