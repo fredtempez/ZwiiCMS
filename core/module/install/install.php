@@ -292,7 +292,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $success ? null : json_encode($message)
+						'data' => $success ? null : json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 				break;
@@ -307,7 +307,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $md5origin[0] === $md5target,
-						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle')
+						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE)
 					]
 				]);
 				break;
@@ -402,7 +402,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $message
+						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 		}
