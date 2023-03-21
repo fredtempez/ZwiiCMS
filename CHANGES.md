@@ -2,7 +2,7 @@
 
 ## Version 12.3.03
 - Corrige le problème d'affichage lors de l'édition d'une page contenant une feuille style commentée.
-- Améliore l'affichage des erreurs lors de la mise à jour automatique. L'échec de la vérification de la clé MD5SUM de l'archive d'installation provoque l'arrêt de l'installation au lieu d'un message en fin d'installation. 
+- Améliore l'affichage des erreurs lors de la mise à jour automatique. L'échec de la vérification de la clé MD5SUM de l'archive d'installation provoque l'arrêt de l'installation au lieu d'un message en fin d'installation.
 
 ## Version 12.3.02
 - Amélioration de l'obfuscation.

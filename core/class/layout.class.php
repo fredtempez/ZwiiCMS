@@ -1043,8 +1043,8 @@ class layout extends common
         if ($this->core->output['inlineScript']) {
             $inlineScript = implode($this->core->output['inlineScript']);
         }
-        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script'] . htmlspecialchars_decode($inlineScript)) . '</script>';
-        
+        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script'] ) . '</script>';
+        echo '<script defer>' . htmlspecialchars_decode(helper::minifyJs($inlineScript)) . '</script>';
     }
 
     /**
@@ -1071,7 +1071,7 @@ class layout extends common
         if ($this->core->output['inlineStyle']) {
             foreach ($this->core->output['inlineStyle'] as $style) {
                 if ($style) {
-                    echo '<style type="text/css">' . helper::minifyCss($style) . '</style>';
+                    echo '<style type="text/css">' . helper::minifyCss(htmlspecialchars_decode($style)) . '</style>';
                 }
 
             }
