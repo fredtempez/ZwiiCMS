@@ -56,6 +56,10 @@ class user extends common
 
 	public static $languagesInstalled = [];
 
+	public static $sharePath = [
+		'/site/file/source/'
+	];
+
 	/**
 	 * Ajout
 	 */
@@ -488,11 +492,14 @@ class user extends common
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' =>  helper::baseUrl() . 'user/group',
+				'redirect' => helper::baseUrl() . 'user/group',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
 		}
+
+		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = array_flip(self::$sharePath);
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -618,7 +625,7 @@ class user extends common
 					}
 					// Cas 3 le délai de bloquage court
 					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification = sprintf(helper::translate('Accès bloqué %d minutes', ($this->getData(['config', 'connect', 'timeout']) / 60)));
+						$notification = sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
 					}
 
 					// Valeurs en sortie
@@ -878,4 +885,35 @@ class user extends common
 		exit();
 	}
 
+	/**
+	 * Liste les dossier contenus dans RFM
+	 */
+	function getSubdirectories($dir, $basePath = '') {
+		$subdirs = array();
+		// Ouvrez le répertoire spécifié
+		$dh = opendir($dir);
+		// Parcourez tous les fichiers et répertoires dans le répertoire
+		while (($file = readdir($dh)) !== false) {
+		  // Ignorer les entrées de répertoire parent et actuel
+		  if ($file == '.' || $file == '..') {
+			continue;
+		  }  
+		  // Construisez le chemin complet du fichier ou du répertoire
+		  $path = $dir . '/' . $file;  
+		  // Vérifiez si c'est un répertoire
+		  if (is_dir($path)) {
+			// Construisez la clé et la valeur pour le tableau associatif
+            $key = $basePath . '/' . $file;
+            $value = $path . '/';
+			// Ajouter la clé et la valeur au tableau associatif
+			$subdirs[$key] = $value;  
+			// Appeler la fonction récursivement pour ajouter les sous-répertoires
+			$subdirs = array_merge($subdirs, $this->getSubdirectories($path, $key));
+		  }
+		}
+		// Fermez le gestionnaire de dossier
+		closedir($dh);
+		return $subdirs;
+	  }
+	  
 }
