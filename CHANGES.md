@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.04
+- Bug de notification de compte bloqué, la traduction n'est pas effectuée.
+
 ## Version 12.3.03
 - Corrige le problème d'affichage lors de l'édition d'une page contenant une feuille style commentée.
 - Corrige des problèmes d'interprétation des scripts intégrés dans une page.
