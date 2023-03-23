@@ -1,4 +1,6 @@
 
+# version 6.6
+- Position de l'icône RSS
 # version 6.5
 - Intl dates formats
 - Modifications liées à la suppression de flatpickr
