@@ -101,3 +101,17 @@
     display: inline;
     vertical-align: top;
 }
+
+article {
+	position: relative;
+	/* Autres styles pour les articles coupés */
+  }
+  
+article
+.read-more-btn {
+	position: absolute;
+	bottom: 10px;
+	right: 10px;
+	z-index: 1;
+	/* Autres styles pour le bouton */
+  }
