@@ -144,14 +144,20 @@
 								<?php echo template::ico('calendar-empty'); ?>
 								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])); ?>
 							</div>
-							<p class="blogContent">
+							<div class="blogContent">
 								<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) !== 0 ? $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
 								<?php echo helper::subword(strip_tags($article['content'], '<br><p>'), 0, $lenght); ?>...
-								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>"><button class="read-more-btn">Lire la suite</button></a>
-								
-							</p>
+								<div class="readMoreContainer">
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>"><button class="readMoreButton">Lire la suite</button></a>
+									<div class="readMoreContainer">
+										<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
+										<button	class="readMoreButton">Lire la suite</button>
+										</a>
+									</div>
+							</div>
 						</div>
 					</div>
+				</div>
 				<?php endif; ?>
 			<?php endforeach; ?>
 	</article>
