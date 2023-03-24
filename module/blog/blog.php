@@ -89,7 +89,7 @@ class blog extends common
 	];
 
 	//Paramètre longueur maximale des commentaires en nb de caractères
-	public static $commentLength = [
+	public static $commentsLength = [
 		100 => '100 signes',
 		250 => '250 signes',
 		500 => '500 signes',
@@ -97,11 +97,19 @@ class blog extends common
 	];
 
 	public static $articlesLenght = [
-		0 => 'Article complet en pleine page',
-		200 => 'Tableau : couverture + 200 signes',
-		400 => 'Tableau : couverture + 400 signes',
-		600 => 'Tableau : couverture + 600 signes',
-		800 => 'Tableau : couverture + 800 signes'
+		0 => 'Articles complets',
+		600 => '600 signes',
+		800 => '800 signes',
+		1000 => '1000 signes',
+		1200 => '1200 signes',
+		1400 => '1400 signes',
+		1600 => '1600 signes',
+		1800 => '1800 signes',
+	];
+
+	public static $articlesLayout = [
+		false => 'Classique',
+		true => 'Moderne',
 	];
 
 	// Permissions d'un article
@@ -556,11 +564,12 @@ class blog extends common
 				[
 					'feeds' => $this->getInput('blogOptionShowFeeds', helper::FILTER_BOOLEAN),
 					'feedsLabel' => $this->getInput('blogOptionFeedslabel', helper::FILTER_STRING_SHORT),
+					'layout' => $this->getInput('blogOptionArticlesLayout', helper::FILTER_BOOLEAN),
+					'articlesLenght' => $this->getInput('blogOptionArticlesLayout', helper::FILTER_BOOLEAN) === false ? $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT): 0,
 					'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT, true),
-					'articlesLenght' => $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT),
-					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 					'dateFormat' => $this->getInput('blogOptionDateFormat'),
 					'timeFormat' => $this->getInput('blogOptionTimeFormat'),
+					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
 			// Valeurs en sortie
