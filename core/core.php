@@ -853,7 +853,7 @@ class common
 				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
 				foreach ($childIds as $childId) {
 					$children[] = [
-						'title' => ' » ' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
+						'title' => '&nbsp;»&nbsp;' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
 						'value' => $rewrite . $childId
 					];
 				}
@@ -897,7 +897,7 @@ class common
 
 		// Enregistrement : 3 tentatives
 		for ($i = 0; $i < 3; $i++) {
-			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents), LOCK_EX) !== false) {
+			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents, JSON_UNESCAPED_UNICODE), LOCK_EX) !== false) {
 				break;
 			}
 			// Pause de 10 millisecondes
@@ -1108,8 +1108,9 @@ class common
 		include 'core/layout/mail.php';
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
-		$mail->CharSet = 'UTF-8';
 		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
+		$mail->CharSet = 'UTF-8';
+		$mail->Encoding = 'base64';
 		// Mail
 		try {
 			// Paramètres SMTP perso
@@ -1152,7 +1153,7 @@ class common
 				$mail->addAddress($to);
 			}
 			$mail->isHTML(true);
-			$mail->Subject = $subject;
+			$mail->Subject = html_entity_decode($subject);
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
 			if ($mail->send()) {

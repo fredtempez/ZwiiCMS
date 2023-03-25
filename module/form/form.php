@@ -14,23 +14,24 @@
  * @link http://zwiicms.fr/
  */
 
-class form extends common {
+class form extends common
+{
 
-	const VERSION = '3.7';
+	const VERSION = '3.8';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
 		'config' => self::GROUP_MODERATOR,
-		'option'  => self::GROUP_MODERATOR,
+		'option' => self::GROUP_MODERATOR,
 		'data' => self::GROUP_MODERATOR,
 		'delete' => self::GROUP_MODERATOR,
 		'deleteall' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'export2csv' => self::GROUP_MODERATOR,
 		'output2csv' => self::GROUP_MODERATOR,
-		'init'  => self::GROUP_MODERATOR,
-		'update'  => self::GROUP_MODERATOR,
+		'init' => self::GROUP_MODERATOR,
+		'update' => self::GROUP_MODERATOR,
 	];
 
 	public static $data = [];
@@ -80,32 +81,33 @@ class form extends common {
 	];
 
 	public static $optionOffset = [
-		0 	=> 'Aucune',
-		1	=> 'Une colonne',
-		2	=> 'Deux colonnes'
+		0 => 'Aucune',
+		1 => 'Une colonne',
+		2 => 'Deux colonnes'
 	];
 
 	public static $optionWidth = [
-		6	=> 'Six colonnes',
-		7	=> 'Sept colonnes',
-		8	=> 'Huit colonnes',
-		9	=> 'Neuf colonnes',
-		10	=> 'Dix colonnes',
-		11	=> 'Onze colonnes',
-		12	=> 'Douze colonnes',
+		6 => 'Six colonnes',
+		7 => 'Sept colonnes',
+		8 => 'Huit colonnes',
+		9 => 'Neuf colonnes',
+		10 => 'Dix colonnes',
+		11 => 'Onze colonnes',
+		12 => 'Douze colonnes',
 	];
 
 	public static $optionAlign = [
-		''					=> 'A gauche',
-		'textAlignCenter'   => 'Au centre',
-		'textAlignRight' 	=> 'A droite'
+		'' => 'A gauche',
+		'textAlignCenter' => 'Au centre',
+		'textAlignRight' => 'A droite'
 	];
 
 
 	/**
 	 * Configuration
 	 */
-	public function config() {
+	public function config()
+	{
 
 		// Mise à jour des données de module
 		$this->update();
@@ -113,21 +115,21 @@ class form extends common {
 		// Liste des utilisateurs
 		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
-		self::$listUsers [] = '';
-		foreach($userIdsFirstnames as $userId => $userFirstname) {
-			self::$listUsers [] =  $userId;
+		self::$listUsers[] = '';
+		foreach ($userIdsFirstnames as $userId => $userFirstname) {
+			self::$listUsers[] = $userId;
 		}
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Génération des données vides
 			if ($this->getData(['module', $this->getUrl(0), 'data']) === null) {
 				$this->setData(['module', $this->getUrl(0), 'data', []]);
 			}
 			// Génération des champs
 			$inputs = [];
-			foreach($this->getInput('formConfigPosition', null) as $index => $position) {
+			foreach ($this->getInput('formConfigPosition', null) as $index => $position) {
 				$inputs[] = [
-					'name' => htmlspecialchars_decode($this->getInput('formConfigName[' . $index . ']'),ENT_QUOTES),
+					'name' => html_entity_decode($this->getInput('formConfigName[' . $index . ']')),
 					'position' => helper::filter($position, helper::FILTER_INT),
 					'required' => $this->getInput('formConfigRequired[' . $index . ']', helper::FILTER_BOOLEAN),
 					'type' => $this->getInput('formConfigType[' . $index . ']'),
@@ -142,13 +144,6 @@ class form extends common {
 				'state' => true
 			]);
 		}
-		// Liste des pages
-		foreach($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
-			self::$pages[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
-			foreach($childrenPageIds as $childKey) {
-				self::$pages[$childKey] = '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']);
-			}
-		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Configuration du module'),
@@ -161,20 +156,21 @@ class form extends common {
 	}
 
 
-	public function option() {
+	public function option()
+	{
 		// Liste des utilisateurs
 		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
 		ksort($userIdsFirstnames);
-		self::$listUsers [] = '';
+		self::$listUsers[] = '';
 		foreach ($userIdsFirstnames as $userId => $userFirstname) {
-			self::$listUsers [] =  $userId;
+			self::$listUsers[] = $userId;
 		}
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Débordement
 			$width = $this->getInput('formOptionWidth');
-			if ($this->getInput('formOptionWidth',helper::FILTER_INT) + $this->getInput('formOptionOffset',helper::FILTER_INT) > 12 ) {				
-				$width = (string) $this->getInput('formOptionWidth',helper::FILTER_INT) - $this->getInput('formOptionOffset',helper::FILTER_INT);
+			if ($this->getInput('formOptionWidth', helper::FILTER_INT) + $this->getInput('formOptionOffset', helper::FILTER_INT) > 12) {
+				$width = (string) $this->getInput('formOptionWidth', helper::FILTER_INT) - $this->getInput('formOptionOffset', helper::FILTER_INT);
 			}
 
 			// Configuration
@@ -186,17 +182,17 @@ class form extends common {
 					'button' => $this->getInput('formOptionButton'),
 					'captcha' => $this->getInput('formOptionCaptcha', helper::FILTER_BOOLEAN),
 					'group' => $this->getInput('formOptionGroup', helper::FILTER_INT),
-					'user' =>  self::$listUsers [$this->getInput('formOptionUser', helper::FILTER_INT)],
-					'mail' => $this->getInput('formOptionMail') ,
+					'user' => self::$listUsers[$this->getInput('formOptionUser', helper::FILTER_INT)],
+					'mail' => $this->getInput('formOptionMail'),
 					'pageId' => $this->getInput('formOptionPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formOptionPageId', helper::FILTER_ID) : '',
-					'subject' => $this->getInput('formOptionSubject'),
+					'subject' => html_entity_decode($this->getInput('formOptionSubject')),
 					'replyto' => $this->getInput('formOptionMailReplyTo', helper::FILTER_BOOLEAN),
 					'signature' => $this->getInput('formOptionSignature'),
 					'logoUrl' => $this->getInput('formOptionLogo'),
 					'logoWidth' => $this->getInput('formOptionLogoWidth'),
-					'offset' =>$this->getInput('formOptionOffset'),
-					'width' =>$width,
-					'align' =>$this->getInput('formOptionAlign'),
+					'offset' => $this->getInput('formOptionOffset'),
+					'width' => $width,
+					'align' => $this->getInput('formOptionAlign'),
 				]
 			]);
 			// Génération des données vides
@@ -209,12 +205,12 @@ class form extends common {
 				'redirect' => helper::baseUrl() . $this->getUrl(),
 				'state' => true
 			]);
-		} else   {
+		} else {
 			// Liste des pages
-			foreach($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
+			foreach ($this->getHierarchy(null, true, false) as $parentPageId => $childrenPageIds) {
 				self::$pages[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
-				foreach($childrenPageIds as $childKey) {
-					self::$pages[$childKey] = '&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'title']);
+				foreach ($childrenPageIds as $childKey) {
+					self::$pages[$childKey] = '&nbsp;»&nbsp;' . $this->getData(['page', $childKey, 'title']);
 				}
 			}
 			// Valeurs en sortie
@@ -232,9 +228,10 @@ class form extends common {
 	/**
 	 * Données enregistrées
 	 */
-	public function data() {
+	public function data()
+	{
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
-		if($data) {
+		if ($data) {
 			// Pagination
 			$pagination = helper::pagination($data, $this->getUrl(), self::$itemsperPage);
 			// Liste des pages
@@ -243,16 +240,16 @@ class form extends common {
 			$dataIds = array_reverse(array_keys($data));
 			$data = array_reverse($data);
 			// Données en fonction de la pagination
-			for($i = $pagination['first']; $i < $pagination['last']; $i++) {
+			for ($i = $pagination['first']; $i < $pagination['last']; $i++) {
 				$content = '';
-				foreach($data[$i] as $input => $value) {
+				foreach ($data[$i] as $input => $value) {
 					$content .= $input . ' : ' . $value . '<br>';
 				}
 				self::$data[] = [
 					$content,
 					template::button('formDataDelete' . $dataIds[$i], [
 						'class' => 'formDataDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i]  . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i] . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash')
 					])
 				];
@@ -268,39 +265,40 @@ class form extends common {
 	/**
 	 * Export CSV
 	 * @author Frédéric Tempez <frederic.tempez@outlook.com>
- 	 * @copyright Copyright (C) 2018-2023, Frédéric Tempez
+	 * @copyright Copyright (C) 2018-2023, Frédéric Tempez
 	 */
-	public function export2csv() {
+	public function export2csv()
+	{
 		// Jeton incorrect
 		if ($this->getUrl(2) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			$data = $this->getData(['module', $this->getUrl(0), 'data']);
 			if ($data !== []) {
-				$csvfilename = 'data-'.date('dmY').'-'.date('hm').'-'.rand(10,99).'.csv';
-				if (!file_exists(self::FILE_DIR.'source/data')) {
-					mkdir(self::FILE_DIR.'source/data', 0755);
+				$csvfilename = 'data-' . date('dmY') . '-' . date('hm') . '-' . rand(10, 99) . '.csv';
+				if (!file_exists(self::FILE_DIR . 'source/data')) {
+					mkdir(self::FILE_DIR . 'source/data', 0755);
 				}
-				$fp = fopen(self::FILE_DIR.'source/data/'.$csvfilename, 'w');
-				fputcsv($fp, array_keys($data[1]), ';','"');
+				$fp = fopen(self::FILE_DIR . 'source/data/' . $csvfilename, 'w');
+				fputcsv($fp, array_keys($data[1]), ';', '"');
 				foreach ($data as $fields) {
-					fputcsv($fp, $fields, ';','"');
+					fputcsv($fp, $fields, ';', '"');
 				}
 				fclose($fp);
 				// Valeurs en sortie
 				$this->addOutput([
 					'notification' => sprintf(helper::translate('Export CSV effectué dans %1 '), $csvfilename),
-					'redirect' => helper::baseUrl() . $this->getUrl(0) .'/data',
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 					'state' => true
 				]);
 			} else {
 				$this->addOutput([
 					'notification' => helper::translate('Aucune donnée à exporter'),
-					'redirect' => helper::baseUrl() . $this->getUrl(0) .'/data'
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data'
 				]);
 			}
 		}
@@ -310,19 +308,20 @@ class form extends common {
 	/**
 	 * Suppression
 	 */
-	public function deleteall() {
+	public function deleteall()
+	{
 		// Jeton incorrect
 		if ($this->getUrl(2) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			$data = ($this->getData(['module', $this->getUrl(0), 'data']));
-			if (count($data) > 0 ) {
+			if (count($data) > 0) {
 				// Suppression multiple
-				for ($i = 1; $i <= count($data) ; $i++) {
+				for ($i = 1; $i <= count($data); $i++) {
 					echo $this->deleteData(['module', $this->getUrl(0), 'data', $i]);
 				}
 				// Valeurs en sortie
@@ -345,17 +344,18 @@ class form extends common {
 	/**
 	 * Suppression
 	 */
-	public function delete() {
+	public function delete()
+	{
 		// Jeton incorrect
 		if ($this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl()  . $this->getUrl(0) . '/data',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 				'notification' => helper::translate('Action interdite')
 			]);
 		} else {
 			// La donnée n'existe pas
-			if($this->getData(['module', $this->getUrl(0), 'data', $this->getUrl(2)]) === null) {
+			if ($this->getData(['module', $this->getUrl(0), 'data', $this->getUrl(2)]) === null) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'access' => false
@@ -380,19 +380,20 @@ class form extends common {
 	/**
 	 * Accueil
 	 */
-	public function index() {
+	public function index()
+	{
 
 		// Mise à jour des données de module
 		$this->update();
 
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if ($this->isPost()) {
 			// Check la captcha
-			if(
+			if (
 				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])
 				// AND $this->getInput('formcaptcha', helper::FILTER_INT) !== $this->getInput('formcaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('formcaptchaSecondNumber', helper::FILTER_INT))
-				AND password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult') ) === false )
-			{
+				and password_verify($this->getInput('formCaptcha', helper::FILTER_INT), $this->getInput('formCaptchaResult')) === false
+			) {
 				self::$inputNotices['formCaptcha'] = helper::translate('Captcha incorrect');
 
 			}
@@ -400,9 +401,9 @@ class form extends common {
 			$data = [];
 			$replyTo = null;
 			$content = '';
-			foreach($this->getData(['module', $this->getUrl(0), 'input']) as $index => $input) {
+			foreach ($this->getData(['module', $this->getUrl(0), 'input']) as $index => $input) {
 				// Filtre la valeur
-				switch($input['type']) {
+				switch ($input['type']) {
 					case self::TYPE_MAIL:
 						$filter = helper::FILTER_MAIL;
 						break;
@@ -420,10 +421,12 @@ class form extends common {
 				}
 				$value = $this->getInput('formInput[' . $index . ']', $filter, $input['required']) === true ? 'X' : $this->getInput('formInput[' . $index . ']', $filter, $input['required']);
 				//  premier champ email ajouté au mail en reply si option active
-				if ($this->getData(['module', $this->getUrl(0), 'config', 'replyto']) === true &&
-					$input['type'] === 'mail') {
+				if (
+					$this->getData(['module', $this->getUrl(0), 'config', 'replyto']) === true &&
+					$input['type'] === 'mail'
+				) {
 					$replyTo = $value;
-                }
+				}
 				// Préparation des données pour la création dans la base
 				$data[$this->getData(['module', $this->getUrl(0), 'input', $index, 'name'])] = $value;
 				// Préparation des données pour le mail
@@ -434,23 +437,25 @@ class form extends common {
 			// Envoi du mail
 			// Rechercher l'adresse en fonction du mail
 			$sent = true;
-			$singleuser = $this->getData(['user',
-										  $this->getData(['module', $this->getUrl(0), 'config', 'user']),
-										  'mail']);
+			$singleuser = $this->getData([
+				'user',
+				$this->getData(['module', $this->getUrl(0), 'config', 'user']),
+				'mail'
+			]);
 			$singlemail = $this->getData(['module', $this->getUrl(0), 'config', 'mail']);
 			$group = $this->getData(['module', $this->getUrl(0), 'config', 'group']);
 			// Verification si le mail peut être envoyé
-			if(
+			if (
 				self::$inputNotices === [] && (
 					$group > 0 ||
 					$singleuser !== '' ||
-					$singlemail !== '' )
+					$singlemail !== '')
 			) {
 				// Utilisateurs dans le groupe
 				$to = [];
-				if ($group > 0){
-					foreach($this->getData(['user']) as $userId => $user) {
-						if($user['group'] >= $group) {
+				if ($group > 0) {
+					foreach ($this->getData(['user']) as $userId => $user) {
+						if ($user['group'] >= $group) {
 							$to[] = $user['mail'];
 						}
 					}
@@ -463,10 +468,10 @@ class form extends common {
 				if (!empty($singlemail)) {
 					$to[] = $singlemail;
 				}
-				if($to) {
+				if ($to) {
 					// Sujet du mail
 					$subject = $this->getData(['module', $this->getUrl(0), 'config', 'subject']);
-					if($subject === '') {
+					if ($subject === '') {
 						$subject = 'Nouveau message en provenance de votre site';
 					}
 					// Envoi le mail
@@ -507,21 +512,23 @@ class form extends common {
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
 	 */
-	private function update() {
+	private function update()
+	{
 
 		// le module n'est pas initialisé
-		if ( $this->getData(['module',$this->getUrl(0), 'config']) === NULL ) {
+		if ($this->getData(['module', $this->getUrl(0), 'config']) === NULL) {
 			$this->init();
 		}
 	}
 
-		/**
+	/**
 	 * Initialisation du thème d'un nouveau module
 	 */
-	private function init() {
+	private function init()
+	{
 		// Données du module absentes
 		require_once('module/form/ressource/defaultdata.php');
-		if ($this->getData(['module', $this->getUrl(0), 'config' ]) === null) {
+		if ($this->getData(['module', $this->getUrl(0), 'config']) === null) {
 			$this->setData(['module', $this->getUrl(0), 'config', init::$defaultData]);
 		}
 	}
