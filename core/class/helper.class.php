@@ -682,28 +682,4 @@ class helper
 		return $text;
 	}
 
-	/**
-	 * Cryptage
-	 * @param string $key la clé d'encryptage
-	 * @param string $payload la chaine à coder
-	 * @return string
-	 */
-	public static function encrypt($key, $payload)
-	{
-		$iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
-		$encrypted = openssl_encrypt($payload, 'aes-256-cbc', $key, 0, $iv);
-		return base64_encode($encrypted . '::' . $iv);
-	}
-
-	/**
-	 * Décryptage
-	 * @param string $key la clé d'encryptage
-	 * @param string $garble la chaine à décoder
-	 * @return string
-	 */
-	public static  function decrypt($key, $garble)
-	{
-		list($encrypted_data, $iv) = explode('::', base64_decode($garble), 2);
-		return openssl_decrypt($encrypted_data, 'aes-256-cbc', $key, 0, $iv);
-	}
 }

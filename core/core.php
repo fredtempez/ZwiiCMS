@@ -1146,12 +1146,10 @@ class common
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
 				if ($this->getData(['config', 'smtp', 'auth'])) {
-					$mail->SMTPAutoTLS = true;
 					$mail->SMTPSecure = true;
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
-					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
+					$mail->Password = $this->getData(['config', 'smtp', 'password']);
 				}
 			}
 

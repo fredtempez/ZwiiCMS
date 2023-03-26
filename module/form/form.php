@@ -491,7 +491,7 @@ class form extends common
 			$this->addOutput([
 				'notification' => ($sent === true ? helper::translate('Formulaire soumis') : $sent),
 				'redirect' => $redirect ? helper::baseUrl() . $redirect : '',
-				'state' => ($sent === true ? true : null),
+				'state' => ($sent === true ? true : false),
 				'vendor' => [
 					'flatpickr'
 				],

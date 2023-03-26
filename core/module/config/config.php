@@ -455,12 +455,12 @@ class config extends common
 					],
 					'smtp' => [
 						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
-						'port' => $this->getInput('smtpPort', helper::FILTER_INT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
+						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('smtpPort', helper::FILTER_INT),
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
-						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
-						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
+						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT),
+						'password' => $this->getInput('smtpPassword', helper::FILTER_STRING_SHORT),
 						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [
