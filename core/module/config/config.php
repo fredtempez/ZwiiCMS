@@ -213,7 +213,7 @@ class config extends common
 	{
 
 		// Mettre à jour le site map
-		$successSitemap = $this->createSitemap();
+		$successSitemap = $this->updateSitemap();
 
 		// Valeurs en sortie
 		$this->addOutput([

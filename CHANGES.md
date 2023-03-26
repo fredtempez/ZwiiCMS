@@ -1,7 +1,8 @@
 # Changelog
 
 ## Version 12.3.04
-- Bug de notification de compte bloqué, la traduction n'est pas effectuée.
+- Corrige un défaut d'actualisation de la liste des pages et du site map lorsque la page change d'id.
+- Notification de compte bloqué, la traduction n'est pas effectuée.
 - Amélioration du module, aspect de la liste des articles présenté en tableau et du bouton Lire la suite
 
 ## Version 12.3.03
