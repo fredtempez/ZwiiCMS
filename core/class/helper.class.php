@@ -682,7 +682,7 @@ class helper
 		return $text;
 	}
 
-		/**
+	/**
 	 * Cryptage
 	 * @param string $key la clé d'encryptage
 	 * @param string $string la chaine à coder

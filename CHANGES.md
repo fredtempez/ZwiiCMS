@@ -6,7 +6,7 @@
     - Corrige le décryptage du mot de passe SMTP.
     - Corrige un défaut d'encodage UTF-8 du sujet du mail et du titre du site.
 - Notification de compte bloqué, la traduction n'est pas effectuée.
-- Amélioration du module Blog, aspect de la liste des articles présenté en tableau avec un bouton "Lire la suite".
+- Amélioration du module Blog, aspect de la liste des articles présenté en tableau avec un bouton "Lire la suite" agrémenté d'un effet de flou.
 
 ## Version 12.3.03
 - Corrige le problème d'affichage lors de l'édition d'une page contenant une feuille style commentée.
