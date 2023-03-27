@@ -1156,11 +1156,11 @@ class common
 			// Expéditeur
 			$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
 			$from = $from ? $from : 'no-reply@' . $host;
-			$mail->setFrom($from, $this->getData(['locale', 'title']));
+			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title'])));
 
 			// répondre à
 			if (is_null($replyTo)) {
-				$mail->addReplyTo($from, $this->getData(['locale', 'title']));
+				$mail->addReplyTo($from, html_entity_decode($this->getData(['locale', 'title'])));
 			} else {
 				$mail->addReplyTo($replyTo);
 			}
