@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="<?php echo substr(self::$i18nContent, 0, 2);?>">
 <head>
-	<meta charset="utf-8">
+	<meta charset="UTF-8">
 	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">

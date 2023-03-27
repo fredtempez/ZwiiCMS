@@ -951,6 +951,38 @@ footer #footerSocials .zwiico-github:hover {
     background: #000;
 }
 
+footer #footerSocials .zwiico-reddit {
+    background: #FF4500;
+}
+
+footer #footerSocials .zwiico-reddit:hover {
+    background: #D23311;
+}
+
+footer #footerSocials .zwiico-steam {
+    background: #171A21;
+}
+
+footer #footerSocials .zwiico-steam:hover {
+    background: #0F1318;
+}
+
+footer #footerSocials .zwiico-vimeo {
+    background: #162221;
+}
+
+footer #footerSocials .zwiico-vimeo:hover {
+    background: #121B1E;
+}
+
+footer #footerSocials .zwiico-twitch {
+    background: #9146FF;
+}
+
+footer #footerSocials .zwiico-twitch:hover {
+    background: #703CEC;
+}
+
 
 /* Bulle de dialogue */
 

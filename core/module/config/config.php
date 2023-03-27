@@ -213,7 +213,7 @@ class config extends common
 	{
 
 		// Mettre à jour le site map
-		$successSitemap = $this->createSitemap();
+		$successSitemap = $this->updateSitemap();
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -451,16 +451,20 @@ class config extends common
 						'twitterId' => $this->getInput('socialTwitterId'),
 						'youtubeId' => $this->getInput('socialYoutubeId'),
 						'youtubeUserId' => $this->getInput('socialYoutubeUserId'),
-						'githubId' => $this->getInput('socialGithubId')
+						'githubId' => $this->getInput('socialGithubId'),
+						'redditId' => $this->getInput('socialRedditId'),
+						'twitchId' => $this->getInput('socialTwitchId'),
+						'vimeoId' => $this->getInput('socialVimeoId'),
+						'steamId' =>$this->getInput('socialSteamId'),
 					],
 					'smtp' => [
 						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
-						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
-						'port' => $this->getInput('smtpPort', helper::FILTER_INT, $this->getInput('smtpEnable', helper::FILTER_BOOLEAN)),
+						'host' => $this->getInput('smtpHost', helper::FILTER_STRING_SHORT),
+						'port' => $this->getInput('smtpPort', helper::FILTER_INT),
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
-						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN)),
-						'password' => helper::encrypt($this->getData(['config', 'smtp', 'username']), $this->getInput('smtpPassword', null, $this->getInput('smtpAuth', helper::FILTER_BOOLEAN))),
+						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT),
+						'password' => helper::encrypt($this->getInput('smtpPassword', helper::FILTER_STRING_SHORT),$this->getInput('smtpHost', helper::FILTER_STRING_SHORT)),
 						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [

@@ -1,5 +1,21 @@
 # Changelog
 
+## Version 12.3.04
+### Corrections
+- Corrige un défaut d'actualisation de la liste des pages et du site map lorsque la page change d'id.
+- Serveur SMTP :
+    - Corrige le décryptage du mot de passe SMTP.
+    - Corrige un défaut d'encodage UTF-8 du sujet du mail et du titre du site.
+- Traduction du message de compte bloqué.
+### Améliorations
+- Module Blog :
+    - Aspect de la liste des articles présenté en tableau avec un bouton "Lire la suite" agrémenté d'un effet de flou.
+    - Des tailles de masquage du texte des articles plus importantes sont proposées.
+- Comptes de réseaux sociaux :
+    - Sont ajoutés Steam, Twitch, Vimeo et Reddit.
+    - Des icônes accompagnent le noms des réseaux dans la configuration.
+
+
 ## Version 12.3.03
 - Corrige le problème d'affichage lors de l'édition d'une page contenant une feuille style commentée.
 - Corrige des problèmes d'interprétation des scripts intégrés dans une page.

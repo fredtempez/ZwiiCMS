@@ -371,54 +371,9 @@ class common
 
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
-			$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
-			// Parents
-			foreach ($pages as $pageId => $pagePosition) {
-				if (
-					// Page parent
-					$this->getData(['page', $pageId, 'parentPageId']) === ""
-					// Ignore les pages dont l'utilisateur n'a pas accès
-					and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
-						or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-							and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
-						)
-					)
-				) {
-					if ($pagePosition !== 0) {
-						$this->hierarchy['visible'][$pageId] = [];
-					}
-					if ($this->getData(['page', $pageId, 'block']) === 'bar') {
-						$this->hierarchy['bar'][$pageId] = [];
-					}
-					$this->hierarchy['all'][$pageId] = [];
-				}
-			}
-			// Enfants
-			foreach ($pages as $pageId => $pagePosition) {
-				if (
-					// Page parent
-					$parentId = $this->getData(['page', $pageId, 'parentPageId'])
-					// Ignore les pages dont l'utilisateur n'a pas accès
-					and (
-						($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
-							and $this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
-						)
-						or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-							and $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])
-							and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
-						)
-					)
-				) {
-					if ($pagePosition !== 0) {
-						$this->hierarchy['visible'][$parentId][] = $pageId;
-					}
-					if ($this->getData(['page', $pageId, 'block']) === 'bar') {
-						$this->hierarchy['bar'][$pageId] = [];
-					}
-					$this->hierarchy['all'][$parentId][] = $pageId;
-				}
-			}
+			$this->buildHierarchy();
 		}
+
 
 		// Construit l'url
 		if ($this->url === '') {
@@ -707,6 +662,7 @@ class common
 		}
 	}
 
+
 	/**
 	 * Accède à la liste des pages parents et de leurs enfants
 	 * @param int $parentId Id de la page parent
@@ -731,6 +687,133 @@ class common
 			return $hierarchy;
 		}
 	}
+
+	/**
+	 * Fonction pour construire le tableau des pages
+	 * Appelée par le core uniquement
+	 */
+
+	private function buildHierarchy()
+	{
+
+		$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
+		// Parents
+		foreach ($pages as $pageId => $pagePosition) {
+			if (
+				// Page parent
+				$this->getData(['page', $pageId, 'parentPageId']) === ""
+				// Ignore les pages dont l'utilisateur n'a pas accès
+				and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+					)
+				)
+			) {
+				if ($pagePosition !== 0) {
+					$this->hierarchy['visible'][$pageId] = [];
+				}
+				if ($this->getData(['page', $pageId, 'block']) === 'bar') {
+					$this->hierarchy['bar'][$pageId] = [];
+				}
+				$this->hierarchy['all'][$pageId] = [];
+			}
+		}
+		// Enfants
+		foreach ($pages as $pageId => $pagePosition) {
+			if (
+				// Page parent
+				$parentId = $this->getData(['page', $pageId, 'parentPageId'])
+				// Ignore les pages dont l'utilisateur n'a pas accès
+				and (
+					($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+						and $this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
+					)
+					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						and $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])
+						and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+					)
+				)
+			) {
+				if ($pagePosition !== 0) {
+					$this->hierarchy['visible'][$parentId][] = $pageId;
+				}
+				if ($this->getData(['page', $pageId, 'block']) === 'bar') {
+					$this->hierarchy['bar'][$pageId] = [];
+				}
+				$this->hierarchy['all'][$parentId][] = $pageId;
+			}
+		}
+	}
+
+		/**
+	 * Génère un fichier json avec la liste des pages
+	 *
+	 */
+	private function tinyMcePages()
+	{
+		// Sauve la liste des pages pour TinyMCE
+		$parents = [];
+		$rewrite = (helper::checkRewrite()) ? '' : '?';
+		// Boucle de recherche des pages actives
+		foreach ($this->getHierarchy(null, false, false) as $parentId => $childIds) {
+			$children = [];
+			// Exclure les barres
+			if ($this->getData(['page', $parentId, 'block']) !== 'bar') {
+				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
+				foreach ($childIds as $childId) {
+					$children[] = [
+						'title' => '&nbsp;»&nbsp;' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
+						'value' => $rewrite . $childId
+					];
+				}
+				// Traitement
+				if (empty($childIds)) {
+					// Pas d'enfant, uniquement l'entrée du parent
+					$parents[] = [
+						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
+						'value' => $rewrite . $parentId
+					];
+				} else {
+					// Des enfants, on ajoute la page parent en premier
+					array_unshift($children, [
+						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
+						'value' => $rewrite . $parentId
+					]);
+					// puis on ajoute les enfants au parent
+					$parents[] = [
+						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
+						'value' => $rewrite . $parentId,
+						'menu' => $children
+					];
+				}
+			}
+		}
+		// Sitemap et Search
+		$children = [];
+		$children[] = [
+			'title' => 'Rechercher dans le site',
+			'value' => $rewrite . 'search'
+		];
+		$children[] = [
+			'title' => 'Plan du site',
+			'value' => $rewrite . 'sitemap'
+		];
+		$parents[] = [
+			'title' => 'Pages spéciales',
+			'value' => '#',
+			'menu' => $children
+		];
+
+		// Enregistrement : 3 tentatives
+		for ($i = 0; $i < 3; $i++) {
+			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents, JSON_UNESCAPED_UNICODE), LOCK_EX) !== false) {
+				break;
+			}
+			// Pause de 10 millisecondes
+			usleep(10000);
+		}
+	}
+
 
 	/**
 	 * Accède à une valeur des variables http (ordre de recherche en l'absence de type : _COOKIE, _POST)
@@ -837,74 +920,6 @@ class common
 		return ($this->checkCSRF() and $this->input['_POST'] !== []);
 	}
 
-	/**
-	 * Génère un fichier json avec la liste des pages
-	 *
-	 */
-	public function listPages()
-	{
-		// Sauve la liste des pages pour TinyMCE
-		$parents = [];
-		$rewrite = (helper::checkRewrite()) ? '' : '?';
-		// Boucle de recherche des pages actives
-		foreach ($this->getHierarchy(null, false, false) as $parentId => $childIds) {
-			$children = [];
-			// Exclure les barres
-			if ($this->getData(['page', $parentId, 'block']) !== 'bar') {
-				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
-				foreach ($childIds as $childId) {
-					$children[] = [
-						'title' => ' » ' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
-						'value' => $rewrite . $childId
-					];
-				}
-				// Traitement
-				if (empty($childIds)) {
-					// Pas d'enfant, uniquement l'entrée du parent
-					$parents[] = [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
-						'value' => $rewrite . $parentId
-					];
-				} else {
-					// Des enfants, on ajoute la page parent en premier
-					array_unshift($children, [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
-						'value' => $rewrite . $parentId
-					]);
-					// puis on ajoute les enfants au parent
-					$parents[] = [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'shortTitle']), ENT_QUOTES),
-						'value' => $rewrite . $parentId,
-						'menu' => $children
-					];
-				}
-			}
-		}
-		// Sitemap et Search
-		$children = [];
-		$children[] = [
-			'title' => 'Rechercher dans le site',
-			'value' => $rewrite . 'search'
-		];
-		$children[] = [
-			'title' => 'Plan du site',
-			'value' => $rewrite . 'sitemap'
-		];
-		$parents[] = [
-			'title' => 'Pages spéciales',
-			'value' => '#',
-			'menu' => $children
-		];
-
-		// Enregistrement : 3 tentatives
-		for ($i = 0; $i < 3; $i++) {
-			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents), LOCK_EX) !== false) {
-				break;
-			}
-			// Pause de 10 millisecondes
-			usleep(10000);
-		}
-	}
 
 	/**
 	 * Retourne une chemin localisé pour l'enregistrement des données
@@ -931,13 +946,19 @@ class common
 	/**
 	 * Génère un fichier un fichier sitemap.xml
 	 * https://github.com/icamys/php-sitemap-generator
-	 * $command valeurs possible
 	 * all : génère un site map complet
 	 * Sinon contient id de la page à créer
+	 * @param string Valeurs possibles
 	 */
 
-	public function createSitemap($command = "all")
+	public function updateSitemap()
 	{
+
+		// Rafraîchit la liste des pages après une modification de pageId notamment 
+		$this->buildHierarchy();
+
+		// Actualise la liste des pages pour TinyMCE
+		$this->tinyMcePages();
 
 		//require_once "core/vendor/sitemap/SitemapGenerator.php";
 
@@ -1035,6 +1056,8 @@ class common
 		}
 
 		return (file_exists('sitemap.xml') && file_exists('robots.txt'));
+
+
 	}
 
 	/*
@@ -1109,8 +1132,9 @@ class common
 		include 'core/layout/mail.php';
 		$layout = ob_get_clean();
 		$mail = new PHPMailer\PHPMailer\PHPMailer;
-		$mail->CharSet = 'UTF-8';
 		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
+		$mail->CharSet = 'UTF-8';
+		$mail->Encoding = 'base64';
 		// Mail
 		try {
 			// Paramètres SMTP perso
@@ -1119,27 +1143,25 @@ class common
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->SMTPSecure = false;
-				$mail->SMTPAuth  = false;
+				$mail->SMTPAuth = false;
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
 				if ($this->getData(['config', 'smtp', 'auth'])) {
-					$mail->SMTPAutoTLS = true;
 					$mail->SMTPSecure = true;
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
-					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
+					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'password']),$this->getData(['config', 'smtp', 'host']));
 				}
 			}
 
 			// Expéditeur
 			$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
 			$from = $from ? $from : 'no-reply@' . $host;
-			$mail->setFrom($from, $this->getData(['locale', 'title']));
+			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title'])));
 
 			// répondre à
 			if (is_null($replyTo)) {
-				$mail->addReplyTo($from, $this->getData(['locale', 'title']));
+				$mail->addReplyTo($from, html_entity_decode($this->getData(['locale', 'title'])));
 			} else {
 				$mail->addReplyTo($replyTo);
 			}
@@ -1153,7 +1175,7 @@ class common
 				$mail->addAddress($to);
 			}
 			$mail->isHTML(true);
-			$mail->Subject = $subject;
+			$mail->Subject = html_entity_decode($subject);
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
 			if ($mail->send()) {
@@ -1162,7 +1184,7 @@ class common
 				return $mail->ErrorInfo;
 			}
 		} catch (Exception $e) {
-			return $e->getMessage();
+			return  $mail->ErrorInfo;
 		}
 	}
 
@@ -1258,7 +1280,7 @@ class common
 			new RecursiveCallbackFilterIterator(
 				new RecursiveDirectoryIterator(
 					$folder,
-						RecursiveDirectoryIterator::SKIP_DOTS
+					RecursiveDirectoryIterator::SKIP_DOTS
 				),
 				function ($fileInfo, $key, $iterator) use ($filter) {
 					return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);

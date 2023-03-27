@@ -410,6 +410,22 @@ class layout extends common
                     $socialUrl = 'https://www.github.com/';
                     $title = 'Github';
                     break;
+                case 'redditId':
+                    $socialUrl = 'https://www.reddit.com/user/';
+                    $title = 'Reddit';
+                    break;
+                case 'twitchId':
+                    $socialUrl = 'https://www.twitch.tv/';
+                    $title = 'Twitch';
+                    break;
+                case 'vimeoId':
+                    $socialUrl = 'https://vimeo.com/';
+                    $title = 'Vimeo';
+                    break;
+                case 'steamId':
+                    $socialUrl = 'https://steamcommunity.com/id/';
+                    $title = 'Steam';
+                    break;
                 default:
                     $socialUrl = '';
             }
@@ -965,7 +981,7 @@ class layout extends common
                     'help' => 'Fichiers',
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
                     'attr' => 'data-lity'
-                ]) . '</li>';   
+                ]) . '</li>';
             }
             if ($this->getUser('group') >= self::GROUP_ADMIN) {
                 $rightItems .= '<li>' . template::ico('brush', [
@@ -1016,10 +1032,10 @@ class layout extends common
                 }
             }
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] . 
-                                '" data-tippy-content="'. helper::translate('Configurer mon compte') . '">' . 
-                                template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . 
-                                '</span></a></li>';
+                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] .
+                    '" data-tippy-content="' . helper::translate('Configurer mon compte') . '">' .
+                    template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') .
+                    '</span></a></li>';
             }
             $rightItems .= '<li>' . template::ico('logout', [
                 'help' => 'Déconnecter',
@@ -1043,8 +1059,8 @@ class layout extends common
         if ($this->core->output['inlineScript']) {
             $inlineScript = implode($this->core->output['inlineScript']);
         }
-        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script'] ) . '</script>';
-        echo '<script defer>' . htmlspecialchars_decode(helper::minifyJs($inlineScript)) . '</script>';
+        echo '<script defer>' . helper::minifyJs($coreScript . $this->core->output['script']) . '</script>';
+        echo '<script defer>' . helper::minifyJs(htmlspecialchars_decode($inlineScript)) . '</script>';
     }
 
     /**
