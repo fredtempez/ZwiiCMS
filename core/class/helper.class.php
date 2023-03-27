@@ -682,4 +682,26 @@ class helper
 		return $text;
 	}
 
+		/**
+	 * Cryptage
+	 * @param string $key la clé d'encryptage
+	 * @param string $string la chaine à coder
+	 * @return string
+	 */
+	public static function encrypt($string, $key) {
+		$encrypted = openssl_encrypt($string, "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
+		return base64_encode($encrypted);
+	  }
+
+	/**
+	 * Décryptage
+	 * @param string $key la clé d'encryptage
+	 * @param string $string la chaine à décoder
+	 * @return string
+	 */
+	public static function decrypt($string, $key) {
+		$decrypted = openssl_decrypt(base64_decode($string), "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
+		return $decrypted;
+	  }
+
 }

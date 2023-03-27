@@ -1149,7 +1149,7 @@ class common
 					$mail->SMTPSecure = true;
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = $this->getData(['config', 'smtp', 'password']);
+					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'password']),$this->getData(['config', 'smtp', 'host']));
 				}
 			}
 
@@ -1183,7 +1183,7 @@ class common
 				return $mail->ErrorInfo;
 			}
 		} catch (Exception $e) {
-			return $e->getMessage();
+			return  $mail->ErrorInfo;
 		}
 	}
 

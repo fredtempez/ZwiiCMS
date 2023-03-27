@@ -460,7 +460,7 @@ class config extends common
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
 						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT),
-						'password' => $this->getInput('smtpPassword', helper::FILTER_STRING_SHORT),
+						'password' => helper::encrypt($this->getInput('smtpPassword', helper::FILTER_STRING_SHORT),$this->getInput('smtpHost', helper::FILTER_STRING_SHORT)),
 						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [
