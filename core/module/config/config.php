@@ -451,7 +451,11 @@ class config extends common
 						'twitterId' => $this->getInput('socialTwitterId'),
 						'youtubeId' => $this->getInput('socialYoutubeId'),
 						'youtubeUserId' => $this->getInput('socialYoutubeUserId'),
-						'githubId' => $this->getInput('socialGithubId')
+						'githubId' => $this->getInput('socialGithubId'),
+						'redditId' => $this->getInput('socialRedditId'),
+						'twitchId' => $this->getInput('socialTwitchId'),
+						'vimeoId' => $this->getInput('socialVimeoId'),
+						'steamId' =>$this->getInput('socialSteamId'),
 					],
 					'smtp' => [
 						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
