@@ -57,9 +57,13 @@
 .zwiico-youtube:before { content: '\f167'; } /* '' */
 .zwiico-instagram:before { content: '\f16d'; } /* '' */
 .zwiico-box:before { content: '\f187'; } /* '' */
+.zwiico-vimeo:before { content: '\f194'; } /* '' */
 .zwiico-cubes:before { content: '\f1b3'; } /* '' */
+.zwiico-steam:before { content: '\f1b6'; } /* '' */
 .zwiico-file-archive:before { content: '\f1c6'; } /* '' */
 .zwiico-sliders:before { content: '\f1de'; } /* '' */
+.zwiico-twitch:before { content: '\f1e8'; } /* '' */
 .zwiico-brush:before { content: '\f1fc'; } /* '' */
 .zwiico-pinterest:before { content: '\f231'; } /* '' */
+.zwiico-reddit:before { content: '\f281'; } /* '' */
 .zwiico-shopping-basket:before { content: '\f291'; } /* '' */

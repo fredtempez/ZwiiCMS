@@ -617,8 +617,8 @@ class user extends common
 						$this->setData(['user', $userId, 'connectTimeout', time()]);
 					}
 					// Cas 3 le délai de bloquage court
-					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification = sprintf(helper::translate('Accès bloqué %d minutes', ($this->getData(['config', 'connect', 'timeout']) / 60)));
+					if ($this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time()) {
+						$notification =  sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
 					}
 
 					// Valeurs en sortie

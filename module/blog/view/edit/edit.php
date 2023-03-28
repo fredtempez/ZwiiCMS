@@ -127,7 +127,7 @@
 						]); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper">
-						<?php echo template::select('blogEditCommentMaxlength', $module::$commentLength,[
+						<?php echo template::select('blogEditCommentMaxlength', $module::$commentsLength,[
 							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 							'label' => 'Caractères par commentaire',
 							'selected' => $this->getData(['module', $this->getUrl(0), 'posts',  $this->getUrl(2), 'commentMaxlength'])

@@ -1,17 +1,19 @@
+# Version 3.8
+- Encode UTF-8 de l'objet du message, et des noms des champs.
 # Version 3.7
-- Modification liées à la suppression de flatpickr
+- Modification liées à la suppression de flatpickr.
 # Version 3.6
-- Appel de fonction incorrect
+- Appel de fonction incorrect.
 # Version 3.5
 - Multilingue
 # Version 3.4
 - Bug de présentation, une div en trop.
 # Version 3.3
-- Multilinguisme
+- Multilinguisme.
 # Version 3.2
-- Bug variable non initialisée
+- Bug variable non initialisée.
 # Version 3.1
-- Initialisation des paramètres personnalisés
+- Initialisation des paramètres personnalisés.
 # Version 3
-- Déplacement des options de formulaires
-- Gabarit du formulaire sur la page
+- Déplacement des options de formulaires.
+- Gabarit du formulaire sur la page.
