@@ -1138,7 +1138,7 @@ class common
 		try {
 			// Paramètres SMTP perso
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
-				$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_CLIENT;
+				//$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_CLIENT;
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->SMTPSecure = false;
