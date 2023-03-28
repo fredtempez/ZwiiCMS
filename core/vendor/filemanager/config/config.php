@@ -24,9 +24,8 @@ $g = json_decode(file_get_contents('../../../site/data/group.json'), true);
 $group = $u['user'][$userId]['group'];
 $file = $g['group'][$group]['file'];
 $folder = $g['group'][$group]['folder'];
-
-$uploadDir = $g['group'][$group]['path'];
-$currentPath = '../../..' . $uploadDir;
+$uploadDir = $g['group'][$group]['folder']['path'];
+$currentPath = '../../.' . $uploadDir;
 if (!is_dir($currentPath ))
 	mkdir($currentPath );
 

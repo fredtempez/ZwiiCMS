@@ -116,9 +116,9 @@
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('connectAttempt', $module::$sharePath, [
-                        'label' => 'Racinde du dossier partagé',
-                        'selected' => $this->getData(['group', $this->getUrl(2), 'path'])
+                    <?php echo template::select('groupEditPath', $module::$sharePath, [
+                        'label' => 'Racine du dossier partagé',
+                        'selected' => $this->getData(['group', $this->getUrl(2), 'folder', 'path'])
                     ]); ?>
                 </div>
             </div>

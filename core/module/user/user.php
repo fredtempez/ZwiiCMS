@@ -487,6 +487,7 @@ class user extends common
 						'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
 						'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+						'path' => $this->getInput('groupEditPath'),
 					]
 				]
 			]);
@@ -500,8 +501,9 @@ class user extends common
 
 		self::$sharePath = $this->getSubdirectories('./site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
+		self::$sharePath = array_merge( ['./site/file/source/' => '/'], self::$sharePath);
 
-		// Valeurs en sortie
+		// Valeurs en sortie;
 		$this->addOutput([
 			'title' => helper::translate('Editer groupe'),
 			'view' => 'groupEdit'
