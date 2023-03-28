@@ -3,7 +3,7 @@
     <div class="col1">
         <?php echo template::button('groupEditBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'user',
+            'href' => helper::baseUrl() . 'user/group',
             'value' => template::ico('left')
         ]); ?>
     </div>

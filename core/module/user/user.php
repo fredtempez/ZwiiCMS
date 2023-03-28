@@ -506,7 +506,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => helper::translate('Editer groupe'),
+			'title' => sprintf(helper::translate('Groupe %s'), $this->getData(['group', $this->getUrl(2), 'name'])),
 			'view' => 'groupEdit'
 		]);
 	}
