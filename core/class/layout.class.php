@@ -336,7 +336,7 @@ class layout extends common
         }
         // Affichage de la barre de membre simple
         if (
-            $this->getUser('group') === self::GROUP_MEMBER
+            $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser('group') < self::GROUP_ADMIN
             && $this->getData(['theme', 'footer', 'memberBar']) === true
         ) {
             $items .= '<span id="footerDisplayMemberAccount"';
@@ -493,7 +493,7 @@ class layout extends common
         }
         // Commandes pour les membres simples
         if (
-            $this->getUser('group') == self::GROUP_MEMBER
+            $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser('group') < self::GROUP_ADMIN
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
