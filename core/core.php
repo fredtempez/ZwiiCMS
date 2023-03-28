@@ -744,7 +744,7 @@ class common
 		}
 	}
 
-		/**
+	/**
 	 * Génère un fichier json avec la liste des pages
 	 *
 	 */
@@ -1138,7 +1138,7 @@ class common
 		try {
 			// Paramètres SMTP perso
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
-				$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_SERVER;
+				$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_CLIENT;
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->SMTPSecure = false;
@@ -1147,9 +1147,19 @@ class common
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
 				if ($this->getData(['config', 'smtp', 'auth'])) {
 					$mail->SMTPSecure = true;
-					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
+					$mail->SMTPAuth = true;
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'password']),$this->getData(['config', 'smtp', 'host']));
+					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'password']), $this->getData(['config', 'smtp', 'host']));
+					switch ($this->getData(['config', 'smtp', 'secure'])) {
+						case 'ssl':
+							$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
+							break;
+						case 'tls':
+							$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+							break;
+						default:
+							break;
+					}
 				}
 			}
 
@@ -1183,7 +1193,7 @@ class common
 				return $mail->ErrorInfo;
 			}
 		} catch (Exception $e) {
-			return  $mail->ErrorInfo;
+			return $mail->ErrorInfo;
 		}
 	}
 
