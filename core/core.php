@@ -912,6 +912,23 @@ class common
 	}
 
 	/**
+	 *  Accède aux données du groupe de l'utilisateur connecté
+	 * @param int $key Clé de la valeur
+	 * @return string|null
+	*/
+	public function getGroup($key1, $key2 = null) {
+		if (is_array($this->user) === false) {
+			return false;
+		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['group', $this->user['group']]))) {
+			return $this->getData(['group', $this->user['group'], $key1]);
+		} elseif ($key2	&& array_key_exists($key2, $this->getData(['group', $this->user['group'], $key1]))) {
+			return $this->getData(['group', $this->user['group'], $key1, $key2]);
+		} else {
+			return false;
+		}
+	}
+
+	/**
 	 * Check qu'une valeur est transmise par la méthode _POST
 	 * @return bool
 	 */

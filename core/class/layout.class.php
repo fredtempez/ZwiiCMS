@@ -341,14 +341,9 @@ class layout extends common
         ) {
             $items .= '<span id="footerDisplayMemberAccount"';
             $items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
-            $items .= '<wbr>&nbsp;|&nbsp;' .
-                template::ico('user', [
-                    'margin' => 'all',
-                    'help' => 'Mon compte',
-                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
-                ]);
+            $items .= '<wbr>&nbsp;|&nbsp;';
             if (
-                $this->getData(['user', $this->getUser('id'), 'files']) === true
+                $this->getgroup('folder', 'share') === true
             ) {
                 $items .= '<wbr>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -357,6 +352,11 @@ class layout extends common
                     'help' => 'Fichiers du site'
                 ]);
             }
+            $items .= '<wbr>' . template::ico('user', [
+                    'margin' => 'all',
+                    'help' => 'Mon compte',
+                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
+                ]);
             $items .= '<wbr>' . template::ico('logout', [
                 'margin' => 'all',
                 'help' => 'Déconnecter',
@@ -497,7 +497,7 @@ class layout extends common
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
-                $this->getData(['user', $this->getUser('id'), 'files']) === true
+                $this->getGroup('folder', 'share') === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),

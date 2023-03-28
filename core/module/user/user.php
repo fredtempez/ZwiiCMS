@@ -487,6 +487,7 @@ class user extends common
 						'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
 						'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
+						'share' => $this->getInput('groupEditShare', helper::FILTER_BOOLEAN),
 						'path' => $this->getInput('groupEditPath'),
 					]
 				]

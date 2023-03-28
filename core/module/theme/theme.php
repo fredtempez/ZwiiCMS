@@ -31,7 +31,7 @@ class theme extends common
 		'export' => self::GROUP_ADMIN,
 		'import' => self::GROUP_ADMIN,
 		'save' => self::GROUP_ADMIN,
-		'fonts' => self::GROUP_ADMIN,
+		'font' => self::GROUP_ADMIN,
 		'fontAdd' => self::GROUP_ADMIN,
 		'fontEdit' => self::GROUP_ADMIN,
 		'fontDelete' => self::GROUP_ADMIN
@@ -645,7 +645,7 @@ class theme extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Fontes'),
-			'view' => 'fonts'
+			'view' => 'font'
 		]);
 	}
 
@@ -669,8 +669,8 @@ class theme extends common
 				$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 				// Supprime la fonte si elle existe dans le type inverse
-				if (is_array($this->getData(['fonts', $type, $fontId]))) {
-					$this->deleteData(['fonts', $type, $fontId]);
+				if (is_array($this->getData(['font', $type, $fontId]))) {
+					$this->deleteData(['font', $type, $fontId]);
 				}
 				// Stocker la fonte
 				$this->setData([
@@ -733,8 +733,8 @@ class theme extends common
 			$fontFamilyName = str_replace('"', '\'', $fontFamilyName);
 
 			// Supprime la fonte si elle existe dans le type inverse
-			if (is_array($this->getData(['fonts', $type, $fontId]))) {
-				$this->deleteData(['fonts', $type, $fontId]);
+			if (is_array($this->getData(['font', $type, $fontId]))) {
+				$this->deleteData(['font', $type, $fontId]);
 			}
 
 			// Stocker les fontes

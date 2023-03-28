@@ -85,8 +85,7 @@
             <h4>
                 <?php echo helper::translate('Opérations sur les dossiers'); ?>
             </h4>
-            <div class="row">
-
+            <div class="row">                
                 <div class="col2">
                     <?php echo template::checkbox('groupEditFolderCreate', true, 'Création', [
                         'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'create'])
@@ -112,12 +111,16 @@
                         'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'permission'])
                     ]); ?>
                 </div>
-
             </div>
             <div class="row">
+                <div class="col2">
+                    <?php echo template::checkbox('groupEditShare', true, 'Partage', [
+                        'checked' => $this->getData(['group', $this->getUrl(2), 'folder', 'share'])
+                    ]); ?>
+                </div>
                 <div class="col6">
                     <?php echo template::select('groupEditPath', $module::$sharePath, [
-                        'label' => 'Racine du dossier partagé',
+                        'label' => 'Racine du partage',
                         'selected' => $this->getData(['group', $this->getUrl(2), 'folder', 'path'])
                     ]); ?>
                 </div>

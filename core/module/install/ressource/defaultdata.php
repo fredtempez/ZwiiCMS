@@ -347,7 +347,7 @@ class init extends common
 			],
 			'1' => [
 				'name' => 'Membre',
-				'readonly' => true,
+				'readonly' => false,
 				'comment' => 'Accède aux pages réservées et à un dossier partagé',
 				'path' => '/site/file/source/partage/',
 				'file' => [
@@ -368,7 +368,9 @@ class init extends common
 					'delete' => false,
 					'rename' => false,
 					'copycut' => false,
-					'permission' => false
+					'permission' => false,
+					'share' => false,
+					'path' => '.\/site\/file\/source\/partage\/',
 				]
 			],
 			'2' => [
@@ -394,7 +396,9 @@ class init extends common
 					'delete' => true,
 					'rename' => true,
 					'copycut' => false,
-					'permission' => false
+					'permission' => false,
+					'share' => false,
+					'path' => '.\/site\/file\/source\/partage\/',
 				]
 			],
 			'99' => [
@@ -413,7 +417,9 @@ class init extends common
 					'duplicate' => true,
 					'extract' => true,
 					'copycut' => true,
-					'permission' => true
+					'permission' => true,
+					'share' => false,
+					'path' => '.\/site\/file\/source\/',
 				],
 				'folder' => [
 					'create' => true,

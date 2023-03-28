@@ -97,8 +97,8 @@ class core extends common
 			 */
 
 			// Fonts disponibles
-			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
-			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
+			$fontsAvailable['files'] = $this->getData(['font', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['font', 'imported']);
 			$fontsAvailable['websafe'] = self::$fontsWebSafe;
 
 			// Fontes installées
@@ -139,8 +139,8 @@ class core extends common
 			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
 				: $fontFile;
 			// Enregistre la personnalisation
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
+			if (!is_dir(self::DATA_DIR . 'font')) {
+				mkdir(self::DATA_DIR . 'font');
 			}
 			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
@@ -319,8 +319,8 @@ class core extends common
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
 			// Enregistre les fontes
-			if (!is_dir(self::DATA_DIR . 'fonts')) {
-				mkdir(self::DATA_DIR . 'fonts');
+			if (!is_dir(self::DATA_DIR . 'font')) {
+				mkdir(self::DATA_DIR . 'font');
 			}
 			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
 
@@ -343,8 +343,8 @@ class core extends common
 			$css = '/*' . md5(json_encode($this->getData(['admin']))) . '*/';
 
 			// Fonts disponibles
-			$fontsAvailable['files'] = $this->getData(['fonts', 'files']);
-			$fontsAvailable['imported'] = $this->getData(['fonts', 'imported']);
+			$fontsAvailable['files'] = $this->getData(['font', 'files']);
+			$fontsAvailable['imported'] = $this->getData(['font', 'imported']);
 			$fontsAvailable['websafe'] = self::$fontsWebSafe;
 
 			/**
