@@ -372,7 +372,7 @@ class init extends common
 					'copycut' => false,
 					'permission' => false,
 					'share' => false,
-					'path' => '.\/site\/file\/source\/partage\/',
+					'path' => './site/file/source/partage/',
 				]
 			],
 			"moderator" => [
@@ -400,7 +400,7 @@ class init extends common
 					'copycut' => false,
 					'permission' => false,
 					'share' => false,
-					'path' => '.\/site\/file\/source\/partage\/',
+					'path' => './site/file/source/partage/',
 				]
 			],
 			"admin" => [
