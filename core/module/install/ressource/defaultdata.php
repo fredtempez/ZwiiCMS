@@ -401,7 +401,7 @@ class init extends common
 					'path' => '.\/site\/file\/source\/partage\/',
 				]
 			],
-			'99' => [
+			'3' => [
 				'name' => 'Administrateur',
 				'readonly' => true,
 				'comment' => 'Contrôle total',

@@ -955,21 +955,14 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 		unlink('core/module/install/ressource/i18n/gr_GR.json');
 
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12300]);
+	$this->setData(['core', 'dataVersion', 12301]);
 }
 
 // Version 12.4.00
+/*
 if ($this->getData(['core', 'dataVersion']) < 12400) {
-
-	// Affecter le groupe 99 aux admins
-	$users = $this->getData(['user']);
-	foreach ($users as $key => $value) {
-		if ($value['group'] === 3) {
-			$this->setData(['user', $key, 'group', 99]);
-		}
-	}
 	
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12400]);
 
-}
+} */
