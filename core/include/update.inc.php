@@ -943,6 +943,16 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
 
+
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12301]);
+}
+
+// Version 12.4.00
+
+if ($this->getData(['core', 'dataVersion']) < 12400) {
+	
 	// Nettoyage du dossier de langue d'installation'
 	unlink('core/vendor/tinymce/langs/langs.zip');
 	if (file_exists('core/module/install/ressource/i18n/de.json'))
@@ -953,16 +963,4 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 		unlink('core/module/install/ressource/i18n/pt_PT.json');
 	if (file_exists('core/module/install/ressource/i18n/gr_GR.json'))
 		unlink('core/module/install/ressource/i18n/gr_GR.json');
-
-	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12301]);
 }
-
-// Version 12.4.00
-/*
-if ($this->getData(['core', 'dataVersion']) < 12400) {
-	
-	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12400]);
-
-} */

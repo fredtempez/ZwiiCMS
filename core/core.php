@@ -55,7 +55,7 @@ class common
 	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.4.00';
 
-	const ZWII_DATAVERSION = 12301;
+	const ZWII_DATAVERSION = 12400;
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
