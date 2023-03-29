@@ -334,22 +334,24 @@ class init extends common
 		],
 		'blacklist' => [],
 		'language'=> [],
-		'group' => [
-			'-1' => [
+		'permission' => [
+			"banned" => [
 				'name' => 'Banni',
 				'readonly' => true,
-				'comment' => 'Accès désactivé'
+				'comment' => 'Accès désactivé',
+				'group' => -1,
 			],
-			'0' => [
+			"visitor" => [
 				'name' => 'Visiteur',
 				'readonly' => true,
-				'comment' => 'Accède au site'
+				'comment' => 'Accède au site',
+				'group' => 0,
 			],
-			'1' => [
+			'member' => [
 				'name' => 'Membre',
 				'readonly' => false,
 				'comment' => 'Accède aux pages réservées et à un dossier partagé',
-				'path' => '/site/file/source/partage/',
+				'group' => 0,
 				'file' => [
 					'download' => false,
 					'edit' => false,
@@ -373,11 +375,11 @@ class init extends common
 					'path' => '.\/site\/file\/source\/partage\/',
 				]
 			],
-			'2' => [
-				'name' => 'Editeur',
+			"moderator" => [
+				'name' => 'Moderateur',
 				'readonly' => false,
 				'comment' => 'Edition des pages',
-				'path' => '/site/file/source/',
+				'group' => 2,
 				'file' => [
 					'download' => true,
 					'edit' => true,
@@ -401,33 +403,11 @@ class init extends common
 					'path' => '.\/site\/file\/source\/partage\/',
 				]
 			],
-			'3' => [
+			"admin" => [
 				'name' => 'Administrateur',
 				'readonly' => true,
 				'comment' => 'Contrôle total',
-				'path' => '/site/file/source/',
-				'file' => [
-					'download' => true,
-					'edit' => true,
-					'create' => true,
-					'rename' => true,
-					'upload' => true,
-					'delete' => true,
-					'preview' => true,
-					'duplicate' => true,
-					'extract' => true,
-					'copycut' => true,
-					'permission' => true,
-					'share' => false,
-					'path' => '.\/site\/file\/source\/',
-				],
-				'folder' => [
-					'create' => true,
-					'delete' => true,
-					'rename' => true,
-					'copycut' => true,
-					'permission' => false
-				]
+				'group' => 3,
 			]
 		],
 	];

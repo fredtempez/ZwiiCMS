@@ -27,9 +27,9 @@ class user extends common
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR,
-		'group' => self::GROUP_ADMIN,
-		'groupAdd' => self::GROUP_ADMIN,
-		'groupEdit' => self::GROUP_ADMIN,
+		'permission' => self::GROUP_ADMIN,
+		'permissionEdit' => self::GROUP_ADMIN,
+		'permissionAdd' => self::GROUP_ADMIN,
 	];
 
 	public static $users = [];
@@ -386,7 +386,7 @@ class user extends common
 				self::$users[] = [
 					$userId,
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-					helper::translate(self::$groups[$this->getData(['user', $userId, 'group'])]),
+					helper::translate(self::$groups[(int)$this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
@@ -411,24 +411,22 @@ class user extends common
 	/**
 	 * Table des groupes
 	 */
-	public function group()
+	public function permission()
 	{
-		$g = $this->getData(['group']);
+		$g = $this->getData(['permission']);
 		foreach ($g as $groupId => $groupData) {
-
 			self::$userGroups[$groupId] = [
-				$groupId,
 				$groupData['name'],
 				$groupData['comment'],
-				template::button('groupEdit' . $groupId, [
-					'href' => helper::baseUrl() . 'user/groupEdit/' . $groupId . '/' . $_SESSION['csrf'],
+				template::button('permissionEdit' . $groupId, [
+					'href' => helper::baseUrl() . 'user/permissionEdit/' . $groupId . '/' . $_SESSION['csrf'],
 					'value' => template::ico('pencil'),
 					'help' => 'Éditer',
 					'disabled' => $groupData['readonly'],
 				]),
-				template::button('userDelete' . $groupId, [
+				template::button('permissionDelete' . $groupId, [
 					'class' => 'userDelete buttonRed',
-					'href' => helper::baseUrl() . 'user/groupDelete/' . $groupId . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $_SESSION['csrf'],
 					'value' => template::ico('trash'),
 					'help' => 'Supprimer',
 					'disabled' => $groupData['readonly'],
@@ -437,15 +435,15 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Groupes'),
-			'view' => 'group'
+			'title' => helper::translate('Permissions'),
+			'view' => 'permission'
 		]);
 	}
 
 	/**
 	 * Edition d'un groupe
 	 */
-	public function groupEdit()
+	public function permissionEdit()
 	{
 		if (
 			$this->getUrl(3) !== $_SESSION['csrf']
@@ -462,39 +460,39 @@ class user extends common
 		if ($this->isPost()) {
 			$group = $this->getUrl(2);
 			$this->setData([
-				'group',
+				'permission',
 				$group,
 				[
-					'name' => $this->getData(['group', $group, 'name']),
-					'readonly' => $this->getData(['group', $group, 'readonly']),
-					'comment' => $this->getData(['group', $group, 'comment']),
+					'name' => $this->getData(['permission', $group, 'name']),
+					'readonly' => $this->getData(['permission', $group, 'readonly']),
+					'comment' => $this->getData(['permission', $group, 'comment']),
 					'file' => [
-						'download' => $this->getInput('groupEditDownload', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('groupEditEdit', helper::FILTER_BOOLEAN),
-						'create' => $this->getInput('groupEditCreate', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('groupEditRename', helper::FILTER_BOOLEAN),
-						'upload' => $this->getInput('groupEditUpload', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('groupEditDelete', helper::FILTER_BOOLEAN),
-						'preview' => $this->getInput('groupEditPreview', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('groupEditDuplicate', helper::FILTER_BOOLEAN),
-						'extract' => $this->getInput('groupEditExtract', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('groupEditCopycut', helper::FILTER_BOOLEAN),
-						'permission' => $this->getInput('groupEditPermission', helper::FILTER_BOOLEAN),
+						'download' => $this->getInput('permissionEditDownload', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('permissionEditEdit', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('permissionEditCreate', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('permissionEditRename', helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('permissionEditUpload', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('permissionEditDelete', helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('permissionEditPreview', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('permissionEditDuplicate', helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('permissionEditExtract', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('permissionEditCopycut', helper::FILTER_BOOLEAN),
+						'permission' => $this->getInput('permissionEditPermission', helper::FILTER_BOOLEAN),
 					],
 					'folder' => [
-						'create' => $this->getInput('groupEditFolderCreate', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('groupEditFolderDelete', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('groupEditFolderRename', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('groupEditFolderCopycut', helper::FILTER_BOOLEAN),
-						'permission' => $this->getInput('groupEditFolderPermission', helper::FILTER_BOOLEAN),
-						'share' => $this->getInput('groupEditShare', helper::FILTER_BOOLEAN),
-						'path' => $this->getInput('groupEditPath'),
+						'create' => $this->getInput('permissionEditFolderCreate', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('permissionEditFolderDelete', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('permissionEditFolderRename', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('permissionEditFolderCopycut', helper::FILTER_BOOLEAN),
+						'permission' => $this->getInput('permissionEditFolderPermission', helper::FILTER_BOOLEAN),
+						'share' => $this->getInput('permissionEditShare', helper::FILTER_BOOLEAN),
+						'path' => $this->getInput('permissionEditPath'),
 					]
 				]
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/group',
+				'redirect' => helper::baseUrl() . 'user/permission',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -506,8 +504,8 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Groupe %s'), $this->getData(['group', $this->getUrl(2), 'name'])),
-			'view' => 'groupEdit'
+			'title' => sprintf(helper::translate('Groupe %s'), $this->getData(['permission', $this->getUrl(2), 'name'])),
+			'view' => 'permissionEdit'
 		]);
 	}
 

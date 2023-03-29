@@ -234,7 +234,7 @@ class common
 		'theme' => '',
 		'user' => '',
 		'language' => '',
-		'group'=> '',
+		'permission'=> '',
 	];
 
 	public static $fontsWebSafe = [
@@ -534,7 +534,6 @@ class common
 	 */
 	public function getData($keys = [])
 	{
-
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
 			// descripteur de la base
@@ -912,17 +911,17 @@ class common
 	}
 
 	/**
-	 *  Accède aux données du groupe de l'utilisateur connecté
-	 * @param int $key Clé de la valeur
+	 * Retourne les permission de l'utilisateur connecté
+	 * @param int $key Clé de la valeur du groupe
 	 * @return string|null
 	*/
-	public function getGroup($key1, $key2 = null) {
+	public function getPermission($key1, $key2 = null) {
 		if (is_array($this->user) === false) {
 			return false;
-		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['group', $this->user['group']]))) {
-			return $this->getData(['group', $this->user['group'], $key1]);
-		} elseif ($key2	&& array_key_exists($key2, $this->getData(['group', $this->user['group'], $key1]))) {
-			return $this->getData(['group', $this->user['group'], $key1, $key2]);
+		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['permission', $this->user['group']]))) {
+			return $this->getData(['permission', $this->user['group'], $key1]);
+		} elseif ($key2	&& array_key_exists($key2, $this->getData(['permission', $this->user['group'], $key1]))) {
+			return $this->getData(['permission', $this->user['group'], $key1, $key2]);
 		} else {
 			return false;
 		}
