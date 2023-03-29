@@ -386,7 +386,7 @@ class user extends common
 				self::$users[] = [
 					$userId,
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-					helper::translate(self::$groups[(int)$this->getData(['user', $userId, 'group'])]),
+					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
@@ -413,25 +413,56 @@ class user extends common
 	 */
 	public function permission()
 	{
-		$g = $this->getData(['permission']);
-		foreach ($g as $groupId => $groupData) {
-			self::$userGroups[$groupId] = [
-				$groupData['name'],
-				$groupData['comment'],
-				template::button('permissionEdit' . $groupId, [
-					'href' => helper::baseUrl() . 'user/permissionEdit/' . $groupId . '/' . $_SESSION['csrf'],
-					'value' => template::ico('pencil'),
-					'help' => 'Éditer',
-					'disabled' => $groupData['readonly'],
-				]),
-				template::button('permissionDelete' . $groupId, [
-					'class' => 'userDelete buttonRed',
-					'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $_SESSION['csrf'],
-					'value' => template::ico('trash'),
-					'help' => 'Supprimer',
-					'disabled' => $groupData['readonly'],
-				])
-			];
+		foreach ($this->getData(['permission']) as $groupId => $groupData) {
+
+			// Membres sans permissions spécifiques
+			if (
+				$groupId == -1 ||
+				$groupId == 0 ||
+				$groupId == 3
+			) {
+				self::$userGroups[$groupId] = [
+					$groupId,
+					$groupData['name'],
+					$groupData['comment'],
+					template::button('permissionEdit' . $groupId, [
+						'href' => helper::baseUrl() . 'user/permissionEdit/' . $groupId . '/' . $_SESSION['csrf'],
+						'value' => template::ico('pencil'),
+						'help' => 'Éditer',
+						'disabled' => $groupData['readonly'],
+					]),
+					template::button('permissionDelete' . $groupId, [
+						'class' => 'userDelete buttonRed',
+						'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $_SESSION['csrf'],
+						'value' => template::ico('trash'),
+						'help' => 'Supprimer',
+						'disabled' => $groupData['readonly'],
+					])
+				];
+			} else {
+				// Enumérer les sous groupes MEMBER et MODERATOR
+				foreach ($groupData as $subGroupId => $subGroupData) {
+					echo $subGroupId;
+					self::$userGroups[$groupId.'.'.$subGroupId] = [
+						$groupId . '-' . $subGroupId,
+						$subGroupData['name'],
+						$subGroupData['comment'],
+						template::button('permissionEdit' . $groupId.$subGroupId, [
+							'href' => helper::baseUrl() . 'user/permissionEdit/' .  $groupId . '-' . $subGroupId . '/' . $_SESSION['csrf'],
+							'value' => template::ico('pencil'),
+							'help' => 'Éditer',
+							'disabled' => $subGroupData['readonly'],
+						]),
+						template::button('permissionDelete' .  $groupId.$subGroupId, [
+							'class' => 'userDelete buttonRed',
+							'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '-' . $subGroupId . '/' . $_SESSION['csrf'],
+							'value' => template::ico('trash'),
+							'help' => 'Supprimer',
+							'disabled' => $subGroupData['readonly'],
+						])
+					];
+				}
+			}
 		}
 		// Valeurs en sortie
 		$this->addOutput([
@@ -500,7 +531,7 @@ class user extends common
 
 		self::$sharePath = $this->getSubdirectories('./site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge( ['./site/file/source/' => '/'], self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => '/'], self::$sharePath);
 
 		// Valeurs en sortie;
 		$this->addOutput([
@@ -625,8 +656,8 @@ class user extends common
 						$this->setData(['user', $userId, 'connectTimeout', time()]);
 					}
 					// Cas 3 le délai de bloquage court
-					if ($this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification =  sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
+					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
+						$notification = sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
 					}
 
 					// Valeurs en sortie
@@ -889,32 +920,33 @@ class user extends common
 	/**
 	 * Liste les dossier contenus dans RFM
 	 */
-	function getSubdirectories($dir, $basePath = '') {
+	function getSubdirectories($dir, $basePath = '')
+	{
 		$subdirs = array();
 		// Ouvrez le répertoire spécifié
 		$dh = opendir($dir);
 		// Parcourez tous les fichiers et répertoires dans le répertoire
 		while (($file = readdir($dh)) !== false) {
-		  // Ignorer les entrées de répertoire parent et actuel
-		  if ($file == '.' || $file == '..') {
-			continue;
-		  }  
-		  // Construisez le chemin complet du fichier ou du répertoire
-		  $path = $dir . '/' . $file;  
-		  // Vérifiez si c'est un répertoire
-		  if (is_dir($path)) {
-			// Construisez la clé et la valeur pour le tableau associatif
-            $key = $basePath . '/' . $file;
-            $value = $path . '/';
-			// Ajouter la clé et la valeur au tableau associatif
-			$subdirs[$key] = $value;  
-			// Appeler la fonction récursivement pour ajouter les sous-répertoires
-			$subdirs = array_merge($subdirs, $this->getSubdirectories($path, $key));
-		  }
+			// Ignorer les entrées de répertoire parent et actuel
+			if ($file == '.' || $file == '..') {
+				continue;
+			}
+			// Construisez le chemin complet du fichier ou du répertoire
+			$path = $dir . '/' . $file;
+			// Vérifiez si c'est un répertoire
+			if (is_dir($path)) {
+				// Construisez la clé et la valeur pour le tableau associatif
+				$key = $basePath . '/' . $file;
+				$value = $path . '/';
+				// Ajouter la clé et la valeur au tableau associatif
+				$subdirs[$key] = $value;
+				// Appeler la fonction récursivement pour ajouter les sous-répertoires
+				$subdirs = array_merge($subdirs, $this->getSubdirectories($path, $key));
+			}
 		}
 		// Fermez le gestionnaire de dossier
 		closedir($dh);
 		return $subdirs;
-	  }
-	  
+	}
+
 }

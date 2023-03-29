@@ -335,81 +335,134 @@ class init extends common
 		'blacklist' => [],
 		'language'=> [],
 		'permission' => [
-			"banned" => [
+			'-1' => [
 				'name' => 'Banni',
 				'readonly' => true,
 				'comment' => 'Accès désactivé',
-				'group' => -1,
 			],
-			"visitor" => [
+			'0' => [
 				'name' => 'Visiteur',
 				'readonly' => true,
 				'comment' => 'Accède au site',
-				'group' => 0,
 			],
-			'member' => [
-				'name' => 'Membre',
-				'readonly' => false,
-				'comment' => 'Accède aux pages réservées et à un dossier partagé',
-				'group' => 0,
-				'file' => [
-					'download' => false,
-					'edit' => false,
-					'create' => false,
-					'rename' => false,
-					'upload' => false,
-					'delete' => false,
-					'preview' => false,
-					'duplicate' => false,
-					'extract' => false,
-					'copycut' => false,
-					'permission' => false
+			'1' => [
+				'0' => [
+					'name' => 'Membre simple',
+					'readonly' => false,
+					'comment' => 'Accède aux pages réservées',
+					'file' => [
+						'download' => false,
+						'edit' => false,
+						'create' => false,
+						'rename' => false,
+						'upload' => false,
+						'delete' => false,
+						'preview' => false,
+						'duplicate' => false,
+						'extract' => false,
+						'copycut' => false,
+						'permission' => false
+					],
+					'folder' => [
+						'create' => false,
+						'delete' => false,
+						'rename' => false,
+						'copycut' => false,
+						'permission' => false,
+						'share' => false,
+						'path' => './site/file/source/partage/',
+					]
 				],
-				'folder' => [
-					'create' => false,
-					'delete' => false,
-					'rename' => false,
-					'copycut' => false,
-					'permission' => false,
-					'share' => false,
-					'path' => './site/file/source/partage/',
-				]
-			],
-			"moderator" => [
-				'name' => 'Moderateur',
-				'readonly' => false,
-				'comment' => 'Edition des pages',
-				'group' => 2,
-				'file' => [
-					'download' => true,
-					'edit' => true,
-					'create' => true,
-					'rename' => true,
-					'upload' => true,
-					'delete' => false,
-					'preview' => true,
-					'duplicate' => false,
-					'extract' => false,
-					'copycut' => false,
-					'permission' => false
+				'1' => [
+						'name' => 'Membre',
+						'readonly' => false,
+						'comment' => 'Accède aux pages réservées et à un dossier partagé',
+						'file' => [
+							'download' => false,
+							'edit' => false,
+							'create' => false,
+							'rename' => false,
+							'upload' => false,
+							'delete' => false,
+							'preview' => false,
+							'duplicate' => false,
+							'extract' => false,
+							'copycut' => false,
+							'permission' => false
+						],
+						'folder' => [
+							'create' => false,
+							'delete' => false,
+							'rename' => false,
+							'copycut' => false,
+							'permission' => false,
+							'share' => true,
+							'path' => './site/file/source/partage/',
+						]
+					],
 				],
-				'folder' => [
-					'create' => true,
-					'delete' => true,
-					'rename' => true,
-					'copycut' => false,
-					'permission' => false,
-					'share' => false,
-					'path' => './site/file/source/partage/',
-				]
+			'2' => [
+				'0' => [
+					'name' => 'Modérateur',
+					'readonly' => false,
+					'comment' => 'Edition des pages',
+					'file' => [
+						'download' => true,
+						'edit' => true,
+						'create' => true,
+						'rename' => true,
+						'upload' => true,
+						'delete' => false,
+						'preview' => true,
+						'duplicate' => false,
+						'extract' => false,
+						'copycut' => false,
+						'permission' => false
+					],
+					'folder' => [
+						'create' => true,
+						'delete' => true,
+						'rename' => true,
+						'copycut' => false,
+						'permission' => false,
+						'share' => true,
+						'path' => './site/file/source/partage/',
+					]
+				],
+				'1' => [
+					'name' => 'Editeur avec gestion des fichiers',
+					'readonly' => false,
+					'comment' => 'Edition des pages',
+					'file' => [
+						'download' => true,
+						'edit' => true,
+						'create' => true,
+						'rename' => true,
+						'upload' => true,
+						'delete' => false,
+						'preview' => true,
+						'duplicate' => false,
+						'extract' => false,
+						'copycut' => false,
+						'permission' => false
+					],
+					'folder' => [
+						'create' => true,
+						'delete' => true,
+						'rename' => true,
+						'copycut' => false,
+						'permission' => false,
+						'share' => true,
+						'path' => './site/file/source/',
+					]
+				],
 			],
-			"admin" => [
+			'3' => [
 				'name' => 'Administrateur',
 				'readonly' => true,
 				'comment' => 'Contrôle total',
-				'group' => 3,
 			]
-		],
+		]
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [

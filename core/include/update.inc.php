@@ -964,6 +964,10 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 	if (file_exists('core/module/install/ressource/i18n/gr_GR.json'))
 		unlink('core/module/install/ressource/i18n/gr_GR.json');
 
+	// Création du dossier partga pour les nouveaux droits
+	if (!is_dir(self::FILE_DIR . 'source/partage')) {
+		mkdir(self::FILE_DIR . 'source/partage');
+	}
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12400]);
