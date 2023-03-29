@@ -964,3 +964,8 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 	if (file_exists('core/module/install/ressource/i18n/gr_GR.json'))
 		unlink('core/module/install/ressource/i18n/gr_GR.json');
 }
+
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12400]);
+}
