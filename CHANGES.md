@@ -13,7 +13,7 @@
     - Des tailles de masquage du texte des articles plus importantes sont proposées.
 - Comptes de réseaux sociaux :
     - Sont ajoutés Steam, Twitch, Vimeo et Reddit.
-    - Des icônes accompagnent le noms des réseaux dans la configuration.
+    - Des icônes accompagnent le nom des réseaux dans la configuration.
 
 
 ## Version 12.3.03
