@@ -416,7 +416,7 @@ class translate extends common
 			];
 
 			// Sauvegarde hors méthodes si la langue n'est pas celle de l'UI
-			if ($lang === self::$i18nUI) {
+			if ($lang === self::$i18nContent) {
 				// Enregistrer les données par lecture directe du formulaire
 				$this->setData(['locale', $data['locale']]);
 			} else {
@@ -436,7 +436,7 @@ class translate extends common
 		//-----------------------------------------
 
 		// La locale est-elle celle de la langue de l'UI ?
-		if ($lang === self::$i18nUI) {
+		if ($lang === self::$i18nContent) {
 			self::$locales[$lang]['locale'] = $this->getData(['locale']);
 		} else {
 			// Lire les locales sans passer par les méthodes

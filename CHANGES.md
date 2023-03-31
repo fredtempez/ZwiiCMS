@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.05
+- Corrige un problème de stockage des paramètres de la localisation.
+
 ## Version 12.3.04
 ### Corrections
 - Corrige un défaut d'actualisation de la liste des pages et du site map lorsque la page change d'id.
@@ -13,7 +16,7 @@
     - Des tailles de masquage du texte des articles plus importantes sont proposées.
 - Comptes de réseaux sociaux :
     - Sont ajoutés Steam, Twitch, Vimeo et Reddit.
-    - Des icônes accompagnent le noms des réseaux dans la configuration.
+    - Des icônes accompagnent le nom des réseaux dans la configuration.
 
 
 ## Version 12.3.03
