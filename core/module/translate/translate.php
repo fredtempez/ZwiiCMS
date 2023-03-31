@@ -178,17 +178,17 @@ class translate extends common
 		// Check si la langue est bien disponible sinon la supprime de la BDD
 		if ($installedUI) {
 			foreach ($installedUI as $key => $value)
-			if (file_exists(self::I18N_DIR . $key . '.json' )	=== false ) {
-				$this->deleteData(['languages', $key]);
-			}
+				if (file_exists(self::I18N_DIR . $key . '.json') === false) {
+					$this->deleteData(['languages', $key]);
+				}
 		}
 
 		// Langues disponibles avec la mise à jour
 		$store = json_decode(file_get_contents('core/module/install/ressource/i18n/languages.json'), true);
 		$store = $store['languages'];
 
-		foreach($installedUI as $key => $value) {
-			if (isset($store[$key]) && $store[$key]['version'] > $value['version'])  {
+		foreach ($installedUI as $key => $value) {
+			if (isset($store[$key]) && $store[$key]['version'] > $value['version']) {
 				$this->setData(['languages', $key, $store[$key]]);
 			}
 		}
@@ -258,10 +258,10 @@ class translate extends common
 					'',
 					/*
 					template::button('translateContentLanguageUIEdit' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-						'value' => template::ico('pencil'),
-						'help' => 'Éditer',
-						'disabled' => 'fr_FR' === $file
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+					'value' => template::ico('pencil'),
+					'help' => 'Éditer',
+					'disabled' => 'fr_FR' === $file
 					]),
 					*/
 					template::button('translateContentLanguageUIDownload' . $file, [
