@@ -24,9 +24,9 @@
 	</div>
 	<div class="col1">
 		<?php echo template::button('userGroup', [
-			'href' => helper::baseUrl() . 'user/permission',
+			'href' => helper::baseUrl() . 'user/profil',
 			'value' => template::ico('lock'),
-			'help' => 'Gestion des permissions'
+			'help' => 'Gestion des profils'
 		]); ?>
 	</div>
 	<div class="col1">

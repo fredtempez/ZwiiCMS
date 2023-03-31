@@ -334,7 +334,7 @@ class init extends common
 		],
 		'blacklist' => [],
 		'language'=> [],
-		'permission' => [
+		'profil' => [
 			'-1' => [
 				'name' => 'Banni',
 				'readonly' => true,
@@ -361,14 +361,14 @@ class init extends common
 						'duplicate' => false,
 						'extract' => false,
 						'copycut' => false,
-						'permission' => false
+						'chmod' => false
 					],
 					'folder' => [
 						'create' => false,
 						'delete' => false,
 						'rename' => false,
 						'copycut' => false,
-						'permission' => false,
+						'chmod' => false,
 						'share' => false,
 						'path' => './site/file/source/partage/',
 					]
@@ -388,14 +388,14 @@ class init extends common
 							'duplicate' => false,
 							'extract' => false,
 							'copycut' => false,
-							'permission' => false
+							'chmod' => false
 						],
 						'folder' => [
 							'create' => false,
 							'delete' => false,
 							'rename' => false,
 							'copycut' => false,
-							'permission' => false,
+							'chmod' => false,
 							'share' => true,
 							'path' => './site/file/source/partage/',
 						]
@@ -417,14 +417,14 @@ class init extends common
 						'duplicate' => false,
 						'extract' => false,
 						'copycut' => false,
-						'permission' => false
+						'chmod' => false
 					],
 					'folder' => [
 						'create' => true,
 						'delete' => true,
 						'rename' => true,
 						'copycut' => false,
-						'permission' => false,
+						'chmod' => false,
 						'share' => true,
 						'path' => './site/file/source/partage/',
 					]
@@ -444,14 +444,14 @@ class init extends common
 						'duplicate' => false,
 						'extract' => false,
 						'copycut' => false,
-						'permission' => false
+						'chmod' => false
 					],
 					'folder' => [
 						'create' => true,
 						'delete' => true,
 						'rename' => true,
 						'copycut' => false,
-						'permission' => false,
+						'chmod' => false,
 						'share' => true,
 						'path' => './site/file/source/',
 					]

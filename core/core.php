@@ -234,7 +234,7 @@ class common
 		'theme' => '',
 		'user' => '',
 		'language' => '',
-		'permission'=> '',
+		'profil'=> '',
 	];
 
 	public static $fontsWebSafe = [
@@ -918,10 +918,10 @@ class common
 	public function getPermission($key1, $key2 = null) {
 		if (is_array($this->user) === false) {
 			return false;
-		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['permission', $this->user['group']]))) {
-			return $this->getData(['permission', $this->user['group'], $key1]);
-		} elseif ($key2	&& array_key_exists($key2, $this->getData(['permission', $this->user['group'], $key1]))) {
-			return $this->getData(['permission', $this->user['group'], $key1, $key2]);
+		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['profil', $this->user['group']]))) {
+			return $this->getData(['profil', $this->user['group'], $key1]);
+		} elseif ($key2	&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $key1]))) {
+			return $this->getData(['profil', $this->user['group'], $key1, $key2]);
 		} else {
 			return false;
 		}

@@ -27,9 +27,9 @@ class user extends common
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR,
-		'permission' => self::GROUP_ADMIN,
-		'permissionEdit' => self::GROUP_ADMIN,
-		'permissionAdd' => self::GROUP_ADMIN,
+		'profil' => self::GROUP_ADMIN,
+		'profilEdit' => self::GROUP_ADMIN,
+		'profilAdd' => self::GROUP_ADMIN,
 	];
 
 	public static $users = [];
@@ -58,6 +58,11 @@ class user extends common
 
 	public static $sharePath = [
 		'/site/file/source/'
+	];
+
+	public static $groupProfils = [
+		self::GROUP_MEMBER => 'Membre',
+		self::GROUP_MODERATOR => 'Editeur'
 	];
 
 	/**
@@ -411,9 +416,9 @@ class user extends common
 	/**
 	 * Table des groupes
 	 */
-	public function permission()
+	public function profil()
 	{
-		foreach ($this->getData(['permission']) as $groupId => $groupData) {
+		foreach ($this->getData(['profil']) as $groupId => $groupData) {
 
 			// Membres sans permissions spécifiques
 			if (
@@ -425,8 +430,8 @@ class user extends common
 					$groupId,
 					$groupData['name'],
 					nl2br($groupData['comment']),
-					template::button('permissionEdit' . $groupId, [
-						'href' => helper::baseUrl() . 'user/permissionEdit/' . $groupId . '/' . $_SESSION['csrf'],
+					template::button('profilEdit' . $groupId, [
+						'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => $groupData['readonly'],
@@ -449,15 +454,15 @@ class user extends common
 						$groupId . '-' . $subGroupId,
 						self::$groups[$groupId] .'<br />Profil : '.  $subGroupData['name'],
 						nl2br($subGroupData['comment']),
-						template::button('permissionEdit' . $groupId.$subGroupId, [
-							'href' => helper::baseUrl() . 'user/permissionEdit/' .  $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
+						template::button('profilEdit' . $groupId.$subGroupId, [
+							'href' => helper::baseUrl() . 'user/profilEdit/' .  $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $subGroupData['readonly'],
 						]),
-						template::button('permissionDelete' .  $groupId.$subGroupId, [
+						template::button('profilDelete' .  $groupId.$subGroupId, [
 							'class' => 'userDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
 							'disabled' => $subGroupData['readonly'],
@@ -468,15 +473,15 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Permissions'),
-			'view' => 'permission'
+			'title' => helper::translate('Profils des groupes'),
+			'view' => 'profil'
 		]);
 	}
 
 	/**
 	 * Edition d'un groupe
 	 */
-	public function permissionEdit()
+	public function profilEdit()
 	{
 		if (
 			$this->getUrl(4) !== $_SESSION['csrf']
@@ -491,43 +496,56 @@ class user extends common
 
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$group = $this->getUrl(2);
+			$oldGroup = $this->getUrl(2);
+			$group = $this->getInput('profilEditGroup');
 			$profil = $this->getUrl(3);
+			// Changement de groupe, effacer le profil de l'ancien groupe et incrément le profil
+			if ($oldGroup !== $group) {
+				$this->deleteData(['profil', $oldGroup, $profil]);				
+				$profil = helper::increment($profil, $this->getData(['profil', $group]));
+			}
+			
+			echo "groupe " . $group;
+			echo "profil " . $profil;
+			exit();
 			$this->setData([
-				'permission',
+				'profil',
 				$group,
 				$profil,
 				[
-					'name' => $this->getInput('permissionEditName', null, true),
+					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,
-					'comment' => $this->getInput('permissionEditComment', helper::FILTER_STRING_SHORT, true),
+					'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
 					'file' => [
-						'download' => $this->getInput('permissionEditDownload', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('permissionEditEdit', helper::FILTER_BOOLEAN),
-						'create' => $this->getInput('permissionEditCreate', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('permissionEditRename', helper::FILTER_BOOLEAN),
-						'upload' => $this->getInput('permissionEditUpload', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('permissionEditDelete', helper::FILTER_BOOLEAN),
-						'preview' => $this->getInput('permissionEditPreview', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('permissionEditDuplicate', helper::FILTER_BOOLEAN),
-						'extract' => $this->getInput('permissionEditExtract', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('permissionEditCopycut', helper::FILTER_BOOLEAN),
-						'permission' => $this->getInput('permissionEditPermission', helper::FILTER_BOOLEAN),
+						'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('profilEditCreate', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilEditRename', helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('profilEditUpload', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditDelete', helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('profilEditPreview', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilEditDuplicate', helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('profilEditExtract', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilEditCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilEditChmod', helper::FILTER_BOOLEAN),
 					],
 					'folder' => [
-						'create' => $this->getInput('permissionEditFolderCreate', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('permissionEditFolderDelete', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('permissionEditFolderRename', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('permissionEditFolderCopycut', helper::FILTER_BOOLEAN),
-						'permission' => $this->getInput('permissionEditFolderPermission', helper::FILTER_BOOLEAN),
-						'share' => $this->getInput('permissionEditShare', helper::FILTER_BOOLEAN),
-						'path' => $this->getInput('permissionEditPath'),
+						'create' => $this->getInput('profilEditFolderCreate', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditFolderDelete', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
+						'share' => $this->getInput('profilEditShare', helper::FILTER_BOOLEAN),
+						'path' => $this->getInput('profilEditPath'),
 					]
 				]
 			]);
+
+			
+
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/permission',
+				'redirect' => helper::baseUrl() . 'user/profil',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -539,11 +557,23 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Groupe : %s - Profil : %s'), $this->getData(['permission', $this->getUrl(2), 'name']), $this->getData(['permission', $this->getUrl(2), $this->getUrl(3), 'name'])),
-			'view' => 'permissionEdit'
+			'title' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name']),
+			'view' => 'profilEdit'
 		]);
 	}
 
+	/**
+	 * Ajouter un profil de permission
+	 */
+
+	public function profilAdd() {
+
+		// Valeurs en sortie;
+		$this->addOutput([
+			'title' => "Ajouter un profil",
+			'view' => 'profilAdd'
+		]);
+	}
 
 	/**
 	 * Connexion
