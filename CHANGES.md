@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.05
+- Corrige un problème de stockage des paramètres de la localisation.
+
 ## Version 12.3.04
 ### Corrections
 - Corrige un défaut d'actualisation de la liste des pages et du site map lorsque la page change d'id.
