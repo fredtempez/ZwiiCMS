@@ -417,14 +417,14 @@ class user extends common
 
 			// Membres sans permissions spécifiques
 			if (
-				$groupId == -1 ||
-				$groupId == 0 ||
-				$groupId == 3
+				$groupId == self::GROUP_BANNED ||
+				$groupId == self::GROUP_VISITOR ||
+				$groupId == self::GROUP_ADMIN
 			) {
 				self::$userGroups[$groupId] = [
 					$groupId,
 					$groupData['name'],
-					$groupData['comment'],
+					nl2br($groupData['comment']),
 					template::button('permissionEdit' . $groupId, [
 						'href' => helper::baseUrl() . 'user/permissionEdit/' . $groupId . '/' . $_SESSION['csrf'],
 						'value' => template::ico('pencil'),
@@ -438,24 +438,26 @@ class user extends common
 						'help' => 'Supprimer',
 						'disabled' => $groupData['readonly'],
 					])
-				];
-			} else {
+				];				
+			} elseif (
+				$groupId == self::GROUP_MEMBER ||
+				$groupId == self::GROUP_MODERATOR
+			) {
 				// Enumérer les sous groupes MEMBER et MODERATOR
 				foreach ($groupData as $subGroupId => $subGroupData) {
-					echo $subGroupId;
 					self::$userGroups[$groupId.'.'.$subGroupId] = [
 						$groupId . '-' . $subGroupId,
-						$subGroupData['name'],
-						$subGroupData['comment'],
+						self::$groups[$groupId] .'<br />Profil : '.  $subGroupData['name'],
+						nl2br($subGroupData['comment']),
 						template::button('permissionEdit' . $groupId.$subGroupId, [
-							'href' => helper::baseUrl() . 'user/permissionEdit/' .  $groupId . '-' . $subGroupId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . 'user/permissionEdit/' .  $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $subGroupData['readonly'],
 						]),
 						template::button('permissionDelete' .  $groupId.$subGroupId, [
 							'class' => 'userDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '-' . $subGroupId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
 							'disabled' => $subGroupData['readonly'],
@@ -477,7 +479,7 @@ class user extends common
 	public function permissionEdit()
 	{
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->getUrl(4) !== $_SESSION['csrf']
 		) {
 
 			// Valeurs en sortie
@@ -490,13 +492,15 @@ class user extends common
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$group = $this->getUrl(2);
+			$profil = $this->getUrl(3);
 			$this->setData([
 				'permission',
 				$group,
+				$profil,
 				[
-					'name' => $this->getData(['permission', $group, 'name']),
-					'readonly' => $this->getData(['permission', $group, 'readonly']),
-					'comment' => $this->getData(['permission', $group, 'comment']),
+					'name' => $this->getInput('permissionEditName', null, true),
+					'readonly' => false,
+					'comment' => $this->getInput('permissionEditComment', helper::FILTER_STRING_SHORT, true),
 					'file' => [
 						'download' => $this->getInput('permissionEditDownload', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('permissionEditEdit', helper::FILTER_BOOLEAN),
@@ -535,7 +539,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Groupe %s'), $this->getData(['permission', $this->getUrl(2), 'name'])),
+			'title' => sprintf(helper::translate('Groupe : %s - Profil : %s'), $this->getData(['permission', $this->getUrl(2), 'name']), $this->getData(['permission', $this->getUrl(2), $this->getUrl(3), 'name'])),
 			'view' => 'permissionEdit'
 		]);
 	}

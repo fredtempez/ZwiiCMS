@@ -7,4 +7,4 @@
         ]); ?>
 	</div>
 </div>
-<?php echo template::table([1, 3, 7, 1, 1], $module::$userGroups, ['#', 'Nom', 'Commentaire', '', '']); ?>
+<?php echo template::table([1, 4, 5, 1, 1], $module::$userGroups, ['#', 'Groupe et profil', 'Commentaire', '', '']); ?>
