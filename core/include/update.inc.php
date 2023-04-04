@@ -954,7 +954,8 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 if ($this->getData(['core', 'dataVersion']) < 12400) {
 	
 	// Nettoyage du dossier de langue d'installation'
-	unlink('core/vendor/tinymce/langs/langs.zip');
+	if (file_exists('core/vendor/tinymce/langs/langs.zip'))
+		unlink('core/vendor/tinymce/langs/langs.zip');
 	if (file_exists('core/module/install/ressource/i18n/de.json'))
 		unlink('core/module/install/ressource/i18n/de.json');
 	if (file_exists('core/module/install/ressource/i18n/it.json'))

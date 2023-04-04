@@ -79,7 +79,7 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
       [R] content          Dossier des contenus de page
         [F] accueil.html   Exemple contenu de la page d'accueil
     [R] fonts              Dossier contenant les fontes installées
-      [F] fonts.html       Fichier contenant les appels des fontes à charger sur cdnFonts
+      [F] font.html       Fichier contenant les appels des fontes à charger sur cdnFonts
       [F] fonts.css        Fichier contenant la feuille de style liée aux polices de caractères locales
       [F] fontes.woff      Fichiers locaux des fontes (woff, etc..)
     [R] modules            Personnalisation des modules ou données propres

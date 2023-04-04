@@ -1083,9 +1083,9 @@ class theme extends common
 					foreach ($fonts as $fontId => $fontName) {
 						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
+					if (file_exists(self::DATA_DIR . 'fonts/font.html')) {
 
-						$zip->addFile(self::DATA_DIR . 'fonts/fonts.html', self::DATA_DIR . 'fonts/fonts.html');
+						$zip->addFile(self::DATA_DIR . 'fonts/font.html', self::DATA_DIR . 'fonts/font.html');
 					}
 					break;
 				case 'theme':
@@ -1121,9 +1121,9 @@ class theme extends common
 					foreach ($fonts as $fontId => $fontName) {
 						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
+					if (file_exists(self::DATA_DIR . 'fonts/font.html')) {
 
-						$zip->addFile(self::DATA_DIR . 'fonts/fonts.html', self::DATA_DIR . 'fonts/fonts.html');
+						$zip->addFile(self::DATA_DIR . 'fonts/font.html', self::DATA_DIR . 'fonts/font.html');
 					}
 					break;
 			}
@@ -1236,7 +1236,7 @@ class theme extends common
 		$fontsInstalled = array_unique($fontsInstalled);
 
 		/**
-		 * Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+		 * Chargement des polices en ligne dans un fichier font.html inclus dans main.php
 		 */
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
@@ -1287,7 +1287,7 @@ class theme extends common
 		}
 
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fileContent);
+		file_put_contents(self::DATA_DIR . 'fonts/font.html', $fileContent);
 		// Enregistre la personnalisation
 		file_put_contents(self::DATA_DIR . 'fonts/fonts.css',  $fileContentCss);
 	}

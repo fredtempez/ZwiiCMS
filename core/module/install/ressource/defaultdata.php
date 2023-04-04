@@ -90,12 +90,12 @@ class init extends common
 				],
 				'droid-sans-2' => [
 					'name' => 'Droid Sans',
-					'font-family' =>  '\'Droid Sans\', sans-serif',
+					'font-family' => '\'Droid Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 				],
 				'droid-serif-2' => [
 					'name' => 'Droid Serif',
-					'font-family' =>  '\'Droid Serif\', serif',
+					'font-family' => '\'Droid Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 				],
 				'indie-flower' => [
@@ -207,7 +207,7 @@ class init extends common
 		],
 		'module' => [],
 		'user' => [],
-		'theme' =>  [
+		'theme' => [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
 				'image' => '',
@@ -333,7 +333,20 @@ class init extends common
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
 		'blacklist' => [],
-		'language'=> [],
+		'language' => [
+			"fr_FR" => [
+				"version" => 12300,
+				"date" => 1677838293
+			],
+			"es" => [
+				"version" => 12300,
+				"date" => 1677838293
+			],
+			"en_EN" => [
+				"version" => 12300,
+				"date" => 1677838293
+			]
+		],
 		'profil' => [
 			'-1' => [
 				'name' => 'Banni',
@@ -374,33 +387,33 @@ class init extends common
 					]
 				],
 				'1' => [
-						'name' => 'Membre',
-						'readonly' => false,
-						'comment' => 'Accède aux pages réservées et à un dossier partagé',
-						'file' => [
-							'download' => false,
-							'edit' => false,
-							'create' => false,
-							'rename' => false,
-							'upload' => false,
-							'delete' => false,
-							'preview' => false,
-							'duplicate' => false,
-							'extract' => false,
-							'copycut' => false,
-							'chmod' => false
-						],
-						'folder' => [
-							'create' => false,
-							'delete' => false,
-							'rename' => false,
-							'copycut' => false,
-							'chmod' => false,
-							'share' => true,
-							'path' => './site/file/source/partage/',
-						]
+					'name' => 'Membre',
+					'readonly' => false,
+					'comment' => 'Accède aux pages réservées et à un dossier partagé',
+					'file' => [
+						'download' => false,
+						'edit' => false,
+						'create' => false,
+						'rename' => false,
+						'upload' => false,
+						'delete' => false,
+						'preview' => false,
+						'duplicate' => false,
+						'extract' => false,
+						'copycut' => false,
+						'chmod' => false
 					],
+					'folder' => [
+						'create' => false,
+						'delete' => false,
+						'rename' => false,
+						'copycut' => false,
+						'chmod' => false,
+						'share' => true,
+						'path' => './site/file/source/partage/',
+					]
 				],
+			],
 			'2' => [
 				'0' => [
 					'name' => 'Modérateur',
@@ -571,7 +584,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -598,7 +611,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -625,7 +638,7 @@ class init extends common
 				'block' => '4-8',
 				'barLeft' => 'barre',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -652,7 +665,7 @@ class init extends common
 				'block' => '9-3',
 				'barLeft' => '',
 				'barRight' => 'barrelateraleavecmenu',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -679,7 +692,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -706,7 +719,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -987,13 +1000,14 @@ class init extends common
 						'publishedOn' => 1548790902,
 						'state' => true,
 						'title' => 'Mon premier article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 					'mon-deuxieme-article' => [
 						'closeComment' => false,
@@ -1006,13 +1020,14 @@ class init extends common
 						'publishedOn' => 1550432502,
 						'state' => true,
 						'title' => 'Mon deuxième article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 					'mon-troisieme-article' => [
 						'closeComment' => true,
@@ -1025,13 +1040,14 @@ class init extends common
 						'publishedOn' => 1550864502,
 						'state' => true,
 						'title' => 'Mon troisième article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 				],
 			],
@@ -1081,24 +1097,24 @@ class init extends common
 					],
 				],
 				'theme' => [
-					'thumbAlign' 	   => 'center',
-					'thumbWidth' 	   => '18em',
-					'thumbHeight'	   => '15em',
-					'thumbMargin'	   => '.5em',
-					'thumbBorder'	   => '.1em',
-					'thumbOpacity'	   => '.7',
+					'thumbAlign' => 'center',
+					'thumbWidth' => '18em',
+					'thumbHeight' => '15em',
+					'thumbMargin' => '.5em',
+					'thumbBorder' => '.1em',
+					'thumbOpacity' => '.7',
 					'thumbBorderColor' => 'rgba(221, 221, 221, 1)',
-					'thumbRadius'      => '.3em',
-					'thumbShadows'     => '1px 1px 10px',
+					'thumbRadius' => '.3em',
+					'thumbShadows' => '1px 1px 10px',
 					'thumbShadowsColor' => 'rgba(125, 125, 125, 1)',
-					'legendHeight'	   => '.375em',
-					'legendAlign'	   => 'center',
-					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
-					'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
-					'style'            =>  'site/data/modules/gallery/galeries.css'
+					'legendHeight' => '.375em',
+					'legendAlign' => 'center',
+					'legendTextColor' => 'rgba(255, 255, 255, 1)',
+					'legendBgColor' => 'rgba(0, 0, 0, .6)',
+					'style' => 'site/data/modules/gallery/galeries.css'
 				],
 				'config' => [
-					'versionData'      =>  '3.0'
+					'versionData' => '3.0'
 				],
 			],
 			'site-de-zwii' => [

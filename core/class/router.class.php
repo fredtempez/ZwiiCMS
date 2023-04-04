@@ -123,7 +123,7 @@ class core extends common
 			}
 
 			/**
-			 * Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+			 * Chargement des polices en ligne dans un fichier font.html inclus dans main.php
 			 */
 			$fontFile = '';
 			$gf = false;
@@ -142,7 +142,7 @@ class core extends common
 			if (!is_dir(self::DATA_DIR . 'font')) {
 				mkdir(self::DATA_DIR . 'font');
 			}
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
 
 			/**
 			 * Fontes installées localement
@@ -322,7 +322,7 @@ class core extends common
 			if (!is_dir(self::DATA_DIR . 'font')) {
 				mkdir(self::DATA_DIR . 'font');
 			}
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR . 'theme.css', $css);
@@ -369,7 +369,7 @@ class core extends common
 			}
 
 			/**
-			 * Chargement des polices en ligne dans un fichier fonts.html inclus dans main.php
+			 * Chargement des polices en ligne dans un fichier font.html inclus dans main.php
 			 */
 			$fontFile = '';
 			foreach ($fonts as $fontId) {
@@ -380,7 +380,7 @@ class core extends common
 				}
 			}
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR . 'fonts/fonts.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
 
 			/**
 			 * Fontes installées localement
