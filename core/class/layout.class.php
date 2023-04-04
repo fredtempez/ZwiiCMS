@@ -1100,8 +1100,8 @@ class layout extends common
     public function showFonts()
     {
         // Import des fontes liées au thème
-        if (file_exists(self::DATA_DIR . 'fonts/font.html')) {
-            include_once(self::DATA_DIR . 'fonts/font.html');
+        if (file_exists(self::DATA_DIR . 'font/font.html')) {
+            include_once(self::DATA_DIR . 'font/font.html');
         }
     }
 

@@ -142,7 +142,7 @@ class core extends common
 			if (!is_dir(self::DATA_DIR . 'font')) {
 				mkdir(self::DATA_DIR . 'font');
 			}
-			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
 
 			/**
 			 * Fontes installées localement
@@ -150,10 +150,10 @@ class core extends common
 			foreach ($fonts as $fontId) {
 				// Validité du tableau :
 				if (isset($fontsAvailable['files'][$fontId])) {
-					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId)) {
+					if (file_exists(self::DATA_DIR . 'font/' . $fontId)) {
 						// Chargement de la police
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
 						// Tableau pour la construction de la feuille de style
 						$fonts[$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 					} else {
@@ -322,7 +322,7 @@ class core extends common
 			if (!is_dir(self::DATA_DIR . 'font')) {
 				mkdir(self::DATA_DIR . 'font');
 			}
-			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
 
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR . 'theme.css', $css);
@@ -380,7 +380,7 @@ class core extends common
 				}
 			}
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR . 'fonts/font.html', $fontFile);
+			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
 
 			/**
 			 * Fontes installées localement
@@ -388,10 +388,10 @@ class core extends common
 			foreach ($fonts as $fontId) {
 				// Validité du tableau :
 				if (isset($fontsAvailable['files'][$fontId])) {
-					if (file_exists(self::DATA_DIR . 'fonts/' . $fontId)) {
+					if (file_exists(self::DATA_DIR . 'font/' . $fontId)) {
 						// Chargement de la police
 						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'fonts/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
+						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
 						// Tableau pour la construction de la feuille de style
 						$fonts[$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
 					} else {

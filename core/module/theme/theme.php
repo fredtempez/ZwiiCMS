@@ -583,7 +583,7 @@ class theme extends common
 	/**
 	 * Options des fontes
 	 */
-	public function fonts()
+	public function font()
 	{
 
 		// Toutes les fontes installées sont chargées
@@ -689,7 +689,7 @@ class theme extends common
 					$type === 'files' &&
 					file_exists(self::FILE_DIR . 'source/' . $ressource)
 				) {
-					copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource);
+					copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'font/' . $ressource);
 				}
 
 				// Valeurs en sortie
@@ -752,7 +752,7 @@ class theme extends common
 				$type === 'files' &&
 				file_exists(self::FILE_DIR . 'source/' . $ressource)
 			) {
-				copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'fonts/' . $ressource);
+				copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'font/' . $ressource);
 			}
 
 			// Valeurs en sortie
@@ -979,7 +979,7 @@ class theme extends common
 
 					// Substitution des fontes Google
 					if ($modele = 'theme') {
-						$c = $this->subFonts(self::DATA_DIR . 'theme.json');
+						$c = $this->subFont(self::DATA_DIR . 'theme.json');
 						// Un remplacement nécessite la régénération de la feuille de style
 						if (
 							$c > 0
@@ -989,7 +989,7 @@ class theme extends common
 						}
 					}
 					if ($modele = 'admin') {
-						$c = $this->subFonts(self::DATA_DIR . 'admin.json');
+						$c = $this->subFont(self::DATA_DIR . 'admin.json');
 						// Un remplacement nécessite la régénération de la feuille de style
 						if (
 							$c > 0
@@ -1081,11 +1081,11 @@ class theme extends common
 					$zip->addEmptyDir(self::DATA_DIR . 'font');
 					$fonts = $this->getData(['font', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
-						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
+						$zip->addFile(self::DATA_DIR . 'font/' . $fontName, self::DATA_DIR . 'font/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR . 'fonts/font.html')) {
+					if (file_exists(self::DATA_DIR . 'font/font.html')) {
 
-						$zip->addFile(self::DATA_DIR . 'fonts/font.html', self::DATA_DIR . 'fonts/font.html');
+						$zip->addFile(self::DATA_DIR . 'font/font.html', self::DATA_DIR . 'font/font.html');
 					}
 					break;
 				case 'theme':
@@ -1119,11 +1119,11 @@ class theme extends common
 					$zip->addEmptyDir(self::DATA_DIR . 'font');
 					$fonts = $this->getData(['font', 'files']);
 					foreach ($fonts as $fontId => $fontName) {
-						$zip->addFile(self::DATA_DIR . 'fonts/' . $fontName, self::DATA_DIR . 'fonts/' . $fontName);
+						$zip->addFile(self::DATA_DIR . 'font/' . $fontName, self::DATA_DIR . 'font/' . $fontName);
 					}
-					if (file_exists(self::DATA_DIR . 'fonts/font.html')) {
+					if (file_exists(self::DATA_DIR . 'font/font.html')) {
 
-						$zip->addFile(self::DATA_DIR . 'fonts/font.html', self::DATA_DIR . 'fonts/font.html');
+						$zip->addFile(self::DATA_DIR . 'font/font.html', self::DATA_DIR . 'font/font.html');
 					}
 					break;
 			}
@@ -1138,7 +1138,7 @@ class theme extends common
 	 * @param string $file, nom du fichier json à convertir
 	 * @return int nombre de substitution effectuées
 	 */
-	private function subFonts($file)
+	private function subFont($file)
 	{
 		// Tableau de substitution des fontes
 		$fonts = [
@@ -1271,24 +1271,24 @@ class theme extends common
 					($scope === 'user' && in_array($fontId, $fontsInstalled))
 					||  $scope === 'all'
 				) {
-					if (file_exists(self::DATA_DIR . 'fonts/' . $fontValue['resource'])) {
+					if (file_exists(self::DATA_DIR . 'font/' . $fontValue['resource'])) {
 						// Extension
-						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'fonts/' . $fontValue['resource']);
+						$path_parts = pathinfo(helper::baseUrl(false)  . self::DATA_DIR . 'font/' . $fontValue['resource']);
 						// Chargement de la police
 						$fileContentCss .=  '@font-face {';
 						$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
 						$fileContentCss .= 'src: url("'  . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
 						$fileContentCss .=  '}';
 						// Préchargement
-						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'fonts/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
+						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'font/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
 					}
 				}
 			}
 		}
 
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR . 'fonts/font.html', $fileContent);
+		file_put_contents(self::DATA_DIR . 'font/font.html', $fileContent);
 		// Enregistre la personnalisation
-		file_put_contents(self::DATA_DIR . 'fonts/fonts.css',  $fileContentCss);
+		file_put_contents(self::DATA_DIR . 'font/font.css',  $fileContentCss);
 	}
 }

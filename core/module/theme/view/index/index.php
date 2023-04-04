@@ -17,7 +17,7 @@
 		<div class="col2 offset4">
 			<?php echo template::button('themeFonts', [
 				'ico' => 'font',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/font',
 				'value' => 'Fontes'
 			]); ?>
 		</div>
@@ -68,7 +68,7 @@
 		<div class="col2 offset4">
 			<?php echo template::button('themeFonts', [
 				'ico' => 'font',
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/fonts',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/font',
 				'value' => 'Fontes'
 			]); ?>
 		</div>
