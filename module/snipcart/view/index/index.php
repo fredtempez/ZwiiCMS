@@ -1,8 +1,6 @@
-<?php
-	// Chargement de la clé d'API
-	echo '<script async src="https://cdn.snipcart.com/themes/v3.0.25/default/snipcart.js"></script>';
-	echo '<div hidden id="snipcart" data-api-key="' . $this->getData(['module', $this->getUrl(0), 'config','key']) . '"></div>';
-?>
+<!-- Chargement du script et de la clé d'API -->
+<script async src="https://cdn.snipcart.com/themes/v3.0.25/default/snipcart.js"></script>
+<div hidden id="snipcart" data-api-key="' . <?php echo $this->getData(['module', $this->getUrl(0), 'config','key']);?>'"></div>
 
 <link rel="stylesheet" href="<?php echo helper::baseUrl(false).$module::DATADIRECTORY.'/'.$this->getUrl(0) ?>.css">
 <?php  if(empty($module::$checkMessage)): ?>
