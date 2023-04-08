@@ -225,6 +225,9 @@ class snipcart extends common
 			'showBarEditButton' => true,
 			'showPageContent' => true,
 			'view' => 'index',
+			'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
+						? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+						: '',
 			'vendor' => [
 				'snipcart'
 			]
