@@ -116,7 +116,8 @@ class snipcart extends common
 					'buttonBgColor' => $this->getInput('snipcartOptionBgColor', helper::FILTER_STRING_SHORT),
 					'template' => $this->getInput('snipcartOptionTemplate', helper::FILTER_STRING_SHORT),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
-				]
+				],
+				
 			]);
 
 			// Valeurs en sortie
@@ -145,69 +146,6 @@ class snipcart extends common
 			$data["template"] = $template;
 			$json = json_encode($data);
 			file_put_contents(self::DATAMODULE . '/datadefault.json', $json);
-
-			// Si snipcart est activé on vérifie s'il faut compléter les fichiers body.inc.html et head.inc.html
-			if (
-				$this->getData([
-					'module', $this->getUrl(0),
-					'config',
-					'valid'
-				]) === true
-				&& $this->getData([
-					'module', $this->getUrl(0),
-					'config',
-					'key'
-				]) != ''
-			) {
-
-				// body.inc.html
-				$str = [];
-				$str[0] = '<!-- Module snipcart inclusion dans body-->';
-				$str[1] = '<?php if($this->getData([\'page\', $this->getUrl(0), \'moduleId\']) === \'snipcart\' && $this->getUrl(1) != \'config\'){';
-				$str[2] = 'echo \'<script async src="https://cdn.snipcart.com/themes/v3.0.25/default/snipcart.js"></script>\';';
-				$str[3] = 'echo \'<div hidden id="snipcart" data-api-key="\';';
-				$str[4] = '$key = $this->getData([\'module\', $this->getUrl(0), \'config\',\'key\']); echo $key;';
-				$str[5] = 'echo \'"></div>\';}?>';
-				$str[6] = '<!-- Module snipcart fin d\'inclusion -->';
-				$strbody = '';
-				foreach ($str as $key => $value) {
-					$strbody = $strbody . $value . "\r\n";
-				}
-				// Si le fichier body.inc.html existe
-				if (file_exists('./site/data/body.inc.html')) {
-					$file = file_get_contents('./site/data/body.inc.html');
-					// Quelques chaînes ne sont pas trouvées
-					if (strpos($file, $str[0]) === false || strpos($file, $str[6]) === false || strpos($str[3], '<div hidden id="snipcart" data-api-key="') === false) {
-						file_put_contents('./site/data/body.inc.html', $file . "\r\n" . $strbody);
-					}
-				} else {
-					file_put_contents('./site/data/body.inc.html', $strbody);
-				}
-
-				// head.inc.html
-				$str = [];
-				$str[0] = '<!-- Module snipcart inclusion dans head-->';
-				$str[5] = '<?php if($this->getData([\'page\', $this->getUrl(0), \'moduleId\']) === \'snipcart\'){';
-				$str[6] = 'echo \'<link rel="preconnect" href="https://app.snipcart.com">\';';
-				$str[7] = 'echo \'<link rel="preconnect" href="https://cdn.snipcart.com">\';';
-				$str[8] = 'echo \'<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.23/default/snipcart.css" />\';}?>';
-				$str[9] = '<!-- Module snipcart fin d\'inclusion -->';
-				$strhead = '';
-				foreach ($str as $key => $value) {
-					$strhead = $strhead . $value . "\r\n";
-				}
-				// Si le fichier head.inc.html existe
-				if (file_exists('./site/data/head.inc.html')) {
-					$file = file_get_contents('./site/data/head.inc.html');
-					// Quelques chaînes ne sont pas trouvées 
-					if (strpos($file, $str[0]) === false || strpos($file, $str[9]) === false) {
-						file_put_contents('./site/data/head.inc.html', $file . "\r\n" . $strhead);
-					}
-				} else {
-					file_put_contents('./site/data/head.inc.html', $strhead);
-				}
-
-			}
 
 			// Valeurs en sortie
 			$this->addOutput([

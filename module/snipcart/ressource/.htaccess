@@ -1,4 +1,0 @@
-# Autorise l'accès de datadefault.json par les scripts js
-<Files "datadefault.json">
-	allow from all
-</Files>
