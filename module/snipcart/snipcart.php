@@ -46,6 +46,8 @@ class snipcart extends common
 		'bouton_produit' => 'Le module crée simultanément le produit et le bouton'
 	];
 
+	public static $checkMessage = '';
+
 	/**
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
@@ -146,10 +148,16 @@ class snipcart extends common
 
 			// Si snipcart est activé on vérifie s'il faut compléter les fichiers body.inc.html et head.inc.html
 			if (
-				$this->getData(['module', $this->getUrl(0), 'config',
-					'valid']) === true
-				&& $this->getData(['module', $this->getUrl(0), 'config',
-					'key']) != ''
+				$this->getData([
+					'module', $this->getUrl(0),
+					'config',
+					'valid'
+				]) === true
+				&& $this->getData([
+					'module', $this->getUrl(0),
+					'config',
+					'key'
+				]) != ''
 			) {
 
 				// body.inc.html
@@ -260,6 +268,13 @@ class snipcart extends common
 		$json = json_encode($data);
 		file_put_contents(self::DATAMODULE . '/datadefault.json', $json);
 
+		
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'valid']) !== true) {
+			self::$checkMessage = 'Snipcart n\'est pas activé !';
+		}
+		if ($this->getData(['module', $this->getUrl(0), 'config', 'key']) === '') {
+			self::$checkMessage ='La clef snipcart n\'est pas renseignée !';
+		} 
 		// Valeurs en sortie
 		$this->addOutput([
 			'showBarEditButton' => true,
