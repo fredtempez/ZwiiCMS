@@ -179,10 +179,6 @@ class snipcart extends common
 				// head.inc.html
 				$str = [];
 				$str[0] = '<!-- Module snipcart inclusion dans head-->';
-				$str[1] = '<?php if($this->getData([\'page\', $this->getUrl(2), \'moduleId\']) === \'snipcart\'){';
-				$str[2] = 'echo \'<script src="\'. helper::baseUrl(false).\'core/vendor/tinymce/tinymce.min.js"></script>\';';
-				$str[3] = 'echo \'<script src="\'. helper::baseUrl(false).\'core/vendor/tinymce/jquery.tinymce.min.js"></script>\';';
-				$str[4] = 'echo \'<script src="\'. helper::baseUrl(false).\'module/snipcart/vendor/init.js"></script>\';}?>';
 				$str[5] = '<?php if($this->getData([\'page\', $this->getUrl(0), \'moduleId\']) === \'snipcart\'){';
 				$str[6] = 'echo \'<link rel="preconnect" href="https://app.snipcart.com">\';';
 				$str[7] = 'echo \'<link rel="preconnect" href="https://cdn.snipcart.com">\';';
@@ -268,7 +264,10 @@ class snipcart extends common
 		$this->addOutput([
 			'showBarEditButton' => true,
 			'showPageContent' => true,
-			'view' => 'index'
+			'view' => 'index',
+			'vendor' => [
+				'snipcart'
+			]
 		]);
 
 	}

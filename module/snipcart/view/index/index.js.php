@@ -15,9 +15,9 @@
 /** NE PAS EFFACER
 * admin.css
 */
-
-/*
-.formConfigInput {
-	background: #FFF;
-}
-*/
+$(document).ready(function() {
+    $('head').append('<link rel="preconnect" href="https://app.snipcart.com">');
+    $('head').append('<link rel="preconnect" href="https://cdn.snipcart.com">');
+    $('head').append('<link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.0.23/default/snipcart.css" />');
+  });
+  

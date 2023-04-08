@@ -5,14 +5,12 @@
 		<div class="col1">
 			<?php echo template::button('snipcartOptionBack', [
 				'class' => 'buttonGrey',
-				'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-				'ico' => 'left',
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
+				'value' => template::ico('left'),
 			]); ?>
 		</div>
-		<div class="col1 offset8">
-			<?php echo template::submit('snipcartOptionSubmit', [
-				'value' => 'Valider'
-			]); ?>
+		<div class="col2 offset9">
+			<?php echo template::submit('snipcartOptionSubmit'); ?>
 		</div>
 	</div>
 	
