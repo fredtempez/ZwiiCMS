@@ -21,6 +21,13 @@
  * 
  */
 
+/*
+ * A faire :
+ * Dissocier la configuration générale du thème de la page sélectionnée, les paramètres de la boutique sont communs au site mais pas ceux du thème
+ * Stocker les feuilles de styles, une par page invoquée dans la page
+ */
+
+
 class snipcart extends common
 {
 
@@ -117,7 +124,7 @@ class snipcart extends common
 					'template' => $this->getInput('snipcartOptionTemplate', helper::FILTER_STRING_SHORT),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
 				],
-				
+
 			]);
 
 			// Valeurs en sortie
@@ -206,13 +213,13 @@ class snipcart extends common
 		$json = json_encode($data);
 		file_put_contents(self::DATAMODULE . '/datadefault.json', $json);
 
-		
+
 		if ($this->getData(['module', $this->getUrl(0), 'config', 'valid']) !== true) {
 			self::$checkMessage = 'Snipcart n\'est pas activé !';
 		}
 		if ($this->getData(['module', $this->getUrl(0), 'config', 'key']) === '') {
-			self::$checkMessage ='La clef snipcart n\'est pas renseignée !';
-		} 
+			self::$checkMessage = 'La clef snipcart n\'est pas renseignée !';
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'showBarEditButton' => true,
