@@ -134,7 +134,7 @@ class template
         // Label
         $html .= self::label(
             $attributes['id'],
-            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" /> ' .helper::translate('en chiffres'),
+            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq'),
             [
                 'help' => $attributes['help']
             ]
