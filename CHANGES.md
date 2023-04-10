@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.06
+- Compléments de traduction.
+
 ## Version 12.3.05
 - Corrige un problème de stockage des paramètres de la localisation.
 
