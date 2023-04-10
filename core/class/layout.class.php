@@ -885,8 +885,8 @@ class layout extends common
             // Liste des pages
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
-                $leftItems .= '<option value="">Pages du site</option>';
-                $leftItems .= '<optgroup label="Pages orphelines">';
+                $leftItems .= '<option value="">' . helper::translate('Pages du site') . '</option>';
+                $leftItems .= '<optgroup label="' . helper::translate('Pages orphelines') . '">';
                 $orpheline = true;
                 $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
                 foreach ($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
@@ -895,7 +895,7 @@ class layout extends common
                         $orpheline
                     ) {
                         $orpheline = false;
-                        $leftItems .= '<optgroup label="Pages dans le menu">';
+                        $leftItems .= '<optgroup label="' . helper::translate('Pages dans le menu') . '">';
                     }
                     // Exclure les barres
                     if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
@@ -925,7 +925,7 @@ class layout extends common
                 }
                 $leftItems .= '</optgroup' >
                     // Afficher les barres
-                    $leftItems .= '<optgroup label="Barres latérales">';
+                    $leftItems .= '<optgroup label="'.helper::translate('Barres latérales').'">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
                     $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
                     foreach ($childrenPageIds as $childKey) {
