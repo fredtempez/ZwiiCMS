@@ -387,7 +387,8 @@ class common
 		// Pour éviter une 404 sur une langue étrangère, bascule dans la langue correcte.
 		if (is_null($this->getData(['page', $this->getUrl(0)]))) {
 			foreach (self::$languages as $key => $value) {
-				if (is_dir(self::DATA_DIR . $key)) {
+				if (is_dir(self::DATA_DIR . $key) &&
+					file_exists(self::DATA_DIR . $key . '/page.json')) {
 					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
 					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
 						setcookie('ZWII_CONTENT', $key, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
