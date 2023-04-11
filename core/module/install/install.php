@@ -345,10 +345,10 @@ class install extends common
 			// Configuration
 			case 4:
 				$success = true;
-				$message = null;
+				$message = '';
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
+				if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
 					$rewriteData = PHP_EOL .
 						'# URL rewriting' . PHP_EOL .
@@ -392,7 +392,7 @@ class install extends common
 
 				foreach ($installedUI as $key => $value) {
 					if ($store[$key]['version'] > $value['version']) {
-						echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+						copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 						$this->setData(['language', $key, $store[$key]]);
 					}
 				}

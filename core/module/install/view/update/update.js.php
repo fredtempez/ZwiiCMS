@@ -9,7 +9,8 @@ function step(i, data) {
             data: data
         },
         success: function (result) {
-            if (!result.success) { // Vérification de la propriété "success"
+            console.log(result.success);
+            if (result.success != "1") { // Vérification de la propriété "success"
                 // Appel de la fonction de gestion d'erreur
                 showError(i, result, errors);
                 return;

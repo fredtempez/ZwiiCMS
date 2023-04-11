@@ -240,7 +240,7 @@ class user extends common
 				$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
 				if ($this->getInput('userEditNewPassword')) {
 					// L'ancien mot de passe est correct
-					if (password_verify($this->getInput('userEditOldPassword'), $this->getData(['user', $this->getUrl(2), 'password']))) {
+					if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
 						// La confirmation correspond au mot de passe
 						if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
 							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
@@ -645,7 +645,7 @@ class user extends common
 				if (
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
 					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
-					and password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
+					and password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password']))
 					and $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 					and $captcha === true
 				) {
