@@ -394,7 +394,8 @@ class common
 						setcookie('ZWII_CONTENT', $key, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
 						self::$i18nContent = $key;
 						\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
-						header('Refresh:0; url=' . $_SERVER['PHP_SELF']);
+						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl(0));
+						exit();
 					}
 				}
 			}
