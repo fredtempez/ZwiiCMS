@@ -363,6 +363,7 @@ class common
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
+
 		// Utilisateur connecté
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
@@ -380,6 +381,21 @@ class common
 				$this->url = $url;
 			} else {
 				$this->url = $this->getData(['locale', 'homePageId']);
+			}
+		}
+		
+		// Pour éviter une 404 sur une langue étrangère, bascule dans la langue correcte.
+		if (is_null($this->getData(['page', $this->getUrl(0)]))) {
+			foreach (self::$languages as $key => $value) {
+				if (is_dir(self::DATA_DIR . $key)) {
+					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
+					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
+						setcookie('ZWII_CONTENT', $key, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+						self::$i18nContent = $key;
+						\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+						header('Refresh:0; url=' . $_SERVER['PHP_SELF']);
+					}
+				}
 			}
 		}
 

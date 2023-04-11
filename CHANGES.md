@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 12.3.07
+- Corrige un affichage erroné en fin d'installation
+- Corrige une erreur 404 lors de l'accès à une page dans une langue étrangère et bascule dans le format de langue correct.
+
 ## Version 12.3.06
 - Compléments de traduction.
 
