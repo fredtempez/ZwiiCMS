@@ -1,9 +1,12 @@
 # Changelog
 
 ## Version 12.3.07
+### Corrections
 - Corrige un affichage erroné en fin d'installation
 - Corrige une erreur 404 lors de l'accès à une page dans une langue étrangère et bascule dans le format de langue correct.
 - Permet m'affichage des pages orphelines dans les redirections du formulaire, module désormais en version 3.8.
+### Amélioration
+- Les caractères spéciaux dans le mot de passe sont reconnus.
 
 ## Version 12.3.06
 - Compléments de traduction.
