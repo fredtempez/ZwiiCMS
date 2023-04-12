@@ -521,7 +521,6 @@ class core extends common
 					file_exists(self::DATA_DIR . $key . '/page.json')) {
 					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
 					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
-						//setcookie('ZWII_CONTENT', $key, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
 						$_SESSION['ZWII_CONTENT'] = $key;
 						self::$i18nContent = $key;
 						\setlocale(LC_ALL, self::$i18nContent . '.UTF8');

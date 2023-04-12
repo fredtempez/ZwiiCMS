@@ -63,9 +63,6 @@ class install extends common
 			]);
 		}
 
-		//Nettoyage anciennes installations
-		helper::deleteCookie('ZWII_CONTENT');
-
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
 			foreach ($this->getData(['languages']) as $lang => $value) {
@@ -106,7 +103,6 @@ class install extends common
 
 				// par défaut le contenu est la langue d'installation
 				self::$i18nContent = self::$i18nUI;
-				//setcookie('ZWII_CONTENT', self::$i18nContent, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
 				$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
 
 				// Double vérification pour le mot de passe

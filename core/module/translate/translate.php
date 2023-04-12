@@ -622,10 +622,8 @@ class translate extends common
 			array_key_exists($lang, self::$languages) === true
 
 		) {
-			// Nettoyer le cookie
-			helper::deleteCookie('ZWII_CONTENT');
-			// Stocker le choix
-			//setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+
+			// Stocker la sélection
 			$_SESSION['ZWII_CONTENT'] = $lang;
 		}
 

@@ -102,7 +102,6 @@ class common
 	public static $inputBefore = [];
 	public static $inputNotices = [];
 	public static $importNotices = [];
-	public static $captchaNotices = [];
 	public static $coreNotices = [];
 	public $output = [
 		'access' => true,
@@ -217,8 +216,6 @@ class common
 	private $url = '';
 	// Données de site
 	private $user = [];
-	// Drapeau de sauvegarde
-	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
@@ -314,17 +311,13 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Extraction de la sesion
+		$this->input['_SESSION'] = $_SESSION;
+
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
-		}
-
-		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
-			// Déterminé par le cookie
-			//self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
 
@@ -436,7 +429,6 @@ class common
 			);
 			stream_context_set_default($context);
 		}
-
 	}
 
 

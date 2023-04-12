@@ -532,15 +532,15 @@ $(document).ready(function () {
         var langSelected = $(this).val();
         var langSelected = langSelected.split("/");
         // Lit le cookie de langue
-        // var langCookie = getCookie('ZWII_CONTENT');
-        var langCookie = "<?php echo $this->getInput('ZWII_CONTENT');?>";
+        var langSession = "<?php echo $_SESSION['ZWII_CONTENT'];?>";
+        console.log(langSession);
         // Découpe l'URL pour exclure le changement de page avec le thème
         var url = window.location;
         var currentUrl = url.href.split("/");
         // Change si différent, corrige le problème avec le thème et le rechargement de la langue.
         if ((currentUrl !== "?theme" ||
                 currentUrl !== "theme") &&
-            langSelected[6] !== langCookie
+            langSelected[6] !== langSession
         ) {
             //$(location).attr("href", langUrl);
             var select = document.getElementById("barSelectLanguage");
