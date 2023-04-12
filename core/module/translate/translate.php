@@ -202,7 +202,7 @@ class translate extends common
 			if (is_dir(self::DATA_DIR . $key)) {
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
-				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
+				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
 					$messageLocale = helper::translate('Langue du site sélectionnée');
 				} else {
 					$messageLocale = '';

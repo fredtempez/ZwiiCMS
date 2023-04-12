@@ -532,7 +532,8 @@ $(document).ready(function () {
         var langSelected = $(this).val();
         var langSelected = langSelected.split("/");
         // Lit le cookie de langue
-        var langCookie = getCookie('ZWII_CONTENT');
+        // var langCookie = getCookie('ZWII_CONTENT');
+        var langCookie = "<?php echo $this->getInput('ZWII_CONTENT');?>";
         // Découpe l'URL pour exclure le changement de page avec le thème
         var url = window.location;
         var currentUrl = url.href.split("/");
