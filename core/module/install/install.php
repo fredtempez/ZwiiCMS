@@ -60,7 +60,7 @@ class install extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
+				'redirect' => helper::baseUrl() . 'install/postinstall'
 			]);
 		}
 
@@ -99,7 +99,7 @@ class install extends common
 				$success = true;
 
 				// Validation de la langue transmise
-				self::$i18nUI = $this->getUrl(2);
+				self::$i18nUI = $_SESSION['ZWII_UI'];
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 
 				// par défaut le contenu est la langue d'installation
