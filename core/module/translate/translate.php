@@ -615,7 +615,7 @@ class translate extends common
 		 * fait partie des lnagues installées
 		 */
 		if (
-			$this->getInput('ZWII_CONTENT') !== $lang
+			$_SESSION['ZWII_CONTENT'] !== $lang
 			&&
 			is_dir(self::DATA_DIR . $lang)
 			&&

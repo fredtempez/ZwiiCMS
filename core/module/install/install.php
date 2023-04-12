@@ -54,8 +54,9 @@ class install extends common
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$lang = $this->getInput('installLanguage');
-			// Place le cookie pour la suite de  l'installation
-			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			// Pour la suite  de l'installation
+			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			$_SESSION['ZWII_UI'] = $this->getInput('installLanguage');
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -166,7 +167,8 @@ class install extends common
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
 						// Supprime l'installation FR générée par défaut.
-						$this->removeDir(self::DATA_DIR . 'fr_FR');
+						if (is_dir(self::DATA_DIR . 'fr_FR'))
+							$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy

@@ -312,7 +312,7 @@ class common
 		}
 
 		// Extraction de la sesion
-		$this->input['_SESSION'] = $_SESSION;
+		// $this->input['_SESSION'] = $_SESSION;
 
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
@@ -356,7 +356,7 @@ class common
 				: self::$i18nUI;
 		} else {
 			// Installation
-			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR';
+			self::$i18nUI = $_SESSION['ZWII_UI'] ? $_SESSION['ZWII_UI'] : 'fr_FR';
 		}
 
 
