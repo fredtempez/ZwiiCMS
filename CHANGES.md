@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.08
+- Amélioration du code liée à la traduction du contenu du CMS.
+
 ## Version 12.3.07
 ### Corrections
 - Corrige un affichage erroné en fin d'installation
