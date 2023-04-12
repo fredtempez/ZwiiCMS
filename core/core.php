@@ -315,9 +315,16 @@ class common
 		}
 
 		// Déterminer la langue du contenu du site
+		if (isset($_SESSION['ZWII_CONTENT'])) {
+			// Déterminé par le cookie
+			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
+			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+		}
+
+		// Déterminer la langue du contenu du site
 		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
+			//self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
 

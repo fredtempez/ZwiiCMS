@@ -625,7 +625,8 @@ class translate extends common
 			// Nettoyer le cookie
 			helper::deleteCookie('ZWII_CONTENT');
 			// Stocker le choix
-			setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+			//setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+			$_SESSION['ZWII_CONTENT'] = $lang;
 		}
 
 		// Valeurs en sortie
