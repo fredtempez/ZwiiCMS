@@ -168,43 +168,20 @@ class translate extends common
 	public function index()
 	{
 
-		/**
-		 * Met à jour les dictionnaires des langues depuis les modèles installés
-		 */
+		// --------------------------------------------------------------------------------------------------
+		// Langues du site
+		// --------------------------------------------------------------------------------------------------
 
-		// Langues installées
-		$installedUI = $this->getData(['language']);
-
-		// Check si la langue est bien disponible sinon la supprime de la BDD
-		if ($installedUI) {
-			foreach ($installedUI as $key => $value)
-				if (file_exists(self::I18N_DIR . $key . '.json') === false) {
-					$this->deleteData(['languages', $key]);
-				}
-		}
-
-		// Langues disponibles avec la mise à jour
-		$store = $this->getData(['language']);
-
-		if ($installedUI) {
-			foreach($installedUI as $key => $value) {
-				if (isset($store[$key]) && $store[$key]['version'] > $value['version'])  {
-					$this->setData(['language', $key, $store[$key]]);
-				}
-			}
-		}
-
-		// Préparation du formulaire
-		// -------------------------
-
-		// Onglet des langues de contenu
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $key &&
-				file_exists(self::DATA_DIR . $key . 'page.json') &&
-				file_exists(self::DATA_DIR . $key . 'module.json') &&
-				file_exists(self::DATA_DIR . $key . 'locale.json') 
-			)) {
+			if (
+				is_dir(
+					self::DATA_DIR . $key &&
+					file_exists(self::DATA_DIR . $key . 'page.json') &&
+					file_exists(self::DATA_DIR . $key . 'module.json') &&
+					file_exists(self::DATA_DIR . $key . 'locale.json')
+				)
+			) {
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
 				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
@@ -234,7 +211,8 @@ class translate extends common
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
 
 		// --------------------------------------------------------------------------------------------------
-		// Onglet des langues de l'interface
+		// Langues de l'UI
+		// --------------------------------------------------------------------------------------------------
 
 		// Langues attachées à des utilisateurs non effaçables
 		$usersUI = [];
@@ -245,20 +223,17 @@ class translate extends common
 
 		// Langues installées
 		$installedUI = $this->getData(['language']);
-		if (array_key_exists('languages', $installedUI )) {
-			$installedUI = $installedUI['languages'];
-		}
-		if (array_key_exists('language', $installedUI )) {
+
+		if (array_key_exists('language', $installedUI)) {
 			$installedUI = $installedUI['language'];
 		}
+
 		// Langues disponibles en ligne
-		$storeUI = is_null (json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true))
-						? json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true)
-						: json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
-		if (array_key_exists('languages', $storeUI )) {
+		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
+		if (array_key_exists('languages', $storeUI)) {
 			$storeUI = $storeUI['languages'];
 		}
-		if (array_key_exists('language', $storeUI )) {
+		if (array_key_exists('language', $storeUI)) {
 			$storeUI = $storeUI['language'];
 		}
 
