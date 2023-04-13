@@ -180,9 +180,8 @@ class translate extends common
 				file_exists(self::DATA_DIR . $key . '/page.json') &&
 				file_exists(self::DATA_DIR . $key . '/module.json') &&
 				file_exists(self::DATA_DIR . $key . '/locale.json')
-				)
-			{
-				
+			) {
+
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
 				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
@@ -308,11 +307,28 @@ class translate extends common
 
 			// Création du contenu
 			$lang = $this->getInput('translateAddContent');
+			require_once('core/module/install/ressource/defaultdata.php');
 
 			// Stockage dans un sous-dossier localisé
 			if (!file_exists(self::DATA_DIR . $lang)) {
 				mkdir(self::DATA_DIR . $lang, 0755);
+				mkdir(self::DATA_DIR . $lang . '/content', 0755);
 			}
+
+			// En_EN si le contenu localisé n'est pas traduit
+			if (!isset(init::$defaultDataI18n[$lang])) {
+				$langSource = 'default';
+			}
+			
+			file_put_contents(self::DATA_DIR . $lang . '/locale.json', json_encode(['locale' => init::$defaultDataI18n[$langSource]['locale']]));
+			file_put_contents(self::DATA_DIR . $lang . '/page.json', json_encode(['page' => init::$defaultDataI18n[$langSource]['page']]));
+			file_put_contents(self::DATA_DIR . $lang . '/module.json', json_encode(['module' => []]));
+			
+			// Créer la page d'accueil
+			$pageId = init::$defaultDataI18n[$langSource]['locale']['homePageId'];
+			$content = init::$defaultDataI18n[$langSource]['html'];
+			file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langSource]['page'][$pageId]['content'], $content);
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'translate',

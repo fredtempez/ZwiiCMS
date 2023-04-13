@@ -598,16 +598,6 @@ class common
 	public function initData($module, $lang, $sampleSite = false)
 	{
 
-		// Créer la base de données des langues
-		/*
-		if ($module === 'language') {
-			copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
-			$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-			unlink(self::I18N_DIR . 'language.json');
-			return;
-		}
-		*/
-
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
@@ -647,7 +637,7 @@ class common
 			} else {
 				// En_EN si le contenu localisé n'est pas traduit
 				if (!isset(init::$defaultDataI18n[$lang])) {
-					$lang = 'en_EN';
+					$lang = 'default';
 				}
 				// Messages localisés
 				$this->setData(['locale', init::$defaultDataI18n[$lang]['locale']]);

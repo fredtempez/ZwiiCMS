@@ -478,7 +478,60 @@ class init extends common
 		]
 	];
 	public static $defaultDataI18n = [
-		'en_EN' => [
+		'es' => [
+			'locale' => [
+				'homePageId' => 'home',
+				'page302' => 'none',
+				'page403' => 'none',
+				'page404' => 'none',
+				'legalPageId' => 'none',
+				'searchPageId' => 'none',
+				'searchPageLabel' => 'none',
+				'sitemapPageLabel' => 'none',
+				'legalPageLabel' => 'legales',
+				"metaDescription" => "Zwii es un CMS sin base de datos que facilita la creación y gestión de un sitio web sin necesidad de conocimientos de programación.",
+				"title" => "¡Tu sitio en unos clics!",
+				"cookies" => [
+					"mainLabel" => "Este sitio web utiliza cookies necesarias para su funcionamiento. Estas cookies permiten optimizar su funcionamiento, por ejemplo, memorizando los datos de conexión, el idioma que has elegido o la validación de este mensaje.",
+					"titleLabel" => "Cookies esenciales",
+					"linkLegalLabel" => "Consultar el aviso legal",
+					"cookiesFooterText" => "Cookies",
+					"buttonValidLabel" => "Aceptar"
+					]
+			],
+			'page' => [
+				'home' => [
+					'typeMenu' => 'text',
+					'iconUrl' => '',
+					'disable' => false,
+					'content' => 'home.html',
+					'hideTitle' => false,
+					'homePageId' => true,
+					'breadCrumb' => false,
+					'metaDescription' => '',
+					'metaTitle' => '',
+					'moduleId' => '',
+					'modulePosition' => 'bottom',
+					'parentPageId' => '',
+					'position' => 1,
+					'group' => self::GROUP_VISITOR,
+					'targetBlank' => false,
+					'title' => 'Home page',
+					'shortTitle' => 'Home',
+					'block' => '12',
+					'barLeft' => '',
+					'barRight' => '',
+					'displayMenu' => 'none',
+					'hideMenuSide' => false,
+					'hideMenuChildren' => false,
+					'extraPosition' => false,
+					'css' => '',
+					'js' => ''
+				]
+			],
+			'html' => '¡Bienvenido a ZwiiCMS, felicidades, esta es su primera página!'
+		],
+		'default' => [
 			'locale' => [
 				'homePageId' => 'home',
 				'page302' => 'none',
