@@ -174,14 +174,15 @@ class translate extends common
 
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
+
 			if (
-				is_dir(
-					self::DATA_DIR . $key &&
-					file_exists(self::DATA_DIR . $key . 'page.json') &&
-					file_exists(self::DATA_DIR . $key . 'module.json') &&
-					file_exists(self::DATA_DIR . $key . 'locale.json')
+				is_dir(self::DATA_DIR . $key) &&
+				file_exists(self::DATA_DIR . $key . '/page.json') &&
+				file_exists(self::DATA_DIR . $key . '/module.json') &&
+				file_exists(self::DATA_DIR . $key . '/locale.json')
 				)
-			) {
+			{
+				
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
 				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
@@ -230,12 +231,7 @@ class translate extends common
 
 		// Langues disponibles en ligne
 		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-		if (array_key_exists('languages', $storeUI)) {
-			$storeUI = $storeUI['languages'];
-		}
-		if (array_key_exists('language', $storeUI)) {
-			$storeUI = $storeUI['language'];
-		}
+		$storeUI = $storeUI['languages'];
 
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($installedUI as $file => $value) {
