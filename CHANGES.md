@@ -2,6 +2,7 @@
 
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
+- Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.
 
 ## Version 12.3.07
 ### Corrections

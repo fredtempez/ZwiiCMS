@@ -217,7 +217,7 @@ class translate extends common
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageLocaleDelete' . $key, [
-						'class' => ' buttonRed' . ($messageLocale ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
@@ -271,7 +271,7 @@ class translate extends common
 						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
-						'class' => 'buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',

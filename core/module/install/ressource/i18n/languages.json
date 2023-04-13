@@ -1,16 +1,17 @@
 {
     "languages": {
         "fr_FR": {
-            "version": 12306,
-            "date": 1681137784
+            "version": 12308,
+            "date": 1681371766
         },
         "es": {
-            "version": 12306,
-            "date": 1681137784
+            "version": 12308,
+            "date": 1681371766
         },
+
         "en_EN": {
-            "version": 12306,
-            "date": 1681137784
+            "version": 12308,
+            "date": 1681371766
         }
     }
 }
