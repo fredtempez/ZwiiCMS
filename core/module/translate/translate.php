@@ -199,7 +199,11 @@ class translate extends common
 		// Onglet des langues de contenu
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $key)) {
+			if (is_dir(self::DATA_DIR . $key &&
+				file_exists(self::DATA_DIR . $key . 'page.json') &&
+				file_exists(self::DATA_DIR . $key . 'module.json') &&
+				file_exists(self::DATA_DIR . $key . 'locale.json') 
+			)) {
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
 				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
