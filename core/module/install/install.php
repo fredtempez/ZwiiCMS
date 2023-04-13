@@ -385,13 +385,13 @@ class install extends common
 				$installedUI = $this->getData(['language']);
 
 				// Langues disponibles avec la mise à jour
-				$store = json_decode(file_get_contents('core/module/install/ressource/i18n/language.json'), true);
-				$store = $store['language'];
+				require_once('core/module/install/ressource/defaultdata.php');
+				$default = init::$defaultData['language'];
 
 				foreach ($installedUI as $key => $value) {
-					if ($store[$key]['version'] > $value['version']) {
+					if ($default[$key]['version'] > $value['version']) {
 						copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-						$this->setData(['language', $key, $store[$key]]);
+						$this->setData(['language', $key, $default[$key]]);
 					}
 				}
 
