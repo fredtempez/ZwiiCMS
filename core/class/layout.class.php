@@ -1166,8 +1166,8 @@ class layout extends common
             is_dir(self::DATA_DIR . $lang)
         ) {
             if (
-                (isset($_COOKIE['ZWII_CONTENT'])
-                    and $_COOKIE['ZWII_CONTENT'] === $lang
+                (isset($_SESSION['ZWII_CONTENT'])
+                    and $_SESSION['ZWII_CONTENT'] === $lang
                 )
             ) {
                 $select = ' class="i18nFlagSelected" ';

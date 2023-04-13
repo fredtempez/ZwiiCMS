@@ -102,7 +102,6 @@ class common
 	public static $inputBefore = [];
 	public static $inputNotices = [];
 	public static $importNotices = [];
-	public static $captchaNotices = [];
 	public static $coreNotices = [];
 	public $output = [
 		'access' => true,
@@ -217,8 +216,6 @@ class common
 	private $url = '';
 	// Données de site
 	private $user = [];
-	// Drapeau de sauvegarde
-	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
@@ -315,10 +312,13 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Extraction de la sesion
+		// $this->input['_SESSION'] = $_SESSION;
+
 		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
+		if (isset($_SESSION['ZWII_CONTENT'])) {
 			// Déterminé par le cookie
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
+			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
 
@@ -349,20 +349,18 @@ class common
 		// Langue de l'administration
 		if ($this->getData(['user']) !== []) {
 			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
-			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $this->getInput('ZWII_UI');
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
 				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
 				? 'fr_FR'
 				: self::$i18nUI;
+			// Stocker le cookie de langue pour l'éditeur de texte
+			setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 		} else {
 			// Installation
-			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR';
+			self::$i18nUI = isset($_SESSION['ZWII_UI']) ? $_SESSION['ZWII_UI'] : 'fr_FR';
 		}
-
-
-		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
 
 		// Utilisateur connecté
@@ -382,23 +380,6 @@ class common
 				$this->url = $url;
 			} else {
 				$this->url = $this->getData(['locale', 'homePageId']);
-			}
-		}
-		
-		// Pour éviter une 404 sur une langue étrangère, bascule dans la langue correcte.
-		if (is_null($this->getData(['page', $this->getUrl(0)]))) {
-			foreach (self::$languages as $key => $value) {
-				if (is_dir(self::DATA_DIR . $key) &&
-					file_exists(self::DATA_DIR . $key . '/page.json')) {
-					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
-					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
-						setcookie('ZWII_CONTENT', $key, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
-						self::$i18nContent = $key;
-						\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
-						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl(0));
-						exit();
-					}
-				}
 			}
 		}
 
@@ -447,7 +428,6 @@ class common
 			);
 			stream_context_set_default($context);
 		}
-
 	}
 
 

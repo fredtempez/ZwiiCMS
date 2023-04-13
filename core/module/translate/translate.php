@@ -200,10 +200,14 @@ class translate extends common
 		// Onglet des langues de contenu
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $key)) {
+			if (is_dir(self::DATA_DIR . $key &&
+				file_exists(self::DATA_DIR . $key . 'page.json') &&
+				file_exists(self::DATA_DIR . $key . 'module.json') &&
+				file_exists(self::DATA_DIR . $key . 'locale.json') 
+			)) {
 				if (self::$i18nUI === $key) {
 					$messageLocale = helper::translate('Langue par défaut');
-				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
+				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
 					$messageLocale = helper::translate('Langue du site sélectionnée');
 				} else {
 					$messageLocale = '';
@@ -218,7 +222,7 @@ class translate extends common
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageLocaleDelete' . $key, [
-						'class' => ' buttonRed' . ($messageLocale ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
@@ -284,7 +288,7 @@ class translate extends common
 						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
-						'class' => 'buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
@@ -628,17 +632,16 @@ class translate extends common
 		 * fait partie des lnagues installées
 		 */
 		if (
-			$this->getInput('ZWII_CONTENT') !== $lang
+			$_SESSION['ZWII_CONTENT'] !== $lang
 			&&
 			is_dir(self::DATA_DIR . $lang)
 			&&
 			array_key_exists($lang, self::$languages) === true
 
 		) {
-			// Nettoyer le cookie
-			helper::deleteCookie('ZWII_CONTENT');
-			// Stocker le choix
-			setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+
+			// Stocker la sélection
+			$_SESSION['ZWII_CONTENT'] = $lang;
 		}
 
 		// Valeurs en sortie

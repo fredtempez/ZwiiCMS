@@ -54,17 +54,15 @@ class install extends common
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$lang = $this->getInput('installLanguage');
-			// Place le cookie pour la suite de  l'installation
-			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			// Pour la suite  de l'installation
+			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			$_SESSION['ZWII_UI'] = $this->getInput('installLanguage');
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
+				'redirect' => helper::baseUrl() . 'install/postinstall'
 			]);
 		}
-
-		//Nettoyage anciennes installations
-		helper::deleteCookie('ZWII_CONTENT');
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
@@ -101,13 +99,12 @@ class install extends common
 				$success = true;
 
 				// Validation de la langue transmise
-				self::$i18nUI = $this->getUrl(2);
+				self::$i18nUI = $_SESSION['ZWII_UI'];
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 
 				// par défaut le contenu est la langue d'installation
 				self::$i18nContent = self::$i18nUI;
-				setcookie('ZWII_CONTENT', self::$i18nContent, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
-
+				$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
 
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -170,7 +167,8 @@ class install extends common
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
 						// Supprime l'installation FR générée par défaut.
-						$this->removeDir(self::DATA_DIR . 'fr_FR');
+						if (is_dir(self::DATA_DIR . 'fr_FR'))
+							$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy
