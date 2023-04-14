@@ -63,7 +63,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
-                        'label' => 'Alignement du contenu',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
                 </div>

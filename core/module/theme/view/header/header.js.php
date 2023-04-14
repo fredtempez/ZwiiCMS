@@ -60,15 +60,16 @@ $("input, select").on("change", function() {
 
 			//Modifier la dropdown liste si une image n'est pas sélectionnée
 			if ($("#themeHeaderImage").val() !== "" ) {
+				var message = "<?php echo helper::translate('Hauteur de l\'image sélectionnée');?>";
 				// Une image est ajoutée ou changée
 				if ($("#themeHeaderHeight option").length === 5) {
 					// Pas d'image précédemment on ajoute l'option
-					$("#themeHeaderHeight ").prepend('<option selected="selected" value="0"> Hauteur de l\'image sélectionnée </option>');
+					$("#themeHeaderHeight ").prepend('<option selected="selected" value="0">' + message +'</option>');
 				}
 				// Modifier la valeur
 				$("#themeHeaderHeight option:eq(0)").val(tmpImgHeight + "px");
 				// Modifier l'option
-				$("#themeHeaderHeight option:eq(0)").html("Hauteur de l\'image sélectionnée (" + tmpImgHeight + "px)");
+				$("#themeHeaderHeight option:eq(0)").html(message + " (" + tmpImgHeight + "px)");
 				$("#themeHeaderImageInfo").show();
 			} else {
 				$("#themeHeaderImageInfo").hide();

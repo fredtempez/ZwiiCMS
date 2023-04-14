@@ -138,7 +138,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
-                        'label' => 'Alignement du contenu',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'header', 'textAlign'])
                     ]); ?>
                 </div>
@@ -163,10 +163,10 @@
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('Largeur :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
-                        -
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
-                        -
+                        <?php echo helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span> ; <?php echo helper::translate('Largeur du site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>
+                        |
+                        <?php echo helper::translate('Hauteur de l\'image'); ?> <span id="themeHeaderImageHeight"></span>
+                        |
                         <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
