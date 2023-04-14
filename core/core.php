@@ -592,60 +592,50 @@ class common
 
 	/**
 	 * Initialisation des données
-	 * @param array $module : nom du module à générer
+	 * @param string $module : nom du module à générer
+	 * @param string $lang la langue à créer
+	 * @param bool $sampleSite créer un site exemple en FR
 	 * choix valides :  core config user theme page module
 	 */
 	public function initData($module, $lang, $sampleSite = false)
 	{
-
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
-		// Stockage dans un sous-dossier localisé
+		// Création des sous-dossiers
 		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
+		}
+		if (!file_exists(self::DATA_DIR . $lang . '/content')) {
 			mkdir(self::DATA_DIR . $lang . '/content', 0755);
 		}
 
-		if ($lang == 'fr_FR') {
-			// Stockage dans un sous-dossier localisé
-
-			$db = $this->dataFiles[$module];
-
-			if ($sampleSite === true) {
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$langFolder][$module]]));
-			} else {
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langFolder][$module]]));
-			}
-
+		// Site en français avec site exemple
+		if ($lang == 'fr_FR' && $sampleSite === true) {
+			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]]));
 			// Créer le jeu de pages du site de test
 			if ($module === 'page') {
-				$langFolder = $lang . '/content/';
 				// Site de test ou page simple
-				if ($sampleSite === true) {
-					foreach (init::$siteContent as $key => $value) {
-						// Creation du contenu de la page
-						if (!empty($this->getData(['page', $key, 'content']))) {
-							file_put_contents(self::DATA_DIR . $langFolder . $this->getData(['page', $key, 'content']), $value);
-						}
+				foreach (init::$siteContent as $key => $value) {
+					// Creation du contenu de la page
+					if (!empty($this->getData(['page', $key, 'content']))) {
+						file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
 					}
-				} else {
-					// Créer la page d'accueil
-					file_put_contents(self::DATA_DIR . $langFolder . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
 				}
 			}
+
+		// Version en langue étrangère ou fr_FR sans site de test
 		} else {
 			// En_EN si le contenu localisé n'est pas traduit
+			$langDefault = $lang ;
 			if (!isset(init::$defaultDataI18n[$lang])) {
-				$langFolder = 'default';
+				$langDefault = 'default';
 			}
-
-			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langFolder][$module]]));
-
+			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]]));
 			// Créer la page d'accueil
-			$pageId = init::$defaultDataI18n[$langFolder]['locale']['homePageId'];
-			$content = init::$defaultDataI18n[$langFolder]['html'];
-			file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langFolder]['page'][$pageId]['content'], $content);
+			$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
+			$content = init::$defaultDataI18n[$langDefault]['html'];
+			file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
 		}
 	}
 

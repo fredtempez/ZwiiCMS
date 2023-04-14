@@ -427,7 +427,7 @@ class init extends common
 		]
 	];
 	public static $defaultDataI18n = [
-		'fr' => [
+		'fr_FR' => [
 			'locale' => [
 				'homePageId' => 'accueil',
 				'page302' => 'none',
@@ -479,6 +479,7 @@ class init extends common
 				]
 			],
 			'module' => [],
+			'html' => '<h2>Bienvenue sur votre nouveau site Zwii !</h2>'
 		],
 		'es' => [
 			'locale' => [
@@ -531,7 +532,8 @@ class init extends common
 					'js' => ''
 				]
 			],
-			'html' => '¡Bienvenido a ZwiiCMS, felicidades, esta es su primera página!'
+			'module' => [],
+			'html' => '<h2>¡Bienvenido a ZwiiCMS, felicidades, esta es su primera página!</h2>'
 		],
 		'default' => [
 			'locale' => [
@@ -584,7 +586,8 @@ class init extends common
 					'js' => ''
 				]
 			],
-			'html' => 'Welcome in this ZwiiCMS, congratulations this is you first page !'
+			'module' => [],
+			'html' => '<h2>Welcome in this ZwiiCMS, congratulations this is you first page !</h2>'
 		]
 	];
 
