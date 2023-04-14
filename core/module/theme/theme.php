@@ -47,7 +47,7 @@ class theme extends common
 	];
 	public static $containerWides = [
 		'container' => 'Limitée au site',
-		'none' => 'Etendue sur la page'
+		'none' => 'Étendu sur la page'
 	];
 	public static $footerblocks = [
 		1 => [
@@ -78,11 +78,11 @@ class theme extends common
 		'bold' => 'Gras'
 	];
 	public static $footerHeights = [
-		'0px' => 'Nulles (0px)',
-		'5px' => 'Très petites (5px)',
-		'10px' => 'Petites (10px)',
-		'15px' => 'Moyennes (15px)',
-		'20px' => 'Grandes (20px)'
+		'0px' => '0px',
+		'5px' => '5px',
+		'10px' => '10px',
+		'15px' => '15px',
+		'20px' => '20px'
 	];
 	public static $footerPositions = [
 		'hide' => 'Caché',
@@ -90,27 +90,27 @@ class theme extends common
 		'body' => 'En dessous du site'
 	];
 	public static $footerFontSizes = [
-		'.8em' => 'Très petite (80%)',
-		'.9em' => 'Petite (90%)',
+		'.8em' => '80%',
+		'.9em' => '90%',
 		'1em' => 'Standard (100%)',
-		'1.1em' => 'Moyenne (110%)',
-		'1.2em' => 'Grande (120%)',
-		'1.3em' => 'Très grande (130%)'
+		'1.1em' => '110%',
+		'1.2em' => '120%',
+		'1.3em' => '130%'
 	];
 	public static $headerFontSizes = [
-		'1.6em' => 'Très petite (160%)',
-		'1.8em' => 'Petite (180%)',
-		'2em' => 'Moyenne (200%)',
-		'2.2em' => 'Grande (220%)',
-		'2.4vmax' => 'Très grande (240%)'
+		'1.6em' => '160%',
+		'1.8em' => '180%',
+		'2em' => '200%',
+		'2.2em' => '220%',
+		'2.4vmax' => '240%'
 	];
 	public static $headerHeights = [
 		'unset' => 'Libre', // texte dynamique cf header.js.php
-		'100px' => 'Très petite (100px) ',
-		'150px' => 'Petite (150px)',
-		'200px' => 'Moyenne (200px)',
-		'300px' => 'Grande (300px)',
-		'400px' => 'Très grande (400px)',
+		'100px' => '100px',
+		'150px' => '150px',
+		'200px' => '200px',
+		'300px' => '300px',
+		'400px' => '400px',
 	];
 	public static $headerPositions = [
 		'body' => 'Au dessus du site',
@@ -133,12 +133,12 @@ class theme extends common
 		'bottom right' => 'En bas à droite'
 	];
 	public static $menuFontSizes = [
-		'.8em' => 'Très petite (80%)',
-		'.9em' => 'Petite (90%)',
+		'.8em' => '80%',
+		'.9em' => '90%',
 		'1em' => 'Standard (100%)',
-		'1.1em' => 'Moyenne (110%)',
-		'1.2em' => 'Grande (120%)',
-		'1.3em' => 'Très grande (130%)'
+		'1.1em' => '110%',
+		'1.2em' => '120%',
+		'1.3em' => '130%'
 	];
 	public static $menuHeights = [
 		'5px 10px' => 'Très petite',

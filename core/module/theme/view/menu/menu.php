@@ -63,7 +63,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
-                        'label' => 'Alignement',
+                        'label' => 'Alignement du contenu',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
                 </div>
@@ -197,7 +197,7 @@
                 <div class="col6">
                     <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à celle définie dans le site',
+                        'help' => 'Proportionnelle à la taille définie dans le site',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>

@@ -188,7 +188,7 @@
                 <div class="col3">
                     <?php echo template::select('themeFooterFontSize', $module::$footerFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à celle définie dans le site.',
+                        'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'footer', 'fontSize'])
                     ]); ?>
                 </div>

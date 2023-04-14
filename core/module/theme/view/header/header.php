@@ -118,7 +118,7 @@
                 <div class="col4">
                     <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à celle définie dans le site.',
+                        'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'header', 'fontSize'])
                     ]); ?>
                 </div>
