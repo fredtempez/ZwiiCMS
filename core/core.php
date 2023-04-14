@@ -231,7 +231,7 @@ class common
 		'theme' => '',
 		'user' => '',
 		'language' => '',
-		'profil'=> '',
+		'profil' => '',
 	];
 
 	public static $fontsWebSafe = [
@@ -604,25 +604,24 @@ class common
 		// Stockage dans un sous-dossier localisé
 		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
+			mkdir(self::DATA_DIR . $lang . '/content', 0755);
 		}
-		$db = $this->dataFiles[$module];
 
-		if ($sampleSite === true && $lang === 'fr_FR') {
-			$db->set($module, init::$siteData[$module]);
-		} else {
-			$db->set($module, init::$defaultData[$module]);
-		}
-		$db->save;
+		if ($lang == 'fr_FR') {
+			// Stockage dans un sous-dossier localisé
 
-		// Créer le jeu de pages du site de test
-		if ($module === 'page') {
-			$langFolder = $lang . '/content/';
-			// Dossier des pages
-			if (!is_dir(self::DATA_DIR . $langFolder)) {
-				mkdir(self::DATA_DIR . $langFolder, 0755);
+			$db = $this->dataFiles[$module];
+
+			if ($sampleSite === true) {
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$langFolder][$module]]));
+			} else {
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langFolder][$module]]));
 			}
-			// Site de test ou page simple
-			if ($lang === 'fr_FR') {
+
+			// Créer le jeu de pages du site de test
+			if ($module === 'page') {
+				$langFolder = $lang . '/content/';
+				// Site de test ou page simple
 				if ($sampleSite === true) {
 					foreach (init::$siteContent as $key => $value) {
 						// Creation du contenu de la page
@@ -634,20 +633,19 @@ class common
 					// Créer la page d'accueil
 					file_put_contents(self::DATA_DIR . $langFolder . 'accueil.html', '<p>Contenu de votre nouvelle page.</p>');
 				}
-			} else {
-				// En_EN si le contenu localisé n'est pas traduit
-				if (!isset(init::$defaultDataI18n[$lang])) {
-					$lang = 'default';
-				}
-				// Messages localisés
-				$this->setData(['locale', init::$defaultDataI18n[$lang]['locale']]);
-				// Page dans une autre langue, page d'accueil
-				$this->setData(['page', init::$defaultDataI18n[$lang]['page']]);
-				// Créer la page d'accueil
-				$pageId = init::$defaultDataI18n[$lang]['locale']['homePageId'];
-				$content = init::$defaultDataI18n[$lang]['html'];
-				file_put_contents(self::DATA_DIR . $langFolder . init::$defaultDataI18n[$lang]['page'][$pageId]['content'], $content);
 			}
+		} else {
+			// En_EN si le contenu localisé n'est pas traduit
+			if (!isset(init::$defaultDataI18n[$lang])) {
+				$langFolder = 'default';
+			}
+
+			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langFolder][$module]]));
+
+			// Créer la page d'accueil
+			$pageId = init::$defaultDataI18n[$langFolder]['locale']['homePageId'];
+			$content = init::$defaultDataI18n[$langFolder]['html'];
+			file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langFolder]['page'][$pageId]['content'], $content);
 		}
 	}
 
@@ -904,13 +902,14 @@ class common
 	 * Retourne les permission de l'utilisateur connecté
 	 * @param int $key Clé de la valeur du groupe
 	 * @return string|null
-	*/
-	public function getPermission($key1, $key2 = null) {
+	 */
+	public function getPermission($key1, $key2 = null)
+	{
 		if (is_array($this->user) === false) {
 			return false;
 		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['profil', $this->user['group']]))) {
 			return $this->getData(['profil', $this->user['group'], $key1]);
-		} elseif ($key2	&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $key1]))) {
+		} elseif ($key2 && array_key_exists($key2, $this->getData(['profil', $this->user['group'], $key1]))) {
 			return $this->getData(['profil', $this->user['group'], $key1, $key2]);
 		} else {
 			return false;

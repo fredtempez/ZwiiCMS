@@ -50,26 +50,6 @@ class init extends common
 			'lastAutoUpdate' => 0,
 			'updateAvailable' => false
 		],
-		'locale' => [
-			'homePageId' => 'accueil',
-			'page302' => 'none',
-			'page403' => 'none',
-			'page404' => 'none',
-			'legalPageId' => 'none',
-			'searchPageId' => 'none',
-			'searchPageLabel' => 'Rechercher',
-			'sitemapPageLabel' => 'Plan du site',
-			'legalPageLabel' => 'Mentions légales',
-			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !',
-			'cookies' => [
-				'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
-				'titleLabel' => 'Cookies essentiels',
-				'linkLegalLabel' => 'Consulter  les mentions légales',
-				'cookiesFooterText' => 'Cookies',
-				'buttonValidLabel' => 'J\'ai compris'
-			]
-		],
 		'font' => [
 			'files' => [],
 			'imported' => [
@@ -175,37 +155,6 @@ class init extends common
 				]
 			]
 		],
-		'page' => [
-			'accueil' => [
-				'typeMenu' => 'text',
-				'iconUrl' => '',
-				'disable' => false,
-				'content' => 'accueil.html',
-				'hideTitle' => false,
-				'homePageId' => true,
-				'breadCrumb' => false,
-				'metaDescription' => '',
-				'metaTitle' => '',
-				'moduleId' => '',
-				'modulePosition' => 'bottom',
-				'parentPageId' => '',
-				'position' => 1,
-				'group' => self::GROUP_VISITOR,
-				'targetBlank' => false,
-				'title' => 'Accueil',
-				'shortTitle' => 'Accueil',
-				'block' => '12',
-				'barLeft' => '',
-				'barRight' => '',
-				'displayMenu' => 'none',
-				'hideMenuSide' => false,
-				'hideMenuChildren' => false,
-				'extraPosition' => false,
-				'css' => '',
-				'js' => ''
-			]
-		],
-		'module' => [],
 		'user' => [],
 		'theme' => [
 			'body' => [
@@ -478,6 +427,59 @@ class init extends common
 		]
 	];
 	public static $defaultDataI18n = [
+		'fr' => [
+			'locale' => [
+				'homePageId' => 'accueil',
+				'page302' => 'none',
+				'page403' => 'none',
+				'page404' => 'none',
+				'legalPageId' => 'none',
+				'searchPageId' => 'none',
+				'searchPageLabel' => 'Rechercher',
+				'sitemapPageLabel' => 'Plan du site',
+				'legalPageLabel' => 'Mentions légales',
+				'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
+				'title' => 'Votre site en quelques clics !',
+				'cookies' => [
+					'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+					'titleLabel' => 'Cookies essentiels',
+					'linkLegalLabel' => 'Consulter  les mentions légales',
+					'cookiesFooterText' => 'Cookies',
+					'buttonValidLabel' => 'J\'ai compris'
+				]
+			],
+			'page' => [
+				'accueil' => [
+					'typeMenu' => 'text',
+					'iconUrl' => '',
+					'disable' => false,
+					'content' => 'accueil.html',
+					'hideTitle' => false,
+					'homePageId' => true,
+					'breadCrumb' => false,
+					'metaDescription' => '',
+					'metaTitle' => '',
+					'moduleId' => '',
+					'modulePosition' => 'bottom',
+					'parentPageId' => '',
+					'position' => 1,
+					'group' => self::GROUP_VISITOR,
+					'targetBlank' => false,
+					'title' => 'Accueil',
+					'shortTitle' => 'Accueil',
+					'block' => '12',
+					'barLeft' => '',
+					'barRight' => '',
+					'displayMenu' => 'none',
+					'hideMenuSide' => false,
+					'hideMenuChildren' => false,
+					'extraPosition' => false,
+					'css' => '',
+					'js' => ''
+				]
+			],
+			'module' => [],
+		],
 		'es' => [
 			'locale' => [
 				'homePageId' => 'home',
@@ -587,7 +589,7 @@ class init extends common
 	];
 
 
-	public static $siteData = [
+	public static $siteTemplate = [
 		'page' => [
 			'accueil' => [
 				'typeMenu' => 'text',
