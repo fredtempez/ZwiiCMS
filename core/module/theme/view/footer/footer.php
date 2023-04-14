@@ -135,7 +135,7 @@
                     <?php echo template::checkbox('themeFooterDisplayLegal', true, 'Mentions légales', [
                         'checked' => $this->getData(['locale', 'legalPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displayLegal']),
                         'disabled' => $this->getData(['locale', 'legalPageId']) === 'none' ? true : false,
-                        'help' => 'Option active si une page a été sélectionnée.'
+                        'help' => 'Sélectionnez une page pour activer'
                     ]); ?>
                 </div>
                 <div class="col3">
@@ -149,7 +149,7 @@
                     <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
                         'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                         'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
-                        'help' => 'Option active si une page a été sélectionnée.'
+                        'help' => 'Sélectionnez une page pour activer'
                     ]); ?>
                 </div>
                 <div class="col3">

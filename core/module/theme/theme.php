@@ -113,7 +113,7 @@ class theme extends common
 		'400px' => '400px',
 	];
 	public static $headerPositions = [
-		'body' => 'Au dessus du site',
+		'body' => 'Au-dessus du site',
 		'site' => 'Dans le site',
 		'hide' => 'Cachée'
 	];
