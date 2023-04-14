@@ -101,7 +101,6 @@
                     <?php echo template::select('themeMenuBurgerContent', $module::$burgerContent, [
                         'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
-                        'help' => 'Le menu burger remplace le menu complet lorsque la largeur de l\'écran  n\'est pas suffisante.'
                     ]); ?>
                 </div>
             </div>
@@ -195,7 +194,7 @@
                 <div class="col6">
                     <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à la taille définie dans le site',
+                        'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>
