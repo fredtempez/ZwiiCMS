@@ -483,7 +483,7 @@ class init extends common
 		],
 		'es' => [
 			'locale' => [
-				'homePageId' => 'home',
+				'homePageId' => 'inicio',
 				'page302' => 'none',
 				'page403' => 'none',
 				'page404' => 'none',
@@ -503,11 +503,11 @@ class init extends common
 					]
 			],
 			'page' => [
-				'home' => [
+				'inicio' => [
 					'typeMenu' => 'text',
 					'iconUrl' => '',
 					'disable' => false,
-					'content' => 'home.html',
+					'content' => 'inico.html',
 					'hideTitle' => false,
 					'homePageId' => true,
 					'breadCrumb' => false,
@@ -519,8 +519,8 @@ class init extends common
 					'position' => 1,
 					'group' => self::GROUP_VISITOR,
 					'targetBlank' => false,
-					'title' => 'Home page',
-					'shortTitle' => 'Home',
+					'title' => 'Página de inicio',
+					'shortTitle' => 'Página de inicio',
 					'block' => '12',
 					'barLeft' => '',
 					'barRight' => '',
@@ -1221,7 +1221,8 @@ class init extends common
 			'legalPageId' => 'none',
 			'searchPageId' => 'none',
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !'
+			'title' => 'Votre site en quelques clics !',
+			
 		]
 	];
 

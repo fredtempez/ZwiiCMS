@@ -166,6 +166,7 @@ class install extends common
 					if (self::$i18nContent !== 'fr_FR') {
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
+						$this->initData('locale', self::$i18nContent, false);
 						// Supprime l'installation FR générée par défaut.
 						if (is_dir(self::DATA_DIR . 'fr_FR'))
 							$this->removeDir(self::DATA_DIR . 'fr_FR');
@@ -234,7 +235,7 @@ class install extends common
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl(true) . $this->getData(['locale', 'homePageId']),
+						'redirect' => helper::baseUrl(true),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
 						'state' => ($sent === true && $success === true) ? true : null
 					]);

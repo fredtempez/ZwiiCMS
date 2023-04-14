@@ -312,13 +312,13 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Extraction de la sesion
-		// $this->input['_SESSION'] = $_SESSION;
-
-		// Déterminer la langue du contenu du site
+		// Transmettre la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
-			// Déterminé par le cookie
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
+			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+		} else {
+			// Par défaut fr_FR
+			$_SESSION['ZWII_CONTENT'] = self::$i18nContent ;
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
 		
@@ -330,7 +330,6 @@ class common
 					file_exists($folder . $stageId . '.json') === false
 				) {
 					$this->initData($stageId, self::$i18nContent);
-					common::$coreNotices[] = $stageId;
 				}
 			}
 		}
