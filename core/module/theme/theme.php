@@ -210,10 +210,10 @@ class theme extends common
 		'capitalize' => 'Majuscule à chaque mot'
 	];
 	public static $siteWidths = [
-		'750px' => 'Petite (750 pixels)',
-		'960px' => 'Moyenne (960 pixels)',
-		'1170px' => 'Grande (1170 pixels)',
-		'100%' => 'Fluide (100%)'
+		'750px' => '750 pixels',
+		'960px' => '960 pixels',
+		'1170px' => '1170 pixels',
+		'100%' => '100%'
 	];
 	public static $headerWide = [
 		'auto auto' => 'Automatique',
