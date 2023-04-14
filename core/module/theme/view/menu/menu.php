@@ -95,12 +95,11 @@
                 <div class="col3">
                     <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
-                        'help' => 'Icônes de gestion de compte et de déconnexion. Uniquement pour les membres connectés'
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('themeMenuBurgerContent', $module::$burgerContent, [
-                        'label' => 'Affichage dans le menu burger',
+                        'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
                         'help' => 'Le menu burger remplace le menu complet lorsque la largeur de l\'écran  n\'est pas suffisante.'
                     ]); ?>
@@ -166,8 +165,7 @@
                     <?php
                     echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
                         'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
-                        'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
-                    ]); ?>
+                     ]); ?>
                 </div>
                 <div class="col4">
                     <?php echo template::text('themeMenuActiveColor', [

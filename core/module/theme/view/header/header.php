@@ -42,7 +42,6 @@
                     <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
                         'label' => 'Hauteur maximale',
                         'selected' => $this->getData(['theme', 'header', 'height']),
-                        'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
                     ]); ?>
                 </div>
             </div>
@@ -183,9 +182,6 @@
                         <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
                             'label' => 'Adaptation',
                             'selected' => $this->getData(['theme', 'header', 'imageContainer']),
-                            'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
-                                    Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
-                                    Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
                         ]); ?>
                     </div>
                     <div class="col3">
