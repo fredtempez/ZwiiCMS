@@ -321,18 +321,7 @@ class common
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
-
-		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath($keys, self::$i18nContent),
-				'backup' => file_exists('site/data/.backup')
-			]);
-		}
-
+		
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
 			foreach ($this->dataFiles as $stageId => $item) {
@@ -344,6 +333,17 @@ class common
 					common::$coreNotices[] = $stageId;
 				}
 			}
+		}
+
+		// Instanciation de la classe des entrées / sorties
+		// Récupère les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dataPath($keys, self::$i18nContent),
+				'backup' => file_exists('site/data/.backup')
+			]);
 		}
 
 		// Langue de l'administration
@@ -602,19 +602,21 @@ class common
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
-		// Création des sous-dossiers
-		if (!file_exists(self::DATA_DIR . $lang)) {
-			mkdir(self::DATA_DIR . $lang, 0755);
-		}
-		if (!file_exists(self::DATA_DIR . $lang . '/content')) {
-			mkdir(self::DATA_DIR . $lang . '/content', 0755);
-		}
-
-		// Site en français avec site exemple
-		if ($lang == 'fr_FR' && $sampleSite === true) {
-			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]]));
-			// Créer le jeu de pages du site de test
-			if ($module === 'page') {
+		if (
+			$module === 'page' ||
+			$module === 'module' ||
+			$module === 'locale'
+		) {
+			// Création des sous-dossiers localisés
+			if (!file_exists(self::DATA_DIR . $lang)) {
+				mkdir(self::DATA_DIR . $lang, 0755);
+			}
+			if (!file_exists(self::DATA_DIR . $lang . '/content')) {
+				mkdir(self::DATA_DIR . $lang . '/content', 0755);
+			}
+			// Site en français avec site exemple
+			if ($lang == 'fr_FR' && $sampleSite === true) {
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]], JSON_PRETTY_PRINT));
 				// Site de test ou page simple
 				foreach (init::$siteContent as $key => $value) {
 					// Creation du contenu de la page
@@ -622,21 +624,25 @@ class common
 						file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
 					}
 				}
-			}
 
-		// Version en langue étrangère ou fr_FR sans site de test
-		} else {
-			// En_EN si le contenu localisé n'est pas traduit
-			$langDefault = $lang ;
-			if (!isset(init::$defaultDataI18n[$lang])) {
-				$langDefault = 'default';
+				// Version en langue étrangère ou fr_FR sans site de test
+			} else {
+				// En_EN par défaut si le contenu localisé n'est pas traduit
+				$langDefault = $lang;
+				if (!isset(init::$defaultDataI18n[$lang])) {
+					$langDefault = 'default';
+				}
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]], JSON_PRETTY_PRINT));
+				// Créer la page d'accueil
+				$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
+				$content = init::$defaultDataI18n[$langDefault]['html'];
+				file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
 			}
-			file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]]));
-			// Créer la page d'accueil
-			$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
-			$content = init::$defaultDataI18n[$langDefault]['html'];
-			file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
+		} else {
+			// Installation des données du module
+			file_put_contents(self::DATA_DIR . $module . '.json', json_encode([$module => init::$defaultData[$module]], JSON_PRETTY_PRINT));
 		}
+
 	}
 
 
