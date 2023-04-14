@@ -64,7 +64,6 @@
 					<?php
 					$imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
 					echo template::file('themeBodyImage', [
-						'help' => 'Sélectionner une image',
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Arrière plan',
 						'type' => 1,
