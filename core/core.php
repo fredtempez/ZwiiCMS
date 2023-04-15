@@ -316,10 +316,14 @@ class common
 
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
-			// Déterminé par le cookie
+			// Déterminé par la session présente
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+			;
+		} else {
+			// Initialiser la session en fr_FR
+			$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
 		}
+		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
@@ -349,6 +353,7 @@ class common
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
+
 		// Langue de l'administration si le user est connecté
 		if ($this->getData(['user', $this->getUser('id'), 'language'])) {
 			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
