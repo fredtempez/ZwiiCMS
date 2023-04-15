@@ -690,7 +690,7 @@ class template
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['help']  = helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
         if (empty($attributes['font']) === false) {
             $fonts = $attributes['font'];

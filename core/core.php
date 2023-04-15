@@ -348,7 +348,7 @@ class common
 		// Langue de l'administration
 		if ($this->getData(['user']) !== []) {
 			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
-			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $_SESSION['ZWII_CONTENT'];
 			// Validation de la langue
 			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
 				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
@@ -358,9 +358,8 @@ class common
 			setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 		} else {
 			// Installation
-			self::$i18nUI = isset($_SESSION['ZWII_UI']) ? $_SESSION['ZWII_UI'] : 'fr_FR';
+			self::$i18nUI = isset($_SESSION['ZWII_UI']) ? $_SESSION['ZWII_UI'] : $_SESSION['ZWII_CONTENT'];
 		}
-
 
 		// Utilisateur connecté
 		if ($this->user === []) {

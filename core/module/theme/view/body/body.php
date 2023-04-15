@@ -35,19 +35,20 @@
 			</div>
 			<div class="row">
 				<div class="col6">
+				<?php echo template::text('themeBodyToTopColor', [
+						'class' => 'colorPicker',
+						'help' => 'Le curseur horizontal règle le niveau de transparence.',
+						'label' => 'Couleur icône haut de page',
+						'value' => $this->getData(['theme', 'body', 'toTopColor'])
+					]); ?>
+
+				</div>
+				<div class="col6">
 					<?php echo template::text('themeBodyToTopBackground', [
 						'class' => 'colorPicker',
 						'help' => 'Le curseur horizontal règle le niveau de transparence.',
-						'label' => 'Fond icône haut de page',
+						'label' => 'Icône haut de page, couleur arrière-plan',
 						'value' => $this->getData(['theme', 'body', 'toTopbackgroundColor'])
-					]); ?>
-				</div>
-				<div class="col6">
-					<?php echo template::text('themeBodyToTopColor', [
-						'class' => 'colorPicker',
-						'help' => 'Le curseur horizontal règle le niveau de transparence.',
-						'label' => 'Icône haut de page',
-						'value' => $this->getData(['theme', 'body', 'toTopColor'])
 					]); ?>
 				</div>
 			</div>
@@ -64,7 +65,6 @@
 					<?php
 					$imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
 					echo template::file('themeBodyImage', [
-						'help' => 'Sélectionner une image',
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Arrière plan',
 						'type' => 1,
