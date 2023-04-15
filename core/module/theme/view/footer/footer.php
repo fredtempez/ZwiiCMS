@@ -94,13 +94,12 @@
                 <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayCopyright', true, 'Motorisé par', [
                         'checked' => $this->getData(['theme', 'footer', 'displayCopyright']),
-                        'help' => 'Affiche cette mention devant ZwiiCMS'
                     ]); ?>
                 </div>
                 <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayVersion', true, 'Version', [
                         'checked' => $this->getData(['theme', 'footer', 'displayVersion']),
-                        'help' => 'Affiche le numéro de version après ZwiiCMS'
+
                     ]); ?>
                 </div>
                 <div class="col3">
@@ -111,7 +110,7 @@
                 <div class="col3">
                     <?php echo template::checkbox('themefooterDisplayCookie', true, 'Cookies', [
                         'checked' => $this->getData(['config', 'cookieConsent']) === true ? $this->getData(['theme', 'footer', 'displayCookie']) : false,
-                        'help' => 'Message d\'information relatif aux cookies, disponible si l\'acceptation des cookies est activé.',
+                        'help' => 'Disponible si le consentement des cookies est activé.',
                         'disabled' => !$this->getData(['config', 'cookieConsent'])
                     ]); ?>
                 </div>
@@ -120,13 +119,12 @@
                 <div class="col3">
                     <?php echo template::checkbox('themeFooterLoginLink', true, 'Lien de connexion', [
                         'checked' => $this->getData(['theme', 'footer', 'loginLink']),
-                        'help' => 'Pour limiter les tentatives de piratage, enregistrez la page de connexion en favori et désactivez cette option.'
                     ]); ?>
                 </div>
                 <div class="col3">
                     <?php echo template::checkbox('themeFooterMemberBar', true, 'Barre de membre', [
                         'checked' => $this->getData(['theme', 'footer', 'memberBar']),
-                        'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés, ne s\'applique pas aux éditeurs et administrateurs.'
+                        'help' => 'Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés.'
                     ]); ?>
                 </div>
             </div>
