@@ -320,8 +320,7 @@ class common
 			// Par défaut fr_FR
 			$_SESSION['ZWII_CONTENT'] = self::$i18nContent ;
 			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
-		}
-		
+		}	
 		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
