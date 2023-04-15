@@ -3,6 +3,10 @@
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
 - Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.
+- Correction des dialogues de traduction.
+- Correction dans le footer de l'activation d'une page spéciale non désignée.
+- Thème : simplification des valeurs de sélection, la valeur remplace une désignation, 80% au lieu de Petit.
+- Thème : suppression des bulles d'aides trop verbeuses.
 
 ## Version 12.3.07
 ### Corrections
