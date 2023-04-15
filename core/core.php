@@ -312,15 +312,18 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-		// Transmettre la langue du contenu du site
+		// Extraction de la sesion
+		// $this->input['_SESSION'] = $_SESSION;
+
+		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
+			// Déterminé par la session présente
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+			;
 		} else {
-			// Par défaut fr_FR
-			$_SESSION['ZWII_CONTENT'] = self::$i18nContent ;
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
-		}	
+			// Initialiser la session en fr_FR
+			$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
+		}
 		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
@@ -334,7 +337,6 @@ class common
 			]);
 		}
 
-		
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
 			foreach ($this->dataFiles as $stageId => $item) {
@@ -343,19 +345,9 @@ class common
 					file_exists($folder . $stageId . '.json') === false
 				) {
 					$this->initData($stageId, self::$i18nContent);
+					common::$coreNotices[] = $stageId;
 				}
 			}
-		}
-
-		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath($keys, self::$i18nContent),
-				'backup' => file_exists('site/data/.backup')
-			]);
 		}
 
 		// Récupére un utilisateur connecté
