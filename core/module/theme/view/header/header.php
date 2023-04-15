@@ -102,40 +102,40 @@
             <h4><?php echo helper::translate('Mise en forme du titre'); ?>
             </h4>
             <div class="row">
-                <div class="col4">
+                <div class="col12">
                     <?php echo template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>
-                <div class="col4">
+            </div>
+            <div class="row">
+                <div class="col3">
                     <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'header', 'font']),
                         'fonts' => $module::$fonts['family']
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'header', 'fontSize'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'header', 'fontWeight'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'header', 'textTransform'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'header', 'textAlign'])

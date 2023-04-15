@@ -63,7 +63,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
-                        'label' => 'Alignement du contenu',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
                 </div>
@@ -184,29 +184,27 @@
             <h4><?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'menu', 'font']),
                         'fonts' => $module::$fonts['family']
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFontWeight', $module::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuTextTransform', $module::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'menu', 'textTransform'])
