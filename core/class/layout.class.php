@@ -280,7 +280,7 @@ class layout extends common
         // Affichage de motorisé par
         $items .= '<span id="footerDisplayCopyright" ';
         $items .= $this->getData(['theme', 'footer', 'displayCopyright']) === false ? 'class="displayNone"' : '';
-        $items .= '>Motorisé&nbsp;par&nbsp;</span>';
+        $items .= '>'.sprintf('%s ', helper::translate('Motorisé par')) . '</span>';
         // Toujours afficher le nom du CMS
         $items .= '<span id="footerZwiiCMS">';
         $items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" >ZwiiCMS</a>';
