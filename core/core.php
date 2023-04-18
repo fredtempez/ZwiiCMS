@@ -169,7 +169,7 @@ class common
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
 	// Langues de contenu
-	public static $i18nContent = 'fr_FR';
+	public static $i18nContent = '';
 	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
@@ -319,12 +319,8 @@ class common
 		if (isset($_SESSION['ZWII_CONTENT'])) {
 			// Déterminé par la session présente
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
-			;
-		} else {
-			// Initialiser la session en fr_FR
-			$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
+			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 		}
-		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
