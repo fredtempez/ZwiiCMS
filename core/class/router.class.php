@@ -522,8 +522,6 @@ class core extends common
 					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
 					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
 						$_SESSION['ZWII_CONTENT'] = $key;
-						self::$i18nContent = $key;
-						\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl(0));
 						exit();
 					}

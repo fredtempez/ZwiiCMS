@@ -199,35 +199,38 @@ class translate extends common
 		// Onglet des langues de contenu
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $key &&
-				file_exists(self::DATA_DIR . $key . 'page.json') &&
-				file_exists(self::DATA_DIR . $key . 'module.json') &&
-				file_exists(self::DATA_DIR . $key . 'locale.json') 
-			)) {
-				if (self::$i18nUI === $key) {
-					$messageLocale = helper::translate('Langue par défaut');
-				} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
-					$messageLocale = helper::translate('Langue du site sélectionnée');
-				} else {
-					$messageLocale = '';
+
+			if (is_dir(self::DATA_DIR . $key)) {
+				if (file_exists(self::DATA_DIR . $key . '/page.json') &&
+					file_exists(self::DATA_DIR . $key . '/module.json') &&
+					file_exists(self::DATA_DIR . $key . '/locale.json')
+					) {
+						if (self::$i18nUI === $key) {
+							$messageLocale = helper::translate('Langue par défaut');
+						} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
+							$messageLocale = helper::translate('Langue du site sélectionnée');
+						} else {
+							$messageLocale = '';
+						}
+						self::$languagesInstalled[] = [
+							template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
+							$messageLocale,
+							template::button('translateContentLanguageLocaleEdit' . $key, [
+								'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
+								'value' => template::ico('pencil'),
+								'help' => 'Éditer'
+							]),
+							template::button('translateContentLanguageLocaleDelete' . $key, [
+								'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
+								'value' => template::ico('trash'),
+								'help' => 'Supprimer',
+							])
+						];
 				}
-				self::$languagesInstalled[] = [
-					template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
-					$messageLocale,
-					template::button('translateContentLanguageLocaleEdit' . $key, [
-						'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
-						'value' => template::ico('pencil'),
-						'help' => 'Éditer'
-					]),
-					template::button('translateContentLanguageLocaleDelete' . $key, [
-						'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
-						'value' => template::ico('trash'),
-						'help' => 'Supprimer',
-					])
-				];
 			}
+
 		}
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;

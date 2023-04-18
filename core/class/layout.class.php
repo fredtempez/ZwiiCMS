@@ -519,17 +519,17 @@ class layout extends common
         }
         // Retourne les items du menu
         echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
-        // Drapeau les langues des langues selon l'existance des dossiers
+        // Drapeau les langues
         foreach (self::$languages as $key => $value) {
             if (is_dir(self::DATA_DIR . $key)) {
-                $t[] = $this->showi18n($key);
+                    $t[] = $this->showi18n($key);
             }
         }
         // Pas de drapeau si la langue est unique
         if (count($t) > 1) {
             foreach ($t as $key) {
                 echo $key;
-            }
+             }
         }
         echo '</ul>';
     }
@@ -1163,22 +1163,18 @@ class layout extends common
     public function showi18n($lang)
     {
         if (
-            is_dir(self::DATA_DIR . $lang)
+            (isset($_SESSION['ZWII_CONTENT'])
+                and $_SESSION['ZWII_CONTENT'] === $lang
+            )
         ) {
-            if (
-                (isset($_SESSION['ZWII_CONTENT'])
-                    and $_SESSION['ZWII_CONTENT'] === $lang
-                )
-            ) {
-                $select = ' class="i18nFlagSelected" ';
-            } else {
-                $select = ' class="i18nFlag" ';
-            }
-
-            $items = '<li>';
-            $items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
-            $items .= '</li>';
+            $select = ' class="i18nFlagSelected" ';
+        } else {
+            $select = ' class="i18nFlag" ';
         }
+
+        $items = '<li>';
+        $items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+        $items .= '</li>';
         return $items;
     }
 }
