@@ -81,7 +81,7 @@ class plugin extends common
 				if (($infoModules[$this->getUrl(2)]['dataDirectory'])) {
 					if (
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
-						&& !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
+						|| !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
 						$notification = sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
 					}
@@ -229,7 +229,7 @@ class plugin extends common
 						if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
 							mkdir(self::TEMP_DIR . $tempFolder . $src);
 						}
-						$success = $success && $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
+						$success = $success || $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
 					}
 				}
 				// Message de retour
@@ -238,9 +238,9 @@ class plugin extends common
 				$zip->close();
 				return ([
 					'success' => $success,
-					'notification' => $success 
-										? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
-										: helper::translate('Erreur inconnue, le module n\'est pas installé')
+					'notification' => $success
+					? sprintf(helper::translate('Le module %s a été %s'), $module['name'], $t)
+					: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
 				return ([
@@ -419,10 +419,15 @@ class plugin extends common
 	public function index()
 	{
 
+		$i18nSites = [];
 		// Tableau des langues rédigées
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-			if (is_dir(self::DATA_DIR . $key)) {
+			if (
+					is_dir(self::DATA_DIR . $value
+					&& file_exists(self::DATA_DIR . $value . '/page.json')
+					&& file_exists(self::DATA_DIR . $value . '/module.json'))
+			) {
 				$i18nSites[$key] = $value;
 			}
 		}
@@ -432,10 +437,11 @@ class plugin extends common
 
 		// Parcourir les langues du site traduit et recherche les modules affectés à des pages
 		$pagesInfos = [];
+
 		foreach ($i18nSites as $keyi18n => $valuei18n) {
 
 			// Clés moduleIds dans les pages de la langue
-			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/' . 'page.json'), true);
+			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/page.json'), true);
 
 			// Extraire les clés des modules
 			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pages['page'], 'moduleId', 'SORT_DESC'), 'strlen');
@@ -443,7 +449,6 @@ class plugin extends common
 			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
 				if (!empty($value)) {
-
 					$pagesInfos[$keyi18n][$key]['pageId'] = $key;
 					$pagesInfos[$keyi18n][$key]['title'] = $pages['page'][$key]['title'];
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
@@ -601,7 +606,7 @@ class plugin extends common
 					if (!file_exists(self::FILE_DIR . 'source/modules')) {
 						mkdir(self::FILE_DIR . 'source/modules');
 					}
-					$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
+					$success = $success || copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -702,11 +707,11 @@ class plugin extends common
 			// Copier les données et le descripteur
 			$success = file_put_contents($tmpFolder . '/module.json', json_encode($moduleData, JSON_UNESCAPED_UNICODE)) === false ? false : true;
 
-			$success = $success && is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule], JSON_UNESCAPED_UNICODE)));
+			$success = $success || is_int(file_put_contents($tmpFolder . '/enum.json', json_encode([$moduleId => $infoModule], JSON_UNESCAPED_UNICODE)));
 			// Le dossier du module s'il existe
 			if (is_dir(self::DATA_DIR . $moduleId . '/' . $pageId)) {
 				// Copier le dossier des données
-				$success = $success && $this->copyDir(self::DATA_DIR . '/' . $moduleId . '/' . $pageId, $tmpFolder . '/dataDirectory');
+				$success = $success || $this->copyDir(self::DATA_DIR . '/' . $moduleId . '/' . $pageId, $tmpFolder . '/dataDirectory');
 			}
 
 			// Création du zip
@@ -721,7 +726,7 @@ class plugin extends common
 							mkdir(self::FILE_DIR . 'source/modules');
 						}
 						if (file_exists(self::TEMP_DIR . $fileName)) {
-							$success = $success && copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/data' . $moduleId . '.zip');
+							$success = $success || copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/data' . $moduleId . '.zip');
 							// Valeurs en sortie
 							$this->addOutput([
 								'redirect' => helper::baseUrl() . 'plugin',
