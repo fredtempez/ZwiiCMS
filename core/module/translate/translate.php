@@ -201,10 +201,11 @@ class translate extends common
 			// tableau des langues installées
 
 			if (is_dir(self::DATA_DIR . $key)) {
-				if (file_exists(self::DATA_DIR . $key . '/page.json') &&
-					file_exists(self::DATA_DIR . $key . '/module.json') &&
-					file_exists(self::DATA_DIR . $key . '/locale.json')
-					) {
+				// Ne pas importer dans 12.4.00
+				//if (file_exists(self::DATA_DIR . $key . '/page.json') &&
+				//	file_exists(self::DATA_DIR . $key . '/module.json') &&
+				//	file_exists(self::DATA_DIR . $key . '/locale.json')
+				//	) {
 						if (self::$i18nUI === $key) {
 							$messageLocale = helper::translate('Langue par défaut');
 						} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
@@ -228,7 +229,7 @@ class translate extends common
 								'help' => 'Supprimer',
 							])
 						];
-				}
+				//}
 			}
 
 		}
