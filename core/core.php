@@ -318,8 +318,17 @@ class common
 		if (isset($_SESSION['ZWII_CONTENT'])) {
 			// Déterminé par la session présente
 			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+		} else {
+			// Détermine la langue par défaut
+			foreach (self::$languages as $key => $value) {
+				if (file_exists(self::DATA_DIR . $key . '/.default')) {
+					self::$i18nContent = $key;
+					$_SESSION['ZWII_CONTENT'] = $key;
+					break;
+				}
+			}
 		}
+		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
