@@ -153,7 +153,7 @@ class install extends common
 					// Création du dossier de langue avec le marqueur de langue par défaut
 					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
 						mkdir(self::DATA_DIR . self::$i18nContent);
-						touch(self::DATA_DIR . self::$i18nContent . '/.dafault');
+						touch(self::DATA_DIR . self::$i18nContent . '/.default');
 					}
 
 					// Installation du site de test
