@@ -98,14 +98,6 @@ class install extends common
 
 				$success = true;
 
-				// Validation de la langue transmise
-				self::$i18nUI = $_SESSION['ZWII_UI'];
-				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
-
-				// par défaut le contenu est la langue d'installation
-				self::$i18nContent = self::$i18nUI;
-				$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
-
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
@@ -149,6 +141,20 @@ class install extends common
 						null,
 						$this->getData(['config', 'smtp', 'from']),
 					);
+
+					// Validation de la langue transmise
+					self::$i18nUI = $_SESSION['ZWII_UI'];
+					self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+
+					// par défaut le contenu est la langue d'installation
+					self::$i18nContent = self::$i18nUI;
+					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
+					
+					// Création du dossier de langue avec le marqueur de langue par défaut
+					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
+						mkdir(self::DATA_DIR . self::$i18nContent);
+						touch(self::DATA_DIR . self::$i18nContent . '/.default');
+					}
 
 					// Installation du site de test
 					if (
