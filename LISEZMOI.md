@@ -76,6 +76,7 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
       [F] page.json        Données des pages
       [F] module.json      Données des modules de pages
       [F] local.json       Données du site propres à la langue
+      [F] .default         Indicateur de la langue de site par défaut
       [R] content          Dossier des contenus de page
         [F] accueil.html   Exemple contenu de la page d'accueil
     [R] fonts              Dossier contenant les fontes installées

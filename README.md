@@ -77,6 +77,7 @@ text
       [FILE] page.json    Page data
       [FILE] module.json  Page module data
       [FILE] local.json   Language-specific site data
+      [FILE] .default      Unique file of default site language
       [DIR] content       Folder of page contents
         [FILE] home.html  Sample home page content
     [DIR] fonts           Folder containing the installed fonts
