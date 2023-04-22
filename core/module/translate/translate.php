@@ -174,13 +174,12 @@ class translate extends common
 
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
-
 			if (is_dir(self::DATA_DIR . $key)) {
 				if (file_exists(self::DATA_DIR . $key . '/page.json') &&
 					file_exists(self::DATA_DIR . $key . '/module.json') &&
 					file_exists(self::DATA_DIR . $key . '/locale.json')
 				) {
-						if (self::$i18nUI === $key) {
+					if (file_exists(self::DATA_DIR . $key . '/.default')) {
 							$messageLocale = helper::translate('Langue par défaut');
 						} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
 							$messageLocale = helper::translate('Langue du site sélectionnée');
