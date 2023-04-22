@@ -620,15 +620,10 @@ class translate extends common
 		 * Changement de la langue si
 		 * différe de la langue active
 		 * déjà initialisée
-		 * fait partie des lnagues installées
+		 * fait partie des langues installées
 		 */
 		if (
-			$_SESSION['ZWII_CONTENT'] !== $lang
-			&&
-			is_dir(self::DATA_DIR . $lang)
-			&&
 			array_key_exists($lang, self::$languages) === true
-
 		) {
 
 			// Stocker la sélection
