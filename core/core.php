@@ -55,8 +55,6 @@ class common
 	// Numéro de version et branche pour l'auto-update
 	const ZWII_VERSION = '12.3.08';
 
-	const ZWII_DATAVERSION = 12301;
-
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 	const ZWII_UPDATE_CHANNEL = "v12";
@@ -413,10 +411,8 @@ class common
 			}
 		}
 
-		// Mise à jour des données core selon la version du jeu de données
-		if ($this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION) {
-			include('core/include/update.inc.php');
-		}
+		// Mise à jour des données core
+		include('core/include/update.inc.php');
 
 
 		// Données de proxy
