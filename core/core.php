@@ -52,10 +52,8 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 
-	// Numéro de version et branche pour l'auto-update
+	// Numéro de version
 	const ZWII_VERSION = '12.4.00';
-
-	const ZWII_DATAVERSION = 12400;
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
@@ -365,25 +363,21 @@ class common
 			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
 			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
 			// Validation de la langue
-			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
-				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
-				? 'fr_FR'
-				: self::$i18nUI;
-			// Stocker le cookie de langue pour l'éditeur de texte
-			setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			self::$i18nUI = isset(self::$i18nUI) && file_exists(self::I18N_DIR . self::$i18nUI . '.json')
+				? self::$i18nUI
+				: 'fr_FR';
+
 		} else {
-			// Tenter de récupérer une valeur dans l'ordre session ZWII_UI, cookie zwii_UI, session ZWII_CONTENT
-			if (isset($_SESSION['ZWII_UI'])) {
-				self::$i18nUI = $_SESSION['ZWII_UI'];
-			} elseif ($this->getInput('ZWII_UI')) {
-				self::$i18nUI = $this->getInput('ZWII_UI');
-			} elseif (isset($_SESSION['ZWII_CONTENT'])) {
+			// Pas de connexion, ZWII_UI prend la valeur de ZWII_CONTENT
+			if (isset($_SESSION['ZWII_CONTENT'])) {
 				self::$i18nUI = $_SESSION['ZWII_CONTENT'];
 			} else {
 				self::$i18nUI = 'fr_FR';
 			}
 			$_SESSION['ZWII_UI'] = self::$i18nUI;
 		}
+		// Stocker le cookie de langue pour l'éditeur de texte
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
@@ -418,10 +412,8 @@ class common
 			}
 		}
 
-		// Mise à jour des données core selon la version du jeu de données
-		if ($this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION) {
-			include('core/include/update.inc.php');
-		}
+		// Mise à jour des données core
+		include('core/include/update.inc.php');
 
 
 		// Données de proxy

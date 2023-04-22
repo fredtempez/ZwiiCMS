@@ -5,6 +5,7 @@ class init extends common
 		'config' => [
 			'autoBackup' => true,
 			'autoUpdate' => true,
+			'autoUpdateDelay' => 86400,
 			'autoUpdateHtaccess' => false,
 			'favicon' => 'favicon.ico',
 			'faviconDark' => 'faviconDark.ico',
@@ -44,7 +45,7 @@ class init extends common
 			]
 		],
 		'core' => [
-			'dataVersion' => 12300,
+			'dataVersion' => 12301,
 			'lastBackup' => 0,
 			'lastClearTmp' => 0,
 			'lastAutoUpdate' => 0,

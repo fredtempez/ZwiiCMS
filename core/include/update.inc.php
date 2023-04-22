@@ -942,15 +942,31 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 	$this->deleteData(['config', 'smtp', 'sender']);
 	$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
 
-
-
-
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12301]);
 }
 
-// Version 12.4.00
+// Version 12.3.08
+if ($this->getData(['core', 'dataVersion']) < 12308) {
 
+	// Langue par défaut
+	$l = [
+		'fr_FR' => 'Français',
+		'en_EN' => 'English',
+		'es' => 'Español',
+	];
+	foreach ($l as $key => $value) {
+		if (is_dir(self::DATA_DIR . $key )) {
+			touch(self::DATA_DIR . $key . '/.default');
+			break;
+		}
+	}
+	
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12308]);
+}
+
+// Version 12.4.00
 if ($this->getData(['core', 'dataVersion']) < 12400) {
 	
 	// Nettoyage du dossier de langue d'installation'
