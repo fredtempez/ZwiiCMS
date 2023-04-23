@@ -50,7 +50,9 @@ class install extends common
 				'access' => false
 			]);
 		}
-		// Accès autorisé
+
+
+
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			$lang = $this->getInput('installLanguage');
@@ -63,6 +65,9 @@ class install extends common
 				'redirect' => helper::baseUrl() . 'install/postinstall'
 			]);
 		}
+
+		// Régénère la session 
+		session_regenerate_id();
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
