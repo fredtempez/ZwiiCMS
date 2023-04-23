@@ -324,7 +324,6 @@ class user extends common
 				}
 			}
 
-
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
@@ -711,6 +710,10 @@ class user extends common
 		if ($this->getData(['config', 'connect', 'log'])) {
 			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
+
+		// Régénère la session 
+		session_regenerate_id();
+		
 		// Stockage des cookies
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
 			self::$userId = $_COOKIE['ZWII_USER_ID'];
