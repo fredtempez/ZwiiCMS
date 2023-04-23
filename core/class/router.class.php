@@ -474,15 +474,10 @@ class core extends common
 			header('Location:' . helper::baseUrl() . 'install');
 			exit();
 		}
+		
 		// Journalisation
-		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
-		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
-		$dataLog .= $this->getUser('id') ? $this->getUser('id') . ';' : 'anonyme' . ';';
-		$dataLog .= $this->getUrl();
-		$dataLog .= PHP_EOL;
-		if ($this->getData(['config', 'connect', 'log'])) {
-			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
-		}
+		$this->saveLog();
+
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')

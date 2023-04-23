@@ -1315,4 +1315,20 @@ class common
 		}
 		$zip->close();
 	}
+
+
+	/**
+	 * Journalisation
+	 */
+	public function saveLog($message = '') {
+		// Journalisation
+		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
+		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
+		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
+		$dataLog .= $message ? $this->getUrl() . ';'. $message : $this->getUrl();
+		$dataLog .= PHP_EOL;
+		if ($this->getData(['config', 'connect', 'log'])) {
+			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+		}
+	}
 }

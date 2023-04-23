@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 12.4.00
+# Améliorations
+- Gestion des groupes de profils d'utilisateurs.
+- Améliore la gestion de la base de données et la génération du fichier de journalisation.
+
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
 - Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.

@@ -701,15 +701,7 @@ class user extends common
 			}
 		}
 		// Journalisation
-		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
-		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
-		$dataLog .= empty($this->getInput('userLoginId')) ? ';' : $this->getInput('userLoginId', helper::FILTER_ID) . ';';
-		$dataLog .= $this->getUrl() . ';';
-		$dataLog .= $logStatus;
-		$dataLog .= PHP_EOL;
-		if ($this->getData(['config', 'connect', 'log'])) {
-			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
-		}
+		$this->saveLog($logStatus);
 
 		// Régénère la session 
 		session_regenerate_id();
