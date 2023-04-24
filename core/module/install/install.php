@@ -51,10 +51,9 @@ class install extends common
 			]);
 		}
 
-
-
 		// Soumission du formulaire
 		if ($this->isPost()) {
+
 			$lang = $this->getInput('installLanguage');
 			// Pour la suite  de l'installation
 			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
@@ -70,7 +69,6 @@ class install extends common
 		if (is_dir(self::I18N_DIR)) {
 			foreach ($this->getData(['languages']) as $lang => $value) {
 				self::$i18nFiles[$lang] = self::$languages[$lang];
-				;
 			}
 		}
 
@@ -150,6 +148,12 @@ class install extends common
 					// La langue du site est la langue de l'UI
 					$_SESSION['ZWII_CONTENT'] = $_SESSION['ZWII_UI'];
 
+					// Efface les langues déjà installées
+					foreach ($this->getData(['languages']) as $lang => $value) {
+						if (is_dir(self::DATA_DIR . $lang))
+							$this->removeDir(self::DATA_DIR . $lang);
+					}
+
 					// Création du dossier de langue avec le marqueur de langue par défaut
 					if (!is_dir(self::DATA_DIR . $_SESSION['ZWII_CONTENT'])) {
 						mkdir(self::DATA_DIR . $_SESSION['ZWII_CONTENT']);
@@ -163,6 +167,7 @@ class install extends common
 					) {
 						$this->initData('page', $_SESSION['ZWII_CONTENT'], true);
 						$this->initData('module', $_SESSION['ZWII_CONTENT'], true);
+						$this->initData('locale', $_SESSION['ZWII_CONTENT'], true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
@@ -172,9 +177,7 @@ class install extends common
 					if ($_SESSION['ZWII_CONTENT'] !== 'fr_FR') {
 						$this->initData('page', $_SESSION['ZWII_CONTENT'], false);
 						$this->initData('module', $_SESSION['ZWII_CONTENT'], false);
-						// Supprime l'installation FR générée par défaut.
-						if (is_dir(self::DATA_DIR . 'fr_FR'))
-							$this->removeDir(self::DATA_DIR . 'fr_FR');
+						$this->initData('locale', $_SESSION['ZWII_CONTENT'], false);
 					}
 
 					// Sauvegarder la configuration du Proxy

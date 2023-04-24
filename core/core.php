@@ -167,7 +167,7 @@ class common
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
 	// Langues de contenu
-	public static $i18nContent = '';
+	public static $i18nContent = 'fr_FR';
 	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
