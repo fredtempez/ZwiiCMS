@@ -532,9 +532,9 @@ class user extends common
 			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
 
-		// Régénère la session 
-		session_regenerate_id();
-		
+		// Detruit la session 
+		session_destroy();
+
 		// Stockage des cookies
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
 			self::$userId = $_COOKIE['ZWII_USER_ID'];
