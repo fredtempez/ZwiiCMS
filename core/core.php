@@ -365,10 +365,10 @@ class common
 			self::$i18nUI = isset(self::$i18nUI) && file_exists(self::I18N_DIR . self::$i18nUI . '.json')
 				? self::$i18nUI
 				: 'fr_FR';
-
 		} else {
-			// Pas de connexion, ZWII_UI prend la valeur de ZWII_CONTENT
-			if (isset($_SESSION['ZWII_CONTENT'])) {
+			if (isset($_SESSION['ZWII_UI'])) {
+				self::$i18nUI = $_SESSION['ZWII_UI'];
+			} elseif (isset($_SESSION['ZWII_CONTENT'])) {
 				self::$i18nUI = $_SESSION['ZWII_CONTENT'];
 			} else {
 				self::$i18nUI = 'fr_FR';
