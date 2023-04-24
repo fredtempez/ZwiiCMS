@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 12.3.09
+- Corrige le filtrage des modules orphelins.
+
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
 - Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.

@@ -424,9 +424,9 @@ class plugin extends common
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
 			if (
-					is_dir(self::DATA_DIR . $value
-					&& file_exists(self::DATA_DIR . $value . '/page.json')
-					&& file_exists(self::DATA_DIR . $value . '/module.json'))
+					is_dir(self::DATA_DIR . $key)
+					&& file_exists(self::DATA_DIR . $key . '/page.json')
+					&& file_exists(self::DATA_DIR . $key . '/module.json')
 			) {
 				$i18nSites[$key] = $value;
 			}
