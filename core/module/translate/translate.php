@@ -209,7 +209,7 @@ class translate extends common
 					if (file_exists(self::DATA_DIR . $key . '/.default')) {
 							$messageLocale = helper::translate('Langue par défaut');
 						} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
-							$messageLocale = helper::translate('Langue du site sélectionnée');
+							$messageLocale = helper::translate('Langue du site par défaut');
 						} else {
 							$messageLocale = '';
 						}
