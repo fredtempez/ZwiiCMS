@@ -154,7 +154,7 @@ class install extends common
 					// par défaut le contenu est la langue d'installation
 					self::$i18nContent = self::$i18nUI;
 					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
-					
+
 					// Création du dossier de langue avec le marqueur de langue par défaut
 					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
 						mkdir(self::DATA_DIR . self::$i18nContent);

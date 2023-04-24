@@ -289,7 +289,7 @@
     "La version installée est plus récente": "The installed version is more recent",
     "La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.": "The verification is daily. Option deactivated if the server configuration does not allow it.",
     "Langue de l'administration": "Language of administration",
-    "Langue du site sélectionnée": "Selected site language",
+    "Langue du site par défaut": "Default site language",
     "Langue par défaut": "Default language",
     "Langues": "Languages",
     "Langues disponibles": "Available languages",
@@ -614,6 +614,6 @@
     "Couleur icône haut de page": "Color of top page icon",
     "Icône haut de page, couleur arrière-plan": "Top page icon, background color",
     "Disponible si le consentement des cookies est activé.": "Available if cookie consent is enabled.",
-    "Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés.": "Displays account management icons and logout function for logged-in users."
-    
+    "Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés.": "Displays account management icons and logout function for logged-in users.",
+    "Définir par défaut": "Set as default"
 }

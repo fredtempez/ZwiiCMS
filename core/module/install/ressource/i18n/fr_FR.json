@@ -289,7 +289,7 @@
     "La version installée est plus récente": "",
     "La vérification est quotidienne. Option désactivée si la configuration du serveur ne le permet pas.": "",
     "Langue de l'administration": "",
-    "Langue du site sélectionnée": "",
+    "Langue du site par défaut": "",
     "Langue par défaut": "",
     "Langues": "",
     "Langues disponibles": "",
@@ -614,5 +614,6 @@
     "Couleur icône haut de page": "",
     "Icône haut de page, couleur arrière-plan": "",
     "Disponible si le consentement des cookies est activé.": "",
-    "Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés.:": ""
+    "Affiche les icônes de gestion du compte et de déconnexion des membres simples connectés.:": "",
+    "Définir par défaut": ""
 }

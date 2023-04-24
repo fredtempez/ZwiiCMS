@@ -29,6 +29,7 @@ class translate extends common
 		// Effacer une langue de contenu ou de l'interface
 		'content' => self::GROUP_VISITOR,
 		'update' => self::GROUP_ADMIN,
+		'default' => self::GROUP_ADMIN
 	];
 
 	const PAGINATION = '20';
@@ -585,6 +586,40 @@ class translate extends common
 		}
 	}
 
+	/*
+	 * Modifie la langue du site par défaut
+	 *
+	 */
+	public function default()
+	{
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		$lang = $this->getUrl(2);
+		if (
+			$this->getUrl(3) !== $_SESSION['csrf']
+			|| array_key_exists($lang, self::$languages) === false
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'translate',
+				'state' => false,
+				'notification' => helper::translate('Action interdite')
+			]);
+		}
+
+		foreach (self::$languages as $key => $value) {
+			if (file_exists(self::DATA_DIR . $key . '/.default')) {
+				unlink(self::DATA_DIR . $key . '/.default');
+				touch(self::DATA_DIR . $lang . '/.default');
+				break;
+			}
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'notification' => helper::translate('Modifications enregistrées'),
+			'redirect' => helper::baseUrl() . 'translate',
+			'state' => true,
+		]);
+	}
 
 	/*
 	 * Traitement du changement de langue

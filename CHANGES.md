@@ -5,6 +5,11 @@
 - Gestion des groupes de profils d'utilisateurs.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 
+## Version 12.3.09
+- Corrige le filtrage des modules orphelins.
+- Autorise la modification de la langue du site par défaut.
+- Installation en langue étrangère non prise en compte depuis 12.3.08
+
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
 - Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.
