@@ -178,7 +178,6 @@ class install extends common
 						$this->initData('page', $_SESSION['ZWII_CONTENT'], false);
 						$this->initData('module', $_SESSION['ZWII_CONTENT'], false);
 						$this->initData('locale', $_SESSION['ZWII_CONTENT'], false);
-						$this->initData('locale', $_SESSION['ZWII_CONTENT'], false);
 					}
 
 					// Sauvegarder la configuration du Proxy
