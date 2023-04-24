@@ -148,36 +148,31 @@ class install extends common
 					);
 
 					// Validation de la langue transmise
-					self::$i18nUI = $_SESSION['ZWII_UI'];
-					self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
-
-					// par défaut le contenu est la langue d'installation
-					self::$i18nContent = self::$i18nUI;
-					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
+					$_SESSION['ZWII_CONTENT'] = $_SESSION['ZWII_UI'];
 
 					// Création du dossier de langue avec le marqueur de langue par défaut
-					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
-						mkdir(self::DATA_DIR . self::$i18nContent);
-						touch(self::DATA_DIR . self::$i18nContent . '/.default');
+					if (!is_dir(self::DATA_DIR . $_SESSION['ZWII_CONTENT'])) {
+						mkdir(self::DATA_DIR . $_SESSION['ZWII_CONTENT']);
+						touch(self::DATA_DIR . $_SESSION['ZWII_CONTENT'] . '/.default');
 					}
 
 					// Installation du site de test
 					if (
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& self::$i18nContent === 'fr_FR'
+						&& $_SESSION['ZWII_CONTENT'] === 'fr_FR'
 					) {
-						$this->initData('page', self::$i18nContent, true);
-						$this->initData('module', self::$i18nContent, true);
+						$this->initData('page', $_SESSION['ZWII_CONTENT'], true);
+						$this->initData('module', $_SESSION['ZWII_CONTENT'], true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 					}
 
 					// Jeu réduit pour les pages étrangères
-					if (self::$i18nContent !== 'fr_FR') {
-						$this->initData('page', self::$i18nContent, false);
-						$this->initData('module', self::$i18nContent, false);
-						$this->initData('locale', self::$i18nContent, false);
+					if ($_SESSION['ZWII_CONTENT'] !== 'fr_FR') {
+						$this->initData('page', $_SESSION['ZWII_CONTENT'], false);
+						$this->initData('module', $_SESSION['ZWII_CONTENT'], false);
+						$this->initData('locale', $_SESSION['ZWII_CONTENT'], false);
 						// Supprime l'installation FR générée par défaut.
 						if (is_dir(self::DATA_DIR . 'fr_FR'))
 							$this->removeDir(self::DATA_DIR . 'fr_FR');
