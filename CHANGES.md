@@ -3,6 +3,7 @@
 ## Version 12.3.09
 - Corrige le filtrage des modules orphelins.
 - Autorise la modification de la langue du site par défaut.
+- Installation en langue étrangère non prise en compte depuis 12.3.08
 
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
