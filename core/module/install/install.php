@@ -66,9 +66,6 @@ class install extends common
 			]);
 		}
 
-		// Régénère la session 
-		session_regenerate_id();
-
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
 			foreach ($this->getData(['language']) as $lang => $value) {
@@ -148,6 +145,9 @@ class install extends common
 					);
 
 					// Validation de la langue transmise
+					$_SESSION['ZWII_UI'] = array_key_exists($_SESSION['ZWII_UI'], self::$languages) ? $_SESSION['ZWII_UI'] : 'fr_FR';
+
+					// La langue du site est la langue de l'UI
 					$_SESSION['ZWII_CONTENT'] = $_SESSION['ZWII_UI'];
 
 					// Création du dossier de langue avec le marqueur de langue par défaut
