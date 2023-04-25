@@ -532,9 +532,6 @@ class user extends common
 			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
 
-		// Detruit la session 
-		session_destroy();
-
 		// Stockage des cookies
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
 			self::$userId = $_COOKIE['ZWII_USER_ID'];
@@ -554,7 +551,10 @@ class user extends common
 	{
 		helper::deleteCookie('ZWII_USER_ID');
 		helper::deleteCookie('ZWII_USER_PASSWORD');
+
+		// Détruit la session
 		session_destroy();
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => helper::translate('Déconnexion !'),
