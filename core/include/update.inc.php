@@ -956,12 +956,30 @@ if ($this->getData(['core', 'dataVersion']) < 12308) {
 		'es' => 'Español',
 	];
 	foreach ($l as $key => $value) {
-		if (is_dir(self::DATA_DIR . $key )) {
+		if (is_dir(self::DATA_DIR . $key)) {
 			touch(self::DATA_DIR . $key . '/.default');
 			break;
 		}
 	}
-	
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12308]);
+}
+
+// Version 12.3.09
+if ($this->getData(['core', 'dataVersion']) < 12309) {
+
+	// Mettre à jour les locales
+	foreach (self::$languages as $key => $value) {
+		// tableau des langues installées
+		if (is_dir(self::DATA_DIR . $key)) {
+			$d = json_decode(file_get_contents(self::DATA_DIR . $key . '/locale.json'), true);
+			$d = array_merge($d['locale'],['poweredPageLabel' => 'Motorisé par']);
+			$t ['locale'] = $d;
+			file_put_contents(self::DATA_DIR . $key . '/locale.json', json_encode($t));
+		}
+	}
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 12309]);
 }
