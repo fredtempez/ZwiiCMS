@@ -113,14 +113,21 @@
                 </span>-->
             </h4>
             <div class="row">
-                <div class="col6">
+                <div class="col4">
+                    <?php echo template::text('localePoweredPageLabel', [
+                        'label' => 'Motorisé par',
+                        'placeholder' => 'Motorisé par',
+                        'value' => $module::$locales[$this->getUrl(2)]['locale']['poweredPageLabel']
+                    ]); ?>
+                </div>
+                <div class="col4">
                     <?php echo template::text('localeLegalPageLabel', [
                         'label' => 'Mentions légales',
                         'placeholder' => 'Mentions légales',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['legalPageLabel']
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::text('localeSearchPageLabel', [
                         'label' => 'Rechercher',
                         'placeholder' => 'Rechercher',
@@ -129,14 +136,14 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col6">
+                <div class="col4 offset2">
                     <?php echo template::text('localeSitemapPageLabel', [
                         'label' => 'Plan du site',
                         'placeholder' => 'Plan du site',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['sitemapPageLabel'],
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::text('localeCookiesFooterText', [
                         'label' => 'Cookies',
                         'value' => $module::$locales[$this->getUrl(2)]['locale']['cookies']['cookiesFooterText'],

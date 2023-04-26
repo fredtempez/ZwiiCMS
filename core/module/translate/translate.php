@@ -368,6 +368,7 @@ class translate extends common
 					'page302' => $this->getInput('localePage302'),
 					'legalPageId' => $this->getInput('localeLegalPageId'),
 					'searchPageId' => $this->getInput('localeSearchPageId'),
+					'poweredPageLabel' => empty($this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT)) ? 'Motorisé par' : $this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT),
 					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT)) ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
 					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
 					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT)) ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
