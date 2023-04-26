@@ -53,11 +53,11 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version et branche pour l'auto-update
-	const ZWII_VERSION = '12.3.09';
+	const ZWII_VERSION = '12.3.09.test01';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
-	const ZWII_UPDATE_CHANNEL = "v12";
+	const ZWII_UPDATE_CHANNEL = "test";
 
 	// URL langues de l'UI en ligne
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
@@ -331,7 +331,7 @@ class common
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
 		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
+			// Constructeur  JsonDB;
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath($keys, self::$i18nContent),
@@ -368,8 +368,8 @@ class common
 		} else {
 			if (isset($_SESSION['ZWII_UI'])) {
 				self::$i18nUI = $_SESSION['ZWII_UI'];
-			} elseif (isset($_SESSION['ZWII_CONTENT'])) {
-				self::$i18nUI = $_SESSION['ZWII_CONTENT'];
+			} elseif (isset($_COOKIE['ZWII_UI'])) {
+				self::$i18nUI = $_COOKIE['ZWII_UI'];
 			} else {
 				self::$i18nUI = 'fr_FR';
 			}
@@ -630,9 +630,14 @@ class common
 		}
 		$db->save;
 
+
+
 		// Créer le jeu de pages du site de test
 		if ($module === 'page') {
+
+			// Dossier du contenu des pages
 			$langFolder = $lang . '/content/';
+
 			// Dossier des pages
 			if (!is_dir(self::DATA_DIR . $langFolder)) {
 				mkdir(self::DATA_DIR . $langFolder, 0755);

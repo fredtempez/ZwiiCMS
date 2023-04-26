@@ -91,12 +91,12 @@ class init extends common
 				],
 				'droid-sans-2' => [
 					'name' => 'Droid Sans',
-					'font-family' =>  '\'Droid Sans\', sans-serif',
+					'font-family' => '\'Droid Sans\', sans-serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-sans-2'
 				],
 				'droid-serif-2' => [
 					'name' => 'Droid Serif',
-					'font-family' =>  '\'Droid Serif\', serif',
+					'font-family' => '\'Droid Serif\', serif',
 					'resource' => 'https://fonts.cdnfonts.com/css/droid-serif-2'
 				],
 				'indie-flower' => [
@@ -208,7 +208,7 @@ class init extends common
 		],
 		'module' => [],
 		'user' => [],
-		'theme' =>  [
+		'theme' => [
 			'body' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
 				'image' => '',
@@ -334,7 +334,7 @@ class init extends common
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
 		],
 		'blacklist' => [],
-		'languages'=> [],
+		'languages' => [],
 	];
 	public static $defaultDataI18n = [
 		'en_EN' => [
@@ -443,7 +443,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -470,7 +470,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -497,7 +497,7 @@ class init extends common
 				'block' => '4-8',
 				'barLeft' => 'barre',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -524,7 +524,7 @@ class init extends common
 				'block' => '9-3',
 				'barLeft' => '',
 				'barRight' => 'barrelateraleavecmenu',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -551,7 +551,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -578,7 +578,7 @@ class init extends common
 				'block' => '12',
 				'barLeft' => '',
 				'barRight' => '',
-				'displayMenu' =>  'none',
+				'displayMenu' => 'none',
 				'hideMenuSide' => false,
 				'hideMenuChildren' => false,
 				'extraPosition' => false,
@@ -860,13 +860,14 @@ class init extends common
 						'publishedOn' => 1548790902,
 						'state' => true,
 						'title' => 'Mon premier article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 					'mon-deuxieme-article' => [
 						'closeComment' => false,
@@ -880,13 +881,14 @@ class init extends common
 						'publishedOn' => 1550432502,
 						'state' => true,
 						'title' => 'Mon deuxième article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 					'mon-troisieme-article' => [
 						'closeComment' => true,
@@ -900,13 +902,14 @@ class init extends common
 						'publishedOn' => 1550864502,
 						'state' => true,
 						'title' => 'Mon troisième article',
-						'userId' => '', // Géré au moment de l'installation
+						'userId' => '',
+						// Géré au moment de l'installation
 						'editConsent' => 'all',
 						'commentMaxlength' => '500',
-						'commentApproved' =>  false,
-						'commentClose' =>  false,
-						'commentNotification' =>  false,
-						'commentGroupNotification' =>  1
+						'commentApproved' => false,
+						'commentClose' => false,
+						'commentNotification' => false,
+						'commentGroupNotification' => 1
 					],
 				],
 			],
@@ -956,24 +959,24 @@ class init extends common
 					],
 				],
 				'theme' => [
-					'thumbAlign' 	   => 'center',
-					'thumbWidth' 	   => '18em',
-					'thumbHeight'	   => '15em',
-					'thumbMargin'	   => '.5em',
-					'thumbBorder'	   => '.1em',
-					'thumbOpacity'	   => '.7',
+					'thumbAlign' => 'center',
+					'thumbWidth' => '18em',
+					'thumbHeight' => '15em',
+					'thumbMargin' => '.5em',
+					'thumbBorder' => '.1em',
+					'thumbOpacity' => '.7',
 					'thumbBorderColor' => 'rgba(221, 221, 221, 1)',
-					'thumbRadius'      => '.3em',
-					'thumbShadows'     => '1px 1px 10px',
+					'thumbRadius' => '.3em',
+					'thumbShadows' => '1px 1px 10px',
 					'thumbShadowsColor' => 'rgba(125, 125, 125, 1)',
-					'legendHeight'	   => '.375em',
-					'legendAlign'	   => 'center',
-					'legendTextColor'  => 'rgba(255, 255, 255, 1)',
-					'legendBgColor'	   => 'rgba(0, 0, 0, .6)',
-					'style'            =>  'site/data/modules/gallery/galeries.css'
+					'legendHeight' => '.375em',
+					'legendAlign' => 'center',
+					'legendTextColor' => 'rgba(255, 255, 255, 1)',
+					'legendBgColor' => 'rgba(0, 0, 0, .6)',
+					'style' => 'site/data/modules/gallery/galeries.css'
 				],
 				'config' => [
-					'versionData'      =>  '3.0'
+					'versionData' => '3.0'
 				],
 			],
 			'site-de-zwii' => [
@@ -1021,9 +1024,19 @@ class init extends common
 			'page404' => 'none',
 			'legalPageId' => 'none',
 			'searchPageId' => 'none',
+			'searchPageLabel' => 'Rechercher',
+			'sitemapPageLabel' => 'Plan du site',
+			'legalPageLabel' => 'Mentions légales',
 			'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
-			'title' => 'Votre site en quelques clics !'
-		]
+			'title' => 'Votre site en quelques clics !',
+			'cookies' => [
+				'mainLabel' => 'Ce site utilise des cookies nécessaires à son fonctionnement, ils permettent de fluidifier son fonctionnement par exemple en mémorisant les données de connexion, la langue que vous avez choisie ou la validation de ce message.',
+				'titleLabel' => 'Cookies essentiels',
+				'linkLegalLabel' => 'Consulter  les mentions légales',
+				'cookiesFooterText' => 'Cookies',
+				'buttonValidLabel' => 'J\'ai compris'
+			]
+		],
 	];
 
 	public static $siteContent = [

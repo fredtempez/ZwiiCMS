@@ -667,7 +667,7 @@ class translate extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])
+			'redirect' => helper::baseUrl()
 		]);
 	}
 
