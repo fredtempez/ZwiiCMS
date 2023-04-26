@@ -57,6 +57,7 @@ class install extends common
 			$lang = $this->getInput('installLanguage');
 			// Pour la suite  de l'installation
 			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+
 			$_SESSION['ZWII_UI'] = $this->getInput('installLanguage');
 
 			// Valeurs en sortie
@@ -143,41 +144,37 @@ class install extends common
 					);
 
 					// Validation de la langue transmise
-					$_SESSION['ZWII_UI'] = array_key_exists($_SESSION['ZWII_UI'], self::$languages) ? $_SESSION['ZWII_UI'] : 'fr_FR';
+					self::$i18nUI = $_SESSION['ZWII_UI'];
+					self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 
-					// La langue du site est la langue de l'UI
-					$_SESSION['ZWII_CONTENT'] = $_SESSION['ZWII_UI'];
-
-					// Efface les langues déjà installées
-					foreach ($this->getData(['languages']) as $lang => $value) {
-						if (is_dir(self::DATA_DIR . $lang))
-							$this->removeDir(self::DATA_DIR . $lang);
-					}
+					// par défaut le contenu est la langue d'installation
+					self::$i18nContent = self::$i18nUI;
+					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
 
 					// Création du dossier de langue avec le marqueur de langue par défaut
-					if (!is_dir(self::DATA_DIR . $_SESSION['ZWII_CONTENT'])) {
-						mkdir(self::DATA_DIR . $_SESSION['ZWII_CONTENT']);
-						touch(self::DATA_DIR . $_SESSION['ZWII_CONTENT'] . '/.default');
+					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
+						mkdir(self::DATA_DIR . self::$i18nContent);
+						touch(self::DATA_DIR . self::$i18nContent . '/.default');
 					}
 
 					// Installation du site de test
 					if (
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& $_SESSION['ZWII_CONTENT'] === 'fr_FR'
+						&& self::$i18nContent === 'fr_FR'
 					) {
-						$this->initData('page', $_SESSION['ZWII_CONTENT'], true);
-						$this->initData('module', $_SESSION['ZWII_CONTENT'], true);
-						$this->initData('locale', $_SESSION['ZWII_CONTENT'], true);
+						$this->initData('page', self::$i18nContent, true);
+						$this->initData('module', self::$i18nContent, true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 					}
 
 					// Jeu réduit pour les pages étrangères
-					if ($_SESSION['ZWII_CONTENT'] !== 'fr_FR') {
-						$this->initData('page', $_SESSION['ZWII_CONTENT'], false);
-						$this->initData('module', $_SESSION['ZWII_CONTENT'], false);
-						$this->initData('locale', $_SESSION['ZWII_CONTENT'], false);
+					if (self::$i18nContent !== 'fr_FR') {
+						$this->initData('page', self::$i18nContent, false);
+						$this->initData('module', self::$i18nContent, false);
+						if (is_dir(self::DATA_DIR . 'fr_FR'))
+						$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy
@@ -243,7 +240,7 @@ class install extends common
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl(true),
+						'redirect' => helper::baseUrl(),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
 						'state' => ($sent === true && $success === true) ? true : null
 					]);
