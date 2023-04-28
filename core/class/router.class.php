@@ -512,8 +512,10 @@ class core extends common
 		// Pour éviter une 404 sur une langue étrangère, bascule dans la langue correcte.
 		if (is_null($this->getData(['page', $this->getUrl(0)]))) {
 			foreach (self::$languages as $key => $value) {
-				if (is_dir(self::DATA_DIR . $key) &&
-					file_exists(self::DATA_DIR . $key . '/page.json')) {
+				if (
+					is_dir(self::DATA_DIR . $key) &&
+					file_exists(self::DATA_DIR . $key . '/page.json')
+				) {
 					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
 					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
 						$_SESSION['ZWII_CONTENT'] = $key;
@@ -920,20 +922,22 @@ class core extends common
 			case self::DISPLAY_LAYOUT_LIGHT:
 				ob_start();
 				require 'core/layout/light.php';
-				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/[\t ]+/u', ' ', ob_get_clean());
+				$content = ob_get_clean();
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
 				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
+				$content = preg_replace('/[\t ]+/u', ' ', $content);
 				echo $content;
 				break;
 			// Layout principal
 			case self::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				require 'core/layout/main.php';
-				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
-				$content = preg_replace('/[\t ]+/u', ' ', ob_get_clean());
+				$content = ob_get_clean();
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
 				$content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+				// Supprime les espaces, les sauts de ligne, les tabulations et autres caractères inutiles
+				$content = preg_replace('/[\t ]+/u', ' ', $content);
 				echo $content;
 				break;
 		}

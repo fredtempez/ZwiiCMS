@@ -6,10 +6,13 @@
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 
 ## Version 12.3.09
+### Corrections
 - Corrige le filtrage des modules orphelins.
+- Corrige l'installation en langue étrangère non prise en compte depuis 12.3.08
+- Corrige le bug d'affichage avec le module de recherche.
+### Modifications
 - Autorise la modification de la langue du site par défaut.
-- Installation en langue étrangère non prise en compte depuis 12.3.08
-- Traduction de "Motorisé par" dans la personnalisation des données de la langue de l'UI.
+- Traduction de "Motorisé par" dans la personnalisation des données de la langue du site.
 
 ## Version 12.3.08
 - Amélioration du code liée à la traduction du contenu du CMS.
