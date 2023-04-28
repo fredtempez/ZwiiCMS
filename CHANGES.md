@@ -1,9 +1,12 @@
 # Changelog
 
 ## Version 12.3.09
+### Corrections
 - Corrige le filtrage des modules orphelins.
+- Corrige l'installation en langue étrangère non prise en compte depuis 12.3.08
+- Corrige le bug d'affichage avec le module de recherche.
+### Modifications
 - Autorise la modification de la langue du site par défaut.
-- Installation en langue étrangère non prise en compte depuis 12.3.08
 - Traduction de "Motorisé par" dans la personnalisation des données de la langue du site.
 
 ## Version 12.3.08
