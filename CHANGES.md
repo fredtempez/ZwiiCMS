@@ -5,6 +5,10 @@
 - Gestion des groupes de profils d'utilisateurs.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 
+## Version 12.3.10
+- Mise à jour du fichier dialog.php de Responsive File Manager
+- Vulnérabilité dans ajax_call.php CVE-2020-10567
+
 ## Version 12.3.09
 ### Corrections
 - Corrige le filtrage des modules orphelins.
