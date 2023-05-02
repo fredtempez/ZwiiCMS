@@ -46,6 +46,8 @@ class user extends common
 
 	public static $userGroups = [];
 
+	public static $userProfils = [];
+
 	public static $userLongtime = false;
 
 	public static $separators = [
@@ -89,6 +91,13 @@ class user extends common
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
 
+			// Profil
+			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
+			$profil = null;
+			if ($group < 1 || $group > 2 ) {
+				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
+			}
+
 			// Stockage des données
 			$this->setData([
 				'user',
@@ -96,18 +105,18 @@ class user extends common
 				[
 					'firstname' => $userFirstname,
 					'forgot' => 0,
-					'group' => $this->getInput('userAddGroup', helper::FILTER_INT, true),
+					'group' => $group,
+					'profil' => $profil,
 					'lastname' => $userLastname,
 					'pseudo' => $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true),
 					'signature' => $this->getInput('userAddSignature', helper::FILTER_INT, true),
 					'mail' => $userMail,
 					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
-					"connectFail" => null,
-					"connectTimeout" => null,
-					"accessUrl" => null,
-					"accessTimer" => null,
-					"accessCsrf" => null,
-					"files" => $this->getInput('userAddFiles', helper::FILTER_BOOLEAN),
+					'connectFail' => null,
+					'connectTimeout' => null,
+					'accessUrl' => null,
+					'accessTimer' => null,
+					'accessCsrf' => null,
 					'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
 				]
 			]);
@@ -133,19 +142,26 @@ class user extends common
 				'state' => $sent === true ? true : null
 			]);
 		}
+
 		// Langues disponibles pour l'interface de l'utilisateur
-		if (is_dir(self::I18N_DIR)) {
-			$dir = getcwd();
-			chdir(self::I18N_DIR);
-			$files = glob('*.json');
-			chdir($dir);
-		}
-		foreach ($files as $file) {
-			// La langue est-elle référencée ?
-			if (array_key_exists(basename($file, '.json'), self::$languages)) {
-				self::$languagesInstalled[basename($file, '.json')] = self::$languages[basename($file, '.json')];
+		self::$languagesInstalled = $this->getData(['language']);
+		if (self::$languagesInstalled) {
+			foreach (self::$languagesInstalled as $lang => $datas) {
+				self::$languagesInstalled[$lang] = self::$languages[$lang];
 			}
 		}
+
+		// Profils disponibles
+		foreach ($this->getData(['profil']) as $profilId => $profilData) {
+			if ($profilId < 1 || $profilId > 2) {
+				continue;
+			}
+			foreach ($profilData as $key => $value) {
+				self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
+			}
+		}
+
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Nouvel utilisateur'),
@@ -316,11 +332,21 @@ class user extends common
 			}
 
 			// Langues disponibles pour l'interface de l'utilisateur
-
 			self::$languagesInstalled = $this->getData(['language']);
 			if (self::$languagesInstalled) {
 				foreach (self::$languagesInstalled as $lang => $datas) {
 					self::$languagesInstalled[$lang] = self::$languages[$lang];
+				}
+			}
+
+			// Profils disponibles
+			foreach ($this->getData(['profil']) as $profilId => $profilData) {
+				if ($profilId < 1 || $profilId > 2) {
+					continue;
+				}
+				echo $profilId;
+				foreach ($profilData as $key => $value) {
+					self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
 				}
 			}
 
@@ -405,6 +431,7 @@ class user extends common
 				];
 			}
 		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Utilisateurs'),
@@ -442,24 +469,24 @@ class user extends common
 						'help' => 'Supprimer',
 						'disabled' => $groupData['readonly'],
 					])
-				];				
+				];
 			} elseif (
 				$groupId == self::GROUP_MEMBER ||
 				$groupId == self::GROUP_MODERATOR
 			) {
 				// Enumérer les sous groupes MEMBER et MODERATOR
 				foreach ($groupData as $subGroupId => $subGroupData) {
-					self::$userGroups[$groupId.'.'.$subGroupId] = [
+					self::$userGroups[$groupId . '.' . $subGroupId] = [
 						$groupId . '-' . $subGroupId,
-						self::$groups[$groupId] .'<br />Profil : '.  $subGroupData['name'],
+						self::$groups[$groupId] . '<br />Profil : ' . $subGroupData['name'],
 						nl2br($subGroupData['comment']),
-						template::button('profilEdit' . $groupId.$subGroupId, [
-							'href' => helper::baseUrl() . 'user/profilEdit/' .  $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
+						template::button('profilEdit' . $groupId . $subGroupId, [
+							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $subGroupData['readonly'],
 						]),
-						template::button('profilDelete' .  $groupId.$subGroupId, [
+						template::button('profilDelete' . $groupId . $subGroupId, [
 							'class' => 'userDelete buttonRed',
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
 							'value' => template::ico('trash'),
@@ -500,13 +527,11 @@ class user extends common
 			$profil = $this->getUrl(3);
 			// Changement de groupe, effacer le profil de l'ancien groupe et incrément le profil
 			if ($oldGroup !== $group) {
-				$this->deleteData(['profil', $oldGroup, $profil]);				
+				$this->deleteData(['profil', $oldGroup, $profil]);
 				$profil = helper::increment($profil, $this->getData(['profil', $group]));
 			}
-			
 			echo "groupe " . $group;
 			echo "profil " . $profil;
-			exit();
 			$this->setData([
 				'profil',
 				$group,
@@ -540,8 +565,6 @@ class user extends common
 				]
 			]);
 
-			
-
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user/profil',
@@ -565,7 +588,8 @@ class user extends common
 	 * Ajouter un profil de permission
 	 */
 
-	public function profilAdd() {
+	public function profilAdd()
+	{
 
 		// Valeurs en sortie;
 		$this->addOutput([

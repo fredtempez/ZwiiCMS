@@ -17,3 +17,8 @@
 /** NE PAS EFFACER
 * admin.css
 */
+
+#userAddProfil1Wrapper,
+#userAddProfil2Wrapper {
+    padding: 0;
+}

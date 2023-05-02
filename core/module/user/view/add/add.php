@@ -14,7 +14,8 @@
 <div class="row">
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo helper::translate('Identité'); ?>
+			<h4>
+				<?php echo helper::translate('Identité'); ?>
 			</h4>
 			<div class="row">
 				<div class="col6">
@@ -30,23 +31,34 @@
 					]); ?>
 				</div>
 			</div>
-			<?php echo template::text('userAddPseudo', [
-				'autocomplete' => 'off',
-				'label' => 'Pseudo'
-			]); ?>
-			<?php echo template::select('userAddSignature', $module::$signature, [
-				'label' => 'Signature',
-				'selected' => 1
-			]); ?>
+
+			<div class="row">
+				<div class="col6">
+					<?php echo template::text('userAddPseudo', [
+						'autocomplete' => 'off',
+						'label' => 'Pseudo'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::select('userAddSignature', $module::$signature, [
+						'label' => 'Signature',
+						'selected' => 1
+					]); ?>
+				</div>
+			</div>
 			<?php echo template::mail('userAddMail', [
 				'autocomplete' => 'off',
 				'label' => 'Adresse électronique'
+			]); ?>
+			<?php echo template::select('userAddLanguage', $module::$languagesInstalled, [
+				'label' => 'Langues'
 			]); ?>
 		</div>
 	</div>
 	<div class="col6">
 		<div class="block">
-			<h4><?php echo helper::translate('Authentification'); ?>
+			<h4>
+				<?php echo helper::translate('Authentification'); ?>
 			</h4>
 			<?php echo template::text('userAddId', [
 				'autocomplete' => 'off',
@@ -72,39 +84,29 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo helper::translate('Paramètres'); ?>
+			<h4>
+				<?php echo helper::translate('Permissions'); ?>
 			</h4>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::select('userAddLanguage', $module::$languagesInstalled, [
-						'label' =>  'Langues'
-					]); ?>
-				</div>
+			<div class="row ">
 				<div class="col6">
 					<?php echo template::select('userAddGroup', self::$groupNews, [
 						'label' => 'Groupe',
 						'selected' => self::GROUP_MEMBER
 					]); ?>
-					<div id="userAddMemberFiles" class="displayNone">
-						<?php echo template::checkbox('userAddFiles', true, 'Partage de fichiers autorisé', [
-							'checked' => false,
-							'help' => 'Ce membre pourra téléverser ou télécharger des fichiers dans le dossier \'partage\' et ses sous-dossiers'
+				</div>
+				<div class="col3">
+					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>">
+						<?php echo template::select('userAddProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
+							'label' => 'Profil',
 						]); ?>
 					</div>
-					<div id="userAddLabelAuth">
-						<?php echo helper::translate('Permissions :'); ?>
+				</div>
+				<div class="col3">
+					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>">
+						<?php echo template::select('userAddProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
+							'label' => 'Profil',
+						]); ?>
 					</div>
-					<ul id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>" class="userAddGroupDescription displayNone">
-						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-					</ul>
-					<ul id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>" class="userAddGroupDescription displayNone">
-						<li><?php echo helper::translate('Accès aux pages privées'); ?></li>
-						<li><?php echo helper::translate('Ajout - Édition - Suppression de pages'); ?></li>
-						<li><?php echo helper::translate('Ajout - Édition  - Suppression de fichiers'); ?></li>
-					</ul>
-					<ul id="userAddGroupDescription<?php echo self::GROUP_ADMIN; ?>" class="userAddGroupDescription displayNone">
-						<li><?php echo helper::translate('Administration complète du site'); ?></li>
-					</ul>
 				</div>
 			</div>
 		</div>
