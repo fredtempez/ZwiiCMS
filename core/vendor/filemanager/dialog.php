@@ -276,7 +276,7 @@ if (isset($_GET['editor'])) {
     $editor = $_GET['type'] == 0 ? null : 'tinymce';
 }
 
-$field_id = isset($_GET['field_id']) ? fix_get_params($_GET['field_id']) : '';
+$field_id = isset($_GET['field_id']) ? fix_get_params($_GET['field_id']) : null;
 $type_param = fix_get_params($_GET['type']);
 $apply = null;
 
@@ -340,7 +340,7 @@ $get_params = http_build_query($get_params);
         <link rel="stylesheet" href="css/jquery.fileupload-ui-noscript.css">
     </noscript>
     <link rel="stylesheet"
-          href="css/jplayer.blue.monday.min.css"/>
+          href="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.7.1/skin/blue.monday/jplayer.blue.monday.min.css"/>
     <link href="css/style.css?v=<?php
     echo $version; ?>" rel="stylesheet" type="text/css"/>
     <!--[if lt IE 8]>
@@ -352,13 +352,16 @@ $get_params = http_build_query($get_params);
     </style>
     <![endif]-->
 
-    <script src="js/jquery-1.12.4.min.js"></script> 
-    <script src="../jquery/jquery-ui.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+            integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <script src="js/plugins.js?v=<?php
     echo $version; ?>"></script>
-    <script src="js/jquery.jplayer.min.js"></script>
-    <script type='text/javascript' src='js/fabric.min.js'></script>
-    <script type="text/javascript" src="js/FileSaver.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jplayer/2.9.2/jplayer/jquery.jplayer.min.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.6.0/fabric.js'></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.min.js"></script>
     <script src="js/modernizr.custom.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -368,11 +371,14 @@ $get_params = http_build_query($get_params);
     <!-- Only load TUI Libraries if we need it -->
     <?php
     if ($config['tui_active'] === true) { ?>
-        <link rel="stylesheet" href="css/tui-image-editor.css">
-        <link type="text/css" href="css/tui-color-picker.css"  rel="stylesheet">
-        <script type="text/javascript" src="js/tui-code-snippet.min.js"></script>
-        <script type="text/javascript" src="js/tui-color-picker.js"></script>
-        <script src="js/tui-image-editor.js"></script>
+        <link rel="stylesheet" href="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.css">
+        <link type="text/css" href="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.css"
+              rel="stylesheet">
+        <script type="text/javascript"
+                src="https://uicdn.toast.com/tui.code-snippet/v1.5.0/tui-code-snippet.min.js"></script>
+        <script type="text/javascript"
+                src="https://uicdn.toast.com/tui-color-picker/v2.2.6/tui-color-picker.js"></script>
+        <script src="https://uicdn.toast.com/tui-image-editor/latest/tui-image-editor.js"></script>
         <?php
     } ?>
 
@@ -386,11 +392,11 @@ $get_params = http_build_query($get_params);
 </head>
 <body>
 <!-- The Templates plugin is included to render the upload/download listings -->
-<script src="js/tmpl.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="js/load-image.all.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/blueimp-load-image/2.18.0/load-image.all.min.js"></script>
 <!-- The Canvas to Blob plugin is included for image resizing functionality -->
-<script src="js/canvas-to-blob.min.js"></script>
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
 <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
 <script src="js/jquery.iframe-transport.js"></script>
 <!-- The basic File Upload plugin -->
@@ -856,75 +862,54 @@ if ($config['upload_files']) { ?>
         }
     }
 
-    function filenameSort($x, $y)
-    {
-        global $descending;
-
-        if ($x['is_dir'] !== $y['is_dir']) {
-            $greater = $y['is_dir'];
-        } else {
-            $greater = ($descending)
-                ? $x['file_lcase'] < $y['file_lcase']
-                : $x['file_lcase'] >= $y['file_lcase'];
-        }
-        return $greater ? 1 : -1;
-    }
-
-    function dateSort($x, $y)
-    {
-        global $descending;
-
-        if ($x['is_dir'] !== $y['is_dir']) {
-            $greater = $y['is_dir'];
-        } else {
-            $greater = ($descending)
-                ? $x['date'] < $y['date']
-                : $x['date'] >= $y['date'];
-        }
-        return $greater ? 1 : -1;
-    }
-
-
-    function sizeSort($x, $y)
-    {
-        global $descending;
-
-        if ($x['is_dir'] !== $y['is_dir']) {
-            $greater = $y['is_dir'];
-        } else {
-            $greater = ($descending)
-                ? $x['size'] < $y['size']
-                : $x['size'] >= $y['size'];
-        }
-        return $greater ? 1 : -1;
-    }
-
-    function extensionSort($x, $y)
-    {
-        global $descending;
-
-        if ($x['is_dir'] !== $y['is_dir']) {
-            $greater = $y['is_dir'];
-        } else {
-            $greater = ($descending)
-                ? $x['extension'] < $y['extension']
-                : $x['extension'] >= $y['extension'];
-        }
-        return $greater ? 1 : -1;
-    }
-
     switch ($sort_by) {
         case 'date':
-            usort($sorted, 'dateSort');
+            //usort($sorted, 'dateSort');
+            usort($sorted, function($x, $y) use ($descending) {
+                if ($x['is_dir'] !== $y['is_dir']) {
+                    return $y['is_dir'] ? 1 : -1;
+                } else {
+                    return ($descending)
+                        ? $x['size'] < $y['size']
+                        : $x['size'] >= $y['size'];
+                }
+            });
             break;
         case 'size':
-            usort($sorted, 'sizeSort');
+            //usort($sorted, 'sizeSort');
+            usort($sorted, function($x, $y) use ($descending) {
+                if ($x['is_dir'] !== $y['is_dir']) {
+                    return $y['is_dir'] ? 1 : -1;
+                } else {
+                    return ($descending)
+                        ? $x['date'] < $y['date']
+                        : $x['date'] >= $y['date'];
+                }
+            });
             break;
         case 'extension':
-            usort($sorted, 'extensionSort');
+            //usort($sorted, 'extensionSort');
+            usort($sorted, function($x, $y) use ($descending) {
+                if ($x['is_dir'] !== $y['is_dir']) {
+                    return $y['is_dir'] ? 1 : -1;
+                } else {
+                    return ($descending)
+                        ? ($x['extension'] < $y['extension'] ? 1 : 0)
+                        : ($x['extension'] >= $y['extension'] ? 1 : 0);
+                }
+            });
             break;
         default:
-            usort($sorted, 'filenameSort');
+            // usort($sorted, 'filenameSort');
+            usort($sorted, function($x, $y) use ($descending) {
+                if ($x['is_dir'] !== $y['is_dir']) {
+                    return $y['is_dir'] ? 1 : -1;
+                } else {
+                    return ($descending)
+                    ? ($x['file_lcase'] < $y['file_lcase'] ? 1 : ($x['file_lcase'] == $y['file_lcase'] ? 0 : -1))
+                    : ($x['file_lcase'] >= $y['file_lcase'] ? 1 : ($x['file_lcase'] == $y['file_lcase'] ? 0 : -1));
+                }
+            });
             break;
     }
 
