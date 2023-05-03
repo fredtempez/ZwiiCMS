@@ -624,7 +624,7 @@ class common
 			}
 			// Site en français avec site exemple
 			if ($lang == 'fr_FR' && $sampleSite === true) {
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]], JSON_PRETTY_PRINT));
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
 				// Site de test ou page simple
 				foreach (init::$siteContent as $key => $value) {
 					// Creation du contenu de la page
@@ -640,7 +640,7 @@ class common
 				if (!isset(init::$defaultDataI18n[$lang])) {
 					$langDefault = 'default';
 				}
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]], JSON_PRETTY_PRINT));
+				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
 				// Créer la page d'accueil
 				$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
 				$content = init::$defaultDataI18n[$langDefault]['html'];
@@ -648,7 +648,7 @@ class common
 			}
 		} else {
 			// Installation des données du module
-			file_put_contents(self::DATA_DIR . $module . '.json', json_encode([$module => init::$defaultData[$module]], JSON_PRETTY_PRINT));
+			file_put_contents(self::DATA_DIR . $module . '.json', json_encode([$module => init::$defaultData[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
 		}
 
 	}

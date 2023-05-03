@@ -4,6 +4,7 @@
 # Améliorations
 - Gestion des groupes de profils d'utilisateurs.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
+- Stockage des données JSON, forçage au format objet.
 
 ## Version 12.3.10
 - Mise à jour du fichier dialog.php de Responsive File Manager
