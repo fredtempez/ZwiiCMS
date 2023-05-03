@@ -94,7 +94,7 @@ class user extends common
 			// Profil
 			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
 			$profil = null;
-			if ($group < 1 || $group > 2 ) {
+			if ($group > 1 || $group < 2 ) {
 				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
 			}
 

@@ -87,21 +87,19 @@
 			<h4>
 				<?php echo helper::translate('Permissions'); ?>
 			</h4>
-			<div class="row ">
+			<div class="row">
 				<div class="col6">
 					<?php echo template::select('userAddGroup', self::$groupNews, [
 						'label' => 'Groupe',
 						'selected' => self::GROUP_MEMBER
 					]); ?>
 				</div>
-				<div class="col3">
+				<div class="col6">
 					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>">
 						<?php echo template::select('userAddProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
 							'label' => 'Profil',
 						]); ?>
 					</div>
-				</div>
-				<div class="col3">
 					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>">
 						<?php echo template::select('userAddProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
 							'label' => 'Profil',
