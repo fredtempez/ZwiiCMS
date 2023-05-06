@@ -94,7 +94,7 @@ class user extends common
 			// Profil
 			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
 			$profil = null;
-			if ($group > 1 || $group < 2 ) {
+			if ($group > 1 || $group < 2) {
 				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
 			}
 
@@ -289,6 +289,11 @@ class user extends common
 					$newfirstname = $this->getData(['user', $this->getUrl(2), 'firstname']);
 					$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
 				}
+				// Profil
+				$profil = null;
+				if ($newGroup > 1 || $newGroup < 2) {
+					$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
+				}
 				// Modifie l'utilisateur
 				$this->setData([
 					'user',
@@ -297,6 +302,7 @@ class user extends common
 						'firstname' => $newfirstname,
 						'forgot' => 0,
 						'group' => $newGroup,
+						'profil' => $profil,
 						'lastname' => $newlastname,
 						'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
 						'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
@@ -344,7 +350,6 @@ class user extends common
 				if ($profilId < 1 || $profilId > 2) {
 					continue;
 				}
-				echo $profilId;
 				foreach ($profilData as $key => $value) {
 					self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
 				}

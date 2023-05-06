@@ -112,22 +112,22 @@
 							'label' => 'Groupe',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'group'])
 						]); ?>
-						<?php if ($this->getData(['user', $this->getUrl(2), 'group']) === self::GROUP_MEMBER): ?>
-							<div class="col6">
-								<?php echo template::select('userEditProfil', $module::$userProfils[self::GROUP_MEMBER], [
-									'label' => 'Profil',
-									'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
-								]); ?>
-							</div>
-						<?php endif; ?>
-						<?php if ($this->getData(['user', $this->getUrl(2), 'group']) === self::GROUP_MEMBER): ?>
-							<div class="col6">
-								<?php echo template::select('userEditProfil', $module::$userProfils[self::GROUP_MODERATOR], [
-									'label' => 'Profil',
-									'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
-								]); ?>
-							<?php endif; ?>
-						<?php endif; ?>
+					<?php endif; ?>
+				</div>
+				<div class="col6">
+					<div class="userEditGroupProfil displayNone"
+						id="userEditGroupProfil<?php echo self::GROUP_MEMBER; ?>">
+						<?php echo template::select('userEditProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
+							'label' => 'Profil',
+							'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
+						]); ?>
+					</div>
+					<div class="userEditGroupProfil displayNone"
+						id="userEditGroupProfil<?php echo self::GROUP_MODERATOR; ?>">
+						<?php echo template::select('userEditProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
+							'label' => 'Profil',
+							'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
+						]); ?>
 					</div>
 				</div>
 			</div>

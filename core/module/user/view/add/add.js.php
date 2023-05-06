@@ -40,8 +40,8 @@ $("#userAddId").on("change keydown keyup", function(event) {
  * Droits des groupes
  */
 $("#userAddGroup").on("change", function() {
-	$(".userAddGroupDescription").hide();
-	$("#userAddGroupDescription" + $(this).val()).show();
+	$(".userAddGroupProfil").hide();
+	$("#userAddGroupProfil" + $(this).val()).show();
 }).trigger("change");
 
 

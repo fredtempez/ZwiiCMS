@@ -95,12 +95,12 @@
 					]); ?>
 				</div>
 				<div class="col6">
-					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MEMBER; ?>">
+					<div class="userAddGroupProfil displayNone" id="userAddGroupProfil<?php echo self::GROUP_MEMBER; ?>">
 						<?php echo template::select('userAddProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
 							'label' => 'Profil',
 						]); ?>
 					</div>
-					<div class="userAddGroupDescription displayNone" id="userAddGroupDescription<?php echo self::GROUP_MODERATOR; ?>">
+					<div class="userAddGroupProfil displayNone" id="userAddGroupProfil<?php echo self::GROUP_MODERATOR; ?>">
 						<?php echo template::select('userAddProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
 							'label' => 'Profil',
 						]); ?>
