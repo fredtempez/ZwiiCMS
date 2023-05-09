@@ -487,7 +487,7 @@ $config = array(
     * TUI Image Editor config
     *******************/
     // Add or modify the options below as needed - they will be json encoded when added to the configuration so arrays can be utilized as needed
-    'tui_active'                           => true,
+    'tui_active'                           => false,
     'tui_position'                         => 'bottom',
     // 'common.bi.image'                      => "../assets/images/logo.png",
     // 'common.bisize.width'                  => '70px',
