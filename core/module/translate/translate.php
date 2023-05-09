@@ -636,7 +636,10 @@ class translate extends common
 		 * déjà initialisée
 		 * fait partie des langues installées
 		 */
+
 		if (
+			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') &&
+		    $this->getUser('group') > self::GROUP_MODERATOR &&
 			array_key_exists($lang, self::$languages) === true
 		) {
 
