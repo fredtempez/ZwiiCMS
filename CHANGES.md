@@ -1,8 +1,11 @@
 # Changelog
 
+## Version 12.3.11
+- Interdit la création d'une langue autrement que par un administrateur.
+
 ## Version 12.3.10
 - Edition d'un utilisateur, affiche correctement la langue de l'interface dans l'édition d'un utilisateur.
-- Mise à jour du fichier dialog.php de Responsive File Manager
+- Mise à jour du fichier dialog.php de Responsive File Manager.
 - Vulnérabilité dans ajax_call.php CVE-2020-10567, désactivation de TUI Editor et de la fonction save_image.
 
 ## Version 12.3.09
