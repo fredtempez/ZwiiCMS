@@ -93,7 +93,7 @@
 			<div class="col6">
 				<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
 					'label' =>  'Langues',
-					'selected' => $this->getData(['user', $this->getUser('id'), 'language'])
+					'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
 				]); ?>
 			</div>
 			<div class="col6">
