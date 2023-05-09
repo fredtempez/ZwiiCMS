@@ -48,13 +48,17 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 		case 2:
 		case 1:
 			$profil = $u['user'][$userId]['profil'];
-			$file = $g['profil'][$group][$profil]['file'];
-			$folder = $g['profil'][$group][$profil]['folder'];
-			$uploadDir = $g['profil'][$group][$profil]['folder']['path'];
-			$currentPath = '../../../' . $uploadDir;
-			if (!is_dir($currentPath))
-				mkdir($currentPath);
-			break;
+			if (!is_null($profil)) {
+				$file = $g['profil'][$group][$profil]['file'];
+				$folder = $g['profil'][$group][$profil]['folder'];
+				$uploadDir = $g['profil'][$group][$profil]['folder']['path'];
+				$currentPath = '../../../' . $uploadDir;
+				if (!is_dir($currentPath)) {
+					mkdir($currentPath);
+				}
+				break;
+			}
+			// Applique default si $profil null
 		default:
 			$file['delete'] = false;
 			$file['upload'] = false;
