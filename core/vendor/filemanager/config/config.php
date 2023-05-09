@@ -21,13 +21,62 @@ setlocale(LC_CTYPE, $lang);
 $userId = $_COOKIE['ZWII_USER_ID'];
 $u = json_decode(file_get_contents('../../../site/data/user.json'), true);
 $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
-$group = $u['user'][$userId]['group'];
-$file = $g['profil'][$group]['file'];
-$folder = $g['profil'][$group]['folder'];
-$uploadDir = $g['profil'][$group]['folder']['path'];
-$currentPath = '../../.' . $uploadDir;
-if (!is_dir($currentPath ))
-	mkdir($currentPath );
+// Lecture les droits
+if (!is_null($u) && !is_null($g) && !is_null($userId)) {
+	$group = $u['user'][$userId]['group'];
+	switch ($group) {
+		case 3:
+			$file['delete'] = true;
+			$file['upload'] = true;
+			$file['rename'] = true;
+			$file['duplicate'] = true;
+			$file['extract'] = true;
+			$file['copycut'] = true;
+			$file['permission'] = true;
+			$file['preview'] = true;
+			$file['edit'] = true;
+			$file['extract'] = true;
+			$file['download'] = true;
+			$folder['create'] = true;
+			$folder['create'] = true;
+			$folder['delete'] = true;
+			$folder['copycut'] = true;
+			$folder['chmod'] = true;
+			$uploadDir = '/site/file/source/';
+			$currentPath = '../../../site/file/source/';
+			break;
+		case 2:
+		case 1:
+			$profil = $u['user'][$userId]['profil'];
+			$file = $g['profil'][$group][$profil]['file'];
+			$folder = $g['profil'][$group][$profil]['folder'];
+			$uploadDir = $g['profil'][$group][$profil]['folder']['path'];
+			$currentPath = '../../../' . $uploadDir;
+			if (!is_dir($currentPath))
+				mkdir($currentPath);
+			break;
+		default:
+			$file['delete'] = false;
+			$file['upload'] = false;
+			$file['rename'] = false;
+			$file['duplicate'] = false;
+			$file['extract'] = false;
+			$file['copycut'] = false;
+			$file['permission'] = false;
+			$file['preview'] = false;
+			$file['edit'] = false;
+			$file['extract'] = false;
+			$file['download'] = false;
+			$folder['create'] = false;
+			$folder['create'] = false;
+			$folder['delete'] = false;
+			$folder['copycut'] = false;
+			$folder['chmod'] = false;
+			$uploadDir = null;
+			$currentPath = '../../../site/file/source/';
+			break;
+	}
+}
 
 
 /* Fin lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
@@ -322,7 +371,8 @@ $config = array(
 	// WATERMARK IMAGE
 	//
 	//Watermark path or false
-	'image_watermark' => false, //"../watermark.png",
+	'image_watermark' => false,
+	//"../watermark.png",
 	# Could be a pre-determined position such as:
 	#           tl = top left,
 	#           t  = top (middle),
@@ -358,29 +408,29 @@ $config = array(
 	//Permissions configuration
 	//******************
 
-	'delete_files' => $file['delete'],
-	'create_folders' => $folder['create'],
-	'delete_folders' => $folder['delete'],
-	'upload_files' => $file['upload'],
-	'rename_files' => $file['rename'],
-	'rename_folders' => $folder['create'],
-	'duplicate_files' => $file['duplicate'],
-	'extract_files' => $file['extract'],
-	'copy_cut_files' => $file['copycut'],
+	'delete_files' => $file['delete'] ? $file['delete'] : false,
+	'create_folders' => $folder['create'] ? $folder['create'] : false,
+	'delete_folders' => $folder['delete'] ? $folder['delete'] : false,
+	'upload_files' => $file['upload'] ? $file['upload'] : false,
+	'rename_files' => $file['rename'] ? $file['rename'] : false,
+	'rename_folders' => $folder['create'] ? $folder['create'] : false,
+	'duplicate_files' => $file['duplicate'] ? $file['duplicate'] : false,
+	'extract_files' => $file['extract'] ? $file['extract'] : false,
+	'copy_cut_files' => $file['copycut'] ? $file['copycut'] : false,
 	// for copy/cut files
-	'copy_cut_dirs' => $folder['copycut'],
+	'copy_cut_dirs' => $folder['copycut'] ? $folder['copycut'] : false,
 	// for copy/cut directories
-	'chmod_files' => $file['permission'],
+	'chmod_files' => $file['permission'] ? $file['permission'] : false,
 	// change file permissions
-	'chmod_dirs' => $folder['copycut'],
+	'chmod_dirs' => $folder['chmod'] ? $folder['chmod'] : false,
 	// change folder permissions
-	'preview_text_files' => $file['preview'],
+	'preview_text_files' => $file['preview'] ? $file['preview'] : false,
 	// eg.: txt, log etc.
-	'edit_text_files' => $file['edit'],
+	'edit_text_files' => $file['edit'] ? $file['edit'] : false,
 	// eg.: txt, log etc.
-	'create_text_files' => $file['extract'],
+	'create_text_files' => $file['extract'] ? $file['extract'] : false,
 	// only create files with exts. defined in $config['editable_text_file_exts']
-	'download_files' => $file['download'],
+	'download_files' => $file['download'] ? $file['download'] : false,
 	// allow download files or just preview
 
 	// you can preview these type of files if $preview_text_files is true
@@ -427,7 +477,8 @@ $config = array(
 	//  If you insert an extensions blacklist array the filemanager don't check any extensions but simply block the extensions in the list
 	//  otherwise check Allowed extensions configuration
 	//*********************
-	'ext_blacklist' => false, //['exe','bat','jpg'],
+	'ext_blacklist' => false,
+	//['exe','bat','jpg'],
 
 
 	//Empty filename permits like .htaccess, .env, ...
