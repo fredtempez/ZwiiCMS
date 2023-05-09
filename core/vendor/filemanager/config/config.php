@@ -20,11 +20,11 @@ setlocale(LC_CTYPE, $lang);
 /* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
 $userId = $_COOKIE['ZWII_USER_ID'];
 $u = json_decode(file_get_contents('../../../site/data/user.json'), true);
-$g = json_decode(file_get_contents('../../../site/data/group.json'), true);
+$g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
 $group = $u['user'][$userId]['group'];
-$file = $g['group'][$group]['file'];
-$folder = $g['group'][$group]['folder'];
-$uploadDir = $g['group'][$group]['folder']['path'];
+$file = $g['profil'][$group]['file'];
+$folder = $g['profil'][$group]['folder'];
+$uploadDir = $g['profil'][$group]['folder']['path'];
 $currentPath = '../../.' . $uploadDir;
 if (!is_dir($currentPath ))
 	mkdir($currentPath );

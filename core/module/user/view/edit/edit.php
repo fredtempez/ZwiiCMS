@@ -65,7 +65,7 @@
 			]); ?>
 			<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
 				'label' => 'Langue',
-				'selected' => $this->getData(['user', $this->getUser('id'), 'language'])
+				'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
 			]); ?>
 		</div>
 	</div>
@@ -119,14 +119,14 @@
 						id="userEditGroupProfil<?php echo self::GROUP_MEMBER; ?>">
 						<?php echo template::select('userEditProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
 							'label' => 'Profil',
-							'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
+							'selected' => $this->getData(['user', $this->getUrl(2), 'profil'])
 						]); ?>
 					</div>
 					<div class="userEditGroupProfil displayNone"
 						id="userEditGroupProfil<?php echo self::GROUP_MODERATOR; ?>">
 						<?php echo template::select('userEditProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
 							'label' => 'Profil',
-							'selected' => $this->getData(['user', $this->getUser('id'), 'profil'])
+							'selected' => $this->getData(['user', $this->getUrl(2), 'profil'])
 						]); ?>
 					</div>
 				</div>
