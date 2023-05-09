@@ -1,7 +1,7 @@
 # Changelog
 
 ## Version 12.3.10
-- Edition d'un utilisateur, sélection de la langue de sont interface.
+- Edition d'un utilisateur, corrige affichage de la langue de l'interface.
 - Mise à jour du fichier dialog.php de Responsive File Manager
 - Vulnérabilité dans ajax_call.php CVE-2020-10567, désactivation de TUI Editor et de la fonction save_image.
 
