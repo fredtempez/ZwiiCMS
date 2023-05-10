@@ -595,11 +595,14 @@ class user extends common
 	{
 		// Soumission du formulaire
 		if ($this->isPost()) {
+			// Nombre de profils de ce groupe
+			$group = $this->getInput('profilAddGroup');
+			$profil = (string) (count($this->getData(['profil', $group])) + 1);
 			// Sauvegarder les données
 			$this->setData([
 				'profil',
-				$this->getInput('profilAddGroup'),
-				$this->getInput('profilAddProfil'),
+				$group,
+				$profil,
 				[
 					'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,

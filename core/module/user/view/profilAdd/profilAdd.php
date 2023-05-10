@@ -21,13 +21,13 @@
                 <div class="col6">
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::text('profilEditName', [
+                            <?php echo template::text('profilAddName', [
                                 'label' => 'Nom du profil',
                                 'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])
                             ]); ?>
                         </div>
                         <div class="col12">
-                            <?php echo template::select('profilEditGroup', $module::$groupProfils, [
+                            <?php echo template::select('profilAddGroup', $module::$groupProfils, [
                                 'label' => 'Groupe',
                                 'selected' => $this->getUrl(2)
                             ]); ?>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col6">
-                    <?php echo template::textarea('profilEditComment', [
+                    <?php echo template::textarea('profilAddComment', [
                         'label' => 'Commentaire',
                         'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment'])
                     ]); ?>
