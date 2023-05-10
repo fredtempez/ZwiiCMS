@@ -317,7 +317,7 @@ class layout extends common
         $items .= '<span id="footerDisplayCookie"';
         $items .= ($this->getData(['config', 'cookieConsent']) === true && $this->getData(['theme', 'footer', 'displayCookie']) === true) ? '>' : ' class="displayNone" >';
         $label = empty($this->getData(['locale', 'cookies', 'cookiesFooterText'])) ? 'Cookies' : $this->getData(['locale', 'cookies', 'cookiesFooterText']);
-        $items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" class="skiptranslate" id="footerLinkCookie">' . $label . '</a>';
+        $items .= '<wbr>&nbsp;|&nbsp;<a href="javascript:void(0)" id="footerLinkCookie">' . $label . '</a>';
         $items .= '</span>';
         // Affichage du lien de connexion
         if (
@@ -344,7 +344,7 @@ class layout extends common
             $items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
             $items .= '<wbr>&nbsp;|&nbsp;';
             if (
-                $this->getUser('group') >= self::GROUP_MEMBER && $this->getPermission('folder', 'share') === true
+                $this->getPermission('filemanager') === true
             ) {
                 $items .= '<wbr>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -354,10 +354,10 @@ class layout extends common
                 ]);
             }
             $items .= '<wbr>' . template::ico('user', [
-                    'margin' => 'all',
-                    'help' => 'Mon compte',
-                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
-                ]);
+                'margin' => 'all',
+                'help' => 'Mon compte',
+                'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
+            ]);
             $items .= '<wbr>' . template::ico('logout', [
                 'margin' => 'all',
                 'help' => 'Déconnecter',
@@ -523,14 +523,14 @@ class layout extends common
         // Drapeau les langues
         foreach (self::$languages as $key => $value) {
             if (is_dir(self::DATA_DIR . $key)) {
-                    $t[] = $this->showi18n($key);
+                $t[] = $this->showi18n($key);
             }
         }
         // Pas de drapeau si la langue est unique
         if (count($t) > 1) {
             foreach ($t as $key) {
                 echo $key;
-             }
+            }
         }
         echo '</ul>';
     }
@@ -926,7 +926,7 @@ class layout extends common
                 }
                 $leftItems .= '</optgroup' >
                     // Afficher les barres
-                    $leftItems .= '<optgroup label="'.helper::translate('Barres latérales').'">';
+                    $leftItems .= '<optgroup label="' . helper::translate('Barres latérales') . '">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
                     $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
                     foreach ($childrenPageIds as $childKey) {
@@ -977,7 +977,10 @@ class layout extends common
             }
             // Items de droite
             $rightItems = '';
-            if ($this->getUser('group') >= self::GROUP_MODERATOR) {
+            if (
+                $this->getUser('group') >= self::GROUP_MODERATOR
+                && $this->getPermission('filemanager')
+            ) {
                 $rightItems .= '<li>' . template::ico('folder', [
                     'help' => 'Fichiers',
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),

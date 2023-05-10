@@ -535,8 +535,6 @@ class user extends common
 				$this->deleteData(['profil', $oldGroup, $profil]);
 				$profil = helper::increment($profil, $this->getData(['profil', $group]));
 			}
-			echo "groupe " . $group;
-			echo "profil " . $profil;
 			$this->setData([
 				'profil',
 				$group,
@@ -545,6 +543,7 @@ class user extends common
 					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,
 					'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
+					'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
 					'file' => [
 						'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
@@ -564,7 +563,6 @@ class user extends common
 						'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
-						'share' => $this->getInput('profilEditShare', helper::FILTER_BOOLEAN),
 						'path' => $this->getInput('profilEditPath'),
 					]
 				]
@@ -595,6 +593,48 @@ class user extends common
 
 	public function profilAdd()
 	{
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			// Sauvegarder les données
+			$this->setData([
+				'profil',
+				$this->getInput('profilAddGroup'),
+				$this->getInput('profilAddProfil'),
+				[
+					'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
+					'readonly' => false,
+					'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
+					'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
+					'file' => [
+						'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
+					],
+					'folder' => [
+						'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
+						'path' => $this->getInput('profilAddPath'),
+					]
+				]
+			]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'user/profil',
+				'notification' => helper::translate('Modifications enregistrées'),
+				'state' => true
+			]);
+		}
 
 		// Valeurs en sortie;
 		$this->addOutput([

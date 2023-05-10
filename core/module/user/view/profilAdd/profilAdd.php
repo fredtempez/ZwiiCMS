@@ -52,7 +52,7 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddShare', true, 'Activé'); ?>
+                    <?php echo template::checkbox('profilAddFileManager', true, 'Activé'); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('profilAddPath', $module::$sharePath, [

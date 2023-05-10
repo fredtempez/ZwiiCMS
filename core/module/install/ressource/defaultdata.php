@@ -313,6 +313,7 @@ class init extends common
 					'name' => 'Membre simple',
 					'readonly' => false,
 					'comment' => 'Accède aux pages réservées',
+					'filemanager' => false,
 					'file' => [
 						'download' => false,
 						'edit' => false,
@@ -333,13 +334,14 @@ class init extends common
 						'copycut' => false,
 						'chmod' => false,
 						'share' => false,
-						'path' => './site/file/source/partage/',
+						'path' => null,
 					]
 				],
 				'1' => [
 					'name' => 'Membre',
 					'readonly' => false,
 					'comment' => 'Accède aux pages réservées et à un dossier partagé',
+					'filemanager' => true,
 					'file' => [
 						'download' => false,
 						'edit' => false,
@@ -369,6 +371,7 @@ class init extends common
 					'name' => 'Modérateur',
 					'readonly' => false,
 					'comment' => 'Edition des pages',
+					'filemanager' => true,
 					'file' => [
 						'download' => true,
 						'edit' => true,
@@ -396,6 +399,7 @@ class init extends common
 					'name' => 'Editeur avec gestion des fichiers',
 					'readonly' => false,
 					'comment' => 'Edition des pages',
+					'filemanager' => true,
 					'file' => [
 						'download' => true,
 						'edit' => true,

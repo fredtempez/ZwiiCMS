@@ -415,7 +415,6 @@ class common
 		// Mise à jour des données core
 		include('core/include/update.inc.php');
 
-
 		// Données de proxy
 		$proxy = $this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']);
 		if (
@@ -911,13 +910,25 @@ class common
 	{
 		if (is_array($this->user) === false) {
 			return false;
-		} elseif ($key2 === null && array_key_exists($key1, $this->getData(['profil', $this->user['group']]))) {
-			return $this->getData(['profil', $this->user['group'], $key1]);
-		} elseif ($key2 && array_key_exists($key2, $this->getData(['profil', $this->user['group'], $key1]))) {
-			return $this->getData(['profil', $this->user['group'], $key1, $key2]);
+		} elseif ($this->getUser('group') === self::GROUP_ADMIN) {
+			return true;
+		} elseif ($this->getUser('group') < 1) {
+			return false;
+		} elseif (
+			$key2
+			&& $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1])
+			&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]))
+		) {
+			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1, $key2]);
+		} elseif (
+			$this->getData(['profil', $this->user['group'], $this->user['profil']])
+			&& array_key_exists($key1, $this->getData(['profil', $this->user['group'], $this->user['profil']]))
+		) {
+			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]);
 		} else {
 			return false;
 		}
+
 	}
 
 	/**
@@ -1320,12 +1331,13 @@ class common
 	/**
 	 * Journalisation
 	 */
-	public function saveLog($message = '') {
+	public function saveLog($message = '')
+	{
 		// Journalisation
 		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
-		$dataLog .= $message ? $this->getUrl() . ';'. $message : $this->getUrl();
+		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config', 'connect', 'log'])) {
 			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);

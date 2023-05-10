@@ -424,7 +424,7 @@ $config = array(
 	// for copy/cut files
 	'copy_cut_dirs' => $folder['copycut'] ? $folder['copycut'] : false,
 	// for copy/cut directories
-	'chmod_files' => $file['permission'] ? $file['permission'] : false,
+	'chmod_files' => $file['chmod'] ? $file['chmod'] : false,
 	// change file permissions
 	'chmod_dirs' => $folder['chmod'] ? $folder['chmod'] : false,
 	// change folder permissions
