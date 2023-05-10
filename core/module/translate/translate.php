@@ -638,8 +638,7 @@ class translate extends common
 		 */
 
 		if (
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD') &&
-		    $this->getUser('group') > self::GROUP_MODERATOR &&
+			is_dir(self::DATA_DIR . $lang) &&
 			array_key_exists($lang, self::$languages) === true
 		) {
 
