@@ -32,11 +32,11 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			$file['duplicate'] = true;
 			$file['extract'] = true;
 			$file['copycut'] = true;
-			$file['permission'] = true;
 			$file['preview'] = true;
 			$file['edit'] = true;
 			$file['extract'] = true;
 			$file['download'] = true;
+			$file['chmod'] = true;
 			$folder['create'] = true;
 			$folder['create'] = true;
 			$folder['delete'] = true;
@@ -66,11 +66,11 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			$file['duplicate'] = false;
 			$file['extract'] = false;
 			$file['copycut'] = false;
-			$file['permission'] = false;
 			$file['preview'] = false;
 			$file['edit'] = false;
 			$file['extract'] = false;
 			$file['download'] = false;
+			$file['chmod'] = false;
 			$folder['create'] = false;
 			$folder['create'] = false;
 			$folder['delete'] = false;
