@@ -12,12 +12,13 @@
  */
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 	$(".userEditGroupProfil").hide();
 	$("#userEditGroupProfil" + $("#userEditGroup").val()).show();
-});
 
-$("#userEditGroup").on("change", function() {
-	$(".userEditGroupProfil").hide();
-	$("#userEditGroupProfil" + $(this).val()).show();
-}).trigger("change");
+	$("#userEditGroup").on("change", function () {
+		$(".userEditGroupProfil").hide();
+		$("#userEditGroupProfil" + $(this).val()).show();
+	});
+
+});
