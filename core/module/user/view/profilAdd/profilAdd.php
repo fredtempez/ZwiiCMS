@@ -56,7 +56,7 @@
                 </div>
                 <div class="col6">
                     <?php echo template::select('profilAddPath', $module::$sharePath, [
-                        'label' => 'Racine du dossier',
+                        'label' => 'Dossier',
                         'class' => 'filemanager',
                     ]); ?>
                 </div>

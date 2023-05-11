@@ -58,7 +58,7 @@
                 </div>
                 <div class="col6">
                     <?php echo template::select('profilEditPath', $module::$sharePath, [
-                        'label' => 'Racine du dossier',
+                        'label' => 'Dossier',
                         'class' => 'filemanager',
                         'selected' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'path'])
                     ]); ?>

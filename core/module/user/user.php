@@ -578,7 +578,7 @@ class user extends common
 
 		self::$sharePath = $this->getSubdirectories('./site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge(['./site/file/source/' => 'Accès total'], self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Valeurs en sortie;
@@ -642,7 +642,7 @@ class user extends common
 
 		self::$sharePath = $this->getSubdirectories('./site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge(['./site/file/source/' => 'Accès total'], self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Valeurs en sortie;
@@ -1043,7 +1043,7 @@ class user extends common
 			// Vérifiez si c'est un répertoire
 			if (is_dir($path)) {
 				// Construisez la clé et la valeur pour le tableau associatif
-				$key = $basePath === '' ? $file : $basePath . '/' . $file;
+				$key = $basePath === '' ? ucfirst($file) : $basePath . '/' . $file;
 				$value = $path . '/';
 				// Ajouter la clé et la valeur au tableau associatif
 				$subdirs[$key] = $value;
