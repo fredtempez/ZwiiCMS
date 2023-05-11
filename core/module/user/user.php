@@ -578,7 +578,8 @@ class user extends common
 
 		self::$sharePath = $this->getSubdirectories('./site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge(['./site/file/source/' => '/'], self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => 'Accès total'], self::$sharePath);
+		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Valeurs en sortie;
 		$this->addOutput([
@@ -638,6 +639,11 @@ class user extends common
 				'state' => true
 			]);
 		}
+
+		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = array_flip(self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => 'Accès total'], self::$sharePath);
+		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Valeurs en sortie;
 		$this->addOutput([
@@ -1021,7 +1027,7 @@ class user extends common
 	/**
 	 * Liste les dossier contenus dans RFM
 	 */
-	function getSubdirectories($dir, $basePath = '')
+	private function getSubdirectories($dir, $basePath = '')
 	{
 		$subdirs = array();
 		// Ouvrez le répertoire spécifié
@@ -1037,7 +1043,7 @@ class user extends common
 			// Vérifiez si c'est un répertoire
 			if (is_dir($path)) {
 				// Construisez la clé et la valeur pour le tableau associatif
-				$key = $basePath . '/' . $file;
+				$key = $basePath === '' ? $file : $basePath . '/' . $file;
 				$value = $path . '/';
 				// Ajouter la clé et la valeur au tableau associatif
 				$subdirs[$key] = $value;

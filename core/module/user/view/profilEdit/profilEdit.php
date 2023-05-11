@@ -52,7 +52,7 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilEditFileManager', true, 'Activé', [
+                    <?php echo template::checkbox('profilEditFileManager', true, 'Autorisé', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'filemanager'])
                     ]); ?>
                 </div>
