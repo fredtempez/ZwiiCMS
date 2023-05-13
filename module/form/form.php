@@ -30,8 +30,6 @@ class form extends common
 		'index' => self::GROUP_VISITOR,
 		'export2csv' => self::GROUP_MODERATOR,
 		'output2csv' => self::GROUP_MODERATOR,
-		'init' => self::GROUP_MODERATOR,
-		'update' => self::GROUP_MODERATOR,
 	];
 
 	public static $data = [];
