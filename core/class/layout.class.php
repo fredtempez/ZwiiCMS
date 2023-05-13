@@ -935,10 +935,13 @@ class layout extends common
                 }
                 $leftItems .= '</optgroup>';
                 $leftItems .= '</select></li>';
-                $leftItems .= '<li>' . template::ico('plus', [
-                    'href' => helper::baseUrl() . 'page/add',
-                    'help' => 'Nouvelle page ou barre latérale'
-                ]) . '</li>';
+                // Bouton Ajouter une page
+                if ($this->getPermission('page', 'add')) {
+                    $leftItems .= '<li>' . template::ico('plus', [
+                        'href' => helper::baseUrl() . 'page/add',
+                        'help' => 'Nouvelle page ou barre latérale'
+                    ]) . '</li>';
+                }
                 if (
                     // Sur un module de page qui autorise le bouton de modification de la page
                     $this->core->output['showBarEditButton']
@@ -951,28 +954,44 @@ class layout extends common
                     // Sur une page d'accueil
                     or $this->getUrl(0) === ''
                 ) {
-                    $leftItems .= '<li>' . template::ico('pencil', [
-                        'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
-                        'help' => 'Éditer la page'
-                    ]) . '</li>';
-                    if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
+                    // Bouton Editer une page
+                    if ($this->getPermission('page', 'edit')) {
+                        $leftItems .= '<li>' . template::ico('pencil', [
+                            'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
+                            'help' => 'Éditer la page'
+                        ]) . '</li>';
+                    }
+                    // Bouton Editer le module d'une page
+                    if (
+                        $this->getPermission('page', 'module')
+                        && $this->getData(['page', $this->getUrl(0), 'moduleId'])
+                    ) {
                         $leftItems .= '<li>' . template::ico('gear', [
                             'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
                             'help' => 'Module de la page'
                         ]) . '</li>';
                     }
-                    $leftItems .= '<li>' . template::ico('clone', [
-                        'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
-                        'help' => 'Dupliquer la page'
-                    ])
-                        . '</li>';
-
-                    $leftItems .= '<li>' . template::ico('trash', [
-                        'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
-                        'help' => 'Supprimer la page',
-                        'id' => 'pageDelete'
-                    ])
-                        . '</li>';
+                    // Bouton dupliquer une page
+                    if (
+                        $this->getPermission('page', 'duplicate')
+                    ) {
+                        $leftItems .= '<li>' . template::ico('clone', [
+                            'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+                            'help' => 'Dupliquer la page'
+                        ])
+                            . '</li>';
+                    }
+                    // Bouton Effacer une page
+                    if (
+                        $this->getPermission('page', 'delete')
+                    ) {
+                        $leftItems .= '<li>' . template::ico('trash', [
+                            'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+                            'help' => 'Supprimer la page',
+                            'id' => 'pageDelete'
+                        ])
+                            . '</li>';
+                    }
                 }
             }
             // Items de droite
