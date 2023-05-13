@@ -699,7 +699,9 @@ class core extends common
 					}
 				}
 				$action = array_key_exists($action, $module::$actions) ? $action : 'index';
-				if (array_key_exists($action, $module::$actions)) {
+				if (array_key_exists($action, $module::$actions) 
+						//&& $this->getPermission($moduleId, $action)
+				){
 					$module->$action();
 					$output = $module->output;
 					// Check le groupe de l'utilisateur
@@ -707,6 +709,7 @@ class core extends common
 						($module::$actions[$action] === self::GROUP_VISITOR
 							or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 								and $this->getUser('group') >= $module::$actions[$action]
+								and $this->getPermission($moduleId, $action)
 							)
 						)
 						and $output['access'] === true
