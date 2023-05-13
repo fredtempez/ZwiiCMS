@@ -909,24 +909,28 @@ class common
 	public function getPermission($key1, $key2 = null)
 	{
 		// User n'existe pas
-		if (is_array($this->user) === false) {
-			return false;
+		// if (is_array($this->user) === false) {
+		//	return false;
 		// Administrateur, toutes les permissions
-		} elseif ($this->getUser('group') === self::GROUP_ADMIN) {
-			return true;
+		//} elseif ($this->getUser('group') === self::GROUP_ADMIN) {
+		//	return true;
 		// Groupe sans autorisation
-		} elseif ($this->getUser('group') < 1) {
-			return false;
+		//} elseif ($this->getUser('group') < 1) {
+		//	return false;
 		// Groupe avec profil, consultation des autorisations sur deux clés
-		} elseif (
-			$key2
+		//} elseif (
+		if ($key1
+			&& $key2
+			&& $this->user
 			&& $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1])
 			&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]))
 		) {
 			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1, $key2]);
 		// Groupe avec profil, consultation des autorisations sur une seule clé
 		} elseif (
-			$this->getData(['profil', $this->user['group'], $this->user['profil']])
+			$key1
+			&& $this->user
+			&& $this->getData(['profil', $this->user['group'], $this->user['profil']])
 			&& array_key_exists($key1, $this->getData(['profil', $this->user['group'], $this->user['profil']]))
 		) {
 			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]);

@@ -699,9 +699,10 @@ class core extends common
 					}
 				}
 				$action = array_key_exists($action, $module::$actions) ? $action : 'index';
-				if (array_key_exists($action, $module::$actions) 
-						//&& $this->getPermission($moduleId, $action)
-				){
+				var_dump( $moduleId);
+				var_dump ($action);
+				var_dump ($this->getPermission('user', 'login'));
+				if (array_key_exists($action, $module::$actions)) {
 					$module->$action();
 					$output = $module->output;
 					// Check le groupe de l'utilisateur
