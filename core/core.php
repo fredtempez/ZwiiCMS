@@ -888,12 +888,14 @@ class common
 	 * @param int $key Clé de la valeur
 	 * @return string|null
 	 */
-	public function getUser($key)
+	public function getUser($key, $perm1 = null, $perm2 = null)
 	{
 		if (is_array($this->user) === false) {
 			return false;
 		} elseif ($key === 'id') {
 			return $this->getInput('ZWII_USER_ID');
+		} elseif ($key === 'permission') {
+			return $this->getPermission($perm1, $perm2);
 		} elseif (array_key_exists($key, $this->user)) {
 			return $this->user[$key];
 		} else {
@@ -912,21 +914,19 @@ class common
 		// if (is_array($this->user) === false) {
 		//	return false;
 		// Administrateur, toutes les permissions
-		//} elseif ($this->getUser('group') === self::GROUP_ADMIN) {
-		//	return true;
-		// Groupe sans autorisation
-		//} elseif ($this->getUser('group') < 1) {
-		//	return false;
-		// Groupe avec profil, consultation des autorisations sur deux clés
-		//} elseif (
-		if ($key1
+		if ($this->getUser('group') === self::GROUP_ADMIN) {
+			return true;
+		} elseif ($this->getUser('group') < 1) { // Groupe sans autorisation
+			return false;
+		} elseif ( // Groupe avec profil, consultation des autorisations sur deux clés
+			$key1
 			&& $key2
 			&& $this->user
 			&& $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1])
 			&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]))
 		) {
 			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1, $key2]);
-		// Groupe avec profil, consultation des autorisations sur une seule clé
+			// Groupe avec profil, consultation des autorisations sur une seule clé
 		} elseif (
 			$key1
 			&& $this->user
@@ -935,9 +935,8 @@ class common
 		) {
 			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]);
 		} else {
-			// Permission non spécifiée dans le profil est autorisée par défaut pour le fonctionnement de $action
+			// Une permission non spécifiée dans le profil est autorisée par défaut pour le fonctionnement de $action
 			return true;
-			//return false;
 		}
 
 	}

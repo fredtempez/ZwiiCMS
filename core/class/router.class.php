@@ -474,7 +474,7 @@ class core extends common
 			header('Location:' . helper::baseUrl() . 'install');
 			exit();
 		}
-		
+
 		// Journalisation
 		$this->saveLog();
 
@@ -699,9 +699,6 @@ class core extends common
 					}
 				}
 				$action = array_key_exists($action, $module::$actions) ? $action : 'index';
-				var_dump( $moduleId);
-				var_dump ($action);
-				var_dump ($this->getPermission('user', 'login'));
 				if (array_key_exists($action, $module::$actions)) {
 					$module->$action();
 					$output = $module->output;
@@ -710,7 +707,7 @@ class core extends common
 						($module::$actions[$action] === self::GROUP_VISITOR
 							or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 								and $this->getUser('group') >= $module::$actions[$action]
-								and $this->getPermission($moduleId, $action)
+								and $this->getUser('permission', $moduleId, $action)
 							)
 						)
 						and $output['access'] === true

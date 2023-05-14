@@ -21,11 +21,13 @@ setlocale(LC_CTYPE, $lang);
 $userId = $_COOKIE['ZWII_USER_ID'];
 $u = json_decode(file_get_contents('../../../site/data/user.json'), true);
 $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
+
 // Lecture les droits
 if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 	$group = $u['user'][$userId]['group'];
 	switch ($group) {
 		case 3:
+			// Accès admin
 			$file['delete'] = true;
 			$file['upload'] = true;
 			$file['rename'] = true;
@@ -47,7 +49,11 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			break;
 		case 2:
 		case 1:
+			// Accès contrôlés par le profil
 			$profil = $u['user'][$userId]['profil'];
+			if ($g['profil'][$group][$profil]['filemanager'] === false)
+				exit('Accès interdit');
+			// lecture du profil
 			if (!is_null($profil)) {
 				$file = $g['profil'][$group][$profil]['file'];
 				$folder = $g['profil'][$group][$profil]['folder'];
@@ -58,27 +64,9 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 				}
 				break;
 			}
-			// Applique default si $profil null
 		default:
-			$file['delete'] = false;
-			$file['upload'] = false;
-			$file['rename'] = false;
-			$file['duplicate'] = false;
-			$file['extract'] = false;
-			$file['copycut'] = false;
-			$file['preview'] = false;
-			$file['edit'] = false;
-			$file['extract'] = false;
-			$file['download'] = false;
-			$file['chmod'] = false;
-			$folder['create'] = false;
-			$folder['create'] = false;
-			$folder['delete'] = false;
-			$folder['copycut'] = false;
-			$folder['chmod'] = false;
-			$uploadDir = null;
-			$currentPath = '../../../site/file/source/';
-			break;
+			// Pas d'autorisation d'accès au gestionnaire de fichiers
+			exit('Accès interdit');
 	}
 }
 

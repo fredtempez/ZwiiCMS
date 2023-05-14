@@ -344,7 +344,7 @@ class layout extends common
             $items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
             $items .= '<wbr>&nbsp;|&nbsp;';
             if (
-                $this->getPermission('filemanager') === true
+                $this->getUser('permission','filemanager') === true
             ) {
                 $items .= '<wbr>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -498,7 +498,7 @@ class layout extends common
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
-                $this->getUser('group') >= self::GROUP_MEMBER && $this->getPermission('folder', 'share') === true
+                $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser('permission','folder', 'share') === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -936,7 +936,7 @@ class layout extends common
                 $leftItems .= '</optgroup>';
                 $leftItems .= '</select></li>';
                 // Bouton Ajouter une page
-                if ($this->getPermission('page', 'add')) {
+                if ($this->getUser('permission','page', 'add')) {
                     $leftItems .= '<li>' . template::ico('plus', [
                         'href' => helper::baseUrl() . 'page/add',
                         'help' => 'Nouvelle page ou barre latérale'
@@ -955,7 +955,7 @@ class layout extends common
                     or $this->getUrl(0) === ''
                 ) {
                     // Bouton Editer une page
-                    if ($this->getPermission('page', 'edit')) {
+                    if ($this->getUser('permission','page', 'edit')) {
                         $leftItems .= '<li>' . template::ico('pencil', [
                             'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
                             'help' => 'Éditer la page'
@@ -963,7 +963,7 @@ class layout extends common
                     }
                     // Bouton Editer le module d'une page
                     if (
-                        $this->getPermission('page', 'module')
+                        $this->getUser('permission','page', 'module')
                         && $this->getData(['page', $this->getUrl(0), 'moduleId'])
                     ) {
                         $leftItems .= '<li>' . template::ico('gear', [
@@ -973,7 +973,7 @@ class layout extends common
                     }
                     // Bouton dupliquer une page
                     if (
-                        $this->getPermission('page', 'duplicate')
+                        $this->getUser('permission','page', 'duplicate')
                     ) {
                         $leftItems .= '<li>' . template::ico('clone', [
                             'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
@@ -983,7 +983,7 @@ class layout extends common
                     }
                     // Bouton Effacer une page
                     if (
-                        $this->getPermission('page', 'delete')
+                        $this->getUser('permission','page', 'delete')
                     ) {
                         $leftItems .= '<li>' . template::ico('trash', [
                             'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
@@ -998,7 +998,7 @@ class layout extends common
             $rightItems = '';
             if (
                 $this->getUser('group') >= self::GROUP_MODERATOR
-                && $this->getPermission('filemanager')
+                && $this->getUser('permission','filemanager')
             ) {
                 $rightItems .= '<li>' . template::ico('folder', [
                     'help' => 'Fichiers',
