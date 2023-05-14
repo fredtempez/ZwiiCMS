@@ -48,6 +48,40 @@
     <div class="col12">
         <div class="block">
             <h4>
+                <?php echo helper::translate('Pages'); ?>
+            </h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageEdit', true, 'Editer'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Editeur CSS'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Editeur JS'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>
                 <?php echo helper::translate('Gestionnaire de fichiers'); ?>
             </h4>
             <div class="row">

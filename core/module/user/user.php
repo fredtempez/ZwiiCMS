@@ -564,6 +564,15 @@ class user extends common
 						'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
 						'path' => $this->getInput('profilEditPath'),
+					],
+					'page' => [
+						'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditPageEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditPageElete', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilEditPageDuplicate', helper::FILTER_BOOLEAN),
+						'module' => $this->getInput('profilEditPageModule', helper::FILTER_BOOLEAN),
+						'cssEditor' => $this->getInput('profilEditPagecssEditor', helper::FILTER_BOOLEAN),
+						'jsEditor' => $this->getInput('profilEditPagejsEditor', helper::FILTER_BOOLEAN),
 					]
 				]
 			]);
@@ -583,7 +592,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name']),
+			'title' => sprintf(helper::translate('Éditer le profil : %s'),$this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
 			'view' => 'profilEdit'
 		]);
 	}
@@ -629,6 +638,15 @@ class user extends common
 						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
 						'path' => $this->getInput('profilAddPath'),
+					],
+					'page' => [
+						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddPageElete', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
+						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
+						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
+						'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
 					]
 				]
 			]);

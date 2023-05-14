@@ -44,6 +44,56 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>
+                <?php echo helper::translate('Pages'); ?>
+            </h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
+                    ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPageEdit', true, 'Editer', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
+                    ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
+                    ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
+                    ]); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
+                    ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPagecssEditor', true, 'Editeur CSS', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
+                    ]); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditPagejsEditor', true, 'Editeur JS', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
+                    ]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -164,7 +214,7 @@
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'duplicate'])
                                 ]); ?>
                             </div>
-                            </div>
+                        </div>
                         <div class="row">
                             <div class="col3">
                                 <?php echo template::checkbox('profilEditExtract', true, 'Extraction', [
@@ -191,5 +241,4 @@
         </div>
     </div>
 </div>
-
 <?php echo template::formClose(); ?>
