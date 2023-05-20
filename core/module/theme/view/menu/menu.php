@@ -63,7 +63,7 @@
                 </div>
                 <div class="col4">
                     <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
-                        'label' => 'Alignement du contenu',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
                 </div>
@@ -95,14 +95,12 @@
                 <div class="col3">
                     <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
-                        'help' => 'Icônes de gestion de compte et de déconnexion. Uniquement pour les membres connectés'
                     ]); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('themeMenuBurgerContent', $module::$burgerContent, [
-                        'label' => 'Affichage dans le menu burger',
+                        'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
-                        'help' => 'Le menu burger remplace le menu complet lorsque la largeur de l\'écran  n\'est pas suffisante.'
                     ]); ?>
                 </div>
             </div>
@@ -166,8 +164,7 @@
                     <?php
                     echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
                         'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
-                        'help' => 'La couleur de fond de la page active peut être définie automatique ou selon une couleur définie, comme par exemple celle de fond des pages.'
-                    ]); ?>
+                     ]); ?>
                 </div>
                 <div class="col4">
                     <?php echo template::text('themeMenuActiveColor', [
@@ -187,29 +184,27 @@
             <h4><?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'menu', 'font']),
                         'fonts' => $module::$fonts['family']
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à celle définie dans le site',
+                        'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuFontWeight', $module::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col3">
                     <?php echo template::select('themeMenuTextTransform', $module::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'menu', 'textTransform'])

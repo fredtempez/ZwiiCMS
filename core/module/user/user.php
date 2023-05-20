@@ -105,9 +105,9 @@ class user extends common
 					$userMail,
 					'Compte créé sur ' . $this->getData(['locale', 'title']),
 					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-						'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-						'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
-						'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
+					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
+					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null,
 					$this->getData(['config', 'smtp', 'from']),
 				);
@@ -205,7 +205,7 @@ class user extends common
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Droit d'édition
 			and (
-				// Impossible de s'auto-éditer
+					// Impossible de s'auto-éditer
 				($this->getUser('id') === $this->getUrl(2)
 					and $this->getUrl('group') <= self::GROUP_VISITOR
 				)
@@ -226,7 +226,7 @@ class user extends common
 				$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
 				if ($this->getInput('userEditNewPassword')) {
 					// L'ancien mot de passe est correct
-					if (password_verify($this->getInput('userEditOldPassword'), $this->getData(['user', $this->getUrl(2), 'password']))) {
+					if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
 						// La confirmation correspond au mot de passe
 						if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
 							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
@@ -306,7 +306,7 @@ class user extends common
 			foreach (self::$languagesInstalled as $lang => $datas) {
 				self::$languagesInstalled[$lang] = self::$languages[$lang];
 			}
-			
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
@@ -333,9 +333,9 @@ class user extends common
 					$this->getData(['user', $userId, 'mail']),
 					'Réinitialisation de votre mot de passe',
 					'Bonjour <strong>' . $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']) . '</strong>,<br><br>' .
-						'Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.<br><br>' .
-						'<a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a><br><br>' .
-						'<small>Si nous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</small>',
+					'Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.<br><br>' .
+					'<a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a><br><br>' .
+					'<small>Si nous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</small>',
 					null,
 					$this->getData(['config', 'smtp', 'from']),
 				);
@@ -349,7 +349,7 @@ class user extends common
 			else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' =>  helper::translate('Utilisateur inexistant')
+					'notification' => helper::translate('Utilisateur inexistant')
 				]);
 			}
 		}
@@ -454,7 +454,7 @@ class user extends common
 			} else {
 				// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
 				if (
-					$this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) < time()
+					$this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time()
 					and $this->getData(['user', $userId, 'connectFail']) === $this->getData(['config', 'connect', 'attempt'])
 				) {
 					$this->setData(['user', $userId, 'connectFail', 0]);
@@ -465,7 +465,7 @@ class user extends common
 				if (
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
 					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
-					and password_verify($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true), $this->getData(['user', $userId, 'password']))
+					and password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password']))
 					and $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 					and $captcha === true
 				) {
@@ -510,8 +510,8 @@ class user extends common
 						$this->setData(['user', $userId, 'connectTimeout', time()]);
 					}
 					// Cas 3 le délai de bloquage court
-					if ($this->getData(['user', $userId, 'connectTimeout'])  + $this->getData(['config', 'connect', 'timeout']) > time()) {
-						$notification =  sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
+					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
+						$notification = sprintf(helper::translate('Accès bloqué %d minutes'), ($this->getData(['config', 'connect', 'timeout']) / 60));
 					}
 
 					// Valeurs en sortie
@@ -524,13 +524,14 @@ class user extends common
 		// Journalisation
 		$dataLog = helper::dateUTF8('%Y %m %d', time()) . ' - ' . helper::dateUTF8('%H:%M', time());
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
-		$dataLog .=  empty($this->getInput('userLoginId')) ? ';' : $this->getInput('userLoginId', helper::FILTER_ID)  . ';';
+		$dataLog .= empty($this->getInput('userLoginId')) ? ';' : $this->getInput('userLoginId', helper::FILTER_ID) . ';';
 		$dataLog .= $this->getUrl() . ';';
 		$dataLog .= $logStatus;
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config', 'connect', 'log'])) {
 			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
+
 		// Stockage des cookies
 		if (!empty($_COOKIE['ZWII_USER_ID'])) {
 			self::$userId = $_COOKIE['ZWII_USER_ID'];
@@ -550,7 +551,10 @@ class user extends common
 	{
 		helper::deleteCookie('ZWII_USER_ID');
 		helper::deleteCookie('ZWII_USER_PASSWORD');
+
+		// Détruit la session
 		session_destroy();
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'notification' => helper::translate('Déconnexion !'),
@@ -631,11 +635,11 @@ class user extends common
 			$filePath = self::FILE_DIR . 'source/' . $file;
 			if ($file and file_exists($filePath)) {
 				// Analyse et extraction du CSV
-				$rows   = array_map(function ($row) {
+				$rows = array_map(function ($row) {
 					return str_getcsv($row, $this->getInput('userImportSeparator'));
 				}, file($filePath));
 				$header = array_shift($rows);
-				$csv    = array();
+				$csv = array();
 				foreach ($rows as $row) {
 					$csv[] = array_combine($header, $row);
 				}
@@ -656,7 +660,7 @@ class user extends common
 					) {
 						// Validation du groupe
 						$item['groupe'] = (int) $item['groupe'];
-						$item['groupe'] =   ($item['groupe'] >= self::GROUP_BANNED and $item['groupe'] <= self::GROUP_ADMIN)
+						$item['groupe'] = ($item['groupe'] >= self::GROUP_BANNED and $item['groupe'] <= self::GROUP_ADMIN)
 							? $item['groupe'] : 1;
 						// L'utilisateur existe
 						if ($this->getData(['user', helper::filter($item['id'], helper::FILTER_ID)])) {
@@ -679,15 +683,18 @@ class user extends common
 							// Enregistre le user
 							$create = $this->setData([
 								'user',
-								$userId, [
+								$userId,
+								[
 									'firstname' => $item['prenom'],
 									'forgot' => 0,
 									'group' => $item['groupe'],
 									'lastname' => $item['nom'],
 									'mail' => $item['email'],
 									'pseudo' => $item['prenom'],
-									'signature' => 1, // Pseudo
-									'password' => uniqid(), // A modifier à la première connexion
+									'signature' => 1,
+									// Pseudo
+									'password' => uniqid(),
+									// A modifier à la première connexion
 									"connectFail" => null,
 									"connectTimeout" => null,
 									"accessUrl" => null,
@@ -696,7 +703,7 @@ class user extends common
 								]
 							]);
 							// Icône de notification
-							$item['notification'] = $create  ? template::ico('check') : template::ico('cancel');
+							$item['notification'] = $create ? template::ico('check') : template::ico('cancel');
 							// Envoi du mail
 							if (
 								$create
@@ -706,11 +713,11 @@ class user extends common
 									$item['email'],
 									'Compte créé sur ' . $this->getData(['locale', 'title']),
 									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-										'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-										'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-										'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
-										null,
-										$this->getData(['config', 'smtp', 'from']),
+									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
+									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
+									null,
+									$this->getData(['config', 'smtp', 'from']),
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône
@@ -731,10 +738,10 @@ class user extends common
 					}
 				}
 				if (empty(self::$users)) {
-					$notification =  helper::translate('Rien à importer, erreur de format ou fichier incorrect');
+					$notification = helper::translate('Rien à importer, erreur de format ou fichier incorrect');
 					$success = false;
 				} else {
-					$notification =  helper::translate('Importation effectuée');
+					$notification = helper::translate('Importation effectuée');
 					$success = true;
 				}
 			} else {
@@ -753,8 +760,9 @@ class user extends common
 
 	/** 
 	 * Télécharge un modèle
-	*/
-	public function template() {
+	 */
+	public function template()
+	{
 		$file = 'template.csv';
 		$path = 'core/module/user/ressource/';
 		// Téléchargement du CSV

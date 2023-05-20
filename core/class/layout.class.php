@@ -280,7 +280,8 @@ class layout extends common
         // Affichage de motorisé par
         $items .= '<span id="footerDisplayCopyright" ';
         $items .= $this->getData(['theme', 'footer', 'displayCopyright']) === false ? 'class="displayNone"' : '';
-        $items .= '>Motorisé&nbsp;par&nbsp;</span>';
+        $label = empty($this->getData(['locale', 'poweredPageLabel'])) ? 'Motorisé par' : $this->getData(['locale', 'poweredPageLabel']);
+        $items .= '><wbr>&nbsp;' . $label . '&nbsp;</span>';
         // Toujours afficher le nom du CMS
         $items .= '<span id="footerZwiiCMS">';
         $items .= '<a href="https://zwiicms.fr/" onclick="window.open(this.href);return false" >ZwiiCMS</a>';
@@ -519,17 +520,17 @@ class layout extends common
         }
         // Retourne les items du menu
         echo '<ul class="navMain" id="menuLeft">' . $itemsLeft . '</ul><ul class="navMain" id="menuRight">' . $itemsRight;
-        // Drapeau les langues des langues selon l'existance des dossiers
+        // Drapeau les langues
         foreach (self::$languages as $key => $value) {
             if (is_dir(self::DATA_DIR . $key)) {
-                $t[] = $this->showi18n($key);
+                    $t[] = $this->showi18n($key);
             }
         }
         // Pas de drapeau si la langue est unique
         if (count($t) > 1) {
             foreach ($t as $key) {
                 echo $key;
-            }
+             }
         }
         echo '</ul>';
     }
@@ -885,8 +886,8 @@ class layout extends common
             // Liste des pages
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
-                $leftItems .= '<option value="">Pages du site</option>';
-                $leftItems .= '<optgroup label="Pages orphelines">';
+                $leftItems .= '<option value="">' . helper::translate('Pages du site') . '</option>';
+                $leftItems .= '<optgroup label="' . helper::translate('Pages orphelines') . '">';
                 $orpheline = true;
                 $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
                 foreach ($this->getHierarchy(null, false) as $parentPageId => $childrenPageIds) {
@@ -895,7 +896,7 @@ class layout extends common
                         $orpheline
                     ) {
                         $orpheline = false;
-                        $leftItems .= '<optgroup label="Pages dans le menu">';
+                        $leftItems .= '<optgroup label="' . helper::translate('Pages dans le menu') . '">';
                     }
                     // Exclure les barres
                     if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
@@ -925,7 +926,7 @@ class layout extends common
                 }
                 $leftItems .= '</optgroup' >
                     // Afficher les barres
-                    $leftItems .= '<optgroup label="Barres latérales">';
+                    $leftItems .= '<optgroup label="'.helper::translate('Barres latérales').'">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
                     $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
                     foreach ($childrenPageIds as $childKey) {
@@ -1163,22 +1164,18 @@ class layout extends common
     public function showi18n($lang)
     {
         if (
-            is_dir(self::DATA_DIR . $lang)
+            (isset($_SESSION['ZWII_CONTENT'])
+                and $_SESSION['ZWII_CONTENT'] === $lang
+            )
         ) {
-            if (
-                (isset($_COOKIE['ZWII_CONTENT'])
-                    and $_COOKIE['ZWII_CONTENT'] === $lang
-                )
-            ) {
-                $select = ' class="i18nFlagSelected" ';
-            } else {
-                $select = ' class="i18nFlag" ';
-            }
-
-            $items = '<li>';
-            $items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
-            $items .= '</li>';
+            $select = ' class="i18nFlagSelected" ';
+        } else {
+            $select = ' class="i18nFlag" ';
         }
+
+        $items = '<li>';
+        $items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+        $items .= '</li>';
         return $items;
     }
 }

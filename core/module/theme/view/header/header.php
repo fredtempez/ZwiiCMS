@@ -42,7 +42,6 @@
                     <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
                         'label' => 'Hauteur maximale',
                         'selected' => $this->getData(['theme', 'header', 'height']),
-                        'help' => 'La hauteur maximale est de 600 pixels, même si les dimensions de l\'image sélectionnée sont supérieures. <br />Lorsque l\'adaptation est positionnée sur Responsive, la hauteur diminue proportionnellement à la largeur.'
                     ]); ?>
                 </div>
             </div>
@@ -103,42 +102,42 @@
             <h4><?php echo helper::translate('Mise en forme du titre'); ?>
             </h4>
             <div class="row">
-                <div class="col4">
+                <div class="col12">
                     <?php echo template::checkbox('themeHeaderTextHide', true, 'Titre masqué', [
                         'checked' => $this->getData(['theme', 'header', 'textHide'])
                     ]); ?>
                 </div>
-                <div class="col4">
+            </div>
+            <div class="row">
+                <div class="col3">
                     <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'header', 'font']),
                         'fonts' => $module::$fonts['family']
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
                         'label' => 'Taille',
-                        'help' => 'Proportionnelle à celle définie dans le site.',
+                        'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'header', 'fontSize'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'header', 'fontWeight'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'header', 'textTransform'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
-                        'label' => 'Alignement du contenu',
+                        'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'header', 'textAlign'])
                     ]); ?>
                 </div>
@@ -163,10 +162,10 @@
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageWidth"></span> ( <?php echo helper::translate('Largeur :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>)
-                        -
-                        <?php echo helper::translate('Largeur de l\'image :'); ?> <span id="themeHeaderImageHeight"></span>
-                        -
+                        <?php echo helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span> ; <?php echo helper::translate('Largeur du site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>
+                        |
+                        <?php echo helper::translate('Hauteur de l\'image'); ?> <span id="themeHeaderImageHeight"></span>
+                        |
                         <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
                 </div>
@@ -183,9 +182,6 @@
                         <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
                             'label' => 'Adaptation',
                             'selected' => $this->getData(['theme', 'header', 'imageContainer']),
-                            'help' => 'Les modes responsives permettent de conserver des dimensions proportionnelles.<br />
-                                    Cover pour une image plus grande que la bannière, Contain pour une image plus petite.
-                                    Les modes Auto et Etiré ne provoquent pas de modification de la hauteur de la bannière.'
                         ]); ?>
                     </div>
                     <div class="col3">

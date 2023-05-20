@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '3.8';
+	const VERSION = '3.9';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -207,7 +207,7 @@ class form extends common
 			]);
 		} else {
 			// Liste des pages
-			foreach ($this->getHierarchy(null, true, false) as $parentPageId => $childrenPageIds) {
+			foreach ($this->getHierarchy(null, false, false) as $parentPageId => $childrenPageIds) {
 				self::$pages[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 				foreach ($childrenPageIds as $childKey) {
 					self::$pages[$childKey] = '&nbsp;»&nbsp;' . $this->getData(['page', $childKey, 'title']);

@@ -79,6 +79,7 @@ if (isset($_GET['action'])) {
 			}
 			break;
 		case 'save_img':
+            break;
 			$info = pathinfo($_POST['name']);
             $image_data = $_POST['url'];
 

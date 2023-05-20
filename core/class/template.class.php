@@ -134,7 +134,7 @@ class template
         // Label
         $html .= self::label(
             $attributes['id'],
-            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />  en chiffres ?',
+            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq'),
             [
                 'help' => $attributes['help']
             ]
@@ -494,8 +494,8 @@ class template
                 $lang = $langId;
                 break;
             case 'selected':
-                if (isset($_COOKIE['ZWII_CONTENT'])) {
-                    $lang = $_COOKIE['ZWII_CONTENT'];
+                if (isset($_SESSION['ZWII_CONTENT'])) {
+                    $lang = $_SESSION['ZWII_CONTENT'];
                 } else {
                     $lang = 'fr_FR';
                 }
@@ -690,7 +690,7 @@ class template
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['help']  = helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
         if (empty($attributes['fonts']) === false) {
             $fonts = $attributes['fonts'];

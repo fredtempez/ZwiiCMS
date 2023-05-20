@@ -1,5 +1,41 @@
 # Changelog
 
+## Version 12.3.11
+- Interdit la création d'une langue autrement que par un administrateur.
+
+## Version 12.3.10
+- Edition d'un utilisateur, affiche correctement la langue de l'interface dans l'édition d'un utilisateur.
+- Mise à jour du fichier dialog.php de Responsive File Manager.
+- Vulnérabilité dans ajax_call.php CVE-2020-10567, désactivation de TUI Editor et de la fonction save_image.
+
+## Version 12.3.09
+### Corrections
+- Corrige le filtrage des modules orphelins.
+- Corrige l'installation en langue étrangère non prise en compte depuis 12.3.08
+- Corrige le bug d'affichage avec le module de recherche.
+### Modifications
+- Autorise la modification de la langue du site par défaut.
+- Traduction de "Motorisé par" dans la personnalisation des données de la langue du site.
+
+## Version 12.3.08
+- Amélioration du code liée à la traduction du contenu du CMS.
+- Implémentation d'un message d'avertissement de suppression d'une langue de site ou de contenu.
+- Correction des dialogues de traduction.
+- Correction dans le footer de l'activation d'une page spéciale non désignée.
+- Thème : simplification des valeurs de sélection, la valeur remplace une désignation, 80% au lieu de Petit.
+- Thème : suppression des bulles d'aides trop verbeuses.
+
+## Version 12.3.07
+### Corrections
+- Corrige un affichage erroné en fin d'installation
+- Corrige une erreur 404 lors de l'accès à une page dans une langue étrangère et bascule dans le format de langue correct.
+- Permets l'affichage des pages orphelines dans les redirections du formulaire, module désormais en version 3.8.
+### Amélioration
+- Les caractères spéciaux dans le mot de passe sont reconnus.
+
+## Version 12.3.06
+- Compléments de traduction.
+
 ## Version 12.3.05
 - Corrige un problème de stockage des paramètres de la localisation.
 

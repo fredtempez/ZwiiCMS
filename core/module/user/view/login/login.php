@@ -8,9 +8,9 @@
 	</div>
 	<div class="col6">
 		<?php if ($this->getData(['config', 'connect', 'showPassword']) === true) {
-			$passwordLabel = '<span id="passwordLabel">Mot de passe</span><span id="passwordIcon">' .  template::ico('eye') . '</span>';
+			$passwordLabel = '<span id="passwordLabel">' . helper::translate('Mot de passe') . '</span><span id="passwordIcon">' .  template::ico('eye') . '</span>';
 		} else {
-			$passwordLabel = 'Mot de passe';
+			$passwordLabel = helper::translate('Mot de passe');
 		}
 		?>
 		<?php echo template::password('userLoginPassword', [

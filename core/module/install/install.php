@@ -50,27 +50,26 @@ class install extends common
 				'access' => false
 			]);
 		}
-		// Accès autorisé
+
 		// Soumission du formulaire
 		if ($this->isPost()) {
+
 			$lang = $this->getInput('installLanguage');
-			// Place le cookie pour la suite de  l'installation
-			setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+			// Pour la suite  de l'installation
+			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
+
+			$_SESSION['ZWII_UI'] = $this->getInput('installLanguage');
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'install/postinstall/' . $lang
+				'redirect' => helper::baseUrl() . 'install/postinstall'
 			]);
 		}
-
-		//Nettoyage anciennes installations
-		helper::deleteCookie('ZWII_CONTENT');
 
 		// Liste des langues UI disponibles
 		if (is_dir(self::I18N_DIR)) {
 			foreach ($this->getData(['languages']) as $lang => $value) {
 				self::$i18nFiles[$lang] = self::$languages[$lang];
-				;
 			}
 		}
 
@@ -99,15 +98,6 @@ class install extends common
 			if ($this->isPost()) {
 
 				$success = true;
-
-				// Validation de la langue transmise
-				self::$i18nUI = $this->getUrl(2);
-				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
-
-				// par défaut le contenu est la langue d'installation
-				self::$i18nContent = self::$i18nUI;
-				setcookie('ZWII_CONTENT', self::$i18nContent, time() + 3600, helper::baseUrl(false, false), '', helper::isHttps(), true);
-
 
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
@@ -153,6 +143,20 @@ class install extends common
 						$this->getData(['config', 'smtp', 'from']),
 					);
 
+					// Validation de la langue transmise
+					self::$i18nUI = $_SESSION['ZWII_UI'];
+					self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+
+					// par défaut le contenu est la langue d'installation
+					self::$i18nContent = self::$i18nUI;
+					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
+
+					// Création du dossier de langue avec le marqueur de langue par défaut
+					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
+						mkdir(self::DATA_DIR . self::$i18nContent);
+						touch(self::DATA_DIR . self::$i18nContent . '/.default');
+					}
+
 					// Installation du site de test
 					if (
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
@@ -169,7 +173,7 @@ class install extends common
 					if (self::$i18nContent !== 'fr_FR') {
 						$this->initData('page', self::$i18nContent, false);
 						$this->initData('module', self::$i18nContent, false);
-						// Supprime l'installation FR générée par défaut.
+						if (is_dir(self::DATA_DIR . 'fr_FR'))
 						$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
@@ -236,7 +240,7 @@ class install extends common
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl(true) . $this->getData(['locale', 'homePageId']),
+						'redirect' => helper::baseUrl(),
 						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
 						'state' => ($sent === true && $success === true) ? true : null
 					]);
@@ -345,10 +349,10 @@ class install extends common
 			// Configuration
 			case 4:
 				$success = true;
-				$message = null;
+				$message = '';
 				$rewrite = $this->getInput('data');
 				// Réécriture d'URL
-				if ($rewrite === "true") { // Ajout des lignes dans le .htaccess
+				if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
 					$rewriteData = PHP_EOL .
 						'# URL rewriting' . PHP_EOL .
@@ -392,7 +396,6 @@ class install extends common
 
 				foreach ($installedUI as $key => $value) {
 					if ($store[$key]['version'] > $value['version']) {
-						echo copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 						$this->setData(['languages', $key, $store[$key]]);
 					}
 				}

@@ -115,7 +115,7 @@ class JsonDb extends \Prowebcraft\Dot
     protected function loadData($reload = false)
     {
         if ($this->data === null || $reload) {
-            $this->db = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'];
+            $this->db = $this->config['dir'] . $this->config['name'];
             if (!file_exists($this->db)) {
                 return null; // Rebuild database manage by CMS
             } else {
@@ -150,8 +150,7 @@ class JsonDb extends \Prowebcraft\Dot
             if ($w == $l) {
                 break;
             }
-            $try++;
-            sleep(1);
+            $t++;
         }
         if ($w !== $l) {
             exit('Erreur d\'écriture, les données n\'ont pas été sauvegardées');

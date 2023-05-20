@@ -1,5 +1,7 @@
+# Version 3.9
+- Redirection des pages orphelines
 # Version 3.8
-- Encode UTF-8 de l'objet du message, et des noms des champs.
+- Encodage : UTF-8 de l'objet du message et des noms des champs
 # Version 3.7
 - Modification liées à la suppression de flatpickr.
 # Version 3.6

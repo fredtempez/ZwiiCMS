@@ -53,9 +53,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version et branche pour l'auto-update
-	const ZWII_VERSION = '12.3.05';
-
-	const ZWII_DATAVERSION = 12301;
+	const ZWII_VERSION = '12.3.11';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
@@ -102,7 +100,6 @@ class common
 	public static $inputBefore = [];
 	public static $inputNotices = [];
 	public static $importNotices = [];
-	public static $captchaNotices = [];
 	public static $coreNotices = [];
 	public $output = [
 		'access' => true,
@@ -217,8 +214,6 @@ class common
 	private $url = '';
 	// Données de site
 	private $user = [];
-	// Drapeau de sauvegarde
-	private $saveFlag = false;
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
@@ -314,17 +309,29 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
+		// Extraction de la sesion
+		// $this->input['_SESSION'] = $_SESSION;
+
 		// Déterminer la langue du contenu du site
-		if (isset($this->input['_COOKIE']['ZWII_CONTENT'])) {
-			// Déterminé par le cookie
-			self::$i18nContent = $this->input['_COOKIE']['ZWII_CONTENT'];
-			\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+		if (isset($_SESSION['ZWII_CONTENT'])) {
+			// Déterminé par la session présente
+			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
+		} else {
+			// Détermine la langue par défaut
+			foreach (self::$languages as $key => $value) {
+				if (file_exists(self::DATA_DIR . $key . '/.default')) {
+					self::$i18nContent = $key;
+					$_SESSION['ZWII_CONTENT'] = $key;
+					break;
+				}
+			}
 		}
+		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
 		// Récupère les descripteurs
 		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB
+			// Constructeur  JsonDB;
 			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
 				'name' => $keys . '.json',
 				'dir' => $this->dataPath($keys, self::$i18nContent),
@@ -345,34 +352,36 @@ class common
 			}
 		}
 
-		// Langue de l'administration
-		if ($this->getData(['user']) !== []) {
-			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
-			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']) ? $this->getData(['user', $this->getUser('id'), 'language']) : $this->getInput('ZWII_UI');
-			// Validation de la langue
-			self::$i18nUI = (empty(self::$i18nUI) || is_null(self::$i18nUI))
-				&& !file_exists(self::I18N_DIR . self::$i18nUI . '.json')
-				? 'fr_FR'
-				: self::$i18nUI;
-		} else {
-			// Installation
-			self::$i18nUI = $this->getInput('ZWII_UI') ? $this->getInput('ZWII_UI') : 'fr_FR';
-		}
-
-
-		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
-
-		// Utilisateur connecté
+		// Récupére un utilisateur connecté
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
+
+		// Langue de l'administration si le user est connecté
+		if ($this->getData(['user', $this->getUser('id'), 'language'])) {
+			// Langue sélectionnée dans le compte, la langue du cookie sinon celle du compte ouvert
+			self::$i18nUI = $this->getData(['user', $this->getUser('id'), 'language']);
+			// Validation de la langue
+			self::$i18nUI = isset(self::$i18nUI) && file_exists(self::I18N_DIR . self::$i18nUI . '.json')
+				? self::$i18nUI
+				: 'fr_FR';
+		} else {
+			if (isset($_SESSION['ZWII_UI'])) {
+				self::$i18nUI = $_SESSION['ZWII_UI'];
+			} elseif (isset($_COOKIE['ZWII_UI'])) {
+				self::$i18nUI = $_COOKIE['ZWII_UI'];
+			} else {
+				self::$i18nUI = 'fr_FR';
+			}
+			$_SESSION['ZWII_UI'] = self::$i18nUI;
+		}
+		// Stocker le cookie de langue pour l'éditeur de texte
+		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
 
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
 			$this->buildHierarchy();
 		}
-
 
 		// Construit l'url
 		if ($this->url === '') {
@@ -402,10 +411,8 @@ class common
 			}
 		}
 
-		// Mise à jour des données core selon la version du jeu de données
-		if ($this->getData(['core', 'dataVersion']) < common::ZWII_DATAVERSION) {
-			include('core/include/update.inc.php');
-		}
+		// Mise à jour des données core
+		include('core/include/update.inc.php');
 
 
 		// Données de proxy
@@ -428,7 +435,6 @@ class common
 			);
 			stream_context_set_default($context);
 		}
-
 	}
 
 
@@ -624,9 +630,14 @@ class common
 		}
 		$db->save;
 
+
+
 		// Créer le jeu de pages du site de test
 		if ($module === 'page') {
+
+			// Dossier du contenu des pages
 			$langFolder = $lang . '/content/';
+
 			// Dossier des pages
 			if (!is_dir(self::DATA_DIR . $langFolder)) {
 				mkdir(self::DATA_DIR . $langFolder, 0755);

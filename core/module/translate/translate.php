@@ -29,6 +29,7 @@ class translate extends common
 		// Effacer une langue de contenu ou de l'interface
 		'content' => self::GROUP_VISITOR,
 		'update' => self::GROUP_ADMIN,
+		'default' => self::GROUP_ADMIN
 	];
 
 	const PAGINATION = '20';
@@ -199,13 +200,19 @@ class translate extends common
 		// Onglet des langues de contenu
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
+
 			if (is_dir(self::DATA_DIR . $key)) {
-				if (self::$i18nUI === $key) {
-					$messageLocale = helper::translate('Langue par défaut');
-				} elseif (isset($_COOKIE['ZWII_CONTENT']) && $_COOKIE['ZWII_CONTENT'] === $key) {
-					$messageLocale = helper::translate('Langue du site sélectionnée');
+				// Ne pas importer dans 12.4.00
+				//if (file_exists(self::DATA_DIR . $key . '/page.json') &&
+				//	file_exists(self::DATA_DIR . $key . '/module.json') &&
+				//	file_exists(self::DATA_DIR . $key . '/locale.json')
+				//	) {
+				if (file_exists(self::DATA_DIR . $key . '/.default')) {
+					$messageLocale = helper::translate('Langue du site par défaut');
 				} else {
-					$messageLocale = '';
+					$messageLocale = '<a href="'
+						. helper::baseUrl() . $this->getUrl(0) . '/default/' . $key . '/' . $_SESSION['csrf']
+						. '">' . helper::translate('Définir par défaut') . '</a>';
 				}
 				self::$languagesInstalled[] = [
 					template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
@@ -217,13 +224,15 @@ class translate extends common
 						'help' => 'Éditer'
 					]),
 					template::button('translateContentLanguageLocaleDelete' . $key, [
-						'class' => ' buttonRed' . ($messageLocale ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . ($messageLocale === 'Langue du site par défaut' ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					])
 				];
+				//}
 			}
+
 		}
 		// Activation du bouton de copie
 		self::$siteCopy = count(self::$languagesInstalled) > 1 ? false : true;
@@ -271,7 +280,7 @@ class translate extends common
 						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
-						'class' => 'buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
+						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
@@ -381,6 +390,7 @@ class translate extends common
 					'page302' => $this->getInput('localePage302'),
 					'legalPageId' => $this->getInput('localeLegalPageId'),
 					'searchPageId' => $this->getInput('localeSearchPageId'),
+					'poweredPageLabel' => empty($this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT)) ? 'Motorisé par' : $this->getInput('localePoweredPageLabel', helper::FILTER_STRING_SHORT),
 					'searchPageLabel' => empty($this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT)) ? 'Rechercher' : $this->getInput('localeSearchPageLabel', helper::FILTER_STRING_SHORT),
 					'legalPageLabel' => empty($this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT)) ? 'Mentions légales' : $this->getInput('localeLegalPageLabel', helper::FILTER_STRING_SHORT),
 					'sitemapPageLabel' => empty($this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT)) ? 'Plan du site' : $this->getInput('localeSitemapPageLabel', helper::FILTER_STRING_SHORT),
@@ -599,6 +609,40 @@ class translate extends common
 		}
 	}
 
+	/*
+	 * Modifie la langue du site par défaut
+	 *
+	 */
+	public function default()
+	{
+		// Jeton incorrect ou URl avec le code langue incorrecte
+		$lang = $this->getUrl(2);
+		if (
+			$this->getUrl(3) !== $_SESSION['csrf']
+			|| array_key_exists($lang, self::$languages) === false
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'translate',
+				'state' => false,
+				'notification' => helper::translate('Action interdite')
+			]);
+		}
+
+		foreach (self::$languages as $key => $value) {
+			if (file_exists(self::DATA_DIR . $key . '/.default')) {
+				unlink(self::DATA_DIR . $key . '/.default');
+				touch(self::DATA_DIR . $lang . '/.default');
+				break;
+			}
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'notification' => helper::translate('Modifications enregistrées'),
+			'redirect' => helper::baseUrl() . 'translate',
+			'state' => true,
+		]);
+	}
 
 	/*
 	 * Traitement du changement de langue
@@ -612,25 +656,21 @@ class translate extends common
 		 * Changement de la langue si
 		 * différe de la langue active
 		 * déjà initialisée
-		 * fait partie des lnagues installées
+		 * fait partie des langues installées
 		 */
-		if (
-			$this->getInput('ZWII_CONTENT') !== $lang
-			&&
-			is_dir(self::DATA_DIR . $lang)
-			&&
-			array_key_exists($lang, self::$languages) === true
 
+		if (
+			is_dir(self::DATA_DIR . $lang) &&
+			array_key_exists($lang, self::$languages) === true
 		) {
-			// Nettoyer le cookie
-			helper::deleteCookie('ZWII_CONTENT');
-			// Stocker le choix
-			setcookie('ZWII_CONTENT', $lang, time() + 3600, helper::baseUrl(false, false), '', true, helper::isHttps());
+
+			// Stocker la sélection
+			$_SESSION['ZWII_CONTENT'] = $lang;
 		}
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'redirect' => helper::baseUrl() . $this->getData(['locale', $this->getUrl(2), 'homePageId'])
+			'redirect' => helper::baseUrl()
 		]);
 	}
 
