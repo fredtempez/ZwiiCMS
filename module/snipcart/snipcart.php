@@ -63,7 +63,8 @@ class snipcart extends common
 	{
 
 		// Initialisation ou mise à jour vers la version 1.4
-		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '1.4', '<')) {
+		if ( $this->getData(['module', $this->getUrl(0), 'config', 'versionData']) 
+			&& version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '1.4', '<')) {
 			// Si c'est une initialisation
 			if (null === $this->getData(['module', $this->getUrl(0), 'config'])) {
 				$this->setData([
@@ -211,6 +212,13 @@ class snipcart extends common
 		$data["buttonBgColor"] = $this->getData(['module', $this->getUrl(0), 'config', 'buttonBgColor']);
 		$data["template"] = $template;
 		$json = json_encode($data);
+		
+		if (!is_dir(self::DATADIRECTORY)) {
+			mkdir (self::DATADIRECTORY);
+		}
+		if (!is_dir(self::DATAMODULE)) {
+			mkdir (self::DATAMODULE);
+		}
 		file_put_contents(self::DATAMODULE . '/datadefault.json', $json);
 
 
@@ -225,7 +233,7 @@ class snipcart extends common
 			'showBarEditButton' => true,
 			'showPageContent' => true,
 			'view' => 'index',
-			'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
+			'style' => $this->getData(['module', $this->getUrl(0), 'theme', 'style']) && file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
 						? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
 						: '',
 			'vendor' => [
