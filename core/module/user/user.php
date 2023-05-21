@@ -531,7 +531,7 @@ class user extends common
 			$this->setData([
 				'profil',
 				$this->getInput('profilEditGroup'),
-				$this->getUrl(3),
+				$this->getInput('profilEditProfil'),
 				[
 					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,

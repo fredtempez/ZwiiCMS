@@ -16,3 +16,7 @@
 /** NE PAS EFFACER
 * admin.css
 */
+
+#containerPage {
+    display: none;
+}

@@ -27,10 +27,16 @@
                             ]); ?>
                         </div>
                         <div class="col12">
-                            <?php echo template::text('profilEditGroup', [
+                            <?php echo template::text('profilEditDisplayGroup', [
                                 'label' => 'Groupe',
                                 'value' => self::$groups[$this->getUrl(2)],
                                 'disabled' => true
+                            ]); ?>
+                            <?php echo template::hidden('profilEditGroup', [
+                                'value' => $this->getUrl(2),
+                            ]); ?>
+                            <?php echo template::hidden('profilEditProfil', [
+                                'value' => $this->getUrl(3),
                             ]); ?>
                         </div>
                     </div>
@@ -45,55 +51,55 @@
         </div>
     </div>
 </div>
-<?php if($this->getUrl(2) >= 2): ?>
-<div class="row">
-    <div class="col12">
-        <div class="block">
-            <h4>
-                <?php echo helper::translate('Pages'); ?>
-            </h4>
-            <div class="row">
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
-                    ]); ?>
+<?php if ($this->getUrl(2) >= self::GROUP_MODERATOR): ?>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Pages'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageEdit', true, 'Editer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
+                        ]); ?>
+                    </div>
                 </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPageEdit', true, 'Editer', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
-                    ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
-                    ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
-                    ]); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
-                    ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPagecssEditor', true, 'Editeur CSS', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
-                    ]); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilEditPagejsEditor', true, 'Editeur JS', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
-                    ]); ?>
+                <div class="row">
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Editeur CSS', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Editeur JS', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
+                        ]); ?>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 <div class="row">
     <div class="col12">

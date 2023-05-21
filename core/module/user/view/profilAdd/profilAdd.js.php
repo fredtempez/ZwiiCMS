@@ -26,4 +26,15 @@ $(document).ready(function () {
             $(".filemanager").prop("disabled", false);
         }
     });
+
+    // Désactive la gestion des pages pour les membres
+    $('#profilAddGroup').change(function() {
+        console.log($(this).val());
+        if ($(this).val() === '1') {
+            $('#containerPage').slideUp();
+        } else {
+            $('#containerPage').slideDown();
+        }
+    });
+
 });
