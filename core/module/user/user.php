@@ -527,18 +527,11 @@ class user extends common
 
 		// Soumission du formulaire
 		if ($this->isPost()) {
-			$oldGroup = $this->getUrl(2);
-			$group = $this->getInput('profilEditGroup');
-			$profil = $this->getUrl(3);
-			// Changement de groupe, effacer le profil de l'ancien groupe et incrément le profil
-			if ($oldGroup !== $group) {
-				$this->deleteData(['profil', $oldGroup, $profil]);
-				$profil = helper::increment($profil, $this->getData(['profil', $group]));
-			}
+
 			$this->setData([
 				'profil',
-				$group,
-				$profil,
+				$this->getInput('profilEditGroup'),
+				$this->getUrl(3),
 				[
 					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,

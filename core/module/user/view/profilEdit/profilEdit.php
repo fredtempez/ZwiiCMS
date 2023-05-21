@@ -27,9 +27,10 @@
                             ]); ?>
                         </div>
                         <div class="col12">
-                            <?php echo template::select('profilEditGroup', $module::$groupProfils, [
+                            <?php echo template::text('profilEditGroup', [
                                 'label' => 'Groupe',
-                                'selected' => $this->getUrl(2)
+                                'value' => self::$groups[$this->getUrl(2)],
+                                'disabled' => true
                             ]); ?>
                         </div>
                     </div>
@@ -44,7 +45,7 @@
         </div>
     </div>
 </div>
-
+<?php if($this->getUrl(2) >= 2): ?>
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -93,7 +94,7 @@
         </div>
     </div>
 </div>
-
+<?php endif; ?>
 <div class="row">
     <div class="col12">
         <div class="block">
