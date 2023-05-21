@@ -23,9 +23,9 @@ tinymce.init({
 				if (ed.id === 'themeHeaderText') {
 					$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
 				}
-
 			});
 		},
+		
 	// Langue
 	language: "fr_FR",
 	// Plugins
