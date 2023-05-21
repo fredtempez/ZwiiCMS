@@ -104,8 +104,15 @@
 						<?php echo template::select('userAddProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
 							'label' => 'Profil',
 						]); ?>
-					</div>
 				</div>
+			</div>
+			<div class="row">
+					<div class="col12">
+						<?php echo template::textarea('useraddProfilComment', [
+							"value" => '' 
+						]);
+						?> 
+					</div>
 			</div>
 		</div>
 	</div>
