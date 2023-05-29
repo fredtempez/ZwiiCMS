@@ -574,7 +574,7 @@ class helper
 	 * @param null|int $sufix Suffixe de l'url
 	 * @return array
 	 */
-	public static function pagination($array, $url, $item, $sufix = null)
+	public static function pagination($array, $url, $item, $suffix = null)
 	{
 		// Scinde l'url
 		$url = explode('/', $url);
@@ -598,7 +598,7 @@ class helper
 		if ($nbPage > 1) {
 			for ($i = 1; $i <= $nbPage; $i++) {
 				$disabled = ($i === $currentPage) ? ' class="disabled"' : false;
-				$pages .= '<a href="' . helper::baseUrl() . $urlCurrent . '/' . $i . $sufix . '"' . $disabled . '>' . $i . '</a>';
+				$pages .= '<a href="' . helper::baseUrl() . $urlCurrent . '/' . $i . $suffix . '"' . $disabled . '>' . $i . '</a>';
 			}
 			$pages = '<div class="pagination">' . $pages . '</div>';
 		}
