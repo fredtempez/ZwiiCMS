@@ -164,7 +164,7 @@ class user extends common
 			}
 			foreach ($profilData as $key => $value) {
 				self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
-				self::$userProfilsComments[$profilId][$key] = $profilData[$key]['comment'];
+				self::$userProfilsComments[$profilId][$key] = $profilData[$key]['name'] . ' : ' . $profilData[$key]['comment'];
 			}
 		}
 

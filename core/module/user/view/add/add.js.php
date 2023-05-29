@@ -41,7 +41,9 @@ $("#userAddId").on("change keydown keyup", function(event) {
  */
 $("#userAddGroup").on("change", function() {
 	$(".userAddGroupProfil").hide();
+	$(".userCommentProfil").hide();
 	$("#userAddGroupProfil" + $(this).val()).show();
+	$("#userCommentProfil" + $(this).val()).show();
 }).trigger("change");
 
 
