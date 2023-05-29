@@ -154,7 +154,7 @@ class user extends common
 
 		// Profils disponibles
 		foreach ($this->getData(['profil']) as $profilId => $profilData) {
-			if ($profilId < self::GROUP_MEMBER ) {
+			if ($profilId < self::GROUP_MEMBER) {
 				continue;
 			}
 			if ($profilId === self::GROUP_ADMIN) {
@@ -354,11 +354,17 @@ class user extends common
 
 			// Profils disponibles
 			foreach ($this->getData(['profil']) as $profilId => $profilData) {
-				if ($profilId < 1 || $profilId > 2) {
+				if ($profilId < self::GROUP_MEMBER) {
+					continue;
+				}
+				if ($profilId === self::GROUP_ADMIN) {
+					self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
+					self::$userProfilsComments[$profilId][self::GROUP_ADMIN] = $profilData['comment'];
 					continue;
 				}
 				foreach ($profilData as $key => $value) {
 					self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
+					self::$userProfilsComments[$profilId][$key] = $profilData[$key]['name'] . ' : ' . $profilData[$key]['comment'];
 				}
 			}
 
@@ -592,7 +598,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Éditer le profil : %s'),$this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
+			'title' => sprintf(helper::translate('Éditer le profil : %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
 			'view' => 'profilEdit'
 		]);
 	}

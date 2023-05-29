@@ -18,7 +18,9 @@ $(document).ready(function () {
 
 	$("#userEditGroup").on("change", function () {
 		$(".userEditGroupProfil").hide();
+		$(".userCommentProfil").hide();
 		$("#userEditGroupProfil" + $(this).val()).show();
+		$("#userCommentProfil" + $(this).val()).show();
 	});
 
 });

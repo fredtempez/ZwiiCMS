@@ -131,6 +131,26 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div id="userCommentProfil<?php echo self::GROUP_MEMBER; ?>" class="col12 displayNone userCommentProfil">
+					<?php echo template::textarea('useraddProfilComment' . self::GROUP_MEMBER, [
+						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_MEMBER])
+					]);
+					?>
+				</div>
+				<div id="userCommentProfil<?php echo self::GROUP_MODERATOR; ?>" class="col12 displayNone userCommentProfil">
+					<?php echo template::textarea('useraddProfilComment2' . self::GROUP_MODERATOR, [
+						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_MODERATOR])
+					]);
+					?>
+				</div>
+				<div id="userCommentProfil<?php echo self::GROUP_ADMIN; ?>" class="col12 displayNone userCommentProfil">
+					<?php echo template::textarea('useraddProfilComment' . self::GROUP_ADMIN, [
+						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_ADMIN])
+					]);
+					?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
