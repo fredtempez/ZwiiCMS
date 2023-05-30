@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '6.6';
+	const VERSION = '6.7';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -871,7 +871,7 @@ class blog extends common
 				}
 			}
 			// Pagination
-			$pagination = helper::pagination($articleIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']));
+			$pagination = helper::pagination($articleIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']), '#article');
 			// Liste des pages
 			self::$pages = $pagination['pages'];
 			// Articles en fonction de la pagination

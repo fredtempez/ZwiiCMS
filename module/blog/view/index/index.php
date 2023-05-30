@@ -9,7 +9,7 @@
 	</div>
 <?php endif; ?>
 <?php if ($module::$articles): ?>
-	<article>
+	<article id="article">
 		<?php foreach ($module::$articles as $articleId => $article): ?>
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'layout']) === true): ?>
 				<div class="readMoreModernContainer">
