@@ -579,7 +579,18 @@ class user extends common
 						'module' => $this->getInput('profilEditPageModule', helper::FILTER_BOOLEAN),
 						'cssEditor' => $this->getInput('profilEditPagecssEditor', helper::FILTER_BOOLEAN),
 						'jsEditor' => $this->getInput('profilEditPagejsEditor', helper::FILTER_BOOLEAN),
-					]
+					],
+					'blog' => [
+						'add' => $this->getInput('profilEditBlogAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditBlogEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditBlogDElete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilEditBlogConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN),
+						'comment' => $this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN),
+						'commentApprouve' => $this->getInput('profilEditBlogCommentApprouve', helper::FILTER_BOOLEAN),
+						'commentdelete' => $this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN),
+						'commentDeleteAll' => $this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
+					],
 				]
 			]);
 
@@ -648,12 +659,23 @@ class user extends common
 					'page' => [
 						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddPageElete', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddPageDElete', helper::FILTER_BOOLEAN),
 						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
 						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
 						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
 						'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
-					]
+					],
+					'blog' => [
+						'add' => $this->getInput('profilAddBlogAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddBlogDElete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilAddBlogConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN),
+						'comment' => $this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN),
+						'commentApprouve' => $this->getInput('profilAddBlogCommentApprouve', helper::FILTER_BOOLEAN),
+						'commentdelete' => $this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN),
+						'commentDeleteAll' => $this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
+					],
 				]
 			]);
 			// Valeurs en sortie

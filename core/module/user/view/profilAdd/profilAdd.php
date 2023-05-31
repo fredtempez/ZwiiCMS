@@ -78,7 +78,7 @@
         </div>
     </div>
 </div>
-<div class="row containerPage">
+<div class="row containerModule">
     <div class="col12">
         <div class="block">
             <h4>
