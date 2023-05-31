@@ -28,12 +28,11 @@ $(document).ready(function () {
     });
 
     // Désactive la gestion des pages pour les membres
-    $('#profilAddGroup').change(function() {
-        console.log($(this).val());
+    $('#profilAddGroup').change(function() {;
         if ($(this).val() === '1') {
-            $('#containerPage').slideUp();
+            $('.containerPage').slideUp();
         } else {
-            $('#containerPage').slideDown();
+            $('.containerPage').slideDown();
         }
     });
 

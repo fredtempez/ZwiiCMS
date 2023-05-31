@@ -60,40 +60,101 @@
                 </h4>
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
+                        <?php echo template::checkbox('profilEditPageAdd', false, 'Ajouter', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageEdit', true, 'Editer', [
+                        <?php echo template::checkbox('profilEditPageEdit', false, 'Editer', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
+                        <?php echo template::checkbox('profilEditPageDelete', false, 'Supprimer', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
+                        <?php echo template::checkbox('profilEditPageDuplicate', false, 'Dupliquer', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
                         ]); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
+                        <?php echo template::checkbox('profilEditPageModule', false, 'Module', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Editeur CSS', [
+                        <?php echo template::checkbox('profilEditPagecssEditor', false, 'Editeur CSS', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Editeur JS', [
+                        <?php echo template::checkbox('profilEditPagejsEditor', false, 'Editeur JS', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
+                        ]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Blog'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditBlogAdd', false, 'Ajouter', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'add'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditBlogEdit', false, 'Edit', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'edit'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditBlogDelete', false, 'Supprimer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'delete'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditBlogConfig', false, 'Configuration', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'config'])
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditBlogOption', false, 'Option', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'option'])
+                        ]); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditBlogComment', false, 'Commentaire', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'comment'])
+                        ]); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditBlogCommentApprouve', false, 'Approuver commentaire', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentApprove'])
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col6">
+                        <?php echo template::checkbox('profilEditBlogCommentDelete', false, 'Supprimer commentaire', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDelete'])
+                        ]); ?>
+                    </div>
+                    <div class="col6">
+                        <?php echo template::checkbox('profilEditBlogCommentDeleteAll', false, 'Nettoyer commentaires', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDeleteAll'])
                         ]); ?>
                     </div>
                 </div>
@@ -109,7 +170,7 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilEditFileManager', true, 'Autorisé', [
+                    <?php echo template::checkbox('profilEditFileManager', false, 'Autorisé', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'filemanager'])
                     ]); ?>
                 </div>
@@ -129,31 +190,31 @@
                         </h4>
                         <div class="row">
                             <div class="col2">
-                                <?php echo template::checkbox('profilEditFolderCreate', true, 'Création', [
+                                <?php echo template::checkbox('profilEditFolderCreate', false, 'Création', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'create']),
                                 ]); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilEditFolderDelete', true, 'Effacement', [
+                                <?php echo template::checkbox('profilEditFolderDelete', false, 'Effacement', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'delete'])
                                 ]); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilEditFolderRename', true, 'Nommage', [
+                                <?php echo template::checkbox('profilEditFolderRename', false, 'Nommage', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'rename'])
                                 ]); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilEditFolderCopycut', true, 'Copié collé', [
+                                <?php echo template::checkbox('profilEditFolderCopycut', false, 'Copié collé', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'copycut'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditFolderChmod', true, 'Droits sur les dossiers', [
+                                <?php echo template::checkbox('profilEditFolderChmod', false, 'Droits sur les dossiers', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'chmod'])
                                 ]); ?>
@@ -170,25 +231,25 @@
                         </h4>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditDownload', true, 'Téléchargement', [
+                                <?php echo template::checkbox('profilEditDownload', false, 'Téléchargement', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'download'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditEdit', true, 'Edition', [
+                                <?php echo template::checkbox('profilEditEdit', false, 'Edition', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'edit'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditCreate', true, 'Création', [
+                                <?php echo template::checkbox('profilEditCreate', false, 'Création', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'create'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditRename', true, 'Nommage', [
+                                <?php echo template::checkbox('profilEditRename', false, 'Nommage', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'rename'])
                                 ]); ?>
@@ -196,27 +257,27 @@
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditUpload', true, 'Téléversement', [
+                                <?php echo template::checkbox('profilEditUpload', false, 'Téléversement', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'upload'])
                                 ]); ?>
                             </div>
 
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditDelete', true, 'Effacement', [
+                                <?php echo template::checkbox('profilEditDelete', false, 'Effacement', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'delete'])
                                 ]); ?>
                             </div>
 
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditPreview', true, 'Prévisualisation', [
+                                <?php echo template::checkbox('profilEditPreview', false, 'Prévisualisation', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'preview'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditDuplicate', true, 'Duplication', [
+                                <?php echo template::checkbox('profilEditDuplicate', false, 'Duplication', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'duplicate'])
                                 ]); ?>
@@ -224,19 +285,19 @@
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditExtract', true, 'Extraction', [
+                                <?php echo template::checkbox('profilEditExtract', false, 'Extraction', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'extract'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditCopycut', true, 'Copié collé', [
+                                <?php echo template::checkbox('profilEditCopycut', false, 'Copié collé', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'copycut'])
                                 ]); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditChmod', true, 'Droits sur les fichiers', [
+                                <?php echo template::checkbox('profilEditChmod', false, 'Droits sur les fichiers', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'chmod'])
                                 ]); ?>
