@@ -588,8 +588,15 @@ class user extends common
 						'option' => $this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN),
 						'comment' => $this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN),
 						'commentApprouve' => $this->getInput('profilEditBlogCommentApprouve', helper::FILTER_BOOLEAN),
-						'commentdelete' => $this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN),
+						'commentDelete' => $this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN),
 						'commentDeleteAll' => $this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
+					],
+					'news' => [
+						'add' => $this->getInput('profilEditNewsAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditNewsDElete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilEditNewsConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN),
 					],
 				]
 			]);
@@ -673,8 +680,15 @@ class user extends common
 						'option' => $this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN),
 						'comment' => $this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN),
 						'commentApprouve' => $this->getInput('profilAddBlogCommentApprouve', helper::FILTER_BOOLEAN),
-						'commentdelete' => $this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN),
+						'commentDelete' => $this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN),
 						'commentDeleteAll' => $this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
+					],
+					'news' => [
+						'add' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddNewsDElete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilAddNewsConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN),
 					],
 				]
 			]);

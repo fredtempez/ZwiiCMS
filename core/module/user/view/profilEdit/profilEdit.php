@@ -129,7 +129,6 @@
                     </div>
                 </div>
                 <div class="row">
-
                     <div class="col4">
                         <?php echo template::checkbox('profilEditBlogOption', false, 'Option', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'option'])
@@ -157,6 +156,45 @@
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDeleteAll'])
                         ]); ?>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('News'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditNewsAdd', false, 'Ajouter', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'add'])
+                        ]); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditNewsEdit', false, 'Edit', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'edit'])
+                        ]); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditNewsDelete', false, 'Supprimer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'delete'])
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col6">
+                        <?php echo template::checkbox('profilEditNewsConfig', false, 'Configuration', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'config'])
+                        ]); ?>
+                    </div>
+                    <div class="col6">
+                        <?php echo template::checkbox('profilEditNewsOption', false, 'Option', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'option'])
+                        ]); ?>
+                    </div>
+
                 </div>
             </div>
         </div>

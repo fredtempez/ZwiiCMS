@@ -26,4 +26,12 @@ $(document).ready(function () {
             $(".filemanager").prop("disabled", false);
         }
     });
+
+    $("#profilEditPageEdit").change(function ()  {
+        if (!$(this).prop("checked")) {
+            $(".containerModule").prop("disabled", true);
+        } else {
+            $(".containerModule").prop("disabled", false);
+        }
+    });
 });

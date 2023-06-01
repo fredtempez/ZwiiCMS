@@ -36,4 +36,12 @@ $(document).ready(function () {
         }
     });
 
+    $("#profilAddPageEdit").change(function ()  {
+        if (!$(this).prop("checked")) {
+            $(".containerModule").prop("disabled", true);
+        } else {
+            $(".containerModule").prop("disabled", false);
+        }
+    });
+
 });
