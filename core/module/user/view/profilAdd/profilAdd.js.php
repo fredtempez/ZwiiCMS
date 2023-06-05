@@ -13,35 +13,41 @@
 
 
 $(document).ready(function () {
-    // Désactive tous les éléments de la classe "filemanager" si le checkbox avec l'id "profilEditFileManager" est décoché au chargement de la page
-    if (!$("#profilAddFileManager").prop("checked")) {
-        $(".filemanager").prop("disabled", true);
-    }
 
-    // À chaque inversion de l'état du checkbox avec l'id "profilEditFileManager", désactive ou active tous les éléments de la classe "filemanager" en fonction de l'état
+
+    // À chaque inversion de l'état du checkbox avec l'id "profilAddFileManager", désactive ou active tous les éléments de la classe "filemanager" en fonction de l'état
     $("#profilAddFileManager").change(function () {
-        if (!$(this).prop("checked")) {
+        if (!$(this).is(':checked')) {
             $(".filemanager").prop("disabled", true);
         } else {
             $(".filemanager").prop("disabled", false);
         }
     });
 
-    // Désactive la gestion des pages pour les membres
-    $('#profilAddGroup').change(function() {;
-        if ($(this).val() === '1') {
-            $('.containerPage, .containerModule').slideUp();
+    // Gérer l'évènement affichage des
+    $("#profilAddPageModule").change(function () {
+        if (!$(this).is(':checked')) {
+            $(".containerModule").slideUp();
+            // Décocher les checkboxes dans la classe .containerModule
+            $('.containerModule input[type="checkbox"]').removeAttr('checked');
         } else {
-            $('.containerPage, .containerModule').slideDown();
+            $(".containerModule").slideDown();
         }
     });
 
-    $("#profilAddPageEdit").change(function ()  {
-        if (!$(this).prop("checked")) {
-            $(".containerModule").prop("disabled", true);
+    // Gérer l’évènement de modification de la checkbox #profilAddPageEdit
+    $('#profilAddPageEdit').change(function () {
+        if ($(this).is(':checked')) {
+            // Activer les autres checkboxes
+            $('#profilAddPageModule, #profilAddPagecssEditor, #profilAddPagejsEditor').prop('disabled', false);
         } else {
-            $(".containerModule").prop("disabled", false);
+            // Désactiver les autres checkboxes
+            $('#profilAddPageModule, #profilAddPagecssEditor, #profilAddPagejsEditor').prop('checked', false).prop('disabled', true);
+            // Désactiver les modules et tout décocher
+            $(".containerModule").slideUp();
+            $('.containerModule input[type="checkbox"]').removeAttr('checked');
         }
     });
+
 
 });
