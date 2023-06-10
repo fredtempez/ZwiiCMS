@@ -29,7 +29,6 @@ class form extends common
 		'deleteall' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'export2csv' => self::GROUP_MODERATOR,
-		'output2csv' => self::GROUP_MODERATOR,
 	];
 
 	public static $data = [];

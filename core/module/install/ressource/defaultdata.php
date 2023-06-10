@@ -363,7 +363,6 @@ class init extends common
 						'delete' => false,
 						'deleteAll' => false,
 						'export2csv' => false,
-						'output2csv' => false,
 					],
 					'gallery' => [
 						'config' => false,
@@ -441,7 +440,6 @@ class init extends common
 						'delete' => false,
 						'deleteAll' => false,
 						'export2csv' => false,
-						'output2csv' => false,
 					],
 					'gallery' => [
 						'config' => false,
@@ -524,7 +522,7 @@ class init extends common
 						'delete' => true,
 						'deleteAll' => true,
 						'export2csv' => true,
-						'output2csv' => true,
+
 					],
 					'gallery' => [
 						'config' => true,
@@ -533,9 +531,6 @@ class init extends common
 						'add' => true,
 						'option' => true,
 						'theme' => true,
-						'dirs' => true,
-						'sortGalleries' => true,
-						'sortPictures' => true,
 					],
 					'news' => [
 						'add' => true,
@@ -605,7 +600,6 @@ class init extends common
 						'delete' => true,
 						'deleteAll' => true,
 						'export2csv' => true,
-						'output2csv' => true,
 					],
 					'gallery' => [
 						'config' => true,
@@ -614,9 +608,6 @@ class init extends common
 						'add' => true,
 						'option' => true,
 						'theme' => true,
-						'dirs' => true,
-						'sortGalleries' => true,
-						'sortPictures' => true,
 					],
 					'news' => [
 						'add' => true,
