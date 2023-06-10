@@ -606,6 +606,14 @@ class user extends common
 						'option' => $this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN),
 						'theme' => $this->getInput('profilEditGalleryConfig', helper::FILTER_BOOLEAN),
 					],
+					'form' => [
+						'config' => $this->getInput('profilEditFormConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilEditFormOption', helper::FILTER_BOOLEAN),
+						'data' => $this->getInput('profilEditFormData', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditFormDelete', helper::FILTER_BOOLEAN),
+						'deleteAll' => $this->getInput('profilEditFormDeleteAll', helper::FILTER_BOOLEAN),
+						'export2csv' => $this->getInput('profilEditFormExport2csv', helper::FILTER_BOOLEAN),
+					],
 				]
 			]);
 
@@ -705,6 +713,14 @@ class user extends common
 						'config' => $this->getInput('profilAddGalleryConfig', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN),
 						'theme' => $this->getInput('profilAddGalleryConfig', helper::FILTER_BOOLEAN),
+					],
+					'form' => [
+						'config' => $this->getInput('profilAddFormConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilAddFormOption', helper::FILTER_BOOLEAN),
+						'data' => $this->getInput('profilAddFormData', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN),
+						'deleteAll' => $this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN),
+						'export2csv' => $this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN),
 					],
 				]
 			]);
