@@ -372,9 +372,6 @@ class init extends common
 						'add' => false,
 						'option' => false,
 						'theme' => false,
-						'dirs' => false,
-						'sortGalleries' => false,
-						'sortPictures' => false,
 					],
 					'news' => [
 						'add' => false,

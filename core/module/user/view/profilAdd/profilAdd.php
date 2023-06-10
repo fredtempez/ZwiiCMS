@@ -151,6 +151,37 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Galerie'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryAdd', false, 'Ajouter'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryEdit', false, 'Edit'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryDelete', false, 'Supprimer'); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryConfig', false, 'Configuration'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryOption', false, 'Option'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddGalleryTheme', false, 'Theme'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col12">

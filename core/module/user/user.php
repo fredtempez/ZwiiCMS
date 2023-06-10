@@ -598,6 +598,14 @@ class user extends common
 						'config' => $this->getInput('profilEditNewsConfig', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN),
 					],
+					'gallery' => [
+						'add' => $this->getInput('profilEditGalleryAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditGalleryEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilEditGalleryDelete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilEditGalleryConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN),
+						'theme' => $this->getInput('profilEditGalleryConfig', helper::FILTER_BOOLEAN),
+					],
 				]
 			]);
 
@@ -666,7 +674,7 @@ class user extends common
 					'page' => [
 						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddPageDElete', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
 						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
 						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
 						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
@@ -675,7 +683,7 @@ class user extends common
 					'blog' => [
 						'add' => $this->getInput('profilAddBlogAdd', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddBlogDElete', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddBlogDelete', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddBlogConfig', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN),
 						'comment' => $this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN),
@@ -686,9 +694,17 @@ class user extends common
 					'news' => [
 						'add' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddNewsDElete', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddNewsDelete', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddNewsConfig', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN),
+					],
+					'gallery' => [
+						'add' => $this->getInput('profilAddGalleryAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddGalleryEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddGalleryDelete', helper::FILTER_BOOLEAN),
+						'config' => $this->getInput('profilAddGalleryConfig', helper::FILTER_BOOLEAN),
+						'option' => $this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN),
+						'theme' => $this->getInput('profilAddGalleryConfig', helper::FILTER_BOOLEAN),
 					],
 				]
 			]);
