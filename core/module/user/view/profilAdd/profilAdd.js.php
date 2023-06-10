@@ -24,6 +24,16 @@ $(document).ready(function () {
         }
     });
 
+    // Désactive la gestion des pages pour les membres
+    $('#profilAddGroup').change(function () {
+        ;
+        if ($(this).val() === '1') {
+            $('.containerPage').slideUp();
+        } else {
+            $('.containerPage').slideDown();
+        }
+    });
+
     // Gérer l'évènement affichage des
     $("#profilAddPageModule").change(function () {
         if (!$(this).is(':checked')) {

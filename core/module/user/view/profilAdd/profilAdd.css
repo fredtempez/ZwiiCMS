@@ -17,6 +17,6 @@
 * admin.css
 */
 
-.containerPage {
+.containerPage, .containerModule {
     display: none;
 }

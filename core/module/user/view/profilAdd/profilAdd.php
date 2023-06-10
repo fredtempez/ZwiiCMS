@@ -52,27 +52,27 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageAdd', false, 'Ajouter'); ?>
+                    <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageEdit', false, 'Editer'); ?>
+                    <?php echo template::checkbox('profilAddPageEdit', true, 'Editer'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDelete', false, 'Effacer'); ?>
+                    <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDuplicate', false, 'Dupliquer'); ?>
+                    <?php echo template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageModule', false, 'Module'); ?>
+                    <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagecssEditor', false, 'Editeur CSS'); ?>
+                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Editeur CSS'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagejsEditor', false, 'Editeur JS'); ?>
+                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Editeur JS'); ?>
                 </div>
             </div>
         </div>
@@ -87,36 +87,36 @@
                 </h4>
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::checkbox('profilAddBlogAdd', false, 'Ajouter'); ?>
+                        <?php echo template::checkbox('profilAddBlogAdd', true, 'Ajouter'); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilAddBlogEdit', false, 'Edit'); ?>
+                        <?php echo template::checkbox('profilAddBlogEdit', true, 'Edit'); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilAddBlogDelete', false, 'Supprimer'); ?>
+                        <?php echo template::checkbox('profilAddBlogDelete', true, 'Supprimer'); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilAddBlogConfig', false, 'Configuration'); ?>
+                        <?php echo template::checkbox('profilAddBlogConfig', true, 'Configuration'); ?>
                     </div>
                 </div>
                 <div class="row">
 
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogOption', false, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddBlogOption', true, 'Option'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogComment', false, 'Commentaire'); ?>
+                        <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogCommentApprouve', false, 'Approuver commentaire'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentApprouve', true, 'Approuver commentaire'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddBlogCommentDelete', false, 'Supprimer commentaire'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer commentaire'); ?>
                     </div>
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddBlogCommentDeleteAll', false, 'Nettoyer commentaires'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Nettoyer commentaires'); ?>
                     </div>
                 </div>
             </div>
@@ -130,21 +130,21 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddNewsAdd', false, 'Ajouter'); ?>
+                        <?php echo template::checkbox('profilAddNewsAdd', true, 'Ajouter'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddNewsEdit', false, 'Edit'); ?>
+                        <?php echo template::checkbox('profilAddNewsEdit', true, 'Edit'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddNewsDelete', false, 'Supprimer'); ?>
+                        <?php echo template::checkbox('profilAddNewsDelete', true, 'Supprimer'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddNewsConfig', false, 'Configuration'); ?>
+                        <?php echo template::checkbox('profilAddNewsConfig', true, 'Configuration'); ?>
                     </div>
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddNewsOption', false, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddNewsOption', true, 'Option'); ?>
                     </div>
 
                 </div>
@@ -159,24 +159,24 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryAdd', false, 'Ajouter'); ?>
+                        <?php echo template::checkbox('profilAddGalleryAdd', true, 'Ajouter'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryEdit', false, 'Edit'); ?>
+                        <?php echo template::checkbox('profilAddGalleryEdit', true, 'Edit'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryDelete', false, 'Supprimer'); ?>
+                        <?php echo template::checkbox('profilAddGalleryDelete', true, 'Supprimer'); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryConfig', false, 'Configuration'); ?>
+                        <?php echo template::checkbox('profilAddGalleryConfig', true, 'Configuration'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryOption', false, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddGalleryOption', true, 'Option'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryTheme', false, 'Theme'); ?>
+                        <?php echo template::checkbox('profilAddGalleryTheme', true, 'Theme'); ?>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddFileManager', false, 'Autorisé'); ?>
+                    <?php echo template::checkbox('profilAddFileManager', true, 'Autorisé'); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::select('profilAddPath', $module::$sharePath, [
@@ -208,19 +208,19 @@
                         </h4>
                         <div class="row">
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderCreate', false, 'Création', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddFolderCreate', true, 'Création', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderDelete', false, 'Effacement', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddFolderDelete', true, 'Effacement', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderRename', false, 'Nommage', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddFolderRename', true, 'Nommage', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilAddFolderCopycut', false, 'Copié collé', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddFolderCopycut', true, 'Copié collé', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddFolderChmod', false, 'Droits sur les dossiers', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddFolderChmod', true, 'Droits sur les dossiers', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                     </div>
@@ -234,42 +234,42 @@
                         </h4>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDownload', false, 'Téléchargement', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddDownload', true, 'Téléchargement', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddEdit', false, 'Edition', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddEdit', true, 'Edition', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddCreate', false, 'Création', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddCreate', true, 'Création', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddRename', false, 'Nommage', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddRename', true, 'Nommage', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddUpload', false, 'Téléversement', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddUpload', true, 'Téléversement', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDelete', false, 'Effacement', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddDelete', true, 'Effacement', ['class' => 'filemanager']); ?>
                             </div>
 
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddPreview', false, 'Prévisualisation', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddPreview', true, 'Prévisualisation', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddDuplicate', false, 'Duplication', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddDuplicate', true, 'Duplication', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddExtract', false, 'Extraction', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddExtract', true, 'Extraction', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddCopycut', false, 'Copié collé', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddCopycut', true, 'Copié collé', ['class' => 'filemanager']); ?>
                             </div>
                             <div class="col3">
-                                <?php echo template::checkbox('profilAddChmod', false, 'Droits sur les fichiers', ['class' => 'filemanager']); ?>
+                                <?php echo template::checkbox('profilAddChmod', true, 'Droits sur les fichiers', ['class' => 'filemanager']); ?>
                             </div>
                         </div>
                     </div>
