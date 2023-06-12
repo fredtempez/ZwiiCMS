@@ -918,7 +918,8 @@ class common
 			return true;
 		} elseif ($this->getUser('group') < 1) { // Groupe sans autorisation
 			return false;
-		} elseif ( // Groupe avec profil, consultation des autorisations sur deux clés
+		} elseif (
+			// Groupe avec profil, consultation des autorisations sur deux clés
 			$key1
 			&& $key2
 			&& $this->user

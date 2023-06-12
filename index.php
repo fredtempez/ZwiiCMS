@@ -44,10 +44,10 @@ setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french');
  */
 require 'core/class/autoload.php';
 autoload::autoloader();
+spl_autoload_register('core::autoload');
 
 /**
  * Chargement du coeur
  */
 $core = new core;
-spl_autoload_register('core::autoload');
 echo $core->router();
