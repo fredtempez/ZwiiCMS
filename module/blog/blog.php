@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '6.7';
+	const VERSION = '6.8';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -565,7 +565,7 @@ class blog extends common
 					'feeds' => $this->getInput('blogOptionShowFeeds', helper::FILTER_BOOLEAN),
 					'feedsLabel' => $this->getInput('blogOptionFeedslabel', helper::FILTER_STRING_SHORT),
 					'layout' => $this->getInput('blogOptionArticlesLayout', helper::FILTER_BOOLEAN),
-					'articlesLenght' => $this->getInput('blogOptionArticlesLayout', helper::FILTER_BOOLEAN) === false ? $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT): 0,
+					'articlesLenght' => $this->getInput('blogOptionArticlesLayout', helper::FILTER_BOOLEAN) === false ? $this->getInput('blogOptionArticlesLenght', helper::FILTER_INT) : 0,
 					'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT, true),
 					'dateFormat' => $this->getInput('blogOptionDateFormat'),
 					'timeFormat' => $this->getInput('blogOptionTimeFormat'),
@@ -863,10 +863,13 @@ class blog extends common
 				if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
 					$articleIds[] = $articleId;
 					// Nombre de commentaires approuvés par article
+					self::$comments[$articleId] = 0 ;
 					if (is_array($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']))) {
-						self::$comments[$articleId] = count($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']));
-					} else {
-						self::$comments[$articleId] = '0';
+						foreach ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment']) as $commentId => $commentValue) {
+							if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'comment', $commentId, 'approval'])) {
+								self::$comments[$articleId] = self::$comments[$articleId] + 1;
+							}
+						}
 					}
 				}
 			}

@@ -133,11 +133,11 @@
 							</h2>
 							<div class="blogComment">
 								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
-									<?php if ($article['comment']): ?>
-										<?php echo count($article['comment']); ?>
+									<?php if ($module::$comments[$articleId]): ?>
+										<?php echo $module::$comments[$articleId]; ?>
+										<?php echo template::ico('comment', ['margin' => 'left']); ?>
 									<?php endif; ?>
 								</a>
-								<?php echo template::ico('comment', ['margin' => 'left']); ?>
 							</div>
 							<div class="blogDate">
 								<!-- bloc signature et date -->
