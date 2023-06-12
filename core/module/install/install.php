@@ -162,20 +162,22 @@ class install extends common
 						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
 						&& self::$i18nContent === 'fr_FR'
 					) {
-						$this->initData('page', self::$i18nContent, true);
-						$this->initData('module', self::$i18nContent, true);
+						$this->initData('module', 'fr_FR', true);
+						$this->initData('page', 'fr_FR', true);
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 
 					}
 
-					// Jeu réduit pour les pages étrangères
-					if (self::$i18nContent !== 'fr_FR') {
-						$this->initData('page', self::$i18nContent, false);
-						$this->initData('module', self::$i18nContent, false);
+					// Nettoyage fr par défaut
+					if (
+						self::$i18nContent !== 'fr_FR'
+
+					) {
+
 						if (is_dir(self::DATA_DIR . 'fr_FR'))
-						$this->removeDir(self::DATA_DIR . 'fr_FR');
+							$this->removeDir(self::DATA_DIR . 'fr_FR');
 					}
 
 					// Sauvegarder la configuration du Proxy
