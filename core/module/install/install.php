@@ -167,6 +167,7 @@ class install extends common
 						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
 						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
+
 					}
 
 					// Jeu réduit pour les pages étrangères

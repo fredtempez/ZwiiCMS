@@ -65,7 +65,7 @@
 					<?php echo helper::translate('Options avancées'); ?>
 				</span>
 			</summary>
-			<?php if ($this->getUrl(2) === 'fr_FR'): ?>
+			<?php if ($_SESSION['ZWII_UI'] === 'fr_FR'): ?>
 				<div class="row">
 					<div class="col12">
 						<?php echo template::checkbox('installDefaultData', true, 'Ne pas charger l\'exemple de site (utilisateurs avancés)', [

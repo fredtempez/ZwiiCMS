@@ -624,14 +624,10 @@ class common
 			// Site en français avec site exemple
 			if ($lang == 'fr_FR' && $sampleSite === true) {
 				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
-				// Site de test ou page simple
+				// Création des pages
 				foreach (init::$siteContent as $key => $value) {
-					// Creation du contenu de la page
-					if (!empty($this->getData(['page', $key, 'content']))) {
-						file_put_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $key, 'content']), $value);
-					}
+					$this->setPage($key, $value, 'fr_FR');
 				}
-
 				// Version en langue étrangère ou fr_FR sans site de test
 			} else {
 				// En_EN par défaut si le contenu localisé n'est pas traduit
