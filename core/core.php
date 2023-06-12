@@ -1806,7 +1806,6 @@ class core extends common
 	public function router()
 	{
 
-		// 		
 		$layout = new layout($this);
 
 		// Installation
@@ -1910,21 +1909,23 @@ class core extends common
 		 */
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
-		foreach ($this->getData(['user']) as $userId => $userIds) {
-			if (!is_null($this->getData(['user', $userId, 'accessUrl']))) {
-				$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
-			}
-			if (
-				$this->getUser('id') &&
-				$userId !== $this->getUser('id') &&
-				$this->getData(['user', $userId, 'accessUrl']) === $this->getUrl() &&
-				array_intersect($t, self::$accessList) &&
-				array_intersect($t, self::$accessExclude) !== false &&
-				time() < $this->getData(['user', $userId, 'accessTimer']) + self::ACCESS_TIMER
-			) {
-				$access = false;
-				$accessInfo['userName'] = $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
-				$accessInfo['pageId'] = end($t);
+		if ($this->getData(['user'])) {
+			foreach ($this->getData(['user']) as $userId => $userIds) {
+				if (!is_null($this->getData(['user', $userId, 'accessUrl']))) {
+					$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
+				}
+				if (
+					$this->getUser('id') &&
+					$userId !== $this->getUser('id') &&
+					$this->getData(['user', $userId, 'accessUrl']) === $this->getUrl() &&
+					array_intersect($t, self::$accessList) &&
+					array_intersect($t, self::$accessExclude) !== false &&
+					time() < $this->getData(['user', $userId, 'accessTimer']) + self::ACCESS_TIMER
+				) {
+					$access = false;
+					$accessInfo['userName'] = $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+					$accessInfo['pageId'] = end($t);
+				}
 			}
 		}
 		// Accès concurrent stocke la page visitée

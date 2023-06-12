@@ -11,10 +11,30 @@
 				</span>
 			</summary>
 			<div class="row">
-				<div class="col12">
+				<div class="col6">
+					<?php echo template::text('installFirstname', [
+						'autocomplete' => 'off',
+						'label' => 'Prénom'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::text('installLastname', [
+						'autocomplete' => 'off',
+						'label' => 'Nom'
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col6">
 					<?php echo template::text('installId', [
 						'autocomplete' => 'off',
 						'label' => 'Identifiant'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::mail('installMail', [
+						'autocomplete' => 'off',
+						'label' => 'Adresse électronique'
 					]); ?>
 				</div>
 			</div>
@@ -29,28 +49,6 @@
 					<?php echo template::password('installConfirmPassword', [
 						'autocomplete' => 'off',
 						'label' => 'Confirmation'
-					]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col12">
-					<?php echo template::mail('installMail', [
-						'autocomplete' => 'off',
-						'label' => 'Adresse électronique'
-					]); ?>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col6">
-					<?php echo template::text('installFirstname', [
-						'autocomplete' => 'off',
-						'label' => 'Prénom'
-					]); ?>
-				</div>
-				<div class="col6">
-					<?php echo template::text('installLastname', [
-						'autocomplete' => 'off',
-						'label' => 'Nom'
 					]); ?>
 				</div>
 			</div>
