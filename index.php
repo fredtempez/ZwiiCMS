@@ -48,7 +48,6 @@ autoload::autoloader();
 /**
  * Chargement du coeur
  */
-require 'core/core.php';
 $core = new core;
 spl_autoload_register('core::autoload');
 echo $core->router();

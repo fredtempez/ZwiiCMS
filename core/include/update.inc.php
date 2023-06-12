@@ -1004,6 +1004,10 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 		mkdir(self::FILE_DIR . 'source/partage');
 	}
 
+	// Efface le script router.php
+	if (file_exists('core/class/router.class.php'))
+		unlink('core/class/router.class.php');
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12400]);
 }
