@@ -796,8 +796,6 @@ class init extends common
 			'html' => '<h2>Welcome in this ZwiiCMS, congratulations this is you first page !</h2>'
 		]
 	];
-
-
 	public static $siteTemplate = [
 		'page' => [
 			'accueil' => [

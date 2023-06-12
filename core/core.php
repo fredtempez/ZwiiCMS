@@ -353,7 +353,7 @@ class common
 			}
 		}
 
-		// Récupére un utilisateur connecté
+		// Récupère un utilisateur connecté
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
