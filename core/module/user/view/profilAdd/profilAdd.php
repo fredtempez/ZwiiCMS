@@ -183,49 +183,65 @@
         </div>
     </div>
     <div class="row">
-            <div class="col12">
-                <div class="block">
-                    <h4>
-                        <?php echo helper::translate('Formulaire'); ?>
-                    </h4>
-                    <div class="row">
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormConfig', true, 'Configuration', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'config'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormOption', true, 'Option', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'option'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormData', true, 'Données', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'data'])
-                            ]); ?>
-                        </div>
-
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Formulaire'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormConfig', true, 'Configuration'); ?>
                     </div>
-                    <div class="row">
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormDelete', true, 'Supprimer', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'delete'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Supprimer', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'deleteAll'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'export2csv'])
-                            ]); ?>
-                        </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormOption', true, 'Option'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormData', true, 'Données'); ?>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormDelete', true, 'Supprimer'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Supprimer'); ?>
+                    </div>
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV'); ?>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Redirection'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configuration'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Recherche'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col4">
+                        <?php echo template::checkbox('profilEditSearchConfig', true, 'Configuration'); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col12">

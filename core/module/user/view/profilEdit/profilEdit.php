@@ -287,6 +287,38 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col12">
+                <div class="block">
+                    <h4>
+                        <?php echo helper::translate('Redirection'); ?>
+                    </h4>
+                    <div class="row">
+                        <div class="col4">
+                            <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configuration', [
+                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'redirection', 'config'])
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col12">
+                <div class="block">
+                    <h4>
+                        <?php echo helper::translate('Recherche'); ?>
+                    </h4>
+                    <div class="row">
+                        <div class="col4">
+                            <?php echo template::checkbox('profilEditSearchConfig', true, 'Configuration', [
+                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'search', 'config'])
+                            ]); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 <?php endif; ?>
 <div class="row">

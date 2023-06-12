@@ -614,6 +614,12 @@ class user extends common
 						'deleteAll' => $this->getInput('profilEditFormDeleteAll', helper::FILTER_BOOLEAN),
 						'export2csv' => $this->getInput('profilEditFormExport2csv', helper::FILTER_BOOLEAN),
 					],
+					'search' => [
+						'config' => $this->getInput('profilEditSearchConfig', helper::FILTER_BOOLEAN),
+					],
+					'redirection' => [
+						'config' => $this->getInput('profilEditRedirectionConfig', helper::FILTER_BOOLEAN),
+					],
 				]
 			]);
 
@@ -721,6 +727,12 @@ class user extends common
 						'delete' => $this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN),
 						'deleteAll' => $this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN),
 						'export2csv' => $this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN),
+					],
+					'search' => [
+						'config' => $this->getInput('profilAddSearchConfig', helper::FILTER_BOOLEAN),
+					],
+					'redirection' => [
+						'config' => $this->getInput('profilAddRedirectionConfig', helper::FILTER_BOOLEAN),
 					],
 				]
 			]);
