@@ -412,9 +412,6 @@ class common
 			}
 		}
 
-		// Mise à jour des données core
-		include('core/include/update.inc.php');
-
 		// Données de proxy
 		$proxy = $this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']);
 		if (
@@ -435,6 +432,9 @@ class common
 			);
 			stream_context_set_default($context);
 		}
+		// Mise à jour des données core
+		include('core/include/update.inc.php');
+
 	}
 
 
