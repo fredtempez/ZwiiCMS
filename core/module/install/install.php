@@ -110,9 +110,32 @@ class install extends common
 				$userMail = $this->getInput('installMail', helper::FILTER_MAIL, true);
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
 
+				// Validation de la langue transmise
+				self::$i18nUI = $_SESSION['ZWII_UI'];
+				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+				// par défaut le contenu est la langue d'installation
+				$_SESSION['ZWII_CONTENT'] = self::$i18nUI;
+
+				// Création du dossier de langue avec le marqueur de langue par défaut
+				if (!is_dir(self::DATA_DIR . $_SESSION['ZWII_CONTENT'])) {
+					mkdir(self::DATA_DIR . $_SESSION['ZWII_CONTENT']);
+					touch(self::DATA_DIR . $_SESSION['ZWII_CONTENT'] . '/.default');
+				}
+
+				// Installation du site de test
+				if (
+					$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
+					&& $_SESSION['ZWII_CONTENT'] === 'fr_FR'
+				) {
+					$sample = true;
+				}
+				$this->initData('page', $_SESSION['ZWII_CONTENT'], $sample);
+				$this->initData('module', $_SESSION['ZWII_CONTENT'], $sample);
+				$this->initData('locale', $_SESSION['ZWII_CONTENT'], $sample);
+
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
-				$success = $this->setData([
+				$this->setData([
 					'user',
 					$userId,
 					[
@@ -124,130 +147,103 @@ class install extends common
 						'signature' => 1,
 						'mail' => $userMail,
 						'password' => $this->getInput('installPassword', helper::FILTER_PASSWORD, true),
-						'language' => self::$i18nUI
+						'language' => $_SESSION['ZWII_CONTENT']
 					]
 				]);
 
-				// Compte créé, envoi du mail et création des données du site
-				if ($success) { // Formulaire complété envoi du mail
-					// Envoie le mail
-					// Sent contient true si réussite sinon code erreur d'envoi en clair
-					$sent = $this->sendMail(
-						$userMail,
-						'Installation de votre site',
-						'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-						'Voici les détails de votre installation.<br><br>' .
-						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-						null,
-						$this->getData(['config', 'smtp', 'from']),
-					);
+				// Envoie le mail
+				// Sent contient true si réussite sinon code erreur d'envoi en clair
+				$this->sendMail(
+					$userMail,
+					'Installation de votre site',
+					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
+					'Voici les détails de votre installation.<br><br>' .
+					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+					null,
+					'localhost',
+				);
 
-					// Validation de la langue transmise
-					self::$i18nUI = $_SESSION['ZWII_UI'];
-					self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
-
-					// par défaut le contenu est la langue d'installation
-					self::$i18nContent = self::$i18nUI;
-					$_SESSION['ZWII_CONTENT'] = self::$i18nContent;
-
-					// Création du dossier de langue avec le marqueur de langue par défaut
-					if (!is_dir(self::DATA_DIR . self::$i18nContent)) {
-						mkdir(self::DATA_DIR . self::$i18nContent);
-						touch(self::DATA_DIR . self::$i18nContent . '/.default');
-					}
-
-					// Installation du site de test
-					if (
-						$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-						&& self::$i18nContent === 'fr_FR'
-					) {
-						$this->initData('module', 'fr_FR', true);
-						$this->initData('page', 'fr_FR', true);
-						$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
-						$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
-						$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
-
-					}
-
-					// Nettoyage fr par défaut
-					if (
-						self::$i18nContent !== 'fr_FR'
-
-					) {
-
-						if (is_dir(self::DATA_DIR . 'fr_FR'))
-							$this->removeDir(self::DATA_DIR . 'fr_FR');
-					}
-
-					// Sauvegarder la configuration du Proxy
-					$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
-					$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);
-					$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
-
-					// Images exemples livrées dans tous les cas
-					try {
-						// Décompression dans le dossier de fichier temporaires
-						if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
-							unlink(self::TEMP_DIR . 'files.tar.gz');
-						}
-						if (file_exists(self::TEMP_DIR . 'files.tar')) {
-							unlink(self::TEMP_DIR . 'files.tar');
-						}
-						copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
-						$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
-						$pharData->decompress();
-						// Installation
-						$pharData->extractTo(__DIR__ . '/../../../', null, true);
-					} catch (Exception $e) {
-						$success = $e->getMessage();
-					}
-
-					// Nettoyage
-					unlink(self::TEMP_DIR . 'files.tar.gz');
-					unlink(self::TEMP_DIR . 'files.tar');
-
-					// Créer le dossier des fontes
-					if (!is_dir(self::DATA_DIR . 'font')) {
-						mkdir(self::DATA_DIR . 'font');
-					}
-
-					// Installation du thème sélectionné
-					$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
-					$dataThemes = $dataThemes['themes'];
-					$themeFilename = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
-					if ($themeFilename !== '') {
-						$theme = new theme;
-						$theme->import('core/module/install/ressource/themes/' . $themeFilename);
-					}
-
-					// Copie des thèmes dans les fichiers
-					if (!is_dir(self::FILE_DIR . 'source/theme')) {
-						mkdir(self::FILE_DIR . 'source/theme');
-					}
-					$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
-					unlink(self::FILE_DIR . 'source/theme/themes.json');
-
-					// Copie des langues de l'UI et génération de la base de données
-					if (is_dir(self::I18N_DIR) === false) {
-						mkdir(self::I18N_DIR);
-					}
-
-					// Créer la base de données des langues
-					copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
-					$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-					unlink(self::I18N_DIR . 'language.json');
-
-					// Fixe l'adresse from pour les envois d'email
-					$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
-
-					// Valeurs en sortie
-					$this->addOutput([
-						'redirect' => helper::baseUrl(),
-						'notification' => $sent === true ? helper::translate('Installation terminée') : $sent,
-						'state' => ($sent === true && $success === true) ? true : null
-					]);
+				// Nettoyage fr par défaut
+				if (
+					$_SESSION['ZWII_CONTENT'] !== 'fr_FR'
+				) {
+					if (is_dir(self::DATA_DIR . 'fr_FR'))
+						$this->removeDir(self::DATA_DIR . 'fr_FR');
 				}
+
+				// Sauvegarder la configuration du Proxy
+				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
+				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);
+				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
+
+				// Images exemples livrées dans tous les cas
+				try {
+					// Décompression dans le dossier de fichier temporaires
+					if (file_exists(self::TEMP_DIR . 'files.tar.gz')) {
+						unlink(self::TEMP_DIR . 'files.tar.gz');
+					}
+					if (file_exists(self::TEMP_DIR . 'files.tar')) {
+						unlink(self::TEMP_DIR . 'files.tar');
+					}
+					copy('core/module/install/ressource/files.tar.gz', self::TEMP_DIR . 'files.tar.gz');
+					$pharData = new PharData(self::TEMP_DIR . 'files.tar.gz');
+					$pharData->decompress();
+					// Installation
+					$pharData->extractTo(__DIR__ . '/../../../', null, true);
+				} catch (Exception $e) {
+					$success = $e->getMessage();
+				}
+
+				// Nettoyage
+				unlink(self::TEMP_DIR . 'files.tar.gz');
+				unlink(self::TEMP_DIR . 'files.tar');
+
+				// Créer le dossier des fontes
+				if (!is_dir(self::DATA_DIR . 'font')) {
+					mkdir(self::DATA_DIR . 'font');
+				}
+
+				// Installation du thème sélectionné
+				$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
+				$dataThemes = $dataThemes['themes'];
+				$themeFilename = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
+				if ($themeFilename !== '') {
+					$theme = new theme;
+					$theme->import('core/module/install/ressource/themes/' . $themeFilename);
+				}
+
+				// Copie des thèmes dans les fichiers
+				if (!is_dir(self::FILE_DIR . 'source/theme')) {
+					mkdir(self::FILE_DIR . 'source/theme');
+				}
+				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
+				unlink(self::FILE_DIR . 'source/theme/themes.json');
+
+				// Copie des langues de l'UI et génération de la base de données
+				if (is_dir(self::I18N_DIR) === false) {
+					mkdir(self::I18N_DIR);
+				}
+
+				// Créer la base de données des langues
+				// copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
+				$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
+				// unlink(self::I18N_DIR . 'language.json');
+
+				// Fixe l'adresse from pour les envois d'email
+				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
+
+				// Supprimé à cause de l'écrasement des bases
+				//$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
+				//$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
+				//$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl(),
+					'notification' => helper::translate('Installation terminée'),
+					'state' => true
+				]);
 			}
 
 			// Affichage du formulaire
