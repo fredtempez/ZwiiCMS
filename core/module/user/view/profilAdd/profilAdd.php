@@ -108,7 +108,7 @@
                         <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogCommentApprouve', true, 'Approuver commentaire'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver commentaire'); ?>
                     </div>
                 </div>
                 <div class="row">

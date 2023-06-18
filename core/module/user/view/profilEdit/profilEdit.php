@@ -136,12 +136,12 @@
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditBlogComment', true, 'Commentaire', [
+                            <?php echo template::checkbox('profilEditBlogComment', true, 'Gérer commentaires', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'comment'])
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditBlogCommentApprouve', true, 'Approuver commentaire', [
+                            <?php echo template::checkbox('profilEditBlogCommentApprove', true, 'Approuver commentaire', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentApprove'])
                             ]); ?>
                         </div>
