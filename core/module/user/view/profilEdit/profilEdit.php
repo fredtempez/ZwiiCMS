@@ -108,17 +108,17 @@
                         <?php echo helper::translate('Blog'); ?>
                     </h4>
                     <div class="row">
-                        <div class="col3">
+                        <div class="col4">
                             <?php echo template::checkbox('profilEditBlogAdd', true, 'Ajouter', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'add'])
                             ]); ?>
                         </div>
-                        <div class="col3">
+                        <div class="col4">
                             <?php echo template::checkbox('profilEditBlogEdit', true, 'Éditer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'edit'])
                             ]); ?>
                         </div>
-                        <div class="col3">
+                        <div class="col4">
                             <?php echo template::checkbox('profilEditBlogDelete', true, 'Supprimer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'delete'])
                             ]); ?>
@@ -126,7 +126,7 @@
                     </div>
                     <div class="row">
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditBlogOption', true, 'Option', [
+                            <?php echo template::checkbox('profilEditBlogOption', true, 'Options', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'option'])
                             ]); ?>
                         </div>
@@ -179,7 +179,7 @@
                             ]); ?>
                         </div>
                         <div class="col3">
-                            <?php echo template::checkbox('profilEditNewsOption', true, 'Option', [
+                            <?php echo template::checkbox('profilEditNewsOption', true, 'Options', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'option'])
                             ]); ?>
                         </div>
@@ -213,7 +213,7 @@
                     </div>
                     <div class="row">
                         <div class="col6">
-                            <?php echo template::checkbox('profilEditGalleryOption', true, 'Option', [
+                            <?php echo template::checkbox('profilEditGalleryOption', true, 'Options', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'option'])
                             ]); ?>
                         </div>
@@ -234,7 +234,7 @@
                     </h4>
                     <div class="row">
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditFormOption', true, 'Option', [
+                            <?php echo template::checkbox('profilEditFormOption', true, 'Options', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'option'])
                             ]); ?>
                         </div>

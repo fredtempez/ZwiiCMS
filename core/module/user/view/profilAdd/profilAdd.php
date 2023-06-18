@@ -86,20 +86,20 @@
                     <?php echo helper::translate('Blog'); ?>
                 </h4>
                 <div class="row">
-                    <div class="col3">
+                    <div class="col4">
                         <?php echo template::checkbox('profilAddBlogAdd', true, 'Ajouter'); ?>
                     </div>
-                    <div class="col3">
+                    <div class="col4">
                         <?php echo template::checkbox('profilAddBlogEdit', true, 'Edit'); ?>
                     </div>
-                    <div class="col3">
+                    <div class="col4">
                         <?php echo template::checkbox('profilAddBlogDelete', true, 'Supprimer'); ?>
                     </div>
                 </div>
                 <div class="row">
 
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogOption', true, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddBlogOption', true, 'Options'); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
@@ -136,7 +136,7 @@
                         <?php echo template::checkbox('profilAddNewsDelete', true, 'Supprimer'); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilAddNewsOption', true, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddNewsOption', true, 'Options'); ?>
                     </div>
 
                 </div>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="row">
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddGalleryOption', true, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddGalleryOption', true, 'Options'); ?>
                     </div>
                     <div class="col6">
                         <?php echo template::checkbox('profilAddGalleryTheme', true, 'Thème'); ?>
@@ -179,7 +179,7 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddFormOption', true, 'Option'); ?>
+                        <?php echo template::checkbox('profilAddFormOption', true, 'Options'); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::checkbox('profilAddFormData', true, 'Gérer les données'); ?>
