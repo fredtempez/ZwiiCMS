@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '3.9';
+	const VERSION = '3.10';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -344,7 +344,9 @@ class form extends common
 	public function delete()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if (
+			$this->getUser('permission', 'form', 'delete') === false ||
+			$this->getUrl(3) !== $_SESSION['csrf']) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',

@@ -1,3 +1,5 @@
+# Version 4.5
+- Bloque l'effacement de l'article selon le profil
 # Version 4.4
 - Intl date Formats
 - Bug un conflit avec le style de la page

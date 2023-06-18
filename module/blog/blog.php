@@ -592,7 +592,9 @@ class blog extends common
 	 */
 	public function delete()
 	{
-		if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
+		if (
+			$this->getUser('permission', 'blog', 'delete') === false ||
+			$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false

@@ -18,7 +18,7 @@ class gallery extends common
 {
 
 
-	const VERSION = '3.8';
+	const VERSION = '3.9';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
@@ -500,7 +500,8 @@ class gallery extends common
 	{
 		// $url prend l'adresse sans le token
 		// La galerie n'existe pas
-		if ($this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
+		if ($this->getUser('permission', 'gallery', 'delete') === false ||
+			$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false

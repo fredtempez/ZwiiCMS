@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '4.3';
+	const VERSION = '4.4';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -365,7 +365,8 @@ class news extends common
 	public function delete()
 	{
 		// La news n'existe pas
-		if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
+		if ($this->getUser('permission', 'news', 'delete') === false ||
+			$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
