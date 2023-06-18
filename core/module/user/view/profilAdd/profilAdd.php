@@ -55,7 +55,7 @@
                     <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPageEdit', true, 'Editer'); ?>
+                    <?php echo template::checkbox('profilAddPageEdit', true, 'Éditer'); ?>
                 </div>
                 <div class="col3">
                     <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
@@ -69,10 +69,10 @@
                     <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Editeur CSS'); ?>
+                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Éditeur CSS'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Editeur JS'); ?>
+                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Éditeur JS'); ?>
                 </div>
             </div>
         </div>
@@ -95,9 +95,6 @@
                     <div class="col3">
                         <?php echo template::checkbox('profilAddBlogDelete', true, 'Supprimer'); ?>
                     </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilAddBlogConfig', true, 'Configuration'); ?>
-                    </div>
                 </div>
                 <div class="row">
 
@@ -108,15 +105,15 @@
                         <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver commentaire'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver les commentaires'); ?>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col6">
-                        <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer commentaire'); ?>
+                    <div class="col6"s>
+                        <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer les commentaires'); ?>
                     </div>
                     <div class="col6">
-                        <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Nettoyer commentaires'); ?>
+                        <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Nettoyer les commentaires'); ?>
                     </div>
                 </div>
             </div>
@@ -129,21 +126,16 @@
                     <?php echo helper::translate('News'); ?>
                 </h4>
                 <div class="row">
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::checkbox('profilAddNewsAdd', true, 'Ajouter'); ?>
                     </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddNewsEdit', true, 'Edit'); ?>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilAddNewsEdit', true, 'Éditer'); ?>
                     </div>
-                    <div class="col4">
+                    <div class="col3">
                         <?php echo template::checkbox('profilAddNewsDelete', true, 'Supprimer'); ?>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col6">
-                        <?php echo template::checkbox('profilAddNewsConfig', true, 'Configuration'); ?>
-                    </div>
-                    <div class="col6">
+                    <div class="col3">
                         <?php echo template::checkbox('profilAddNewsOption', true, 'Option'); ?>
                     </div>
 
@@ -162,21 +154,18 @@
                         <?php echo template::checkbox('profilAddGalleryAdd', true, 'Ajouter'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryEdit', true, 'Edit'); ?>
+                        <?php echo template::checkbox('profilAddGalleryEdit', true, 'Éditer'); ?>
                     </div>
                     <div class="col4">
                         <?php echo template::checkbox('profilAddGalleryDelete', true, 'Supprimer'); ?>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryConfig', true, 'Configuration'); ?>
-                    </div>
-                    <div class="col4">
+                    <div class="col6">
                         <?php echo template::checkbox('profilAddGalleryOption', true, 'Option'); ?>
                     </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryTheme', true, 'Theme'); ?>
+                    <div class="col6">
+                        <?php echo template::checkbox('profilAddGalleryTheme', true, 'Thème'); ?>
                     </div>
                 </div>
             </div>
@@ -190,15 +179,14 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddFormConfig', true, 'Configuration'); ?>
-                    </div>
-                    <div class="col4">
                         <?php echo template::checkbox('profilAddFormOption', true, 'Option'); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::checkbox('profilAddFormData', true, 'Données'); ?>
+                        <?php echo template::checkbox('profilAddFormData', true, 'Gérer les données'); ?>
                     </div>
-
+                    <div class="col4">
+                        <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV'); ?>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col4">
@@ -207,9 +195,7 @@
                     <div class="col4">
                         <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Supprimer'); ?>
                     </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV'); ?>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -222,7 +208,7 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configuration'); ?>
+                        <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configurer'); ?>
                     </div>
                 </div>
             </div>
@@ -236,7 +222,7 @@
                 </h4>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::checkbox('profilEditSearchConfig', true, 'Configuration'); ?>
+                        <?php echo template::checkbox('profilEditSearchConfig', true, 'Configurer'); ?>
                     </div>
                 </div>
             </div>

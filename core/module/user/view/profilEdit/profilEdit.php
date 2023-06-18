@@ -65,7 +65,7 @@
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageEdit', true, 'Editer', [
+                        <?php echo template::checkbox('profilEditPageEdit', true, 'Éditer', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
                         ]); ?>
                     </div>
@@ -82,17 +82,17 @@
                 </div>
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
+                        <?php echo template::checkbox('profilEditPageModule', true, 'Gérer Module', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Editeur CSS', [
+                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Éditeur CSS', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Editeur JS', [
+                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Éditeur JS', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
                         ]); ?>
                     </div>
@@ -114,18 +114,13 @@
                             ]); ?>
                         </div>
                         <div class="col3">
-                            <?php echo template::checkbox('profilEditBlogEdit', true, 'Edit', [
+                            <?php echo template::checkbox('profilEditBlogEdit', true, 'Éditer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'edit'])
                             ]); ?>
                         </div>
                         <div class="col3">
                             <?php echo template::checkbox('profilEditBlogDelete', true, 'Supprimer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'delete'])
-                            ]); ?>
-                        </div>
-                        <div class="col3">
-                            <?php echo template::checkbox('profilEditBlogConfig', true, 'Configuration', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'config'])
                             ]); ?>
                         </div>
                     </div>
@@ -136,24 +131,24 @@
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditBlogComment', true, 'Gérer commentaires', [
+                            <?php echo template::checkbox('profilEditBlogComment', true, 'Gérer les commentaires', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'comment'])
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditBlogCommentApprove', true, 'Approuver commentaire', [
+                            <?php echo template::checkbox('profilEditBlogCommentApprove', true, 'Approuver les commentaires', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentApprove'])
                             ]); ?>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col6">
-                            <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Supprimer commentaire', [
+                            <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Supprimer les commentaires', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDelete'])
                             ]); ?>
                         </div>
                         <div class="col6">
-                            <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Nettoyer commentaires', [
+                            <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Nettoyer les commentaires', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDeleteAll'])
                             ]); ?>
                         </div>
@@ -168,29 +163,22 @@
                         <?php echo helper::translate('News'); ?>
                     </h4>
                     <div class="row">
-                        <div class="col4">
+                        <div class="col3">
                             <?php echo template::checkbox('profilEditNewsAdd', true, 'Ajouter', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'add'])
                             ]); ?>
                         </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilEditNewsEdit', true, 'Edit', [
+                        <div class="col3">
+                            <?php echo template::checkbox('profilEditNewsEdit', true, 'Éditer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'edit'])
                             ]); ?>
                         </div>
-                        <div class="col4">
+                        <div class="col3">
                             <?php echo template::checkbox('profilEditNewsDelete', true, 'Supprimer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'delete'])
                             ]); ?>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col6">
-                            <?php echo template::checkbox('profilEditNewsConfig', true, 'Configuration', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'config'])
-                            ]); ?>
-                        </div>
-                        <div class="col6">
+                        <div class="col3">
                             <?php echo template::checkbox('profilEditNewsOption', true, 'Option', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'option'])
                             ]); ?>
@@ -213,7 +201,7 @@
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditGalleryEdit', true, 'Edit', [
+                            <?php echo template::checkbox('profilEditGalleryEdit', true, 'Éditer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'edit'])
                             ]); ?>
                         </div>
@@ -224,18 +212,13 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col4">
-                            <?php echo template::checkbox('profilEditGalleryConfig', true, 'Configuration', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'config'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
+                        <div class="col6">
                             <?php echo template::checkbox('profilEditGalleryOption', true, 'Option', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'option'])
                             ]); ?>
                         </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilEditGalleryTheme', true, 'Theme', [
+                        <div class="col6">
+                            <?php echo template::checkbox('profilEditGalleryTheme', true, 'Thème', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'theme'])
                             ]); ?>
                         </div>
@@ -251,36 +234,30 @@
                     </h4>
                     <div class="row">
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditFormConfig', true, 'Configuration', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'config'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
                             <?php echo template::checkbox('profilEditFormOption', true, 'Option', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'option'])
                             ]); ?>
                         </div>
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditFormData', true, 'Données', [
+                            <?php echo template::checkbox('profilEditFormData', true, 'Gérer les données', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'data'])
-                            ]); ?>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col4">
-                            <?php echo template::checkbox('profilEditFormDelete', true, 'Supprimer', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'delete'])
-                            ]); ?>
-                        </div>
-                        <div class="col4">
-                            <?php echo template::checkbox('profilEditFormDeleteAll', true, 'Tout Supprimer', [
-                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'deleteAll'])
                             ]); ?>
                         </div>
                         <div class="col4">
                             <?php echo template::checkbox('profilEditFormExport2csv', true, 'Export CSV', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'export2csv'])
+                            ]); ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col6">
+                            <?php echo template::checkbox('profilEditFormDelete', true, 'Supprimer', [
+                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'delete'])
+                            ]); ?>
+                        </div>
+                        <div class="col6">
+                            <?php echo template::checkbox('profilEditFormDeleteAll', true, 'Tout Supprimer', [
+                                'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'deleteAll'])
                             ]); ?>
                         </div>
                     </div>
@@ -295,7 +272,7 @@
                     </h4>
                     <div class="row">
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configuration', [
+                            <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configurer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'redirection', 'config'])
                             ]); ?>
                         </div>
@@ -311,7 +288,7 @@
                     </h4>
                     <div class="row">
                         <div class="col4">
-                            <?php echo template::checkbox('profilEditSearchConfig', true, 'Configuration', [
+                            <?php echo template::checkbox('profilEditSearchConfig', true, 'Configurer', [
                                 'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'search', 'config'])
                             ]); ?>
                         </div>
