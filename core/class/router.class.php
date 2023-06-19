@@ -18,7 +18,7 @@ class core extends common
 		parent::__construct();
 		// Token CSRF
 		if (empty($_SESSION['csrf'])) {
-			$_SESSION['csrf'] = bin2hex(openssl_random_pseudo_bytes(32));
+			$_SESSION['csrf'] = bin2hex(openssl_random_pseudo_bytes(128));
 		}
 
 		// Fuseau horaire
