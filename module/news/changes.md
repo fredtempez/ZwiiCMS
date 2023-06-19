@@ -1,5 +1,9 @@
 # Version 4.5
+<<<<<<< HEAD
 - Masque le code de vérification
+=======
+- Bloque l'effacement de l'article selon le profil
+>>>>>>> c2d3d5cef21c81bd51045e52dde6a6ef533fd33c
 # Version 4.4
 - Intl date Formats
 - Bug un conflit avec le style de la page
