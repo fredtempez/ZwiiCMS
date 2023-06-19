@@ -397,7 +397,7 @@ class template
         $html = '<form id="' . $id . '" method="post">';
         // Stock le token CSRF
         $html .= self::hidden('csrf', [
-            'value' => $_SESSION['csrf']
+            'value' => htmlentities($_SESSION['csrf'], ENT_QUOTES | ENT_HTML5, 'UTF-8')
         ]);
         // Retourne le html
         return $html;

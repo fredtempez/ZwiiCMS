@@ -320,7 +320,7 @@ class blog extends common
 		$comments = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']);
 		self::$commentsDelete = template::button('blogCommentDeleteAll', [
 			'class' => 'blogCommentDeleteAll buttonRed',
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2) . '/' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDeleteAll/' . $this->getUrl(2),
 			'value' => 'Tout effacer'
 		]);
 		// Ids des commentaires par ordre de création
@@ -340,7 +340,7 @@ class blog extends common
 			if ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'commentApproved']) === true) {
 				$buttonApproval = template::button('blogCommentApproved' . $commentIds[$i], [
 					'class' => $comment['approval'] === true ? 'blogCommentRejected buttonGreen' : 'blogCommentApproved buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentApprove/' . $this->getUrl(2) . '/' . $commentIds[$i],
 					'value' => $comment['approval'] === true ? 'A' : 'R',
 					'help' => $comment['approval'] === true ? 'Approuvé' : 'Rejeté',
 				]);
@@ -354,7 +354,7 @@ class blog extends common
 				$buttonApproval,
 				template::button('blogCommentDelete' . $commentIds[$i], [
 					'class' => 'blogCommentDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/commentDelete/' . $this->getUrl(2) . '/' . $commentIds[$i],
 					'value' => template::ico('trash')
 				])
 			];
@@ -379,7 +379,7 @@ class blog extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(4) !== $_SESSION['csrf']) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -404,7 +404,7 @@ class blog extends common
 	public function commentDeleteAll()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -436,7 +436,7 @@ class blog extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(4) !== $_SESSION['csrf']) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -536,12 +536,12 @@ class blog extends common
 					'help' => ($toApprove || $approved) > 0 ? 'Éditer  / Approuver les commentaires' : ''
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i],
 					'value' => template::ico('pencil')
 				]),
 				template::button('blogConfigDelete' . $articleIds[$i], [
 					'class' => 'blogConfigDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $articleIds[$i],
 					'value' => template::ico('trash')
 				])
 			];
@@ -601,7 +601,7 @@ class blog extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -626,7 +626,7 @@ class blog extends common
 	public function edit()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',

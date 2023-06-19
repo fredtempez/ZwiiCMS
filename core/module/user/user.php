@@ -194,7 +194,7 @@ class user extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
@@ -227,7 +227,7 @@ class user extends common
 	public function edit()
 	{
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->checkCSRF()
 		) {
 
 			// Valeurs en sortie
@@ -436,13 +436,13 @@ class user extends common
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
 					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
-						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
-						'href' => helper::baseUrl() . 'user/delete/' . $userId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/delete/' . $userId,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer'
 					])
@@ -475,14 +475,14 @@ class user extends common
 					$groupData['name'],
 					nl2br($groupData['comment']),
 					template::button('profilEdit' . $groupId, [
-						'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => $groupData['readonly'],
 					]),
 					template::button('permissionDelete' . $groupId, [
 						'class' => 'userDelete buttonRed',
-						'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 						'disabled' => $groupData['readonly'],
@@ -499,14 +499,14 @@ class user extends common
 						self::$groups[$groupId] . '<br />Profil : ' . $subGroupData['name'],
 						nl2br($subGroupData['comment']),
 						template::button('profilEdit' . $groupId . $subGroupId, [
-							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $subGroupId,
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $subGroupData['readonly'],
 						]),
 						template::button('profilDelete' . $groupId . $subGroupId, [
 							'class' => 'userDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
 							'disabled' => $subGroupData['readonly'],
@@ -528,7 +528,7 @@ class user extends common
 	public function profilEdit()
 	{
 		if (
-			$this->getUrl(4) !== $_SESSION['csrf']
+			$this->checkCSRF()
 		) {
 
 			// Valeurs en sortie

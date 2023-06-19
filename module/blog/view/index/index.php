@@ -73,7 +73,7 @@
 								)
 							): ?>
 								<a
-									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId . '/' . $_SESSION['csrf']; ?>">
+									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId; ?>">
 									<?php echo template::ico('pencil'); ?> Éditer
 								</a>
 							<?php endif; ?>

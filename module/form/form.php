@@ -246,7 +246,7 @@ class form extends common
 					$content,
 					template::button('formDataDelete' . $dataIds[$i], [
 						'class' => 'formDataDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i] . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i],
 						'value' => template::ico('trash')
 					])
 				];
@@ -267,7 +267,7 @@ class form extends common
 	public function export2csv()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
@@ -308,7 +308,7 @@ class form extends common
 	public function deleteall()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
@@ -346,7 +346,7 @@ class form extends common
 		// Jeton incorrect
 		if (
 			$this->getUser('permission', 'form', 'delete') === false ||
-			$this->getUrl(3) !== $_SESSION['csrf']) {
+			$this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',

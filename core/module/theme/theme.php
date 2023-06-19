@@ -625,14 +625,14 @@ class theme extends common
 						$type,
 						$type !== 'websafe' ? 	template::button('themeFontEdit' . $fontId, [
 							'class' => 'themeFontEdit',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' .  $type . '/' . $fontId,
 							'value' => template::ico('pencil'),
 							'disabled' => !empty($fontUsed[$fontId])
 						])
 							: '',
 						$type !== 'websafe' ? 	template::button('themeFontDelete' . $fontId, [
 							'class' => 'themeFontDelete buttonRed',
-							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId . '/' . $_SESSION['csrf'],
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontDelete/' . $type . '/' . $fontId,
 							'value' => template::ico('cancel'),
 							'disabled' => !empty($fontUsed[$fontId])
 						])
@@ -775,7 +775,7 @@ class theme extends common
 	public function fontDelete()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(4) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl()  . 'theme/fonts',

@@ -69,7 +69,7 @@ class translate extends common
 		$lang = $this->getUrl(2);
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf'] &&
+			$this->checkCSRF() &&
 			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
@@ -198,7 +198,7 @@ class translate extends common
 							]),
 							template::button('translateContentLanguageLocaleDelete' . $key, [
 								'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
+								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key,
 								'value' => template::ico('trash'),
 								'help' => 'Supprimer',
 							])
@@ -253,13 +253,13 @@ class translate extends common
 					*/
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
 						'value' => template::ico('update'),
 						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
 						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					]),
@@ -278,7 +278,7 @@ class translate extends common
 					'',
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => 'buttonGreen',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
 						'value' => template::ico('shopping-basket'),
 						'help' => 'Installer',
 					])
@@ -541,7 +541,7 @@ class translate extends common
 		$target = $this->getUrl(2);
 		$lang = $this->getUrl(3);
 		if (
-			$this->getUrl(4) !== $_SESSION['csrf']
+			$this->checkCSRF()
 			|| array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
@@ -596,7 +596,7 @@ class translate extends common
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		$lang = $this->getUrl(2);
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->checkCSRF()
 			|| array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie

@@ -239,12 +239,12 @@ class news extends common
 				$dateOff,
 				helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])]),
 				template::button('newsConfigEdit' . $newsIds[$i], [
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i],
 					'value' => template::ico('pencil')
 				]),
 				template::button('newsConfigDelete' . $newsIds[$i], [
 					'class' => 'newsConfigDelete buttonRed',
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
+					'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i],
 					'value' => template::ico('trash')
 				])
 			];
@@ -338,12 +338,12 @@ class news extends common
 					$dateOff,
 					helper::translate(helper::translate(self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $newsIds[$i], 'state'])])),
 					template::button('newsConfigEdit' . $newsIds[$i], [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsIds[$i],
 						'value' => template::ico('pencil')
 					]),
 					template::button('newsConfigDelete' . $newsIds[$i], [
 						'class' => 'newsConfigDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i] . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $newsIds[$i],
 						'value' => template::ico('cancel')
 					])
 				];
@@ -373,7 +373,7 @@ class news extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -398,7 +398,7 @@ class news extends common
 	public function edit()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
