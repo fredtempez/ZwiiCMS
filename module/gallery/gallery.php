@@ -18,7 +18,7 @@ class gallery extends common
 {
 
 
-	const VERSION = '3.8';
+	const VERSION = '3.9';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 
@@ -385,13 +385,13 @@ class gallery extends common
 					$gallery['config']['name'],
 					$gallery['config']['directory'],
 					template::button('galleryConfigEdit' . $galleryId, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId,
 						'value' => template::ico('pencil'),
 						'help' => 'Configuration de la galerie '
 					]),
 					template::button('galleryConfigDelete' . $galleryId, [
 						'class' => 'galleryConfigDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $galleryId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $galleryId,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer cette galerie'
 					])
@@ -507,7 +507,7 @@ class gallery extends common
 			]);
 		}
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -544,7 +544,7 @@ class gallery extends common
 	public function edit()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -589,7 +589,7 @@ class gallery extends common
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(2) . '/' . $_SESSION['csrf'],
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(2),
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -854,7 +854,7 @@ class gallery extends common
 	public function theme()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -935,7 +935,7 @@ class gallery extends common
 		 */
 		if ($this->getUrl(2) === 'galleries') {
 			// Jeton incorrect
-			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -976,7 +976,7 @@ class gallery extends common
 			 */
 		} elseif ($this->getUrl(2) === 'gallery') {
 			// Jeton incorrect
-			if ($this->getUrl(4) !== $_SESSION['csrf']) {
+			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit',
@@ -1027,7 +1027,7 @@ class gallery extends common
 				}
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId . '/' . $_SESSION['csrf'],
+					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $galleryId,
 					'notification' => helper::translate('Modifications enregistrées'),
 					'state' => true
 				]);

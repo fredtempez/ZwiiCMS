@@ -1,3 +1,5 @@
+# Version 3.10
+- Masque le code de vérification
 # Version 3.9
 - Redirection des pages orphelines
 # Version 3.8

@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '3.9';
+	const VERSION = '3.10';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -29,9 +29,6 @@ class form extends common
 		'deleteall' => self::GROUP_MODERATOR,
 		'index' => self::GROUP_VISITOR,
 		'export2csv' => self::GROUP_MODERATOR,
-		'output2csv' => self::GROUP_MODERATOR,
-		'init' => self::GROUP_MODERATOR,
-		'update' => self::GROUP_MODERATOR,
 	];
 
 	public static $data = [];
@@ -249,7 +246,7 @@ class form extends common
 					$content,
 					template::button('formDataDelete' . $dataIds[$i], [
 						'class' => 'formDataDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i] . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $dataIds[$i],
 						'value' => template::ico('trash')
 					])
 				];
@@ -270,7 +267,7 @@ class form extends common
 	public function export2csv()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
@@ -311,7 +308,7 @@ class form extends common
 	public function deleteall()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(2) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
@@ -347,7 +344,7 @@ class form extends common
 	public function delete()
 	{
 		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',

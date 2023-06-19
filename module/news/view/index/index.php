@@ -34,7 +34,7 @@
 								)
 							): ?>
 								<a
-									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsId . '/' . $_SESSION['csrf']; ?>">
+									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsId; ?>">
 									<?php echo template::ico('pencil'); ?> Éditer
 								</a>
 							<?php endif; ?>

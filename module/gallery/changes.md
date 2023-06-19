@@ -1,3 +1,5 @@
+# Version 3.9
+- Bloque l'effacement de la galerie selon le profil
 # Version 3.8
 - Version compare null, dataversion not initialize
 - Bug de positionnement des boutons de retour
