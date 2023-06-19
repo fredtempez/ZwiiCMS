@@ -1,5 +1,6 @@
 # version 6.9
 - Bloque l'effacement de l'article selon le profil
+- Masque le code de vérification
 # version 6.8
 - Erreur de décompte des commentaires approuvés ou non dans l'index
 # version 6.7
@@ -11,7 +12,7 @@
 - Intl dates formats
 - Modifications liées à la suppression de flatpickr
 # version 6.4
-- Multilingisme
+- Multilinguisme
 # version 6.31
 - Miniature de l'image dans le flux RSS
 # version 6.3
