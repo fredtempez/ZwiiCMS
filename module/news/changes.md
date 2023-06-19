@@ -1,3 +1,5 @@
+# Version 4.5
+- Masque le code de vérification
 # Version 4.4
 - Intl date Formats
 - Bug un conflit avec le style de la page
@@ -15,5 +17,3 @@
 - Ecran layout réservé à la configuration et au thème
 - Bug avec l'initialisation, fichier css déclaré mais absent
 - Appel de la feuille style si présente
-
-A faire partie CSS à amléiorer au niveau des options

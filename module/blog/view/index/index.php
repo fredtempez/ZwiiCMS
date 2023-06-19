@@ -9,7 +9,7 @@
 	</div>
 <?php endif; ?>
 <?php if ($module::$articles): ?>
-	<article>
+	<article id="article">
 		<?php foreach ($module::$articles as $articleId => $article): ?>
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'layout']) === true): ?>
 				<div class="readMoreModernContainer">
@@ -73,7 +73,7 @@
 								)
 							): ?>
 								<a
-									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId . '/' . $_SESSION['csrf']; ?>">
+									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId; ?>">
 									<?php echo template::ico('pencil'); ?> Éditer
 								</a>
 							<?php endif; ?>
@@ -133,11 +133,11 @@
 							</h2>
 							<div class="blogComment">
 								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
-									<?php if ($article['comment']): ?>
-										<?php echo count($article['comment']); ?>
+									<?php if ($module::$comments[$articleId]): ?>
+										<?php echo $module::$comments[$articleId]; ?>
+										<?php echo template::ico('comment', ['margin' => 'left']); ?>
 									<?php endif; ?>
 								</a>
-								<?php echo template::ico('comment', ['margin' => 'left']); ?>
 							</div>
 							<div class="blogDate">
 								<!-- bloc signature et date -->

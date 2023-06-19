@@ -9,14 +9,14 @@
 	<div class="col1 offset9">
 	<?php echo template::button('formDataDeleteAll', [
 			'class' => 'formDataDeleteAll buttonRed',
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/deleteall' . '/' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/deleteall',
 			'value' => template::ico('trash'),
 			'help' => 'Effacer toutes les données'
 		]); ?>
 	</div>
 	<div class="col1">
 	<?php echo template::button('formDataBack', [
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/export2csv' . '/' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/export2csv',
 			'value' => template::ico('download'),
 			'help' => 'Exporter toutes les données'
 		]); ?>

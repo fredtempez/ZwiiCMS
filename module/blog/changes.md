@@ -1,4 +1,9 @@
-
+# version 6.9
+- Masque le code de vérification
+# version 6.8
+- Erreur de décompte des commentaires approuvés ou non dans l'index
+# version 6.7
+- Ancre article qui affiche le début de l'article au clic sur la barre de pages, fonction utile lorsque le module est sous la page
 # version 6.6
 - Position de l'icône RSS
 - Présentation en tableau amélioration du visuel
