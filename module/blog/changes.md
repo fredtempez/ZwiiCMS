@@ -1,5 +1,6 @@
 # version 6.9
 - Masque le code de vérification
+- Corrige un défaut d'affichage de l'article dans l'index, lorsque l'article ne contient pas d'image.
 # version 6.8
 - Erreur de décompte des commentaires approuvés ou non dans l'index
 # version 6.7
