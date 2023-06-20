@@ -574,7 +574,7 @@ class blog extends common
 			]);
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
