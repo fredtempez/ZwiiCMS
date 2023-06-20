@@ -69,7 +69,6 @@ class translate extends common
 		$lang = $this->getUrl(2);
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf'] &&
 			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
@@ -563,8 +562,7 @@ class translate extends common
 		$target = $this->getUrl(2);
 		$lang = $this->getUrl(3);
 		if (
-			$this->getUrl(4) !== $_SESSION['csrf']
-			|| array_key_exists($lang, self::$languages) === false
+			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -618,8 +616,7 @@ class translate extends common
 		// Jeton incorrect ou URl avec le code langue incorrecte
 		$lang = $this->getUrl(2);
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
-			|| array_key_exists($lang, self::$languages) === false
+			array_key_exists($lang, self::$languages) === false
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
