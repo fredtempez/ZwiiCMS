@@ -9,13 +9,13 @@
 	</div>
 	<div class="col1 offset8">
 		<?php echo template::button('galleryConfigOption', [
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/option/galleries/' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/option/galleries/',
 			'value' => template::ico('sliders')
 		]); ?>
 	</div>
 	<div class="col1">
 		<?php echo template::button('galleryConfigTheme', [
-			'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . $this->getUrl(0) . '/theme/',
 			'value' => template::ico('brush')
 		]); ?>
 	</div>
