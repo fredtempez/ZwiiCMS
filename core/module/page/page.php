@@ -186,115 +186,94 @@ class page extends common
 	public function delete()
 	{
 		// $url prend l'adresse sans le token
-		$url = explode('&', $this->getUrl(2));
+		$page = $this->getUrl(2);
 		// La page n'existe pas
-		if ($this->getData(['page', $url[0]]) === null) {
+		if ($this->getData(['page', $page]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
 		} // Jeton incorrect
-		elseif (!isset($_GET['csrf'])) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'redirect' => helper::baseUrl() . 'page/edit/' . $page,
 				'notification' => helper::translate('Jeton invalide')
-			]);
-		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Impossible de supprimer la page d'accueil
-		elseif ($url[0] === $this->getData(['locale', 'homePageId'])) {
+		elseif ($page === $this->getData(['locale', 'homePageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
-		// Impossible de supprimer la page de recherche affectée
-		elseif ($url[0] === $this->getData(['locale', 'searchPageId'])) {
+		// Impossible de supprimer la page affectée
+		elseif ($page === $this->getData(['locale', 'searchPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
-		// Impossible de supprimer la page des mentions légales affectée
-		elseif ($url[0] === $this->getData(['locale', 'legalPageId'])) {
+		// Impossible de supprimer la page  affectée
+		elseif ($page === $this->getData(['locale', 'legalPageId'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
-		// Impossible de supprimer la page des mentions légales affectée
-		elseif ($url[0] === $this->getData(['locale', 'page404'])) {
+		// Impossible de supprimer la page affectée
+		elseif ($page === $this->getData(['locale', 'page404'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
-		// Impossible de supprimer la page des mentions légales affectée
-		elseif ($url[0] === $this->getData(['locale', 'page403'])) {
+		// Impossible de supprimer la page affectée
+		elseif ($page === $this->getData(['locale', 'page403'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
 			]);
 		}
-		// Impossible de supprimer la page des mentions légales affectée
-		elseif ($url[0] === $this->getData(['locale', 'page302'])) {
+		// Impossible de supprimer la page affectée
+		elseif ($page === $this->getData(['locale', 'page302'])) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'config',
 				'notification' => helper::translate('Suppression interdite, page active dans la configuration du site')
-			]);
-		}
-		// Jeton incorrect
-		elseif (!isset($_GET['csrf'])) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => helper::translate('Jeton invalide')
-			]);
-		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Impossible de supprimer une page contenant des enfants
-		elseif ($this->getHierarchy($url[0], null)) {
+		elseif ($this->getHierarchy($page, null)) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'redirect' => helper::baseUrl() . 'page/edit/' . $page,
 				'notification' => helper::translate('Impossible de supprimer une page contenant des pages enfants')
 			]);
 		}
 		// Suppression
 		else {
-
 			// Effacer le dossier du module
-			$moduleId = $this->getData(['page', $url[0], 'moduleId']);
+			$moduleId = $this->getData(['page', $page, 'moduleId']);
 			$modulesData = helper::getModules();
 			if (
 				array_key_exists($moduleId, $modulesData)
-				&& is_dir($modulesData[$moduleId]['dataDirectory'] . $url[0])
+				&& is_dir($modulesData[$moduleId]['dataDirectory'] . $page)
 			) {
-				$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $url[0]);
+				$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $page);
 			}
 			// Effacer la page
-			$this->deleteData(['page', $url[0]]);
-			if (file_exists(self::DATA_DIR . self::$i18nContent . '/content/' . $url[0] . '.html')) {
-				unlink(self::DATA_DIR . self::$i18nContent . '/content/' . $url[0] . '.html');
+			$this->deleteData(['page', $page]);
+			if (file_exists(self::DATA_DIR . self::$i18nContent . '/content/' . $page . '.html')) {
+				unlink(self::DATA_DIR . self::$i18nContent . '/content/' . $page . '.html');
 			}
-			$this->deleteData(['module', $url[0]]);
+			$this->deleteData(['module', $page]);
 
 			// Met à jour le sitemap
 			$this->updateSitemap();
