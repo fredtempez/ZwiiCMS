@@ -211,7 +211,7 @@ class translate extends common
 					$messageLocale = helper::translate('Langue du site par défaut');
 				} else {
 					$messageLocale = '<a href="'
-						. helper::baseUrl() . $this->getUrl(0) . '/default/' . $key . '/' . $_SESSION['csrf']
+						. helper::baseUrl() . $this->getUrl(0) . '/default/' . $key 
 						. '">' . helper::translate('Définir par défaut') . '</a>';
 				}
 				self::$languagesInstalled[] = [
@@ -225,7 +225,7 @@ class translate extends common
 					]),
 					template::button('translateContentLanguageLocaleDelete' . $key, [
 						'class' => 'translateDelete buttonRed' . ($messageLocale === 'Langue du site par défaut' ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key ,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					])
@@ -275,13 +275,13 @@ class translate extends common
 					*/
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file ,
 						'value' => template::ico('update'),
 						'help' => 'Mettre à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
 						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/ui/' . $file ,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 					]),
@@ -300,7 +300,7 @@ class translate extends common
 					'',
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => 'buttonGreen',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file ,
 						'value' => template::ico('shopping-basket'),
 						'help' => 'Installer',
 					])

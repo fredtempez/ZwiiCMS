@@ -375,13 +375,13 @@ class user extends common
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
 					helper::translate(self::$groups[$this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
-						'href' => helper::baseUrl() . 'user/edit/' . $userId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/edit/' . $userId ,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
-						'href' => helper::baseUrl() . 'user/delete/' . $userId . '/' . $_SESSION['csrf'],
+						'href' => helper::baseUrl() . 'user/delete/' . $userId ,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer'
 					])

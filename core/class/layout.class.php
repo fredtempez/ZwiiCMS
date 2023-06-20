@@ -346,7 +346,7 @@ class layout extends common
                 template::ico('user', [
                     'margin' => 'all',
                     'help' => 'Mon compte',
-                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
+                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
                 ]);
             if (
                 $this->getData(['user', $this->getUser('id'), 'files']) === true
@@ -509,7 +509,7 @@ class layout extends common
             $itemsRight .= '<li>' . template::ico('user', [
                 'help' => 'Mon compte',
                 'margin' => 'right',
-                'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf']
+                'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id') 
             ]) . '</li>';
             $itemsRight .= '<li>' .
                 template::ico('logout', [
@@ -962,13 +962,13 @@ class layout extends common
                         ]) . '</li>';
                     }
                     $leftItems .= '<li>' . template::ico('clone', [
-                        'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+                        'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0),
                         'help' => 'Dupliquer la page'
                     ])
                         . '</li>';
 
                     $leftItems .= '<li>' . template::ico('trash', [
-                        'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '&csrf=' . $_SESSION['csrf'],
+                        'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0),
                         'help' => 'Supprimer la page',
                         'id' => 'pageDelete'
                     ])
@@ -1033,7 +1033,7 @@ class layout extends common
                 }
             }
             if ($this->getUser('group') >= self::GROUP_MODERATOR) {
-                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') . '/' . $_SESSION['csrf'] .
+                $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id')  .
                     '" data-tippy-content="' . helper::translate('Configurer mon compte') . '">' .
                     template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') .
                     '</span></a></li>';
