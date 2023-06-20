@@ -194,7 +194,9 @@ class user extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->checkCSRF()) {
+		elseif (
+			$this->checkCSRF()
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
@@ -590,13 +592,13 @@ class user extends common
 						'commentDelete' => $this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN),
 						'commentDeleteAll' => $this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilEditBlogAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogCommentApprove', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
+						$this->getInput('profilEditBlogEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogCommentApprove', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
 					],
 					'news' => [
 						'add' => $this->getInput('profilEditNewsAdd', helper::FILTER_BOOLEAN),
@@ -604,9 +606,9 @@ class user extends common
 						'delete' => $this->getInput('profilEditNewsDelete', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilEditNewsAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN)
+						$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN)
 					],
 					'gallery' => [
 						'add' => $this->getInput('profilEditGalleryAdd', helper::FILTER_BOOLEAN),
@@ -615,10 +617,10 @@ class user extends common
 						'option' => $this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN),
 						'theme' => $this->getInput('profilEditGalleryTheme', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilEditGalleryAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditGalleryEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditGalleryDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilEditGalleryTheme', helper::FILTER_BOOLEAN)
+						$this->getInput('profilEditGalleryEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditGalleryDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilEditGalleryTheme', helper::FILTER_BOOLEAN)
 					],
 					'form' => [
 						'config' => $this->getInput('profilEditFormConfig', helper::FILTER_BOOLEAN),
@@ -718,13 +720,13 @@ class user extends common
 						'commentDelete' => $this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN),
 						'commentDeleteAll' => $this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddBlogAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogCommentApprove', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
+						$this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogCommentApprove', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
 					],
 					'news' => [
 						'add' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN),
@@ -732,9 +734,9 @@ class user extends common
 						'delete' => $this->getInput('profilAddNewsDelete', helper::FILTER_BOOLEAN),
 						'option' => $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN)
+						$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN)
 					],
 					'gallery' => [
 						'add' => $this->getInput('profilAddGalleryAdd', helper::FILTER_BOOLEAN),
@@ -743,10 +745,10 @@ class user extends common
 						'option' => $this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN),
 						'theme' => $this->getInput('profilAddGalleryTheme', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddGalleryAdd', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddGalleryEdit', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddGalleryDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddGalleryTheme', helper::FILTER_BOOLEAN)
+						$this->getInput('profilAddGalleryEdit', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddGalleryDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddGalleryTheme', helper::FILTER_BOOLEAN)
 					],
 					'form' => [
 						'option' => $this->getInput('profilAddFormOption', helper::FILTER_BOOLEAN),
@@ -755,10 +757,10 @@ class user extends common
 						'deleteAll' => $this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN),
 						'export2csv' => $this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN),
 						'config' => $this->getInput('profilAddFormOption', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddFormData', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN) ||
-									$this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN)
+						$this->getInput('profilAddFormData', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN) ||
+						$this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN)
 					],
 					'search' => [
 						'config' => $this->getInput('profilAddSearchConfig', helper::FILTER_BOOLEAN),
