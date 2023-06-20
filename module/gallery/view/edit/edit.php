@@ -9,7 +9,7 @@
 		</div>
 		<div class="col1 offset8">
 			<?php echo template::button('galleryConfigOption', [
-				'href' => helper::baseUrl() . $this->getUrl(0) . '/option/gallery/' . $this->getUrl(2) . '/'. $_SESSION['csrf'],
+				'href' => helper::baseUrl() . $this->getUrl(0) . '/option/gallery/' . $this->getUrl(2),
 				'value' => template::ico('sliders')
 			]); ?>
 		</div>

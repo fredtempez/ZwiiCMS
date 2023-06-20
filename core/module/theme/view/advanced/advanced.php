@@ -9,7 +9,7 @@
 	</div>
 	<div class="col1 offset8">
 		<?php echo template::button('themeAdvancedReset', [
-			'href' => helper::baseUrl() . 'theme/reset/custom' . '&csrf=' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . 'theme/reset/custom',
 			'class' => 'buttonRed',
 			'value' => template::ico('cancel'),
 			'help' => 'Réinitialiser la feuille de style'

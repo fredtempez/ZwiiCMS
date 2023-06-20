@@ -17,7 +17,7 @@
 	<div class="col1 offset8">
 		<?php echo template::button('configAdminReset', [
 			'class' => 'buttonRed',
-			'href' => helper::baseUrl() . 'theme/reset/admin' . '&csrf=' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . 'theme/reset/admin',
 			'value' => template::ico('cancel'),
 			'help' => 'Réinitialiser avec le thème par défaut'
 		]); ?>

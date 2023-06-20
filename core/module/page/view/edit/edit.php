@@ -21,14 +21,14 @@
 	<div class="col1 offset6">
 		<?php echo template::button('pageEditDelete', [
 			'class' => 'buttonRed',
-			'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(2),
 			'value' => template::ico('trash'),
 			'help' => 'Effacer la page'
 		]); ?>
 	</div>
 	<div class="col1">
 		<?php echo template::button('pageEditDuplicate', [
-			'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2) . '&csrf=' . $_SESSION['csrf'],
+			'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(2),
 			'value' => template::ico('clone'),
 			'help' => 'Dupliquer la page'
 		]); ?>
