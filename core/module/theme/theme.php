@@ -811,44 +811,32 @@ class theme extends common
 	 */
 	public function reset()
 	{
-		// $url prend l'adresse sans le token
-		$url = explode('&', $this->getUrl(2));
-
-		if (
-			isset($_GET['csrf'])
-			and $_GET['csrf'] === $_SESSION['csrf']
-		) {
-			// Réinitialisation
-			$redirect = '';
-			switch ($url[0]) {
-				case 'admin':
-					$this->initData('admin', self::$i18nUI);
-					$redirect = helper::baseUrl() . 'theme/admin';
-					break;
-				case 'manage':
-					$this->initData('theme', self::$i18nUI);
-					$redirect = helper::baseUrl() . 'theme/manage';
-					break;
-				case 'custom':
-					unlink(self::DATA_DIR . 'custom.css');
-					$redirect = helper::baseUrl() . 'theme/advanced';
-					break;
-				default:
-					$redirect = helper::baseUrl() . 'theme';
-			}
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => helper::translate('Thème réinitialisé'),
-				'redirect' => $redirect,
-				'state' => true
-			]);
-		} else {
-			// Valeurs en sortie
-			$this->addOutput([
-				'notification' => helper::translate('Jeton incorrect')
-			]);
+		// Réinitialisation
+		$redirect = '';
+		switch ($this->getUrl(2)) {
+			case 'admin':
+				$this->initData('admin', self::$i18nUI);
+				$redirect = helper::baseUrl() . 'theme/admin';
+				break;
+			case 'manage':
+				$this->initData('theme', self::$i18nUI);
+				$redirect = helper::baseUrl() . 'theme/manage';
+				break;
+			case 'custom':
+				unlink(self::DATA_DIR . 'custom.css');
+				$redirect = helper::baseUrl() . 'theme/advanced';
+				break;
+			default:
+				$redirect = helper::baseUrl() . 'theme';
 		}
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'notification' => helper::translate('Thème réinitialisé'),
+			'redirect' => $redirect,
+			'state' => true
+		]);
+
 	}
 
 
