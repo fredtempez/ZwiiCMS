@@ -319,7 +319,7 @@ class form extends common
 			if (count($data) > 0) {
 				// Suppression multiple
 				for ($i = 1; $i <= count($data); $i++) {
-					echo $this->deleteData(['module', $this->getUrl(0), 'data', $i]);
+					$this->deleteData(['module', $this->getUrl(0), 'data', $i]);
 				}
 				// Valeurs en sortie
 				$this->addOutput([
