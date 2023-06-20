@@ -157,11 +157,13 @@ class user extends common
 			]);
 		}
 		// Jeton incorrect
-		elseif ($this->getUrl(3) !== $_SESSION['csrf']) {
+		elseif (
+			$this->checkCSRF()
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Action interdite')
+				'notification' => helper::translate('Jeton incorrect')
 			]);
 		}
 		// Bloque la suppression de son propre compte
@@ -190,7 +192,7 @@ class user extends common
 	public function edit()
 	{
 		if (
-			$this->getUrl(3) !== $_SESSION['csrf']
+			$this->checkCSRF()
 		) {
 
 			// Valeurs en sortie
@@ -375,13 +377,13 @@ class user extends common
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
 					helper::translate(self::$groups[$this->getData(['user', $userId, 'group'])]),
 					template::button('userEdit' . $userId, [
-						'href' => helper::baseUrl() . 'user/edit/' . $userId ,
+						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer'
 					]),
 					template::button('userDelete' . $userId, [
 						'class' => 'userDelete buttonRed',
-						'href' => helper::baseUrl() . 'user/delete/' . $userId ,
+						'href' => helper::baseUrl() . 'user/delete/' . $userId,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer'
 					])
