@@ -72,44 +72,38 @@ class page extends common
 	public function duplicate()
 	{
 		// Adresse sans le token
-		$url = explode('&', $this->getUrl(2));
+		$page = $this->getUrl(2);
 		// La page n'existe pas
-		if ($this->getData(['page', $url[0]]) === null) {
+		if ($this->getData(['page', $page]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
 		} // Jeton incorrect
-		elseif (!isset($_GET['csrf'])) {
+		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
+				'redirect' => helper::baseUrl() . 'page/edit/' . $page,
 				'notification' => helper::translate('Jeton invalide')
-			]);
-		} elseif ($_GET['csrf'] !== $_SESSION['csrf']) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $url[0],
-				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Duplication de la page
-		$pageTitle = $this->getData(['page', $url[0], 'title']);
+		$pageTitle = $this->getData(['page', $page, 'title']);
 		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
 		$pageId = helper::increment($pageId, self::$coreModuleIds);
 		$pageId = helper::increment($pageId, self::$moduleIds);
 		$data = $this->getData([
 			'page',
-			$url[0]
+			$page
 		]);
 		// Ecriture
 		$this->setData(['page', $pageId, $data]);
 		$notification = helper::translate('Page dupliquée');
 		// Duplication du module présent
-		if ($this->getData(['page', $url[0], 'moduleId'])) {
+		if ($this->getData(['page', $page, 'moduleId'])) {
 			$data = $this->getData([
 				'module',
-				$url[0]
+				$page
 			]);
 			// Ecriture
 			$this->setData(['module', $pageId, $data]);
