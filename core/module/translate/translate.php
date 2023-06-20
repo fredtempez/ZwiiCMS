@@ -67,7 +67,7 @@ class translate extends common
 	public function update()
 	{
 		$lang = $this->getUrl(2);
-		// Jeton incorrect ou URl avec le code langue incorrecte
+		// Action interdite ou URl avec le code langue incorrecte
 		if (
 			array_key_exists($lang, self::$languages) === false
 		) {
@@ -342,7 +342,7 @@ class translate extends common
 	 */
 	public function locale()
 	{
-		// Jeton incorrect ou URl avec le code langue incorrecte
+		// Action interdite ou URl avec le code langue incorrecte
 		$lang = $this->getUrl(2);
 		if (
 			array_key_exists($lang, self::$languages) === false
@@ -447,7 +447,7 @@ class translate extends common
 	public function edit()
 	{
 		$lang = $this->getUrl(2);
-		// Jeton incorrect ou URl avec le code langue incorrecte
+		// Action interdite ou URl avec le code langue incorrecte
 		if (
 			array_key_exists($lang, self::$languages) === false
 		) {
@@ -536,7 +536,7 @@ class translate extends common
 	 */
 	public function delete()
 	{
-		// Jeton incorrect ou URl avec le code langue incorrecte
+		// Action interdite ou URl avec le code langue incorrecte
 		$target = $this->getUrl(2);
 		$lang = $this->getUrl(3);
 		if (
@@ -591,7 +591,7 @@ class translate extends common
 	 */
 	public function default()
 	{
-		// Jeton incorrect ou URl avec le code langue incorrecte
+		// Action interdite ou URl avec le code langue incorrecte
 		$lang = $this->getUrl(2);
 		if (
 			array_key_exists($lang, self::$languages) === false

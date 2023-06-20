@@ -79,7 +79,7 @@ class page extends common
 			$this->addOutput([
 				'access' => false
 			]);
-		} // Jeton incorrect
+		} // Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -187,7 +187,7 @@ class page extends common
 			$this->addOutput([
 				'access' => false
 			]);
-		} // Jeton incorrect
+		} // Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([

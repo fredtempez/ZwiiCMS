@@ -193,7 +193,7 @@ class user extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif (
 			$this->checkCSRF()
 		) {

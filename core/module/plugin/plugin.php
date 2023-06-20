@@ -62,7 +62,7 @@ class plugin extends common
 	public function delete()
 	{
 
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -291,7 +291,7 @@ class plugin extends common
 	 */
 	public function uploadItem()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -571,7 +571,7 @@ class plugin extends common
 	 */
 	public function save()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -645,7 +645,7 @@ class plugin extends common
 	 */
 	public function dataDelete()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -676,7 +676,7 @@ class plugin extends common
 	 */
 	public function dataExport()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -817,7 +817,7 @@ class plugin extends common
 		}
 		// Bouton d'importation des données d'un module spécifique
 		if (count(explode('/', $this->getUrl())) === 6) {
-			// Jeton incorrect
+			// Action interdite
 			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([
