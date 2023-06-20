@@ -378,7 +378,7 @@ class blog extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -403,7 +403,7 @@ class blog extends common
 	 */
 	public function commentDeleteAll()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -435,7 +435,7 @@ class blog extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -599,7 +599,7 @@ class blog extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -624,7 +624,7 @@ class blog extends common
 	 */
 	public function edit()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([

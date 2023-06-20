@@ -266,7 +266,7 @@ class form extends common
 	 */
 	public function export2csv()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -307,7 +307,7 @@ class form extends common
 	 */
 	public function deleteall()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -343,7 +343,7 @@ class form extends common
 	 */
 	public function delete()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([

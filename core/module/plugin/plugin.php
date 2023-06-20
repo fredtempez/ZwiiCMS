@@ -62,8 +62,8 @@ class plugin extends common
 	public function delete()
 	{
 
-		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		// Action interdite
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -291,8 +291,8 @@ class plugin extends common
 	 */
 	public function uploadItem()
 	{
-		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
+		// Action interdite
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'store',
@@ -383,7 +383,7 @@ class plugin extends common
 					implode(' - ', $pageInfos),
 					template::button('moduleExport' . $key, [
 						'class' => $class,
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/uploadItem/' . $key,
 						'value' => $ico,
 						'help' => $help
 					])
@@ -454,7 +454,6 @@ class plugin extends common
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
 				}
 			}
-
 		}
 
 		// Recherche des modules orphelins dans toutes les langues
@@ -482,7 +481,7 @@ class plugin extends common
 					$infoModules[$key]['delete'] === true
 					? template::button('moduleDelete' . $key, [
 						'class' => 'moduleDelete buttonRed',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/' . $key,
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer le module'
 					])
@@ -503,12 +502,12 @@ class plugin extends common
 					$infoModules[$key]['version'],
 					'',
 					template::button('moduleSave' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/filemanager/' . $key ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/filemanager/' . $key,
 						'value' => template::ico('download-cloud'),
 						'help' => 'Sauvegarder le module dans le gestionnaire de fichiers'
 					]),
 					template::button('moduleDownload' . $key, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/download/' . $key ,
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/save/download/' . $key,
 						'value' => template::ico('download'),
 						'help' => 'Sauvegarder et télécharger le module'
 					])
@@ -534,19 +533,19 @@ class plugin extends common
 								$infoModules[$pagesInfos[$keyi18n][$keyPage]['moduleId']]['version'],
 								template::flag($keyi18n, '20px') . '&nbsp<a href ="' . helper::baseUrl() . $keyPage . '" target="_blank">' . $pagesInfos[$keyi18n][$keyPage]['title'] . ' (' . $keyPage . ')</a>',
 								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage ,
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/filemanager/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('download-cloud'),
 									'help' => 'Sauvegarder les données du module dans le gestionnaire de fichiers'
 								]),
 								template::button('dataExport' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage ,
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataExport/download/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('download'),
 									'help' => 'Sauvegarder et télécharger les données du module'
 								]),
 								template::button('dataDelete' . $keyPage, [
-									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage ,
+									'href' => helper::baseUrl() . $this->getUrl(0) . '/dataDelete/' . self::$i18nContent . '/' . $pagesInfos[$keyi18n][$keyPage]['moduleId'] . '/' . $keyPage,
 									// appel de fonction vaut exécution, utiliser un paramètre
 									'value' => template::ico('trash'),
 									'class' => 'buttonRed dataDelete',
@@ -572,8 +571,8 @@ class plugin extends common
 	 */
 	public function save()
 	{
-		// Jeton incorrect
-		if ($this->getUrl(4) !== $_SESSION['csrf']) {
+		// Action interdite
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -646,8 +645,8 @@ class plugin extends common
 	 */
 	public function dataDelete()
 	{
-		// Jeton incorrect
-		if ($this->getUrl(5) !== $_SESSION['csrf']) {
+		// Action interdite
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -677,8 +676,8 @@ class plugin extends common
 	 */
 	public function dataExport()
 	{
-		// Jeton incorrect
-		if ($this->getUrl(6) !== $_SESSION['csrf']) {
+		// Action interdite
+		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -818,8 +817,8 @@ class plugin extends common
 		}
 		// Bouton d'importation des données d'un module spécifique
 		if (count(explode('/', $this->getUrl())) === 6) {
-			// Jeton incorrect
-			if ($this->getUrl(3) !== $_SESSION['csrf']) {
+			// Action interdite
+			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'plugin',

@@ -506,7 +506,7 @@ class gallery extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -543,7 +543,7 @@ class gallery extends common
 	 */
 	public function edit()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -853,7 +853,7 @@ class gallery extends common
 	 */
 	public function theme()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -934,7 +934,7 @@ class gallery extends common
 		 * Options applicables à toutes les galeries du module
 		 */
 		if ($this->getUrl(2) === 'galleries') {
-			// Jeton incorrect
+			// Action interdite
 			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([
@@ -975,7 +975,7 @@ class gallery extends common
 			 * Enregistre les options de configuration de la galerie d'images sélectionnée
 			 */
 		} elseif ($this->getUrl(2) === 'gallery') {
-			// Jeton incorrect
+			// Action interdite
 			if ($this->checkCSRF()) {
 				// Valeurs en sortie
 				$this->addOutput([

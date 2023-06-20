@@ -156,14 +156,14 @@ class user extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif (
 			$this->checkCSRF()
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Jeton incorrect')
+				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Bloque la suppression de son propre compte

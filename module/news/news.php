@@ -371,7 +371,7 @@ class news extends common
 				'access' => false
 			]);
 		}
-		// Jeton incorrect
+		// Action interdite
 		elseif ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -396,7 +396,7 @@ class news extends common
 	 */
 	public function edit()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([

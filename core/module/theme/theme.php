@@ -796,7 +796,7 @@ class theme extends common
 	 */
 	public function fontDelete()
 	{
-		// Jeton incorrect
+		// Action interdite
 		if ($this->checkCSRF()) {
 			// Valeurs en sortie
 			$this->addOutput([
