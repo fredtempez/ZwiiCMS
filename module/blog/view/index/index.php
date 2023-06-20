@@ -72,8 +72,7 @@
 									)
 								)
 							): ?>
-								<a
-									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId; ?>">
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleId; ?>">
 									<?php echo template::ico('pencil'); ?> Éditer
 								</a>
 							<?php endif; ?>
@@ -150,15 +149,11 @@
 								<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) !== 0 ? $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
 								<?php echo helper::subword(strip_tags($article['content'], '<br><p>'), 0, $lenght); ?>...
 								<div class="readMoreContainer">
-									<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>"><button
-											class="readMoreButton">Lire la suite</button></a>
-									<div class="readMoreContainer">
-										<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
-											<button class="readMoreButton">
-												<?php echo helper::translate('Lire la suite'); ?>
-											</button>
-										</a>
-									</div>
+									<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
+										<button class="readMoreButton">
+											<?php echo helper::translate('Lire la suite'); ?>
+										</button>
+									</a>
 								</div>
 							</div>
 						</div>
