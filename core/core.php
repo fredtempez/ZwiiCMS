@@ -473,7 +473,7 @@ class common
 	 */
 	public function checkCSRF()
 	{
-		return ((empty($_POST['csrf']) or hash_equals($_SESSION['csrf'], $_POST['csrf']) === false) === false);
+		return ((empty($_POST['csrf']) or hash_equals( $_POST['csrf'], $_SESSION['csrf']) === false) === false);
 	}
 
 	/**
