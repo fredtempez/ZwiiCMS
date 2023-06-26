@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 12.4.00
+- L'ID de session n'est plus transmise dans l'URL, les modules distribués ont été actualisés.
+- Corrections de bug dans le module Blog, merci de consulter le fichier changes.log du module.
+
 ## Version 12.3.11
 - Interdit la création d'une langue autrement que par un administrateur.
 
