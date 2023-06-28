@@ -309,7 +309,7 @@ class init extends common
 				'comment' => 'Accède au site',
 			],
 			'1' => [
-				'0' => [
+				'1' => [
 					'name' => 'Membre simple',
 					'readonly' => false,
 					'comment' => 'Accède aux pages réservées',
@@ -386,7 +386,7 @@ class init extends common
 						'config' => false,
 					]
 				],
-				'1' => [
+				'2' => [
 					'name' => 'Membre',
 					'readonly' => false,
 					'comment' => 'Accède aux pages réservées et à un dossier partagé',
@@ -468,7 +468,7 @@ class init extends common
 				],
 			],
 			'2' => [
-				'0' => [
+				'1' => [
 					'name' => 'Modérateur',
 					'readonly' => false,
 					'comment' => 'Edition des pages',
@@ -546,7 +546,7 @@ class init extends common
 						'config' => true,
 					]
 				],
-				'1' => [
+				'2' => [
 					'name' => 'Editeur avec gestion des fichiers',
 					'readonly' => false,
 					'comment' => 'Edition des pages',

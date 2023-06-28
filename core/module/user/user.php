@@ -542,8 +542,6 @@ class user extends common
 		}
 
 		// Soumission du formulaire
-		var_dump( $this->getInput('profilEditGroup',helper::FILTER_STRING_LONG) );
-		var_dump( $this->getInput('profilEditProfil',helper::FILTER_STRING_LONG) );
 		if ($this->isPost()) {
 			$this->setData([
 				'profil',
