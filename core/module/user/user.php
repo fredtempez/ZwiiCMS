@@ -30,6 +30,7 @@ class user extends common
 		'profil' => self::GROUP_ADMIN,
 		'profilEdit' => self::GROUP_ADMIN,
 		'profilAdd' => self::GROUP_ADMIN,
+		'profilDelete' => self::GROUP_ADMIN,
 	];
 
 	public static $users = [];
@@ -541,12 +542,13 @@ class user extends common
 		}
 
 		// Soumission du formulaire
+		var_dump( $this->getInput('profilEditGroup',helper::FILTER_STRING_LONG) );
+		var_dump( $this->getInput('profilEditProfil',helper::FILTER_STRING_LONG) );
 		if ($this->isPost()) {
-
 			$this->setData([
 				'profil',
-				$this->getInput('profilEditGroup'),
-				$this->getInput('profilEditProfil'),
+				$this->getInput('profilEditGroup',helper::FILTER_STRING_LONG, true),
+				$this->getInput('profilEditProfil',helper::FILTER_STRING_LONG, true),
 				[
 					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,
@@ -788,6 +790,32 @@ class user extends common
 			'title' => "Ajouter un profil",
 			'view' => 'profilAdd'
 		]);
+	}
+
+	/**
+	 * Effacement de profil
+	 */
+
+	public function profilDelete()
+	{
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
+			$this->getData(['profil', $this->getUrl(2), $this->getUrl(3)]) === null
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+			// Suppression
+		} else {
+			$this->deleteData([ 'profil', $this->getUrl(2), $this->getUrl(3)]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/profil',
+				'notification' => helper::translate('Profil supprimé'),
+				'state' => true
+			]);
+		}
 	}
 
 	/**
