@@ -636,6 +636,9 @@ class user extends common
 					'redirection' => [
 						'config' => $this->getInput('profilEditRedirectionConfig', helper::FILTER_BOOLEAN),
 					],
+					'user' => [
+						'edit' =>  $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
+					]
 				]
 			]);
 
@@ -768,6 +771,9 @@ class user extends common
 					'redirection' => [
 						'config' => $this->getInput('profilAddRedirectionConfig', helper::FILTER_BOOLEAN),
 					],
+					'user' => [
+						'edit' =>  $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
+					]
 				]
 			]);
 			// Valeurs en sortie

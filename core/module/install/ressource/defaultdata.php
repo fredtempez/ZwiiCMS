@@ -384,6 +384,9 @@ class init extends common
 					],
 					'search' => [
 						'config' => false,
+					],
+					'user' => [
+						'edit' => true,
 					]
 				],
 				'2' => [
@@ -464,6 +467,9 @@ class init extends common
 					],
 					'search' => [
 						'config' => false,
+					],
+					'user' => [
+						'edit' => true,
 					]
 				],
 			],
@@ -544,6 +550,9 @@ class init extends common
 					],
 					'search' => [
 						'config' => true,
+					],
+					'user' => [
+						'edit' => true,
 					]
 				],
 				'2' => [
@@ -621,6 +630,9 @@ class init extends common
 					],
 					'search' => [
 						'config' => true,
+					],
+					'user' => [
+						'edit' => true,
 					]
 				],
 			],

@@ -344,7 +344,10 @@ class layout extends common
             $items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
             $items .= '<wbr>&nbsp;|&nbsp;';
             if (
-                $this->getUser('permission','filemanager') === true
+                $this->getUser(
+                    'permission',
+                    'filemanager'
+                ) === true
             ) {
                 $items .= '<wbr>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -498,7 +501,11 @@ class layout extends common
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
-                $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser('permission','folder', 'share') === true
+                $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser(
+                    'permission',
+                    'folder',
+                    'share'
+                ) === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -936,7 +943,7 @@ class layout extends common
                 $leftItems .= '</optgroup>';
                 $leftItems .= '</select></li>';
                 // Bouton Ajouter une page
-                if ($this->getUser('permission','page', 'add')) {
+                if ($this->getUser('permission', 'page', 'add')) {
                     $leftItems .= '<li>' . template::ico('plus', [
                         'href' => helper::baseUrl() . 'page/add',
                         'help' => 'Nouvelle page ou barre latérale'
@@ -955,7 +962,7 @@ class layout extends common
                     or $this->getUrl(0) === ''
                 ) {
                     // Bouton Editer une page
-                    if ($this->getUser('permission','page', 'edit')) {
+                    if ($this->getUser('permission', 'page', 'edit')) {
                         $leftItems .= '<li>' . template::ico('pencil', [
                             'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
                             'help' => 'Éditer la page'
@@ -963,7 +970,7 @@ class layout extends common
                     }
                     // Bouton Editer le module d'une page
                     if (
-                        $this->getUser('permission','page', 'module')
+                        $this->getUser('permission', 'page', 'module')
                         && $this->getData(['page', $this->getUrl(0), 'moduleId'])
                     ) {
                         $leftItems .= '<li>' . template::ico('gear', [
@@ -973,7 +980,7 @@ class layout extends common
                     }
                     // Bouton dupliquer une page
                     if (
-                        $this->getUser('permission','page', 'duplicate')
+                        $this->getUser('permission', 'page', 'duplicate')
                     ) {
                         $leftItems .= '<li>' . template::ico('clone', [
                             'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0),
@@ -983,7 +990,7 @@ class layout extends common
                     }
                     // Bouton Effacer une page
                     if (
-                        $this->getUser('permission','page', 'delete')
+                        $this->getUser('permission', 'page', 'delete')
                     ) {
                         $leftItems .= '<li>' . template::ico('trash', [
                             'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0),
@@ -998,7 +1005,10 @@ class layout extends common
             $rightItems = '';
             if (
                 $this->getUser('group') >= self::GROUP_MODERATOR
-                && $this->getUser('permission','filemanager')
+                && $this->getUser(
+                    'permission',
+                    'filemanager'
+                )
             ) {
                 $rightItems .= '<li>' . template::ico('folder', [
                     'help' => 'Fichiers',
@@ -1027,7 +1037,6 @@ class layout extends common
                     'help' => 'Utilisateurs',
                     'href' => helper::baseUrl() . 'user'
                 ]) . '</li>';
-
                 // Mise à jour automatique
                 $today = mktime(0, 0, 0);
                 $checkUpdate = $this->getData(['core', 'lastAutoUpdate']);
@@ -1054,7 +1063,11 @@ class layout extends common
                     $rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
                 }
             }
-            if ($this->getUser('group') >= self::GROUP_MODERATOR) {
+            if (
+                $this->getUser('group') >= self::GROUP_MODERATOR
+                && $this->getUser('permission', 'user', 'edit')
+
+            ) {
                 $rightItems .= '<li><a href="' . helper::baseUrl() . 'user/edit/' . $this->getUser('id') .
                     '" data-tippy-content="' . helper::translate('Configurer mon compte') . '">' .
                     template::ico('user', ['margin' => 'right']) . '<span id="displayUsername">' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') .
