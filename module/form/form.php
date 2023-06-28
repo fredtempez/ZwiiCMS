@@ -344,9 +344,7 @@ class form extends common
 	public function delete()
 	{
 		// Action interdite
-		if (
-			$this->getUser('permission', 'form', 'delete') === false ||
-			$this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) === false) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',

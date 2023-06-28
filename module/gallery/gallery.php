@@ -498,21 +498,12 @@ class gallery extends common
 	 */
 	public function delete()
 	{
-		// $url prend l'adresse sans le token
 		// La galerie n'existe pas
-		if ($this->getUser('permission', 'gallery', 'delete') === false ||
+		if ($this->getUser('permission',  __CLASS__, __FUNCTION__) === false ||
 			$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
-			]);
-		}
-		// Action interdite
-		if ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => helper::translate('Suppression interdite')
 			]);
 		}
 		// Suppression

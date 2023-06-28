@@ -365,19 +365,11 @@ class news extends common
 	public function delete()
 	{
 		// La news n'existe pas
-		if ($this->getUser('permission', 'news', 'delete') === false ||
+		if ($this->getUser('permission',  __CLASS__, __FUNCTION__) === false ||
 			$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
-			]);
-		}
-		// Action interdite
-		elseif ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => helper::translate('Action interdite')
 			]);
 		}
 		// Suppression
