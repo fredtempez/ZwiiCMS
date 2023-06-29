@@ -240,7 +240,10 @@ class config extends common
 	public function backup()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Creation du ZIP
 			$filter = $this->getInput('configBackupOption', helper::FILTER_BOOLEAN) === true ? ['backup', 'tmp'] : ['backup', 'tmp', 'file'];
 			$fileName = helper::autoBackup(self::TEMP_DIR, $filter);
@@ -330,7 +333,10 @@ class config extends common
 	public function restore()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			$success = false;
 
@@ -361,10 +367,10 @@ class config extends common
 				}
 				// Lire le contenu de l'archive dans le tableau files
 				/*
-							for ($i = 0; $i < $zip->numFiles; $i++) {
-								$stat = $zip->statIndex($i);
-								$files[] = (basename($stat['name']));
-							}*/
+																for ($i = 0; $i < $zip->numFiles; $i++) {
+																	$stat = $zip->statIndex($i);
+																	$files[] = (basename($stat['name']));
+																}*/
 				// Extraction de l'archive dans un dossier temporaire
 				$tmpDir = uniqid(8);
 				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
@@ -427,7 +433,10 @@ class config extends common
 	public function index()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Basculement en mise à jour auto,  remise à 0 du compteur
 			if (
@@ -600,7 +609,10 @@ class config extends common
 	public function script()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Ecrire les fichiers de script
 			if ($this->geturl(2) === 'head') {
 				file_put_contents(self::DATA_DIR . 'head.inc.html', $this->getInput('configScriptHead', null));

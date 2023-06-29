@@ -13,7 +13,8 @@
  * @link http://zwiicms.fr/
  */
 
-class redirection extends common {
+class redirection extends common
+{
 
 	const VERSION = '1.6';
 	const REALNAME = 'Redirection';
@@ -28,9 +29,13 @@ class redirection extends common {
 	/**
 	 * Configuration
 	 */
-	public function config() {
+	public function config()
+	{
 		// Soumission du formulaire
-		if($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData(['module', $this->getUrl(0), 'url', $this->getInput('redirectionConfigUrl', helper::FILTER_URL, true)]);
 			// Valeurs en sortie
 			$this->addOutput([
@@ -49,9 +54,11 @@ class redirection extends common {
 	/**
 	 * Accueil
 	 */
-	public function index() {
+	public function index()
+	{
 		// Message si l'utilisateur peut éditer la page
-		if( $this->getUser('permission',  __CLASS__, __FUNCTION__) !== true
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 			&& $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			&& $this->getUser('group') >= self::GROUP_MODERATOR
 			&& $this->getUrl(1) !== 'force'

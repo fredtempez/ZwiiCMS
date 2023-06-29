@@ -249,7 +249,10 @@ class theme extends common
 	public function admin()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'admin',
 				[
@@ -295,7 +298,10 @@ class theme extends common
 	public function advanced()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Enregistre le CSS
 			file_put_contents(self::DATA_DIR . 'custom.css', $this->getInput('themeAdvancedCss', null));
 			// Valeurs en sortie
@@ -321,7 +327,10 @@ class theme extends common
 	public function body()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'theme',
 				'body',
@@ -359,7 +368,10 @@ class theme extends common
 	public function footer()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			if (
 				$this->getInput('themeFooterCopyrightPosition') === 'hide' &&
 				$this->getInput('themeFooterSocialsPosition') === 'hide' &&
@@ -449,7 +461,10 @@ class theme extends common
 	public function header()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Modification des URL des images dans la bannière perso
 			$featureContent = $this->getInput('themeHeaderText', null);
 			/**
@@ -550,7 +565,10 @@ class theme extends common
 	public function menu()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'theme',
 				'menu',
@@ -675,7 +693,10 @@ class theme extends common
 	public function fontAdd()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$type === 'files' ? 'imported' : 'files';
@@ -742,7 +763,10 @@ class theme extends common
 	public function fontEdit()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontEditUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', null) : $this->getInput('fontEditFile', null);
@@ -880,7 +904,10 @@ class theme extends common
 	public function site()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'theme',
 				'title',
@@ -954,7 +981,10 @@ class theme extends common
 	 */
 	public function manage()
 	{
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			$zipFilename = $this->getInput('themeManageImport', helper::FILTER_STRING_SHORT, true);
 			$data = $this->import(self::FILE_DIR . 'source/' . $zipFilename);

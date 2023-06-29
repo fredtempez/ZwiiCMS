@@ -265,8 +265,11 @@ class plugin extends common
 	public function upload()
 	{
 		// Soumission du formulaire
-		
-		if ($this->isPost()) {
+
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Installation d'un module
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
 			$zipFilename = $this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
@@ -422,9 +425,9 @@ class plugin extends common
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
 			if (
-					is_dir(self::DATA_DIR . $key)
-					&& file_exists(self::DATA_DIR . $key . '/page.json')
-					&& file_exists(self::DATA_DIR . $key . '/module.json')
+				is_dir(self::DATA_DIR . $key)
+				&& file_exists(self::DATA_DIR . $key . '/page.json')
+				&& file_exists(self::DATA_DIR . $key . '/module.json')
 			) {
 				$i18nSites[$key] = $value;
 			}
@@ -759,7 +762,10 @@ class plugin extends common
 	public function dataImport()
 	{
 		// Soumission du formulaire d'importation du module dans une page libre
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Récupérer le fichier et le décompacter
 			$zipFilename = $this->getInput('pluginImportFile', helper::FILTER_STRING_SHORT, true);
 			$pageId = $this->getInput('pluginImportPage', null, true);

@@ -57,7 +57,7 @@ class search extends common
 		if (
 			$this->getData(['module', $this->getUrl(0), 'config']) === NULL
 			|| $this->getData(['module', $this->getUrl(0), 'theme']) === NULL
-			|| !file_exists(self::DATADIRECTORY . $this->getUrl(0)  . '/theme.css')
+			|| !file_exists(self::DATADIRECTORY . $this->getUrl(0) . '/theme.css')
 		) {
 			$this->init();
 		}
@@ -120,7 +120,10 @@ class search extends common
 		// Mise à jour des données de module
 		$this->update();
 
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Générer la feuille de CSS
 			$style = '.keywordColor {background:' . $this->getInput('searchKeywordColor') . ';}';
@@ -129,23 +132,31 @@ class search extends common
 			// Fin feuille de style
 
 			// Soumission du formulaire
-			$this->setData(['module', $this->getUrl(0), 'config', [
-				'submitText' => $this->getInput('searchSubmitText'),
-				'placeHolder' => $this->getInput('searchPlaceHolder'),
-				'resultHideContent' => $this->getInput('searchResultHideContent', helper::FILTER_BOOLEAN),
-				'previewLength' => $this->getInput('searchPreviewLength', helper::FILTER_INT),
-				'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
-			]]);
-			$this->setData(['module', $this->getUrl(0), 'theme', [
-				'keywordColor' => $this->getInput('searchKeywordColor'),
-				'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
-			]]);
+			$this->setData([
+				'module', $this->getUrl(0),
+				'config',
+				[
+					'submitText' => $this->getInput('searchSubmitText'),
+					'placeHolder' => $this->getInput('searchPlaceHolder'),
+					'resultHideContent' => $this->getInput('searchResultHideContent', helper::FILTER_BOOLEAN),
+					'previewLength' => $this->getInput('searchPreviewLength', helper::FILTER_INT),
+					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+				]
+			]);
+			$this->setData([
+				'module', $this->getUrl(0),
+				'theme',
+				[
+					'keywordColor' => $this->getInput('searchKeywordColor'),
+					'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
+				]
+			]);
 
 
 			// Valeurs en sortie, affichage du formulaire
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(),
-				'notification' => $success  ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
+				'notification' => $success ? 'Modifications enregistrées' : 'Modifications non enregistrées !',
 				'state' => $success
 			]);
 		}
@@ -165,7 +176,10 @@ class search extends common
 		// Mise à jour des données de module
 		$this->update();
 
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			//Initialisations variables
 			$success = true;
 			$result = [];
@@ -181,10 +195,12 @@ class search extends common
 			$arraymotclef = explode(' ', $motclef);
 			$motclef = '';
 			foreach ($arraymotclef as $key => $value) {
-				if (strlen($value) > 2 && $value !== 'les' && $value !== 'des' && $value !== 'une' && $value !== 'aux') $motclef .= $value . ' ';
+				if (strlen($value) > 2 && $value !== 'les' && $value !== 'des' && $value !== 'une' && $value !== 'aux')
+					$motclef .= $value . ' ';
 			}
 			// Suppression du dernier ' '
-			if ($motclef !== '') $motclef = substr($motclef, 0, strlen($motclef) - 1);
+			if ($motclef !== '')
+				$motclef = substr($motclef, 0, strlen($motclef) - 1);
 
 			// Récupération de l'état de l'option mot entier passé par le même formulaire
 			self::$motentier = $this->getInput('searchMotentier', helper::FILTER_BOOLEAN);
@@ -192,7 +208,7 @@ class search extends common
 			if ($motclef !== '') {
 				foreach ($this->getHierarchy(null, false, null) as $parentId => $childIds) {
 					if (
-						$this->getData(['page', $parentId, 'disable']) === false  &&
+						$this->getData(['page', $parentId, 'disable']) === false &&
 						$this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
 						$this->getData(['page', $parentId, 'block']) !== 'bar'
 					) {
@@ -200,9 +216,9 @@ class search extends common
 						$titre = $this->getData(['page', $parentId, 'title']);
 						//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $parentId, 'content']));
 						$content = $this->getPage($parentId, self::$i18nContent);
-						$content =   $titre . ' ' . $content;
+						$content = $titre . ' ' . $content;
 						// Pages sauf pages filles et articles de blog
-						$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
+						$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
 						if (is_array($tempData)) {
 							$result[] = $tempData;
 						}
@@ -219,9 +235,9 @@ class search extends common
 							$titre = $this->getData(['page', $childId, 'title']);
 							//$content = file_get_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $this->getData(['page', $childId, 'content']));
 							$content = $this->getPage($childId, self::$i18nContent);
-							$content =   $titre . ' ' . $content;
+							$content = $titre . ' ' . $content;
 							//Pages filles
-							$tempData  = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
+							$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
 							if (is_array($tempData)) {
 								$result[] = $tempData;
 							}
@@ -235,7 +251,7 @@ class search extends common
 									$titre = $article['title'];
 									$contenu = ' ' . $titre . ' ' . $article['content'];
 									// Articles de sous-page de type blog
-									$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+									$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 									if (is_array($tempData)) {
 										$result[] = $tempData;
 									}
@@ -252,7 +268,7 @@ class search extends common
 								$url = $parentId . '/' . $articleId;
 								$titre = $article['title'];
 								$contenu = ' ' . $titre . ' ' . $article['content'];
-								$tempData  = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+								$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
 								if (is_array($tempData)) {
 									$result[] = $tempData;
 								}
@@ -282,8 +298,8 @@ class search extends common
 				'showBarEditButton' => true,
 				'showPageContent' => !$this->getData(['module', $this->getUrl(0), 'config', 'resultHideContent']),
 				'style' => file_exists($this->getData(['module', $this->getUrl(0), 'theme', 'style']))
-					? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
-					: ''
+				? $this->getData(['module', $this->getUrl(0), 'theme', 'style'])
+				: ''
 			]);
 		} else {
 			// Valeurs en sortie, affichage du formulaire
@@ -323,7 +339,7 @@ class search extends common
 		$valid = preg_match_all($keywords, $contenu, $matches, PREG_OFFSET_CAPTURE);
 		if ($valid > 0) {
 			if (($matches[0][0][1]) > 0) {
-				$resultat =  sprintf('<h2><a  href="./?%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $url, $titre, count($matches[0]));
+				$resultat = sprintf('<h2><a  href="./?%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $url, $titre, count($matches[0]));
 				// Création de l'aperçu
 				// Eviter de découper avec une valeur négative
 				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;

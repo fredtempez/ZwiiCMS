@@ -250,7 +250,10 @@ class blog extends common
 	public function add()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Modification de l'userId
 			if ($this->getUser('group') === self::GROUP_ADMIN) {
 				$newuserid = $this->getInput('blogAddUserId', helper::FILTER_STRING_SHORT, true);
@@ -556,7 +559,10 @@ class blog extends common
 	{
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'module', $this->getUrl(0),
 				'config',
@@ -635,7 +641,10 @@ class blog extends common
 		// L'article existe
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 				if ($this->getUser('group') === self::GROUP_ADMIN) {
 					$newuserid = $this->getInput('blogEditUserId', helper::FILTER_STRING_SHORT, true);
 				} else {
@@ -730,7 +739,10 @@ class blog extends common
 			// L'article existe
 			else {
 				// Soumission du formulaire
-				if ($this->isPost()) {
+				if (
+					$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+					$this->isPost()
+				) {
 					// Check la captcha
 					if (
 						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
@@ -892,21 +904,24 @@ class blog extends common
 	 */
 	public function signature($userId)
 	{
-		switch ($this->getData(['user', $userId, 'signature'])) {
-			case 1:
-				return $userId;
-				break;
-			case 2:
-				return $this->getData(['user', $userId, 'pseudo']);
-				break;
-			case 3:
-				return $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']);
-				break;
-			case 4:
-				return $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
-				break;
-			default:
-				return $this->getData(['user', $userId, 'firstname']);
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
+			switch ($this->getData(['user', $userId, 'signature'])) {
+				case 1:
+					return $userId;
+					break;
+				case 2:
+					return $this->getData(['user', $userId, 'pseudo']);
+					break;
+				case 3:
+					return $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']);
+					break;
+				case 4:
+					return $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
+					break;
+				default:
+					return $this->getData(['user', $userId, 'firstname']);
+			}
 		}
+
 	}
 }

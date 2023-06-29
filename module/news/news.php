@@ -163,7 +163,10 @@ class news extends common
 	public function add()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Crée la news
 			$newsId = helper::increment($this->getInput('newsAddTitle', helper::FILTER_ID), (array) $this->getData(['module', $this->getUrl(0), 'posts']));
 			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
@@ -262,7 +265,10 @@ class news extends common
 	public function option()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Générer la feuille de CSS
 			$style = '.newsFrame {';
@@ -404,7 +410,7 @@ class news extends common
 		// La news existe
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true && $this->isPost()) {
 				// Si l'id a changée
 				$newsId = $this->getInput('newsEditTitle', helper::FILTER_ID, true);
 				if ($newsId !== $this->getUrl(2)) {

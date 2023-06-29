@@ -296,7 +296,10 @@ class page extends common
 		// La page existe
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 				// Si le Title n'est pas vide, premier test pour positionner la notification du champ obligatoire
 				if ($this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '') {
 					// Génére l'ID si le titre de la page a changé
@@ -541,7 +544,10 @@ class page extends common
 	public function cssEditor()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$css = $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le CSS
 			$this->setData([
@@ -572,7 +578,10 @@ class page extends common
 	public function jsEditor()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$js = $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le JS
 			$this->setData([

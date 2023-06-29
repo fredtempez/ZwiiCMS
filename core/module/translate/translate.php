@@ -66,38 +66,47 @@ class translate extends common
 	 */
 	public function update()
 	{
-		$lang = $this->getUrl(2);
-		// Action interdite ou URl avec le code langue incorrecte
 		if (
-			array_key_exists($lang, self::$languages) === false
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			$lang = $this->getUrl(2);
+			// Action interdite ou URl avec le code langue incorrecte
+			if (
+				array_key_exists($lang, self::$languages) === false
+			) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'translate',
+					'state' => false,
+					'notification' => helper::translate('Action interdite')
+				]);
+			}
+
+			// Upload et sauver le fichier de langue
+			$response = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
+			if ($response !== false) {
+				$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+				// Mettre à jour le descripteur
+				$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
+				$enums = $this->getData(['language']);
+				$enums = array_merge($enums, [
+					$lang => $enumsStore['language'][$lang]
+				]);
+				$response = (bool) $response && $this->setData(['language', $enums]);
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'translate',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+				'state' => $response
 			]);
 		}
-
-		// Upload et sauver le fichier de langue
-		$response = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
-		if ($response !== false) {
-			$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-			// Mettre à jour le descripteur
-			$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
-			$enums = $this->getData(['language']);
-			$enums = array_merge($enums, [
-				$lang => $enumsStore['language'][$lang]
-			]);
-			$response = (bool) $response && $this->setData(['language', $enums]);
-		}
-
-		// Valeurs en sortie
-		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'translate',
-			'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
-			'state' => $response
-		]);
 	}
 
 	/**
@@ -105,9 +114,11 @@ class translate extends common
 	 */
 	public function copy()
 	{
-
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Initialisation
 			$success = false;
 			$copyFrom = $this->getInput('translateFormCopySource');
@@ -175,33 +186,34 @@ class translate extends common
 		foreach (self::$languages as $key => $value) {
 			// tableau des langues installées
 			if (is_dir(self::DATA_DIR . $key)) {
-				if (file_exists(self::DATA_DIR . $key . '/page.json') &&
+				if (
+					file_exists(self::DATA_DIR . $key . '/page.json') &&
 					file_exists(self::DATA_DIR . $key . '/module.json') &&
 					file_exists(self::DATA_DIR . $key . '/locale.json')
 				) {
 					if (file_exists(self::DATA_DIR . $key . '/.default')) {
-							$messageLocale = helper::translate('Langue par défaut');
-						} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
-							$messageLocale = helper::translate('Langue du site sélectionnée');
-						} else {
-							$messageLocale = '';
-						}
-						self::$languagesInstalled[] = [
-							template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
-							$messageLocale,
-							template::button('translateContentLanguageLocaleEdit' . $key, [
-								'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
-								'value' => template::ico('pencil'),
-								'help' => 'Éditer'
-							]),
-							template::button('translateContentLanguageLocaleDelete' . $key, [
-								'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
-								'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key,
-								'value' => template::ico('trash'),
-								'help' => 'Supprimer',
-							])
-						];
+						$messageLocale = helper::translate('Langue par défaut');
+					} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
+						$messageLocale = helper::translate('Langue du site sélectionnée');
+					} else {
+						$messageLocale = '';
+					}
+					self::$languagesInstalled[] = [
+						template::flag($key, '20 %') . '&nbsp;' . $value . ' (' . $key . ')',
+						$messageLocale,
+						template::button('translateContentLanguageLocaleEdit' . $key, [
+							'class' => file_exists(self::DATA_DIR . $key . '/locale.json') ? '' : ' disabled',
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/locale/' . $key,
+							'value' => template::ico('pencil'),
+							'help' => 'Éditer'
+						]),
+						template::button('translateContentLanguageLocaleDelete' . $key, [
+							'class' => 'translateDelete buttonRed' . ($messageLocale ? ' disabled' : ''),
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/delete/locale/' . $key,
+							'value' => template::ico('trash'),
+							'help' => 'Supprimer',
+						])
+					];
 				}
 			}
 
@@ -243,13 +255,13 @@ class translate extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-					template::button('translateContentLanguageUIEdit' . $file, [
-					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-					'value' => template::ico('pencil'),
-					'help' => 'Éditer',
-					'disabled' => 'fr_FR' === $file
-					]),
-					*/
+																																			template::button('translateContentLanguageUIEdit' . $file, [
+																																			'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+																																			'value' => template::ico('pencil'),
+																																			'help' => 'Éditer',
+																																			'disabled' => 'fr_FR' === $file
+																																			]),
+																																			*/
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
@@ -302,7 +314,10 @@ class translate extends common
 	{
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Création du contenu
 			$lang = $this->getInput('translateAddContent');
@@ -356,7 +371,10 @@ class translate extends common
 		}
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Sauvegarder les locales
 			$data = [
@@ -459,7 +477,10 @@ class translate extends common
 			]);
 		}
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// Sauvegarder les champs de la langue
 			$data = json_decode(file_get_contents(self::I18N_DIR . $lang . '.json'), true);
@@ -536,52 +557,61 @@ class translate extends common
 	 */
 	public function delete()
 	{
-		// Action interdite ou URl avec le code langue incorrecte
-		$target = $this->getUrl(2);
-		$lang = $this->getUrl(3);
 		if (
-			array_key_exists($lang, self::$languages) === false
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
-		}
-		switch ($target) {
-			case 'locale':
-				$success = false;
-				// Effacement d'une site dans une langue
-				if (is_dir(self::DATA_DIR . $lang) === true) {
-					$success = $this->removeDir(self::DATA_DIR . $lang);
-				}
+		} else {
+			// Action interdite ou URl avec le code langue incorrecte
+			$target = $this->getUrl(2);
+			$lang = $this->getUrl(3);
+			if (
+				array_key_exists($lang, self::$languages) === false
+			) {
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'translate',
-					'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
-					'state' => $success
+					'state' => false,
+					'notification' => helper::translate('Action interdite')
 				]);
-				break;
+			}
+			switch ($target) {
+				case 'locale':
+					$success = false;
+					// Effacement d'une site dans une langue
+					if (is_dir(self::DATA_DIR . $lang) === true) {
+						$success = $this->removeDir(self::DATA_DIR . $lang);
+					}
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl() . 'translate',
+						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
+						'state' => $success
+					]);
+					break;
 
-			case 'ui':
-				$success = false;
-				// Effacement d'une langue de l'interface
-				if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
-					$this->deleteData(['language', $lang]);
-					$success = unlink(self::I18N_DIR . $lang . '.json');
-				}
-				// Effacer la langue dans la base
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'translate',
-					'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
-					'state' => $success
-				]);
-				break;
-			default:
-				# Do nothing
-				break;
+				case 'ui':
+					$success = false;
+					// Effacement d'une langue de l'interface
+					if (file_exists(self::I18N_DIR . $lang . '.json') === true) {
+						$this->deleteData(['language', $lang]);
+						$success = unlink(self::I18N_DIR . $lang . '.json');
+					}
+					// Effacer la langue dans la base
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl() . 'translate',
+						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
+						'state' => $success
+					]);
+					break;
+				default:
+					# Do nothing
+					break;
+			}
 		}
 	}
 
@@ -591,32 +621,41 @@ class translate extends common
 	 */
 	public function default()
 	{
-		// Action interdite ou URl avec le code langue incorrecte
-		$lang = $this->getUrl(2);
 		if (
-			array_key_exists($lang, self::$languages) === false
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			// Action interdite ou URl avec le code langue incorrecte
+			$lang = $this->getUrl(2);
+			if (
+				array_key_exists($lang, self::$languages) === false
+			) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'translate',
+					'state' => false,
+					'notification' => helper::translate('Action interdite')
+				]);
+			}
+
+			foreach (self::$languages as $key => $value) {
+				if (file_exists(self::DATA_DIR . $key . '/.default')) {
+					unlink(self::DATA_DIR . $key . '/.default');
+					touch(self::DATA_DIR . $lang . '/.default');
+					break;
+				}
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'notification' => helper::translate('Modifications enregistrées'),
 				'redirect' => helper::baseUrl() . 'translate',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'state' => true,
 			]);
 		}
-
-		foreach (self::$languages as $key => $value) {
-			if (file_exists(self::DATA_DIR . $key . '/.default')) {
-				unlink(self::DATA_DIR . $key . '/.default');
-				touch(self::DATA_DIR . $lang . '/.default');
-				break;
-			}
-		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'notification' => helper::translate('Modifications enregistrées'),
-			'redirect' => helper::baseUrl() . 'translate',
-			'state' => true,
-		]);
 	}
 
 	/*

@@ -52,7 +52,10 @@ class install extends common
 		}
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			$lang = $this->getInput('installLanguage');
 			// Pour la suite  de l'installation
@@ -95,7 +98,10 @@ class install extends common
 		// Accès autorisé
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 
 				$success = true;
 

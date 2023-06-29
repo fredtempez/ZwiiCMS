@@ -117,7 +117,10 @@ class form extends common
 			self::$listUsers[] = $userId;
 		}
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Génération des données vides
 			if ($this->getData(['module', $this->getUrl(0), 'data']) === null) {
 				$this->setData(['module', $this->getUrl(0), 'data', []]);
@@ -163,7 +166,10 @@ class form extends common
 			self::$listUsers[] = $userId;
 		}
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Débordement
 			$width = $this->getInput('formOptionWidth');
 			if ($this->getInput('formOptionWidth', helper::FILTER_INT) + $this->getInput('formOptionOffset', helper::FILTER_INT) > 12) {
@@ -228,7 +234,10 @@ class form extends common
 	public function data()
 	{
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
-		if ($data) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$data
+		) {
 			// Pagination
 			$pagination = helper::pagination($data, $this->getUrl(), self::$itemsperPage);
 			// Liste des pages
@@ -383,7 +392,10 @@ class form extends common
 		$this->update();
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Check la captcha
 			if (
 				$this->getData(['module', $this->getUrl(0), 'config', 'captcha'])

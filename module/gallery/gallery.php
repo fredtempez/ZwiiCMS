@@ -417,7 +417,10 @@ class gallery extends common
 	public function add()
 	{
 		// Soumission du formulaire d'ajout d'une galerie
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$galleryId = $this->getInput('galleryAddName', null, true);
 			$success = false;
 			if ($galleryId) {
@@ -499,8 +502,10 @@ class gallery extends common
 	public function delete()
 	{
 		// La galerie n'existe pas
-		if ($this->getUser('permission',  __CLASS__, __FUNCTION__) !== true ||
-			$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
+			$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -536,7 +541,10 @@ class gallery extends common
 	public function edit()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 
 			// légendes
 			foreach ((array) $this->getInput('legend', null) as $file => $legend) {
@@ -687,25 +695,25 @@ class gallery extends common
 				// Définir les options
 				self::$config['homePicture'] = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'homePicture']);
 				self::$config['fullScreen'] = $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'config', 'fullScreen']) === true ? 'fullScreen' : '';
-				self::$config['backPositionTop'] = ( $this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'top'||
-													 $this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'both' )
-													? ''
-													: 'displayNone';
-				self::$config['backPositionBottom'] = ( $this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'bottom'||
-														$this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'both' )
-													? ''
-													: 'displayNone';
+				self::$config['backPositionTop'] = ($this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'top' ||
+					$this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'both')
+					? ''
+					: 'displayNone';
+				self::$config['backPositionBottom'] = ($this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'bottom' ||
+					$this->getData(['module', $this->getUrl(0), 'config', 'backPosition']) === 'both')
+					? ''
+					: 'displayNone';
 				self::$config['backAlign'] = 'textAlign' . ucfirst($this->getData(['module', $this->getUrl(0), 'config', 'backAlign']));
 
 				// Annulation de l'apparition des boutons si la galerie est unique
 				self::$config['backPositionTop'] = ($this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true
-											&& count($this->getData(['module', $this->getUrl(0), 'content'])) === 1)
-											? 'displayNone'
-											: self::$config['backPositionTop'];
+					&& count($this->getData(['module', $this->getUrl(0), 'content'])) === 1)
+					? 'displayNone'
+					: self::$config['backPositionTop'];
 				self::$config['backPositionBottom'] = ($this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true
-											&& count($this->getData(['module', $this->getUrl(0), 'content'])) === 1)
-											? 'displayNone'
-											: self::$config['backPositionBottom'];				
+					&& count($this->getData(['module', $this->getUrl(0), 'content'])) === 1)
+					? 'displayNone'
+					: self::$config['backPositionBottom'];
 
 				if (is_dir($directory)) {
 					$iterator = new DirectoryIterator($directory);
@@ -838,7 +846,10 @@ class gallery extends common
 	public function theme()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Dossier de l'instance
 			if (!is_dir(self::DATADIRECTORY . $this->getUrl(0))) {
 				mkdir(self::DATADIRECTORY . $this->getUrl(0), 0755, true);
@@ -910,16 +921,11 @@ class gallery extends common
 		 * Options applicables à toutes les galeries du module
 		 */
 		if ($this->getUrl(2) === 'galleries') {
-			// Action interdite
-			if ($this->checkCSRF()) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-					'notification' => helper::translate('Action interdite')
-				]);
-			}
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 
 				// Sauver la configuration de la galerie
 				$this->setData([
@@ -960,7 +966,10 @@ class gallery extends common
 				]);
 			}
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 
 				// Le nom de la galerie est vide c'est le nom dans l'url qui est pris en compte
 				$galleryId = !empty($this->getInput('galleryEditName')) ? $this->getInput('galleryEditName', helper::FILTER_ID, true) : $this->getUrl(3);

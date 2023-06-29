@@ -75,7 +75,10 @@ class user extends common
 	public function add()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$check = true;
 			// L'identifiant d'utilisateur est indisponible
 			$userId = $this->getInput('userAddId', helper::FILTER_ID, true);
@@ -259,7 +262,10 @@ class user extends common
 			// Accès autorisé
 			else {
 				// Soumission du formulaire
-				if ($this->isPost()) {
+				if (
+					$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+					$this->isPost()
+				) {
 					// Double vérification pour le mot de passe
 					$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
 					if ($this->getInput('userEditNewPassword')) {
@@ -384,7 +390,10 @@ class user extends common
 	public function forgot()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$userId = $this->getInput('userForgotId', helper::FILTER_ID, true);
 			if ($this->getData(['user', $userId])) {
 				// Enregistre la date de la demande dans le compte utilisateur
@@ -529,18 +538,12 @@ class user extends common
 	 */
 	public function profilEdit()
 	{
-		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
-			$this->checkCSRF()
-		) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'access' => false
-			]);
-		}
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			$this->setData([
 				'profil',
 				$this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true),
@@ -667,7 +670,10 @@ class user extends common
 	public function profilAdd()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Nombre de profils de ce groupe
 			$group = $this->getInput('profilAddGroup');
 			$profil = (string) (count($this->getData(['profil', $group])) + 1);
@@ -827,7 +833,9 @@ class user extends common
 	{
 		// Soumission du formulaire
 		$logStatus = '';
-		if ($this->isPost()) {
+		if (
+			$this->isPost()
+		) {
 			// Lire Id du compte
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
 			// Check le captcha
@@ -1003,7 +1011,10 @@ class user extends common
 		// Accès autorisé
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->isPost()
+			) {
 				// Double vérification pour le mot de passe
 				if ($this->getInput('userResetNewPassword')) {
 					// La confirmation ne correspond pas au mot de passe
@@ -1046,7 +1057,10 @@ class user extends common
 		// Soumission du formulaire
 		$notification = '';
 		$success = true;
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->isPost()
+		) {
 			// Lecture du CSV et construction du tableau
 			$file = $this->getInput('userImportCSVFile', helper::FILTER_STRING_SHORT, true);
 			$filePath = self::FILE_DIR . 'source/' . $file;
@@ -1180,16 +1194,19 @@ class user extends common
 	 */
 	public function template()
 	{
-		$file = 'template.csv';
-		$path = 'core/module/user/ressource/';
-		// Téléchargement du CSV
-		header('Content-Description: File Transfer');
-		header('Content-Type: application/octet-stream');
-		header('Content-Transfer-Encoding: binary');
-		header('Content-Disposition: attachment; filename="' . $file . '"');
-		header('Content-Length: ' . filesize($path . $file));
-		readfile($path . $file);
-		exit();
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
+			$file = 'template.csv';
+			$path = 'core/module/user/ressource/';
+			// Téléchargement du CSV
+			header('Content-Description: File Transfer');
+			header('Content-Type: application/octet-stream');
+			header('Content-Transfer-Encoding: binary');
+			header('Content-Disposition: attachment; filename="' . $file . '"');
+			header('Content-Length: ' . filesize($path . $file));
+			readfile($path . $file);
+			exit();
+		}
+
 	}
 
 	/**
