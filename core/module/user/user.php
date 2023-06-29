@@ -184,6 +184,7 @@ class user extends common
 	{
 		// Accès refusé
 		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
@@ -230,7 +231,7 @@ class user extends common
 	public function edit()
 	{
 		if (
-			$this->checkCSRF()
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === false
 		) {
 
 			// Valeurs en sortie
@@ -531,6 +532,7 @@ class user extends common
 	public function profilEdit()
 	{
 		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
 			$this->checkCSRF()
 		) {
 
