@@ -49,7 +49,7 @@
         <div class="col12">
             <div class="block">
                 <h4>
-                    <?php echo helper::translate('Compte utilisateur'); ?>
+                    <?php echo helper::translate('Compte de l\'utilisateur'); ?>
                 </h4>
                 <div class="row">
                     <div class="col3">
