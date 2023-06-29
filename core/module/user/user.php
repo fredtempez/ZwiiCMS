@@ -184,7 +184,7 @@ class user extends common
 	{
 		// Accès refusé
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
@@ -231,152 +231,150 @@ class user extends common
 	public function edit()
 	{
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === false
-		) {
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Action interdite')
-			]);
-		}
-		// Accès refusé
-		if (
-			// L'utilisateur n'existe pas
-			$this->getData(['user', $this->getUrl(2)]) === null
-			// Droit d'édition
-			and (
-					// Impossible de s'auto-éditer
-				($this->getUser('id') === $this->getUrl(2)
-					and $this->getUrl('group') <= self::GROUP_VISITOR
-				)
-				// Impossible d'éditer un autre utilisateur
-				or ($this->getUrl('group') < self::GROUP_MODERATOR)
-			)
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
-		}
-		// Accès autorisé
-		else {
-			// Soumission du formulaire
-			if ($this->isPost()) {
-				// Double vérification pour le mot de passe
-				$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
-				if ($this->getInput('userEditNewPassword')) {
-					// L'ancien mot de passe est correct
-					if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
-						// La confirmation correspond au mot de passe
-						if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
-							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
-							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
-							if ($this->getUser('id') === $this->getUrl(2)) {
-								helper::deleteCookie('ZWII_USER_ID');
-								helper::deleteCookie('ZWII_USER_PASSWORD');
-							}
-						} else {
-							self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
-						}
-					} else {
-						self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
-					}
-				}
-				// Modification du groupe
-				if (
-					$this->getUser('group') === self::GROUP_ADMIN
-					and $this->getUrl(2) !== $this->getUser('id')
-				) {
-					$newGroup = $this->getInput('userEditGroup', helper::FILTER_INT, true);
-				} else {
-					$newGroup = $this->getData(['user', $this->getUrl(2), 'group']);
-				}
-				// Modification de nom Prénom
-				if ($this->getUser('group') === self::GROUP_ADMIN) {
-					$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
-					$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
-				} else {
-					$newfirstname = $this->getData(['user', $this->getUrl(2), 'firstname']);
-					$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
-				}
-				// Profil
-				$profil = null;
-				if ($newGroup > 1 || $newGroup < 2) {
-					$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
-				}
-				// Modifie l'utilisateur
-				$this->setData([
-					'user',
-					$this->getUrl(2),
-					[
-						'firstname' => $newfirstname,
-						'forgot' => 0,
-						'group' => $newGroup,
-						'profil' => $profil,
-						'lastname' => $newlastname,
-						'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
-						'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
-						'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
-						'password' => $newPassword,
-						'connectFail' => $this->getData(['user', $this->getUrl(2), 'connectFail']),
-						'connectTimeout' => $this->getData(['user', $this->getUrl(2), 'connectTimeout']),
-						'accessUrl' => $this->getData(['user', $this->getUrl(2), 'accessUrl']),
-						'accessTimer' => $this->getData(['user', $this->getUrl(2), 'accessTimer']),
-						'accessCsrf' => $this->getData(['user', $this->getUrl(2), 'accessCsrf']),
-						'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
-						'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
-					]
-				]);
-				// Redirection spécifique si l'utilisateur change son mot de passe
-				if ($this->getUser('id') === $this->getUrl(2) and $this->getInput('userEditNewPassword')) {
-					$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
-				}
-				// Redirection si retour en arrière possible
-				elseif ($this->getUser('group') === 3) {
-					$redirect = helper::baseUrl() . 'user';
-				}
-				// Redirection normale
-				else {
-					$redirect = helper::baseUrl();
-				}
+		} else {
+			if (
+				// L'utilisateur n'existe pas
+				$this->getData(['user', $this->getUrl(2)]) === null
+				// Droit d'édition
+				and (
+						// Impossible de s'auto-éditer
+					($this->getUser('id') === $this->getUrl(2)
+						and $this->getUrl('group') <= self::GROUP_VISITOR
+					)
+					// Impossible d'éditer un autre utilisateur
+					or ($this->getUrl('group') < self::GROUP_MODERATOR)
+				)
+			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => $redirect,
-					'notification' => helper::translate('Modifications enregistrées'),
-					'state' => true
+					'access' => false
 				]);
 			}
-
-			// Langues disponibles pour l'interface de l'utilisateur
-			self::$languagesInstalled = $this->getData(['language']);
-			if (self::$languagesInstalled) {
-				foreach (self::$languagesInstalled as $lang => $datas) {
-					self::$languagesInstalled[$lang] = self::$languages[$lang];
+			// Accès autorisé
+			else {
+				// Soumission du formulaire
+				if ($this->isPost()) {
+					// Double vérification pour le mot de passe
+					$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
+					if ($this->getInput('userEditNewPassword')) {
+						// L'ancien mot de passe est correct
+						if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
+							// La confirmation correspond au mot de passe
+							if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
+								$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
+								// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
+								if ($this->getUser('id') === $this->getUrl(2)) {
+									helper::deleteCookie('ZWII_USER_ID');
+									helper::deleteCookie('ZWII_USER_PASSWORD');
+								}
+							} else {
+								self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
+							}
+						} else {
+							self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
+						}
+					}
+					// Modification du groupe
+					if (
+						$this->getUser('group') === self::GROUP_ADMIN
+						and $this->getUrl(2) !== $this->getUser('id')
+					) {
+						$newGroup = $this->getInput('userEditGroup', helper::FILTER_INT, true);
+					} else {
+						$newGroup = $this->getData(['user', $this->getUrl(2), 'group']);
+					}
+					// Modification de nom Prénom
+					if ($this->getUser('group') === self::GROUP_ADMIN) {
+						$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
+						$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
+					} else {
+						$newfirstname = $this->getData(['user', $this->getUrl(2), 'firstname']);
+						$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
+					}
+					// Profil
+					$profil = null;
+					if ($newGroup > 1 || $newGroup < 2) {
+						$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
+					}
+					// Modifie l'utilisateur
+					$this->setData([
+						'user',
+						$this->getUrl(2),
+						[
+							'firstname' => $newfirstname,
+							'forgot' => 0,
+							'group' => $newGroup,
+							'profil' => $profil,
+							'lastname' => $newlastname,
+							'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
+							'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
+							'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
+							'password' => $newPassword,
+							'connectFail' => $this->getData(['user', $this->getUrl(2), 'connectFail']),
+							'connectTimeout' => $this->getData(['user', $this->getUrl(2), 'connectTimeout']),
+							'accessUrl' => $this->getData(['user', $this->getUrl(2), 'accessUrl']),
+							'accessTimer' => $this->getData(['user', $this->getUrl(2), 'accessTimer']),
+							'accessCsrf' => $this->getData(['user', $this->getUrl(2), 'accessCsrf']),
+							'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
+							'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
+						]
+					]);
+					// Redirection spécifique si l'utilisateur change son mot de passe
+					if ($this->getUser('id') === $this->getUrl(2) and $this->getInput('userEditNewPassword')) {
+						$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
+					}
+					// Redirection si retour en arrière possible
+					elseif ($this->getUser('group') === 3) {
+						$redirect = helper::baseUrl() . 'user';
+					}
+					// Redirection normale
+					else {
+						$redirect = helper::baseUrl();
+					}
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => $redirect,
+						'notification' => helper::translate('Modifications enregistrées'),
+						'state' => true
+					]);
 				}
+
+				// Langues disponibles pour l'interface de l'utilisateur
+				self::$languagesInstalled = $this->getData(['language']);
+				if (self::$languagesInstalled) {
+					foreach (self::$languagesInstalled as $lang => $datas) {
+						self::$languagesInstalled[$lang] = self::$languages[$lang];
+					}
+				}
+
+				// Profils disponibles
+				foreach ($this->getData(['profil']) as $profilId => $profilData) {
+					if ($profilId < self::GROUP_MEMBER) {
+						continue;
+					}
+					if ($profilId === self::GROUP_ADMIN) {
+						self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
+						self::$userProfilsComments[$profilId][self::GROUP_ADMIN] = $profilData['comment'];
+						continue;
+					}
+					foreach ($profilData as $key => $value) {
+						self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
+						self::$userProfilsComments[$profilId][$key] = $profilData[$key]['name'] . ' : ' . $profilData[$key]['comment'];
+					}
+				}
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
+					'view' => 'edit'
+				]);
 			}
-
-			// Profils disponibles
-			foreach ($this->getData(['profil']) as $profilId => $profilData) {
-				if ($profilId < self::GROUP_MEMBER) {
-					continue;
-				}
-				if ($profilId === self::GROUP_ADMIN) {
-					self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
-					self::$userProfilsComments[$profilId][self::GROUP_ADMIN] = $profilData['comment'];
-					continue;
-				}
-				foreach ($profilData as $key => $value) {
-					self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
-					self::$userProfilsComments[$profilId][$key] = $profilData[$key]['name'] . ' : ' . $profilData[$key]['comment'];
-				}
-			}
-
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => $this->getData(['user', $this->getUrl(2), 'firstname']) . ' ' . $this->getData(['user', $this->getUrl(2), 'lastname']),
-				'view' => 'edit'
-			]);
 		}
 	}
 
@@ -532,14 +530,12 @@ class user extends common
 	public function profilEdit()
 	{
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			$this->checkCSRF()
 		) {
-
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		}
 
@@ -547,8 +543,8 @@ class user extends common
 		if ($this->isPost()) {
 			$this->setData([
 				'profil',
-				$this->getInput('profilEditGroup',helper::FILTER_STRING_LONG, true),
-				$this->getInput('profilEditProfil',helper::FILTER_STRING_LONG, true),
+				$this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true),
+				$this->getInput('profilEditProfil', helper::FILTER_STRING_LONG, true),
 				[
 					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 					'readonly' => false,
@@ -639,7 +635,7 @@ class user extends common
 						'config' => $this->getInput('profilEditRedirectionConfig', helper::FILTER_BOOLEAN),
 					],
 					'user' => [
-						'edit' =>  $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
 					]
 				]
 			]);
@@ -774,7 +770,7 @@ class user extends common
 						'config' => $this->getInput('profilAddRedirectionConfig', helper::FILTER_BOOLEAN),
 					],
 					'user' => [
-						'edit' =>  $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
 					]
 				]
 			]);
@@ -805,7 +801,7 @@ class user extends common
 	public function profilDelete()
 	{
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === false ||
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			$this->getData(['profil', $this->getUrl(2), $this->getUrl(3)]) === null
 		) {
 			// Valeurs en sortie
@@ -814,7 +810,7 @@ class user extends common
 			]);
 			// Suppression
 		} else {
-			$this->deleteData([ 'profil', $this->getUrl(2), $this->getUrl(3)]);
+			$this->deleteData(['profil', $this->getUrl(2), $this->getUrl(3)]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/profil',

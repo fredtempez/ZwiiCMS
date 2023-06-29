@@ -499,7 +499,7 @@ class gallery extends common
 	public function delete()
 	{
 		// La galerie n'existe pas
-		if ($this->getUser('permission',  __CLASS__, __FUNCTION__) === false ||
+		if ($this->getUser('permission',  __CLASS__, __FUNCTION__) !== true ||
 			$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2)]) === null) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -535,14 +535,6 @@ class gallery extends common
 	 */
 	public function edit()
 	{
-		// Action interdite
-		if ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => helper::translate('Action interdite')
-			]);
-		}
 		// Soumission du formulaire
 		if ($this->isPost()) {
 
@@ -845,14 +837,6 @@ class gallery extends common
 	 */
 	public function theme()
 	{
-		// Action interdite
-		if ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => helper::translate('Action interdite')
-			]);
-		}
 		// Soumission du formulaire
 		if ($this->isPost()) {
 			// Dossier de l'instance

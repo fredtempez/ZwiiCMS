@@ -182,17 +182,13 @@ class page extends common
 		// $url prend l'adresse sans le token
 		$page = $this->getUrl(2);
 		// La page n'existe pas
-		if ($this->getData(['page', $page]) === null) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
+			$this->getData(['page', $page]) === null
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
-			]);
-		} // Action interdite
-		elseif ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $page,
-				'notification' => helper::translate('Jeton invalide')
 			]);
 		}
 		// Impossible de supprimer la page d'accueil
@@ -288,7 +284,10 @@ class page extends common
 	public function edit()
 	{
 		// La page n'existe pas
-		if ($this->getData(['page', $this->getUrl(2)]) === null) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
+			$this->getData(['page', $this->getUrl(2)]) === null
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
@@ -602,13 +601,14 @@ class page extends common
 	 * Retourne les informations sur les pages en omettant les clés CSS et JS qui occasionnent des bugs d'affichage dans l'éditeur de page
 	 * @return array tableau associatif des pages dans le menu 
 	 */
-	public function getPageInfo() {
+	public function getPageInfo()
+	{
 		$p = $this->getData(['page']);
-		$d = array_map(function($d) {
+		$d = array_map(function ($d) {
 			unset($d["css"], $d["js"]);
 			return $d;
 		}, $p);
-		return  json_encode($d);
+		return json_encode($d);
 
 	}
 }

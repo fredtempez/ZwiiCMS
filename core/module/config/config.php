@@ -34,119 +34,119 @@ class config extends common
 	];
 
 	public static $timezones = [
-		'Pacific/Midway'		=> '(GMT-11:00) Midway Island',
-		'US/Samoa'				=> '(GMT-11:00) Samoa',
-		'US/Hawaii'				=> '(GMT-10:00) Hawaii',
-		'US/Alaska'				=> '(GMT-09:00) Alaska',
-		'US/Pacific'			=> '(GMT-08:00) Pacific Time (US &amp; Canada)',
-		'America/Tijuana'		=> '(GMT-08:00) Tijuana',
-		'US/Arizona'			=> '(GMT-07:00) Arizona',
-		'US/Mountain'			=> '(GMT-07:00) Mountain Time (US &amp; Canada)',
-		'America/Chihuahua'		=> '(GMT-07:00) Chihuahua',
-		'America/Mazatlan'		=> '(GMT-07:00) Mazatlan',
-		'America/Mexico_City'	=> '(GMT-06:00) Mexico City',
-		'America/Monterrey'		=> '(GMT-06:00) Monterrey',
-		'Canada/Saskatchewan'	=> '(GMT-06:00) Saskatchewan',
-		'US/Central'			=> '(GMT-06:00) Central Time (US &amp; Canada)',
-		'US/Eastern'			=> '(GMT-05:00) Eastern Time (US &amp; Canada)',
-		'US/East-Indiana'		=> '(GMT-05:00) Indiana (East)',
-		'America/Bogota'		=> '(GMT-05:00) Bogota',
-		'America/Lima'			=> '(GMT-05:00) Lima',
-		'America/Caracas'		=> '(GMT-04:30) Caracas',
-		'Canada/Atlantic'		=> '(GMT-04:00) Atlantic Time (Canada)',
-		'America/La_Paz'		=> '(GMT-04:00) La Paz',
-		'America/Santiago'		=> '(GMT-04:00) Santiago',
-		'Canada/Newfoundland'	=> '(GMT-03:30) Newfoundland',
-		'America/Buenos_Aires'	=> '(GMT-03:00) Buenos Aires',
-		'Greenland'				=> '(GMT-03:00) Greenland',
-		'Atlantic/Stanley'		=> '(GMT-02:00) Stanley',
-		'Atlantic/Azores'		=> '(GMT-01:00) Azores',
-		'Atlantic/Cape_Verde'	=> '(GMT-01:00) Cape Verde Is.',
-		'Africa/Casablanca'		=> '(GMT) Casablanca',
-		'Europe/Dublin'			=> '(GMT) Dublin',
-		'Europe/Lisbon'			=> '(GMT) Lisbon',
-		'Europe/London'			=> '(GMT) London',
-		'Africa/Monrovia'		=> '(GMT) Monrovia',
-		'Europe/Amsterdam'		=> '(GMT+01:00) Amsterdam',
-		'Europe/Belgrade'		=> '(GMT+01:00) Belgrade',
-		'Europe/Berlin'			=> '(GMT+01:00) Berlin',
-		'Europe/Bratislava'		=> '(GMT+01:00) Bratislava',
-		'Europe/Brussels'		=> '(GMT+01:00) Brussels',
-		'Europe/Budapest'		=> '(GMT+01:00) Budapest',
-		'Europe/Copenhagen'		=> '(GMT+01:00) Copenhagen',
-		'Europe/Ljubljana'		=> '(GMT+01:00) Ljubljana',
-		'Europe/Madrid'			=> '(GMT+01:00) Madrid',
-		'Europe/Paris'			=> '(GMT+01:00) Paris',
-		'Europe/Prague'			=> '(GMT+01:00) Prague',
-		'Europe/Rome'			=> '(GMT+01:00) Rome',
-		'Europe/Sarajevo'		=> '(GMT+01:00) Sarajevo',
-		'Europe/Skopje'			=> '(GMT+01:00) Skopje',
-		'Europe/Stockholm'		=> '(GMT+01:00) Stockholm',
-		'Europe/Vienna'			=> '(GMT+01:00) Vienna',
-		'Europe/Warsaw'			=> '(GMT+01:00) Warsaw',
-		'Europe/Zagreb'			=> '(GMT+01:00) Zagreb',
-		'Europe/Athens'			=> '(GMT+02:00) Athens',
-		'Europe/Bucharest'		=> '(GMT+02:00) Bucharest',
-		'Africa/Cairo'			=> '(GMT+02:00) Cairo',
-		'Africa/Harare'			=> '(GMT+02:00) Harare',
-		'Europe/Helsinki'		=> '(GMT+02:00) Helsinki',
-		'Europe/Istanbul'		=> '(GMT+02:00) Istanbul',
-		'Asia/Jerusalem'		=> '(GMT+02:00) Jerusalem',
-		'Europe/Kiev'			=> '(GMT+02:00) Kyiv',
-		'Europe/Minsk'			=> '(GMT+02:00) Minsk',
-		'Europe/Riga'			=> '(GMT+02:00) Riga',
-		'Europe/Sofia'			=> '(GMT+02:00) Sofia',
-		'Europe/Tallinn'		=> '(GMT+02:00) Tallinn',
-		'Europe/Vilnius'		=> '(GMT+02:00) Vilnius',
-		'Asia/Baghdad'			=> '(GMT+03:00) Baghdad',
-		'Asia/Kuwait'			=> '(GMT+03:00) Kuwait',
-		'Europe/Moscow'			=> '(GMT+03:00) Moscow',
-		'Africa/Nairobi'		=> '(GMT+03:00) Nairobi',
-		'Asia/Riyadh'			=> '(GMT+03:00) Riyadh',
-		'Europe/Volgograd'		=> '(GMT+03:00) Volgograd',
-		'Asia/Tehran'			=> '(GMT+03:30) Tehran',
-		'Asia/Baku'				=> '(GMT+04:00) Baku',
-		'Asia/Muscat'			=> '(GMT+04:00) Muscat',
-		'Asia/Tbilisi'			=> '(GMT+04:00) Tbilisi',
-		'Asia/Yerevan'			=> '(GMT+04:00) Yerevan',
-		'Asia/Kabul'			=> '(GMT+04:30) Kabul',
-		'Asia/Yekaterinburg'	=> '(GMT+05:00) Ekaterinburg',
-		'Asia/Karachi'			=> '(GMT+05:00) Karachi',
-		'Asia/Tashkent'			=> '(GMT+05:00) Tashkent',
-		'Asia/Kolkata'			=> '(GMT+05:30) Kolkata',
-		'Asia/Kathmandu'		=> '(GMT+05:45) Kathmandu',
-		'Asia/Almaty'			=> '(GMT+06:00) Almaty',
-		'Asia/Dhaka'			=> '(GMT+06:00) Dhaka',
-		'Asia/Novosibirsk'		=> '(GMT+06:00) Novosibirsk',
-		'Asia/Bangkok'			=> '(GMT+07:00) Bangkok',
-		'Asia/Jakarta'			=> '(GMT+07:00) Jakarta',
-		'Asia/Krasnoyarsk'		=> '(GMT+07:00) Krasnoyarsk',
-		'Asia/Chongqing'		=> '(GMT+08:00) Chongqing',
-		'Asia/Hong_Kong'		=> '(GMT+08:00) Hong Kong',
-		'Asia/Irkutsk'			=> '(GMT+08:00) Irkutsk',
-		'Asia/Kuala_Lumpur'		=> '(GMT+08:00) Kuala Lumpur',
-		'Australia/Perth'		=> '(GMT+08:00) Perth',
-		'Asia/Singapore'		=> '(GMT+08:00) Singapore',
-		'Asia/Taipei'			=> '(GMT+08:00) Taipei',
-		'Asia/Ulaanbaatar'		=> '(GMT+08:00) Ulaan Bataar',
-		'Asia/Urumqi'			=> '(GMT+08:00) Urumqi',
-		'Asia/Seoul'			=> '(GMT+09:00) Seoul',
-		'Asia/Tokyo'			=> '(GMT+09:00) Tokyo',
-		'Asia/Yakutsk'			=> '(GMT+09:00) Yakutsk',
-		'Australia/Adelaide'	=> '(GMT+09:30) Adelaide',
-		'Australia/Darwin'		=> '(GMT+09:30) Darwin',
-		'Australia/Brisbane'	=> '(GMT+10:00) Brisbane',
-		'Australia/Canberra'	=> '(GMT+10:00) Canberra',
-		'Pacific/Guam'			=> '(GMT+10:00) Guam',
-		'Australia/Hobart'		=> '(GMT+10:00) Hobart',
-		'Australia/Melbourne'	=> '(GMT+10:00) Melbourne',
-		'Pacific/Port_Moresby'	=> '(GMT+10:00) Port Moresby',
-		'Australia/Sydney'		=> '(GMT+10:00) Sydney',
-		'Asia/Vladivostok'		=> '(GMT+10:00) Vladivostok',
-		'Asia/Magadan'			=> '(GMT+11:00) Magadan',
-		'Pacific/Auckland'		=> '(GMT+12:00) Auckland',
-		'Pacific/Fiji'			=> '(GMT+12:00) Fiji',
-		'Asia/Kamchatka'		=> '(GMT+12:00) Kamchatka'
+		'Pacific/Midway' => '(GMT-11:00) Midway Island',
+		'US/Samoa' => '(GMT-11:00) Samoa',
+		'US/Hawaii' => '(GMT-10:00) Hawaii',
+		'US/Alaska' => '(GMT-09:00) Alaska',
+		'US/Pacific' => '(GMT-08:00) Pacific Time (US &amp; Canada)',
+		'America/Tijuana' => '(GMT-08:00) Tijuana',
+		'US/Arizona' => '(GMT-07:00) Arizona',
+		'US/Mountain' => '(GMT-07:00) Mountain Time (US &amp; Canada)',
+		'America/Chihuahua' => '(GMT-07:00) Chihuahua',
+		'America/Mazatlan' => '(GMT-07:00) Mazatlan',
+		'America/Mexico_City' => '(GMT-06:00) Mexico City',
+		'America/Monterrey' => '(GMT-06:00) Monterrey',
+		'Canada/Saskatchewan' => '(GMT-06:00) Saskatchewan',
+		'US/Central' => '(GMT-06:00) Central Time (US &amp; Canada)',
+		'US/Eastern' => '(GMT-05:00) Eastern Time (US &amp; Canada)',
+		'US/East-Indiana' => '(GMT-05:00) Indiana (East)',
+		'America/Bogota' => '(GMT-05:00) Bogota',
+		'America/Lima' => '(GMT-05:00) Lima',
+		'America/Caracas' => '(GMT-04:30) Caracas',
+		'Canada/Atlantic' => '(GMT-04:00) Atlantic Time (Canada)',
+		'America/La_Paz' => '(GMT-04:00) La Paz',
+		'America/Santiago' => '(GMT-04:00) Santiago',
+		'Canada/Newfoundland' => '(GMT-03:30) Newfoundland',
+		'America/Buenos_Aires' => '(GMT-03:00) Buenos Aires',
+		'Greenland' => '(GMT-03:00) Greenland',
+		'Atlantic/Stanley' => '(GMT-02:00) Stanley',
+		'Atlantic/Azores' => '(GMT-01:00) Azores',
+		'Atlantic/Cape_Verde' => '(GMT-01:00) Cape Verde Is.',
+		'Africa/Casablanca' => '(GMT) Casablanca',
+		'Europe/Dublin' => '(GMT) Dublin',
+		'Europe/Lisbon' => '(GMT) Lisbon',
+		'Europe/London' => '(GMT) London',
+		'Africa/Monrovia' => '(GMT) Monrovia',
+		'Europe/Amsterdam' => '(GMT+01:00) Amsterdam',
+		'Europe/Belgrade' => '(GMT+01:00) Belgrade',
+		'Europe/Berlin' => '(GMT+01:00) Berlin',
+		'Europe/Bratislava' => '(GMT+01:00) Bratislava',
+		'Europe/Brussels' => '(GMT+01:00) Brussels',
+		'Europe/Budapest' => '(GMT+01:00) Budapest',
+		'Europe/Copenhagen' => '(GMT+01:00) Copenhagen',
+		'Europe/Ljubljana' => '(GMT+01:00) Ljubljana',
+		'Europe/Madrid' => '(GMT+01:00) Madrid',
+		'Europe/Paris' => '(GMT+01:00) Paris',
+		'Europe/Prague' => '(GMT+01:00) Prague',
+		'Europe/Rome' => '(GMT+01:00) Rome',
+		'Europe/Sarajevo' => '(GMT+01:00) Sarajevo',
+		'Europe/Skopje' => '(GMT+01:00) Skopje',
+		'Europe/Stockholm' => '(GMT+01:00) Stockholm',
+		'Europe/Vienna' => '(GMT+01:00) Vienna',
+		'Europe/Warsaw' => '(GMT+01:00) Warsaw',
+		'Europe/Zagreb' => '(GMT+01:00) Zagreb',
+		'Europe/Athens' => '(GMT+02:00) Athens',
+		'Europe/Bucharest' => '(GMT+02:00) Bucharest',
+		'Africa/Cairo' => '(GMT+02:00) Cairo',
+		'Africa/Harare' => '(GMT+02:00) Harare',
+		'Europe/Helsinki' => '(GMT+02:00) Helsinki',
+		'Europe/Istanbul' => '(GMT+02:00) Istanbul',
+		'Asia/Jerusalem' => '(GMT+02:00) Jerusalem',
+		'Europe/Kiev' => '(GMT+02:00) Kyiv',
+		'Europe/Minsk' => '(GMT+02:00) Minsk',
+		'Europe/Riga' => '(GMT+02:00) Riga',
+		'Europe/Sofia' => '(GMT+02:00) Sofia',
+		'Europe/Tallinn' => '(GMT+02:00) Tallinn',
+		'Europe/Vilnius' => '(GMT+02:00) Vilnius',
+		'Asia/Baghdad' => '(GMT+03:00) Baghdad',
+		'Asia/Kuwait' => '(GMT+03:00) Kuwait',
+		'Europe/Moscow' => '(GMT+03:00) Moscow',
+		'Africa/Nairobi' => '(GMT+03:00) Nairobi',
+		'Asia/Riyadh' => '(GMT+03:00) Riyadh',
+		'Europe/Volgograd' => '(GMT+03:00) Volgograd',
+		'Asia/Tehran' => '(GMT+03:30) Tehran',
+		'Asia/Baku' => '(GMT+04:00) Baku',
+		'Asia/Muscat' => '(GMT+04:00) Muscat',
+		'Asia/Tbilisi' => '(GMT+04:00) Tbilisi',
+		'Asia/Yerevan' => '(GMT+04:00) Yerevan',
+		'Asia/Kabul' => '(GMT+04:30) Kabul',
+		'Asia/Yekaterinburg' => '(GMT+05:00) Ekaterinburg',
+		'Asia/Karachi' => '(GMT+05:00) Karachi',
+		'Asia/Tashkent' => '(GMT+05:00) Tashkent',
+		'Asia/Kolkata' => '(GMT+05:30) Kolkata',
+		'Asia/Kathmandu' => '(GMT+05:45) Kathmandu',
+		'Asia/Almaty' => '(GMT+06:00) Almaty',
+		'Asia/Dhaka' => '(GMT+06:00) Dhaka',
+		'Asia/Novosibirsk' => '(GMT+06:00) Novosibirsk',
+		'Asia/Bangkok' => '(GMT+07:00) Bangkok',
+		'Asia/Jakarta' => '(GMT+07:00) Jakarta',
+		'Asia/Krasnoyarsk' => '(GMT+07:00) Krasnoyarsk',
+		'Asia/Chongqing' => '(GMT+08:00) Chongqing',
+		'Asia/Hong_Kong' => '(GMT+08:00) Hong Kong',
+		'Asia/Irkutsk' => '(GMT+08:00) Irkutsk',
+		'Asia/Kuala_Lumpur' => '(GMT+08:00) Kuala Lumpur',
+		'Australia/Perth' => '(GMT+08:00) Perth',
+		'Asia/Singapore' => '(GMT+08:00) Singapore',
+		'Asia/Taipei' => '(GMT+08:00) Taipei',
+		'Asia/Ulaanbaatar' => '(GMT+08:00) Ulaan Bataar',
+		'Asia/Urumqi' => '(GMT+08:00) Urumqi',
+		'Asia/Seoul' => '(GMT+09:00) Seoul',
+		'Asia/Tokyo' => '(GMT+09:00) Tokyo',
+		'Asia/Yakutsk' => '(GMT+09:00) Yakutsk',
+		'Australia/Adelaide' => '(GMT+09:30) Adelaide',
+		'Australia/Darwin' => '(GMT+09:30) Darwin',
+		'Australia/Brisbane' => '(GMT+10:00) Brisbane',
+		'Australia/Canberra' => '(GMT+10:00) Canberra',
+		'Pacific/Guam' => '(GMT+10:00) Guam',
+		'Australia/Hobart' => '(GMT+10:00) Hobart',
+		'Australia/Melbourne' => '(GMT+10:00) Melbourne',
+		'Pacific/Port_Moresby' => '(GMT+10:00) Port Moresby',
+		'Australia/Sydney' => '(GMT+10:00) Sydney',
+		'Asia/Vladivostok' => '(GMT+10:00) Vladivostok',
+		'Asia/Magadan' => '(GMT+11:00) Magadan',
+		'Pacific/Auckland' => '(GMT+12:00) Auckland',
+		'Pacific/Fiji' => '(GMT+12:00) Fiji',
+		'Asia/Kamchatka' => '(GMT+12:00) Kamchatka'
 	];
 	// Type de proxy
 	public static $proxyType = [
@@ -187,7 +187,7 @@ class config extends common
 	];
 	public static $captchaTypes = [
 		'num' => 'Chiffres',
-		'alpha'	  => 'Lettres'
+		'alpha' => 'Lettres'
 	];
 	public static $updateDelay = [
 		86400 => '1',
@@ -211,16 +211,26 @@ class config extends common
 	 */
 	public function siteMap()
 	{
+		// La page n'existe pas
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			// Mettre à jour le site map
+			$successSitemap = $this->updateSitemap();
 
-		// Mettre à jour le site map
-		$successSitemap = $this->updateSitemap();
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'config',
+				'notification' => $successSitemap ? helper::translate('La carte du site a été mise à jour') : helper::translate('Echec de l\'écriture, vérifiez les permissions'),
+				'state' => $successSitemap
+			]);
+		}
 
-		// Valeurs en sortie
-		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'config',
-			'notification' => $successSitemap ? helper::translate('La carte du site a été mise à jour') : helper::translate('Echec de l\'écriture, vérifiez les permissions'),
-			'state' => $successSitemap
-		]);
 	}
 
 
@@ -289,7 +299,7 @@ class config extends common
 
 
 		// Traitement des données reçues valides.
-		if (!empty($token) && $data  !== false) {
+		if (!empty($token) && $data !== false) {
 			$data = json_decode($data, true);
 			$img = $data['screenshot'];
 			// Effacer l'image et la miniature png
@@ -302,9 +312,9 @@ class config extends common
 			$success = copy($img, self::FILE_DIR . 'source/screenshot.jpg');
 		}
 
-		$notification =  empty($token)
+		$notification = empty($token)
 			? 'La clé de l\'API ne peut pas être vide'
-			: ($success === false  ? 'Service en ligne inaccessible' : 'Capture d\'écran générée avec succès');
+			: ($success === false ? 'Service en ligne inaccessible' : 'Capture d\'écran générée avec succès');
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -351,10 +361,10 @@ class config extends common
 				}
 				// Lire le contenu de l'archive dans le tableau files
 				/*
-				for ($i = 0; $i < $zip->numFiles; $i++) {
-					$stat = $zip->statIndex($i);
-					$files[] = (basename($stat['name']));
-				}*/
+							for ($i = 0; $i < $zip->numFiles; $i++) {
+								$stat = $zip->statIndex($i);
+								$files[] = (basename($stat['name']));
+							}*/
 				// Extraction de l'archive dans un dossier temporaire
 				$tmpDir = uniqid(8);
 				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
@@ -362,7 +372,7 @@ class config extends common
 				$data = json_decode(file_get_contents(self::TEMP_DIR . $tmpDir . '/data/core.json'), true);
 				$dataVersion = $data['core']['dataVersion'];
 				// Version non prises en charge <9 ou erreur d'extraction
-				if (intval(substr($dataVersion, 0, 1)) <=  9 or !$success) {
+				if (intval(substr($dataVersion, 0, 1)) <= 9 or !$success) {
 					// Valeurs en sortie erreur
 					$this->addOutput([
 						'title' => helper::translate('Restaurer'),
@@ -393,8 +403,8 @@ class config extends common
 			}
 
 			// Message de notification
-			$notification  = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
-			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ?  helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
+			$notification = $success === true ? 'Restauration effectuée avec succès' : 'Erreur inconnue';
+			$redirect = $this->getInput('configRestoreImportUser', helper::FILTER_BOOLEAN) === true ? helper::baseUrl() . 'config/restore' : helper::baseUrl() . 'user/login/';
 			// Valeurs en sortie erreur
 			$this->addOutput([
 				'redirect' => $redirect,
@@ -455,7 +465,7 @@ class config extends common
 						'redditId' => $this->getInput('socialRedditId'),
 						'twitchId' => $this->getInput('socialTwitchId'),
 						'vimeoId' => $this->getInput('socialVimeoId'),
-						'steamId' =>$this->getInput('socialSteamId'),
+						'steamId' => $this->getInput('socialSteamId'),
 					],
 					'smtp' => [
 						'enable' => $this->getInput('smtpEnable', helper::FILTER_BOOLEAN),
@@ -464,7 +474,7 @@ class config extends common
 						'auth' => $this->getInput('smtpAuth', helper::FILTER_BOOLEAN),
 						'secure' => $this->getInput('smtpSecure', helper::FILTER_STRING_SHORT),
 						'username' => $this->getInput('smtpUsername', helper::FILTER_STRING_SHORT),
-						'password' => helper::encrypt($this->getInput('smtpPassword', helper::FILTER_STRING_SHORT),$this->getInput('smtpHost', helper::FILTER_STRING_SHORT)),
+						'password' => helper::encrypt($this->getInput('smtpPassword', helper::FILTER_STRING_SHORT), $this->getInput('smtpHost', helper::FILTER_STRING_SHORT)),
 						'from' => $this->getInput('smtpFrom', helper::FILTER_MAIL, true),
 					],
 					'seo' => [
@@ -494,7 +504,8 @@ class config extends common
 						unlink($filename);
 					}
 				}
-				if (file_exists('site/data/.backup')) unlink('site/data/.backup');
+				if (file_exists('site/data/.backup'))
+					unlink('site/data/.backup');
 			} else {
 				touch('site/data/.backup');
 			}
@@ -508,8 +519,8 @@ class config extends common
 				) {
 					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
-					$rewriteData = 	PHP_EOL .
-						'# URL rewriting' .  PHP_EOL .
+					$rewriteData = PHP_EOL .
+						'# URL rewriting' . PHP_EOL .
 						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
 						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
@@ -574,7 +585,7 @@ class config extends common
 		}
 
 		// Sélecteur de délais, compléter avec la traduction en jours
-		foreach(self::$updateDelay as $key => $value) {			
+		foreach (self::$updateDelay as $key => $value) {
 			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
 		}
 
@@ -690,7 +701,7 @@ class config extends common
 			$data = '';
 			foreach ($d as $key => $item) {
 				$data .= helper::dateUTF8('%Y %m %d', $item['lastFail']) . ' - ' . helper::dateUTF8('%H:%M', time());
-				$data .= $key  . ';' . $item['ip'] . ';' .  $item['connectFail']  . PHP_EOL;
+				$data .= $key . ';' . $item['ip'] . ';' . $item['connectFail'] . PHP_EOL;
 			}
 			file_put_contents($fileName, $data, FILE_APPEND);
 			header('Content-Description: File Transfer');

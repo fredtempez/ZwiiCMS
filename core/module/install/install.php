@@ -416,14 +416,24 @@ class install extends common
 	 */
 	public function update()
 	{
-		// Nouvelle version
-		self::$newVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
-		// Valeurs en sortie
-		$this->addOutput([
-			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => helper::translate('Mise à jour'),
-			'view' => 'update'
-		]);
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			// Nouvelle version
+			self::$newVersion = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/version');
+			// Valeurs en sortie
+			$this->addOutput([
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
+				'title' => helper::translate('Mise à jour'),
+				'view' => 'update'
+			]);
+		}
 	}
 
 }

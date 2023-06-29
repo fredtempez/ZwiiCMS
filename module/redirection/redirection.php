@@ -51,10 +51,10 @@ class redirection extends common {
 	 */
 	public function index() {
 		// Message si l'utilisateur peut éditer la page
-		if(
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			AND $this->getUser('group') >= self::GROUP_MODERATOR
-			AND $this->getUrl(1) !== 'force'
+		if( $this->getUser('permission',  __CLASS__, __FUNCTION__) !== true
+			&& $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			&& $this->getUser('group') >= self::GROUP_MODERATOR
+			&& $this->getUrl(1) !== 'force'
 		) {
 			// Valeurs en sortie
 			$this->addOutput([

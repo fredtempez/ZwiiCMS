@@ -63,12 +63,10 @@ class plugin extends common
 	{
 
 		// Action interdite
-		if ($this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		} else {
 			// Suppression des dossiers
@@ -243,13 +241,14 @@ class plugin extends common
 					: helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
 			} else {
+				// Supprimer le dossier temporaire
+				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$zip->close();
 				return ([
 					'success' => false,
 					'notification' => helper::translate('Erreur inconnue, le module n\'est pas installé')
 				]);
-				// Supprimer le dossier temporaire
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
-				$zip->close();
+
 			}
 		} else {
 			// Message de retour
@@ -266,6 +265,7 @@ class plugin extends common
 	public function upload()
 	{
 		// Soumission du formulaire
+		
 		if ($this->isPost()) {
 			// Installation d'un module
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
@@ -292,12 +292,10 @@ class plugin extends common
 	public function uploadItem()
 	{
 		// Action interdite
-		if ($this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'store',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		} else {
 			// Récupérer le module en ligne
@@ -572,15 +570,12 @@ class plugin extends common
 	public function save()
 	{
 		// Action interdite
-		if ($this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		} else {
-
 			// Créer un dossier temporaire
 			$tmpFolder = self::TEMP_DIR . uniqid();
 			if (!is_dir($tmpFolder)) {
@@ -646,12 +641,10 @@ class plugin extends common
 	public function dataDelete()
 	{
 		// Action interdite
-		if ($this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		} else {
 			$this->setData(['page', $this->getUrl(4), 'moduleId', '']);
@@ -672,20 +665,16 @@ class plugin extends common
 	 * 2 : i18n id
 	 * 3 : moduleId
 	 * 4 : pageId
-	 * 5 : CSRF
 	 */
 	public function dataExport()
 	{
 		// Action interdite
-		if ($this->checkCSRF()) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'plugin',
-				'state' => false,
-				'notification' => helper::translate('Action interdite')
+				'access' => false
 			]);
 		} else {
-
 			// Créer un dossier temporaire
 			$tmpFolder = self::TEMP_DIR . uniqid();
 			if (!is_dir($tmpFolder)) {
@@ -769,7 +758,6 @@ class plugin extends common
 	 */
 	public function dataImport()
 	{
-
 		// Soumission du formulaire d'importation du module dans une page libre
 		if ($this->isPost()) {
 			// Récupérer le fichier et le décompacter
