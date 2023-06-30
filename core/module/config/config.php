@@ -241,7 +241,7 @@ class config extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Creation du ZIP
@@ -334,7 +334,7 @@ class config extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 
@@ -434,7 +434,7 @@ class config extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 
@@ -610,7 +610,7 @@ class config extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Ecrire les fichiers de script

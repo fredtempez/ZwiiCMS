@@ -250,7 +250,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$this->setData([
@@ -299,7 +299,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Enregistre le CSS
@@ -328,7 +328,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$this->setData([
@@ -369,7 +369,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			if (
@@ -462,7 +462,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Modification des URL des images dans la bannière perso
@@ -566,7 +566,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$this->setData([
@@ -694,7 +694,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Type d'import en ligne ou local
@@ -764,7 +764,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Type d'import en ligne ou local
@@ -905,7 +905,7 @@ class theme extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$this->setData([
@@ -982,7 +982,7 @@ class theme extends common
 	public function manage()
 	{
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 

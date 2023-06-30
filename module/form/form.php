@@ -118,7 +118,7 @@ class form extends common
 		}
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Génération des données vides
@@ -167,7 +167,7 @@ class form extends common
 		}
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Débordement
@@ -393,7 +393,7 @@ class form extends common
 
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Check la captcha

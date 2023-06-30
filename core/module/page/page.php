@@ -545,7 +545,7 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$css = $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG);
@@ -579,7 +579,7 @@ class page extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$js = $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG);

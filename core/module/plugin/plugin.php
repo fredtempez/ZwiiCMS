@@ -267,7 +267,7 @@ class plugin extends common
 		// Soumission du formulaire
 
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Installation d'un module
@@ -763,7 +763,7 @@ class plugin extends common
 	{
 		// Soumission du formulaire d'importation du module dans une page libre
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Récupérer le fichier et le décompacter

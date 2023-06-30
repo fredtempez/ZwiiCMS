@@ -418,7 +418,7 @@ class gallery extends common
 	{
 		// Soumission du formulaire d'ajout d'une galerie
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			$galleryId = $this->getInput('galleryAddName', null, true);
@@ -542,7 +542,7 @@ class gallery extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 
@@ -847,7 +847,7 @@ class gallery extends common
 	{
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Dossier de l'instance
