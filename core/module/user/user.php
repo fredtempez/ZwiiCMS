@@ -263,7 +263,7 @@ class user extends common
 			else {
 				// Soumission du formulaire
 				if (
-					$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+					$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 					$this->isPost()
 				) {
 					// Double vérification pour le mot de passe
@@ -1012,7 +1012,7 @@ class user extends common
 		else {
 			// Soumission du formulaire
 			if (
-				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
 				// Double vérification pour le mot de passe

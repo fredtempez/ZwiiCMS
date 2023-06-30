@@ -410,7 +410,10 @@ class news extends common
 		// La news existe
 		else {
 			// Soumission du formulaire
-			if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true && $this->isPost()) {
+			if (
+				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
+				$this->isPost()
+			) {
 				// Si l'id a changée
 				$newsId = $this->getInput('newsEditTitle', helper::FILTER_ID, true);
 				if ($newsId !== $this->getUrl(2)) {

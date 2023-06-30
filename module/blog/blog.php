@@ -642,7 +642,7 @@ class blog extends common
 		else {
 			// Soumission du formulaire
 			if (
-				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
 				if ($this->getUser('group') === self::GROUP_ADMIN) {
@@ -740,7 +740,7 @@ class blog extends common
 			else {
 				// Soumission du formulaire
 				if (
-					$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+					$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 					$this->isPost()
 				) {
 					// Check la captcha

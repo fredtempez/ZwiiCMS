@@ -923,7 +923,7 @@ class gallery extends common
 		if ($this->getUrl(2) === 'galleries') {
 			// Soumission du formulaire
 			if (
-				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
 
@@ -967,7 +967,7 @@ class gallery extends common
 			}
 			// Soumission du formulaire
 			if (
-				$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
 
