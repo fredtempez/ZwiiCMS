@@ -45,20 +45,6 @@
     </div>
 </div>
 <div class="row containerPage">
-<div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Compte de l\'utilisateur'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col3">
-                    <?php echo template::checkbox('profilAddUserEdit', true, 'Éditer'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col12">
         <div class="block">
             <h4>
@@ -123,7 +109,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col6"s>
+                    <div class="col6" s>
                         <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer les commentaires'); ?>
                     </div>
                     <div class="col6">
@@ -238,6 +224,20 @@
                     <div class="col4">
                         <?php echo template::checkbox('profilEditSearchConfig', true, 'Configurer'); ?>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col12">
+        <div class="block">
+            <h4>
+                <?php echo helper::translate('Compte de l\'utilisateur'); ?>
+            </h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddUserEdit', true, 'Éditer'); ?>
                 </div>
             </div>
         </div>

@@ -344,10 +344,7 @@ class layout extends common
             $items .= $this->getData(['theme', 'footer', 'displaymemberAccount']) === false ? ' class="displayNone">' : '>';
             $items .= '<wbr>&nbsp;|&nbsp;';
             if (
-                $this->getUser(
-                    'permission',
-                    'filemanager'
-                ) === true
+                $this->getUser('permission', 'filemanager') === true
             ) {
                 $items .= '<wbr>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -356,11 +353,15 @@ class layout extends common
                     'help' => 'Fichiers du site'
                 ]);
             }
-            $items .= '<wbr>' . template::ico('user', [
-                'margin' => 'all',
-                'help' => 'Mon compte',
-                'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
-            ]);
+            if (
+                $this->getUser('permission', 'user', 'edit') === true
+            ) {
+                $items .= '<wbr>' . template::ico('user', [
+                    'margin' => 'all',
+                    'help' => 'Mon compte',
+                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
+                ]);
+            }
             $items .= '<wbr>' . template::ico('logout', [
                 'margin' => 'all',
                 'help' => 'Déconnecter',
@@ -501,11 +502,8 @@ class layout extends common
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
-                $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser(
-                    'permission',
-                    'folder',
-                    'share'
-                ) === true
+                $this->getUser('group') >= self::GROUP_MEMBER &&
+                $this->getUser('permission', 'folder', 'share') === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
@@ -513,11 +511,15 @@ class layout extends common
                     'help' => 'Fichiers du site'
                 ]) . '</li>';
             }
-            $itemsRight .= '<li>' . template::ico('user', [
-                'help' => 'Mon compte',
-                'margin' => 'right',
-                'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
-            ]) . '</li>';
+            if (
+                $this->getUser('permission', 'user', 'edit') === true
+            ) {
+                $itemsRight .= '<li>' . template::ico('user', [
+                    'help' => 'Mon compte',
+                    'margin' => 'right',
+                    'href' => helper::baseUrl() . 'user/edit/' . $this->getUser('id')
+                ]) . '</li>';
+            }
             $itemsRight .= '<li>' .
                 template::ico('logout', [
                     'help' => 'Déconnecter',
