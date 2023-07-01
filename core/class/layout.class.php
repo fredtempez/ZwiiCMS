@@ -503,7 +503,7 @@ class layout extends common
         ) {
             if (
                 $this->getUser('group') >= self::GROUP_MEMBER &&
-                $this->getUser('permission', 'folder', 'share') === true
+                $this->getUser('permission', 'filemanager') === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
                     'href' => helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php?type=0&akey=' . md5_file(self::DATA_DIR . 'core.json') . '&lang=' . $this->getData(['user', $this->getUser('id'), 'language']),
