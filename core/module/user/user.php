@@ -263,7 +263,6 @@ class user extends common
 			else {
 				// Soumission du formulaire
 				if (
-					$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 					$this->isPost()
 				) {
 					// Double vérification pour le mot de passe
@@ -442,10 +441,13 @@ class user extends common
 		ksort($userIdsFirstnames);
 		foreach ($userIdsFirstnames as $userId => $userFirstname) {
 			if ($this->getData(['user', $userId, 'group'])) {
+				$group = helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]);
+				$profil = $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']);
 				self::$users[] = [
 					$userId,
 					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
+					$group,
+					empty($profil) ? $group : $profil,
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),

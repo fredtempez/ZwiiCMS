@@ -38,4 +38,4 @@
 		]); ?>
 	</div>
 </div>
-<?php echo template::table([3, 4, 3, 1, 1], $module::$users, ['Identifiant', 'Nom', 'Groupe', '', '']); ?>
+<?php echo template::table([2, 2 , 3, 3, 1, 1], $module::$users, ['Identifiant', 'Nom', 'Groupe', 'Profil', '', '']); ?>
