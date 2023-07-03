@@ -74,47 +74,41 @@ class page extends common
 		// Adresse sans le token
 		$page = $this->getUrl(2);
 		// La page n'existe pas
-		if ($this->getData(['page', $page]) === null) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
+			$this->getData(['page', $page]) === null
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
 			]);
-		} // Action interdite
-		elseif ($this->checkCSRF()) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'page/edit/' . $page,
-				'notification' => helper::translate('Jeton invalide')
-			]);
-		}
-		// Duplication de la page
-		$pageTitle = $this->getData(['page', $page, 'title']);
-		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
-		$pageId = helper::increment($pageId, self::$coreModuleIds);
-		$pageId = helper::increment($pageId, self::$moduleIds);
-		$data = $this->getData([
-			'page',
-			$page
-		]);
-		// Ecriture
-		$this->setData(['page', $pageId, $data]);
-		$notification = helper::translate('Page dupliquée');
-		// Duplication du module présent
-		if ($this->getData(['page', $page, 'moduleId'])) {
+		} else {
+			// Duplication de la page
+			$pageTitle = $this->getData(['page', $page, 'title']);
+			$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+			$pageId = helper::increment($pageId, self::$coreModuleIds);
+			$pageId = helper::increment($pageId, self::$moduleIds);
 			$data = $this->getData([
-				'module',
+				'page',
 				$page
 			]);
 			// Ecriture
-			$this->setData(['module', $pageId, $data]);
-			$notification = helper::translate('Page et module dupliqués');
+			$this->setData(['page', $pageId, $data]);
+			$notification = helper::translate('Page dupliquée');
+			// Duplication du module présent
+			if ($this->getData(['page', $page, 'moduleId'])) {
+				$data = $this->getData(['module', $page]);
+				$this->setData(['module', $pageId, $data]);
+				$notification = helper::translate('Page et module dupliqués');
+			}
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . 'page/edit/' . $pageId,
+				'notification' => $notification,
+				'state' => true
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'redirect' => helper::baseUrl() . 'page/edit/' . $pageId,
-			'notification' => $notification,
-			'state' => true
-		]);
 	}
 
 
@@ -123,55 +117,63 @@ class page extends common
 	 */
 	public function add()
 	{
-		$pageTitle = 'Nouvelle page';
-		$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
-		$this->setData([
-			'page',
-			$pageId,
-			[
-				'typeMenu' => 'text',
-				'iconUrl' => '',
-				'disable' => false,
-				'content' => $pageId . '.html',
-				'hideTitle' => false,
-				'breadCrumb' => false,
-				'metaDescription' => '',
-				'metaTitle' => '',
-				'moduleId' => '',
-				'parentPageId' => '',
-				'modulePosition' => 'bottom',
-				'position' => 0,
-				'group' => self::GROUP_VISITOR,
-				'targetBlank' => false,
-				'title' => $pageTitle,
-				'shortTitle' => $pageTitle,
-				'block' => '12',
-				'barLeft' => '',
-				'barRight' => '',
-				'displayMenu' => '0',
-				'hideMenuSide' => false,
-				'hideMenuHead' => false,
-				'hideMenuChildren' => false,
-				'js' => '',
-				'css' => ''
-			]
-		]);
-		// Creation du contenu de la page
-		if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
-			mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			$pageTitle = 'Nouvelle page';
+			$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+			$this->setData([
+				'page',
+				$pageId,
+				[
+					'typeMenu' => 'text',
+					'iconUrl' => '',
+					'disable' => false,
+					'content' => $pageId . '.html',
+					'hideTitle' => false,
+					'breadCrumb' => false,
+					'metaDescription' => '',
+					'metaTitle' => '',
+					'moduleId' => '',
+					'parentPageId' => '',
+					'modulePosition' => 'bottom',
+					'position' => 0,
+					'group' => self::GROUP_VISITOR,
+					'targetBlank' => false,
+					'title' => $pageTitle,
+					'shortTitle' => $pageTitle,
+					'block' => '12',
+					'barLeft' => '',
+					'barRight' => '',
+					'displayMenu' => '0',
+					'hideMenuSide' => false,
+					'hideMenuHead' => false,
+					'hideMenuChildren' => false,
+					'js' => '',
+					'css' => ''
+				]
+			]);
+			// Creation du contenu de la page
+			if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
+				mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
+			}
+			//file_put_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+			$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18nContent);
+
+			// Met à jour le sitemap
+			$this->updateSitemap();
+
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $pageId,
+				'notification' => helper::translate('Nouvelle page créée'),
+				'state' => true
+			]);
 		}
-		//file_put_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
-		$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$i18nContent);
 
-		// Met à jour le sitemap
-		$this->updateSitemap();
-
-		// Valeurs en sortie
-		$this->addOutput([
-			'redirect' => helper::baseUrl() . $pageId,
-			'notification' => helper::translate('Nouvelle page créée'),
-			'state' => true
-		]);
 	}
 
 	/**
