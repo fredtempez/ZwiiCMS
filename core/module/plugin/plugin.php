@@ -580,7 +580,7 @@ class plugin extends common
 			]);
 		} else {
 			// Créer un dossier temporaire
-			$tmpFolder = self::TEMP_DIR . uniqid();
+			$tmpFolder = self::TEMP_DIR . uniqid() . '/';
 			if (!is_dir($tmpFolder)) {
 				mkdir($tmpFolder, 0755);
 			}
@@ -590,21 +590,19 @@ class plugin extends common
 
 			// Descripteur de l'archive
 			$infoModule = helper::getModules();
-			//Nom de l'archive
-			$fileName = $moduleId . $infoModule[$moduleId]['version'] . '.zip';
 
-			// Régénération du module
-			$success = file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId], JSON_UNESCAPED_UNICODE));
+			//Nom de l'archive
+			$fileName = $moduleId . str_replace('.', '-', $infoModule[$moduleId]['version']) . '.zip';
+
+			// Régénération du descripteur du module
+			file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId], JSON_UNESCAPED_UNICODE));
 
 			// Construire l'archive
-			$this->makeZip(self::TEMP_DIR . $fileName, self::MODULE_DIR . $moduleId);
+			$this->makeZip( $tmpFolder . $fileName, self::MODULE_DIR . $moduleId);
 
 			switch ($action) {
 				case 'filemanager':
-					if (!file_exists(self::FILE_DIR . 'source/modules')) {
-						mkdir(self::FILE_DIR . 'source/modules');
-					}
-					$success = $success || copy(self::TEMP_DIR . $fileName, self::FILE_DIR . 'source/modules/' . $moduleId . '.zip');
+					$success = copy($tmpFolder . $fileName, self::FILE_DIR . 'source/modules/' . $fileName );
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -612,24 +610,20 @@ class plugin extends common
 						'notification' => $success ? helper::translate('Archive copiée dans le dossier Modules du gestionnaire de fichier') : helper::translate('Erreur de copie'),
 						'state' => $success
 					]);
-					// Nettoyage
-					unlink(self::TEMP_DIR . $fileName);
-					$this->removeDir($tmpFolder);
 					break;
 				case 'download':
-				default:
-
 					// Téléchargement du ZIP
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/octet-stream');
 					header('Content-Transfer-Encoding: binary');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
-					header('Content-Length: ' . filesize(self::TEMP_DIR . $fileName));
-					readfile(self::TEMP_DIR . $fileName);
-					// Nettoyage du dossier
-					unlink(self::TEMP_DIR . $fileName);
+					header('Content-Length: ' . filesize($tmpFolder. $fileName));
+					readfile($tmpFolder . $fileName);
 					exit();
 			}
+			// Nettoyage
+			unlink(self::TEMP_DIR . $fileName);
+			$this->removeDir($tmpFolder);
 		}
 	}
 
