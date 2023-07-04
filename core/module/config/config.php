@@ -367,10 +367,10 @@ class config extends common
 				}
 				// Lire le contenu de l'archive dans le tableau files
 				/*
-																for ($i = 0; $i < $zip->numFiles; $i++) {
-																	$stat = $zip->statIndex($i);
-																	$files[] = (basename($stat['name']));
-																}*/
+																																		for ($i = 0; $i < $zip->numFiles; $i++) {
+																																			$stat = $zip->statIndex($i);
+																																			$files[] = (basename($stat['name']));
+																																		}*/
 				// Extraction de l'archive dans un dossier temporaire
 				$tmpDir = uniqid(8);
 				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
@@ -647,26 +647,36 @@ class config extends common
 
 	public function logReset()
 	{
-		if (file_exists(self::DATA_DIR . 'journal.log')) {
-			unlink(self::DATA_DIR . 'journal.log');
-			// Créer les en-têtes des journaux
-			$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-			file_put_contents(self::DATA_DIR . 'journal.log', $d);
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
-				'view' => 'index',
-				'notification' => helper::translate('Journal réinitialisé avec succès'),
-				'state' => true
+				'access' => false
 			]);
 		} else {
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => helper::translate('Configuration'),
-				'view' => 'index',
-				'notification' => helper::translate('Aucun journal à effacer'),
-				'state' => false
-			]);
+			if (file_exists(self::DATA_DIR . 'journal.log')) {
+				unlink(self::DATA_DIR . 'journal.log');
+				// Créer les en-têtes des journaux
+				$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
+				file_put_contents(self::DATA_DIR . 'journal.log', $d);
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Configuration'),
+					'view' => 'index',
+					'notification' => helper::translate('Journal réinitialisé avec succès'),
+					'state' => true
+				]);
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Configuration'),
+					'view' => 'index',
+					'notification' => helper::translate('Aucun journal à effacer'),
+					'state' => false
+				]);
+			}
 		}
 	}
 
@@ -677,25 +687,35 @@ class config extends common
 	 */
 	public function logDownload()
 	{
-		$fileName = self::DATA_DIR . 'journal.log';
-		if (file_exists($fileName)) {
-			ob_start();
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			header('Content-Length: ' . filesize($fileName));
-			ob_clean();
-			ob_end_flush();
-			readfile($fileName);
-			exit();
-		} else {
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
-				'view' => 'index',
-				'notification' => helper::translate('Aucun fichier journal à télécharger'),
-				'state' => false
+				'access' => false
 			]);
+		} else {
+			$fileName = self::DATA_DIR . 'journal.log';
+			if (file_exists($fileName)) {
+				ob_start();
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Length: ' . filesize($fileName));
+				ob_clean();
+				ob_end_flush();
+				readfile($fileName);
+				exit();
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Configuration'),
+					'view' => 'index',
+					'notification' => helper::translate('Aucun fichier journal à télécharger'),
+					'state' => false
+				]);
+			}
 		}
 	}
 
@@ -704,36 +724,46 @@ class config extends common
 	 */
 	public function blacklistDownload()
 	{
-		ob_start();
-		$fileName = self::TEMP_DIR . 'blacklist.log';
-		$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
-		file_put_contents($fileName, $d);
-		if (file_exists($fileName)) {
-			$d = $this->getData(['blacklist']);
-			$data = '';
-			foreach ($d as $key => $item) {
-				$data .= helper::dateUTF8('%Y %m %d', $item['lastFail']) . ' - ' . helper::dateUTF8('%H:%M', time());
-				$data .= $key . ';' . $item['ip'] . ';' . $item['connectFail'] . PHP_EOL;
-			}
-			file_put_contents($fileName, $data, FILE_APPEND);
-			header('Content-Description: File Transfer');
-			header('Content-Type: application/octet-stream');
-			header('Content-Transfer-Encoding: binary');
-			header('Content-Disposition: attachment; filename="' . $fileName . '"');
-			header('Content-Length: ' . filesize($fileName));
-			ob_clean();
-			ob_end_flush();
-			readfile($fileName);
-			unlink(self::TEMP_DIR . 'blacklist.log');
-			exit();
-		} else {
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Confighelper::translate(uration'),
-				'view' => 'index',
-				'notification' => helper::translate('Aucune liste noire à télécharger'),
-				'state' => false
+				'access' => false
 			]);
+		} else {
+			ob_start();
+			$fileName = self::TEMP_DIR . 'blacklist.log';
+			$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
+			file_put_contents($fileName, $d);
+			if (file_exists($fileName)) {
+				$d = $this->getData(['blacklist']);
+				$data = '';
+				foreach ($d as $key => $item) {
+					$data .= helper::dateUTF8('%Y %m %d', $item['lastFail']) . ' - ' . helper::dateUTF8('%H:%M', time());
+					$data .= $key . ';' . $item['ip'] . ';' . $item['connectFail'] . PHP_EOL;
+				}
+				file_put_contents($fileName, $data, FILE_APPEND);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Transfer-Encoding: binary');
+				header('Content-Disposition: attachment; filename="' . $fileName . '"');
+				header('Content-Length: ' . filesize($fileName));
+				ob_clean();
+				ob_end_flush();
+				readfile($fileName);
+				unlink(self::TEMP_DIR . 'blacklist.log');
+				exit();
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Confighelper::translate(uration'),
+					'view' => 'index',
+					'notification' => helper::translate('Aucune liste noire à télécharger'),
+					'state' => false
+				]);
+			}
 		}
 	}
 
@@ -743,23 +773,33 @@ class config extends common
 
 	public function blacklistReset()
 	{
-		if (file_exists(self::DATA_DIR . 'blacklist.json')) {
-			$this->setData(['blacklist', []]);
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Configuration'),
-				'view' => 'index',
-				'notification' => helper::translate('Liste noire réinitialisée avec succès'),
-				'state' => true
+				'access' => false
 			]);
 		} else {
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => helper::translate('Configuration'),
-				'view' => 'index',
-				'notification' => helper::translate('Aucune liste noire à effacer'),
-				'state' => false
-			]);
+			if (file_exists(self::DATA_DIR . 'blacklist.json')) {
+				$this->setData(['blacklist', []]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Configuration'),
+					'view' => 'index',
+					'notification' => helper::translate('Liste noire réinitialisée avec succès'),
+					'state' => true
+				]);
+			} else {
+				// Valeurs en sortie
+				$this->addOutput([
+					'title' => helper::translate('Configuration'),
+					'view' => 'index',
+					'notification' => helper::translate('Aucune liste noire à effacer'),
+					'state' => false
+				]);
+			}
 		}
 	}
 
@@ -768,16 +808,26 @@ class config extends common
 	 */
 	public function copyBackups()
 	{
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
 
-		$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup');
+			$success = $this->copyDir(self::BACKUP_DIR, self::FILE_DIR . 'source/backup');
 
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => helper::translate('Configuration'),
-			'view' => 'index',
-			'notification' => $success ? helper::translate('Copie terminée avec succès') : helper::translate('Copie terminée avec des erreurs'),
-			'state' => $success
-		]);
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => helper::translate('Configuration'),
+				'view' => 'index',
+				'notification' => $success ? helper::translate('Copie terminée avec succès') : helper::translate('Copie terminée avec des erreurs'),
+				'state' => $success
+			]);
+		}
 	}
 
 	/**
@@ -785,22 +835,32 @@ class config extends common
 	 */
 	public function delBackups()
 	{
-		$path = realpath(self::BACKUP_DIR);
-		$success = $fail = 0;
-		foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
-			if (strpos($filename, '.zip')) {
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			$path = realpath(self::BACKUP_DIR);
+			$success = $fail = 0;
+			foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path)) as $filename) {
+				if (strpos($filename, '.zip')) {
 
-				$r = unlink($filename);
-				$success = $r === true ? $success + 1 : $success;
-				$fail = $r === false ? $fail + 1 : $fail;
+					$r = unlink($filename);
+					$success = $r === true ? $success + 1 : $success;
+					$fail = $r === false ? $fail + 1 : $fail;
+				}
 			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => helper::translate('Configuration'),
+				'view' => 'index',
+				'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': ' . $fail,
+				'state' => true
+			]);
 		}
-		// Valeurs en sortie
-		$this->addOutput([
-			'title' => helper::translate('Configuration'),
-			'view' => 'index',
-			'notification' => $success . helper::translate('Fichiers effacés') . ' - ' . helper::translate('Échecs') . ': ' . $fail,
-			'state' => true
-		]);
 	}
 }

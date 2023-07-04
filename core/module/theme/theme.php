@@ -1016,81 +1016,91 @@ class theme extends common
 
 	public function import($zipName = '')
 	{
-
+		// Action interdite
 		if (
-			$zipName !== '' &&
-			file_exists($zipName)
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
-			// Init variables de retour
-			$success = false;
-			$notification = '';
-			// Dossier temporaire
-			$tempFolder = uniqid();
-			// Ouvrir le zip
-			$zip = new ZipArchive();
-			if ($zip->open($zipName) === TRUE) {
-				mkdir(self::TEMP_DIR . $tempFolder, 0755);
-				$zip->extractTo(self::TEMP_DIR . $tempFolder);
-				$modele = '';
-				// Archive de thème ?
-				if (
-					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
-					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
-					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
-				) {
-					$modele = 'theme';
-				}
-				if (
-					file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
-					and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
-				) {
-					$modele = 'admin';
-				}
-				if (!empty($modele)) {
-					// traiter l'archive
-					$success = $zip->extractTo('.');
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
 
-					// Substitution des fontes Google
-					if ($modele = 'theme') {
-						$c = $this->subFont(self::DATA_DIR . 'theme.json');
-						// Un remplacement nécessite la régénération de la feuille de style
-						if (
-							$c > 0
-							and file_exists(self::DATA_DIR . 'theme.css')
-						) {
-							unlink(self::DATA_DIR . 'theme.css');
-						}
-					}
-					if ($modele = 'admin') {
-						$c = $this->subFont(self::DATA_DIR . 'admin.json');
-						// Un remplacement nécessite la régénération de la feuille de style
-						if (
-							$c > 0
-							and file_exists(self::DATA_DIR . 'admin.css')
-						) {
-							unlink(self::DATA_DIR . 'admin.css');
-						}
-					}
-
-					// traitement d'erreur
-					$notification = $success ? helper::translate('Thème importé') : helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
-				} else {
-					// pas une archive de thème
-					$success = false;
-					$notification = helper::translate('Archive de thème invalide');
-				}
-				// Supprimer le dossier temporaire même si le thème est invalide
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
-				$zip->close();
-			} else {
-				// erreur à l'ouverture
+			if (
+				$zipName !== '' &&
+				file_exists($zipName)
+			) {
+				// Init variables de retour
 				$success = false;
-				$notification = helper::translate('Impossible d\'ouvrir l\'archive');
-			}
-			return (['success' => $success, 'notification' => $notification]);
-		}
+				$notification = '';
+				// Dossier temporaire
+				$tempFolder = uniqid();
+				// Ouvrir le zip
+				$zip = new ZipArchive();
+				if ($zip->open($zipName) === TRUE) {
+					mkdir(self::TEMP_DIR . $tempFolder, 0755);
+					$zip->extractTo(self::TEMP_DIR . $tempFolder);
+					$modele = '';
+					// Archive de thème ?
+					if (
+						file_exists(self::TEMP_DIR . $tempFolder . '/site/data/custom.css')
+						and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.css')
+						and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/theme.json')
+					) {
+						$modele = 'theme';
+					}
+					if (
+						file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.json')
+						and file_exists(self::TEMP_DIR . $tempFolder . '/site/data/admin.css')
+					) {
+						$modele = 'admin';
+					}
+					if (!empty($modele)) {
+						// traiter l'archive
+						$success = $zip->extractTo('.');
 
-		return (['success' => false, 'notification' => helper::translate('Archive non spécifiée ou introuvable')]);
+						// Substitution des fontes Google
+						if ($modele = 'theme') {
+							$c = $this->subFont(self::DATA_DIR . 'theme.json');
+							// Un remplacement nécessite la régénération de la feuille de style
+							if (
+								$c > 0
+								and file_exists(self::DATA_DIR . 'theme.css')
+							) {
+								unlink(self::DATA_DIR . 'theme.css');
+							}
+						}
+						if ($modele = 'admin') {
+							$c = $this->subFont(self::DATA_DIR . 'admin.json');
+							// Un remplacement nécessite la régénération de la feuille de style
+							if (
+								$c > 0
+								and file_exists(self::DATA_DIR . 'admin.css')
+							) {
+								unlink(self::DATA_DIR . 'admin.css');
+							}
+						}
+
+						// traitement d'erreur
+						$notification = $success ? helper::translate('Thème importé') : helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
+					} else {
+						// pas une archive de thème
+						$success = false;
+						$notification = helper::translate('Archive de thème invalide');
+					}
+					// Supprimer le dossier temporaire même si le thème est invalide
+					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					$zip->close();
+				} else {
+					// erreur à l'ouverture
+					$success = false;
+					$notification = helper::translate('Impossible d\'ouvrir l\'archive');
+				}
+				return (['success' => $success, 'notification' => $notification]);
+			}
+
+			return (['success' => false, 'notification' => helper::translate('Archive non spécifiée ou introuvable')]);
+		}
 	}
 
 
