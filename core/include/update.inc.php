@@ -985,7 +985,7 @@ if ($this->getData(['core', 'dataVersion']) < 12309) {
 }
 
 // Version 12.4.00
-if ($this->getData(['core', 'dataVersion']) < 12400) {
+if ($this->getData(['core', 'dataVersion']) < 13000) {
 
 	// Nettoyage du dossier de langue d'installation'
 	if (file_exists('core/vendor/tinymce/langs/langs.zip'))
@@ -1016,10 +1016,10 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 				$this->setData(['user', $userId, 'profil', 1]);
 				break;
 			default:
-			$this->setData(['user', $userId, 'profil', $this->getData(['user', $userId, 'group'])]);
+			$this->setData(['user', $userId, 'profil', 0]);
 				break;
 		}
 	}
 	// Mise à jour
-	$this->setData(['core', 'dataVersion', 12400]);
+	$this->setData(['core', 'dataVersion', 13000]);
 }
