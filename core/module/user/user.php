@@ -98,8 +98,8 @@ class user extends common
 
 			// Profil
 			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
-			$profil = null;
-			if ($group > 1 || $group < 2) {
+			$profil = 0;
+			if ($group === 1 || $group === 2) {
 				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
 			}
 
@@ -303,8 +303,8 @@ class user extends common
 						$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
 					}
 					// Profil
-					$profil = null;
-					if ($newGroup > 1 || $newGroup < 2) {
+					$profil = 0;
+					if ($newGroup === 1 || $newGroup === 2) {
 						$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
 					}
 					// Modifie l'utilisateur
