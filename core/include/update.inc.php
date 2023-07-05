@@ -974,8 +974,8 @@ if ($this->getData(['core', 'dataVersion']) < 12309) {
 		// tableau des langues installées
 		if (is_dir(self::DATA_DIR . $key)) {
 			$d = json_decode(file_get_contents(self::DATA_DIR . $key . '/locale.json'), true);
-			$d = array_merge($d['locale'],['poweredPageLabel' => 'Motorisé par']);
-			$t ['locale'] = $d;
+			$d = array_merge($d['locale'], ['poweredPageLabel' => 'Motorisé par']);
+			$t['locale'] = $d;
 			file_put_contents(self::DATA_DIR . $key . '/locale.json', json_encode($t));
 		}
 	}
@@ -986,7 +986,7 @@ if ($this->getData(['core', 'dataVersion']) < 12309) {
 
 // Version 12.4.00
 if ($this->getData(['core', 'dataVersion']) < 12400) {
-	
+
 	// Nettoyage du dossier de langue d'installation'
 	if (file_exists('core/vendor/tinymce/langs/langs.zip'))
 		unlink('core/vendor/tinymce/langs/langs.zip');
@@ -999,15 +999,27 @@ if ($this->getData(['core', 'dataVersion']) < 12400) {
 	if (file_exists('core/module/install/ressource/i18n/gr_GR.json'))
 		unlink('core/module/install/ressource/i18n/gr_GR.json');
 
-	// Création du dossier partga pour les nouveaux droits
+	// Création du dossier partage pour les nouveaux droits
 	if (!is_dir(self::FILE_DIR . 'source/partage')) {
 		mkdir(self::FILE_DIR . 'source/partage');
 	}
 
 	// Efface le script router.php
-	if (file_exists('core/class/router.class.php'))
-		unlink('core/class/router.class.php');
+	// if (file_exists('core/class/router.class.php'))
+	//	unlink('core/class/router.class.php');
 
+	// Ajouter le prénom comme pseudo et le pseudo comme signature
+	foreach ($this->getData(['user']) as $userId => $userIds) {
+		switch ($this->getData(['user', $userId, 'group'])) {
+			case '1':
+			case '2':
+				$this->setData(['user', $userId, 'profil', 1]);
+				break;
+			default:
+			$this->setData(['user', $userId, 'profil', $this->getData(['user', $userId, 'group'])]);
+				break;
+		}
+	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 12400]);
 }
