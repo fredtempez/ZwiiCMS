@@ -66,7 +66,7 @@ class user extends common
 
 	public static $groupProfils = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Editeur'
+		self::GROUP_EDITOR => 'Editeur'
 	];
 
 	/**
@@ -191,7 +191,7 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
-			and ($this->getUrl('group') < self::GROUP_MODERATOR)
+			and ($this->getUrl('group') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -251,7 +251,7 @@ class user extends common
 						and $this->getUrl('group') <= self::GROUP_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('group') < self::GROUP_MODERATOR)
+					or ($this->getUrl('group') < self::GROUP_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -503,7 +503,7 @@ class user extends common
 				];
 			} elseif (
 				$groupId == self::GROUP_MEMBER ||
-				$groupId == self::GROUP_MODERATOR
+				$groupId == self::GROUP_EDITOR
 			) {
 				// Enumérer les sous groupes MEMBER et MODERATOR
 				foreach ($groupData as $subGroupId => $subGroupData) {

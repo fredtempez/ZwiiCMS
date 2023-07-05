@@ -123,8 +123,8 @@
 						]); ?>
 					</div>
 					<div class="userEditGroupProfil displayNone"
-						id="userEditGroupProfil<?php echo self::GROUP_MODERATOR; ?>">
-						<?php echo template::select('userEditProfil' . self::GROUP_MODERATOR, $module::$userProfils[self::GROUP_MODERATOR], [
+						id="userEditGroupProfil<?php echo self::GROUP_EDITOR; ?>">
+						<?php echo template::select('userEditProfil' . self::GROUP_EDITOR, $module::$userProfils[self::GROUP_EDITOR], [
 							'label' => 'Profil',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'profil'])
 						]); ?>
@@ -138,9 +138,9 @@
 					]);
 					?>
 				</div>
-				<div id="userCommentProfil<?php echo self::GROUP_MODERATOR; ?>" class="col12 displayNone userCommentProfil">
-					<?php echo template::textarea('useraddProfilComment2' . self::GROUP_MODERATOR, [
-						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_MODERATOR])
+				<div id="userCommentProfil<?php echo self::GROUP_EDITOR; ?>" class="col12 displayNone userCommentProfil">
+					<?php echo template::textarea('useraddProfilComment2' . self::GROUP_EDITOR, [
+						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_EDITOR])
 					]);
 					?>
 				</div>

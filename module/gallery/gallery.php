@@ -44,15 +44,15 @@ class gallery extends common
 	public static $config = [];
 
 	public static $actions = [
-		'config' => self::GROUP_MODERATOR,
-		'delete' => self::GROUP_MODERATOR,
-		'dirs' => self::GROUP_MODERATOR,
-		'sortGalleries' => self::GROUP_MODERATOR,
-		'sortPictures' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR,
-		'add' => self::GROUP_MODERATOR,
-		'theme' => self::GROUP_MODERATOR,
-		'option' => self::GROUP_MODERATOR,
+		'config' => self::GROUP_EDITOR,
+		'delete' => self::GROUP_EDITOR,
+		'dirs' => self::GROUP_EDITOR,
+		'sortGalleries' => self::GROUP_EDITOR,
+		'sortPictures' => self::GROUP_EDITOR,
+		'edit' => self::GROUP_EDITOR,
+		'add' => self::GROUP_EDITOR,
+		'theme' => self::GROUP_EDITOR,
+		'option' => self::GROUP_EDITOR,
 		'index' => self::GROUP_VISITOR
 	];
 

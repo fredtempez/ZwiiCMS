@@ -575,7 +575,7 @@ class layout extends common
                     and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
                 ) or ($this->getData(['page', $parentPageId, 'disable']) === true
                     and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-                    and $this->getUser('group') < self::GROUP_MODERATOR
+                    and $this->getUser('group') < self::GROUP_EDITOR
                 )
             ) {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
@@ -641,7 +641,7 @@ class layout extends common
                         and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
                     ) or ($this->getData(['page', $childKey, 'disable']) === true
                         and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-                        and $this->getUser('group') < self::GROUP_MODERATOR
+                        and $this->getUser('group') < self::GROUP_EDITOR
                     )
                 ) {
                     $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
@@ -876,7 +876,7 @@ class layout extends common
             // Items de gauche
             $leftItems = '';
             // Sélecteur de langues
-            if ($this->getUser('group') >= self::GROUP_MODERATOR) {
+            if ($this->getUser('group') >= self::GROUP_EDITOR) {
                 $c = 0;
                 $leftItem = '';
                 foreach (self::$languages as $key => $value) {
@@ -893,7 +893,7 @@ class layout extends common
                 }
             }
             // Liste des pages
-            if ($this->getUser('group') >= self::GROUP_MODERATOR) {
+            if ($this->getUser('group') >= self::GROUP_EDITOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
                 $leftItems .= '<option value="">' . helper::translate('Pages du site') . '</option>';
                 $leftItems .= '<optgroup label="' . helper::translate('Pages orphelines') . '">';
@@ -1006,7 +1006,7 @@ class layout extends common
             // Items de droite
             $rightItems = '';
             if (
-                $this->getUser('group') >= self::GROUP_MODERATOR
+                $this->getUser('group') >= self::GROUP_EDITOR
                 && $this->getUser(
                     'permission',
                     'filemanager'
@@ -1066,7 +1066,7 @@ class layout extends common
                 }
             }
             if (
-                $this->getUser('group') >= self::GROUP_MODERATOR
+                $this->getUser('group') >= self::GROUP_EDITOR
                 && $this->getUser('permission', 'user', 'edit')
 
             ) {
@@ -1153,7 +1153,7 @@ class layout extends common
         $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
         if (
             $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-            and $this->getUser('group') >= self::GROUP_MODERATOR
+            and $this->getUser('group') >= self::GROUP_EDITOR
         ) {
             $vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR . 'core.json')) . ';';
         }

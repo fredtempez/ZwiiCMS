@@ -27,7 +27,7 @@ class common
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
-	const GROUP_MODERATOR = 2;
+	const GROUP_EDITOR = 2;
 	const GROUP_ADMIN = 3;
 	const SIGNATURE_ID = 1;
 	const SIGNATURE_PSEUDO = 2;
@@ -136,24 +136,24 @@ class common
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupEdits = [
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupNews = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 	public static $groupPublics = [
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Éditeur',
+		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
 

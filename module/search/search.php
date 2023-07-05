@@ -26,7 +26,7 @@ class search extends common
 
 	public static $actions = [
 		'index' => self::GROUP_VISITOR,
-		'config' => self::GROUP_MODERATOR
+		'config' => self::GROUP_EDITOR
 	];
 
 	// Variables pour l'affichage des résultats
