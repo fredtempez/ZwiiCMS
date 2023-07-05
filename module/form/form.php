@@ -235,7 +235,7 @@ class form extends common
 	{
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$data
 		) {
 			// Pagination
@@ -297,7 +297,7 @@ class form extends common
 				fclose($fp);
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => sprintf(helper::translate('Export CSV effectué dans %1 '), $csvfilename),
+					'notification' => sprintf(helper::translate('Export CSV effectué dans %s '), $csvfilename	),
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 					'state' => true
 				]);
