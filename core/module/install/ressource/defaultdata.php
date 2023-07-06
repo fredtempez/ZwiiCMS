@@ -475,7 +475,7 @@ class init extends common
 			],
 			'2' => [
 				'1' => [
-					'name' => 'Editeur simple',
+					'name' => 'Rédacteur simple',
 					'readonly' => false,
 					'comment' => 'Édition des pages',
 					'filemanager' => true,
@@ -556,7 +556,7 @@ class init extends common
 					]
 				],
 				'2' => [
-					'name' => 'Éditeur avec partage de fichiers',
+					'name' => 'Rédacteur avec partage de fichiers',
 					'readonly' => false,
 					'comment' => 'Edition des pages',
 					'filemanager' => true,
