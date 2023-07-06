@@ -390,7 +390,7 @@ class init extends common
 					]
 				],
 				'2' => [
-					'name' => 'Membre',
+					'name' => 'Membre avec droit de partage',
 					'readonly' => false,
 					'comment' => 'Accède aux pages réservées et à un dossier partagé',
 					'filemanager' => true,
@@ -475,7 +475,7 @@ class init extends common
 			],
 			'2' => [
 				'1' => [
-					'name' => 'Modérateur',
+					'name' => 'Editeur simple',
 					'readonly' => false,
 					'comment' => 'Édition des pages',
 					'filemanager' => true,

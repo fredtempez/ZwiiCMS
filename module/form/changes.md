@@ -1,6 +1,7 @@
 # Version 3.10
 - Bloque l'effacement selon le profil
 - Masque le code de vérification
+- Export des données en CSV impossible
 # Version 3.9
 - Redirection des pages orphelines
 # Version 3.8

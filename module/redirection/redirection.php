@@ -21,7 +21,7 @@ class redirection extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
-		'config' => self::GROUP_MODERATOR,
+		'config' => self::GROUP_EDITOR,
 		'index' => self::GROUP_VISITOR
 	];
 
@@ -60,7 +60,7 @@ class redirection extends common
 		if (
 			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 			&& $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-			&& $this->getUser('group') >= self::GROUP_MODERATOR
+			&& $this->getUser('group') >= self::GROUP_EDITOR
 			&& $this->getUrl(1) !== 'force'
 		) {
 			// Valeurs en sortie

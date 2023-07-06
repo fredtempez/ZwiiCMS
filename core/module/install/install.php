@@ -273,147 +273,157 @@ class install extends common
 	 */
 	public function steps()
 	{
-		switch ($this->getInput('step', helper::FILTER_INT)) {
-			// Préparation
-			case 1:
-				$success = true;
-				$message = '';
-				// RAZ la mise à jour auto
-				$this->setData(['core', 'updateAvailable', false]);
-				// Backup du dossier Data
-				helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
-				// Sauvegarde htaccess
-				if ($this->getData(['config', 'autoUpdateHtaccess'])) {
-					$success = copy('.htaccess', '.htaccess' . '.bak');
-					$message = 'Erreur de copie du fichier htaccess';
-				}
-				// Nettoyage des fichiers d'installation précédents
-				if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
-					$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
-					$message = 'Impossible d\'effacer la mise à jour précédente';
-				}
-				if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
-					$success = $success || unlink(self::TEMP_DIR . 'update.tar');
-					$message = 'Impossible d\'effacer la mise à jour précédente';
-				}
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_JSON,
-					'content' => [
-						'success' => $success,
-						'data' => $success ? null : json_encode($message, JSON_UNESCAPED_UNICODE)
-					]
-				]);
-				break;
-			// Téléchargement
-			case 2:
-				file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
-				$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
-				$md5origin = explode(' ', $md5origin);
-				$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_JSON,
-					'content' => [
-						'success' => $md5origin[0] === $md5target,
-						'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE)
-					]
-				]);
-				break;
-			// Installation
-			case 3:
-				$success = true;
-				// Check la réécriture d'URL avant d'écraser les fichiers
-				$rewrite = helper::checkRewrite();
-				// Décompression et installation
-				try {
-					// Décompression dans le dossier de fichier temporaires
-					$pharData = new PharData(self::TEMP_DIR . 'update.tar.gz');
-					$pharData->decompress();
-					// Installation
-					$pharData->extractTo(__DIR__ . '/../../../', null, true);
-				} catch (Exception $e) {
-					$success = $e->getMessage();
-				}
-				// Nettoyage du dossier
-				if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
-					unlink(self::TEMP_DIR . 'update.tar.gz');
-				}
-				if (file_exists(self::TEMP_DIR . 'update.tar')) {
-					unlink(self::TEMP_DIR . 'update.tar');
-				}
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_JSON,
-					'content' => [
-						'success' => $success,
-						'data' => $rewrite
-					]
-				]);
-				break;
-			// Configuration
-			case 4:
-				$success = true;
-				$message = '';
-				$rewrite = $this->getInput('data');
-				// Réécriture d'URL
-				if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
-					$fileContent = file_get_contents('.htaccess');
-					$rewriteData = PHP_EOL .
-						'# URL rewriting' . PHP_EOL .
-						'<IfModule mod_rewrite.c>' . PHP_EOL .
-						"\tRewriteEngine on" . PHP_EOL .
-						"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-						'</IfModule>' . PHP_EOL .
-						'# URL rewriting' . PHP_EOL;
-					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-					$r = file_put_contents(
-						'.htaccess',
-						$fileContent
-					);
-					$success = $r === false ? false : true;
-					$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : null;
-				}
-				// Recopie htaccess
-				if (
-					$this->getData(['config', 'autoUpdateHtaccess']) &&
-					$success && file_exists('.htaccess.bak')
-				) {
-					// L'écraser avec le backup
-					$success = $success || copy('.htaccess.bak', '.htaccess');
-					// Effacer le backup
-					unlink('.htaccess.bak');
-				}
-
-				/**
-				 * Met à jour les dictionnaires des langues depuis les modèles installés
-				 */
-
-				// Langues installées
-				$installedUI = $this->getData(['language']);
-
-				// Langues disponibles avec la mise à jour
-				require_once('core/module/install/ressource/defaultdata.php');
-				$default = init::$defaultData['language'];
-
-				foreach ($installedUI as $key => $value) {
-					if ($default[$key]['version'] > $value['version']) {
-						copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-						$this->setData(['language', $key, $default[$key]]);
+		// Action interdite
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
+		) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+		} else {
+			switch ($this->getInput('step', helper::FILTER_INT)) {
+				// Préparation
+				case 1:
+					$success = true;
+					$message = '';
+					// RAZ la mise à jour auto
+					$this->setData(['core', 'updateAvailable', false]);
+					// Backup du dossier Data
+					helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
+					// Sauvegarde htaccess
+					if ($this->getData(['config', 'autoUpdateHtaccess'])) {
+						$success = copy('.htaccess', '.htaccess' . '.bak');
+						$message = 'Erreur de copie du fichier htaccess';
 					}
-				}
+					// Nettoyage des fichiers d'installation précédents
+					if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
+						$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
+						$message = 'Impossible d\'effacer la mise à jour précédente';
+					}
+					if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
+						$success = $success || unlink(self::TEMP_DIR . 'update.tar');
+						$message = 'Impossible d\'effacer la mise à jour précédente';
+					}
+					// Valeurs en sortie
+					$this->addOutput([
+						'display' => self::DISPLAY_JSON,
+						'content' => [
+							'success' => $success,
+							'data' => $success ? null : json_encode($message, JSON_UNESCAPED_UNICODE)
+						]
+					]);
+					break;
+				// Téléchargement
+				case 2:
+					file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
+					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
+					$md5origin = explode(' ', $md5origin);
+					$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
+					// Valeurs en sortie
+					$this->addOutput([
+						'display' => self::DISPLAY_JSON,
+						'content' => [
+							'success' => $md5origin[0] === $md5target,
+							'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE)
+						]
+					]);
+					break;
+				// Installation
+				case 3:
+					$success = true;
+					// Check la réécriture d'URL avant d'écraser les fichiers
+					$rewrite = helper::checkRewrite();
+					// Décompression et installation
+					try {
+						// Décompression dans le dossier de fichier temporaires
+						$pharData = new PharData(self::TEMP_DIR . 'update.tar.gz');
+						$pharData->decompress();
+						// Installation
+						$pharData->extractTo(__DIR__ . '/../../../', null, true);
+					} catch (Exception $e) {
+						$success = $e->getMessage();
+					}
+					// Nettoyage du dossier
+					if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
+						unlink(self::TEMP_DIR . 'update.tar.gz');
+					}
+					if (file_exists(self::TEMP_DIR . 'update.tar')) {
+						unlink(self::TEMP_DIR . 'update.tar');
+					}
+					// Valeurs en sortie
+					$this->addOutput([
+						'display' => self::DISPLAY_JSON,
+						'content' => [
+							'success' => $success,
+							'data' => $rewrite
+						]
+					]);
+					break;
+				// Configuration
+				case 4:
+					$success = true;
+					$message = '';
+					$rewrite = $this->getInput('data');
+					// Réécriture d'URL
+					if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
+						$fileContent = file_get_contents('.htaccess');
+						$rewriteData = PHP_EOL .
+							'# URL rewriting' . PHP_EOL .
+							'<IfModule mod_rewrite.c>' . PHP_EOL .
+							"\tRewriteEngine on" . PHP_EOL .
+							"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+							"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+							"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+							"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+							'</IfModule>' . PHP_EOL .
+							'# URL rewriting' . PHP_EOL;
+						$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
+						$r = file_put_contents(
+							'.htaccess',
+							$fileContent
+						);
+						$success = $r === false ? false : true;
+						$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : null;
+					}
+					// Recopie htaccess
+					if (
+						$this->getData(['config', 'autoUpdateHtaccess']) &&
+						$success && file_exists('.htaccess.bak')
+					) {
+						// L'écraser avec le backup
+						$success = $success || copy('.htaccess.bak', '.htaccess');
+						// Effacer le backup
+						unlink('.htaccess.bak');
+					}
 
-				// Valeurs en sortie
-				$this->addOutput([
-					'display' => self::DISPLAY_JSON,
-					'content' => [
-						'success' => $success,
-						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
-					]
-				]);
+					/**
+					 * Met à jour les dictionnaires des langues depuis les modèles installés
+					 */
+
+					// Langues installées
+					$installedUI = $this->getData(['language']);
+
+					// Langues disponibles avec la mise à jour
+					require_once('core/module/install/ressource/defaultdata.php');
+					$default = init::$defaultData['language'];
+
+					foreach ($installedUI as $key => $value) {
+						if ($default[$key]['version'] > $value['version']) {
+							copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+							$this->setData(['language', $key, $default[$key]]);
+						}
+					}
+
+					// Valeurs en sortie
+					$this->addOutput([
+						'display' => self::DISPLAY_JSON,
+						'content' => [
+							'success' => $success,
+							'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
+						]
+					]);
+			}
 		}
 	}
 

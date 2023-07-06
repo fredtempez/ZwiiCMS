@@ -1,10 +1,16 @@
 # Changelog
 
-## Version 12.4.00
+## Version 13.0.00
 # Améliorations
 - Gestion des groupes de profils d'utilisateurs.
+- Sécurise l'accès aux fonctions sensibles du CLMS.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 - Stockage des données JSON, forçage au format objet.
+- Correction de bugs mineurs dans la sauvegarde des modules installés.
+
+## Version 12.4.00
+- L'ID de session n'est plus transmise dans l'URL, les modules distribués ont été actualisés.
+- Corrections de bug dans le module Blog, merci de consulter le fichier changes.log du module.
 
 ## Version 12.3.11
 - Interdit la création d'une langue autrement que par un administrateur.

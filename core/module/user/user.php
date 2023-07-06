@@ -66,7 +66,7 @@ class user extends common
 
 	public static $groupProfils = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_MODERATOR => 'Editeur'
+		self::GROUP_EDITOR => 'Editeur'
 	];
 
 	/**
@@ -98,8 +98,8 @@ class user extends common
 
 			// Profil
 			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
-			$profil = null;
-			if ($group > 1 || $group < 2) {
+			$profil = 0;
+			if ($group === 1 || $group === 2) {
 				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
 			}
 
@@ -191,7 +191,7 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
-			and ($this->getUrl('group') < self::GROUP_MODERATOR)
+			and ($this->getUrl('group') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -251,7 +251,7 @@ class user extends common
 						and $this->getUrl('group') <= self::GROUP_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('group') < self::GROUP_MODERATOR)
+					or ($this->getUrl('group') < self::GROUP_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -303,8 +303,8 @@ class user extends common
 						$newlastname = $this->getData(['user', $this->getUrl(2), 'lastname']);
 					}
 					// Profil
-					$profil = null;
-					if ($newGroup > 1 || $newGroup < 2) {
+					$profil = 0;
+					if ($newGroup === 1 || $newGroup === 2) {
 						$profil = $this->getInput('userEditProfil' . $newGroup, helper::FILTER_INT);
 					}
 					// Modifie l'utilisateur
@@ -503,7 +503,7 @@ class user extends common
 				];
 			} elseif (
 				$groupId == self::GROUP_MEMBER ||
-				$groupId == self::GROUP_MODERATOR
+				$groupId == self::GROUP_EDITOR
 			) {
 				// Enumérer les sous groupes MEMBER et MODERATOR
 				foreach ($groupData as $subGroupId => $subGroupData) {
@@ -1014,7 +1014,8 @@ class user extends common
 		else {
 			// Soumission du formulaire
 			if (
-				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
+				// Tous les suers peuvent réinitialiser
+				// $this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
 				// Double vérification pour le mot de passe

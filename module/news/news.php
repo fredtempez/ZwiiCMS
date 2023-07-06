@@ -21,13 +21,13 @@ class news extends common
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
 	public static $actions = [
-		'add' => self::GROUP_MODERATOR,
-		'config' => self::GROUP_MODERATOR,
+		'add' => self::GROUP_EDITOR,
+		'config' => self::GROUP_EDITOR,
 		// Edition des news
-		'option' => self::GROUP_MODERATOR,
+		'option' => self::GROUP_EDITOR,
 		// paramétrage des news
-		'delete' => self::GROUP_MODERATOR,
-		'edit' => self::GROUP_MODERATOR,
+		'delete' => self::GROUP_EDITOR,
+		'edit' => self::GROUP_EDITOR,
 		'index' => self::GROUP_VISITOR,
 		'rss' => self::GROUP_VISITOR
 	];

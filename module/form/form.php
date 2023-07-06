@@ -22,13 +22,13 @@ class form extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
-		'config' => self::GROUP_MODERATOR,
-		'option' => self::GROUP_MODERATOR,
-		'data' => self::GROUP_MODERATOR,
-		'delete' => self::GROUP_MODERATOR,
-		'deleteall' => self::GROUP_MODERATOR,
+		'config' => self::GROUP_EDITOR,
+		'option' => self::GROUP_EDITOR,
+		'data' => self::GROUP_EDITOR,
+		'delete' => self::GROUP_EDITOR,
+		'deleteall' => self::GROUP_EDITOR,
 		'index' => self::GROUP_VISITOR,
-		'export2csv' => self::GROUP_MODERATOR,
+		'export2csv' => self::GROUP_EDITOR,
 	];
 
 	public static $data = [];
@@ -235,7 +235,7 @@ class form extends common
 	{
 		$data = $this->getData(['module', $this->getUrl(0), 'data']);
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$data
 		) {
 			// Pagination
@@ -297,7 +297,7 @@ class form extends common
 				fclose($fp);
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => sprintf(helper::translate('Export CSV effectué dans %1 '), $csvfilename),
+					'notification' => sprintf(helper::translate('Export CSV effectué dans %s '), $csvfilename	),
 					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/data',
 					'state' => true
 				]);
