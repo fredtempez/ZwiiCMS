@@ -14,7 +14,9 @@
 
 $(document).ready(function () {
 	$(".userEditGroupProfil").hide();
+	$(".userCommentProfil").hide();
 	$("#userEditGroupProfil" + $("#userEditGroup").val()).show();
+	$("#userCommentProfil" + $("#userEditGroup").val()).show();
 
 	$("#userEditGroup").on("change", function () {
 		$(".userEditGroupProfil").hide();
