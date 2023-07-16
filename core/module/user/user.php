@@ -137,7 +137,7 @@ class user extends common
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
 					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null,
-					$this->getData(['config', 'smtp', 'from']),
+					$this->getData(['config', 'smtp', 'from'])
 				);
 			}
 			// Valeurs en sortie
@@ -408,7 +408,7 @@ class user extends common
 					'<a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a><br><br>' .
 					'<small>Si nous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</small>',
 					null,
-					$this->getData(['config', 'smtp', 'from']),
+					$this->getData(['config', 'smtp', 'from'])
 				);
 				// Valeurs en sortie
 				$this->addOutput([
@@ -1151,7 +1151,7 @@ class user extends common
 									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
 									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
 									null,
-									$this->getData(['config', 'smtp', 'from']),
+									$this->getData(['config', 'smtp', 'from'])
 								);
 								if ($sent === true) {
 									// Mail envoyé changement de l'icône

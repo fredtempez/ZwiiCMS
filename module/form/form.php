@@ -489,7 +489,7 @@ class form extends common
 						'Nouveau message en provenance de la page "' . $this->getData(['page', $this->getUrl(0), 'title']) . '" :<br><br>' .
 						$content,
 						$replyTo,
-						$this->getData(['config', 'smtp', 'from']),
+						$this->getData(['config', 'smtp', 'from'])
 					);
 				}
 			}
