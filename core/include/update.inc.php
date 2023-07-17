@@ -3,7 +3,17 @@
 /**
  * Mises à jour suivant les versions de Zwii
  */
-if ($this->getData(['core', 'dataVersion']) < 9227) {
+
+// Premier appel lors de l'installation, les fichiers sont vides en lecture
+if (is_null($this->getData(['core', 'dataVersion']))) {
+	header("Location: " . $_SERVER['PHP_SELF']);
+	exit();
+}
+
+// Pas d'installation depuis une version inférieur
+if (
+	$this->getData(['core', 'dataVersion']) < 9227
+) {
 	// Arrêt du script
 	exit('ZwiiCMS version 12 est incompatible avec la base de données installée. L\'installation d\'une version intermédiaire 10 ou 11 est nécessaire.');
 }
@@ -1016,7 +1026,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 				$this->setData(['user', $userId, 'profil', 1]);
 				break;
 			default:
-			$this->setData(['user', $userId, 'profil', 0]);
+				$this->setData(['user', $userId, 'profil', 0]);
 				break;
 		}
 	}
