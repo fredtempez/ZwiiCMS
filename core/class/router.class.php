@@ -509,7 +509,10 @@ class core extends common
 					file_exists(self::DATA_DIR . $key . '/page.json')
 				) {
 					$pagesId = json_decode(file_get_contents(self::DATA_DIR . $key . '/page.json'), true);
-					if (array_key_exists($this->getUrl(0), $pagesId['page'])) {
+					if (
+						is_array($pagesId['page']) &&
+						array_key_exists($this->getUrl(0), $pagesId['page'])
+					) {
 						$_SESSION['ZWII_CONTENT'] = $key;
 						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl(0));
 						exit();
