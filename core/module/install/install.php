@@ -75,6 +75,11 @@ class install extends common
 				self::$i18nFiles[$lang] = self::$languages[$lang];
 			}
 		}
+		// Effacer le cookie de l'UI et de contenu
+		unset($_SESSION['ZWII_UI']);
+		unset($_SESSION['ZWII_CONTENT']);
+		setcookie('ZWII_UI', '', time() - 3600, helper::baseUrl(false, false));
+
 
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,

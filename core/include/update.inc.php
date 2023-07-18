@@ -19,7 +19,7 @@ if ($this->getData(['core', 'dataVersion']) < 10000) {
 	//----------------------------------------
 	// Mettre à jour les données des galeries
 	$pageList = array();
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -179,7 +179,7 @@ if ($this->getData(['core', 'dataVersion']) < 10300) {
 	$this->setData(['config', 'searchPageId', '']);
 
 	// Mettre à jour les données des galeries
-	$pageList = array(); foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	$pageList = array(); foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -240,7 +240,7 @@ if ($this->getData(['core', 'dataVersion']) < 10304) {
 if ($this->getData(['core', 'dataVersion']) < 10306) {
 	// Liste des pages
 	$pageList = array();
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -298,7 +298,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 	// Ajouter les champs de blog v3
 	// Liste des pages dans pageList
 	$pageList = array();
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -389,7 +389,7 @@ if ($this->getData(['core', 'dataVersion']) < 10600) {
 
 	// Liste des pages dans pageList
 	$pageList = array();
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -451,7 +451,7 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
 		mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 	}
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -509,7 +509,7 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 	$this->setData(['config', 'connect', 'captchaType', 'alpha']);
 
 	// Ajout de la variable shortTitle basée sur Title
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;
@@ -573,7 +573,7 @@ if ($this->getData(['core', 'dataVersion']) < 11203) {
 	$c3 = 0;
 	$success = false;
 	// Boucler sur les pages
-	foreach ($this->getHierarchy(null, null, null) as $parentId => $childIds) {
+	foreach ($this->getHierarchy() as $parentId => $childIds) {
 		$content = $this->getPage($parentId, self::$i18nContent);
 		$titre = $this->getData(['page', $parentId, 'title']);
 		$content = $titre . ' ' . $content;
@@ -669,7 +669,7 @@ if ($this->getData(['core', 'dataVersion']) < 11300) {
 if ($this->getData(['core', 'dataVersion']) < 11303) {
 
 	// Ajout de la variable shortTitle basée sur Title
-	foreach ($this->getHierarchy(null, null, null) as $parentKey => $parentValue) {
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$pageList[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$pageList[] = $childKey;

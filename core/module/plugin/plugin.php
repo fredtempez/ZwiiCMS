@@ -830,7 +830,7 @@ class plugin extends common
 		 * Liste des pages sans module
 		 * et ne sont pas des barres latérales
 		 */
-		self::$pagesList = $this->getHierarchy(null, null, null);
+		self::$pagesList = $this->getHierarchy();
 		foreach (self::$pagesList as $page => $value) {
 			if (
 				$this->getData(['page', $page, 'block']) === 'bar' ||

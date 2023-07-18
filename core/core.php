@@ -1010,7 +1010,7 @@ class common
 		$datetime = new DateTime(date('c'));
 		$datetime->format(DateTime::ATOM); // Updated ISO8601
 
-		foreach ($this->getHierarchy(null, null, null) as $parentPageId => $childrenPageIds) {
+		foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
 			if (
 				$this->getData(['page', $parentPageId, 'group']) !== 0 ||
