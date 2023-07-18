@@ -605,6 +605,19 @@ class common
 		// Tableau avec les données vierges
 		require_once('core/module/install/ressource/defaultdata.php');
 
+		if (!file_exists(self::DATA_DIR . $lang)) {
+			mkdir(self::DATA_DIR . $lang, 0755);
+		}
+		$db = $this->dataFiles[$module];
+
+		if ($sampleSite === true && $lang === 'fr_FR') {
+			$db->set($module, init::$defaultDataI18n[$module]);
+		} else {
+			$db->set($module, init::$defaultData[$module]);
+		}
+		$db->save; // Stockage dans un sous-dossier localisé
+
+		// Localisations
 		if (
 			$module === 'page' ||
 			$module === 'module' ||
@@ -641,6 +654,7 @@ class common
 			// Installation des données du module
 			file_put_contents(self::DATA_DIR . $module . '.json', json_encode([$module => init::$defaultData[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
 		}
+
 
 	}
 

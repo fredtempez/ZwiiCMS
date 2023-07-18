@@ -6,7 +6,7 @@
 
 // Premier appel lors de l'installation, les fichiers sont vides en lecture
 if (is_null($this->getData(['core', 'dataVersion']))) {
-	header("Location: " . $_SERVER['PHP_SELF']);
+//	header("Location: " . $_SERVER['PHP_SELF']);
 	exit();
 }
 
