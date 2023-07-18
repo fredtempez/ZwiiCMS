@@ -750,7 +750,7 @@ class init extends common
 				]
 			],
 			'module' => [],
-			'html' => '<h2>¡Bienvenido/a a esta nueva instalación de ZwiiCMS! Crea y administra tu sitio web de manera sencilla con nuestro sistema amigable.</h2>'
+			'html' => '<h2>¡Bienvenido/a a esta nueva instalación de ZwiiCMS!</h2><p>Crea y administra tu sitio web de manera sencilla con nuestro sistema amigable.</p><p>Esta es tu primera página, inicia sesión para crear nuevas.</p>'
 		],
 		'default' => [
 			'locale' => [
@@ -805,7 +805,7 @@ class init extends common
 				]
 			],
 			'module' => [],
-			'html' => '<h2Welcome to this new installation of ZwiiCMS. Easily create and manage your website with our user-friendly system.</h2>'
+			'html' => '<h2>Welcome to this new installation of ZwiiCMS.</h2><p>Easily create and manage your website with our user-friendly system.</p><p>This is your first page, log in to create new ones.</p>'
 		]
 	];
 	public static $siteTemplate = [

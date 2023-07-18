@@ -632,16 +632,14 @@ class common
 				// Version en langue étrangère ou fr_FR sans site de test
 			} else {
 				// En_EN par défaut si le contenu localisé n'est pas traduit
-				$langDefault = $lang;
-				if (!isset(init::$defaultDataI18n[$lang])) {
-					$langDefault = 'default';
-				}
+				$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ?  $lang :  'default';
+				// Charger les données de cette langue 
 				$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
-				// Créer la page d'accueil
+				// Créer la page d'accueil, une seule page dans cette configuration
 				$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
 				$content = init::$defaultDataI18n[$langDefault]['html'];
-				file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
-
+				$this->setPage($pageId, $content, $lang);
+				//file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
 			}
 		} else {
 			// Installation des données des autres modules cad theme profil font config, admin et core
