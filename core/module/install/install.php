@@ -83,7 +83,7 @@ class install extends common
 
 		$this->addOutput([
 			'display' => self::DISPLAY_LAYOUT_LIGHT,
-			'title' => helper::translate('Installation'),
+			'title' => helper::translate('ZwiiCMS Installation'),
 			'view' => 'index'
 		]);
 	}
@@ -267,7 +267,7 @@ class install extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
-				'title' => helper::translate('Installation'),
+				'title' => helper::translate('ZwiiCMS Installation'),
 				'view' => 'postinstall'
 			]);
 		}

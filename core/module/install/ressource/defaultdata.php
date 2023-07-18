@@ -285,16 +285,16 @@ class init extends common
 		'blacklist' => [],
 		'language' => [
 			"fr_FR" => [
-				"version" => 12308,
-				"date" => 1682171316
+				"version" => 13000,
+				"date" => 1689300567
 			],
 			"es" => [
-				"version" => 12308,
-				"date" => 1682171316
+				"version" => 13000,
+				"date" => 1689300567
 			],
 			"en_EN" => [
-				"version" => 12308,
-				"date" => 1682171316
+				"version" => 13000,
+				"date" => 1689300567
 			]
 		],
 		'profil' => [
@@ -717,7 +717,7 @@ class init extends common
 					"linkLegalLabel" => "Consultar el aviso legal",
 					"cookiesFooterText" => "Cookies",
 					"buttonValidLabel" => "Aceptar"
-					]
+				]
 			],
 			'page' => [
 				'inicio' => [
@@ -762,7 +762,7 @@ class init extends common
 				'searchPageId' => 'none',
 				'searchPageLabel' => 'none',
 				'sitemapPageLabel' => 'none',
-				'poweredPageLabel'=> 'Powered by',
+				'poweredPageLabel' => 'Powered by',
 				'legalPageLabel' => 'legals',
 				'metaDescription' => 'Zwii is a database-free CMS that makes it easy to create and manage a website without any programming knowledge.',
 				'title' => 'Your site in a few clicks!',
@@ -1436,7 +1436,7 @@ class init extends common
 			'page404' => 'none',
 			'legalPageId' => 'none',
 			'searchPageId' => 'none',
-			'poweredPageLabel'=> 'Motorisé par',
+			'poweredPageLabel' => 'Motorisé par',
 			'searchPageLabel' => 'Rechercher',
 			'sitemapPageLabel' => 'Plan du site',
 			'legalPageLabel' => 'Mentions légales',
