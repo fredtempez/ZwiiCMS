@@ -4,12 +4,6 @@
  * Mises à jour suivant les versions de Zwii
  */
 
-// Premier appel lors de l'installation, les fichiers sont vides en lecture
-if (is_null($this->getData(['core', 'dataVersion']))) {
-//	header("Location: " . $_SERVER['PHP_SELF']);
-	exit();
-}
-
 // Pas d'installation depuis une version inférieur
 if (
 	$this->getData(['core', 'dataVersion']) < 9227

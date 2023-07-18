@@ -608,16 +608,8 @@ class common
 		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
 		}
-		$db = $this->dataFiles[$module];
 
-		if ($sampleSite === true && $lang === 'fr_FR') {
-			$db->set($module, init::$defaultDataI18n[$module]);
-		} else {
-			$db->set($module, init::$defaultData[$module]);
-		}
-		$db->save; // Stockage dans un sous-dossier localisé
-
-		// Localisations
+		// Localisation
 		if (
 			$module === 'page' ||
 			$module === 'module' ||
@@ -632,7 +624,7 @@ class common
 			}
 			// Site en français avec site exemple
 			if ($lang == 'fr_FR' && $sampleSite === true) {
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$siteTemplate[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
+				$this->setData([$module,init::$siteTemplate[$module]]);
 				// Création des pages
 				foreach (init::$siteContent as $key => $value) {
 					$this->setPage($key, $value, 'fr_FR');
@@ -644,17 +636,17 @@ class common
 				if (!isset(init::$defaultDataI18n[$lang])) {
 					$langDefault = 'default';
 				}
-				file_put_contents(self::DATA_DIR . $lang . '/' . $module . '.json', json_encode([$module => init::$defaultDataI18n[$langDefault][$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
+				$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
 				// Créer la page d'accueil
 				$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
 				$content = init::$defaultDataI18n[$langDefault]['html'];
 				file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
+
 			}
 		} else {
-			// Installation des données du module
-			file_put_contents(self::DATA_DIR . $module . '.json', json_encode([$module => init::$defaultData[$module]], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT));
+			// Installation des données des autres modules cad theme profil font config, admin et core
+			$this->setData([$module, init::$defaultData[$module]]);
 		}
-
 
 	}
 
