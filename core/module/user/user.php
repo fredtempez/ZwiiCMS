@@ -660,7 +660,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => sprintf(helper::translate('Éditer le profil : %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
+			'title' => sprintf(helper::translate('Édition du profil %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
 			'view' => 'profilEdit'
 		]);
 	}
