@@ -26,31 +26,14 @@ class helper
 
 	public static function translate($text)
 	{
-		/*
-		* 
-		$target = 'redirection';
-		$url = $_SERVER['QUERY_STRING'];
-		$module = explode('/', $url);		
-		if ( $module[0] === $target)
-		{ 
-		// La traduction existe déjà dans le core
-		if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-		$dialogues = json_decode(file_get_contents('module/' . $target . '/i18n/fr_FR.json' ), true);
-		$data = array_merge($dialogues,[$text =>  '']);
-		file_put_contents ('module/' . $target . '/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-		}
-		
-		}
-		*/
 
 		// La traduction existe déjà dans le core
-		/*
-		if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-		$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-		$data = array_merge($dialogues,[$text =>  '']);
-		file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-		}
-		*/
+
+			  if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+			  $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+			  $data = array_merge($dialogues,[$text =>  '']);
+			  file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			  }
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
@@ -691,10 +674,11 @@ class helper
 	 * @param string $string la chaine à coder
 	 * @return string
 	 */
-	public static function encrypt($string, $key) {
+	public static function encrypt($string, $key)
+	{
 		$encrypted = openssl_encrypt($string, "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
 		return base64_encode($encrypted);
-	  }
+	}
 
 	/**
 	 * Décryptage
@@ -702,9 +686,10 @@ class helper
 	 * @param string $string la chaine à décoder
 	 * @return string
 	 */
-	public static function decrypt($string, $key) {
+	public static function decrypt($string, $key)
+	{
 		$decrypted = openssl_decrypt(base64_decode($string), "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
 		return $decrypted;
-	  }
+	}
 
 }

@@ -360,7 +360,7 @@
                                 ]); ?>
                             </div>
                             <div class="col2">
-                                <?php echo template::checkbox('profilEditFolderCopycut', true, 'Copié collé', [
+                                <?php echo template::checkbox('profilEditFolderCopycut', true, 'Presse papier', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'copycut'])
                                 ]); ?>
