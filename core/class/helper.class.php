@@ -28,12 +28,13 @@ class helper
 	{
 
 		// La traduction existe déjà dans le core
-
-			  if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-			  $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-			  $data = array_merge($dialogues,[$text =>  '']);
-			  file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-			  }
+		/*
+					if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+					$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+					$data = array_merge($dialogues,[$text =>  '']);
+					file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+					}
+					*/
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
