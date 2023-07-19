@@ -87,17 +87,16 @@ class translate extends common
 				]);
 			}
 
-			// Upload et sauver le fichier de langue
-			$response = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
-			if ($response !== false) {
-				$response = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-				// Mettre à jour le descripteur
-				$enumsStore = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'language.json'), true);
-				$enums = $this->getData(['language']);
-				$enums = array_merge($enums, [
-					$lang => $enumsStore['language'][$lang]
-				]);
-				$response = (bool) $response && $this->setData(['language', $enums]);
+			// Télécharger le descripteur en ligne
+			$languageData = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
+			$descripteur = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
+			$response = false;
+			if (
+				is_array($languageData) &&
+				is_array($descripteur['languages'][$lang])
+			) {			
+				$response = $this->setData(['language', $lang, $descripteur['languages'][$lang] ]);
+				$response = $response || file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			}
 
 			// Valeurs en sortie
@@ -255,13 +254,14 @@ class translate extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-																																			template::button('translateContentLanguageUIEdit' . $file, [
-																																			'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-																																			'value' => template::ico('pencil'),
-																																			'help' => 'Éditer',
-																																			'disabled' => 'fr_FR' === $file
-																																			]),
-																																			*/
+								   template::button('translateContentLanguageUIEdit' . $file, [
+									   'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+									   'value' => template::ico('pencil'),
+									   'help' => 'Éditer',
+									   'disabled' => 'fr_FR' === $file
+								   ]),
+								   */
+
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
