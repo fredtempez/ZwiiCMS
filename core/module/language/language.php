@@ -13,7 +13,7 @@
  * @link http://zwiicms.fr/
  */
 
-class translate extends common
+class language extends common
 {
 
 	public static $actions = [
@@ -81,7 +81,7 @@ class translate extends common
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'translate',
+					'redirect' => helper::baseUrl() . 'language',
 					'state' => false,
 					'notification' => helper::translate('Action interdite')
 				]);
@@ -101,7 +101,7 @@ class translate extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
 				'state' => $response
 			]);
@@ -328,7 +328,7 @@ class translate extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -364,7 +364,7 @@ class translate extends common
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -471,7 +471,7 @@ class translate extends common
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'state' => false,
 				'notification' => helper::translate('Action interdite')
 			]);
@@ -505,7 +505,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'state' => true,
 			]);
 		}
@@ -573,7 +573,7 @@ class translate extends common
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'translate',
+					'redirect' => helper::baseUrl() . 'language',
 					'state' => false,
 					'notification' => helper::translate('Action interdite')
 				]);
@@ -587,7 +587,7 @@ class translate extends common
 					}
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'translate',
+						'redirect' => helper::baseUrl() . 'language',
 						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
 						'state' => $success
 					]);
@@ -603,7 +603,7 @@ class translate extends common
 					// Effacer la langue dans la base
 					// Valeurs en sortie
 					$this->addOutput([
-						'redirect' => helper::baseUrl() . 'translate',
+						'redirect' => helper::baseUrl() . 'language',
 						'notification' => $success ? helper::translate('Traduction supprimée') : helper::translate('Erreur inconnue'),
 						'state' => $success
 					]);
@@ -636,7 +636,7 @@ class translate extends common
 			) {
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl() . 'translate',
+					'redirect' => helper::baseUrl() . 'language',
 					'state' => false,
 					'notification' => helper::translate('Action interdite')
 				]);
@@ -652,7 +652,7 @@ class translate extends common
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'translate',
+				'redirect' => helper::baseUrl() . 'language',
 				'state' => true,
 			]);
 		}

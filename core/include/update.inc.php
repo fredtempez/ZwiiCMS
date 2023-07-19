@@ -1008,9 +1008,10 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 		mkdir(self::FILE_DIR . 'source/partage');
 	}
 
-	// Efface le script router.php
-	// if (file_exists('core/class/router.class.php'))
-	//	unlink('core/class/router.class.php');
+	// Efface le dossier translate 
+	if (is_dir('core/module/translate')) {
+		$this->removeDir('core/module/translate');
+	}
 
 	// Ajouter le prénom comme pseudo et le pseudo comme signature
 	foreach ($this->getData(['user']) as $userId => $userIds) {

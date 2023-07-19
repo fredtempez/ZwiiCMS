@@ -1029,7 +1029,7 @@ class layout extends common
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('flag', [
                     'help' => 'Multilingue',
-                    'href' => helper::baseUrl() . 'translate'
+                    'href' => helper::baseUrl() . 'language'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('cog-alt', [
                     'help' => 'Configuration',

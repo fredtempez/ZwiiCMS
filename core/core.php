@@ -68,7 +68,7 @@ class common
 		'sitemap',
 		'theme',
 		'user',
-		'translate',
+		'language',
 		'plugin'
 	];
 	public static $accessList = [
@@ -77,7 +77,7 @@ class common
 		'config',
 		'edit',
 		'config',
-		'translate'
+		'language'
 	];
 	public static $accessExclude = [
 		'login',
