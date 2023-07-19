@@ -532,7 +532,7 @@ $(document).ready(function () {
         var langSelected = $(this).val();
         var langSelected = langSelected.split("/");
         // Lit le cookie de langue
-        var langSession = "<?php echo $_SESSION['ZWII_CONTENT'];?>";
+        var langSession = "<?php echo isset($_SESSION['ZWII_CONTENT']) ? $_SESSION['ZWII_CONTENT'] : '';?>";
         // Découpe l'URL pour exclure le changement de page avec le thème
         var url = window.location;
         var currentUrl = url.href.split("/");
