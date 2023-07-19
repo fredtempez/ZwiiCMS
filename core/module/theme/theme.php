@@ -1089,7 +1089,7 @@ class theme extends common
 						$notification = helper::translate('Archive de thème invalide');
 					}
 					// Supprimer le dossier temporaire même si le thème est invalide
-					$this->removeDir(self::TEMP_DIR . $tempFolder);
+					$this->deleteDir(self::TEMP_DIR . $tempFolder);
 					$zip->close();
 				} else {
 					// erreur à l'ouverture

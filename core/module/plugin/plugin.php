@@ -73,13 +73,13 @@ class plugin extends common
 			$infoModules = helper::getModules();
 			$module = $this->getUrl(2);
 			//Liste des dossiers associés au module non effacés
-			if ($this->removeDir('./module/' . $module) === true) {
+			if ($this->deleteDir('./module/' . $module) === true) {
 				$success = true;
 				$notification = 'Module ' . $module . ' désinstallé';
 				if (($infoModules[$this->getUrl(2)]['dataDirectory'])) {
 					if (
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
-						|| !$this->removeDir($infoModules[$this->getUrl(2)]['dataDirectory'])
+						|| !$this->deleteDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
 						$notification = sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
 					}
@@ -134,7 +134,7 @@ class plugin extends common
 				$module = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'enum.json'), true);
 			} else {
 				// Message de retour
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => false,
@@ -149,7 +149,7 @@ class plugin extends common
 					// Vérification de la présence des dossier décrits
 					if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
 						// Message de retour
-						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$this->deleteDir(self::TEMP_DIR . $tempFolder);
 						$zip->close();
 						return ([
 							'success' => false,
@@ -159,7 +159,7 @@ class plugin extends common
 					// Interdire l'écriture dans le dossier core
 					if (strstr($dest, 'core') !== false) {
 						// Message de retour
-						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$this->deleteDir(self::TEMP_DIR . $tempFolder);
 						$zip->close();
 						return ([
 							'success' => false,
@@ -174,7 +174,7 @@ class plugin extends common
 			 */
 			if (!file_exists(self::TEMP_DIR . $tempFolder . $module['name'] . '.php')) {
 				// Message de retour
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => false,
@@ -207,7 +207,7 @@ class plugin extends common
 						$installOk = true;
 					} else {
 						// Message de retour
-						$this->removeDir(self::TEMP_DIR . $tempFolder);
+						$this->deleteDir(self::TEMP_DIR . $tempFolder);
 						$zip->close();
 						return ([
 							'success' => false,
@@ -232,7 +232,7 @@ class plugin extends common
 				}
 				// Message de retour
 				$t = isset($versionInstalled) ? helper::translate('actualisé') : helper::translate('installé');
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => $success,
@@ -242,7 +242,7 @@ class plugin extends common
 				]);
 			} else {
 				// Supprimer le dossier temporaire
-				$this->removeDir(self::TEMP_DIR . $tempFolder);
+				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
 				return ([
 					'success' => false,
@@ -623,7 +623,7 @@ class plugin extends common
 			}
 			// Nettoyage
 			unlink(self::TEMP_DIR . $fileName);
-			$this->removeDir($tmpFolder);
+			$this->deleteDir($tmpFolder);
 		}
 	}
 
@@ -721,7 +721,7 @@ class plugin extends common
 							]);
 							// Nettoyage
 							unlink(self::TEMP_DIR . $fileName);
-							$this->removeDir($tmpFolder);
+							$this->deleteDir($tmpFolder);
 						}
 						break;
 					case 'download':
@@ -793,7 +793,7 @@ class plugin extends common
 			}
 
 			// Supprimer le dossier temporaire
-			$this->removeDir(self::TEMP_DIR . $tmpFolder);
+			$this->deleteDir(self::TEMP_DIR . $tmpFolder);
 			$zip->close();
 
 			// Valeurs en sortie

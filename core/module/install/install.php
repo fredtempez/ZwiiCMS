@@ -175,7 +175,7 @@ class install extends common
 					$_SESSION['ZWII_CONTENT'] !== 'fr_FR'
 				) {
 					if (is_dir(self::DATA_DIR . 'fr_FR'))
-						$this->removeDir(self::DATA_DIR . 'fr_FR');
+						$this->deleteDir(self::DATA_DIR . 'fr_FR');
 				}
 
 				// Sauvegarder la configuration du Proxy

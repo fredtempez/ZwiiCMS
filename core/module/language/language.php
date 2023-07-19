@@ -583,7 +583,7 @@ class language extends common
 					$success = false;
 					// Effacement d'une site dans une langue
 					if (is_dir(self::DATA_DIR . $lang) === true) {
-						$success = $this->removeDir(self::DATA_DIR . $lang);
+						$success = $this->deleteDir(self::DATA_DIR . $lang);
 					}
 					// Valeurs en sortie
 					$this->addOutput([

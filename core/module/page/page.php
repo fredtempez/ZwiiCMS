@@ -258,7 +258,7 @@ class page extends common
 				array_key_exists($moduleId, $modulesData)
 				&& is_dir($modulesData[$moduleId]['dataDirectory'] . $page)
 			) {
-				$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $page);
+				$this->deleteDir($modulesData[$moduleId]['dataDirectory'] . $page);
 			}
 			// Effacer la page
 			$this->deleteData(['page', $page]);
@@ -335,7 +335,7 @@ class page extends common
 								// Placer la feuille de style dans un dossier au nom de la nouvelle instance
 								mkdir($modulesData[$moduleId]['dataDirectory'] . $pageId, 0755);
 								copy($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2), $modulesData[$moduleId]['dataDirectory'] . $pageId);
-								$this->removeDir($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2));
+								$this->deleteDir($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2));
 								// Mettre à jour le nom de la feuille de style
 								$this->setData(['module', $pageId, 'theme', 'style', $modulesData[$moduleId]['dataDirectory'] . $pageId]);
 							}

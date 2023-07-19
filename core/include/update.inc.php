@@ -703,7 +703,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 
 	// Effacer le dossier
 	if (is_dir('core/module/addon')) {
-		$this->removeDir('core/module/addon');
+		$this->deleteDir('core/module/addon');
 	}
 
 
@@ -901,10 +901,10 @@ if ($this->getData(['core', 'dataVersion']) < 12000) {
 
 	// Supprimer les fichier associés
 	if (is_dir('core/module/translate/ressource')) {
-		$this->removeDir('core/module/translate/ressource');
+		$this->deleteDir('core/module/translate/ressource');
 	}
 	if (is_dir('core/vendor/i18n/css')) {
-		$this->removeDir('core/vendor/i18n/css');
+		$this->deleteDir('core/vendor/i18n/css');
 	}
 	if (file_exists('core/vendor/i18n/inc.json')) {
 		unlink('core/vendor/i18n/inc.json');
@@ -939,7 +939,7 @@ if ($this->getData(['core', 'dataVersion']) < 12301) {
 
 	// Nettoyage de flatPickr
 	if (is_dir('core/vendor/flatpickr')) {
-		$this->removeDir('core/vendor/flatpickr');
+		$this->deleteDir('core/vendor/flatpickr');
 	}
 
 	// email reply
@@ -1010,7 +1010,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 
 	// Efface le dossier translate 
 	if (is_dir('core/module/translate')) {
-		$this->removeDir('core/module/translate');
+		$this->deleteDir('core/module/translate');
 	}
 
 	// Ajouter le prénom comme pseudo et le pseudo comme signature

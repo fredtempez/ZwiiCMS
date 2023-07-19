@@ -398,7 +398,7 @@ class config extends common
 
 				// Copie dans le dossier /site/data
 				$success = $this->copyDir(self::TEMP_DIR . $tmpDir, 'site/');
-				$this->removeDir(self::TEMP_DIR . $tmpDir);
+				$this->deleteDir(self::TEMP_DIR . $tmpDir);
 
 				// Restaurer les users originaux d'une v10 si option cochée
 				if (

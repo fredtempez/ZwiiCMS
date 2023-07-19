@@ -599,7 +599,7 @@ class news extends common
 			if (is_dir(self::DATADIRECTORY . 'pages/')) {
 				// Déplacer les données du dossier Pages
 				$this->copyDir(self::DATADIRECTORY . 'pages/' . $this->getUrl(0), self::DATADIRECTORY . $this->getUrl(0));
-				$this->removeDir(self::DATADIRECTORY . 'pages/');
+				$this->deleteDir(self::DATADIRECTORY . 'pages/');
 				$style = $this->getData(['module', $this->getUrl(0), 'theme', 'style']);
 				$this->setData(['module', $this->getUrl(0), 'theme', 'style', str_replace('pages/', '', $style)]);
 			}

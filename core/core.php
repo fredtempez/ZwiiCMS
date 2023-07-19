@@ -1231,13 +1231,13 @@ class common
 	 * Effacer un dossier non vide.
 	 * @param string URL du dossier à supprimer
 	 */
-	public function removeDir($path)
+	public function deleteDir($path)
 	{
 		foreach (new DirectoryIterator($path) as $item) {
 			if ($item->isFile())
 				@unlink($item->getRealPath());
 			if (!$item->isDot() && $item->isDir())
-				$this->removeDir($item->getRealPath());
+				$this->deleteDir($item->getRealPath());
 		}
 		return (rmdir($path));
 	}
