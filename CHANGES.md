@@ -2,8 +2,8 @@
 
 ## Version 13.0.00
 # Améliorations
-- Gestion des groupes de profils d'utilisateurs.
-- Sécurise l'accès aux fonctions sensibles du CLMS.
+- Gestion des profils d'utilisateurs.
+- Sécurise l'accès aux fonctions sensibles du CMS.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 - Stockage des données JSON, forçage au format objet.
 - Correction de bugs mineurs dans la sauvegarde des modules installés.
