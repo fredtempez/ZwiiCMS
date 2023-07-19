@@ -1028,7 +1028,7 @@ class layout extends common
                     'href' => helper::baseUrl() . 'plugin'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('flag', [
-                    'help' => 'Multilingue',
+                    'help' => 'Langues',
                     'href' => helper::baseUrl() . 'language'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('cog-alt', [
