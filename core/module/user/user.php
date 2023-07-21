@@ -546,103 +546,66 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
+			// Données du formulaire
+			$data = [
+				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
+				'readonly' => false,
+				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
+				'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
+				'file' => [
+					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
+					'create' => $this->getInput('profilEditCreate', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilEditRename', helper::FILTER_BOOLEAN),
+					'upload' => $this->getInput('profilEditUpload', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditDelete', helper::FILTER_BOOLEAN),
+					'preview' => $this->getInput('profilEditPreview', helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilEditDuplicate', helper::FILTER_BOOLEAN),
+					'extract' => $this->getInput('profilEditExtract', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilEditCopycut', helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilEditChmod', helper::FILTER_BOOLEAN),
+				],
+				'folder' => [
+					'create' => $this->getInput('profilEditFolderCreate', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditFolderDelete', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
+					'path' => $this->getInput('profilEditPath'),
+				],
+				'page' => [
+					'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilEditPageEdit', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilEditPageDelete', helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilEditPageDuplicate', helper::FILTER_BOOLEAN),
+					'module' => $this->getInput('profilEditPageModule', helper::FILTER_BOOLEAN),
+					'cssEditor' => $this->getInput('profilEditPagecssEditor', helper::FILTER_BOOLEAN),
+					'jsEditor' => $this->getInput('profilEditPagejsEditor', helper::FILTER_BOOLEAN),
+				],
+				'user' => [
+					'edit' => $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
+				]
+			];
+
+			// Données des modules
+			$dataModules = helper::getModules();
+			if (is_array($dataModules)) {
+				foreach ($dataModules as $moduleId => $moduleValue) {
+					if (file_exists('module/' . $moduleId . '/profil/main/edit.inc.php')) {
+						include('module/' . $moduleId . '/profil/main/edit.inc.php');
+						if (is_array($moduleData[$moduleId])) {
+							$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
+						}
+					}
+				}
+			}
+
+			//Sauvegarder le données
 			$this->setData([
 				'profil',
 				$this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true),
 				$this->getInput('profilEditProfil', helper::FILTER_STRING_LONG, true),
-				[
-					'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
-					'readonly' => false,
-					'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
-					'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
-					'file' => [
-						'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
-						'create' => $this->getInput('profilEditCreate', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilEditRename', helper::FILTER_BOOLEAN),
-						'upload' => $this->getInput('profilEditUpload', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditDelete', helper::FILTER_BOOLEAN),
-						'preview' => $this->getInput('profilEditPreview', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilEditDuplicate', helper::FILTER_BOOLEAN),
-						'extract' => $this->getInput('profilEditExtract', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilEditCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilEditChmod', helper::FILTER_BOOLEAN),
-					],
-					'folder' => [
-						'create' => $this->getInput('profilEditFolderCreate', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditFolderDelete', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
-						'path' => $this->getInput('profilEditPath'),
-					],
-					'page' => [
-						'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilEditPageEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditPageDelete', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilEditPageDuplicate', helper::FILTER_BOOLEAN),
-						'module' => $this->getInput('profilEditPageModule', helper::FILTER_BOOLEAN),
-						'cssEditor' => $this->getInput('profilEditPagecssEditor', helper::FILTER_BOOLEAN),
-						'jsEditor' => $this->getInput('profilEditPagejsEditor', helper::FILTER_BOOLEAN),
-					],
-					'blog' => [
-						'add' => $this->getInput('profilEditBlogAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilEditBlogEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditBlogDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN),
-						'comment' => $this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN),
-						'commentApprove' => $this->getInput('profilEditBlogCommentApprove', helper::FILTER_BOOLEAN),
-						'commentDelete' => $this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN),
-						'commentDeleteAll' => $this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilEditBlogAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogOption', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogComment', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogCommentApprove', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogCommentDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
-					],
-					'news' => [
-						'add' => $this->getInput('profilEditNewsAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditNewsDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilEditNewsAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditNewsEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditNewsOption', helper::FILTER_BOOLEAN)
-					],
-					'gallery' => [
-						'add' => $this->getInput('profilEditGalleryAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilEditGalleryEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditGalleryDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN),
-						'theme' => $this->getInput('profilEditGalleryTheme', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilEditGalleryAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditGalleryEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditGalleryDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditGalleryOption', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilEditGalleryTheme', helper::FILTER_BOOLEAN)
-					],
-					'form' => [
-						'config' => $this->getInput('profilEditFormConfig', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilEditFormOption', helper::FILTER_BOOLEAN),
-						'data' => $this->getInput('profilEditFormData', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilEditFormDelete', helper::FILTER_BOOLEAN),
-						'deleteAll' => $this->getInput('profilEditFormDeleteAll', helper::FILTER_BOOLEAN),
-						'export2csv' => $this->getInput('profilEditFormExport2csv', helper::FILTER_BOOLEAN),
-					],
-					'search' => [
-						'config' => $this->getInput('profilEditSearchConfig', helper::FILTER_BOOLEAN),
-					],
-					'redirection' => [
-						'config' => $this->getInput('profilEditRedirectionConfig', helper::FILTER_BOOLEAN),
-					],
-					'user' => [
-						'edit' => $this->getInput('profilEditUserEdit', helper::FILTER_BOOLEAN),
-					]
-				]
+				$data
 			]);
 
 			// Valeurs en sortie
@@ -679,108 +642,67 @@ class user extends common
 			// Nombre de profils de ce groupe
 			$group = $this->getInput('profilAddGroup');
 			$profil = (string) (count($this->getData(['profil', $group])) + 1);
+
+			// Données du formulaire
+			$data = [
+				'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
+				'readonly' => false,
+				'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
+				'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
+				'file' => [
+					'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
+					'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
+					'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
+					'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
+					'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
+				],
+				'folder' => [
+					'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
+					'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
+					'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
+					'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
+					'path' => $this->getInput('profilAddPath'),
+				],
+				'page' => [
+					'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
+					'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
+					'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
+					'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
+					'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
+					'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
+					'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
+				],
+				'user' => [
+					'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
+				]
+			];
+
+			// Données des modules
+			$dataModules = helper::getModules();
+			if (is_array($dataModules)) {
+				foreach ($dataModules as $moduleId => $moduleValue) {
+					if (file_exists('module/' . $moduleId . '/profil/main/add.inc.php')) {
+						include('module/' . $moduleId . '/profil/main/add.inc.php');
+						if (is_array($moduleData[$moduleId])) {
+							$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
+						}
+					}
+				}
+			}
+
 			// Sauvegarder les données
 			$this->setData([
 				'profil',
 				$group,
 				$profil,
-				[
-					'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
-					'readonly' => false,
-					'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
-					'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
-					'file' => [
-						'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
-						'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
-						'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
-						'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
-						'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
-					],
-					'folder' => [
-						'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
-						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
-						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
-						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
-						'path' => $this->getInput('profilAddPath'),
-					],
-					'page' => [
-						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
-						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
-						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
-						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
-						'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
-					],
-					'blog' => [
-						'add' => $this->getInput('profilAddBlogAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddBlogDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN),
-						'comment' => $this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN),
-						'commentApprove' => $this->getInput('profilAddBlogCommentApprove', helper::FILTER_BOOLEAN),
-						'commentDelete' => $this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN),
-						'commentDeleteAll' => $this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilAddBlogAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogOption', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogComment', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogCommentApprove', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogCommentDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddBlogCommentDeleteAll', helper::FILTER_BOOLEAN)
-					],
-					'news' => [
-						'add' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddNewsDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN)
-					],
-					'gallery' => [
-						'add' => $this->getInput('profilAddGalleryAdd', helper::FILTER_BOOLEAN),
-						'edit' => $this->getInput('profilAddGalleryEdit', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddGalleryDelete', helper::FILTER_BOOLEAN),
-						'option' => $this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN),
-						'theme' => $this->getInput('profilAddGalleryTheme', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilAddGalleryAdd', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddGalleryEdit', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddGalleryDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddGalleryOption', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddGalleryTheme', helper::FILTER_BOOLEAN)
-					],
-					'form' => [
-						'option' => $this->getInput('profilAddFormOption', helper::FILTER_BOOLEAN),
-						'data' => $this->getInput('profilAddFormData', helper::FILTER_BOOLEAN),
-						'delete' => $this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN),
-						'deleteAll' => $this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN),
-						'export2csv' => $this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN),
-						'config' => $this->getInput('profilAddFormOption', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddFormData', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddFormDelete', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddFormDeleteAll', helper::FILTER_BOOLEAN) ||
-						$this->getInput('profilAddFormExport2csv', helper::FILTER_BOOLEAN)
-					],
-					'search' => [
-						'config' => $this->getInput('profilAddSearchConfig', helper::FILTER_BOOLEAN),
-					],
-					'redirection' => [
-						'config' => $this->getInput('profilAddRedirectionConfig', helper::FILTER_BOOLEAN),
-					],
-					'user' => [
-						'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
-					]
-				]
+				$data
 			]);
 			// Valeurs en sortie
 			$this->addOutput([

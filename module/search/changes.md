@@ -1,3 +1,5 @@
+# Version 3.0
+- Gestion des permissions intégrée dans le module
 # Version 2.8
 - Multilingue
 # Version 2.71

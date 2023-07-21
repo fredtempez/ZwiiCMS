@@ -79,155 +79,24 @@
     </div>
 </div>
 <div class="containerModule">
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' .  helper::translate('Blog'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogAdd', true, 'Ajouter'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogEdit', true, 'Edit'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogDelete', true, 'Effacer'); ?>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogOption', true, 'Options'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver les commentaires'); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col6" s>
-                        <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Effacer les commentaires'); ?>
-                    </div>
-                    <div class="col6">
-                        <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Nettoyer les commentaires'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('News'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col3">
-                        <?php echo template::checkbox('profilAddNewsAdd', true, 'Ajouter'); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilAddNewsEdit', true, 'Éditer'); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilAddNewsDelete', true, 'Effacer'); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilAddNewsOption', true, 'Options'); ?>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('Galerie'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryAdd', true, 'Ajouter'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryEdit', true, 'Éditer'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddGalleryDelete', true, 'Effacer'); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col6">
-                        <?php echo template::checkbox('profilAddGalleryOption', true, 'Options'); ?>
-                    </div>
-                    <div class="col6">
-                        <?php echo template::checkbox('profilAddGalleryTheme', true, 'Thème'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('Formulaire'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormOption', true, 'Options'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormData', true, 'Gérer les données'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV'); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormDelete', true, 'Effacer'); ?>
-                    </div>
-                    <div class="col4">
-                        <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Effacer'); ?>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('Redirection'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configurer'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('Recherche'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col4">
-                        <?php echo template::checkbox('profilEditSearchConfig', true, 'Configurer'); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php if (file_exists('module/blog/profil/view/add.inc.php')) {
+        include('module/blog/profil/view/add.inc.php');
+    } ?>
+    <?php if (file_exists('module/news/profil/view/add.inc.php')) {
+        include('module/news/profil/view/add.inc.php');
+    } ?>
+    <?php if (file_exists('module/gallery/profil/view/add.inc.php')) {
+        include('module/gallery/profil/view/add.inc.php');
+    } ?>
+    <?php if (file_exists('module/form/profil/view/add.inc.php')) {
+        include('module/form/profil/view/add.inc.php');
+    } ?>
+    <?php if (file_exists('module/redirection/profil/view/add.inc.php')) {
+        include('module/redirection/profil/view/add.inc.php');
+    } ?>
+    <?php if (file_exists('module/search/profil/view/add.inc.php')) {
+        include('module/search/profil/view/add.inc.php');
+    } ?>
 </div>
 <div class="row">
     <div class="col12">

@@ -20,7 +20,7 @@
 class search extends common
 {
 
-	const VERSION = '2.8';
+	const VERSION = '3.0';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 

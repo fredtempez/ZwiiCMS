@@ -1,3 +1,5 @@
+# Version 5.0
+- Gestion des permissions intégrée dans le module
 # Version 4.5
 - Bloque l'effacement de l'article selon le profil
 - Masque le code de vérification

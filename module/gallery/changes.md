@@ -1,3 +1,5 @@
+# Version 4.0
+- Gestion des permissions intégrée dans le module
 # Version 3.9
 - Bloque l'effacement de la galerie selon le profil
 - Masque le code de vérification

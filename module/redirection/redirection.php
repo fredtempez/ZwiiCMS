@@ -16,7 +16,7 @@
 class redirection extends common
 {
 
-	const VERSION = '1.6';
+	const VERSION = '2.0';
 	const REALNAME = 'Redirection';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 

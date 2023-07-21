@@ -1,3 +1,5 @@
+# Version 7.0
+- Gestion des permissions intégrée dans le module
 # version 6.9
 - Bloque l'effacement de l'article selon le profil
 # version 6.8
