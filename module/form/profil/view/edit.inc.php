@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Formulaire'); ?>
+                <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Formulaire'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -23,12 +23,12 @@
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditFormDelete', true, 'Supprimer', [
+                    <?php echo template::checkbox('profilEditFormDelete', true, 'Effacer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'delete'])
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditFormDeleteAll', true, 'Tout Supprimer', [
+                    <?php echo template::checkbox('profilEditFormDeleteAll', true, 'Tout Effacer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'form', 'deleteAll'])
                     ]); ?>
                 </div>

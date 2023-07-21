@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('News'); ?>
+                <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('News'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -16,7 +16,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilEditNewsDelete', true, 'Supprimer', [
+                    <?php echo template::checkbox('profilEditNewsDelete', true, 'Effacer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'news', 'delete'])
                     ]); ?>
                 </div>

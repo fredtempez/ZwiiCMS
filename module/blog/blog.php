@@ -535,7 +535,7 @@ class blog extends common
 					'class' => ($toApprove || $approved) > 0 ? '' : 'buttonGrey',
 					'href' => ($toApprove || $approved) > 0 ? helper::baseUrl() . $this->getUrl(0) . '/comment/' . $articleIds[$i] : '',
 					'value' => $toApprove > 0 ? $toApprove . '/' . $approved : $approved,
-					'help' => ($toApprove || $approved) > 0 ? 'Éditer  / Approuver les commentaires' : ''
+					'help' => ($toApprove || $approved) > 0 ? 'Éditer  / Approuver un commentaire' : ''
 				]),
 				template::button('blogConfigEdit' . $articleIds[$i], [
 					'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $articleIds[$i],

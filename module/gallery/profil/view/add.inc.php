@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Galerie'); ?>
+                <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Galerie'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -12,7 +12,7 @@
                     <?php echo template::checkbox('profilAddGalleryEdit', true, 'Éditer'); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddGalleryDelete', true, 'Supprimer'); ?>
+                    <?php echo template::checkbox('profilAddGalleryDelete', true, 'Effacer'); ?>
                 </div>
             </div>
             <div class="row">
