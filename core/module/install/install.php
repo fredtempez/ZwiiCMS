@@ -320,14 +320,17 @@ class install extends common
 					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 					$md5origin = explode(' ', $md5origin);
 					$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
-					echo $md5origin;
-					echo $md5target;
+					$success = $md5origin[0] === $md5target;
+					$message = $success === false ? json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE) : "";
+					var_dump($md5origin);
+					var_dump($md5target);
+					echo($md5target);
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
 						'content' => [
-							'success' => $md5origin[0] === $md5target,
-							'data' => $md5origin[0] === $md5target ? null : json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE)
+							'success' =>$success,
+							'data' => $success ? '' : 
 						]
 					]);
 					break;
