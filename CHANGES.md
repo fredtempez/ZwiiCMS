@@ -6,7 +6,10 @@
 - Sécurise l'accès aux fonctions sensibles du CMS.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 - Stockage des données JSON, forçage au format objet.
+# Corrections
+- Affichage de messages incohérents et bloquage de la procédure de mise à jour automatique.
 - Correction de bugs mineurs dans la sauvegarde des modules installés.
+- Dépréciations liées à php 8.n
 
 ## Version 12.4.00
 - L'ID de session n'est plus transmise dans l'URL, les modules distribués ont été actualisés.
