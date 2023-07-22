@@ -330,7 +330,7 @@ class install extends common
 						'display' => self::DISPLAY_JSON,
 						'content' => [
 							'success' =>$success,
-							'data' => $success ? '' : 
+							'data' => $success
 						]
 					]);
 					break;
