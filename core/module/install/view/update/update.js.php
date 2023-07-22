@@ -36,7 +36,7 @@ function showError(step, message, errors) {
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
-    if (typeof message === 'object' && message.data) {
+    if (typeof message === 'object' && message.data.lenght > 0) {
         var errorMessage = message.data.replace(/"/g, "");
         console.log("Step : " + step);
         console.log(errors);
