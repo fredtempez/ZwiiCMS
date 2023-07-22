@@ -342,7 +342,7 @@ class install extends common
 						// Installation
 						$pharData->extractTo(__DIR__ . '/../../../', null, true);
 					} catch (Exception $e) {
-						$success = $e->getMessage();
+						$success = false;
 					}
 					// Nettoyage du dossier
 					if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
