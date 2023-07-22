@@ -9,11 +9,11 @@ function step(i, data) {
             data: data
         },
         success: function (result) {
-            if (result.success != "1") { // Vérification de la propriété "success"
+            // if (result.success != "1") { // Vérification de la propriété "success"
                 // Appel de la fonction de gestion d'erreur
-                showError(i, result, errors);
-                return;
-            }
+            //    showError(i, result, errors);
+            //    return;
+            //}
             setTimeout((function () {
                 if (4 === i) {
                     $("#installUpdateSuccess").show();
