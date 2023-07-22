@@ -847,10 +847,11 @@ class user extends common
 						]);
 					} else {
 						$logStatus = 'Connexion réussie';
+						$redirect = $this->getUrl(2) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))) : helper::baseUrl();
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
-							'redirect' => helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))),
+							'redirect' => $redirect,
 							'state' => true
 						]);
 					}
