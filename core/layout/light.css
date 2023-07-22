@@ -18,6 +18,12 @@
 /* Site */
 #site {
 	max-width: 600px !important;
+	border-radius: 5px !important;
+}
+
+#site, p, div, label, select, input, table, span {
+	background-color: rgba(255, 255, 255, 1) !important;
+    color: rgba(33, 34, 35, 1) !important;
 }
 
 section {
