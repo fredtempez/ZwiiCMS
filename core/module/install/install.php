@@ -379,12 +379,11 @@ class install extends common
 							'</IfModule>' . PHP_EOL .
 							'# URL rewriting' . PHP_EOL;
 						$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-						$r = file_put_contents(
+						$success = file_put_contents(
 							'.htaccess',
 							$fileContent
 						);
-						$success = $r === false ? false : true;
-						$message = $r === false ? 'Le fichier htaccess n\'a pas été restauré' : null;
+						$message = $success ? 'Le fichier htaccess n\'a pas été restauré' : null;
 					}
 					// Recopie htaccess
 					if (
