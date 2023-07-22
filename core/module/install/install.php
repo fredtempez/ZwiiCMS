@@ -320,6 +320,8 @@ class install extends common
 					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 					$md5origin = explode(' ', $md5origin);
 					$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
+					echo $md5origin;
+					echo $md5target;
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
