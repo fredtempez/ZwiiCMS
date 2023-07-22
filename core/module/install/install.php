@@ -383,7 +383,7 @@ class install extends common
 							'.htaccess',
 							$fileContent
 						);
-						$message = $success ? null : 'Le fichier htaccess n\'a pas été restauré';
+						$message = $success ? '' : 'Le fichier htaccess n\'a pas été restauré';
 					}
 					// Recopie htaccess
 					if (
