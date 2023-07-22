@@ -38,6 +38,8 @@ function showError(step, message, errors) {
     $("#installUpdateProgress").hide();
     if (typeof message === 'object' && message.data) {
         var errorMessage = message.data.replace(/"/g, "");
+        console.log("Step : " + step);
+        console.log("Errur : " + message.data);
         $("#installUpdateErrorMessage").text(errorMessage);
     } else {
         $("#installUpdateErrorMessage").text(message.replace(/<[^p].*?>/g, ""));
