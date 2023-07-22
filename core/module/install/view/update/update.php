@@ -27,7 +27,7 @@
 					<?php echo helper::translate('4/4 : Configuration...'); ?>
 				</span>
 			</div>
-			<div id="installUpdateError" class="colorRed displayNone">
+			<div id="installUpdateError" class="message colorRed displayNone">
 				<?php echo template::ico('cancel'); ?>
 				<strong>
 					<?php echo helper::translate('Une erreur est survenue lors de l\'étape :'); ?>
@@ -35,7 +35,7 @@
 					<span id="installUpdateErrorStep"> </span>.
 				</strong>
 			</div>
-			<div id="installUpdateSuccess" class="colorGreen displayNone">
+			<div id="installUpdateSuccess" class="message colorGreen displayNone">
 				<?php echo template::ico('check'); ?>
 				<?php echo helper::translate('Mise à jour terminée avec succès.'); ?>
 			</div>
