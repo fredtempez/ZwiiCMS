@@ -298,11 +298,11 @@ class install extends common
 					}
 					// Nettoyage des fichiers d'installation précédents
 					if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
-						$success = $success || unlink(self::TEMP_DIR . 'update.tar.gz');
+						$success = unlink(self::TEMP_DIR . 'update.tar.gz');
 						$message = 'Impossible d\'effacer la mise à jour précédente';
 					}
-					if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
-						$success = $success || unlink(self::TEMP_DIR . 'update.tar');
+					if (is_dir(self::TEMP_DIR . 'update.tar') && $success) {
+						$success =  $this->deleteDir(self::TEMP_DIR . 'update.tar');
 						$message = 'Impossible d\'effacer la mise à jour précédente';
 					}
 					// Valeurs en sortie

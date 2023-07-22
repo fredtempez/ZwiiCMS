@@ -10,7 +10,7 @@ function step(i, data) {
         },
         success: function (result) {
             // if (result.success != "1") { // Vérification de la propriété "success"
-                // Appel de la fonction de gestion d'erreur
+            // Appel de la fonction de gestion d'erreur
             //    showError(i, result, errors);
             //    return;
             //}
@@ -36,17 +36,23 @@ function showError(step, message, errors) {
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
-    if (typeof message === 'object' && message.data.lenght > 0) {
-        var errorMessage = message.data.replace(/"/g, "");
-        console.log("Step : " + step);
-        console.log(errors);
-        console.log("Erreur : " + message.data.lenght > 0);
-        $("#installUpdateErrorMessage").text(errorMessage);
-    } else {
-        $("#installUpdateErrorMessage").text(message.replace(/<[^p].*?>/g, ""));
-    }
+    // Trouver la position du premier "{" pour repérer le début du tableau
+
+    const startOfArray = message.indexOf('{');
+
+    // Extraire le message du warning jusqu'au début du tableau
+    const warningMessage = message.substring(0, startOfArray).trim();
+
+    // Extraire le tableau JSON entre les accolades
+    const jsonString = message.substring(startOfArray);
+    const jsonData = JSON.parse(jsonString);
+
+    // Afficher les résultats
+    console.log("Message du warning:", warningMessage);
+    console.log("Données du tableau:", jsonData);
+    $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " + jsonData.data.replace(/^"(.*)"$/, '$1') + "<br>" + warningMessage.replace(/<[^p].*?>/g, ""));
 }
 
-$(window).on("load", function() {
+$(window).on("load", function () {
     step(1, null);
 });
