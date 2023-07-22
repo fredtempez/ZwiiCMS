@@ -18,6 +18,8 @@
 /* Site */
 #site {
 	max-width: 600px !important;
+	background-color: unset;
+
 }
 
 section {
