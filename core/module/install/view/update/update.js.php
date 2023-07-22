@@ -39,7 +39,8 @@ function showError(step, message, errors) {
     if (typeof message === 'object' && message.data) {
         var errorMessage = message.data.replace(/"/g, "");
         console.log("Step : " + step);
-        console.log("Errur : " + message.data);
+        console.log(errors);
+        console.log("Erreur : " + message.data.lenght > 0);
         $("#installUpdateErrorMessage").text(errorMessage);
     } else {
         $("#installUpdateErrorMessage").text(message.replace(/<[^p].*?>/g, ""));
