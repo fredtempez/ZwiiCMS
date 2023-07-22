@@ -7,6 +7,7 @@
 - Améliore la gestion de la base de données et la génération du fichier de journalisation.
 - Stockage des données JSON, forçage au format objet.
 # Corrections
+- Erreurs fictives pendant la mise à jour en ligne.
 - Affichage de messages incohérents et bloquage de la procédure de mise à jour automatique.
 - Correction de bugs mineurs dans la sauvegarde des modules installés.
 - Dépréciations liées à php 8.n
