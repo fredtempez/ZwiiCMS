@@ -647,8 +647,8 @@
     "Blog": "Blog",
     "Options": "Opciones",
     "Approuver un commentaire": "Aprobar comentarios",
-    "Effacer un commentaires": "Borrar comentario",
-    "Effacer tous les commentaires": "Borrar todo comentarios",
+    "Effacer un commentaire": "Borrar el comentario",
+    "Effacer tous les commentaires": "Borrar todos los comentarios",
     "News": "Noticias",
     "Formulaire": "Formulario",
     "Gérer les données": "Administrar datos",
@@ -658,5 +658,7 @@
     "Configurer": "Configurar",
     "Recherche": "Buscar",
     "Presse Papier": "Portapapeles",
-    "Prévisualiser": "Previsualizar"
+    "Prévisualiser": "Previsualizar",
+    "La réécriture d'URL n'a pas été restaurée !": "¡La reescritura de URL no ha sido restaurada!",
+    "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "¡La copia de seguridad del archivo htaccess no ha sido restaurada!"
 }

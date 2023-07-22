@@ -383,7 +383,7 @@ class install extends common
 							'.htaccess',
 							$fileContent
 						);
-						$message = $success ? '' : 'Le fichier htaccess n\'a pas été restauré';
+						$message = $success ? '' : helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
 					}
 					// Recopie htaccess
 					if (
@@ -392,6 +392,7 @@ class install extends common
 					) {
 						// L'écraser avec le backup
 						$success = $success || copy('.htaccess.bak', '.htaccess');
+						$message = $success ? '' : helper::translate('La copie de sauvegarde du fichier htaccess n\'a pas été restaurée !');
 						// Effacer le backup
 						unlink('.htaccess.bak');
 					}
