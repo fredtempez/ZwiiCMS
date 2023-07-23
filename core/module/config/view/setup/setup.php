@@ -89,11 +89,11 @@
 							'selected' => $this->getData(['config', 'autoUpdateDelay']),
 						]); ?>
 					</div>
-					<div class="col3 offset2 verticalAlignBottom">
+					<div class="col3 offset1 verticalAlignBottom">
 						<pre>Version installée : <strong><?php echo common::ZWII_VERSION ; ?></strong></pre>
 						<pre>Version en ligne  : <strong><?php echo helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) ; ?></strong></pre>
 					</div>
-					<div class="col3 verticalAlignBottom">
+					<div class="col3 offset2 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
 							'ico' => 'download-cloud',
 							'href' => helper::baseUrl() . 'install/update',
