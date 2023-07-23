@@ -422,18 +422,14 @@ class install extends common
 					 * Met à jour les dictionnaires des langues depuis les modèles installés
 					 */
 					if ($success) {
-						// Langues installées
-						$installedUI = $this->getData(['language']);
-
-						// Langues disponibles avec la mise à jour
 						require_once('core/module/install/ressource/defaultdata.php');
-						$default = init::$defaultData['language'];
-
-						foreach ($installedUI as $key => $value) {
-							if ( is_array($value) &&
-								$default[$key]['version'] > $value['version']) {
+						$installedLanguages = $this->getData(['language']);
+						$defaultLanguages = init::$defaultData['language'];
+						foreach ($installedLanguages as $key => $value) {
+							if (isset($defaultLanguages[$key]['version']) &&
+								$defaultLanguages[$key]['version'] > $value['version']) {
 								copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-								$this->setData(['language', $key, $default[$key]]);
+								$this->setData(['language', $key, $defaultLanguages[$key]]);
 							}
 						}
 					}
