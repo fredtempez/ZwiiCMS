@@ -430,7 +430,8 @@ class install extends common
 						$default = init::$defaultData['language'];
 
 						foreach ($installedUI as $key => $value) {
-							if ($default[$key]['version'] > $value['version']) {
+							if ( is_array($value) &&
+								$default[$key]['version'] > $value['version']) {
 								copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 								$this->setData(['language', $key, $default[$key]]);
 							}
