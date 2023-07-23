@@ -329,6 +329,7 @@ class install extends common
 						$message = json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE);
 						if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
 							unlink(self::TEMP_DIR . 'update.tar.gz');
+							http_response_code(500);
 						}
 					}
 
