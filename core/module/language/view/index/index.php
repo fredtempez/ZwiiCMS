@@ -65,7 +65,7 @@
 				</h4>
 				<div class="col4 offset2">
 					<?php echo template::button('translateButtonCopyContent', [
-						'href' => helper::baseUrl() . 'translate/copy',
+						'href' => helper::baseUrl() . 'language/copy',
 						'ico' => 'docs',
 						'disabled' => $module::$siteCopy,
 						'value' => 'Copie de contenus localisés'
@@ -73,7 +73,7 @@
 				</div>
 				<div class="col4">
 					<?php echo template::button('translateButtonAddContent', [
-						'href' => helper::baseUrl() . 'translate/add',
+						'href' => helper::baseUrl() . 'language/add',
 						'ico' => 'plus',
 						'class' => 'buttonGreen',
 						'value' => 'Nouveau contenu localisé'

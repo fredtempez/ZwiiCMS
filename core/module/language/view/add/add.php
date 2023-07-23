@@ -3,7 +3,7 @@
     <div class="col1">
         <?php echo template::button('translateFormBack', [
             'class' => 'buttonGrey',
-            'href' => helper::baseUrl() . 'translate',
+            'href' => helper::baseUrl() . 'language',
             'value' => template::ico('left')
         ]); ?>
     </div>

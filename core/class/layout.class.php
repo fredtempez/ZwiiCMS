@@ -882,7 +882,7 @@ class layout extends common
                 foreach (self::$languages as $key => $value) {
                     if (is_dir(self::DATA_DIR . $key)) {
                         $c++;
-                        $location = helper::baseUrl() . 'translate/content/' . $key;
+                        $location = helper::baseUrl() . 'language/content/' . $key;
                         $leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
                     }
                 }
@@ -1211,7 +1211,7 @@ class layout extends common
         }
 
         $items = '<li>';
-        $items .= '<a href="' . helper::baseUrl() . 'translate/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
+        $items .= '<a href="' . helper::baseUrl() . 'language/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
         $items .= '</li>';
         return $items;
     }
