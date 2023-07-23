@@ -9,11 +9,11 @@ function step(i, data) {
             data: data
         },
         success: function (result) {
-            // if (result.success != "1") { // Vérification de la propriété "success"
+             if (result.success != "1") { // Vérification de la propriété "success"
             // Appel de la fonction de gestion d'erreur
-            //    showError(i, result, errors);
-            //    return;
-            //}
+                showError(i, result, errors);
+                return;
+            }
             setTimeout((function () {
                 if (4 === i) {
                     $("#installUpdateSuccess").show();
@@ -36,21 +36,30 @@ function showError(step, message, errors) {
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
-    // Trouver la position du premier "{" pour repérer le début du tableau
 
-    const startOfArray = message.indexOf('{');
+    // Vérifier si l'accolade ouvrante est trouvée et qu'elle n'est pas en première position
+    if (typeof message !== 'object') {
+        
+        // Trouver la position du premier "{" pour repérer le début du tableau
+        const startOfArray = message.indexOf('{');
 
-    // Extraire le message du warning jusqu'au début du tableau
-    const warningMessage = message.substring(0, startOfArray).trim();
+        // Extraire le message du warning jusqu'au début du tableau
+        const warningMessage = message.substring(0, startOfArray).trim();
 
-    // Extraire le tableau JSON entre les accolades
-    const jsonString = message.substring(startOfArray);
-    const jsonData = JSON.parse(jsonString);
+        // Extraire le tableau JSON entre les accolades
+        const jsonString = message.substring(startOfArray);
+        const jsonData = JSON.parse(jsonString);
 
-    // Afficher les résultats
-    console.log("Message du warning:", warningMessage);
-    console.log("Données du tableau:", jsonData);
-    $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " + jsonData.data.replace(/^"(.*)"$/, '$1') + "<br>" + warningMessage.replace(/<[^p].*?>/g, ""));
+        // Afficher les résultats
+        console.log("Message du warning:", warningMessage);
+        console.log("Données du tableau:", jsonData);
+        $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " + jsonData.data.replace(/^"(.*)"$/, '$1') + "<br>" + warningMessage.replace(/<[^p].*?>/g, ""));
+    } else {
+        // Si l'accolade ouvrante n'est pas trouvée ou en première position, afficher un message d'erreur
+        console.log("Aucune donnée JSON trouvée dans le message d'erreur.");
+        // Vous pouvez également faire quelque chose d'autre ici, par exemple, afficher un message à l'utilisateur, etc.
+        $("#installUpdateErrorMessage").html(message);
+    }
 }
 
 $(window).on("load", function () {
