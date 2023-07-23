@@ -356,6 +356,7 @@ class install extends common
 						$pharData->extractTo(__DIR__ . '/../../../', null, true);
 					} catch (Exception $e) {
 						$success = false;
+						http_response_code(500);
 					}
 					// Nettoyage du dossier
 					if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
@@ -396,7 +397,11 @@ class install extends common
 							'.htaccess',
 							$fileContent
 						);
-						$message = $success ? '' : helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
+						if ($success === false) {
+							$message = helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
+							http_response_code(500);
+						}
+
 					}
 					// Recopie htaccess
 					if (
@@ -404,8 +409,11 @@ class install extends common
 						$success && file_exists('.htaccess.bak')
 					) {
 						// L'écraser avec le backup
-						$success = $success || copy('.htaccess.bak', '.htaccess');
-						$message = $success ? '' : helper::translate('La copie de sauvegarde du fichier htaccess n\'a pas été restaurée !');
+						$success = copy('.htaccess.bak', '.htaccess');
+						if ($success === false) {
+							$message = helper::translate('La copie de sauvegarde du fichier htaccess n\'a pas été restaurée !');
+							http_response_code(500);
+						}
 						// Effacer le backup
 						unlink('.htaccess.bak');
 					}
@@ -413,18 +421,19 @@ class install extends common
 					/**
 					 * Met à jour les dictionnaires des langues depuis les modèles installés
 					 */
+					if ($success) {
+						// Langues installées
+						$installedUI = $this->getData(['language']);
 
-					// Langues installées
-					$installedUI = $this->getData(['language']);
+						// Langues disponibles avec la mise à jour
+						require_once('core/module/install/ressource/defaultdata.php');
+						$default = init::$defaultData['language'];
 
-					// Langues disponibles avec la mise à jour
-					require_once('core/module/install/ressource/defaultdata.php');
-					$default = init::$defaultData['language'];
-
-					foreach ($installedUI as $key => $value) {
-						if ($default[$key]['version'] > $value['version']) {
-							copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-							$this->setData(['language', $key, $default[$key]]);
+						foreach ($installedUI as $key => $value) {
+							if ($default[$key]['version'] > $value['version']) {
+								copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+								$this->setData(['language', $key, $default[$key]]);
+							}
 						}
 					}
 

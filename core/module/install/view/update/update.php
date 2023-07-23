@@ -30,8 +30,7 @@
 			<div id="installUpdateError" class="message colorRed displayNone">
 				<?php echo template::ico('cancel'); ?>
 				<strong>
-					<?php echo helper::translate('Une erreur est survenue lors de l\'étape :'); ?>
-					&nbsp;
+					<?php echo helper::translate('Une erreur est survenue lors de l\'étape :') . '<br>'; ?>
 					<span id="installUpdateErrorStep"> </span>.
 				</strong>
 			</div>
