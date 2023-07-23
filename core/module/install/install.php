@@ -294,16 +294,16 @@ class install extends common
 					// Sauvegarde htaccess
 					if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 						$success = copy('.htaccess', '.htaccess' . '.bak');
-						$message =  $success ? '' : 'Erreur de copie du fichier htaccess';
+						$message = $success ? '' : 'Erreur de copie du fichier htaccess';
 					}
 					// Nettoyage des fichiers d'installation précédents
 					if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
 						$success = unlink(self::TEMP_DIR . 'update.tar.gz');
 						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
 					}
-					if (is_dir(self::TEMP_DIR . 'update.tar') && $success) {
-						$success =  $this->deleteDir(self::TEMP_DIR . 'update.tar');
-						$message =  $success ? '' :'Impossible d\'effacer la mise à jour précédente';
+					if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
+						$success = unlink(self::TEMP_DIR . 'update.tar');
+						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
 					}
 					// Valeurs en sortie
 					$this->addOutput([
@@ -320,14 +320,23 @@ class install extends common
 					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 					$md5origin = explode(' ', $md5origin);
 					$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
-					// Sorties
-					$success = ($md5origin[0] === $md5target);
-					$message = $success === false ? json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE) : "";
+					// Vérifier si les checksums correspondent
+					if ($md5origin[0] === $md5target) {
+						$success = true;
+						$message = "";
+					} else {
+						$success = false;
+						$message = json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE);
+						if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
+							unlink(self::TEMP_DIR . 'update.tar.gz');
+						}
+					}
+
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
 						'content' => [
-							'success' =>$success,
+							'success' => $success,
 							'data' => $message
 						]
 					]);
