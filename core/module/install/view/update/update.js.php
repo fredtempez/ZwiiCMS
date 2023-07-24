@@ -39,7 +39,7 @@ function showError(step, message, errors) {
 
     // Vérifier si l'accolade ouvrante est trouvée et qu'elle n'est pas en première position
     if (typeof message !== 'object') {
-        
+
         // Trouver la position du premier "{" pour repérer le début du tableau
         const startOfArray = message.indexOf('{');
 
@@ -53,7 +53,10 @@ function showError(step, message, errors) {
         // Afficher les résultats
         console.log("Message du warning:", warningMessage);
         console.log("Données du tableau:", jsonData);
-        $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " + jsonData.data.replace(/^"(.*)"$/, '$1') + "<br>" + warningMessage.replace(/<[^p].*?>/g, ""));
+        $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " +
+            warningMessage.replace(/<[^p].*?>/g, "") +
+            "<br>" +
+            jsonData.data.replace(/^"(.*)"$/, '$1'));
     } else {
         // Vous pouvez également faire quelque chose d'autre ici, par exemple, afficher un message à l'utilisateur, etc.
         $("#installUpdateErrorMessage").html(message);
