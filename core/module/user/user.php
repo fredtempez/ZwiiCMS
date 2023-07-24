@@ -612,7 +612,7 @@ class user extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/profil',
+				'redirect' => helper::baseUrl() . 'user/profilEdit/' . $this->getUrl(2) . '/' . $this->getUrl(3),
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);

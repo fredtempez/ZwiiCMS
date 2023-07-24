@@ -6,7 +6,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditDownloadEdit', true, 'Ajouter', [
+                    <?php echo template::checkbox('profilEditDownloadAdd', true, 'Ajouter', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'add'])
                     ]); ?>
                 </div>
