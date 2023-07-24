@@ -45,7 +45,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditDownloadCategoryEdit', true, 'Editer une catégorie', [
+                    <?php echo template::checkbox('profilEditDownloadCategoryEdit', true, 'Éditer une catégorie', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'categoryEdit'])
                     ]); ?>
                 </div>
