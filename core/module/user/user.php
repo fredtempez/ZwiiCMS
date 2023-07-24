@@ -628,6 +628,7 @@ class user extends common
 		self::$listModules = helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
 		sort(self::$listModules);
+
 		// Valeurs en sortie;
 		$this->addOutput([
 			'title' => sprintf(helper::translate('Édition du profil %s'), $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])),
