@@ -101,24 +101,11 @@
         </div>
     </div>
     <div class="containerModule">
-        <?php if (file_exists('module/blog/profil/view/edit.inc.php')) {
-            include('module/blog/profil/view/edit.inc.php');
-        } ?>
-        <?php if (file_exists('module/news/profil/view/edit.inc.php')) {
-            include('module/news/profil/view/edit.inc.php');
-        } ?>
-        <?php if (file_exists('module/gallery/profil/view/edit.inc.php')) {
-            include('module/gallery/profil/view/edit.inc.php');
-        } ?>
-        <?php if (file_exists('module/form/profil/view/edit.inc.php')) {
-            include('module/form/profil/view/edit.inc.php');
-        } ?>
-        <?php if (file_exists('module/redirection/profil/view/edit.inc.php')) {
-            include('module/redirection/profil/view/edit.inc.php');
-        } ?>
-        <?php if (file_exists('module/search/profil/view/edit.inc.php')) {
-            include('module/search/profil/view/edit.inc.php');
-        } ?>
+        <?php foreach (user::$listModules as $moduleId): ?>
+            <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {   
+                include('module/' . $moduleId . '/profil/view/edit.inc.php');
+            } ?>
+        <?php endforeach; ?>
     </div>
 <?php endif; ?>
 <div class="row">

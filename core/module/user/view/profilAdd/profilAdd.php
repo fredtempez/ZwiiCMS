@@ -79,24 +79,12 @@
     </div>
 </div>
 <div class="containerModule">
-    <?php if (file_exists('module/blog/profil/view/add.inc.php')) {
-        include('module/blog/profil/view/add.inc.php');
-    } ?>
-    <?php if (file_exists('module/news/profil/view/add.inc.php')) {
-        include('module/news/profil/view/add.inc.php');
-    } ?>
-    <?php if (file_exists('module/gallery/profil/view/add.inc.php')) {
-        include('module/gallery/profil/view/add.inc.php');
-    } ?>
-    <?php if (file_exists('module/form/profil/view/add.inc.php')) {
-        include('module/form/profil/view/add.inc.php');
-    } ?>
-    <?php if (file_exists('module/redirection/profil/view/add.inc.php')) {
-        include('module/redirection/profil/view/add.inc.php');
-    } ?>
-    <?php if (file_exists('module/search/profil/view/add.inc.php')) {
-        include('module/search/profil/view/add.inc.php');
-    } ?>
+    <?php foreach (user::$listModules as $moduleId): ?>
+        <?php echo $moduleId;
+        if (file_exists('module/' . $moduleId . '/profil/view/add.inc.php')) {
+            include('module/' . $moduleId . '/profil/view/add.inc.php');
+        } ?>
+    <?php endforeach; ?>
 </div>
 <div class="row">
     <div class="col12">
