@@ -1,3 +1,5 @@
+# Version 4.0
+- Gestion des permissions intégrée dans le module
 # Version 3.5
 - Masque le code de vérification
 # Version 3.4
