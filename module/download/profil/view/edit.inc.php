@@ -39,14 +39,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col6">
-                    <?php echo template::checkbox('profilEditDownloadCommentDelete', true, 'Supprimer le commentaire', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'commentDelete'])
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategories', true, 'Catégories', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryManage'])
                     ]); ?>
                 </div>
-                <div class="col6">
-                    <?php echo template::checkbox('profilEditDownloadCommentDeleteAll', true, 'Supprimer tout les commentaires', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'commentDeleteAll'])
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategoryEdit', true, 'Editer une catégorie', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryEdit'])
+                    ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategoryDelete', true, 'Effacer une catégorie',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryDelete'])
+                    ]); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer le commentaire',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'commentDelete'])
+                    ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Effacer tous les commentaires',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment', 'deleteAll'])
+                    ]); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAllStats', true, 'Effacer toutes les statistiques',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'deleteAllStats'])
                     ]); ?>
                 </div>
             </div>

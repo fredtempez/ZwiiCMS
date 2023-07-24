@@ -32,7 +32,7 @@
                     <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer le commentaire'); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Supprimer tout les commentaires'); ?>
+                    <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Supprimer tous les commentaires'); ?>
                 </div>
             </div>
         </div>

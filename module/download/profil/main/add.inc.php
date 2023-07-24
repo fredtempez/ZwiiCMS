@@ -14,5 +14,12 @@
     $this->getInput('profilAddDownloadComment', helper::FILTER_BOOLEAN) ||
     $this->getInput('profilAddDownloadCommentApprove', helper::FILTER_BOOLEAN) ||
     $this->getInput('profilAddDownloadCommentDelete', helper::FILTER_BOOLEAN) ||
-    $this->getInput('profilAddDownloadCommentDeleteAll', helper::FILTER_BOOLEAN)
+    $this->getInput('profilAddDownloadCommentDeleteAll', helper::FILTER_BOOLEAN),
+    'categoryManage' => $this->getInput('profilAddDownloadCategories', helper::FILTER_BOOLEAN),
+    'categoryEdit' => $this->getInput('profilAddDownloadCategoryEdit', helper::FILTER_BOOLEAN),
+    'categoryDelete' => $this->getInput('profilAddDownloadCategoryDelete', helper::FILTER_BOOLEAN),
+    'deleteAllStats' => $this->getInput('profilAddDownloadCommentDeleteAllStats', helper::FILTER_BOOLEAN),
+
+
+
 ];

@@ -27,11 +27,25 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col6" s>
-                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Supprimer le commentaire'); ?>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategories', true, 'Catégories'); ?>
                 </div>
-                <div class="col6">
-                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Supprimer tout les commentaires'); ?>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategoryEdit', true, 'Editer une catégorie'); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCategoryDelete', true, 'Effacer une catégorie'); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer le commentaire'); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Effacer tous les commentaires'); ?>
+                </div>
+                <div class="col4">
+                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAllStats', true, 'Effacer toutes les statistiques'); ?>
                 </div>
             </div>
         </div>

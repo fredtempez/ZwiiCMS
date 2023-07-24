@@ -45,7 +45,7 @@
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Supprimer tout les commentaires', [
+                    <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Supprimer tous les commentaires', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDeleteAll'])
                     ]); ?>
                 </div>
