@@ -328,15 +328,7 @@ class common
 		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB;
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath($keys, self::$i18nContent),
-				'backup' => file_exists('site/data/.backup')
-			]);
-		}
+		$this->jsonDB(self::$i18nContent);
 
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
@@ -595,6 +587,21 @@ class common
 		return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 	}
 
+
+	public function jsonDB($lang)
+	{
+		// Instanciation de la classe des entrées / sorties
+		// Récupère les descripteurs
+		foreach ($this->dataFiles as $keys => $value) {
+			// Constructeur  JsonDB;
+			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				'name' => $keys . '.json',
+				'dir' => $this->dataPath($keys, $lang),
+				'backup' => file_exists('site/data/.backup')
+			]);
+		}
+	}
+	
 	/**
 	 * Initialisation des données
 	 * @param string $module : nom du module à générer
@@ -626,7 +633,7 @@ class common
 			}
 			// Site en français avec site exemple
 			if ($lang == 'fr_FR' && $sampleSite === true) {
-				$this->setData([$module,init::$siteTemplate[$module]]);
+				$this->setData([$module, init::$siteTemplate[$module]]);
 				// Création des pages
 				foreach (init::$siteContent as $key => $value) {
 					$this->setPage($key, $value, 'fr_FR');
@@ -634,7 +641,7 @@ class common
 				// Version en langue étrangère ou fr_FR sans site de test
 			} else {
 				// En_EN par défaut si le contenu localisé n'est pas traduit
-				$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ?  $lang :  'default';
+				$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ? $lang : 'default';
 				// Charger les données de cette langue 
 				$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
 				// Créer la page d'accueil, une seule page dans cette configuration

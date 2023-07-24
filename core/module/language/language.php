@@ -94,8 +94,8 @@ class language extends common
 			if (
 				is_array($languageData) &&
 				is_array($descripteur['languages'][$lang])
-			) {			
-				$response = $this->setData(['language', $lang, $descripteur['languages'][$lang] ]);
+			) {
+				$response = $this->setData(['language', $lang, $descripteur['languages'][$lang]]);
 				$response = $response || file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			}
 
@@ -254,13 +254,13 @@ class language extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-								   template::button('translateContentLanguageUIEdit' . $file, [
-									   'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-									   'value' => template::ico('pencil'),
-									   'help' => 'Éditer',
-									   'disabled' => 'fr_FR' === $file
-								   ]),
-								   */
+												  template::button('translateContentLanguageUIEdit' . $file, [
+													  'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+													  'value' => template::ico('pencil'),
+													  'help' => 'Éditer',
+													  'disabled' => 'fr_FR' === $file
+												  ]),
+												  */
 
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
@@ -319,12 +319,16 @@ class language extends common
 			$this->isPost()
 		) {
 
-			// Création du contenu
 			$lang = $this->getInput('translateAddContent');
 
+			// Constructeur pour cette langue
+			$this->jsonDB($lang);
+			
+			// Création du contenu
 			$this->initData('page', $lang);
 			$this->initData('module', $lang);
 			$this->initData('locale', $lang);
+
 
 			// Valeurs en sortie
 			$this->addOutput([
