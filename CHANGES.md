@@ -2,13 +2,11 @@
 
 ## Version 13.0.00
 # Améliorations
-- Gestion des profils d'utilisateurs.
-- Sécurise l'accès aux fonctions sensibles du CMS.
-- Améliore la gestion de la base de données et la génération du fichier de journalisation.
-- Stockage des données JSON, forçage au format objet.
-- Erreurs fictives pendant la mise à jour en ligne, améliorations du dialogue AJAX entre PHP et JQUERY.
+- Gestion des profils d'utilisateurs dans les groupes de memebres et d'éditeurs (modérateurs). Les profils définissent avec précision les autorisations d'accès à toutes les fonctions du CMS.
+- Améliore la gestion de la base de données et la génération du fichier de journalisation, stockage des données JSON, forçage au format objet.
+- Erreurs fictives pendant la mise à jour en ligne, améliorations du dialogue AJAX entre PHP et JQUERY avec un affichage précis des erreurs.
+- L'ajout d'une langue de contenu initialise les données de la langue.
 # Corrections
-- Affichage de messages incohérents et bloquage de la procédure de mise à jour automatique.
 - Correction de bugs mineurs dans la sauvegarde des modules installés.
 - Dépréciations liées à php 8.n
 
