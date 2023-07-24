@@ -80,8 +80,7 @@
 </div>
 <div class="containerModule">
     <?php foreach (user::$listModules as $moduleId): ?>
-        <?php echo $moduleId;
-        if (file_exists('module/' . $moduleId . '/profil/view/add.inc.php')) {
+        <?php if (file_exists('module/' . $moduleId . '/profil/view/add.inc.php')) {
             include('module/' . $moduleId . '/profil/view/add.inc.php');
         } ?>
     <?php endforeach; ?>
