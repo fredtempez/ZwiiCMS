@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.0.00.2';
+	const ZWII_VERSION = '13.0.00.3';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
@@ -601,7 +601,7 @@ class common
 			]);
 		}
 	}
-	
+
 	/**
 	 * Initialisation des données
 	 * @param string $module : nom du module à générer
