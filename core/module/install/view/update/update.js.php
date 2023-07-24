@@ -32,7 +32,7 @@ function step(i, data) {
 }
 
 function showError(step, message, errors) {
-    $("#installUpdateErrorStep").text(errors[step]);
+    $("#installUpdateErrorStep").text(errors[step] + " (étape n°" + step + ")");
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
@@ -51,12 +51,10 @@ function showError(step, message, errors) {
         const jsonData = JSON.parse(jsonString);
 
         // Afficher les résultats
-        console.log("Message du warning:", warningMessage);
-        console.log("Données du tableau:", jsonData);
         $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " +
-            warningMessage.replace(/<[^p].*?>/g, "") +
+            jsonData.data.replace(/^"(.*)"$/, '$1') +
             "<br>" +
-            jsonData.data.replace(/^"(.*)"$/, '$1'));
+            warningMessage.replace(/<[^p].*?>/g, ""));
     } else {
         // Vous pouvez également faire quelque chose d'autre ici, par exemple, afficher un message à l'utilisateur, etc.
         $("#installUpdateErrorMessage").html(message);
