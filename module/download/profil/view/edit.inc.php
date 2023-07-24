@@ -6,7 +6,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditDownloadAdd', true, 'Ajouter', [
+                    <?php echo template::checkbox('profilEditDownloadEdit', true, 'Ajouter', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'add'])
                     ]); ?>
                 </div>
@@ -40,35 +40,35 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCategories', true, 'Catégories', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryManage'])
+                    <?php echo template::checkbox('profilEditDownloadCategories', true, 'Catégories', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'categoryManage'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCategoryEdit', true, 'Editer une catégorie', [
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryEdit'])
+                    <?php echo template::checkbox('profilEditDownloadCategoryEdit', true, 'Editer une catégorie', [
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'categoryEdit'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCategoryDelete', true, 'Effacer une catégorie',[
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'categoryDelete'])
+                    <?php echo template::checkbox('profilEditDownloadCategoryDelete', true, 'Effacer une catégorie',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'categoryDelete'])
                     ]); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer le commentaire',[
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'commentDelete'])
+                    <?php echo template::checkbox('profilEditDownloadCommentDelete', true, 'Effacer le commentaire',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'commentDelete'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Effacer tous les commentaires',[
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment', 'deleteAll'])
+                    <?php echo template::checkbox('profilEditDownloadCommentDeleteAll', true, 'Effacer tous les commentaires',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'commentDeleteAll'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCommentDeleteAllStats', true, 'Effacer toutes les statistiques',[
-                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'deleteAllStats'])
+                    <?php echo template::checkbox('profilEditDownloadCommentDeleteAllStats', true, 'Effacer toutes les statistiques',[
+                        'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'deleteAllStats'])
                     ]); ?>
                 </div>
             </div>
