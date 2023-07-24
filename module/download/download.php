@@ -715,7 +715,9 @@ class download extends common
 		// L'item existe
 		else {
 			// Soumission du formulaire
-			if ($this->isPost()) {
+			if (
+				$this->isPost()
+			) {
 				if ($this->getUser('group') === self::GROUP_ADMIN) {
 					$newuserid = $this->getInput('downloadEditUserId', helper::FILTER_STRING_SHORT, true);
 				} else {
