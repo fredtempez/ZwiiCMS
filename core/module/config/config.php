@@ -758,7 +758,7 @@ class config extends common
 			} else {
 				// Valeurs en sortie
 				$this->addOutput([
-					'title' => helper::translate('Confighelper::translate(uration'),
+					'title' => helper::translate('Configuration'),
 					'view' => 'index',
 					'notification' => helper::translate('Aucune liste noire à télécharger'),
 					'state' => false
