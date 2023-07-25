@@ -16,10 +16,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col4">
+                <div class="col6">
                     <?php echo template::checkbox('profilAddFormDelete', true, 'Effacer'); ?>
                 </div>
-                <div class="col4">
+                <div class="col6">
                     <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Effacer'); ?>
                 </div>
 
