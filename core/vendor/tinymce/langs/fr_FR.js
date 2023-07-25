@@ -458,5 +458,5 @@ tinymce.addI18n('fr_FR',{
 "Prev": "Pr\u00e9c ",
 "Find and replace": "Trouver et remplacer",
 "Whole words": "Mots entiers",
-"Insert template": "Ajouter un th\u00e8me"
+"Insert template": "Ins\u00e9rer un mod\u00e8le"
 });
