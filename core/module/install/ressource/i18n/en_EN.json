@@ -636,12 +636,11 @@
     "Droits sur les dossiers": "Folder authorizations",
     "Permissions sur les fichiers": "File Permissions",
     "Téléverser": "Upload",
-    "Prévisualier": "Preview",
+    "Prévisualiser": "Preview",
     "Dupliquer": "Duplicate",
     "Extraire": "Extract",
     "Presse papier": "Clipboard",
     "Droits sur les fichiers": "File authorizations",
-    "Éditeur": "Editor",
     "Permissions sur les pages": "Page Permissions",
     "Permissions sur le module": "Module Permissions",
     "Blog": "Blog",
@@ -657,7 +656,6 @@
     "Configurer": "Configure",
     "Recherche": "Search",
     "Presse Papier": "Clipboard",
-    "Prévisualiser": "Preview",
     "La réécriture d'URL n'a pas été restaurée !": "URL rewriting has not been restored!",
     "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "Backup copy of htaccess file has not been restored!"
 }

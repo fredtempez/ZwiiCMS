@@ -636,12 +636,11 @@
     "Droits sur les dossiers": "",
     "Permissions sur les fichiers": "",
     "Téléverser": "",
-    "Prévisualier": "",
+    "Prévisualiser": "",
     "Dupliquer": "",
     "Extraire": "",
     "Presse papier": "",
     "Droits sur les fichiers": "",
-    "Éditeur": "",
     "Permissions sur les pages": "",
     "Permissions sur le module": "",
     "Blog": "",
@@ -658,7 +657,6 @@
     "Configurer": "",
     "Recherche": "",
     "Presse Papier": "",
-    "Prévisualiser": "",
     "La réécriture d'URL n'a pas été restaurée !": "",
     "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": ""
 }

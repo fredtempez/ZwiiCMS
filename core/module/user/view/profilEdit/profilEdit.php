@@ -233,7 +233,7 @@
                             </div>
 
                             <div class="col3">
-                                <?php echo template::checkbox('profilEditPreview', true, 'Prévisualier', [
+                                <?php echo template::checkbox('profilEditPreview', true, 'Prévisualiser', [
                                     'class' => 'filemanager',
                                     'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'file', 'preview'])
                                 ]); ?>
