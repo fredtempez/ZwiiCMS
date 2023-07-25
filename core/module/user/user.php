@@ -66,7 +66,7 @@ class user extends common
 
 	public static $groupProfils = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Editeur'
+		self::GROUP_EDITOR => 'Éditeur'
 	];
 
 	public static $listModules = [];
