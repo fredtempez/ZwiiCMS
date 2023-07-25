@@ -82,7 +82,7 @@
                 </div>
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::checkbox('profilEditPageModule', true, 'Gérer Module', [
+                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
                             'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
                         ]); ?>
                     </div>
@@ -102,7 +102,7 @@
     </div>
     <div class="containerModule">
         <?php foreach (user::$listModules as $moduleId): ?>
-            <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {   
+            <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {
                 include('module/' . $moduleId . '/profil/view/edit.inc.php');
             } ?>
         <?php endforeach; ?>

@@ -74,5 +74,12 @@
     "Éditer l'article": "Makaleyi düzenle",
     "Éditer/ Approuver un commentaire": "Yorumları Düzenle/Onayla",
     "Éditeur": "Düzenleyici",
-    "État": "Durum"
+    "État": "Durum",
+    "Gérer les commentaires": "Yorumları yönet",
+    "Effacer le commentaire": "Yorumu sil",
+    "Effacer tous les commentaires": "Tüm yorumları sil",
+    "Effacer toutes les statistiques": "Tüm istatistikleri sil",
+    "Gérer les catégories": "Kategorileri yönet",
+    "Éditer une catégorie": "Kategori düzenle",
+    "Effacer une catégorie": "Kategoriyi sil"
 }

@@ -21,15 +21,15 @@
                     <?php echo template::checkbox('profilAddBlogOption', true, 'Options'); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddBlogComment', true, 'Commentaire'); ?>
+                    <?php echo template::checkbox('profilAddBlogComment', true, 'Gérer les commentaires'); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Gérer les commentaires'); ?>
+                    <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver un commentaire'); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col6" s>
-                    <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer le commentaire'); ?>
+                    <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer un commentaire'); ?>
                 </div>
                 <div class="col6">
                     <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Supprimer tous les commentaires'); ?>

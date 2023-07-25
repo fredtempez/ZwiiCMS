@@ -16,7 +16,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditBlogDelete', true, 'Effacer`', [
+                    <?php echo template::checkbox('profilEditBlogDelete', true, 'Effacer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'delete'])
                     ]); ?>
                 </div>
@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Supprimer le commentaire', [
+                    <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Supprimer un commentaire', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDelete'])
                     ]); ?>
                 </div>
