@@ -99,6 +99,8 @@ class form extends common
 		'textAlignRight' => 'A droite'
 	];
 
+	// Format fixe temporaire
+	public static $dateFormat = 'd/m/Y';
 
 	/**
 	 * Configuration
@@ -427,7 +429,10 @@ class form extends common
 					default:
 						$filter = helper::FILTER_STRING_SHORT;
 				}
+				// Application des filtres
 				$value = $this->getInput('formInput[' . $index . ']', $filter, $input['required']) === true ? 'X' : $this->getInput('formInput[' . $index . ']', $filter, $input['required']);
+				// Convertit la date au format correct
+				$value = $input['type'] === self::TYPE_DATETIME ? date_format(date_create($value), 'd/m/Y') : $value;
 				//  premier champ email ajouté au mail en reply si option active
 				if (
 					$this->getData(['module', $this->getUrl(0), 'config', 'replyto']) === true &&
@@ -436,6 +441,7 @@ class form extends common
 					$replyTo = $value;
 				}
 				// Préparation des données pour la création dans la base
+
 				$data[$this->getData(['module', $this->getUrl(0), 'input', $index, 'name'])] = $value;
 				// Préparation des données pour le mail
 				$content .= '<strong>' . $this->getData(['module', $this->getUrl(0), 'input', $index, 'name']) . ' :</strong> ' . $value . '<br>';

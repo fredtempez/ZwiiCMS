@@ -24,3 +24,8 @@
 .inputDateManagerWrapper {
 	width: 20%;
 }
+
+input[type="date"] {
+    width: 200px;
+	text-align: center;
+}

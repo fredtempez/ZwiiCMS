@@ -13,7 +13,8 @@
 					]); ?>
 				<?php elseif ($input['type'] === $module::TYPE_SELECT): ?>
 					<?php
-					$values = array_flip(explode(',', $input['values'])); foreach ($values as $value => $key) {
+					$values = array_flip(explode(',', $input['values']));
+					foreach ($values as $value => $key) {
 						$values[$value] = trim($value);
 					}
 					?>
@@ -49,6 +50,10 @@
 					</h3>
 				<?php endif; ?>
 			<?php endforeach; ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col12 textAlignCenter">
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'captcha'])): ?>
 				<div class="row">
 					<div class="col12 textAlignCenter">
@@ -60,7 +65,7 @@
 				</div>
 			<?php endif; ?>
 			<div class="row">
-				<div class="col2 offset10">
+				<div class="col2">
 					<?php echo template::submit('formSubmit', [
 						'value' => $this->getData(['module', $this->getUrl(0), 'config', 'button']) ? $this->getData(['module', $this->getUrl(0), 'config', 'button']) : 'Envoyer',
 						'ico' => ''

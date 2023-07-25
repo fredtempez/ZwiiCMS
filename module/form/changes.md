@@ -1,5 +1,7 @@
 # Version 4.0
-- Gestion des permissions intégrée dans le module
+- Gestion des permissions intégrée dans le module.
+- Date au format européen.
+- Largeur fixe du champ date.
 # Version 3.10
 - Bloque l'effacement selon le profil
 - Masque le code de vérification
