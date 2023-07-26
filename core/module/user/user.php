@@ -524,7 +524,7 @@ class user extends common
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
-							'disabled' => $subGroupData['readonly'],
+							'disabled' => $subGroupData['permanent'],
 						])
 					];
 				}
@@ -746,7 +746,8 @@ class user extends common
 	{
 		if (
 			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
-			$this->getData(['profil', $this->getUrl(2), $this->getUrl(3)]) === null
+			$this->getData(['profil', $this->getUrl(2), $this->getUrl(3)]) === null ||
+			$this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'permanent']) === true
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
