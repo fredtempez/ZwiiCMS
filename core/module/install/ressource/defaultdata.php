@@ -301,17 +301,20 @@ class init extends common
 			'-1' => [
 				'name' => 'Banni',
 				'readonly' => true,
+				'delete' => false,
 				'comment' => 'Accès désactivé',
 			],
 			'0' => [
 				'name' => 'Visiteur',
 				'readonly' => true,
+				'delete' => false,
 				'comment' => 'Accède au site',
 			],
 			'1' => [
 				'1' => [
 					'name' => 'Membre simple',
 					'readonly' => false,
+					'delete' => false,
 					'comment' => 'Accède aux pages réservées',
 					'filemanager' => false,
 					'file' => [
@@ -392,6 +395,7 @@ class init extends common
 				'2' => [
 					'name' => 'Membre avec droit de partage',
 					'readonly' => false,
+					'delete' => true,
 					'comment' => 'Accède aux pages réservées et à un dossier partagé',
 					'filemanager' => true,
 					'file' => [
@@ -477,6 +481,7 @@ class init extends common
 				'1' => [
 					'name' => 'Editeur simple',
 					'readonly' => false,
+					'delete' => false,
 					'comment' => 'Édition des pages',
 					'filemanager' => true,
 					'file' => [
@@ -558,6 +563,7 @@ class init extends common
 				'2' => [
 					'name' => 'Rédacteur',
 					'readonly' => false,
+					'delete' => true,
 					'comment' => 'Tous les droits sur les contenus',
 					'filemanager' => true,
 					'file' => [
