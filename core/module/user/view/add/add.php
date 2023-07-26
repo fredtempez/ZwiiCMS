@@ -131,4 +131,5 @@
 			</div>
 		</div>
 	</div>
-	<?php echo template::formClose(); ?>
+</div>
+<?php echo template::formClose(); ?>
