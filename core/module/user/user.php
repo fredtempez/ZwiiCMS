@@ -552,7 +552,7 @@ class user extends common
 			$data = [
 				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
-				'permanent' => false,
+				'permanent' => $this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true) === '1' ? true : false,
 				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
 				'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
 				'file' => [
