@@ -1025,6 +1025,30 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 				break;
 		}
 	}
+
+	//----------------------------------------
+	// Mettre à jour les données des galeries
+	$pageList = array();
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
+		$pageList[] = $parentKey;
+		foreach ($parentValue as $childKey) {
+			$pageList[] = $childKey;
+		}
+	}
+
+	// Mise à jour des pages, le profil est mis à 0 pour les groupes sans profil et 1 pour es groupes avec profil
+	foreach ($pageList as $parentKey => $parent) {
+		switch ($this->getData(['page', $parent, 'group'])) {
+			case 1:
+			case 2:
+				$this->setData(['page', $parent, 'profil', 1]);
+				break;
+			default:
+				$this->setData(['page', $parent, 'profil', 0]);
+				break;
+		}
+	}
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13000]);
 }
