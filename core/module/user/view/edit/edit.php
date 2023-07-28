@@ -29,7 +29,7 @@
 				<div class="col6">
 					<?php echo template::text('userEditFirstname', [
 						'autocomplete' => 'off',
-						'disabled' => $this->getUser('group') > 2 ? false : true,
+						'disabled' => $this->getUser('group') > self::GROUP_EDITOR ? false : true,
 						'label' => 'Prénom',
 						'value' => $this->getData(['user', $this->getUrl(2), 'firstname'])
 					]); ?>
@@ -37,7 +37,7 @@
 				<div class="col6">
 					<?php echo template::text('userEditLastname', [
 						'autocomplete' => 'off',
-						'disabled' => $this->getUser('group') > 2 ? false : true,
+						'disabled' => $this->getUser('group') > self::GROUP_EDITOR  ? false : true,
 						'label' => 'Nom',
 						'value' => $this->getData(['user', $this->getUrl(2), 'lastname'])
 					]); ?>

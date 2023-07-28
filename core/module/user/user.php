@@ -337,7 +337,7 @@ class user extends common
 						$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
 					}
 					// Redirection si retour en arrière possible
-					elseif ($this->getUser('group') === 3) {
+					elseif ($this->getUser('group') === self::GROUP_ADMIN) {
 						$redirect = helper::baseUrl() . 'user';
 					}
 					// Redirection normale
