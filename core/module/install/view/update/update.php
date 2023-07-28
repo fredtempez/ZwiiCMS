@@ -14,27 +14,27 @@
 		<div class="col9 verticalAlignMiddle">
 			<div id="installUpdateProgress">
 				<?php echo template::ico('spin', ['animate' => true]); ?>
-				<span class="cursorWait installUpdateProgressText" data-id="1">
+				<span class="installUpdateProgressText" data-id="1">
 					<?php echo helper::translate('1/4 : Préparation...'); ?>
 				</span>
-				<span class="cursorWait installUpdateProgressText displayNone" data-id="2">
+				<span class="installUpdateProgressText displayNone" data-id="2">
 					<?php echo helper::translate('2/4 : Téléchargement...'); ?>
 				</span>
-				<span class="cursorWait installUpdateProgressText displayNone" data-id="3">
+				<span class="installUpdateProgressText displayNone" data-id="3">
 					<?php echo helper::translate('3/4 : Installation...'); ?>
 				</span>
-				<span class="cursorWait installUpdateProgressText displayNone" data-id="4">
+				<span class="installUpdateProgressText displayNone" data-id="4">
 					<?php echo helper::translate('4/4 : Configuration...'); ?>
 				</span>
 			</div>
-			<div id="installUpdateError" class="message colorRed displayNone cursorDefault">
+			<div id="installUpdateError" class="message colorRed displayNone">
 				<?php echo template::ico('cancel'); ?>
 				<strong>
 					<?php echo helper::translate('Une erreur est survenue lors de l\'étape :') . '<br>'; ?>
 					<span id="installUpdateErrorStep"> </span>.
 				</strong>
 			</div>
-			<div id="installUpdateSuccess" class="message colorGreen displayNone cursorDefault">
+			<div id="installUpdateSuccess" class="message colorGreen displayNone">
 				<?php echo template::ico('check'); ?>
 				<?php echo helper::translate('Mise à jour terminée avec succès.'); ?>
 			</div>

@@ -1,6 +1,9 @@
 function step(i, data) {
     var errors = ["<?php echo helper::translate('Préparation de la mise à jour'); ?>", "<?php echo helper::translate('Téléchargement et validation de l\'archive'); ?>", "<?php echo helper::translate('Installation'); ?>", "<?php echo helper::translate('Configuration'); ?>"];
     $(".installUpdateProgressText").hide(), $(".installUpdateProgressText[data-id=" + i + "]").show();
+    
+    $("body").css("cursor", "wait");
+
     $.ajax({
         type: "POST",
         url: "<?php echo helper::baseUrl(false); ?>?install/steps",
@@ -17,6 +20,7 @@ function step(i, data) {
             setTimeout((function () {
                 if (4 === i) {
                     $("#installUpdateSuccess").show();
+                    $("body").css("cursor", "default");
                     $("#installUpdateEnd").removeClass("disabled");
                     $("#installUpdateProgress").hide();
                 } else {
@@ -32,6 +36,7 @@ function step(i, data) {
 }
 
 function showError(step, message, errors) {
+    $("body").css("cursor", "default");
     $("#installUpdateErrorStep").text(errors[step] + " (étape n°" + step + ")");
     $("#installUpdateError").show();
     $("#installUpdateEnd").removeClass("disabled");
