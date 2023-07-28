@@ -342,8 +342,6 @@ class common
 				}
 			}
 		}
-		// Mise à jour des données core 
-		include('core/include/update.inc.php');
 
 		// Récupère un utilisateur connecté
 		if ($this->user === []) {
@@ -424,6 +422,9 @@ class common
 			);
 			stream_context_set_default($context);
 		}
+
+		// Mise à jour des données core
+	//	include('core/include/update.inc.php');
 
 	}
 
@@ -700,7 +701,10 @@ class common
 				// Ignore les pages dont l'utilisateur n'a pas accès
 				and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
 					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+											// Modification qui tient compte du profil de la page
+					and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
+
 					)
 				)
 			) {
@@ -724,8 +728,13 @@ class common
 						and $this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
 					)
 					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-						and $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])
-						and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+						//and $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])
+						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+
+							// Modification qui tient compte du profil de la page
+						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$parentId, 'group']) * 10 + $this->getData(['page', $this->$parentId, 'profil']))
+						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
+
 					)
 				)
 			) {
