@@ -65,6 +65,8 @@ class page extends common
 		true => 'Menu accessoire'
 	];
 
+	public static $userProfils = [];
+
 
 	/**
 	 * Duplication
@@ -439,6 +441,18 @@ class page extends common
 							}
 						}
 					}
+					// Détermine le groupe selon que la page est une barre ou une page standard
+					$group = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0;
+
+					//Détermine le profil d'utilisateur en fonction du groupe sinon le groupe vaut 0
+					$profil = 0;
+					if (
+						$this->getinput('pageEditBlock') !== 'bar' ||
+						$group === 1 ||
+						$group === 2
+					) {
+						$profil = $this->getInput('pageEditProfil' . $group, helper::FILTER_INT);
+					}
 
 					// Modifie la page ou en crée une nouvelle si l'id a changé
 					$this->setData([
@@ -457,7 +471,8 @@ class page extends common
 							'modulePosition' => $this->getInput('pageModulePosition'),
 							'parentPageId' => $this->getInput('pageEditParentPageId'),
 							'position' => $position,
-							'group' => $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0,
+							'group' => $group,
+							'profil' => $profil,
 							'targetBlank' => $this->getInput('pageEditTargetBlank', helper::FILTER_BOOLEAN),
 							'title' => $this->getInput('pageEditTitle', helper::FILTER_STRING_SHORT),
 							'shortTitle' => $this->getInput('pageEditShortTitle', helper::FILTER_STRING_SHORT, true),
@@ -528,7 +543,20 @@ class page extends common
 					self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 				}
 			}
-
+			// Profils installés
+			// Profils disponibles
+			foreach ($this->getData(['profil']) as $profilId => $profilData) {
+				if ($profilId < self::GROUP_MEMBER) {
+					continue;
+				}
+				if ($profilId === self::GROUP_ADMIN) {
+					self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
+					continue;
+				}
+				foreach ($profilData as $key => $value) {
+					self::$userProfils[$profilId][$key] = $profilData[$key]['name'];
+				}
+			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => $this->getData(['page', $this->getUrl(2), 'title']),

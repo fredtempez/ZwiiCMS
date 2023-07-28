@@ -2,7 +2,8 @@
 <div class="row">
 	<div class="col1">
 		<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
-		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code') $href = helper::baseUrl(); ?>
+		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')
+			$href = helper::baseUrl(); ?>
 		<?php echo template::button('pageEditBack', [
 			'class' => 'buttonGrey',
 			'href' => $href,
@@ -11,12 +12,12 @@
 	</div>
 	<div class="col1">
 		<?php /**echo template::button('pageEditHelp', [
-				'href' => 'https://doc.zwiicms.fr/edition-des-pages',
-				'target' => '_blank',
-				'value' => template::ico('help'),
-				'class' => 'buttonHelp',
-				'help' => 'Consulter l\'aide en ligne'
-			]); */ ?>
+					  'href' => 'https://doc.zwiicms.fr/edition-des-pages',
+					  'target' => '_blank',
+					  'value' => template::ico('help'),
+					  'class' => 'buttonHelp',
+					  'help' => 'Consulter l\'aide en ligne'
+				  ]); */?>
 	</div>
 	<div class="col1 offset6">
 		<?php echo template::button('pageEditDelete', [
@@ -67,7 +68,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Titres'); ?>
+				<h4>
+					<?php echo helper::translate('Titres'); ?>
 					<!--<span id="infoHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/informations-generales" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php //echo template::ico('help', ['margin' => 'left']); ?>
@@ -119,7 +121,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Emplacement dans le menu'); ?>
+				<h4>
+					<?php echo helper::translate('Emplacement dans le menu'); ?>
 					<!--<span id="positionHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/emplacement-dans-le-menu" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php //echo template::ico('help', ['margin' => 'left']); ?>
@@ -135,11 +138,11 @@
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php if ($this->getHierarchy($this->getUrl(2), false)) : ?>
+							<?php if ($this->getHierarchy($this->getUrl(2), false)): ?>
 								<?php echo template::hidden('pageEditParentPageId', [
 									'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
 								]); ?>
-							<?php else : ?>
+							<?php else: ?>
 								<?php echo template::select('pageEditParentPageId', $module::$pagesNoParentId, [
 									'label' => 'Page parent',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
@@ -174,7 +177,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Options avancées'); ?>
+				<h4>
+					<?php echo helper::translate('Options avancées'); ?>
 					<!--<span id="advancedHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/options-d-emplacement-avancee" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php //echo template::ico('help', ['margin' => 'left']); ?>
@@ -221,7 +225,8 @@
 	<div class="row">
 		<div class="col6">
 			<div class="block">
-				<h4><?php echo helper::translate('Module'); ?>
+				<h4>
+					<?php echo helper::translate('Module'); ?>
 				</h4>
 				<div class="row">
 					<div class="col10">
@@ -258,7 +263,9 @@
 		</div>
 		<div class="col6">
 			<div class="block">
-				<h4><?php echo helper::translate('Contenu avancé');?></h4>
+				<h4>
+					<?php echo helper::translate('Contenu avancé'); ?>
+				</h4>
 				<div class="row">
 					<div class="col6 offset3">
 						<?php echo template::button('pageEditCssEditor', [
@@ -286,7 +293,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Mise en page'); ?>
+				<h4>
+					<?php echo helper::translate('Mise en page'); ?>
 					<!--<span id="layoutHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/mise-en-page-2" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php //echo template::ico('help', ['margin' => 'left']); ?>
@@ -308,21 +316,21 @@
 						</div>
 						<div class="col6">
 							<!-- Sélection des barres latérales	 -->
-							<?php if ($this->getHierarchy($this->getUrl(2), false, true)) : ?>
+							<?php if ($this->getHierarchy($this->getUrl(2), false, true)): ?>
 								<?php echo template::hidden('pageEditBarLeft', [
 									'value' => $this->getData(['page', $this->getUrl(2), 'barLeft'])
 								]); ?>
-							<?php else : ?>
+							<?php else: ?>
 								<?php echo template::select('pageEditBarLeft', $module::$pagesBarId, [
 									'label' => 'Barre latérale gauche :',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'barLeft'])
 								]); ?>
 							<?php endif; ?>
-							<?php if ($this->getHierarchy($this->getUrl(2), false, true)) : ?>
+							<?php if ($this->getHierarchy($this->getUrl(2), false, true)): ?>
 								<?php echo template::hidden('pageEditBarRight', [
 									'value' => $this->getData(['page', $this->getUrl(2), 'barRight'])
 								]); ?>
-							<?php else : ?>
+							<?php else: ?>
 								<?php echo template::select('pageEditBarRight', $module::$pagesBarId, [
 									'label' => 'Barre latérale droite :',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'barRight'])
@@ -345,7 +353,8 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4><?php echo helper::translate('Permission et référencement');?>
+				<h4>
+					<?php echo helper::translate('Permission et référencement'); ?>
 					<!--<span id="seoHelpButton" class="helpDisplayButton">
 						<a href="https://doc.zwiicms.fr/permission-et-referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
 							<?php //echo template::ico('help', ['margin' => 'left']); ?>
@@ -356,10 +365,31 @@
 					<div class="row">
 						<div class='col6'>
 							<?php echo template::select('pageEditGroup', self::$groupPublics, [
-								'label' => 'Groupe requis pour accéder à la page :',
-								'selected' => $this->getData(['page', $this->getUrl(2), 'group'])
+								'label' => 'Groupe minimal pour accéder à la page',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'group']),
+								'help' => 'Les groupes de niveau supérieur accèdent à la page.'
 							]); ?>
 						</div>
+						<div class="col6">
+							<div class="pageEditGroupProfil displayNone"
+								id="pageEditGroupProfil<?php echo self::GROUP_MEMBER; ?>">
+								<?php echo template::select('pageEditProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
+									'label' => 'Profil minimal pour accéder à la page',
+									'selected' => $this->getData(['page', $this->getUrl(2), 'profil']),
+									'help' => 'Les profils de niveau supérieur accèdent à la page.',
+								]); ?>
+							</div>
+							<div class="pageEditGroupProfil displayNone"
+								id="pageEditGroupProfil<?php echo self::GROUP_EDITOR; ?>">
+								<?php echo template::select('pageEditProfil' . self::GROUP_EDITOR, $module::$userProfils[self::GROUP_EDITOR], [
+									'label' => 'Profil minimal pour accéder à la page',
+									'selected' => $this->getData(['page', $this->getUrl(2), 'profil']),
+									'help' => 'Les profils de niveau supérieur accèdent à la page.',
+								]); ?>
+							</div>
+						</div>
+					</div>
+					<div class="row">
 						<div class='col12'>
 							<?php echo template::text('pageEditMetaTitle', [
 								'label' => 'Méta-titre',

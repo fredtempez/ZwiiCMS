@@ -44,3 +44,7 @@
     background-color: #00BFFF;
 }
 
+#pageEditProfil1Wrapper,
+#pageEditProfil2Wrapper {
+    padding: 0;
+}

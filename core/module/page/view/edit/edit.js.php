@@ -54,6 +54,16 @@ function protectModule() {
 */
 $( document ).ready(function() {
 
+		// Changement de profil
+		$(".pageEditGroupProfil").hide();
+		$("#pageEditGroupProfil" + $("#pageEditGroup").val()).show();
+	
+		$("#pageEditGroup").on("change", function () {
+			$(".pageEditGroupProfil").hide();
+			$("#pageEditGroupProfil" + $(this).val()).show();
+		});
+	
+
 	/**
 	 * Sélection des onglets
 	 */
