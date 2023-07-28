@@ -424,7 +424,7 @@ class common
 		}
 
 		// Mise à jour des données core
-	//	include('core/include/update.inc.php');
+	include('core/include/update.inc.php');
 
 	}
 
