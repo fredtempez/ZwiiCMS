@@ -16,3 +16,11 @@
 /** NE PAS EFFACER
 * admin.css
 */
+
+.cursorWait {
+    cursor: wait;
+}
+
+.cursorDefault {
+    cursor: default;
+}
