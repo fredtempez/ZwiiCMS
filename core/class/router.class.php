@@ -527,7 +527,9 @@ class core extends common
 			if (
 				$this->getData(['page', $this->getUrl(0), 'group']) === self::GROUP_VISITOR
 				or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
-					and $this->getUser('group') >= $this->getData(['page', $this->getUrl(0), 'group'])
+					// and $this->getUser('group') >= $this->getData(['page', $this->getUrl(0), 'group'])
+					// Modification qui tient compte du profil de la page
+					and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->getUrl(0), 'group']) * 10 + $this->getData(['page', $this->getUrl(0), 'profil']))
 				)
 			) {
 				$access = true;
