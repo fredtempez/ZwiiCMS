@@ -1044,7 +1044,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 	// Mise à jour des pages, le profil est mis à 0 pour les groupes sans profil et 1 pour es groupes avec profil
 	$currentlanguage = $_SESSION['ZWII_CONTENT'];
 	foreach ($languages as $langId) {
-		echo $langId;
+
 		foreach ($hierarchy as $parentKey => $parent) {
 			switch ($this->getData(['page', $parent, 'group'])) {
 				case 1:
@@ -1057,7 +1057,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 			}
 		}
 	}
-	$_SESSION['ZWII_CONTENT'] = $currentlanguage ;
+	$_SESSION['ZWII_CONTENT'] = $currentlanguage;
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13000]);
