@@ -18,15 +18,15 @@ if ($this->getData(['core', 'dataVersion']) < 10000) {
 
 	//----------------------------------------
 	// Mettre à jour les données des galeries
-	$pageList = array();
+	$hierarchy = array();
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
 	// Mise à jour des données pour la galerie v2
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		//La page a une galerie
 		if ($this->getData(['page', $parent, 'moduleId']) === 'gallery') {
 			// Parcourir les dossiers de la galerie
@@ -179,15 +179,15 @@ if ($this->getData(['core', 'dataVersion']) < 10300) {
 	$this->setData(['config', 'searchPageId', '']);
 
 	// Mettre à jour les données des galeries
-	$pageList = array(); foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+	$hierarchy = array(); foreach ($this->getHierarchy() as $parentKey => $parentValue) {
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
 	// Mise à jour des données de thème de la galerie
 	// Les données de thème sont communes au site
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		//La page a une galerie
 		if ($this->getData(['page', $parent, 'moduleId']) === 'gallery') {
 			foreach ($this->getData(['module', $parent]) as $galleryKey => $galleryItem) {
@@ -239,15 +239,15 @@ if ($this->getData(['core', 'dataVersion']) < 10304) {
 // Version 10.3.06
 if ($this->getData(['core', 'dataVersion']) < 10306) {
 	// Liste des pages
-	$pageList = array();
+	$hierarchy = array();
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
 	// Mettre à jour les données des blogs les articles sont dans posts
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		//La page a un blog
 		if ($this->getData(['page', $parent, 'moduleId']) === 'blog') {
 			if (is_array($this->getData(['module', $parent]))) {
@@ -262,7 +262,7 @@ if ($this->getData(['core', 'dataVersion']) < 10306) {
 			}
 		}
 	}
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		//La page a une news
 		if ($this->getData(['page', $parent, 'moduleId']) === 'news') {
 			if (is_array($this->getData(['module', $parent]))) {
@@ -297,16 +297,16 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 
 	// Ajouter les champs de blog v3
 	// Liste des pages dans pageList
-	$pageList = array();
+	$hierarchy = array();
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
 	// Parcourir pageList et rechercher les modules de blog
 
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		//La page est un blog
 		if ($this->getData(['page', $parent, 'moduleId']) === 'blog') {
 			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
@@ -388,15 +388,15 @@ if ($this->getData(['core', 'dataVersion']) < 10600) {
 	// Mise à jour des données des modules autonomes
 
 	// Liste des pages dans pageList
-	$pageList = array();
+	$hierarchy = array();
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
 	// Parcourir pageList et rechercher les modules au CSS autonomes
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		if (
 			$this->getData(['page', $parent, 'moduleId']) === 'search'
 			|| $this->getData(['page', $parent, 'moduleId']) === 'gallery'
@@ -446,18 +446,18 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 
 	// Externaliser les contenus des pages
 	// Liste des pages dans pageList
-	$pageList = array();
+	$hierarchy = array();
 	// Creation du contenu de la page
 	if (!is_dir(self::DATA_DIR . self::$i18nContent . '/content')) {
 		mkdir(self::DATA_DIR . self::$i18nContent . '/content', 0755);
 	}
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		$content = $this->getData(['page', $parent, 'content']);
 		//file_put_contents(self::DATA_DIR . self::$i18nContent . '/content/' . $parent . '.html', $content);
 		$this->setPage($parent, $content, 'fr');
@@ -510,12 +510,12 @@ if ($this->getData(['core', 'dataVersion']) < 11200) {
 
 	// Ajout de la variable shortTitle basée sur Title
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		$this->setData(['page', $parent, 'shortTitle', $this->getData(['page', $parent, 'title'])]);
 	}
 
@@ -670,12 +670,12 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 
 	// Ajout de la variable shortTitle basée sur Title
 	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
+		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+			$hierarchy[] = $childKey;
 		}
 	}
-	foreach ($pageList as $parentKey => $parent) {
+	foreach ($hierarchy as $parentKey => $parent) {
 		$this->setData(['page', $parent, 'extraPosition', false]);
 	}
 
@@ -1026,28 +1026,38 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 		}
 	}
 
-	//----------------------------------------
-	// Mettre à jour les données des galeries
-	$pageList = array();
-	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
-		$pageList[] = $parentKey;
-		foreach ($parentValue as $childKey) {
-			$pageList[] = $childKey;
+	// Récupérer la liste de toutes les pages dans toutes langues
+	$hierarchy = array();
+	$languages = array();
+	// Tableau des langues non installées
+	foreach (self::$languages as $key => $value) {
+		if (is_dir(self::DATA_DIR . $key))
+			$languages[] = $key;
+		foreach ($this->getHierarchy() as $parentKey => $parentValue) {
+			$hierarchy[] = $parentKey;
+			foreach ($parentValue as $childKey) {
+				$hierarchy[] = $childKey;
+			}
 		}
 	}
 
 	// Mise à jour des pages, le profil est mis à 0 pour les groupes sans profil et 1 pour es groupes avec profil
-	foreach ($pageList as $parentKey => $parent) {
-		switch ($this->getData(['page', $parent, 'group'])) {
-			case 1:
-			case 2:
-				$this->setData(['page', $parent, 'profil', 1]);
-				break;
-			default:
-				$this->setData(['page', $parent, 'profil', 0]);
-				break;
+	$currentlanguage = $_SESSION['ZWII_CONTENT'];
+	foreach ($languages as $langId) {
+		echo $langId;
+		foreach ($hierarchy as $parentKey => $parent) {
+			switch ($this->getData(['page', $parent, 'group'])) {
+				case 1:
+				case 2:
+					$this->setData(['page', $parent, 'profil', 1]);
+					break;
+				default:
+					$this->setData(['page', $parent, 'profil', 0]);
+					break;
+			}
 		}
 	}
+	$_SESSION['ZWII_CONTENT'] = $currentlanguage ;
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13000]);
