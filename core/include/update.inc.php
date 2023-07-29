@@ -688,10 +688,10 @@ if ($this->getData(['core', 'dataVersion']) < 11303) {
 if ($this->getData(['core', 'dataVersion']) < 11306) {
 
 	// Supprime les fontes déclarées en double par la version précédentes
-	$files = $this->getData(['fonts', 'files']);
+	$files = $this->getData(['font', 'files']);
 	foreach ($files as $fontId => $fontFile) {
-		if (!is_null($this->getData(['fonts', 'imported', $fontId]))) {
-			$this->deleteData(['fonts', 'imported', $fontId]);
+		if (!is_null($this->getData(['font', 'imported', $fontId]))) {
+			$this->deleteData(['font', 'imported', $fontId]);
 		}
 	}
 	// Mise à jour
@@ -801,7 +801,9 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	];
 
 	// Conversion des fontes locales
-	$files = $this->getData(['fonts', 'files']);
+		
+	$files = $this->getData(['font', 'files']);
+
 	if (is_array($files)) {
 		foreach ($files as $fontId => $fontName) {
 			if (
@@ -809,7 +811,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 				&& file_exists(self::DATA_DIR . 'fonts/' . $fontName)
 			) {
 				$this->setData([
-					'fonts',
+					'font',
 					'files',
 					$fontId,
 					[
@@ -823,12 +825,12 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	}
 
 	// Consersion des fontes importées
-	$imported = $this->getData(['fonts', 'imported']);
+	$imported = $this->getData(['font', 'imported']);
 	if (is_array($imported)) {
 		foreach ($imported as $fontId => $fontUrl) {
 			if (gettype($fontUrl) === 'string') {
 				$this->setData([
-					'fonts',
+					'font',
 					'imported',
 					$fontId,
 					[
@@ -843,7 +845,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	// Importation des fontes exemples
 	$template = $fonts;
 	foreach ($template as $fontId => $fontValue) {
-		$this->setData(['fonts', 'imported', $fontId, $fontValue]);
+		$this->setData(['font', 'imported', $fontId, $fontValue]);
 	}
 
 	// Redirection des pages d'administration vers la bannière de connexion
@@ -1042,7 +1044,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 	}
 
 	// Mise à jour des pages, le profil est mis à 0 pour les groupes sans profil et 1 pour es groupes avec profil
-	$currentlanguage = $_SESSION['ZWII_CONTENT'];
+	$currentlanguage = self::$i18nContent;
 	foreach ($languages as $langId) {
 
 		foreach ($hierarchy as $parentKey => $parent) {

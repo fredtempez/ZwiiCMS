@@ -529,7 +529,7 @@ class common
 	 * @return mixed
 	 */
 	public function getData($keys = [])
-	{
+	{ 
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
 			// descripteur de la base

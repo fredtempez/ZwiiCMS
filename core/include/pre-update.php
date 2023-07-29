@@ -5,12 +5,11 @@
  * */
 
 if (file_exists('site/data/core.json')) {
-    $version = json_decode(file_get_contents('site/data/core.json'), true);
-
-    // Avant version 12.skey0.00
+    $core = json_decode(file_get_contents('site/data/core.json'), true);
+    $version = $core['core']['dataVersion'];
+    // Avant version 12.0.00
     if (
-        array_key_exists('dataVersion',$version) &&
-        $version['core']['dataVersion'] < 12000
+        $version < 12000
     ) {
         // Correspondance pour les dossiers de langue à convertir
         $languages = [
@@ -27,13 +26,13 @@ if (file_exists('site/data/core.json')) {
                 $end = rename('site/data/' . $key, 'site/data/' . $value);
             }
         }
+
         sleep(1);
     }
 
     // Renomme les bases de données
     if (
-        array_key_exists('dataVersion',$version) &&
-        $version['core']['dataVersion'] < 12400
+        $version < 12400
     ) {
         // Renommage les fichiers de données au pluriel
         $t = [

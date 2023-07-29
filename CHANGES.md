@@ -8,6 +8,7 @@
 - L'ajout d'une langue de contenu initialise les données de la langue.
 # Corrections
 - Correction de bugs mineurs dans la sauvegarde des modules installés.
+- Problèmes de mise à jour depuis les versions 11.
 - Dépréciations liées à php 8.n
 
 ## Version 12.4.00
