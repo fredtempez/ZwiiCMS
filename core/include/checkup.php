@@ -52,5 +52,5 @@ $d = [
 ];
 foreach ($d as $key) {
     if (file_exists($key . '.htaccess') === false)
-        exit('<pre>ZwiiCMS ne peut pas démarrer, le fichier ' .$key . '.htaccess est manquant.<br />ZwiiCMS cannot start, file ' . $key . '.htaccess is missing manquant.</pre>' );
+        exit('<pre>ZwiiCMS ne peut pas démarrer, le fichier ' .$key . '.htaccess est manquant.<br />ZwiiCMS cannot start, file ' . $key . '.htaccess is missing.</pre>' );
 }
