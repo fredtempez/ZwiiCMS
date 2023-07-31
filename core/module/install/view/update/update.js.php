@@ -30,7 +30,7 @@ function step(i, data) {
         },
         error: function (xhr) {
             // Appel de la fonction de gestion d'erreur
-            showError(1, xhr.responseText, errors);
+            showError(i, xhr.responseText, errors);
         }
     });
 }
