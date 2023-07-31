@@ -435,7 +435,7 @@ class layout extends common
                     $socialUrl = '';
             }
             if ($socialId !== '') {
-                $socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '">' . template::ico(substr(str_replace('User', '', $socialName), 0, -2)) . '</a>';
+                $socials .= '<a href="' . $socialUrl . $socialId . '" onclick="window.open(this.href);return false" data-tippy-content="' . $title . '" alt="' . $title . '">' . template::ico(substr(str_replace('User', '', $socialName), 0, -2)) . '</a>';
             }
         }
         if ($socials !== '') {
