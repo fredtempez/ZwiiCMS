@@ -29,6 +29,10 @@ function step(i, data) {
             }), 2e3)
         },
         error: function (xhr) {
+            // Balance tout dans la console
+            console.log(i);
+            console.log(xhr.responseText);
+            console.log(errors);
             // Appel de la fonction de gestion d'erreur
             showError(i, xhr.responseText, errors);
         }
