@@ -48,7 +48,7 @@ $d = [
     'site/data/',
     'site/backup/',
     'site/tmp/',
-    'site/i18n/'
+   // 'site/i18n/', pas contrôler pour éviter les pbs de mise à jour
 ];
 foreach ($d as $key) {
     if (file_exists($key . '.htaccess') === false)
