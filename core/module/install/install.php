@@ -379,34 +379,13 @@ class install extends common
 					$success = true;
 					$message = '';
 					$rewrite = $this->getInput('data');
-					// Réécriture d'URL
-					if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
-						$fileContent = file_get_contents('.htaccess');
-						$rewriteData = PHP_EOL .
-							'# URL rewriting' . PHP_EOL .
-							'<IfModule mod_rewrite.c>' . PHP_EOL .
-							"\tRewriteEngine on" . PHP_EOL .
-							"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
-							"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
-							"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
-							"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
-							'</IfModule>' . PHP_EOL .
-							'# URL rewriting' . PHP_EOL;
-						$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-						$success = file_put_contents(
-							'.htaccess',
-							$fileContent
-						);
-						if ($success === false) {
-							$message = helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
-							http_response_code(500);
-						}
 
-					}
+					/**
+					 * Restaure le fichier htaccess
+					 */
 					// Recopie htaccess
 					if (
-						$this->getData(['config', 'autoUpdateHtaccess']) &&
-						$success && file_exists('.htaccess.bak')
+						$this->getData(['config', 'autoUpdateHtaccess'])
 					) {
 						// L'écraser avec le backup
 						$success = copy('.htaccess.bak', '.htaccess');
@@ -416,6 +395,32 @@ class install extends common
 						}
 						// Effacer le backup
 						unlink('.htaccess.bak');
+					} else {
+						/**
+						 * Restaure la réécriture d'URL
+						 */
+						if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
+							$fileContent = file_get_contents('.htaccess');
+							$rewriteData = PHP_EOL .
+								'# URL rewriting' . PHP_EOL .
+								'<IfModule mod_rewrite.c>' . PHP_EOL .
+								"\tRewriteEngine on" . PHP_EOL .
+								"\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL .
+								"\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL .
+								"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
+								"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
+								'</IfModule>' . PHP_EOL .
+								'# URL rewriting' . PHP_EOL;
+							$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
+							$success = file_put_contents(
+								'.htaccess',
+								$fileContent
+							);
+							if ($success === false) {
+								$message = helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
+								http_response_code(500);
+							}
+						}
 					}
 
 					/**
@@ -426,8 +431,10 @@ class install extends common
 						$installedLanguages = $this->getData(['language']);
 						$defaultLanguages = init::$defaultData['language'];
 						foreach ($installedLanguages as $key => $value) {
-							if (isset($defaultLanguages[$key]['version']) &&
-								$defaultLanguages[$key]['version'] > $value['version']) {
+							if (
+								isset($defaultLanguages[$key]['version']) &&
+								$defaultLanguages[$key]['version'] > $value['version']
+							) {
 								copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 								$this->setData(['language', $key, $defaultLanguages[$key]]);
 							}
