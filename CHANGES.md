@@ -6,8 +6,9 @@
 - Améliore la gestion de la base de données et la génération du fichier de journalisation, stockage des données JSON, forçage au format objet.
 - Erreurs fictives pendant la mise à jour en ligne, améliorations du dialogue AJAX entre PHP et JQUERY avec un affichage précis des erreurs.
 - L'ajout d'une langue de contenu initialise les données de la langue.
+- Format d'image avif si supporté par la version installée de php;.
 # Corrections
-- Correction de bugs mineurs dans la sauvegarde des modules installés.
+- Correction de bugs mineurs dans la sauvegarde et la suppression des modules installés.
 - Problèmes de mise à jour depuis les versions 11.
 - Dépréciations liées à php 8.n
 
