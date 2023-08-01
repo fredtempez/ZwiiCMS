@@ -73,15 +73,18 @@ class plugin extends common
 			$infoModules = helper::getModules();
 			$module = $this->getUrl(2);
 			//Liste des dossiers associés au module non effacés
-			if ($this->deleteDir('./module/' . $module) === true) {
+			if (
+				is_dir('./module/' . $module) &&
+				$this->deleteDir('./module/' . $module) === true
+			) {
 				$success = true;
 				$notification = 'Module ' . $module . ' désinstallé';
 				if (($infoModules[$this->getUrl(2)]['dataDirectory'])) {
 					if (
 						is_dir($infoModules[$this->getUrl(2)]['dataDirectory'])
-						|| !$this->deleteDir($infoModules[$this->getUrl(2)]['dataDirectory'])
 					) {
-						$notification = sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']);
+						$s = $this->deleteDir($infoModules[$this->getUrl(2)]['dataDirectory']);
+						$notification = $s === false ? sprintf(helper::translate('Le module %s est désinstallé, il reste peut-être des données dans %s'), $module, $infoModules[$this->getUrl(2)]['dataDirectory']) : $notification;
 					}
 				}
 			} else {
@@ -598,11 +601,11 @@ class plugin extends common
 			file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId], JSON_UNESCAPED_UNICODE));
 
 			// Construire l'archive
-			$this->makeZip( $tmpFolder . $fileName, self::MODULE_DIR . $moduleId);
+			$this->makeZip($tmpFolder . $fileName, self::MODULE_DIR . $moduleId);
 
 			switch ($action) {
 				case 'filemanager':
-					$success = copy($tmpFolder . $fileName, self::FILE_DIR . 'source/modules/' . $fileName );
+					$success = copy($tmpFolder . $fileName, self::FILE_DIR . 'source/modules/' . $fileName);
 
 					// Valeurs en sortie
 					$this->addOutput([
@@ -617,7 +620,7 @@ class plugin extends common
 					header('Content-Type: application/octet-stream');
 					header('Content-Transfer-Encoding: binary');
 					header('Content-Disposition: attachment; filename="' . $fileName . '"');
-					header('Content-Length: ' . filesize($tmpFolder. $fileName));
+					header('Content-Length: ' . filesize($tmpFolder . $fileName));
 					readfile($tmpFolder . $fileName);
 					exit();
 			}
