@@ -424,7 +424,7 @@ class common
 		}
 
 		// Mise à jour des données core
-	include('core/include/update.inc.php');
+		include('core/include/update.inc.php');
 
 	}
 
@@ -529,7 +529,7 @@ class common
 	 * @return mixed
 	 */
 	public function getData($keys = [])
-	{ 
+	{
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
 			// descripteur de la base
@@ -702,8 +702,8 @@ class common
 				and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
 					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
-											// Modification qui tient compte du profil de la page
-					and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
+						// Modification qui tient compte du profil de la page
+						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
 
 					)
 				)
@@ -731,7 +731,7 @@ class common
 						//and $this->getUser('group') >= $this->getData(['page', $parentId, 'group'])
 						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
 
-							// Modification qui tient compte du profil de la page
+						// Modification qui tient compte du profil de la page
 						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$parentId, 'group']) * 10 + $this->getData(['page', $this->$parentId, 'profil']))
 						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
 
@@ -1135,6 +1135,9 @@ class common
 			case 'webp':
 				$source_image = imagecreatefromwebp($src);
 				break;
+			case 'avif':
+				$source_image = function_exists('imagecreatefromavif') ? imagecreatefromavif($src) : null;
+				break;
 		}
 		// Image valide
 		if ($source_image) {
@@ -1155,7 +1158,9 @@ class common
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
 				case 'webp':
-					$source_image = imagecreatefromwebp($src);
+					return (imagewebp($virtual_image, $dest));
+				case 'avif':
+					return (imageavif($virtual_image, $dest));
 			}
 		} else {
 			return (false);
