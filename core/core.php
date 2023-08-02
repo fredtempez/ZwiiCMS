@@ -60,6 +60,9 @@ class common
 	// URL langues de l'UI en ligne
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
 
+	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
+	const MAX_PROFILS = 10;
+
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -703,7 +706,7 @@ class common
 					or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
 						// Modification qui tient compte du profil de la page
-						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
+						and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
 
 					)
 				)
@@ -732,8 +735,8 @@ class common
 						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
 
 						// Modification qui tient compte du profil de la page
-						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$parentId, 'group']) * 10 + $this->getData(['page', $this->$parentId, 'profil']))
-						and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->$pageId, 'group']) * 10 + $this->getData(['page', $pageId, 'profil']))
+						and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $this->$parentId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $this->$parentId, 'profil']))
+						and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $this->$pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
 
 					)
 				)
