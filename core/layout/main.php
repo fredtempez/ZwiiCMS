@@ -172,7 +172,7 @@
 			</nav>
 		<?php endif; ?>
 		<!-- Corps de page -->
-		<?php $layout->showSection(); ?>
+		<?php $layout->showMain(); ?>
 		<!-- footer -->
 		<?php $layout->showFooter(); ?>
 		<!-- Fin du site -->

@@ -55,9 +55,9 @@ class layout extends common
      * Formate le contenu de la page selon les gabarits
      * @param Page par defaut
      */
-    public function showSection()
+    public function showMain()
     {
-        echo '<section>';
+        echo '<main><section>';
         // Récupérer la config de la page courante
         $blocks = is_null($this->getData(['page', $this->getUrl(0), 'block'])) ? '12' : $this->getData(['page', $this->getUrl(0), 'block']);
         $blocks = explode('-', $blocks);
@@ -143,7 +143,7 @@ class layout extends common
             }
             echo '</div>';
         }
-        echo '</section>';
+        echo '</main></section>';
     }
 
     /**
