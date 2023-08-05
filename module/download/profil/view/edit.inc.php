@@ -40,7 +40,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditDownloadCommentDelete', true, 'Effacer le commentaire',[
+                    <?php echo template::checkbox('profilEditDownloadCommentDelete', true, 'Effacer un commentaire',[
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'download', 'commentDelete'])
                     ]); ?>
                 </div>

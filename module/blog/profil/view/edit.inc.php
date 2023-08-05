@@ -40,12 +40,12 @@
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Supprimer un commentaire', [
+                    <?php echo template::checkbox('profilEditBlogCommentDelete', true, 'Effacer un commentaire', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDelete'])
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Supprimer tous les commentaires', [
+                    <?php echo template::checkbox('profilEditBlogCommentDeleteAll', true, 'Effacer tous les commentaires', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'blog', 'commentDeleteAll'])
                     ]); ?>
                 </div>

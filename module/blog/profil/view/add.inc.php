@@ -29,10 +29,10 @@
             </div>
             <div class="row">
                 <div class="col6" s>
-                    <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Supprimer un commentaire'); ?>
+                    <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Effacer un commentaire'); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Supprimer tous les commentaires'); ?>
+                    <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Effacer tous les commentaires'); ?>
                 </div>
             </div>
         </div>

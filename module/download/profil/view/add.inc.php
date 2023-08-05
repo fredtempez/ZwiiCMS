@@ -28,7 +28,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer le commentaire'); ?>
+                    <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer un commentaire'); ?>
                 </div>
                 <div class="col4">
                     <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Effacer tous les commentaires'); ?>

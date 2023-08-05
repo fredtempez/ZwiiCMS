@@ -657,5 +657,6 @@
     "Presse Papier": "Portapapeles",
     "Prévisualiser": "Previsualizar",
     "La réécriture d'URL n'a pas été restaurée !": "¡La reescritura de URL no ha sido restaurada!",
-    "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "¡La copia de seguridad del archivo htaccess no ha sido restaurada!"
+    "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "¡La copia de seguridad del archivo htaccess no ha sido restaurada!",
+    "Les profils d'ordre supérieurs sont de rang plus élevé que les profils d'ordre inférieur": "Los perfiles de orden superior tienen un rango más alto que los perfiles de orden inferior."
 }

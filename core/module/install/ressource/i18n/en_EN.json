@@ -657,5 +657,6 @@
     "Recherche": "Search",
     "Presse Papier": "Clipboard",
     "La réécriture d'URL n'a pas été restaurée !": "URL rewriting has not been restored!",
-    "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "Backup copy of htaccess file has not been restored!"
+    "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "Backup copy of htaccess file has not been restored!",
+    "Les profils d'ordre supérieurs sont de rang plus élevé que les profils d'ordre inférieur": "Higher-order profiles are of higher rank than lower-order profiles."
 }

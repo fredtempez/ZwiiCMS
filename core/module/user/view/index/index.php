@@ -26,7 +26,7 @@
 		<?php echo template::button('userGroup', [
 			'href' => helper::baseUrl() . 'user/profil',
 			'value' => template::ico('lock'),
-			'help' => 'Gestion des profils'
+			'help' => 'Profils'
 		]); ?>
 	</div>
 	<div class="col1">
