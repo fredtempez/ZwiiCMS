@@ -71,6 +71,8 @@ class user extends common
 
 	public static $listModules = [];
 
+	public static $profils = [];
+
 	/**
 	 * Ajout
 	 */
@@ -508,23 +510,23 @@ class user extends common
 				$groupId == self::GROUP_EDITOR
 			) {
 				// Enumérer les sous groupes MEMBER et MODERATOR
-				foreach ($groupData as $subGroupId => $subGroupData) {
-					self::$userGroups[$groupId . '.' . $subGroupId] = [
-						$groupId . '-' . $subGroupId,
-						self::$groups[$groupId] . '<br />Profil : ' . $subGroupData['name'],
-						nl2br($subGroupData['comment']),
-						template::button('profilEdit' . $groupId . $subGroupId, [
-							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $subGroupId,
+				foreach ($groupData as $profilId => $profilData) {
+					self::$userGroups[$groupId . '.' . $profilId] = [
+						$groupId . '-' . $profilId,
+						self::$groups[$groupId] . '<br />Profil : ' . $profilData['name'],
+						nl2br($profilData['comment']),
+						template::button('profilEdit' . $groupId . $profilId, [
+							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $profilId,
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
-							'disabled' => $subGroupData['readonly'],
+							'disabled' => $profilId === 1 ? true : $profilData['readonly'],
 						]),
-						template::button('profilDelete' . $groupId . $subGroupId, [
+						template::button('profilDelete' . $groupId . $profilId, [
 							'class' => 'userDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $subGroupId,
+							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
-							'disabled' => $subGroupData['permanent'],
+							'disabled' => $profilData['permanent'],
 						])
 					];
 				}
@@ -548,6 +550,15 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
+
+			// Effacer les données du numéro de profil ancien
+			$group = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
+			$profil = $this->getInput('profilEditProfil', helper::FILTER_STRING_SHORT, true);
+			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
+			if ($profil !== $profil) {
+				$this->deleteData(['profil', $group, $oldProfil]);
+			}
+
 			// Données du formulaire
 			$data = [
 				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
@@ -606,14 +617,14 @@ class user extends common
 			//Sauvegarder le données
 			$this->setData([
 				'profil',
-				$this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true),
-				$this->getInput('profilEditProfil', helper::FILTER_STRING_LONG, true),
+				$group,
+				$profil,
 				$data
 			]);
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/profilEdit/' . $this->getUrl(2) . '/' . $this->getUrl(3),
+				'redirect' => helper::baseUrl() . 'user/profil',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -629,6 +640,27 @@ class user extends common
 		self::$listModules = helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
 		sort(self::$listModules);
+
+		/**
+		 * Génération des profils disponibles
+		 * Tableau des profils attribués
+		 * Extraire les numéros de profils
+		 * Générer un tableau $p des profils possibles selon le plafond
+		 * Ne garder que la différence sauf le profil de l'utilisateur édité que l'on ajoute
+		 */
+		self::$profils = $this->getData(['profil', $this->getUrl(2)]);
+		// Supprime le profil utilisateur 
+		unset(self::$profils[$this->getUrl(3)]);
+		self::$profils = array_keys(self::$profils);
+		$p = range(1, self::MAX_PROFILS - 1);
+		self::$profils = array_diff($p, self::$profils);
+		sort(self::$profils);
+		// Restructure le tableau pour faire correspondre la clé et la valeur
+		$p = array();
+		foreach (self::$profils as $key => $value) {
+			$p[$value] = $value;
+		}
+		self::$profils = $p;
 
 		// Valeurs en sortie;
 		$this->addOutput([
@@ -650,76 +682,89 @@ class user extends common
 		) {
 			// Nombre de profils de ce groupe
 			$group = $this->getInput('profilAddGroup');
-			$profil = (string) (count($this->getData(['profil', $group])) + 1);
+			$profil = count($this->getData(['profil', $group]));
+			// Vérifier le quota du nombre de profils dans le groupe
+			var_dump($profil < self::MAX_PROFILS);
 
-			// Données du formulaire
-			$data = [
-				'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
-				'readonly' => false,
-				'permanent' => false,
-				'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
-				'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
-				'file' => [
-					'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
-					'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
-					'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
-					'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
-					'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
-					'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
-					'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
-					'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
-				],
-				'folder' => [
-					'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
-					'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
-					'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
-					'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
-					'path' => $this->getInput('profilAddPath'),
-				],
-				'page' => [
-					'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
-					'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
-					'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
-					'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
-					'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
-					'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
-					'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
-				],
-				'user' => [
-					'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
-				]
-			];
+			if ($profil < self::MAX_PROFILS) {
+				$profil = (string) ($profil + 1);
+				// Données du formulaire
+				$data = [
+					'name' => $this->getInput('profilAddName', helper::FILTER_STRING_SHORT, true),
+					'readonly' => false,
+					'permanent' => false,
+					'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
+					'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
+					'file' => [
+						'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
+						'create' => $this->getInput('profilAddCreate', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddRename', helper::FILTER_BOOLEAN),
+						'upload' => $this->getInput('profilAddUpload', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddDelete', helper::FILTER_BOOLEAN),
+						'preview' => $this->getInput('profilAddPreview', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddDuplicate', helper::FILTER_BOOLEAN),
+						'extract' => $this->getInput('profilAddExtract', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddChmod', helper::FILTER_BOOLEAN),
+					],
+					'folder' => [
+						'create' => $this->getInput('profilAddFolderCreate', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddFolderDelete', helper::FILTER_BOOLEAN),
+						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
+						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
+						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
+						'path' => $this->getInput('profilAddPath'),
+					],
+					'page' => [
+						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
+						'edit' => $this->getInput('profilAddPageEdit', helper::FILTER_BOOLEAN),
+						'delete' => $this->getInput('profilAddPageDelete', helper::FILTER_BOOLEAN),
+						'duplicate' => $this->getInput('profilAddPageDuplicate', helper::FILTER_BOOLEAN),
+						'module' => $this->getInput('profilAddPageModule', helper::FILTER_BOOLEAN),
+						'cssEditor' => $this->getInput('profilAddPagecssEditor', helper::FILTER_BOOLEAN),
+						'jsEditor' => $this->getInput('profilAddPagejsEditor', helper::FILTER_BOOLEAN),
+					],
+					'user' => [
+						'edit' => $this->getInput('profilAddUserEdit', helper::FILTER_BOOLEAN),
+					]
+				];
 
-			// Données des modules
-			$dataModules = helper::getModules();
-			if (is_array($dataModules)) {
-				foreach ($dataModules as $moduleId => $moduleValue) {
-					if (file_exists('module/' . $moduleId . '/profil/main/add.inc.php')) {
-						include('module/' . $moduleId . '/profil/main/add.inc.php');
-						if (is_array($moduleData[$moduleId])) {
-							$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
+				// Données des modules
+				$dataModules = helper::getModules();
+				if (is_array($dataModules)) {
+					foreach ($dataModules as $moduleId => $moduleValue) {
+						if (file_exists('module/' . $moduleId . '/profil/main/add.inc.php')) {
+							include('module/' . $moduleId . '/profil/main/add.inc.php');
+							if (is_array($moduleData[$moduleId])) {
+								$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
+							}
 						}
 					}
 				}
-			}
 
-			// Sauvegarder les données
-			$this->setData([
-				'profil',
-				$group,
-				$profil,
-				$data
-			]);
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user/profil',
-				'notification' => helper::translate('Modifications enregistrées'),
-				'state' => true
-			]);
+				// Sauvegarder les données
+				$this->setData([
+					'profil',
+					$group,
+					$profil,
+					$data
+				]);
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'user/profil',
+					'notification' => helper::translate('Modifications enregistrées'),
+					'state' => true
+				]);
+			} else {
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'user/profil',
+					'notification' => helper::translate('Nombre de profils maximum : ') . self::MAX_PROFILS,
+					'state' => false
+				]);
+			}
 		}
 
 		// Chemin vers les dossiers du gestionnaire de fichier

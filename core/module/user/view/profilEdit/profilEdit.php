@@ -21,10 +21,21 @@
                 <div class="col6">
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::text('profilEditName', [
-                                'label' => 'Nom du profil',
-                                'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])
-                            ]); ?>
+                            <div class="row">
+                                <div class="col6">
+                                    <?php echo template::text('profilEditName', [
+                                        'label' => 'Nom du profil',
+                                        'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])
+                                    ]); ?>
+                                    </div>
+                                     <div class="col6">
+                                    <?php echo template::select('profilEditProfil', $module::$profils,  [
+                                        'label' => 'Hiérarchie du profil',
+                                        'help' => 'Les profils d\'ordre supérieurs sont de rang plus élevés que les profils d\'ordre inférieur',
+                                        'selected' => $this->getUrl(3)
+                                    ]); ?>
+                                </div>
+                            </div>
                         </div>
                         <div class="col12">
                             <?php echo template::text('profilEditDisplayGroup', [
@@ -35,7 +46,7 @@
                             <?php echo template::hidden('profilEditGroup', [
                                 'value' => $this->getUrl(2),
                             ]); ?>
-                            <?php echo template::hidden('profilEditProfil', [
+                            <?php echo template::hidden('profilEditOldProfil', [
                                 'value' => $this->getUrl(3),
                             ]); ?>
                         </div>
