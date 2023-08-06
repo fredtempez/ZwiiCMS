@@ -286,15 +286,15 @@ class init extends common
 		'language' => [
 			"fr_FR" => [
 				"version" => 13000,
-				"date" => 1670428545
+				"date" => 1691352286
 			],
 			"es" => [
 				"version" => 13000,
-				"date" => 1670428545
+				"date" => 1691352286
 			],
 			"en_EN" => [
 				"version" => 13000,
-				"date" => 1670428545
+				"date" => 1691352286
 			]
 		],
 		'profil' => [
