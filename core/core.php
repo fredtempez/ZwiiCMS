@@ -57,9 +57,6 @@ class common
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
 	const ZWII_UPDATE_CHANNEL = 'v13';
 
-	// URL langues de l'UI en ligne
-	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
-
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
 

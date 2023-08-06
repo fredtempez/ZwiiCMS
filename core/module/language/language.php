@@ -16,6 +16,11 @@
 class language extends common
 {
 
+		// URL langues de l'UI en ligne
+		const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/';
+
+		const ZWII_UI_BRANCH = 'v13';
+
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
 		'copy' => self::GROUP_ADMIN,
@@ -88,14 +93,14 @@ class language extends common
 			}
 
 			// Télécharger le descripteur en ligne
-			$languageData = json_decode(helper::getUrlContents(common::ZWII_UI_URL . $lang . '.json'), true);
-			$descripteur = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
+			$languageData = json_decode(helper::getUrlContents(self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/' . $lang . '.json'), true);
+			$descripteur = json_decode(helper::getUrlContents(self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/' . 'language.json'), true);
 			$response = false;
 			if (
 				is_array($languageData) &&
-				is_array($descripteur['languages'][$lang])
+				is_array($descripteur['language'][$lang])
 			) {
-				$response = $this->setData(['language', $lang, $descripteur['languages'][$lang]]);
+				$response = $this->setData(['language', $lang, $descripteur['language'][$lang]]);
 				$response = $response || file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 			}
 
@@ -239,8 +244,9 @@ class language extends common
 		}
 
 		// Langues disponibles en ligne
-		$storeUI = json_decode(helper::getUrlContents(common::ZWII_UI_URL . 'languages.json'), true);
-		$storeUI = $storeUI['languages'];
+		echo self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/language.json';
+		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/language.json'), true);
+		$storeUI = $storeUI['language'];
 
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($installedUI as $file => $value) {
