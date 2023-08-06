@@ -17,7 +17,7 @@ class language extends common
 {
 
 		// URL langues de l'UI en ligne
-		const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13';
+		const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13/';
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
@@ -92,21 +92,23 @@ class language extends common
 
 			// Télécharger le descripteur en ligne
 			$languageData = json_decode(helper::getUrlContents(self::ZWII_UI_URL  . $lang . '.json'), true);
-			$descripteur = json_decode(helper::getUrlContents(self::ZWII_UI_URL . '/' . 'language.json'), true);
-			$response = false;
+			$descripteur = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
+			$success = false;
 			if (
 				is_array($languageData) &&
 				is_array($descripteur['language'][$lang])
 			) {
-				$response = $this->setData(['language', $lang, $descripteur['language'][$lang]]);
-				$response = $response || file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($response, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+				if ($this->setData(['language', $lang, $descripteur['language'][$lang]])) {
+					$success = file_put_contents(self::I18N_DIR . $lang . '.json', json_encode($languageData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+					$success = is_int($success) ? true : false;
+				}
 			}
 
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'language',
-				'notification' => $response ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
-				'state' => $response
+				'notification' => $success ? helper::translate('Copie terminée avec succès') : 'Copie terminée avec des erreurs',
+				'state' => $success
 			]);
 		}
 	}
@@ -242,7 +244,7 @@ class language extends common
 		}
 
 		// Langues disponibles en ligne
-		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL .  'language.json'), true);
+		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
 		$storeUI = $storeUI['language'];
 
 		// Construction du tableau à partir des langues disponibles dans le store
@@ -326,7 +328,7 @@ class language extends common
 
 			// Constructeur pour cette langue
 			$this->jsonDB($lang);
-			
+
 			// Création du contenu
 			$this->initData('page', $lang);
 			$this->initData('module', $lang);
