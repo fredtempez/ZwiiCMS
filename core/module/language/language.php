@@ -244,7 +244,6 @@ class language extends common
 		}
 
 		// Langues disponibles en ligne
-		echo self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/language.json';
 		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL . self::ZWII_UI_BRANCH . '/language.json'), true);
 		$storeUI = $storeUI['language'];
 
@@ -610,7 +609,6 @@ class language extends common
 						$this->deleteData(['language', $lang]);
 						$success = unlink(self::I18N_DIR . $lang . '.json');
 					}
-					// Effacer la langue dans la base
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl() . 'language',
