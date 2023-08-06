@@ -1,26 +1,5 @@
 {
-    "Alignement": "Alignment",
-    "Aucun": "None",
-    "Aucune": "None",
     "Dossier cible": "Target folder",
-    "Grande": "Large",
-    "Image": "Image",
-    "Important": "Important",
-    "Importante": "Important",
-    "Le curseur horizontal règle le niveau de transparence.": "The horizontal slider adjusts the transparency level.",
-    "Léger": "Light",
-    "Légère": "Light",
     "Masqué": "Hidden",
-    "Moyen": "Medium",
-    "Moyenne": "Medium",
-    "Petite": "Small",
-    "Tri des images": "Image sorting",
-    "Très grande": "Very large",
-    "Très important": "Very important",
-    "Très importante": "Very important",
-    "Très léger": "Very light",
-    "Très légère": "Very light",
-    "Très petite": "Very small",
-    "À droite": "Right",
-    "À gauche": "Left"
+    "Tri des images": "Image sorting"
 }

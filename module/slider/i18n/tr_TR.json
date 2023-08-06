@@ -1,26 +1,5 @@
 {
-    "Alignement": "Hizalama",
-    "Aucun": "Hiçbiri",
-    "Aucune": "Hiçbiri",
     "Dossier cible": "Hedef klasör",
-    "Grande": "Büyük",
-    "Image": "Resim",
-    "Important": "Önemli",
-    "Importante": "Önemli",
-    "Le curseur horizontal règle le niveau de transparence.": "Yatay kaydırıcı şeffaflık düzeyini ayarlar.",
-    "Léger": "Hafif",
-    "Légère": "Hafif",
     "Masqué": "Gizli",
-    "Moyen": "Orta",
-    "Moyenne": "Orta",
-    "Petite": "Küçük",
-    "Tri des images": "Resim sıralama",
-    "Très grande": "Çok büyük",
-    "Très important": "Çok önemli",
-    "Très importante": "Çok önemli",
-    "Très léger": "Çok hafif",
-    "Très légère": "Çok hafif",
-    "Très petite": "Çok küçük",
-    "À droite": "Sağa",
-    "À gauche": "Sola"
+    "Tri des images": "Resim sıralama"
 }

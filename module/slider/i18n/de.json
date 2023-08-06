@@ -1,26 +1,5 @@
 {
-    "Alignement": "Ausrichtung",
-    "Aucun": "Keine",
-    "Aucune": "Keine",
     "Dossier cible": "Zielordner",
-    "Grande": "Groß",
-    "Image": "Bild",
-    "Important": "Wichtig",
-    "Importante": "Wichtig",
-    "Le curseur horizontal règle le niveau de transparence.": "Der horizontale Schieberegler regelt die Transparenzstufe.",
-    "Léger": "Leicht",
-    "Légère": "Leicht",
     "Masqué": "Versteckt",
-    "Moyen": "Mittel",
-    "Moyenne": "Mittel",
-    "Petite": "Klein",
-    "Tri des images": "Bildsortierung",
-    "Très grande": "Sehr groß",
-    "Très important": "Sehr wichtig",
-    "Très importante": "Sehr wichtig",
-    "Très léger": "Sehr leicht",
-    "Très légère": "Sehr leicht",
-    "Très petite": "Sehr klein",
-    "À droite": "Rechts",
-    "À gauche": "Links"
+    "Tri des images": "Bildsortierung"
 }

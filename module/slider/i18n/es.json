@@ -1,26 +1,5 @@
 {
-    "Alignement": "Alineación",
-    "Aucun": "Ninguno",
-    "Aucune": "Ninguno",
     "Dossier cible": "Carpeta de destino",
-    "Grande": "Grande",
-    "Image": "Imagen",
-    "Important": "Importante",
-    "Importante": "Importante",
-    "Le curseur horizontal règle le niveau de transparence.": "El cursor horizontal ajusta el nivel de transparencia.",
-    "Léger": "Ligero",
-    "Légère": "Ligero",
     "Masqué": "Oculto",
-    "Moyen": "Medio",
-    "Moyenne": "Medio",
-    "Petite": "Pequeño",
-    "Tri des images": "Ordenar imágenes",
-    "Très grande": "Muy grande",
-    "Très important": "Muy importante",
-    "Très importante": "Muy importante",
-    "Très léger": "Muy ligero",
-    "Très légère": "Muy ligero",
-    "Très petite": "Muy pequeño",
-    "À droite": "Derecha",
-    "À gauche": "Izquierda"
+    "Tri des images": "Ordenar imágenes"
 }
