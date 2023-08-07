@@ -16,8 +16,8 @@
 class language extends common
 {
 
-		// URL langues de l'UI en ligne
-		const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13/';
+	// URL langues de l'UI en ligne
+	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13/';
 
 	public static $actions = [
 		'index' => self::GROUP_ADMIN,
@@ -91,7 +91,7 @@ class language extends common
 			}
 
 			// Télécharger le descripteur en ligne
-			$languageData = json_decode(helper::getUrlContents(self::ZWII_UI_URL  . $lang . '.json'), true);
+			$languageData = json_decode(helper::getUrlContents(self::ZWII_UI_URL . $lang . '.json'), true);
 			$descripteur = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
 			$success = false;
 			if (
@@ -259,13 +259,13 @@ class language extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-												  template::button('translateContentLanguageUIEdit' . $file, [
-													  'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-													  'value' => template::ico('pencil'),
-													  'help' => 'Éditer',
-													  'disabled' => 'fr_FR' === $file
-												  ]),
-												  */
+																 template::button('translateContentLanguageUIEdit' . $file, [
+																	 'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+																	 'value' => template::ico('pencil'),
+																	 'help' => 'Éditer',
+																	 'disabled' => 'fr_FR' === $file
+																 ]),
+																 */
 
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',

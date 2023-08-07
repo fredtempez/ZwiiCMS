@@ -16,7 +16,6 @@
 		 'help' => 'Consulter l\'aide en ligne'
 		 ]);*/?>
 	</div>
-
 </div>
 
 <div class="tab">
