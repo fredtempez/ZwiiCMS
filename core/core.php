@@ -63,23 +63,24 @@ class common
 
 	public static $actions = [];
 	public static $coreModuleIds = [
-		'config',
-		'install',
-		'maintenance',
-		'page',
-		'sitemap',
-		'theme',
-		'user',
-		'language',
-		'plugin'
+		"config",
+		"dashboard",
+		"install",
+		"language",
+		"maintenance",
+		"page",
+		"plugin",
+		"sitemap",
+		"theme",
+		"user"
 	];
 	public static $accessList = [
-		'user',
-		'theme',
-		'config',
-		'edit',
-		'config',
-		'language'
+		"config",
+		"edit",
+		"language",
+		"plugin",
+		"theme",
+		"user"
 	];
 	public static $accessExclude = [
 		'login',
