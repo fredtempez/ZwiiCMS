@@ -305,7 +305,7 @@ class language extends common
 
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Multilingue'),
+			'title' => helper::translate('Langues'),
 			'view' => 'index'
 		]);
 	}
