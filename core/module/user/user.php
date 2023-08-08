@@ -489,8 +489,8 @@ class user extends common
 			) {
 				self::$userGroups[$groupId] = [
 					$groupId,
-					$groupData['name'],
-					nl2br($groupData['comment']),
+					helper::translate($groupData['name']),
+					nl2br(helper::translate($groupData['comment'])),
 					template::button('profilEdit' . $groupId, [
 						'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId,
 						'value' => template::ico('pencil'),
@@ -513,8 +513,8 @@ class user extends common
 				foreach ($groupData as $profilId => $profilData) {
 					self::$userGroups[$groupId . '.' . $profilId] = [
 						$groupId . '-' . $profilId,
-						self::$groups[$groupId] . '<br />Profil : ' . $profilData['name'],
-						nl2br($profilData['comment']),
+						helper::translate(self::$groups[$groupId]). '<br />Profil : ' . helper::translate($profilData['name']),
+						nl2br(helper::translate($profilData['comment'])),
 						template::button('profilEdit' . $groupId . $profilId, [
 							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $profilId,
 							'value' => template::ico('pencil'),

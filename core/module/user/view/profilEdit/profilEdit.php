@@ -25,7 +25,7 @@
                                 <div class="col6">
                                     <?php echo template::text('profilEditName', [
                                         'label' => 'Nom du profil',
-                                        'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name'])
+                                        'value' => helper::translate($this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name']))
                                     ]); ?>
                                     </div>
                                      <div class="col6">
@@ -41,7 +41,7 @@
                         <div class="col12">
                             <?php echo template::text('profilEditDisplayGroup', [
                                 'label' => 'Groupe associé',
-                                'value' => self::$groups[$this->getUrl(2)],
+                                'value' => helper::translate(self::$groups[$this->getUrl(2)]),
                                 'disabled' => true
                             ]); ?>
                             <?php echo template::hidden('profilEditGroup', [
@@ -56,7 +56,7 @@
                 <div class="col6">
                     <?php echo template::textarea('profilEditComment', [
                         'label' => 'Commentaire',
-                        'value' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment'])
+                        'value' => helper::translate($this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'comment']))
                     ]); ?>
                 </div>
             </div>
