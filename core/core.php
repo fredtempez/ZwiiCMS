@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.0.00.14';
+	const ZWII_VERSION = '13.0.00.15';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/';
@@ -74,7 +74,7 @@ class common
 		"theme",
 		"user"
 	];
-	public static $accessList = [
+	public static $concurrentAccess = [
 		"config",
 		"edit",
 		"language",
@@ -82,10 +82,14 @@ class common
 		"theme",
 		"user"
 	];
+	/*
+	Cette variable est supprimée du test dans le routeur.
 	public static $accessExclude = [
 		'login',
-		'logout'
+		'logout',
+		"maintenance",
 	];
+	*/
 	private $data = [];
 	private $hierarchy = [
 		'all' => [],

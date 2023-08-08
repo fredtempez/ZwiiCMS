@@ -572,8 +572,8 @@ class core extends common
 					$this->getUser('id') &&
 					$userId !== $this->getUser('id') &&
 					$this->getData(['user', $userId, 'accessUrl']) === $this->getUrl() &&
-					array_intersect($t, self::$accessList) &&
-					array_intersect($t, self::$accessExclude) !== false &&
+					array_intersect($t, self::$concurrentAccess) &&
+					//array_intersect($t, self::$accessExclude) !== false &&
 					time() < $this->getData(['user', $userId, 'accessTimer']) + self::ACCESS_TIMER
 				) {
 					$access = false;
