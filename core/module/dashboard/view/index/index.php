@@ -10,45 +10,45 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<?php echo 'Version de PHP : ' . phpversion(); ?>
-		<?php
-		$extensions = get_loaded_extensions();
+		<div class="block">
+			<h4>
+				<?php echo helper::translate('Système'); ?>
+			</h4>
+			<div class="row">
+				<div class="col6">
+					<p>
+						<?php echo helper::translate('Serveur Web'); ?>
+					</p>
+					<p>
+						<?php echo $module::$infos['webserver']; ?>
+					</p>
+				</div>
+				<div class="col6">
+					<p>
+						<?php echo helper::translate('PHP') . ' ' . $module::$infos['php']['version']; ?>
+					</p>
+					<p>
+						<?php echo implode(' - ', $module::$infos['php']['extension']); ?>
+					</p>
+				</div>
+			</div>
 
-		echo '<p>Extensions activées :</p>';
-		foreach ($extensions as $extension) {
-			echo $extension . ' - ';
-		}
-		?>
-		<?php
-		$serverSoftware = $_SERVER['SERVER_SOFTWARE'];
-		echo '<p>';
-		if (stripos($serverSoftware, 'apache') !== false) {
-			echo 'Serveur web : Apache';
-		} elseif (stripos($serverSoftware, 'nginx') !== false) {
-			echo 'Serveur web : Nginx';
-		} elseif (stripos($serverSoftware, 'tomcat') !== false) {
-			echo 'Serveur web : Tomcat';
-		} else {
-			echo 'Serveur web non identifié : ' . $serverSoftware;
-
-		}
-		echo '</p>';
-		?>
-
-		<?php
-		echo 'Mémoire utilisée : ' . memory_get_usage() . ' octets</p>';
-		echo 'Pic de mémoire utilisée : ' . memory_get_peak_usage() . ' octets</p>';
-		?>
-
-		<?php
-		$loadAverage = sys_getloadavg();
-		echo 'Charge moyenne (1 min / 5 min / 15 min) : ' . implode(' / ', $loadAverage) . '</P>';
-		?>
-
-		<?php
-		$diskSpace = shell_exec('df -h'); // Linux example
-		echo 'Espace disque :</p>' . $diskSpace;
-		?>
-
+			<div class="row">
+				<div class="col12">
+					<p>
+						<?php echo helper::translate('Mémoire'); ?>
+					</p>
+					<p>
+						<?php echo $module::$infos['system']['memory']; ?>
+					</p>
+					<p>
+						<?php echo $module::$infos['system']['charge']; ?>
+					</p>
+					<p>
+						<?php echo $module::$infos['system']['peek']; ?>
+					</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
