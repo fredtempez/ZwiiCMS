@@ -31,8 +31,9 @@
                                      <div class="col6">
                                     <?php echo template::select('profilEditProfil', $module::$profils,  [
                                         'label' => 'Hiérarchie',
-                                        'help' => 'Les profils d\'ordre supérieurs sont de rang plus élevés que les profils d\'ordre inférieur',
-                                        'selected' => $this->getUrl(3)
+                                        'help' => 'Rang 9 > rang 1. Le profil de rang 1 n\'est pas modifiable.',
+                                        'selected' => $this->getUrl(3),
+                                        'disabled' => $this->getUrl(3) === '1',
                                     ]); ?>
                                 </div>
                             </div>

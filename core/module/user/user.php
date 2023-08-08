@@ -519,7 +519,7 @@ class user extends common
 							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $profilId,
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
-							'disabled' => $profilId === 1 ? true : $profilData['readonly'],
+							'disabled' => $profilData['readonly'],
 						]),
 						template::button('profilDelete' . $groupId . $profilId, [
 							'class' => 'userDelete buttonRed',
