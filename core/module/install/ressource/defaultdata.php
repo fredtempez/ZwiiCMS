@@ -479,7 +479,7 @@ class init extends common
 			],
 			'2' => [
 				'1' => [
-					'name' => 'Editeur simple',
+					'name' => 'Éditeur simple',
 					'readonly' => false,
 					'permanent' => true,
 					'comment' => 'Édition des pages',
@@ -564,7 +564,7 @@ class init extends common
 					'name' => 'Rédacteur',
 					'readonly' => false,
 					'permanent' => false,
-					'comment' => 'Tous les droits sur les contenus',
+					'comment' => 'Tous les droits d\'édition des contenus',
 					'filemanager' => true,
 					'file' => [
 						'download' => true,
