@@ -5,29 +5,27 @@
                 <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Galerie'); ?>
             </h4>
             <div class="row">
-                <div class="col4">
+                <div class="col3">
                     <?php echo template::checkbox('profilEditGalleryAdd', true, 'Ajouter', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'add'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::checkbox('profilEditGalleryEdit', true, 'Éditer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'edit'])
                     ]); ?>
                 </div>
-                <div class="col4">
+                <div class="col2">
                     <?php echo template::checkbox('profilEditGalleryDelete', true, 'Effacer', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'delete'])
                     ]); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
+                <div class="col2">
                     <?php echo template::checkbox('profilEditGalleryOption', true, 'Options', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'option'])
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col2">
                     <?php echo template::checkbox('profilEditGalleryTheme', true, 'Thème', [
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'gallery', 'theme'])
                     ]); ?>

@@ -5,24 +5,21 @@
                 <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Formulaire'); ?>
             </h4>
             <div class="row">
-                <div class="col4">
-                    <?php echo template::checkbox('profilAddFormOption', true, 'Options'); ?>
+                <div class="col3">
+                    <?php echo template::checkbox('profilEditFormData', true, 'Gérer les données'); ?>
                 </div>
-                <div class="col4">
-                    <?php echo template::checkbox('profilAddFormData', true, 'Gérer les données'); ?>
+                <div class="col2">
+                    <?php echo template::checkbox('profilEditFormOption', true, 'Options'); ?>
                 </div>
-                <div class="col4">
-                    <?php echo template::checkbox('profilAddFormExport2csv', true, 'Export CSV'); ?>
+                <div class="col2">
+                    <?php echo template::checkbox('profilEditFormDelete', true, 'Effacer'); ?>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col6">
-                    <?php echo template::checkbox('profilAddFormDelete', true, 'Effacer'); ?>
+                <div class="col2">
+                    <?php echo template::checkbox('profilEditFormDeleteAll', true, 'Tout Effacer'); ?>
                 </div>
-                <div class="col6">
-                    <?php echo template::checkbox('profilAddFormDeleteAll', true, 'Tout Effacer'); ?>
+                <div class="col2">
+                    <?php echo template::checkbox('profilEditFormExport2csv', true, 'Export CSV'); ?>
                 </div>
-
             </div>
         </div>
     </div>
