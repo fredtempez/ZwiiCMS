@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Galerie'); ?>
+            <?php echo sprintf('%s %s', helper::translate('Permissions'), helper::translate('Galerie')); ?>
             </h4>
             <div class="row">
                 <div class="col3">
