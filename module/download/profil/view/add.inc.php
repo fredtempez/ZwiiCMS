@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo helper::translate('Permissions sur le module') . ' ' . helper::translate('Téléchargement'); ?>
+                <?php echo sprintf('%s %s', helper::translate('Permissions'), helper::translate('Téléchargement')); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -21,15 +21,15 @@
             </div>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddDownloadComment', true, 'Commentaire'); ?>
+                    <?php echo template::checkbox('profilAddDownloadComment', true, 'Gérer les commentaires'); ?>
                 </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddDownloadCommentApprove', true, 'Gérer les commentaires'); ?>
+                <div class="col3 downloadAddCommentOptions">
+                    <?php echo template::checkbox('profilAddDownloadCommentApprove', true, 'Approuver un commentaire'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 downloadAddCommentOptions">
                     <?php echo template::checkbox('profilAddDownloadCommentDelete', true, 'Effacer un commentaire'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 downloadAddCommentOptions">
                     <?php echo template::checkbox('profilAddDownloadCommentDeleteAll', true, 'Effacer tous les commentaires'); ?>
                 </div>
             </div>
@@ -37,13 +37,13 @@
                 <div class="col3">
                     <?php echo template::checkbox('profilAddDownloadCategories', true, 'Gérer les catégories'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 downloadAddCategoryOptions">
                     <?php echo template::checkbox('profilAddDownloadCategoryEdit', true, 'Éditer une catégorie'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 downloadAddCategoryOptions">
                     <?php echo template::checkbox('profilAddDownloadCategoryDelete', true, 'Effacer une catégorie'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 downloadAddCategoryOptions">
                     <?php echo template::checkbox('profilAddDownloadCommentDeleteAllStats', true, 'Effacer toutes les statistiques'); ?>
                 </div>
             </div>

@@ -2,7 +2,7 @@
     <div class="col12">
         <div class="block">
             <h4>
-                <?php echo  helper::translate('Permissions sur le module') . ' ' .  helper::translate('Blog'); ?>
+                <?php echo sprintf('%s %s', helper::translate('Permissions'), helper::translate('Blog')); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -22,13 +22,13 @@
                 <div class="col3">
                     <?php echo template::checkbox('profilAddBlogComment', true, 'Gérer les commentaires'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 blogAddCommentOptions">
                     <?php echo template::checkbox('profilAddBlogCommentApprove', true, 'Approuver un commentaire'); ?>
                 </div>
-                <div class="col3" s>
+                <div class="col3 blogAddCommentOptions">
                     <?php echo template::checkbox('profilAddBlogCommentDelete', true, 'Effacer un commentaire'); ?>
                 </div>
-                <div class="col3">
+                <div class="col3 blogAddCommentOptions">
                     <?php echo template::checkbox('profilAddBlogCommentDeleteAll', true, 'Effacer tous les commentaires'); ?>
                 </div>
             </div>
