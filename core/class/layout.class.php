@@ -824,11 +824,33 @@ class layout extends common
      */
     public function showMetaImage()
     {
-        $items = '<meta property="og:image" content="' . helper::baseUrl(false) . self::FILE_DIR . 'source/screenshot.jpg" />';
-        $items .= '<meta property="og:image:type" content="image/jpeg" />';
-        $items .= '<meta property="og:image:width" content="1200" />';
-        $items .= '<meta property="og:image:height" content="627" />';
-        echo $items;
+        $imagePath = self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']);
+        if (
+            $this->getData(['config', 'seo', 'openGraphImage'])
+            && file_exists($imagePath)
+        ) {
+            $typeMime = exif_imagetype($imagePath);
+            switch ($typeMime) {
+                case IMAGETYPE_JPEG:
+                    $typeMime = 'image/jpeg';
+                    break;
+                case IMAGETYPE_PNG:
+                    $typeMime = 'image/png';
+                    break;
+                default:
+                    // Type incorrect
+                    return;
+            }
+            $imageSize = getimagesize($imagePath);
+            $wide = $imageSize[0];
+            $height = $imageSize[1];
+            //Sortie
+            $items = '<meta property="og:image" content="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']) . '" />';
+            $items .= '<meta property="og:image:type" content="' . $typeMime . '" />';
+            $items .= '<meta property="og:image:width" content="' . $wide . '" />';
+            $items .= '<meta property="og:image:height" content="' . $height . '" />';
+            echo $items;
+        }
     }
 
     /**

@@ -136,8 +136,6 @@
     "Chiffres": "",
     "Cible": "",
     "Cliquez sur une zone afin d'accéder à ses options de personnalisation.": "",
-    "Clé de l'API <a href=\"https://app.screenshotapi.net/\" target=\"_blank\">ScreenShotApi</a>": "",
-    "Clé de l'API <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>": "",
     "Commentaire": "",
     "Complète": "",
     "Compte administrateur": "",
@@ -180,7 +178,6 @@
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence.": "",
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.": "",
     "Couleurs": "",
-    "Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération": "",
     "Dans le site": "",
     "Dans quelle langue utiliserez-vous Zwii ?": "",
     "Date": "",
@@ -322,7 +319,6 @@
     "L'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.": "",
     "L'identifiant est défini lors de la création du compte, il ne peut pas être modifié.": "",
     "La carte du site a été mise à jour": "",
-    "La clé de l'API ne peut pas être vide": "",
     "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "",
     "La description d'une page participe à son référencement, chaque page doit disposer d'une description différente.": "",
     "La page %s est ouverte par l'utilisateur %s": "",
@@ -675,5 +671,9 @@
     "Édition du profil %s": "",
     "Éléments": "",
     "Étendu sur la page": "",
-    "Étiquettes des pages spéciales": ""
+    "Étiquettes des pages spéciales": "",
+    "Dimensions minimales": "",
+    "Taille maximale du fichier": "",
+    "5 Mo pour les images JPEG": "",
+    "1 Mo pour les images PNG": ""
 }

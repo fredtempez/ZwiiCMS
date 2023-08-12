@@ -29,7 +29,7 @@ class init extends common
 			],
 			'seo' => [
 				'robots' => true,
-				'keyApi' => 'XXXXXXX-XXXXXXX-XXXXXXX-XXXXXXX'
+				'openGraphImage' => 'screenshot.jpg'
 			],
 			'connect' => [
 				'timeout' => 600,
@@ -286,15 +286,15 @@ class init extends common
 		'language' => [
 			"fr_FR" => [
 				"version" => 13000,
-				"date" => 1691352286
+				"date" => 1691858227
 			],
 			"es" => [
 				"version" => 13000,
-				"date" => 1691352286
+				"date" => 1691858227
 			],
 			"en_EN" => [
 				"version" => 13000,
-				"date" => 1691352286
+				"date" => 1691858227
 			]
 		],
 		'profil' => [

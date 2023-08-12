@@ -136,8 +136,6 @@
     "Chiffres": "Cifras",
     "Cible": "Objetivo",
     "Cliquez sur une zone afin d'accéder à ses options de personnalisation.": "Haga clic en un área para acceder a sus opciones de personalización.",
-    "Clé de l'API <a href=\"https://app.screenshotapi.net/\" target=\"_blank\">ScreenShotApi</a>": "Clave API <a href=",
-    "Clé de l'API <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>": "Clave API <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>",
     "Commentaire": "Comentario",
     "Complète": "sin truncar",
     "Compte administrateur": "Cuenta de administrador",
@@ -180,7 +178,6 @@
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence.": "Color visible en ausencia de una imagen.<br />El control deslizante horizontal ajusta el nivel de transparencia.",
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.": "Color visible en ausencia de una imagen.<br />El control deslizante horizontal ajusta el nivel de transparencia. El color del texto es automático.",
     "Couleurs": "Colores",
-    "Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération": "Cree una cuenta gratuita, copie la clave, luego valide el formulario antes de hacer clic en el botón generar",
     "Dans le site": "En el sitio",
     "Dans quelle langue utiliserez-vous Zwii ?": "¿En qué idioma usará Zwii?",
     "Date": "fecha",
@@ -322,7 +319,6 @@
     "L'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.": "El archivo ha sido depositado en el administrador de archivos. No se aceptan archivos inferiores a la versión 9.",
     "L'identifiant est défini lors de la création du compte, il ne peut pas être modifié.": "El identificador se define al crear la cuenta, no se puede modificar.",
     "La carte du site a été mise à jour": "El mapa del sitio ha sido actualizado.",
-    "La clé de l'API ne peut pas être vide": "La clave API no puede estar vacía",
     "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "¡La copia de seguridad del archivo htaccess no ha sido restaurada!",
     "La description d'une page participe à son référencement, chaque page doit disposer d'une description différente.": "La descripción de una página participa en su referenciación, cada página debe tener una descripción diferente.",
     "La page %s est ouverte par l'utilisateur %s": "La página %s ha sido abierta por el usuario %s",
@@ -675,5 +671,9 @@
     "Édition du profil %s": "Edición del perfil %s",
     "Éléments": "Elementos",
     "Étendu sur la page": "Extendido en la página",
-    "Étiquettes des pages spéciales": "Etiquetas de páginas especiales"
+    "Étiquettes des pages spéciales": "Etiquetas de páginas especiales",
+    "Dimensions minimales": "Dimensiones mínimas",
+    "Taille maximale du fichier": "Tamaño máximo de archivo",
+    "5 Mo pour les images JPEG": "5 MB para imágenes JPEG",
+    "1 Mo pour les images PNG": "1 MB para imágenes PNG"
 }

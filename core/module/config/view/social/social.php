@@ -11,33 +11,47 @@
 					</span>-->
 				</h4>
 				<div class="row">
-					<div class="col7">
+					<div class="col6">
 						<div class="row">
 							<div class="col12">
-								<?php echo template::text('seoKeyApi', [
-									'label' => 'Clé de l\'API <a href="https://app.screenshotapi.net/" target="_blank">ScreenShotApi</a>',
-									'value' => $this->getData(['config', 'seo', 'keyApi']),
-									'help' => 'Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération'
+								<?php echo template::file('seoOpenGraphImage', [
+									'language' => $this->getData(['user', $this->getUser('id'), 'language']),
+									'label' => 'Image Open Graph',
+									'value' => $this->getData(['config', 'seo', 'openGraphImage']),
+									'type' => 1,
+									'help' =>  sprintf('%s : JPG - PNG<br />', helper::translate('Format')) .
+									 sprintf('%s : 1200 x 630 pixels<br />', helper::translate('Dimensions minimales')) .
+									 sprintf('%s : 1.91:1<br />', helper::translate('Ratio')) .
+									 sprintf('%s : %s, %s<br />', helper::translate('Taille maximale du fichier'), helper::translate('5 Mo pour les images JPEG'), helper::translate('1 Mo pour les images PNG'))
 								]); ?>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col6 offset3">
-								<?php echo template::button('socialMetaImage', [
-									'href' => helper::baseUrl() . 'config/configMetaImage',
-									'value' => 'Générer une capture Open Graph'
-								]); ?>
+							<div class="col10 textAlignCenter">
+								<?php if( $module::$imageOpenGraph['type']): ?>
+								<p>
+									<?php echo sprintf('%s : %s ', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
+								</p>
+								<p>
+									<?php echo sprintf('%s : %s x %s pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height'] ); ?>
+								</p>
+								<p>
+									<?php echo sprintf('%s : %s' , helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
+								</p>
+								<p>
+									<?php echo sprintf('%s : %s', helper::translate('Taille'), $module::$imageOpenGraph['size']); ?>
+								</p>
+								<?php endif; ?>
 							</div>
 						</div>
 					</div>
-					<div class="col5">
-						<?php if (file_exists(self::FILE_DIR . 'source/screenshot.jpg')): ?>
-							<div class="row">
-								<div class="col8 offset2 textAlignCenter">
-									<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR . 'source/screenshot.jpg'; ?>"
-										data-tippy-content="Cette capture d'écran est nécessaire aux partages sur les réseaux sociaux. Elle est régénérée lorsque le fichier 'screenshot.jpg' est effacé du gestionnaire de fichiers." />
-								</div>
-							</div>
+					<div class="col6">
+						<?php if (
+							$this->getData(['config', 'seo', 'openGraphImage']) &&
+							file_exists(self::FILE_DIR .  'source/' . $this->getData(['config', 'seo', 'openGraphImage']))
+						): ?>
+							<img
+								src="<?php echo self::FILE_DIR .  'source/' . $this->getData(['config', 'seo', 'openGraphImage']); ?>" />
 						<?php endif; ?>
 					</div>
 				</div>

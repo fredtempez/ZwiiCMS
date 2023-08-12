@@ -204,6 +204,8 @@ class config extends common
 	public static $onlineVersion = '';
 	public static $updateButtonText = 'Réinstaller';
 
+	public static $imageOpenGraph = [];
+
 	/**
 	 * Génére les fichiers pour les crawlers
 	 * Sitemap compressé et non compressé
@@ -299,8 +301,6 @@ class config extends common
 			}
 		}
 
-
-
 		// Traitement des données reçues valides.
 		if (!empty($token) && $data !== false) {
 			$data = json_decode($data, true);
@@ -365,12 +365,7 @@ class config extends common
 						'state' => false
 					]);
 				}
-				// Lire le contenu de l'archive dans le tableau files
-				/*
-																																		for ($i = 0; $i < $zip->numFiles; $i++) {
-																																			$stat = $zip->statIndex($i);
-																																			$files[] = (basename($stat['name']));
-																																		}*/
+
 				// Extraction de l'archive dans un dossier temporaire
 				$tmpDir = uniqid(8);
 				$success = $zip->extractTo(self::TEMP_DIR . $tmpDir);
@@ -488,7 +483,7 @@ class config extends common
 					],
 					'seo' => [
 						'robots' => $this->getInput('seoRobots', helper::FILTER_BOOLEAN),
-						'keyApi' => $this->getInput('seoKeyApi', helper::FILTER_STRING_SHORT),
+						'openGraphImage' => $this->getInput('seoOpenGraphImage', helper::FILTER_STRING_SHORT),
 					],
 					'connect' => [
 						'attempt' => $this->getInput('connectAttempt', helper::FILTER_INT),
@@ -596,6 +591,47 @@ class config extends common
 		// Sélecteur de délais, compléter avec la traduction en jours
 		foreach (self::$updateDelay as $key => $value) {
 			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
+		}
+
+		// Paramètres de l'image OpenGraph
+		$imagePath = self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']);
+
+		// Par défaut
+		self::$imageOpenGraph['type'] = '';
+		self::$imageOpenGraph['size'] = '';
+		self::$imageOpenGraph['wide'] = '';
+		self::$imageOpenGraph['height'] = '';
+		self::$imageOpenGraph['ratio'] = 0;
+		if (
+			$this->getData(['config', 'seo', 'openGraphImage'])
+			&& file_exists($imagePath)
+		) {
+			// Infos sur l'image Open Graph
+			$typeMime = exif_imagetype($imagePath);
+			switch ($typeMime) {
+				case IMAGETYPE_JPEG:
+					$typeMime = 'jpeg';
+					break;
+				case IMAGETYPE_PNG:
+					$typeMime = 'png';
+					break;
+			}
+			self::$imageOpenGraph['type'] = $typeMime;
+			$imageSize = getimagesize($imagePath);
+			self::$imageOpenGraph['wide'] = $imageSize[0];
+			self::$imageOpenGraph['height'] = $imageSize[1];
+			self::$imageOpenGraph['ratio'] = self::$imageOpenGraph['wide'] / self::$imageOpenGraph['height'];
+
+			self::$imageOpenGraph['size'] = filesize($imagePath);
+			$tailleEnOctets = filesize($imagePath);
+
+			if ($tailleEnOctets >= 1024 * 1024) {
+				// Si la taille est supérieure ou égale à 1 Mo, afficher en mégaoctets
+				self::$imageOpenGraph['size'] = round($tailleEnOctets / (1024 * 1024), 2) . ' Mo';
+			} else {
+				// Sinon, afficher en kilooctets
+				self::$imageOpenGraph['size'] = round($tailleEnOctets / 1024, 2) . ' Ko';
+			}
 		}
 
 		// Valeurs en sortie

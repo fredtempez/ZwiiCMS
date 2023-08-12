@@ -6,7 +6,8 @@
 - Améliore la gestion de la base de données et la génération du fichier de journalisation, stockage des données JSON, forçage au format objet.
 - Erreurs fictives pendant la mise à jour en ligne, améliorations du dialogue AJAX entre PHP et JQUERY avec un affichage précis des erreurs.
 - L'ajout d'une langue de contenu initialise les données de la langue.
-- Format d'image avif si supporté par la version installée de php;.
+- Format d'image avif si supporté par la version installée de php.
+- Remplacement du service ScreenShot API par un sélecteur manuel ; affiche les paramètres d'images recommandées et ceux de l'image sélectionnée.
 # Corrections
 - Correction de bugs mineurs dans la sauvegarde et la suppression des modules installés.
 - Problèmes de mise à jour depuis les versions 11.

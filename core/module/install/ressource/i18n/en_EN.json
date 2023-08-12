@@ -136,8 +136,6 @@
     "Chiffres": "Numbers",
     "Cible": "Target",
     "Cliquez sur une zone afin d'accéder à ses options de personnalisation.": "Click on an area to access its customization options.",
-    "Clé de l'API <a href=\"https://app.screenshotapi.net/\" target=\"_blank\">ScreenShotApi</a>": "API key <a href=\"https://app.screenshotapi.net/\" target=\"_blank\">ScreenShotApi</a>",
-    "Clé de l'API <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>": "API key <a href='https://app.screenshotapi.net/' target='_blank'>ScreenShotApi</a>",
     "Commentaire": "Comment",
     "Complète": "Complete",
     "Compte administrateur": "Administrator account",
@@ -180,7 +178,6 @@
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence.": "Visible color in the absence of an image. <br /> The horizontal cursor regulates the level of transparency.",
     "Couleur visible en l'absence d'une image.<br />Le curseur horizontal règle le niveau de transparence. La couleur du texte est automatique.": "Visible color in the absence of an image. <br /> The horizontal cursor regulates the level of transparency. The color of the text is automatic.",
     "Couleurs": "Colors",
-    "Créez un compte gratuit, recopier la clé , puis valider le formulaire avant de cliquer sur le bouton de génération": "Create a free account, copy the key, then validate the form before clicking the generation button",
     "Dans le site": "Into the site",
     "Dans quelle langue utiliserez-vous Zwii ?": "In which language will you use Zwii?",
     "Date": "Date",
@@ -322,7 +319,6 @@
     "L'archive a été déposée dans le gestionnaire de fichiers. Les archives inférieures à la version 9 ne sont pas acceptées.": "The archive was deposited in the file manager. Archives below version 9 are not accepted.",
     "L'identifiant est défini lors de la création du compte, il ne peut pas être modifié.": "The identifier is defined when creating the account, it cannot be changed.",
     "La carte du site a été mise à jour": "The site card has been updated",
-    "La clé de l'API ne peut pas être vide": "The key to the API cannot be empty",
     "La copie de sauvegarde du fichier htaccess n'a pas été restaurée !": "Backup copy of htaccess file has not been restored!",
     "La description d'une page participe à son référencement, chaque page doit disposer d'une description différente.": "The description of a page participates in its referencing, each page must have a different description.",
     "La page %s est ouverte par l'utilisateur %s": "Page %s opened by user %s",
@@ -675,5 +671,9 @@
     "Édition du profil %s": "Edit Profile %s",
     "Éléments": "Items",
     "Étendu sur la page": "Spread across the page",
-    "Étiquettes des pages spéciales": "Special pages labels"
+    "Étiquettes des pages spéciales": "Special pages labels",
+    "Dimensions minimales": "Minimum dimensions",
+    "Taille maximale du fichier": "Maximum file size",
+    "5 Mo pour les images JPEG": "5 MB for JPEG images",
+    "1 Mo pour les images PNG": "1 MB for PNG images"
 }
