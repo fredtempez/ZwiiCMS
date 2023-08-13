@@ -53,3 +53,15 @@
 .activeButton {
     background-color: #00BFFF;
 }
+
+.greenInfo, .redInfo {
+font-weight: bold;
+}
+
+.greenInfo {
+    color: green;
+}
+
+.redInfo {
+    color: red;
+}

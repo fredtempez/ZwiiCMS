@@ -615,6 +615,8 @@ class config extends common
 				case IMAGETYPE_PNG:
 					$typeMime = 'png';
 					break;
+				default:
+				$typeMime = image_type_to_mime_type($typeMime);
 			}
 			self::$imageOpenGraph['type'] = $typeMime;
 			$imageSize = getimagesize($imagePath);

@@ -9,4 +9,327 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-function setCookie(name,value,days){var expires="";if(days){var date=new Date;date.setTime(date.getTime()+24*days*60*60*1e3),expires="; expires="+date.toUTCString()}document.cookie=name+"="+(value||"")+expires+"; path=/; samesite=lax"}function getCookie(name){for(var nameEQ=name+"=",ca=document.cookie.split(";"),i=0;i<ca.length;i++){for(var c=ca[i];" "==c.charAt(0);)c=c.substring(1,c.length);if(0==c.indexOf(nameEQ))return c.substring(nameEQ.length,c.length)}return null}function capitalizeFirstLetter(string){return string.charAt(0).toUpperCase()+string.slice(1)}$(document).ready((function(){$("#configBackupDelButton").on("click",(function(){var _this=$(this),message_warning="<?php echo helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";return core.confirm(message_warning,(function(){$(location).attr("href",_this.attr("href"))}))})),$("input[name=smtpEnable]").is(":checked")?($("#smtpParam").addClass("disabled"),$("#smtpParam").slideDown()):($("#smtpParam").removeClass("disabled"),$("#smtpParam").slideUp()),1==$("select[name=smtpAuth]").val()?($("#smtpAuthParam").addClass("disabled"),$("#smtpAuthParam").slideDown()):($("#smtpAuthParam").removeClass("disabled"),$("#smtpAuthParam").slideUp()),$("input[name=connectCaptcha]").is(":checked")?($("#connectCaptchaStrongWrapper").addClass("disabled"),$("#connectCaptchaStrongWrapper").slideDown(),$("#connectCaptchaTypeWrapper").addClass("disabled"),$("#connectCaptchaTypeWrapper").slideDown()):($("#connectCaptchaStrongWrapper").removeClass("disabled"),$("#connectCaptchaStrongWrapper").slideUp(),$("#connectCaptchaTypeWrapper").removeClass("disabled"),$("#connectCaptchaTypeWrapper").slideUp(),$("#connectCaptchaStrong").prop("checked",!1));var configLayout=getCookie("configLayout");null==configLayout&&(configLayout="setup",setCookie("configLayout","setup")),$("#localeContainer").hide(),$("#socialContainer").hide(),$("#connectContainer").hide(),$("#networkContainer").hide(),$("#setupContainer").hide(),$("#"+configLayout+"Container").show(),$("#config"+capitalizeFirstLetter(configLayout)+"Button").addClass("activeButton"),$("input[name=smtpEnable]").on("change",(function(){$("input[name=smtpEnable]").is(":checked")?($("#smtpParam").addClass("disabled"),$("#smtpParam").slideDown()):($("#smtpParam").removeClass("disabled"),$("#smtpParam").slideUp())})),$("select[name=smtpAuth]").on("change",(function(){1==$("select[name=smtpAuth]").val()?($("#smtpAuthParam").addClass("disabled"),$("#smtpAuthParam").slideDown()):($("#smtpAuthParam").removeClass("disabled"),$("#smtpAuthParam").slideUp())})),$("select[name=connectAttempt]").on("change",(function(){"999"===$("select[name=connectAttempt]").val()?$("select[name=connectTimeout]").val(0):"0"===$("select[name=connectTimeout]").val()&&$("select[name=connectTimeout]").val(300)})),$("select[name=connectTimeout]").on("change",(function(){"0"===$("select[name=connectTimeout]").val()?$("select[name=connectAttempt]").val(999):"999"===$("select[name=connectAttempt]").val()&&$("select[name=connectAttempt]").val(3)})),$("input[name=connectCaptcha]").on("change",(function(){$("input[name=connectCaptcha]").is(":checked")?($("#connectCaptchaStrongWrapper").addClass("disabled"),$("#connectCaptchaStrongWrapper").slideDown(),$("#connectCaptchaTypeWrapper").addClass("disabled"),$("#connectCaptchaTypeWrapper").slideDown()):($("#connectCaptchaStrongWrapper").removeClass("disabled"),$("#connectCaptchaStrongWrapper").slideUp(),$("#connectCaptchaTypeWrapper").removeClass("disabled"),$("#connectCaptchaTypeWrapper").slideUp(),$("#connectCaptchaStrong").prop("checked",!1))})),$("#configSetupButton").on("click",(function(){$("#localeContainer").hide(),$("#socialContainer").hide(),$("#connectContainer").hide(),$("#networkContainer").hide(),$("#setupContainer").show(),$("#configSetupButton").addClass("activeButton"),$("#configLocaleButton").removeClass("activeButton"),$("#configSocialButton").removeClass("activeButton"),$("#configConnectButton").removeClass("activeButton"),$("#configNetworkButton").removeClass("activeButton"),setCookie("configLayout","setup")})),$("#configLocaleButton").on("click",(function(){$("#setupContainer").hide(),$("#socialContainer").hide(),$("#connectContainer").hide(),$("#networkContainer").hide(),$("#localeContainer").show(),$("#configSetupButton").removeClass("activeButton"),$("#configLocaleButton").addClass("activeButton"),$("#configSocialButton").removeClass("activeButton"),$("#configConnectButton").removeClass("activeButton"),$("#configNetworkButton").removeClass("activeButton"),setCookie("configLayout","locale")})),$("#configSocialButton").on("click",(function(){$("#connectContainer").hide(),$("#setupContainer").hide(),$("#localeContainer").hide(),$("#networkContainer").hide(),$("#socialContainer").show(),$("#configSetupButton").removeClass("activeButton"),$("#configLocaleButton").removeClass("activeButton"),$("#configSocialButton").addClass("activeButton"),$("#configConnectButton").removeClass("activeButton"),$("#configNetworkButton").removeClass("activeButton"),setCookie("configLayout","social")})),$("#configConnectButton").on("click",(function(){$("#setupContainer").hide(),$("#localeContainer").hide(),$("#socialContainer").hide(),$("#networkContainer").hide(),$("#connectContainer").show(),$("#configSetupButton").removeClass("activeButton"),$("#configLocaleButton").removeClass("activeButton"),$("#configSocialButton").removeClass("activeButton"),$("#configConnectButton").addClass("activeButton"),$("#configNetworkButton").removeClass("activeButton"),setCookie("configLayout","connect")})),$("#configNetworkButton").on("click",(function(){$("#setupContainer").hide(),$("#localeContainer").hide(),$("#socialContainer").hide(),$("#connectContainer").hide(),$("#networkContainer").show(),$("#configSetupButton").removeClass("activeButton"),$("#configLocaleButton").removeClass("activeButton"),$("#configSocialButton").removeClass("activeButton"),$("#configConnectButton").removeClass("activeButton"),$("#configNetworkButton").addClass("activeButton"),setCookie("configLayout","network")})),$("#socialMetaImage, #socialSiteMap, #configBackupCopyButton").click((function(event){$("body, .button").css("cursor","wait")}));var containers=["setup","locale","social","connect","network"];$.each(containers,(function(index,value){var a;$("div#"+value+"Container").find("input.notice").not(".displayNone").length>0?$("#config"+capitalizeFirstLetter(value)+"Button").addClass("buttonNotice"):$("#config"+capitalizeFirstLetter(value)+"Button").removeClass("buttonNotice")}))}));
+
+
+$(document).ready(function () {
+
+    /**
+     * Confirmation de suppression
+     */
+    $("#configBackupDelButton").on("click", function () {
+        var _this = $(this);
+        var message_warning = "<?php echo helper::translate('Supprimer toutes les sauvegardes automatiques ?'); ?>";
+        return core.confirm(message_warning, function () {
+            $(location).attr("href", _this.attr("href"));
+        });
+    });
+
+    // Positionnement inital des options
+    //-----------------------------------------------------------------------------------------------------
+
+    /**
+     * Afficher et masquer options smtp
+     */
+    if ($("input[name=smtpEnable]").is(':checked')) {
+        $("#smtpParam").addClass("disabled");
+        $("#smtpParam").slideDown();
+    } else {
+        $("#smtpParam").removeClass("disabled");
+        $("#smtpParam").slideUp();
+    }
+    /**
+     * Afficher et masquer options Auth
+     */
+
+    if ($("select[name=smtpAuth]").val() == true) {
+        $("#smtpAuthParam").addClass("disabled");
+        $("#smtpAuthParam").slideDown();
+    } else {
+        $("#smtpAuthParam").removeClass("disabled");
+        $("#smtpAuthParam").slideUp();
+    }
+
+    /**
+     * Afficher et masquer les options de captcha
+     */
+
+    if ($("input[name=connectCaptcha]").is(':checked')) {
+        $("#connectCaptchaStrongWrapper").addClass("disabled");
+        $("#connectCaptchaStrongWrapper").slideDown();
+        $("#connectCaptchaTypeWrapper").addClass("disabled");
+        $("#connectCaptchaTypeWrapper").slideDown();
+    } else {
+        $("#connectCaptchaStrongWrapper").removeClass("disabled");
+        $("#connectCaptchaStrongWrapper").slideUp();
+        $("#connectCaptchaTypeWrapper").removeClass("disabled");
+        $("#connectCaptchaTypeWrapper").slideUp();
+        $("#connectCaptchaStrong").prop("checked", false);
+    }
+
+    var configLayout = getCookie("configLayout");
+    if (configLayout == null) {
+        configLayout = "setup";
+        setCookie("configLayout", "setup");
+    }
+    $("#localeContainer").hide();
+    $("#socialContainer").hide();
+    $("#connectContainer").hide();
+    $("#networkContainer").hide();
+    $("#setupContainer").hide();
+    $("#" + configLayout + "Container").show();
+    $("#config" + capitalizeFirstLetter(configLayout) + "Button").addClass("activeButton");
+
+
+    // Gestion des événements
+    //---------------------------------------------------------------------------------------------------------------------
+
+    /**
+     * Afficher et masquer options smtp
+     */
+    $("input[name=smtpEnable]").on("change", function () {
+        if ($("input[name=smtpEnable]").is(':checked')) {
+            $("#smtpParam").addClass("disabled");
+            $("#smtpParam").slideDown();
+        } else {
+            $("#smtpParam").removeClass("disabled");
+            $("#smtpParam").slideUp();
+        }
+    });
+
+    /**
+     * Afficher et masquer options Auth
+     */
+
+    $("select[name=smtpAuth]").on("change", function () {
+        if ($("select[name=smtpAuth]").val() == true) {
+            $("#smtpAuthParam").addClass("disabled");
+            $("#smtpAuthParam").slideDown();
+        } else {
+            $("#smtpAuthParam").removeClass("disabled");
+            $("#smtpAuthParam").slideUp();
+        }
+    });
+
+    /**
+     * Options de blocage de connexions
+     * Contrôle la cohérence des sélections et interdit une seule valeur Aucune
+     */
+    $("select[name=connectAttempt]").on("change", function () {
+        if ($("select[name=connectAttempt]").val() === "999") {
+            $("select[name=connectTimeout]").val(0);
+        } else {
+            if ($("select[name=connectTimeout]").val() === "0") {
+                $("select[name=connectTimeout]").val(300);
+            }
+        }
+    });
+    $("select[name=connectTimeout]").on("change", function () {
+        if ($("select[name=connectTimeout]").val() === "0") {
+            $("select[name=connectAttempt]").val(999);
+        } else {
+            if ($("select[name=connectAttempt]").val() === "999") {
+                $("select[name=connectAttempt]").val(3);
+            }
+        }
+    });
+
+    /**
+     * Captcha strong si captcha sélectionné
+     */
+    $("input[name=connectCaptcha]").on("change", function () {
+
+        if ($("input[name=connectCaptcha]").is(':checked')) {
+            $("#connectCaptchaStrongWrapper").addClass("disabled");
+            $("#connectCaptchaStrongWrapper").slideDown();
+            $("#connectCaptchaTypeWrapper").addClass("disabled");
+            $("#connectCaptchaTypeWrapper").slideDown();
+
+        } else {
+            $("#connectCaptchaStrongWrapper").removeClass("disabled");
+            $("#connectCaptchaStrongWrapper").slideUp();
+            $("#connectCaptchaTypeWrapper").removeClass("disabled");
+            $("#connectCaptchaTypeWrapper").slideUp();
+            $("#connectCaptchaStrong").prop("checked", false);
+        }
+    });
+
+
+    /**
+     *  Sélection de la  page de configuration à afficher
+     */
+    $("#configSetupButton").on("click", function () {
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").hide();
+        $("#setupContainer").show();
+        $("#configSetupButton").addClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout", "setup");
+    });
+    $("#configLocaleButton").on("click", function () {
+        $("#setupContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").hide();
+        $("#localeContainer").show();
+        $("#configSetupButton").removeClass("activeButton");
+        $("#configLocaleButton").addClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout", "locale");
+    });
+    $("#configSocialButton").on("click", function () {
+        $("#connectContainer").hide();
+        $("#setupContainer").hide();
+        $("#localeContainer").hide();
+        $("#networkContainer").hide();
+        $("#socialContainer").show();
+        $("#configSetupButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").addClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout", "social");
+    });
+    $("#configConnectButton").on("click", function () {
+        $("#setupContainer").hide();
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#networkContainer").hide();
+        $("#connectContainer").show();
+        $("#configSetupButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").addClass("activeButton");
+        $("#configNetworkButton").removeClass("activeButton");
+        setCookie("configLayout", "connect");
+    });
+    $("#configNetworkButton").on("click", function () {
+        $("#setupContainer").hide();
+        $("#localeContainer").hide();
+        $("#socialContainer").hide();
+        $("#connectContainer").hide();
+        $("#networkContainer").show();
+        $("#configSetupButton").removeClass("activeButton");
+        $("#configLocaleButton").removeClass("activeButton");
+        $("#configSocialButton").removeClass("activeButton");
+        $("#configConnectButton").removeClass("activeButton");
+        $("#configNetworkButton").addClass("activeButton");
+        setCookie("configLayout", "network");
+    });
+
+
+    /**
+     * Aspect de la souris
+     */
+    $("#socialMetaImage, #socialSiteMap, #configBackupCopyButton").click(function (event) {
+        $('body, .button').css('cursor', 'wait');
+    });
+
+
+    // Mise en évidence des erreurs de saisie dans les boutons de sélection
+    var containers = ["setup", "locale", "social", "connect", "network"];
+    $.each(containers, function (index, value) {
+        var a = $("div#" + value + "Container").find("input.notice").not(".displayNone");
+        if (a.length > 0) {
+            $("#config" + capitalizeFirstLetter(value) + "Button").addClass("buttonNotice");
+        } else {
+            $("#config" + capitalizeFirstLetter(value) + "Button").removeClass("buttonNotice");
+        }
+    });
+
+    // Contrôle l'image Open Screen Graph
+    // Type d'image
+    $("span#screenType").each(function(){
+        var text = $(this).text();
+        if (text.includes("jpg") || text.includes("jpeg") || text.includes("png")) {
+            $(this).css("color", "green");
+        } else {
+            $(this).css("color", "red");
+        }
+    });
+    // La largeur
+    $("span#screenWide").each(function(){
+        var screenId = parseInt($(this).text());
+        if (screenId >= 1200) {
+            $(this).css("color", "green");
+        } else {
+            $(this).css("color", "red");
+        }
+    });
+    // La hauteur
+    $("span#screenHeight").each(function(){
+        var screenId = parseInt($(this).text());
+        if (screenId >= 630) {
+            $(this).css("color", "green");
+        } else {
+            $(this).css("color", "red");
+        }
+    });
+    // Le ratio
+    $('span#screenRatio').each(function(){
+        var ratio = parseFloat($(this).text());
+        if (ratio >= 1.90 && ratio <= 1.92) {
+            $(this).css("color", "green");
+            $("#screenFract").css("color", "green");
+        } else {
+            $(this).css("color", "red");
+            $("#screenFract").css("color", "red");
+        }
+    });
+    // Le poids
+    $('span#screenWeight').each(function(index){
+        var weight = parseFloat($(this).text());
+        var fileType = $('span#screenType').eq(index).text();
+console.log(weight);
+        if ((fileType === "jpg" || fileType === "jpeg") && weight < 5000000) {
+            $(this).css("color", "green");
+        } else {
+           $(this).css("color", "red");
+        }
+    });
+
+    $('span#screenWeight').each(function(index){
+        var weight = parseFloat($(this).text());
+        var fileType = $('span#screenType').eq(index).text();
+
+        if (fileType === "png" && weight <= 1000000) {
+            $(this).css("color", "green");
+        } else {
+            $(this).css("color", "red");
+        }
+    });
+
+});
+
+
+function setCookie(name, value, days) {
+    var expires = "";
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/; samesite=lax";
+}
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+// Define function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}

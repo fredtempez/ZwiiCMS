@@ -30,16 +30,16 @@
 							<div class="col10 textAlignCenter">
 								<?php if( $module::$imageOpenGraph['type']): ?>
 								<p>
-									<?php echo sprintf('%s : %s ', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
+									<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
 								</p>
 								<p>
-									<?php echo sprintf('%s : %s x %s pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height'] ); ?>
+									<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height'] ); ?>
 								</p>
 								<p>
-									<?php echo sprintf('%s : %s' , helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
+									<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>' , helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
 								</p>
 								<p>
-									<?php echo sprintf('%s : %s', helper::translate('Taille'), $module::$imageOpenGraph['size']); ?>
+									<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), $module::$imageOpenGraph['size']); ?>
 								</p>
 								<?php endif; ?>
 							</div>
