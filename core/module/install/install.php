@@ -381,6 +381,22 @@ class install extends common
 					$rewrite = $this->getInput('data');
 
 					/**
+					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
+					 */
+					require_once('core/module/install/ressource/defaultdata.php');
+					$installedLanguages = $this->getData(['language']);
+					$defaultLanguages = init::$defaultData['language'];
+					foreach ($installedLanguages as $key => $value) {
+						if (
+							isset($defaultLanguages[$key]['version']) &&
+							$defaultLanguages[$key]['version'] > $value['version']
+						) {
+							copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+							$this->setData(['language', $key, $defaultLanguages[$key]]);
+						}
+					}
+
+					/**
 					 * Restaure le fichier htaccess
 					 */
 					// Recopie htaccess
@@ -391,7 +407,6 @@ class install extends common
 						$success = copy('.htaccess.bak', '.htaccess');
 						if ($success === false) {
 							$message = helper::translate('La copie de sauvegarde du fichier htaccess n\'a pas été restaurée !');
-							http_response_code(500);
 						}
 						// Effacer le backup
 						unlink('.htaccess.bak');
@@ -418,27 +433,16 @@ class install extends common
 							);
 							if ($success === false) {
 								$message = helper::translate('La réécriture d\'URL n\'a pas été restaurée !');
-								http_response_code(500);
+								// La réécriture n'est pas installée, il faut la désactiver
+								helper::$rewriteStatus = false;
+							} else {
+								$success === true; // file_put_content retourne un int si non false
 							}
 						}
 					}
-
-					/**
-					 * Met à jour les dictionnaires des langues depuis les modèles installés
-					 */
-					if ($success) {
-						require_once('core/module/install/ressource/defaultdata.php');
-						$installedLanguages = $this->getData(['language']);
-						$defaultLanguages = init::$defaultData['language'];
-						foreach ($installedLanguages as $key => $value) {
-							if (
-								isset($defaultLanguages[$key]['version']) &&
-								$defaultLanguages[$key]['version'] > $value['version']
-							) {
-								copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-								$this->setData(['language', $key, $defaultLanguages[$key]]);
-							}
-						}
+					// Quelque chose s'est mal passé avec htaccess
+					if ($success === false) {
+						http_response_code(500);
 					}
 
 					// Valeurs en sortie
