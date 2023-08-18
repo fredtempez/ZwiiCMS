@@ -29,7 +29,7 @@ class init extends common
 			],
 			'seo' => [
 				'robots' => true,
-				'openGraphImage' => 'screenshot.jpg'
+				'openGraphImage' => 'screenshot.png'
 			],
 			'connect' => [
 				'timeout' => 600,
