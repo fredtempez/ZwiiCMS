@@ -492,14 +492,11 @@ class user extends common
 					helper::translate($groupData['name']),
 					nl2br(helper::translate($groupData['comment'])),
 					template::button('profilEdit' . $groupId, [
-						'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => $groupData['readonly'],
 					]),
-					template::button('permissionDelete' . $groupId, [
-						'class' => 'userDelete buttonRed',
-						'href' => helper::baseUrl() . 'user/permissionDelete/' . $groupId,
+					template::button('profilDelete' . $groupId, [
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
 						'disabled' => $groupData['readonly'],
@@ -522,7 +519,7 @@ class user extends common
 							'disabled' => $profilData['readonly'],
 						]),
 						template::button('profilDelete' . $groupId . $profilId, [
-							'class' => 'userDelete buttonRed',
+							'class' => 'profilDelete buttonRed',
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
