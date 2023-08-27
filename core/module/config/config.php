@@ -588,6 +588,22 @@ class config extends common
 			self::$updateButtonText = helper::translate('Mettre à jour');
 		}
 
+		/**
+		 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés car ne fonctionne pas dans install update
+		 */
+		require_once('core/module/install/ressource/defaultdata.php');
+		$installedLanguages = $this->getData(['language']);
+		$defaultLanguages = init::$defaultData['language'];
+		foreach ($installedLanguages as $key => $value) {
+			if (
+				isset($defaultLanguages[$key]['version']) &&
+				$defaultLanguages[$key]['version'] > $value['version']
+			) {
+				copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+				$this->setData(['language', $key, $defaultLanguages[$key]]);
+			}
+		}
+
 		// Sélecteur de délais, compléter avec la traduction en jours
 		foreach (self::$updateDelay as $key => $value) {
 			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
@@ -616,7 +632,7 @@ class config extends common
 					$typeMime = 'png';
 					break;
 				default:
-				$typeMime = image_type_to_mime_type($typeMime);
+					$typeMime = image_type_to_mime_type($typeMime);
 			}
 			self::$imageOpenGraph['type'] = $typeMime;
 			$imageSize = getimagesize($imagePath);
