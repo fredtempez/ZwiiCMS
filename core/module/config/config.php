@@ -588,21 +588,6 @@ class config extends common
 			self::$updateButtonText = helper::translate('Mettre à jour');
 		}
 
-		/**
-		 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés car ne fonctionne pas dans install update
-		 */
-		require_once('core/module/install/ressource/defaultdata.php');
-		$installedLanguages = $this->getData(['language']);
-		$defaultLanguages = init::$defaultData['language'];
-		foreach ($installedLanguages as $key => $value) {
-			if (
-				isset($defaultLanguages[$key]['version']) &&
-				$defaultLanguages[$key]['version'] > $value['version']
-			) {
-				copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-				$this->setData(['language', $key, $defaultLanguages[$key]]);
-			}
-		}
 
 		// Sélecteur de délais, compléter avec la traduction en jours
 		foreach (self::$updateDelay as $key => $value) {
