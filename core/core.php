@@ -437,7 +437,9 @@ class common
 		foreach ($installedLanguages as $key => $value) {
 			if (
 				isset($defaultLanguages[$key]['version']) &&
-				$defaultLanguages[$key]['version'] > $value['version']
+				$defaultLanguages[$key]['version'] > $value['version'] &&
+				isset($defaultLanguages[$key]['date']) &&
+				$defaultLanguages[$key]['date'] > $value['date']
 			) {
 				copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
 				$this->setData(['language', $key, $defaultLanguages[$key]]);
