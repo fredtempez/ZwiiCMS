@@ -381,22 +381,6 @@ class install extends common
 					$rewrite = $this->getInput('data');
 
 					/**
-					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
-					 */
-					require_once('core/module/install/ressource/defaultdata.php');
-					$installedLanguages = $this->getData(['language']);
-					$defaultLanguages = init::$defaultData['language'];
-					foreach ($installedLanguages as $key => $value) {
-						if (
-							isset($defaultLanguages[$key]['version']) &&
-							$defaultLanguages[$key]['version'] > $value['version']
-						) {
-							copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
-							$this->setData(['language', $key, $defaultLanguages[$key]]);
-						}
-					}
-
-					/**
 					 * Restaure le fichier htaccess
 					 */
 					// Recopie htaccess
@@ -434,6 +418,23 @@ class install extends common
 							);
 						}
 					}
+
+					/**
+					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
+					 */
+					require_once('core/module/install/ressource/defaultdata.php');
+					$installedLanguages = $this->getData(['language']);
+					$defaultLanguages = init::$defaultData['language'];
+					foreach ($installedLanguages as $key => $value) {
+						if (
+							isset($defaultLanguages[$key]['version']) &&
+							$defaultLanguages[$key]['version'] > $value['version']
+						) {
+							copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+							$this->setData(['language', $key, $defaultLanguages[$key]]);
+						}
+					}
+					die();
 
 					// Valeurs en sortie
 					$this->addOutput([
