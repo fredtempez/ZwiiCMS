@@ -401,7 +401,7 @@ class install extends common
 					 */
 					// Recopie htaccess
 					if (
-						$this->getData(['config', 'autoUpdateHtaccess'])
+						$this->getData(['config', 'autoUpdateHtaccess']) === true
 					) {
 						// L'écraser avec le backup
 						$success = copy('.htaccess.bak', '.htaccess');
@@ -436,7 +436,7 @@ class install extends common
 								// La réécriture n'est pas installée, il faut la désactiver
 								helper::$rewriteStatus = false;
 							} else {
-								$success === true; // file_put_content retourne un int si non false
+								$success = true; // file_put_content retourne un int si non false
 							}
 						}
 					}
