@@ -801,7 +801,7 @@ if ($this->getData(['core', 'dataVersion']) < 11400) {
 	];
 
 	// Conversion des fontes locales
-		
+
 	$files = $this->getData(['font', 'files']);
 
 	if (is_array($files)) {
@@ -1014,6 +1014,15 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 	if (is_dir('core/module/translate')) {
 		$this->deleteDir('core/module/translate');
 	}
+
+	// Renomme le fichier et le dossier des fontes
+	if (file_exists(self::DATA_DIR . 'fonts/fonts.html')) {
+		rename(self::DATA_DIR . 'fonts/fonts.html', self::DATA_DIR . 'fonts/font.html');
+	}
+	if (is_dir(self::DATA_DIR . 'fonts')) {
+		rename(self::DATA_DIR . 'fonts', self::DATA_DIR . 'font');
+	}
+
 
 	// Ajouter le prénom comme pseudo et le pseudo comme signature
 	foreach ($this->getData(['user']) as $userId => $userIds) {
