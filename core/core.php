@@ -431,6 +431,19 @@ class common
 		// Mise à jour des données core
 		include('core/include/update.inc.php');
 
+		require_once('core/module/install/ressource/defaultdata.php');
+		$installedLanguages = $this->getData(['language']);
+		$defaultLanguages = init::$defaultData['language'];
+		foreach ($installedLanguages as $key => $value) {
+			if (
+				isset($defaultLanguages[$key]['version']) &&
+				$defaultLanguages[$key]['version'] > $value['version']
+			) {
+				copy('core/module/install/ressource/i18n/' . $key . '.json', self::I18N_DIR . $key . '.json');
+				$this->setData(['language', $key, $defaultLanguages[$key]]);
+			}
+		}
+
 	}
 
 
