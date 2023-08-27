@@ -91,12 +91,13 @@ text
     [FILE] config.json    Site configuration
     [FILE] core.json      Core configuration
     [FILE] custom.css     Advanced customization stylesheet
-    [FILE] fonts.json     Custom font descriptor
-    [FILE] journal.log    Action logging
-    [FILE] languages.json Interface database languages
+    [FILE] font.json      Custom font descriptor
+    [FILE] journal.log    Activities logging
+    [FILE] language.json  Interface languages database
+    [FILE] profil.json    Users profiles database
     [FILE] theme.css      Site theme
-    [FILE] theme.json     Site data
-    [FILE] user.json      User data
+    [FILE] theme.json     Site database
+    [FILE] user.json      User database
     [FILE] .backup Marker for file backup if present
   [DIR] file              File manager upload directory
     [DIR] source          Various resources

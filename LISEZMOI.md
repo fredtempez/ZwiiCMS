@@ -90,9 +90,10 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
     [F] config.json        Configuration du site
     [F] core.json          Configuration du noyau
     [F] custom.css         Feuille de style de la personnalisation avancée
-    [F] fonts.json         Descripteur des fontes personnalisées
-    [F] journal.log        Journalisation des actions
-    [F] languages.json     Configuration des langues de l'interface
+    [F] font.json          Descripteur des fontes personnalisées
+    [F] journal.log        Journalisation des activités
+    [F] language.json      Langues de l'interface
+    [F] profil.json        Profils des utilisateurs
     [F] theme.css          Thème du site
     [F] theme.json         Données du site
     [F] user.json          Données des utilisateurs
