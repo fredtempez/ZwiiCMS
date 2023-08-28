@@ -31,34 +31,14 @@ tinymce.init({
 	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu du menu
 	menu: {
-		file: { title: 'File', items: 'newdocument restoredraft | preview | export print | deleteallconversations' },
-		edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
-		view: { title: 'View', items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments' },
-		insert: { title: 'Insert', items: 'image link media addcomment pageembed template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime' },
-		//format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | removeformat' },
-		tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
-		table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
-		help: { title: 'Help', items: 'help' }
+		edit: {title: 'Edit', items: 'undo redo | selectall searchreplace | cut copy paste pastetext | easyattributes style'},
+		insert: {title: 'Insert', items: 'template | nonbreaking hr charmap anchor | abbr insertdatetime | exegames_hangman'},
+		format: {title: 'Format', items: 'underline strikethrough superscript subscript | formats | removeformat'},
+		table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
+		
 	},
 	// Contenu de la barre d'outils
-	toolbar: "bold italic underline strikethrough formatgroup | h1 h2 h3 paragraphgroup | link image insertgroup| visualblocks code fullscreen",
-	toolbar_groups: {
-		formatgroup: {
-			icon: 'format',
-			tooltip: 'Format du texte',
-			items: 'forecolor backcolor | superscript subscript | removeformat'
-		},
-		paragraphgroup: {
-			icon: 'paragraph',
-			tooltip: 'Format des paragraphes',
-			items: 'bullist numlist | alignleft aligncenter alignright alignjustify | indent outdent'
-		},
-		insertgroup: {
-			icon: 'plus',
-			tooltip: 'Insérer',
-			items: 'emoticons charmap hr table template'
-		}
-	},
+	toolbar: "ndo redo | bold italic | formatselect | alignleft aligncenter alignright alignjustify | exelink unlink | bullist numlist | image media | fullscreen",
 	toolbar_sticky: true,
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
@@ -109,7 +89,7 @@ tinymce.init({
 	// Pages internes
 	link_list: baseUrl + "core/vendor/tinymce/links.php",
 	// Contenu du menu contextuel
-	contextmenu: "selectall searchreplace | hr | media image  link anchor nonbreaking  | insertable  cell row column deletetable",
+	contextmenu: "exelink | inserttable | cell row column deletetable",
 	// Fichiers CSS à intégrer à l'éditeur
 	content_css: [
 		baseUrl + "core/layout/common.css",
