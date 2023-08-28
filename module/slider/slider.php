@@ -181,7 +181,10 @@ class slider extends common
 		self::$pageList = array_merge([0 => ''], self::$pageList);
 
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
+			$this->isPost()
+		) {
 
 			$inputs['legends'] = $this->getInput('legends', null);
 			$inputs['uri'] = $this->getInput('sliderHref', null);
@@ -320,8 +323,8 @@ class slider extends common
 			$timeout = $this->getInput('sliderThemeDiapoTime', helper::FILTER_INT);
 			if ($speed >= $timeout) {
 				// Valeurs en sortie
-					$notification = 'La durée de transition doit inférieure à la durée de l`\'image fixe';
-					$state= false;
+				$notification = 'La durée de transition doit inférieure à la durée de l`\'image fixe';
+				$state = false;
 			} else {
 
 				$this->setData([
