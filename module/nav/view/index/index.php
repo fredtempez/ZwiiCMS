@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row navButton">
     <div class="col1 textAlignCenter">
         <?php if ($module::$previousPage !== null) {
             echo template::button('navPreviousButton', [
