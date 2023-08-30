@@ -68,8 +68,8 @@ class page extends common
 	public static $userProfils = [];
 
 	public static $navIconTemplate = [
-        'dir' => 'Triangle',
-        'open' => 'Triangle ouvert',
+        'dir' => 'Petit triangle',
+        'open' => 'Grand triangle',
         'big' => 'Flèche',
     ];
 
