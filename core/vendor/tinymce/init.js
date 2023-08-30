@@ -38,7 +38,7 @@ tinymce.init({
 		
 	},
 	// Contenu de la barre d'outils
-	toolbar: "ndo redo | bold italic | formatselect | alignleft aligncenter alignright alignjustify | exelink unlink | bullist numlist | image media | fullscreen",
+	toolbar: "ndo redo | bold italic strikethrough | h1 h2 h3 | alignleft aligncenter alignright alignjustify | link | bullist numlist | image media | fullscreen",
 	toolbar_sticky: true,
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
@@ -144,13 +144,15 @@ tinymce.init({
 				{ title: "Header 1", format: "h1" },
 				{ title: "Header 2", format: "h2" },
 				{ title: "Header 3", format: "h3" },
-				{ title: "Header 4", format: "h4" }
+				{ title: "Header 4", format: "h4" },
+				{ title: "Header 4", format: "h5" },
+				{ title: "Header 6", format: "h6" }
 			]
 		},
 		{
 			title: "Blocks", items: [
 				{ title: "Paragraph", format: "p" },
-				{ title: "Blockquote", format: "blockquote" },
+				{ title: "Citation", format: "blockquote" },
 				{ title: "Div", format: "div" },
 				{ title: "Pre", format: "pre" }
 			]
