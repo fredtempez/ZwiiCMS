@@ -1,13 +1,10 @@
 <?php echo template::formOpen('pageEditForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php $href = helper::baseUrl() . $this->getUrl(2); ?>
-		<?php if ($this->getData(['page', $this->getUrl(2), 'moduleId']) === 'redirection' || 'code')
-			$href = helper::baseUrl(); ?>
-		<?php echo template::button('pageEditBack', [
+		<?php echo template::button('configModulesBack', [
 			'class' => 'buttonGrey',
-			'href' => $href,
-			'value' => template::ico('home')
+			'href' => helper::baseUrl() . $this->getUrl(2),
+			'value' => template::ico('left')
 		]); ?>
 	</div>
 	<div class="col1">
