@@ -126,7 +126,7 @@ tinymce.init({
 	// Urls absolues
 	relative_urls: true,
 	// Conversion des URLs
-	convert_urls: false,
+	convert_urls: true,
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
