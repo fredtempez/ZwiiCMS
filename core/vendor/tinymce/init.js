@@ -31,9 +31,9 @@ tinymce.init({
 	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
 	// Contenu du menu
 	menu: {
-		edit: {title: 'Edit', items: 'undo redo | selectall searchreplace | cut copy paste pastetext | easyattributes style'},
-		insert: {title: 'Insert', items: 'template | nonbreaking hr charmap anchor | abbr insertdatetime | exegames_hangman'},
-		format: {title: 'Format', items: 'underline strikethrough superscript subscript | formats | removeformat'},
+		edit: {title: 'Edit', items: 'undo redo | selectall searchreplace | cut copy paste pastetext | style'},
+		insert: {title: 'Insert', items: 'template | nonbreaking hr charmap anchor | abbr insertdatetime '},
+		format: {title: 'Format', items: 'underline strikethrough superscript subscript | forecolor backcolor | formats | removeformat'},
 		table: {title: 'Table', items: 'inserttable tableprops deletetable | cell row column'},
 		
 	},
