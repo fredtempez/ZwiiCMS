@@ -193,6 +193,7 @@ $( document ).ready(function() {
 			$("#pageEditSeoWrapper").slideUp();
 			$("#pageEditAdvancedWrapper").removeClass("disabled");
 			$("#pageEditAdvancedWrapper").slideUp();
+			$(".navSelect").slideUp();
 			/*
 			$("#pageEditBlockLayout").removeClass("col6");
 			$("#pageEditBlockLayout").addClass("col12");
@@ -509,6 +510,7 @@ pageEditBlockDOM.on("change", function() {
 			$("#pageEditModuleConfig").slideUp();
 			$("#pageEditDisplayMenuWrapper").addClass("disabled");
 			$("#pageEditDisplayMenuWrapper").slideDown();
+			$(".navSelect").slideUp();
 			/*
 			$("#pageEditBlockLayout").removeClass("col6");
 			$("#pageEditBlockLayout").addClass("col12");
@@ -529,6 +531,7 @@ pageEditBlockDOM.on("change", function() {
 			$("#pageEditModuleConfig").slideDown();
 			$("#pageEditDisplayMenuWrapper").removeClass("disabled");
 			$("#pageEditDisplayMenuWrapper").slideUp();
+			$(".navSelect").slideDown();
 			if ($("#pageEditParentPageId").val() !== "") {
 				$("#pageEditbreadCrumbWrapper").addClass("disabled");
 				$("#pageEditbreadCrumbWrapper").slideDown();

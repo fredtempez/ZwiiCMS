@@ -9,12 +9,12 @@
 	</div>
 	<div class="col1">
 		<?php /**echo template::button('pageEditHelp', [
-					  'href' => 'https://doc.zwiicms.fr/edition-des-pages',
-					  'target' => '_blank',
-					  'value' => template::ico('help'),
-					  'class' => 'buttonHelp',
-					  'help' => 'Consulter l\'aide en ligne'
-				  ]); */?>
+						'href' => 'https://doc.zwiicms.fr/edition-des-pages',
+						'target' => '_blank',
+						'value' => template::ico('help'),
+						'class' => 'buttonHelp',
+						'help' => 'Consulter l\'aide en ligne'
+					]); */?>
 	</div>
 	<div class="col1 offset6">
 		<?php echo template::button('pageEditDelete', [
@@ -337,6 +337,26 @@
 								'label' => 'Contenu du menu vertical',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'displayMenu']),
 								'help' => 'Par défaut le menu est affiché APRES le contenu de la page. Pour le positionner à un emplacement précis, insérez [MENU] dans le contenu de la page.'
+							]); ?>
+						</div>
+					</div>
+					<div class="row navSelect">
+						<div class="col4">
+							<?php echo template::select('pageEditNavLeft', $module::$navIconPosition, [
+								'label' => 'Bouton de navigation gauche',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'navLeft']),
+							]); ?>
+						</div>
+						<div class="col4">
+							<?php echo template::select('pageEditNavTemplate', $module::$navIconTemplate, [
+								'label' => 'Modèle',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'navTemplate']),
+							]); ?>
+						</div>
+						<div class="col4">
+							<?php echo template::select('pageEditNavRight', $module::$navIconPosition, [
+								'label' => 'Bouton de navigation droit',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'navRight']),
 							]); ?>
 						</div>
 					</div>

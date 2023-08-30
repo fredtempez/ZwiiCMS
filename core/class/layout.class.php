@@ -88,13 +88,19 @@ class layout extends common
             (sizeof($blocks) === 1 ||
                 in_array($this->getUrl(1), $pattern))
         ) { // Pleine page en mode configuration
+            if ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'top' || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'top') {
+                $this->showNavButtons('top');
+            }
             $this->showContent();
+            if ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'bottom' || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'bottom') {
+                $this->showNavButtons('bottom');
+            }
         } else {
             echo '<div class="row siteContainer">';
             /**
              * Barre gauche
              */
-            if ($blockleft !== "") {
+            if ($blockleft !== '') {
                 echo '<div class="' . $blockleft . '" id="contentLeft"><aside>';
                 // Détermine si le menu est présent
                 if ($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barLeft']), 'displayMenu']) === 'none') {
@@ -117,12 +123,14 @@ class layout extends common
              * Contenu de page
              */
             echo '<div class="' . $content . '" id="contentSite">';
+            $this->showNavButtons('top');
             $this->showContent();
+            $this->showNavButtons('bottom');
             echo '</div>';
             /**
              * Barre droite
              */
-            if ($blockright !== "") {
+            if ($blockright !== '') {
                 echo '<div class="' . $blockright . '" id="contentRight"><aside>';
                 // Détermine si le menu est présent
                 if ($this->getData(['page', $this->getData(['page', $this->getUrl(0), 'barRight']), 'displayMenu']) === 'none') {
@@ -1236,5 +1244,67 @@ class layout extends common
         $items .= '<a href="' . helper::baseUrl() . 'language/content/' . $lang . '"><img ' . $select . ' alt="' . self::$languages[$lang] . '" src="' . helper::baseUrl(false) . 'core/vendor/i18n/png/' . $lang . '.png"/></a>';
         $items .= '</li>';
         return $items;
+    }
+
+    // Affiche une icône de navigation
+    // @param $position string 'top' or 'bottom
+    public function showNavButtons($position)
+    {
+        // Boutons par défaut
+        $leftButton = 'left';
+        $rightButton = 'right-dir';
+
+        // Déterminer la hiérarchie des pages
+        $hierarchy = array();
+        foreach ($this->getHierarchy() as $parentKey => $parentValue) {
+            $hierarchy[] = $parentKey;
+            foreach ($parentValue as $childKey) {
+                $hierarchy[] = $childKey;
+            }
+        }
+        // Parcourir la hiérarchie et rechercher les éléments avant et après
+        $elementToFind = $this->getUrl(0);
+
+        // Trouver la clé de l'élément recherché
+        $key = array_search($elementToFind, $hierarchy);
+
+        if ($key !== false) {
+            // Trouver l'élément précédent
+            $previousKey = ($key > 0) ? $key - 1 : null;
+            $previousValue = ($previousKey !== null) ? $hierarchy[$previousKey] : null;
+
+            // Trouver l'élément suivant
+            $nextKey = ($key < count($hierarchy) - 1) ? $key + 1 : null;
+            $nextValue = ($nextKey !== null) ? $hierarchy[$nextKey] : null;
+
+            $previousPage = $previousValue;
+            $nextPage = $nextValue;
+        }
+
+        // Jeux d'icônes sinon celui par défaut
+        if ($this->getData(['page', $this->getUrl(0), 'navTemplate'])) {
+            $leftButton = self::$navIconTemplate[$this->getData(['page', $this->getUrl(0), 'navTemplate'])]['left'];
+            $rightButton = self::$navIconTemplate[$this->getData(['page', $this->getUrl(0), 'navTemplate'])]['right'];
+        }
+
+        $items = '<div class="navButton">';
+        $items .= '<div class="row">';
+        $items .= '<div class="col1">';
+        if ($previousPage !== null and $this->getData(['page', $this->getUrl(0), 'navLeft']) === $position) {
+            $items .= template::button('navPreviousButtonLeft', [
+                'href' => helper::baseUrl() . $previousPage,
+                'value' => template::ico($leftButton)
+            ]);
+        }
+        $items .= '</div>';
+        $items .= '<div class="col1 offset10">';
+        if ($nextPage !== null and $this->getData(['page', $this->getUrl(0), 'navRight']) === $position) {
+            $items .= template::button('navNextButtonRight', [
+                'href' => helper::baseUrl() . $nextPage,
+                'value' => template::ico($rightButton)
+            ]);
+        }
+        $items .= '</div></div></div>';
+        echo $items;
     }
 }

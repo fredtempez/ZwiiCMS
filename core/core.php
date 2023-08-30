@@ -298,6 +298,21 @@ class common
 		]
 	];
 
+	// Boutons de navigation dans la page
+	public static $navIconTemplate = [
+        'open' => [
+            'left' => 'left-open',
+            'right' => 'right-open',
+        ],
+        'dir' => [
+            'left' => 'left',
+            'right' => 'right-dir',
+        ],
+        'big' => [
+            'left' => 'left-big',
+            'right' => 'right-big',
+        ],
+    ];
 
 	/**
 	 * Constructeur commun

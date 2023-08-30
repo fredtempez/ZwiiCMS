@@ -67,6 +67,18 @@ class page extends common
 
 	public static $userProfils = [];
 
+	public static $navIconTemplate = [
+        'dir' => 'Triangle',
+        'open' => 'Triangle ouvert',
+        'big' => 'Flèche',
+    ];
+
+	public static $navIconPosition = [
+		'none' => 'Masqué',
+		'top' => 'Haut de page',
+		'bottom' => 'Bas de page',
+	];
+
 
 	/**
 	 * Duplication
@@ -150,6 +162,9 @@ class page extends common
 					'block' => '12',
 					'barLeft' => '',
 					'barRight' => '',
+					'navLeft' => 'none',
+					'navRight' => 'none',
+					'navTemplate' => 'dir',
 					'displayMenu' => '0',
 					'hideMenuSide' => false,
 					'hideMenuHead' => false,
@@ -479,6 +494,9 @@ class page extends common
 							'block' => $this->getinput('pageEditBlock'),
 							'barLeft' => $barLeft,
 							'barRight' => $barRight,
+							'navLeft' => $this->getInput('pageEditNavLeft'),
+							'navRight' => $this->getInput('pageEditNavRight'),
+							'navTemplate' => $this->getInput('pageEditNavTemplate'),
 							'displayMenu' => $this->getinput('pageEditDisplayMenu'),
 							'hideMenuSide' => $this->getinput('pageEditHideMenuSide', helper::FILTER_BOOLEAN),
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
