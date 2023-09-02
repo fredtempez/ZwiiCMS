@@ -8,7 +8,7 @@
 - L'ajout d'une langue de contenu initialise les données de la langue.
 - Format d'image avif si supporté par la version installée de php.
 - Remplacement du service ScreenShot API par un sélecteur manuel ; affiche les paramètres d'images recommandées et ceux de l'image sélectionnée.
-- Nouveau module Navigation qui permet un déplacement latéral dans la hiérarchie du menu à l'aide de deux boutons.
+- Nouvelels options de page qui permautorise un déplacement latéral dans la hiérarchie du menu à l'aide de deux boutons personnalisables parmi 3 modèles.
 # Corrections
 - Correction de bugs mineurs dans la sauvegarde et la suppression des modules installés.
 - Problèmes de mise à jour depuis les versions 11.
