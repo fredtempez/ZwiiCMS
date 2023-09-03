@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 13.0.01
+# Corrections
+- Mauvaise présentation de l'icône devant les pages enfants dans la liste de liens de TinyMCE.
+
 ## Version 13.0.00
 # Améliorations
 - Gestion des profils d'utilisateurs dans les groupes de membres et d'éditeurs (modérateurs). Les profils définissent avec précision les autorisations d'accès à toutes les fonctions du CMS.

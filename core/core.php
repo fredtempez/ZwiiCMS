@@ -786,7 +786,7 @@ class common
 				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
 				foreach ($childIds as $childId) {
 					$children[] = [
-						'title' => '&nbsp;»&nbsp;' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
+						'title' => '↳' . html_entity_decode($this->getData(['page', $childId, 'shortTitle']), ENT_QUOTES),
 						'value' => $rewrite . $childId
 					];
 				}
