@@ -16,7 +16,7 @@
 class redirection extends common
 {
 
-	const VERSION = '2.0';
+	const VERSION = '2.1';
 	const REALNAME = 'Redirection';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -58,8 +58,7 @@ class redirection extends common
 	{
 		// Message si l'utilisateur peut éditer la page
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
-			&& $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 			&& $this->getUser('group') >= self::GROUP_EDITOR
 			&& $this->getUrl(1) !== 'force'
 		) {

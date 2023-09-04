@@ -3,6 +3,7 @@
 ## Version 13.0.01
 # Corrections
 - Mauvaise présentation de l'icône devant les pages enfants dans la liste de liens de TinyMCE.
+- Module redirection : édition  de la page ou du module impossible.
 
 ## Version 13.0.00
 # Améliorations
