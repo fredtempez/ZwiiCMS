@@ -21,7 +21,7 @@ To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-
 
 To download the latest released version, go to :
 - [the Updates page](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
-- or at [the site download page](https://zwiicms.fr/telechargement) 
+- or at [the site download page](https://zwiicms.fr/download) 
 
 
 ## Installation
