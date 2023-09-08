@@ -42,13 +42,16 @@ if (file_exists('site/data/core.json')) {
         foreach ($t as $k => $v) {
             if (file_exists($k)) {
                 $d = file_get_contents($k);
-                $d = str_replace(basename($k, '.json'), basename($v, '.json'), $d);
+                $d = str_replace('"' . basename($k, '.json') . '"' , '"' . basename($v, '.json') . '"', $d);
                 file_put_contents($v, $d);
                 unlink($k);
             }
         }
         if (file_exists('core/module/install/ressource/i18n/languages.json')) {
             unlink('core/module/install/ressource/i18n/languages.json');
+        }
+        if (file_exists('core/module/install/ressource/i18n/fontes.json')) {
+            unlink('core/module/install/ressource/i18n/fonte.json');
         }
     }
 
