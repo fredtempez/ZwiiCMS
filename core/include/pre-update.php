@@ -47,12 +47,6 @@ if (file_exists('site/data/core.json')) {
                 unlink($k);
             }
         }
-        if (file_exists('core/module/install/ressource/i18n/languages.json')) {
-            unlink('core/module/install/ressource/i18n/languages.json');
-        }
-        if (file_exists('core/module/install/ressource/i18n/fontes.json')) {
-            unlink('core/module/install/ressource/i18n/fonte.json');
-        }
     }
 
 }

@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 13.0.02
+# Corrections
+- Bug de renommage de la base de données des fontes
+
 ## Version 13.0.01
 # Corrections
 - Mauvaise présentation de l'icône devant les pages enfants dans la liste de liens de TinyMCE.
