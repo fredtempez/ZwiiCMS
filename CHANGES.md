@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 13.0.03 
+- Suppression d'appels inutiles à une fonction de contrôle CSRF.
+
 ## Version 13.0.02
 # Corrections
 - Bug de renommage de la base de données des fontes
