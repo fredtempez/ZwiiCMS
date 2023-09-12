@@ -957,14 +957,6 @@ class gallery extends common
 			 * Enregistre les options de configuration de la galerie d'images sélectionnée
 			 */
 		} elseif ($this->getUrl(2) === 'gallery') {
-			// Action interdite
-			if ($this->checkCSRF()) {
-				// Valeurs en sortie
-				$this->addOutput([
-					'redirect' => helper::baseUrl() . $this->getUrl(0) . '/edit',
-					'notification' => helper::translate('Action interdite')
-				]);
-			}
 			// Soumission du formulaire
 			if (
 				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&

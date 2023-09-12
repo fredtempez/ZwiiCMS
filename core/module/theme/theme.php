@@ -822,8 +822,7 @@ class theme extends common
 	{
 		// Action interdite
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
-			$this->checkCSRF()
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true
 		) {
 			// Valeurs en sortie
 			// Valeurs en sortie

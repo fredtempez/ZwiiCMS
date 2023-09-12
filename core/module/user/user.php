@@ -202,16 +202,6 @@ class user extends common
 				'access' => false
 			]);
 		}
-		// Action interdite
-		elseif (
-			$this->checkCSRF()
-		) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'user',
-				'notification' => helper::translate('Action interdite')
-			]);
-		}
 		// Bloque la suppression de son propre compte
 		elseif ($this->getUser('id') === $this->getUrl(2)) {
 			// Valeurs en sortie

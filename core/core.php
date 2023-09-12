@@ -480,7 +480,7 @@ class common
 	}
 
 	/**
-	 * Check du token CSRF (true = bo
+	 * Check du token CSRF
 	 */
 	public function checkCSRF()
 	{
