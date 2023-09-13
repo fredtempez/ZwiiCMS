@@ -907,21 +907,22 @@ class layout extends common
             $leftItems = '';
             // Sélecteur de langues
             if ($this->getUser('group') >= self::GROUP_EDITOR) {
-                $c = 0;
                 $leftItem = '';
                 foreach (self::$languages as $key => $value) {
                     if (is_dir(self::DATA_DIR . $key)) {
-                        $c++;
                         $location = helper::baseUrl() . 'language/content/' . $key;
                         $leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
                     }
                 }
-                if ($c > 1) {
-                    $leftItems .= '<li><select id="barSelectLanguage" >';
-                    $leftItems .= $leftItem;
-                    $leftItems .= '</select></li>';
-                }
+                $leftItems .= '<li><select id="barSelectLanguage" >';
+                $leftItems .= $leftItem;
+                $leftItems .= '</select></li>';
+                $leftItems .= '<li>' . template::ico('flag', [
+                    'help' => 'Langues',
+                    'href' => helper::baseUrl() . 'language'
+                ]) . '</li>';
             }
+
             // Liste des pages
             if ($this->getUser('group') >= self::GROUP_EDITOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
@@ -1056,10 +1057,6 @@ class layout extends common
                 $rightItems .= '<li>' . template::ico('puzzle', [
                     'help' => 'Modules',
                     'href' => helper::baseUrl() . 'plugin'
-                ]) . '</li>';
-                $rightItems .= '<li>' . template::ico('flag', [
-                    'help' => 'Langues',
-                    'href' => helper::baseUrl() . 'language'
                 ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('cog-alt', [
                     'help' => 'Configuration',
