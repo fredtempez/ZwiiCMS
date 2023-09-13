@@ -34,11 +34,11 @@ $b = false;
 foreach ($e as $k => $v) {
     if (array_search($v,$m) === false)  {
         $b = true;
-        echo '<pre><p>Module ' . $v . ' manquant - Module ' . $v . ' missing.</p></pre>';
+        echo '<pre><p>Module PHP : ' . $v . ' manquant - Module PHP ' . $v . ' missing.</p></pre>';
     }
 }
 if ($b)
-    exit('<pre><p>ZwiiCMS ne peut pas démarrer ; activez les extensions requises - ZwiiCMS cannot start, enabled missing extensions.</p></pre>');
+    exit('<pre><p>ZwiiCMS ne peut pas démarrer ; activez les extensions requises dans PHP.ini- ZwiiCMS cannot start, enabled PHP missing extensions into PHP.ini</p></pre>');
 /**
  * Contrôle les htacess
  */
