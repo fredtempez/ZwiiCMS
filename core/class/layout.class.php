@@ -917,12 +917,12 @@ class layout extends common
                 $leftItems .= '<li><select id="barSelectLanguage" >';
                 $leftItems .= $leftItem;
                 $leftItems .= '</select></li>';
-                if ($this->getUser('group') >= self::GROUP_ADMIN) {
-                    $leftItems .= '<li>' . template::ico('flag', [
-                        'help' => 'Langues',
-                        'href' => helper::baseUrl() . 'language'
-                    ]) . '</li>';
-                }
+            }
+            if ($this->getUser('group') >= self::GROUP_ADMIN) {
+                $leftItems .= '<li>' . template::ico('flag', [
+                    'help' => 'Langues',
+                    'href' => helper::baseUrl() . 'language'
+                ]) . '</li>';
             }
 
             // Liste des pages
