@@ -1,7 +1,12 @@
 # Changelog
 
 ## Version 13.0.03 
+# Améliorations
 - Suppression d'appels inutiles à une fonction de contrôle CSRF.
+- Supprime les fonctions liées à la gestion des données des modules contenant des bugs variés.
+# Corrections
+- Message de réinitialisation de mot de passe non envoyé.
+- Complète le message d'erreur lorsque des modules PHP sont absents.
 
 ## Version 13.0.02
 # Corrections
