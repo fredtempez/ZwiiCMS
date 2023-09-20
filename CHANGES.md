@@ -2,6 +2,7 @@
 
 ## Version 13.0.03 
 # Améliorations
+- Déplacement du bouton de gestion des langues à la droite du sélecteur de langues dans la barre d'administration. Le sélecteur de langue est toujours affiché même si le français est la seule langue disponible.
 - Suppression d'appels inutiles à une fonction de contrôle CSRF.
 - Supprime les fonctions liées à la gestion des données des modules contenant des bugs variés.
 # Corrections
