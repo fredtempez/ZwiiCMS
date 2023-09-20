@@ -990,7 +990,7 @@ if ($this->getData(['core', 'dataVersion']) < 12309) {
 	$this->setData(['core', 'dataVersion', 12309]);
 }
 
-// Version 12.4.00
+// Version 13.0.00
 if ($this->getData(['core', 'dataVersion']) < 13000) {
 
 	// Nettoyage du dossier de langue d'installation'
@@ -1075,4 +1075,18 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13000]);
+}
+
+// Version 13.0.03
+if ($this->getData(['core', 'dataVersion']) < 13003) {
+
+	if (is_dir('core/module/plugin/view/dataImport')) {
+		$this->deleteDir('core/module/plugin/view/dataImport');
+	}
+	if (file_exists('core/module/plugin/view/index/index.js.php')) {
+		unlink('core/module/plugin/view/index/index.js.php');
+	}
+
+	// Mise à jour
+	//$this->setData(['core', 'dataVersion', 13003]);
 }
