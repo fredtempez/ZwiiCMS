@@ -8,6 +8,7 @@
 # Corrections
 - Message de réinitialisation de mot de passe non envoyé.
 - Complète le message d'erreur lorsque des modules PHP sont absents.
+- Les liens dans le pied de page prennent la couleur définie dans le site.
 
 ## Version 13.0.02
 # Corrections
