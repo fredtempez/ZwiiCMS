@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 13.0.04
+# Améliorations
+- Supprime la gestion d'erreur à l'étape 4 de la mise à jour automatique.
+
 ## Version 13.0.03 
 # Améliorations
 - Déplacement du bouton de gestion des langues à la droite du sélecteur de langues dans la barre d'administration. Le sélecteur de langue est toujours affiché même si le français est la seule langue disponible.
