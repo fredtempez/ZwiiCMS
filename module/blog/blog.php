@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '7.0';
+	const VERSION = '7.1';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -740,7 +740,6 @@ class blog extends common
 			else {
 				// Soumission du formulaire
 				if (
-					$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 					$this->isPost()
 				) {
 					// Check la captcha
