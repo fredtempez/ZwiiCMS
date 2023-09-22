@@ -10,7 +10,7 @@
 - Complète le message d'erreur lorsque des modules PHP sont absents.
 - Les liens dans le pied de page prennent la couleur définie dans le site.
 - Module form 4.1 : corrige un email non envoyé après validation d'un formulaire.
-- Module blog Version 7.1 : permission lors de la validation d'un formulaire.
+- Module blog Version 7.1 : permission lors de la validation d'un formulaire
 
 ## Version 13.0.02
 # Corrections
