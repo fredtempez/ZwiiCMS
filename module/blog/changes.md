@@ -1,3 +1,5 @@
+# Version 7.1
+- Permission lors de la validation d'un formulaire
 # Version 7.0
 - Gestion des permissions intégrée dans le module
 # version 6.9
