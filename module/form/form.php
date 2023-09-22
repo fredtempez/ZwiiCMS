@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '4.0';
+	const VERSION = '4.1';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -395,7 +395,6 @@ class form extends common
 
 		// Soumission du formulaire
 		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
 			// Check la captcha

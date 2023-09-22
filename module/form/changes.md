@@ -1,3 +1,5 @@
+# Version 4.1
+- Corrige un email non envoyé après validation d'un formulaire.
 # Version 4.0
 - Gestion des permissions intégrée dans le module.
 - Date au format européen.
