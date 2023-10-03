@@ -23,7 +23,7 @@
 							<?php echo template::ico('user'); ?>
 							<?php echo $news['userId']; ?>
 							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn']) . ' - ' . helper::dateUTF8($module::$timeFormat, $news['publishedOn']); ?>
+							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$i18nContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$i18nContent); ?>
 							<!-- Bloc edition -->
 							<?php if (
 

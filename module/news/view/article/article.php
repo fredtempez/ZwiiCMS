@@ -9,7 +9,7 @@
 		<?php echo template::ico('user'); ?>
 		<?php echo $module::$articleSignature . ' - ';?>
 		<?php echo template::ico('calendar-empty'); ?>
-		<?php echo helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn'])); ?>
+		<?php echo helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nContent) . ' - ' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nContent); ?>
 		<!-- Bloc edition -->
         <?php if (
             $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')

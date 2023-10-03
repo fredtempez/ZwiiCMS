@@ -4,6 +4,7 @@
 # Améliorations
 - Supprime la gestion d'erreur à l'étape 4 de la mise à jour automatique.
 - Modifie l'URL de téléchargement des mises à jour.
+- Améliore l'affichage des dats dans les langues étrangères.
 
 ## Version 13.0.03 
 # Améliorations
