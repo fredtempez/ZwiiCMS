@@ -539,7 +539,8 @@ class user extends common
 
 			// Effacer les données du numéro de profil ancien
 			$group = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
-			$profil = $this->getInput('profilEditProfil', helper::FILTER_STRING_SHORT, true);
+			// Les profils 1 sont désactivés dans le formulaire
+			$profil = empty($this->getInput('profilEditProfil')) ?  '1' : $this->getInput('profilEditProfil') ;
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
 			if ($profil !== $profil) {
 				$this->deleteData(['profil', $group, $oldProfil]);
@@ -549,7 +550,7 @@ class user extends common
 			$data = [
 				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
-				'permanent' => $this->getInput('profilEditGroup', helper::FILTER_STRING_LONG, true) === '1' ? true : false,
+				'permanent' => $group === '1' ? true : false,
 				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
 				'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
 				'file' => [

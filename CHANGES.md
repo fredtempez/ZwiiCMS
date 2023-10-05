@@ -1,8 +1,10 @@
 # Changelog
 
 ## Version 13.0.04
-# Correction
-- Importation d'utilisateur en masse, le bouton de téléchargement d'un modèle était inopérant.
+# Corrections
+- Erreur d'édition d'un profil de niveau 1, exemple membre simple.
+- Le profil de membre simple affichait le gestionnaire de fichiers dans tous les cas.
+- Importation d'utilisateurs en masse, le bouton de téléchargement d'un modèle était inopérant.
 # Améliorations
 - Supprime la gestion d'erreur à l'étape 4 de la mise à jour automatique.
 - Modifie l'URL de téléchargement des mises à jour.
