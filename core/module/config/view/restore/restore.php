@@ -7,7 +7,7 @@
 			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 		<?php echo template::submit('configRestoreSubmit', [
 			'value' => 'Restaurer',
 			'uniqueSubmission' => true,
