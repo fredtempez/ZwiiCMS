@@ -18,7 +18,8 @@
     <div class="col1 offset8">
     <?php echo template::button('userImporTemplate', [
             'href' => helper::baseUrl() . 'user/template',
-            'value' => template::ico('table')
+            'value' => template::ico('table'),
+            'help' => 'Télécharger un modèle'
         ]); ?>      
     </div>
     <div class="col2">
