@@ -678,9 +678,15 @@ class user extends common
 			// Nombre de profils de ce groupe
 			$group = $this->getInput('profilAddGroup');
 			$profil = count($this->getData(['profil', $group]));
-			// Vérifier le quota du nombre de profils dans le groupe
-			var_dump($profil < self::MAX_PROFILS);
-
+			// Gère le chemin
+			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
+			$path = $this->getInput('profilEditPath');
+			if ($group <= self::GROUP_ADMIN
+				&& $fileManager 
+				&& empty($path)
+				) {
+					$fileManager = false;
+			}
 			if ($profil < self::MAX_PROFILS) {
 				$profil = (string) ($profil + 1);
 				// Données du formulaire
@@ -689,7 +695,7 @@ class user extends common
 					'readonly' => false,
 					'permanent' => false,
 					'comment' => $this->getInput('profilAddComment', helper::FILTER_STRING_SHORT, true),
-					'filemanager' => $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN),
+					'filemanager' => $fileManager,
 					'file' => [
 						'download' => $this->getInput('profilAddDownload', helper::FILTER_BOOLEAN),
 						'edit' => $this->getInput('profilAddEdit', helper::FILTER_BOOLEAN),
@@ -709,7 +715,7 @@ class user extends common
 						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
-						'path' => $this->getInput('profilAddPath'),
+						'path' => $path,
 					],
 					'page' => [
 						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
