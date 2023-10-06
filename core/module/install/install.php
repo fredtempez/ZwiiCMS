@@ -377,6 +377,7 @@ class install extends common
 				// Configuration
 				case 4:
 					$success = true;
+					$message = '';
 					$rewrite = $this->getInput('data');
 
 					/**
@@ -387,13 +388,11 @@ class install extends common
 						$this->getData(['config', 'autoUpdateHtaccess']) === true
 					) {
 						// L'écraser avec le backup
-						copy('.htaccess.bak', '.htaccess');
-						/*
+						$success = copy('.htaccess.bak', '.htaccess');
 						if ($success === false) {
 							$message = helper::translate('La copie de sauvegarde du fichier htaccess n\'a pas été restaurée !');
 							http_response_code(500);
 						}
-						*/
 						// Effacer le backup
 						unlink('.htaccess.bak');
 					} else {
@@ -413,7 +412,7 @@ class install extends common
 								'</IfModule>' . PHP_EOL .
 								'# URL rewriting' . PHP_EOL;
 							$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-							file_put_contents(
+							$success = file_put_contents(
 								'.htaccess',
 								$fileContent
 							);
@@ -445,8 +444,8 @@ class install extends common
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
 						'content' => [
-							'success' => true,
-							'data' => ''
+							'success' => $success,
+							'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 						]
 					]);
 			}
