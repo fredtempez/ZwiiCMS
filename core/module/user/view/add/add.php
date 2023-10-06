@@ -82,7 +82,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col12">
+	<div class="col6 offset3">
 		<div class="block">
 			<h4>
 				<?php echo helper::translate('Permissions'); ?>
