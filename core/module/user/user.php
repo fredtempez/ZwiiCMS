@@ -542,17 +542,25 @@ class user extends common
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ?  '1' : $this->getInput('profilEditProfil') ;
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
+			// Gère le chemin
+			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
+			$path = $this->getInput('profilEditPath');
+			if ($group <= self::GROUP_ADMIN
+				&& $fileManager 
+				&& empty($path)
+				) {
+					$fileManager = false;
+			}
 			if ($profil !== $profil) {
 				$this->deleteData(['profil', $group, $oldProfil]);
 			}
-
 			// Données du formulaire
 			$data = [
 				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
 				'permanent' => $group === '1' ? true : false,
 				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
-				'filemanager' => $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN),
+				'filemanager' => $fileManager,
 				'file' => [
 					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
 					'edit' => $this->getInput('profilEditEdit', helper::FILTER_BOOLEAN),
@@ -572,7 +580,7 @@ class user extends common
 					'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
 					'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
 					'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
-					'path' => $this->getInput('profilEditPath'),
+					'path' => $path,
 				],
 				'page' => [
 					'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),

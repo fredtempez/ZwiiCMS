@@ -2,6 +2,7 @@
 
 ## Version 13.0.04
 # Corrections
+- Corrige un bug de sécurité. Lorsqu'un profil dispose des droits d'accès au gestionnaire de fichiers et qu'aucun dossier est sélectionné, la racine du site était affichée.
 - Erreur d'édition d'un profil de niveau 1, exemple membre simple.
 - Le profil de membre simple affichait le gestionnaire de fichiers dans tous les cas.
 - Importation d'utilisateurs en masse, le bouton de téléchargement d'un modèle était inopérant.
