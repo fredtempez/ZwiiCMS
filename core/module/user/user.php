@@ -679,8 +679,8 @@ class user extends common
 			$group = $this->getInput('profilAddGroup');
 			$profil = count($this->getData(['profil', $group]));
 			// Gère le chemin
-			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
-			$path = $this->getInput('profilEditPath');
+			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
+			$path = $this->getInput('profilAddPath');
 			if ($group <= self::GROUP_ADMIN
 				&& $fileManager 
 				&& empty($path)
