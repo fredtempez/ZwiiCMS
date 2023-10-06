@@ -10,7 +10,7 @@
 # Améliorations
 - Supprime la gestion d'erreur à l'étape 4 de la mise à jour automatique.
 - Modifie l'URL de téléchargement des mises à jour.
-- Améliore l'affichage des dates lorsque le site est affiché dans dans une langue étrangère.
+- Améliore l'affichage des dates lorsque le site est affiché dans une langue étrangère.
 
 ## Version 13.0.03 
 # Améliorations
