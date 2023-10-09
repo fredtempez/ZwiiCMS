@@ -32,10 +32,16 @@
 <div class="row">
 	<div class="col12">
 		<div class="block">
-			<h4><?php echo helper::translate('Couleurs'); ?>
+			<h4><?php echo helper::translate('Paramètres'); ?>
 			</h4>
 			<div class="row">
-				<div class="col4">
+			<div class="col3">
+					<?php echo template::select('adminSiteWidth', $module::$siteWidths, [
+						'label' => 'Largeur',
+						'selected' => $this->getData(['admin', 'width'])
+					]); ?>
+				</div>
+				<div class="col3">
 					<?php echo template::text('adminBackgroundColor', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
@@ -43,7 +49,7 @@
 						'value' => $this->getData(['admin', 'backgroundColor'])
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::text('adminColorTitle', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
@@ -51,7 +57,7 @@
 						'value' => $this->getData(['admin', 'colorTitle'])
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::text('adminColorText', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',
@@ -77,7 +83,7 @@
 						'value' => $this->getData(['admin', 'borderBlockColor'])
 					]); ?>
 				</div>
-				<div class="col3 offset1">
+				<div class="col4">
 					<?php echo template::text('adminColorHelp', [
 						'class' => 'colorPicker',
 						'help' => 'Couleur visible en l\'absence d\'une image.<br />Le curseur horizontal règle le niveau de transparence.',

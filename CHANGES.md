@@ -4,6 +4,7 @@
 ### Améliorations
 - Ajoute des filtres des membres, groupes/profils, prénoms et noms commençant par telle lettre.
 - Restaure la gestion d'erreur à l'étape 4 de la mise à jour automatique.
+- Nouvelles tailles d'écran en pourcentages de 70% à 100% par pas de 5%.
 
 ## Version 13.0.04
 ### Corrections

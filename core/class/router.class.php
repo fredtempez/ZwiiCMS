@@ -400,6 +400,26 @@ class core extends common
 			$css .= 'p, div, label, select, input, table, span {font-family:' . $fonts[$this->getData(['admin', 'fontText'])] . '}';
 			$css .= 'body,.row > div {font-size:' . $this->getData(['admin', 'fontSize']) . '}';
 			$css .= 'body h1, h2, h3, h4 a, h5, h6 {font-family:' . $fonts[$this->getData(['admin', 'fontTitle'])] . ';color:' . $this->getData(['admin', 'colorTitle']) . ';}';
+			$css .= '.container {max-width:' . $this->getData(['admin', 'width']) . '}';
+			$margin = $this->getData(['theme', 'site', 'margin']) ? '0' : '20px';
+			// Marge supplémentaire lorsque le pied de page est fixe
+			if (
+				$this->getData(['theme', 'footer', 'fixed']) === true &&
+				$this->getData(['theme', 'footer', 'position']) === 'body'
+			) {
+
+				$marginBottomLarge = ((str_replace('px', '', $this->getData(['theme', 'footer', 'height'])) * 2) + 31) . 'px';
+				$marginBottomSmall = ((str_replace('px', '', $this->getData(['theme', 'footer', 'height'])) * 2) + 93) . 'px';
+			} else {
+				$marginBottomSmall = $margin;
+				$marginBottomLarge = $margin;
+			}
+			$css .= $this->getData(['admin', 'width']) === '100%'
+				? '@media (min-width: 769px) {#site{margin:0 auto ' . $marginBottomLarge . ' 0 !important;}}@media (max-width: 768px) {#site{margin:0 auto ' . $marginBottomSmall . ' 0 !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
+				: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge . ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall . ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
+			$css .= $this->getData(['admin', 'width']) === '750px'
+				? '.button, button{font-size:0.8em;}'
+				: '';
 
 			// TinyMCE
 			$colors = helper::colorVariants($this->getData(['admin', 'colorText']));

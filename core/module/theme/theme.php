@@ -214,7 +214,13 @@ class theme extends common
 		'750px' => '750 pixels',
 		'960px' => '960 pixels',
 		'1170px' => '1170 pixels',
-		'100%' => '100%'
+		'100%' => '100%',
+		'95%' => '95%',
+		'90%' => '90%',
+		'85%' => '85%',
+		'80%' => '80%',
+		'75%' => '75%',
+		'70%' => '70%',
 	];
 	public static $headerWide = [
 		'auto auto' => 'Automatique',
@@ -269,6 +275,7 @@ class theme extends common
 					'fontTitle' => $this->getInput('adminFontTitle'),
 					'backgroundBlockColor' => $this->getInput('adminBackGroundBlockColor'),
 					'borderBlockColor' => $this->getInput('adminBorderBlockColor'),
+					'width' => $this->getInput('adminSiteWidth'),
 				]
 			]);
 			// Valeurs en sortie
