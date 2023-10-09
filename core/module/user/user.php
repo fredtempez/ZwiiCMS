@@ -73,6 +73,12 @@ class user extends common
 
 	public static $profils = [];
 
+	public static $alphabet = [];
+
+	public static $courseGroups = [
+		'all' => 'Tout'
+	];
+
 	/**
 	 * Ajout
 	 */
@@ -135,9 +141,9 @@ class user extends common
 			if ($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
 				$sent = $this->sendMail(
 					$userMail,
-					'Compte créé sur ' . $this->getData(['locale', 'title']),
+					'Compte créé sur ' . $this->getData(['config', 'title']),
 					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
 					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null,
@@ -430,17 +436,69 @@ class user extends common
 	 */
 	public function index()
 	{
-		$userIdsFirstnames = helper::arrayColumn($this->getData(['user']), 'firstname');
-		ksort($userIdsFirstnames);
-		foreach ($userIdsFirstnames as $userId => $userFirstname) {
+		// Liste des groupes et des profils
+		$courseGroups = $this->getData(['profil']);
+		foreach ($courseGroups as $groupId => $groupValue) {
+			switch ($groupId) {
+				case "-1":
+				case "0":
+				case "3":
+					break;
+				case "1":
+				case "2":
+					foreach ($groupValue as $profilId => $profilValue) {
+						if ($profilId) {
+							self::$courseGroups[$groupId . $profilId] = sprintf(helper::translate('Groupe %s - Profil %s'), self::$groupPublics[$groupId], $profilValue['name']);
+						}
+					}
+			}
+		}
+
+		// Liste alphabétique
+		self::$alphabet = range('A', 'Z');
+		$alphabet = range('A', 'Z');
+		self::$alphabet = array_combine($alphabet, self::$alphabet);
+		self::$alphabet = array_merge(['all' => 'Tout'], self::$alphabet);
+
+		// Liste des membres
+		$userIdsLastNames = helper::arrayColumn($this->getData(['user']), 'lastname');
+		ksort($userIdsLastNames);
+		foreach ($userIdsLastNames as $userId => $userLastNames) {
 			if ($this->getData(['user', $userId, 'group'])) {
-				$group = helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]);
-				$profil = $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']);
+				// Filtres
+				if ($this->isPost()) {
+					// Groupe et profils
+					$group = (string) $this->getData(['user', $userId, 'group']);
+					$profil = (string) $this->getData(['user', $userId, 'profil']);
+					$firstName = $this->getData(['user', $userId, 'firstname']);
+					$lastName = $this->getData(['user', $userId, 'lastname']);
+					if (
+						$this->getInput('userFilterGroup', helper::FILTER_INT) > 0
+						&& $this->getInput('userFilterGroup', helper::FILTER_STRING_SHORT) !== $group . $profil
+					)
+						continue;
+					// Première lettre du prénom
+					if (
+						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== 'all'
+						&& $this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
+					)
+						continue;
+					// Première lettre du nom
+					if (
+						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== 'all'
+						&& $this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
+					)
+						continue;
+				}
+
+				// Formatage de la liste
 				self::$users[] = [
 					$userId,
-					$userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']),
-					$group,
-					empty($profil) ? $group : $profil,
+					$this->getData(['user', $userId, 'firstname']) . ' ' . $userLastNames,
+					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
+					empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
+						? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
+						: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),
@@ -499,7 +557,7 @@ class user extends common
 				foreach ($groupData as $profilId => $profilData) {
 					self::$userGroups[$groupId . '.' . $profilId] = [
 						$groupId . '-' . $profilId,
-						helper::translate(self::$groups[$groupId]). '<br />Profil : ' . helper::translate($profilData['name']),
+						helper::translate(self::$groups[$groupId]) . '<br />Profil : ' . helper::translate($profilData['name']),
 						nl2br(helper::translate($profilData['comment'])),
 						template::button('profilEdit' . $groupId . $profilId, [
 							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $profilId,
@@ -540,16 +598,17 @@ class user extends common
 			// Effacer les données du numéro de profil ancien
 			$group = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
-			$profil = empty($this->getInput('profilEditProfil')) ?  '1' : $this->getInput('profilEditProfil') ;
+			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
 			// Gère le chemin
 			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilEditPath');
-			if ($group <= self::GROUP_ADMIN
-				&& $fileManager 
+			if (
+				$group <= self::GROUP_ADMIN
+				&& $fileManager
 				&& empty($path)
-				) {
-					$fileManager = false;
+			) {
+				$fileManager = false;
 			}
 			if ($profil !== $profil) {
 				$this->deleteData(['profil', $group, $oldProfil]);
@@ -681,12 +740,14 @@ class user extends common
 			// Gère le chemin
 			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilAddPath');
-			if ($group <= self::GROUP_ADMIN
-				&& $fileManager 
+			if (
+				$group <= self::GROUP_ADMIN
+				&& $fileManager
 				&& empty($path)
-				) {
-					$fileManager = false;
+			) {
+				$fileManager = false;
 			}
+
 			if ($profil < self::MAX_PROFILS) {
 				$profil = (string) ($profil + 1);
 				// Données du formulaire
@@ -1072,11 +1133,13 @@ class user extends common
 						and array_key_exists('nom', $item)
 						and array_key_exists('groupe', $item)
 						and array_key_exists('email', $item)
+						and array_key_exists('passe', $item)
 						and $item['nom']
 						and $item['prenom']
 						and $item['id']
 						and $item['email']
 						and $item['groupe']
+						and $item['passe']
 					) {
 						// Validation du groupe
 						$item['groupe'] = (int) $item['groupe'];
@@ -1113,7 +1176,7 @@ class user extends common
 									'pseudo' => $item['prenom'],
 									'signature' => 1,
 									// Pseudo
-									'password' => uniqid(),
+									'password' => helper::filter($item['passe'], helper::FILTER_PASSWORD),
 									// A modifier à la première connexion
 									"connectFail" => null,
 									"connectTimeout" => null,
@@ -1131,9 +1194,9 @@ class user extends common
 							) {
 								$sent = $this->sendMail(
 									$item['email'],
-									'Compte créé sur ' . $this->getData(['locale', 'title']),
+									'Compte créé sur ' . $this->getData(['config', 'title']),
 									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['locale', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
+									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
 									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
 									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
 									null,

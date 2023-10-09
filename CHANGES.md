@@ -1,19 +1,24 @@
 # Changelog
 
+## Version 13.0.05
+### Améliorations
+- Ajoute des filtres des membres, groupes/profils, prénoms et noms commençant par telle lettre.
+- Restaure la gestion d'erreur à l'étape 4 de la mise à jour automatique.
+
 ## Version 13.0.04
-# Corrections
+### Corrections
 - Corrige un bug de sécurité. Lorsqu'un profil dispose des droits d'accès au gestionnaire de fichiers et qu'aucun dossier est sélectionné, la racine du site était affichée.
 - Corrige un problème d'affichage des commentaires des profils dans l'édition d'un compte.
 - Erreur d'édition d'un profil de niveau 1, exemple membre simple.
 - Le profil de membre simple affichait le gestionnaire de fichiers dans tous les cas.
 - Importation d'utilisateurs en masse, le bouton de téléchargement d'un modèle était inopérant.
-# Améliorations
+### Améliorations
 - Supprime la gestion d'erreur à l'étape 4 de la mise à jour automatique.
 - Modifie l'URL de téléchargement des mises à jour.
 - Améliore l'affichage des dates lorsque le site est affiché dans une langue étrangère.
 
 ## Version 13.0.03 
-# Améliorations
+### Améliorations
 - Déplacement du bouton de gestion des langues à la droite du sélecteur de langues dans la barre d'administration. Le sélecteur de langue est toujours affiché même si le français est la seule langue disponible.
 - Suppression d'appels inutiles à une fonction de contrôle CSRF.
 - Supprime les fonctions liées à la gestion des données des modules contenant des bugs variés.
@@ -25,16 +30,16 @@
 - Module blog Version 7.1 : permission lors de la validation d'un formulaire
 
 ## Version 13.0.02
-# Corrections
+### Corrections
 - Bug de renommage de la base de données des fontes
 
 ## Version 13.0.01
-# Corrections
+### Corrections
 - Mauvaise présentation de l'icône devant les pages enfants dans la liste de liens de TinyMCE.
 - Module redirection : édition  de la page ou du module impossible.
 
 ## Version 13.0.00
-# Améliorations
+### Améliorations
 - Gestion des profils d'utilisateurs dans les groupes de membres et d'éditeurs (modérateurs). Les profils définissent avec précision les autorisations d'accès à toutes les fonctions du CMS.
 - Améliore la gestion de la base de données et la génération du fichier de journalisation, stockage des données JSON, forçage au format objet.
 - Erreurs fictives pendant la mise à jour en ligne, améliorations du dialogue AJAX entre PHP et JQUERY avec un affichage précis des erreurs.
@@ -42,7 +47,7 @@
 - Format d'image avif si supporté par la version installée de php.
 - Remplacement du service ScreenShot API par un sélecteur manuel ; affiche les paramètres d'images recommandées et ceux de l'image sélectionnée.
 - Nouvelles options de page qui autorise un déplacement latéral dans la hiérarchie du menu à l'aide de deux boutons personnalisables parmi 3 modèles.
-# Corrections
+### Corrections
 - Correction de bugs mineurs dans la sauvegarde et la suppression des modules installés.
 - Problèmes de mise à jour depuis les versions 11.
 - Dépréciations liées à php 8.n
