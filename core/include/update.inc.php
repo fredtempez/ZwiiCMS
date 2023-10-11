@@ -1077,8 +1077,8 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 	$this->setData(['core', 'dataVersion', 13000]);
 }
 
-// Version 13.0.03
-if ($this->getData(['core', 'dataVersion']) < 13003) {
+// Version 13.0.05
+if ($this->getData(['core', 'dataVersion']) < 13005) {
 
 	if (is_dir('core/module/plugin/view/dataImport')) {
 		$this->deleteDir('core/module/plugin/view/dataImport');
@@ -1087,6 +1087,18 @@ if ($this->getData(['core', 'dataVersion']) < 13003) {
 		unlink('core/module/plugin/view/index/index.js.php');
 	}
 
+	// Installe l'adresse d'envoi si non spécifiée
+	if (empty($this->getData(['config', 'smtp', 'from']))) {
+		$this->setData(['config', 'smtp', 'from', 'no-reply@localhost']);
+	}
+
+	// Fixe la taille de l'administration identique à la taille de site
+	$this->setData(['admin', 'width', $this->getData(['theme', 'site', 'width'])]);
+
+
 	// Mise à jour
-	//$this->setData(['core', 'dataVersion', 13003]);
+	$this->setData(['core', 'dataVersion', 13005]);
 }
+
+
+
