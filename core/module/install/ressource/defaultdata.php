@@ -25,7 +25,7 @@ class init extends common
 			'proxyPort' => '',
 			'proxyType' => 'tcp://',
 			'smtp' => [
-				'enable' => false,,
+				'enable' => false,
 				'from'=> 'no-reply@localhost'
 			],
 			'seo' => [
