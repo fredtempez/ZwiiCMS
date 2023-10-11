@@ -167,7 +167,7 @@ class install extends common
 					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
 					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null,
-					'localhost'
+					'no-reply@localhost'
 				);
 
 				// Nettoyage fr par défaut
