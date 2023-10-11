@@ -1,6 +1,8 @@
 # Changelog
 
 ## Version 13.0.05
+### Correction
+- Adresse d'envoi des emails non spécifiée.
 ### Améliorations
 - Ajoute des filtres des membres, groupes/profils, prénoms et noms commençant par telle lettre.
 - Restaure la gestion d'erreur à l'étape 4 de la mise à jour automatique.
