@@ -280,7 +280,8 @@ class init extends common
 			'backgroundColorButtonGreen' => 'rgba(100, 207, 8, 1)',
 			'backgroundColorButtonHelp' => 'rgba(255, 153, 0, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
-			'borderBlockColor' => 'rgba(190, 202, 209, 1)'
+			'borderBlockColor' => 'rgba(190, 202, 209, 1)',
+			'width' => '960px'
 		],
 		'blacklist' => [],
 		'language' => [
