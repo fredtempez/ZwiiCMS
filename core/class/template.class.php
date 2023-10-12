@@ -93,19 +93,19 @@ class template
         // Icône de l'opérateur et calcul du résultat
         switch ($operator) {
             case 1:
-                $operator = template::ico('plus');
+                $operator = template::ico('plus', ['fontSize' => '2em;']);
                 $result =  $firstNumber + $secondNumber;
                 break;
             case 2:
-                $operator = template::ico('minus');
+                $operator = template::ico('minus', ['fontSize' => '2em;']);
                 $result =  $firstNumber - $secondNumber;
                 break;
             case 3:
-                $operator = template::ico('cancel');
+                $operator = template::ico('cancel', ['fontSize' => '2em;']);
                 $result =  $firstNumber * $secondNumber;
                 break;
             case 4:
-                $operator = template::ico('divide');
+                $operator = template::ico('divide', ['fontSize' => '2em;']);
                 $limit2 = [10, 10, 6, 5, 4, 3, 2, 2, 2, 2];
                 for ($i = 1; $i <= $firstNumber; $i++) {
                     $limit = $limit2[$i - 1];
@@ -134,7 +134,7 @@ class template
         // Label
         $html .= self::label(
             $attributes['id'],
-            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq'),
+            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq', ['fontSize' => '2em;']),
             [
                 'help' => $attributes['help']
             ]

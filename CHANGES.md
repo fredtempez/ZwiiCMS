@@ -12,6 +12,7 @@
 - Restaure la gestion d'erreur à l'étape 4 de la mise à jour automatique.
 - Nouvelles tailles d'écran en pourcentages de 70% à 100% par pas de 5%.
 - Déplacement de la fonction signature de la fonction core.php.
+- Doublement de la taille des opérateurs dans le captcha de la fenêtre de login.
 
 ## Version 13.0.04
 
