@@ -897,26 +897,4 @@ class blog extends common
 		}
 	}
 
-	/**
-	 * Retourne la signature d'un utilisateur
-	 */
-	public function signature($userId)
-	{
-		switch ($this->getData(['user', $userId, 'signature'])) {
-			case 1:
-				return $userId;
-				break;
-			case 2:
-				return $this->getData(['user', $userId, 'pseudo']);
-				break;
-			case 3:
-				return $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']);
-				break;
-			case 4:
-				return $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
-				break;
-			default:
-				return $this->getData(['user', $userId, 'firstname']);
-		}
-	}
 }
