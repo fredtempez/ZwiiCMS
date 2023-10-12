@@ -10,4 +10,14 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-$(".userDelete").on("click",(function(){var _this=$(this);return message="<?php echo helper::translate('Confirmer la suppression de cet utilisateur');?>",core.confirm(message,(function(){$(location).attr("href",_this.attr("href"))}))}));
+$(document).ready((function () {
+    $(".userDelete").on("click", (function () {
+        var _this = $(this);
+        return message = "<?php echo helper::translate('Confirmer la suppression de cet utilisateur');?>", core.confirm(message, (function () {
+            $(location).attr("href", _this.attr("href"))
+        }))
+    }));
+    $("#userFilterGroup, #userFilterFirstName, #userFilterLastName").change(function() {
+        $("#userFilterUserForm").submit();
+      });
+}));
