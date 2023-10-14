@@ -1093,12 +1093,13 @@ if ($this->getData(['core', 'dataVersion']) < 13005) {
 	}
 
 	// Fixe la taille de l'administration identique à la taille de site
-	$this->setData(['admin', 'width', $this->getData(['theme', 'site', 'width'])]);
+	$size = $this->getData(['theme', 'site', 'width']);
+	$this->setData(['admin', 'width', $size]);
 
-
+	// Ancienne déclaration oubliée !!
+	if ($this->getData(['admin', 'backgroundColorButtonHelp']) === null) {
+		$this->setData(['admin', 'backgroundColorButtonHelp', 'rgba(255, 153, 0, 1)']);
+	}
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13005]);
 }
-
-
-
