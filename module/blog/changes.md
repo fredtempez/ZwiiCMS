@@ -1,3 +1,5 @@
+# Version 7.2
+- Problème avec la portée de la fonction signature déplacée
 # Version 7.1
 - Permission lors de la validation d'un formulaire
 # Version 7.0
