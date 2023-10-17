@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 13.0.06
+
+### Correction
+
+- Supprime les largeurs d'écran en pourcentages inférieures à 100%.
+
 ## Version 13.0.05
 
 ### Correction

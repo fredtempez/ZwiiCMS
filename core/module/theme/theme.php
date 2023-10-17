@@ -215,12 +215,6 @@ class theme extends common
 		'960px' => '960 pixels',
 		'1170px' => '1170 pixels',
 		'100%' => '100%',
-		'95%' => '95%',
-		'90%' => '90%',
-		'85%' => '85%',
-		'80%' => '80%',
-		'75%' => '75%',
-		'70%' => '70%',
 	];
 	public static $headerWide = [
 		'auto auto' => 'Automatique',
