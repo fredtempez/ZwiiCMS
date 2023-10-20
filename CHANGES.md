@@ -1,12 +1,15 @@
 # Changelog
 
 ## Version 13.0.06
+
+### Corrections 
+
 - Corrige le warning déclenché lorsque les boutons de navigation sont placés dans une page orpheline.
 - Supprime les largeurs d'écran en pourcentages inférieures à 100%.
 
 ## Version 13.0.05
 
-### Corrections
+### Correction
 
 - Adresse d'envoi des emails non spécifiée entraînant un rejet de l'envoi.
 
