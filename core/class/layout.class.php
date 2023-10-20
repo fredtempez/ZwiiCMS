@@ -1267,6 +1267,9 @@ class layout extends common
         // Trouver la clé de l'élément recherché
         $key = array_search($elementToFind, $hierarchy);
 
+        $previousPage = null;
+        $nextPage = null;
+
         if ($key !== false) {
             // Trouver l'élément précédent
             $previousKey = ($key > 0) ? $key - 1 : null;
@@ -1289,7 +1292,9 @@ class layout extends common
         $items = '<div class="navButton">';
         $items .= '<div class="row">';
         $items .= '<div class="col1">';
-        if ($previousPage !== null and $this->getData(['page', $this->getUrl(0), 'navLeft']) === $position) {
+        if (
+            $previousPage !== null && $this->getData(['page', $this->getUrl(0), 'navLeft']) === $position
+        ) {
             $items .= template::button('navPreviousButtonLeft', [
                 'href' => helper::baseUrl() . $previousPage,
                 'value' => template::ico($leftButton)
@@ -1297,7 +1302,7 @@ class layout extends common
         }
         $items .= '</div>';
         $items .= '<div class="col1 offset10">';
-        if ($nextPage !== null and $this->getData(['page', $this->getUrl(0), 'navRight']) === $position) {
+        if ($nextPage !== null && $this->getData(['page', $this->getUrl(0), 'navRight']) === $position) {
             $items .= template::button('navNextButtonRight', [
                 'href' => helper::baseUrl() . $nextPage,
                 'value' => template::ico($rightButton)
