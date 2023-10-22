@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 13.0.07
+- Inversion de l'ordre des boutons dans la fenêtre de login sur les peittes écrans.
+
 ## Version 13.0.06
 
 ### Corrections 

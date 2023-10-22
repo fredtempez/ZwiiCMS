@@ -38,18 +38,17 @@
 		<a href="<?php echo helper::baseUrl(); ?>user/forgot/<?php echo $this->getUrl(2);?>"><?php echo helper::translate('Mot de passe perdu'); ?></a>
 	</div>
 </div>
-<div class="row">
-	<div class="col2">
+<div class="row" id="buttonsContainer">
+	<div class="col2" id="backContainer">
 		<?php echo template::button('userLoginBack', [
 			'href' => $this->getUrl(2) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))) : helper::baseUrl(),
 			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col3 offset7">
+	<div class="col3 offset7" id="loginContainer">
 		<?php echo template::submit('userLoginSubmit', [
 			'value' => 'Connexion',
 			'ico' => ''
 		]); ?>
 	</div>
-</div>
 <?php echo template::formClose(); ?>
