@@ -54,7 +54,7 @@ class common
 	const ZWII_VERSION = '13.0.07';
 
 	// URL autoupdate
-	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/update/raw/branch/master/cms/';
+	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
 	const ZWII_UPDATE_CHANNEL = 'v13';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
