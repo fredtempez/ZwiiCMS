@@ -599,8 +599,10 @@ class plugin extends common
 
 			switch ($action) {
 				case 'filemanager':
+					if (is_dir(self::FILE_DIR . 'source/modules') === false) {
+						mkdir(self::FILE_DIR . 'source/modules');
+					}
 					$success = copy($tmpFolder . $fileName, self::FILE_DIR . 'source/modules/' . $fileName);
-
 					// Valeurs en sortie
 					$this->addOutput([
 						'redirect' => helper::baseUrl() . 'plugin',

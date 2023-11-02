@@ -1,7 +1,16 @@
 # Changelog
 
 ## Version 13.0.07
-- Inversion de l'ordre des boutons dans la fenêtre de login sur les peittes écrans.
+
+## Corrections 
+
+- Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
+- Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
+
+## Améliorations
+
+- Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
+
 
 ## Version 13.0.06
 
