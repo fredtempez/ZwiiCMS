@@ -24,7 +24,7 @@
   pauseControls: true,    // Boolean: Pause when hovering controls, true or false
   prevText: "Previous",   // String: Text for the "previous" button
   nextText: "Next",       // String: Text for the "next" button
-  maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
+  width: "",           // Integer: Max-width of the slideshow, in pixels
   navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
   manualControls: "",     // Selector: Declare custom pager navigation
   namespace: "rslides",   // String: Change the default namespace used
@@ -33,19 +33,31 @@
  */
 
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-    var maxWidth = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
+    var maxwidth = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
+    var screenwidth = "<?php echo intval(trim($this->getData(['theme', 'site', 'width']), 'px')); ?>";
     var sort = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'sort']); ?>";
     // Réduction de la taille maximale selon la largeur de la section
-    var screenSize = $("section").width() - 40;
-    maxWidth = maxWidth < screenSize ? maxWidth : screenSize;
-    $("#wrapper").css('width', maxWidth);
-    $(function() {
+
+    // Limiter à la largeur de l'écran
+    if (
+        screenwidth !== '100%' &&
+        maxwidth > screenwidth
+    ) {
+        mawwidth = screenwidth - 40;
+    }
+    // Largeur 100%
+    maxwidth = $("#site").width();
+
+
+    console.log(maxwidth);
+    $("#wrapper").css('width', "100%");
+    $(function () {
         $("#sliders").responsiveSlides({
             pager: "<?php echo (bool)$this->getData(['module', $this->getUrl(0),  'theme', 'pager']); ?>",
             auto: "<?php echo (bool)$this->getData(['module', $this->getUrl(0), 'theme', 'auto']); ?>",
-            maxwidth: maxWidth,
+            maxwidth: maxwidth,
             speed: "<?php echo $this->getData(['module', $this->getUrl(0),  'theme', 'speed']); ?>",
             timeout: "<?php echo $this->getData(['module', $this->getUrl(0), 'theme', 'timeout']); ?>",
             namespace: "<?php echo $this->getData(['module', $this->getUrl(0), 'theme', 'namespace']); ?>",
@@ -53,9 +65,5 @@ $(document).ready(function() {
             random: sort == "random" ? true : false,
         });
     });
-
-
-
-
 
 });

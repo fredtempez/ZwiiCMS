@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.0';
+	const VERSION = '6.1';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -224,13 +224,13 @@ class slider extends common
 						$fileInfos->getFilename(),
 						template::text('legends[' . $fileInfos->getFilename() . ']', [
 							'value' => empty($this->getData(['module', $this->getUrl(0), 'legends', str_replace('.', '', $fileInfos->getFilename())]))
-							? ''
-							: $this->getData(['module', $this->getUrl(0), 'legends', str_replace('.', '', $fileInfos->getFilename())])
+								? ''
+								: $this->getData(['module', $this->getUrl(0), 'legends', str_replace('.', '', $fileInfos->getFilename())])
 						]),
 						template::select('sliderHref[' . $fileInfos->getFilename() . ']', self::$pageList, [
 							'selected' => empty($this->getData(['module', $this->getUrl(0), 'uri', str_replace('.', '', $fileInfos->getFilename())]))
-							? ''
-							: $this->getData(['module', $this->getUrl(0), 'uri', str_replace('.', '', $fileInfos->getFilename())])
+								? ''
+								: $this->getData(['module', $this->getUrl(0), 'uri', str_replace('.', '', $fileInfos->getFilename())])
 						]),
 						'<a href="' . str_replace('source', 'thumb', $directory) . '/' . self::THUMBS_SEPARATOR . $fileInfos->getFilename() . '" rel="data-lity" data-lity=""><img src="' . str_replace('source', 'thumb', $directory) . '/' . $fileInfos->getFilename() . '"></a>'
 					];
@@ -313,11 +313,6 @@ class slider extends common
 		// Soumission du formulaire
 		if ($this->isPost()) {
 
-			// Adapte la largeur à celle de l'écran :
-			$maxWidth = $this->getInput('sliderThememaxWidth', helper::FILTER_INT) === 0
-				? intval(trim($this->getData(['theme', 'site', 'width']), 'px')) - 40
-				: $this->getInput('sliderThememaxWidth', helper::FILTER_INT);
-
 			// Equilibrer les durées
 			$speed = $this->getInput('sliderThemespeed', helper::FILTER_INT);
 			$timeout = $this->getInput('sliderThemeDiapoTime', helper::FILTER_INT);
@@ -334,7 +329,7 @@ class slider extends common
 						'theme' => [
 							'pager' => $this->getInput('sliderThemePager', helper::FILTER_BOOLEAN),
 							'auto' => $this->getInput('sliderThemeAuto', helper::FILTER_BOOLEAN),
-							'maxWidth' => $maxWidth,
+							'maxWidth' => $this->getInput('sliderThememaxWidth', helper::FILTER_INT),
 							'speed' => $speed,
 							'timeout' => $timeout,
 							'namespace' => $this->getInput('sliderThemeNameSpace', helper::FILTER_STRING_SHORT),
