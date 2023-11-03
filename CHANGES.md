@@ -6,15 +6,15 @@
 
 - Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
 - Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
+- Evite les messages de warning si le store est inaccessible.
 
 ## Améliorations
 
 - Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
 
-
 ## Version 13.0.06
 
-### Corrections 
+### Corrections
 
 - Corrige le warning déclenché lorsque les boutons de navigation sont placés dans une page orpheline.
 - Supprime les largeurs d'écran en pourcentages inférieures à 100%.
