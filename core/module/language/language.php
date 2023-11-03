@@ -245,7 +245,7 @@ class language extends common
 
 		// Langues disponibles en ligne
 		$storeUI = json_decode(helper::getUrlContents(self::ZWII_UI_URL . 'language.json'), true);
-		$storeUI = $storeUI['language'];
+		$storeUI = $storeUI ? $storeUI['language'] : null;
 
 		// Construction du tableau à partir des langues disponibles dans le store
 		foreach ($installedUI as $file => $value) {
@@ -259,16 +259,16 @@ class language extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-																 template::button('translateContentLanguageUIEdit' . $file, [
-																	 'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-																	 'value' => template::ico('pencil'),
-																	 'help' => 'Éditer',
-																	 'disabled' => 'fr_FR' === $file
-																 ]),
-																 */
+					template::button('translateContentLanguageUIEdit' . $file, [
+						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+						'value' => template::ico('pencil'),
+						'help' => 'Éditer',
+						'disabled' => 'fr_FR' === $file
+					]),
+					*/
 
 					template::button('translateContentLanguageUIDownload' . $file, [
-						'class' => version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
+						'class' =>  isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
 						'value' => template::ico('update'),
 						'help' => 'Mettre à jour',
@@ -283,22 +283,24 @@ class language extends common
 			}
 		}
 		// Construction du tableau à partir des langues disponibles dans le store
-		foreach ($storeUI as $file => $value) {
+		if ($storeUI) {
+			foreach ($storeUI as $file => $value) {
 
-			// La langue est-elle installée ?
-			if (array_key_exists($file, $installedUI) === false) {
-				self::$languagesStore[$file] = [
-					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
-					$value['version'],
-					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nContent),
-					'',
-					template::button('translateContentLanguageUIDownload' . $file, [
-						'class' => 'buttonGreen',
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
-						'value' => template::ico('shopping-basket'),
-						'help' => 'Installer',
-					])
-				];
+				// La langue est-elle installée ?
+				if (array_key_exists($file, $installedUI) === false) {
+					self::$languagesStore[$file] = [
+						template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
+						$value['version'],
+						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nContent),
+						'',
+						template::button('translateContentLanguageUIDownload' . $file, [
+							'class' => 'buttonGreen',
+							'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
+							'value' => template::ico('shopping-basket'),
+							'help' => 'Installer',
+						])
+					];
+				}
 			}
 		}
 
