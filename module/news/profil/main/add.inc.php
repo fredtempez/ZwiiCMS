@@ -5,6 +5,6 @@
     'option' => $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN),
     'config' => $this->getInput('profilAddNewsAdd', helper::FILTER_BOOLEAN) ||
     $this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
-    $this->getInput('profilAddNewsEdit', helper::FILTER_BOOLEAN) ||
+    $this->getInput('profilAddNewsDelete', helper::FILTER_BOOLEAN) ||
     $this->getInput('profilAddNewsOption', helper::FILTER_BOOLEAN)
 ];

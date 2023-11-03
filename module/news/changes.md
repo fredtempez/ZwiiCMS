@@ -1,3 +1,5 @@
+# Version 5.1
+- Erreur de profil
 # Version 5.0
 - Gestion des permissions intégrée dans le module
 # Version 4.5
