@@ -11,6 +11,7 @@
 ## Améliorations
 
 - Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
+- Deux barres d'outils dans l'éditeur de texte TinyMCE.
 
 ## Version 13.0.06
 
