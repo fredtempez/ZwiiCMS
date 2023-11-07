@@ -685,5 +685,8 @@
     "Flèche": "Arrow",
     "Modèle": "Template",
     "Bouton de navigation droit": "Right Navigation Button",
-    "Bouton de navigation gauche": "Left Navigation Button"
+    "Bouton de navigation gauche": "Left Navigation Button",
+    "Groupes / Profils": "Groups / Profiles",
+    "Prénom commence par": "First Name starts with",
+    "Nom commence par": "Last Name starts with"
 }
