@@ -1,3 +1,5 @@
+# Version 7.3
+- Termes des commandes de profils
 # Version 7.2
 - Problème avec la portée de la fonction signature déplacée
 # Version 7.1

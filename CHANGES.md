@@ -11,7 +11,8 @@
 ## Améliorations
 
 - Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
-- Deux barres d'outils dans l'éditeur de texte TinyMCE.
+- Modification des barres d'outils de l'éditeur de texte TinyMCE.
+- Gestion des profils des modules, les termes sont plus précis (*Ajouter un article* au lieu d'*Ajouter*).
 
 ## Version 13.0.06
 

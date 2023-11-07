@@ -6,16 +6,16 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddNewsAdd', true, 'Ajouter'); ?>
+                    <?php echo template::checkbox('profilAddNewsAdd', true, 'Ajouter un article'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddNewsEdit', true, 'Éditer'); ?>
+                    <?php echo template::checkbox('profilAddNewsEdit', true, 'Éditer un article'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddNewsDelete', true, 'Effacer'); ?>
+                    <?php echo template::checkbox('profilAddNewsDelete', true, 'Effacer un article'); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::checkbox('profilAddNewsOption', true, 'Options'); ?>
+                    <?php echo template::checkbox('profilAddNewsOption', true, 'Options des articles'); ?>
                 </div>
 
             </div>

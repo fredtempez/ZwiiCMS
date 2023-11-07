@@ -1,3 +1,5 @@
+# Version 5.2
+- Termes des commandes de profils
 # Version 5.1
 - Erreur de profil
 # Version 5.0
