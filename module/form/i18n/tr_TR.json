@@ -48,5 +48,10 @@
     "Vide affiche le texte par défaut": "Boş ise, varsayılan metni görüntüler",
     "Voir et exporter les données du formulaire": "Form verilerini görüntüle ve dışa aktar",
     "Étiquette": "Etiket",
-    "Étiquette du bouton de soumission": "Düğme etiketini gönder"
+    "Étiquette du bouton de soumission": "Düğme etiketini gönder",
+    "Options du formulaire": "Form Seçenekleri",
+    "Consulter les réponses": "Yanıtları Görüntüle",
+    "Effacer une réponse": "Bir Yanıtı Sil",
+    "Effacer toutes les réponses": "Tüm Yanıtları Sil",
+    "Exporter toutes les réponses": "Tüm Yanıtları Dışa Aktar"
 }

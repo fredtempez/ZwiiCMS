@@ -48,5 +48,10 @@
     "Vide affiche le texte par défaut": "Vacío muestra el texto predeterminado",
     "Voir et exporter les données du formulaire": "Ver y exportar datos del formulario",
     "Étiquette": "Etiqueta",
-    "Étiquette du bouton de soumission": "Etiqueta del botón de envio"
+    "Étiquette du bouton de soumission": "Etiqueta del botón de envio",
+    "Options du formulaire": "Opciones del formulario",
+    "Consulter les réponses": "Consultar respuestas",
+    "Effacer une réponse": "Eliminar una respuesta",
+    "Effacer toutes les réponses": "Eliminar todas las respuestas",
+    "Exporter toutes les réponses": "Exportar todas las respuestas"
 }

@@ -48,5 +48,10 @@
     "Vide affiche le texte par défaut": "Vacuum displays the default text",
     "Voir et exporter les données du formulaire": "See and export form data",
     "Étiquette": "Label",
-    "Étiquette du bouton de soumission": "Submission button label"
+    "Étiquette du bouton de soumission": "Submission button label",
+    "Options du formulaire": "Form Options",
+    "Consulter les réponses": "View Responses",
+    "Effacer une réponse": "Delete a Response",
+    "Effacer toutes les réponses": "Delete All Responses",
+    "Exporter toutes les réponses": "Export All Responses"
 }

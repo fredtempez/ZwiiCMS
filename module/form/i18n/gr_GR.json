@@ -48,5 +48,10 @@
     "Vide affiche le texte par défaut": "Το κενό εμφανίζει προεπιλεγμένο κείμενο",
     "Voir et exporter les données du formulaire": "Προβολή και εξαγωγή δεδομένων φόρμας",
     "Étiquette": "ετικέτα",
-    "Étiquette du bouton de soumission": "Ετικέτα κουμπιού υποβολής"
+    "Étiquette du bouton de soumission": "Ετικέτα κουμπιού υποβολής",
+    "Options du formulaire": "Επιλογές φόρμας",
+    "Consulter les réponses": "Προβολή απαντήσεων",
+    "Effacer une réponse": "Διαγραφή μιας απάντησης",
+    "Effacer toutes les réponses": "Διαγραφή όλων των απαντήσεων",
+    "Exporter toutes les réponses": "Εξαγωγή όλων των απαντήσεων"
 }

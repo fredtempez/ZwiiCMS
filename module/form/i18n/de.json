@@ -48,5 +48,10 @@
     "Vide affiche le texte par défaut": "Das Vakuum zeigt den Standardtext an",
     "Voir et exporter les données du formulaire": "Sehen und exportieren Sie Formulardaten",
     "Étiquette": "Etikett",
-    "Étiquette du bouton de soumission": "Schaltfläche Einsender"
+    "Étiquette du bouton de soumission": "Schaltfläche Einsender",
+    "Options du formulaire": "Formularoptionen",
+    "Consulter les réponses": "Antworten anzeigen",
+    "Effacer une réponse": "Antwort löschen",
+    "Effacer toutes les réponses": "Alle Antworten löschen",
+    "Exporter toutes les réponses": "Alle Antworten exportieren"
 }

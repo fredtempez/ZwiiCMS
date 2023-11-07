@@ -1,3 +1,5 @@
+# Version 4.2
+- Termes des commandes de profils
 # Version 4.1
 - Corrige un email non envoyé après validation d'un formulaire.
 # Version 4.0
