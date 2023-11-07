@@ -6,7 +6,7 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configurer'); ?>
+                    <?php echo template::checkbox('profilEditRedirectionConfig', true, 'Configurer le module'); ?>
                 </div>
             </div>
         </div>
