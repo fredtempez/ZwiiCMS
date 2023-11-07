@@ -12,7 +12,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col2 offset10">
+	<div class="col3 offset9">
 		<?php echo template::submit('userResetSubmit', [
 			'value' => 'Valider'
 		]); ?>
