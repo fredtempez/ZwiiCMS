@@ -18,7 +18,7 @@ class gallery extends common
 {
 
 
-	const VERSION = '4.0';
+	const VERSION = '4.1';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 

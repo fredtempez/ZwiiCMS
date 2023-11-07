@@ -1,3 +1,5 @@
+# Version 4.1
+- Termes des commandes de profils
 # Version 4.0
 - Gestion des permissions intégrée dans le module
 # Version 3.9
