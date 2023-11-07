@@ -10,6 +10,7 @@
 
 ## Améliorations
 
+- Les administrateurs ont la possibilité de forcer un changement de mot de passe sans avoir à connaître le mot de passe en vigueur.
 - Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
 - Modification des barres d'outils de l'éditeur de texte TinyMCE.
 - Gestion des profils des modules, les termes sont plus précis (*Ajouter un article* au lieu d'*Ajouter*).
