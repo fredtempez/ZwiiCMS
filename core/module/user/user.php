@@ -499,8 +499,8 @@ class user extends common
 					$this->getData(['user', $userId, 'firstname']) . ' ' . $userLastNames,
 					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
 					empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
-						? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
-						: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
+					? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
+					: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),
@@ -695,6 +695,18 @@ class user extends common
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
+		
+		// Charge les dialogues du module pour afficher les traductions
+		foreach (self::$listModules as $moduleId) {
+			if (
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
+				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+			) {
+				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
+				self::$dialog = array_merge(self::$dialog, $d);
+			}
+		}
+		// Tri alphabétique
 		sort(self::$listModules);
 
 		/**
@@ -837,9 +849,27 @@ class user extends common
 		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
+		// Chemin vers les dossiers du gestionnaire de fichier
+		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = array_flip(self::$sharePath);
+		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
+		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
+
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
 		self::$listModules = array_keys(self::$listModules);
+		
+		// Charge les dialogues du module pour afficher les traductions
+		foreach (self::$listModules as $moduleId) {
+			if (
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
+				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+			) {
+				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
+				self::$dialog = array_merge(self::$dialog, $d);
+			}
+		}
+		// Tri alphabétique
 		sort(self::$listModules);
 
 		// Valeurs en sortie;
