@@ -81,11 +81,15 @@
 				'readonly' => true,
 				'value' => $this->getUrl(2)
 			]); ?>
-			<?php echo template::password('userEditOldPassword', [
-				'autocomplete' => 'new-password',
-				// remplace 'off' pour éviter le pré remplissage auto
-				'label' => 'Ancien mot de passe'
-			]); ?>
+			<?php
+			// Les admins ont le pouvoir de forcer le changement de mot de passe
+			if ($this->getUser('group') < self::GROUP_ADMIN): ?>
+				<?php echo template::password('userEditOldPassword', [
+					'autocomplete' => 'new-password',
+					// remplace 'off' pour éviter le pré remplissage auto
+					'label' => 'Ancien mot de passe',
+				]); ?>
+			<?php endif; ?>
 			<?php echo template::password('userEditNewPassword', [
 				'autocomplete' => 'off',
 				'label' => 'Nouveau mot de passe'

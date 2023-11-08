@@ -266,25 +266,37 @@ class user extends common
 					$this->isPost()
 				) {
 					// Double vérification pour le mot de passe
-					$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
-					if ($this->getInput('userEditNewPassword')) {
-						// L'ancien mot de passe est correct
-						if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
-							// La confirmation correspond au mot de passe
-							if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
-								$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
-								// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
-								if ($this->getUser('id') === $this->getUrl(2)) {
-									helper::deleteCookie('ZWII_USER_ID');
-									helper::deleteCookie('ZWII_USER_PASSWORD');
+					if ($this->getUser('group') < self::GROUP_ADMIN) {
+						$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
+						if ($this->getInput('userEditNewPassword')) {
+							// L'ancien mot de passe est correct
+							if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
+								// La confirmation correspond au mot de passe
+								if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
+									$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
+									// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
+									if ($this->getUser('id') === $this->getUrl(2)) {
+										helper::deleteCookie('ZWII_USER_ID');
+										helper::deleteCookie('ZWII_USER_PASSWORD');
+									}
+								} else {
+									self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
 								}
 							} else {
-								self::$inputNotices['userEditConfirmPassword'] = helper::translate('Incorrect');
+								self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
 							}
-						} else {
-							self::$inputNotices['userEditOldPassword'] = helper::translate('Incorrect');
+						}
+					} else {
+						if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
+							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
+							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
+							if ($this->getUser('id') === $this->getUrl(2)) {
+								helper::deleteCookie('ZWII_USER_ID');
+								helper::deleteCookie('ZWII_USER_PASSWORD');
+							}
 						}
 					}
+					
 					// Modification du groupe
 					if (
 						$this->getUser('group') === self::GROUP_ADMIN
