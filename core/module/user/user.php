@@ -288,7 +288,7 @@ class user extends common
 						}
 					} else {
 						if ($this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')) {
-							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD, true);
+							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD);
 							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
 							if ($this->getUser('id') === $this->getUrl(2)) {
 								helper::deleteCookie('ZWII_USER_ID');
@@ -332,7 +332,7 @@ class user extends common
 							'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
 							'signature' => $this->getInput('userEditSignature', helper::FILTER_INT, true),
 							'mail' => $this->getInput('userEditMail', helper::FILTER_MAIL, true),
-							'password' => $newPassword,
+							'password' => $newPassword ? $newPassword : $this->getData(['user', $this->getUrl(2)], 'password'),
 							'connectFail' => $this->getData(['user', $this->getUrl(2), 'connectFail']),
 							'connectTimeout' => $this->getData(['user', $this->getUrl(2), 'connectTimeout']),
 							'accessUrl' => $this->getData(['user', $this->getUrl(2), 'accessUrl']),
