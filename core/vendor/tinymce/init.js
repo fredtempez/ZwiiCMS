@@ -32,28 +32,31 @@ tinymce.init({
 	// Contenu du menu
 	menu: {
 		edit: {
-			title: 'Edit',
-			items: 'undo redo | selectall searchreplace | cut copy paste pastetext | style'
+			title: "Edit",
+			items: "undo redo | selectall searchreplace | cut copy paste pastetext"
 		},
 		insert: {
-			title: 'Insert',
-			items: 'template | nonbreaking hr charmap anchor | abbr insertdatetime '
+			title: "Insert",
+			items: "template | nonbreaking hr charmap anchor "
 		},
 		format: {
-			title: 'Format',
-			items: 'underline strikethrough superscript subscript |  forecolor backcolor | formats | removeformat'
+			title: "Format",
+			items: " bold underline strikethrough superscript subscript | | formats | removeformat"
+		},
+		tools: {
+			title: "Tools",
+			items: ""
 		},
 		table: {
-			title: 'Table',
-			items: 'inserttable tableprops deletetable | cell row column'
+			title: "Table",
+			items: "inserttable tableprops deletetable | cell row column"
 		},
 	},
 	// Contenu de la barre d'outils
-    toolbar: [
-        "fontselect fontsizeselect formatselect | bold italic strikethrough forecolor backcolor",
-        "link image ImgPen media | alignleft aligncenter alignright alignjustify | " +
-        "numlist bullist | outdent indent removeformat | fullscreen"
-    ],
+	// Contenu de la barre d'outils
+	toolbar: [
+		"undo redo | fontsizeselect | h1 h2 h3 |  alignleft aligncenter alignright alignjustify | bold forecolor backcolor| bullist numlist | link image media | outdent indent removeformat | fullscreen",
+	],
 	toolbar_sticky: true,
 	fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
