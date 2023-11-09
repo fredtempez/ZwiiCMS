@@ -1097,7 +1097,10 @@ class user extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'access' => false
+				'redirect' => helper::baseurl(), 
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !'),
+				'state' => false
+				//'access' => false
 			]);
 		}
 		// Accès autorisé
