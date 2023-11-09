@@ -1018,6 +1018,8 @@ class common
 
 	public function updateSitemap()
 	{
+		// Le drapeau prend true quand au moins une page est trouvée
+		$flag = false;
 
 		// Rafraîchit la liste des pages après une modification de pageId notamment 
 		$this->buildHierarchy();
@@ -1025,7 +1027,7 @@ class common
 		// Actualise la liste des pages pour TinyMCE
 		$this->tinyMcePages();
 
-		//require_once "core/vendor/sitemap/SitemapGenerator.php";	
+		//require_once 'core/vendor/sitemap/SitemapGenerator.php';	
 
 		$timezone = $this->getData(['config', 'timezone']);
 		$outputDir = getcwd();
@@ -1059,8 +1061,9 @@ class common
 			// Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true) {
 				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($parentPageId !== $this->getData(['locale', 'homePageId'])) ? $parentPageId : '';
+				$pageId = ($parentPageId !== $this->homePageId()) ? $parentPageId : '';
 				$sitemap->addUrl('/' . $pageId, $datetime);
+				$flag = true;
 			}
 			// Articles du blog
 			if (
@@ -1070,7 +1073,8 @@ class common
 				foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
 					if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
 						$date = $this->getData(['module', $parentPageId, 'posts', $articleId, 'publishedOn']);
-						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, new DateTime('@{$date}', new DateTimeZone($timezone)));
+						$flag = true;
 					}
 				}
 			}
@@ -1080,8 +1084,9 @@ class common
 					continue;
 				}
 				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($childKey !== $this->getData(['locale', 'homePageId'])) ? $childKey : '';
+				$pageId = ($childKey !== $this->homePageId()) ? $childKey : '';
 				$sitemap->addUrl('/' . $childKey, $datetime);
+				$flag = true;
 
 				// La sous-page est un blog
 				if (
@@ -1091,11 +1096,16 @@ class common
 					foreach ($this->getData(['module', $childKey, 'posts']) as $articleId => $article) {
 						if ($this->getData(['module', $childKey, 'posts', $articleId, 'state']) === true) {
 							$date = $this->getData(['module', $childKey, 'posts', $articleId, 'publishedOn']);
-							$sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+							$sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime('@{$date}', new DateTimeZone($timezone)));
+							$flag = true;
 						}
 					}
 				}
 			}
+		}
+
+		if ($flag === false) {
+			return false;
 		}
 
 		// Flush all stored urls from memory to the disk and close all necessary tags.
@@ -1122,8 +1132,8 @@ class common
 
 		return (file_exists('sitemap.xml') && file_exists('robots.txt'));
 
-
 	}
+
 
 	/*
 	 * Création d'une miniature
