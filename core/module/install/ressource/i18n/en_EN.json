@@ -688,5 +688,6 @@
     "Bouton de navigation gauche": "Left Navigation Button",
     "Groupes / Profils": "Groups / Profiles",
     "Prénom commence par": "First Name starts with",
-    "Nom commence par": "Last Name starts with"
+    "Nom commence par": "Last Name starts with",
+    "Impossible de réinitialiser le mot de passe de ce compte !": "Impossible to reset this account password!"
 }
