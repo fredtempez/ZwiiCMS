@@ -7,6 +7,7 @@
 - Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
 - Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
 - Evite les messages de warning si le store est inaccessible.
+- Corrige un bug dans la génération du sitemap lorsque le site ne contient pas de page visible.
 
 ## Améliorations
 
