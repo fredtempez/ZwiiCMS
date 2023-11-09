@@ -55,7 +55,7 @@ tinymce.init({
 	// Contenu de la barre d'outils
 	// Contenu de la barre d'outils
 	toolbar: [
-		"undo redo | fontsizeselect | italic bold forecolor backcolor |  h1 h2 h3 | | bullist numlist | alignleft aligncenter alignright alignjustify |  outdent indent removeformat | link image media |fullscreen",
+		"undo redo | fontsizeselect | bold italic forecolor backcolor |  h1 h2 h3 | | bullist numlist | alignleft aligncenter alignright alignjustify |  outdent indent removeformat | link image media |fullscreen",
 	],
 	toolbar_sticky: true,
 	fontsize_formats: "8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
