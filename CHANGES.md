@@ -6,15 +6,15 @@
 
 - Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
 - Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
-- Evite les messages de warning si le store est inaccessible.
 - Corrige un bug dans la génération du sitemap lorsque le site ne contient pas de page visible.
+- Evite les messages de warning si le store est inaccessible.
 
 ## Améliorations
 
 - Les administrateurs ont la possibilité de forcer un changement de mot de passe sans avoir à connaître le mot de passe en vigueur.
-- Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
-- Modification des barres d'outils de l'éditeur de texte TinyMCE.
 - Gestion des profils des modules, les termes sont plus précis (*Ajouter un article* au lieu d'*Ajouter*).
+- Inversion de l'ordre des boutons dans la fenêtre de login sur les petits écrans.
+- Modifications de la barre d'outils et du menu de l'éditeur de texte TinyMCE.
 
 ## Version 13.0.06
 

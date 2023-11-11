@@ -13,23 +13,21 @@ ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/).
 
 ## License
 
-This work is licensed under the Attribution-Noncommercial-No Derivative Works 4.0 International License. 
+This work is licensed under the Attribution-Noncommercial-No Derivative Works 4.0 International License.
 
-To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-nd/4.0/ or write to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc-nd/4.0/> or write to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 ## Downloading ZwiiCMS
 
 To download the latest released version, go to :
-- [the Updates page](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
-- or at [the site download page](https://zwiicms.fr/download) 
-
+* [the Updates page](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
+* or at [the site download page](https://zwiicms.fr/download)
 
 ## Installation
 
 Unzip the Zwii archive and upload its contents to the root of your server or to a subdirectory. That's all!
 
 You will find more explanations, in particular for an installation at Free, in the "Downloads" section of the forum.
-
 
 ## Update procedures
 
@@ -46,7 +44,6 @@ When installing a major version, it is recommended to make a backup copy.
 * Save your entire site, especially the "site" directory.
 * Unzip the new version on your computer.
 * Transfer its content to your server by activating the file replacement.
-
 
 ## General tree structure
 

@@ -13,23 +13,21 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 ## Licence
 
-Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International. 
+Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International.
 
-Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Pour voir une copie de cette licence, visitez <http://creativecommons.org/licenses/by-nc-nd/4.0/> ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
 ## Téléchargement de ZwiiCMS
 
 Pour télécharger la dernière version publiée, rendez-vous :
-- sur [la page des mises à jour](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
-- ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargement) 
-
+* sur [la page des mises à jour](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases)
+* ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargement)
 
 ## Installation
 
 Décompressez l'archive de Zwii et téléversez son contenu à la racine de votre serveur ou dans un sous-répertoire. C'est tout !
 
 Vous trouverez de plus amples explications, en particulier pour une installation chez Free, dans la rubrique "Téléchargements" du forum.
-
 
 ## Procédures de mise à jour
 
@@ -46,7 +44,6 @@ A l'occasion de l'installation d'une verion majeure, il est recommandé de réal
 * Sauvegardez l'intégralité de votre site, spécialement le répertoire "site".
 * Décompressez la nouvelle version sur votre ordinateur.
 * Transférez son contenu sur votre serveur en activant le remplacement des fichiers.
-
 
 ## Arborescence générale
 
