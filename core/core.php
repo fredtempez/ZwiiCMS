@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.0.07';
+	const ZWII_VERSION = '13.0.08';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
@@ -1061,7 +1061,7 @@ class common
 			// Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
 			if ($this->getData(['page', $parentPageId, 'disable']) !== true) {
 				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($parentPageId !== $this->homePageId()) ? $parentPageId : '';
+				$pageId = ($parentPageId !== $this->getData(['locale', 'homePageId'])) ? $parentPageId : '';
 				$sitemap->addUrl('/' . $pageId, $datetime);
 				$flag = true;
 			}
@@ -1073,9 +1073,8 @@ class common
 				foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
 					if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
 						$date = $this->getData(['module', $parentPageId, 'posts', $articleId, 'publishedOn']);
-						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, new DateTime('@{$date}', new DateTimeZone($timezone)));
-						$flag = true;
-					}
+						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+											}
 				}
 			}
 			// Sous-pages
@@ -1084,7 +1083,7 @@ class common
 					continue;
 				}
 				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($childKey !== $this->homePageId()) ? $childKey : '';
+				$pageId = ($childKey !== $this->getData(['locale', 'homePageId'])) ? $childKey : '';
 				$sitemap->addUrl('/' . $childKey, $datetime);
 				$flag = true;
 
@@ -1096,9 +1095,8 @@ class common
 					foreach ($this->getData(['module', $childKey, 'posts']) as $articleId => $article) {
 						if ($this->getData(['module', $childKey, 'posts', $articleId, 'state']) === true) {
 							$date = $this->getData(['module', $childKey, 'posts', $articleId, 'publishedOn']);
-							$sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime('@{$date}', new DateTimeZone($timezone)));
-							$flag = true;
-						}
+							$sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+													}
 					}
 				}
 			}

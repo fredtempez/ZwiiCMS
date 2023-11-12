@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 13.0.08
+
+## Corrections
+-Corrige un bug dans la génération du sitemap.
+
 ## Version 13.0.07
 
 ## Corrections 
