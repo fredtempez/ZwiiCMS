@@ -2,7 +2,7 @@
 
 ## Version 13.0.08
 
-## Corrections
+## Correction
 -Corrige un bug dans la génération du sitemap.
 
 ## Version 13.0.07
