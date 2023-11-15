@@ -7,6 +7,7 @@
 - Corrige des messages de dépréciations de fonctions dans RFM.
 - Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
 - Met à jour les profils dans le slider.
+- Petites corrections.
 
 ## Version 13.0.08
 
