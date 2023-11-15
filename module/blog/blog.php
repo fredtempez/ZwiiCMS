@@ -359,7 +359,7 @@ class blog extends common
 				self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
 				self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 				self::$comments[] = [
-					helper::dateUTF8(self::$dateFormat, $comment['createdOn'], self::$i18nContent) . ' - ' . helper::dateUTF8(self::$timeFormat, $comment['createdOn'], self::$i18nContent),
+					helper::dateUTF8(self::$dateFormat, $comment['createdOn'], self::$siteContent) . ' - ' . helper::dateUTF8(self::$timeFormat, $comment['createdOn'], self::$siteContent),
 					$comment['content'],
 					$comment['userId'] ? $this->getData(['user', $comment['userId'], 'firstname']) . ' ' . $this->getData(['user', $comment['userId'], 'lastname']) : $comment['author'],
 					$buttonApproval,
@@ -528,7 +528,7 @@ class blog extends common
 				'<a href="' . helper::baseurl() . $this->getUrl(0) . '/' . $articleIds[$i] . '" target="_blank" >' .
 				$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'title']) .
 				'</a>',
-				helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']), self::$i18nContent) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']), self::$i18nContent),
+				helper::dateUTF8(self::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']), self::$siteContent) . ' - ' . helper::dateUTF8(self::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'publishedOn']), self::$siteContent),
 				self::$states[$this->getData(['module', $this->getUrl(0), 'posts', $articleIds[$i], 'state'])],
 				// Bouton pour afficher les commentaires de l'article
 				template::button('blogConfigComment' . $articleIds[$i], [

@@ -28,7 +28,7 @@
 							<?php echo template::ico('user'); ?>
 							<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
 							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nContent); ?>
+							<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$siteContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$siteContent); ?>
 						</div>
 					</div>
 					<div class="row">
@@ -143,7 +143,7 @@
 								<?php echo template::ico('user'); ?>
 								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
 								<?php echo template::ico('calendar-empty'); ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'], self::$i18nContent), self::$i18nContent); ?>
+								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$siteContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'], self::$siteContent), self::$siteContent); ?>
 							</div>
 							<div class="blogContent">
 								<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) !== 0 ? $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>

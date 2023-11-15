@@ -911,7 +911,7 @@ class layout extends common
                 foreach (self::$languages as $key => $value) {
                     if (is_dir(self::DATA_DIR . $key)) {
                         $location = helper::baseUrl() . 'language/content/' . $key;
-                        $leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$i18nContent ? 'selected' : '') . '>' . $value . '</option>';
+                        $leftItem .= '<option name="' . $key . '" value="' . $location . '" ' . ($key === self::$siteContent ? 'selected' : '') . '>' . $value . '</option>';
                     }
                 }
                 $leftItems .= '<li><select id="barSelectLanguage" >';

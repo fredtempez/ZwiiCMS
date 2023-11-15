@@ -170,7 +170,7 @@ class common
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
 	// Langues de contenu
-	public static $i18nContent = 'fr_FR';
+	public static $siteContent = 'fr_FR';
 	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
@@ -334,30 +334,30 @@ class common
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
 			// Déterminé par la session présente
-			self::$i18nContent = $_SESSION['ZWII_CONTENT'];
+			self::$siteContent = $_SESSION['ZWII_CONTENT'];
 		} else {
 			// Détermine la langue par défaut
 			foreach (self::$languages as $key => $value) {
 				if (file_exists(self::DATA_DIR . $key . '/.default')) {
-					self::$i18nContent = $key;
+					self::$siteContent = $key;
 					$_SESSION['ZWII_CONTENT'] = $key;
 					break;
 				}
 			}
 		}
-		\setlocale(LC_ALL, self::$i18nContent . '.UTF8');
+		\setlocale(LC_ALL, self::$siteContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
-		$this->jsonDB(self::$i18nContent);
+		$this->jsonDB(self::$siteContent);
 
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
 			foreach ($this->dataFiles as $stageId => $item) {
-				$folder = $this->dataPath($stageId, self::$i18nContent);
+				$folder = $this->dataPath($stageId, self::$siteContent);
 				if (
 					file_exists($folder . $stageId . '.json') === false
 				) {
-					$this->initData($stageId, self::$i18nContent);
+					$this->initData($stageId, self::$siteContent);
 					common::$coreNotices[] = $stageId;
 				}
 			}
@@ -1391,7 +1391,7 @@ class common
 	public function saveLog($message = '')
 	{
 		// Journalisation
-		$dataLog = helper::dateUTF8('%Y %m %d', time(), self::$i18nContent) . ' - ' . helper::dateUTF8('%H:%M', time(), self::$i18nContent);
+		$dataLog = helper::dateUTF8('%Y %m %d', time(), self::$siteContent) . ' - ' . helper::dateUTF8('%H:%M', time(), self::$siteContent);
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();

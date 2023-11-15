@@ -255,7 +255,7 @@ class language extends common
 				self::$languagesUiInstalled[$file] = [
 					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 					$value['version'],
-					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nContent),
+					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$siteContent),
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
@@ -291,7 +291,7 @@ class language extends common
 					self::$languagesStore[$file] = [
 						template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 						$value['version'],
-						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nContent),
+						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$siteContent),
 						'',
 						template::button('translateContentLanguageUIDownload' . $file, [
 							'class' => 'buttonGreen',
@@ -414,7 +414,7 @@ class language extends common
 			];
 
 			// Sauvegarde hors méthodes si la langue n'est pas celle de l'UI
-			if ($lang === self::$i18nContent) {
+			if ($lang === self::$siteContent) {
 				// Enregistrer les données par lecture directe du formulaire
 				$this->setData(['locale', $data['locale']]);
 			} else {
@@ -434,7 +434,7 @@ class language extends common
 		//-----------------------------------------
 
 		// La locale est-elle celle de la langue de l'UI ?
-		if ($lang === self::$i18nContent) {
+		if ($lang === self::$siteContent) {
 			self::$locales[$lang]['locale'] = $this->getData(['locale']);
 		} else {
 			// Lire les locales sans passer par les méthodes
