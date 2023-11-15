@@ -1,13 +1,22 @@
 # Changelog
 
+## Version 13.0.09
+
+### Corrections
+
+- Corrige des messages de dépréciations de fonctions dans RFM.
+- Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
+- Met à jour les profils dans le slider.
+
 ## Version 13.0.08
 
-## Correction
+### Corrections
+
 -Corrige un bug dans la génération du sitemap.
 
 ## Version 13.0.07
 
-## Corrections 
+### Corrections 
 
 - Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
 - Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
