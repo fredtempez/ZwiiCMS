@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.1';
+	const VERSION = '6.2';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -266,18 +266,13 @@ class slider extends common
 	{
 		// $url prend l'adresse sans le token
 		// La galerie n'existe pas
-		if ($this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
+			$this->getData(['module', $this->getUrl(0), $this->getUrl(2)]) === null
+		) {
 			// Valeurs en sortie
 			$this->addOutput([
 				'access' => false
-			]);
-		}
-		// Jeton incorrect
-		if ($this->getUrl(3) !== $_SESSION['csrf']) {
-			// Valeurs en sortie
-			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
-				'notification' => 'Suppression  non autorisée'
 			]);
 		}
 		// Suppression
@@ -311,7 +306,10 @@ class slider extends common
 	public function theme()
 	{
 		// Soumission du formulaire
-		if ($this->isPost()) {
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
+			$this->isPost()
+		) {
 
 			// Equilibrer les durées
 			$speed = $this->getInput('sliderThemespeed', helper::FILTER_INT);

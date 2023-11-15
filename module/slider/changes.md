@@ -1,3 +1,5 @@
+# Version 6.2
+- Applique les profils
 # Version 6.1
 - Corrige le calcul de la largeur lorsque la largeur de l'écran est de 100%
 # Version 6.0 
