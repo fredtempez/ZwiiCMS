@@ -686,7 +686,8 @@ class template
             'label' => '',
             'name' => $nameId,
             'selected' => '',
-            'font' =>  []
+            'font' =>  [],
+            'multiple' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -715,6 +716,11 @@ class template
             $attributes['class'] .= ' notice';
         }
         $html .= self::notice($attributes['id'], $notice);
+        // Attribut multiple
+        if ($attributes['multiple'] === true) {
+            echo "ppp";
+            $attributes['multiple'] = 'multiple';
+        }
         // Début sélection
         $html .= sprintf(
             '<select %s>',
@@ -743,6 +749,7 @@ class template
         // Retourne le html
         return $html;
     }
+
 
     /**
      * Crée une bulle de dialogue
