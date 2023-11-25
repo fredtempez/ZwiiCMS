@@ -872,7 +872,7 @@ class core extends common
 			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech(sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s'), $accessInfo['pageId'], $accessInfo['userName']))
+					'content' => template::speech('<p>'. sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], helper::translate('Retour')))
 
 				]);
 			} else {
@@ -884,7 +884,7 @@ class core extends common
 				} else {
 					$this->addOutput([
 						'title' => 'Accès interdit',
-						'content' => template::speech(helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)'))
+						'content' => template::speech('<p>' . helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">'. helper::translate('Retour') . '</a></p>')
 					]);
 				}
 			}
@@ -898,7 +898,7 @@ class core extends common
 			} else {
 				$this->addOutput([
 					'title' => 'Page indisponible',
-					'content' => template::speech(helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)'))
+					'content' => template::speech('<p>' . helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)') . '</p><p><a style="color:inherit" href="javascript:history.back()">'. helper::translate('Retour') . '</a></p>')
 				]);
 			}
 		}

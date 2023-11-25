@@ -1003,9 +1003,10 @@ footer #footerSocials .zwiico-twitch:hover {
     max-width: 500px;
     width: 100%;
     margin: 16px auto;
-    text-align: left;
+    text-align: center;
     border-radius: 2px;
     transition: background-color .3s ease-out;
+    z-index: 100;
 }
 
 .speechBubble:before {

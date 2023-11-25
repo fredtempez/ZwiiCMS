@@ -12,7 +12,8 @@
 
 ### Améliorations
 
-- Affecte une icône home aux boutons de retour
+- Affecte une icône home aux boutons de retour.
+- Ajoute un bouton de retour aux pages d'erreur 403 et d'erreur 404.
 
 ## Version 13.0.08
 
