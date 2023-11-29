@@ -1819,4 +1819,7 @@ th.col12 {
     .bannerDisplay {
         display: none;
     }
+    header {
+        background-size: cover !important;
+    }
 }
