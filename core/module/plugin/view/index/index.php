@@ -3,7 +3,7 @@
 		<?php echo template::button('configModulesBack', [
 			'class' => 'buttonGrey',
 			'href' => helper::baseUrl(),
-			'value' => template::ico('left')
+			'value' => template::ico('home')
 		]); ?>
 	</div>
 	<div class="col1">

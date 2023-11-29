@@ -68,10 +68,10 @@ class page extends common
 	public static $userProfils = [];
 
 	public static $navIconTemplate = [
-        'dir' => 'Petit triangle',
-        'open' => 'Grand triangle',
-        'big' => 'Flèche',
-    ];
+		'dir' => 'Petit triangle',
+		'open' => 'Grand triangle',
+		'big' => 'Flèche',
+	];
 
 	public static $navIconPosition = [
 		'none' => 'Masqué',
@@ -539,6 +539,9 @@ class page extends common
 			}
 			// Construction du formulaire
 
+			// Met à jour le sitemap
+			$this->updateSitemap();
+
 			// Création du sélecteur de modules	
 			self::$moduleIds = [];
 			foreach (helper::getModules() as $key => $values) {
@@ -599,7 +602,8 @@ class page extends common
 			$css = $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageCssEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le CSS
 			$this->setData([
-				'page', $this->getUrl(2),
+				'page',
+				$this->getUrl(2),
 				'css',
 				$css
 			]);
@@ -633,7 +637,8 @@ class page extends common
 			$js = $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG) === null ? '' : $this->getInput('pageJsEditorContent', helper::FILTER_STRING_LONG);
 			// Enregistre le JS
 			$this->setData([
-				'page', $this->getUrl(2),
+				'page',
+				$this->getUrl(2),
 				'js',
 				$js
 			]);
