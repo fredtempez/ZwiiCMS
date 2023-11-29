@@ -7,6 +7,7 @@
 - Corrige un problème de permission non spécifiée dans un profil.
 - Corrige des messages de dépréciations de fonctions dans RFM.
 - Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
+- Corrige la liste des pages selon la lnague dus ietd ans la f
 - Met à jour les profils dans le slider.
 - Petites corrections.
 
