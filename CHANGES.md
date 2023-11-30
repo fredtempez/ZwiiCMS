@@ -13,8 +13,12 @@
 
 ### Améliorations
 
+- La gestion des utilisateurs bénéficie de nouvelles fonctionnalités :
+  - Un champ étiquette optionnel peut être attribué aux utilisateurs, il contient des mots clés séparés par des espaces. Ces mots clés permettent de filtrer les utilisateurs.
+  - Un champ de recherche dynamique agisssant sur l'ensemble des colonnes du tableau filtre les lignes.
+  - Le nombre d'éléments affichés est dynamique.
 - Affecte une icône home aux boutons de retour.
-- Ajoute un bouton de retour aux pages d'erreur 403 et d'erreur 404.
+- Ajoute un lien de retour aux pages d'erreur 403 et d'erreur 404.
 
 ## Version 13.0.08
 

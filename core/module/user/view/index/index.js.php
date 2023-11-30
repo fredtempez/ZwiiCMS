@@ -25,7 +25,8 @@ $(document).ready((function () {
 
     $('#dataTables').DataTable({
         language: {
-            url: "core/vendor/datatables/french.json"
+            url: "core/vendor/datatables/french.json",
+            "paging": false
         }
     });
 }));

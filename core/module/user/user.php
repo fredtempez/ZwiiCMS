@@ -550,7 +550,10 @@ class user extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Utilisateurs'),
-			'view' => 'index'
+			'view' => 'index',
+			'vendor' => [
+				'datatables'
+			]
 		]);
 	}
 
@@ -1232,9 +1235,9 @@ class user extends common
 								$item['nom'],
 								$item['prenom'],
 								self::$groups[$item['groupe']],
-								($this->getData(['profil', $item['groupe'], $item['profil'], 'name']) !== null ) 
-								? $this->getData(['profil', $item['groupe'], $item['profil'], 'name']) 
-								: $item['profil'],
+								empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
+								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
+								: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								helper::filter($item['email'], helper::FILTER_MAIL),
 								$item['tags'],
@@ -1291,15 +1294,14 @@ class user extends common
 								}
 							}
 							// Création du tableau de confirmation
-							var_dump( $item['profil']);
 							self::$users[] = [
 								$userId,
 								$item['nom'],
 								$item['prenom'],
 								self::$groups[$item['groupe']],
-								($this->getData(['profil', $item['groupe'], $item['profil'], 'name']) !== null ) 
-								? $this->getData(['profil', $item['groupe'], $item['profil'], 'name']) 
-								: $item['profil'],
+								empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
+								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
+								: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								$item['email'],
 								$item['tags'],
