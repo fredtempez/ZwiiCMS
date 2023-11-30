@@ -61,7 +61,7 @@
 <?php if ($module::$users): ?>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], $module::$users, ['Id', 'Nom', 'Prénom', 'Groupe', 'Profil', 'Pseudo', 'eMail', 'Etiquettes', '']); ?>
+            <?php echo template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], $module::$users, ['Id', 'Nom', 'Prénom', 'Groupe', 'Profil', 'Pseudo', 'eMail', 'Étiquettes', '']); ?>
             <?php echo template::ico('check'); ?> Compte créé |
             <?php echo template::ico('mail'); ?> Compte créé et notifié |
             <?php echo template::ico('cancel'); ?> Erreur dans le fichier ou le compte existe.

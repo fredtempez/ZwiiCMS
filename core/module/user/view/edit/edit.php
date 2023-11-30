@@ -76,7 +76,7 @@
 			<div class="row">
 				<div class="col12">
 				<?php echo template::text('userEditTags', [
-						'label' => 'Etiquettes',
+						'label' => 'Étiquettes',
 						'value' => $this->getData(['user', $this->getUrl(2), 'tags']),
 						'help' => 'Le séparateur d\'étiquettes est l\'espace'
 					]); ?>
