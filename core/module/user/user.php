@@ -483,7 +483,9 @@ class user extends common
 			if ($this->getData(['user', $userId, 'group'])) {
 
 				// Compte les rôles
-				$profils[$this->getData(['user', $userId, 'group']) . $this->getData(['user', $userId, 'profil'])]++;
+				if (isset($profils[$this->getData(['user', $userId, 'group']) . $this->getData(['user', $userId, 'profil'])])) {
+					$profils[$this->getData(['user', $userId, 'group']) . $this->getData(['user', $userId, 'profil'])]++;
+				}
 
 				// Filtres
 				if ($this->isPost()) {
