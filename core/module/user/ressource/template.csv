@@ -1,5 +1,5 @@
-id;nom;prenom;email;groupe
-jm1;Membre1;Jean;jean.membre1@email.fr;1
-am2;Membre2;Albert;albert.membre2@email.fr;1
-jrediteur;Editeur;Robert;robert.editeur@email.fr;2
-padmin;Dupuis;Admin;paul.admin@email.fr;3
+id;nom;prenom;email;groupe;profil;passe;tags
+jm1;Membre1;Jean;jean.membre1@email.fr;1;1;jEan05;"adhérent"
+am2;Membre2;Albert;albert.membre2@email.fr;1;1;alBertAG;"adhérent"
+jrediteur;Editeur;Robert;robert.editeur@email.fr;2;1;roBert54;"trésorier"
+padmin;Dupuis;Admin;paul.admin@email.fr;3;0;paul32Mirabel32;"président"

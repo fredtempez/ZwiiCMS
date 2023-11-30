@@ -9,6 +9,8 @@
  * @link http://zwiicms.fr/
  */
 
+ /** @import url("site/data/admin.css"); */
+
 /** NE PAS EFFACER
 * admin.css
 */
@@ -19,6 +21,7 @@
 #passwordIcon {
     float: right;
 }
+
 @media screen and (max-width: 768px) {
     #buttonsContainer {
         display: grid;

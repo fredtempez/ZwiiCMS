@@ -51,4 +51,5 @@
 			'ico' => ''
 		]); ?>
 	</div>
+</div>
 <?php echo template::formClose(); ?>

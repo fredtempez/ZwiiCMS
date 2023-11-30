@@ -12,7 +12,13 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col3 offset9">
+	<div class="col3">
+		<?php echo template::button('userResetBack', [
+			'href' => helper::baseUrl(),
+			'value' => template::ico('left')
+		]); ?>
+	</div>
+	<div class="col3 offset6">
 		<?php echo template::submit('userResetSubmit', [
 			'value' => 'Valider'
 		]); ?>

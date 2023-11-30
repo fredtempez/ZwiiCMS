@@ -58,15 +58,30 @@
 					]); ?>
 				</div>
 			</div>
-			<?php echo template::mail('userEditMail', [
-				'autocomplete' => 'off',
-				'label' => 'Adresse électronique',
-				'value' => $this->getData(['user', $this->getUrl(2), 'mail'])
-			]); ?>
-			<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
-				'label' => 'Langue',
-				'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
-			]); ?>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::mail('userEditMail', [
+						'autocomplete' => 'off',
+						'label' => 'Adresse électronique',
+						'value' => $this->getData(['user', $this->getUrl(2), 'mail'])
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
+						'label' => 'Langue',
+						'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col12">
+				<?php echo template::text('userEditTags', [
+						'label' => 'Etiquettes',
+						'value' => $this->getData(['user', $this->getUrl(2), 'tags']),
+						'help' => 'Le séparateur d\'étiquettes est l\'espace'
+					]); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col6">

@@ -46,13 +46,28 @@
 					]); ?>
 				</div>
 			</div>
-			<?php echo template::mail('userAddMail', [
-				'autocomplete' => 'off',
-				'label' => 'Adresse électronique'
-			]); ?>
-			<?php echo template::select('userAddLanguage', $module::$languagesInstalled, [
-				'label' => 'Langues'
-			]); ?>
+			<div class="row">
+				<div class="col6">
+					<?php echo template::mail('userAddMail', [
+						'autocomplete' => 'off',
+						'label' => 'Adresse électronique'
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::select('userAddLanguage', $module::$languagesInstalled, [
+						'label' => 'Langues'
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col12">
+					<?php echo template::text('userAddTags', [
+						'label' => 'Etiquettes',
+						'value' => $this->getData(['user', $this->getUrl(2), 'tags']),
+						'help' => 'Le séparateur d\'étiquettes est l\'espace'
+					]); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="col6">
@@ -110,21 +125,23 @@
 				</div>
 			</div>
 			<div class="row">
-				<div id="userCommentProfil<?php echo self::GROUP_MEMBER; ?>" class="col12 displayNone userCommentProfil">
+				<div id="userCommentProfil<?php echo self::GROUP_MEMBER; ?>"
+					class="col12 displayNone userCommentProfil">
 					<?php echo template::textarea('useraddProfilComment' . self::GROUP_MEMBER, [
-						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_MEMBER])
+						"value" => implode("\n", $module::$userProfilsComments[self::GROUP_MEMBER])
 					]);
 					?>
 				</div>
-				<div id="userCommentProfil<?php echo self::GROUP_EDITOR; ?>" class="col12 displayNone userCommentProfil">
+				<div id="userCommentProfil<?php echo self::GROUP_EDITOR; ?>"
+					class="col12 displayNone userCommentProfil">
 					<?php echo template::textarea('useraddProfilComment2' . self::GROUP_EDITOR, [
-						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_EDITOR])
+						"value" => implode("\n", $module::$userProfilsComments[self::GROUP_EDITOR])
 					]);
 					?>
 				</div>
 				<div id="userCommentProfil<?php echo self::GROUP_ADMIN; ?>" class="col12 displayNone userCommentProfil">
 					<?php echo template::textarea('useraddProfilComment' . self::GROUP_ADMIN, [
-						"value" => implode("\n",$module::$userProfilsComments[self::GROUP_ADMIN])
+						"value" => implode("\n", $module::$userProfilsComments[self::GROUP_ADMIN])
 					]);
 					?>
 				</div>
