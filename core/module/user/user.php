@@ -648,7 +648,10 @@ class user extends common
 			) {
 				$fileManager = false;
 			}
-			if ($profil !== $profil) {
+			if (
+				$profil !== $oldProfil &&
+				$this->deleteData(['profil', $group, $oldProfil])
+			) {
 				$this->deleteData(['profil', $group, $oldProfil]);
 			}
 			// Données du formulaire
