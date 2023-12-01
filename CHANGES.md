@@ -2,7 +2,7 @@
 
 ## Version 13.1.00
 
-### Corrections
+
 
 ### Améliorations
 
@@ -12,6 +12,8 @@
   - Le nombre d'éléments affichés est dynamique.
 - Affecte une icône home aux boutons de retour.
 - Ajoute un lien de retour aux pages d'erreur 403 et d'erreur 404.
+
+### Corrections
 
 - Corrige un problème de permission non spécifiée dans un profil.
 - Corrige des messages de dépréciations de fonctions dans RFM.
