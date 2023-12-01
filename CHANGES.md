@@ -4,13 +4,6 @@
 
 ### Corrections
 
-- Corrige un problème de permission non spécifiée dans un profil.
-- Corrige des messages de dépréciations de fonctions dans RFM.
-- Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
-- Corrige la liste des pages selon la lnague dus ietd ans la f
-- Met à jour les profils dans le slider.
-- Petites corrections.
-
 ### Améliorations
 
 - La gestion des utilisateurs bénéficie de nouvelles fonctionnalités :
@@ -19,6 +12,13 @@
   - Le nombre d'éléments affichés est dynamique.
 - Affecte une icône home aux boutons de retour.
 - Ajoute un lien de retour aux pages d'erreur 403 et d'erreur 404.
+
+- Corrige un problème de permission non spécifiée dans un profil.
+- Corrige des messages de dépréciations de fonctions dans RFM.
+- Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
+- Corrige la génération de la liste des pages selon la langue sélectionnée pour les liens TinyMCE
+- Met à jour les profils dans le slider.
+- Petites corrections.
 
 ## Version 13.0.08
 
