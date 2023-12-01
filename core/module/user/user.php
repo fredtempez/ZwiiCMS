@@ -648,6 +648,7 @@ class user extends common
 			) {
 				$fileManager = false;
 			}
+			// Effacer l'ancien profil si le rang a changé
 			if (
 				$profil !== $oldProfil &&
 				$this->deleteData(['profil', $group, $oldProfil])
@@ -658,7 +659,7 @@ class user extends common
 			$data = [
 				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
-				'permanent' => $group === '1' ? true : false,
+				'permanent' => $profil === '1' ? true : false,
 				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
 				'filemanager' => $fileManager,
 				'file' => [
