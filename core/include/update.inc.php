@@ -1100,6 +1100,19 @@ if ($this->getData(['core', 'dataVersion']) < 13005) {
 	if ($this->getData(['admin', 'backgroundColorButtonHelp']) === null) {
 		$this->setData(['admin', 'backgroundColorButtonHelp', 'rgba(255, 153, 0, 1)']);
 	}
+
 	// Mise à jour
 	$this->setData(['core', 'dataVersion', 13005]);
+}
+
+// Version 13.1.01
+if ($this->getData(['core', 'dataVersion']) < 13101) {
+
+	// Supprime le choix du thème à l'installation
+	if (is_dir('core/module/install/ressource/themes')) {
+		$this->deleteDir('core/module/install/ressource/themes') ;
+	}
+
+	// Mise à jour
+	$this->setData(['core', 'dataVersion', 13101]);
 }

@@ -32,9 +32,6 @@ class install extends common
 
 	public static $updateButtonText = 'Réinstaller';
 
-	// Thèmes proposés à l'installation
-	public static $themes = [];
-
 	public static $newVersion;
 
 	// Fichiers des Interface
@@ -213,39 +210,16 @@ class install extends common
 					mkdir(self::DATA_DIR . 'font');
 				}
 
-				// Installation du thème sélectionné
-				$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
-				$dataThemes = $dataThemes['themes'];
-				$themeFilename = $dataThemes[$this->getInput('installTheme', helper::FILTER_STRING_SHORT)]['filename'];
-				if ($themeFilename !== '') {
-					$theme = new theme;
-					$theme->import('core/module/install/ressource/themes/' . $themeFilename);
-				}
-
-				// Copie des thèmes dans les fichiers
-				if (!is_dir(self::FILE_DIR . 'source/theme')) {
-					mkdir(self::FILE_DIR . 'source/theme');
-				}
-				$this->copyDir('core/module/install/ressource/themes', self::FILE_DIR . 'source/theme');
-				unlink(self::FILE_DIR . 'source/theme/themes.json');
-
 				// Copie des langues de l'UI et génération de la base de données
 				if (is_dir(self::I18N_DIR) === false) {
 					mkdir(self::I18N_DIR);
 				}
 
 				// Créer la base de données des langues
-				// copy('core/module/install/ressource/i18n/language.json', self::DATA_DIR . 'language.json');
 				$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
-				// unlink(self::I18N_DIR . 'language.json');
 
 				// Fixe l'adresse from pour les envois d'email
 				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
-
-				// Supprimé à cause de l'écrasement des bases
-				//$this->setData(['module', 'blog', 'posts', 'mon-premier-article', 'userId', $userId]);
-				//$this->setData(['module', 'blog', 'posts', 'mon-deuxieme-article', 'userId', $userId]);
-				//$this->setData(['module', 'blog', 'posts', 'mon-troisieme-article', 'userId', $userId]);
 
 				// Valeurs en sortie
 				$this->addOutput([
@@ -254,13 +228,6 @@ class install extends common
 					'state' => true
 				]);
 			}
-
-			// Affichage du formulaire
-
-			// Récupération de la liste des thèmes
-			$dataThemes = json_decode(file_get_contents('core/module/install/ressource/themes/themes.json'), true);
-			$dataThemes = $dataThemes['themes'];
-			self::$themes = helper::arrayColumn($dataThemes, 'name');
 
 			// Valeurs en sortie
 			$this->addOutput([

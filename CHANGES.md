@@ -1,7 +1,11 @@
 # Changelog
 
-## Version 13.1.00
+## Version 13.1.01
 
+Cette version supprime le sélecteur de thème à l'installation.
+
+
+## Version 13.1.00
 
 
 ### Améliorations

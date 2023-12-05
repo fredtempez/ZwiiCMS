@@ -94,9 +94,6 @@
 			</div>
 			<div class="row">
 				<div class="col12">
-					<?php echo template::select('installTheme', $module::$themes, [
-						'label' => 'Thème'
-					]); ?>
 					<?php echo template::hidden('installLanguage', [
 						'value' => $this->getUrl(2)
 					]); ?>
