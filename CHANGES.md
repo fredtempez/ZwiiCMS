@@ -8,7 +8,7 @@
 
 - La gestion des utilisateurs bénéficie de nouvelles fonctionnalités :
   - Un champ étiquette optionnel peut être attribué aux utilisateurs, il contient des mots clés séparés par des espaces. Ces mots clés permettent de filtrer les utilisateurs.
-  - Un champ de recherche dynamique agisssant sur l'ensemble des colonnes du tableau filtre les lignes.
+  - Un champ de recherche dynamique agissant sur l'ensemble des colonnes du tableau filtre les lignes.
   - Le nombre d'éléments affichés est dynamique.
   - La procédure d'import tient compte du champ étiquette et ajoute le champ profil.
 - Affecte une icône home aux boutons de retour.
@@ -17,7 +17,7 @@
 ### Corrections
 
 - Corrige un problème de permission non spécifiée dans un profil.
-- Corrige des messages de dépréciations de fonctions dans RFM.
+- Corrige des messages de dépréciation de fonctions dans RFM.
 - Corrige un message de dépréciation lié à l'absence éventuel de titre court dans la génération du sitemap.
 - Corrige la génération de la liste des pages selon la langue sélectionnée pour les liens TinyMCE
 - Met à jour les profils dans le slider.
