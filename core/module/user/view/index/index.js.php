@@ -27,6 +27,18 @@ $(document).ready((function () {
         language: {
             url: "core/vendor/datatables/french.json",
         },
-        locale: 'fr'
+        locale: 'fr',
+        "columnDefs": [
+            {
+                target: 5,
+                orderable: false,
+                searchable: false
+            },
+            {
+                target: 6,
+                orderable: false,
+                searchable: false
+            }
+        ]
     });
 }));
