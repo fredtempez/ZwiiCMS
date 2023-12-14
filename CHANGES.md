@@ -4,6 +4,9 @@
 
 Cette version supprime le sélecteur de thème à l'installation.
 
+### Correction
+
+- Corrige une mauvaise mise en forme du journal des évènements.
 
 ## Version 13.1.00
 
