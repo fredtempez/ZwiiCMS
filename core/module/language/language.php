@@ -259,16 +259,16 @@ class language extends common
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
-					template::button('translateContentLanguageUIEdit' . $file, [
-						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
-						'value' => template::ico('pencil'),
-						'help' => 'Éditer',
-						'disabled' => 'fr_FR' === $file
-					]),
-					*/
+								   template::button('translateContentLanguageUIEdit' . $file, [
+									   'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
+									   'value' => template::ico('pencil'),
+									   'help' => 'Éditer',
+									   'disabled' => 'fr_FR' === $file
+								   ]),
+								   */
 
 					template::button('translateContentLanguageUIDownload' . $file, [
-						'class' =>  isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
+						'class' => isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
 						'value' => template::ico('update'),
 						'help' => 'Mettre à jour',
@@ -304,6 +304,17 @@ class language extends common
 			}
 		}
 
+		// Pointer vers la fenêtre
+		switch ($this->getUrl(1)) {
+			case 'interface':
+				setcookie('translateLayout', 'ui', time() + 3600, '/', '', false, false);
+				break;
+			case 'site':
+				setcookie('translateLayout', 'content', time() + 3600, '/', '', false, false);
+				break;
+			default:
+				break;
+		}
 
 		// Valeurs en sortie
 		$this->addOutput([

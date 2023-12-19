@@ -71,7 +71,7 @@ $(document).ready(function () {
         configLayout = "setup";
         setCookie("configLayout", "setup");
     }
-    $("#localeContainer").hide();
+
     $("#socialContainer").hide();
     $("#connectContainer").hide();
     $("#networkContainer").hide();
@@ -158,39 +158,22 @@ $(document).ready(function () {
      *  Sélection de la  page de configuration à afficher
      */
     $("#configSetupButton").on("click", function () {
-        $("#localeContainer").hide();
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").hide();
         $("#setupContainer").show();
         $("#configSetupButton").addClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
         setCookie("configLayout", "setup");
     });
-    $("#configLocaleButton").on("click", function () {
-        $("#setupContainer").hide();
-        $("#socialContainer").hide();
-        $("#connectContainer").hide();
-        $("#networkContainer").hide();
-        $("#localeContainer").show();
-        $("#configSetupButton").removeClass("activeButton");
-        $("#configLocaleButton").addClass("activeButton");
-        $("#configSocialButton").removeClass("activeButton");
-        $("#configConnectButton").removeClass("activeButton");
-        $("#configNetworkButton").removeClass("activeButton");
-        setCookie("configLayout", "locale");
-    });
     $("#configSocialButton").on("click", function () {
         $("#connectContainer").hide();
         $("#setupContainer").hide();
-        $("#localeContainer").hide();
         $("#networkContainer").hide();
         $("#socialContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -198,12 +181,10 @@ $(document).ready(function () {
     });
     $("#configConnectButton").on("click", function () {
         $("#setupContainer").hide();
-        $("#localeContainer").hide();
         $("#socialContainer").hide();
         $("#networkContainer").hide();
         $("#connectContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
         $("#configNetworkButton").removeClass("activeButton");
@@ -211,12 +192,10 @@ $(document).ready(function () {
     });
     $("#configNetworkButton").on("click", function () {
         $("#setupContainer").hide();
-        $("#localeContainer").hide();
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").show();
         $("#configSetupButton").removeClass("activeButton");
-        $("#configLocaleButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
         $("#configNetworkButton").addClass("activeButton");
@@ -233,7 +212,7 @@ $(document).ready(function () {
 
 
     // Mise en évidence des erreurs de saisie dans les boutons de sélection
-    var containers = ["setup", "locale", "social", "connect", "network"];
+    var containers = ["setup", "social", "connect", "network"];
     $.each(containers, function (index, value) {
         var a = $("div#" + value + "Container").find("input.notice").not(".displayNone");
         if (a.length > 0) {
