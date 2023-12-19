@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '5.2';
+	const VERSION = '5.3';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -308,7 +308,8 @@ class news extends common
 					'height' => $this->getInput('newsOptionHeight', helper::FILTER_INT, true),
 					'dateFormat' => $this->getInput('newsOptionDateFormat'),
 					'timeFormat' => $this->getInput('newsOptionTimeFormat'),
-					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData'])
+					'buttonBack' => $this->getInput('newsOptionButtonBack'),
+					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
 
@@ -593,12 +594,18 @@ class news extends common
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '3.4']);
 		}
-		// Mise à jour 3.4
+		// Mise à jour 4.4
 		if (version_compare($versionData, '4.4', '<')) {
 			$this->setData(['module', $this->getUrl(0), 'config', 'dateFormat', '%d %B %Y']);
 			$this->setData(['module', $this->getUrl(0), 'config', 'timeFormat', '%H:%M']);
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '4.4']);
+		}
+		// Mise à jour 5.3
+		if (version_compare($versionData, '5.3', '<')) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
+			// Mettre à jour la version
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '5.3']);
 		}
 
 	}

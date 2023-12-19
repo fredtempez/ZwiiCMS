@@ -1,3 +1,5 @@
+# Version 5.3
+- Option d'un lien de retour dans la signature
 # Version 5.2
 - Termes des commandes de profils
 # Version 5.1
@@ -24,5 +26,3 @@
 - Ecran layout réservé à la configuration et au thème
 - Bug avec l'initialisation, fichier css déclaré mais absent
 - Appel de la feuille style si présente
-
-A faire partie CSS à amléiorer au niveau des options

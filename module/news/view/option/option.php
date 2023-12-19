@@ -48,10 +48,15 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col6">
+					<div class="col3">
 						<?php echo template::checkbox('newsOptionShowFeeds', true, 'Lien du flux RSS', [
 							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 							'help' => 'Flux limité aux articles de la première page.'
+						]); ?>
+					</div>
+					<div class="col3">
+						<?php echo template::checkbox('newsOptionButtonBack', true, 'Bouton de retour', [
+							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
 						]); ?>
 					</div>
 					<div class="col6">
