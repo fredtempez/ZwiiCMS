@@ -298,7 +298,7 @@ core.start = function () {
     });
     // Confirmation de déconnexion
     $("#barLogout").on("click", function () {
-        message = "<?php echo helper::translate('Se déconnecter') . '?';?>";
+        message = "<?php echo helper::translate('Se déconnecter') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barLogout").attr("href"));
         });
