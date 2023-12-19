@@ -26,7 +26,7 @@
 			)
 		): ?>
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">
-				<?php echo template::ico('pencil'); ?> 
+				<?php echo template::ico('pencil'); ?>
 				<?php echo helper::translate('Éditer') . '&nbsp;';?>
 			</a>
 		<?php endif; ?>
