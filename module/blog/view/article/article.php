@@ -22,7 +22,7 @@
 		<?php echo template::ico('user'); ?>
 		<?php echo $module::$articleSignature; ?>
 		<?php echo template::ico('calendar-empty'); ?>
-		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent); ?>
+		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent) . ' ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent); ?>
 		<!-- Bloc edition -->
 		<?php if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
@@ -45,12 +45,14 @@
 				)
 			)
 		): ?>
+			&nbsp;-&nbsp;
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">
 				<?php echo template::ico('pencil'); ?> Éditer
 			</a>
 		<?php endif; ?>
 		<!-- Bloc RSS-->
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
+			&nbsp;-&nbsp;
 			<div id="rssFeed">
 				<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>"
 					target="_blank">
