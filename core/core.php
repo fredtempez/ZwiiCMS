@@ -938,19 +938,17 @@ class common
 	}
 
 	/**
-	 * Retourne les permission de l'utilisateur connecté
+	 * Retourne les permissions de l'utilisateur connecté
 	 * @param int $key Clé de la valeur du groupe
 	 * @return string|null
 	 */
 	public function getPermission($key1, $key2 = null)
 	{
-		// User n'existe pas
-		// if (is_array($this->user) === false) {
-		//	return false;
+
 		// Administrateur, toutes les permissions
 		if ($this->getUser('group') === self::GROUP_ADMIN) {
 			return true;
-		} elseif ($this->getUser('group') < 1) { // Groupe sans autorisation
+		} elseif ($this->getUser('group') <= self::GROUP_VISITOR) { // Groupe sans autorisation
 			return false;
 		} elseif (
 			// Groupe avec profil, consultation des autorisations sur deux clés
@@ -974,11 +972,8 @@ class common
 			if (class_exists($key1)) {
 				$module = new $key1;
 				if (array_key_exists($key2, $module::$actions)) {
-					// var_dump($this->getUser('group'));
-					// var_dump($module::$actions[$key2]);
-					// var_dump($this->getUser('group') >= $module::$actions[$key2]);
 					return $this->getUser('group') >= $module::$actions[$key2];
-				} 
+				}
 			}
 			return false;
 		}
