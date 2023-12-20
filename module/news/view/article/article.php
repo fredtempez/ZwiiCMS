@@ -4,13 +4,13 @@
 	</div>
 </div>
 <div class="row verticalAlignMiddle">
-	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])): ?>
-		<div class="col6 textAlignLeft">
+	<div class="col6 textAlignLeft">
+		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])): ?>
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0); ?>">
 				<?php echo template::ico('left') . helper::translate('Retour'); ?>
 			</a>
-		</div>
-	<?php endif; ?>
+		<?php endif; ?>
+	</div>
 	<div class="col6 newsDate textAlignRight">
 		<!-- bloc signature et date -->
 		<?php echo template::ico('user'); ?>
@@ -28,7 +28,7 @@
 			&nbsp;
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">
 				<?php echo template::ico('pencil'); ?>
-				<?php echo helper::translate('Éditer');?>
+				<?php echo helper::translate('Éditer'); ?>
 			</a>
 		<?php endif; ?>
 		<!-- Bloc RSS-->
