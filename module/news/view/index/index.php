@@ -21,18 +21,18 @@
 						</h2>
 						<div class="newsSignature">
 							<?php echo template::ico('user'); ?>
-							<?php echo $news['userId']; ?>
+							<?php echo $news['userId'] . ' - '; ?>
 							<?php echo template::ico('calendar-empty'); ?>
 							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$siteContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$siteContent); ?>
 							<!-- Bloc edition -->
 							<?php if (
-
 								$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 								and
 								( // Propriétaire
 									($this->getUser('group') === self::GROUP_ADMIN)
 								)
 							): ?>
+								&nbsp;
 								<a
 									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsId; ?>">
 									<?php echo template::ico('pencil'); ?> Éditer

@@ -25,14 +25,16 @@
 				($this->getUser('group') === self::GROUP_ADMIN)
 			)
 		): ?>
+			&nbsp;
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">
 				<?php echo template::ico('pencil'); ?>
-				<?php echo helper::translate('Éditer') . '&nbsp;';?>
+				<?php echo helper::translate('Éditer');?>
 			</a>
 		<?php endif; ?>
 		<!-- Bloc RSS-->
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
 			<div id="rssFeed">
+				&nbsp;
 				<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>"
 					target="_blank">
 					<img src='module/news/ressource/feed-icon-16.gif' />
