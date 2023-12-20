@@ -50,12 +50,17 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col8">
+				<div class="col3">
 					<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
+						<?php echo template::checkbox('newsOptionButtonBack', true, 'Bouton de retour', [
+							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
+						]); ?>
+					</div>
+				<div class="col6">
 					<?php echo template::text('blogOptionFeedslabel', [
 						'label' => 'Texte de l\'étiquette',
 						'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])

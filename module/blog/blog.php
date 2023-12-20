@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '7.3';
+	const VERSION = '7.4';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -174,10 +174,12 @@ class blog extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'timeFormat', '%H:%M']);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '6.5']);
 		}
+		// Version 7.4
+		if (version_compare($this->getData(['module', $this->getUrl(0), 'config', 'versionData']), '7.4', '<')) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '7.4']);
+		}
 	}
-
-
-
 
 	/**
 	 * Flux RSS
@@ -574,6 +576,7 @@ class blog extends common
 					'itemsperPage' => $this->getInput('blogOptionItemsperPage', helper::FILTER_INT, true),
 					'dateFormat' => $this->getInput('blogOptionDateFormat'),
 					'timeFormat' => $this->getInput('blogOptionTimeFormat'),
+					'buttonBack' => $this->getInput('newsOptionButtonBack'),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
