@@ -1,3 +1,5 @@
+# Version 7.4
+- Bouton de retour dans les articles
 # Version 7.3
 - Termes des commandes de profils
 # Version 7.2
