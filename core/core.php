@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.1.00';
+	const ZWII_VERSION = '13.1.01';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
@@ -327,9 +327,6 @@ class common
 		if (isset($_COOKIE)) {
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
-
-		// Extraction de la sesion
-		// $this->input['_SESSION'] = $_SESSION;
 
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_CONTENT'])) {
