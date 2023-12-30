@@ -2,14 +2,20 @@
 
 ## Version 13.1.01
 
-Cette version supprime le sélecteur de thème à l'installation.
+### Améliorations
 
-### Correction
+- Cette version supprime le sélecteur de thème lors de l'installation.
+- Modules news et blog :
+  - Nouvelle option ajoutant un bouton de retour dans la page de l'article.
+  - La mise en forme du bloc signature est homogénéisée.
+- Profil des membres, corrige une impossibilité d'autoriser l'accès au gestionnaire de fichiers pour les membres non administrateurs.
+
+### Corrections
 
 - Corrige une mauvaise mise en forme du journal des évènements.
+- Autres petites corrections.
 
 ## Version 13.1.00
-
 
 ### Améliorations
 
