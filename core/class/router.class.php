@@ -105,53 +105,14 @@ class core extends common
 			// Suppression des polices identiques
 			$fonts = array_unique($fonts);
 
-			/**
-			 * Charge les fontes websafe
-			 */
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if (isset($fontsAvailable['websafe'][$fontId])) {
-					$fonts[$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
-				}
-			}
 
 			/**
-			 * Chargement des polices en ligne dans un fichier font.html inclus dans main.php
-			 */
-			$fontFile = '';
-			$gf = false;
-			foreach ($fonts as $fontId) {
-				if (isset($fontsAvailable['imported'][$fontId])) {
-					$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] . '" rel="stylesheet">';
-					// Tableau pour la construction de la feuille de style
-					$fonts[$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
-					$gf = strpos($fontsAvailable['imported'][$fontId]['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
-				}
-			}
-			// Ajoute le préconnect des fontes Googles.
-			$fontFile = $gf ? '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . $fontFile
-				: $fontFile;
-			// Enregistre la personnalisation
-			if (!is_dir(self::DATA_DIR . 'font')) {
-				mkdir(self::DATA_DIR . 'font');
-			}
-			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
-
-			/**
-			 * Fontes installées localement
+			 * Charge les fontes
 			 */
 			foreach ($fonts as $fontId) {
-				// Validité du tableau :
-				if (isset($fontsAvailable['files'][$fontId])) {
-					if (file_exists(self::DATA_DIR . 'font/' . $fontId)) {
-						// Chargement de la police
-						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
-						// Tableau pour la construction de la feuille de style
-						$fonts[$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
-					} else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts[$fontId] = 'verdana';
+				foreach (['websafe', 'imported', 'files'] as $typeFont) {
+					if (isset($fontsAvailable[$typeFont][$fontId])) {
+						$fonts[$fontId] = $fontsAvailable[$typeFont][$fontId]['font-family'];
 					}
 				}
 			}
@@ -311,12 +272,6 @@ class core extends common
 			$css .= '#footerText > p {text-align:' . $this->getData(['theme', 'footer', 'textAlign']) . '}';
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
-			// Enregistre les fontes
-			if (!is_dir(self::DATA_DIR . 'font')) {
-				mkdir(self::DATA_DIR . 'font');
-			}
-			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
-
 			// Enregistre la personnalisation
 			file_put_contents(self::DATA_DIR . 'theme.css', $css);
 
@@ -352,44 +307,12 @@ class core extends common
 			$fonts = array_unique($fonts);
 
 			/**
-			 * Charge les fontes websafe
-			 */
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if (isset($fontsAvailable['websafe'][$fontId])) {
-					$fonts[$fontId] = $fontsAvailable['websafe'][$fontId]['font-family'];
-				}
-			}
-
-			/**
-			 * Chargement des polices en ligne dans un fichier font.html inclus dans main.php
-			 */
-			$fontFile = '';
-			foreach ($fonts as $fontId) {
-				if (isset($fontsAvailable['imported'][$fontId])) {
-					$fontFile .= '<link href="' . $fontsAvailable['imported'][$fontId]['resource'] . '" rel="stylesheet">';
-					// Tableau pour la construction de la feuille de style
-					$fonts[$fontId] = $fontsAvailable['imported'][$fontId]['font-family'];
-				}
-			}
-			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR . 'font/font.html', $fontFile);
-
-			/**
-			 * Fontes installées localement
+			 * Charge les fontes
 			 */
 			foreach ($fonts as $fontId) {
-				// Validité du tableau :
-				if (isset($fontsAvailable['files'][$fontId])) {
-					if (file_exists(self::DATA_DIR . 'font/' . $fontId)) {
-						// Chargement de la police
-						$css .= '@font-face {font-family:"' . $fontsAvailable['files'][$fontId]['font-family'] . '";';
-						$css .= 'src: url("' . helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontsAvailable['files'][$fontId]['resource'] . '");}';
-						// Tableau pour la construction de la feuille de style
-						$fonts[$fontId] = $fontsAvailable['files'][$fontId]['font-family'];
-					} else {
-						// Le fichier de font n'est pas disponible, fonte par défaut
-						$fonts[$fontId] = 'verdana';
+				foreach (['websafe', 'imported', 'files'] as $typeFont) {
+					if (isset($fontsAvailable[$typeFont][$fontId])) {
+						$fonts[$fontId] = $fontsAvailable[$typeFont][$fontId]['font-family'];
 					}
 				}
 			}
@@ -872,7 +795,7 @@ class core extends common
 			if ($accessInfo['userName']) {
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
-					'content' => template::speech('<p>'. sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], helper::translate('Retour')))
+					'content' => template::speech('<p>' . sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], helper::translate('Retour')))
 
 				]);
 			} else {
@@ -884,7 +807,7 @@ class core extends common
 				} else {
 					$this->addOutput([
 						'title' => 'Accès interdit',
-						'content' => template::speech('<p>' . helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">'. helper::translate('Retour') . '</a></p>')
+						'content' => template::speech('<p>' . helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . helper::translate('Retour') . '</a></p>')
 					]);
 				}
 			}
@@ -898,7 +821,7 @@ class core extends common
 			} else {
 				$this->addOutput([
 					'title' => 'Page indisponible',
-					'content' => template::speech('<p>' . helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)') . '</p><p><a style="color:inherit" href="javascript:history.back()">'. helper::translate('Retour') . '</a></p>')
+					'content' => template::speech('<p>' . helper::translate('La page demandée n\'existe pas ou est introuvable (erreur 404)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . helper::translate('Retour') . '</a></p>')
 				]);
 			}
 		}

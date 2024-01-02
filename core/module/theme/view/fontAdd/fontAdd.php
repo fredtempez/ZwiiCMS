@@ -3,7 +3,7 @@
 	<div class="col1">
 		<?php echo template::button('fontAddBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'theme/fonts',
+			'href' => helper::baseUrl() . 'theme/font',
 			'value' => template::ico('left')
 		]); ?>
 	</div>

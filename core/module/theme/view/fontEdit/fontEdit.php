@@ -3,7 +3,7 @@
 	<div class="col1">
 		<?php echo template::button('fontEditBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'theme/fonts',
+			'href' => helper::baseUrl() . 'theme/font',
 			'value' => template::ico('left')
 		]); ?>
 	</div>
@@ -66,10 +66,10 @@
 			</div>
 			<div class="row" id="containerfontEditFile">
 				<div class="col12">
-					<?php echo template::file('fontEditFile', [
+				<?php echo template::text('fontEditFile', [
 						'label' => 'Fichier de fonte (Format WOFF)',
-						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
-						'value' => $this->getUrl(2) === 'files' ? $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'resource']) : ''
+						'value' => $this->getUrl(2) === 'files' ? $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'resource']) : '',
+						'disabled' => true
 					]); ?>
 				</div>
 			</div>

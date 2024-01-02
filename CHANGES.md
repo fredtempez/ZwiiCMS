@@ -1,5 +1,14 @@
 # Changelog
 
+## Version 13.1.02
+
+### Correction
+- Corrige un bug d'installation d'une fonte.
+- Corrige un bug de redirection vers la liste des fontes après édition ou ajout.
+
+### Amélioration
+- Ajoute le filtrage et le tri des fontes de puis la liste du thème.
+
 ## Version 13.1.01
 
 ### Améliorations

@@ -666,7 +666,7 @@ class theme extends common
 							'class' => 'themeFontEdit',
 							'href' => helper::baseUrl() . $this->getUrl(0) . '/fontEdit/' . $type . '/' . $fontId,
 							'value' => template::ico('pencil'),
-							'disabled' => !empty($fontUsed[$fontId])
+							//'disabled' => !empty($fontUsed[$fontId])
 						])
 						: '',
 						$type !== 'websafe' ? template::button('themeFontDelete' . $fontId, [
@@ -701,8 +701,8 @@ class theme extends common
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontAddUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
 			$type === 'files' ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
-			if (!empty($ressource)) {
+			$resource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
+			if (!empty($resource)) {
 				$fontId = $this->getInput('fontAddFontId', null, true);
 				$fontName = $this->getInput('fontAddFontName', null, true);
 				$fontFamilyName = $this->getInput('fontAddFontFamilyName', null, true);
@@ -714,6 +714,19 @@ class theme extends common
 				if (is_array($this->getData(['font', $type, $fontId]))) {
 					$this->deleteData(['font', $type, $fontId]);
 				}
+
+				// Copier la fonte si le nom du fichier est fourni
+				$success = false;
+				if (!is_dir(self::DATA_DIR . 'font/')) {
+					mkdir(self::DATA_DIR . 'font/');
+				}
+				if (
+					$type === 'files' &&
+					file_exists(self::FILE_DIR . 'source/' . $resource)
+				) {
+					$success = copy(self::FILE_DIR . 'source/' . $resource, self::DATA_DIR . 'font/' . basename($resource));
+				}
+
 				// Stocker la fonte
 				$this->setData([
 					'font',
@@ -722,24 +735,15 @@ class theme extends common
 					[
 						'name' => $fontName,
 						'font-family' => $fontFamilyName,
-						'resource' => $ressource
+						'resource' => $resource
 					]
 				]);
 
-
-				// Copier la fonte si le nom du fichier est fourni
-				if (
-					$type === 'files' &&
-					file_exists(self::FILE_DIR . 'source/' . $ressource)
-				) {
-					copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'font/' . $ressource);
-				}
-
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => helper::translate('Fonte créée'),
-					'redirect' => helper::baseUrl() . 'theme/fonts',
-					'state' => true
+					'notification' => $success ? helper::translate('Fonte actualisée') : helper::translate('Erreur de copie'),
+					'redirect' => helper::baseUrl() . 'theme/font',
+					'state' => $success
 				]);
 			} else {
 				// Valeurs en sortie
@@ -770,8 +774,8 @@ class theme extends common
 		) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontEditUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$ressource = $type === 'imported' ? $this->getInput('fontEditUrl', null) : $this->getInput('fontEditFile', null);
 			$fontId = $this->getInput('fontEditFontId', null, true);
+			$resource = $this->getData(['font', $type, $fontId, 'resource']);
 			$fontName = $this->getInput('fontEditFontName', null, true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName', null, true);
 
@@ -783,6 +787,7 @@ class theme extends common
 				$this->deleteData(['font', $type, $fontId]);
 			}
 
+
 			// Stocker les fontes
 			$this->setData([
 				'font',
@@ -791,21 +796,14 @@ class theme extends common
 				[
 					'name' => $fontName,
 					'font-family' => $fontFamilyName,
-					'resource' => $ressource
+					'resource' => $resource
 				]
 			]);
-			// Copier la fonte si le nom du fichier est fourni
-			if (
-				$type === 'files' &&
-				file_exists(self::FILE_DIR . 'source/' . $ressource)
-			) {
-				copy(self::FILE_DIR . 'source/' . $ressource, self::DATA_DIR . 'font/' . $ressource);
-			}
 
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Fonte actualisée'),
-				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'redirect' => helper::baseUrl() . 'theme/font',
 				'state' => true
 			]);
 		}
@@ -847,7 +845,7 @@ class theme extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . 'theme/fonts',
+				'redirect' => helper::baseUrl() . 'theme/font',
 				'notification' => helper::translate('Fonte supprimée'),
 				'state' => true
 			]);
@@ -1374,13 +1372,13 @@ class theme extends common
 					($scope === 'user' && in_array($fontId, $fontsInstalled))
 					|| $scope === 'all'
 				) {
-					if (file_exists(self::DATA_DIR . 'font/' . $fontValue['resource'])) {
+					if (file_exists($fontValue['resource'])) {
 						// Extension
 						$path_parts = pathinfo(helper::baseUrl(false) . self::DATA_DIR . 'font/' . $fontValue['resource']);
 						// Chargement de la police
 						$fileContentCss .= '@font-face {';
 						$fileContentCss .= 'font-family:"' . $fontValue['name'] . '";';
-						$fileContentCss .= 'src: url("' . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
+						$fileContentCss .= 'src: url("' . helper::baseUrl(false) . $fontValue['resource'] . '") format("' . $path_parts['extension'] . '");';
 						$fileContentCss .= '}';
 						// Préchargement
 						//$fileContent = '<link rel="preload" href="' . self::DATA_DIR . 'font/' . $fontValue['resource'] . '" type="font/woff" crossorigin="anonymous" as="font">' . $fileContent;
