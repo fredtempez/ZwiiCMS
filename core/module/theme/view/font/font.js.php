@@ -8,4 +8,26 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-$(".themeFontDelete").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?",(function(){$(location).attr("href",_this.attr("href"))}))}));
+$(".themeFontDelete").on("click", (function() {
+    var _this = $(this);
+    return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", (function() {
+        $(location).attr("href", _this.attr("href"))
+    }))
+}));
+$('#dataTables').DataTable({
+    language: {
+        url: "core/vendor/datatables/french.json",
+    },
+    locale: 'fr',
+    "columnDefs": [{
+            target: 5,
+            orderable: false,
+            searchable: false
+        },
+        {
+            target: 6,
+            orderable: false,
+            searchable: false
+        }
+    ]
+});

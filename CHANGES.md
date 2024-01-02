@@ -5,6 +5,7 @@
 ### Correction
 - Corrige un bug d'installation d'une fonte.
 - Corrige un bug de redirection vers la liste des fontes après édition ou ajout.
+- Supprime le script imagemap non tenu à jour et bogué.
 
 ### Amélioration
 - Ajoute le filtrage et le tri des fontes de puis la liste du thème.

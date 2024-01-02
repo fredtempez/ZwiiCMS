@@ -684,7 +684,10 @@ class theme extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Fontes'),
-			'view' => 'font'
+			'view' => 'font',
+			'vendor' => [
+				'datatables'
+			]
 		]);
 	}
 
