@@ -44,7 +44,8 @@
 					<?php echo template::text('fontEditFontId', [
 						'autocomplete' => 'off',
 						'label' => 'Identifiant (sans espace ni majuscule)',
-						'value' =>  $this->getUrl(3)
+						'value' =>  $this->getUrl(3),
+						'disabled' => true
 					]); ?>
 				</div>
 				<div class="col6">
