@@ -358,7 +358,7 @@ class template
                 %s
                 data-lity
             >
-                ' . self::ico('upload', ['margin' => 'right']) . '
+                ' . self::ico('upload-cloud', ['margin' => 'right']) . '
                 <span class="inputFileLabel"></span>
             </a>',
             $attributes['class'],
