@@ -692,7 +692,7 @@ class user extends common
 					'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
 					'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
 					'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
-					'path' => $path,
+					'path' => preg_replace('/^\\./', '', $path), // Supprime le point pour préserver le chemin
 				],
 				'page' => [
 					'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
@@ -841,7 +841,7 @@ class user extends common
 						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
-						'path' => $path,
+						'path' => preg_replace('/^\\./', '', $path), // Supprime le point pour préserver le chemin
 					],
 					'page' => [
 						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
@@ -1384,7 +1384,7 @@ class user extends common
 			// Ignorer les entrées de répertoire parent et actuel
 			if ($file == '.' || $file == '..') {
 				continue;
-			}
+			} 
 			// Construisez le chemin complet du fichier ou du répertoire
 			$path = $dir . '/' . $file;
 			// Vérifiez si c'est un répertoire
