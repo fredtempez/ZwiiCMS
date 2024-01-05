@@ -738,7 +738,7 @@ class theme extends common
 					[
 						'name' => $fontName,
 						'font-family' => $fontFamilyName,
-						'resource' => $resource
+						'resource' => self::DATA_DIR . 'font/' . basename($resource)
 					]
 				]);
 
