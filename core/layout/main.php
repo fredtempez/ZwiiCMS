@@ -14,15 +14,15 @@
 	<?php $layout->showFavicon(); ?>
 	<?php $layout->showVendor(); ?>
 	<?php $layout->showFonts(); ?>
+	<?php if (file_exists(self::DATA_DIR . 'font/font.css')): ?>
+		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>font/font.css?<?php echo md5_file(self::DATA_DIR . 'font/font.css'); ?>">
+	<?php endif; ?>
 	<link rel="stylesheet"
 		href="<?php echo helper::baseUrl(false); ?>core/layout/common.css?<?php echo md5_file('core/layout/common.css'); ?>">
 	<link rel="stylesheet"
 		href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR . 'theme.css'); ?>">
 	<link rel="stylesheet"
 		href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR . 'custom.css'); ?>">
-	<?php if (file_exists(self::DATA_DIR . 'font/font.css')): ?>
-		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>font/font.css?<?php echo md5_file(self::DATA_DIR . 'font/font.css'); ?>">
-	<?php endif; ?>
 	<!-- Détection RSS -->
 	<?php if (
 		($this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog'

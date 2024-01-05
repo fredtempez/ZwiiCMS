@@ -45,7 +45,7 @@
 						'autocomplete' => 'off',
 						'label' => 'Identifiant (sans espace ni majuscule)',
 						'value' =>  $this->getUrl(3),
-						'disabled' => true
+						'readonly' => true
 					]); ?>
 				</div>
 				<div class="col6">
@@ -70,7 +70,7 @@
 				<?php echo template::text('fontEditFile', [
 						'label' => 'Fichier de fonte (Format WOFF)',
 						'value' => $this->getUrl(2) === 'files' ? $this->getData(['font', $this->getUrl(2), $this->getUrl(3), 'resource']) : '',
-						'disabled' => true
+						'readonly' => true
 					]); ?>
 				</div>
 			</div>
