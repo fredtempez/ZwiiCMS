@@ -1226,12 +1226,14 @@ class theme extends common
 					// Ajoute les fontes
 					$zip->addEmptyDir(self::DATA_DIR . 'font');
 					$fonts = $this->getData(['font', 'files']);
-					foreach ($fonts as $fontId => $fontName) {
-						$zip->addFile(self::DATA_DIR . 'font/' . $fontName, self::DATA_DIR . 'font/' . $fontName);
+					foreach ($fonts as $fontId => $fontInfo) {
+						$zip->addFile($fontInfo['resource'], $fontInfo['resource']);
 					}
 					if (file_exists(self::DATA_DIR . 'font/font.html')) {
-
 						$zip->addFile(self::DATA_DIR . 'font/font.html', self::DATA_DIR . 'font/font.html');
+					}
+					if (file_exists(self::DATA_DIR . 'font/font.css')) {
+						$zip->addFile(self::DATA_DIR . 'font/font.css', self::DATA_DIR . 'font/font.css');
 					}
 					break;
 			}
