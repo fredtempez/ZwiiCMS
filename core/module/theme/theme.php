@@ -718,8 +718,10 @@ class theme extends common
 					$this->deleteData(['font', $type, $fontId]);
 				}
 
+				// Paramètres de la sortie vrai par défaut, c'est une fonte en ligne
+				$success = true;
+
 				// Copier la fonte si le nom du fichier est fourni
-				$success = false;
 				if (!is_dir(self::DATA_DIR . 'font/')) {
 					mkdir(self::DATA_DIR . 'font/');
 				}
@@ -744,7 +746,7 @@ class theme extends common
 
 				// Valeurs en sortie
 				$this->addOutput([
-					'notification' => $success ? helper::translate('Fonte actualisée') : helper::translate('Erreur de copie'),
+					'notification' => $success ? helper::translate('Fonte actualisée') : helper::translate('Fonte non créée, ressource absente !'),
 					'redirect' => helper::baseUrl() . 'theme/font',
 					'state' => $success
 				]);
