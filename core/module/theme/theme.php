@@ -740,7 +740,8 @@ class theme extends common
 					[
 						'name' => $fontName,
 						'font-family' => $fontFamilyName,
-						'resource' => self::DATA_DIR . 'font/' . basename($resource)
+						// Stocke l'URL our lien vers la fonte dans  data
+						'resource' => $type === 'imported' ? $resource : self::DATA_DIR . 'font/' . basename($resource),
 					]
 				]);
 
