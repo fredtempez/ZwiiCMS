@@ -2,8 +2,8 @@
 
 ## Version 13.1.02
 
-### Correction
-- Corrige un bug d'installation d'une fonte.
+### Corrections
+- Corrige un problème lors de l'installation et de la désinstallation d'une fonte sous forme de fichier woff.
 - Corrige un bug de redirection vers la liste des fontes après édition ou ajout.
 - Supprime le script imagemap non tenu à jour et bogué.
 
