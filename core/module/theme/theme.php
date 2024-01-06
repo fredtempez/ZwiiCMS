@@ -840,10 +840,11 @@ class theme extends common
 
 			// Effacer le fichier existant
 			if (
-				$this->getUrl(2) === 'file' &&
-				file_exists(self::DATA_DIR . $this->getUrl(2))
+				$this->getUrl(2) === 'files' &&
+				file_exists($this->getData(['font', 'files', $this->getUrl(3), 'resource']))
 			) {
-				unlink(self::DATA_DIR . $this->getUrl(2));
+
+				unlink($this->getData(['font',  'files', $this->getUrl(3), 'resource']));
 			}
 
 			// Valeurs en sortie
