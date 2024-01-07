@@ -3,12 +3,13 @@
 ## Version 13.1.02
 
 ### Corrections
-- Corrige un problème lors de l'installation et de la désinstallation d'une fonte sous forme de fichier woff.
-- Corrige un bug de redirection vers la liste des fontes après édition ou ajout.
+- Thème ; fontes : corrige un problème lors de l'installation et de la désinstallation d'une fonte sous forme de fichier woff.
+- Thème ; fontes : corrige un bug de redirection vers la liste des fontes après édition ou ajout.
+- Utilisateur ; ajout : corrige la non prise en compte de langue.
 - Supprime le script imagemap non tenu à jour et bogué.
 
 ### Amélioration
-- Ajoute le filtrage et le tri des fontes de puis la liste du thème.
+- Thèmes ; fontes : filtrage et tri des fontes installées.
 
 ## Version 13.1.01
 
