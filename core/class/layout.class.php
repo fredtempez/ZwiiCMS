@@ -506,7 +506,7 @@ class layout extends common
         }
         // Commandes pour les membres simples
         if (
-            $this->getUser('group') >= self::GROUP_MEMBER && $this->getUser('group') < self::GROUP_ADMIN
+            $this->getUser('group') === self::GROUP_MEMBER
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
