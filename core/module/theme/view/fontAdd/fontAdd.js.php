@@ -4,7 +4,7 @@
  * file that was distributed with this source code.
  *
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2023, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2024, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */

@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2023, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2024, Frédéric Tempez
  * @author Sylvain Lelièvre <lelievresylvain@free.fr>
  * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
