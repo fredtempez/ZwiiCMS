@@ -1,5 +1,11 @@
 # Changelog
 
+
+## Version 13.1.03
+### Corrections
+- Corrige un format de date dans la génération du sitemap.
+- Limite l'affichage de l'icône du gestionnaire de fichiers dans le menu aux membres simples.
+
 ## Version 13.1.02
 
 ### Corrections
