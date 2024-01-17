@@ -6,6 +6,10 @@
 - Corrige un format de date dans la génération du sitemap.
 - Limite l'affichage de l'icône du gestionnaire de fichiers dans le menu aux membres simples.
 
+### Améliorations
+- Thèmes ; fontes : les fontes attribuées sont dans le thème administrateur sont prises en compte dans le bloquage de l'effacement.
+- Optimisation du code de discrimination.
+
 ## Version 13.1.02
 
 ### Corrections
