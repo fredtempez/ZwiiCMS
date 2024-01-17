@@ -628,16 +628,16 @@ class theme extends common
 		// Toutes les fontes installées sont chargées
 		$this->setFonts('all');
 
+		// Polices liées au thème admin
+		$fonts['Titre (admin)'] = $this->getData(['admin', 'fontTitle']);
+		$fonts['Texte (admin)'] = $this->getData(['admin', 'fontText']);
+		
 		// Polices liées au thème
-		$used = [
-			'Bannière' => $this->getData(['theme', 'header', 'font']),
-			'Menu' => $this->getData(['theme', 'menu', 'font']),
-			'Titre ' => $this->getData(['theme', 'title', 'font']),
-			'Texte' => $this->getData(['theme', 'text', 'font']),
-			'Pied de page' => $this->getData(['theme', 'footer', 'font']),
-			'Titre (admin)' => $this->getData(['admin', 'fontTitle']),
-			'Admin (texte)' => $this->getData(['admin', 'fontText'])
-		];
+		$fonts['Bannière'] = $this->getData(['theme', 'header', 'font']);
+		$fonts['Menu'] = $this->getData(['theme', 'menu', 'font']);
+		$fonts['Titre'] = $this->getData(['theme', 'title', 'font']);
+		$fonts['Texte'] = $this->getData(['theme', 'text', 'font']);
+		$fonts['Pied de page'] = $this->getData(['theme', 'footer', 'font']);
 
 		// Récupérer le détail des fontes installées
 		//$f = $this->getFonts();
@@ -649,18 +649,17 @@ class theme extends common
 		foreach ($f as $type => $typeValue) {
 			if (is_array($typeValue)) {
 				foreach ($typeValue as $fontId => $fontValue) {
-					// Fontes utilisées par les thèmes
-					$fontUsed[$fontId] = '';
-					foreach ($used as $key => $value) {
-						if ($value === $fontId) {
-							$fontUsed[$fontId] .= $key . '<br/>';
-						}
-					}
+					// Recherche les correspondances
+					$result = array_filter($fonts, function($value) use ($fontId) {
+						return $value == $fontId;
+					});
+					$keyResults = array_keys($result);
+					// Préparation du tableau
 					self::$fontsDetail[] = [
 						$fontId,
 						'<span style="font-family:' . $f[$type][$fontId]['font-family'] . '">' . $f[$type][$fontId]['name'] . '</span>',
 						$f[$type][$fontId]['font-family'],
-						$fontUsed[$fontId],
+						empty($keyResults) ? '' : '<span class="fontsList">' . implode('<br />', $keyResults) . '</span>',
 						$type,
 						$type !== 'websafe' ? template::button('themeFontEdit' . $fontId, [
 							'class' => 'themeFontEdit',
