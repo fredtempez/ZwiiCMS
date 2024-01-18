@@ -28,7 +28,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap",
+	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap textpattern",
 	// Contenu du menu
 	menu: {
 		file: { title: 'File', items: 'newdocument restoredraft' },
@@ -209,7 +209,28 @@ tinymce.init({
 			url: baseUrl + "core/vendor/tinymce/templates/col10-2.html",
 			description: "Grille adaptative sur 12 colonnes, sur mobile elles passent les unes en dessous des autres."
 		}
-	]
+	],
+	textpattern_patterns: [
+		{start: '*', end: '*', format: 'italic'},
+		{start: '**', end: '**', format: 'bold'},
+		{start: '#', format: 'h1'},
+		{start: '##', format: 'h2'},
+		{start: '###', format: 'h3'},
+		{start: '####', format: 'h4'},
+		{start: '#####', format: 'h5'},
+		{start: '######', format: 'h6'},
+		{start: '1. ', cmd: 'InsertOrderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
+		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
+	  ]
 });
 
 
@@ -268,7 +289,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor",
+	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	// Titre des images
@@ -307,6 +328,27 @@ tinymce.init({
 	// Url de base
 	document_base_url: baseUrl,
 	max_height: 200,
+	textpattern_patterns: [
+		{start: '*', end: '*', format: 'italic'},
+		{start: '**', end: '**', format: 'bold'},
+		{start: '#', format: 'h1'},
+		{start: '##', format: 'h2'},
+		{start: '###', format: 'h3'},
+		{start: '####', format: 'h4'},
+		{start: '#####', format: 'h5'},
+		{start: '######', format: 'h6'},
+		{start: '1. ', cmd: 'InsertOrderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
+		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
+	  ]
 });
 
 
