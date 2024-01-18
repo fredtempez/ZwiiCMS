@@ -410,6 +410,7 @@ class user extends common
 			$this->isPost()
 		) {
 			$userId = $this->getInput('userForgotId', helper::FILTER_ID, true);
+			$sent = false;
 			if ($this->getData(['user', $userId])) {
 				// Enregistre la date de la demande dans le compte utilisateur
 				$this->setData(['user', $userId, 'forgot', time()]);
