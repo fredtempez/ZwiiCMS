@@ -5,6 +5,8 @@
 ### Corrections
 - Corrige un format de date dans la génération du sitemap.
 - Limite l'affichage de l'icône du gestionnaire de fichiers dans le menu aux membres simples.
+- Module blog ; format d'une variable de temps.
+- Mot de passe oublié, une variable non définie affichant un warning.
 
 ### Améliorations
 - Thèmes ; fontes : les fontes attribuées sont dans le thème administrateur sont prises en compte dans le bloquage de l'effacement.
