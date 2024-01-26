@@ -1392,7 +1392,7 @@ class common
 	public function saveLog($message = '')
 	{
 		// Journalisation
-		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$siteContent) . ';' . helper::dateUTF8('%H:%M', time(), self::$siteContent). ';';
+		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';' . helper::dateUTF8('%H:%M', time(), self::$i18nUI). ';';
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();

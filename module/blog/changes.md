@@ -1,3 +1,5 @@
+# Version 7.5
+- Bug paramètre de localisation erroné
 # Version 7.4
 - Bouton de retour dans les articles
 # Version 7.3

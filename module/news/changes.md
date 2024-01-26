@@ -1,3 +1,5 @@
+# Version 5.4
+- Bug paramètre de localisation erroné
 # Version 5.3
 - Option d'un lien de retour dans la signature
 # Version 5.2

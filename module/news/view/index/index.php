@@ -23,7 +23,7 @@
 							<?php echo template::ico('user'); ?>
 							<?php echo $news['userId'] . ' - '; ?>
 							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$siteContent) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$siteContent); ?>
+							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$i18nUI); ?>
 							<!-- Bloc edition -->
 							<?php if (
 								$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')

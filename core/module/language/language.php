@@ -255,7 +255,7 @@ class language extends common
 				self::$languagesUiInstalled[$file] = [
 					template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 					$value['version'],
-					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$siteContent),
+					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
 					/*
@@ -291,7 +291,7 @@ class language extends common
 					self::$languagesStore[$file] = [
 						template::flag($file, '20 %') . '&nbsp;' . self::$languages[$file],
 						$value['version'],
-						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$siteContent),
+						helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
 						'',
 						template::button('translateContentLanguageUIDownload' . $file, [
 							'class' => 'buttonGreen',

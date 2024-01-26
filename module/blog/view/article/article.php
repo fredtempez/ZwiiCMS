@@ -22,7 +22,7 @@
 		<?php echo template::ico('user'); ?>
 		<?php echo $module::$articleSignature; ?>
 		<?php echo template::ico('calendar-empty'); ?>
-		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent) . ' ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$siteContent); ?>
+		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI) . ' ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
 		<!-- Bloc edition -->
 		<?php if (
 			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
@@ -156,7 +156,7 @@
 					<?php echo template::ico('user'); ?>
 					<?php echo $module::$commentsSignature[$commentId]; ?>
 					<?php echo template::ico('calendar-empty'); ?>
-					<?php echo helper::dateUTF8($module::$dateFormat, $comment['createdOn'], self::$siteContent) . ' - ' . helper::dateUTF8($module::$timeFormat, $comment['createdOn'], self::$siteContent); ?>
+					<?php echo helper::dateUTF8($module::$dateFormat, $comment['createdOn'], self::$i18nUI) . ' - ' . helper::dateUTF8($module::$timeFormat, $comment['createdOn'], self::$i18nUI); ?>
 				</h4>
 				<?php echo $comment['content']; ?>
 			</div>
