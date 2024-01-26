@@ -6,6 +6,7 @@
 - Corrige un format de date dans la génération du sitemap.
 - Limite l'affichage de l'icône du gestionnaire de fichiers dans le menu aux membres simples.
 - Module blog ; format d'une variable de temps.
+- Modules Blog et news, corrige un bug de paramètre de localisation erroné.
 - Mot de passe oublié, une variable non définie affichant un warning.
 
 ### Améliorations
