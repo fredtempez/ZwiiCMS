@@ -77,8 +77,9 @@
 				<div class="col12">
 				<?php echo template::text('userEditTags', [
 						'label' => 'Étiquettes',
+						'disabled' => $this->getUser('group') > self::GROUP_EDITOR ? false : true,
 						'value' => $this->getData(['user', $this->getUrl(2), 'tags']),
-						'help' => 'Le séparateur d\'étiquettes est l\'espace'
+						'help' => 'Les étiquettes sont séparées par des espaces'
 					]); ?>
 				</div>
 			</div>
