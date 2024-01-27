@@ -128,10 +128,10 @@ tinymce.init({
 	image_dimensions: true,
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
-	// Urls absolues
-	relative_urls: true,
-	// Conversion des URLs
-	convert_urls: false,
+	// Urls relatives
+	relative_urls: true,    // Utiliser des URLs relatives
+	remove_script_host: false,  // Conserver le script host (domaine)
+	convert_urls: true,    // Convertir automatiquement les URLs
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
@@ -321,10 +321,10 @@ tinymce.init({
 	image_dimensions: true,
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
-	// Urls absolues
-	relative_urls: true,
-	// Conversion des URLs
-	convert_urls: false,
+	// Urls relatives
+	relative_urls: true,    // Utiliser des URLs relatives
+	remove_script_host: false,  // Conserver le script host (domaine)
+	convert_urls: true,    // Convertir automatiquement les URLs
 	// Url de base
 	document_base_url: baseUrl,
 	max_height: 200,
