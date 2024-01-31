@@ -368,7 +368,7 @@ class helper
 		$version = helper::getOnlineVersion($channel);
 		$update = false;
 		if (!empty($version)) {
-			$update = version_compare(common::ZWII_VERSION, $version) === -1;	
+			$update = version_compare(common::ZWII_VERSION, $version) == -1;	
 		}
 		return $update;
 	}
