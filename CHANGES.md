@@ -10,7 +10,7 @@
 - Mot de passe oublié, une variable non définie affichant un warning.
 
 ### Améliorations
-- Thèmes ; fontes : les fontes attribuées sont dans le thème administrateur sont prises en compte dans le bloquage de l'effacement.
+- Thèmes ; fontes : les fontes attribuées sont dans le thème administrateur sont prises en compte dans le blocage de l'effacement.
 - Optimisation du code de discrimination.
 
 ## Version 13.1.02
