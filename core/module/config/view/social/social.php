@@ -28,7 +28,7 @@
 						</div>
 						<div class="row">
 							<div class="col10 textAlignCenter">
-								<?php if( $module::$imageOpenGraph['type']): ?>
+								<?php if( !empty($module::$imageOpenGraph['type']) ): ?>
 								<p>
 									<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
 								</p>
