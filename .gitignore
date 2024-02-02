@@ -9,3 +9,4 @@ site/i18n/*.json
 core/vendor/tinymce/link_list.json
 robots.txt
 sitemap.xml
+.gitattributes
