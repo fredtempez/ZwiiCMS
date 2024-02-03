@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 13.1.04
+### Corrections
+- Evite une notice dans l'onglet social de la configuration lorsque l'image opengraph n'est pas spécifiée.
 
 ## Version 13.1.03
 ### Corrections
