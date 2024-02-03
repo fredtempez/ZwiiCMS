@@ -291,7 +291,7 @@ core.start = function () {
     });
     // Confirmation de mise à jour
     $("#barUpdate").on("click", function () {
-        message = "<?php echo helper::translate('Mettre à jour') . ' ?';?>";
+        message = "<?php echo helper::translate('Mise à jour') . ' ?';?>";
         return core.confirm(message, function () {
             $(location).attr("href", $("#barUpdate").attr("href"));
         });
