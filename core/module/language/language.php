@@ -271,7 +271,7 @@ class language extends common
 						'class' => isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
 						'value' => template::ico('update'),
-						'help' => 'Mettre à jour',
+						'help' => 'Mise à jour',
 					]),
 					template::button('translateContentLanguageUIDelete' . $file, [
 						'class' => 'translateDelete buttonRed' . (in_array($file, $usersUI) ? ' disabled' : ''),

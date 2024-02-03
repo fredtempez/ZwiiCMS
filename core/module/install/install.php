@@ -450,7 +450,7 @@ class install extends common
 
 			// Variable de version
 			if (helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)) {
-				self::$updateButtonText = helper::translate('Mettre à jour');
+				self::$updateButtonText = helper::translate('Mise à jour');
 			}
 
 
