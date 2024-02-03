@@ -4,6 +4,9 @@
 ### Corrections
 - Evite une notice dans l'onglet social de la configuration lorsque l'image opengraph n'est pas spécifiée.
 
+### Améliorations
+- Mise à jour en ligne :restauration de la réécriture dans le fichier .htaccess de la racine, utilisation d'un fichier drapeau *.rewrite* pour conserver l'état de la réécriture zfin de dédier la variable ```data``` (XHR) aux messages d'erreur.
+
 ## Version 13.1.03
 ### Corrections
 - Corrige un format de date dans la génération du sitemap.

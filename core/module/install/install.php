@@ -318,11 +318,12 @@ class install extends common
 				case 3:
 					$success = true;
 					$message = '';
+
 					// Check la réécriture d'URL avant d'écraser les fichiers
-					$rewrite = helper::checkRewrite();
 					if (helper::checkRewrite()) {
 						touch(self::DATA_DIR . '.rewrite');
 					}
+
 					// Décompression et installation
 					try {
 						// Décompression dans le dossier de fichier temporaires
@@ -335,6 +336,7 @@ class install extends common
 						$success = false;
 						http_response_code(500);
 					}
+
 					// Nettoyage du dossier
 					if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
 						unlink(self::TEMP_DIR . 'update.tar.gz');
@@ -342,6 +344,7 @@ class install extends common
 					if (file_exists(self::TEMP_DIR . 'update.tar')) {
 						unlink(self::TEMP_DIR . 'update.tar');
 					}
+					
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
@@ -355,7 +358,6 @@ class install extends common
 				case 4:
 					$success = true;
 					$message = '';
-					//$rewrite = $this->getInput('data');
 
 					/**
 					 * Restaure le fichier htaccess
@@ -405,7 +407,6 @@ class install extends common
 					$defaultLanguages = init::$defaultData['language'];
 					foreach ($installedLanguages as $key => $value) {
 
-						//var_dump( $defaultLanguages[$key]['date'] > $value['date'] );
 						if (
 							isset($defaultLanguages[$key]['date']) &&
 							$defaultLanguages[$key]['date'] > $value['date'] &&
