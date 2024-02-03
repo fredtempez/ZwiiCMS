@@ -267,11 +267,11 @@ class install extends common
 						$message = $success ? '' : 'Erreur de copie du fichier htaccess';
 					}
 					// Nettoyage des fichiers d'installation précédents
-					if (file_exists(self::TEMP_DIR . 'update.tar.gz') && $success) {
+					if ($success && file_exists(self::TEMP_DIR . 'update.tar.gz')) {
 						$success = unlink(self::TEMP_DIR . 'update.tar.gz');
 						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
 					}
-					if (file_exists(self::TEMP_DIR . 'update.tar') && $success) {
+					if ($success && file_exists(self::TEMP_DIR . 'update.tar')) {
 						$success = unlink(self::TEMP_DIR . 'update.tar');
 						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
 					}
@@ -286,6 +286,8 @@ class install extends common
 					break;
 				// Téléchargement
 				case 2:
+					$success = true;
+					$message = '';
 					file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 					$md5origin = explode(' ', $md5origin);
@@ -296,7 +298,7 @@ class install extends common
 						$message = "";
 					} else {
 						$success = false;
-						$message = json_encode('Erreur de téléchargement ou de somme de contrôle', JSON_UNESCAPED_UNICODE);
+						$message = 'Erreur de téléchargement ou de somme de contrôle';
 						if (file_exists(self::TEMP_DIR . 'update.tar.gz')) {
 							unlink(self::TEMP_DIR . 'update.tar.gz');
 							http_response_code(500);
@@ -308,15 +310,19 @@ class install extends common
 						'display' => self::DISPLAY_JSON,
 						'content' => [
 							'success' => $success,
-							'data' => $message
+							'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 						]
 					]);
 					break;
 				// Installation
 				case 3:
 					$success = true;
+					$message = '';
 					// Check la réécriture d'URL avant d'écraser les fichiers
 					$rewrite = helper::checkRewrite();
+					if (helper::checkRewrite()) {
+						touch(self::DATA_DIR . '.rewrite');
+					}
 					// Décompression et installation
 					try {
 						// Décompression dans le dossier de fichier temporaires
@@ -325,6 +331,7 @@ class install extends common
 						// Installation
 						$pharData->extractTo(__DIR__ . '/../../../', null, true);
 					} catch (Exception $e) {
+						$message = $e->getMessage();
 						$success = false;
 						http_response_code(500);
 					}
@@ -340,7 +347,7 @@ class install extends common
 						'display' => self::DISPLAY_JSON,
 						'content' => [
 							'success' => $success,
-							'data' => $rewrite
+							'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 						]
 					]);
 					break;
@@ -348,7 +355,7 @@ class install extends common
 				case 4:
 					$success = true;
 					$message = '';
-					$rewrite = $this->getInput('data');
+					//$rewrite = $this->getInput('data');
 
 					/**
 					 * Restaure le fichier htaccess
@@ -369,7 +376,7 @@ class install extends common
 						/**
 						 * Restaure la réécriture d'URL
 						 */
-						if ($rewrite === 'true') { // Ajout des lignes dans le .htaccess
+						if (file_exists(self::DATA_DIR . '.rewrite')) { // Ajout des lignes dans le .htaccess
 							$fileContent = file_get_contents('.htaccess');
 							$rewriteData = PHP_EOL .
 								'# URL rewriting' . PHP_EOL .
@@ -386,6 +393,7 @@ class install extends common
 								'.htaccess',
 								$fileContent
 							);
+							unlink(self::DATA_DIR . '.rewrite');
 						}
 					}
 
