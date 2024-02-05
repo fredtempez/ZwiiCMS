@@ -1063,7 +1063,13 @@ class user extends common
 						]);
 					} else {
 						$logStatus = 'Connexion réussie';
-						$redirect = ($this->getUrl(2) && strpos($this->getUrl(2), 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $this->getUrl(2))) : helper::baseUrl();
+						$pageId = $this->getUrl(2);
+						if ($this->getData(['config', 'page404']) === $pageId
+						 || $this->getData(['config', 'page403']) === $pageId
+						) {
+							$pageId = '';
+						}
+						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl();
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
