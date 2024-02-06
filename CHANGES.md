@@ -1,14 +1,22 @@
 # Changelog
 
 ## Version 13.1.04
+
 ### Corrections
+
 - Evite une notice dans l'onglet social de la configuration lorsque l'image opengraph n'est pas spécifiée.
+- Ajoute une protection supplémentaire dans la classe jsonDb pour éviter l'enregistrement accidentel de données nulles.
+- Ne redirige pas vers une page d'erreur (403 ou 404) après un login.
 
 ### Améliorations
-- Mise à jour en ligne :restauration de la réécriture dans le fichier .htaccess de la racine, utilisation d'un fichier drapeau *.rewrite* pour conserver l'état de la réécriture zfin de dédier la variable ```data``` (XHR) aux messages d'erreur.
+
+- Mise à jour en ligne :restauration de la réécriture dans le fichier .htaccess de la racine, utilisation d'un fichier drapeau *.rewrite* pour conserver l'état de la réécriture afin de dédier la variable ```data``` (XHR) aux messages d'erreur.
+- Journalise les erreurs de mise à jour automatique.
 
 ## Version 13.1.03
+
 ### Corrections
+
 - Corrige un format de date dans la génération du sitemap.
 - Limite l'affichage de l'icône du gestionnaire de fichiers dans le menu aux membres simples.
 - Module blog ; format d'une variable de temps.
@@ -16,18 +24,21 @@
 - Mot de passe oublié, une variable non définie affichant un warning.
 
 ### Améliorations
+
 - Thèmes ; fontes : les fontes attribuées sont dans le thème administrateur sont prises en compte dans le blocage de l'effacement.
 - Optimisation du code de discrimination.
 
 ## Version 13.1.02
 
 ### Corrections
+
 - Thème ; fontes : corrige un problème lors de l'installation et de la désinstallation d'une fonte sous forme de fichier woff.
 - Thème ; fontes : corrige un bug de redirection vers la liste des fontes après édition ou ajout.
 - Utilisateur ; ajout : corrige la non prise en compte de la langue.
 - Supprime le script imagemap non tenu à jour et bogué.
 
 ### Amélioration
+
 - Thèmes ; fontes : filtrage et tri des fontes installées.
 
 ## Version 13.1.01
@@ -74,7 +85,7 @@
 
 ## Version 13.0.07
 
-### Corrections 
+### Corrections
 
 - Module Slider (version 6.1), conformité de la largeur de l'image en pleine largeur lorsque le site est en largeur 100%.
 - Gestion des extensions, création du dossier "Modules" absent lors de la copie de l'archive d'un module dans le gestionnaire de fichiers.
