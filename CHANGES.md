@@ -4,7 +4,7 @@
 
 ### Corrections
 
-- Corrige définitivement la fonction delete de la calsse dot.
+- Corrige définitivement la fonction delete de la classe dot.
 - Branche de mise à jour de la version 13.1.04 incorrecte.
 
 ## Version 13.1.04
