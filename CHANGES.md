@@ -1,8 +1,25 @@
 # Changelog
 
+## Version 13.1.05
+
+### Corrections
+
+- Corrige définitivement la fonction delete de la calsse dot.
+- Branche de mise à jour de la version 13.1.04 incorrecte.
+
 ## Version 13.1.04
 
-gi
+### Corrections
+
+- Evite une notice dans l'onglet social de la configuration lorsque l'image opengraph n'est pas spécifiée.
+- Corrige une erreur dans la classe dot (fonction delete appelée statiquement)
+- Ne redirige pas vers une page d'erreur (403 ou 404) après un login.
+
+### Améliorations
+
+- Mise à jour en ligne :restauration de la réécriture dans le fichier .htaccess de la racine, utilisation d'un fichier drapeau *.rewrite* pour conserver l'état de la réécriture afin de dédier la variable ```data``` (XHR) aux messages d'erreur.
+- Journalise les erreurs de mise à jour automatique.
+
 
 ## Version 13.1.03
 
