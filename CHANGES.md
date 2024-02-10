@@ -5,7 +5,7 @@
 ### Corrections
 
 - Evite une notice dans l'onglet social de la configuration lorsque l'image opengraph n'est pas spécifiée.
-- Ajoute une protection supplémentaire dans la classe jsonDb pour éviter l'enregistrement accidentel de données nulles.
+- Corrige une erreur dans la classe dot (fonction delete appelée statiquement)
 - Ne redirige pas vers une page d'erreur (403 ou 404) après un login.
 
 ### Améliorations
