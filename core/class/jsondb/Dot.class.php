@@ -141,7 +141,7 @@ class Dot implements \ArrayAccess, \Iterator, \Countable
         } elseif (is_array($key)) {
             // Iterate array of paths
             foreach ($key as $k) {
-                self::delete($k);
+                delete($k);
             }
         }
     }
