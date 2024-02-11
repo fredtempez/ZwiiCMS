@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 13.1.06
+
+### Corrections
+
+- Ajout d'utilisateur, étiquette non sauvegardée.
+
 ## Version 13.1.05
 
 ### Corrections

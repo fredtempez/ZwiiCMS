@@ -133,7 +133,7 @@ class user extends common
 					'accessTimer' => null,
 					'accessCsrf' => null,
 					'language' => $this->getInput('userAddLanguage', helper::FILTER_STRING_SHORT),
-					'tags' => ''
+					'tags' => $this->getInput('userAddTags', helper::FILTER_STRING_SHORT),
 				]
 			]);
 
