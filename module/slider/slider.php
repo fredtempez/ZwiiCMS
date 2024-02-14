@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.2';
+	const VERSION = '6.3';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -237,7 +237,7 @@ class slider extends common
 				}
 			}
 			// Tri des images pour affichage de la liste dans la page d'édition
-			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'tri'])) {
+			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'sort'])) {
 				case 'dsc':
 					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
 					break;
@@ -385,7 +385,7 @@ class slider extends common
 			}
 
 			// Tri des images par ordre alphabétique, alphabétique inverse, aléatoire ou pas
-			switch ($this->getData(['module', $galleryId, 'config', 'tri'])) {
+			switch ($this->getData(['module', $galleryId, 'config', 'sort'])) {
 				case 'SORT_DSC':
 					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
 					break;
@@ -445,7 +445,7 @@ class slider extends common
 						'speed' => 1000,
 						'timeout' => 3000,
 						'namespace' => 'centered-btns',
-						'tri' => 'RAND',
+						'sort' => 'RAND',
 					],
 					'directory' => null,
 					'legends' => [],

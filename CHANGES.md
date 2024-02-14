@@ -5,6 +5,7 @@
 ### Corrections
 
 - Ajout d'utilisateur, étiquette non sauvegardée.
+- Slider, corrige un tri non pris en compte.
 
 ## Version 13.1.05
 
