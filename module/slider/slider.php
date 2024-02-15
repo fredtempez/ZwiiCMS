@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.3';
+	const VERSION = '6.4';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -239,10 +239,10 @@ class slider extends common
 			// Tri des images pour affichage de la liste dans la page d'édition
 			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'sort'])) {
 				case 'dsc':
-					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
 					break;
 				case 'asc':
-					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
 					break;
 				case 'rand':
 				case 'none':
@@ -385,16 +385,31 @@ class slider extends common
 			}
 
 			// Tri des images par ordre alphabétique, alphabétique inverse, aléatoire ou pas
-			switch ($this->getData(['module', $galleryId, 'config', 'sort'])) {
-				case 'SORT_DSC':
-					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+			switch ($this->getData(['module', $galleryId, 'theme', 'sort'])) {
+				case 'desc':
+					uksort(self::$pictures, function ($a, $b) {
+						return strcmp(basename($a), basename($b));
+					});
 					break;
-				case 'SORT_ASC':
-					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+				case 'asc':
+					uksort(self::$pictures, function ($a, $b) {
+						return strcmp(basename($b), basename($a));
+					});
 					break;
-				case 'RAND':
+				case 'rand':
+					// Récupérer les clés du tableau
+					$keys = array_keys(self::$pictures);
+					// Mélanger les clés
+					shuffle($keys);
+					// Créer un nouveau tableau avec les clés mélangées
+					$shuffledPictures = [];
+					foreach ($keys as $key) {
+						$shuffledPictures[$key] = self::$pictures[$key];
+					}
+					// Mettre à jour le tableau initial avec le nouveau tableau mélangé
+					self::$pictures = $shuffledPictures;
 					break;
-				case 'NONE':
+				case 'none':
 					break;
 				default:
 					break;
