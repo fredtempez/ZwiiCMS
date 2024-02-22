@@ -1,5 +1,12 @@
 # Changelog
 
+
+## Version 13.1.07
+
+### Corrections
+
+- Corrige une dépréciation de la sortie de la fonction Usort dans RFM.
+
 ## Version 13.1.06
 
 ### Corrections

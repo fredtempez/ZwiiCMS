@@ -864,50 +864,54 @@ if ($config['upload_files']) { ?>
 
     switch ($sort_by) {
         case 'date':
-            //usort($sorted, 'dateSort');
             usort($sorted, function($x, $y) use ($descending) {
                 if ($x['is_dir'] !== $y['is_dir']) {
                     return $y['is_dir'] ? 1 : -1;
                 } else {
-                    return ($descending)
-                        ? $x['size'] < $y['size']
-                        : $x['size'] >= $y['size'];
+                    if ($descending) {
+                        return ($x['size'] < $y['size']) ? -1 : ($x['size'] > $y['size'] ? 1 : 0);
+                    } else {
+                        return ($x['size'] > $y['size']) ? -1 : ($x['size'] < $y['size'] ? 1 : 0);
+                    }
                 }
             });
             break;
         case 'size':
-            //usort($sorted, 'sizeSort');
             usort($sorted, function($x, $y) use ($descending) {
                 if ($x['is_dir'] !== $y['is_dir']) {
                     return $y['is_dir'] ? 1 : -1;
                 } else {
-                    return ($descending)
-                        ? $x['date'] < $y['date']
-                        : $x['date'] >= $y['date'];
+                    if ($descending) {
+                        return ($x['date'] < $y['date']) ? -1 : ($x['date'] > $y['date'] ? 1 : 0);
+                    } else {
+                        return ($x['date'] > $y['date']) ? -1 : ($x['date'] < $y['date'] ? 1 : 0);
+                    }
                 }
             });
-            break;
         case 'extension':
-            //usort($sorted, 'extensionSort');
             usort($sorted, function($x, $y) use ($descending) {
                 if ($x['is_dir'] !== $y['is_dir']) {
                     return $y['is_dir'] ? 1 : -1;
                 } else {
-                    return ($descending)
-                        ? ($x['extension'] < $y['extension'] ? 1 : 0)
-                        : ($x['extension'] >= $y['extension'] ? 1 : 0);
+                    if ($descending) {
+                        return strcasecmp($x['extension'], $y['extension']);
+                    } else {
+                        return -strcasecmp($x['extension'], $y['extension']);
+                    }
                 }
             });
+            
             break;
         default:
-            // usort($sorted, 'filenameSort');
             usort($sorted, function($x, $y) use ($descending) {
                 if ($x['is_dir'] !== $y['is_dir']) {
                     return $y['is_dir'] ? 1 : -1;
                 } else {
-                    return ($descending)
-                    ? ($x['file_lcase'] < $y['file_lcase'] ? 1 : ($x['file_lcase'] == $y['file_lcase'] ? 0 : -1))
-                    : ($x['file_lcase'] >= $y['file_lcase'] ? 1 : ($x['file_lcase'] == $y['file_lcase'] ? 0 : -1));
+                    if ($descending) {
+                        return strcasecmp($x['file_lcase'], $y['file_lcase']);
+                    } else {
+                        return -strcasecmp($x['file_lcase'], $y['file_lcase']);
+                    }
                 }
             });
             break;
