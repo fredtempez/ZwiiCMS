@@ -6,6 +6,7 @@
 ### Corrections
 
 - Corrige une dépréciation de la sortie de la fonction Usort dans RFM.
+- Module slider 6.4 : corrige plusieurs bugs dans les fonctions de tri
 
 ## Version 13.1.06
 

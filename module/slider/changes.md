@@ -1,5 +1,5 @@
 # Version 6.4
-- Corrige plussieurs bugs dans les fonctions de tri
+- Corrige plusieurs bugs dans les fonctions de tri
 # Version 6.3
 - Corrige un tri non fonctionnel.
 # Version 6.2
