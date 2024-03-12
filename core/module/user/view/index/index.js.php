@@ -28,6 +28,7 @@ $(document).ready((function () {
             url: "core/vendor/datatables/french.json",
         },
         locale: 'fr',
+        stateSave: true,
         "columnDefs": [
             {
                 target: 5,

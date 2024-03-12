@@ -19,6 +19,7 @@ $('#dataTables').DataTable({
         url: "core/vendor/datatables/french.json",
     },
     locale: 'fr',
+    stateSave: true,
     "columnDefs": [{
             target: 5,
             orderable: false,

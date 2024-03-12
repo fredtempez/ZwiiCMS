@@ -1,6 +1,12 @@
 # Changelog
 
 
+## Version 13.1.08
+
+### Amélioration 
+
+- Sauvegarde de l'état des sélecteurs dans les tables des fontes et des utilisateurs.
+
 ## Version 13.1.07
 
 ### Corrections
