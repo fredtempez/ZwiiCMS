@@ -26,16 +26,57 @@ class sharefolder extends common
 		'index' => self::GROUP_VISITOR,
 	];
 
+	static $folders = '';
+
     public function index() {
+
+		self::$folders = $this->listerSousDossier( self::FILE_DIR . 'source/partage');
+
         // Valeurs en sortie
 		$this->addOutput([
 			'showBarEditButton' => true,
 			'showPageContent' => true,
-			'view' => 'index',
-			'vendor' => [
-				'php-dirlister'
-			],
+			'view' => 'index'
 		]);
     }
+
+	private function listerSousDossier($chemin) {
+		// Vérifier si le chemin existe et est un dossier
+		if (is_dir($chemin)) {	
+			// Ouvrir le dossier
+			if ($dh = opendir($chemin)) {
+				$items = isset($items) ? $items . '<ul>' : '<ul>';
+				//$items = '<ul>';
+				// Parcourir les éléments du dossier
+				while (($element = readdir($dh)) !== false) {
+					// Exclure les éléments spéciaux
+					if ($element != '.' && $element != '..') {
+						// Construire le chemin complet de l'élément
+						$cheminComplet = $chemin . '/' . $element;
+	
+						// Vérifier si c'est un dossier
+						if (is_dir($cheminComplet)) {
+							// Afficher le nom du dossier
+							$items .= "<li>$element";
+							// Appeler récursivement la fonction pour ce sous-dossier
+							$items .= $this->listerSousDossier($cheminComplet);
+							$items .= '</li>';
+						} else {
+							// Afficher le nom du fichier comme un lien
+							$items .= '<li><a href="' . $cheminComplet . '">' . $element . '</a></li>';
+						}
+					}
+				}
+				$items .=  "</ul>";
+	
+				// Fermer le dossier
+				closedir($dh);
+			}
+			return $items;
+		} else {
+			exit ('Erreur de chemin');
+		}
+		
+	}
 
 }
