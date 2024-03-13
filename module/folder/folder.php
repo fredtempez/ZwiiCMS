@@ -26,23 +26,52 @@ class folder extends common
 		'index' => self::GROUP_VISITOR,
 	];
 
-	static $folders = '';
+	// Contenu du chemin sélectionné
+	public static $folders = '';
 
-    public function index() {
+	public static $sharePath = [
+		'/site/file/source/'
+	];
 
-		self::$folders = $this->listerSousDossier( self::FILE_DIR . 'source/partage');
+	public function index()
+	{
 
-        // Valeurs en sortie
+		self::$folders = $this->listerSousDossier(self::FILE_DIR . 'source/partage');
+
+		// Valeurs en sortie
 		$this->addOutput([
 			'showBarEditButton' => true,
 			'showPageContent' => true,
 			'view' => 'index'
 		]);
-    }
+	}
 
-	private function listerSousDossier($chemin) {
+
+	public function config()
+	{
+		// Soumission du formulaire
+		if (
+			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
+			$this->isPost()
+		) {
+			$this->setData(['module', $this->getUrl(0), 'path', preg_replace('/^\\./', '', $this->getInput('folderEditPath')) ]);
+
+		}
+
+		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = array_flip(self::$sharePath);
+
+		// Valeurs en sortie
+		$this->addOutput([
+			'view' => 'config'
+		]);
+	}
+
+
+	private function listerSousDossier($chemin)
+	{
 		// Vérifier si le chemin existe et est un dossier
-		if (is_dir($chemin)) {	
+		if (is_dir($chemin)) {
 			// Ouvrir le dossier
 			if ($dh = opendir($chemin)) {
 				$items = isset($items) ? $items . '<ul>' : '<ul>';
@@ -53,7 +82,7 @@ class folder extends common
 					if ($element != '.' && $element != '..') {
 						// Construire le chemin complet de l'élément
 						$cheminComplet = $chemin . '/' . $element;
-	
+
 						// Vérifier si c'est un dossier
 						if (is_dir($cheminComplet)) {
 							// Afficher le nom du dossier
@@ -67,16 +96,48 @@ class folder extends common
 						}
 					}
 				}
-				$items .=  "</ul>";
-	
+				$items .= "</ul>";
+
 				// Fermer le dossier
 				closedir($dh);
 			}
 			return $items;
 		} else {
-			exit ('Erreur de chemin');
+			exit('Erreur de chemin');
 		}
-		
+
+	}
+
+	/**
+	 * Liste les dossier contenus dans RFM
+	 */
+	private function getSubdirectories($dir, $basePath = '')
+	{
+		$subdirs = array();
+		// Ouvrez le répertoire spécifié
+		$dh = opendir($dir);
+		// Parcourez tous les fichiers et répertoires dans le répertoire
+		while (($file = readdir($dh)) !== false) {
+			// Ignorer les entrées de répertoire parent et actuel
+			if ($file == '.' || $file == '..') {
+				continue;
+			}
+			// Construisez le chemin complet du fichier ou du répertoire
+			$path = $dir . '/' . $file;
+			// Vérifiez si c'est un répertoire
+			if (is_dir($path)) {
+				// Construisez la clé et la valeur pour le tableau associatif
+				$key = $basePath === '' ? ucfirst($file) : $basePath . '/' . $file;
+				$value = $path . '/';
+				// Ajouter la clé et la valeur au tableau associatif
+				$subdirs[$key] = $value;
+				// Appeler la fonction récursivement pour ajouter les sous-répertoires
+				$subdirs = array_merge($subdirs, $this->getSubdirectories($path, $key));
+			}
+		}
+		// Fermez le gestionnaire de dossier
+		closedir($dh);
+		return $subdirs;
 	}
 
 }
