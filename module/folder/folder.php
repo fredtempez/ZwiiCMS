@@ -14,11 +14,11 @@
  * @link http://zwiicms.fr/
  */
 
-class sharefolder extends common
+class folder extends common
 {
 
 	const VERSION = '4.2';
-	const REALNAME = 'Dossier partagé';
+	const REALNAME = 'Dossier';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
@@ -63,7 +63,7 @@ class sharefolder extends common
 							$items .= '</li>';
 						} else {
 							// Afficher le nom du fichier comme un lien
-							$items .= '<li><a href="' . $cheminComplet . '">' . $element . '</a></li>';
+							$items .= '<li><a href="' . $cheminComplet . '" target="_blank">' . $element . '</a></li>';
 						}
 					}
 				}
