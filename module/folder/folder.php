@@ -30,13 +30,13 @@ class folder extends common
 	public static $folders = '';
 
 	public static $sharePath = [
-		'/site/file/source/'
+		'site/file/source/'
 	];
 
 	public function index()
 	{
 
-		self::$folders = $this->listerSousDossier(self::FILE_DIR . 'source/partage');
+		self::$folders = $this->getFolderContent($this->getData(['module', $this->getUrl(0), 'path']));
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -56,6 +56,13 @@ class folder extends common
 		) {
 			$this->setData(['module', $this->getUrl(0), 'path', preg_replace('/^\\./', '', $this->getInput('folderEditPath')) ]);
 
+			// Valeurs en sortie
+			$this->addOutput([
+				'redirect' => helper::baseUrl() . $this->getUrl(0),
+				'notification' => helper::translate('Modifications enregistrées'),
+				'state' => true
+			]);
+
 		}
 
 		self::$sharePath = $this->getSubdirectories('site/file/source');
@@ -68,7 +75,7 @@ class folder extends common
 	}
 
 
-	private function listerSousDossier($chemin)
+	private function getFolderContent($chemin)
 	{
 		// Vérifier si le chemin existe et est un dossier
 		if (is_dir($chemin)) {
@@ -88,7 +95,7 @@ class folder extends common
 							// Afficher le nom du dossier avec un élément details
 							$items .= "<li class='directory'><details><summary>$element</summary>";
 							// Appeler récursivement la fonction pour ce sous-dossier
-							$items .= $this->listerSousDossier($cheminComplet);
+							$items .= $this->getFolderContent($cheminComplet);
 							$items .= '</details></li>';
 						} else {
 							// Afficher le nom du fichier comme un lien

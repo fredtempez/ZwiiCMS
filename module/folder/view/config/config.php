@@ -20,7 +20,7 @@
                     <?php echo template::select('folderEditPath', $module::$sharePath, [
                         'label' => 'Dossier',
                         'class' => 'filemanager',
-                        'selected' => '.' . $this->getData(['module', $this->getUrl(0), 'path'])
+                        'selected' => $this->getData(['module', $this->getUrl(0), 'path'])
                     ]); ?>
                     </div>
                 </div>
