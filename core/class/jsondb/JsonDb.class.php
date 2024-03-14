@@ -129,7 +129,7 @@ class JsonDb extends \Prowebcraft\Dot
                 }
             }
             $this->data = json_decode(file_get_contents($this->db), true);
-            if (!$this->data === null) {
+            if (!$this->data === null && json_last_error() !== JSON_ERROR_NONE) {
                 throw new \InvalidArgumentException('Database file ' . $this->db
                     . ' contains invalid json object. Please validate or remove file');
             }
