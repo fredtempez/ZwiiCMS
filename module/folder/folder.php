@@ -75,42 +75,42 @@ class folder extends common
 	}
 
 
-	private function getFolderContent($chemin)
-	{
-		// Vérifier si le chemin existe et est un dossier
-		if (is_dir($chemin)) {
-			// Ouvrir le dossier
-			if ($dh = opendir($chemin)) {
-				$items = isset($items) ? $items . '<ul class="folder">' : '<ul class ="folder">';
-				//$items = '<ul>';
-				// Parcourir les éléments du dossier
-				while (($element = readdir($dh)) !== false) {
-					// Exclure les éléments spéciaux
-					if ($element != '.' && $element != '..') {
-						// Construire le chemin complet de l'élément
-						$cheminComplet = $chemin . '/' . $element;
-	
-						// Vérifier si c'est un dossier
-						if (is_dir($cheminComplet)) {
-							// Afficher le nom du dossier avec un élément details
-							$items .= "<li class='directory'><details><summary>$element</summary>";
-							// Appeler récursivement la fonction pour ce sous-dossier
-							$items .= $this->getFolderContent($cheminComplet);
-							$items .= '</details></li>';
-						} else {
-							// Afficher le nom du fichier comme un lien
-							$items .= "<li class='file'><a href='$cheminComplet' target='_blank'>$element</a></li>";
-						}
-					}
-				}
-				$items .= "</ul>";
-	
-				// Fermer le dossier
-				closedir($dh);
-			}
-			return $items;
-		}
-	}
+private function getFolderContent($chemin)
+{
+    // Vérifier si le chemin existe et est un dossier
+    if (is_dir($chemin)) {
+        // Ouvrir le dossier
+        if ($dh = opendir($chemin)) {
+            $items = isset($items) ? $items . '<ul class="folder">' : '<ul class ="folder">';
+            // Parcourir les éléments du dossier
+            while (($element = readdir($dh)) !== false) {
+                // Exclure les éléments spéciaux
+                if ($element != '.' && $element != '..') {
+                    // Construire le chemin complet de l'élément
+                    $cheminComplet = $chemin . $element;
+
+                    // Vérifier si c'est un dossier
+                    if (is_dir($cheminComplet)) {
+                        // Afficher le nom du dossier avec un élément details
+                        $items .= "<li class='directory'>$element<ul>";
+                        // Appeler récursivement la fonction pour ce sous-dossier
+                        $items .= $this->getFolderContent($cheminComplet);
+                        $items .= '</ul></li>';
+                    } else {
+                        // Afficher le nom du fichier comme un lien
+                        $items .= "<li class='file'><a href='$cheminComplet' target='_blank'>$element</a></li>";
+                    }
+                }
+            }
+            $items .= "</ul>";
+
+            // Fermer le dossier
+            closedir($dh);
+        }
+        return $items;
+    }
+}
+
 	
 	
 
