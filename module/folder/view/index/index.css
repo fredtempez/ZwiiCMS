@@ -1,0 +1,45 @@
+#dirindex article {
+  display: block;
+  margin: 0 auto;
+  width: 480px;
+}
+
+#dirindex a {
+  color: #004466;
+  text-decoration: none;
+}
+
+#dirindex a:hover {
+  text-decoration: underline;
+}
+
+#dirindex a:visited {
+  color: #666666;
+}
+
+#dirindex details summary,
+#dirindex details summary::-webkit-details-marker {
+  list-style: none;
+  cursor: pointer;
+}
+
+#dirindex {
+  list-style: none;
+}
+
+#dirindex .directory {
+  list-style-type: "\1F4C1";
+}
+
+#dirindex .file {
+  list-style-type: "\1F4C4";
+}
+
+#dirindex ul li {
+  margin-top: 10px;
+}
+
+#dirindex li  {
+  padding-left: 5px;
+  list-style-position : outside;
+}
