@@ -58,7 +58,7 @@ class folder extends common
 
 		}
 
-		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
 
 		// Valeurs en sortie
