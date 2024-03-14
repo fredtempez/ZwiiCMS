@@ -81,7 +81,7 @@ private function getFolderContent($chemin)
     if (is_dir($chemin)) {
         // Ouvrir le dossier
         if ($dh = opendir($chemin)) {
-            $items = isset($items) ? $items . '<ul class="folder">' : '<ul class ="folder">';
+            $items = isset($items) ? $items : '<ul>';
             // Parcourir les éléments du dossier
             while (($element = readdir($dh)) !== false) {
                 // Exclure les éléments spéciaux
@@ -92,10 +92,10 @@ private function getFolderContent($chemin)
                     // Vérifier si c'est un dossier
                     if (is_dir($cheminComplet)) {
                         // Afficher le nom du dossier avec un élément details
-                        $items .= "<li class='directory'>$element<ul>";
+                        $items .= "<li class='directory'>$element";
                         // Appeler récursivement la fonction pour ce sous-dossier
                         $items .= $this->getFolderContent($cheminComplet);
-                        $items .= '</ul></li>';
+                        $items .= '</li>';
                     } else {
                         // Afficher le nom du fichier comme un lien
                         $items .= "<li class='file'><a href='$cheminComplet' target='_blank'>$element</a></li>";
