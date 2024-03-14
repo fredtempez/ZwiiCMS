@@ -739,9 +739,9 @@ class user extends common
 		}
 
 		// Chemin vers les dossiers du gestionnaire de fichier
-		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
+		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
@@ -896,9 +896,9 @@ class user extends common
 		}
 
 		// Chemin vers les dossiers du gestionnaire de fichier
-		self::$sharePath = $this->getSubdirectories('./site/file/source');
+		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
-		self::$sharePath = array_merge(['./site/file/source/' => 'Tous les dossiers'], self::$sharePath);
+		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
 		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
