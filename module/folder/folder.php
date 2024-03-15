@@ -54,7 +54,12 @@ class folder extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-			$this->setData(['module', $this->getUrl(0), 'path', preg_replace('/^\\./', '', $this->getInput('folderEditPath')) ]);
+			$this->setData(['module', 
+						$this->getUrl(0),[
+							'path'=> preg_replace('/^\\./', '', $this->getInput('folderConfigPath')),
+							'title' => $this->getInput('folderConfigTitle')
+
+			]]);
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -75,13 +80,10 @@ class folder extends common
 	}
 
 
-	private function getFolderContent($chemin, $config = [])
+	private function getFolderContent($chemin)
 	{
-		$showSubFolder = isset($config['showsubfolder']) ? $config['showsubfolder'] : true;
-		$sort = isset($config['sort']) ? $config['sort'] : true;
-	
 		// Vérifier si le chemin existe et est un dossier
-		if (!is_null($chemin) && is_dir($chemin)) {
+		if (is_dir($chemin)) {
 			// Ouvrir le dossier
 			if ($dh = opendir($chemin)) {
 				// Initialiser les tableaux pour les sous-dossiers et les fichiers
@@ -109,23 +111,19 @@ class folder extends common
 				// Fermer le dossier
 				closedir($dh);
 	
-				// Trier les sous-dossiers et les fichiers si nécessaire
-				if ($sort) {
-					sort($subDirectories);
-					sort($files);
-				}
+				// Trier les sous-dossiers et les fichiers
+				sort($subDirectories);
+				sort($files);
 	
 				// Initialiser la liste des éléments
 				$items = '<ul>';
 	
-				// Ajouter les sous-dossiers à la liste si configuré pour les afficher
-				if ($showSubFolder) {
-					foreach ($subDirectories as $subDirectory) {
-						$items .= "<li class='directory'>$subDirectory";
-						// Appeler récursivement la fonction pour ce sous-dossier
-						$items .= $this->getFolderContent($chemin . '/' . $subDirectory, $config);
-						$items .= '</li>';
-					}
+				// Ajouter les sous-dossiers à la liste
+				foreach ($subDirectories as $subDirectory) {
+					$items .= "<li class='directory'>$subDirectory";
+					// Appeler récursivement la fonction pour ce sous-dossier
+					$items .= $this->getFolderContent($chemin . '/' . $subDirectory);
+					$items .= '</li>';
 				}
 	
 				// Ajouter les fichiers à la liste

@@ -17,12 +17,19 @@
                 <h4><?php echo helper::translate('Paramètres'); ?></h4>
                 <div class="row">
                     <div class="col6">
-                    <?php echo template::select('folderEditPath', $module::$sharePath, [
-                        'label' => 'Dossier',
-                        'class' => 'filemanager',
-                        'selected' => $this->getData(['module', $this->getUrl(0), 'path'])
-                    ]); ?>
+						<?php echo template::select('folderConfigPath', $module::$sharePath, [
+							'label' => 'Dossier',
+							'class' => 'filemanager',
+							'selected' => $this->getData(['module', $this->getUrl(0), 'path'])
+						]); ?>
                     </div>
+					<div class="col6">
+					<?php echo template::text('folderConfigTitle', [
+                            'label' => 'Titre',
+							'placeholder' => 'Répertoire',
+                            'value' =>  empty($this->getData(['module', $this->getUrl(0), 'title'])) ? 'Répertoire' : $this->getData(['module', $this->getUrl(0), 'title'])
+                        ]); ?>
+					</div>
                 </div>
             </div>
         </div>
