@@ -36,7 +36,10 @@ class folder extends common
 	public function index()
 	{
 
-		self::$folders = $this->getFolderContent($this->getData(['module', $this->getUrl(0), 'path']));
+		$config['showsubfolder'] = $this->getData(['module', $this->getUrl(0), 'subfolder']);
+		$config['sort'] = $this->getData(['module', $this->getUrl(0), 'sort']);
+
+		self::$folders = $this->getFolderContent($this->getData(['module', $this->getUrl(0), 'path']), $config);
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -54,12 +57,18 @@ class folder extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-			$this->setData(['module', 
-						$this->getUrl(0),[
-							'path'=> preg_replace('/^\\./', '', $this->getInput('folderConfigPath')),
-							'title' => $this->getInput('folderConfigTitle')
+			$this->setData([
+				'module',
+				$this->getUrl(0),
+				[
+					'path' => preg_replace('/^\\./', '', $this->getInput('folderConfigPath')),
+					'title' => $this->getInput('folderConfigTitle'),
+					'sort' => $this->getInput('folderConfigSort', helper::FILTER_BOOLEAN),
+					'subfolder' => $this->getInput('folderConfigSubfolder', helper::FILTER_BOOLEAN),
+					'folder' => $this->getInput('folderConfigFolder', helper::FILTER_BOOLEAN),
 
-			]]);
+				]
+			]);
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -80,70 +89,80 @@ class folder extends common
 	}
 
 
-	private function getFolderContent($chemin)
-	{
-		// Vérifier si le chemin existe et est un dossier
-		if (is_dir($chemin)) {
-			// Ouvrir le dossier
-			if ($dh = opendir($chemin)) {
-				// Initialiser les tableaux pour les sous-dossiers et les fichiers
-				$subDirectories = [];
-				$files = [];
-	
-				// Parcourir les éléments du dossier
-				while (($element = readdir($dh)) !== false) {
-					// Exclure les éléments spéciaux
-					if ($element != '.' && $element != '..') {
-						// Construire le chemin complet de l'élément
-						$cheminComplet = $chemin . '/' .$element;
-	
-						// Vérifier si c'est un dossier
-						if (is_dir($cheminComplet)) {
-							// Ajouter le dossier au tableau des sous-dossiers
-							$subDirectories[] = $element;
-						} else {
-							// Ajouter le fichier au tableau des fichiers
-							$files[] = $element;
-						}
-					}
-				}
-	
-				// Fermer le dossier
-				closedir($dh);
-	
-				// Trier les sous-dossiers et les fichiers
-				sort($subDirectories);
-				sort($files);
-	
-				// Initialiser la liste des éléments
-				$items = '<ul>';
-	
-				// Ajouter les sous-dossiers à la liste
-				foreach ($subDirectories as $subDirectory) {
-					$items .= "<li class='directory'>$subDirectory";
-					// Appeler récursivement la fonction pour ce sous-dossier
-					$items .= $this->getFolderContent($chemin . '/' . $subDirectory);
-					$items .= '</li>';
-				}
-	
-				// Ajouter les fichiers à la liste
-				foreach ($files as $file) {
-					$items .= "<li class='file'><a href='" . $chemin . '/' . $file . "' data-lity>$file</a></li>";
-				}
-	
-				// Fermer la liste
-				$items .= "</ul>";
-	
-				return $items;
-			}
-		}
-	
-		return '';
-	}
-	
+private function getFolderContent($chemin, $config = [])
+{
+    $showSubFolder = isset($config['showsubfolder']) ? $config['showsubfolder'] : true;
+    $sort = isset($config['sort']) ? $config['sort'] : true;
 
-	
-	
+    // Vérifier si le chemin existe et est un dossier
+    if (is_dir($chemin)) {
+        // Ouvrir le dossier
+        if ($dh = opendir($chemin)) {
+            // Initialiser les tableaux pour les sous-dossiers et les fichiers
+            $subDirectories = [];
+            $files = [];
+
+            // Parcourir les éléments du dossier
+            while (($element = readdir($dh)) !== false) {
+                // Exclure les éléments spéciaux
+                if ($element != '.' && $element != '..') {
+                    // Construire le chemin complet de l'élément
+                    $cheminComplet = $chemin . '/' .$element;
+
+                    // Vérifier si c'est un dossier
+                    if (is_dir($cheminComplet)) {
+                        // Ajouter le dossier au tableau des sous-dossiers
+                        $subDirectories[] = $element;
+                    } else {
+                        // Ajouter le fichier au tableau des fichiers
+                        $files[] = $element;
+                    }
+                }
+            }
+
+            // Fermer le dossier
+            closedir($dh);
+
+            // Trier les sous-dossiers et les fichiers si nécessaire
+            if ($sort) {
+                sort($subDirectories);
+                sort($files);
+            }
+
+            // Initialiser la liste des éléments
+            $items = '<ul>';
+
+            // Ajouter les sous-dossiers à la liste si configuré pour les afficher
+            if ($showSubFolder) {
+                foreach ($subDirectories as $subDirectory) {
+                    $items .= "<li class='directory'>$subDirectory";
+                    // Appeler récursivement la fonction pour ce sous-dossier
+                    $items .= $this->getFolderContent($chemin . '/' . $subDirectory, $config);
+                    $items .= '</li>';
+                }
+            }
+
+            // Ajouter les fichiers à la liste
+            foreach ($files as $file) {
+                $items .= "<li class='file'><a href='" . $chemin . '/' . $file . "' data-lity>$file</a></li>";
+            }
+
+            // Fermer la liste
+            $items .= "</ul>";
+
+            return $items;
+        }
+    }
+
+    return '';
+}
+
+
+
+
+
+
+
 
 	/**
 	 * Liste les dossier contenus dans RFM
