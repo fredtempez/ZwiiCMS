@@ -75,41 +75,74 @@ class folder extends common
 	}
 
 
-private function getFolderContent($chemin)
-{
-    // Vérifier si le chemin existe et est un dossier
-    if (is_dir($chemin)) {
-        // Ouvrir le dossier
-        if ($dh = opendir($chemin)) {
-            $items = isset($items) ? $items : '<ul>';
-            // Parcourir les éléments du dossier
-            while (($element = readdir($dh)) !== false) {
-                // Exclure les éléments spéciaux
-                if ($element != '.' && $element != '..') {
-                    // Construire le chemin complet de l'élément
-                    $cheminComplet = $chemin . $element;
-
-                    // Vérifier si c'est un dossier
-                    if (is_dir($cheminComplet)) {
-                        // Afficher le nom du dossier avec un élément details
-                        $items .= "<li class='directory'>$element";
-                        // Appeler récursivement la fonction pour ce sous-dossier
-                        $items .= $this->getFolderContent($cheminComplet);
-                        $items .= '</li>';
-                    } else {
-                        // Afficher le nom du fichier comme un lien
-                        $items .= "<li class='file'><a href='$cheminComplet' target='_blank'>$element</a></li>";
-                    }
-                }
-            }
-            $items .= "</ul>";
-
-            // Fermer le dossier
-            closedir($dh);
-        }
-        return $items;
-    }
-}
+	private function getFolderContent($chemin, $config = [])
+	{
+		$showSubFolder = isset($config['showsubfolder']) ? $config['showsubfolder'] : true;
+		$sort = isset($config['sort']) ? $config['sort'] : true;
+	
+		// Vérifier si le chemin existe et est un dossier
+		if (!is_null($chemin) && is_dir($chemin)) {
+			// Ouvrir le dossier
+			if ($dh = opendir($chemin)) {
+				// Initialiser les tableaux pour les sous-dossiers et les fichiers
+				$subDirectories = [];
+				$files = [];
+	
+				// Parcourir les éléments du dossier
+				while (($element = readdir($dh)) !== false) {
+					// Exclure les éléments spéciaux
+					if ($element != '.' && $element != '..') {
+						// Construire le chemin complet de l'élément
+						$cheminComplet = $chemin . '/' .$element;
+	
+						// Vérifier si c'est un dossier
+						if (is_dir($cheminComplet)) {
+							// Ajouter le dossier au tableau des sous-dossiers
+							$subDirectories[] = $element;
+						} else {
+							// Ajouter le fichier au tableau des fichiers
+							$files[] = $element;
+						}
+					}
+				}
+	
+				// Fermer le dossier
+				closedir($dh);
+	
+				// Trier les sous-dossiers et les fichiers si nécessaire
+				if ($sort) {
+					sort($subDirectories);
+					sort($files);
+				}
+	
+				// Initialiser la liste des éléments
+				$items = '<ul>';
+	
+				// Ajouter les sous-dossiers à la liste si configuré pour les afficher
+				if ($showSubFolder) {
+					foreach ($subDirectories as $subDirectory) {
+						$items .= "<li class='directory'>$subDirectory";
+						// Appeler récursivement la fonction pour ce sous-dossier
+						$items .= $this->getFolderContent($chemin . '/' . $subDirectory, $config);
+						$items .= '</li>';
+					}
+				}
+	
+				// Ajouter les fichiers à la liste
+				foreach ($files as $file) {
+					$items .= "<li class='file'><a href='" . $chemin . '/' . $file . "' data-lity>$file</a></li>";
+				}
+	
+				// Fermer la liste
+				$items .= "</ul>";
+	
+				return $items;
+			}
+		}
+	
+		return '';
+	}
+	
 
 	
 	
