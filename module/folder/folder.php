@@ -36,9 +36,13 @@ class folder extends common
 	public function index()
 	{
 
+		// Configuration de l'affichage
 		$config['showsubfolder'] = $this->getData(['module', $this->getUrl(0), 'subfolder']);
 		$config['sort'] = $this->getData(['module', $this->getUrl(0), 'sort']);
+		$config['showdetails'] = $this->getData(['module', $this->getUrl(0), 'details']);
+		$config['initialfolderstate'] = $this->getData(['module', $this->getUrl(0), 'folderstate']);
 
+		// Générer l'affichage
 		self::$folders = $this->getFolderContent($this->getData(['module', $this->getUrl(0), 'path']), $config);
 
 		// Valeurs en sortie
@@ -66,7 +70,8 @@ class folder extends common
 					'sort' => $this->getInput('folderConfigSort', helper::FILTER_BOOLEAN),
 					'subfolder' => $this->getInput('folderConfigSubfolder', helper::FILTER_BOOLEAN),
 					'folder' => $this->getInput('folderConfigFolder', helper::FILTER_BOOLEAN),
-
+					'details' => $this->getInput('folderConfigDetails', helper::FILTER_BOOLEAN),
+					'folderstate' => $this->getInput('folderConfigFolderState', helper::FILTER_BOOLEAN),
 				]
 			]);
 
@@ -88,74 +93,104 @@ class folder extends common
 		]);
 	}
 
+	private function getFolderContent($chemin, $config = [])
+	{
+		$showSubFolder = isset ($config['showsubfolder']) ? $config['showsubfolder'] : true;
+		$sort = isset ($config['sort']) ? $config['sort'] : true;
+		$showDetails = isset ($config['showdetails']) ? $config['showdetails'] : false;
+		$initialFolderState = isset ($config['initialfolderstate']) ? $config['initialfolderstate'] : 'collapsed';
 
-private function getFolderContent($chemin, $config = [])
-{
-    $showSubFolder = isset($config['showsubfolder']) ? $config['showsubfolder'] : true;
-    $sort = isset($config['sort']) ? $config['sort'] : true;
+		// Vérifier si le chemin existe et est un dossier
+		if (is_dir($chemin)) {
+			// Ouvrir le dossier
+			if ($dh = opendir($chemin)) {
+				// Initialiser les tableaux pour les sous-dossiers et les fichiers
+				$subDirectories = [];
+				$files = [];
 
-    // Vérifier si le chemin existe et est un dossier
-    if (is_dir($chemin)) {
-        // Ouvrir le dossier
-        if ($dh = opendir($chemin)) {
-            // Initialiser les tableaux pour les sous-dossiers et les fichiers
-            $subDirectories = [];
-            $files = [];
+				// Parcourir les éléments du dossier
+				while (($element = readdir($dh)) !== false) {
+					// Exclure les éléments spéciaux
+					if ($element != '.' && $element != '..') {
+						// Construire le chemin complet de l'élément
+						$cheminComplet = $chemin . '/' . $element;
 
-            // Parcourir les éléments du dossier
-            while (($element = readdir($dh)) !== false) {
-                // Exclure les éléments spéciaux
-                if ($element != '.' && $element != '..') {
-                    // Construire le chemin complet de l'élément
-                    $cheminComplet = $chemin . '/' .$element;
+						// Vérifier si c'est un dossier
+						if (is_dir($cheminComplet)) {
+							// Ajouter le dossier au tableau des sous-dossiers
+							$subDirectories[] = $element;
+						} else {
+							// Ajouter le fichier au tableau des fichiers
+							$files[] = $element;
+						}
+					}
+				}
 
-                    // Vérifier si c'est un dossier
-                    if (is_dir($cheminComplet)) {
-                        // Ajouter le dossier au tableau des sous-dossiers
-                        $subDirectories[] = $element;
-                    } else {
-                        // Ajouter le fichier au tableau des fichiers
-                        $files[] = $element;
-                    }
-                }
-            }
+				// Fermer le dossier
+				closedir($dh);
 
-            // Fermer le dossier
-            closedir($dh);
+				// Trier les sous-dossiers et les fichiers si nécessaire
+				if ($sort) {
+					sort($subDirectories);
+					sort($files);
+				}
 
-            // Trier les sous-dossiers et les fichiers si nécessaire
-            if ($sort) {
-                sort($subDirectories);
-                sort($files);
-            }
+				// Initialiser la liste des éléments
+				$items = '<ul>';
 
-            // Initialiser la liste des éléments
-            $items = '<ul>';
+				// Ajouter les sous-dossiers à la liste si configuré pour les afficher
+				if ($showSubFolder) {
+					foreach ($subDirectories as $subDirectory) {
+						$folderClass = '';
+						if ($initialFolderState == 'collapsed') {
+							$folderClass = 'collapsible';
+						}
+						$items .= "<li class='directory $folderClass'><span class='toggle'>$subDirectory</span><ul class='sub-items'";
+						if ($initialFolderState == 'collapsed') {
+							$items .= " style='display:none;'";
+						}
+						$items .= '>';
+						// Appeler récursivement la fonction pour ce sous-dossier
+						$items .= $this->getFolderContent($chemin . '/' . $subDirectory, $config);
+						$items .= '</ul></li>';
+					}
+				}
 
-            // Ajouter les sous-dossiers à la liste si configuré pour les afficher
-            if ($showSubFolder) {
-                foreach ($subDirectories as $subDirectory) {
-                    $items .= "<li class='directory'>$subDirectory";
-                    // Appeler récursivement la fonction pour ce sous-dossier
-                    $items .= $this->getFolderContent($chemin . '/' . $subDirectory, $config);
-                    $items .= '</li>';
-                }
-            }
+				// Ajouter les fichiers à la liste
+				foreach ($files as $file) {
+					$fileFullPath = $chemin . '/' . $file;
+					$fileInfo = '';
+					if ($showDetails) {
+						$fileSize = filesize($fileFullPath);
+						$fileSizeFormatted = $this->formatSizeUnits($fileSize);
+						$fileInfo = "<span class='file-info'> " . date("Y-m-d H:i:s", filemtime($fileFullPath)) . ", $fileSizeFormatted</span>";
+					}
+					$items .= "<li class='file'><a href='$fileFullPath' data-lity>$file</a>$fileInfo</li>";
+				}
 
-            // Ajouter les fichiers à la liste
-            foreach ($files as $file) {
-                $items .= "<li class='file'><a href='" . $chemin . '/' . $file . "' data-lity>$file</a></li>";
-            }
+				// Fermer la liste
+				$items .= "</ul>";
 
-            // Fermer la liste
-            $items .= "</ul>";
+				return $items;
+			}
+		}
 
-            return $items;
-        }
-    }
+		return '';
+	}
 
-    return '';
-}
+
+
+	private function formatSizeUnits($bytes)
+	{
+		$units = array('octest', 'Ko', 'Mo', 'Go', 'To');
+		$i = 0;
+		while ($bytes >= 1024) {
+			$bytes /= 1024;
+			$i++;
+		}
+		return round($bytes, 2) . ' ' . $units[$i];
+	}
+
 
 
 

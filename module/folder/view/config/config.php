@@ -34,14 +34,24 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::checkbox('folderConfigSort', true, 'Trier les dossiers et les fichiers', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'sort'])
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::checkbox('folderConfigSubfolder', true, 'Descendre dans l\'arboresence', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'subfolder'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::checkbox('folderConfigDetails', true, 'Date et poids', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'details'])
+					]); ?>
+				</div>
+				<div class="col3">
+					<?php echo template::checkbox('folderConfigFolderState', true, 'Dossiers pliés', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'folderstate'])
 					]); ?>
 				</div>
 			</div>

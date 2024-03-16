@@ -1,7 +1,7 @@
 #dirindex article {
   display: block;
   margin: 0 auto;
-  width: 480px;
+  width: 600px;
 }
 
 #dirindex a {
@@ -42,4 +42,19 @@
 #dirindex li  {
   padding-left: 5px;
   list-style-position : outside;
+}
+
+/* Style pour le pliage/dépliage des dossiers */
+.toggle {
+  cursor: pointer;
+}
+
+/* Style pour les sous-éléments des dossiers */
+.sub-items {
+  list-style-type: none;
+}
+
+/* Style pour les informations de fichier */
+.file-info {
+  float: right;
 }
