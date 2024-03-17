@@ -6,6 +6,7 @@
 ### Amélioration 
 
 - Sauvegarde de l'état des sélecteurs dans les tables des fontes et des utilisateurs.
+- Fournit un outil de mise à jour automatisé.
 
 ## Version 13.1.07
 
