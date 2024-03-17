@@ -183,7 +183,7 @@ class folder extends common
 
 	private function formatSizeUnits($bytes)
 	{
-		$units = array('octest', 'Ko', 'Mo', 'Go', 'To');
+		$units = array('octets', 'Ko', 'Mo', 'Go', 'To');
 		$i = 0;
 		while ($bytes >= 1024) {
 			$bytes /= 1024;
