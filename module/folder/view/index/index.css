@@ -63,3 +63,10 @@
   /* Ajout d'une largeur fixe à la div */
   width: 200px;
 }
+
+.file-name {
+  max-width: 400px; /* Largeur maximale du nom de fichier */
+  white-space: nowrap; /* Empêcher le débordement du texte à la ligne suivante */
+  overflow: hidden; /* Cacher tout texte qui dépasse */
+  text-overflow: ellipsis; /* Ajouter des points de suspension (...) pour indiquer que le texte a été tronqué */
+}
