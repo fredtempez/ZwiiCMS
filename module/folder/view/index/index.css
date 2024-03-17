@@ -55,7 +55,11 @@
   margin-left: -40px;
 }
 
-/* Style pour les informations de fichier */
-.file-info {
+
+.file-info-container {
+  display: flex;
   float: right;
+  align-content: left;
+  /* Ajout d'une largeur fixe à la div */
+  width: 200px;
 }

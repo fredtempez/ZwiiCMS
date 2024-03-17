@@ -95,11 +95,11 @@ class folder extends common
 
 	private function getFolderContent($chemin, $config = [])
 	{
-		$showSubFolder = isset ($config['showsubfolder']) ? $config['showsubfolder'] : true;
-		$sort = isset ($config['sort']) ? $config['sort'] : true;
-		$showDetails = isset ($config['showdetails']) ? $config['showdetails'] : false;
-		$initialFolderState = isset ($config['initialfolderstate']) ? $config['initialfolderstate'] : 'collapsed';
-
+		$showSubFolder = isset($config['showsubfolder']) ? $config['showsubfolder'] : true;
+		$sort = isset($config['sort']) ? $config['sort'] : true;
+		$showDetails = isset($config['showdetails']) ? $config['showdetails'] : false;
+		$initialFolderState = isset($config['initialfolderstate']) ? $config['initialfolderstate'] : 'collapsed';
+	
 		// Vérifier si le chemin existe et est un dossier
 		if (is_dir($chemin)) {
 			// Ouvrir le dossier
@@ -107,14 +107,14 @@ class folder extends common
 				// Initialiser les tableaux pour les sous-dossiers et les fichiers
 				$subDirectories = [];
 				$files = [];
-
+	
 				// Parcourir les éléments du dossier
 				while (($element = readdir($dh)) !== false) {
 					// Exclure les éléments spéciaux
 					if ($element != '.' && $element != '..') {
 						// Construire le chemin complet de l'élément
 						$cheminComplet = $chemin . '/' . $element;
-
+	
 						// Vérifier si c'est un dossier
 						if (is_dir($cheminComplet)) {
 							// Ajouter le dossier au tableau des sous-dossiers
@@ -125,19 +125,19 @@ class folder extends common
 						}
 					}
 				}
-
+	
 				// Fermer le dossier
 				closedir($dh);
-
+	
 				// Trier les sous-dossiers et les fichiers si nécessaire
 				if ($sort) {
 					sort($subDirectories);
 					sort($files);
 				}
-
+	
 				// Initialiser la liste des éléments
 				$items = '<ul>';
-
+	
 				// Ajouter les sous-dossiers à la liste si configuré pour les afficher
 				if ($showSubFolder) {
 					foreach ($subDirectories as $subDirectory) {
@@ -155,7 +155,7 @@ class folder extends common
 						$items .= '</ul></li>';
 					}
 				}
-
+	
 				// Ajouter les fichiers à la liste
 				foreach ($files as $file) {
 					$fileFullPath = $chemin . '/' . $file;
@@ -163,20 +163,21 @@ class folder extends common
 					if ($showDetails) {
 						$fileSize = filesize($fileFullPath);
 						$fileSizeFormatted = $this->formatSizeUnits($fileSize);
-						$fileInfo = "<span class='file-info'> " . date("d-m-Y H:i", filemtime($fileFullPath)) . " - $fileSizeFormatted</span>";
+						$fileInfo = "<div class='file-info-container'>" . date("d-m-Y H:i", filemtime($fileFullPath)) . " - $fileSizeFormatted</div>";
 					}
 					$items .= "<li class='file'><a href='$fileFullPath' data-lity>$file</a>$fileInfo</li>";
 				}
-
+	
 				// Fermer la liste
 				$items .= "</ul>";
-
+	
 				return $items;
 			}
 		}
-
+	
 		return '';
 	}
+	
 
 
 
