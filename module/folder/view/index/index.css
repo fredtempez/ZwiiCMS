@@ -52,6 +52,7 @@
 /* Style pour les sous-éléments des dossiers */
 .sub-items {
   list-style-type: none;
+  margin-left: -40px;
 }
 
 /* Style pour les informations de fichier */

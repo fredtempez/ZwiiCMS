@@ -163,7 +163,7 @@ class folder extends common
 					if ($showDetails) {
 						$fileSize = filesize($fileFullPath);
 						$fileSizeFormatted = $this->formatSizeUnits($fileSize);
-						$fileInfo = "<span class='file-info'> " . date("Y-m-d H:i:s", filemtime($fileFullPath)) . ", $fileSizeFormatted</span>";
+						$fileInfo = "<span class='file-info'> " . date("d-m-Y H:i", filemtime($fileFullPath)) . " - $fileSizeFormatted</span>";
 					}
 					$items .= "<li class='file'><a href='$fileFullPath' data-lity>$file</a>$fileInfo</li>";
 				}
