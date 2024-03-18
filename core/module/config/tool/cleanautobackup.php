@@ -11,7 +11,7 @@ Le script vérifie également la présence et la validité d'une clé spécifiqu
 */
 
 // Vérification de la clé
-if (isset($_GET['key'])) {
+if (isset ($_GET['key'])) {
     // Récupération de la clé fournie en GET
     $key = $_GET['key'];
 
@@ -20,31 +20,31 @@ if (isset($_GET['key'])) {
 
     // Vérification de correspondance entre les clés
     if ($key !== $storedKey) {
-        die("Clé invalide !");
+        http_response_code(401);
+        exit();
     }
 } else {
-    // Si la clé est manquante, affiche un message d'erreur et arrête l'exécution du script
-    die("Clé manquante !");
-}
 
-// Récupère le nombre de jours à partir de la variable GET 'days'
-$days = isset($_GET['days']) ? (int)$_GET['days'] : 1; // Par défaut à 1 si non spécifié
+    // Récupère le nombre de jours à partir de la variable GET 'days'
+    $days = isset ($_GET['days']) ? (int) $_GET['days'] : 1; // Par défaut à 1 si non spécifié
 
-// Chemin vers le répertoire contenant les fichiers
-$directory = '../../../../site/backup/'; // Remplacez par le chemin réel
+    // Chemin vers le répertoire contenant les fichiers
+    $directory = '../../../../site/backup/'; // Remplacez par le chemin réel
 
-// Convertit le nombre de jours en secondes
-$timeLimit = strtotime("-$days days");
+    // Convertit le nombre de jours en secondes
+    $timeLimit = strtotime("-$days days");
 
-// Crée un nouvel objet DirectoryIterator
-foreach (new DirectoryIterator($directory) as $file) {
-    // Vérifie si l'élément courant est un fichier et a l'extension 'tar.gz'
-    if ($file->isFile() && $file->getExtension() === 'tar.gz') {
-        // Vérifie si le fichier a été modifié avant la limite de temps
-        if ($file->getMTime() < $timeLimit) {
-            // Supprime le fichier
-            unlink($file->getRealPath());
+    // Crée un nouvel objet DirectoryIterator
+    foreach (new DirectoryIterator($directory) as $file) {
+        // Vérifie si l'élément courant est un fichier et a l'extension 'tar.gz'
+        if ($file->isFile() && $file->getExtension() === 'tar.gz') {
+            // Vérifie si le fichier a été modifié avant la limite de temps
+            if ($file->getMTime() < $timeLimit) {
+                // Supprime le fichier
+                unlink($file->getRealPath());
+            }
         }
     }
+    // Si la clé est manquante, affiche un message d'erreur et arrête l'exécution du script
+    http_response_code(201);
 }
-?>

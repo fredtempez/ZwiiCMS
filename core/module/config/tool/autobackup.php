@@ -11,38 +11,38 @@ La clé doit être fournie en tant que paramètre "key" dans l'URL et correspond
 */
 
 // Vérification de la clé
-if (isset($_GET['key'])) {
+if (isset ($_GET['key'])) {
     $key = $_GET['key'];
     $storedKey = file_get_contents('data.key');
     if ($key !== $storedKey) {
-        die("Clé invalide !");
+        http_response_code(401);
+        exit();
     }
 } else {
-    die("Clé manquante !");
-}
-
-// Création du ZIP
-$filter = ['backup', 'tmp'];
-$fileName =  date('Y-m-d-H-i-s', time()) . '-rolling-backup.zip';
-$zip = new ZipArchive();
-$zip->open('../../../../site/backup/' . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-$directory = '../../../../site';
-$files = new RecursiveIteratorIterator(
-    new RecursiveCallbackFilterIterator(
-        new RecursiveDirectoryIterator(
-            $directory,
-            RecursiveDirectoryIterator::SKIP_DOTS
-        ),
-        function ($fileInfo, $key, $iterator) use ($filter) {
-            return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+    // Création du ZIP
+    $filter = ['backup', 'tmp'];
+    $fileName = date('Y-m-d-H-i-s', time()) . '-rolling-backup.zip';
+    $zip = new ZipArchive();
+    $zip->open('../../../../site/backup/' . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+    $directory = '../../../../site';
+    $files = new RecursiveIteratorIterator(
+        new RecursiveCallbackFilterIterator(
+            new RecursiveDirectoryIterator(
+                $directory,
+                RecursiveDirectoryIterator::SKIP_DOTS
+            ),
+            function ($fileInfo, $key, $iterator) use ($filter) {
+                return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+            }
+        )
+    );
+    foreach ($files as $name => $file) {
+        if (!$file->isDir()) {
+            $filePath = $file->getRealPath();
+            $relativePath = substr($filePath, strlen(realpath($directory)) + 1);
+            $zip->addFile($filePath, $relativePath);
         }
-    )
-);
-foreach ($files as $name => $file) {
-    if (!$file->isDir()) {
-        $filePath = $file->getRealPath();
-        $relativePath = substr($filePath, strlen(realpath($directory)) + 1);
-        $zip->addFile($filePath, $relativePath);
     }
+    $zip->close();
+    http_response_code(201);
 }
-$zip->close();
