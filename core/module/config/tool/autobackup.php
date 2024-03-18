@@ -18,7 +18,6 @@ if (isset ($_GET['key'])) {
         http_response_code(401);
         exit();
     }
-} else {
     // Création du ZIP
     $filter = ['backup', 'tmp'];
     $fileName = date('Y-m-d-H-i-s', time()) . '-rolling-backup.zip';

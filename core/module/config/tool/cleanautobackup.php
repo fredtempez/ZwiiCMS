@@ -23,7 +23,6 @@ if (isset ($_GET['key'])) {
         http_response_code(401);
         exit();
     }
-} else {
 
     // Récupère le nombre de jours à partir de la variable GET 'days'
     $days = isset ($_GET['days']) ? (int) $_GET['days'] : 1; // Par défaut à 1 si non spécifié
