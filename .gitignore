@@ -10,3 +10,4 @@ core/vendor/tinymce/link_list.json
 robots.txt
 sitemap.xml
 .gitignore
+core/module/config/tool/data.key
