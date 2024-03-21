@@ -1,3 +1,5 @@
+# Version 7.6
+- Mise à jour RSS Feed
 # Version 7.5
 - Bug paramètre de localisation erroné
 # Version 7.4

@@ -2,6 +2,7 @@
 namespace FeedWriter;
 
 use \DateTime;
+use \DateTimeInterface;
 
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
@@ -217,19 +218,19 @@ class Item
     /**
     * Set the 'date' element of the feed item.
     *
-    * The value of the date parameter can be either an instance of the
-    * DateTime class, an integer containing a UNIX timestamp or a string
+    * The value of the date parameter can be either a class implementing
+    * DateTimeInterface, an integer containing a UNIX timestamp or a string
     * which is parseable by PHP's 'strtotime' function.
     *
     * @access   public
-    * @param    DateTime|int|string $date Date which should be used.
+    * @param    DateTimeInterface|int|string $date Date which should be used.
     * @return   self
     * @throws   \InvalidArgumentException if the given date was not parseable.
     */
     public function setDate($date)
     {
         if (!is_numeric($date)) {
-            if ($date instanceof DateTime)
+            if ($date instanceof DateTimeInterface || $date instanceof DateTime)
                 $date = $date->getTimestamp();
             else {
                 $date = strtotime($date);
@@ -277,7 +278,7 @@ class Item
     * Attach a external media to the feed item.
     * Not supported in RSS 1.0 feeds.
     *
-    * See RFC 4288 for syntactical correct MIME types.
+    * See RFC 6838 for syntactical correct MIME types.
     *
     * Note that you should avoid the use of more than one enclosure in one item,
     * since some RSS aggregators don't support it.
@@ -288,7 +289,8 @@ class Item
     * @param    string  $type     The MIME type attribute of the media.
     * @param    boolean $multiple Specifies if multiple enclosures are allowed
     * @return   self
-    * @link     https://tools.ietf.org/html/rfc4288
+    * @link     https://tools.ietf.org/html/rfc6838
+    * @link     http://www.iana.org/assignments/media-types/media-types.xhtml
     * @throws   \InvalidArgumentException if the length or type parameter is invalid.
     * @throws   InvalidOperationException if this method is called on RSS1 feeds.
     */
@@ -389,7 +391,7 @@ class Item
             // Check if the given ID is an valid URI scheme (see RFC 4287 4.2.6)
             // The list of valid schemes was generated from http://www.iana.org/assignments/uri-schemes
             // by using only permanent or historical schemes.
-            $validSchemes = array('aaa', 'aaas', 'about', 'acap', 'acct', 'cap', 'cid', 'coap', 'coaps', 'crid', 'data', 'dav', 'dict', 'dns', 'example', 'fax', 'file', 'filesystem', 'ftp', 'geo', 'go', 'gopher', 'h323', 'http', 'https', 'iax', 'icap', 'im', 'imap', 'info', 'ipp', 'ipps', 'iris', 'iris.beep', 'iris.lwz', 'iris.xpc', 'iris.xpcs', 'jabber', 'ldap', 'mailserver', 'mailto', 'mid', 'modem', 'msrp', 'msrps', 'mtqp', 'mupdate', 'news', 'nfs', 'ni', 'nih', 'nntp', 'opaquelocktoken', 'pack', 'pkcs11', 'pop', 'pres', 'prospero', 'reload', 'rtsp', 'rtsps', 'rtspu', 'service', 'session', 'shttp', 'sieve', 'sip', 'sips', 'sms', 'snews', 'snmp', 'soap.beep', 'soap.beeps', 'stun', 'stuns', 'tag', 'tel', 'telnet', 'tftp', 'thismessage', 'tip', 'tn3270', 'turn', 'turns', 'tv', 'urn', 'vemmi', 'videotex', 'vnc', 'wais', 'ws', 'wss', 'xcon', 'xcon-userid', 'xmlrpc.beep', 'xmlrpc.beeps', 'xmpp', 'z39.50', 'z39.50r', 'z39.50s');
+            $validSchemes = array('aaa', 'aaas', 'about', 'acap', 'acct', 'bb', 'cap', 'cid', 'coap', 'coap+tcp', 'coap+ws', 'coaps', 'coaps+tcp', 'coaps+ws', 'crid', 'data', 'dav', 'dict', 'dns', 'drop', 'dtn', 'example', 'fax', 'file', 'filesystem', 'ftp', 'geo', 'go', 'gopher', 'grd', 'h323', 'http', 'https', 'iax', 'icap', 'im', 'imap', 'info', 'ipn', 'ipp', 'ipps', 'iris', 'iris.beep', 'iris.lwz', 'iris.xpc', 'iris.xpcs', 'jabber', 'ldap', 'leaptofrogans', 'mailserver', 'mailto', 'mid', 'modem', 'msrp', 'msrps', 'mt', 'mtqp', 'mupdate', 'news', 'nfs', 'ni', 'nih', 'nntp', 'opaquelocktoken', 'p1', 'pack', 'pkcs11', 'pop', 'pres', 'prospero', 'reload', 'rtsp', 'rtsps', 'rtspu', 'service', 'session', 'shttp (OBSOLETE)', 'sieve', 'sip', 'sips', 'sms', 'snews', 'snmp', 'soap.beep', 'soap.beeps', 'stun', 'stuns', 'tag', 'tel', 'telnet', 'tftp', 'thismessage', 'tip', 'tn3270', 'turn', 'turns', 'tv', 'upt', 'urn', 'vemmi', 'videotex', 'vnc', 'wais', 'wpid', 'ws', 'wss', 'xcon', 'xcon-userid', 'xmlrpc.beep', 'xmlrpc.beeps', 'xmpp', 'z39.50', 'z39.50r', 'z39.50s');
             $found = FALSE;
             $checkId = strtolower($id);
 
