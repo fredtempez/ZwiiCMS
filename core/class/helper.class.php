@@ -29,13 +29,13 @@ class helper
 
 		// La traduction existe déjà dans le core
 		/*
-					if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-					$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-					$data = array_merge($dialogues,[$text =>  '']);
-					file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-					}
-					*/
-		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
+						  if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+						  $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+						  $data = array_merge($dialogues,[$text =>  '']);
+						  file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+						  }
+						  */
+		return (array_key_exists($text, core::$dialog) && !empty (core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
 	/**
@@ -57,7 +57,7 @@ class helper
 		if (!file_exists('site/i18n/' . $to . '.json')) {
 			file_put_contents('site/i18n/' . $to . '.json', json_encode([]));
 		}
-		if (!empty($text)) {
+		if (!empty ($text)) {
 			//Lecture des données en ligne
 			$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
 			// Mode traduction
@@ -92,9 +92,9 @@ class helper
 
 	public static function getIp($anon = 4)
 	{
-		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		if (!empty ($_SERVER['HTTP_CLIENT_IP'])) {
 			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		} elseif (!empty ($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		} else {
 			$ip = $_SERVER['REMOTE_ADDR'];
@@ -156,7 +156,7 @@ class helper
 	public static function arraycolumn($array, $column, $sort = null)
 	{
 		$newArray = [];
-		if (empty($array) === false) {
+		if (empty ($array) === false) {
 			$newArray = array_map(function ($element) use ($column) {
 				return $element[$column];
 			}, $array);
@@ -193,7 +193,7 @@ class helper
 	{
 		// Creation du ZIP
 		$baseName = str_replace('/', '', helper::baseUrl(false, false));
-		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
+		$baseName = empty ($baseName) ? 'ZwiiCMS' : $baseName;
 		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s', time()) . '.zip';
 		$zip = new ZipArchive();
 		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
@@ -295,7 +295,7 @@ class helper
 	public static function isHttps()
 	{
 		if (
-			(empty($_SERVER['HTTPS']) === false and $_SERVER['HTTPS'] !== 'off')
+			(empty ($_SERVER['HTTPS']) === false and $_SERVER['HTTPS'] !== 'off')
 			or $_SERVER['SERVER_PORT'] === 443
 		) {
 			return true;
@@ -367,8 +367,8 @@ class helper
 	{
 		$version = helper::getOnlineVersion($channel);
 		$update = false;
-		if (!empty($version)) {
-			$update = version_compare(common::ZWII_VERSION, $version) == -1;	
+		if (!empty ($version)) {
+			$update = version_compare(common::ZWII_VERSION, $version) == -1;
 		}
 		return $update;
 	}
@@ -390,10 +390,10 @@ class helper
 			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "#222" : "#DDD",
 			'rgb' => 'rgb(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ')',
 			'invert' => 'rgba (' .
-			($rgba[0] < 128 ? 255 : 0) . ',' .
-			($rgba[1] < 128 ? 255 : 0) . ',' .
-			($rgba[1] < 128 ? 255 : 0) . ',' .
-			($rgba[0] < 128 ? 255 : 0) . ')'
+				($rgba[0] < 128 ? 255 : 0) . ',' .
+				($rgba[1] < 128 ? 255 : 0) . ',' .
+				($rgba[1] < 128 ? 255 : 0) . ',' .
+				($rgba[0] < 128 ? 255 : 0) . ')'
 		];
 	}
 
@@ -434,8 +434,8 @@ class helper
 				$text = mb_strtolower($text, 'UTF-8');
 				$text = strip_tags(
 					str_replace(
-						explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", '),
-						explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-'),
+						explode(',', 'á,à,â,ä,ã,å,ç,é,è,ê,ë,í,ì,î,ï,ñ,ó,ò,ô,ö,õ,ú,ù,û,ü,ý,ÿ,\',", ,//'),
+						explode(',', 'a,a,a,a,a,a,c,e,e,e,e,i,i,i,i,n,o,o,o,o,o,u,u,u,u,y,y,-,-,-,-'),
 						$text
 					)
 				);
@@ -445,7 +445,7 @@ class helper
 				// Supprime les tirets en fin de chaine (emoji en fin de nom)
 				$text = rtrim($text, '-');
 				// Cas où un identifiant est vide
-				if (empty($text)) {
+				if (empty ($text)) {
 					$text = uniqid('');
 				}
 				// Un ID ne peut pas être un entier, pour éviter les conflits avec le système de pagination
