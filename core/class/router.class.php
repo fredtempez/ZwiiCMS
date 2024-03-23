@@ -761,9 +761,8 @@ class core extends common
 						// Librairies
 						if ($output['vendor'] !== $this->output['vendor']) {
 							$this->addOutput([
-								'vendor' => array_merge($this->output['vendor'], $this->output['vendor'])
+								'vendor' => array_merge($this->output['vendor'], $output['vendor'])
 							]);
-							
 						}
 
 						if ($output['title'] !== null) {
