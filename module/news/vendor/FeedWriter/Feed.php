@@ -2,10 +2,11 @@
 namespace FeedWriter;
 
 use \DateTime;
+use \DateTimeInterface;
 
 /*
  * Copyright (C) 2008 Anis uddin Ahmad <anisniit@gmail.com>
- * Copyright (C) 2010-2016 Michael Bemmerl <mail@mx-server.de>
+ * Copyright (C) 2010-2016, 2022 Michael Bemmerl <mail@mx-server.de>
  *
  * This file is part of the "Universal Feed Writer" project.
  *
@@ -77,6 +78,13 @@ abstract class Feed
     private $version       = null;
 
     /**
+    * Contains the encoding of this feed.
+    *
+    * @var string
+    */
+    private $encoding      = 'utf-8';
+
+    /**
      * Constructor
      *
      * If no version is given, a feed in RSS 2.0 format will be generated.
@@ -86,9 +94,6 @@ abstract class Feed
     protected function __construct($version = Feed::RSS2)
     {
         $this->version = $version;
-
-        // Setting default encoding
-        $this->encoding = 'utf-8';
 
         // Setting default value for essential channel element
         $this->setTitle($version . ' Feed');
@@ -396,9 +401,13 @@ abstract class Feed
     * @access   public
     * @param    string $title value of 'title' channel tag
     * @return   self
+    * @throws   \InvalidArgumentException if the title is empty or NULL.
     */
     public function setTitle($title)
     {
+        if (empty($title))
+            throw new \InvalidArgumentException('The title may not be empty or NULL.');
+
         return $this->setChannelElement('title', $title);
     }
 
@@ -406,15 +415,15 @@ abstract class Feed
     * Set the date when the feed was lastly updated.
     *
     * This adds the 'updated' element to the feed. The value of the date parameter
-    * can be either an instance of the DateTime class, an integer containing a UNIX
+    * can be either a class implementing DateTimeInterface, an integer containing a UNIX
     * timestamp or a string which is parseable by PHP's 'strtotime' function.
     *
     * Not supported in RSS1 feeds.
     *
     * @access   public
-    * @param    DateTime|int|string  Date which should be used.
+    * @param    DateTimeInterface|int|string  Date which should be used.
     * @return   self
-    * @throws   \InvalidArgumentException if the given date is not an instance of DateTime, a UNIX timestamp or a date string.
+    * @throws   \InvalidArgumentException if the given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.
     * @throws   InvalidOperationException if this method is called on an RSS1 feed.
     */
     public function setDate($date)
@@ -425,7 +434,7 @@ abstract class Feed
         // The feeds have different date formats.
         $format = $this->version == Feed::ATOM ? \DATE_ATOM : \DATE_RSS;
 
-        if ($date instanceof DateTime)
+        if ($date instanceof DateTimeInterface || $date instanceof DateTime)
             $date = $date->format($format);
         else if(is_numeric($date) && $date >= 0)
             $date = date($format, $date);
@@ -438,7 +447,7 @@ abstract class Feed
             $date = date($format, $timestamp);
         }
         else
-            throw new \InvalidArgumentException('The given date is not an instance of DateTime, a UNIX timestamp or a date string.');
+            throw new \InvalidArgumentException('The given date is not an implementation of DateTimeInterface, a UNIX timestamp or a date string.');
 
         if ($this->version == Feed::ATOM)
             $this->setChannelElement('updated', $date);
@@ -454,9 +463,13 @@ abstract class Feed
     * @access   public
     * @param    string  $description Description of the feed.
     * @return   self
+    * @throws   \InvalidArgumentException if the description is empty or NULL.
     */
     public function setDescription($description)
     {
+        if (empty($description))
+            throw new \InvalidArgumentException('The description may not be empty or NULL.');
+
         if ($this->version != Feed::ATOM)
             $this->setChannelElement('description', $description);
         else
@@ -471,9 +484,13 @@ abstract class Feed
     * @access   public
     * @param    string $link value of 'link' channel tag
     * @return   self
+    * @throws   \InvalidArgumentException if the link is empty or NULL.
     */
     public function setLink($link)
     {
+        if (empty($link))
+            throw new \InvalidArgumentException('The link may not be empty or NULL.');
+
         if ($this->version == Feed::ATOM)
             $this->setAtomLink($link);
         else
@@ -667,7 +684,7 @@ abstract class Feed
     /**
     * Replace invalid XML characters.
     *
-    * @link http://www.phpwact.org/php/i18n/charsets#xml See utf8_for_xml() function
+    * @link https://web.archive.org/web/20160608013721/http://www.phpwact.org:80/php/i18n/charsets#xml See utf8_for_xml() function
     * @link http://www.w3.org/TR/REC-xml/#charsets
     * @link https://github.com/mibe/FeedWriter/issues/30
     *
@@ -906,7 +923,7 @@ abstract class Feed
             $out .= "</rdf:Seq>" . PHP_EOL . "</items>" . PHP_EOL . "</channel>" . PHP_EOL;
 
             // An image has its own element after the channel elements.
-            if (array_key_exists('image', $this->data))
+            if (array_key_exists('Image', $this->data))
                 $out .= $this->makeNode('image', $this->data['Image'], array('rdf:about' => $this->data['Image']['url']));
         } else if ($this->version == Feed::ATOM) {
             // ATOM feeds have a unique feed ID. Use the title channel element as key.

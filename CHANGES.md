@@ -3,9 +3,11 @@
 
 ## Version 13.1.08
 
-### Amélioration 
+### Améliorations
 
 - Sauvegarde de l'état des sélecteurs dans les tables des fontes et des utilisateurs.
+- Ajoute des contrôles d'intégrité des bases de données Json lors des opérations de chargement et de sauvegarde.
+- Fournit une interface pour le contrôle des sauvegardes automatisées et de leur nettoyage.
 
 ## Version 13.1.07
 

@@ -1,3 +1,5 @@
+# Version 5.5
+- Mise à jour RSS Feed
 # Version 5.4
 - Bug paramètre de localisation erroné
 # Version 5.3
