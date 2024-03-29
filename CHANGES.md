@@ -3,6 +3,8 @@
 
 ## Version 13.1.08
 
+### Corrige des erreurs quand une page parente ou des pages enfants ont des permissions limitées.
+
 ### Améliorations
 
 - Sauvegarde de l'état des sélecteurs dans les tables des fontes et des utilisateurs.
