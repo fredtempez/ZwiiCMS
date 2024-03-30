@@ -1,3 +1,5 @@
+# Version 3.1
+- Initialise un module installé dans une page sans avoir ouvert la page de configuration sans lancer de mise à jour.
 # Version 3.0
 - Gestion des permissions intégrée dans le module
 # Version 2.8

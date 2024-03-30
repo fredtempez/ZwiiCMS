@@ -20,7 +20,7 @@
 class search extends common
 {
 
-	const VERSION = '3.0';
+	const VERSION = '3.1';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
@@ -173,8 +173,8 @@ class search extends common
 	public function index()
 	{
 
-		// Mise à jour des données de module
-		$this->update();
+		// Initialise un module non configuré
+		$this->init();
 
 		if (
 			$this->isPost()
