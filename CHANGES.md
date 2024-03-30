@@ -3,13 +3,16 @@
 
 ## Version 13.1.08
 
-### Corrige des erreurs quand une page parente ou des pages enfants ont des permissions limitées.
+### Corrections
+
+- Corrige des erreurs quand une page parente ou des pages enfants ont des permissions limitées.
+- Module Search 3.1 : initialisation du module après installation dans une page sans configration par l'utilisateur.
 
 ### Améliorations
 
 - Sauvegarde de l'état des sélecteurs dans les tables des fontes et des utilisateurs.
 - Ajoute des contrôles d'intégrité des bases de données Json lors des opérations de chargement et de sauvegarde.
-- Fournit une interface pour le contrôle des sauvegardes automatisées et de leur nettoyage.
+- Fournit une interface pour le contrôle des sauvegardes automatisées et de leur nettoyage par script CRON.
 
 ## Version 13.1.07
 
