@@ -121,10 +121,10 @@ class JsonDb extends \Prowebcraft\Dot
             } else {
                 if ($this->config['backup']) {
                     try {
-                        //todo make backup of database
                         copy($this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'], $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup');
                     } catch (\Exception $e) {
-
+                        error_log('Erreur de chargement : ' . $e);
+                        exit('Erreur de chargement : ' . $e);
                     }
                 }
             }
