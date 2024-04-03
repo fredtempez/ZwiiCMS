@@ -129,9 +129,9 @@ class JsonDb extends \Prowebcraft\Dot
                 }
             }
             $this->data = json_decode(file_get_contents($this->db), true);
-            if (!$this->data === null && json_last_error() !== JSON_ERROR_NONE) {
-                throw new \InvalidArgumentException('Le fichier ' . $this->db
-                    . ' contient des données invalides.');
+            if (!$this->data === null) {
+                throw new \InvalidArgumentException('Database file ' . $this->db
+                    . ' contains invalid json object. Please validate or remove file');
             }
         }
         return $this->data;
@@ -142,14 +142,10 @@ class JsonDb extends \Prowebcraft\Dot
      */
     public function save()
     {
-        $v = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
+        $v = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT );
         // $v = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT);
         $l = strlen($v);
         $t = 0;
-        if ($v === false) {
-            error_log('Erreur d\'encodage JSON : ' . json_last_error_msg());
-            exit ('Erreur d\'encodage JSON : ' . json_last_error_msg());
-        }
         while ($t < 5) {
             $w = file_put_contents($this->db, $v); // Multi user get a locker
             if ($w == $l) {
