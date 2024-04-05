@@ -60,6 +60,18 @@ class common
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
 
+	const MAX_FILE_WRITE_ATTEMPTS = 5;
+	
+	/**
+	 * Nombre maximal de tentatives d'encodage JSON
+	 */
+	const MAX_JSON_ENCODE_ATTEMPTS = 3;
+
+	/**
+	 * Temps d'attente entre les tentatives en secondes
+	 */
+	const RETRY_DELAY_SECONDS = 1;
+
 
 	public static $actions = [];
 	public static $coreModuleIds = [
@@ -347,6 +359,7 @@ class common
 		// Instanciation de la classe des entrées / sorties
 		$this->jsonDB(self::$siteContent);
 
+
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
 			foreach ($this->dataFiles as $stageId => $item) {
@@ -593,6 +606,67 @@ class common
 	}
 
 
+	   /**
+     * Écriture sécurisée dans un fichier en utilisant un verrouillage de fichier pour éviter les accès concurrents.
+     * Les données sont encodées au format JSON si l'extension du fichier est JSON.
+     *
+     * @param string $filename Le chemin du fichier dans lequel écrire les données.
+     * @param mixed  $data     Les données à écrire dans le fichier.
+     * @param int    $options  Les options pour la fonction file_put_contents, par défaut 0.
+     *
+     * @return bool            Retourne true si l'écriture dans le fichier est réussie, false sinon.
+     */
+    public static function secureFilePutContents($filename, $data, $options = 0)
+    {
+        // Vérifier si l'extension du fichier est JSON
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $encodeJson = strtolower($extension) === 'json';
+
+        // Tentatives d'encodage JSON si nécessaire
+        if ($encodeJson) {
+            $jsonData = null;
+            $attempts = 0;
+            while ($attempts < self::MAX_JSON_ENCODE_ATTEMPTS) {
+                $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+                if ($jsonData !== false) {
+                    break; // Sortir de la boucle si l'encodage réussit
+                }
+                $attempts++;
+                error_log('Erreur d\'encodage JSON (tentative ' . $attempts . ') : ' . json_last_error_msg());
+                sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
+            }
+
+            if ($jsonData === false) {
+                error_log('Impossible d\'encoder les données en format JSON.');
+                return false;
+            }
+        } else {
+            // Pas d'encodage JSON nécessaire
+            $jsonData = $data;
+        }
+
+        // Écriture sécurisée dans le fichier avec un verrouillage
+        $attempts = 0;
+        while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS) {
+            $lockHandle = fopen($filename . '.lock', 'w');
+            if (flock($lockHandle, LOCK_EX)) {
+                $bytesWritten = file_put_contents($filename, $jsonData, $options);
+                flock($lockHandle, LOCK_UN);
+                fclose($lockHandle);
+                if ($bytesWritten !== false && $bytesWritten === strlen($jsonData)) {
+                    return true; // Écriture réussie
+                }
+            } else {
+                fclose($lockHandle);
+            }
+            $attempts++;
+            error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données dans ' . $filename);
+            sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
+        }
+
+        error_log('Impossible d\'écrire dans le fichier ' . $filename . ' après ' . self::MAX_FILE_WRITE_ATTEMPTS . ' tentatives.');
+        return false;
+    }
 
 	/**
 	 * Effacer les données de la page
