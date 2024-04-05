@@ -589,7 +589,7 @@ class common
 	public function setPage($page, $value, $lang)
 	{
 
-		return file_put_contents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
+		return $this->secureFilePutContents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
 	}
 
 
@@ -827,7 +827,7 @@ class common
 
 		// Enregistrement : 3 tentatives
 		for ($i = 0; $i < 3; $i++) {
-			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents, JSON_UNESCAPED_UNICODE), LOCK_EX) !== false) {
+			if ($this->secureFilePutContents('core/vendor/tinymce/link_list.json',$parents) !== false) {
 				break;
 			}
 			// Pause de 10 millisecondes
@@ -1121,7 +1121,7 @@ class common
 			}
 			$sitemap->updateRobots();
 		} else {
-			file_put_contents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
+			$this->secureFilePutContents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
 		}
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
@@ -1398,7 +1398,7 @@ class common
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config', 'connect', 'log'])) {
-			file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+			$this->secureFilePutContents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
 	}
 

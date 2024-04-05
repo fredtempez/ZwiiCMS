@@ -292,7 +292,7 @@ class install extends common
 				case 2:
 					$success = true;
 					$message = '';
-					file_put_contents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
+					$this->secureFilePutContents(self::TEMP_DIR . 'update.tar.gz', helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.tar.gz'));
 					$md5origin = helper::getUrlContents(common::ZWII_UPDATE_URL . common::ZWII_UPDATE_CHANNEL . '/update.md5');
 					$md5origin = explode(' ', $md5origin);
 					$md5target = md5_file(self::TEMP_DIR . 'update.tar.gz');
@@ -401,7 +401,7 @@ class install extends common
 								'</IfModule>' . PHP_EOL .
 								'# URL rewriting' . PHP_EOL;
 							$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-							$success = file_put_contents(
+							$success = $this->secureFilePutContents(
 								'.htaccess',
 								$fileContent
 							);

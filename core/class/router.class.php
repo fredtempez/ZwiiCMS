@@ -61,17 +61,17 @@ class core extends common
 
 		// Crée le fichier de personnalisation avancée
 		if (file_exists(self::DATA_DIR . 'custom.css') === false) {
-			file_put_contents(self::DATA_DIR . 'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
+			$this->secureFilePutContents(self::DATA_DIR . 'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
 			chmod(self::DATA_DIR . 'custom.css', 0755);
 		}
 		// Crée le fichier de personnalisation
 		if (file_exists(self::DATA_DIR . 'theme.css') === false) {
-			file_put_contents(self::DATA_DIR . 'theme.css', '');
+			$this->secureFilePutContents(self::DATA_DIR . 'theme.css', '');
 			chmod(self::DATA_DIR . 'theme.css', 0755);
 		}
 		// Crée le fichier de personnalisation de l'administration
 		if (file_exists(self::DATA_DIR . 'admin.css') === false) {
-			file_put_contents(self::DATA_DIR . 'admin.css', '');
+			$this->secureFilePutContents(self::DATA_DIR . 'admin.css', '');
 			chmod(self::DATA_DIR . 'admin.css', 0755);
 		}
 
@@ -273,7 +273,7 @@ class core extends common
 			$css .= '#footerCopyright{text-align:' . $this->getData(['theme', 'footer', 'copyrightAlign']) . '}';
 
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR . 'theme.css', $css);
+			$this->secureFilePutContents(self::DATA_DIR . 'theme.css', $css);
 
 			// Effacer le cache pour tenir compte de la couleur de fond TinyMCE
 			header("Expires: Tue, 01 Jan 2000 00:00:00 GMT");
@@ -367,7 +367,7 @@ class core extends common
 			// Bordure du contour TinyMCE
 			$css .= '.mce-tinymce{border: 1px solid ' . $this->getData(['admin', 'borderBlockColor']) . '!important;}';
 			// Enregistre la personnalisation
-			file_put_contents(self::DATA_DIR . 'admin.css', $css);
+			$this->secureFilePutContents(self::DATA_DIR . 'admin.css', $css);
 		}
 	}
 	/**
