@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 13.2.00
+
+### Correction
+
+Modification de la fonction d'écriture des données de la classe jsonDB dans le but de s'assurer de l'intégrité des données écrites. Un trafic intense en pointe sur des fichiers volumineux et sur un serveur peu puissant pouvait occasionner des erreurs d'écriture ou un mauvais formatage des données json.
 
 ## Version 13.1.08
 
