@@ -616,60 +616,62 @@ class common
      *
      * @return bool            Retourne true si l'écriture dans le fichier est réussie, false sinon.
      */
-    public static function secureFilePutContents($filename, $data, $options = 0)
-    {
-        // Vérifier si l'extension du fichier est JSON
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
-        $encodeJson = strtolower($extension) === 'json';
-
-        // Tentatives d'encodage JSON si nécessaire
-        if ($encodeJson) {
-            $jsonData = null;
-            $attempts = 0;
-            while ($attempts < self::MAX_JSON_ENCODE_ATTEMPTS) {
-                $jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-                if ($jsonData !== false) {
-                    break; // Sortir de la boucle si l'encodage réussit
-                }
-                $attempts++;
-                error_log('Erreur d\'encodage JSON (tentative ' . $attempts . ') : ' . json_last_error_msg());
-                sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
-            }
-
-            if ($jsonData === false) {
-                error_log('Impossible d\'encoder les données en format JSON.');
-                return false;
-            }
-        } else {
-            // Pas d'encodage JSON nécessaire
-            $jsonData = $data;
-        }
-
-        // Écriture sécurisée dans le fichier avec un verrouillage
-        $attempts = 0;
-        while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS) {
-            $lockHandle = fopen($filename . '.lock', 'w');
-            if (flock($lockHandle, LOCK_EX)) {
-                $bytesWritten = file_put_contents($filename, $jsonData, $options);
-                flock($lockHandle, LOCK_UN);
-                fclose($lockHandle);
-                if ($bytesWritten !== false && $bytesWritten === strlen($jsonData)) {
-                    return true; // Écriture réussie
-                }
-            } else {
-                fclose($lockHandle);
-				if (file_exists($lockHandle)) {
-					unlink($lockHandle);
+	public static function secureFilePutContents($filename, $data, $options = 0)
+	{
+		// Vérifier si l'extension du fichier est JSON
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		$encodeJson = strtolower($extension) === 'json';
+	
+		// Tentatives d'encodage JSON si nécessaire
+		if ($encodeJson) {
+			$jsonData = null;
+			$attempts = 0;
+			while ($attempts < self::MAX_JSON_ENCODE_ATTEMPTS) {
+				$jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+				if ($jsonData !== false) {
+					break; // Sortir de la boucle si l'encodage réussit
 				}
-            }
-            $attempts++;
-            error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données dans ' . $filename);
-            sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
-        }
-
-        error_log('Impossible d\'écrire dans le fichier ' . $filename . ' après ' . self::MAX_FILE_WRITE_ATTEMPTS . ' tentatives.');
-        return false;
-    }
+				$attempts++;
+				error_log('Erreur d\'encodage JSON (tentative ' . $attempts . ') : ' . json_last_error_msg());
+				sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
+			}
+	
+			if ($jsonData === false) {
+				error_log('Impossible d\'encoder les données en format JSON.');
+				return false;
+			}
+		} else {
+			// Pas d'encodage JSON nécessaire
+			$jsonData = $data;
+		}
+	
+		// Écriture sécurisée dans le fichier avec un verrouillage
+		$attempts = 0;
+		while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS) {
+			$lockHandle = fopen($filename, 'c+');
+			if ($lockHandle !== false && flock($lockHandle, LOCK_EX)) {
+				$bytesWritten = fwrite($lockHandle, $jsonData);
+				if ($bytesWritten !== false && $bytesWritten === strlen($jsonData)) {
+					fflush($lockHandle); // Vider le tampon
+					ftruncate($lockHandle, ftell($lockHandle)); // Tronquer le fichier à la position actuelle du pointeur
+					flock($lockHandle, LOCK_UN); // Libérer le verrouillage
+					fclose($lockHandle); // Fermer le fichier
+					return file_put_contents($filename, $jsonData, $options) !== false; // Écriture réussie
+				}
+				flock($lockHandle, LOCK_UN); // Libérer le verrouillage en cas d'échec d'écriture
+			}
+			if ($lockHandle !== false) {
+				fclose($lockHandle); // Fermer le fichier en cas d'échec d'acquisition du verrouillage
+			}
+			$attempts++;
+			error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données dans ' . $filename);
+			sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
+		}
+	
+		error_log('Impossible d\'écrire dans le fichier ' . $filename . ' après ' . self::MAX_FILE_WRITE_ATTEMPTS . ' tentatives.');
+		return false;
+	}
+	
 
 	/**
 	 * Effacer les données de la page

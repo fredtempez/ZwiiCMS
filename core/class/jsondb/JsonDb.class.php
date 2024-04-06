@@ -166,38 +166,35 @@ class JsonDb extends \Prowebcraft\Dot
             error_log('Impossible d\'encoder les données en format JSON.');
             return false;
         }
-
-        $lockFile = $this->db . '.lock';
-        $lockHandle = fopen($lockFile, 'w');
+        $lockHandle = fopen($this->db, 'r+');
 
         if (flock($lockHandle, LOCK_EX)) {
             $attempts = 0;
             $bytesWritten = false;
             while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS && $bytesWritten === false) {
-                $bytesWritten = file_put_contents($this->db, $jsonData);
+                ftruncate($lockHandle, 0); // Vide le fichier
+                rewind($lockHandle); // Remet le pointeur au début du fichier
+                $bytesWritten = fwrite($lockHandle, $jsonData);
                 if ($bytesWritten === false) {
                     $attempts++;
                     error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données.');
                     sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
                 }
             }
-            flock($lockHandle, LOCK_UN);
-            fclose($lockHandle);
-
+            flock($lockHandle, LOCK_UN); // Libérer le verrouillage
+            fclose($lockHandle); // Fermer le fichier
+        
             if ($bytesWritten === false || $bytesWritten != strlen($jsonData)) {
                 error_log('Erreur d\'écriture, les données n\'ont pas été sauvegardées.');
                 return false;
             }
         } else {
             error_log('Impossible d\'obtenir un verrouillage sur le fichier de base de données.');
-            fclose($lockHandle);
+            fclose($lockHandle); // Fermer le fichier
             return false;
         }
-        // Supprimer le fichier de verrouillage
-        if (file_exists($lockFile)) {
-            unlink($lockFile);
-        }
         return true;
+        
+        
     }
-
 }
