@@ -77,7 +77,7 @@ class helper
 				// Créer la variable
 				$data = array_merge($data, [$text => '']);
 			}
-			file_put_contents('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+			file_put_contents('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
 		}
 	}

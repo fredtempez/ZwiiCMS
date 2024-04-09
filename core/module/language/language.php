@@ -99,7 +99,7 @@ class language extends common
 				is_array($descripteur['language'][$lang])
 			) {
 				if ($this->setData(['language', $lang, $descripteur['language'][$lang]])) {
-					$success = $this->secureFilePutContents(self::I18N_DIR . $lang . '.json', $languageData);
+					$success = $this->secure_file_put_contents(self::I18N_DIR . $lang . '.json', $languageData);
 					$success = is_int($success) ? true : false;
 				}
 			}
@@ -430,7 +430,7 @@ class language extends common
 				$this->setData(['locale', $data['locale']]);
 			} else {
 				// Sauver sur le disque
-				$this->secureFilePutContents(self::DATA_DIR . $lang . '/locale.json', $data);
+				$this->secure_file_put_contents(self::DATA_DIR . $lang . '/locale.json', $data);
 			}
 
 			// Valeurs en sortie
@@ -512,7 +512,7 @@ class language extends common
 					$data[$key] = $target;
 				}
 			}
-			$this->secureFilePutContents(self::I18N_DIR . $lang . '.json', $data);
+			$this->secure_file_put_contents(self::I18N_DIR . $lang . '.json', $data);
 
 			// Mettre à jour le descripteur
 			$this->setData([
@@ -546,7 +546,7 @@ class language extends common
 				$data[$key] = '';
 			}
 		}
-		$this->secureFilePutContents(self::I18N_DIR . $lang . '.json', $data);
+		$this->secure_file_put_contents(self::I18N_DIR . $lang . '.json', $data);
 
 		//  Tableau des chaines à traduire dans la langue sélectionnée
 		foreach ($data as $key => $value) {

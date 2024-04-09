@@ -135,7 +135,7 @@ if ($this->getData(['core', 'dataVersion']) < 10200) {
 	}
 	// Créer les en-têtes du journal
 	$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-	$this->secureFilePutContents(self::DATA_DIR . 'journal.log', $d);
+	$this->secure_file_put_contents(self::DATA_DIR . 'journal.log', $d);
 	// Init préservation htaccess
 	$this->setData(['config', 'autoUpdateHtaccess', false]);
 	// Options de barre de membre simple
@@ -459,7 +459,7 @@ if ($this->getData(['core', 'dataVersion']) < 11000) {
 	}
 	foreach ($hierarchy as $parentKey => $parent) {
 		$content = $this->getData(['page', $parent, 'content']);
-		//$this->secureFilePutContents(self::DATA_DIR . self::$siteContent . '/content/' . $parent . '.html', $content);
+		//$this->secure_file_put_contents(self::DATA_DIR . self::$siteContent . '/content/' . $parent . '.html', $content);
 		$this->setPage($parent, $content, 'fr');
 		$this->setData(['page', $parent, 'content', $parent . '.html']);
 	}
@@ -982,7 +982,7 @@ if ($this->getData(['core', 'dataVersion']) < 12309) {
 			$d = json_decode(file_get_contents(self::DATA_DIR . $key . '/locale.json'), true);
 			$d = array_merge($d['locale'], ['poweredPageLabel' => 'Motorisé par']);
 			$t['locale'] = $d;
-			$this->secureFilePutContents(self::DATA_DIR . $key . '/locale.json', $t);
+			$this->secure_file_put_contents(self::DATA_DIR . $key . '/locale.json', $t);
 		}
 	}
 

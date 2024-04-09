@@ -177,7 +177,7 @@ class page extends common
 			if (!is_dir(self::DATA_DIR . self::$siteContent . '/content')) {
 				mkdir(self::DATA_DIR . self::$siteContent . '/content', 0755);
 			}
-			//$this->secureFilePutContents(self::DATA_DIR . self::$siteContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+			//$this->secure_file_put_contents(self::DATA_DIR . self::$siteContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
 			$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$siteContent);
 
 			// Met à jour le sitemap

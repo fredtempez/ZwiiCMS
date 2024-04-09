@@ -534,7 +534,7 @@ class config extends common
 						'</IfModule>' . PHP_EOL .
 						'# URL rewriting' . PHP_EOL;
 					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
-					$this->secureFilePutContents(
+					$this->secure_file_put_contents(
 						'.htaccess',
 						$fileContent
 					);
@@ -550,7 +550,7 @@ class config extends common
 					$fileContent = file_get_contents('.htaccess');
 					$fileContent = explode('# URL rewriting', $fileContent);
 					$fileContent = $fileContent[0] . '# URL rewriting' . $fileContent[2];
-					$this->secureFilePutContents(
+					$this->secure_file_put_contents(
 						'.htaccess',
 						$fileContent
 					);
@@ -654,10 +654,10 @@ class config extends common
 		) {
 			// Ecrire les fichiers de script
 			if ($this->geturl(2) === 'head') {
-				$this->secureFilePutContents(self::DATA_DIR . 'head.inc.html', $this->getInput('configScriptHead', null));
+				$this->secure_file_put_contents(self::DATA_DIR . 'head.inc.html', $this->getInput('configScriptHead', null));
 			}
 			if ($this->geturl(2) === 'body') {
-				$this->secureFilePutContents(self::DATA_DIR . 'body.inc.html', $this->getInput('configScriptBody', null));
+				$this->secure_file_put_contents(self::DATA_DIR . 'body.inc.html', $this->getInput('configScriptBody', null));
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -699,7 +699,7 @@ class config extends common
 				unlink(self::DATA_DIR . 'journal.log');
 				// Créer les en-têtes des journaux
 				$d = 'Date;Heure;IP;Id;Action' . PHP_EOL;
-				$this->secureFilePutContents(self::DATA_DIR . 'journal.log', $d);
+				$this->secure_file_put_contents(self::DATA_DIR . 'journal.log', $d);
 				// Valeurs en sortie
 				$this->addOutput([
 					'title' => helper::translate('Configuration'),
@@ -775,7 +775,7 @@ class config extends common
 			ob_start();
 			$fileName = self::TEMP_DIR . 'blacklist.log';
 			$d = 'Date dernière tentative;Heure dernière tentative;Id;Adresse IP;Nombre d\'échecs' . PHP_EOL;
-			$this->secureFilePutContents($fileName, $d);
+			$this->secure_file_put_contents($fileName, $d);
 			if (file_exists($fileName)) {
 				$d = $this->getData(['blacklist']);
 				$data = '';
@@ -783,7 +783,7 @@ class config extends common
 					$data .= helper::dateUTF8('%Y %m %d', $item['lastFail'], self::$i18nUI) . ' - ' . helper::dateUTF8('%H:%M', time(), self::$i18nUI);
 					$data .= $key . ';' . $item['ip'] . ';' . $item['connectFail'] . PHP_EOL;
 				}
-				$this->secureFilePutContents($fileName, $data, FILE_APPEND);
+				$this->secure_file_put_contents($fileName, $data, FILE_APPEND);
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
 				header('Content-Transfer-Encoding: binary');

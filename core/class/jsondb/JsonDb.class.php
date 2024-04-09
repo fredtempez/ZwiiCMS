@@ -148,53 +148,40 @@ class JsonDb extends \Prowebcraft\Dot
      */
     public function save()
     {
-        $jsonOptions = JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_FORCE_OBJECT;
-        $jsonData = json_encode($this->data, $jsonOptions);
+        // Encode les données au format JSON avec les options spécifiées
+        $encoded_data = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_PRETTY_PRINT);
 
-        $attempts = 0;
-        while ($attempts < self::MAX_JSON_ENCODE_ATTEMPTS) {
-            if ($jsonData !== false) {
-                break; // Sortir de la boucle si l'encodage réussit
+        // Vérifie la longueur de la chaîne JSON encodée
+        $encoded_length = strlen($encoded_data);
+
+        // Initialise le compteur de tentatives
+        $attempt = 0;
+
+        // Tente d'encoder les données en JSON et de les sauvegarder jusqu'à 5 fois en cas d'échec
+        while ($attempt < 5) {
+            // Essaye d'écrire les données encodées dans le fichier de base de données
+            $write_result = file_put_contents($this->db, $encoded_data, LOCK_EX); // Les utilisateurs multiples obtiennent un verrou
+
+            // Vérifie si l'écriture a réussi
+            if ($write_result === $encoded_length) {
+                // Sort de la boucle si l'écriture a réussi
+                break;
             }
-            $attempts++;
-            error_log('Erreur d\'encodage JSON (tentative ' . $attempts . ') : ' . json_last_error_msg());
-            $jsonData = json_encode($this->data, $jsonOptions); // Réessayer l'encodage
-            sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
+
+            // Incrémente le compteur de tentatives
+            $attempt++;
+
+            // Attente
+            sleep(1);
         }
 
-        if ($jsonData === false) {
-            error_log('Impossible d\'encoder les données en format JSON.');
-            return false;
-        }
-        $lockHandle = fopen($this->db, 'r+');
+        // Vérifie si l'écriture a échoué même après plusieurs tentatives
+        if ($write_result !== $encoded_length) {
+            // Enregistre un message d'erreur dans le journal des erreurs
+            error_log('Erreur d\'écriture, les données n\'ont pas été sauvegardées.');
 
-        if (flock($lockHandle, LOCK_EX)) {
-            $attempts = 0;
-            $bytesWritten = false;
-            while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS && $bytesWritten === false) {
-                ftruncate($lockHandle, 0); // Vide le fichier
-                rewind($lockHandle); // Remet le pointeur au début du fichier
-                $bytesWritten = fwrite($lockHandle, $jsonData);
-                if ($bytesWritten === false) {
-                    $attempts++;
-                    error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données.');
-                    sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
-                }
-            }
-            flock($lockHandle, LOCK_UN); // Libérer le verrouillage
-            fclose($lockHandle); // Fermer le fichier
-        
-            if ($bytesWritten === false || $bytesWritten != strlen($jsonData)) {
-                error_log('Erreur d\'écriture, les données n\'ont pas été sauvegardées.');
-                return false;
-            }
-        } else {
-            error_log('Impossible d\'obtenir un verrouillage sur le fichier de base de données.');
-            fclose($lockHandle); // Fermer le fichier
-            return false;
+            // Affiche un message d'erreur et termine le script
+            exit('Erreur d\'écriture, les données n\'ont pas été sauvegardées.');
         }
-        return true;
-        
-        
     }
 }

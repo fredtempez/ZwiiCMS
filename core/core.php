@@ -602,73 +602,48 @@ class common
 	public function setPage($page, $value, $lang)
 	{
 
-		return $this->secureFilePutContents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
+		return $this->secure_file_put_contents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
 	}
 
-
-	   /**
-     * Écriture sécurisée dans un fichier en utilisant un verrouillage de fichier pour éviter les accès concurrents.
-     * Les données sont encodées au format JSON si l'extension du fichier est JSON.
-     *
-     * @param string $filename Le chemin du fichier dans lequel écrire les données.
-     * @param mixed  $data     Les données à écrire dans le fichier.
-     * @param int    $options  Les options pour la fonction file_put_contents, par défaut 0.
-     *
-     * @return bool            Retourne true si l'écriture dans le fichier est réussie, false sinon.
-     */
-	public static function secureFilePutContents($filename, $data, $options = 0)
+	/**
+	 * Écrit les données dans un fichier avec plusieurs tentatives d'écriture et verrouillage
+	 *
+	 * @param string $filename Le nom du fichier
+	 * @param string $data Les données à écrire dans le fichier
+	 * @param int $flags Les drapeaux optionnels à passer à la fonction $this->secure_file_put_contents
+	 * @return bool True si l'écriture a réussi, sinon false
+	 */
+	function secure_file_put_contents($filename, $data, $flags = 0)
 	{
-		// Vérifier si l'extension du fichier est JSON
-		$extension = pathinfo($filename, PATHINFO_EXTENSION);
-		$encodeJson = strtolower($extension) === 'json';
-	
-		// Tentatives d'encodage JSON si nécessaire
-		if ($encodeJson) {
-			$jsonData = null;
-			$attempts = 0;
-			while ($attempts < self::MAX_JSON_ENCODE_ATTEMPTS) {
-				$jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-				if ($jsonData !== false) {
-					break; // Sortir de la boucle si l'encodage réussit
-				}
-				$attempts++;
-				error_log('Erreur d\'encodage JSON (tentative ' . $attempts . ') : ' . json_last_error_msg());
-				sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
-			}
-	
-			if ($jsonData === false) {
-				error_log('Impossible d\'encoder les données en format JSON.');
-				return false;
-			}
-		} else {
-			// Pas d'encodage JSON nécessaire
-			$jsonData = $data;
+		// Vérifie si le fichier existe
+		if (!file_exists($filename)) {
+			// Crée le fichier s'il n'existe pas
+			$handle = fopen($filename, 'w');
+			fclose($handle);
 		}
-	
-		// Écriture sécurisée dans le fichier avec un verrouillage
+
+		// Initialise le compteur de tentatives
 		$attempts = 0;
-		while ($attempts < self::MAX_FILE_WRITE_ATTEMPTS) {
-			$lockHandle = fopen($filename, 'c+');
-			if ($lockHandle !== false && flock($lockHandle, LOCK_EX)) {
-				$bytesWritten = fwrite($lockHandle, $jsonData);
-				if ($bytesWritten !== false && $bytesWritten === strlen($jsonData)) {
-					fflush($lockHandle); // Vider le tampon
-					ftruncate($lockHandle, ftell($lockHandle)); // Tronquer le fichier à la position actuelle du pointeur
-					flock($lockHandle, LOCK_UN); // Libérer le verrouillage
-					fclose($lockHandle); // Fermer le fichier
-					return file_put_contents($filename, $jsonData, $options) !== false; // Écriture réussie
-				}
-				flock($lockHandle, LOCK_UN); // Libérer le verrouillage en cas d'échec d'écriture
+
+		// Vérifie la longueur des données
+		$data_length = strlen($data);
+
+		// Effectue jusqu'à 5 tentatives d'écriture
+		while ($attempts < 5) {
+			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
+			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
+
+			// Vérifie si l'écriture a réussi
+			if ($write_result !== false && $write_result === $data_length) {
+				// Sort de la boucle si l'écriture a réussi
+				return true;
 			}
-			if ($lockHandle !== false) {
-				fclose($lockHandle); // Fermer le fichier en cas d'échec d'acquisition du verrouillage
-			}
+
+			// Incrémente le compteur de tentatives
 			$attempts++;
-			error_log('Erreur d\'écriture (tentative ' . $attempts . ') : impossible de sauvegarder les données dans ' . $filename);
-			sleep(self::RETRY_DELAY_SECONDS); // Attendre avant de réessayer
 		}
-	
-		error_log('Impossible d\'écrire dans le fichier ' . $filename . ' après ' . self::MAX_FILE_WRITE_ATTEMPTS . ' tentatives.');
+
+		// Échec de l'écriture après plusieurs tentatives
 		return false;
 	}
 	
@@ -906,7 +881,7 @@ class common
 
 		// Enregistrement : 3 tentatives
 		for ($i = 0; $i < 3; $i++) {
-			if ($this->secureFilePutContents('core/vendor/tinymce/link_list.json',$parents) !== false) {
+			if ($this->secure_file_put_contents('core/vendor/tinymce/link_list.json',$parents) !== false) {
 				break;
 			}
 			// Pause de 10 millisecondes
@@ -1200,7 +1175,7 @@ class common
 			}
 			$sitemap->updateRobots();
 		} else {
-			$this->secureFilePutContents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
+			$this->secure_file_put_contents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
 		}
 
 		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
@@ -1477,7 +1452,7 @@ class common
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
 		$dataLog .= PHP_EOL;
 		if ($this->getData(['config', 'connect', 'log'])) {
-			$this->secureFilePutContents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
+			$this->secure_file_put_contents(self::DATA_DIR . 'journal.log', $dataLog, FILE_APPEND);
 		}
 	}
 
