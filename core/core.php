@@ -615,18 +615,15 @@ class common
 	 */
 	function secure_file_put_contents($filename, $data, $flags = 0)
 	{
-		// Vérifie si le fichier existe
-		if (!file_exists($filename)) {
-			// Crée le fichier s'il n'existe pas
-			$handle = fopen($filename, 'w');
-			fclose($handle);
-		}
 
 		// Initialise le compteur de tentatives
 		$attempts = 0;
 
+		// Convertit les données en chaîne de caractères
+		$serialized_data = serialize($data);
+
 		// Vérifie la longueur des données
-		$data_length = strlen($data);
+		$data_length = strlen($serialized_data);
 
 		// Effectue jusqu'à 5 tentatives d'écriture
 		while ($attempts < 5) {
