@@ -878,7 +878,7 @@ class common
 
 		// Enregistrement : 3 tentatives
 		for ($i = 0; $i < 3; $i++) {
-			if ($this->secure_file_put_contents('core/vendor/tinymce/link_list.json',$parents) !== false) {
+			if (file_put_contents('core/vendor/tinymce/link_list.json', json_encode($parents, JSON_UNESCAPED_UNICODE), LOCK_EX) !== false) {
 				break;
 			}
 			// Pause de 10 millisecondes
