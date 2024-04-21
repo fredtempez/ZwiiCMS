@@ -57,7 +57,7 @@ class layout extends common
      */
     public function showMain()
     {
-        echo '<main><section>';
+        echo '<main>';
         // Récupérer la config de la page courante
         $blocks = is_null($this->getData(['page', $this->getUrl(0), 'block'])) ? '12' : $this->getData(['page', $this->getUrl(0), 'block']);
         $blocks = explode('-', $blocks);
@@ -151,7 +151,7 @@ class layout extends common
             }
             echo '</div>';
         }
-        echo '</main></section>';
+        echo '</main>';
     }
 
     /**
