@@ -55,7 +55,7 @@ body {
     .tippy-tooltip {
         font-size: .8rem !important;
     }
-    section {
+    main {
         padding: 5px;
     }
 }
@@ -766,17 +766,17 @@ li .menuSideChild {
 /* Corps */
 
 @media screen and (min-width:768px) {
-    section {
+    main {
         padding: 20px;
     }
 }
 
-section {
+main {
     /*min-height: 100%;*/
     min-height: 65vh;
 }
 
-section #sectionTitle {
+main #sectionTitle {
     margin-top: 0;
 }
 
@@ -785,7 +785,7 @@ section #sectionTitle {
     min-height: 0px;
 }
 
-section:after {
+main:after {
     content: " ";
     display: table;
     clear: both;
