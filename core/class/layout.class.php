@@ -151,7 +151,7 @@ class layout extends common
             }
             echo '</div>';
         }
-        echo '</main></section>';
+        echo '</section></main>';
     }
 
     /**
