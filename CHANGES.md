@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 13.2.02
+
+Corrige un warning quand un module blog ou news ne contient pas d'article.
+
+
 ## Version 13.2.01
 
 ### Correction
