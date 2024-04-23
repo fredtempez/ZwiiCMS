@@ -3,7 +3,7 @@
 	<div class="col1">
 		<?php echo template::button('pageCssEditorBack', [
 			'class' => 'buttonGrey',
-			'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2),
+			'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent,
 			'value' => template::ico('left')
 		]); ?>
 	</div>

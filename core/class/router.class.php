@@ -444,26 +444,6 @@ class core extends common
 			exit();
 		}
 
-		// Pour éviter une 404 sur une langue étrangère, bascule dans la langue correcte.
-		if (is_null($this->getData(['page', $this->getUrl(0)]))) {
-			foreach (common::$languages as $key => $value) {
-				if (
-					is_dir(common::DATA_DIR . $key) &&
-					file_exists(common::DATA_DIR . $key . '/page.json')
-				) {
-					$pagesId = json_decode(file_get_contents(common::DATA_DIR . $key . '/page.json'), true);
-					if (
-						is_array($pagesId['page']) &&
-						array_key_exists($this->getUrl(0), $pagesId['page'])
-					) {
-						$_SESSION['ZWII_CONTENT'] = $key;
-						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl(0));
-						exit();
-					}
-				}
-			}
-		}
-
 		// Check l'accès à la page
 		$access = null;
 		if ($this->getData(['page', $this->getUrl(0)]) !== null) {
@@ -813,6 +793,28 @@ class core extends common
 			}
 		} elseif ($this->output['content'] === '') {
 			http_response_code(404);
+			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
+			// Parcourir les espaces
+			foreach (common::$languages as $langId => $value) {;
+				if (
+					// l'espace existe
+					is_dir(common::DATA_DIR . $langId) &&
+					file_exists(common::DATA_DIR . $langId . '/page.json')
+				) {
+					// Lire les données des pages
+					$pagesId = json_decode(file_get_contents(common::DATA_DIR . $langId . '/page.json'), true);
+					if (
+						// La page existe
+						is_array($pagesId['page']) &&
+						array_key_exists($this->getUrl(0), $pagesId['page'])
+					) {
+						// Basculer
+						$_SESSION['ZWII_SITE_CONTENT'] = $langId;
+						header('Refresh:0; url=' . helper::baseUrl() . $this->getUrl());
+						exit();
+					}
+				}
+			}
 			if (
 				$this->getData(['locale', 'page404']) !== 'none'
 				and $this->getData(['page', $this->getData(['locale', 'page404'])])

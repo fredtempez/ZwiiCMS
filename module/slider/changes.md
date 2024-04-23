@@ -1,3 +1,5 @@
+# Version 6.5
+- Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.
 # Version 6.4
 - Corrige plusieurs bugs dans les fonctions de tri
 # Version 6.3

@@ -980,7 +980,7 @@ class layout extends common
                 // Bouton Ajouter une page
                 if ($this->getUser('permission', 'page', 'add')) {
                     $leftItems .= '<li>' . template::ico('plus', [
-                        'href' => helper::baseUrl() . 'page/add',
+                        'href' => helper::baseUrl() . 'page/add/' . self::$siteContent,
                         'help' => 'Nouvelle page ou barre latérale'
                     ]) . '</li>';
                 }
@@ -999,7 +999,7 @@ class layout extends common
                     // Bouton Editer une page
                     if ($this->getUser('permission', 'page', 'edit')) {
                         $leftItems .= '<li>' . template::ico('pencil', [
-                            'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0),
+                            'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Éditer la page'
                         ]) . '</li>';
                     }
@@ -1018,7 +1018,7 @@ class layout extends common
                         $this->getUser('permission', 'page', 'duplicate')
                     ) {
                         $leftItems .= '<li>' . template::ico('clone', [
-                            'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0),
+                            'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Dupliquer la page'
                         ])
                             . '</li>';
@@ -1028,7 +1028,7 @@ class layout extends common
                         $this->getUser('permission', 'page', 'delete')
                     ) {
                         $leftItems .= '<li>' . template::ico('trash', [
-                            'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0),
+                            'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Supprimer la page',
                             'id' => 'pageDelete'
                         ])

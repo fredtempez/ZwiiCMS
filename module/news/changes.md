@@ -1,3 +1,5 @@
+# Version 5.6
+- Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.
 # Version 5.5
 - Mise à jour RSS Feed
 # Version 5.4

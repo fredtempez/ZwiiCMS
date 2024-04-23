@@ -1,5 +1,10 @@
 # Changelog
 
+
+## Version 13.3.00
+
+Cette modification évite les problèmes d'édition de langues différentes dans des onglets différents du même navigateur.
+
 ## Version 13.2.02
 
 Corrige un warning quand un module blog ou news ne contient pas d'article.
