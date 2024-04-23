@@ -9,7 +9,6 @@ Cette modification évite les problèmes d'édition de langues différentes dans
 
 Corrige un warning quand un module blog ou news ne contient pas d'article.
 
-
 ## Version 13.2.01
 
 ### Correction
