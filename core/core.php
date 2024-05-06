@@ -341,15 +341,15 @@ class common
 		}
 
 		// Déterminer la langue du contenu du site
-		if (isset($_SESSION['ZWII_CONTENT'])) {
+		if (isset($_SESSION['ZWII_SITE_CONTENT'])) {
 			// Déterminé par la session présente
-			self::$siteContent = $_SESSION['ZWII_CONTENT'];
+			self::$siteContent = $_SESSION['ZWII_SITE_CONTENT'];
 		} else {
 			// Détermine la langue par défaut
 			foreach (self::$languages as $key => $value) {
 				if (file_exists(self::DATA_DIR . $key . '/.default')) {
 					self::$siteContent = $key;
-					$_SESSION['ZWII_CONTENT'] = $key;
+					$_SESSION['ZWII_SITE_CONTENT'] = $key;
 					break;
 				}
 			}

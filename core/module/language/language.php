@@ -197,7 +197,7 @@ class language extends common
 				) {
 					if (file_exists(self::DATA_DIR . $key . '/.default')) {
 						$messageLocale = helper::translate('Langue par défaut');
-					} elseif (isset($_SESSION['ZWII_CONTENT']) && $_SESSION['ZWII_CONTENT'] === $key) {
+					} elseif (isset($_SESSION['ZWII_SITE_CONTENT']) && $_SESSION['ZWII_SITE_CONTENT'] === $key) {
 						$messageLocale = helper::translate('Langue du site sélectionnée');
 					} else {
 						$messageLocale = '';
@@ -700,7 +700,7 @@ class language extends common
 		) {
 
 			// Stocker la sélection
-			$_SESSION['ZWII_CONTENT'] = $lang;
+			$_SESSION['ZWII_SITE_CONTENT'] = $lang;
 		}
 
 		// Valeurs en sortie

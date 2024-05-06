@@ -1068,7 +1068,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 			}
 		}
 	}
-	$_SESSION['ZWII_CONTENT'] = $currentlanguage;
+	$_SESSION['ZWII_SITE_CONTENT'] = $currentlanguage;
 
 	// Supprime la clé OpenOgraph
 	$this->deleteData(['config', 'seo', 'keyApi']);
