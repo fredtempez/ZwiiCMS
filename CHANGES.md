@@ -3,7 +3,7 @@
 
 ## Version 13.3.01
 
-Livraision des modules blogs et news corrigeant un problème de flux RSS avec des méta vides.
+Livraison des modules blogs et news corrigeant un problème de flux RSS avec des méta vides.
 
 ## Version 13.3.00
 
