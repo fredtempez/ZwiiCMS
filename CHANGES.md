@@ -1,6 +1,10 @@
 # Changelog
 
 
+## Version 13.3.01
+
+Livraision des modules blogs et news corrigeant un problème de flux RSS avec des méta vides.
+
 ## Version 13.3.00
 
 Cette modification évite les problèmes d'édition de langues différentes dans des onglets différents du même navigateur.
@@ -20,7 +24,7 @@ Modification de la fonction d'écriture des données de la classe jsonDB dans le
 ### Corrections
 
 - Corrige des erreurs quand une page parente ou des pages enfants ont des permissions limitées.
-- Module Search 3.1 : initialisation du module après installation dans une page sans configration par l'utilisateur.
+- Module Search 3.1 : initialisation du module après installation dans une page sans configuration par l'utilisateur.
 
 ### Améliorations
 

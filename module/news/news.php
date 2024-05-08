@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '5.6';
+	const VERSION = '5.7';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -124,9 +124,9 @@ class news extends common
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
-		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']));
+		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']): '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
+		$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']) ? $this->getData(['page', $this->getUrl(0), 'metaDescription']): '');
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
