@@ -1,4 +1,4 @@
-# Version 5.7
+# Versions 5.7 - 5.8
 - Le flux RSS ne fonctionne pas si les méta de la page sont vides.
 # Version 5.6
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.

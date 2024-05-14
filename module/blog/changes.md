@@ -1,5 +1,5 @@
 
-# Version 7.8
+# Versions 7.8 - 7.9
 - Le flux RSS ne fonctionne pas si les méta de la page sont vides.
 # Version 7.7
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.

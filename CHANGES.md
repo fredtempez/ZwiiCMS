@@ -1,7 +1,7 @@
 # Changelog
 
 
-## Version 13.3.01
+## Versions 13.3.01 - 13.2.02
 
 Livraison des modules blogs et news corrigeant un problème de flux RSS avec des méta vides.
 

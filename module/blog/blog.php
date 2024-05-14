@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '7.8';
+	const VERSION = '7.9';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -198,7 +198,9 @@ class blog extends common
 		// En-tête
 		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']): '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']) ? $this->getData(['page', $this->getUrl(0), 'metaDescription']): '');
+		if ($this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
+			$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
+		}
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
