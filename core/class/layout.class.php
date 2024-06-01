@@ -990,14 +990,14 @@ class layout extends common
                     // Sur une page sans module
                     or $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
                     // Sur une page avec un module invalide
-                    or (!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) &&
+                    or (!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) and 
                         !class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
                     )
                     // Sur une page d'accueil
                     or $this->getUrl(0) === ''
                 ) {
                     // Bouton Editer une page
-                    if ($this->getUser('permission', 'page', 'edit')) {
+                    if ($this->getUser('permission', 'page', 'edit') and $this->geturl(1) !== 'edit') {
                         $leftItems .= '<li>' . template::ico('pencil', [
                             'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Éditer la page'

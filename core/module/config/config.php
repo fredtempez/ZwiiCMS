@@ -524,6 +524,12 @@ class config extends common
 					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
 					$rewriteData = PHP_EOL .
+						' # Enlever le slash final des URL' . PHP_EOL .
+						'RewriteCond %{REQUEST_FILENAME} !-f' . PHP_EOL .
+						'RewriteCond %{REQUEST_FILENAME} !-d' . PHP_EOL .
+						'RewriteCond %{REQUEST_URI} ^(.+)/$' . PHP_EOL .
+						'RewriteRule ^ %1 [R=301,L]' . PHP_EOL .
+						PHP_EOL .
 						'# URL rewriting' . PHP_EOL .
 						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .

@@ -1,5 +1,11 @@
 # Changelog
 
+## Versions 13.3.03
+
+** Corrections :**
+- L'ajout d'un slash en fin d'adresse avec la réécriture active provoquait une mauvaise détermination des adresses des images dans TinyMCE. Résolution : une directive htaccess supprime tous les slash en fin d'adresse.
+- Lorsque la page est ouverte en édition, un clic sur le bouton édition dans la barre d'administration affiche une erreur, le lien étant incorrect. Afin d'éviter cette erreur et une redondance, le bouton d'édition est masqué lorsque la page est éditée.
+
 
 ## Versions 13.3.01 - 13.2.02
 
