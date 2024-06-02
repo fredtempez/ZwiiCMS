@@ -32,17 +32,13 @@ Options -Indexes
     Options -MultiViews
 </IfModule>
 
-# ne pas supprimer la ligne URL rewriting !
-
-
-
-
  # Enlever le slash final des URL
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} ^(.+)/$
-RewriteRule ^ %1 [R=301,L]
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_URI} ^(.+)/$
+ RewriteRule ^ %1 [R=301,L]
 
+# ne pas supprimer la ligne URL rewriting !
 # URL rewriting
 
 
