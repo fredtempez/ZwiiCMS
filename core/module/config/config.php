@@ -523,7 +523,7 @@ class config extends common
 				) {
 					// Ajout des lignes dans le .htaccess
 					$fileContent = file_get_contents('.htaccess');
-					$rewriteData = PHP_EOL .
+					$rewriteData = 
 						'# URL rewriting' . PHP_EOL .
 						'<IfModule mod_rewrite.c>' . PHP_EOL .
 						"\tRewriteEngine on" . PHP_EOL .
@@ -532,7 +532,7 @@ class config extends common
 						"\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL .
 						"\tRewriteRule ^(.*)$ index.php?$1 [L]" . PHP_EOL .
 						'</IfModule>' . PHP_EOL .
-						'# URL rewriting' . PHP_EOL;
+						'# URL rewriting';
 					$fileContent = str_replace('# URL rewriting', $rewriteData, $fileContent);
 					$this->secure_file_put_contents(
 						'.htaccess',

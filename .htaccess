@@ -39,7 +39,6 @@ Options -Indexes
  RewriteRule ^ %1 [R=301,L]
 
 # ne pas supprimer la ligne URL rewriting !
-
 # URL rewriting
 
 
