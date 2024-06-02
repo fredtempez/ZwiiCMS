@@ -463,6 +463,7 @@ class core extends common
 					$access = false;
 				}
 			}
+			
 			// Empêcher l'accès aux pages désactivées par URL directe
 			if (
 				($this->getData(['page', $this->getUrl(0), 'disable']) === true
@@ -471,6 +472,14 @@ class core extends common
 					and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
 					and $this->getUser('group') < common::GROUP_EDITOR
 				)
+			) {
+				$access = false;
+			}
+
+			// Lève une erreur si l'url est celle d'une page avec des éléments surnuméraires  https://www.site.fr/page/truc
+			if (
+				array_key_exists($this->getUrl(0), $this->getData(['page']))
+				and $this->getUrl(1)
 			) {
 				$access = false;
 			}
@@ -795,7 +804,8 @@ class core extends common
 			http_response_code(404);
 			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
 			// Parcourir les espaces
-			foreach (common::$languages as $langId => $value) {;
+			foreach (common::$languages as $langId => $value) {
+				;
 				if (
 					// l'espace existe
 					is_dir(common::DATA_DIR . $langId) &&
