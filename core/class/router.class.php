@@ -478,6 +478,7 @@ class core extends common
 			if (
 				array_key_exists($this->getUrl(0), $this->getData(['page']))
 				and $this->getUrl(1)
+				and $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
 			) {
 				$access = false;
 			}
