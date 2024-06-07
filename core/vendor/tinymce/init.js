@@ -119,7 +119,7 @@ tinymce.init({
 	// Autoriser tous les éléments
 	valid_elements: '*[*]',
 	// Autorise l'ajout de script
-	extended_valid_elements: "script[language|type|src]",
+	extended_valid_elements: "script[language|type|src],img[class|src|border=0|alt|title|hspace|vspace|width|height|align|onmouseover|onmouseout|name|loading=lazy]",
 	// Conserver les styles
 	keep_styles: false,
 	// Bloque le dimensionnement des médias (car automatiquement en fullsize avec fitvids pour le responsive)
