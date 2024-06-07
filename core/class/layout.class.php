@@ -990,14 +990,17 @@ class layout extends common
                     // Sur une page sans module
                     or $this->getData(['page', $this->getUrl(0), 'moduleId']) === ''
                     // Sur une page avec un module invalide
-                    or (!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) and 
+                    or (!is_null($this->getData(['page', $this->getUrl(2), 'moduleId'])) and
                         !class_exists($this->getData(['page', $this->getUrl(2), 'moduleId']))
                     )
                     // Sur une page d'accueil
                     or $this->getUrl(0) === ''
                 ) {
                     // Bouton Editer une page
-                    if ($this->getUser('permission', 'page', 'edit') and $this->geturl(1) !== 'edit') {
+                    if (
+                        $this->getUser('permission', 'page', 'edit')
+                        and $this->geturl(1) !== 'edit'
+                    ) {
                         $leftItems .= '<li>' . template::ico('pencil', [
                             'href' => helper::baseUrl() . 'page/edit/' . $this->getUrl(0) . '/' . self::$siteContent,
                             'help' => 'Éditer la page'
@@ -1006,7 +1009,8 @@ class layout extends common
                     // Bouton Editer le module d'une page
                     if (
                         $this->getUser('permission', 'page', 'module')
-                        && $this->getData(['page', $this->getUrl(0), 'moduleId'])
+                        and $this->geturl(1) !== 'edit'
+                        and $this->getData(['page', $this->getUrl(0), 'moduleId'])
                     ) {
                         $leftItems .= '<li>' . template::ico('gear', [
                             'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
@@ -1016,6 +1020,7 @@ class layout extends common
                     // Bouton dupliquer une page
                     if (
                         $this->getUser('permission', 'page', 'duplicate')
+                        and $this->geturl(1) !== 'edit'
                     ) {
                         $leftItems .= '<li>' . template::ico('clone', [
                             'href' => helper::baseUrl() . 'page/duplicate/' . $this->getUrl(0) . '/' . self::$siteContent,
@@ -1026,6 +1031,8 @@ class layout extends common
                     // Bouton Effacer une page
                     if (
                         $this->getUser('permission', 'page', 'delete')
+                        and $this->geturl(1) !== 'edit'
+
                     ) {
                         $leftItems .= '<li>' . template::ico('trash', [
                             'href' => helper::baseUrl() . 'page/delete/' . $this->getUrl(0) . '/' . self::$siteContent,
@@ -1168,7 +1175,7 @@ class layout extends common
     {
         // Import des fontes liées au thème
         if (file_exists(self::DATA_DIR . 'font/font.html')) {
-            include_once(self::DATA_DIR . 'font/font.html');
+            include_once (self::DATA_DIR . 'font/font.html');
         }
     }
 
