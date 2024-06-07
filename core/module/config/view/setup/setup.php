@@ -48,7 +48,7 @@
 						<?php echo template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
 							'checked' => helper::checkRewrite(),
 							'help' => 	'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',
-							'disabled' =>  !in_array('mod_rewrite',apache_get_modules())
+							'disabled' =>  stripos($_SERVER["SERVER_SOFTWARE"], 'Apache') === false
 						]); ?>
 					</div>
 				</div>
