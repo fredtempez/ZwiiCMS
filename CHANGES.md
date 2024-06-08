@@ -3,7 +3,7 @@
 ## Versions 13.3.03
 
 ** Corrections :**
-- Le bug d'édition des pages avec Firefox est corrigé grâce à la suppression d'une commande forçant le chargement lassif des images dans cors.js.php
+- Le bug d'édition des pages avec Firefox est corrigé grâce à la suppression d'une commande forçant le chargement lassif des images dans core.js.php
 - Dans la configuration, l'option Apache URL intelligentes ne s'active que si le serveur est Apache et que le module Rewriter est actif. Ce qui exclue les autres serveurs non compatibles comme Nginx, Caddy etc.
 - L'ajout d'un slash en fin d'adresse avec la réécriture active provoquait une mauvaise détermination des adresses des images dans TinyMCE. Résolution : une directive htaccess supprime tous les slash en fin d'adresse.
 - Lorsque la page est ouverte en édition, un clic sur le bouton édition dans la barre d'administration affiche une erreur, le lien étant incorrect. Afin d'éviter cette erreur et une redondance, le bouton d'édition est masqué lorsque la page est éditée.
