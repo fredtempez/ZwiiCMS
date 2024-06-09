@@ -902,4 +902,19 @@ class config extends common
 			]);
 		}
 	}
+	
+	/**
+	 * Fonction pour vérifier la présence du module de réécriture
+	 * @return bool
+	 */
+	public function isModRewriteEnabled() {
+		// Check if Apache and mod_rewrite is loaded
+		if (function_exists('apache_get_modules')) {
+			$modules = apache_get_modules();
+			return in_array('mod_rewrite', $modules);
+		} else {
+			// Fallback if not using Apache or unable to detect modules
+			return getenv('HTTP_MOD_REWRITE') == 'On' || getenv('REDIRECT_STATUS') == '200';
+		}
+	}
 }

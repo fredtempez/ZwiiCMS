@@ -338,13 +338,12 @@ class helper
 	{
 		// N'interroge que le serveur Apache
 		if (strpos($_SERVER["SERVER_SOFTWARE"], 'Apache') > 0) {
-			self::$rewriteStatus === false;
-		} elseif (self::$rewriteStatus === null) {
+			self::$rewriteStatus = false;
+		} else {
 			// Ouvre et scinde le fichier .htaccess
 			$htaccess = explode('# URL rewriting', file_get_contents('.htaccess'));
 			// Retourne un boolean en fonction du contenu de la partie réservée à l'URL rewriting
-			//self::$rewriteStatus = (empty($htaccess[1]) === false);
-			self::$rewriteStatus = (strpos($htaccess[1], 'RewriteEngine on') > 0) ? true : false;
+			self::$rewriteStatus = (strpos($htaccess[1], 'RewriteEngine on') !== false);
 		}
 		return self::$rewriteStatus;
 	}
