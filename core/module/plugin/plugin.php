@@ -592,7 +592,7 @@ class plugin extends common
 			$fileName = $moduleId . str_replace('.', '-', $infoModule[$moduleId]['version']) . '.zip';
 
 			// Régénération du descripteur du module
-			$this->secure_file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', $infoModule[$moduleId]);
+			file_put_contents(self::MODULE_DIR . $moduleId . '/enum.json', json_encode($infoModule[$moduleId], JSON_UNESCAPED_UNICODE));
 
 			// Construire l'archive
 			$this->makeZip($tmpFolder . $fileName, self::MODULE_DIR . $moduleId);

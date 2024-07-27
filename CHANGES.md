@@ -1,4 +1,9 @@
-# Changelog
+# Notes de mises à jour
+
+## Versions 13.3.04
+
+** Correction : **
+- Mauvaise génération du descripteur d'un module lors de sa sauvegarde. 
 
 ## Versions 13.3.03
 
