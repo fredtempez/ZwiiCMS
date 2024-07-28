@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.3.04';
+	const ZWII_VERSION = '13.3.05';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
@@ -1217,11 +1217,10 @@ class common
 				$source_image = imagecreatefromwebp($src);
 				break;
 			case 'avif':
-				$source_image = function_exists('imagecreatefromavif') ? imagecreatefromavif($src) : null;
-				break;
+				$source_image =  imagecreatefromavif($src);
 		}
 		// Image valide
-		if ($source_image) {
+		if (is_object($source_image)) {
 			$width = imagesx($source_image);
 			$height = imagesy($source_image);
 			/* find the "desired height" of this thumbnail, relative to the desired width  */
@@ -1238,9 +1237,9 @@ class common
 					return (imagepng($virtual_image, $dest));
 				case 'image/gif':
 					return (imagegif($virtual_image, $dest));
-				case 'webp':
+				case 'image/webp':
 					return (imagewebp($virtual_image, $dest));
-				case 'avif':
+				case 'image/avif':
 					return (imageavif($virtual_image, $dest));
 			}
 		} else {

@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Versions 13.3.05
+** Correction : **
+- Corrige la génération des miniatures au format avif et webp
+
+
 ## Versions 13.3.04
 
 ** Correction : **
