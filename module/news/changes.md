@@ -1,3 +1,5 @@
+# Versions 5.9
+- Largeur d'un bouton de retour.
 # Versions 5.7 - 5.8
 - Le flux RSS ne fonctionne pas si les méta de la page sont vides.
 # Version 5.6

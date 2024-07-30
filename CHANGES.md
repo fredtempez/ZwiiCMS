@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Versions 13.3.06
+** Correction : **
+- Mise à jour du module News 5.9, taille d'un bouton.
+
 ## Versions 13.3.05
 ** Correction : **
 - Corrige la génération des miniatures au format avif et webp

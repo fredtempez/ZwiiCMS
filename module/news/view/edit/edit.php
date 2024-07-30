@@ -1,13 +1,13 @@
 <?php echo template::formOpen('newsEditForm'); ?>
 	<div class="row">
-		<div class="col2">
+		<div class="col1">
 			<?php echo template::button('newsEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'value' => template::ico('left')
 			]); ?>
 		</div>
-		<div class="col2 offset6">
+		<div class="col2 offset7">
 			<?php echo template::button('newsEditDraft', [
 				'uniqueSubmission' => true,
 				'value' => helper::translate('Brouillon')
