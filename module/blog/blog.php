@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '7.9';
+	const VERSION = '7.10';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -757,7 +757,7 @@ class blog extends common
 					}
 					// Crée le commentaire
 					$commentId = helper::increment(uniqid(), $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'comment']));
-					$content = $this->getInput('blogArticleContent', false);
+					$content = $this->getInput('blogArticleContent', null, true);
 					$this->setData([
 						'module', $this->getUrl(0),
 						'posts', $this->getUrl(1),
