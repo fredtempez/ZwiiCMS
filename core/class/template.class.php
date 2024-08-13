@@ -28,7 +28,7 @@ class template
         $attributes['value'] = helper::translate($attributes['value']);
         $attributes['help'] = helper::translate($attributes['help']);
         // Retourne le html
-        return  sprintf(
+        return sprintf(
             '<a %s class="button %s %s %s" %s>%s</a>',
             helper::sprintAttributes($attributes, ['class', 'disabled', 'ico', 'value']),
             $attributes['disabled'] ? 'disabled' : '',
@@ -65,12 +65,12 @@ class template
         // Limite addition et soustraction selon le type de captcha
         $numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20];
         $letters = ['u', 't', 's', 'r', 'q', 'p', 'o', 'n', 'm', 'l', 'k', 'j', 'i', 'h', 'g', 'f', 'e', 'd', 'c', 'b', 'a'];
-        $limit = $attributes['limit']  ? count($letters) - 1 : 10;
+        $limit = $attributes['limit'] ? count($letters) - 1 : 10;
 
         // Tirage de l'opération
         mt_srand();
         // Captcha simple limité à l'addition
-        $operator = $attributes['limit'] ?  mt_rand(1, 4) : 1;
+        $operator = $attributes['limit'] ? mt_rand(1, 4) : 1;
 
         // Limite si multiplication ou division
         if ($operator > 2) {
@@ -94,15 +94,15 @@ class template
         switch ($operator) {
             case 1:
                 $operator = template::ico('plus', ['fontSize' => '2em;']);
-                $result =  $firstNumber + $secondNumber;
+                $result = $firstNumber + $secondNumber;
                 break;
             case 2:
                 $operator = template::ico('minus', ['fontSize' => '2em;']);
-                $result =  $firstNumber - $secondNumber;
+                $result = $firstNumber - $secondNumber;
                 break;
             case 3:
                 $operator = template::ico('cancel', ['fontSize' => '2em;']);
-                $result =  $firstNumber * $secondNumber;
+                $result = $firstNumber * $secondNumber;
                 break;
             case 4:
                 $operator = template::ico('divide', ['fontSize' => '2em;']);
@@ -112,7 +112,7 @@ class template
                 }
                 mt_srand();
                 $secondNumber = mt_rand(1, $limit);
-                $firstNumber =  $firstNumber * $secondNumber;
+                $firstNumber = $firstNumber * $secondNumber;
                 $result = $firstNumber / $secondNumber;
                 break;
         }
@@ -125,8 +125,8 @@ class template
         $secondLetter = uniqid();
 
         // Masquage image source pour éviter un décodage
-        copy('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$firstNumber] .  '.png', 'site/tmp/' . $firstLetter . '.png');
-        copy('core/vendor/zwiico/png/' .  $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
+        copy('core/vendor/zwiico/png/' . $attributes['type'] . '/' . $letters[$firstNumber] . '.png', 'site/tmp/' . $firstLetter . '.png');
+        copy('core/vendor/zwiico/png/' . $attributes['type'] . '/' . $letters[$secondNumber] . '.png', 'site/tmp/' . $secondLetter . '.png');
 
 
         // Début du wrapper
@@ -134,7 +134,7 @@ class template
         // Label
         $html .= self::label(
             $attributes['id'],
-            '<img class="captcha' .  ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' .  ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq', ['fontSize' => '2em;']),
+            '<img class="captcha' . ucFirst($attributes['type']) . '"  src="' . helper::baseUrl(false) . 'site/tmp/' . $firstLetter . '.png" />&nbsp;<strong>' . $operator . '</strong>&nbsp;<img class="captcha' . ucFirst($attributes['type']) . '" src="' . helper::baseUrl(false) . 'site/tmp/' . $secondLetter . '.png" />' . template::ico('eq', ['fontSize' => '2em;']),
             [
                 'help' => $attributes['help']
             ]
@@ -244,17 +244,32 @@ class template
             'placeholder' => '',
             'readonly' => false,
             'value' => '',
-            'type'=> 'date',
+            'type' => 'date',
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        // Filtre selon le type 
+        switch ($attributes['type']) {
+            case 'datetime-local':
+                $filter = helper::FILTER_TIMESTAMP;
+                break;
+            case 'date':
+                $filter = helper::FILTER_DATE;
+                break;
+            case 'time':
+                $filter = helper::FILTER_TIME;
+                break;
+            default:
+                $filter = null; // pas de filtre pour month and year
+                break;
+        }
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         } else {
-            $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], helper::FILTER_TIMESTAMP) : '');
+            $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], $filter) : '');
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
@@ -284,7 +299,7 @@ class template
         $html .= '</div>';
         // Retourne le html
         return $html;
-    }    
+    }
 
 
     /**
@@ -346,14 +361,14 @@ class template
         $html .= sprintf(
             '<a
                 href="' .
-                helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
-                '?relative_url=1' .
-                '&lang=' . $attributes['language'] .
-                '&field_id=' . $attributes['id'] .
-                '&type=' . $attributes['type'] .
-                '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
-                ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
-                . '"
+            helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
+            '?relative_url=1' .
+            '&lang=' . $attributes['language'] .
+            '&field_id=' . $attributes['id'] .
+            '&type=' . $attributes['type'] .
+            '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
+            ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
+            . '"
                 class="inputFile %s %s"
                 %s
                 data-lity
@@ -471,7 +486,7 @@ class template
         // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
         // Contenu de l'icône
-        $alt = $attributes['help'] ? $attributes['help'] :  $ico;
+        $alt = $attributes['help'] ? $attributes['help'] : $ico;
         $item = $attributes['href'] ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" alt="' . $alt . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
         $item .= '<span class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
@@ -686,12 +701,12 @@ class template
             'label' => '',
             'name' => $nameId,
             'selected' => '',
-            'font' =>  [],
+            'font' => [],
             'multiple' => ''
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
-        $attributes['help']  = helper::translate($attributes['help']);
+        $attributes['help'] = helper::translate($attributes['help']);
         // Stocker les fontes et remettre à zéro le tableau des fontes transmis pour éviter une erreur de sprintAttributes
         if (empty($attributes['font']) === false) {
             $fonts = $attributes['font'];
@@ -728,7 +743,7 @@ class template
         );
         foreach ($options as $value => $text) {
             // Select des liste de fontes
-            $html .=   isset($fonts)  ? sprintf(
+            $html .= isset($fonts) ? sprintf(
                 '<option value="%s"%s style="font-family: %s;">%s</option>',
                 $value,
                 $attributes['selected'] == $value ? ' selected' : '', // Double == pour ignorer le type de variable car $_POST change les types en string
@@ -782,7 +797,7 @@ class template
         // Traduction de l'aide et de l'étiquette
         $attributes['value'] = helper::translate($attributes['value']);
         // Retourne le html
-        return  sprintf(
+        return sprintf(
             '<button type="submit" class="%s%s" %s>%s</button>',
             $attributes['class'],
             $attributes['uniqueSubmission'] ? 'uniqueSubmission' : '',
@@ -810,7 +825,7 @@ class template
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         foreach ($head as $value) {
-            $head[array_search($value, $head)] =  helper::translate($value);
+            $head[array_search($value, $head)] = helper::translate($value);
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
@@ -905,7 +920,7 @@ class template
         $html .= self::notice($attributes['id'], $notice);
         // Texte
         $html .= sprintf(
-            '<input type="' . $attributes['type']. '" %s>',
+            '<input type="' . $attributes['type'] . '" %s>',
             helper::sprintAttributes($attributes)
         );
         // Fin du wrapper
