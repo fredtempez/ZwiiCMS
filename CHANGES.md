@@ -1,7 +1,7 @@
 # Notes de mises à jour
 
 ## Versions 13.3.05
-** Correction : **
+** Corrections : **
 - Corrige la génération des miniatures au format avif et webp** Corrections : **
 - Mise à jour du module News 5.9, taille d'un bouton.
 - Mise à jour du module Blog 7.10, bloque la soumission d'un commentaire vide.
