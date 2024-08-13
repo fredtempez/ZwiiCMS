@@ -18,6 +18,9 @@ class helper
 	const FILTER_STRING_SHORT = 9;
 	const FILTER_TIMESTAMP = 10;
 	const FILTER_URL = 11;
+	const FILTER_DATE = 12;
+	const FILTER_TIME = 13;
+
 
 
 	/**
@@ -472,6 +475,12 @@ class helper
 				break;
 			case self::FILTER_URL:
 				$text = filter_var($text, FILTER_SANITIZE_URL);
+				break;
+			case self::FILTER_DATE:
+				$text = date('Y-m-d', $text);
+				break;
+			case self::FILTER_TIME:
+				$text = date('H:i:s', $text);
 				break;
 		}
 		return $text;
