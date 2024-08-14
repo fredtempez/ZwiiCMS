@@ -253,7 +253,7 @@ class template
         // Filtre selon le type 
         switch ($attributes['type']) {
             case 'datetime-local':
-                $filter = helper::FILTER_TIMESTAMP;
+                $filter = helper::FILTER_DATETIME;
                 break;
             case 'date':
                 $filter = helper::FILTER_DATE;

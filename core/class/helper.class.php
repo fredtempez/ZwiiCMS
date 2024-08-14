@@ -8,7 +8,7 @@ class helper
 
 	/** Filtres personnalisés */
 	const FILTER_BOOLEAN = 1;
-	const FILTER_DATETIME = 2;
+	const FILTER_DATETIME = 2; // filtre pour le champ de formulaire A conserver pour la compatibilité
 	const FILTER_FLOAT = 3;
 	const FILTER_ID = 4;
 	const FILTER_INT = 5;
@@ -16,10 +16,13 @@ class helper
 	const FILTER_PASSWORD = 7;
 	const FILTER_STRING_LONG = 8;
 	const FILTER_STRING_SHORT = 9;
-	const FILTER_TIMESTAMP = 10;
+	const FILTER_TIMESTAMP = 10; // Saisie d'une date en locatime
 	const FILTER_URL = 11;
-	const FILTER_DATE = 12;
-	const FILTER_TIME = 13;
+	const FILTER_DATE = 12; // filtre pour le champ de formulaire
+	const FILTER_TIME = 13; // filtre pour le champ de formulair
+	const FILTER_MONTH = 14; // filtre pour le champ de formulair
+	const FILTER_YEAR = 16; // filtre pour le champ de formulair
+
 
 
 
@@ -32,12 +35,12 @@ class helper
 
 		// La traduction existe déjà dans le core
 		/*
-					if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-					$dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-					$data = array_merge($dialogues,[$text =>  '']);
-					file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-					}
-					*/
+						  if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+						  $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+						  $data = array_merge($dialogues,[$text =>  '']);
+						  file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+						  }
+						  */
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
@@ -370,7 +373,7 @@ class helper
 		$version = helper::getOnlineVersion($channel);
 		$update = false;
 		if (!empty($version)) {
-			$update = version_compare(common::ZWII_VERSION, $version) == -1;	
+			$update = version_compare(common::ZWII_VERSION, $version) == -1;
 		}
 		return $update;
 	}
@@ -392,10 +395,10 @@ class helper
 			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "#222" : "#DDD",
 			'rgb' => 'rgb(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ')',
 			'invert' => 'rgba (' .
-			($rgba[0] < 128 ? 255 : 0) . ',' .
-			($rgba[1] < 128 ? 255 : 0) . ',' .
-			($rgba[1] < 128 ? 255 : 0) . ',' .
-			($rgba[0] < 128 ? 255 : 0) . ')'
+				($rgba[0] < 128 ? 255 : 0) . ',' .
+				($rgba[1] < 128 ? 255 : 0) . ',' .
+				($rgba[1] < 128 ? 255 : 0) . ',' .
+				($rgba[0] < 128 ? 255 : 0) . ')'
 		];
 	}
 
@@ -480,8 +483,13 @@ class helper
 				$text = date('Y-m-d', $text);
 				break;
 			case self::FILTER_TIME:
-				$text = date('H:i:s', $text);
+				$text = date('H:i', $text);
 				break;
+			case self::FILTER_MONTH:
+				$text = date('m', $text);
+				break;
+			case self::FILTER_YEAR:
+				$text = date('Y', $text);
 		}
 		return $text;
 	}
