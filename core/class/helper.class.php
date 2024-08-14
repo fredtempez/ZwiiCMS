@@ -484,12 +484,6 @@ class helper
 				break;
 			case self::FILTER_TIME:
 				$text = date('H:i', $text);
-				break;
-			case self::FILTER_MONTH:
-				$text = date('m', $text);
-				break;
-			case self::FILTER_YEAR:
-				$text = date('Y', $text);
 		}
 		return $text;
 	}

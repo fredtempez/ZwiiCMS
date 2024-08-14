@@ -224,7 +224,7 @@ class template
      * Crée un champ date
      * @param string $nameId Nom et id du champ
      * @param array $attributes Attributs ($key => $value)
-     * @param string type date time datetime-local month week
+     * @param string type date seule ;  time heure seule ;  datetime-local (jour et heure)
      * @return string
      */
     public static function date($nameId, array $attributes = [])
@@ -256,10 +256,10 @@ class template
                 $filter = helper::FILTER_TIMESTAMP;
                 break;
             case 'date':
-                $filter = helper::FILTER_DATE;
+                $filter = helper::FILTER_DATE; // Pour générer une valeur uniquement sur la date
                 break;
             case 'time':
-                $filter = helper::FILTER_TIME;
+                $filter = helper::FILTER_TIME; // Pour générer une valeur uniquement sur l'heure
                 break;
             default:
                 $filter = null; // pas de filtre pour month and year
