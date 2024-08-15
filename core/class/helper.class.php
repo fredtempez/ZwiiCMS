@@ -432,7 +432,8 @@ class helper
 				$text = (int) $date->format('U');
 				break;
 			case self::FILTER_FLOAT:
-				$text = filter_var($text, FILTER_SANITIZE_NUMBER_FLOAT);
+				$text = str_replace(',', '.', $text);  // Remplacer les virgules par des points
+				$text = filter_var($text, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 				$text = (float) $text;
 				break;
 			case self::FILTER_ID:
