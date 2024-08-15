@@ -2,7 +2,10 @@
 
 ## Versions 13.3.05
 ** Corrections : **
-- Corrige la génération des miniatures au format avif et webp** Corrections : **
+- Corrige la génération des miniatures au format avif et webp.
+- Corrige le filter FLOAT du helper qui supprimer la virgule flottante.
+
+** Modifications: **
 - Mise à jour du module News 5.9, taille d'un bouton.
 - Mise à jour du module Blog 7.10, bloque la soumission d'un commentaire vide.
 - Ajoute les filtres DATE et TIME pour l'affichage correct des champs de formulaire.
