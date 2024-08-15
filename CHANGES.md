@@ -3,7 +3,7 @@
 ## Versions 13.3.05
 ** Corrections : **
 - Corrige la génération des miniatures au format avif et webp.
-- Corrige le filter FLOAT du helper qui supprimer la virgule flottante.
+- Corrige le filtre FLOAT du helper qui supprimait la virgule flottante.
 
 ** Modifications: **
 - Mise à jour du module News 5.9, taille d'un bouton.
