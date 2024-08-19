@@ -193,6 +193,7 @@
  .white-btns_tabs {
    margin-top: 10px;
    text-align: center;
+   padding: 0px;
  }
 
  .centered-btns_tabs li,
