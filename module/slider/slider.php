@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.4';
+	const VERSION = '6.6';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -76,7 +76,7 @@ class slider extends common
 		1920 => '1920 pixels',
 		0 => 'Largeur de l\'écran'
 	];
-	public static $selectedMaxwidth = 0;
+	public static $selectedMaxwidth = 640;
 
 	// Transition
 	public static $speed = [
@@ -125,8 +125,8 @@ class slider extends common
 
 	//Choix du tri
 	public static $sort = [
-		'asc' => 'Alphabétique naturel',
-		'dsc' => 'Alphabétique naturel inverse',
+		'dsc' => 'Alphabétique naturel',
+		'asc' => 'Alphabétique naturel inverse',
 		'rand' => 'Aléatoire',
 		'none' => 'Par défaut, sans tri',
 	];
@@ -236,21 +236,7 @@ class slider extends common
 					];
 				}
 			}
-			// Tri des images pour affichage de la liste dans la page d'édition
-			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'sort'])) {
-				case 'dsc':
-					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
-					break;
-				case 'asc':
-					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
-					break;
-				case 'rand':
-				case 'none':
-				default:
-					break;
-			}
 		}
-
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -353,7 +339,7 @@ class slider extends common
 		// Sélection largeur de l'écran
 		self::$selectedMaxwidth = array_key_exists($this->getData(['module', $this->getUrl(0), 'theme', 'maxWidth']), self::$screenWidth)
 			? $this->getData(['module', $this->getUrl(0), 'theme', 'maxWidth'])
-			: 0;
+			: 640;
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -448,7 +434,6 @@ class slider extends common
 	private function init()
 	{
 		if (is_null($this->getData(['module', $this->getUrl(0), 'theme']))) {
-
 			$this->setData([
 				'module',
 				$this->getUrl(0),

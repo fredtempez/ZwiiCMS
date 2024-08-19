@@ -1,3 +1,7 @@
+# Version 6.6
+- Corrige un tri inversé
+- Erreur dans la feuille de styme de la vue index
+- Bug de calcul de la largeur maximale du slide dans la vue index
 # Version 6.5
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.
 # Version 6.4
