@@ -36,9 +36,7 @@
 $(document).ready(function () {
 
     var maxwidth = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'maxWidth']); ?>";
-    var screenwidth = "<?php echo intval(trim($this->getData(['theme', 'site', 'width']), 'px')); ?>";
     var sort = "<?php echo $this->getData(['module', $this->getUrl(0),'theme', 'sort']); ?>";
-    // Réduction de la taille maximale selon la largeur de la section
     $("#wrapper").css('width', "100%");
     $(function () {
         $("#sliders").responsiveSlides({

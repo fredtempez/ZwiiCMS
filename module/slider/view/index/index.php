@@ -2,7 +2,6 @@
 	<div id="wrapper">
 		<div class="rslides_container">
 			<ul class="rslides" id="sliders">
-				<!--id="<?php echo $this->getData(['module', $this->getUrl(0), 'config', 'boutonsVisibles']); ?>"> -->
 				<?php foreach ($module::$pictures as $picture => $options): ?>
 					<?php if (!empty($options['uri'])): ?>
 						<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
