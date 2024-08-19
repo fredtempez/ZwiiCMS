@@ -806,7 +806,7 @@ TinyMCE, URL absolues, transformation autorisée en URL relative si effectuée m
 - Modifications :
   - Gestion des cookies :
     - Options de personnalisation du message d'acceptation des cookies, acceptation ou refus du cookie Google Analytics, affichage de la page des mentions légales.
-    - Etiquette dans le footer permettant d'afficher la popup des cookies.
+    - Étiquette dans le footer permettant d'afficher la popup des cookies.
   - Thème :
     - Disposition des options de configuration du site.
     - Bannière : le contenu peut être personnalisé à l'aide d'un éditeur. La bannière au-dessus du site peut s'étendre sur la largeur de la page.

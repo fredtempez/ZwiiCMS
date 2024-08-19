@@ -39,7 +39,7 @@
 			<div class="row">
 				<div class="col12">
 					<?php if ($module::$pictures): ?>
-						<?php echo template::table([3, 4, 4, 1], $module::$pictures, ['Image', 'Texte alternatif', 'Hyperlien vers une page', '']); ?>
+						<?php echo template::table([3, 4, 4, 1], $module::$pictures, ['Image', 'Étiquette', 'Hyperlien vers une page', '']); ?>
 					<?php else: ?>
 						<?php echo template::speech('Aucune image dans ce dossier'); ?>
 					<?php endif; ?>

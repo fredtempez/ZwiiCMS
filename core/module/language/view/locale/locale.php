@@ -107,7 +107,7 @@
         <div class="block">
             <h4><?php echo helper::translate('Étiquettes des pages spéciales'); ?>
                <!--<span id="labelHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
-                    <a href="https://doc.zwiicms.fr/etiquettes-des-pages-speciales" target="_blank">
+                    <a href="https://doc.zwiicms.fr/Étiquettes-des-pages-speciales" target="_blank">
                         <?php //echo template::ico('help', ['margin' => 'left']); ?>
                     </a>
                 </span>-->

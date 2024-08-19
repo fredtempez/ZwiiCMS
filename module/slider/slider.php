@@ -236,7 +236,33 @@ class slider extends common
 					];
 				}
 			}
+			// Tri des images par ordre alphabétique, alphabétique inverse, aléatoire ou pas
+			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'sort'])) {
+				case 'asc':
+					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+					break;
+				case 'dsc':
+					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+					break;
+				case 'rand':
+					// Récupérer les clés du tableau
+					$keys = array_keys(self::$pictures);
+					// Mélanger les clés
+					shuffle($keys);
+					// Créer un nouveau tableau avec les clés mélangées
+					$shuffledPictures = [];
+					foreach ($keys as $key) {
+						$shuffledPictures[$key] = self::$pictures[$key];
+					}
+					// Mettre à jour le tableau initial avec le nouveau tableau mélangé
+					self::$pictures = $shuffledPictures;
+					break;
+				case 'none':
+				default:
+					break;
+			}
 		}
+
 
 		// Valeurs en sortie
 		$this->addOutput([
@@ -371,16 +397,12 @@ class slider extends common
 			}
 
 			// Tri des images par ordre alphabétique, alphabétique inverse, aléatoire ou pas
-			switch ($this->getData(['module', $galleryId, 'theme', 'sort'])) {
-				case 'desc':
-					uksort(self::$pictures, function ($a, $b) {
-						return strcmp(basename($a), basename($b));
-					});
-					break;
+			switch ($this->getData(['module', $this->getUrl(0), 'theme', 'sort'])) {
 				case 'asc':
-					uksort(self::$pictures, function ($a, $b) {
-						return strcmp(basename($b), basename($a));
-					});
+					krsort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
+					break;
+				case 'dsc':
+					ksort(self::$pictures, SORT_NATURAL | SORT_FLAG_CASE);
 					break;
 				case 'rand':
 					// Récupérer les clés du tableau
@@ -396,7 +418,6 @@ class slider extends common
 					self::$pictures = $shuffledPictures;
 					break;
 				case 'none':
-					break;
 				default:
 					break;
 			}

@@ -61,7 +61,7 @@
 					</div>
 					<div class="col6">
 						<?php echo template::text('newsOptionFeedslabel', [
-							'label' => 'Etiquette RSS',
+							'label' => 'Étiquette RSS',
 							'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 						]); ?>
 					</div>
