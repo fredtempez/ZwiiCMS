@@ -5,11 +5,14 @@
 				<?php foreach ($module::$pictures as $picture => $options): ?>
 					<?php if (!empty($options['uri'])): ?>
 						<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
+					<?php endif; ?>
+					<li>
+						<img src="<?php echo helper::baseUrl(false) . $picture; ?>" alt="<?php echo $options['legend']; ?>">
+						<?php if ($this->getData(['module', $this->getUrl(0), 'theme', 'caption']) === 'bottom'): ?>
+							<p class="caption"><?php echo $options['legend']; ?></p>
 						<?php endif; ?>
-						<li>
-							<img src="<?php echo helper::baseUrl(false) . $picture; ?>" alt="<?php echo $options['legend']; ?>">
-						</li>
-						<?php if (!empty($options['uri'])): ?>
+					</li>
+					<?php if (!empty($options['uri'])): ?>
 						</a>
 					<?php endif; ?>
 				<?php endforeach; ?>

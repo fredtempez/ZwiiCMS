@@ -53,26 +53,33 @@
 		<div class="block">
 			<h4>Navigation</h4>
 			<div class="row">
-				<div class="col4">
-					<?php echo template::select('sliderThemeTri', $module::$sort, [
+				<div class="col3">
+					<?php echo template::select('sliderThemeSort', $module::$sort, [
 						'label' => 'Tri des images',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'sort'])
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::select('sliderThemePager', $module::$pager, [
 						'label' => 'Puces horizontales',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'pager']),
 					]); ?>
 				</div>
-				<div class="col4">
+				<div class="col3">
 					<?php echo template::select('sliderThemeNameSpace', $module::$namespace, [
 						'label' => 'Boutons latéraux',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'namespace'])
 					]); ?>
 				</div>
+				<div class="col3">
+					<?php echo template::select('sliderThemeCaption', $module::$caption, [
+						'label' => 'Légendes',
+						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'caption'])
+					]); ?>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <?php echo template::formClose(); ?>

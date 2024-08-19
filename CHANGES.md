@@ -4,7 +4,7 @@
 ** Corrections : **
 - Corrige la génération des miniatures au format avif et webp.
 - Corrige le filtre FLOAT du helper qui supprimait la virgule flottante.
-- Corrige des bugs dans le module Slider qui passe en version 6.6
+- Corrige des bugs dans le module Slider qui passe en version 7.0, ajout d'une option d'étiquette sous les images.
 
 ** Modifications: **
 - Mise à jour du module News 5.9, taille d'un bouton.

@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '6.6';
+	const VERSION = '7.0';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -56,6 +56,7 @@ class slider extends common
 		true => 'Puces visibles',
 		false => 'Puces invisibles'
 	];
+
 
 	public static $auto = [
 		true => 'Active',
@@ -129,6 +130,11 @@ class slider extends common
 		'asc' => 'Alphabétique naturel inverse',
 		'rand' => 'Aléatoire',
 		'none' => 'Par défaut, sans tri',
+	];
+
+	public static $caption = [
+		'bottom' => 'En bas de l\'image',
+		'alt' => 'Uniquement dans le texte alternatif'
 	];
 
 	/**
@@ -343,7 +349,8 @@ class slider extends common
 							'speed' => $speed,
 							'timeout' => $timeout,
 							'namespace' => $this->getInput('sliderThemeNameSpace', helper::FILTER_STRING_SHORT),
-							'sort' => $this->getInput('sliderThemeTri', helper::FILTER_STRING_SHORT),
+							'sort' => $this->getInput('sliderThemeSort', helper::FILTER_STRING_SHORT),
+							'caption' => $this->getInput('sliderThemeCaption', helper::FILTER_STRING_SHORT),
 						],
 						'directory' => $this->getData(['module', $this->getUrl(0), 'directory']),
 						'legends' => $this->getData(['module', $this->getUrl(0), 'legends']),
@@ -390,9 +397,8 @@ class slider extends common
 				if ($fileInfos->isDot() === false and $fileInfos->isFile() and @getimagesize($fileInfos->getPathname())) {
 					self::$pictures[$directory . '/' . $fileInfos->getFilename()] = [
 						'legend' => $this->getData(['module', $galleryId, 'legends', str_replace('.', '', $fileInfos->getFilename())]),
-						'uri' => $this->getData(['module', $galleryId, 'uri', str_replace('.', '', $fileInfos->getFilename())]),
+						'uri' => $this->getData(['module', $galleryId, 'uri', str_replace('.', '', $fileInfos->getFilename())])
 					];
-					//self::$pictures['uri'][$directory . '/' . $fileInfos->getFilename()] = ;
 				}
 			}
 
