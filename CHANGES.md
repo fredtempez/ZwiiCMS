@@ -6,7 +6,7 @@
 - Corrige le filtre FLOAT du helper qui supprimait la virgule flottante.
 - Corrige des bugs dans le module Slider qui passe en version 7.0, ajout d'une option d'étiquette sous les images.
 
-** Modifications: **
+** Modifications : **
 - Mise à jour du module News 5.9, taille d'un bouton.
 - Mise à jour du module Blog 7.10, bloque la soumission d'un commentaire vide.
 - Ajoute les filtres DATE et TIME pour l'affichage correct des champs de formulaire.
