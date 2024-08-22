@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Versions 13.3.06
+Corrige la feuille de style du slider les balises H1, H3 et A.
+
 ## Versions 13.3.05
 ** Corrections : **
 - Corrige la génération des miniatures au format avif et webp.
