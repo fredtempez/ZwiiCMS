@@ -1,3 +1,5 @@
+# Version 7.1
+
 # Version 7.0
 - Ajoute un affichage de la légende sous l'image
 - Corrige un tri inversé

@@ -52,20 +52,21 @@
    margin-bottom: 50px;
  }
 
- h1 {
+ .rslides h1 {
    font: 600 28px/36px sans-serif;
    margin: 50px 0;
  }
 
- h3 {
+ .rslides h3 {
    font: 600 18px/24px sans-serif;
    color: #999;
    margin: 0 0 20px;
  }
 
- a {
+ .rslides a {
    color: #222;
  }
+
 
  .rslides {
    margin: 0 auto;
