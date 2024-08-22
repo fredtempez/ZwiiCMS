@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::GROUP_VISITOR
 	];
 
-	const VERSION = '7.0';
+	const VERSION = '7.1';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
