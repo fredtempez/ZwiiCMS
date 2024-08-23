@@ -1,7 +1,8 @@
 # Notes de mises à jour
 
 ## Versions 13.3.06
-Corrige la feuille de style du slider les balises H1, H3 et A.
+- Répare le bouton d'effacement en mode édition d'une page. 
+- Corrige la feuille de style du slider les balises H1, H3 et A.
 
 ## Versions 13.3.05
 ** Corrections : **
