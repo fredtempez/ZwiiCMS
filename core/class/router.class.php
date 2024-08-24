@@ -723,7 +723,7 @@ class core extends common
 									$this->addOutput([
 										'content' => ob_get_clean() . ($output['showPageContent'] ? $pageContent : '')
 									]);
-								} else if ($modpos === 'free') {
+								} elseif ($modpos === 'free' && strstr($pageContent, '[MODULE]')) {
 									if (strstr($pageContent, '[MODULE]', true) === false) {
 										$begin = strstr($pageContent, '[]', true);
 									} else {
