@@ -574,7 +574,7 @@ class user extends common
 		// Stoppe si le profil est affecté
 		foreach ($groups as $userId) {
 			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
-				$profilUsed= false;
+				$profilUsed = false;
 			}
 		}
 		foreach ($this->getData(['profil']) as $groupId => $groupData) {
@@ -935,11 +935,11 @@ class user extends common
 		// recherche les membres du groupe 
 		$groups = helper::arrayColumn($this->getData(['user']), 'group');
 		$groups = array_keys($groups, $this->getUrl(2));
-		$flag= true;
+		$flag = true;
 		// Stoppe si le profil est affecté
 		foreach ($groups as $userId) {
 			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
-				$flag= false;
+				$flag = false;
 			}
 		}
 		if (
@@ -956,7 +956,7 @@ class user extends common
 			if ($flag) {
 				$this->deleteData(['profil', $this->getUrl(2), $this->getUrl(3)]);
 			}
-			
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/profil',
@@ -1045,10 +1045,22 @@ class user extends common
 					// RAZ
 					$this->setData(['user', $userId, 'connectFail', 0]);
 					$this->setData(['user', $userId, 'connectTimeout', 0]);
-					// Expiration
+					
+					// Validité du cookie
 					$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime("+1 year") : 0;
-					setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-					setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+					switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
+						case false:
+							// Cookie de session
+							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+							setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+							break;
+						default:
+							// Cookie persistant
+							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
+							setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+							break;
+					}
+
 					// Accès multiples avec le même compte
 					$this->setData(['user', $userId, 'accessCsrf', $_SESSION['csrf']]);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
@@ -1064,8 +1076,9 @@ class user extends common
 					} else {
 						$logStatus = 'Connexion réussie';
 						$pageId = $this->getUrl(2);
-						if ($this->getData(['config', 'page404']) === $pageId
-						 || $this->getData(['config', 'page403']) === $pageId
+						if (
+							$this->getData(['config', 'page404']) === $pageId
+							|| $this->getData(['config', 'page403']) === $pageId
 						) {
 							$pageId = '';
 						}
@@ -1391,7 +1404,7 @@ class user extends common
 			// Ignorer les entrées de répertoire parent et actuel
 			if ($file == '.' || $file == '..') {
 				continue;
-			} 
+			}
 			// Construisez le chemin complet du fichier ou du répertoire
 			$path = $dir . '/' . $file;
 			// Vérifiez si c'est un répertoire
