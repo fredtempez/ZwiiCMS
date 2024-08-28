@@ -31,7 +31,7 @@ class plugin extends common
 
 	// URL des modules
 	const BASEURL_STORE = 'https://store.zwiicms.fr/';
-	const MODULE_STORE = '?modules/';
+	const MODULE_STORE = '?modules';
 
 
 	// Gestion des modules
