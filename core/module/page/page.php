@@ -201,8 +201,8 @@ class page extends common
 			//$this->secure_file_put_contents(self::DATA_DIR . self::$siteContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
 			$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$siteContent);
 
-			// Met à jour le sitemap
-			$this->updateSitemap();
+			// Ne met à jour le sitemap pour éviter un warning, de toute manière la nouvelle page doit être éditée.
+			// $this->updateSitemap();
 
 			// Valeurs en sortie
 			$this->addOutput([
