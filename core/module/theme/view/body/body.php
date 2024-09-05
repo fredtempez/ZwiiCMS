@@ -7,15 +7,7 @@
 			'value' => template::ico('left')
 		]); ?>
 	</div>
-	<div class="col1">
-		<?php /* echo template::button('themeBodyHelp', [
-			'href' => 'https://doc.zwiicms.fr/arriere-plan',
-			'target' => '_blank',
-			'value' => template::ico('help'),
-			'class' => 'buttonHelp'
-		]); */ ?>
-	</div>
-	<div class="col2 offset8">
+	<div class="col2 offset9">
 		<?php echo template::submit('themeBodySubmit'); ?>
 	</div>
 </div>
@@ -35,7 +27,7 @@
 			</div>
 			<div class="row">
 				<div class="col6">
-				<?php echo template::text('themeBodyToTopColor', [
+					<?php echo template::text('themeBodyToTopColor', [
 						'class' => 'colorPicker',
 						'help' => 'Le curseur horizontal règle le niveau de transparence.',
 						'label' => 'Couleur icône haut de page',
@@ -68,7 +60,8 @@
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Arrière plan',
 						'type' => 1,
-						'value' => $imageFile
+						'value' => $imageFile,
+						'folder' => $imageFile ? dirname($imageFile) : ''
 					]); ?>
 				</div>
 			</div>

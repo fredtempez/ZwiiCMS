@@ -7,22 +7,15 @@
             'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col1">
-        <?php /* echo template::button('themeMenuHelp', [
-            'href' => 'https://doc.zwiicms.fr/menu',
-            'target' => '_blank',
-            'value' => template::ico('help'),
-            'class' => 'buttonHelp'
-        ]); */?>
-    </div>
-    <div class="col2 offset8">
+    <div class="col2 offset9">
         <?php echo template::submit('themeMenuSubmit'); ?>
     </div>
 </div>
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Paramètres'); ?>
+            <h4>
+                <?php echo helper::translate('Paramètres'); ?>
             </h4>
             <div class="row">
                 <div class="col6">
@@ -84,7 +77,8 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Contenu'); ?>
+            <h4>
+                <?php echo helper::translate('Contenu'); ?>
             </h4>
             <div class="row">
                 <div class="col3">
@@ -112,7 +106,8 @@
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'label' => 'Logo du menu burger',
                         'type' => 1,
-                        'value' => $imageFile
+                        'value' => $imageFile,
+                        'folder' => $imageFile ? dirname($imageFile) : ''
                     ]);
                     ?>
                 </div>
@@ -123,7 +118,8 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Couleurs'); ?>
+            <h4>
+                <?php echo helper::translate('Couleurs'); ?>
             </h4>
             <div class="row">
                 <div class="col4">
@@ -164,7 +160,7 @@
                     <?php
                     echo template::checkbox('themeMenuActiveColorAuto', true, 'Couleur de fond automatique', [
                         'checked' => $this->getData(['theme', 'menu', 'activeColorAuto']),
-                     ]); ?>
+                    ]); ?>
                 </div>
                 <div class="col4">
                     <?php echo template::text('themeMenuActiveColor', [
@@ -181,7 +177,8 @@
 <div class="row">
     <div class="col12">
         <div class="block">
-            <h4><?php echo helper::translate('Mise en forme du texte'); ?>
+            <h4>
+                <?php echo helper::translate('Mise en forme du texte'); ?>
             </h4>
             <div class="row">
                 <div class="col3">

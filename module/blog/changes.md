@@ -1,4 +1,5 @@
-
+# Versions 7.11
+- Le sélecteur de fichier affiche par défaut le chemin vers le fichier présent dans le champ.
 # Versions 7.10
 - Empêche la validation d'un commentaire lorsque le contenu est vide.
 # Versions 7.8 - 7.9

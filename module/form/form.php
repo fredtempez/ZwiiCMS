@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '4.3';
+	const VERSION = '4.4';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 

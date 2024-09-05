@@ -325,6 +325,7 @@ class template
             'name' => $nameId,
             'type' => 2,
             'value' => '',
+            'folder' => '',
             'language' => 'fr_FR'
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
@@ -367,6 +368,8 @@ class template
             '&field_id=' . $attributes['id'] .
             '&type=' . $attributes['type'] .
             '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
+                // Ajoute le nom du dossier si la variable est passée
+            (!empty($attributes['folder']) ? '&fldr=' . $attributes['folder'] : '') .
             ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
             . '"
                 class="inputFile %s %s"

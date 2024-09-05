@@ -7,15 +7,7 @@
             'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col1">
-        <?php /* echo template::button('themeHeaderHelp', [
-            'href' => 'https://doc.zwiicms.fr/banniere',
-            'target' => '_blank',
-            'value' => template::ico('help'),
-            'class' => 'buttonHelp'
-        ]); */?>
-    </div>
-    <div class="col2 offset8">
+    <div class="col2 offset9">
         <?php echo template::submit('themeHeaderSubmit'); ?>
     </div>
 </div>
@@ -158,13 +150,17 @@
                         'label' => 'Image',
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),
                         'type' => 1,
-                        'value' => $imageFile
+                        'value' => $imageFile,
+                        'folder' => $imageFile ? dirname($imageFile) : ''
                     ]);
                     ?>
                     <span class="themeHeaderImageOptions displayNone" id="themeHeaderImageInfo">
-                        <?php echo helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span> ; <?php echo helper::translate('Largeur du site :'); ?> <?php echo $this->getData(['theme', 'site', 'width']); ?>
+                        <?php echo helper::translate('Largeur de l\'image'); ?> <span id="themeHeaderImageWidth"></span>
+                        ; <?php echo helper::translate('Largeur du site :'); ?>
+                        <?php echo $this->getData(['theme', 'site', 'width']); ?>
                         |
-                        <?php echo helper::translate('Hauteur de l\'image'); ?> <span id="themeHeaderImageHeight"></span>
+                        <?php echo helper::translate('Hauteur de l\'image'); ?> <span
+                            id="themeHeaderImageHeight"></span>
                         |
                         <?php echo helper::translate('Ratio'); ?> <span id="themeHeaderImageRatio"></span>
                     </span>
