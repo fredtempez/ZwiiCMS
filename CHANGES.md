@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Versions 13.4.00
+** Amélioration **
+- Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
+
 ## Versions 13.3.06
 ** Corrections : **
 - Répare le bouton d'effacement en mode édition d'une page. 
