@@ -1,22 +1,5 @@
 # Notes de mises à jour
 
-## Versions 13.4.00
-** Améliorations :**
-- Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
-- Slider en version 7.1, corrections diverses.
-- Connexion persisante renforcée.
-- Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
-- Slider 7.2, le dossier sélectionné est affiché par défaut dans la page update.
-
-**Corrections : **
-- Isole la session dans l'onglet actif.
-- Edition de page, delete et duplicate renvoyant vers une mauvaise page.
-- Supprime un warning à la créatio d'une page.
-
-
-## Version 13.3.07
-- Anticipe la déconnexion de la version 13.4
-
 ## Versions 13.3.06
 ** Corrections : **
 - Corrige un bug de sécurité dans la gestion des profils.
