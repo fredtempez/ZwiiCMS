@@ -3,12 +3,6 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Paramètres'); ?>
-					<!--<span id="setupHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/parametres" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); 
-							?>
-						</a>-->
-					</span>
 				</h4>
 				<div class="row">
 					<div class="col4">
@@ -17,7 +11,8 @@
 							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => 'Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon',
-							'value' => $this->getData(['config', 'favicon'])
+							'value' => $this->getData(['config', 'favicon']),
+							'folder' => $this->getData(['config', 'favicon']) ? dirname($this->getData(['config', 'favicon'])) : ''
 						]); ?>
 					</div>
 					<div class="col4">
@@ -26,7 +21,8 @@
 							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 							'help' => 'Sélectionnez une icône adaptée à un thème sombre.<br>Pensez à supprimer le cache de votre navigateur si la favicon ne change pas.',
 							'label' => 'Favicon thème sombre',
-							'value' => $this->getData(['config', 'faviconDark'])
+							'value' => $this->getData(['config', 'faviconDark']),
+							'folder' => $this->getData(['config', 'faviconDark']) ? dirname($this->getData(['config', 'faviconDark'])) : ''
 						]); ?>
 					</div>
 					<div class="col4">
@@ -47,8 +43,8 @@
 					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
 							'checked' => helper::checkRewrite(),
-							'help' => 	'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',
-							'disabled' =>  stripos($_SERVER["SERVER_SOFTWARE"], 'Apache') === false and $module->isModRewriteEnabled()
+							'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',
+							'disabled' => stripos($_SERVER["SERVER_SOFTWARE"], 'Apache') === false and $module->isModRewriteEnabled()
 						]); ?>
 					</div>
 				</div>
@@ -59,12 +55,6 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Mise à jour automatisée'); ?>
-					<!--<span id="updateHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mise-a-jour" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); 
-							?>
-						</a>
-					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -90,8 +80,8 @@
 						]); ?>
 					</div>
 					<div class="col3 offset1 verticalAlignBottom">
-						<pre>Version installée : <strong><?php echo common::ZWII_VERSION ; ?></strong></pre>
-						<pre>Version en ligne  : <strong><?php echo helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) ; ?></strong></pre>
+						<pre>Version installée : <strong><?php echo common::ZWII_VERSION; ?></strong></pre>
+						<pre>Version en ligne  : <strong><?php echo helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL); ?></strong></pre>
 					</div>
 					<div class="col3 offset2 verticalAlignBottom">
 						<?php echo template::button('configUpdateForced', [
@@ -109,12 +99,6 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Maintenance'); ?>
-					<!--<span id="maintenanceHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/mode-maintenance" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); 
-							?>
-						</a>
-					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -169,12 +153,6 @@
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Scripts externes'); ?>
-					<!--<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/scripts-externes" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); 
-							?>
-						</a>
-					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col4 offset1 verticalAlignBottom">
@@ -198,13 +176,21 @@
 	<div class="row">
 		<div class="col12">
 			<div class="block">
-				<h4>ZwiiCMS <a href="https://zwiicms.fr" target="_blank">Site Web</a> - <a href="https://forum.zwiicms.fr" target="_blank">Forum</a>
+				<h4>ZwiiCMS <a href="https://zwiicms.fr" target="_blank">Site Web</a> - <a
+						href="https://forum.zwiicms.fr" target="_blank">Forum</a>
 				</h4>
 				<div class="row textAlignCenter">
 					<div class="col12">
-						<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
-						<p>Cette œuvre est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons Attribution - Pas d&#39;Utilisation Commerciale - Pas de Modification 4.0 International.</a></p>
-						<p>Pour voir une copie de cette licence, visitez http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.</p>
+						<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img
+								alt="Licence Creative Commons" style="border-width:0"
+								src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
+						<p>Cette œuvre est mise à disposition selon les termes de la <a rel="license"
+								href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons
+								Attribution - Pas d&#39;Utilisation Commerciale - Pas de Modification 4.0
+								International.</a></p>
+						<p>Pour voir une copie de cette licence, visitez
+							http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box
+							1866, Mountain View, CA 94042, USA.</p>
 					</div>
 				</div>
 			</div>

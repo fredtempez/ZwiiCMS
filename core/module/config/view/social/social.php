@@ -4,11 +4,6 @@
 			<div class="block">
 				<h4>
 					<?php echo helper::translate('Capture d\'écran Open Graph'); ?>
-					<!--<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/referencement" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
-						</a>
-					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col6">
@@ -18,29 +13,30 @@
 									'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 									'label' => 'Image Open Graph',
 									'value' => $this->getData(['config', 'seo', 'openGraphImage']),
+									'folder' => $this->getData(['config', 'seo', 'openGraphImage']) ? dirname($this->getData(['config', 'seo', 'openGraphImage'])) : '',
 									'type' => 1,
-									'help' =>  sprintf('%s : JPG - PNG<br />', helper::translate('Format')) .
-									 sprintf('%s : 1200 x 630 pixels<br />', helper::translate('Dimensions minimales')) .
-									 sprintf('%s : 1.91:1<br />', helper::translate('Ratio')) .
-									 sprintf('%s : %s, %s<br />', helper::translate('Taille maximale du fichier'), helper::translate('5 Mo pour les images JPEG'), helper::translate('1 Mo pour les images PNG'))
+									'help' => sprintf('%s : JPG - PNG<br />', helper::translate('Format')) .
+										sprintf('%s : 1200 x 630 pixels<br />', helper::translate('Dimensions minimales')) .
+										sprintf('%s : 1.91:1<br />', helper::translate('Ratio')) .
+										sprintf('%s : %s, %s<br />', helper::translate('Taille maximale du fichier'), helper::translate('5 Mo pour les images JPEG'), helper::translate('1 Mo pour les images PNG'))
 								]); ?>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col10 textAlignCenter">
 								<?php if( !empty($module::$imageOpenGraph['type']) ): ?>
-								<p>
-									<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
-								</p>
-								<p>
+									<p>
+										<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
+									</p>
+									<p>
 									<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height'] ); ?>
-								</p>
-								<p>
+									</p>
+									<p>
 									<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>' , helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
-								</p>
-								<p>
-									<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), $module::$imageOpenGraph['size']); ?>
-								</p>
+									</p>
+									<p>
+										<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), $module::$imageOpenGraph['size']); ?>
+									</p>
 								<?php endif; ?>
 							</div>
 						</div>
@@ -84,12 +80,6 @@
 		<div class="col12">
 			<div class="block">
 				<h4>
-					<?php echo helper::translate('Réseaux sociaux'); ?>
-					<!--<span id="specialeHelpButton" class="helpDisplayButton">
-						<a href="https://doc.zwiicms.fr/reseaux-sociaux" target="_blank" title="Cliquer pour consulter l'aide en ligne">
-							<?php //echo template::ico('help', ['margin' => 'left']); ?>
-						</a>
-					</span>-->
 				</h4>
 				<div class="row">
 					<div class="col3">
