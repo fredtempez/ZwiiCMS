@@ -1,8 +1,15 @@
 # Notes de mises à jour
 
 ## Versions 13.4.00
-** Amélioration **
+** Améliorations :**
 - Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
+- Slider en version 7.1, corrections diverses.
+- Connexion persisante renforcée.
+-
+**Corrections : **
+- Edition de page, delete et duplicate renvoyant vers une mauvaise page.
+- Supprime un warning à la créatio d'une page.
+
 
 ## Versions 13.3.06
 ** Corrections : **
