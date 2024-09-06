@@ -1,5 +1,7 @@
+# Version 7.2
+- Le dossier sélectionné est affiché par défaut dans la page update.
 # Version 7.1
-
+- Améliore le desgin du module
 # Version 7.0
 - Ajoute un affichage de la légende sous l'image
 - Corrige un tri inversé
