@@ -1,0 +1,13 @@
+.dataTables_length {
+    margin-bottom: 10px;
+    width: 250px;
+}
+
+.dataTables_length label {
+    float: left;
+}
+
+.dataTables_length select {
+    margin-left: 5px;
+    width: 80px;
+}
