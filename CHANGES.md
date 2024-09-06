@@ -6,7 +6,7 @@
 - Répare le bouton d'effacement en mode édition d'une page. 
 - Corrige la feuille de style du slider les balises H1, H3 et A.
 - Corrige l'absence de contenu de page lorsque le module est en position libre et que le mot clé [MODULE] n'a pas été inséré.
-- Corrige l'option "REster connecter sur ce navigateur' dont la connexion est désormais réellement persistente.
+- Corrige l'option "REster connecter sur ce navigateur' dont la connexion est désormais réellement persistante.
 - Supprime un slash à la fin de l'URL du catalogue. 
 - Eviter un warning lors de la création d'une nouvelle page.
 
