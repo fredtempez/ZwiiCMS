@@ -51,7 +51,7 @@
 						<div class="col6 blogEdit">
 							<!-- Bloc edition -->
 							<?php if (
-								$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+								$this->isConnected() === true
 								and
 								( // Propriétaire
 									($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === $module::EDIT_OWNER

@@ -1045,19 +1045,29 @@ class user extends common
 					// RAZ
 					$this->setData(['user', $userId, 'connectFail', 0]);
 					$this->setData(['user', $userId, 'connectTimeout', 0]);
-					
+
+					// Clé d'authenfication
+					$authKey = uniqid('', true) . bin2hex(random_bytes(8));
+					$this->setData(['user', $userId, 'authKey', $authKey]);
+
 					// Validité du cookie
 					$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime("+1 year") : 0;
 					switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
 						case false:
 							// Cookie de session
 							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-							setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+							//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
+							// Connexion par clé							
+							setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 							break;
 						default:
 							// Cookie persistant
 							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-							setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+							//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+
+							// Connexion par clé
+							setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false));
 							break;
 					}
 
@@ -1136,7 +1146,9 @@ class user extends common
 	public function logout()
 	{
 		helper::deleteCookie('ZWII_USER_ID');
-		helper::deleteCookie('ZWII_USER_PASSWORD');
+		//helper::deleteCookie('ZWII_USER_PASSWORD');
+		helper::deleteCookie('ZWII_AUTH_KEY');
+		$this->setData(['user', $this->getUser('id'), 'authKey', '']);
 
 		// Détruit la session
 		session_destroy();

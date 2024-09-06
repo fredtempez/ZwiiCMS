@@ -415,7 +415,7 @@ class core extends common
 
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			$this->isConnected() === true
 			and ($this->getUser('group') === common::GROUP_BANNED
 				or ($_SESSION['csrf'] !== $this->getData(['user', $this->getUser('id'), 'accessCsrf'])
 					and $this->getData(['config', 'connect', 'autoDisconnect']) === true)
@@ -429,8 +429,8 @@ class core extends common
 			$this->getData(['config', 'maintenance'])
 			and in_array($this->getUrl(0), ['maintenance', 'user']) === false
 			and $this->getUrl(1) !== 'login'
-			and ($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
-				or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			and ($this->isConnected() === false
+				or ($this->isConnected() === true
 					and $this->getUser('group') < common::GROUP_ADMIN
 				)
 			)
@@ -449,7 +449,7 @@ class core extends common
 		if ($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if (
 				$this->getData(['page', $this->getUrl(0), 'group']) === common::GROUP_VISITOR
-				or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+				or ($this->isConnected() === true
 					// and $this->getUser('group') >= $this->getData(['page', $this->getUrl(0), 'group'])
 					// Modification qui tient compte du profil de la page
 					and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->getUrl(0), 'group']) * 10 + $this->getData(['page', $this->getUrl(0), 'profil']))
@@ -466,9 +466,9 @@ class core extends common
 			// Empêcher l'accès aux pages désactivées par URL directe
 			if (
 				($this->getData(['page', $this->getUrl(0), 'disable']) === true
-					and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+					and $this->isConnected() === false
 				) or ($this->getData(['page', $this->getUrl(0), 'disable']) === true
-					and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					and $this->isConnected() === true
 					and $this->getUser('group') < common::GROUP_EDITOR
 				)
 			) {
@@ -515,7 +515,7 @@ class core extends common
 		}
 		// Accès concurrent stocke la page visitée
 		if (
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			$this->isConnected() === true
 			&& $this->getUser('id')
 		) {
 			$this->setData(['user', $this->getUser('id'), 'accessUrl', $this->getUrl()]);
@@ -635,7 +635,7 @@ class core extends common
 					// Check le groupe de l'utilisateur
 					if (
 						($module::$actions[$action] === common::GROUP_VISITOR
-							or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+							or ($this->isConnected() === true
 								and $this->getUser('group') >= $module::$actions[$action]
 								and $this->getUser('permission', $moduleId, $action)
 							)

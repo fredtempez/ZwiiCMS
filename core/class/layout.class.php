@@ -330,7 +330,7 @@ class layout extends common
         // Affichage du lien de connexion
         if (
             ($this->getData(['theme', 'footer', 'loginLink'])
-                and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                and $this->isConnected() === false
             )
             or $this->getUrl(0) === 'theme'
         ) {
@@ -493,7 +493,7 @@ class layout extends common
         // Lien de connexion
         if (
             ($this->getData(['theme', 'menu', 'loginLink'])
-                and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                and $this->isConnected() === false
             )
             or $this->getUrl(0) === 'theme'
         ) {
@@ -580,9 +580,9 @@ class layout extends common
 
             if (
                 ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                    and $this->isConnected() === false
                 ) or ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+                    and $this->isConnected() === true
                     and $this->getUser('group') < self::GROUP_EDITOR
                 )
             ) {
@@ -646,9 +646,9 @@ class layout extends common
                 $items .= '<li id=' . $childKey . '>';
                 if (
                     ($this->getData(['page', $childKey, 'disable']) === true
-                        and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                        and $this->isConnected() === false
                     ) or ($this->getData(['page', $childKey, 'disable']) === true
-                        and $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+                        and $this->isConnected() === true
                         and $this->getUser('group') < self::GROUP_EDITOR
                     )
                 ) {
@@ -742,7 +742,7 @@ class layout extends common
                 $items .= '<li class="menuSideChild">';
                 if (
                     $this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                    and $this->isConnected() === false
                 ) {
                     $items .= '<a href="' . $this->getUrl(1) . '">';
                 } else {
@@ -766,7 +766,7 @@ class layout extends common
 
                 if (
                     $this->getData(['page', $childKey, 'disable']) === true
-                    and $this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+                    and $this->isConnected() === false
                 ) {
                     $itemsChildren .= '<a href="' . $this->getUrl(1) . '">';
                 } else {
@@ -902,7 +902,7 @@ class layout extends common
      */
     public function showBar()
     {
-        if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+        if ($this->isConnected() === true) {
             // Items de gauche
             $leftItems = '';
             // Sélecteur de langues
@@ -1188,7 +1188,7 @@ class layout extends common
         $vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
         $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
         if (
-            $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+            $this->isConnected() === true
             and $this->getUser('group') >= self::GROUP_EDITOR
         ) {
             $vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR . 'core.json')) . ';';
