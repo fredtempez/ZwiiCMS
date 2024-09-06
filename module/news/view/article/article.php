@@ -19,7 +19,7 @@
 		<?php echo helper::dateUTF8('%d %B %Y', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI) . '&nbsp' . helper::dateUTF8('%H:%M', $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
 		<!-- Bloc edition -->
 		<?php if (
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			$this->isConnected() === true
 			and
 			(  // Propriétaire
 				($this->getUser('group') === self::GROUP_ADMIN)

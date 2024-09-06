@@ -26,7 +26,7 @@
 							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$i18nUI); ?>
 							<!-- Bloc edition -->
 							<?php if (
-								$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+								$this->isConnected() === true
 								and
 								( // Propriétaire
 									($this->getUser('group') === self::GROUP_ADMIN)
