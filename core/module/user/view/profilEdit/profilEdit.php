@@ -152,7 +152,7 @@
                     <?php echo template::select('profilEditPath', $module::$sharePath, [
                         'label' => 'Dossier',
                         'class' => 'filemanager',
-                        'selected' => '.' . $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'path'])
+                        'selected' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'folder', 'path'])
                     ]); ?>
                 </div>
             </div>

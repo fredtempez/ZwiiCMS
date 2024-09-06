@@ -54,7 +54,7 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			if ($g['profil'][$group][$profil]['filemanager'] === false)
 				exit('Accès interdit');
 			// lecture du profil
-			if (!is_null($profil)) {
+			if (!is_null($profil) and $g['profil'][$group][$profil]['folder']['path']  !== '') {
 				$file = $g['profil'][$group][$profil]['file'];
 				$folder = $g['profil'][$group][$profil]['folder'];
 				$uploadDir = $g['profil'][$group][$profil]['folder']['path'];
