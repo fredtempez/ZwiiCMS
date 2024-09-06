@@ -25,7 +25,7 @@
 		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI) . ' ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
 		<!-- Bloc edition -->
 		<?php if (
-			$this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+			$this->isConnected() === true
 			and
 			(  // Propriétaire
 				($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === $module::EDIT_OWNER
@@ -88,7 +88,7 @@
 		'readonly' => true
 	]); ?>
 	<div id="blogArticleCommentWrapper" class="displayNone">
-		<?php if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')): ?>
+		<?php if ($this->isConnected() === true): ?>
 			<?php echo template::text('blogArticleUserName', [
 				'label' => 'Nom',
 				'readonly' => true,
@@ -122,7 +122,7 @@
 			'maxlength' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentMaxlength'])
 		]); ?>
 		<div id="blogArticleContentAlarm"> </div>
-		<?php if ($this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')): ?>
+		<?php if ($this->isConnected() === false): ?>
 			<div class="row">
 				<div class="col12">
 					<?php echo template::captcha('blogArticleCaptcha', [

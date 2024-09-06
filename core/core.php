@@ -768,7 +768,7 @@ class common
 				 $this->getData(['page', $pageId, 'parentPageId']) === ""
 				 // Ignore les pages dont l'utilisateur n'a pas accès
 				 and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
-					 or ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+					 or ($this->isConnected() === true
 						 //and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
 						 // Modification qui tient compte du profil de la page
 						 and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
@@ -799,7 +799,7 @@ class common
 						 $this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
 					 )
 					 or (
-						 $this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')
+						 $this->isConnected() === true
 						 and
 						 $this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
  
@@ -1026,6 +1026,13 @@ class common
 			return false;
 		}
 
+	}
+
+		/**
+	 * @return bool l'utilisateur est connecté true sinon false
+	 */ 
+	public function isConnected() {
+		return ($this->getUser('authKey') === $this->getInput('ZWII_AUTH_KEY'));
 	}
 
 	/**

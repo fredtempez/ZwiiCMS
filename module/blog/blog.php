@@ -749,7 +749,7 @@ class blog extends common
 				) {
 					// Check la captcha
 					if (
-						$this->getUser('password') !== $this->getInput('ZWII_USER_PASSWORD')
+						$this->isConnected() === false
 						//AND $this->getInput('blogArticlecaptcha', helper::FILTER_INT) !== $this->getInput('blogArticlecaptchaFirstNumber', helper::FILTER_INT) + $this->getInput('blogArticlecaptchaSecondNumber', helper::FILTER_INT))
 						and password_verify($this->getInput('blogArticleCaptcha', helper::FILTER_INT), $this->getInput('blogArticleCaptchaResult')) === false
 					) {
@@ -831,7 +831,7 @@ class blog extends common
 				// Signature de l'article
 				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']));
 				// Signature du commentaire édité
-				if ($this->getUser('password') === $this->getInput('ZWII_USER_PASSWORD')) {
+				if ($this->isConnected() === true) {
 					self::$editCommentSignature = $this->signature($this->getUser('id'));
 				}
 				// Commentaires en fonction de la pagination
