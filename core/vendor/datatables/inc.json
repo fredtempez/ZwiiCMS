@@ -1,4 +1,5 @@
 [
 	"datatables.min.js",
-	"datatables.min.css"
+	"datatables.min.css",
+	"datatables.custom.css"
 ]

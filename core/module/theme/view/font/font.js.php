@@ -20,6 +20,7 @@ $('#dataTables').DataTable({
     },
     locale: 'fr',
     stateSave: true,
+    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
     "columnDefs": [{
             target: 5,
             orderable: false,
