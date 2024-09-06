@@ -16,6 +16,7 @@
 
 ## Versions 13.3.06
 ** Corrections : **
+- Corrige un bug de sécurité dans la gestion des profils.
 - Répare le bouton d'effacement en mode édition d'une page. 
 - Corrige la feuille de style du slider les balises H1, H3 et A.
 - Corrige l'absence de contenu de page lorsque le module est en position libre et que le mot clé [MODULE] n'a pas été inséré.
