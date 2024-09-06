@@ -5,7 +5,8 @@
 - Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
 - Slider en version 7.1, corrections diverses.
 - Connexion persisante renforcée.
--
+- Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
+
 **Corrections : **
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
 - Supprime un warning à la créatio d'une page.
