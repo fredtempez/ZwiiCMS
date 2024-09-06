@@ -8,6 +8,7 @@
 - Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
 
 **Corrections : **
+- Isole la session dans l'onglet actif.
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
 - Supprime un warning à la créatio d'une page.
 
