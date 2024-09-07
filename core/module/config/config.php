@@ -22,7 +22,7 @@ class config extends common
 		'copyBackups' => self::GROUP_ADMIN,
 		'delBackups' => self::GROUP_ADMIN,
 		'configMetaImage' => self::GROUP_ADMIN,
-		'siteMap' => self::GROUP_ADMIN,
+		'sitemap' => self::GROUP_ADMIN,
 		'index' => self::GROUP_ADMIN,
 		'restore' => self::GROUP_ADMIN,
 		'updateBaseUrl' => self::GROUP_ADMIN,
@@ -211,7 +211,7 @@ class config extends common
 	 * Sitemap compressé et non compressé
 	 * Robots.txt
 	 */
-	public function siteMap()
+	public function sitemap()
 	{
 		// La page n'existe pas
 		if (

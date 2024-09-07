@@ -9,12 +9,14 @@
 - Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
 - Slider 7.2, le dossier sélectionné est affiché par défaut dans la page update.
 - Augmente la dimension des miniatures après le transfert dans RFM.
-- Search 3.3 n'effectue qu'une seule lecture du fichier module.json en prévention des bots agressifs
+- Search 3.3 n'effectue qu'une seule lecture du fichier module.json en prévention des bots agressifs.
+- Modification du contenu de robots.txt afin de n'autoriser que les moteurs de recherche et d'interdire les bots.
 
 **Corrections : **
 - Isole la session dans l'onglet actif.
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
 - Supprime un warning à la création d'une page.
+- Bouton de génération du site inopérant.
 
 
 ## Versions 13.3.06
