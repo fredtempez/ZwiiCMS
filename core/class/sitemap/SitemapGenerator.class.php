@@ -128,7 +128,17 @@ class SitemapGenerator
      */
     private $sampleRobotsLines = [
         "User-agent: *",
+        "Disallow: /",
+        "User-agent: Googlebot",
         "Allow: /",
+        "User-agent: bingbot",
+        "Allow: /",
+        "User-agent: Slurp",
+        "Allow: /",
+        "User-agent: DuckDuckBot",
+        "Allow: /",
+        "User-agent: Baiduspider",
+        "Allow: /"
     ];
     /**
      * @var array list of valid changefreq values according to the spec
