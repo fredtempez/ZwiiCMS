@@ -9,6 +9,7 @@
 - Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
 - Slider 7.2, le dossier sélectionné est affiché par défaut dans la page update.
 - Augmente la dimension des miniatures après le transfert dans RFM.
+- Search 3.3 n'effectue qu'une seule lecture du fichier module.json en prévention des bots agressifs
 
 **Corrections : **
 - Isole la session dans l'onglet actif.
