@@ -591,7 +591,7 @@ $config = array(
 	// path_from_filemanager/test/test1/
 	// PS if there isn't write permission in your destination folder you must set it
 	//
-	'fixed_image_creation' => true,
+	'fixed_image_creation' => false,
 	//activate or not the creation of one or more image resized with fixed path from filemanager folder
 	'fixed_path_from_filemanager' => array('../../../site/file/thumb/'),
 	//fixed path of the image folder from the current position on upload folder
