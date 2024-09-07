@@ -2,16 +2,18 @@
 
 ## Versions 13.4.00
 ** Améliorations :**
+- Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.
 - Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
 - Slider en version 7.1, corrections diverses.
-- Connexion persisante renforcée.
+- Connexion persistante renforcée.
 - Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
 - Slider 7.2, le dossier sélectionné est affiché par défaut dans la page update.
+- Augmente la dimension des miniatures après le transfert dans RFM.
 
 **Corrections : **
 - Isole la session dans l'onglet actif.
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
-- Supprime un warning à la créatio d'une page.
+- Supprime un warning à la création d'une page.
 
 
 ## Versions 13.3.06
