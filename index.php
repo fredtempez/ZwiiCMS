@@ -20,7 +20,7 @@
 // Remplace la directive htaccess
 ini_set('session.use_trans_sid', FALSE);
 // Crée un identifiant unique pour chaque site en fonction du nom de domaine ou autre
-$siteId = md5($_SERVER['SERVER_NAME']); // Ou utilise un autre identifiant unique pour chaque site
+$siteId = md5($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_FILENAME']); // Ou utilise un autre identifiant unique pour chaque site
 // Change le nom de la session en fonction de cet identifiant
 session_name('zwii_session_' . $siteId);
 // Démarre la session
