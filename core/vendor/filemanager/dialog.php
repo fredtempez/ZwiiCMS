@@ -59,12 +59,12 @@ if (checkRelativePath($subdir_path)) {
 }
 
 if ($subdir == "") {
-    if (!empty($_COOKIE['last_position']) && strpos($_COOKIE['last_position'], '.') === false) {
-        $subdir = trim($_COOKIE['last_position']);
+    if (!empty($_COOKIE['ZWII_RFM_FOLDER']) && strpos($_COOKIE['ZWII_RFM_FOLDER'], '.') === false) {
+        $subdir = trim($_COOKIE['ZWII_RFM_FOLDER']);
     }
 }
 //remember last position
-setcookie('last_position', $subdir, time() + (86400 * 7));
+setcookie('ZWII_RFM_FOLDER', $subdir, time() + (86400 * 7));
 
 if ($subdir == "/") {
     $subdir = "";
