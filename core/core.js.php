@@ -216,12 +216,14 @@ core.start = function () {
         // Variables des cookies
         var getUrl = window.location;
         var domain = "domain=" + getUrl.hostname + ";";
+        var basePath = getUrl.pathname.substring(0, getUrl.pathname.lastIndexOf('/') + 1);
+        var path = "path=" + basePath + ";";
         var e = new Date();
         e.setFullYear(e.getFullYear() + 1);
-        var expires = "expires=" + e.toUTCString();
-
+        var expires = "expires=" + e.toUTCString() + ";";
+    
         // Stocke le cookie d'acceptation
-        document.cookie = "ZWII_COOKIE_CONSENT=true;samesite=strict;" + domain + expires;
+        document.cookie = "ZWII_COOKIE_CONSENT=true; samesite=lax; " + domain + path + expires;
     });
 
 
