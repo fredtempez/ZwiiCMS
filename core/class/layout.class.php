@@ -1063,10 +1063,6 @@ class layout extends common
                     'help' => 'Thème',
                     'href' => helper::baseUrl() . 'theme'
                 ]) . '</li>';
-                $rightItems .= '<li>' . template::ico('puzzle', [
-                    'help' => 'Modules',
-                    'href' => helper::baseUrl() . 'plugin'
-                ]) . '</li>';
                 $rightItems .= '<li>' . template::ico('cog-alt', [
                     'help' => 'Configuration',
                     'href' => helper::baseUrl() . 'config'
@@ -1092,15 +1088,45 @@ class layout extends common
                         ) {
                             $this->setData(['core', 'updateAvailable', true]);
                         }
+
+                        // Recherche de mise à jour des modules
+                        $store = plugin::getStore();
+                        if (is_array($store)) {
+                            // Modules installés
+                            $infoModules = helper::getModules();
+                            // Clés moduleIds dans les pages
+                            $inPages = helper::arrayColumn($this->getData(['page']), 'moduleId', 'SORT_DESC');
+                            // Parcourir les données des modules
+                            foreach ($store as $key => $value) {
+                                if (empty($key)) {
+                                    continue;
+                                }
+                                // Mise à jour d'un module
+                                if (array_key_exists($key, $infoModules) === true) {
+                                    $this->setData(['core', 'updateModuleAvailable', true]);
+                                }
+                            }
+                        }
+
                     }
                 }
-
-
                 // Afficher le bouton : Mise à jour détectée + activée
                 if ($this->getData(['core', 'updateAvailable'])) {
                     $rightItems .= '<li><a href="' . helper::baseUrl() . 'install/update" data-tippy-content="Mettre à jour Zwii ' . common::ZWII_VERSION . ' vers ' . helper::getOnlineVersion(common::ZWII_UPDATE_CHANNEL) . '">' . template::ico('update colorRed') . '</a></li>';
                 }
             }
+            if ($this->getData(['core', 'updateModuleAvailable'])) {
+                $rightItems .= '<li>' . template::ico('puzzle colorRed', [
+                    'help' => 'Modules',
+                    'href' => helper::baseUrl() . 'plugin'
+                ]) . '</li>';
+            } else {
+                $rightItems .= '<li>' . template::ico('puzzle', [
+                    'help' => 'Modules',
+                    'href' => helper::baseUrl() . 'plugin'
+                ]) . '</li>';
+            }
+            // Boutons depuis le groupe éditeur
             if (
                 $this->getUser('group') >= self::GROUP_EDITOR
                 && $this->getUser('permission', 'user', 'edit')
@@ -1175,7 +1201,7 @@ class layout extends common
     {
         // Import des fontes liées au thème
         if (file_exists(self::DATA_DIR . 'font/font.html')) {
-            include_once (self::DATA_DIR . 'font/font.html');
+            include_once(self::DATA_DIR . 'font/font.html');
         }
     }
 

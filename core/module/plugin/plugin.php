@@ -22,7 +22,7 @@ class plugin extends common
 		'delete' => self::GROUP_ADMIN,
 		'save' => self::GROUP_ADMIN,
 		'store' => self::GROUP_ADMIN,
-		'item' => self::GROUP_ADMIN,
+		//'item' => self::GROUP_ADMIN,
 		// détail d'un objet
 		'upload' => self::GROUP_ADMIN,
 		// Téléverser catalogue
@@ -330,6 +330,7 @@ class plugin extends common
 				'state' => $r['success']
 			]);
 		}
+
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Catalogue de modules'),
@@ -409,6 +410,15 @@ class plugin extends common
 			'title' => helper::translate('Module ' . self::$storeItem['title']),
 			'view' => 'item'
 		]);
+	}
+
+	/**
+	 * Retourne le contenu du store en ligne
+	 * @return mixed
+	 */
+	public static function getStore() {
+		$store = json_decode(helper::getUrlContents(self::BASEURL_STORE . self::MODULE_STORE . 'list'), true);
+		return $store;
 	}
 
 	/**
@@ -555,6 +565,9 @@ class plugin extends common
 				}
 			}
 		}
+
+		// Désactive l'icône rouge
+		$this->setData(['core', 'updateModuleAvailable', false]);
 
 		// Valeurs en sortie
 		$this->addOutput([
