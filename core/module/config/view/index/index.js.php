@@ -265,7 +265,6 @@ $(document).ready(function () {
     $('span#screenWeight').each(function(index){
         var weight = parseFloat($(this).text());
         var fileType = $('span#screenType').eq(index).text();
-console.log(weight);
         if ((fileType === "jpg" || fileType === "jpeg") && weight < 5000000) {
             $(this).css("color", "green");
         } else {
