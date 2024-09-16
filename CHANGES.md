@@ -13,6 +13,7 @@
 - Modification du contenu de robots.txt afin de n'autoriser que les moteurs de recherche et d'interdire les bots.
 
 **Corrections : **
+- Change les paramètres du cookie de consentement.
 - Isole la session dans l'onglet actif.
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
 - Supprime un warning à la création d'une page.
