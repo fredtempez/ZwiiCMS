@@ -345,6 +345,7 @@ class user extends common
 							'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
 							'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
 							'tags' => $this->getInput('userEditTags', helper::FILTER_STRING_SHORT),
+							'authKey' =>  $this->getData(['user', $this->getUrl(2), 'authKey']),
 						]
 					]);
 					// Redirection spécifique si l'utilisateur change son mot de passe
