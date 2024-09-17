@@ -18,6 +18,7 @@
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
 - Supprime un warning à la création d'une page.
 - Bouton de génération du site inopérant.
+- Affichage intempestif des boutons de navigation de pages dans les vues des modules.
 
 
 ## Versions 13.3.06

@@ -82,17 +82,25 @@ class layout extends common
                 $content = 'col' . $blocks[1];
                 $blockright = 'col' . $blocks[2];
         }
-        // Page pleine pour la configuration des modules et l'édition des pages sauf l'affichage d'un article de blog
-        $pattern = ['config', 'edit', 'add', 'comment', 'data'];
+        // Toujours en pleine page pour la configuration des modules et l'édition des pages sauf l'affichage d'un article de blog
+        $pattern = ['config', 'edit', 'add', 'comment', 'data', 'option', 'theme', 'comment', 'article', 'data', 'gallery', 'update', 'users', 'validate'];
         if (
             (sizeof($blocks) === 1 ||
                 in_array($this->getUrl(1), $pattern))
         ) { // Pleine page en mode configuration
-            if ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'top' || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'top') {
+            if (
+                ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'top'
+                    || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'top')
+                && in_array($this->getUrl(1), $pattern) === false
+            ) {
                 $this->showNavButtons('top');
             }
             $this->showContent();
-            if ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'bottom' || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'bottom') {
+            if (
+                ($this->getData(['page', $this->getUrl(0), 'navLeft']) === 'bottom'
+                    || $this->getData(['page', $this->getUrl(0), 'navRight']) === 'bottom')
+                && in_array($this->getUrl(1), $pattern) === false
+            ) {
                 $this->showNavButtons('bottom');
             }
         } else {
