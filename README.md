@@ -1,4 +1,4 @@
-# ZwiiCMS 13.4.00 version de test
+# ZwiiCMS 13.4.00 test version
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge.
 
