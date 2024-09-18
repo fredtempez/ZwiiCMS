@@ -11,6 +11,7 @@
 - Augmente la dimension des miniatures après le transfert dans RFM.
 - Search 3.3 n'effectue qu'une seule lecture du fichier module.json en prévention des bots agressifs.
 - Modification du contenu de robots.txt afin de n'autoriser que les moteurs de recherche et d'interdire les bots.
+- Suppression des cookies mémorisant le dernier onglet affiché dans l'édition de la page et dans la configuration du site. Cette information est désormais stockée dans la fiche de l'utilisateur connecté.
 
 **Corrections : **
 - Change les paramètres du cookie de consentement.

@@ -23,7 +23,8 @@ class page extends common
 		'edit' => self::GROUP_EDITOR,
 		'duplicate' => self::GROUP_EDITOR,
 		'jsEditor' => self::GROUP_EDITOR,
-		'cssEditor' => self::GROUP_EDITOR
+		'cssEditor' => self::GROUP_EDITOR,
+		'register' => self::GROUP_EDITOR,
 	];
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
@@ -713,5 +714,25 @@ class page extends common
 			return $d;
 		}, $p);
 		return json_encode($d);
+	}
+
+		/**
+	 * Stocke la variable dans les paramètres de l'utilisateur pour activer la tab à sa prochaine visite
+	 * @return never
+	 */
+	public function register(): void
+	{
+		$this->setData([
+			'user',
+			$this->getUser('id'),
+			'view',
+			[
+				'page' => $this->getUrl(2)
+			]
+		]);
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(3) . '/' . self::$siteContent,
+		]);
 	}
 }

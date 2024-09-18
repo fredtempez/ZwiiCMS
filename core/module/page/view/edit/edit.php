@@ -31,23 +31,28 @@
 <div class="tab">
 	<?php echo template::button('pageEditContentButton', [
 		'value' => 'Contenu',
-		'class' => 'buttonTab'
+		'class' => 'buttonTab',
+		'href' => helper::baseUrl() . 'page/register/content/' . $this->geturl(2)
 	]); ?>
-	<?php echo template::button('PageEditPositionButton', [
+	<?php echo template::button('pageEditPositionButton', [
 		'value' => 'Menu',
-		'class' => 'buttonTab'
+		'class' => 'buttonTab',
+		'href' => helper::baseUrl() . 'page/register/position/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditExtensionButton', [
 		'value' => 'Extension',
-		'class' => 'buttonTab'
+		'class' => 'buttonTab',
+		'href' => helper::baseUrl() . 'page/register/extension/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditLayoutButton', [
 		'value' => 'Mise en page',
-		'class' => 'buttonTab'
+		'class' => 'buttonTab',
+		'href' => helper::baseUrl() . 'page/register/layout/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditPermissionButton', [
 		'value' => 'Permission',
-		'class' => 'buttonTab'
+		'class' => 'buttonTab',
+		'href' => helper::baseUrl() . 'page/register/permission/' . $this->geturl(2)
 	]); ?>
 </div>
 

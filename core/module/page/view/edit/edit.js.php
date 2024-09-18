@@ -15,7 +15,7 @@
 /**
  * Confirmation de suppression
 */
- $("#pageEditDelete").on("click", function() {
+$("#pageEditDelete").on("click", function() {
 	var _this = $(this);
 	var message_delete = "<?php echo helper::translate('Confirmer la suppression de la page'); ?>";
 	return core.confirm(message_delete, function() {
@@ -67,16 +67,18 @@ $( document ).ready(function() {
 	/**
 	 * Sélection des onglets
 	 */
-	 var pageLayout = getCookie("pageLayout");
-	 if (pageLayout == null) {
-		 pageLayout = "content";
-		 setCookie("pageLayout", "content");
+	var pageLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
+	// Non défini, valeur par défaut
+	if (pageLayout == null) {
+		 pageLayout = "content"; 
 	 }
+	 // Tout cacher
 	 $("#pageEditContentContainer").hide();
 	 $("#pageEditExtensionContainer").hide();
 	 $("#pageEditPositionContainer").hide();
 	 $("#pageEditLayoutContainer").hide();
 	 $("#pageEditPermissionContainer").hide();
+	 // Afficher la bonne tab
 	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Container").show();
 	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Button").addClass("activeButton");
 
@@ -295,7 +297,6 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
-			setCookie("pageLayout", "content");
 		});
 		$("#pageEditExtensionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -308,7 +309,6 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
-			setCookie("pageLayout", "extension");
 		});
 		$("#PageEditPositionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -321,7 +321,6 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").addClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
-			setCookie("pageLayout", "position");
 		});
 		$("#pageEditLayoutButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -334,7 +333,6 @@ $( document ).ready(function() {
 			$("#PageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").addClass("activeButton");
 			$("#pageEditPermissionButton").removeClass("activeButton");
-			setCookie("pageLayout", "layout");
 		});
 		$("#pageEditPermissionButton").on("click", function () {
 			$("#pageEditContentContainer").hide();
@@ -347,7 +345,6 @@ $( document ).ready(function() {
 			$("#pageEditPositionButton").removeClass("activeButton");
 			$("#pageEditLayoutButton").removeClass("activeButton");
 			$("#pageEditPermissionButton").addClass("activeButton");
-			setCookie("pageLayout", "permission");
 		});
 
 /**
@@ -721,30 +718,6 @@ function buildPagesList(extraPosition) {
 	// Sélectionne la bonne position
 	positionDOM.val(positionSelected);
 };
-
-/**
- * Cookies
- */
-function setCookie(name, value, days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/; samesite=lax";
-}
-
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
 
 // Define function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {
