@@ -727,7 +727,8 @@ class page extends common
 			$this->getUser('id'),
 			'view',
 			[
-				'page' => $this->getUrl(2)
+				'page' => $this->getUrl(2),
+				'config' => $this->getData(['user', $this->getUser('id'), 'view', 'config']),
 			]
 		]);
 		// Valeurs en sortie
