@@ -68,7 +68,7 @@ $(document).ready(function () {
 
 	var configLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'config']);?>";
 	// Non défini, valeur par défaut
-	if (configLayout == null) {
+	if (configLayout == "") {
         configLayout = "setup"; 
 	 }
 
