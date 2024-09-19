@@ -68,8 +68,9 @@ $( document ).ready(function() {
 	 * Sélection des onglets
 	 */
 	var pageLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
+	console.log(pageLayout);
 	// Non défini, valeur par défaut
-	if (pageLayout == null) {
+	if (pageLayout == "") {
 		 pageLayout = "content"; 
 	 }
 	 // Tout cacher
