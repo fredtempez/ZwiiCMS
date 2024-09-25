@@ -53,19 +53,14 @@ function showError(step, message, errors) {
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
 
-    // Vérifier si l'accolade ouvrante est trouvée et qu'elle n'est pas en première position
     if (typeof message !== 'object') {
-
-        // Trouver la position du premier "{" pour repérer le début du tableau
         const startOfArray = message.indexOf('{');
 
+        // Vérifier que l'accolade existe et n'est pas en première position
         if (startOfArray !== -1 && startOfArray > 0) {
-            // Extraire le message du warning jusqu'au début du tableau
             const warningMessage = message.substring(0, startOfArray).trim();
-
-            // Extraire le tableau JSON entre les accolades
             const jsonString = message.substring(startOfArray);
-            
+
             try {
                 const jsonData = JSON.parse(jsonString);
 
@@ -77,7 +72,7 @@ function showError(step, message, errors) {
                         warningMessage.replace(/<[^p].*?>/g, ""));
                 }
             } catch (e) {
-                // Afficher un message générique en cas d'erreur de parsing
+                // En cas d'erreur de parsing, afficher un message générique
                 console.error("Erreur de parsing JSON : ", e);
                 $("#installUpdateErrorMessage").html("Une erreur inattendue est survenue lors du traitement des détails de l'erreur.");
             }
@@ -89,6 +84,7 @@ function showError(step, message, errors) {
         $("#installUpdateErrorMessage").html(message);
     }
 }
+
 
 $(window).on("load", function () {
     step(1, null);
