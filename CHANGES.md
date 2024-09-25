@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.3.07
+- Anticipe la déconnexion de la version 13.4
+
 ## Versions 13.3.06
 ** Corrections : **
 - Corrige un bug de sécurité dans la gestion des profils.
