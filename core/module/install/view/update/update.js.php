@@ -41,32 +41,38 @@ function showError(step, message, errors) {
     $("#installUpdateEnd").removeClass("disabled");
     $("#installUpdateProgress").hide();
 
-    // Vérifier si l'accolade ouvrante est trouvée et qu'elle n'est pas en première position
     if (typeof message !== 'object') {
-
-        // Trouver la position du premier "{" pour repérer le début du tableau
         const startOfArray = message.indexOf('{');
 
-        // Extraire le message du warning jusqu'au début du tableau
-        const warningMessage = message.substring(0, startOfArray).trim();
+        // Vérifier que l'accolade existe et n'est pas en première position
+        if (startOfArray !== -1 && startOfArray > 0) {
+            const warningMessage = message.substring(0, startOfArray).trim();
+            const jsonString = message.substring(startOfArray);
 
-        // Extraire le tableau JSON entre les accolades
-        const jsonString = message.substring(startOfArray);
-        const jsonData = JSON.parse(jsonString);
+            try {
+                const jsonData = JSON.parse(jsonString);
 
-        // Afficher les résultats
-        if (jsonData) {
-            $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " +
-                jsonData.data.replace(/^"(.*)"$/, '$1') +
-                "<br>" +
-                warningMessage.replace(/<[^p].*?>/g, ""));
+                // Afficher les résultats si le parsing JSON est réussi
+                if (jsonData) {
+                    $("#installUpdateErrorMessage").html("<strong>Détails de l'erreur :</strong><br> " +
+                        jsonData.data.replace(/^"(.*)"$/, '$1') +
+                        "<br>" +
+                        warningMessage.replace(/<[^p].*?>/g, ""));
+                }
+            } catch (e) {
+                // En cas d'erreur de parsing, afficher un message générique
+                console.error("Erreur de parsing JSON : ", e);
+                $("#installUpdateErrorMessage").html("Une erreur inattendue est survenue lors du traitement des détails de l'erreur.");
+            }
+        } else {
+            // Si pas de JSON détecté, afficher le message brut
+            $("#installUpdateErrorMessage").html("Message d'erreur : " + message);
         }
-
     } else {
-        // Vous pouvez également faire quelque chose d'autre ici, par exemple, afficher un message à l'utilisateur, etc.
         $("#installUpdateErrorMessage").html(message);
     }
 }
+
 
 $(window).on("load", function () {
     step(1, null);
