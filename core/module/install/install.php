@@ -432,8 +432,7 @@ class install extends common
 					if (!empty($message)) {
 						$this->saveLog($message);
 					}
-					// Nettoyage de tout contenu indésirable ajouté au tampon
-					ob_clean();
+					die($message);
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
