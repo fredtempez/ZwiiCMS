@@ -21,6 +21,8 @@
 - Bouton de génération du site inopérant.
 - Affichage intempestif des boutons de navigation de pages dans les vues des modules.
 
+## Version 13.3.07
+- Anticipe la déconnexion de la version 13.4
 
 ## Versions 13.3.06
 ** Corrections : **
