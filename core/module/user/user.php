@@ -1149,7 +1149,6 @@ class user extends common
 		helper::deleteCookie('ZWII_USER_ID');
 		//helper::deleteCookie('ZWII_USER_PASSWORD');
 		helper::deleteCookie('ZWII_AUTH_KEY');
-		$this->setData(['user', $this->getUser('id'), 'authKey', '']);
 
 		// Détruit la session
 		session_destroy();
