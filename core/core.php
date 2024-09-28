@@ -619,11 +619,8 @@ class common
 		// Initialise le compteur de tentatives
 		$attempts = 0;
 
-		// Convertit les données en chaîne de caractères
-		$serialized_data = serialize($data);
-
 		// Vérifie la longueur des données
-		$data_length = strlen($serialized_data);
+		$data_length = strlen($data);
 
 		// Effectue jusqu'à 5 tentatives d'écriture
 		while ($attempts < 5) {
@@ -633,15 +630,17 @@ class common
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
 				// Sort de la boucle si l'écriture a réussi
-				return true;
+				break;
 			}
 
 			// Incrémente le compteur de tentatives
 			$attempts++;
+			sleep(1);
 		}
 
 		// Échec de l'écriture après plusieurs tentatives
-		return false;
+		// Etat de l'écriture
+		return ($attempts < 5);
 	}
 	
 

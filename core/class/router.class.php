@@ -517,6 +517,7 @@ class core extends common
 		if (
 			$this->isConnected() === true
 			&& $this->getUser('id')
+			&& !$this->isPost()
 		) {
 			$this->setData(['user', $this->getUser('id'), 'accessUrl', $this->getUrl()]);
 			$this->setData(['user', $this->getUser('id'), 'accessTimer', time()]);
