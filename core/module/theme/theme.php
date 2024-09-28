@@ -419,7 +419,7 @@ class theme extends common
 				]);
 
 				// Sauvegarder la configuration localisée
-				$this->setData(['locale', 'legalPageId', $this->getInput('configLegalPageId')]);
+				$this->setData(['locale', 'legalPageId', $this->getInput('configLegalPageId')], false);
 				$this->setData(['locale', 'searchPageId', $this->getInput('configSearchPageId')]);
 
 				// Valeurs en sortie
@@ -507,21 +507,23 @@ class theme extends common
 					'featureContent' => $featureContent,
 					'featureFiles' => $files
 				]
-			]);
+			], false);
 			// Modification de la position du menu selon la position de la bannière
 			if ($this->getData(['theme', 'header', 'position']) == 'site') {
-				$this->setData(['theme', 'menu', 'position', str_replace('body-', 'site-', $this->getData(['theme', 'menu', 'position']))]);
+				$this->setData(['theme', 'menu', 'position', str_replace('body-', 'site-', $this->getData(['theme', 'menu', 'position']))], false);
 			}
 			if ($this->getData(['theme', 'header', 'position']) == 'body') {
-				$this->setData(['theme', 'menu', 'position', str_replace('site-', 'body-', $this->getData(['theme', 'menu', 'position']))]);
+				$this->setData(['theme', 'menu', 'position', str_replace('site-', 'body-', $this->getData(['theme', 'menu', 'position']))], false);
 			}
 			// Menu accroché à la bannière qui devient cachée
 			if (
 				$this->getData(['theme', 'header', 'position']) == 'hide' &&
 				in_array($this->getData(['theme', 'menu', 'position']), ['body-first', 'site-first', 'body-first', 'site-second'])
 			) {
-				$this->setData(['theme', 'menu', 'position', 'site']);
+				$this->setData(['theme', 'menu', 'position', 'site'], false);
 			}
+			// Force la sauvegarde
+			$this->saveDB('theme');
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
@@ -631,7 +633,7 @@ class theme extends common
 		// Polices liées au thème admin
 		$fonts['Titre (admin)'] = $this->getData(['admin', 'fontTitle']);
 		$fonts['Texte (admin)'] = $this->getData(['admin', 'fontText']);
-		
+
 		// Polices liées au thème
 		$fonts['Bannière'] = $this->getData(['theme', 'header', 'font']);
 		$fonts['Menu'] = $this->getData(['theme', 'menu', 'font']);
@@ -650,7 +652,7 @@ class theme extends common
 			if (is_array($typeValue)) {
 				foreach ($typeValue as $fontId => $fontValue) {
 					// Recherche les correspondances
-					$result = array_filter($fonts, function($value) use ($fontId) {
+					$result = array_filter($fonts, function ($value) use ($fontId) {
 						return $value == $fontId;
 					});
 					$keyResults = array_keys($result);
@@ -846,7 +848,7 @@ class theme extends common
 				file_exists($this->getData(['font', 'files', $this->getUrl(3), 'resource']))
 			) {
 
-				unlink($this->getData(['font',  'files', $this->getUrl(3), 'resource']));
+				unlink($this->getData(['font', 'files', $this->getUrl(3), 'resource']));
 			}
 
 			// Valeurs en sortie
@@ -921,7 +923,7 @@ class theme extends common
 					'fontWeight' => $this->getInput('themeTitleFontWeight'),
 					'textTransform' => $this->getInput('themeTitleTextTransform')
 				]
-			]);
+			], false);
 			$this->setData([
 				'theme',
 				'text',
@@ -931,7 +933,7 @@ class theme extends common
 					'textColor' => $this->getInput('themeTextTextColor'),
 					'linkColor' => $this->getInput('themeTextLinkColor')
 				]
-			]);
+			], false);
 			$this->setData([
 				'theme',
 				'site',
@@ -942,14 +944,14 @@ class theme extends common
 					'width' => $this->getInput('themeSiteWidth'),
 					'margin' => $this->getInput('themeSiteMargin', helper::FILTER_BOOLEAN)
 				]
-			]);
+			], false);
 			$this->setData([
 				'theme',
 				'button',
 				[
 					'backgroundColor' => $this->getInput('themeButtonBackgroundColor')
 				]
-			]);
+			], false);
 			$this->setData([
 				'theme',
 				'block',
@@ -957,7 +959,9 @@ class theme extends common
 					'backgroundColor' => $this->getInput('themeBlockBackgroundColor'),
 					'borderColor' => $this->getInput('themeBlockBorderColor')
 				]
-			]);
+			], false);
+			// Force la sauvegarde
+			$this->saveDB('theme');
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
