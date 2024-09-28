@@ -32,8 +32,6 @@ class core extends common
 			}
 			// Date de la dernière suppression
 			$this->setData(['core', 'lastClearTmp', $lastClearTmp]);
-			// Enregistre les données
-			//$this->SaveData();
 		}
 		// Backup automatique des données
 		$lastBackup = mktime(0, 0, 0);
@@ -519,7 +517,7 @@ class core extends common
 			&& $this->getUser('id')
 			&& !$this->isPost()
 		) {
-			$this->setData(['user', $this->getUser('id'), 'accessUrl', $this->getUrl()]);
+			$this->setData(['user', $this->getUser('id'), 'accessUrl', $this->getUrl()], false);
 			$this->setData(['user', $this->getUser('id'), 'accessTimer', time()]);
 		}
 		// Breadcrumb

@@ -382,11 +382,13 @@ class page extends common
 						$pageId = helper::increment($pageId, self::$moduleIds);
 						// Met à jour les enfants
 						foreach ($this->getHierarchy($this->getUrl(2), null) as $childrenPageId) {
-							$this->setData(['page', $childrenPageId, 'parentPageId', $pageId]);
+							$this->setData(['page', $childrenPageId, 'parentPageId', $pageId], false);
 						}
+						// Force la sauvegarde
+						$this->saveDB('page');
 						// Change l'id de page dans les données des modules
 						if ($this->getData(['module', $this->getUrl(2)]) !== null) {
-							$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])]);
+							$this->setData(['module', $pageId, $this->getData(['module', $this->getUrl(2)])], false);
 							$this->deleteData(['module', $this->getUrl(2)]);
 							// Renommer le dossier du module
 							$moduleId = $this->getData(['page', $this->getUrl(2), 'moduleId']);
@@ -397,8 +399,10 @@ class page extends common
 								copy($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2), $modulesData[$moduleId]['dataDirectory'] . $pageId);
 								$this->deleteDir($modulesData[$moduleId]['dataDirectory'] . $this->getUrl(2));
 								// Mettre à jour le nom de la feuille de style
-								$this->setData(['module', $pageId, 'theme', 'style', $modulesData[$moduleId]['dataDirectory'] . $pageId]);
+								$this->setData(['module', $pageId, 'theme', 'style', $modulesData[$moduleId]['dataDirectory'] . $pageId], false);
 							}
+							// Force la sauvegarde
+							$this->saveDB('module');
 						}
 						// Si la page correspond à la page d'accueil, change l'id dans la configuration du site
 						if ($this->getData(['locale', 'homePageId']) === $this->getUrl(2)) {
@@ -418,20 +422,22 @@ class page extends common
 					}
 					// Traitement des pages spéciales affectées dans la config :
 					if ($this->getUrl(2) === $this->getData(['locale', 'legalPageId'])) {
-						$this->setData(['locale', 'legalPageId', $pageId]);
+						$this->setData(['locale', 'legalPageId', $pageId], false);
 					}
 					if ($this->getUrl(2) === $this->getData(['locale', 'searchPageId'])) {
-						$this->setData(['locale', 'searchPageId', $pageId]);
+						$this->setData(['locale', 'searchPageId', $pageId], false);
 					}
 					if ($this->getUrl(2) === $this->getData(['locale', 'page404'])) {
-						$this->setData(['locale', 'page404', $pageId]);
+						$this->setData(['locale', 'page404', $pageId], false);
 					}
 					if ($this->getUrl(2) === $this->getData(['locale', 'page403'])) {
-						$this->setData(['locale', 'page403', $pageId]);
+						$this->setData(['locale', 'page403', $pageId], false);
 					}
 					if ($this->getUrl(2) === $this->getData(['locale', 'page302'])) {
-						$this->setData(['locale', 'page302', $pageId]);
+						$this->setData(['locale', 'page302', $pageId], false);
 					}
+					// Force la sauvegarde
+					$this->saveDB('locale');
 					// Si la page est une page enfant, actualise les positions des autres enfants du parent, sinon actualise les pages sans parents
 					$lastPosition = 1;
 					$hierarchy = $this->getInput('pageEditParentPageId') ? $this->getHierarchy($this->getInput('pageEditParentPageId')) : array_keys($this->getHierarchy());
@@ -450,7 +456,7 @@ class page extends common
 								$lastPosition++;
 							}
 							// Change la position
-							$this->setData(['page', $hierarchyPageId, 'position', $lastPosition]);
+							$this->setData(['page', $hierarchyPageId, 'position', $lastPosition], false);
 							// Incrémente pour la prochaine position
 							$lastPosition++;
 						}
@@ -475,26 +481,28 @@ class page extends common
 					) {
 						foreach ($this->getHierarchy($pageId) as $parentId => $childId) {
 							if ($this->getData(['page', $childId, 'parentPageId']) === $pageId) {
-								$this->setData(['page', $childId, 'position', 0]);
+								$this->setData(['page', $childId, 'position', 0], false);
 							}
 						}
+						                            // Force la sauvegarde
+													$this->saveDB('page');
 					}
 
 					// La page est une barre latérale qui a été renommée : changer le nom de la barre dans les pages qui l'utilisent
 					if ($this->getinput('pageEditBlock') === 'bar') {
 						foreach ($this->getHierarchy() as $eachPageId => $parentId) {
 							if ($this->getData(['page', $eachPageId, 'barRight']) === $this->getUrl(2)) {
-								$this->setData(['page', $eachPageId, 'barRight', $pageId]);
+								$this->setData(['page', $eachPageId, 'barRight', $pageId], false);
 							}
 							if ($this->getData(['page', $eachPageId, 'barLeft']) === $this->getUrl(2)) {
-								$this->setData(['page', $eachPageId, 'barLeft', $pageId]);
+								$this->setData(['page', $eachPageId, 'barLeft', $pageId], false);
 							}
 							foreach ($parentId as $childId) {
 								if ($this->getData(['page', $childId, 'barRight']) === $this->getUrl(2)) {
-									$this->setData(['page', $childId, 'barRight', $pageId]);
+									$this->setData(['page', $childId, 'barRight', $pageId], false);
 								}
 								if ($this->getData(['page', $childId, 'barLeft']) === $this->getUrl(2)) {
-									$this->setData(['page', $childId, 'barLeft', $pageId]);
+									$this->setData(['page', $childId, 'barLeft', $pageId], false);
 								}
 							}
 						}
@@ -710,13 +718,13 @@ class page extends common
 	{
 		$p = $this->getData(['page']);
 		$d = array_map(function ($d) {
-			unset ($d["css"], $d["js"]);
+			unset($d["css"], $d["js"]);
 			return $d;
 		}, $p);
 		return json_encode($d);
 	}
 
-		/**
+	/**
 	 * Stocke la variable dans les paramètres de l'utilisateur pour activer la tab à sa prochaine visite
 	 * @return never
 	 */

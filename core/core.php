@@ -520,7 +520,7 @@ class common
 	 * Sauvegarde des données
 	 * @param array $keys Clé(s) des données
 	 */
-	public function setData($keys = [])
+	public function setData($keys = [], $save = true)
 	{
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
 		if (
@@ -548,7 +548,7 @@ class common
 				$query .= '.' . $keys[$i];
 			}
 			// Appliquer la modification, le dernier élément étant la donnée à sauvegarder
-			$success = is_object($db->set($query, $keys[count($keys) - 1], true));
+			$success = is_object($db->set($query, $keys[count($keys) - 1], $save));
 		}
 		return $success;
 	}
@@ -723,6 +723,17 @@ class common
 			$this->setData([$module, init::$defaultData[$module]]);
 		}
 
+	}
+
+	/**
+	 * Forçage de l'enregistrement
+	 * @param mixed $module
+	 * @return void
+	 */
+	public function saveDB($module): void
+	{
+		$db = $this->dataFiles[$module];		
+		$db->save();
 	}
 
 

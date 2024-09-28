@@ -1090,11 +1090,11 @@ class layout extends common
                         $today > $checkUpdate + $this->getData(['config', 'autoUpdateDelay', 86400])
                     ) {
                         // Dernier auto controle
-                        $this->setData(['core', 'lastAutoUpdate', $today]);
+                        $this->setData(['core', 'lastAutoUpdate', $today], false);
                         if (
                             helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
                         ) {
-                            $this->setData(['core', 'updateAvailable', true]);
+                            $this->setData(['core', 'updateAvailable', true], false);
                         }
 
                         // Recherche de mise à jour des modules
@@ -1111,11 +1111,12 @@ class layout extends common
                                 }
                                 // Mise à jour d'un module
                                 if (array_key_exists($key, $infoModules) === true) {
-                                    $this->setData(['core', 'updateModuleAvailable', true]);
+                                    $this->setData(['core', 'updateModuleAvailable', true], false);
                                 }
                             }
                         }
-
+                        // Force la sauvegarde
+                        $this->saveDB('core');
                     }
                 }
                 // Afficher le bouton : Mise à jour détectée + activée

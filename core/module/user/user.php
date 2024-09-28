@@ -345,7 +345,7 @@ class user extends common
 							'files' => $this->getInput('userEditFiles', helper::FILTER_BOOLEAN),
 							'language' => $this->getInput('userEditLanguage', helper::FILTER_STRING_SHORT),
 							'tags' => $this->getInput('userEditTags', helper::FILTER_STRING_SHORT),
-							'authKey' =>  $this->getData(['user', $this->getUrl(2), 'authKey']),
+							'authKey' => $this->getData(['user', $this->getUrl(2), 'authKey']),
 						]
 					]);
 					// Redirection spécifique si l'utilisateur change son mot de passe
@@ -1031,8 +1031,8 @@ class user extends common
 					$this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time()
 					and $this->getData(['user', $userId, 'connectFail']) === $this->getData(['config', 'connect', 'attempt'])
 				) {
-					$this->setData(['user', $userId, 'connectFail', 0]);
-					$this->setData(['user', $userId, 'connectTimeout', 0]);
+					$this->setData(['user', $userId, 'connectFail', 0], false);
+					$this->setData(['user', $userId, 'connectTimeout', 0], false);
 				}
 				// Check la présence des variables et contrôle du blocage du compte si valeurs dépassées
 				// Vérification du mot de passe et du groupe
@@ -1044,8 +1044,8 @@ class user extends common
 					and $captcha === true
 				) {
 					// RAZ
-					$this->setData(['user', $userId, 'connectFail', 0]);
-					$this->setData(['user', $userId, 'connectTimeout', 0]);
+					$this->setData(['user', $userId, 'connectFail', 0], false);
+					$this->setData(['user', $userId, 'connectTimeout', 0], false);
 
 					// Clé d'authenfication
 					$authKey = uniqid('', true) . bin2hex(random_bytes(8));
@@ -1073,7 +1073,7 @@ class user extends common
 					}
 
 					// Accès multiples avec le même compte
-					$this->setData(['user', $userId, 'accessCsrf', $_SESSION['csrf']]);
+					$this->setData(['user', $userId, 'accessCsrf', $_SESSION['csrf']], false);
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 					if (
 						$this->getData(['config', 'maintenance'])
@@ -1106,12 +1106,12 @@ class user extends common
 					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
 					$logStatus = $captcha === true ? 'Erreur de mot de passe' : 'Erreur de captcha';
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
-					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
-						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1]);
+					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'], false)) {
+						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1], false);
 					}
 					// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
 					if ($this->getdata(['user', $userId, 'connectFail']) == $this->getData(['config', 'connect', 'attempt'])) {
-						$this->setData(['user', $userId, 'connectTimeout', time()]);
+						$this->setData(['user', $userId, 'connectTimeout', time()], false);
 					}
 					// Cas 3 le délai de bloquage court
 					if ($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) > time()) {
@@ -1124,6 +1124,8 @@ class user extends common
 					]);
 				}
 			}
+			// Force la sauvegarde
+			$this->saveDB('user');
 		}
 		// Journalisation
 		$this->saveLog($logStatus);
@@ -1202,11 +1204,11 @@ class user extends common
 						$newPassword = $this->getInput('userResetNewPassword', helper::FILTER_PASSWORD, true);
 					}
 					// Modifie le mot de passe
-					$this->setData(['user', $this->getUrl(2), 'password', $newPassword]);
+					$this->setData(['user', $this->getUrl(2), 'password', $newPassword], false);
 					// Réinitialise la date de la demande
-					$this->setData(['user', $this->getUrl(2), 'forgot', 0]);
+					$this->setData(['user', $this->getUrl(2), 'forgot', 0], false);
 					// Réinitialise le blocage
-					$this->setData(['user', $this->getUrl(2), 'connectFail', 0]);
+					$this->setData(['user', $this->getUrl(2), 'connectFail', 0], false);
 					$this->setData(['user', $this->getUrl(2), 'connectTimeout', 0]);
 					// Valeurs en sortie
 					$this->addOutput([
@@ -1321,7 +1323,7 @@ class user extends common
 									"accessCsrf" => null,
 									'tags' => $item['tags']
 								]
-							]);
+							], false);
 							// Icône de notification
 							$item['notification'] = $create ? template::ico('check') : template::ico('cancel');
 							// Envoi du mail
@@ -1362,6 +1364,8 @@ class user extends common
 					}
 
 				}
+				// Force la sauvegarde
+				$this->saveDB('user');
 				if (empty(self::$users)) {
 					$notification = helper::translate('Rien à importer, erreur de format ou fichier incorrect');
 					$success = false;
