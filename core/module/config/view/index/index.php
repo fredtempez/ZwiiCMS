@@ -22,23 +22,23 @@
     <?php echo template::button('configSetupButton', [
         'value' => 'Configuration',
         'class' => 'buttonTab',
-		'href' => helper::baseUrl() . 'config/register/setup'
+		//'href' => helper::baseUrl() . 'config/register/setup'
     ]); ?>
     <?php echo template::button('configSocialButton', [
         'value' => 'Référencement',
         'class' => 'buttonTab',
-		'href' => helper::baseUrl() . 'config/register/social'
+		//'href' => helper::baseUrl() . 'config/register/social'
     ]); ?>
 
     <?php echo template::button('configConnectButton', [
         'value' => 'Connexion',
         'class' => 'buttonTab',
-		'href' => helper::baseUrl() . 'config/register/connect'
+		//'href' => helper::baseUrl() . 'config/register/connect'
     ]); ?>
     <?php echo template::button('configNetworkButton', [
         'value' => 'Réseau',
         'class' => 'buttonTab',
-		'href' => helper::baseUrl() . 'config/register/network' 
+		//'href' => helper::baseUrl() . 'config/register/network' 
     ]); ?>
 </div>
 
