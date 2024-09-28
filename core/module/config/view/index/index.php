@@ -7,7 +7,7 @@
             'value' => template::ico('home')
         ]); ?>
     </div>
-    <div class="col2 offset6">
+    <div class="col2 offset7">
         <?php echo template::button('configLocaleButton', [
             'value' => 'Identité',
             'href' => helper::baseUrl() . 'language/site'
