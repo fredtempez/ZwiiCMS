@@ -163,6 +163,9 @@ class JsonDb extends \Prowebcraft\Dot
             // Essaye d'écrire les données encodées dans le fichier de base de données
             $write_result = file_put_contents($this->db, $encoded_data, LOCK_EX); // Les utilisateurs multiples obtiennent un verrou
 
+            $now = \DateTime::createFromFormat('U.u', microtime(true));
+            file_put_contents("tmplog.txt", '[JsonDb][' . $now->format('H:i:s.u') . ']--' . $this->db . "\r\n", FILE_APPEND);
+
             // Vérifie si l'écriture a réussi
             if ($write_result === $encoded_length) {
                 // Sort de la boucle si l'écriture a réussi

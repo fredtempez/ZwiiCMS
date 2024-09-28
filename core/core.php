@@ -627,6 +627,9 @@ class common
 			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
+			$now = \DateTime::createFromFormat('U.u', microtime(true));
+            file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']' . "\r\n", FILE_APPEND);
+
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
 				// Sort de la boucle si l'écriture a réussi
