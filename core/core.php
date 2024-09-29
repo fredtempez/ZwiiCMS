@@ -628,7 +628,7 @@ class common
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
 			$now = \DateTime::createFromFormat('U.u', microtime(true));
-            file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']' . $filename .  "\r\n", FILE_APPEND);
+            file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
 
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
@@ -645,6 +645,7 @@ class common
 		// Etat de l'écriture
 		return ($attempts < 5);
 	}
+
 	
 
 	/**
@@ -707,7 +708,7 @@ class common
 				$this->setData([$module, init::$siteTemplate[$module]]);
 				// Création des pages
 				foreach (init::$siteContent as $key => $value) {
-					$this->setPage($key, $value, 'fr_FR');
+					$this->setPage($key, $value['content'], 'fr_FR');
 				}
 				// Version en langue étrangère ou fr_FR sans site de test
 			} else {

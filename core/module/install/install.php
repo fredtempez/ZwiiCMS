@@ -179,9 +179,9 @@ class install extends common
 				}
 
 				// Sauvegarder la configuration du Proxy
-				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')]);
-				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')]);
-				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)]);
+				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')], false);
+				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')], false);
+				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)], false);
 
 				// Images exemples livrées dans tous les cas
 				try {
@@ -219,7 +219,7 @@ class install extends common
 				$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 
 				// Fixe l'adresse from pour les envois d'email
-				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])]);
+				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])], false);
 
 				// Valeurs en sortie
 				$this->addOutput([
@@ -228,6 +228,8 @@ class install extends common
 					'state' => true
 				]);
 			}
+			// Force la sauvegarde
+			$this->saveDB('config');
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -432,7 +434,7 @@ class install extends common
 					if (!empty($message)) {
 						$this->saveLog($message);
 					}
-					die($message);
+
 					// Valeurs en sortie
 					$this->addOutput([
 						'display' => self::DISPLAY_JSON,
