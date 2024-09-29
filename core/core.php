@@ -704,7 +704,7 @@ class common
 				mkdir(self::DATA_DIR . $lang . '/content', 0755);
 			}
 			// Site en français avec site exemple
-			if ($lang == 'fr_FR' && $sampleSite === true) {
+			if ($lang == 'fr_FR' && $sampleSite === true && $module === 'page') {
 				$this->setData([$module, init::$siteTemplate[$module]]);
 				// Création des pages
 				foreach (init::$siteContent as $key => $value) {
