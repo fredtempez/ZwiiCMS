@@ -3,6 +3,7 @@
 ## Versions 13.4.00
 ** Améliorations :**
 - Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.
+- Améliore les performances des opérations d'écriture.
 - Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
 - Slider en version 7.1, corrections diverses.
 - Connexion persistante renforcée.
@@ -21,8 +22,6 @@
 - Bouton de génération du site inopérant.
 - Affichage intempestif des boutons de navigation de pages dans les vues des modules.
 
-## Version 13.3.07
-- Anticipe la déconnexion de la version 13.4
 
 ## Versions 13.3.06
 ** Corrections : **
