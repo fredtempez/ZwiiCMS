@@ -5,7 +5,6 @@
 - Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.
 - Améliore les performances des opérations d'écriture.
 - Le sélecteur de fichier affiche le chemin d'accès du fichier présent dans le champ dans le gestionnaire de fichier.
-- Slider en version 7.1, corrections diverses.
 - Connexion persistante renforcée.
 - Script Datatables.net filtrage des éléments, nombre d'éléments et position sur l'écran.
 - Slider 7.2, le dossier sélectionné est affiché par défaut dans la page update.
