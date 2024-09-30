@@ -338,30 +338,26 @@ class common
 	 */
 	public function __construct()
 	{
-		// Construct cache
-		if(isset($GLOBALS['common_construct'])) {
-			$this->input['_POST'] = $GLOBALS['common_construct']['input']['_POST'];
-			$this->input['_COOKIE'] = $GLOBALS['common_construct']['input']['_COOKIE'];
-			self::$siteContent = $GLOBALS['common_construct']['siteContent'];
-			$this->dataFiles = $GLOBALS['common_construct']['dataFiles'];
-			$this->user = $GLOBALS['common_construct']['user'];
-			self::$i18nUI = $GLOBALS['common_construct']['i18nUI'];
-			$this->hierarchy = $GLOBALS['common_construct']['hierarchy'];
-			$this->url = $GLOBALS['common_construct']['url'];
-			self::$dialog = $GLOBALS['common_construct']['dialog'];
+		// Récupération du cache des propriétés
+		if(isset($GLOBALS['common_cache'])) {
+			$this->input['_POST'] = $GLOBALS['common_cache']['input']['_POST'];
+			$this->input['_COOKIE'] = $GLOBALS['common_cache']['input']['_COOKIE'];
+			self::$siteContent = $GLOBALS['common_cache']['siteContent'];
+			$this->dataFiles = $GLOBALS['common_cache']['dataFiles'];
+			$this->user = $GLOBALS['common_cache']['user'];
+			self::$i18nUI = $GLOBALS['common_cache']['i18nUI'];
+			$this->hierarchy = $GLOBALS['common_cache']['hierarchy'];
+			$this->url = $GLOBALS['common_cache']['url'];
+			self::$dialog = $GLOBALS['common_cache']['dialog'];
 			return;
 		}
 
 		// Extraction des données http
 		if (isset($_POST)) {
 			$this->input['_POST'] = $_POST;
-			// Cache
-			$GLOBALS['common_construct']['input']['_POST'] = $this->input['_POST'];
 		}
 		if (isset($_COOKIE)) {
 			$this->input['_COOKIE'] = $_COOKIE;
-			// Cache
-			$GLOBALS['common_construct']['input']['_COOKIE'] = $this->input['_COOKIE'];
 		}
 
 		// Déterminer la langue du contenu du site
@@ -378,17 +374,12 @@ class common
 				}
 			}
 		}
-		// Cache
-		$GLOBALS['common_construct']['siteContent'] = self::$siteContent;
 
 		// Localisation
 		\setlocale(LC_ALL, self::$siteContent . '.UTF8');
 
 		// Instanciation de la classe des entrées / sorties
 		$this->jsonDB(self::$siteContent);
-		// Cache
-		$GLOBALS['common_construct']['dataFiles'] = $this->dataFiles;
-
 
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
@@ -407,8 +398,6 @@ class common
 		if ($this->user === []) {
 			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
 		}
-		// Cache
-		$GLOBALS['common_construct']['user'] = $this->user;
 
 		// Langue de l'administration si le user est connecté
 		if ($this->getData(['user', $this->getUser('id'), 'language'])) {
@@ -430,15 +419,11 @@ class common
 		}
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
-		// Cache
-		$GLOBALS['common_construct']['i18nUI'] = self::$i18nUI;
 
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
 			$this->buildHierarchy();
 		}
-		// Cache
-		$GLOBALS['common_construct']['hierarchy'] = $this->hierarchy;
 
 		// Construit l'url
 		if ($this->url === '') {
@@ -448,8 +433,6 @@ class common
 				$this->url = $this->getData(['locale', 'homePageId']);
 			}
 		}
-		// Cache
-		$GLOBALS['common_construct']['url'] = $this->url;
 
 		// Chargement des dialogues
 		if (!file_exists(self::I18N_DIR . self::$i18nUI . '.json')) {
@@ -469,6 +452,7 @@ class common
 				self::$dialog = array_merge(self::$dialog, $d);
 			}
 		}
+
 		// Cache
 		$GLOBALS['common_construct']['dialog'] = self::$dialog;
 
@@ -492,6 +476,21 @@ class common
 			);
 			stream_context_set_default($context);
 		}
+
+		// Mise en cache des propriétés
+		$GLOBALS['common_cache'] = [
+			'input' => [
+				'_POST' => $this->input['_POST'],
+				'_COOKIE' => $this->input['_COOKIE'],
+			],
+			'siteContent' => self::$siteContent,
+			'dataFiles' => $this->dataFiles,
+			'user' => $this->user,
+			'i18nUI' => self::$i18nUI,
+			'hierarchy' => $this->hierarchy,
+			'url' => $this->url,
+			'dialog' => self::$dialog,
+		];
 
 		// Mise à jour des données core
 		include('core/include/update.inc.php');
@@ -667,8 +666,8 @@ class common
 			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
-			$now = \DateTime::createFromFormat('U.u', microtime(true));
-            file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
+			//$now = \DateTime::createFromFormat('U.u', microtime(true));
+            //file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
 
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
