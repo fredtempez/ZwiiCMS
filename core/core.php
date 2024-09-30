@@ -51,11 +51,11 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.3.07';
+	const ZWII_VERSION = '13.3.08';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
-	const ZWII_UPDATE_CHANNEL = 'v13';
+	const ZWII_UPDATE_CHANNEL = 'v134';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
