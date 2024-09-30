@@ -26,17 +26,23 @@ $siteId = md5($_SERVER['SERVER_NAME'] . $_SERVER['SCRIPT_FILENAME']); // Ou util
 session_name('zwii_session_' . $siteId);
 
 // Récupère dynamiquement le chemin du dossier dans lequel le script est exécuté
-$scriptPath = dirname($_SERVER['SCRIPT_NAME']) . '/';
+$scriptPath = dirname($_SERVER['SCRIPT_NAME']);
+
+// Si le chemin est vide (ce qui peut arriver si le site est à la racine), définis-le comme '/'
+if ($scriptPath === '/' || $scriptPath === '\\' || $scriptPath === '.') {
+    $scriptPath = '/';
+}
 
 // Définissez le chemin du cookie de session dynamiquement
 session_set_cookie_params([
     'lifetime' => 0,
     'path' => $scriptPath, // Utilise le chemin du script pour restreindre la session à ce répertoire
-    'domain' => $_SERVER['SERVER_NAME'], // Domain par défaut
+    'domain' => $_SERVER['SERVER_NAME'], // Domaine par défaut
     'secure' => isset($_SERVER['HTTPS']), // Pour HTTPS, si nécessaire
     'httponly' => true,
     'samesite' => 'Lax' // Ou 'Strict' ou 'None' selon tes besoins
 ]);
+
 
 // Démarre la session
 session_start();
