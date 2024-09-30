@@ -35,7 +35,7 @@ function step(i, data) {
             console.log(errors);
             
             // Vérification du code d'erreur HTTP pour gérer la déconnexion
-            if (xhr.status === 401) {
+            if (xhr.status === 401 || xhr.status === 403) {
                 alert("Votre session a expiré. Veuillez vous reconnecter.");
                 window.location.href = "/login"; // Redirige vers la page de connexion
             } else {
