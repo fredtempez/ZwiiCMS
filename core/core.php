@@ -51,12 +51,17 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.5.00';
+	const ZWII_VERSION = '13.4.01';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
 
-	// Branche de base pour la mise à jour 
+	/**
+	 * Branche de base pour la mise à jour
+	 * Pour les versions supérieures à 13.4 et inférieure à 14, la branche reste sur v134
+	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
+	 * les version supérieures. 
+	*/ 
 	const ZWII_UPDATE_CHANNEL = 'v134';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
