@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Versions 13.5.00
+Optimisation des performances par globalisation des variables de la classe common afin d'éviter une répétition du constructeur.
+
 ## Versions 13.4.00
 ** Améliorations :**
 - Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.
