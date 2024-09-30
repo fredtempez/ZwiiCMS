@@ -353,7 +353,6 @@ class common
 			$this->input['_COOKIE'] = $_COOKIE;
 		}
 
-
 		// Déterminer la langue du contenu du site
 		if (isset($_SESSION['ZWII_SITE_CONTENT'])) {
 			// Déterminé par la session présente
@@ -657,8 +656,8 @@ class common
 			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
-			$now = \DateTime::createFromFormat('U.u', microtime(true));
-            file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
+			//$now = \DateTime::createFromFormat('U.u', microtime(true));
+            //file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
 
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
