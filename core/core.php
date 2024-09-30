@@ -469,7 +469,6 @@ class common
 				self::$dialog = array_merge(self::$dialog, $d);
 			}
 		}
-
 		// Cache
 		$GLOBALS['common_construct']['dialog'] = self::$dialog;
 
