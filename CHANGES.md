@@ -5,6 +5,9 @@
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
 
+**Corrections : **
+- Corrige un bug de changement de mot de passe pour les comptes non admins.
+
 ## Versions 13.4.00
 ** Améliorations :**
 - Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.
@@ -18,7 +21,7 @@
 - Modification du contenu de robots.txt afin de n'autoriser que les moteurs de recherche et d'interdire les bots.
 - Suppression des cookies mémorisant le dernier onglet affiché dans l'édition de la page et dans la configuration du site. Cette information est désormais stockée dans la fiche de l'utilisateur connecté.
 
-**Corrections : **
+**Corrections :**
 - Change les paramètres du cookie de consentement.
 - Isole la session dans l'onglet actif.
 - Edition de page, delete et duplicate renvoyant vers une mauvaise page.
