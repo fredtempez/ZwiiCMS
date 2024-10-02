@@ -416,7 +416,7 @@ class user extends common
 				// Enregistre la date de la demande dans le compte utilisateur
 				$this->setData(['user', $userId, 'forgot', time()]);
 				// Crée un id unique pour la réinitialisation
-				$uniqId = md5(json_encode($this->getData(['user', $userId])));
+				$uniqId = md5(json_encode($this->getData(['user', $userId, 'forgot'])));
 				// Envoi le mail
 				$sent = $this->sendMail(
 					$this->getData(['user', $userId, 'mail']),
