@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Versions 13.5.00
+** Améliorations : **
+- Optimisation du chargement des variables de classe.
+- Suppression de redondance de déclaration des charset.
+
 ## Versions 13.4.00
 ** Améliorations :**
 - Change le mode d'authentification, le hash du mot de passe n'est plus stocké dans un cookie.

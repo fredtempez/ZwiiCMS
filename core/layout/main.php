@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<meta http-equiv="content-type" content="text/html;">
 	<meta meta="description=" content="ZwiiCMS le CMS multilingue sans base de données">
 	<meta name="generator" content="ZiiCMS https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
