@@ -1,7 +1,9 @@
 # Notes de mises à jour
 
-## Versions 13.4.01
-Optimisation des performances par globalisation des variables de la classe common afin d'éviter une répétition du constructeur.
+## Versions 13.5.00
+** Améliorations : **
+- Optimisation du chargement des variables de classe.
+- Suppression de redondance de déclaration des charset.
 
 ## Versions 13.4.00
 ** Améliorations :**
