@@ -95,70 +95,70 @@
 							<?php endif; ?>
 						</div>
 					</div>
-				</div>
-			<?php else: ?>
-				<div class="row">
-					<?php if (
-						$article['picture'] &&
-						file_exists(self::FILE_DIR . 'source/' . $article['picture'])
-					): ?>
-						<div class="col3">
-							<?php // Déterminer le nom de la miniature
-											$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
-											$thumb = 'mini_' . $parts['basename'];
-											// Créer la miniature si manquante
-											if (!file_exists(self::FILE_DIR . 'thumb/' . $thumb)) {
-												$this->makeThumb(
-													self::FILE_DIR . 'source/' . $article['picture'],
-													self::FILE_DIR . 'thumb/' . $thumb,
-													self::THUMBS_WIDTH
-												);
-											}
-											?>
-							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
-								<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb; ?>"
-									alt="<?php echo $article['picture']; ?>">
-							</a>
-						</div>
-						<div class="col9">
-						<?php else: ?>
-							<div class="col12">
-							<?php endif; ?>
-							<h2 class="blogTitle">
-								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
-									<?php echo $article['title']; ?>
-								</a>
-							</h2>
-							<div class="blogComment">
-								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
-									<?php if ($module::$comments[$articleId]): ?>
-										<?php echo $module::$comments[$articleId]; ?>
-										<?php echo template::ico('comment', ['margin' => 'left']); ?>
-									<?php endif; ?>
+				<?php else: ?>
+					<div class="row">
+						<?php if (
+							$article['picture'] &&
+							file_exists(self::FILE_DIR . 'source/' . $article['picture'])
+						): ?>
+							<div class="col3">
+								<?php // Déterminer le nom de la miniature
+												$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
+												$thumb = 'mini_' . $parts['basename'];
+												// Créer la miniature si manquante
+												if (!file_exists(self::FILE_DIR . 'thumb/' . $thumb)) {
+													$this->makeThumb(
+														self::FILE_DIR . 'source/' . $article['picture'],
+														self::FILE_DIR . 'thumb/' . $thumb,
+														self::THUMBS_WIDTH
+													);
+												}
+												?>
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
+									<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb; ?>"
+										alt="<?php echo $article['picture']; ?>">
 								</a>
 							</div>
-							<div class="blogDate">
-								<!-- bloc signature et date -->
-								<?php echo template::ico('user'); ?>
-								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
-								<?php echo template::ico('calendar-empty'); ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
-							</div>
-							<div class="blogContent">
-								<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) !== 0 ? $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
-								<?php echo helper::subword(strip_tags($article['content'], '<br><p>'), 0, $lenght); ?>...
-								<div class="readMoreContainer">
+							<div class="col9">
+							<?php else: ?>
+								<div class="col12">
+								<?php endif; ?>
+								<h2 class="blogTitle">
 									<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
-										<button class="readMoreButton">
-											<?php echo helper::translate('Lire la suite'); ?>
-										</button>
+										<?php echo $article['title']; ?>
+									</a>
+								</h2>
+								<div class="blogComment">
+									<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
+										<?php if ($module::$comments[$articleId]): ?>
+											<?php echo $module::$comments[$articleId]; ?>
+											<?php echo template::ico('comment', ['margin' => 'left']); ?>
+										<?php endif; ?>
 									</a>
 								</div>
+								<div class="blogDate">
+									<!-- bloc signature et date -->
+									<?php echo template::ico('user'); ?>
+									<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
+									<?php echo template::ico('calendar-empty'); ?>
+									<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+								</div>
+								<div class="blogContent">
+									<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) !== 0 ? $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']) : 500 ?>
+									<?php echo helper::subword(strip_tags($article['content'], '<br><p>'), 0, $lenght); ?>...
+									<div class="readMoreContainer">
+										<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
+											<button class="readMoreButton">
+												<?php echo helper::translate('Lire la suite'); ?>
+											</button>
+										</a>
+									</div>
+								</div>
 							</div>
-						</div>
+						<?php endif; ?>
 					</div>
-				<?php endif; ?>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			</div>
 	</article>
 	<?php echo $module::$pages; ?>
 <?php else: ?>

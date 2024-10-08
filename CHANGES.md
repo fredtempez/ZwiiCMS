@@ -1,12 +1,13 @@
 # Notes de mises à jour
 
 ## Versions 13.5.00
-** Améliorations : **
+**Améliorations :**
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
 
 **Corrections : **
 - Corrige un bug de changement de mot de passe pour les comptes non admins.
+- Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
 
 ## Versions 13.4.00
 ** Améliorations :**

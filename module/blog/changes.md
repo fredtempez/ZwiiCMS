@@ -1,6 +1,8 @@
-# Versions 7.11
+# Version 7.12
+- Corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
+# Version 7.11
 - Le sélecteur de fichier affiche par défaut le chemin vers le fichier présent dans le champ.
-# Versions 7.10
+# Version 7.10
 - Empêche la validation d'un commentaire lorsque le contenu est vide.
 # Versions 7.8 - 7.9
 - Le flux RSS ne fonctionne pas si les méta de la page sont vides.
