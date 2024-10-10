@@ -673,12 +673,34 @@ class helper
 	public static function subword($text, $start, $length)
 	{
 		$text = trim($text);
-		if (strlen($text) > $length) {
+	
+		// Vérifier si la longueur du texte sans les balises dépasse la longueur souhaitée
+		if (mb_strlen(strip_tags($text)) > $length) {
+			// Utiliser mb_substr pour couper le texte
 			$text = mb_substr($text, $start, $length);
-			$text = mb_substr($text, 0, min(mb_strlen($text), mb_strrpos($text, ' ')));
+			
+			// S'assurer que le texte ne se termine pas au milieu d'un mot
+			$lastSpace = mb_strrpos($text, ' ');
+			if ($lastSpace !== false) {
+				$text = mb_substr($text, 0, $lastSpace);
+			}
+	
+			// Fermer les balises HTML ouvertes
+			$dom = new DOMDocument();
+			@$dom->loadHTML('<div>' . $text . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+			$text = $dom->saveHTML();
+	
+			// Retirer la balise de conteneur ajoutée
+			$text = preg_replace('~^<div>(.*)</div>$~s', '$1', $text);
+	
+			// Ajouter des points de suspension si le texte a été coupé
+			$text .= '...';
 		}
+	
 		return $text;
 	}
+	
+	
 
 	/**
 	 * Cryptage
