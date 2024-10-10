@@ -8,6 +8,7 @@
 **Corrections : **
 - Corrige un bug de changement de mot de passe pour les comptes non admins.
 - Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
+- Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
 
 ## Versions 13.4.00
 ** Améliorations :**
