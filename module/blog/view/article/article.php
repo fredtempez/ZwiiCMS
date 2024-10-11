@@ -18,11 +18,28 @@
 		<?php endif; ?>
 	</div>
 	<div class="col6 newsDate textAlignRight">
-		<!-- bloc signature et date -->
+		<!-- bloc signature -->
 		<?php echo template::ico('user'); ?>
 		<?php echo $module::$articleSignature; ?>
-		<?php echo template::ico('calendar-empty'); ?>
-		<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI) . ' ' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+		<!-- bloc date -->
+		<?php if (
+			$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+			|| $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+		): ?>
+			<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
+		<?php endif; ?>
+		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
+			<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+		<?php endif; ?>
+		<?php if (
+			$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+			&& $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+		): ?>
+			<?php echo '&nbsp;-&nbsp;'; ?>
+		<?php endif; ?>
+		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
+			<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+		<?php endif; ?>
 		<!-- Bloc edition -->
 		<?php if (
 			$this->isConnected() === true

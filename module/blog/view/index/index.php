@@ -24,11 +24,28 @@
 					</div>
 					<div class="row">
 						<div class="col6 blogEdit">
-							<!-- bloc signature et date -->
+							<!-- bloc signature -->
 							<?php echo template::ico('user'); ?>
 							<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
-							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+							<!-- bloc Date -->
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+								|| $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+							): ?>
+								<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
+							<?php endif; ?>
+							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
+								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+							<?php endif; ?>
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+								&& $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+							): ?>
+								<?php echo '&nbsp;-&nbsp;'; ?>
+							<?php endif; ?>
+							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
+								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="row">
@@ -139,27 +156,44 @@
 								</a>
 							</div>
 							<div class="blogDate">
-								<!-- bloc signature et date -->
+								<!-- bloc signature -->
 								<?php echo template::ico('user'); ?>
 								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
-								<?php echo template::ico('calendar-empty'); ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
-							</div>
-							<div class="blogContent">
-								<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']); ?>
-								<?php if ($lenght > 0): ?>
-									<?php ?>
-									<?php echo helper::subword($article['content'], 0, $lenght); ?>...
-									<div class="readMoreContainer">
-										<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
-											<button class="readMoreButton">
-												<?php echo helper::translate('Lire la suite'); ?>
-											</button>
-										</a>
-									</div>
-								<?php else: ?>
-									<?php echo $article['content']; ?>
+								<!-- bloc date -->
+								<?php if (
+									$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+									|| $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+								): ?>
+									<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 								<?php endif; ?>
+								<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
+									<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+								<?php endif; ?>
+								<?php if (
+									$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+									&& $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+								): ?>
+									<?php echo '&nbsp;-&nbsp;'; ?>
+								<?php endif; ?>
+								<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
+									<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+								<?php endif; ?>
+								<div class="blogContent">
+									<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']); ?>
+									<?php if ($lenght > 0): ?>
+										<?php ?>
+										<?php echo helper::subword($article['content'], 0, $lenght); ?>...
+										<div class="readMoreContainer">
+											<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>">
+												<button class="readMoreButton">
+													<?php echo helper::translate('Lire la suite'); ?>
+												</button>
+											</a>
+										</div>
+									<?php else: ?>
+										<?php echo $article['content']; ?>
+									<?php endif; ?>
+								</div>
 							</div>
 						</div>
 					</div>

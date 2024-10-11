@@ -19,30 +19,22 @@
 			</h4>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::select('blogOptionArticlesLayout', $module::$articlesLayout, [
-						'label' => 'Disposition',
-						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'layout'])
+					<?php echo template::checkbox('blogOptionShowDate', true, 'Afficher la date', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'showDate']),
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
-						'label' => 'Aperçus',
-						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
-					]); ?>
-				</div>
-				<div class="col2">
-					<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
-						'label' => 'Articles par page',
-						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])
-					]); ?>
-				</div>
-				<div class="col2">
 					<?php echo template::select('blogOptionDateFormat', $module::$dateFormats, [
 						'label' => 'Format des dates',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
 					]); ?>
 				</div>
-				<div class="col2">
+				<div class="col3">
+					<?php echo template::checkbox('blogOptionShowTime', true, 'Afficher l\'heure', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'showTime']),
+					]); ?>
+				</div>
+				<div class="col3">
 					<?php echo template::select('blogOptionTimeFormat', $module::$timeFormats, [
 						'label' => 'Format des heures',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat'])
@@ -50,19 +42,39 @@
 				</div>
 			</div>
 			<div class="row">
+				<div class="col4">
+					<?php echo template::select('blogOptionArticlesLayout', $module::$articlesLayout, [
+						'label' => 'Disposition',
+						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'layout'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
+						'label' => 'Aperçus',
+						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
+					]); ?>
+				</div>
+				<div class="col4">
+					<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
+						'label' => 'Articles par page',
+						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col3">
+					<?php echo template::checkbox('newsOptionButtonBack', true, 'Bouton de retour', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
+					]); ?>
+				</div>
 				<div class="col3">
 					<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 					]); ?>
 				</div>
-				<div class="col3">
-						<?php echo template::checkbox('newsOptionButtonBack', true, 'Bouton de retour', [
-							'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
-						]); ?>
-					</div>
 				<div class="col6">
 					<?php echo template::text('blogOptionFeedslabel', [
-						'label' => 'Texte de l\'étiquette',
+						'label' => 'Texte de l\'étiquette RSS',
 						'value' => $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel'])
 					]); ?>
 				</div>
