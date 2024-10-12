@@ -27,8 +27,6 @@ $( document ).ready(function() {
 		serializeRegexp:  ""
 	});
 
-	console.log($("#galleryEditSort").val());
-
 if ($("#galleryEditSort").val() !==  "SORT_HAND") {
 		$("#galleryTable tr").addClass("nodrag nodrop");
 		$(".zwiico-sort").hide();
