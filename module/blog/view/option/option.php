@@ -29,12 +29,12 @@
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
 					]); ?>
 				</div>
-				<div class="col3">
+				<div class="col3 timeWrapper">
 					<?php echo template::checkbox('blogOptionShowTime', true, 'Afficher l\'heure', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'showTime']),
 					]); ?>
 				</div>
-				<div class="col3">
+				<div class="col3 timeWrapper">
 					<?php echo template::select('blogOptionTimeFormat', $module::$timeFormats, [
 						'label' => 'Format des heures',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat'])
