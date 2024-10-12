@@ -1,5 +1,6 @@
 <?php if ($module::$news): ?>
-	<link rel="stylesheet" type="text/css" href="<?php echo helper::baseUrl(false) . $this->getData(['module', $this->getUrl(0), 'theme', 'style']);?> "/>
+	<link rel="stylesheet" type="text/css"
+		href="<?php echo helper::baseUrl(false) . $this->getData(['module', $this->getUrl(0), 'theme', 'style']); ?> " />
 	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
 		<div id="rssFeed">
 			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>" target="_blank">
@@ -20,10 +21,28 @@
 							<?php echo '<a href="' . helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
 						</h2>
 						<div class="newsSignature">
+							<!-- bloc signature -->
 							<?php echo template::ico('user'); ?>
-							<?php echo $news['userId'] . ' - '; ?>
-							<?php echo template::ico('calendar-empty'); ?>
-							<?php echo helper::dateUTF8($module::$dateFormat, $news['publishedOn'], self::$i18nUI) . '&nbsp;' . helper::dateUTF8($module::$timeFormat, $news['publishedOn'], self::$i18nUI); ?>
+							<?php echo $news['userId']; ?>
+							<!-- bloc Date -->
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+								|| $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+							): ?>
+								<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
+							<?php endif; ?>
+							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
+								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+							<?php endif; ?>
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
+								&& $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true
+							): ?>
+								<?php echo '&nbsp;-&nbsp;'; ?>
+							<?php endif; ?>
+							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
+								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+							<?php endif; ?> 
 							<!-- Bloc edition -->
 							<?php if (
 								$this->isConnected() === true
@@ -32,10 +51,8 @@
 									($this->getUser('group') === self::GROUP_ADMIN)
 								)
 							): ?>
-								&nbsp;-&nbsp;
-								<a
-									href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsId; ?>">
-									<?php echo template::ico('pencil'); ?> Éditer
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $newsId; ?>">
+									<?php echo template::ico('pencil', ['margin' => 'left']); ?> Éditer
 								</a>
 							<?php endif; ?>
 						</div>
@@ -51,7 +68,6 @@
 					</div>
 				</div>
 			<?php endforeach; ?>
-
 		</div>
 	</article>
 	<?php echo $module::$pages; ?>

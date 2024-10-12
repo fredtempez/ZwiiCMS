@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '5.9';
+	const VERSION = '6.0';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -124,11 +124,12 @@ class news extends common
 		$feeds = new \FeedWriter\RSS2();
 
 		// En-tête
-		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']): '');
+		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']) : '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
 		if ($this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
 			$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
-		};
+		}
+		;
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
@@ -174,7 +175,8 @@ class news extends common
 			$publishedOn = $this->getInput('newsAddPublishedOn', helper::FILTER_DATETIME, true);
 			$publishedOff = $this->getInput('newsAddPublishedOff') ? $this->getInput('newsAddPublishedOff', helper::FILTER_DATETIME) : '';
 			$this->setData([
-				'module', $this->getUrl(0),
+				'module',
+				$this->getUrl(0),
 				'posts',
 				$newsId,
 				[
@@ -288,7 +290,8 @@ class news extends common
 			// Fin feuille de style
 
 			$this->setData([
-				'module', $this->getUrl(0),
+				'module',
+				$this->getUrl(0),
 				'theme',
 				[
 					'style' => $success ? self::DATADIRECTORY . $this->getUrl(0) . '/theme.css' : '',
@@ -300,7 +303,8 @@ class news extends common
 			]);
 
 			$this->setData([
-				'module', $this->getUrl(0),
+				'module',
+				$this->getUrl(0),
 				'config',
 				[
 					'feeds' => $this->getInput('newsOptionShowFeeds', helper::FILTER_BOOLEAN),
@@ -310,7 +314,9 @@ class news extends common
 					'height' => $this->getInput('newsOptionHeight', helper::FILTER_INT, true),
 					'dateFormat' => $this->getInput('newsOptionDateFormat'),
 					'timeFormat' => $this->getInput('newsOptionTimeFormat'),
-					'buttonBack' => $this->getInput('newsOptionButtonBack'),
+					'buttonBack' => $this->getInput('newsOptionButtonBack', helper::FILTER_BOOLEAN),
+					'showDate' => $this->getInput('newsOptionShowDate', helper::FILTER_BOOLEAN),
+					'showTime' => $this->getInput('newsOptionShowTime', helper::FILTER_BOOLEAN),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
@@ -318,7 +324,7 @@ class news extends common
 
 			// Valeurs en sortie
 			$this->addOutput([
-				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/option',
+				'redirect' => helper::baseUrl() . $this->getUrl(0) . '/config',
 				'notification' => helper::translate('Modifications enregistrées'),
 				'state' => true
 			]);
@@ -428,7 +434,8 @@ class news extends common
 				$publishedOn = $this->getInput('newsEditPublishedOn', helper::FILTER_DATETIME, true);
 				$publishedOff = $this->getInput('newsEditPublishedOff') ? $this->getInput('newsEditPublishedOff', helper::FILTER_DATETIME) : '';
 				$this->setData([
-					'module', $this->getUrl(0),
+					'module',
+					$this->getUrl(0),
 					'posts',
 					$newsId,
 					[
@@ -490,6 +497,8 @@ class news extends common
 			}
 			// L'article existe
 			else {
+				self::$dateFormat = $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat']);
+				self::$timeFormat = $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat']);
 				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']));
 				// Valeurs en sortie
 				$this->addOutput([
@@ -608,6 +617,14 @@ class news extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '5.3']);
+		}
+		// Mise à jour 6.0
+		if (version_compare($versionData, '6.0', '<')) {
+			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'showTime', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'showDate', true]);
+			// Mettre à jour la version
+			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '6.0']);
 		}
 
 	}
