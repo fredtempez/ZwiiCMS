@@ -14,7 +14,7 @@
 	<div class="col6 newsDate textAlignRight">
 		<!-- bloc signature -->
 		<?php echo template::ico('user'); ?>
-		<?php echo $module::$articleSignature . ' - '; ?>
+		<?php echo $module::$articleSignature; ?>
 		<!-- bloc date -->
 		<?php if (
 			$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -41,15 +41,13 @@
 				($this->getUser('group') === self::GROUP_ADMIN)
 			)
 		): ?>
-			&nbsp;-&nbsp;
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">
-				<?php echo template::ico('pencil'); ?>
+				<?php echo template::ico('pencil', ['margin' => 'left']); ?>
 				<?php echo helper::translate('Éditer'); ?>
 			</a>
 		<?php endif; ?>
 		<!-- Bloc RSS-->
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
-			&nbsp;-&nbsp;
 			<div id="rssFeed">
 				<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?>"
 					target="_blank">
