@@ -119,14 +119,16 @@ class page extends common
 				$page
 			]);
 			// Ecriture
-			$this->setData(['page', $pageId, $data]);
+			$this->setData(['page', $pageId, $data], false);
 			$notification = helper::translate('Page dupliquée');
 			// Duplication du module présent
 			if ($this->getData(['page', $page, 'moduleId'])) {
 				$data = $this->getData(['module', $page]);
-				$this->setData(['module', $pageId, $data]);
+				$this->setData(['module', $pageId, $data], false);
 				$notification = helper::translate('Page et module dupliqués');
 			}
+			// Force la sauvegarde
+			$this->saveDB('page');
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -484,8 +486,8 @@ class page extends common
 								$this->setData(['page', $childId, 'position', 0], false);
 							}
 						}
-						                            // Force la sauvegarde
-													$this->saveDB('page');
+						// Force la sauvegarde
+						$this->saveDB('page');
 					}
 
 					// La page est une barre latérale qui a été renommée : changer le nom de la barre dans les pages qui l'utilisent
