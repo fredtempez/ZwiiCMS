@@ -63,7 +63,7 @@
 			</div>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::checkbox('newsOptionButtonBack', true, 'Bouton de retour', [
+					<?php echo template::checkbox('blogOptionButtonBack', true, 'Bouton de retour', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
 					]); ?>
 				</div>
