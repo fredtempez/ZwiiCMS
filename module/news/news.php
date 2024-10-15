@@ -317,6 +317,7 @@ class news extends common
 					'buttonBack' => $this->getInput('newsOptionButtonBack', helper::FILTER_BOOLEAN),
 					'showDate' => $this->getInput('newsOptionShowDate', helper::FILTER_BOOLEAN),
 					'showTime' => $this->getInput('newsOptionShowTime', helper::FILTER_BOOLEAN),
+					'showPseudo' => $this->getInput('newsOptionShowPseudo', helper::FILTER_BOOLEAN),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
@@ -623,6 +624,7 @@ class news extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'showTime', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'showDate', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'showPseudo', true]);
 			// Mettre à jour la version
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '6.0']);
 		}

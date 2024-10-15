@@ -1,5 +1,5 @@
 # Versions 6.0
-- Ajoute deux nouvelles options pour afficher ou masquer la date et l'heure de l'article.
+- Ajoute trois nouvelles options pour afficher ou masquer la signature, la date et l'heure de l'article.
 - Corrige un mauvais format de la propriété buttonBack non stockée au type booléen.
 # Versions 5.9
 - Largeur d'un bouton de retour.

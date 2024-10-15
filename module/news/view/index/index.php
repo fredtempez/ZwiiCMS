@@ -22,8 +22,12 @@
 						</h2>
 						<div class="newsSignature">
 							<!-- bloc signature -->
-							<?php echo template::ico('user'); ?>
-							<?php echo $news['userId']; ?>
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showPseudo']) === true
+							): ?>
+								<?php echo template::ico('user'); ?>
+								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'userId'])); ?>
+							<?php endif; ?>
 							<!-- bloc Date -->
 							<?php if (
 								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true

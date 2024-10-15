@@ -13,8 +13,12 @@
 	</div>
 	<div class="col6 newsDate textAlignRight">
 		<!-- bloc signature -->
-		<?php echo template::ico('user'); ?>
-		<?php echo $module::$articleSignature; ?>
+		<?php if (
+			$this->getData(['module', $this->getUrl(0), 'config', 'showPseudo']) === true
+		): ?>
+			<?php echo template::ico('user'); ?>
+			<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId'])); ?>
+		<?php endif; ?>
 		<!-- bloc date -->
 		<?php if (
 			$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -33,7 +37,7 @@
 		<?php endif; ?>
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
 			<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
-		<?php endif; ?>		<!-- Bloc edition -->
+		<?php endif; ?> <!-- Bloc edition -->
 		<?php if (
 			$this->isConnected() === true
 			and
