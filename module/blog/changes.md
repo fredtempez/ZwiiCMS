@@ -1,5 +1,5 @@
 # Version 8.00
-- Ajoute deux nouvelles options pour afficher ou masquer la date et l'heure de l'article.
+- Ajoute trois nouvelles options pour afficher ou masquer le pseudo, la date et l'heure de l'article.
 - Corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
 - Corrige un bug dans la méthode de tronquage de l'article, nécessite Zwii 13.5
 - Corrige un mauvais format de la propriété buttonBack non stockée au type booléen.

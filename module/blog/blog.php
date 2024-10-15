@@ -42,9 +42,6 @@ class blog extends common
 
 	public static $articles = [];
 
-	// Signature de l'article
-	public static $articleSignature = '';
-
 	// Signature du commentaire
 	public static $editCommentSignature = '';
 
@@ -179,6 +176,7 @@ class blog extends common
 			$this->setData(['module', $this->getUrl(0), 'config', 'buttonBack', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'showTime', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'showDate', true]);
+			$this->setData(['module', $this->getUrl(0), 'config', 'showPseudo', true]);
 			$this->setData(['module', $this->getUrl(0), 'config', 'versionData', '8.0']);
 		}
 	}
@@ -583,6 +581,7 @@ class blog extends common
 					'buttonBack' => $this->getInput('blogOptionButtonBack', helper::FILTER_BOOLEAN),
 					'showDate' => $this->getInput('blogOptionShowDate', helper::FILTER_BOOLEAN),
 					'showTime' => $this->getInput('blogOptionShowTime', helper::FILTER_BOOLEAN),
+					'showPseudo' => $this->getInput('blogOptionShowPseudo', helper::FILTER_BOOLEAN),
 					'versionData' => $this->getData(['module', $this->getUrl(0), 'config', 'versionData']),
 				]
 			]);
@@ -831,8 +830,6 @@ class blog extends common
 				$pagination = helper::pagination($commentIds, $this->getUrl(), $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage']), '#comment');
 				// Liste des pages
 				self::$pages = $pagination['pages'];
-				// Signature de l'article
-				self::$articleSignature = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']));
 				// Signature du commentaire édité
 				if ($this->isConnected() === true) {
 					self::$editCommentSignature = $this->signature($this->getUser('id'));

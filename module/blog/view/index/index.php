@@ -25,8 +25,12 @@
 					<div class="row">
 						<div class="col6 blogEdit">
 							<!-- bloc signature -->
-							<?php echo template::ico('user'); ?>
-							<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'config', 'showPseudo']) === true
+							): ?>
+								<?php echo template::ico('user'); ?>
+								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
+							<?php endif; ?>
 							<!-- bloc Date -->
 							<?php if (
 								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -157,9 +161,12 @@
 							</div>
 							<div class="blogDate">
 								<!-- bloc signature -->
-								<?php echo template::ico('user'); ?>
-								<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
-								<!-- bloc date -->
+								<?php if (
+									$this->getData(['module', $this->getUrl(0), 'config', 'showPseudo']) === true
+								): ?>
+									<?php echo template::ico('user'); ?>
+									<?php echo $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId'])); ?>
+								<?php endif; ?> <!-- bloc date -->
 								<?php if (
 									$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
 									|| $this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true

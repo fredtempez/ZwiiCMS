@@ -18,6 +18,18 @@
 				<?php echo helper::translate('Paramètres'); ?>
 			</h4>
 			<div class="row">
+				<div class="col6">
+					<?php echo template::checkbox('blogOptionButtonBack', true, 'Bouton de retour', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
+					]); ?>
+				</div>
+				<div class="col6">
+					<?php echo template::checkbox('blogOptionShowPseudo', true, 'Signature', [
+						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'showPseudo'])
+					]); ?>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col3">
 					<?php echo template::checkbox('blogOptionShowDate', true, 'Afficher la date', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'showDate']),
@@ -62,12 +74,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col3">
-					<?php echo template::checkbox('blogOptionButtonBack', true, 'Bouton de retour', [
-						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'buttonBack'])
-					]); ?>
-				</div>
-				<div class="col3">
+				<div class="col6">
 					<?php echo template::checkbox('blogOptionShowFeeds', true, 'Lien du flux RSS', [
 						'checked' => $this->getData(['module', $this->getUrl(0), 'config', 'feeds']),
 					]); ?>
