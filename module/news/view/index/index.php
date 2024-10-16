@@ -36,7 +36,7 @@
 								<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?>
 							<?php if (
 								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -45,7 +45,7 @@
 								<?php echo '&nbsp;-&nbsp;'; ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
-								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?> 
 							<!-- Bloc edition -->
 							<?php if (
