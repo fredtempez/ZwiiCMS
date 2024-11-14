@@ -496,7 +496,8 @@ class config extends common
 						'autoDisconnect' => $this->getInput('connectAutoDisconnect', helper::FILTER_BOOLEAN),
 						'captchaType' => $this->getInput('connectCaptchaType'),
 						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
-						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN)
+						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
+						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_BOOLEAN),
 					]
 				]
 			]);

@@ -67,7 +67,7 @@ class user extends common
 
 	public static $groupProfils = [
 		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur'
+		self::GROUP_EDITOR => 'Éditeur',
 	];
 
 	public static $listModules = [];
@@ -1070,7 +1070,7 @@ class user extends common
 
 						// Clé d'authenfication utlisée pour lié le compte au cookie au lieu de stocke le hash du mot de passe
 						$authKey = uniqid('', true) . bin2hex(random_bytes(8));
-						if ($this->getData(['config', 'connect', 'mailAuth']) === true) {
+						if ($this->getData(['config', 'connect', 'mailAuth']) >= $this->getData(['user', $userId, 'group'])) {
 							$logStatus = 'Envoi du mail d\'authentification';
 							// Redirection vers la page d'authentification
 							$authRedirect = 'user/auth/';
