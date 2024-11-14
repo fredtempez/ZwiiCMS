@@ -26,6 +26,7 @@ class user extends common
 		'logout' => self::GROUP_MEMBER,
 		'forgot' => self::GROUP_VISITOR,
 		'login' => self::GROUP_VISITOR,
+		'auth' => self::GROUP_VISITOR,
 		'reset' => self::GROUP_VISITOR,
 		'profil' => self::GROUP_ADMIN,
 		'profilEdit' => self::GROUP_ADMIN,
@@ -1043,37 +1044,14 @@ class user extends common
 					and $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
 					and $captcha === true
 				) {
-					// RAZ
+
+					// RAZ des compteurs de blocage
 					$this->setData(['user', $userId, 'connectFail', 0], false);
 					$this->setData(['user', $userId, 'connectTimeout', 0], false);
 
-					// Clé d'authenfication
-					$authKey = uniqid('', true) . bin2hex(random_bytes(8));
-					$this->setData(['user', $userId, 'authKey', $authKey]);
-
-					// Validité du cookie
-					$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime("+1 year") : 0;
-					switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
-						case false:
-							// Cookie de session
-							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-							//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-
-							// Connexion par clé							
-							setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-							break;
-						default:
-							// Cookie persistant
-							setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-							//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
-
-							// Connexion par clé
-							setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false));
-							break;
-					}
-
 					// Accès multiples avec le même compte
 					$this->setData(['user', $userId, 'accessCsrf', $_SESSION['csrf']], false);
+
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 					if (
 						$this->getData(['config', 'maintenance'])
@@ -1085,7 +1063,49 @@ class user extends common
 							'state' => false
 						]);
 					} else {
-						$logStatus = 'Connexion réussie';
+						/**
+						 * Le site n'est pas en maintenance
+						 * Double authentification en cas de saisie correcte 
+						 */
+
+						// Clé d'authenfication utlisée pour lié le compte au cookie au lieu de stocke le hash du mot de passe
+						$authKey = uniqid('', true) . bin2hex(random_bytes(8));
+						if ($this->getData(['config', 'connect', 'mailAuth']) === true) {
+							$logStatus = 'Envoi du mail d\'authentification';
+							// Redirection vers la page d'authentification
+							$authRedirect = 'user/auth/';
+							// Stocker la clé envoyée par email
+							$this->setData(['user', $userId, 'authKey', rand(100000, 999999)]);
+
+						} else {
+							$logStatus = 'Connexion réussie';
+							// La page d'autentification est vide
+							$authRedirect = '';
+							$this->setData(['user', $userId, 'authKey', $authKey]);
+
+						}
+
+						// Validité du cookie
+						$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime("+1 year") : 0;
+						switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
+							case false:
+								// Cookie de session
+								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+
+								// Connexion par clé							
+								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								break;
+							default:
+								// Cookie persistant
+								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
+								//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+
+								// Connexion par clé
+								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false));
+								break;
+						}
+
 						$pageId = $this->getUrl(2);
 						if (
 							$this->getData(['config', 'page404']) === $pageId
@@ -1093,7 +1113,7 @@ class user extends common
 						) {
 							$pageId = '';
 						}
-						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl();
+						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
@@ -1142,16 +1162,87 @@ class user extends common
 		]);
 	}
 
+	/**
+	 * 
+	 * Validation de la connexion par email
+	 * @return void
+	 */
+	public function auth()
+	{
+		// Soumission du formulaire
+		if (
+			$this->isPost()
+		) {
+			// Vérifier la clé saisie
+			$targetKey = $this->getData(['user', $this->getUser('id'), 'authKey']);
+			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
+			if ($targetKey === $inputKey) {
+				$pageId = $this->getUrl(2);
+				// La fiche de l'utilisateur contient la clé d'authentification
+				$this->setData(['user', $this->getUser('id'), 'authKey', $this->getInput('ZWII_AUTH_KEY')]);
+				$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl();
+				// Journalisation
+				$this->saveLog('Connexion réussie');
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => $redirect,
+					'notification' => helper::translate('Connexion réussie'),
+					'state' => true
+				]);
+			} else {
+				// Journalisation
+				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'));
+
+				// Détruit les cookies d'authenfication
+				helper::deleteCookie('ZWII_USER_ID');
+				helper::deleteCookie('ZWII_AUTH_KEY');
+
+				// Détruit la session
+				session_destroy();
+
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl(),
+					'notification' => helper::translate('La clé est incorrecte'),
+					'state' => false
+				]);
+			}
+		} else {
+			/**
+			 * Envoi d'un email contenant une clé 
+			 * Stockage de la clé dans le compte de l'utilisateur
+			 */
+			$sent = $this->sendMail(
+				$this->getUser('mail'),
+				'Tentative de connexion à votre',
+				//'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+				'<p>Clé de validation à saisir dans le formulaire :</p>' .
+				'<h1><center>'.$this->getData(['user', $this->getUser('id'), 'authKey']).'</center></h1>',
+				null,
+				$this->getData(['config', 'smtp', 'from'])
+			);
+			// Message envoyé sinon la connexion est réalisée pour ne pas bloquer.
+			if ($sent === true) {
+				// Valider l'authentification en stockant la clé
+				// Rediriger vers la page ou l'accueil
+			}
+			// Valeurs en sortie
+			$this->addOutput([
+				'title' => helper::translate('Authentification'),
+				'view' => 'auth',
+				'display' => self::DISPLAY_LAYOUT_LIGHT,
+			]);
+		}
+	}
 
 	/**
 	 * Déconnexion
 	 */
 	public function logout()
 	{
+		// Détruit les cookies d'authenfication
 		helper::deleteCookie('ZWII_USER_ID');
-		//helper::deleteCookie('ZWII_USER_PASSWORD');
 		helper::deleteCookie('ZWII_AUTH_KEY');
-
 		// Détruit la session
 		session_destroy();
 
