@@ -1176,7 +1176,14 @@ class user extends common
 			// Vérifier la clé saisie
 			$targetKey = $this->getData(['user', $this->getUser('id'), 'authKey']);
 			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
-			if ($targetKey === $inputKey) {
+			// Supprime la clé stockée et ltemps limite
+			$this->deleteData(['user', $this->getUser('id'), 'authKey']);
+			// Réinitialiser le compteur de temps
+			$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
+			if (
+				$targetKey === $inputKey &&
+				$this->getData(['user', $this->getUser('id'), 'connectTimeout']) + 3600 >= time()
+			) {
 				$pageId = $this->getUrl(2);
 				// La fiche de l'utilisateur contient la clé d'authentification
 				$this->setData(['user', $this->getUser('id'), 'authKey', $this->getInput('ZWII_AUTH_KEY')]);
@@ -1212,23 +1219,32 @@ class user extends common
 			 * Envoi d'un email contenant une clé 
 			 * Stockage de la clé dans le compte de l'utilisateur
 			 */
-			$sent = $this->sendMail(
-				$this->getUser('mail'),
-				'Tentative de connexion à votre',
-				//'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-				'<p>Clé de validation à saisir dans le formulaire :</p>' .
-				'<h1><center>'.$this->getData(['user', $this->getUser('id'), 'authKey']).'</center></h1>',
-				null,
-				$this->getData(['config', 'smtp', 'from'])
-			);
+			// La clé est envoyée une seule fois
+			$sent = false;
+			if (
+				$this->getData(['user', $this->getUser('id'), 'authKey'])
+				&& $this->getData(['user', $this->getUser('id'), 'connectTimeout']) === 0
+			) {
+				$sent = $this->sendMail(
+					$this->getUser('mail'),
+					'Tentative de connexion à votre',
+					//'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
+					'<p>Clé de validation à saisir dans le formulaire :</p>' .
+					'<h1><center>' . $this->getData(['user', $this->getUser('id'), 'authKey']) . '</center></h1>',
+					null,
+					$this->getData(['config', 'smtp', 'from'])
+				);
+				// Stocker l'envoi de l'email
+				$this->setData(['user', $this->getUser('id'), 'connectTimeout', time()]);
+			}
+
 			// Message envoyé sinon la connexion est réalisée pour ne pas bloquer.
-			if ($sent === true) {
-				// Valider l'authentification en stockant la clé
-				// Rediriger vers la page ou l'accueil
+			if ($sent === false) {
+
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'title' => helper::translate('Authentification'),
+				'title' => helper::translate('Double authentification'),
 				'view' => 'auth',
 				'display' => self::DISPLAY_LAYOUT_LIGHT,
 			]);
