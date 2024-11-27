@@ -40,8 +40,8 @@
 					<div class="col4">
 						<?php echo template::select('connectAuthMail', array_merge([''=>'Aucune'], self::$groupNews), [
 							'label' => 'Validation par messagerie',
-							'selected' => $this->getData(['config', 'connect', 'timeout']),
-							'help' => 'La connexion est confirmée par une clé adressée par messagerie depuis le groupe sélectionnée et les groupes supérieurs.'
+							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
+							'help' => 'La connexion est confirmée par une clé adressée par messagerie. Depuis le groupe sélectionnée et les groupes supérieurs.'
 						]); ?>
 					</div>
 					

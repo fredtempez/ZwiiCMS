@@ -1176,10 +1176,6 @@ class user extends common
 			// Vérifier la clé saisie
 			$targetKey = $this->getData(['user', $this->getUser('id'), 'authKey']);
 			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
-			// Supprime la clé stockée et ltemps limite
-			$this->deleteData(['user', $this->getUser('id'), 'authKey']);
-			// Réinitialiser le compteur de temps
-			$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
 			if (
 				$targetKey === $inputKey &&
 				$this->getData(['user', $this->getUser('id'), 'connectTimeout']) + 3600 >= time()
@@ -1190,6 +1186,8 @@ class user extends common
 				$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl();
 				// Journalisation
 				$this->saveLog('Connexion réussie');
+				// Réinitialiser le compteur de temps
+				$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
@@ -1197,8 +1195,11 @@ class user extends common
 					'state' => true
 				]);
 			} else {
-				// Journalisation
-				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'));
+
+				// Supprime la clé stockée et le temps limite
+				$this->deleteData(['user', $this->getUser('id'), 'authKey']);
+				// Réinitialiser le compteur de temps
+				$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
 
 				// Détruit les cookies d'authenfication
 				helper::deleteCookie('ZWII_USER_ID');
@@ -1206,6 +1207,9 @@ class user extends common
 
 				// Détruit la session
 				session_destroy();
+
+				// Journalisation
+				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'));
 
 				// Valeurs en sortie
 				$this->addOutput([
