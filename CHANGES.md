@@ -3,9 +3,8 @@
 ## Versions 13.6.00
 **Amélioration :**
 - Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
-**Corrections :**
+**Correction :**
 - Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
-- Corrige un bug d'écriture dans la mémorisation d'une mise à jour.
 
 ## Versions 13.5.00
 **Améliorations :**
