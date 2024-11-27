@@ -1094,7 +1094,7 @@ class layout extends common
                         if (
                             helper::checkNewVersion(common::ZWII_UPDATE_CHANNEL)
                         ) {
-                            $this->setData(['core', 'updateAvailable', true], false);
+                            $this->setData(['core', 'updateAvailable', true]);
                         }
 
                         // Modules installés
