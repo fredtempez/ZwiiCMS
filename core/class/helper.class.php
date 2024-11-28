@@ -343,7 +343,7 @@ class helper
 	public static function checkRewrite()
 	{
 		// N'interroge que le serveur Apache
-		if (strpos($_SERVER["SERVER_SOFTWARE"], 'Apache') > 0) {
+		if ((helper::checkServerSoftware() === false)) {
 			self::$rewriteStatus = false;
 		} else {
 			// Ouvre et scinde le fichier .htaccess
@@ -352,6 +352,14 @@ class helper
 			self::$rewriteStatus = (strpos($htaccess[1], 'RewriteEngine on') !== false);
 		}
 		return self::$rewriteStatus;
+	}
+	
+	/**
+	 * Retourne vrai ou faux selon que le serveur est comptatible avec htaccess
+	 * @return bool
+	 */
+	public static function checkServerSoftware() {
+		return (stripos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false || stripos($_SERVER['SERVER_SOFTWARE'], 'LiteSpeed')  !== false);
 	}
 
 	/**
