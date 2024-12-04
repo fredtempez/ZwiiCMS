@@ -1,0 +1,36 @@
+/**
+ * This file is part of Zwii.
+ *
+ * For full copyright and license information, please see the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Rémi Jean <remi.jean@outlook.com>
+ * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @link http://zwiicms.fr/
+ */
+
+/** @import url("site/data/admin.css"); */
+
+/** NE PAS EFFACER
+* admin.css
+*/
+
+@media screen and (max-width: 768px) {
+    #buttonsContainer {
+        display: grid;
+    }
+    #loginContainer {
+        order: 1;
+    }
+    #backContainer{
+        order: 2;
+    }
+}
+
+#userAuthKey {
+    text-align: center;
+    font-size: 1.3rem;
+}

@@ -2,13 +2,15 @@
 
 ## Versions 13.5.00
 **Améliorations :**
+- Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
 
-**Corrections : **
+**Corrections :**
 - Corrige un bug de changement de mot de passe pour les comptes non admin.
 - Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
 - Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
+- Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
 
 ## Versions 13.4.00
 ** Améliorations :**
