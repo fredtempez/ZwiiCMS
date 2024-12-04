@@ -128,21 +128,15 @@ class install extends common
 				}
 
 				// Installation du site de test
-				$sample = false;
 				if (
 					$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
-					&& self::$i18nUI === 'fr_FR'
+					&& $_SESSION['ZWII_SITE_CONTENT'] === 'fr_FR'
 				) {
 					$sample = true;
 				}
 				$this->initData('page', $_SESSION['ZWII_SITE_CONTENT'], $sample);
 				$this->initData('module', $_SESSION['ZWII_SITE_CONTENT'], $sample);
 				$this->initData('locale', $_SESSION['ZWII_SITE_CONTENT'], $sample);
-
-				$this->saveDB('page');
-				$this->saveDB('module');
-				$this->saveDB('locale');
-
 
 				// Création de l'utilisateur si les données sont complétées.
 				// success retour de l'enregistrement des données
