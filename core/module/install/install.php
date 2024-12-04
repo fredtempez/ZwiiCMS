@@ -128,12 +128,14 @@ class install extends common
 				}
 
 				// Installation du site de test
+				$sample = false;
 				if (
 					$this->getInput('installDefaultData', helper::FILTER_BOOLEAN) === false
 					&& $_SESSION['ZWII_SITE_CONTENT'] === 'fr_FR'
 				) {
 					$sample = true;
 				}
+
 				$this->initData('page', $_SESSION['ZWII_SITE_CONTENT'], $sample);
 				$this->initData('module', $_SESSION['ZWII_SITE_CONTENT'], $sample);
 				$this->initData('locale', $_SESSION['ZWII_SITE_CONTENT'], $sample);

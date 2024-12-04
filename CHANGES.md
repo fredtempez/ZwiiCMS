@@ -11,6 +11,7 @@
 - Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
 - Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
 - Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
+- Corrige un bug d'initialisation des données des modules du site de test. 
 
 ## Versions 13.4.00
 ** Améliorations :**

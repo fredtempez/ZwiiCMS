@@ -61,14 +61,14 @@ class common
 	 * Pour les versions supérieures à 13.4 et inférieure à 14, la branche reste sur v134
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures. 
-	*/ 
+	 */
 	const ZWII_UPDATE_CHANNEL = 'v134';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
 
 	const MAX_FILE_WRITE_ATTEMPTS = 5;
-	
+
 	/**
 	 * Nombre maximal de tentatives d'encodage JSON
 	 */
@@ -102,13 +102,13 @@ class common
 		"user"
 	];
 	/*
-	   Cette variable est supprimée du test dans le routeur.
-	   public static $accessExclude = [
-		   'login',
-		   'logout',
-		   "maintenance",
-	   ];
-	   */
+		  Cette variable est supprimée du test dans le routeur.
+		  public static $accessExclude = [
+			  'login',
+			  'logout',
+			  "maintenance",
+		  ];
+		  */
 	private $data = [];
 	private $hierarchy = [
 		'all' => [],
@@ -319,19 +319,19 @@ class common
 
 	// Boutons de navigation dans la page
 	public static $navIconTemplate = [
-        'open' => [
-            'left' => 'left-open',
-            'right' => 'right-open',
-        ],
-        'dir' => [
-            'left' => 'left',
-            'right' => 'right-dir',
-        ],
-        'big' => [
-            'left' => 'left-big',
-            'right' => 'right-big',
-        ],
-    ];
+		'open' => [
+			'left' => 'left-open',
+			'right' => 'right-open',
+		],
+		'dir' => [
+			'left' => 'left',
+			'right' => 'right-dir',
+		],
+		'big' => [
+			'left' => 'left-big',
+			'right' => 'right-big',
+		],
+	];
 
 	/**
 	 * Constructeur commun
@@ -339,7 +339,7 @@ class common
 	public function __construct()
 	{
 		// Récupération du cache des propriétés
-		if(isset($GLOBALS['common_cache'])) {
+		if (isset($GLOBALS['common_cache'])) {
 			$this->input['_POST'] = $GLOBALS['common_cache']['input']['_POST'];
 			$this->input['_COOKIE'] = $GLOBALS['common_cache']['input']['_COOKIE'];
 			self::$siteContent = $GLOBALS['common_cache']['siteContent'];
@@ -667,7 +667,7 @@ class common
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
 			//$now = \DateTime::createFromFormat('U.u', microtime(true));
-            //file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
+			//file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
 
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
@@ -685,7 +685,7 @@ class common
 		return ($attempts < 5);
 	}
 
-	
+
 
 	/**
 	 * Effacer les données de la page
@@ -729,41 +729,41 @@ class common
 			mkdir(self::DATA_DIR . $lang, 0755);
 		}
 
-		// Localisation
-		if (
-			$module === 'page' ||
-			$module === 'module' ||
-			$module === 'locale'
-		) {
-			// Création des sous-dossiers localisés
-			if (!file_exists(self::DATA_DIR . $lang)) {
-				mkdir(self::DATA_DIR . $lang, 0755);
-			}
-			if (!file_exists(self::DATA_DIR . $lang . '/content')) {
-				mkdir(self::DATA_DIR . $lang . '/content', 0755);
-			}
-			// Site en français avec site exemple
-			if ($lang == 'fr_FR' && $sampleSite === true && $module === 'page') {
-				$this->setData([$module, init::$siteTemplate[$module]]);
-				// Création des pages
-				foreach (init::$siteContent as $key => $value) {
-					$this->setPage($key, $value['content'], 'fr_FR');
+		switch ($module) {
+			case 'page':
+			case 'module':
+			case 'locale':
+				// Création des sous-dossiers localisés
+				if (!file_exists(self::DATA_DIR . $lang)) {
+					mkdir(self::DATA_DIR . $lang, 0755);
 				}
-				// Version en langue étrangère ou fr_FR sans site de test
-			} else {
-				// En_EN par défaut si le contenu localisé n'est pas traduit
-				$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ? $lang : 'default';
-				// Charger les données de cette langue 
-				$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
-				// Créer la page d'accueil, une seule page dans cette configuration
-				$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
-				$content = init::$defaultDataI18n[$langDefault]['html'];
-				$this->setPage($pageId, $content, $lang);
-				//file_put_contents(self::DATA_DIR . $lang . '/content/' . init::$defaultDataI18n[$langDefault]['page'][$pageId]['content'], $content);
-			}
-		} else {
-			// Installation des données des autres modules cad theme profil font config, admin et core
-			$this->setData([$module, init::$defaultData[$module]]);
+				if (!file_exists(self::DATA_DIR . $lang . '/content')) {
+					mkdir(self::DATA_DIR . $lang . '/content', 0755);
+				}
+				// Site en français avec site exemple
+				if ($lang == 'fr_FR' && $sampleSite === true && $module !== 'locale') {
+					$this->setData([$module, init::$siteTemplate[$module]]);
+					// Création des pages
+					foreach (init::$siteContent as $key => $value) {
+						$this->setPage($key, $value['content'], 'fr_FR');
+					}
+					// Version en langue étrangère ou fr_FR sans site de test
+				} else {
+					// En_EN par défaut si le contenu localisé n'est pas traduit
+					$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ? $lang : 'default';
+					// Charger les données de cette langue 
+					$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
+					// Créer la page d'accueil, une seule page dans cette configuration
+					$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
+					$content = init::$defaultDataI18n[$langDefault]['html'];
+					$this->setPage($pageId, $content, $lang);
+
+				}
+				break;
+			default:
+				// Installation des données des autres modules cad theme profil font config, admin et core
+				$this->setData([$module, init::$defaultData[$module]]);
+				break;
 		}
 
 	}
@@ -775,7 +775,7 @@ class common
 	 */
 	public function saveDB($module): void
 	{
-		$db = $this->dataFiles[$module];		
+		$db = $this->dataFiles[$module];
 		$db->save();
 	}
 
@@ -810,65 +810,65 @@ class common
 	 * Appelée par le core uniquement
 	 */
 
-	 private function buildHierarchy()
-	 {
- 
-		 $pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
-		 // Parents
-		 foreach ($pages as $pageId => $pagePosition) {
-			 if (
-				 // Page parent
-				 $this->getData(['page', $pageId, 'parentPageId']) === ""
-				 // Ignore les pages dont l'utilisateur n'a pas accès
-				 and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
-					 or ($this->isConnected() === true
-						 //and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
-						 // Modification qui tient compte du profil de la page
-						 and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
- 
-					 )
-				 )
-			 ) {
-				 if ($pagePosition !== 0) {
-					 $this->hierarchy['visible'][$pageId] = [];
-				 }
-				 if ($this->getData(['page', $pageId, 'block']) === 'bar') {
-					 $this->hierarchy['bar'][$pageId] = [];
-				 }
-				 $this->hierarchy['all'][$pageId] = [];
-			 }
-		 }
-		 // Enfants
-		 foreach ($pages as $pageId => $pagePosition) {
- 
-			 if (
-				 // Page parent
-				 $parentId = $this->getData(['page', $pageId, 'parentPageId'])
-				 // Ignore les pages dont l'utilisateur n'a pas accès
-				 and (
-					 (
-						 $this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
-						 and
-						 $this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
-					 )
-					 or (
-						 $this->isConnected() === true
-						 and
-						 $this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
- 
-					 )
-				 )
-			 ) {
-				 if ($pagePosition !== 0) {
-					 $this->hierarchy['visible'][$parentId][] = $pageId;
-				 }
-				 if ($this->getData(['page', $pageId, 'block']) === 'bar') {
-					 $this->hierarchy['bar'][$pageId] = [];
-				 }
-				 $this->hierarchy['all'][$parentId][] = $pageId;
-			 }
-		 }
-	 }
+	private function buildHierarchy()
+	{
+
+		$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
+		// Parents
+		foreach ($pages as $pageId => $pagePosition) {
+			if (
+				// Page parent
+				$this->getData(['page', $pageId, 'parentPageId']) === ""
+				// Ignore les pages dont l'utilisateur n'a pas accès
+				and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+					or ($this->isConnected() === true
+						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+						// Modification qui tient compte du profil de la page
+						and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
+
+					)
+				)
+			) {
+				if ($pagePosition !== 0) {
+					$this->hierarchy['visible'][$pageId] = [];
+				}
+				if ($this->getData(['page', $pageId, 'block']) === 'bar') {
+					$this->hierarchy['bar'][$pageId] = [];
+				}
+				$this->hierarchy['all'][$pageId] = [];
+			}
+		}
+		// Enfants
+		foreach ($pages as $pageId => $pagePosition) {
+
+			if (
+				// Page parent
+				$parentId = $this->getData(['page', $pageId, 'parentPageId'])
+				// Ignore les pages dont l'utilisateur n'a pas accès
+				and (
+					(
+						$this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+						and
+						$this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
+					)
+					or (
+						$this->isConnected() === true
+						and
+						$this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
+
+					)
+				)
+			) {
+				if ($pagePosition !== 0) {
+					$this->hierarchy['visible'][$parentId][] = $pageId;
+				}
+				if ($this->getData(['page', $pageId, 'block']) === 'bar') {
+					$this->hierarchy['bar'][$pageId] = [];
+				}
+				$this->hierarchy['all'][$parentId][] = $pageId;
+			}
+		}
+	}
 
 	/**
 	 * Génère un fichier json avec la liste des pages
@@ -1083,9 +1083,10 @@ class common
 
 	/**
 	 * @return bool l'utilisateur est connecté true sinon false
-	 */ 
-	public function isConnected() {
-		return ( 
+	 */
+	public function isConnected()
+	{
+		return (
 			!empty($this->getUser('authKey'))
 			&&
 			$this->getUser('authKey') === $this->getInput('ZWII_AUTH_KEY'));
@@ -1280,7 +1281,7 @@ class common
 				$source_image = imagecreatefromwebp($src);
 				break;
 			case 'avif':
-				$source_image =  imagecreatefromavif($src);
+				$source_image = imagecreatefromavif($src);
 		}
 		// Image valide
 		if (is_object($source_image)) {
@@ -1506,7 +1507,7 @@ class common
 	public function saveLog($message = '')
 	{
 		// Journalisation
-		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';' . helper::dateUTF8('%H:%M', time(), self::$i18nUI). ';';
+		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';' . helper::dateUTF8('%H:%M', time(), self::$i18nUI) . ';';
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
