@@ -1,3 +1,6 @@
+# Version 8.01
+- Un mail de notification est seulement envoyé lorsque le captcha est passé et que le commentaire est déposé.
+- Le mail de notification contient désormais le nom de l'auteur du commentaire ainsi que le commentaire.
 # Version 8.00
 - Ajoute trois nouvelles options pour afficher ou masquer le pseudo, la date et l'heure de l'article.
 - Corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
