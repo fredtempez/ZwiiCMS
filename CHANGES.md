@@ -5,6 +5,7 @@
 - Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
+- Méthode de backup optimisée.
 
 **Corrections :**
 - Corrige un bug de changement de mot de passe pour les comptes non admin.

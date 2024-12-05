@@ -197,14 +197,20 @@ class helper
 
 	public static function autoBackup($folder, $filter = ['backup', 'tmp'])
 	{
-		// Creation du ZIP
+		// Création du nom de fichier ZIP
 		$baseName = str_replace('/', '', helper::baseUrl(false, false));
 		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
-		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s', time()) . '.zip';
+		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s') . '.zip';
+	
+		// Initialisation de l'archive ZIP
 		$zip = new ZipArchive();
-		$zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+		if ($zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+			return false; // Retourne false si l'ouverture échoue
+		}
+	
 		$directory = 'site/';
-		//$filter = array('backup','tmp','file');
+	
+		// Récupération des fichiers et des dossiers
 		$files = new RecursiveIteratorIterator(
 			new RecursiveCallbackFilterIterator(
 				new RecursiveDirectoryIterator(
@@ -212,20 +218,27 @@ class helper
 					RecursiveDirectoryIterator::SKIP_DOTS
 				),
 				function ($fileInfo, $key, $iterator) use ($filter) {
-					return $fileInfo->isFile() || !in_array($fileInfo->getBaseName(), $filter);
+					// Inclure les fichiers ou les répertoires non filtrés
+					return $fileInfo->isFile() || ($fileInfo->isDir() && !in_array($fileInfo->getBaseName(), $filter));
 				}
 			)
 		);
-		foreach ($files as $name => $file) {
+	
+		// Ajout des fichiers à l'archive
+		foreach ($files as $file) {
 			if (!$file->isDir()) {
 				$filePath = $file->getRealPath();
-				$relativePath = substr($filePath, strlen(realpath($directory)) + 1);
+				$relativePath = str_replace(DIRECTORY_SEPARATOR, '/', substr($filePath, strlen(realpath($directory)) + 1));
 				$zip->addFile($filePath, $relativePath);
 			}
 		}
+	
+		// Fermeture de l'archive ZIP
 		$zip->close();
-		return ($fileName);
+	
+		return $fileName;
 	}
+	
 
 
 
