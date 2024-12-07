@@ -38,10 +38,10 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('connectAuthMail', array_merge([''=>'Aucune'], self::$groupNews), [
-							'label' => 'Validation par messagerie',
+					<?php echo template::select('connectAuthMail', array_merge([''=>'Aucune'], self::$groupNews), [
+							'label' => 'Validation par messagerie ⚠️',
 							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
-							'help' => 'La connexion est confirmée par une clé adressée par messagerie. Depuis le groupe sélectionnée et les groupes supérieurs.'
+							'help' => 'La connexion est confirmée par une clé transmise par messagerie. Depuis le groupe sélectionnée et les groupes supérieurs. Vérifiez le bon fonctionnement du serveur de messagerie AVANT d\'activer cette option!'
 						]); ?>
 					</div>
 					

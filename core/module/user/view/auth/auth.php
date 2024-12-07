@@ -1,6 +1,6 @@
 <?php echo template::formOpen('userAuthForm'); ?>
 <div class="row">
-    <div class="col6 offset3">
+    <div class="col4 offset4">
         <?php echo template::text('userAuthKey', [
             'label' => helper::translate('Clé reçue par couriel')
         ]); ?>
@@ -13,10 +13,10 @@
             'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col3 offset7" id="loginContainer">
+    <div class="col2 offset8" id="loginContainer">
         <?php echo template::submit('userLoginSubmit', [
-            'value' => helper::translate('Authentification'),
-            'ico' => ''
+            'value' => template::ico('check'),
+            'ico' => '',
         ]); ?>
     </div>
 </div>
