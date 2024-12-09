@@ -30,7 +30,7 @@
 <?php endif; ?>
 <div class="row">
 	<div class="col8">
-		<?php echo template::checkbox('userLoginLongTime', true, 'Rester connecté sur ce navigateur', [
+		<?php echo template::checkbox('userLoginLongTime', true, 'Se souvenir de moi', [
 			'checked' => $module::$userLongtime
 		]);	?>
 	</div>
