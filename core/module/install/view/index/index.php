@@ -6,7 +6,7 @@
     <div class="col6 offset3">
             <?php echo template::select('installLanguage', $module::$i18nFiles, [
                 'label' =>  'Langues installées',
-				'selected' => array_key_exists ('fr_FR', $module::$i18nFiles) ? 'fr_FR': reset($module::$i18nFiles),
+				'selected' => isset(self::$i18nUI) ?  self::$i18nUI : 'fr_FR',
             ]); ?>
     </div>
 </div>
