@@ -118,6 +118,9 @@ class install extends common
 				// Validation de la langue transmise
 				self::$i18nUI = $_SESSION['ZWII_UI'];
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
+				// Stockage de la langue par défaut afin d'afficher le site dans cette langue lors de l'affichage de la bannière de connexion.
+				$this->setData(['config','defaultLanguageUI', self::$i18nUI], false);
+				
 				// par défaut le contenu est la langue d'installation
 				$_SESSION['ZWII_SITE_CONTENT'] = self::$i18nUI;
 

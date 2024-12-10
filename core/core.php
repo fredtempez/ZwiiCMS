@@ -408,14 +408,13 @@ class common
 				? self::$i18nUI
 				: 'fr_FR';
 		} else {
-			if (isset($_SESSION['ZWII_UI'])) {
-				self::$i18nUI = $_SESSION['ZWII_UI'];
-			} elseif (isset($_COOKIE['ZWII_UI'])) {
-				self::$i18nUI = $_COOKIE['ZWII_UI'];
+			// Par défaut la langue définie par défaut à l'installation
+			if ($this->getData(['config','defaultLanguageUI'])) {
+				self::$i18nUI = $this->getData(['config','defaultLanguageUI']);
 			} else {
 				self::$i18nUI = 'fr_FR';
+				$this->setData(['config','defaultLanguageUI', 'fr_FR']);
 			}
-			$_SESSION['ZWII_UI'] = self::$i18nUI;
 		}
 		// Stocker le cookie de langue pour l'éditeur de texte
 		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false);
