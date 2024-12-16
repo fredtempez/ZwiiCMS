@@ -1068,9 +1068,9 @@ class user extends common
 						 * Double authentification en cas de saisie correcte 
 						 */
 
-						// Clé d'authenfication utlisée pour lié le compte au cookie au lieu de stocke le hash du mot de passe
+						// Clé d'authenfication utlisée pour lier le compte au cookie au lieu de stocker le hash du mot de passe
 						$authKey = uniqid('', true) . bin2hex(random_bytes(8));
-						if ($this->getData(['config', 'connect', 'mailAuth']) >= $this->getData(['user', $userId, 'group'])) {
+						if ($this->getData(['user', $userId, 'group']) >= $this->getData(['config', 'connect', 'mailAuth'])) {
 							$logStatus = 'Envoi du mail d\'authentification';
 							// Redirection vers la page d'authentification
 							$authRedirect = 'user/auth/';
@@ -1231,9 +1231,9 @@ class user extends common
 			) {
 				$sent = $this->sendMail(
 					$this->getUser('mail'),
-					'Tentative de connexion à votre',
+					'Validation de la connexion à votre compte',
 					//'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-					'<p>Clé de validation à saisir dans le formulaire :</p>' .
+					'<p>Clé de validation à saisir dans le formulaire de connexion :</p>' .
 					'<h1><center>' . $this->getData(['user', $this->getUser('id'), 'authKey']) . '</center></h1>',
 					null,
 					$this->getData(['config', 'smtp', 'from'])
