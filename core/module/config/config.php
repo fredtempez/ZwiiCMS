@@ -32,6 +32,7 @@ class config extends common
 		'blacklistReset' => self::GROUP_ADMIN,
 		'blacklistDownload' => self::GROUP_ADMIN,
 		'register' => self::GROUP_ADMIN,
+		'testmail' => self::GROUP_ADMIN,
 	];
 
 	public static $timezones = [
@@ -497,7 +498,7 @@ class config extends common
 						'captchaType' => $this->getInput('connectCaptchaType'),
 						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
 						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
-						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_BOOLEAN),
+						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_INT),
 					]
 				]
 			]);
@@ -939,6 +940,35 @@ class config extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config/' . $this->getUrl(2),
+		]);
+	}
+
+	/**
+	 * Envoi un message de test
+	 * @return void
+	 */
+
+	public function testmail()
+	{
+		$sent = $this->sendMail(
+			$this->getUser('mail'),
+			helper::translate('Test de la messagerie du site'),
+			'<strong>' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</strong>,<br><br>' .
+			'<h4>' . helper::translate('Il semblerait que votre messagerie fonctionne correctement !') . '</h4>',
+			null,
+			'no-reply@localhost'
+		);
+		if ($sent !== true) {
+			// Désactivation de l'authentification par email
+			$this->setData(['config', 'connect', 'mailAuth', 0]);
+			// Journalisation 
+			$this->saveLog($sent);
+		}
+		// Valeurs en sortie
+		$this->addOutput([
+			'redirect' => helper::baseUrl() . 'config/' . $this->getUrl(2),
+			'state' => $sent === true ? true : false,
+			'notification' => $sent === true ? helper::translate('Message de test envoyé avec succès') : helper::translate('Message non envoyé')
 		]);
 	}
 }

@@ -25,29 +25,37 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::select('connectAttempt', $module::$connectAttempt, [
 							'label' => 'Limitation des tentatives',
 							'selected' => $this->getData(['config', 'connect', 'attempt'])
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::select('connectTimeout', $module::$connectTimeout, [
 							'label' => 'Blocage après échecs',
 							'selected' => $this->getData(['config', 'connect', 'timeout'])
 						]); ?>
 					</div>
-					<div class="col4">
-						<?php echo template::select('connectAuthMail', array_merge([''=>'Aucune'], self::$groupNews), [
-							'label' => 'Validation par messagerie',
+					<div class="col3">
+						<?php echo template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$groupNews), [
+							'label' => 'Validation par clé ⚠️',
 							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
-							'help' => 'La connexion est confirmée par une clé adressée par messagerie. Depuis le groupe sélectionnée et les groupes supérieurs.'
+							'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le groupe sélectionné et les groupes supérieurs.'
 						]); ?>
 					</div>
-					
+					<div class="col3 verticalAlignBottom">
+						<?php echo template::button('ConfigSendMail', [
+							'href' => helper::baseUrl() . 'config/testmail',
+							'value' => 'Message de test',
+							'ico' => 'mail'
+						]); ?>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class="row">
 		<div class="col12">
 			<div class="block">
 				<h4><?php echo helper::translate('Captcha à la connexion'); ?>
