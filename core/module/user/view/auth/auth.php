@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col4 offset4">
         <?php echo template::text('userAuthKey', [
-            'label' => helper::translate('Clé reçue par couriel')
+            'label' => helper::translate('Clé envoyée par message')
         ]); ?>
     </div>
 </div>

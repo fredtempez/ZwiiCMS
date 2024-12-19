@@ -699,5 +699,6 @@
     "Envoi du message d'authentification": "Envío del mensaje de autenticación",
     "Connexion réussie": "Conexión exitosa",
     "Erreur de mot de passe": "Error de contraseña",
-    "Erreur de captcha": "Error de captcha"
+    "Erreur de captcha": "Error de captcha",
+    "Clé envoyée par message": "Clave enviada por mensaje"
 }

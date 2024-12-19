@@ -2,6 +2,7 @@
 
 ## Versions 13.5.00
 **Améliorations :**
+- Double authentification par messagerie. Une clé est adressée par messagerie après la saisie du mot de passe et du captcha.
 - Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
@@ -11,6 +12,7 @@
 - Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
 - Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
 - Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
+- À l'installation, le bouton back mémorise la langue sélectionnée à la première étape.
 
 ## Versions 13.4.00
 ** Améliorations :**
