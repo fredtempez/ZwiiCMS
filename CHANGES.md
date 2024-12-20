@@ -13,6 +13,7 @@
 - Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
 - Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
 - À l'installation, le bouton back mémorise la langue sélectionnée à la première étape.
+- Corrige un bug de mise à jour en ligne du fichier des langues.
 
 ## Versions 13.4.00
 ** Améliorations :**
