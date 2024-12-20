@@ -138,7 +138,7 @@
 								]); ?>
 							</div>
 							<div class="col6 verticalAlignBottom">
-								<?php echo template::button('CnnectBlackListReset', [
+								<?php echo template::button('ConnectBlackListReset', [
 									'class' => 'buttonRed',
 									'href' => helper::baseUrl() . 'config/blacklistReset',
 									'value' => 'Réinitialiser la liste',
