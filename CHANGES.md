@@ -2,6 +2,7 @@
 
 ## Versions 13.5.00
 **Améliorations :**
+- Réactivation de l'édition des dialogues des langues.
 - Double authentification par messagerie. Une clé est adressée par messagerie après la saisie du mot de passe et du captcha.
 - Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
 - Optimisation du chargement des variables de classe.
