@@ -2,6 +2,7 @@
 
 ## Versions 13.5.00
 **Améliorations :**
+- Après un changement d'onglet dans la page de configuration, la page ne se recharge plus. Le dernier onglet affiché avant un submit est mémorisé dans les vues de l'utilisateur.
 - Réactivation de l'édition des dialogues des langues.
 - Nouveau bouton de test de bon fonctionnement du serveur SMTP afin de valider la double authentification.
 - Validation de la connexion au site avec un code adressé par email. L'option est disponible depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
