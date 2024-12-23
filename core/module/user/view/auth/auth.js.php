@@ -13,3 +13,21 @@
  */
 
 
+$(document).ready(function () {
+    $('#userAuthKey').on('input', function () {
+        // Récupère la valeur du champ
+        let input = $(this).val();
+        
+        // Supprime tous les caractères non numériques
+        input = input.replace(/\D/g, '');
+        
+        // Limite à 6 caractères maximum
+        if (input.length > 6) {
+            input = input.substring(0, 6);
+        }
+
+        // Met à jour la valeur du champ
+        $(this).val(input);
+    });
+});
+

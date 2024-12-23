@@ -13,10 +13,10 @@
             'value' => template::ico('left')
         ]); ?>
     </div>
-    <div class="col2 offset8" id="loginContainer">
+    <div class="col3 offset7" id="loginContainer">
         <?php echo template::submit('userLoginSubmit', [
-            'value' => template::ico('check'),
-            'ico' => '',
+			'value' => 'Connexion',
+			'ico' => ''
         ]); ?>
     </div>
 </div>
