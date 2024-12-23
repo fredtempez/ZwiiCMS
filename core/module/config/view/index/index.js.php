@@ -66,7 +66,7 @@ $(document).ready(function () {
         $("#connectCaptchaStrong").prop("checked", false);
     }
 
-	var configLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'config']);?>";
+	let configLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'config']);?>";
 	// Non défini, valeur par défaut
 	if (configLayout == "") {
         configLayout = "setup"; 
@@ -82,6 +82,17 @@ $(document).ready(function () {
 
     // Gestion des événements
     //---------------------------------------------------------------------------------------------------------------------
+
+
+
+    /**
+     * Transmet le bouton de l'onglet sélectionné avant la soumission
+     */
+
+    // Mettre à jour le champ caché avant la soumission
+    $('#configForm').on('submit', function () {
+        $('#containerSelected').val(configLayout);
+    });
 
     /**
      * Afficher et masquer options smtp
@@ -162,7 +173,7 @@ $(document).ready(function () {
         $("#connectContainer").hide();
         $("#networkContainer").hide();
         $("#setupContainer").show();
-        document.getElementById("containerSelected").value = "setup";
+        configLayout = "setup";
         $("#configSetupButton").addClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
@@ -173,7 +184,7 @@ $(document).ready(function () {
         $("#setupContainer").hide();
         $("#networkContainer").hide();
         $("#socialContainer").show();
-        document.getElementById("containerSelected").value = "social";
+        configLayout = "social";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
@@ -184,7 +195,7 @@ $(document).ready(function () {
         $("#socialContainer").hide();
         $("#networkContainer").hide();
         $("#connectContainer").show();
-        document.getElementById("containerSelected").value = "connect";
+        configLayout = "connect";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
@@ -195,7 +206,7 @@ $(document).ready(function () {
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").show();
-        document.getElementById("containerSelected").value = "network";
+        configLayout = "network";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
