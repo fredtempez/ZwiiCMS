@@ -7,7 +7,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @authorFrédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */

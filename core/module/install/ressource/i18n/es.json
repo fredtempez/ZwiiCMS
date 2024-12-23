@@ -689,5 +689,18 @@
     "Groupes / Profils": "Grupos / Perfiles",
     "Prénom commence par": "El nombre comienza con",
     "Nom commence par": "El apellido comienza con",
-    "Impossible de réinitialiser le mot de passe de ce compte !": "No puedo restablecer la contraseña de esta cuenta."
+    "Impossible de réinitialiser le mot de passe de ce compte !": "No puedo restablecer la contraseña de esta cuenta.",
+    "Test de la messagerie du site": "Prueba de mensajería del sitio",
+    "Il semblerait que votre messagerie fonctionne correctement !": "¡Parece que su mensajería funciona correctamente!",
+    "Message de test envoyé avec succès": "Mensaje de prueba enviado con éxito",
+    "Message non envoyé": "Mensaje no enviado",
+    "Validation par clé ⚠️": "Validación por clave ⚠️",
+    "La connexion est confirmée à l'aide d'une clé transmise par messagerie. Depuis le groupe sélectionné et les groupes supérieurs.": "La conexión se confirma con una clave enviada por mensajería. Desde el grupo seleccionado y los grupos superiores.",
+    "Envoi du message d'authentification": "Envío del mensaje de autenticación",
+    "Connexion réussie": "Conexión exitosa",
+    "Erreur de mot de passe": "Error de contraseña",
+    "Erreur de captcha": "Error de captcha",
+    "Clé envoyée par message": "Clave enviada por mensaje",
+    "Message de test": "Mensaje de prueba",
+     "Clé d'authentification envoyée à votre adresse mail %s": "Clave de autenticación enviada a su dirección de correo electrónico %s"
 }

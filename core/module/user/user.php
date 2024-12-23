@@ -8,7 +8,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
@@ -980,6 +980,7 @@ class user extends common
 		) {
 			// Lire Id du compte
 			$userId = $this->getInput('userLoginId', helper::FILTER_ID, true);
+			$notification = '';
 			// Check le captcha
 			if (
 				$this->getData(['config', 'connect', 'captcha'])
@@ -1067,22 +1068,52 @@ class user extends common
 						 * Le site n'est pas en maintenance
 						 * Double authentification en cas de saisie correcte 
 						 */
-
-						// Clé d'authenfication utlisée pour lié le compte au cookie au lieu de stocke le hash du mot de passe
+						// Clé d'authenfication utilisée pour lier le compte au cookie au lieu de stocker le hash du mot de passe
 						$authKey = uniqid('', true) . bin2hex(random_bytes(8));
-						if ($this->getData(['config', 'connect', 'mailAuth']) >= $this->getData(['user', $userId, 'group'])) {
-							$logStatus = 'Envoi du mail d\'authentification';
-							// Redirection vers la page d'authentification
-							$authRedirect = 'user/auth/';
-							// Stocker la clé envoyée par email
-							$this->setData(['user', $userId, 'authKey', rand(100000, 999999)]);
+						// Clé pour la double validation
+						$keyByMail = rand(100000, 999999);
+						// La page d'authentification est vide
+						$authRedirect = '';
+						if (
+							$this->getData(['config', 'connect', 'mailAuth']) > 0
+							&& $this->getData(['user', $userId, 'group']) >= $this->getData(['config', 'connect', 'mailAuth'])
+						) {
+							/**
+							 * Envoi d'un email contenant une clé 
+							 * Stockage de la clé dans le compte de l'utilisateur
+							 */
 
+							$sent = $this->sendMail(
+								$this->getData(['user', $userId, 'mail']),
+								'Validation de la connexion à votre compte',
+								'<p>Clé de validation à saisir dans le formulaire de connexion :</p>' .
+								'<h1><center>' . $keyByMail . '</center></h1>',
+								null,
+								$this->getData(['config', 'smtp', 'from'])
+							);
+
+							// L'email a été envoyé avec succès, redirection vers la page de double authentification
+							if ($sent === true) {
+								// Journalisation
+								$logStatus = helper::translate('Envoi du message d\'authentification');
+								// Redirection vers la page d'authentification
+								$authRedirect = 'user/auth/';
+								// Stocker la clé envoyée par email
+								$this->setData(['user', $userId, 'authKey', $keyByMail]);
+								$notification = sprintf('Clé d\'authentification envoyée à votre adresse mail %s', $this->getData(['user', $userId, 'mail']));
+							} else {
+								// Impossible d'envoyer le message
+								// Double authentification désactivée
+								$this->setData(['config', 'connect', 'mailAuth', 0]);
+								$this->setData(['user', $userId, 'authKey', $authKey]);
+								// Journalisation 
+								$this->saveLog($sent);
+								$notification = sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
+							}
 						} else {
-							$logStatus = 'Connexion réussie';
-							// La page d'autentification est vide
-							$authRedirect = '';
+							$logStatus = helper::translate('Connexion réussie');
+							$notification = sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
 							$this->setData(['user', $userId, 'authKey', $authKey]);
-
 						}
 
 						// Validité du cookie
@@ -1116,7 +1147,7 @@ class user extends common
 						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
-							'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
+							'notification' => $notification,
 							'redirect' => $redirect,
 							'state' => true
 						]);
@@ -1124,7 +1155,7 @@ class user extends common
 					// Sinon notification d'échec
 				} else {
 					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
-					$logStatus = $captcha === true ? 'Erreur de mot de passe' : 'Erreur de captcha';
+					$logStatus = $captcha === true ? helper::translate('Erreur de mot de passe') : helper::translate('Erreur de captcha');
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
 					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'], false)) {
 						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1], false);
@@ -1140,7 +1171,7 @@ class user extends common
 
 					// Valeurs en sortie
 					$this->addOutput([
-						'notification' => $notification
+						'notification' => $notification,
 					]);
 				}
 			}
@@ -1176,22 +1207,24 @@ class user extends common
 			// Vérifier la clé saisie
 			$targetKey = $this->getData(['user', $this->getUser('id'), 'authKey']);
 			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
+			// Redirection
+			$pageId = $this->getUrl(2);
+			$redirect = $pageId? helper::baseUrl() . $pageId : helper::baseUrl() ;
 			if (
-				$targetKey === $inputKey &&
-				$this->getData(['user', $this->getUser('id'), 'connectTimeout']) + 3600 >= time()
+				// La clé est valide ou le message n'ayant pas été expédié, la double authentification est désactivée
+				$targetKey === $inputKey || $this->getData(['config', 'connect', 'mailAuth', 0]) === 0
 			) {
-				$pageId = $this->getUrl(2);
+
 				// La fiche de l'utilisateur contient la clé d'authentification
 				$this->setData(['user', $this->getUser('id'), 'authKey', $this->getInput('ZWII_AUTH_KEY')]);
-				$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl();
 				// Journalisation
 				$this->saveLog('Connexion réussie');
-				// Réinitialiser le compteur de temps
-				$this->setData(['user', $this->getUser('id'), 'connectTimeout', 0]);
+				// Utilisateur connecté
+				$userId = $this->getUser('id');
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
-					'notification' => helper::translate('Connexion réussie'),
+					'notification' => sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname'])),
 					'state' => true
 				]);
 			} else {
@@ -1210,42 +1243,14 @@ class user extends common
 
 				// Journalisation
 				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'));
-
 				// Valeurs en sortie
 				$this->addOutput([
-					'redirect' => helper::baseUrl(),
+					'redirect' => $redirect,
 					'notification' => helper::translate('La clé est incorrecte'),
 					'state' => false
 				]);
 			}
 		} else {
-			/**
-			 * Envoi d'un email contenant une clé 
-			 * Stockage de la clé dans le compte de l'utilisateur
-			 */
-			// La clé est envoyée une seule fois
-			$sent = false;
-			if (
-				$this->getData(['user', $this->getUser('id'), 'authKey'])
-				&& $this->getData(['user', $this->getUser('id'), 'connectTimeout']) === 0
-			) {
-				$sent = $this->sendMail(
-					$this->getUser('mail'),
-					'Tentative de connexion à votre',
-					//'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-					'<p>Clé de validation à saisir dans le formulaire :</p>' .
-					'<h1><center>' . $this->getData(['user', $this->getUser('id'), 'authKey']) . '</center></h1>',
-					null,
-					$this->getData(['config', 'smtp', 'from'])
-				);
-				// Stocker l'envoi de l'email
-				$this->setData(['user', $this->getUser('id'), 'connectTimeout', time()]);
-			}
-
-			// Message envoyé sinon la connexion est réalisée pour ne pas bloquer.
-			if ($sent === false) {
-
-			}
 			// Valeurs en sortie
 			$this->addOutput([
 				'title' => helper::translate('Double authentification'),

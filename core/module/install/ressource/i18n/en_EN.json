@@ -122,7 +122,7 @@
     "Caché": "Hidden",
     "Cachée": "Hidden",
     "Captcha complexe": "Complex captcha",
-    "Captcha à la connexion": "Captcha at connecting",
+    "Captcha à la connexion": "Captcha",
     "Captcha, identifiant ou mot de passe incorrects": "Incorrect captcha, login or password",
     "Capture d'écran Open Graph": "Open Graph screenshot",
     "Capture d'écran générée avec succès": "Successful generated screenshot",
@@ -689,5 +689,18 @@
     "Groupes / Profils": "Groups / Profiles",
     "Prénom commence par": "First Name starts with",
     "Nom commence par": "Last Name starts with",
-    "Impossible de réinitialiser le mot de passe de ce compte !": "Impossible to reset this account password!"
+    "Impossible de réinitialiser le mot de passe de ce compte !": "Impossible to reset this account password!",
+    "Test de la messagerie du site": "Site messaging test",
+    "Il semblerait que votre messagerie fonctionne correctement !": "It seems that your messaging is working correctly!",
+    "Message de test envoyé avec succès": "Test message sent successfully",
+    "Message non envoyé": "Message not sent",
+    "Validation par clé ⚠️": "Key-based validation ⚠️",
+    "La connexion est confirmée à l'aide d'une clé transmise par messagerie. Depuis le groupe sélectionné et les groupes supérieurs.": "The connection is confirmed using a key sent via messaging. From the selected group and the higher groups.",
+    "Envoi du message d'authentification": "Sending authentication message",
+    "Connexion réussie": "Login successful",
+    "Erreur de mot de passe": "Password error",
+    "Erreur de captcha": "Captcha error",
+    "Clé envoyée par message": "Key sent via message",
+    "Message de test": "Test message",
+    "Clé d'authentification envoyée à votre adresse mail %s": "Authentication key sent to your email address %s"
 }

@@ -8,7 +8,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
@@ -61,8 +61,8 @@ class common
 	 * Pour les versions supérieures à 13.4 et inférieure à 14, la branche reste sur v134
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures. 
-	 */
-	const ZWII_UPDATE_CHANNEL = 'v134';
+	*/ 
+	const ZWII_UPDATE_CHANNEL = 'v13';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;

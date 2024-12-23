@@ -9,7 +9,7 @@
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
@@ -31,7 +31,7 @@ class config extends common
 		'logDownload' => self::GROUP_ADMIN,
 		'blacklistReset' => self::GROUP_ADMIN,
 		'blacklistDownload' => self::GROUP_ADMIN,
-		'register' => self::GROUP_ADMIN,
+		'testmail' => self::GROUP_ADMIN,
 	];
 
 	public static $timezones = [
@@ -497,8 +497,19 @@ class config extends common
 						'captchaType' => $this->getInput('connectCaptchaType'),
 						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
 						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
-						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_BOOLEAN),
+						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_INT),
 					]
+				]
+			]);
+
+			// Sauvegarde la position des onglets de la vue de l'utilisateur courant
+			$this->setData([
+				'user',
+				$this->getUser('id'),
+				'view',
+				[
+					'config' => $this->getInput('containerSelected'),
+					'page' => $this->getData(['user', $this->getUser('id'), 'view', 'page']),
 				]
 			]);
 
@@ -921,24 +932,33 @@ class config extends common
 		}
 	}
 
+
 	/**
-	 * Stocke la variable dans les paramètres de l'utilisateur pour activer la tab à sa prochaine visite
-	 * @return never
+	 * Envoi un message de test
+	 * @return void
 	 */
-	public function register(): void
+
+	public function testmail()
 	{
-		$this->setData([
-			'user',
-			$this->getUser('id'),
-			'view',
-			[
-				'config' => $this->getUrl(2),
-				'page' => $this->getData(['user', $this->getUser('id'), 'view', 'page']),
-			]
-		]);
+		$sent = $this->sendMail(
+			$this->getUser('mail'),
+			helper::translate('Test de la messagerie du site'),
+			'<strong>' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</strong>,<br><br>' .
+			'<h4>' . helper::translate('Il semblerait que votre messagerie fonctionne correctement !') . '</h4>',
+			null,
+			'no-reply@localhost'
+		);
+		if ($sent !== true) {
+			// Désactivation de l'authentification par email
+			$this->setData(['config', 'connect', 'mailAuth', 0]);
+			// Journalisation 
+			$this->saveLog($sent);
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'redirect' => helper::baseUrl() . 'config/' . $this->getUrl(2),
+			'state' => $sent === true ? true : false,
+			'notification' => $sent === true ? helper::translate('Message de test envoyé avec succès') : helper::translate('Message non envoyé')
 		]);
 	}
 }

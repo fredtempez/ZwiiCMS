@@ -5,7 +5,7 @@
  * file that was distributed with this source code.
  *
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
- * @copyright Copyright (C) 2018-2024, Frédéric Tempez
+ * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
@@ -162,6 +162,7 @@ $(document).ready(function () {
         $("#connectContainer").hide();
         $("#networkContainer").hide();
         $("#setupContainer").show();
+        document.getElementById("containerSelected").value = "setup";
         $("#configSetupButton").addClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
@@ -172,6 +173,7 @@ $(document).ready(function () {
         $("#setupContainer").hide();
         $("#networkContainer").hide();
         $("#socialContainer").show();
+        document.getElementById("containerSelected").value = "social";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").addClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");
@@ -182,6 +184,7 @@ $(document).ready(function () {
         $("#socialContainer").hide();
         $("#networkContainer").hide();
         $("#connectContainer").show();
+        document.getElementById("containerSelected").value = "connect";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").addClass("activeButton");
@@ -192,6 +195,7 @@ $(document).ready(function () {
         $("#socialContainer").hide();
         $("#connectContainer").hide();
         $("#networkContainer").show();
+        document.getElementById("containerSelected").value = "network";
         $("#configSetupButton").removeClass("activeButton");
         $("#configSocialButton").removeClass("activeButton");
         $("#configConnectButton").removeClass("activeButton");

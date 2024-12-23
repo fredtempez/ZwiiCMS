@@ -12,20 +12,22 @@
  * @link http://zwiicms.fr/
  */
 
-/**
- * Galerie d'image
- * SLB est activé pour tout le site
- */
-var b = new SimpleLightbox('.galleryGalleryPicture', {
-	captionSelector: "self",
-	captionType: "data",
-	captionsData: "caption",
-	closeText: "&times;"
+
+$(document).ready(function () {
+    $('#userAuthKey').on('input', function () {
+        // Récupère la valeur du champ
+        let input = $(this).val();
+        
+        // Supprime tous les caractères non numériques
+        input = input.replace(/\D/g, '');
+        
+        // Limite à 6 caractères maximum
+        if (input.length > 6) {
+            input = input.substring(0, 6);
+        }
+
+        // Met à jour la valeur du champ
+        $(this).val(input);
+    });
 });
 
-$( document ).ready(function() {
-	// Démarre en mode plein écran
-	if ( $("#pictureContainer").hasClass("fullScreen") ) {
-		$('a#homePicture')[0].click();
-	}
- });

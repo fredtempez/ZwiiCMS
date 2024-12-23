@@ -2,17 +2,22 @@
 
 ## Versions 13.5.00
 **Améliorations :**
-- Validation de la connexion au site grâce à l'envoi d'un code par email. L'option est activée depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
+- Après un changement d'onglet dans la page de configuration, la page ne se recharge plus. Le dernier onglet affiché avant un submit est mémorisé dans les vues de l'utilisateur.
+- Réactivation de l'édition des dialogues des langues.
+- Nouveau bouton de test de bon fonctionnement du serveur SMTP afin de valider la double authentification.
+- Validation de la connexion au site avec un code adressé par email. L'option est disponible depuis la configuration du site, onglet connexion. Elle s'active par groupe montant, exemple "éditeur" pour éditeurs et administrateurs.
 - Optimisation du chargement des variables de classe.
 - Suppression de redondance de déclaration des charset.
 - Méthode de backup optimisée.
 
 **Corrections :**
-- Corrige un bug de changement de mot de passe pour les comptes non admin.
+- Corrige un défaut d'affichage du bouton d'édition d'une page contenant un module ayant été supprimé sans passer par l'interface de gestion (FTP).
+- Corrige un bug de changement de mot de passe pour les comptes non administrateurs.
 - Blog 7.12, corrige un bug d'affichage des articles lorsque le thème Moderne est sélectionné.
-- Corrige un dysfonctionnement de la fonction de tronquage subword qui perturbait l'affichage des articles de blog.
+- Corrige un dysfonctionnement de la fonction de tronquage qui perturbait l'affichage des articles de blog.
 - Activation de la mémorisation de l'onglet actif dans la configuration après validation du formulaire ou visite d'une autre page du site.
-- Corrige un bug d'initialisation des données des modules du site de test. 
+- À l'installation, le bouton back mémorise la langue sélectionnée à la première étape.
+- Corrige un bug de mise à jour en ligne du fichier des langues.
 
 ## Versions 13.4.00
 ** Améliorations :**

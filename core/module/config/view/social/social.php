@@ -24,15 +24,15 @@
 						</div>
 						<div class="row">
 							<div class="col10 textAlignCenter">
-								<?php if( !empty($module::$imageOpenGraph['type']) ): ?>
+								<?php if (!empty($module::$imageOpenGraph['type'])): ?>
 									<p>
 										<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
 									</p>
 									<p>
-									<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height'] ); ?>
+										<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height']); ?>
 									</p>
 									<p>
-									<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>' , helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
+										<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>', helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
 									</p>
 									<p>
 										<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), $module::$imageOpenGraph['size']); ?>
@@ -44,10 +44,10 @@
 					<div class="col6">
 						<?php if (
 							$this->getData(['config', 'seo', 'openGraphImage']) &&
-							file_exists(self::FILE_DIR .  'source/' . $this->getData(['config', 'seo', 'openGraphImage']))
+							file_exists(self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']))
 						): ?>
 							<img
-								src="<?php echo self::FILE_DIR .  'source/' . $this->getData(['config', 'seo', 'openGraphImage']); ?>" />
+								src="<?php echo self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']); ?>" />
 						<?php endif; ?>
 					</div>
 				</div>
