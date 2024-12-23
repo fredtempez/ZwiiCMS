@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Versions 13.5.01
+**Corrections**
+- Configuration du site, évite le message de formulaire non soumis.
+
 ## Versions 13.5.00
 **Améliorations :**
 - Après un changement d'onglet dans la page de configuration, la page ne se recharge plus. Le dernier onglet affiché avant un submit est mémorisé dans les vues de l'utilisateur.
