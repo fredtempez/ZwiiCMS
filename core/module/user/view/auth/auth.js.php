@@ -12,13 +12,4 @@
  * @link http://zwiicms.fr/
  */
 
-/** @import url("site/data/admin.css"); */
 
-/** NE PAS EFFACER
-* admin.css
-*/
-
-#userAddProfil1Wrapper,
-#userAddProfil2Wrapper {
-    padding: 0;
-}
