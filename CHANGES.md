@@ -1,6 +1,10 @@
 # Notes de mises à jour
 
-## Versions 13.5.01
+## Versions 13.6.00
+**Améliorations :**
+- Mise à jour SiteMapGenerator 5.0.0
+- Compatibilité PHP 8.3n
+
 **Corrections**
 - Configuration du site, évite le message de formulaire non soumis.
 

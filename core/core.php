@@ -51,7 +51,7 @@ class common
 	const ACCESS_TIMER = 1800;
 
 	// Numéro de version
-	const ZWII_VERSION = '13.5.01';
+	const ZWII_VERSION = '13.6.00';
 
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
@@ -1132,7 +1132,7 @@ class common
 	 */
 
 	public function updateSitemap()
-	{
+	{ 
 		// Le drapeau prend true quand au moins une page est trouvée
 		$flag = false;
 

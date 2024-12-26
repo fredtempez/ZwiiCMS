@@ -21,7 +21,7 @@ class Dot implements \ArrayAccess, \Iterator, \Countable
      *
      * @param array|null $data Data
      */
-    public function __construct(array $data = null)
+    public function __construct(?array $data = null)
     {
         if (is_array($data)) {
             $this->data = $data;
