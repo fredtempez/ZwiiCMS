@@ -1127,133 +1127,122 @@ class common
 	 * @param string Valeurs possibles
 	 */
 
-	public function updateSitemap()
-	{
-		// Le drapeau prend true quand au moins une page est trouvée
-		$flag = false;
-
-		// Rafraîchit la liste des pages après une modification de pageId notamment 
-		$this->buildHierarchy();
-
-		// Actualise la liste des pages pour TinyMCE
-		$this->tinyMcePages();
-
-		//require_once 'core/vendor/sitemap/SitemapGenerator.php';	
-
-		$timezone = $this->getData(['config', 'timezone']);
-
-		$config = new \Icamys\SitemapGenerator\Config();
-
-
-		// Your site URL.
-		$config->setBaseURL(helper::baseurl(false));
-		// // OPTIONAL. Setting the current working directory to be output directory
-		$config->setSaveDirectory(sys_get_temp_dir());
-
-
-		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator($config);
-
-		// Create a compressed sitemap
-		$sitemap->enableCompression();
-
-		// will create also compressed (gzipped) sitemap : option buguée
-		// $sitemap->enableCompression();
-
-		// determine how many urls should be put into one file
-		// according to standard protocol 50000 is maximum value (see http://www.sitemaps.org/protocol.html)
-		$sitemap->setMaxUrlsPerSitemap(50000);
-
-		// sitemap file name
-		$sitemap->setSitemapFileName('sitemap.xml');
-
-
-		// Set the sitemap index file name
-		$sitemap->setSitemapIndexFileName('sitemap-index.xml');
-
-		$datetime = new DateTime(date('c'));
-		$datetime->format(DateTime::ATOM); // Updated ISO8601
-
-		foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
-			// Exclure les barres et les pages non publiques et les pages masquées
-			if (
-				$this->getData(['page', $parentPageId, 'group']) !== 0 ||
-				$this->getData(['page', $parentPageId, 'block']) === 'bar'
-			) {
-				continue;
-			}
-			// Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
-			if ($this->getData(['page', $parentPageId, 'disable']) !== true) {
-				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($parentPageId !== $this->getData(['locale', 'homePageId'])) ? $parentPageId : '';
-				$sitemap->addUrl('/' . $pageId, $datetime);
-				$flag = true;
-			}
-			// Articles du blog
-			if (
-				$this->getData(['page', $parentPageId, 'moduleId']) === 'blog'
-				&& !empty($this->getData(['module', $parentPageId]))
-				&& $this->getData(['module', $parentPageId, 'posts'])
-			) {
-				foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
-					if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
-						$date = $this->getData(['module', $parentPageId, 'posts', $articleId, 'publishedOn']);
-						$sitemap->addUrl('/' . $parentPageId . '/' . $articleId, DateTime::createFromFormat('U', $date));
-					}
-				}
-			}
-			// Sous-pages
-			foreach ($childrenPageIds as $childKey) {
-				if ($this->getData(['page', $childKey, 'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true) {
-					continue;
-				}
-				// Cas de la page d'accueil ne pas dupliquer l'URL
-				$pageId = ($childKey !== $this->getData(['locale', 'homePageId'])) ? $childKey : '';
-				$sitemap->addUrl('/' . $childKey, $datetime);
-				$flag = true;
-
-				// La sous-page est un blog
-				if (
-					$this->getData(['page', $childKey, 'moduleId']) === 'blog' &&
-					!empty($this->getData(['module', $childKey]))
-				) {
-					foreach ($this->getData(['module', $childKey, 'posts']) as $articleId => $article) {
-						if ($this->getData(['module', $childKey, 'posts', $articleId, 'state']) === true) {
-							$date = $this->getData(['module', $childKey, 'posts', $articleId, 'publishedOn']);
-							$sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
-						}
-					}
-				}
-			}
-		}
-
-		if ($flag === false) {
-			return false;
-		}
-
-		// Flush all stored urls from memory to the disk and close all necessary tags.
-		$sitemap->flush();
-
-		// Move flushed files to their final location. Compress if the option is enabled.
-		$sitemap->finalize();
-
-		// Update robots.txt file in output directory
-
-		if ($this->getData(['config', 'seo', 'robots']) === true) {
-			if (file_exists('robots.txt')) {
-				unlink('robots.txt');
-			}
-			$sitemap->updateRobots();
-		} else {
-			$this->secure_file_put_contents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
-		}
-
-		// Submit your sitemaps to Google, Yahoo, Bing and Ask.com
-		if (empty($this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']))) {
-			$sitemap->submitSitemap();
-		}
-
-		return (file_exists('sitemap.xml') && file_exists('robots.txt'));
-	}
+	 public function updateSitemap()
+	 {
+		 // Le drapeau prend true quand au moins une page est trouvée
+		 $flag = false;
+ 
+		 // Rafraîchit la liste des pages après une modification de pageId notamment 
+		 $this->buildHierarchy();
+ 
+		 // Actualise la liste des pages pour TinyMCE
+		 $this->tinyMcePages();
+ 
+		 //require_once 'core/vendor/sitemap/SitemapGenerator.php';	
+ 
+		 $timezone = $this->getData(['config', 'timezone']);
+		 $outputDir = getcwd();
+		 $sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false), $outputDir);
+ 
+		 // will create also compressed (gzipped) sitemap : option buguée
+		 // $sitemap->enableCompression();
+ 
+		 // determine how many urls should be put into one file
+		 // according to standard protocol 50000 is maximum value (see http://www.sitemaps.org/protocol.html)
+		 $sitemap->setMaxUrlsPerSitemap(50000);
+ 
+		 // sitemap file name
+		 $sitemap->setSitemapFileName('sitemap.xml');
+ 
+ 
+		 // Set the sitemap index file name
+		 $sitemap->setSitemapIndexFileName('sitemap-index.xml');
+ 
+		 $datetime = new DateTime(date('c'));
+		 $datetime->format(DateTime::ATOM); // Updated ISO8601
+ 
+		 foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+			 // Exclure les barres et les pages non publiques et les pages masquées
+			 if (
+				 $this->getData(['page', $parentPageId, 'group']) !== 0 ||
+				 $this->getData(['page', $parentPageId, 'block']) === 'bar'
+			 ) {
+				 continue;
+			 }
+			 // Page désactivée, traiter les sous-pages sans prendre en compte la page parente.
+			 if ($this->getData(['page', $parentPageId, 'disable']) !== true) {
+				 // Cas de la page d'accueil ne pas dupliquer l'URL
+				 $pageId = ($parentPageId !== $this->getData(['locale', 'homePageId'])) ? $parentPageId : '';
+				 $sitemap->addUrl('/' . $pageId, $datetime);
+				 $flag = true;
+			 }
+			 // Articles du blog
+			 if (
+				 $this->getData(['page', $parentPageId, 'moduleId']) === 'blog'
+				 && !empty($this->getData(['module', $parentPageId]))
+				 && $this->getData(['module', $parentPageId, 'posts'])
+			 ) {
+				 foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
+					 if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
+						 $date = $this->getData(['module', $parentPageId, 'posts', $articleId, 'publishedOn']);
+						 $sitemap->addUrl('/' . $parentPageId . '/' . $articleId, DateTime::createFromFormat('U', $date));
+					 }
+				 }
+			 }
+			 // Sous-pages
+			 foreach ($childrenPageIds as $childKey) {
+				 if ($this->getData(['page', $childKey, 'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true) {
+					 continue;
+				 }
+				 // Cas de la page d'accueil ne pas dupliquer l'URL
+				 $pageId = ($childKey !== $this->getData(['locale', 'homePageId'])) ? $childKey : '';
+				 $sitemap->addUrl('/' . $childKey, $datetime);
+				 $flag = true;
+ 
+				 // La sous-page est un blog
+				 if (
+					 $this->getData(['page', $childKey, 'moduleId']) === 'blog' &&
+					 !empty($this->getData(['module', $childKey]))
+				 ) {
+					 foreach ($this->getData(['module', $childKey, 'posts']) as $articleId => $article) {
+						 if ($this->getData(['module', $childKey, 'posts', $articleId, 'state']) === true) {
+							 $date = $this->getData(['module', $childKey, 'posts', $articleId, 'publishedOn']);
+							 $sitemap->addUrl('/' . $childKey . '/' . $articleId, new DateTime("@{$date}", new DateTimeZone($timezone)));
+						 }
+					 }
+				 }
+			 }
+		 }
+ 
+		 if ($flag === false) {
+			 return false;
+		 }
+ 
+		 // Flush all stored urls from memory to the disk and close all necessary tags.
+		 $sitemap->flush();
+ 
+		 // Move flushed files to their final location. Compress if the option is enabled.
+		 $sitemap->finalize();
+ 
+		 // Update robots.txt file in output directory
+ 
+		 if ($this->getData(['config', 'seo', 'robots']) === true) {
+			 if (file_exists('robots.txt')) {
+				 unlink('robots.txt');
+			 }
+			 $sitemap->updateRobots();
+		 } else {
+			 $this->secure_file_put_contents('robots.txt', 'User-agent: *' . PHP_EOL . 'Disallow: /');
+		 }
+ 
+		 // Submit your sitemaps to Google, Yahoo, Bing and Ask.com
+		 if (empty($this->getData(['config', 'proxyType']) . $this->getData(['config', 'proxyUrl']) . ':' . $this->getData(['config', 'proxyPort']))) {
+			 $sitemap->submitSitemap();
+		 }
+ 
+		 return (file_exists('sitemap.xml') && file_exists('robots.txt'));
+ 
+	 }
 
 
 	/*
