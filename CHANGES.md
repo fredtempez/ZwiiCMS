@@ -1,7 +1,11 @@
 # Notes de mises à jour
 
+## Version 13.5.02
+**Correction**
+- La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans les journal de Zwii.
+
 ## Version 13.5.01
-**Corrections**
+**Correction**
 - Configuration du site, le message de formulaire non soumis non affiché.
 
 ## Version 13.5.00
