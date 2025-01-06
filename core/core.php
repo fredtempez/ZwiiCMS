@@ -239,7 +239,20 @@ class common
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
-	private $dataFiles = [];
+	private $dataFiles = [
+		'admin' => '',
+		'blacklist' => '',
+		'config' => '',
+		'core' => '',
+		'font' => '',
+		'module' => '',
+		'locale' => '',
+		'page' => '',
+		'theme' => '',
+		'user' => '',
+		'language' => '',
+		'profil' => '',
+	];
 
 	public static $fontsWebSafe = [
 		'arial' => [
