@@ -7,7 +7,7 @@
 
 ## Version 13.5.02
 **Correction**
-- La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans les journal de Zwii.
+- La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans le journal de Zwii.
 
 ## Versions 13.5.00
 **Améliorations :**
