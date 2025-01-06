@@ -700,7 +700,7 @@
     "Connexion réussie": "Login successful",
     "Erreur de mot de passe": "Password error",
     "Erreur de captcha": "Captcha error",
-    "Clé envoyée par message": "Key sent via message",
+    "Clé de sécurité": "Security key",
     "Message de test": "Test message",
     "Clé d'authentification envoyée à votre adresse mail %s": "Authentication key sent to your email address %s"
 }

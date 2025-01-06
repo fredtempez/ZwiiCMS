@@ -700,7 +700,7 @@
     "Connexion réussie": "Conexión exitosa",
     "Erreur de mot de passe": "Error de contraseña",
     "Erreur de captcha": "Error de captcha",
-    "Clé envoyée par message": "Clave enviada por mensaje",
+    "Clé de sécurité": "Clave de seguridad",
     "Message de test": "Mensaje de prueba",
      "Clé d'authentification envoyée à votre adresse mail %s": "Clave de autenticación enviada a su dirección de correo electrónico %s"
 }
