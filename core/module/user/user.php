@@ -1124,7 +1124,7 @@ class user extends common
 								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 								//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
-								// Connexion par clé							
+								// Connexion par clé
 								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 								break;
 							default:
@@ -1209,7 +1209,7 @@ class user extends common
 			$inputKey = $this->getInput('userAuthKey', helper::FILTER_INT);
 			// Redirection
 			$pageId = $this->getUrl(2);
-			$redirect = $pageId? helper::baseUrl() . $pageId : helper::baseUrl() ;
+			$redirect = $pageId ? helper::baseUrl() . $pageId : helper::baseUrl();
 			if (
 				// La clé est valide ou le message n'ayant pas été expédié, la double authentification est désactivée
 				$targetKey === $inputKey || $this->getData(['config', 'connect', 'mailAuth', 0]) === 0
@@ -1289,11 +1289,16 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Lien de réinitialisation trop vieux
-			or $this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time()
+			|| $this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time()
 			// Id unique incorrecte
-			or $this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2)])))
+			|| $this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'logout'])))
 		) {
-
+			$this->saveLog(
+				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2) .
+				' Compte : ' . $this->getData(['user', $this->getUrl(2)]) .
+				' Temps : ' . $this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time() .
+				' Clé : ' . $this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'forgot'])))
+			);
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseurl(),
