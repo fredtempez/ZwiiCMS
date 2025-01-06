@@ -2,8 +2,12 @@
 
 ## Versions 13.6.00
 **Améliorations :**
-- Mise à jour SiteMapGenerator 5.0.0
 - Compatibilité PHP 8.3n
+- Corrections syntaxiques.
+
+## Version 13.5.02
+**Correction**
+- La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans les journal de Zwii.
 
 ## Versions 13.5.00
 **Améliorations :**
