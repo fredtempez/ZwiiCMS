@@ -61,7 +61,7 @@ class common
 	 * Pour les versions supérieures à 13.4 et inférieure à 14, la branche reste sur v134
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures. 
-	*/ 
+	 */
 	const ZWII_UPDATE_CHANNEL = 'v13';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
@@ -239,20 +239,7 @@ class common
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
-	private $dataFiles = [
-		'admin' => '',
-		'blacklist' => '',
-		'config' => '',
-		'core' => '',
-		'font' => '',
-		'module' => '',
-		'locale' => '',
-		'page' => '',
-		'theme' => '',
-		'user' => '',
-		'language' => '',
-		'profil' => '',
-	];
+	private $dataFiles = [];
 
 	public static $fontsWebSafe = [
 		'arial' => [
@@ -409,11 +396,11 @@ class common
 				: 'fr_FR';
 		} else {
 			// Par défaut la langue définie par défaut à l'installation
-			if ($this->getData(['config','defaultLanguageUI'])) {
-				self::$i18nUI = $this->getData(['config','defaultLanguageUI']);
+			if ($this->getData(['config', 'defaultLanguageUI'])) {
+				self::$i18nUI = $this->getData(['config', 'defaultLanguageUI']);
 			} else {
 				self::$i18nUI = 'fr_FR';
-				$this->setData(['config','defaultLanguageUI', 'fr_FR']);
+				$this->setData(['config', 'defaultLanguageUI', 'fr_FR']);
 			}
 		}
 		// Stocker le cookie de langue pour l'éditeur de texte
@@ -493,7 +480,6 @@ class common
 
 		// Mise à jour des données core
 		include('core/include/update.inc.php');
-
 	}
 
 
@@ -756,7 +742,6 @@ class common
 					$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
 					$content = init::$defaultDataI18n[$langDefault]['html'];
 					$this->setPage($pageId, $content, $lang);
-
 				}
 				break;
 			default:
@@ -764,7 +749,6 @@ class common
 				$this->setData([$module, init::$defaultData[$module]]);
 				break;
 		}
-
 	}
 
 	/**
@@ -1077,7 +1061,6 @@ class common
 			}
 			return false;
 		}
-
 	}
 
 	/**
@@ -1132,7 +1115,7 @@ class common
 	 */
 
 	public function updateSitemap()
-	{ 
+	{
 		// Le drapeau prend true quand au moins une page est trouvée
 		$flag = false;
 
@@ -1145,8 +1128,20 @@ class common
 		//require_once 'core/vendor/sitemap/SitemapGenerator.php';	
 
 		$timezone = $this->getData(['config', 'timezone']);
-		$outputDir = getcwd();
-		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator(helper::baseurl(false), $outputDir);
+
+		$config = new \Icamys\SitemapGenerator\Config();
+
+
+		// Your site URL.
+		$config->setBaseURL(helper::baseurl(false));
+		// // OPTIONAL. Setting the current working directory to be output directory
+		$config->setSaveDirectory(sys_get_temp_dir());
+
+
+		$sitemap = new \Icamys\SitemapGenerator\SitemapGenerator($config);
+
+		// Create a compressed sitemap
+		$sitemap->enableCompression();
 
 		// will create also compressed (gzipped) sitemap : option buguée
 		// $sitemap->enableCompression();
@@ -1245,7 +1240,6 @@ class common
 		}
 
 		return (file_exists('sitemap.xml') && file_exists('robots.txt'));
-
 	}
 
 
