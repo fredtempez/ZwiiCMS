@@ -7,11 +7,7 @@ class autoload {
         require_once 'core/class/helper.class.php';
         require_once 'core/class/template.class.php';
         require_once 'core/class/layout.class.php';
-        require_once 'core/class/sitemap/IConfig.class.php';
-        require_once 'core/class/sitemap/Config.class.php';
-        require_once 'core/class/sitemap/IRuntime.class.php';
         require_once 'core/class/sitemap/Runtime.class.php';
-        require_once 'core/class/sitemap/IFileSystem.class.php';
         require_once 'core/class/sitemap/FileSystem.class.php';
         require_once 'core/class/sitemap/SitemapGenerator.class.php';
         require_once 'core/class/phpmailer/PHPMailer.class.php';
