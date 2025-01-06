@@ -36,7 +36,7 @@
                     ]); ?>
                 </div>
                 <div class="col5">
-                    <?php echo template::select('formOptionPageId', $module::$pages, [
+                    <?php echo template::select('formOptionPageId', form::$pages, [
                         'classWrapper' => 'displayNone',
                         'label' => 'Page du site',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'pageId'])
@@ -52,7 +52,7 @@
             <h4><?php echo helper::translate('Gabarit'); ?></h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('formOptionAlign', $module::$optionAlign, [
+                    <?php echo template::select('formOptionAlign', form::$optionAlign, [
                         'label' => 'Alignement du formulaire',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'align'])
                     ]); ?>
@@ -60,13 +60,13 @@
             </div>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('formOptionOffset', $module::$optionOffset, [
+                    <?php echo template::select('formOptionOffset', form::$optionOffset, [
                         'label' => 'Décalage à gauche',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'offset'])
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('formOptionWidth', $module::$optionWidth, [
+                    <?php echo template::select('formOptionWidth', form::$optionWidth, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'width'])
                     ]); ?>
@@ -97,7 +97,7 @@
                 </div>
                 <?php
                 // Element 0 quand aucun membre a été sélectionné
-                $groupMembers = [''] + $module::$groupNews;
+                $groupMembers = [''] + form::$groupNews;
                 ?>
                 <div class="row">
                     <div class="col4">
@@ -107,9 +107,9 @@
                         ]); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::select('formOptionUser', $module::$listUsers, [
+                        <?php echo template::select('formOptionUser', form::$listUsers, [
                             'label' => 'A un membre',
-                            'selected' => array_search($this->getData(['module', $this->getUrl(0), 'config', 'user']), $module::$listUsers)
+                            'selected' => array_search($this->getData(['module', $this->getUrl(0), 'config', 'user']), form::$listUsers)
                         ]); ?>
                     </div>
                     <div class="col4">
@@ -121,7 +121,7 @@
                 </div>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::select('formOptionSignature', $module::$signature, [
+                        <?php echo template::select('formOptionSignature', form::$signature, [
                             'label' => 'Type de signature',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'signature'])
                         ]); ?>
@@ -135,7 +135,7 @@
                         ]); ?>
                     </div>
                     <div class="col4">
-                        <?php echo template::select('formOptionLogoWidth', $module::$logoWidth, [
+                        <?php echo template::select('formOptionLogoWidth', form::$logoWidth, [
                             'label' => 'Largeur du logo',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'logoWidth'])
                         ]); ?>

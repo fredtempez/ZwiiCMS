@@ -23,7 +23,7 @@
 							]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::select('searchPreviewLength', $module::$previewLength, [
+						<?php echo template::select('searchPreviewLength', search::$previewLength, [
 								'label' => 'Dimension de l\'aperçu',
 								'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'previewLength'])
 							]); ?>
@@ -66,5 +66,5 @@
 	</div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo search::VERSION; ?>
 </div>

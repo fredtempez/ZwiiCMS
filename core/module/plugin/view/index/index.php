@@ -30,28 +30,28 @@
 		]); ?>
 	</div>
 </div>
-<?php if ($module::$modulesInstalled): ?>
+<?php if (plugin::$modulesInstalled): ?>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
 				<h4>
 					<?php echo helper::translate('Sauvegarde'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 5, 1, 1], $module::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
+				<?php echo template::table([2, 2, 1, 5, 1, 1], plugin::$modulesInstalled, ['Module', 'Identifiant', 'Version', '', '', '']); ?>
 			</div>
 		</div>
 	</div>
 <?php else: ?>
 	<?php echo template::speech('Aucun module installé.'); ?>
 <?php endif; ?>
-<?php if ($module::$modulesOrphan): ?>
+<?php if (plugin::$modulesOrphan): ?>
 	<div class="row">
 		<div class="col12">
 			<div class="block">
 				<h4>
 					<?php echo helper::translate('Modules orphelins'); ?>
 				</h4>
-				<?php echo template::table([2, 2, 1, 6, 1], $module::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
+				<?php echo template::table([2, 2, 1, 6, 1], plugin::$modulesOrphan, ['Module', 'Identifiant', 'Version', '', '']); ?>
 			</div>
 		</div>
 	</div>

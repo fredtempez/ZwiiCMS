@@ -125,14 +125,14 @@
 									'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
 								]); ?>
 							<?php else: ?>
-								<?php echo template::select('pageEditParentPageId', $module::$pagesNoParentId, [
+								<?php echo template::select('pageEditParentPageId', page::$pagesNoParentId, [
 									'label' => 'Page parent',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
 								]); ?>
 							<?php endif; ?>
 						</div>
 						<div class="col4">
-							<?php echo template::select('pageEditExtraPosition', $module::$extraPosition, [
+							<?php echo template::select('pageEditExtraPosition', page::$extraPosition, [
 								'label' => 'Emplacement',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'extraPosition']),
 								'help' => 'Le menu accessoire est aligné à droite de la barre de menu, c\'est un emplacement réservé aux drapeaux et au bouton de connexion.'
@@ -165,7 +165,7 @@
 				<div class="blockContainer">
 					<div class="row">
 						<div class="col3">
-							<?php echo template::select('pageTypeMenu', $module::$typeMenu, [
+							<?php echo template::select('pageTypeMenu', page::$typeMenu, [
 								'label' => 'Apparence',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'typeMenu'])
 							]); ?>
@@ -209,14 +209,14 @@
 				<div class="row">
 					<div class="col10">
 						<?php echo template::hidden('pageEditModuleRedirect'); ?>
-						<?php echo template::select('pageEditModuleId', $module::$moduleIds, [
+						<?php echo template::select('pageEditModuleId', page::$moduleIds, [
 							'help' => 'En cas de changement de module, les données du module précédent seront supprimées.',
 							'label' => 'Module',
 							'selected' => $this->getData(['page', $this->getUrl(2), 'moduleId'])
 						]); ?>
 						<?php echo template::hidden('pageEditModuleIdOld', ['value' => $this->getData(['page', $this->getUrl(2), 'moduleId'])]); ?>
 						<?php echo template::hidden('pageEditModuleIdOldText', [
-							'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']), $module::$moduleIds) ? $module::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
+							'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']), page::$moduleIds) ? page::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 						]); ?>
 					</div>
 					<div class="col2 verticalAlignBottom">
@@ -229,7 +229,7 @@
 				</div>
 				<div class="row">
 					<div class="col12">
-						<?php echo template::select('pageModulePosition', $module::$modulePosition, [
+						<?php echo template::select('pageModulePosition', page::$modulePosition, [
 							'help' => 'En position libre ajoutez le module en plaçant [MODULE] à l\'endroit voulu dans votre page.',
 							'label' => 'Position du module',
 							'selected' => $this->getData(['page', $this->getUrl(2), 'modulePosition'])
@@ -279,7 +279,7 @@
 						<div class="col6">
 							<div class="row">
 								<div class="col12">
-									<?php echo template::select('pageEditBlock', $module::$pageBlocks, [
+									<?php echo template::select('pageEditBlock', page::$pageBlocks, [
 										'label' => 'Gabarits de page - Barre latérale',
 										'help' => 'Pour définir la page comme barre latérale, choisissez l\'option dans la liste.',
 										'selected' => $this->getData(['page', $this->getUrl(2), 'block'])
@@ -294,7 +294,7 @@
 									'value' => $this->getData(['page', $this->getUrl(2), 'barLeft'])
 								]); ?>
 							<?php else: ?>
-								<?php echo template::select('pageEditBarLeft', $module::$pagesBarId, [
+								<?php echo template::select('pageEditBarLeft', page::$pagesBarId, [
 									'label' => 'Barre latérale gauche :',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'barLeft'])
 								]); ?>
@@ -304,12 +304,12 @@
 									'value' => $this->getData(['page', $this->getUrl(2), 'barRight'])
 								]); ?>
 							<?php else: ?>
-								<?php echo template::select('pageEditBarRight', $module::$pagesBarId, [
+								<?php echo template::select('pageEditBarRight', page::$pagesBarId, [
 									'label' => 'Barre latérale droite :',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'barRight'])
 								]); ?>
 							<?php endif; ?>
-							<?php echo template::select('pageEditDisplayMenu', $module::$displayMenu, [
+							<?php echo template::select('pageEditDisplayMenu', page::$displayMenu, [
 								'label' => 'Contenu du menu vertical',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'displayMenu']),
 								'help' => 'Par défaut le menu est affiché APRES le contenu de la page. Pour le positionner à un emplacement précis, insérez [MENU] dans le contenu de la page.'
@@ -318,19 +318,19 @@
 					</div>
 					<div class="row navSelect">
 						<div class="col4">
-							<?php echo template::select('pageEditNavLeft', $module::$navIconPosition, [
+							<?php echo template::select('pageEditNavLeft', page::$navIconPosition, [
 								'label' => 'Bouton de navigation gauche',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'navLeft']),
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php echo template::select('pageEditNavTemplate', $module::$navIconTemplate, [
+							<?php echo template::select('pageEditNavTemplate', page::$navIconTemplate, [
 								'label' => 'Modèle',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'navTemplate']),
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php echo template::select('pageEditNavRight', $module::$navIconPosition, [
+							<?php echo template::select('pageEditNavRight', page::$navIconPosition, [
 								'label' => 'Bouton de navigation droit',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'navRight']),
 							]); ?>
@@ -361,7 +361,7 @@
 						<div class="col6">
 							<div class="pageEditGroupProfil displayNone"
 								id="pageEditGroupProfil<?php echo self::GROUP_MEMBER; ?>">
-								<?php echo template::select('pageEditProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
+								<?php echo template::select('pageEditProfil' . self::GROUP_MEMBER, page::$userProfils[self::GROUP_MEMBER], [
 									'label' => 'Profil minimal pour accéder à la page',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'profil']),
 									'help' => 'Les profils de niveau supérieur accèdent à la page.',
@@ -369,7 +369,7 @@
 							</div>
 							<div class="pageEditGroupProfil displayNone"
 								id="pageEditGroupProfil<?php echo self::GROUP_EDITOR; ?>">
-								<?php echo template::select('pageEditProfil' . self::GROUP_EDITOR, $module::$userProfils[self::GROUP_EDITOR], [
+								<?php echo template::select('pageEditProfil' . self::GROUP_EDITOR, page::$userProfils[self::GROUP_EDITOR], [
 									'label' => 'Profil minimal pour accéder à la page',
 									'selected' => $this->getData(['page', $this->getUrl(2), 'profil']),
 									'help' => 'Les profils de niveau supérieur accèdent à la page.',

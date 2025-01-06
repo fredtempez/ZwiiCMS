@@ -3,7 +3,7 @@
 	<div class="col6">
 		<?php echo template::text('userLoginId', [
 			'label' => 'Identifiant',
-			'value' => $module::$userId
+			'value' => user::$userId
 		]); ?>
 	</div>
 	<div class="col6">
@@ -31,7 +31,7 @@
 <div class="row">
 	<div class="col8">
 		<?php echo template::checkbox('userLoginLongTime', true, helper::translate('Rester connecté sur ce navigateur'), [
-			'checked' => $module::$userLongtime
+			'checked' => user::$userLongtime
 		]);	?>
 	</div>
 	<div class="col4 textAlignRight">

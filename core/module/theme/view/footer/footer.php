@@ -27,13 +27,13 @@
             </h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('themeFooterPosition', $module::$footerPositions, [
+                    <?php echo template::select('themeFooterPosition', theme::$footerPositions, [
                         'label' => 'Position',
                         'selected' => $this->getData(['theme', 'footer', 'position'])
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeFooterHeight', $module::$footerHeights, [
+                    <?php echo template::select('themeFooterHeight', theme::$footerHeights, [
                         'label' => 'Marges verticales',
                         'selected' => $this->getData(['theme', 'footer', 'height'])
                     ]); ?>
@@ -137,7 +137,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC')), [
+                    <?php echo template::select('configLegalPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn(theme::$pagesList, 'title', 'SORT_ASC')), [
                         'label' =>  helper::translate('Mentions légales') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'legalPageId'])
                     ]); ?>
@@ -151,7 +151,7 @@
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn($module::$pagesList, 'title', 'SORT_ASC')), [
+                    <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn(theme::$pagesList, 'title', 'SORT_ASC')), [
                         'label' =>  helper::translate('Rechercher dans le site') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
@@ -177,27 +177,27 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeFooterFont', $module::$fonts['name'], [
+                    <?php echo template::select('themeFooterFont', theme::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'footer', 'font']),
-                        'font' => $module::$fonts['family']
+                        'font' => theme::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeFooterFontSize', $module::$footerFontSizes, [
+                    <?php echo template::select('themeFooterFontSize', theme::$footerFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'footer', 'fontSize'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeFooterFontWeight', $module::$fontWeights, [
+                    <?php echo template::select('themeFooterFontWeight', theme::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'footer', 'fontWeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeFooterTextTransform', $module::$textTransforms, [
+                    <?php echo template::select('themeFooterTextTransform', theme::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'footer', 'textTransform'])
                     ]); ?>
@@ -214,8 +214,8 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php $footerBlockPosition = is_null($this->getData(['theme', 'footer', 'template'])) ? $module::$footerblocks[3] : $module::$footerblocks[$this->getData(['theme', 'footer', 'template'])]; ?>
-                    <?php echo template::select('themeFooterTemplate', $module::$footerTemplate, [
+                    <?php $footerBlockPosition = is_null($this->getData(['theme', 'footer', 'template'])) ? theme::$footerblocks[3] : theme::$footerblocks[$this->getData(['theme', 'footer', 'template'])]; ?>
+                    <?php echo template::select('themeFooterTemplate', theme::$footerTemplate, [
                         'label' => 'Répartition',
                         'selected' => is_null($this->getData(['theme', 'footer', 'template'])) ? 4 : $this->getData(['theme', 'footer', 'template'])
                     ]); ?>
@@ -239,7 +239,7 @@
                     </div>
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::select('themeFooterTextAlign', $module::$aligns, [
+                            <?php echo template::select('themeFooterTextAlign', theme::$aligns, [
                                 'label' => 'Alignement',
                                 'selected' => $this->getData(['theme', 'footer', 'textAlign'])
                             ]); ?>
@@ -263,7 +263,7 @@
                     </div>
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::select('themeFooterSocialsAlign', $module::$aligns, [
+                            <?php echo template::select('themeFooterSocialsAlign', theme::$aligns, [
                                 'label' => 'Alignement',
                                 'selected' => $this->getData(['theme', 'footer', 'socialsAlign'])
                             ]); ?>
@@ -287,7 +287,7 @@
                     </div>
                     <div class="row">
                         <div class="col12">
-                            <?php echo template::select('themeFooterCopyrightAlign', $module::$aligns, [
+                            <?php echo template::select('themeFooterCopyrightAlign', theme::$aligns, [
                                 'label' => 'Alignement',
                                 'selected' => $this->getData(['theme', 'footer', 'copyrightAlign'])
                             ]); ?>

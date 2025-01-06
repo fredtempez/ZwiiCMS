@@ -1,8 +1,8 @@
-<?php if ($module::$pictures): ?>
+<?php if (slider::$pictures): ?>
 	<div id="wrapper">
 		<div class="rslides_container">
 			<ul class="rslides" id="sliders">
-				<?php foreach ($module::$pictures as $picture => $options): ?>
+				<?php foreach (slider::$pictures as $picture => $options): ?>
 					<?php if (!empty($options['uri'])): ?>
 						<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
 					<?php endif; ?>

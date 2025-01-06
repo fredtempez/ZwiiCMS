@@ -36,8 +36,8 @@
 				<h4>
 					<?php echo helper::translate('Langues installées'); ?>
 				</h4>
-				<?php if ($module::$languagesUiInstalled): ?>
-					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], $module::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
+				<?php if (language::$languagesUiInstalled): ?>
+					<?php echo template::table([2, 1, 1, 4, 1, 1, 1], language::$languagesUiInstalled, ['Langues', 'Version', 'Date', '', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -48,8 +48,8 @@
 				<h4>
 					<?php echo helper::translate('Catalogue'); ?>
 				</h4>
-				<?php if ($module::$languagesStore): ?>
-					<?php echo template::table([2, 1, 2, 6, 1], $module::$languagesStore, ['Langues', 'Version', 'Date', '', '']); ?>
+				<?php if (language::$languagesStore): ?>
+					<?php echo template::table([2, 1, 2, 6, 1], language::$languagesStore, ['Langues', 'Version', 'Date', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -66,7 +66,7 @@
 					<?php echo template::button('translateButtonCopyContent', [
 						'href' => helper::baseUrl() . 'language/copy',
 						'ico' => 'docs',
-						'disabled' => $module::$siteCopy,
+						'disabled' => language::$siteCopy,
 						'value' => 'Copie de contenus localisés'
 					]); ?>
 				</div>
@@ -87,8 +87,8 @@
 				<h4>
 					<?php echo helper::translate('Langues installées'); ?>
 				</h4>
-				<?php if ($module::$languagesInstalled): ?>
-					<?php echo template::table([2, 6, 1, 1], $module::$languagesInstalled, ['Langues', '', '', '']); ?>
+				<?php if (language::$languagesInstalled): ?>
+					<?php echo template::table([2, 6, 1, 1], language::$languagesInstalled, ['Langues', '', '', '']); ?>
 				<?php endif; ?>
 			</div>
 		</div>

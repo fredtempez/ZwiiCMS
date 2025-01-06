@@ -27,7 +27,7 @@
                             ]); ?>
                         </div>
                         <div class="col12">
-                            <?php echo template::select('profilAddGroup', $module::$groupProfils, [
+                            <?php echo template::select('profilAddGroup', user::$groupProfils, [
                                 'label' => 'Groupe associé',
                                 'selected' => $this->getUrl(2)
                             ]); ?>
@@ -110,7 +110,7 @@
                     <?php echo template::checkbox('profilAddFileManager', true, 'Autorisé'); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('profilAddPath', $module::$sharePath, [
+                    <?php echo template::select('profilAddPath', user::$sharePath, [
                         'label' => 'Dossier',
                         'class' => 'filemanager',
                     ]); ?>

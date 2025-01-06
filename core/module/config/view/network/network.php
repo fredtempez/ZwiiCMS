@@ -7,7 +7,7 @@
 				</h4>
 				<div class="row">
 					<div class="col2">
-						<?php echo template::select('configProxyType', $module::$proxyType, [
+						<?php echo template::select('configProxyType', config::$proxyType, [
 							'label' => 'Type de proxy',
 							'selected' => $this->getData(['config', 'proxyType'])
 						]); ?>
@@ -69,7 +69,7 @@
 								]); ?>
 							</div>
 							<div class="col2">
-								<?php echo template::select('smtpAuth', $module::$SMTPauth, [
+								<?php echo template::select('smtpAuth', config::$SMTPauth, [
 									'label' => 'Authentification',
 									'selected' => $this->getData(['config', 'smtp', 'auth'])
 								]); ?>
@@ -91,7 +91,7 @@
 									]); ?>
 								</div>
 								<div class="col2">
-									<?php echo template::select('smtpSecure', $module::$SMTPEnc, [
+									<?php echo template::select('smtpSecure', config::$SMTPEnc, [
 										'label' => 'Sécurité',
 										'selected' => $this->getData(['config', 'smtp', 'secure'])
 									]); ?>

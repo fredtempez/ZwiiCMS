@@ -4,7 +4,7 @@
 </h3>
 <div class="row">
     <div class="col6 offset3">
-            <?php echo template::select('installLanguage', $module::$i18nFiles, [
+            <?php echo template::select('installLanguage', install::$i18nFiles, [
                 'label' =>  'Langues installées',
 				'selected' => isset(self::$i18nUI) ?  self::$i18nUI : 'fr_FR',
             ]); ?>

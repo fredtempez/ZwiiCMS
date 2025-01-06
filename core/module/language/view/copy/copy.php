@@ -20,12 +20,12 @@
             </h4>
             <div class="row">
                 <div class="col6">
-                    <?php echo template::select('translateFormCopySource', $module::$languagesInstalled, [
+                    <?php echo template::select('translateFormCopySource', language::$languagesInstalled, [
                         'label' => 'Source'
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('translateFormCopyTarget', $module::$languagesTarget, [
+                    <?php echo template::select('translateFormCopyTarget', language::$languagesTarget, [
                         'label' => 'Cible'
                     ]); ?>
                 </div>

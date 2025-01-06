@@ -6,12 +6,12 @@
 		?>">
 			<?php echo template::formOpen('formForm'); ?>
 			<?php foreach ($this->getData(['module', $this->getUrl(0), 'input']) as $index => $input): ?>
-				<?php if ($input['type'] === $module::TYPE_MAIL): ?>
+				<?php if ($input['type'] === form::TYPE_MAIL): ?>
 					<?php echo template::mail('formInput[' . $index . ']', [
 						'id' => 'formInput_' . $index,
 						'label' => $input['name']
 					]); ?>
-				<?php elseif ($input['type'] === $module::TYPE_SELECT): ?>
+				<?php elseif ($input['type'] === form::TYPE_SELECT): ?>
 					<?php
 					$values = array_flip(explode(',', $input['values']));
 					foreach ($values as $value => $key) {
@@ -22,28 +22,28 @@
 						'id' => 'formInput_' . $index,
 						'label' => $input['name']
 					]); ?>
-				<?php elseif ($input['type'] === $module::TYPE_TEXT): ?>
+				<?php elseif ($input['type'] === form::TYPE_TEXT): ?>
 					<?php echo template::text('formInput[' . $index . ']', [
 						'id' => 'formInput_' . $index,
 						'label' => $input['name']
 					]); ?>
-				<?php elseif ($input['type'] === $module::TYPE_TEXTAREA): ?>
+				<?php elseif ($input['type'] === form::TYPE_TEXTAREA): ?>
 					<?php echo template::textarea('formInput[' . $index . ']', [
 						'id' => 'formInput_' . $index,
 						'label' => $input['name']
 					]); ?>
-				<?php elseif ($input['type'] === $module::TYPE_DATETIME): ?>
+				<?php elseif ($input['type'] === form::TYPE_DATETIME): ?>
 					<?php echo template::date('formInput[' . $index . ']', [
 						'id' => 'formInput_' . $index,
 						'label' => $input['name'],
 						'type' => 'date',
 					]); ?>
-				<?php elseif ($input['type'] === $module::TYPE_CHECKBOX): ?>
+				<?php elseif ($input['type'] === form::TYPE_CHECKBOX): ?>
 					<?php echo template::checkbox(
 						'formInput[' . $index . ']',
 						true, $input['name']
 					); ?>
-				<?php elseif ($input['type'] === $module::TYPE_LABEL): ?>
+				<?php elseif ($input['type'] === form::TYPE_LABEL): ?>
 					<h3 class='formLabel'>
 						<?php echo $input['name']; ?>
 						<hr class="formLabel">

@@ -7,8 +7,8 @@
 		]); ?>
 	</div>
 </div>
-<?php if ($module::$storeList) : ?>
-	<?php echo template::table([2, 2, 1, 2, 2, 1], $module::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Page', '']); ?>
+<?php if (plugin::$storeList) : ?>
+	<?php echo template::table([2, 2, 1, 2, 2, 1], plugin::$storeList, ['Catégorie', 'Module', 'Version', 'Date', 'Page', '']); ?>
 <?php else : ?>
 	<?php echo template::speech('Le catalogue est vide.'); ?>
 <?php endif; ?>

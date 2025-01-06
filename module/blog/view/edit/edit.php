@@ -53,13 +53,13 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('blogEditPictureSize', $module::$pictureSizes, [
+					<?php echo template::select('blogEditPictureSize', blog::$pictureSizes, [
 						'label' => 'Largeur de l\'image',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'pictureSize'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('blogEditPicturePosition', $module::$picturePositions, [
+					<?php echo template::select('blogEditPicturePosition', blog::$picturePositions, [
 						'label' => 'Position',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'picturePosition']),
 						'help' => 'Le texte de l\'article est adapté autour de l\'image'
@@ -86,7 +86,7 @@
 			<h4><?php echo helper::translate('Options de publication'); ?></h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('blogEditUserId', $module::$users, [
+					<?php echo template::select('blogEditUserId', blog::$users, [
 						'label' => 'Auteur',
 						'selected' => $this->getUser('id'),
 						'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
@@ -101,9 +101,9 @@
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('blogEditConsent', $module::$articleConsent, [
+					<?php echo template::select('blogEditConsent', blog::$articleConsent, [
 						'label' => 'Édition - Suppression',
-						'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? $module::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent']),
+						'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? blog::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent']),
 						'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 					]); ?>
 				</div>
@@ -128,7 +128,7 @@
 					]); ?>
 				</div>
 				<div class="col4 commentOptionsWrapper">
-					<?php echo template::select('blogEditCommentMaxlength', $module::$commentsLength, [
+					<?php echo template::select('blogEditCommentMaxlength', blog::$commentsLength, [
 						'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 						'label' => 'Caractères par commentaire',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'commentMaxlength'])
@@ -143,7 +143,7 @@
 					]); ?>
 				</div>
 				<div class="col4 commentOptionsWrapper">
-					<?php echo template::select('blogEditCommentGroupNotification', $module::$groupNews, [
+					<?php echo template::select('blogEditCommentGroupNotification', blog::$groupNews, [
 						'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'commentGroupNotification']),
 					]); ?>
 				</div>

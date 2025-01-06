@@ -18,7 +18,7 @@
             </h4>
             <div class="row">
                 <div class="col4 offset4">
-                    <?php echo template::select('translateAddContent', $module::$i18nFiles, [
+                    <?php echo template::select('translateAddContent', language::$i18nFiles, [
                         'label' =>  'Langues disponibles'
                     ]); ?>
                 </div>

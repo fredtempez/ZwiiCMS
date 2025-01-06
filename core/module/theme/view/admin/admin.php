@@ -36,7 +36,7 @@
 			</h4>
 			<div class="row">
 			<div class="col3">
-					<?php echo template::select('adminSiteWidth', $module::$siteWidths, [
+					<?php echo template::select('adminSiteWidth', theme::$siteWidths, [
 						'label' => 'Largeur',
 						'selected' => $this->getData(['admin', 'width'])
 					]); ?>
@@ -136,23 +136,23 @@
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('adminFontText', $module::$fonts['name'], [
+					<?php echo template::select('adminFontText', theme::$fonts['name'], [
 						'label' => 'Police du texte',
 						'selected' => $this->getData(['admin', 'fontText']),
-						'font' => $module::$fonts['family']
+						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('adminFontTextSize', $module::$siteFontSizes, [
+					<?php echo template::select('adminFontTextSize', theme::$siteFontSizes, [
 						'label' => 'Taille',
 						'selected' => $this->getData(['admin', 'fontSize'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('adminFontTitle', $module::$fonts['name'], [
+					<?php echo template::select('adminFontTitle', theme::$fonts['name'], [
 						'label' => 'Police des titres',
 						'selected' => $this->getData(['admin', 'fontTitle']),
-						'font' => $module::$fonts['family']
+						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 			</div>

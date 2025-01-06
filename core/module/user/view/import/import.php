@@ -42,7 +42,7 @@
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('userImportSeparator', $module::$separators, [
+                    <?php echo template::select('userImportSeparator', user::$separators, [
                         'label' => 'Séparateur'
                     ]); ?>
                 </div>
@@ -58,10 +58,10 @@
     </div>
 </div>
 <?php echo template::formClose(); ?>
-<?php if ($module::$users): ?>
+<?php if (user::$users): ?>
     <div class="row">
         <div class="col12 textAlignCenter">
-            <?php echo template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], $module::$users, ['Id', 'Nom', 'Prénom', 'Groupe', 'Profil', 'Pseudo', 'eMail', 'Étiquettes', '']); ?>
+            <?php echo template::table([1, 2, 2, 1, 1, 1, 2, 1, 1], user::$users, ['Id', 'Nom', 'Prénom', 'Groupe', 'Profil', 'Pseudo', 'eMail', 'Étiquettes', '']); ?>
             <?php echo template::ico('check'); ?> Compte créé |
             <?php echo template::ico('mail'); ?> Compte créé et notifié |
             <?php echo template::ico('cancel'); ?> Erreur dans le fichier ou le compte existe.

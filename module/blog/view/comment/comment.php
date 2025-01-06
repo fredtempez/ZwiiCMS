@@ -8,14 +8,14 @@
 		]); ?>
 	</div>
 
-<?php if($module::$comments): ?>
+<?php if(blog::$comments): ?>
 	<div class="col2 offset8">
-			<?php echo $module::$commentsDelete; ?>
+			<?php echo blog::$commentsDelete; ?>
 	</div>
 
 </div>
-	<?php echo template::table([3, 5, 2, 1, 1], $module::$comments, ['Date', 'Contenu', 'Auteur', '', '']); ?>
-	<?php echo $module::$pages.'<br/>'; ?>
+	<?php echo template::table([3, 5, 2, 1, 1], blog::$comments, ['Date', 'Contenu', 'Auteur', '', '']); ?>
+	<?php echo blog::$pages.'<br/>'; ?>
 <?php else: ?>
 </div>
 	<?php echo template::speech('Aucun commentaire'); ?>

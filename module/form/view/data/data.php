@@ -22,12 +22,12 @@
 		]); ?>
 	</div>
 </div>
-<?php if($module::$data): ?>
-		<?php echo template::table([11, 1], $module::$data, ['Données', '']); ?>
-		<?php echo $module::$pages; ?>
+<?php if(form::$data): ?>
+		<?php echo template::table([11, 1], form::$data, ['Données', '']); ?>
+		<?php echo form::$pages; ?>
 	<?php else: ?>
 		<?php echo template::speech('Aucune donnée'); ?>
 	<?php endif; ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo form::VERSION; ?>
 </div>

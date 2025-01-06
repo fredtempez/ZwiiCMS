@@ -25,13 +25,13 @@
 		</div>
 	</div>
 <?php echo template::formClose(); ?>
-<?php if($module::$articles): ?>
-	<?php echo template::table([4, 4, 1, 1, 1, 1], $module::$articles, ['Titre', 'Publication', 'État', 'Commentaires', '','']); ?>
-	<?php echo $module::$pages; ?>
+<?php if(blog::$articles): ?>
+	<?php echo template::table([4, 4, 1, 1, 1, 1], blog::$articles, ['Titre', 'Publication', 'État', 'Commentaires', '','']); ?>
+	<?php echo blog::$pages; ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun article'); ?>
 <?php endif; ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo blog::VERSION; ?>
 </div>
 

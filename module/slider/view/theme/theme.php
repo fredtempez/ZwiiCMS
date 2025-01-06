@@ -17,25 +17,25 @@
 			<h4>Paramètres</h4>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::select('sliderThememaxWidth', $module::$screenWidth, [
+					<?php echo template::select('sliderThememaxWidth', slider::$screenWidth, [
 						'label' => 'Largeur',
-						'selected' => $module::$selectedMaxwidth,
+						'selected' => slider::$selectedMaxwidth,
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemeAuto', $module::$auto, [
+					<?php echo template::select('sliderThemeAuto', slider::$auto, [
 						'label' => 'Automatisation',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'auto']),
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemeDiapoTime', $module::$timeout, [
+					<?php echo template::select('sliderThemeDiapoTime', slider::$timeout, [
 						'label' => 'Image fixe',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'timeout'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemespeed', $module::$speed, [
+					<?php echo template::select('sliderThemespeed', slider::$speed, [
 						'label' => 'Transition ',
 						'help' => 'Cette durée doit être inférieure au temps fixe',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'speed'])
@@ -54,25 +54,25 @@
 			<h4>Navigation</h4>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::select('sliderThemeSort', $module::$sort, [
+					<?php echo template::select('sliderThemeSort', slider::$sort, [
 						'label' => 'Tri des images',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'sort'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemePager', $module::$pager, [
+					<?php echo template::select('sliderThemePager', slider::$pager, [
 						'label' => 'Puces horizontales',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'pager']),
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemeNameSpace', $module::$namespace, [
+					<?php echo template::select('sliderThemeNameSpace', slider::$namespace, [
 						'label' => 'Boutons latéraux',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'namespace'])
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('sliderThemeCaption', $module::$caption, [
+					<?php echo template::select('sliderThemeCaption', slider::$caption, [
 						'label' => 'Légendes',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'theme', 'caption'])
 					]); ?>

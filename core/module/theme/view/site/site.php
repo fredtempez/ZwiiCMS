@@ -27,19 +27,19 @@
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('themeSiteWidth', $module::$siteWidths, [
+					<?php echo template::select('themeSiteWidth', theme::$siteWidths, [
 						'label' => 'Largeur',
 						'selected' => $this->getData(['theme', 'site', 'width'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeSiteRadius', $module::$radius, [
+					<?php echo template::select('themeSiteRadius', theme::$radius, [
 						'label' => 'Arrondi des angles',
 						'selected' => $this->getData(['theme', 'site', 'radius'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeSiteShadow', $module::$shadows, [
+					<?php echo template::select('themeSiteShadow', theme::$shadows, [
 						'label' => 'Ombre',
 						'selected' => $this->getData(['theme', 'site', 'shadow'])
 					]); ?>
@@ -138,14 +138,14 @@
 			<div class="row">
 				<div class="col6">
 					<?php
-					echo template::select('themeTextFont', $module::$fonts['name'], [
+					echo template::select('themeTextFont', theme::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'text', 'font']),
-						'font' => $module::$fonts['family']
+						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::select('themeTextFontSize', $module::$siteFontSizes, [
+					<?php echo template::select('themeTextFontSize', theme::$siteFontSizes, [
 						'label' => 'Taille',
 						'help' => 'Les tailles des polices de la bannière, de menu et de pied de page sont proportionnelles à cette taille.',
 						'selected' => $this->getData(['theme', 'text', 'fontSize'])
@@ -161,20 +161,20 @@
 			</h4>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('themeTitleFont', $module::$fonts['name'], [
+					<?php echo template::select('themeTitleFont', theme::$fonts['name'], [
 						'label' => 'Fonte',
 						'selected' => $this->getData(['theme', 'title', 'font']),
-						'font' => $module::$fonts['family']
+						'font' => theme::$fonts['family']
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeTitleFontWeight', $module::$fontWeights, [
+					<?php echo template::select('themeTitleFontWeight', theme::$fontWeights, [
 						'label' => 'Style',
 						'selected' => $this->getData(['theme', 'title', 'fontWeight'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('themeTitleTextTransform', $module::$textTransforms, [
+					<?php echo template::select('themeTitleTextTransform', theme::$textTransforms, [
 						'label' => 'Casse',
 						'selected' => $this->getData(['theme', 'title', 'textTransform'])
 					]); ?>

@@ -52,7 +52,7 @@
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::select('userEditSignature', $module::$signature, [
+					<?php echo template::select('userEditSignature', user::$signature, [
 						'label' => 'Signature',
 						'selected' => $this->getData(['user', $this->getUrl(2), 'signature'])
 					]); ?>
@@ -67,7 +67,7 @@
 					]); ?>
 				</div>
 				<div class="col6">
-					<?php echo template::select('userEditLanguage', $module::$languagesInstalled, [
+					<?php echo template::select('userEditLanguage', user::$languagesInstalled, [
 						'label' => 'Langue',
 						'selected' => $this->getData(['user', $this->getUrl(2), 'language'])
 					]); ?>
@@ -140,14 +140,14 @@
 				</div>
 				<div class="col12">
 					<div class="userEditGroupProfil" id="userEditGroupProfil<?php echo self::GROUP_MEMBER; ?>">
-						<?php echo template::select('userEditProfil' . self::GROUP_MEMBER, $module::$userProfils[self::GROUP_MEMBER], [
+						<?php echo template::select('userEditProfil' . self::GROUP_MEMBER, user::$userProfils[self::GROUP_MEMBER], [
 							'label' => 'Profil',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'profil']),
 							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN,
 						]); ?>
 					</div>
 					<div class="userEditGroupProfil" id="userEditGroupProfil<?php echo self::GROUP_EDITOR; ?>">
-						<?php echo template::select('userEditProfil' . self::GROUP_EDITOR, $module::$userProfils[self::GROUP_EDITOR], [
+						<?php echo template::select('userEditProfil' . self::GROUP_EDITOR, user::$userProfils[self::GROUP_EDITOR], [
 							'label' => 'Profil',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'profil']),
 							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN,
@@ -159,7 +159,7 @@
 				<div id="userCommentProfil<?php echo self::GROUP_MEMBER; ?>" class="col12  userCommentProfil">
 					<?php echo template::textarea('userEditProfilComment' . self::GROUP_MEMBER, [
 						'label' => 'Commentaire',
-						'value' => implode("\n", $module::$userProfilsComments[self::GROUP_MEMBER]),
+						'value' => implode("\n", user::$userProfilsComments[self::GROUP_MEMBER]),
 						'disabled' => true,
 
 					]);
@@ -168,7 +168,7 @@
 				<div id="userCommentProfil<?php echo self::GROUP_EDITOR; ?>" class="col12  userCommentProfil">
 					<?php echo template::textarea('userEditProfilComment' . self::GROUP_EDITOR, [
 						'label' => 'Commentaire',
-						'value' => implode("\n", $module::$userProfilsComments[self::GROUP_EDITOR]),
+						'value' => implode("\n", user::$userProfilsComments[self::GROUP_EDITOR]),
 						'disabled' => true,
 
 					]);
@@ -177,7 +177,7 @@
 				<div id="userCommentProfil<?php echo self::GROUP_ADMIN; ?>" class="col12  userCommentProfil">
 					<?php echo template::textarea('userEditProfilComment' . self::GROUP_ADMIN, [
 						'label' => 'Commentaire',
-						'value' => implode("\n", $module::$userProfilsComments[self::GROUP_ADMIN]),
+						'value' => implode("\n", user::$userProfilsComments[self::GROUP_ADMIN]),
 						'disabled' => true,
 					]);
 					?>

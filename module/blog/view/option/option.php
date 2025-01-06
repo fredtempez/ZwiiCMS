@@ -36,7 +36,7 @@
 					]); ?>
 				</div>
 				<div class="col3">
-					<?php echo template::select('blogOptionDateFormat', $module::$dateFormats, [
+					<?php echo template::select('blogOptionDateFormat', blog::$dateFormats, [
 						'label' => 'Format des dates',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'dateFormat'])
 					]); ?>
@@ -47,7 +47,7 @@
 					]); ?>
 				</div>
 				<div class="col3 timeWrapper">
-					<?php echo template::select('blogOptionTimeFormat', $module::$timeFormats, [
+					<?php echo template::select('blogOptionTimeFormat', blog::$timeFormats, [
 						'label' => 'Format des heures',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'timeFormat'])
 					]); ?>
@@ -55,19 +55,19 @@
 			</div>
 			<div class="row">
 				<div class="col4">
-					<?php echo template::select('blogOptionArticlesLayout', $module::$articlesLayout, [
+					<?php echo template::select('blogOptionArticlesLayout', blog::$articlesLayout, [
 						'label' => 'Disposition',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'layout'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('blogOptionArticlesLenght', $module::$articlesLenght, [
+					<?php echo template::select('blogOptionArticlesLenght', blog::$articlesLenght, [
 						'label' => 'Aperçus',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght'])
 					]); ?>
 				</div>
 				<div class="col4">
-					<?php echo template::select('blogOptionItemsperPage', $module::$ArticlesListed, [
+					<?php echo template::select('blogOptionItemsperPage', blog::$ArticlesListed, [
 						'label' => 'Articles par page',
 						'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'itemsperPage'])
 					]); ?>
@@ -91,5 +91,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo blog::VERSION; ?>
 </div>

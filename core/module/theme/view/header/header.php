@@ -18,20 +18,20 @@
             </h4>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeHeaderPosition', $module::$headerPositions, [
+                    <?php echo template::select('themeHeaderPosition', theme::$headerPositions, [
                         'label' => 'Position',
                         'selected' => $this->getData(['theme', 'header', 'position'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeHeaderFeature', $module::$headerFeatures, [
+                    <?php echo template::select('themeHeaderFeature', theme::$headerFeatures, [
                         'label' => 'Contenu',
                         'selected' => $this->getData(['theme', 'header', 'feature'])
                     ]); ?>
                 </div>
 
                 <div class="col4">
-                    <?php echo template::select('themeHeaderHeight', $module::$headerHeights, [
+                    <?php echo template::select('themeHeaderHeight', theme::$headerHeights, [
                         'label' => 'Hauteur maximale',
                         'selected' => $this->getData(['theme', 'header', 'height']),
                     ]); ?>
@@ -39,7 +39,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeHeaderWide', $module::$containerWides, [
+                    <?php echo template::select('themeHeaderWide', theme::$containerWides, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['theme', 'header', 'wide'])
                     ]); ?>
@@ -102,33 +102,33 @@
             </div>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeHeaderFont', $module::$fonts['name'], [
+                    <?php echo template::select('themeHeaderFont', theme::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'header', 'font']),
-                        'font' => $module::$fonts['family']
+                        'font' => theme::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderFontSize', $module::$headerFontSizes, [
+                    <?php echo template::select('themeHeaderFontSize', theme::$headerFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'header', 'fontSize'])
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderFontWeight', $module::$fontWeights, [
+                    <?php echo template::select('themeHeaderFontWeight', theme::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'header', 'fontWeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeHeaderTextTransform', $module::$textTransforms, [
+                    <?php echo template::select('themeHeaderTextTransform', theme::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'header', 'textTransform'])
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('themeHeaderTextAlign', $module::$aligns, [
+                    <?php echo template::select('themeHeaderTextAlign', theme::$aligns, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'header', 'textAlign'])
                     ]); ?>
@@ -169,19 +169,19 @@
             <div class="themeHeaderImageOptions" class="displayNone">
                 <div class="row">
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImageRepeat', $module::$repeats, [
+                        <?php echo template::select('themeHeaderImageRepeat', theme::$repeats, [
                             'label' => 'Répétition',
                             'selected' => $this->getData(['theme', 'header', 'imageRepeat'])
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImageContainer', $module::$headerWide, [
+                        <?php echo template::select('themeHeaderImageContainer', theme::$headerWide, [
                             'label' => 'Adaptation',
                             'selected' => $this->getData(['theme', 'header', 'imageContainer']),
                         ]); ?>
                     </div>
                     <div class="col3">
-                        <?php echo template::select('themeHeaderImagePosition', $module::$imagePositions, [
+                        <?php echo template::select('themeHeaderImagePosition', theme::$imagePositions, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'header', 'imagePosition'])
                         ]); ?>

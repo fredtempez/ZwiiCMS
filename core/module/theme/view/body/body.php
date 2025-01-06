@@ -68,13 +68,13 @@
 			<div id="themeBodyImageOptions" class="displayNone">
 				<div class="row">
 					<div class="col6">
-						<?php echo template::select('themeBodyImageRepeat', $module::$repeats, [
+						<?php echo template::select('themeBodyImageRepeat', theme::$repeats, [
 							'label' => 'Répétition',
 							'selected' => $this->getData(['theme', 'body', 'imageRepeat'])
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::select('themeBodyImagePosition', $module::$imagePositions, [
+						<?php echo template::select('themeBodyImagePosition', theme::$imagePositions, [
 							'label' => 'Position',
 							'selected' => $this->getData(['theme', 'body', 'imagePosition'])
 						]); ?>
@@ -82,13 +82,13 @@
 				</div>
 				<div class="row">
 					<div class="col6">
-						<?php echo template::select('themeBodyImageAttachment', $module::$attachments, [
+						<?php echo template::select('themeBodyImageAttachment', theme::$attachments, [
 							'label' => 'Défilement',
 							'selected' => $this->getData(['theme', 'body', 'imageAttachment'])
 						]); ?>
 					</div>
 					<div class="col6">
-						<?php echo template::select('themeBodyImageSize', $module::$bodySizes, [
+						<?php echo template::select('themeBodyImageSize', theme::$bodySizes, [
 							'label' => 'Taille',
 							'selected' => $this->getData(['theme', 'body', 'imageSize'])
 						]); ?>

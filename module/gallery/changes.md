@@ -1,3 +1,5 @@
+# Version 4.3
+- Remplacement du nom générique de classe dans les vues.
 # Version 4.2
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.
 # Version 4.1

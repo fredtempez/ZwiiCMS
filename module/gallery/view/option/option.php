@@ -11,7 +11,7 @@
         <?php echo template::submit('galleriesOptionSubmit'); ?>
     </div>
 </div>
-<?php if($module::$formOptionSelect === 'galleries'): ?>
+<?php if(gallery::$formOptionSelect === 'galleries'): ?>
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -29,7 +29,7 @@
             </div>
             <div class="row" id="containerBackOptions">
                 <div class="col6">
-                    <?php echo template::select('galleryOptionBackPosition', $module::$galleryOptionBackPosition, [
+                    <?php echo template::select('galleryOptionBackPosition', gallery::$galleryOptionBackPosition, [
                         'label' => 'Position du bouton de retour à l\'index des galeries',
                         'selected' =>  $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true
                                         ? 'none'
@@ -40,7 +40,7 @@
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('galleryOptionBackAlign', $module::$galleryOptionBackAlign, [
+                    <?php echo template::select('galleryOptionBackAlign', gallery::$galleryOptionBackAlign, [
                         'label' => 'Alignement du bouton de retour',
                         'selected' =>  $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true
                                         ? 'none'
@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-<?php elseif($module::$formOptionSelect === 'gallery'): ?>
+<?php elseif(gallery::$formOptionSelect === 'gallery'): ?>
     <div class="row">
 		<div class="col12">
 			<div class="block">
@@ -81,7 +81,7 @@
 			</div>
 			<div class="row">
 				<div class="col3">
-					<?php echo template::select('galleryEditSort', $module::$sort, [
+					<?php echo template::select('galleryEditSort', gallery::$sort, [
 						'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(3), 'config', 'sort']),
 						'label' => 'Tri des images',
 						'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'
@@ -114,7 +114,7 @@
 <div class="row">
     <div class="col12">
         <div class="moduleVersion">Version n°
-            <?php echo $module::VERSION; ?>
+            <?php echo gallery::VERSION; ?>
         </div>
     </div>
 </div>

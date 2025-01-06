@@ -24,13 +24,13 @@
 		</div>
 	</div>
 
-	<?php if($module::$news): ?>
-		<?php echo template::table([4, 2, 2, 2, 1, 1], $module::$news, ['Titre', 'Publication', 'Fin de publication', 'État', '', '']); ?>
-		<?php echo $module::$pages; ?>
+	<?php if(news::$news): ?>
+		<?php echo template::table([4, 2, 2, 2, 1, 1], news::$news, ['Titre', 'Publication', 'Fin de publication', 'État', '', '']); ?>
+		<?php echo news::$pages; ?>
 	<?php else: ?>
 		<?php echo template::speech('Aucun article'); ?>
 	<?php endif; ?>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo news::VERSION; ?>
 </div>

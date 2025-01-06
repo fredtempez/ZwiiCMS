@@ -32,5 +32,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Module Slider version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo slider::VERSION; ?>
 </div>

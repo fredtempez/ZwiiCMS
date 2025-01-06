@@ -1,4 +1,4 @@
-<div class="row <?php echo $module::$config['backAlign'] . ' ' . $module::$config['backPositionTop'];?>">
+<div class="row <?php echo gallery::$config['backAlign'] . ' ' . gallery::$config['backPositionTop'];?>">
 	<div class="col1">
 		<?php echo template::button('galleryGalleryBack', [
 			'href' => helper::baseUrl() . $this->getUrl(0),
@@ -6,14 +6,14 @@
 		]); ?>
 	</div>
 </div>
-<div id="pictureContainer" class="row galleryRow  <?php echo ($module::$config['fullScreen']);?> ">
-<?php foreach($module::$pictures as $picture => $legend): ?>
+<div id="pictureContainer" class="row galleryRow  <?php echo (gallery::$config['fullScreen']);?> ">
+<?php foreach(gallery::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
 		<a
 			href="<?php echo helper::baseUrl(false) . $picture; ?>"
-			<?php  if ( strpos($picture, $module::$config['homePicture']) > 1)  { echo 'id="homePicture"'; }	?>
+			<?php  if ( strpos($picture, gallery::$config['homePicture']) > 1)  { echo 'id="homePicture"'; }	?>
 			class="galleryGalleryPicture"
-			style="background-image:url('<?php echo helper::baseUrl(false) . $module::$thumbs[$picture]; ?>')"
+			style="background-image:url('<?php echo helper::baseUrl(false) . gallery::$thumbs[$picture]; ?>')"
 			data-caption="<?php echo $legend; ?>"
 		>
 			<?php if($legend): ?>
@@ -23,7 +23,7 @@
 	</div>
 <?php endforeach; ?>
 </div>
-<div class="row <?php echo $module::$config['backAlign'] . ' ' . $module::$config['backPositionBottom'];?>">
+<div class="row <?php echo gallery::$config['backAlign'] . ' ' . gallery::$config['backPositionBottom'];?>">
 	<div class="col1">
 		<?php echo template::button('galleryGalleryBack', [
 			'href' => helper::baseUrl() . $this->getUrl(0),

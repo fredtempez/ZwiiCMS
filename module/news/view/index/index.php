@@ -1,4 +1,4 @@
-<?php if ($module::$news): ?>
+<?php if (news::$news): ?>
 	<link rel="stylesheet" type="text/css"
 		href="<?php echo helper::baseUrl(false) . $this->getData(['module', $this->getUrl(0), 'theme', 'style']); ?> " />
 	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
@@ -14,8 +14,8 @@
 	<article>
 		<div class="row">
 
-			<?php foreach ($module::$news as $newsId => $news): ?>
-				<div class="col<?php echo $module::$nbrCol; ?>">
+			<?php foreach (news::$news as $newsId => $news): ?>
+				<div class="col<?php echo news::$nbrCol; ?>">
 					<div class="newsFrame">
 						<h2 class="newsTitle" id="<?php echo $newsId; ?>">
 							<?php echo '<a href="' . helper::baseUrl(true) . $this->getUrl(0) . '/' . $newsId . '">' . $news['title'] . '</a>'; ?>
@@ -36,7 +36,7 @@
 								<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8(news::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?>
 							<?php if (
 								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -45,7 +45,7 @@
 								<?php echo '&nbsp;-&nbsp;'; ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
-								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8(news::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?> 
 							<!-- Bloc edition -->
 							<?php if (
@@ -74,7 +74,7 @@
 			<?php endforeach; ?>
 		</div>
 	</article>
-	<?php echo $module::$pages; ?>
+	<?php echo news::$pages; ?>
 <?php else: ?>
 	<?php echo template::speech('Aucune news'); ?>
 <?php endif; ?>

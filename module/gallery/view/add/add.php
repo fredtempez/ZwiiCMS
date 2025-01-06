@@ -35,7 +35,7 @@
 				</div>
 				<div class="row">
 					<div class="col3">
-						<?php echo template::select('galleryAddSort', $module::$sort, [
+						<?php echo template::select('galleryAddSort', gallery::$sort, [
 							'selected' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort']),
 							'label' => 'Tri des images',
 							'help' => 'Tri manuel : déplacez le images dans le tableau ci-dessous. L\'ordre est sauvegardé automatiquement.'

@@ -24,18 +24,18 @@
 						</div>
 						<div class="row">
 							<div class="col10 textAlignCenter">
-								<?php if (!empty($module::$imageOpenGraph['type'])): ?>
+								<?php if (!empty(config::$imageOpenGraph['type'])): ?>
 									<p>
-										<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), $module::$imageOpenGraph['type']); ?>
+										<?php echo sprintf('%s : <span id="screenType">%s</span>', helper::translate('Format'), config::$imageOpenGraph['type']); ?>
 									</p>
 									<p>
-										<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), $module::$imageOpenGraph['wide'], $module::$imageOpenGraph['height']); ?>
+										<?php echo sprintf('%s : <span id="screenWide">%s</span> x <span id="screenHeight">%s</span> pixels', helper::translate('Dimensions minimales'), config::$imageOpenGraph['wide'], config::$imageOpenGraph['height']); ?>
 									</p>
 									<p>
-										<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>', helper::translate('Ratio'), round($module::$imageOpenGraph['ratio'], 2)); ?>
+										<?php echo sprintf('%s : <span id="screenRatio">%s</span><span id="screenFract">:1</span>', helper::translate('Ratio'), round(config::$imageOpenGraph['ratio'], 2)); ?>
 									</p>
 									<p>
-										<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), $module::$imageOpenGraph['size']); ?>
+										<?php echo sprintf('%s : <span id="screenWeight">%s</span>', helper::translate('Poids'), config::$imageOpenGraph['size']); ?>
 									</p>
 								<?php endif; ?>
 							</div>

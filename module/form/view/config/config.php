@@ -16,7 +16,7 @@
 				]); ?>
 			</div>
 			<div class="col4">
-				<?php echo template::select('formConfigType[]', $module::$types, [
+				<?php echo template::select('formConfigType[]', form::$types, [
 					'class' => 'formConfigType'
 				]); ?>
 			</div>
@@ -93,5 +93,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo form::VERSION; ?>
 </div>

@@ -5,7 +5,7 @@
 			<?php echo self::ZWII_VERSION; ?>
 			<?php echo helper::translate('vers'); ?>
 			&nbsp;
-			<?php echo $module::$newVersion; ?>
+			<?php echo install::$newVersion; ?>
 		</strong></p>
 	<p>
 		<?php echo helper::translate('Afin d\'assurer le bon fonctionnement de Zwii, veuillez ne pas fermer cette page avant la fin de l\'opération.'); ?>

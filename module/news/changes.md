@@ -1,4 +1,6 @@
-# Versions 6.0
+# Version 6.1
+- Remplacement du nom générique de classe dans les vues.
+# Version 6.0
 - Ajoute trois nouvelles options pour afficher ou masquer la signature, la date et l'heure de l'article.
 - Corrige un mauvais format de la propriété buttonBack non stockée au type booléen.
 # Versions 5.9

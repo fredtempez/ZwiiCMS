@@ -41,23 +41,23 @@
 <?php echo template::formOpen('userFilterUserForm'); ?>
 <div class="row">
 	<div class="col3">
-		<?php echo template::select('userFilterGroup', $module::$usersGroups, [
+		<?php echo template::select('userFilterGroup', user::$usersGroups, [
 			'label' => 'Groupes / Profils',
 			'selected' => isset($_POST['userFilterGroup']) ? $_POST['userFilterGroup'] : 'all',
 		]); ?>
 	</div>
 	<div class="col3">
-		<?php echo template::select('userFilterFirstName', $module::$alphabet, [
+		<?php echo template::select('userFilterFirstName', user::$alphabet, [
 			'label' => 'Prénom commence par',
 			'selected' => isset($_POST['userFilterFirstName']) ? $_POST['userFilterFirstName'] : 'all',
 		]); ?>
 	</div>
 	<div class="col3">
-		<?php echo template::select('userFilterLastName', $module::$alphabet, [
+		<?php echo template::select('userFilterLastName', user::$alphabet, [
 			'label' => 'Nom commence par',
 			'selected' => isset($_POST['userFilterLastName']) ? $_POST['userFilterLastName'] : 'all',
 		]); ?>
 	</div>
 </div>
 <?php echo template::formClose(); ?>
-<?php echo template::table([2, 2, 2, 2, 2, 1, 1], $module::$users, ['Identifiant', 'Nom', 'Groupe', 'Profil', 'Étiquettes',  '', ''], ['id' => 'dataTables']); ?>
+<?php echo template::table([2, 2, 2, 2, 2, 1, 1], user::$users, ['Identifiant', 'Nom', 'Groupe', 'Profil', 'Étiquettes',  '', ''], ['id' => 'dataTables']); ?>

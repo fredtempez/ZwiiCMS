@@ -17,25 +17,25 @@
             <h4><?php echo helper::translate('Vignettes');?></h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('galleryThemeThumbWidth', $module::$galleryThemeSizeWidth, [
+                    <?php echo template::select('galleryThemeThumbWidth', gallery::$galleryThemeSizeWidth, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbWidth'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('galleryThemeThumbHeight', $module::$galleryThemeSizeHeight, [
+                    <?php echo template::select('galleryThemeThumbHeight', gallery::$galleryThemeSizeHeight, [
                         'label' => 'Hauteur',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbHeight'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('galleryThemeThumbAlign', $module::$galleryThemeFlexAlign, [
+                    <?php echo template::select('galleryThemeThumbAlign', gallery::$galleryThemeFlexAlign, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbAlign'])
                     ]); ?>
                 </div>
                 <div class="col2">
-                    <?php echo template::select('galleryThemeThumbMargin', $module::$galleryThemeMargin, [
+                    <?php echo template::select('galleryThemeThumbMargin', gallery::$galleryThemeMargin, [
                         'label' => 'Marge',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbMargin'])
                     ]); ?>
@@ -43,7 +43,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('galleryThemeThumbBorder', $module::$galleryThemeBorder, [
+                    <?php echo template::select('galleryThemeThumbBorder', gallery::$galleryThemeBorder, [
                         'label' => 'Bordure',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbBorder'])
                     ]); ?>
@@ -57,7 +57,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('galleryThemeThumbRadius', $module::$galleryThemeRadius, [
+                    <?php echo template::select('galleryThemeThumbRadius', gallery::$galleryThemeRadius, [
                         'label' => 'Arrondi des angles',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbRadius'])
                     ]); ?>
@@ -65,7 +65,7 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('galleryThemeThumbShadows', $module::$galleryThemeShadows, [
+                    <?php echo template::select('galleryThemeThumbShadows', gallery::$galleryThemeShadows, [
                         'label' => 'Ombre',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbShadows'])
                     ]); ?>
@@ -79,7 +79,7 @@
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('galleryThemeThumbOpacity', $module::$galleryThemeOpacity, [
+                    <?php echo template::select('galleryThemeThumbOpacity', gallery::$galleryThemeOpacity, [
                         'label' => 'Opacité au survol',
                         'selected' => $this->getData(['module', $this->getUrl(0), 'theme','thumbOpacity'])
                     ]); ?>
@@ -110,13 +110,13 @@
                 ]); ?>
             </div>
             <div class="col3">
-                <?php echo template::select('galleryThemeLegendHeight', $module::$galleryThemeLegendHeight, [
+                <?php echo template::select('galleryThemeLegendHeight', gallery::$galleryThemeLegendHeight, [
                     'label' => 'Hauteur',
                     'selected' => $this->getData(['module', $this->getUrl(0), 'theme','legendHeight'])
                 ]); ?>
             </div>
             <div class="col3">
-                <?php echo template::select('galleryThemeLegendAlign', $module::$galleryThemeAlign, [
+                <?php echo template::select('galleryThemeLegendAlign', gallery::$galleryThemeAlign, [
                     'label' => 'Alignement',
                     'selected' => $this->getData(['module', $this->getUrl(0), 'theme','legendAlign'])
                 ]); ?>
@@ -128,7 +128,7 @@
 <div class="row">
     <div class="col12">
         <div class="moduleVersion">Version n°
-            <?php echo $module::VERSION; ?>
+            <?php echo gallery::VERSION; ?>
         </div>
     </div>
 </div>

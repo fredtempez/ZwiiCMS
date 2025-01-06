@@ -39,7 +39,7 @@
     <div class="col12">
         <div class="block">
             <div class="row">
-                <?php  foreach ($module::$dialogues as $key => $value) : ?>
+                <?php  foreach (language::$dialogues as $key => $value) : ?>
                     <div class="col6">
                         <?php echo sprintf('%g -', $key); ?>
                         <?php echo $value['source']; ?>
@@ -52,7 +52,7 @@
                     </div>
                 <?php endforeach; ?>
             </div>
-            <?php echo $module::$pages; ?>
+            <?php echo language::$pages; ?>
         </div>
     </div>
 </div>

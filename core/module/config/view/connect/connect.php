@@ -26,13 +26,13 @@
 				</div>
 				<div class="row">
 					<div class="col3">
-						<?php echo template::select('connectAttempt', $module::$connectAttempt, [
+						<?php echo template::select('connectAttempt', config::$connectAttempt, [
 							'label' => 'Limitation des tentatives',
 							'selected' => $this->getData(['config', 'connect', 'attempt'])
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::select('connectTimeout', $module::$connectTimeout, [
+						<?php echo template::select('connectTimeout', config::$connectTimeout, [
 							'label' => 'Blocage après échecs',
 							'selected' => $this->getData(['config', 'connect', 'timeout'])
 						]); ?>
@@ -73,7 +73,7 @@
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::select('connectCaptchaType', $module::$captchaTypes, [
+						<?php echo template::select('connectCaptchaType', config::$captchaTypes, [
 							'label' => 'Type de captcha',
 							'selected' => $this->getData(['config', 'connect', 'captchaType'])
 						]); ?>
@@ -96,7 +96,7 @@
 								]); ?>
 							</div>
 							<div class="col6">
-								<?php echo template::select('connectAnonymousIp', $module::$anonIP, [
+								<?php echo template::select('connectAnonymousIp', config::$anonIP, [
 									'label' => 'Anonymat des adresses IP',
 									'selected' => $this->getData(['config', 'connect', 'anonymousIp']),
 									'help' => 'La règlementation française impose un anonymat de niveau 2'

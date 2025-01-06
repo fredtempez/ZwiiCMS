@@ -42,7 +42,7 @@
 				<h4><?php echo helper::translate('Options de publication');?></h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('newsAddUserId', $module::$users, [
+						<?php echo template::select('newsAddUserId', news::$users, [
 							'label' => 'Auteur',
 							'selected' => $this->getUser('id')
 						]); ?>

@@ -49,12 +49,12 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('blogAddPictureSize', $module::$pictureSizes, [
+						<?php echo template::select('blogAddPictureSize', blog::$pictureSizes, [
 							'label' => 'Largeur de l\'image'
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('blogAddPicturePosition', $module::$picturePositions, [
+						<?php echo template::select('blogAddPicturePosition', blog::$picturePositions, [
 							'label' => 'Position',
 							'help' => 'Le texte de l\'article est adapté autour de l\'image'
 						]); ?>
@@ -79,7 +79,7 @@
 				<h4><?php echo helper::translate('Options de publication'); ?></h4>
 				<div class="row">
 					<div class="col4">
-						<?php echo template::select('blogAddUserId', $module::$users, [
+						<?php echo template::select('blogAddUserId', blog::$users, [
 							'label' => 'Auteur',
 							'selected' => $this->getUser('id'),
 							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
@@ -95,9 +95,9 @@
 						]); ?>
 					</div>
 					<div class="col4">
-						<?php echo template::select('blogAddConsent', $module::$articleConsent  , [
+						<?php echo template::select('blogAddConsent', blog::$articleConsent  , [
 							'label' => 'Édition - Suppression',
-							'selected' => $module::EDIT_ALL,
+							'selected' => blog::EDIT_ALL,
 							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
 						]); ?>
 					</div>
@@ -117,7 +117,7 @@
 						<?php echo template::checkbox('blogAddCommentApproved', true, 'Approbation par un modérateur'); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper">
-						<?php echo template::select('blogAddCommentMaxlength', $module::$commentsLength,[
+						<?php echo template::select('blogAddCommentMaxlength', blog::$commentsLength,[
 							'help' => 'Choix du nombre maximum de caractères pour chaque commentaire de l\'article, mise en forme html comprise.',
 							'label' => 'Caractères par commentaire'
 						]); ?>
@@ -128,7 +128,7 @@
 						<?php echo template::checkbox('blogAddCommentNotification', true, 'Notification par email'); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper">
-						<?php echo template::select('blogAddCommentGroupNotification', $module::$groupNews); ?>
+						<?php echo template::select('blogAddCommentGroupNotification', blog::$groupNews); ?>
 					</div>
 				</div>
 			</div>

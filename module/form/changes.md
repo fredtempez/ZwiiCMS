@@ -1,4 +1,6 @@
-# Versions 4.4
+# Version 4.5
+- Remplacement du nom générique de classe dans les vues.
+# Version 4.4
 - Le sélecteur de fichier affiche par défaut le chemin vers le fichier présent dans le champ.
 # Version 4.3
 - Contrôle de la variable de session liée au contenu. Evite des erreurs lorsque plusieurs onglets sont ouverts.

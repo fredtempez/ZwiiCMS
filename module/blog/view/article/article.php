@@ -34,7 +34,7 @@
 			<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 		<?php endif; ?>
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
-			<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+			<?php echo helper::dateUTF8(blog::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
 		<?php endif; ?>
 		<?php if (
 			$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -43,14 +43,14 @@
 			<?php echo '&nbsp;-&nbsp;'; ?>
 		<?php endif; ?>
 		<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
-			<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
+			<?php echo helper::dateUTF8(blog::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'publishedOn']), self::$i18nUI); ?>
 		<?php endif; ?>
 		<!-- Bloc edition -->
 		<?php if (
 			$this->isConnected() === true
 			and
 			(  // Propriétaire
-				($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === $module::EDIT_OWNER
+				($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === blog::EDIT_OWNER
 					and ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']) === $this->getUser('id')
 						or $this->getUser('group') === self::GROUP_ADMIN)
 				)
@@ -62,8 +62,8 @@
 				)
 				or (
 					// Tout le monde
-					$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === $module::EDIT_ALL
-					and $this->getUser('group') >= $module::$actions['config']
+					$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === blog::EDIT_ALL
+					and $this->getUser('group') >= blog::$actions['config']
 				)
 			)
 		): ?>
@@ -95,8 +95,8 @@
 			<h3>
 				<?php
 				echo template::ico('comment', ['margin' => 'right']);
-				if ($module::$nbCommentsApproved > 0) {
-					echo $module::$nbCommentsApproved . ' commentaire' . ($module::$nbCommentsApproved > 1 ? 's' : '');
+				if (blog::$nbCommentsApproved > 0) {
+					echo blog::$nbCommentsApproved . ' commentaire' . (blog::$nbCommentsApproved > 1 ? 's' : '');
 				} else {
 					echo 'Pas encore de commentaire';
 				}
@@ -114,7 +114,7 @@
 			<?php echo template::text('blogArticleUserName', [
 				'label' => 'Nom',
 				'readonly' => true,
-				'value' => $module::$editCommentSignature
+				'value' => blog::$editCommentSignature
 			]); ?>
 			<?php echo template::hidden('blogArticleUserId', [
 				'value' => $this->getUser('id')
@@ -172,17 +172,17 @@
 <?php endif; ?>
 <div class="row">
 	<div class="col12">
-		<?php foreach ($module::$comments as $commentId => $comment): ?>
+		<?php foreach (blog::$comments as $commentId => $comment): ?>
 			<div class="block">
 				<h4>
 					<?php echo template::ico('user'); ?>
-					<?php echo $module::$commentsSignature[$commentId]; ?>
+					<?php echo blog::$commentsSignature[$commentId]; ?>
 					<?php echo template::ico('calendar-empty'); ?>
-					<?php echo helper::dateUTF8($module::$dateFormat, $comment['createdOn'], self::$i18nUI) . ' - ' . helper::dateUTF8($module::$timeFormat, $comment['createdOn'], self::$i18nUI); ?>
+					<?php echo helper::dateUTF8(blog::$dateFormat, $comment['createdOn'], self::$i18nUI) . ' - ' . helper::dateUTF8(blog::$timeFormat, $comment['createdOn'], self::$i18nUI); ?>
 				</h4>
 				<?php echo $comment['content']; ?>
 			</div>
 		<?php endforeach; ?>
 	</div>
 </div>
-<?php echo $module::$pages; ?>
+<?php echo blog::$pages; ?>

@@ -8,9 +8,9 @@
 		</a>
 	</div>
 <?php endif; ?>
-<?php if ($module::$articles): ?>
+<?php if (blog::$articles): ?>
 	<article id="article">
-		<?php foreach ($module::$articles as $articleId => $article): ?>
+		<?php foreach (blog::$articles as $articleId => $article): ?>
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'layout']) === true): ?>
 				<div class="readMoreModernContainer">
 					<div class="row">
@@ -39,7 +39,7 @@
 								<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
-								<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8(blog::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?>
 							<?php if (
 								$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -48,7 +48,7 @@
 								<?php echo '&nbsp;-&nbsp;'; ?>
 							<?php endif; ?>
 							<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
-								<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+								<?php echo helper::dateUTF8(blog::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
 							<?php endif; ?>
 						</div>
 					</div>
@@ -75,7 +75,7 @@
 								$this->isConnected() === true
 								and
 								( // Propriétaire
-									($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === $module::EDIT_OWNER
+									($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === blog::EDIT_OWNER
 										and ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId']) === $this->getUser('id')
 											or $this->getUser('group') === self::GROUP_ADMIN)
 									)
@@ -87,8 +87,8 @@
 									)
 									or (
 										// Tout le monde
-										$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === $module::EDIT_ALL
-										and $this->getUser('group') >= $module::$actions['config']
+										$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === blog::EDIT_ALL
+										and $this->getUser('group') >= blog::$actions['config']
 									)
 								)
 							): ?>
@@ -104,9 +104,9 @@
 								<p>
 									<?php echo template::ico('comment', ['margin' => 'right']); ?>
 									<?php
-									if ($module::$comments[$articleId] > 0) {
+									if (blog::$comments[$articleId] > 0) {
 										echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/' . $articleId . '">';
-										echo $module::$comments[$articleId] . ' commentaire' . ($module::$comments[$articleId] > 1 ? 's' : '');
+										echo blog::$comments[$articleId] . ' commentaire' . (blog::$comments[$articleId] > 1 ? 's' : '');
 										echo '</a>';
 									} else {
 										echo 'Pas encore de commentaire';
@@ -153,8 +153,8 @@
 							</h2>
 							<div class="blogComment">
 								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>#comment">
-									<?php if ($module::$comments[$articleId]): ?>
-										<?php echo $module::$comments[$articleId]; ?>
+									<?php if (blog::$comments[$articleId]): ?>
+										<?php echo blog::$comments[$articleId]; ?>
 										<?php echo template::ico('comment', ['margin' => 'left']); ?>
 									<?php endif; ?>
 								</a>
@@ -174,7 +174,7 @@
 									<?php echo template::ico('calendar-empty', ['margin' => 'left']); ?>
 								<?php endif; ?>
 								<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true): ?>
-									<?php echo helper::dateUTF8($module::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+									<?php echo helper::dateUTF8(blog::$dateFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
 								<?php endif; ?>
 								<?php if (
 									$this->getData(['module', $this->getUrl(0), 'config', 'showDate']) === true
@@ -183,7 +183,7 @@
 									<?php echo '&nbsp;-&nbsp;'; ?>
 								<?php endif; ?>
 								<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'showTime']) === true): ?>
-									<?php echo helper::dateUTF8($module::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
+									<?php echo helper::dateUTF8(blog::$timeFormat, $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn']), self::$i18nUI); ?>
 								<?php endif; ?>
 								<div class="blogContent">
 									<?php $lenght = $this->getData(['module', $this->getUrl(0), 'config', 'articlesLenght']); ?>
@@ -207,7 +207,7 @@
 				<?php endif; ?>
 			<?php endforeach; ?>
 	</article>
-	<?php echo $module::$pages; ?>
+	<?php echo blog::$pages; ?>
 <?php else: ?>
 	<?php echo template::speech('Aucun article'); ?>
 <?php endif; ?>

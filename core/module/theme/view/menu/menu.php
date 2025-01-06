@@ -21,12 +21,12 @@
                 <div class="col6">
                     <?php
                     if ($this->getData(['theme', 'header', 'position']) == "site") {
-                        echo template::select('themeMenuPosition', $module::$menuPositionsSite, [
+                        echo template::select('themeMenuPosition', theme::$menuPositionsSite, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'menu', 'position'])
                         ]);
                     } else {
-                        echo template::select('themeMenuPosition', $module::$menuPositionsBody, [
+                        echo template::select('themeMenuPosition', theme::$menuPositionsBody, [
                             'label' => 'Position',
                             'selected' => $this->getData(['theme', 'menu', 'position'])
                         ]);
@@ -34,7 +34,7 @@
                     ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeMenuWide', $module::$containerWides, [
+                    <?php echo template::select('themeMenuWide', theme::$containerWides, [
                         'label' => 'Largeur',
                         'selected' => $this->getData(['theme', 'menu', 'wide'])
                     ]); ?>
@@ -42,20 +42,20 @@
             </div>
             <div class="row">
                 <div class="col4">
-                    <?php echo template::select('themeMenuRadius', $module::$menuRadius, [
+                    <?php echo template::select('themeMenuRadius', theme::$menuRadius, [
                         'label' => 'Bords arrondis',
                         'selected' => $this->getData(['theme', 'menu', 'radius']),
                         'help' => 'Autour de la page sélectionnée'
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeMenuHeight', $module::$menuHeights, [
+                    <?php echo template::select('themeMenuHeight', theme::$menuHeights, [
                         'label' => 'Hauteur',
                         'selected' => $this->getData(['theme', 'menu', 'height'])
                     ]); ?>
                 </div>
                 <div class="col4">
-                    <?php echo template::select('themeMenuTextAlign', $module::$aligns, [
+                    <?php echo template::select('themeMenuTextAlign', theme::$aligns, [
                         'label' => 'Alignement',
                         'selected' => $this->getData(['theme', 'menu', 'textAlign'])
                     ]); ?>
@@ -92,7 +92,7 @@
                     ]); ?>
                 </div>
                 <div class="col6">
-                    <?php echo template::select('themeMenuBurgerContent', $module::$burgerContent, [
+                    <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
                         'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
                     ]); ?>
@@ -182,27 +182,27 @@
             </h4>
             <div class="row">
                 <div class="col3">
-                    <?php echo template::select('themeMenuFont', $module::$fonts['name'], [
+                    <?php echo template::select('themeMenuFont', theme::$fonts['name'], [
                         'label' => 'Fonte',
                         'selected' => $this->getData(['theme', 'menu', 'font']),
-                        'font' => $module::$fonts['family']
+                        'font' => theme::$fonts['family']
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuFontSize', $module::$menuFontSizes, [
+                    <?php echo template::select('themeMenuFontSize', theme::$menuFontSizes, [
                         'label' => 'Taille',
                         'help' => 'Proportionnelle à la taille définie dans le site.',
                         'selected' => $this->getData(['theme', 'menu', 'fontSize'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuFontWeight', $module::$fontWeights, [
+                    <?php echo template::select('themeMenuFontWeight', theme::$fontWeights, [
                         'label' => 'Style',
                         'selected' => $this->getData(['theme', 'menu', 'fontWeight'])
                     ]); ?>
                 </div>
                 <div class="col3">
-                    <?php echo template::select('themeMenuTextTransform', $module::$textTransforms, [
+                    <?php echo template::select('themeMenuTextTransform', theme::$textTransforms, [
                         'label' => 'Casse',
                         'selected' => $this->getData(['theme', 'menu', 'textTransform'])
                     ]); ?>

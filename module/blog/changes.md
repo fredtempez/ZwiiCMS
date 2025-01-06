@@ -1,4 +1,6 @@
-# Version 8.01
+# Version 8.2
+- Remplacement du nom générique de classe dans les vues.
+# Version 8.1
 - Un mail de notification est seulement envoyé lorsque le captcha est passé et que le commentaire est déposé.
 - Le mail de notification contient désormais le nom de l'auteur du commentaire ainsi que le commentaire.
 # Version 8.00

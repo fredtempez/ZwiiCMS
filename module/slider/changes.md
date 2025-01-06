@@ -1,3 +1,5 @@
+# Version 7.3
+- Remplacement du nom générique de classe dans les vues.
 # Version 7.2
 - Le dossier sélectionné est affiché par défaut dans la page update.
 # Version 7.1

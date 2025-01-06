@@ -38,8 +38,8 @@
 			</div>
 			<div class="row">
 				<div class="col12">
-					<?php if ($module::$pictures): ?>
-						<?php echo template::table([3, 4, 4, 1], $module::$pictures, ['Image', 'Texte alternatif', 'Hyperlien vers une page', '']); ?>
+					<?php if (slider::$pictures): ?>
+						<?php echo template::table([3, 4, 4, 1], slider::$pictures, ['Image', 'Texte alternatif', 'Hyperlien vers une page', '']); ?>
 					<?php else: ?>
 						<?php echo template::speech('Aucune image dans ce dossier'); ?>
 					<?php endif; ?>
@@ -50,5 +50,5 @@
 </div>
 <?php echo template::formClose(); ?>
 <div class="moduleVersion">Module Slider version n°
-	<?php echo $module::VERSION; ?>
+	<?php echo slider::VERSION; ?>
 </div>
