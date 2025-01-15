@@ -417,8 +417,14 @@ class common
 			}
 		}
 		// Stocker le cookie de langue pour l'éditeur de texte
-		setcookie('ZWII_UI', self::$i18nUI, time() + 3600, helper::baseUrl(false, false), '', false, false, ['samesite' => 'Lax']);
-
+		setcookie('ZWII_UI', self::$i18nUI, [
+			'expires' => time() + 3600,
+			'path' => helper::baseUrl(false, false),
+			'domain' => '',
+			'secure' => false,
+			'httponly' => false,
+			'samesite' => 'Lax' // Vous pouvez aussi utiliser 'Strict' ou 'None'
+		]);
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
 			$this->buildHierarchy();
