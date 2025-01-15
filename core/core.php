@@ -1016,7 +1016,9 @@ class common
 
 	/**
 	 * Accède à l'utilisateur connecté
-	 * @param int $key Clé de la valeur
+	 * @param string $key Clé de la valeur
+	 * @param mixed $perm1
+	 * @param mixed $perm2
 	 * @return string|null
 	 */
 	public function getUser($key, $perm1 = null, $perm2 = null)
