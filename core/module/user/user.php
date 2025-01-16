@@ -90,22 +90,23 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-			$check = true;
 			// L'identifiant d'utilisateur est indisponible
 			$userId = $this->getInput('userAddId', helper::FILTER_ID, true);
 			if ($this->getData(['user', $userId])) {
 				self::$inputNotices['userAddId'] = 'Identifiant déjà utilisé';
-				$check = false;
 			}
 			// Double vérification pour le mot de passe
 			if ($this->getInput('userAddPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('userAddConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
-				self::$inputNotices['userAddConfirmPassword'] = 'Incorrect';
-				$check = false;
+				self::$inputNotices['userAddConfirmPassword'] = 'Les mots de passe ne sont pas indentiques';
 			}
+
 			// Crée l'utilisateur
 			$userFirstname = $this->getInput('userAddFirstname', helper::FILTER_STRING_SHORT, true);
 			$userLastname = $this->getInput('userAddLastname', helper::FILTER_STRING_SHORT, true);
 			$userMail = $this->getInput('userAddMail', helper::FILTER_MAIL, true);
+			$pseudo = $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true);
+			$signature = $this->getInput('userAddSignature', helper::FILTER_INT, true);
+			$password = $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true);
 
 			// Profil
 			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
@@ -124,10 +125,10 @@ class user extends common
 					'group' => $group,
 					'profil' => $profil,
 					'lastname' => $userLastname,
-					'pseudo' => $this->getInput('userAddPseudo', helper::FILTER_STRING_SHORT, true),
-					'signature' => $this->getInput('userAddSignature', helper::FILTER_INT, true),
+					'pseudo' => $pseudo,
+					'signature' => $signature,
 					'mail' => $userMail,
-					'password' => $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true),
+					'password' => $password,
 					'connectFail' => null,
 					'connectTimeout' => null,
 					'accessUrl' => null,
@@ -140,7 +141,10 @@ class user extends common
 
 			// Envoie le mail
 			$sent = true;
-			if ($this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) && $check === true) {
+			if (
+				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) &&
+				self::$inputNotices === []
+			) {
 				$sent = $this->sendMail(
 					$userMail,
 					'Compte créé sur ' . $this->getData(['config', 'title']),
