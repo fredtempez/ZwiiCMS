@@ -353,6 +353,14 @@ td>.col12 {
     color: #E74C3C;
 }
 
+/* Asterisque des champs obligatoires */
+.required-field::after {
+    content: '\00204E';
+    color: #E74C3C;
+    margin-left: 4px;
+    font-size: larger;
+}
+
 
 /* Mauvaise position dans les champs File
 .inputFile.notice {

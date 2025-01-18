@@ -245,6 +245,7 @@ class template
             'readonly' => false,
             'value' => '',
             'type' => 'date',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -271,12 +272,21 @@ class template
         } else {
             $attributes['value'] = ($attributes['value'] ? helper::filter($attributes['value'], $filter) : '');
         }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
@@ -326,7 +336,8 @@ class template
             'type' => 2,
             'value' => '',
             'folder' => '',
-            'language' => 'fr_FR'
+            'language' => 'fr_FR',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['value'] = helper::translate($attributes['value']);
@@ -334,6 +345,13 @@ class template
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
+        }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
         }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
@@ -347,7 +365,9 @@ class template
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Champ caché contenant l'url de la page
@@ -362,16 +382,16 @@ class template
         $html .= sprintf(
             '<a
                 href="' .
-            helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
-            '?relative_url=1' .
-            '&lang=' . $attributes['language'] .
-            '&field_id=' . $attributes['id'] .
-            '&type=' . $attributes['type'] .
-            '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
+                helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
+                '?relative_url=1' .
+                '&lang=' . $attributes['language'] .
+                '&field_id=' . $attributes['id'] .
+                '&type=' . $attributes['type'] .
+                '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
                 // Ajoute le nom du dossier si la variable est passée
-            (empty($attributes['folder']) ? '&fldr=/': '&fldr=' . $attributes['folder']) .
-            ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
-            . '"
+                (empty($attributes['folder']) ? '&fldr=/' : '&fldr=' . $attributes['folder']) .
+                ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
+                . '"
                 class="inputFile %s %s"
                 %s
                 data-lity
@@ -583,7 +603,8 @@ class template
             'name' => $nameId,
             'placeholder' => '',
             'readonly' => false,
-            'value' => ''
+            'value' => '',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -593,12 +614,21 @@ class template
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
@@ -651,18 +681,28 @@ class template
             //'maxlength' => '500',
             'name' => $nameId,
             'placeholder' => '',
-            'readonly' => false
+            'readonly' => false,
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
         $attributes['help'] = helper::translate($attributes['help']);
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
@@ -705,7 +745,8 @@ class template
             'name' => $nameId,
             'selected' => '',
             'font' => [],
-            'multiple' => ''
+            'multiple' => '',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -719,12 +760,21 @@ class template
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['selected'] = common::$inputBefore[$attributes['id']];
         }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
@@ -896,7 +946,8 @@ class template
             'placeholder' => '',
             'readonly' => false,
             'value' => '',
-            'type' => 'text'
+            'type' => 'text',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -906,12 +957,21 @@ class template
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
@@ -953,7 +1013,8 @@ class template
             //'maxlength' => '500',
             'name' => $nameId,
             'readonly' => false,
-            'value' => ''
+            'value' => '',
+            'required' => false,
         ], $attributes);
         // Traduction de l'aide et de l'étiquette
         $attributes['label'] = helper::translate($attributes['label']);
@@ -962,12 +1023,21 @@ class template
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
         // Notice
