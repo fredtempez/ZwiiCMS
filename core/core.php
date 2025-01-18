@@ -547,7 +547,7 @@ class common
 	public function deleteData($keys)
 	{
 		// Descripteur de la base
-		$db = $this->dataFiles[$keys[0]];
+		$db = (object) $this->dataFiles[$keys[0]];
 		// Initialisation de la requête par le nom de la base
 		$query = $keys[0];
 		// Construire la requête
@@ -583,7 +583,7 @@ class common
 		// Construire la requête dans la base inf à 1 retourner toute la base
 		if (count($keys) >= 1) {
 			// Descripteur de la base
-			$db = $this->dataFiles[$keys[0]];
+			$db = (object) $this->dataFiles[$keys[0]];
 			$query = $keys[0];
 			// Construire la requête
 			// Ne pas tenir compte du dernier élément qui une une value donc <
@@ -606,7 +606,7 @@ class common
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
 			// descripteur de la base
-			$db = $this->dataFiles[$keys[0]];
+			$db = (object) $this->dataFiles[$keys[0]];
 			$query = $keys[0];
 			// Construire la requête
 			for ($i = 1; $i < count($keys); $i++) {
@@ -777,7 +777,7 @@ class common
 	 */
 	public function saveDB($module): void
 	{
-		$db = $this->dataFiles[$module];
+		$db = (object) $this->dataFiles[$module];
 		$db->save();
 	}
 
