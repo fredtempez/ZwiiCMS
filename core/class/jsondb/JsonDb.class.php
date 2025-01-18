@@ -18,8 +18,6 @@ class JsonDb extends \Prowebcraft\Dot
     protected $db = '';
     protected $data = null;
     protected $config = [];
-    // Tentative d'encodage après échec
-    const MAX_JSON_ENCODE_ATTEMPTS = 5;
     // Tentative d'écriture après échec
     const MAX_FILE_WRITE_ATTEMPTS = 5;
     // Délais entre deux tentaives
@@ -136,8 +134,8 @@ class JsonDb extends \Prowebcraft\Dot
             }
             $this->data = json_decode(file_get_contents($this->db), true);
             if (!$this->data === null) {
-                throw new \InvalidArgumentException('Database file ' . $this->db
-                    . ' contains invalid json object. Please validate or remove file');
+                throw new \InvalidArgumentException('Le fichier ' . $this->db
+                . ' contient des données invalides.');
             }
         }
         return $this->data;
@@ -175,8 +173,8 @@ class JsonDb extends \Prowebcraft\Dot
             // Incrémente le compteur de tentatives
             $attempt++;
 
-            // Attente
-            sleep(1);
+            // Attente 1/4 de seconde
+            usleep(0.25);
         }
 
         // Vérifie si l'écriture a échoué même après plusieurs tentatives
