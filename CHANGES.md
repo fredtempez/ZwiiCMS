@@ -6,6 +6,7 @@
 - Corrections syntaxiques.
 - Rotation des fichiers journaux (plus de 4 mo et 5 archives compressées).
 - Nouvelle propriété *required* pour les template de saisie de texte obligatoire. Génération d'un repère sur le label du champ et interception du champ invalide par le navigateur qui affiche une popup.
+- Nouvelle méthode de template *number()* pour créer un champ de saisie acceptant les propriétés min, max, step et pattern.
 
 **Corrections :**
 - Lors de l'ajout d'un nouvel utilisateur, en cas d'erreur de saisie et de validation du formulaire, le mail de confirmation n'est pas expédié.

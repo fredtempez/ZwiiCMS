@@ -993,6 +993,106 @@ class template
     }
 
     /**
+     * Génère un champ de saisie de type number (input[type="number"])
+     *
+     * Cette méthode crée un champ numérique HTML complet avec son wrapper,
+     * son label et ses messages d'aide/erreur. Elle gère automatiquement
+     * la conversion des valeurs en nombres et les contraintes de validation.
+     *
+     * @param string $nameId     Identifiant unique du champ, utilisé pour name et id
+     * @param array  $attributes Tableau des attributs du champ avec les clés suivantes :
+     *     @type boolean $before        Active la récupération des données précédentes en cas d'erreur (défaut: true)
+     *     @type string  $class        Classes CSS additionnelles pour l'input (défaut: '')
+     *     @type string  $classWrapper Classes CSS additionnelles pour le wrapper (défaut: '')
+     *     @type boolean $noDirty      Désactive le marquage dirty du champ (défaut: false)
+     *     @type boolean $disabled     Désactive le champ (défaut: false)
+     *     @type string  $help         Texte d'aide affiché sous le label (défaut: '')
+     *     @type string  $label        Texte du label (défaut: '')
+     *     @type string  $placeholder  Texte de placeholder (défaut: '')
+     *     @type boolean $readonly     Rend le champ en lecture seule (défaut: false)
+     *     @type mixed   $value        Valeur initiale du champ (défaut: '')
+     *     @type number  $min          Valeur minimum autorisée (défaut: null)
+     *     @type number  $max          Valeur maximum autorisée (défaut: null)
+     *     @type number  $step         Pas d'incrémentation (ex: 1 pour entiers, 0.01 pour prix) (défaut: null)
+     *     @type string  $pattern      Expression régulière de validation (défaut: null)
+     *
+     * @return string Code HTML du champ number complet
+     */
+    public static function number($nameId, array $attributes = [])
+    {
+        // Attributs par défaut spécifiques aux champs numériques
+        $attributes = array_merge([
+            'type' => 'number',
+            'before' => true,
+            'class' => '',
+            'classWrapper' => '',
+            'noDirty' => false,
+            'disabled' => false,
+            'help' => '',
+            'id' => $nameId,
+            'label' => '',
+            'name' => $nameId,
+            'placeholder' => '',
+            'readonly' => false,
+            'value' => '',
+            'min' => null,
+            'max' => null,
+            'step' => null,
+            'pattern' => null
+        ], $attributes);
+
+        // Conversion de la valeur en nombre si elle n'est pas vide
+        if ($attributes['value'] !== '') {
+            $attributes['value'] = floatval($attributes['value']);
+        }
+
+        // Nettoyage des attributs null pour ne pas les afficher dans le HTML
+        foreach (['min', 'max', 'step', 'pattern'] as $attr) {
+            if ($attributes[$attr] === null) {
+                unset($attributes[$attr]);
+            }
+        }
+
+        // Traduction de l'aide et de l'étiquette
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['help'] = helper::translate($attributes['help']);
+
+        // Sauvegarde des données en cas d'erreur
+        if ($attributes['before'] && array_key_exists($attributes['id'], common::$inputBefore)) {
+            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        }
+
+        // Début du wrapper
+        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
+
+        // Label
+        if ($attributes['label']) {
+            $html .= self::label($attributes['id'], $attributes['label'], [
+                'help' => $attributes['help']
+            ]);
+        }
+
+        // Notice
+        $notice = '';
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
+            $notice = common::$inputNotices[$attributes['id']];
+            $attributes['class'] .= ' notice';
+        }
+        $html .= self::notice($attributes['id'], $notice);
+
+        // Input number
+        $html .= sprintf(
+            '<input type="number" %s>',
+            helper::sprintAttributes($attributes)
+        );
+
+        // Fin du wrapper
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
      * Crée un champ texte long
      * @param string $nameId Nom et id du champ
      * @param array $attributes Attributs ($key => $value)
