@@ -23,7 +23,7 @@
 						<?php echo template::number('configProxyPort', [
 							'label' => 'Port du proxy',
 							'placeholder' => '6060',
-							'value' => $this->getData(['config', 'proxyPort']),
+							'value' => $this->getData(['config', 'proxyPort'])
 						]); ?>
 					</div>
 				</div>

@@ -1034,6 +1034,7 @@ class template
             'name' => $nameId,
             'placeholder' => '',
             'readonly' => false,
+            'required' => false,
             'value' => '',
             'min' => null,
             'max' => null,
@@ -1062,13 +1063,23 @@ class template
             $attributes['value'] = common::$inputBefore[$attributes['id']];
         }
 
+        // Gestion du champ obligatoire 
+        if (isset($attributes['required']) && $attributes['required']) {
+            // Affiche l'astérisque dans le label
+            $required = ' required-field';
+            // Ajoute l'attribut required au champ input
+            $attributes['required'] = 'required';
+        }
+
         // Début du wrapper
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
 
         // Label
         if ($attributes['label']) {
             $html .= self::label($attributes['id'], $attributes['label'], [
-                'help' => $attributes['help']
+                'help' => $attributes['help'],
+                // Ajoute la classe required-field si le champ est obligatoire
+                'class' => isset($required) ? $required : ''
             ]);
         }
 
