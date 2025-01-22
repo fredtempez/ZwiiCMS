@@ -479,7 +479,7 @@ class form extends common
 				if (!empty($singlemail)) {
 					$to[] = $singlemail;
 				}
-				if (is_array($to)) {
+				if (empty($to)=== false) {
 					// Sujet du mail
 					$subject = $this->getData(['module', $this->getUrl(0), 'config', 'subject']);
 					if ($subject === '') {
