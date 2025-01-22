@@ -525,7 +525,7 @@ class user extends common
 				// Formatage de la liste
 				self::$users[] = [
 					$userId,
-					$this->getData(['user', $userId, 'firstname']) . ' ' . $userLastNames,
+					sprintf('%s %s',$userLastNames, $this->getData(['user', $userId, 'firstname'])),
 					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
 					empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
 					? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
