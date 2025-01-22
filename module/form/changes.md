@@ -1,3 +1,5 @@
+# Version 4.6
+- Correction de syntaxe.
 # Version 4.5
 - Remplacement du nom générique de classe dans les vues.
 # Version 4.4

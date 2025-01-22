@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '4.5';
+	const VERSION = '4.6';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -479,7 +479,7 @@ class form extends common
 				if (!empty($singlemail)) {
 					$to[] = $singlemail;
 				}
-				if ($to) {
+				if (is_array($to)) {
 					// Sujet du mail
 					$subject = $this->getData(['module', $this->getUrl(0), 'config', 'subject']);
 					if ($subject === '') {
@@ -495,6 +495,7 @@ class form extends common
 						$this->getData(['config', 'smtp', 'from'])
 					);
 				}
+
 			}
 			// Redirection
 			$redirect = $this->getData(['module', $this->getUrl(0), 'config', 'pageId']);
