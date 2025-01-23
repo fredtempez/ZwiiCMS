@@ -116,30 +116,14 @@ core.confirm = function (text, yesCallback, noCallback) {
 
 /**
  * Scripts à exécuter en dernier
- */
+
 core.end = function () {
-    /**
-     * Modifications non enregistrées du formulaire
-     */
-    var formDOM = $("form");
-    // Ignore :
-    // - TinyMCE car il gère lui même le message
-    // - Les champs avec data-no-dirty
-    var inputsDOM = formDOM.find("input:not([data-no-dirty]), select:not([data-no-dirty]), textarea:not(.editorWysiwyg):not([data-no-dirty])");
-    var inputSerialize = inputsDOM.serialize();
-    $(window).on("beforeunload", function () {
-        if (inputsDOM.serialize() !== inputSerialize) {
-            message = "<?php echo helper::translate('Les modifications que vous avez apportées ne seront peut-être pas enregistrées.');?>";
-            return message;
-        }
-    });
-    formDOM.submit(function () {
-        $(window).off("beforeunload");
-    });
+
 };
 $(function () {
     core.end();
 });
+*/
 
 /**
  * Ajoute une notice
