@@ -1243,66 +1243,94 @@ class common
 	}
 
 
-	/*
-	 * Création d'une miniature
-	 * Fonction utilisée lors de la mise à jour d'une version 9 à une version 10
-	 * @param string $src image source
-	 * @param string $dets image destination
-	 * @param integer $desired_width largeur demandée
-	 */
-	function makeThumb($src, $dest, $desired_width)
-	{
-		// Vérifier l'existence du dossier de destination.
-		$fileInfo = pathinfo($dest);
-		if (!is_dir($fileInfo['dirname'])) {
-			mkdir($fileInfo['dirname'], 0755, true);
-		}
-		$source_image = '';
-		// Type d'image
-		switch ($fileInfo['extension']) {
-			case 'jpeg':
-			case 'jpg':
-				$source_image = imagecreatefromjpeg($src);
-				break;
-			case 'png':
-				$source_image = imagecreatefrompng($src);
-				break;
-			case 'gif':
-				$source_image = imagecreatefromgif($src);
-				break;
-			case 'webp':
-				$source_image = imagecreatefromwebp($src);
-				break;
-			case 'avif':
-				$source_image = imagecreatefromavif($src);
-		}
-		// Image valide
-		if (is_object($source_image)) {
-			$width = imagesx($source_image);
-			$height = imagesy($source_image);
-			/* find the "desired height" of this thumbnail, relative to the desired width  */
-			$desired_height = floor($height * ($desired_width / $width));
-			/* create a new, "virtual" image */
-			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-			/* copy source image at a resized size */
-			imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
-			switch (mime_content_type($src)) {
-				case 'image/jpeg':
-				case 'image/jpg':
-					return (imagejpeg($virtual_image, $dest));
-				case 'image/png':
-					return (imagepng($virtual_image, $dest));
-				case 'image/gif':
-					return (imagegif($virtual_image, $dest));
-				case 'image/webp':
-					return (imagewebp($virtual_image, $dest));
-				case 'image/avif':
-					return (imageavif($virtual_image, $dest));
-			}
-		} else {
-			return (false);
-		}
-	}
+/**
+ * Crée une miniature à partir d'une image source.
+ * Cette fonction prend en charge les formats raster (JPEG, PNG, GIF, WebP, AVIF) et vectoriels (SVG).
+ * Pour les images vectorielles (SVG), aucune redimension n'est effectuée : une copie est réalisée.
+ * 
+ * @param string $src Chemin de l'image source.
+ * @param string $dest Chemin de l'image destination (avec le nom du fichier et l'extension).
+ * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
+ * @return bool True si l'opération a réussi, false sinon.
+ */
+function makeThumb($src, $dest, $desired_width)
+{
+    // Vérifier l'existence du dossier de destination.
+    $fileInfo = pathinfo($dest);
+    if (!is_dir($fileInfo['dirname'])) {
+        mkdir($fileInfo['dirname'], 0755, true);
+    }
+
+    $extension = strtolower($fileInfo['extension']);
+    $mime_type = mime_content_type($src);
+
+    // Gestion des fichiers SVG (copie simple sans redimensionnement)
+    if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
+        return copy($src, $dest);
+    }
+
+    // Chargement de l'image source selon le type
+    $source_image = '';
+    switch ($extension) {
+        case 'jpeg':
+        case 'jpg':
+            $source_image = imagecreatefromjpeg($src);
+            break;
+        case 'png':
+            $source_image = imagecreatefrompng($src);
+            break;
+        case 'gif':
+            $source_image = imagecreatefromgif($src);
+            break;
+        case 'webp':
+            $source_image = imagecreatefromwebp($src);
+            break;
+        case 'avif':
+            if (function_exists('imagecreatefromavif')) {
+                $source_image = imagecreatefromavif($src);
+            } else {
+                return false; // AVIF non supporté
+            }
+            break;
+        default:
+            return false; // Format non pris en charge
+    }
+
+    // Image valide (formats raster uniquement)
+    if (is_resource($source_image) || (is_object($source_image) && $source_image instanceof GdImage)) {
+        $width = imagesx($source_image);
+        $height = imagesy($source_image);
+
+        // Calcul de la hauteur proportionnelle à la largeur demandée
+        $desired_height = floor($height * ($desired_width / $width));
+
+        // Création d'une nouvelle image virtuelle redimensionnée
+        $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
+
+        // Copie de l'image source dans l'image virtuelle avec redimensionnement
+        imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
+
+        // Enregistrement de l'image redimensionnée au format approprié
+        switch ($mime_type) {
+            case 'image/jpeg':
+            case 'image/jpg':
+                return imagejpeg($virtual_image, $dest);
+            case 'image/png':
+                return imagepng($virtual_image, $dest);
+            case 'image/gif':
+                return imagegif($virtual_image, $dest);
+            case 'image/webp':
+                return imagewebp($virtual_image, $dest);
+            case 'image/avif':
+                if (function_exists('imageavif')) {
+                    return imageavif($virtual_image, $dest);
+                }
+        }
+    }
+
+    return false; // En cas d'échec
+}
+
 
 
 	/**
