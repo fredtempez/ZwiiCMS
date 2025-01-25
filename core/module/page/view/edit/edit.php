@@ -51,6 +51,29 @@
 	]); ?>
 </div>
 
+<?php
+// Données dynamiques à insérer dans le JavaScript
+$data = [
+    'translate-delete' => helper::translate('Confirmer la suppression de la page'),
+    'translate-module-delete' => helper::translate('Confirmer la suppression des données du module'),
+    'translate-none' => helper::translate('Ne pas afficher'),
+    'translate-begin' => helper::translate('Au début'),
+    'translate-after' => helper::translate('Après'),
+    'hierarchy' => json_encode($this->getHierarchy()),
+    'pages' => json_encode($module->getPageInfo()),
+    'position-initial' => $this->getData(['page', $this->getUrl(2), 'position']),
+    'current-page' => $this->getUrl(2),
+    'page-layout' => $this->getData(['user', $this->getUser('id'), 'view', 'page'])
+];
+
+// Génération du contenu JavaScript
+echo '<div id="pageEditDataContainer"';
+foreach ($data as $key => $value) {
+    echo ' data-' . htmlspecialchars($key) . '="' . htmlspecialchars($value) . '"';
+}
+echo '></div>';
+?>
+
 <!-- Champ caché pour transmettre l'onglet-->
 <?php echo template::hidden('containerSelected'); ?>
 
