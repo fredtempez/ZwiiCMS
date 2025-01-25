@@ -3,13 +3,22 @@
 ## Versions 13.6.00
 **Améliorations :**
 - Compatibilité PHP 8.3n
-- Corrections syntaxiques.
 - Rotation des fichiers journaux (plus de 4 mo et 5 archives compressées).
-- Nouvelle propriété *required* pour les template de saisie de texte obligatoire. Génération d'un repère sur le label du champ et interception du champ invalide par le navigateur qui affiche une popup.
-- Nouvelle méthode de template *number()* pour créer un champ de saisie acceptant les propriétés min, max, step et pattern.
+- Support des images vectorielles déposées dans le gestionnaire de fichier, une copie est créée dans le dossier des miniatures.
+- Ajout d'un effet de bordure autour des pages de l'installateur et de la mise à jour automatique.
+- Inversion de l'identité des utilisateurs, les noms avant les prénoms.
+- Module form 4.6, petite correction.
+- Corrections syntaxiques.
+- Paramètre lax du cookie ZWII_UI.
 
 **Corrections :**
 - Lors de l'ajout d'un nouvel utilisateur, en cas d'erreur de saisie et de validation du formulaire, le mail de confirmation n'est pas expédié.
+- Edition des pages, la mémorisation du dernier onglet s'effectue désormais à la soumisssion du formulaire. La page ne recherge plus à chaque changement d'onglet, ce qui entraînait des effets néfastes.
+- Nettoyage du code et petites corrections.
+
+**Développeurs :**
+- Nouvelle méthode de template *number()* pour créer un champ de saisie acceptant les propriétés min, max, step et pattern.
+- Nouvelle propriété *required* pour les template de saisie de texte obligatoire. Génération d'un repère sur le label du champ et interception du champ invalide par le navigateur qui affiche une popup.
 
 ## Version 13.5.02
 **Correction**
