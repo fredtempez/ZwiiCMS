@@ -120,7 +120,7 @@ class install extends common
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 				// Stockage de la langue par défaut afin d'afficher le site dans cette langue lors de l'affichage de la bannière de connexion.
 				$this->setData(['config','defaultLanguageUI', self::$i18nUI], false);
-				
+
 				// par défaut le contenu est la langue d'installation
 				$_SESSION['ZWII_SITE_CONTENT'] = self::$i18nUI;
 
@@ -268,6 +268,15 @@ class install extends common
 					$this->setData(['core', 'updateAvailable', false]);
 					// Backup du dossier Data
 					helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
+					// Activer le mode maintenance si inactif
+					if ($this->getData(['config', 'maintenance']) === false) {
+						$this->setData(['config', 'maintenance'], true);
+						// Laisser les fichier se fermer
+						usleep(500000); // 500 milliseconds
+					} else {
+						// On ne désactive pas la maintenance
+						touch(self::DATA_DIR . '.maintenance');
+					}
 					// Sauvegarde htaccess
 					if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 						$success = copy('.htaccess', '.htaccess' . '.bak');
@@ -415,6 +424,14 @@ class install extends common
 							unlink(self::DATA_DIR . '.rewrite');
 						}
 					}
+
+					// Pas de maintenance permanente, on désactive la maintenance
+					if (file_exists(self::DATA_DIR . '.maintenance') === false) {
+						// Mode maintenance
+						$this->setData(['config', 'maintenance'], false);
+					}
+					// Dans tous les cas supprimer le drapeau de maintenance
+					unlink(self::DATA_DIR . '.maintenance');
 
 					/**
 					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
