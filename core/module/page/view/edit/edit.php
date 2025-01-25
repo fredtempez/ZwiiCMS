@@ -1,6 +1,4 @@
 <?php echo template::formOpen('pageEditForm'); ?>
-	<!-- Variable transmise à TinyMCE -->
-<div id="zwii_site_content" data-variable="<?php echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
 <div class="row">
 	<div class="col1">
 		<?php echo template::button('configModulesBack', [
@@ -30,32 +28,26 @@
 		]); ?>
 	</div>
 </div>
-
 <div class="tab">
 	<?php echo template::button('pageEditContentButton', [
 		'value' => 'Contenu',
 		'class' => 'buttonTab',
-		//'href' => helper::baseUrl() . 'page/register/content/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditPositionButton', [
 		'value' => 'Menu',
 		'class' => 'buttonTab',
-		//'href' => helper::baseUrl() . 'page/register/position/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditExtensionButton', [
 		'value' => 'Extension',
 		'class' => 'buttonTab',
-		//'href' => helper::baseUrl() . 'page/register/extension/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditLayoutButton', [
 		'value' => 'Mise en page',
 		'class' => 'buttonTab',
-		//'href' => helper::baseUrl() . 'page/register/layout/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditPermissionButton', [
 		'value' => 'Permission',
 		'class' => 'buttonTab',
-		//'href' => helper::baseUrl() . 'page/register/permission/' . $this->geturl(2)
 	]); ?>
 </div>
 
