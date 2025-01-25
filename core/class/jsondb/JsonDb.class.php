@@ -165,11 +165,13 @@ class JsonDb extends \Prowebcraft\Dot
      * @throws \RuntimeException En cas d'erreur lors de la création de la sauvegarde
      * @throws \InvalidArgumentException Si le fichier contient des données JSON invalides
      */
+
     public function save(): void
     {
         if ($this->data === null) {
             throw new \RuntimeException('Tentative de sauvegarde de données nulles');
         }
+
         try {
             $encoded_data = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
@@ -190,8 +192,11 @@ class JsonDb extends \Prowebcraft\Dot
                         return;
                     }
                 }
+
+                error_log("Échec sauvegarde : longueur incorrecte ou renommage échoué (tentative " . ($attempt + 1) . ")");
             } catch (\Exception $e) {
-                // Nettoyer le fichier temporaire en cas d'exception
+                error_log('Erreur de sauvegarde : ' . $e->getMessage());
+
                 if (file_exists($temp_file)) {
                     unlink($temp_file);
                 }
@@ -200,7 +205,6 @@ class JsonDb extends \Prowebcraft\Dot
             usleep(pow(2, $attempt) * 250000);
         }
 
-        // Erreur fatale si tous les essais échouent
         throw new \RuntimeException('Échec de sauvegarde après ' . $max_attempts . ' tentatives');
     }
 }
