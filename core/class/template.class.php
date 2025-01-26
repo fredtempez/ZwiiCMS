@@ -884,6 +884,10 @@ class template
         $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
         // Début tableau
         $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
+        // Pas de tableau d'Id transmis, générer une numérotation
+        if (empty($rowsId)) {
+            $rowsId = range(0, count($body));
+        }
         // Entêtes
         if ($head) {
             // Début des entêtes
@@ -891,21 +895,17 @@ class template
             $html .= '<tr class="nodrag">';
             $i = 0;
             foreach ($head as $th) {
-                $html .= '<th class="col' . $cols[$i++] . '">' . $th . '</th>';
+                $html .= '<th id="' . $rowsId[$i] . '" class="col' . $cols[$i++] . '">' . $th . '</th>';
             }
             // Fin des entêtes
             $html .= '</tr>';
             $html .= '</thead>';
         }
-        // Pas de tableau d'Id transmis, générer une numérotation
-        if (empty($rowsId)) {
-            $rowsId = range(0, count($body));
-        }
         // Début contenu
         $j = 0;
         foreach ($body as $tr) {
             // Id de ligne pour les tableaux drag and drop
-            $html .= '<tr id="' . $rowsId[$j++] . '">';
+            $html .= '<tr>';
             $i = 0;
             foreach ($tr as $td) {
                 $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
