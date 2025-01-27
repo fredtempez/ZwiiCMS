@@ -437,7 +437,7 @@ class user extends common
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => $sent ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate('Impossible de réinitialiser le mot de passe de ce compte !'),
+				'notification' => $sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate('Le mail de réinitialisation ne peut pas être envoyé, contactez l\'administrateur'),
 				'state' => ($sent === true ? true : false),
 				'redirect' => helper::baseUrl()
 			]);

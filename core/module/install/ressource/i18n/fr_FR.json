@@ -702,5 +702,6 @@
     "Erreur de captcha": "",
     "Clé de sécurité": "",
     "Message de test": "",
-    "Clé d'authentification envoyée à votre adresse mail %s": ""
+    "Clé d'authentification envoyée à votre adresse mail %s": "",
+    "Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur": ""
 }

@@ -702,5 +702,6 @@
     "Erreur de captcha": "Captcha error",
     "Clé de sécurité": "Security key",
     "Message de test": "Test message",
-    "Clé d'authentification envoyée à votre adresse mail %s": "Authentication key sent to your email address %s"
+    "Clé d'authentification envoyée à votre adresse mail %s": "Authentication key sent to your email address %s",
+    "Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur": "The reset email could not be sent, please contact the administrator"
 }
