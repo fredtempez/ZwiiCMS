@@ -576,7 +576,7 @@ class page extends common
 					if (!is_dir(self::DATA_DIR . self::$siteContent . '/content')) {
 						mkdir(self::DATA_DIR . self::$siteContent . '/content', 0755);
 					}
-					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
+					$content = empty($this->getInput('pageEditWysiwyg', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditWysiwyg', null));
 					$this->setPage($pageId, $content, self::$siteContent);
 
 					// Met à jour le sitemap
