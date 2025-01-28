@@ -431,7 +431,9 @@ class install extends common
 						$this->setData(['config', 'maintenance', false]);
 					}
 					// Dans tous les cas supprimer le drapeau de maintenance
-					unlink(self::DATA_DIR . '.maintenance');
+					if (file_exists(self::DATA_DIR . '.maintenance')) {
+						unlink(self::DATA_DIR . '.maintenance');
+					}							
 
 					/**
 					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
