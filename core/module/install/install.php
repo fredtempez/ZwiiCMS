@@ -429,10 +429,13 @@ class install extends common
 						}
 					}
 
+					// Pas de maintenance permanente, on désactive la maintenance
 					/**
 					 * La présence du marqueur de maintenance .maintenance indique une maintenance permanente
 					 */
+
 					$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
+
 					// Dans tous les cas supprimer le drapeau de maintenance
 					if (file_exists(self::DATA_DIR . '.maintenance')) {
 						unlink(self::DATA_DIR . '.maintenance');
