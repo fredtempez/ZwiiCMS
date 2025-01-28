@@ -2,14 +2,20 @@
 
 ## Versions 13.6.00
 **Améliorations :**
+- Mise à jour
 - Compatibilité PHP 8.3n
 - Rotation des fichiers journaux (plus de 4 mo et 5 archives compressées).
 - Support des images vectorielles déposées dans le gestionnaire de fichier, une copie est créée dans le dossier des miniatures.
 - Ajout d'un effet de bordure autour des pages de l'installateur et de la mise à jour automatique.
 - Inversion de l'identité des utilisateurs, les noms avant les prénoms.
+- Réécriture de la méthode de sauvegarde de la classe JsonDB.Un fichier de données temporaire est généré afin d'éviter une écriture dans le fichier d'origine.
+- Réécriture du script de gestion des événements l'édition des pages.
 - Module form 4.6, petite correction.
-- Corrections syntaxiques.
+- Erreur de démarrage (chargement des extensions php), mise en forme de la page d'erreur.
 - Paramètre lax du cookie ZWII_UI.
+- Réinitialisation du mot de passe, nouveau libellé en cas d'erreur d'envoi de l'email.
+- Template date, corrige un bug lorsque des id de colonnes personnalisées sont passées dans le dernier paramètre.
+- Corrections syntaxiques.
 
 **Corrections :**
 - Lors de l'ajout d'un nouvel utilisateur, en cas d'erreur de saisie et de validation du formulaire, le mail de confirmation n'est pas expédié.
