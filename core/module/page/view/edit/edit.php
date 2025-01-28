@@ -119,7 +119,7 @@ echo '></div>';
 	</div>
 	<div class="row">
 		<div class="col12">
-			<?php echo template::textarea('pageEditContent', [
+			<?php echo template::textarea('editorWysiwyg', [
 				'class' => 'editorWysiwyg',
 				'value' => $this->getPage($this->getUrl(2), self::$siteContent)
 			]); ?>
