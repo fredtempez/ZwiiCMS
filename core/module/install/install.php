@@ -270,7 +270,7 @@ class install extends common
 					helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
 					// Activer le mode maintenance si inactif
 					if ($this->getData(['config', 'maintenance']) === false) {
-						$this->setData(['config', 'maintenance'], true);
+						$this->setData(['config', 'maintenance', true]);
 						// Laisser les fichier se fermer
 						usleep(500000); // 500 milliseconds
 					} else {
@@ -428,7 +428,7 @@ class install extends common
 					// Pas de maintenance permanente, on désactive la maintenance
 					if (file_exists(self::DATA_DIR . '.maintenance') === false) {
 						// Mode maintenance
-						$this->setData(['config', 'maintenance'], false);
+						$this->setData(['config', 'maintenance', false]);
 					}
 					// Dans tous les cas supprimer le drapeau de maintenance
 					unlink(self::DATA_DIR . '.maintenance');
