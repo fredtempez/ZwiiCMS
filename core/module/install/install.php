@@ -268,13 +268,17 @@ class install extends common
 					$this->setData(['core', 'updateAvailable', false]);
 					// Backup du dossier Data
 					helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
-					// Activer le mode maintenance si inactif
+					/**
+					 *  Le mode maintenance n'est pas activé
+					 *  Son état est sauvegardé pour être restauré après la mise à jour
+					 * */
 					if ($this->getData(['config', 'maintenance']) === false) {
+						// Activer le modemaintenance
 						$this->setData(['config', 'maintenance', true]);
-						// Laisser les fichier se fermer
+						// Laisser les fichiers se fermer
 						usleep(500000); // 500 milliseconds
 					} else {
-						// On ne désactive pas la maintenance
+						// La présence de ce fichier un marqueur de maintenance permanente
 						touch(self::DATA_DIR . '.maintenance');
 					}
 					// Sauvegarde htaccess
@@ -425,15 +429,14 @@ class install extends common
 						}
 					}
 
-					// Pas de maintenance permanente, on désactive la maintenance
-					if (file_exists(self::DATA_DIR . '.maintenance') === false) {
-						// Mode maintenance
-						$this->setData(['config', 'maintenance', false]);
-					}
+					/**
+					 * La présence du marqueur de maintenance .maintenance indique une maintenance permanente
+					 */
+					$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
 					// Dans tous les cas supprimer le drapeau de maintenance
 					if (file_exists(self::DATA_DIR . '.maintenance')) {
 						unlink(self::DATA_DIR . '.maintenance');
-					}							
+					}
 
 					/**
 					 * Met à jour les dictionnaires des langues depuis les nouveaux modèles installés
