@@ -1,4 +1,6 @@
 <?php echo template::formOpen('pageEditForm'); ?>
+	<!-- Variable transmise à TinyMCE -->
+<div id="zwii_site_content" data-variable="<?php echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
 <div class="row">
 	<div class="col1">
 		<?php echo template::button('configModulesBack', [
@@ -28,53 +30,34 @@
 		]); ?>
 	</div>
 </div>
+
 <div class="tab">
 	<?php echo template::button('pageEditContentButton', [
 		'value' => 'Contenu',
 		'class' => 'buttonTab',
+		//'href' => helper::baseUrl() . 'page/register/content/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditPositionButton', [
 		'value' => 'Menu',
 		'class' => 'buttonTab',
+		//'href' => helper::baseUrl() . 'page/register/position/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditExtensionButton', [
 		'value' => 'Extension',
 		'class' => 'buttonTab',
+		//'href' => helper::baseUrl() . 'page/register/extension/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditLayoutButton', [
 		'value' => 'Mise en page',
 		'class' => 'buttonTab',
+		//'href' => helper::baseUrl() . 'page/register/layout/' . $this->geturl(2)
 	]); ?>
 	<?php echo template::button('pageEditPermissionButton', [
 		'value' => 'Permission',
 		'class' => 'buttonTab',
+		//'href' => helper::baseUrl() . 'page/register/permission/' . $this->geturl(2)
 	]); ?>
 </div>
-
-<?php
-// Données dynamiques à insérer dans le JavaScript
-$data = [
-    'translate-delete' => helper::translate('Confirmer la suppression de la page'),
-    'translate-module-delete' => helper::translate('Confirmer la suppression des données du module'),
-    'translate-none' => helper::translate('Ne pas afficher'),
-    'translate-begin' => helper::translate('Au début'),
-    'translate-after' => helper::translate('Après'),
-    'hierarchy' => json_encode($this->getHierarchy()),
-    'pages' => $module->getPageInfo(),
-    'position-initial' => $this->getData(['page', $this->getUrl(2), 'position']),
-    'current-page' => $this->getUrl(2),
-    'page-layout' => $this->getData(['user', $this->getUser('id'), 'view', 'page'])
-];
-
-// Génération du contenu JavaScript
-echo '<div id="pageEditDataContainer"';
-foreach ($data as $key => $value) {
-    // Convertit explicitement les valeurs null en chaîne vide
-    $sanitizedValue = $value ?? '';
-    echo ' data-' . htmlspecialchars($key) . '="' . htmlspecialchars((string)$sanitizedValue) . '"';
-}
-echo '></div>';
-?>
 
 <!-- Champ caché pour transmettre l'onglet-->
 <?php echo template::hidden('containerSelected'); ?>
@@ -119,7 +102,7 @@ echo '></div>';
 	</div>
 	<div class="row">
 		<div class="col12">
-			<?php echo template::textarea('pageEditWysiwyg', [
+			<?php echo template::textarea('pageEditContent', [
 				'class' => 'editorWysiwyg',
 				'value' => $this->getPage($this->getUrl(2), self::$siteContent)
 			]); ?>
