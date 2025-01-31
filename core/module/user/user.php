@@ -1292,33 +1292,44 @@ class user extends common
 		if (
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
-			// Lien de réinitialisation trop vieux
-			|| $this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time()
-			// Id unique incorrecte
-			|| $this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'logout'])))
+			// Lien de réinitialisation trop vieux (24 heures)
+			or $this->getData(['user', $this->getUrl(2), 'forgot']) === null
+			or (int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time()
+			// Clé unique incorrecte
+			or $this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
 		) {
 			$this->saveLog(
 				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2) .
 				' Compte : ' . $this->getData(['user', $this->getUrl(2)]) .
-				' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time()) .
-				' Clé : ' . ($this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'forgot']))))
+				' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) === null ? 'Clé manquante' : ((int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() ? 'Temps dépassé' : 'Temps valide')) .
+				' Clé : ' . ($this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot']) ? 'Clé invalide' : 'Clé valide')
 			);
+	
+			// Message d'erreur en cas de problème de réinitialisation de mot de passe
+			$message = $this->getData(['user', $this->getUrl(2)]) === null
+				? ' Utilisateur inconnu '
+				: '';
+			$message = $this->getData(['user', $this->getUrl(2), 'forgot']) === null
+				? ' Clé manquante '
+				: $message;
+			$message = (int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time()
+				? ' Temps dépassé '
+				: $message;
+			$message = $this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
+				? ' Clé invalide '
+				: $message;
+	
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseurl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !'),
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . $message,
 				'state' => false
-				//'access' => false
 			]);
 		}
 		// Accès autorisé
 		else {
 			// Soumission du formulaire
-			if (
-				// Tous les users peuvent réinitialiser
-				// $this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
-				$this->isPost()
-			) {
+			if ($this->isPost()) {
 				// Double vérification pour le mot de passe
 				if ($this->getInput('userResetNewPassword')) {
 					// La confirmation ne correspond pas au mot de passe
@@ -1334,7 +1345,9 @@ class user extends common
 					$this->setData(['user', $this->getUrl(2), 'forgot', 0], false);
 					// Réinitialise le blocage
 					$this->setData(['user', $this->getUrl(2), 'connectFail', 0], false);
-					$this->setData(['user', $this->getUrl(2), 'connectTimeout', 0]);
+					$this->setData(['user', $this->getUrl(2), 'connectTimeout', 0], false);
+					// Sauvegarde la base manuellement
+					$this->saveDB('user');
 					// Valeurs en sortie
 					$this->addOutput([
 						'notification' => helper::translate('Nouveau mot de passe enregistré'),
