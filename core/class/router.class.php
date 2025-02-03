@@ -492,7 +492,10 @@ class core extends common
 		 */
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
-		if ($this->getData(['user'])) {
+		if (
+			is_array($this->getData(['user']))
+			&& empty($this->getData(['user'])) === false
+		) {
 			foreach ($this->getData(['user']) as $userId => $userIds) {
 				if (!is_null($this->getData(['user', $userId, 'accessUrl']))) {
 					$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
@@ -573,7 +576,6 @@ class core extends common
 				'inlineStyle' => $inlineStyle,
 				'inlineScript' => $inlineScript,
 			]);
-
 		}
 		// Importe le module
 		else {
@@ -802,8 +804,7 @@ class core extends common
 			http_response_code(404);
 			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
 			// Parcourir les espaces
-			foreach (common::$languages as $langId => $value) {
-				;
+			foreach (common::$languages as $langId => $value) {;
 				if (
 					// l'espace existe
 					is_dir(common::DATA_DIR . $langId) &&
@@ -853,25 +854,25 @@ class core extends common
 			]);
 		}
 		switch ($this->output['display']) {
-			// Layout brut
+				// Layout brut
 			case common::DISPLAY_RAW:
 				echo $this->output['content'];
 				break;
-			// Layout vide
+				// Layout vide
 			case common::DISPLAY_LAYOUT_BLANK:
 				require 'core/layout/blank.php';
 				break;
-			// Affichage en JSON
+				// Affichage en JSON
 			case common::DISPLAY_JSON:
 				header('Content-Type: application/json');
 				echo json_encode($this->output['content']);
 				break;
-			// RSS feed
+				// RSS feed
 			case common::DISPLAY_RSS:
 				header('Content-type: application/rss+xml; charset=UTF-8');
 				echo $this->output['content'];
 				break;
-			// Layout allégé
+				// Layout allégé
 			case common::DISPLAY_LAYOUT_LIGHT:
 				ob_start();
 				require 'core/layout/light.php';
@@ -882,7 +883,7 @@ class core extends common
 				$content = preg_replace('/[\t ]+/u', ' ', $content);
 				echo $content;
 				break;
-			// Layout principal
+				// Layout principal
 			case common::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				require 'core/layout/main.php';
