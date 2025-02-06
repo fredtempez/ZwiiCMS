@@ -20,7 +20,7 @@
 
 **Corrections :**
 - Lors de l'ajout d'un nouvel utilisateur, en cas d'erreur de saisie et de validation du formulaire, le mail de confirmation n'est pas expédié.
-- Edition des pages, la mémorisation du dernier onglet s'effectue désormais à la soumisssion du formulaire. La page ne recherge plus à chaque changement d'onglet, ce qui entraînait des effets néfastes.
+- Edition des pages, la mémorisation du dernier onglet s'effectue désormais à la soumission du formulaire. La page ne recharge plus à chaque changement d'onglet, ce qui entraînait des effets néfastes.
 - Nettoyage du code et petites corrections.
 
 **Développeurs :**
