@@ -179,7 +179,8 @@ if ($this->getData(['core', 'dataVersion']) < 10300) {
 	$this->setData(['config', 'searchPageId', '']);
 
 	// Mettre à jour les données des galeries
-	$hierarchy = array(); foreach ($this->getHierarchy() as $parentKey => $parentValue) {
+	$hierarchy = array();
+	foreach ($this->getHierarchy() as $parentKey => $parentValue) {
 		$hierarchy[] = $parentKey;
 		foreach ($parentValue as $childKey) {
 			$hierarchy[] = $childKey;
@@ -1110,7 +1111,7 @@ if ($this->getData(['core', 'dataVersion']) < 13101) {
 
 	// Supprime le choix du thème à l'installation
 	if (is_dir('core/module/install/ressource/themes')) {
-		$this->deleteDir('core/module/install/ressource/themes') ;
+		$this->deleteDir('core/module/install/ressource/themes');
 	}
 
 	// Mise à jour
@@ -1120,53 +1121,57 @@ if ($this->getData(['core', 'dataVersion']) < 13101) {
 // Version 1.21.00
 
 if (
-    $this->getData(['core', 'dataVersion']) < 13600
+	$this->getData(['core', 'dataVersion']) < 13600
 ) {
-    /**
-     * Renomme la clé dans la base des utilisateurs
-     */
-    if (
-        is_array($this->getData(['user']))
-        && empty($this->getData(['user'])) === false
-    ) {
-        foreach ($this->getData(['user']) as $userId => $userValue) {
-            $d = $this->getData(['user', $userId]);
-            if (isset($d['group']) && $d['group'] !== '') {
-                $position = array_search('group', array_keys($d)) + 1;
-                $l = array_merge(
-                    array_slice($d, 0, $position),
-                    ['role' => $d['group']],
-                    array_slice($d, $position)
-                );
-                unset($l['group']);
-                $this->setData(['user', $userId, $l], false);
-            }
-        }
-    }
-    $this->saveDb('user');
+	/**
+	 * Renomme la clé dans la base des utilisateurs
+	 */
+	if (
+		is_array($this->getData(['user']))
+		&& empty($this->getData(['user'])) === false
+	) {
+		foreach ($this->getData(['user']) as $userId => $userValue) {
+			$d = $this->getData(['user', $userId]);
+			if (isset($d['group']) && $d['group'] !== '') {
+				$position = array_search('group', array_keys($d)) + 1;
+				$l = array_merge(
+					array_slice($d, 0, $position),
+					['role' => $d['group']],
+					array_slice($d, $position)
+				);
+				unset($l['group']);
+				$this->setData(['user', $userId, $l], false);
+			}
+		}
+	}
+	$this->saveDb('user');
 
 
-    /**
-     * Convertit les pages et les modules
-     */
-    $languages = array_merge($this->getData(['language']));
+	/**
+	 * Convertit les pages et les modules
+	 */
+	$languages = array_merge($this->getData(['language']));
 
-    foreach ($languages as $languageId => $courseValue) {
-        // Les pages
-        $filePath = self::DATA_DIR . $languageId . '/page.json';
-        $jsonContent = file_get_contents($filePath);
-        $updatedJsonContent = str_replace('"group":', '"role":', $jsonContent);
-        if ($updatedJsonContent !== $jsonContent) {
-            file_put_contents($filePath, $updatedJsonContent);
-        }
+	foreach ($languages as $languageId => $courseValue) {
+		// Les pages
+		$filePath = self::DATA_DIR . $languageId . '/page.json';
+		if (file_exists($filePath) === true) {
+			$jsonContent = file_get_contents($filePath);
+			$updatedJsonContent = str_replace('"group":', '"role":', $jsonContent);
+			if ($updatedJsonContent !== $jsonContent) {
+				file_put_contents($filePath, $updatedJsonContent);
+			}
+		}
 
-        // Les modules
-        $filePath = self::DATA_DIR . $languageId . '/module.json';
-        $jsonContent = file_get_contents($filePath);
-        $updatedJsonContent = str_replace('"group":', '"role":', $jsonContent);
-        if ($updatedJsonContent !== $jsonContent) {
-            file_put_contents($filePath, $updatedJsonContent);
-        }
-    }
-    $this->setData(['core', 'dataVersion', 13600]);
+		// Les modules
+		$filePath = self::DATA_DIR . $languageId . '/module.json';
+		if (file_exists($filePath) === true) {
+			$jsonContent = file_get_contents($filePath);
+			$updatedJsonContent = str_replace('"group":', '"role":', $jsonContent);
+			if ($updatedJsonContent !== $jsonContent) {
+				file_put_contents($filePath, $updatedJsonContent);
+			}
+		}
+	}
+	$this->setData(['core', 'dataVersion', 13600]);
 }
