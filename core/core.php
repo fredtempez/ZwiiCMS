@@ -28,7 +28,7 @@ class common
 	const GROUP_VISITOR = 0;
 	const GROUP_MEMBER = 1;
 	const GROUP_EDITOR = 2;
-	// Groupe MODERATOR, compatibilité avec les anciens modules :
+	// Role MODERATOR, compatibilité avec les anciens modules :
 	const GROUP_MODERATOR = 2;
 	const GROUP_ADMIN = 3;
 	const SIGNATURE_ID = 1;
@@ -813,11 +813,11 @@ class common
 				// Page parent
 				$this->getData(['page', $pageId, 'parentPageId']) === ""
 				// Ignore les pages dont l'utilisateur n'a pas accès
-				and ($this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+				and ($this->getData(['page', $pageId, 'role']) === self::GROUP_VISITOR
 					or ($this->isConnected() === true
-						//and $this->getUser('group') >= $this->getData(['page', $pageId, 'group'])
+						//and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
 						// Modification qui tient compte du profil de la page
-						and ($this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
+						and ($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
 
 					)
 				)
@@ -840,14 +840,14 @@ class common
 				// Ignore les pages dont l'utilisateur n'a pas accès
 				and (
 					(
-						$this->getData(['page', $pageId, 'group']) === self::GROUP_VISITOR
+						$this->getData(['page', $pageId, 'role']) === self::GROUP_VISITOR
 						and
-						$this->getData(['page', $parentId, 'group']) === self::GROUP_VISITOR
+						$this->getData(['page', $parentId, 'role']) === self::GROUP_VISITOR
 					)
 					or (
 						$this->isConnected() === true
 						and
-						$this->getUser('group') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'group']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
+						$this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
 
 					)
 				)
@@ -1042,33 +1042,33 @@ class common
 	{
 
 		// Administrateur, toutes les permissions
-		if ($this->getUser('group') === self::GROUP_ADMIN) {
+		if ($this->getUser('role') === self::GROUP_ADMIN) {
 			return true;
-		} elseif ($this->getUser('group') <= self::GROUP_VISITOR) { // Groupe sans autorisation
+		} elseif ($this->getUser('role') <= self::GROUP_VISITOR) { // Role sans autorisation
 			return false;
 		} elseif (
-			// Groupe avec profil, consultation des autorisations sur deux clés
+			// Role avec profil, consultation des autorisations sur deux clés
 			$key1
 			&& $key2
 			&& $this->user
-			&& $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1])
-			&& array_key_exists($key2, $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]))
+			&& $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1])
+			&& array_key_exists($key2, $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]))
 		) {
-			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1, $key2]);
-			// Groupe avec profil, consultation des autorisations sur une seule clé
+			return $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1, $key2]);
+			// Role avec profil, consultation des autorisations sur une seule clé
 		} elseif (
 			$key1
 			&& $this->user
-			&& $this->getData(['profil', $this->user['group'], $this->user['profil']])
-			&& array_key_exists($key1, $this->getData(['profil', $this->user['group'], $this->user['profil']]))
+			&& $this->getData(['profil', $this->user['role'], $this->user['profil']])
+			&& array_key_exists($key1, $this->getData(['profil', $this->user['role'], $this->user['profil']]))
 		) {
-			return $this->getData(['profil', $this->user['group'], $this->user['profil'], $key1]);
+			return $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]);
 		} else {
 			// Une permission non spécifiée dans le profil est autorisée selon la valeur de $actions
 			if (class_exists($key1)) {
 				$module = new $key1;
 				if (array_key_exists($key2, $module::$actions)) {
-					return $this->getUser('group') >= $module::$actions[$key2];
+					return $this->getUser('role') >= $module::$actions[$key2];
 				}
 			}
 			return false;
@@ -1163,7 +1163,7 @@ class common
 		foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
 			if (
-				$this->getData(['page', $parentPageId, 'group']) !== 0 ||
+				$this->getData(['page', $parentPageId, 'role']) !== 0 ||
 				$this->getData(['page', $parentPageId, 'block']) === 'bar'
 			) {
 				continue;
@@ -1190,7 +1190,7 @@ class common
 			}
 			// Sous-pages
 			foreach ($childrenPageIds as $childKey) {
-				if ($this->getData(['page', $childKey, 'group']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true) {
+				if ($this->getData(['page', $childKey, 'role']) !== 0 || $this->getData(['page', $childKey, 'disable']) === true) {
 					continue;
 				}
 				// Cas de la page d'accueil ne pas dupliquer l'URL

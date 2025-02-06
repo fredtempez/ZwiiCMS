@@ -414,7 +414,7 @@ class core extends common
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
 			$this->isConnected() === true
-			and ($this->getUser('group') === common::GROUP_BANNED
+			and ($this->getUser('role') === common::GROUP_BANNED
 				or ($_SESSION['csrf'] !== $this->getData(['user', $this->getUser('id'), 'accessCsrf'])
 					and $this->getData(['config', 'connect', 'autoDisconnect']) === true)
 			)
@@ -429,7 +429,7 @@ class core extends common
 			and $this->getUrl(1) !== 'login'
 			and ($this->isConnected() === false
 				or ($this->isConnected() === true
-					and $this->getUser('group') < common::GROUP_ADMIN
+					and $this->getUser('role') < common::GROUP_ADMIN
 				)
 			)
 		) {
@@ -446,11 +446,11 @@ class core extends common
 		$access = null;
 		if ($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if (
-				$this->getData(['page', $this->getUrl(0), 'group']) === common::GROUP_VISITOR
+				$this->getData(['page', $this->getUrl(0), 'role']) === common::GROUP_VISITOR
 				or ($this->isConnected() === true
-					// and $this->getUser('group') >= $this->getData(['page', $this->getUrl(0), 'group'])
+					// and $this->getUser('role') >= $this->getData(['page', $this->getUrl(0), 'role'])
 					// Modification qui tient compte du profil de la page
-					and ($this->getUser('group') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->getUrl(0), 'group']) * 10 + $this->getData(['page', $this->getUrl(0), 'profil']))
+					and ($this->getUser('role') * 10 + $this->getUser('profil')) >= ($this->getData(['page', $this->getUrl(0), 'role']) * 10 + $this->getData(['page', $this->getUrl(0), 'profil']))
 				)
 			) {
 				$access = true;
@@ -467,7 +467,7 @@ class core extends common
 					and $this->isConnected() === false
 				) or ($this->getData(['page', $this->getUrl(0), 'disable']) === true
 					and $this->isConnected() === true
-					and $this->getUser('group') < common::GROUP_EDITOR
+					and $this->getUser('role') < common::GROUP_EDITOR
 				)
 			) {
 				$access = false;
@@ -637,7 +637,7 @@ class core extends common
 					if (
 						($module::$actions[$action] === common::GROUP_VISITOR
 							or ($this->isConnected() === true
-								and $this->getUser('group') >= $module::$actions[$action]
+								and $this->getUser('role') >= $module::$actions[$action]
 								and $this->getUser('permission', $moduleId, $action)
 							)
 						)

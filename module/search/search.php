@@ -208,7 +208,7 @@ class search extends common
 				foreach ($this->getHierarchy(null, false, null) as $parentId => $childIds) {
 					if (
 						$this->getData(['page', $parentId, 'disable']) === false &&
-						$this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
+						$this->getUser('role') >= $this->getData(['page', $parentId, 'role']) &&
 						$this->getData(['page', $parentId, 'block']) !== 'bar'
 					) {
 						$url = $parentId;
@@ -227,7 +227,7 @@ class search extends common
 						// Sous page
 						if (
 							$this->getData(['page', $childId, 'disable']) === false &&
-							$this->getUser('group') >= $this->getData(['page', $parentId, 'group']) &&
+							$this->getUser('role') >= $this->getData(['page', $parentId, 'role']) &&
 							$this->getData(['page', $parentId, 'block']) !== 'bar'
 						) {
 							$url = $childId;

@@ -122,7 +122,7 @@ class user extends common
 				[
 					'firstname' => $userFirstname,
 					'forgot' => 0,
-					'group' => $group,
+					'role' => $group,
 					'profil' => $profil,
 					'lastname' => $userLastname,
 					'pseudo' => $pseudo,
@@ -206,8 +206,8 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
-			// Groupe insuffisant
-			and ($this->getUrl('group') < self::GROUP_EDITOR)
+			// Role insuffisant
+			and ($this->getUrl('role') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -254,10 +254,10 @@ class user extends common
 				and (
 						// Impossible de s'auto-éditer
 					($this->getUser('id') === $this->getUrl(2)
-						and $this->getUrl('group') <= self::GROUP_VISITOR
+						and $this->getUrl('role') <= self::GROUP_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('group') < self::GROUP_EDITOR)
+					or ($this->getUrl('role') < self::GROUP_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -273,7 +273,7 @@ class user extends common
 				) {
 					$oldPassword = $this->getData(['user', $this->getUrl(2), 'password']);
 					// Double vérification pour le mot de passe
-					if ($this->getUser('group') < self::GROUP_ADMIN) {
+					if ($this->getUser('role') < self::GROUP_ADMIN) {
 						if ($this->getInput('userEditNewPassword')) {
 							// L'ancien mot de passe est correct
 							if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
@@ -308,15 +308,15 @@ class user extends common
 
 					// Modification du groupe
 					if (
-						$this->getUser('group') === self::GROUP_ADMIN
+						$this->getUser('role') === self::GROUP_ADMIN
 						and $this->getUrl(2) !== $this->getUser('id')
 					) {
 						$newGroup = $this->getInput('userEditGroup', helper::FILTER_INT, true);
 					} else {
-						$newGroup = $this->getData(['user', $this->getUrl(2), 'group']);
+						$newGroup = $this->getData(['user', $this->getUrl(2), 'role']);
 					}
 					// Modification de nom Prénom
-					if ($this->getUser('group') === self::GROUP_ADMIN) {
+					if ($this->getUser('role') === self::GROUP_ADMIN) {
 						$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
 						$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
 					} else {
@@ -335,7 +335,7 @@ class user extends common
 						[
 							'firstname' => $newfirstname,
 							'forgot' => 0,
-							'group' => $newGroup,
+							'role' => $newGroup,
 							'profil' => $profil,
 							'lastname' => $newlastname,
 							'pseudo' => $this->getInput('userEditPseudo', helper::FILTER_STRING_SHORT, true),
@@ -358,7 +358,7 @@ class user extends common
 						$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
 					}
 					// Redirection si retour en arrière possible
-					elseif ($this->getUser('group') === self::GROUP_ADMIN) {
+					elseif ($this->getUser('role') === self::GROUP_ADMIN) {
 						$redirect = helper::baseUrl() . 'user';
 					}
 					// Redirection normale
@@ -470,7 +470,7 @@ class user extends common
 				case "2":
 					foreach ($groupValue as $profilId => $profilValue) {
 						if ($profilId) {
-							self::$usersGroups[$groupId . $profilId] = sprintf(helper::translate('Groupe %s - Profil %s'), self::$groupPublics[$groupId], $profilValue['name']);
+							self::$usersGroups[$groupId . $profilId] = sprintf(helper::translate('Rôle %s - Profil %s'), self::$groupPublics[$groupId], $profilValue['name']);
 							$profils[$groupId . $profilId] = 0;
 						}
 					}
@@ -487,17 +487,17 @@ class user extends common
 		$userIdsLastNames = helper::arrayColumn($this->getData(['user']), 'lastname');
 		ksort($userIdsLastNames);
 		foreach ($userIdsLastNames as $userId => $userLastNames) {
-			if ($this->getData(['user', $userId, 'group'])) {
+			if ($this->getData(['user', $userId, 'role'])) {
 
 				// Compte les rôles
-				if (isset($profils[$this->getData(['user', $userId, 'group']) . $this->getData(['user', $userId, 'profil'])])) {
-					$profils[$this->getData(['user', $userId, 'group']) . $this->getData(['user', $userId, 'profil'])]++;
+				if (isset($profils[$this->getData(['user', $userId, 'role']) . $this->getData(['user', $userId, 'profil'])])) {
+					$profils[$this->getData(['user', $userId, 'role']) . $this->getData(['user', $userId, 'profil'])]++;
 				}
 
 				// Filtres
 				if ($this->isPost()) {
-					// Groupe et profils
-					$group = (string) $this->getData(['user', $userId, 'group']);
+					// Role et profils
+					$group = (string) $this->getData(['user', $userId, 'role']);
 					$profil = (string) $this->getData(['user', $userId, 'profil']);
 					$firstName = $this->getData(['user', $userId, 'firstname']);
 					$lastName = $this->getData(['user', $userId, 'lastname']);
@@ -526,10 +526,10 @@ class user extends common
 				self::$users[] = [
 					$userId,
 					sprintf('%s %s',$userLastNames, $this->getData(['user', $userId, 'firstname'])),
-					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])]),
-					empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
-					? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
-					: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
+					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])]),
+					empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
+					? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+					: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 					$this->getData(['user', $userId, 'tags']),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
@@ -574,7 +574,7 @@ class user extends common
 
 		// Ne pas supprimer un profil utililsé
 		// recherche les membres du groupe 
-		$groups = helper::arrayColumn($this->getData(['user']), 'group');
+		$groups = helper::arrayColumn($this->getData(['user']), 'role');
 		$groups = array_keys($groups, $this->getUrl(2));
 		$profilUsed = true;
 		// Stoppe si le profil est affecté
@@ -939,7 +939,7 @@ class user extends common
 	{
 		// Ne pas supprimer un profil utililsé
 		// recherche les membres du groupe 
-		$groups = helper::arrayColumn($this->getData(['user']), 'group');
+		$groups = helper::arrayColumn($this->getData(['user']), 'role');
 		$groups = array_keys($groups, $this->getUrl(2));
 		$flag = true;
 		// Stoppe si le profil est affecté
@@ -1046,7 +1046,7 @@ class user extends common
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
 					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
 					and password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password']))
-					and $this->getData(['user', $userId, 'group']) >= self::GROUP_MEMBER
+					and $this->getData(['user', $userId, 'role']) >= self::GROUP_MEMBER
 					and $captcha === true
 				) {
 
@@ -1060,7 +1060,7 @@ class user extends common
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 					if (
 						$this->getData(['config', 'maintenance'])
-						and $this->getData(['user', $userId, 'group']) < self::GROUP_ADMIN
+						and $this->getData(['user', $userId, 'role']) < self::GROUP_ADMIN
 					) {
 						$this->addOutput([
 							'notification' => helper::translate('Seul un administrateur peut se connecter lors d\'une maintenance'),
@@ -1080,7 +1080,7 @@ class user extends common
 						$authRedirect = '';
 						if (
 							$this->getData(['config', 'connect', 'mailAuth']) > 0
-							&& $this->getData(['user', $userId, 'group']) >= $this->getData(['config', 'connect', 'mailAuth'])
+							&& $this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
 						) {
 							/**
 							 * Envoi d'un email contenant une clé 
@@ -1427,9 +1427,9 @@ class user extends common
 								$item['nom'],
 								$item['prenom'],
 								self::$groups[$item['groupe']],
-								empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
-								: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
+								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
+								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								helper::filter($item['email'], helper::FILTER_MAIL),
 								$item['tags'],
@@ -1445,7 +1445,7 @@ class user extends common
 								[
 									'firstname' => $item['prenom'],
 									'forgot' => 0,
-									'group' => $item['groupe'],
+									'role' => $item['groupe'],
 									'profil' => $item['profil'],
 									'lastname' => $item['nom'],
 									'mail' => $item['email'],
@@ -1490,9 +1490,9 @@ class user extends common
 								$item['nom'],
 								$item['prenom'],
 								self::$groups[$item['groupe']],
-								empty($this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'group'])])
-								: $this->getData(['profil', $this->getData(['user', $userId, 'group']), $this->getData(['user', $userId, 'profil']), 'name']),
+								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
+								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								$item['email'],
 								$item['tags'],

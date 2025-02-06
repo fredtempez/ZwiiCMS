@@ -80,7 +80,7 @@
         <div class="block">
             <h4><?php echo helper::translate('Courriel'); ?></h4>
             <?php echo template::checkbox('formOptionMailOptionsToggle', true, 'Envoyer par mail les données saisies :', [
-                'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'group']) ||
+                'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'role']) ||
                     !empty($this->getData(['module', $this->getUrl(0), 'config', 'user'])) ||
                     !empty($this->getData(['module', $this->getUrl(0), 'config', 'mail'])),
                 'help' => 'Sélectionnez au moins un groupe, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.'
@@ -103,7 +103,7 @@
                     <div class="col4">
                         <?php echo template::select('formOptionGroup', $groupMembers, [
                             'label' => 'A tous les groupes depuis',
-                            'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'group']),
+                            'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'role']),
                         ]); ?>
                     </div>
                     <div class="col4">

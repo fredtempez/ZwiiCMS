@@ -52,18 +52,18 @@
 			(  // Propriétaire
 				($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === blog::EDIT_OWNER
 					and ($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'userId']) === $this->getUser('id')
-						or $this->getUser('group') === self::GROUP_ADMIN)
+						or $this->getUser('role') === self::GROUP_ADMIN)
 				)
 				or (
-						// Groupe
+						// Role
 					($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === self::GROUP_ADMIN
 						or $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === self::GROUP_EDITOR)
-					and $this->getUser('group') >= $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent'])
+					and $this->getUser('role') >= $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent'])
 				)
 				or (
 					// Tout le monde
 					$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'editConsent']) === blog::EDIT_ALL
-					and $this->getUser('group') >= blog::$actions['config']
+					and $this->getUser('role') >= blog::$actions['config']
 				)
 			)
 		): ?>

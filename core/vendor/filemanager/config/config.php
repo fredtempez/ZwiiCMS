@@ -24,7 +24,7 @@ $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
 
 // Lecture les droits
 if (!is_null($u) && !is_null($g) && !is_null($userId)) {
-	$group = $u['user'][$userId]['group'];
+	$group = $u['user'][$userId]['role'];
 	switch ($group) {
 		case 3:
 			// Accès admin

@@ -23,7 +23,7 @@ class blog extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	const EDIT_OWNER = 'owner';
-	const EDIT_GROUP = 'group';
+	const EDIT_GROUP = 'role';
 	const EDIT_ALL = 'all';
 
 	public static $actions = [
@@ -112,7 +112,7 @@ class blog extends common
 	// Permissions d'un article
 	public static $articleConsent = [
 		self::EDIT_ALL => 'Tous les groupes',
-		self::EDIT_GROUP => 'Groupe du propriétaire',
+		self::EDIT_GROUP => 'Rôle du propriétaire',
 		self::EDIT_OWNER => 'Propriétaire'
 	];
 
@@ -259,7 +259,7 @@ class blog extends common
 			$this->isPost()
 		) {
 			// Modification de l'userId
-			if ($this->getUser('group') === self::GROUP_ADMIN) {
+			if ($this->getUser('role') === self::GROUP_ADMIN) {
 				$newuserid = $this->getInput('blogAddUserId', helper::FILTER_STRING_SHORT, true);
 			} else {
 				$newuserid = $this->getUser('id');
@@ -284,7 +284,7 @@ class blog extends common
 					'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'editConsent' => $this->getInput('blogAddConsent') === self::EDIT_GROUP ? $this->getUser('group') : $this->getInput('blogAddConsent'),
+					'editConsent' => $this->getInput('blogAddConsent') === self::EDIT_GROUP ? $this->getUser('role') : $this->getInput('blogAddConsent'),
 					'commentMaxlength' => $this->getInput('blogAddCommentMaxlength'),
 					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
@@ -493,13 +493,13 @@ class blog extends common
 				( // Propriétaire
 					$this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent']) === self::EDIT_OWNER
 					and ($this->getData(['module', $this->getUrl(0), 'posts', $value, 'userId']) === $this->getUser('id')
-						or $this->getUser('group') === self::GROUP_ADMIN)
+						or $this->getUser('role') === self::GROUP_ADMIN)
 				)
 
 				or (
-					// Groupe
+					// Role
 					$this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent']) !== self::EDIT_OWNER
-					and $this->getUser('group') >= $this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent'])
+					and $this->getUser('role') >= $this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent'])
 				)
 				or (
 					// Tout le monde
@@ -655,7 +655,7 @@ class blog extends common
 				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
-				if ($this->getUser('group') === self::GROUP_ADMIN) {
+				if ($this->getUser('role') === self::GROUP_ADMIN) {
 					$newuserid = $this->getInput('blogEditUserId', helper::FILTER_STRING_SHORT, true);
 				} else {
 					$newuserid = $this->getUser('id');
@@ -683,7 +683,7 @@ class blog extends common
 						'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 						'userId' => $newuserid,
-						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('group') : $this->getInput('blogEditConsent'),
+						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('role') : $this->getInput('blogEditConsent'),
 						'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
 						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
 						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),
@@ -707,10 +707,10 @@ class blog extends common
 			ksort(self::$users);
 			foreach (self::$users as $userId => &$userFirstname) {
 				// Les membres ne sont pas éditeurs, les exclure de la liste
-				if ($this->getData(['user', $userId, 'group']) < self::GROUP_EDITOR) {
+				if ($this->getData(['user', $userId, 'role']) < self::GROUP_EDITOR) {
 					unset(self::$users[$userId]);
 				}
-				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' . self::$groupEdits[$this->getData(['user', $userId, 'group'])] . ')';
+				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' . self::$groupEdits[$this->getData(['user', $userId, 'role'])] . ')';
 			}
 			unset($userFirstname);
 			// Valeurs en sortie
@@ -783,7 +783,7 @@ class blog extends common
 						$to = [];
 						// Liste des destinataires
 						foreach ($this->getData(['user']) as $userId => $user) {
-							if ($user['group'] >= $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentGroupNotification'])) {
+							if ($user['role'] >= $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentGroupNotification'])) {
 								$to[] = $user['mail'];
 								$firstname[] = $user['firstname'];
 								$lastname[] = $user['lastname'];

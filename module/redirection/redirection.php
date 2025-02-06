@@ -59,7 +59,7 @@ class redirection extends common
 		// Message si l'utilisateur peut éditer la page
 		if (
 			$this->isConnected() === true
-			&& $this->getUser('group') >= self::GROUP_EDITOR
+			&& $this->getUser('role') >= self::GROUP_EDITOR
 			&& $this->getUrl(1) !== 'force'
 		) {
 			// Valeurs en sortie

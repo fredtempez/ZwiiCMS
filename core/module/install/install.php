@@ -151,7 +151,7 @@ class install extends common
 					[
 						'firstname' => $userFirstname,
 						'forgot' => 0,
-						'group' => self::GROUP_ADMIN,
+						'role' => self::GROUP_ADMIN,
 						'profil' => 0,
 						'lastname' => $userLastname,
 						'pseudo' => 'Admin',

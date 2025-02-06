@@ -28,7 +28,7 @@
                         </div>
                         <div class="col12">
                             <?php echo template::select('profilAddGroup', user::$groupProfils, [
-                                'label' => 'Groupe associé',
+                                'label' => 'Rôle associé',
                                 'selected' => $this->getUrl(2)
                             ]); ?>
                         </div>

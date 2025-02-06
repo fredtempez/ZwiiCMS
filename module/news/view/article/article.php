@@ -42,7 +42,7 @@
 			$this->isConnected() === true
 			and
 			(  // Propriétaire
-				($this->getUser('group') === self::GROUP_ADMIN)
+				($this->getUser('role') === self::GROUP_ADMIN)
 			)
 		): ?>
 			<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/edit/' . $this->getUrl(1); ?>">

@@ -1,7 +1,7 @@
 <?php echo template::formOpen('userEditForm'); ?>
 <div class="row">
 	<div class="col1">
-		<?php if ($this->getUser('group') === self::GROUP_ADMIN): ?>
+		<?php if ($this->getUser('role') === self::GROUP_ADMIN): ?>
 			<?php echo template::button('userEditBack', [
 				'class' => 'buttonGrey',
 				'href' => helper::baseUrl() . 'user',
@@ -29,7 +29,7 @@
 				<div class="col6">
 					<?php echo template::text('userEditFirstname', [
 						'autocomplete' => 'off',
-						'disabled' => $this->getUser('group') > self::GROUP_EDITOR ? false : true,
+						'disabled' => $this->getUser('role') > self::GROUP_EDITOR ? false : true,
 						'label' => 'Prénom',
 						'value' => $this->getData(['user', $this->getUrl(2), 'firstname'])
 					]); ?>
@@ -37,7 +37,7 @@
 				<div class="col6">
 					<?php echo template::text('userEditLastname', [
 						'autocomplete' => 'off',
-						'disabled' => $this->getUser('group') > self::GROUP_EDITOR ? false : true,
+						'disabled' => $this->getUser('role') > self::GROUP_EDITOR ? false : true,
 						'label' => 'Nom',
 						'value' => $this->getData(['user', $this->getUrl(2), 'lastname'])
 					]); ?>
@@ -77,7 +77,7 @@
 				<div class="col12">
 				<?php echo template::text('userEditTags', [
 						'label' => 'Étiquettes',
-						'disabled' => $this->getUser('group') > self::GROUP_EDITOR ? false : true,
+						'disabled' => $this->getUser('role') > self::GROUP_EDITOR ? false : true,
 						'value' => $this->getData(['user', $this->getUrl(2), 'tags']),
 						'help' => 'Les étiquettes sont séparées par des espaces'
 					]); ?>
@@ -99,7 +99,7 @@
 			]); ?>
 			<?php
 			// Les admins ont le pouvoir de forcer le changement de mot de passe
-			if ($this->getUser('group') < self::GROUP_ADMIN): ?>
+			if ($this->getUser('role') < self::GROUP_ADMIN): ?>
 				<?php echo template::password('userEditOldPassword', [
 					'autocomplete' => 'new-password',
 					// remplace 'off' pour éviter le pré remplissage auto
@@ -125,16 +125,16 @@
 			</h4>
 			<div class="row">
 				<div class="col12">
-					<?php if ($this->getUser('group') === self::GROUP_ADMIN): ?>
+					<?php if ($this->getUser('role') === self::GROUP_ADMIN): ?>
 						<?php echo template::select('userEditGroup', self::$groupEdits, [
 							'disabled' => ($this->getUrl(2) === $this->getUser('id')),
 							'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre groupe.' : ''),
-							'label' => 'Groupe',
-							'selected' => $this->getData(['user', $this->getUrl(2), 'group']),
+							'label' => 'Rôle',
+							'selected' => $this->getData(['user', $this->getUrl(2), 'role']),
 						]); ?>
 					<?php else: ?>
 						<?php echo template::hidden('userEditGroup', [
-							'value' => $this->getData(['user', $this->getUrl(2), 'group'])
+							'value' => $this->getData(['user', $this->getUrl(2), 'role'])
 						]); ?>
 					<?php endif; ?>
 				</div>
@@ -143,14 +143,14 @@
 						<?php echo template::select('userEditProfil' . self::GROUP_MEMBER, user::$userProfils[self::GROUP_MEMBER], [
 							'label' => 'Profil',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'profil']),
-							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN,
+							'disabled' => $this->getUser('role') !== self::GROUP_ADMIN,
 						]); ?>
 					</div>
 					<div class="userEditGroupProfil" id="userEditGroupProfil<?php echo self::GROUP_EDITOR; ?>">
 						<?php echo template::select('userEditProfil' . self::GROUP_EDITOR, user::$userProfils[self::GROUP_EDITOR], [
 							'label' => 'Profil',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'profil']),
-							'disabled' => $this->getUser('group') !== self::GROUP_ADMIN,
+							'disabled' => $this->getUser('role') !== self::GROUP_ADMIN,
 						]); ?>
 					</div>
 				</div>

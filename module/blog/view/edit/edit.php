@@ -89,7 +89,7 @@
 					<?php echo template::select('blogEditUserId', blog::$users, [
 						'label' => 'Auteur',
 						'selected' => $this->getUser('id'),
-						'disabled' => $this->getUser('group') !== self::GROUP_ADMIN ? true : false
+						'disabled' => $this->getUser('role') !== self::GROUP_ADMIN ? true : false
 					]); ?>
 				</div>
 				<div class="col4">
