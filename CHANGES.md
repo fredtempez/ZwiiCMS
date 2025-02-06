@@ -9,7 +9,7 @@
 - Support des images vectorielles déposées dans le gestionnaire de fichier, une copie est créée dans le dossier des miniatures.
 - Ajout d'un effet de bordure autour des pages de l'installateur et de la mise à jour automatique.
 - Inversion de l'identité des utilisateurs, les noms avant les prénoms.
-- Réécriture de la méthode de sauvegarde de la classe JsonDB.Un fichier de données temporaire est généré afin d'éviter une écriture dans le fichier d'origine.
+- Réécriture de la méthode de sauvegarde de la classe JsonDB. Un fichier de données temporaire est généré afin d'éviter une écriture dans le fichier d'origine.
 - Amélioration du script de gestion des événements l'édition des pages.
 - Erreur de démarrage (chargement des extensions php), mise en forme de la page d'erreur.
 - Paramètre lax du cookie ZWII_UI.
