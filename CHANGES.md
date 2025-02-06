@@ -10,8 +10,7 @@
 - Ajout d'un effet de bordure autour des pages de l'installateur et de la mise à jour automatique.
 - Inversion de l'identité des utilisateurs, les noms avant les prénoms.
 - Réécriture de la méthode de sauvegarde de la classe JsonDB.Un fichier de données temporaire est généré afin d'éviter une écriture dans le fichier d'origine.
-- Réécriture du script de gestion des événements l'édition des pages.
-- Module form 4.6, petite correction.
+- Amélioration du script de gestion des événements l'édition des pages.
 - Erreur de démarrage (chargement des extensions php), mise en forme de la page d'erreur.
 - Paramètre lax du cookie ZWII_UI.
 - Réinitialisation du mot de passe, nouveau libellé en cas d'erreur d'envoi de l'email.
@@ -22,6 +21,7 @@
 - Lors de l'ajout d'un nouvel utilisateur, en cas d'erreur de saisie et de validation du formulaire, le mail de confirmation n'est pas expédié.
 - Edition des pages, la mémorisation du dernier onglet s'effectue désormais à la soumission du formulaire. La page ne recharge plus à chaque changement d'onglet, ce qui entraînait des effets néfastes.
 - Nettoyage du code et petites corrections.
+- Module form 4.6, petite correction.
 
 **Développeurs :**
 - Nouvelle méthode de template *number()* pour créer un champ de saisie acceptant les propriétés min, max, step et pattern.
