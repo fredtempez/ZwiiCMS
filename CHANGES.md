@@ -2,8 +2,9 @@
 
 ## Versions 13.6.00
 **Améliorations :**
-- Mise à jour
+- Les groupes d'utilisateurs deviennent des rôles.
 - Compatibilité PHP 8.3n
+- Durcissement de la sécurité lors de la réinitialisation du mot de passe.
 - Rotation des fichiers journaux (plus de 4 mo et 5 archives compressées).
 - Support des images vectorielles déposées dans le gestionnaire de fichier, une copie est créée dans le dossier des miniatures.
 - Ajout d'un effet de bordure autour des pages de l'installateur et de la mise à jour automatique.
