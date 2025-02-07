@@ -462,7 +462,7 @@ class form extends common
 					$singleuser !== '' ||
 					$singlemail !== '')
 			) {
-				// Utilisateurs dans le groupe
+				// Utilisateurs dans le rôle
 				$to = [];
 				if ($role > 0) {
 					foreach ($this->getData(['user']) as $userId => $user) {

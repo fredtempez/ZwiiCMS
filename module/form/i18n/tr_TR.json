@@ -41,7 +41,7 @@
     "Supprimer cet enregistrement ?": "Bu kayıt silinsin mi?",
     "Supprimer tous les enregistrements ?": "Tüm kayıtlar silinsin mi?",
     "Sélection": "Seçim",
-    "Sélectionnez au moins un groupe, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.": "En az bir grup, bir kullanıcı seçin veya bir e-posta girin. Sunucunuz posta göndermeye izin vermelidir.",
+    "Sélectionnez au moins un rôle, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.": "En az bir grup, bir kullanıcı seçin veya bir e-posta girin. Sunucunuz posta göndermeye izin vermelidir.",
     "Type de signature": "İmza türü",
     "Une colonne": "Bir sütun",
     "Validation du formulaire": "Form doğrulama",

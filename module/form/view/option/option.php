@@ -83,7 +83,7 @@
                 'checked' => (bool) $this->getData(['module', $this->getUrl(0), 'config', 'role']) ||
                     !empty($this->getData(['module', $this->getUrl(0), 'config', 'user'])) ||
                     !empty($this->getData(['module', $this->getUrl(0), 'config', 'mail'])),
-                'help' => 'Sélectionnez au moins un groupe, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.'
+                'help' => 'Sélectionnez au moins un rôle, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.'
             ]); ?>
             <div id="formOptionMailOptions" class="displayNone">
                 <div class="row">

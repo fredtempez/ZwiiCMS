@@ -41,7 +41,7 @@
     "Supprimer cet enregistrement ?": "Delete this recording?",
     "Supprimer tous les enregistrements ?": "Delete all recordings?",
     "Sélection": "Select",
-    "Sélectionnez au moins un groupe, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.": "Select at least one group, a user or enter an email. Your server must allow email shipments.",
+    "Sélectionnez au moins un rôle, un utilisateur ou saisissez un email. Votre serveur doit autoriser les envois de mail.": "Select at least one group, a user or enter an email. Your server must allow email shipments.",
     "Type de signature": "Type de signature",
     "Une colonne": "A column",
     "Validation du formulaire": "Form validation",
