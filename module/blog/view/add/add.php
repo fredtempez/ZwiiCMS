@@ -98,7 +98,7 @@
 						<?php echo template::select('blogAddConsent', blog::$articleConsent  , [
 							'label' => 'Édition - Suppression',
 							'selected' => blog::EDIT_ALL,
-							'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
+							'help' => 'Les utilisateurs des rôles supérieurs accèdent à l\'article sans restriction'
 						]); ?>
 					</div>
 				</div>

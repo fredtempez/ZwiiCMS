@@ -41,7 +41,7 @@
 						<?php echo template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$groupNews), [
 							'label' => 'Validation par clé ⚠️',
 							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
-							'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le groupe sélectionné et les groupes supérieurs.'
+							'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le groupe sélectionné et les rôles supérieurs.'
 						]); ?>
 					</div>
 					<div class="col3 verticalAlignBottom">

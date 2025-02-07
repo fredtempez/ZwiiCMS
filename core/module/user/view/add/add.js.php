@@ -38,7 +38,7 @@ $(document).ready(function () {
 	});
 
 	/**
-	 * Droits des groupes
+	 * Droits des rôles
 	 */
 	$("#userAddGroup").on("change", function () {
 		$(".userAddGroupProfil").hide();

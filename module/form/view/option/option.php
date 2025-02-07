@@ -102,7 +102,7 @@
                 <div class="row">
                     <div class="col4">
                         <?php echo template::select('formOptionGroup', $groupMembers, [
-                            'label' => 'A tous les groupes depuis',
+                            'label' => 'A tous les rôles depuis',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'role']),
                         ]); ?>
                     </div>

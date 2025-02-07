@@ -104,7 +104,7 @@
 					<?php echo template::select('blogEditConsent', blog::$articleConsent, [
 						'label' => 'Édition - Suppression',
 						'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? blog::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent']),
-						'help' => 'Les utilisateurs des groupes supérieurs accèdent à l\'article sans restriction'
+						'help' => 'Les utilisateurs des rôles supérieurs accèdent à l\'article sans restriction'
 					]); ?>
 				</div>
 			</div>

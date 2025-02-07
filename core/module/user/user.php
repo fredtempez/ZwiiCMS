@@ -455,7 +455,7 @@ class user extends common
 	 */
 	public function index()
 	{
-		// Liste des groupes et des profils
+		// Liste des rôles et des profils
 		$usersGroups = $this->getData(['profil']);
 		foreach ($usersGroups as $groupId => $groupValue) {
 			switch ($groupId) {
@@ -567,7 +567,7 @@ class user extends common
 	}
 
 	/**
-	 * Table des groupes
+	 * Table des rôles
 	 */
 	public function profil()
 	{
@@ -609,7 +609,7 @@ class user extends common
 				$groupId == self::GROUP_MEMBER ||
 				$groupId == self::GROUP_EDITOR
 			) {
-				// Enumérer les sous groupes MEMBER et MODERATOR
+				// Enumérer les sous rôles MEMBER et MODERATOR
 				foreach ($groupData as $profilId => $profilData) {
 					self::$userGroups[$groupId . '.' . $profilId] = [
 						$groupId . '-' . $profilId,
@@ -634,7 +634,7 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => helper::translate('Profils des groupes'),
+			'title' => helper::translate('Profils des rôles'),
 			'view' => 'profil'
 		]);
 	}

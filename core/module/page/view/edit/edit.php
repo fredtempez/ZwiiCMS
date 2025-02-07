@@ -361,7 +361,7 @@
 							<?php echo template::select('pageEditGroup', self::$groupPublics, [
 								'label' => 'Rôle minimal pour accéder à la page',
 								'selected' => $this->getData(['page', $this->getUrl(2), 'role']),
-								'help' => 'Les groupes de niveau supérieur accèdent à la page.'
+								'help' => 'Les rôles de niveau supérieur accèdent à la page.'
 							]); ?>
 						</div>
 						<div class="col6">
