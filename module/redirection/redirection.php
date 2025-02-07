@@ -21,8 +21,8 @@ class redirection extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
-		'config' => self::GROUP_EDITOR,
-		'index' => self::GROUP_VISITOR
+		'config' => self::ROLE_EDITOR,
+		'index' => self::ROLE_VISITOR
 	];
 
 
@@ -59,7 +59,7 @@ class redirection extends common
 		// Message si l'utilisateur peut éditer la page
 		if (
 			$this->isConnected() === true
-			&& $this->getUser('role') >= self::GROUP_EDITOR
+			&& $this->getUser('role') >= self::ROLE_EDITOR
 			&& $this->getUrl(1) !== 'force'
 		) {
 			// Valeurs en sortie

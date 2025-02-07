@@ -18,20 +18,20 @@ class config extends common
 {
 
 	public static $actions = [
-		'backup' => self::GROUP_ADMIN,
-		'copyBackups' => self::GROUP_ADMIN,
-		'delBackups' => self::GROUP_ADMIN,
-		'configMetaImage' => self::GROUP_ADMIN,
-		'sitemap' => self::GROUP_ADMIN,
-		'index' => self::GROUP_ADMIN,
-		'restore' => self::GROUP_ADMIN,
-		'updateBaseUrl' => self::GROUP_ADMIN,
-		'script' => self::GROUP_ADMIN,
-		'logReset' => self::GROUP_ADMIN,
-		'logDownload' => self::GROUP_ADMIN,
-		'blacklistReset' => self::GROUP_ADMIN,
-		'blacklistDownload' => self::GROUP_ADMIN,
-		'testmail' => self::GROUP_ADMIN,
+		'backup' => self::ROLE_ADMIN,
+		'copyBackups' => self::ROLE_ADMIN,
+		'delBackups' => self::ROLE_ADMIN,
+		'configMetaImage' => self::ROLE_ADMIN,
+		'sitemap' => self::ROLE_ADMIN,
+		'index' => self::ROLE_ADMIN,
+		'restore' => self::ROLE_ADMIN,
+		'updateBaseUrl' => self::ROLE_ADMIN,
+		'script' => self::ROLE_ADMIN,
+		'logReset' => self::ROLE_ADMIN,
+		'logDownload' => self::ROLE_ADMIN,
+		'blacklistReset' => self::ROLE_ADMIN,
+		'blacklistDownload' => self::ROLE_ADMIN,
+		'testmail' => self::ROLE_ADMIN,
 	];
 
 	public static $timezones = [

@@ -20,19 +20,19 @@ class language extends common
 	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13/';
 
 	public static $actions = [
-		'index' => self::GROUP_ADMIN,
-		'copy' => self::GROUP_ADMIN,
-		'add' => self::GROUP_ADMIN,
+		'index' => self::ROLE_ADMIN,
+		'copy' => self::ROLE_ADMIN,
+		'add' => self::ROLE_ADMIN,
 		// Ajouter une langue de contenu
-		'edit' => self::GROUP_ADMIN,
+		'edit' => self::ROLE_ADMIN,
 		// Éditer une langue de l'UI
-		'locale' => self::GROUP_ADMIN,
+		'locale' => self::ROLE_ADMIN,
 		// Éditer une langue de contenu
-		'delete' => self::GROUP_ADMIN,
+		'delete' => self::ROLE_ADMIN,
 		// Effacer une langue de contenu ou de l'interface
-		'content' => self::GROUP_VISITOR,
-		'update' => self::GROUP_ADMIN,
-		'default' => self::GROUP_ADMIN
+		'content' => self::ROLE_VISITOR,
+		'update' => self::ROLE_ADMIN,
+		'default' => self::ROLE_ADMIN
 	];
 
 	const PAGINATION = '20';

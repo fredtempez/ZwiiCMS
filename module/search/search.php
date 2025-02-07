@@ -25,8 +25,8 @@ class search extends common
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
 	public static $actions = [
-		'index' => self::GROUP_VISITOR,
-		'config' => self::GROUP_EDITOR
+		'index' => self::ROLE_VISITOR,
+		'config' => self::ROLE_EDITOR
 	];
 
 	// Variables pour l'affichage des résultats

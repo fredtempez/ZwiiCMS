@@ -89,7 +89,7 @@
 					<?php echo template::select('blogEditUserId', blog::$users, [
 						'label' => 'Auteur',
 						'selected' => $this->getUser('id'),
-						'disabled' => $this->getUser('role') !== self::GROUP_ADMIN ? true : false
+						'disabled' => $this->getUser('role') !== self::ROLE_ADMIN ? true : false
 					]); ?>
 				</div>
 				<div class="col4">
@@ -103,7 +103,7 @@
 				<div class="col4">
 					<?php echo template::select('blogEditConsent', blog::$articleConsent, [
 						'label' => 'Édition - Suppression',
-						'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? blog::EDIT_GROUP : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent']),
+						'selected' => is_numeric($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent'])) ? blog::EDIT_ROLE : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'editConsent']),
 						'help' => 'Les utilisateurs des rôles supérieurs accèdent à l\'article sans restriction'
 					]); ?>
 				</div>

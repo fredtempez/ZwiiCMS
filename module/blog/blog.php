@@ -23,21 +23,21 @@ class blog extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	const EDIT_OWNER = 'owner';
-	const EDIT_GROUP = 'role';
+	const EDIT_ROLE = 'role';
 	const EDIT_ALL = 'all';
 
 	public static $actions = [
-		'add' => self::GROUP_EDITOR,
-		'comment' => self::GROUP_EDITOR,
-		'commentApprove' => self::GROUP_EDITOR,
-		'commentDelete' => self::GROUP_EDITOR,
-		'commentDeleteAll' => self::GROUP_EDITOR,
-		'config' => self::GROUP_EDITOR,
-		'option' => self::GROUP_EDITOR,
-		'delete' => self::GROUP_EDITOR,
-		'edit' => self::GROUP_EDITOR,
-		'index' => self::GROUP_VISITOR,
-		'rss' => self::GROUP_VISITOR
+		'add' => self::ROLE_EDITOR,
+		'comment' => self::ROLE_EDITOR,
+		'commentApprove' => self::ROLE_EDITOR,
+		'commentDelete' => self::ROLE_EDITOR,
+		'commentDeleteAll' => self::ROLE_EDITOR,
+		'config' => self::ROLE_EDITOR,
+		'option' => self::ROLE_EDITOR,
+		'delete' => self::ROLE_EDITOR,
+		'edit' => self::ROLE_EDITOR,
+		'index' => self::ROLE_VISITOR,
+		'rss' => self::ROLE_VISITOR
 	];
 
 	public static $articles = [];
@@ -112,7 +112,7 @@ class blog extends common
 	// Permissions d'un article
 	public static $articleConsent = [
 		self::EDIT_ALL => 'Tous les rôles',
-		self::EDIT_GROUP => 'Rôle du propriétaire',
+		self::EDIT_ROLE => 'Rôle du propriétaire',
 		self::EDIT_OWNER => 'Propriétaire'
 	];
 
@@ -259,7 +259,7 @@ class blog extends common
 			$this->isPost()
 		) {
 			// Modification de l'userId
-			if ($this->getUser('role') === self::GROUP_ADMIN) {
+			if ($this->getUser('role') === self::ROLE_ADMIN) {
 				$newuserid = $this->getInput('blogAddUserId', helper::FILTER_STRING_SHORT, true);
 			} else {
 				$newuserid = $this->getUser('id');
@@ -284,7 +284,7 @@ class blog extends common
 					'state' => $this->getInput('blogAddState', helper::FILTER_BOOLEAN),
 					'title' => $this->getInput('blogAddTitle', helper::FILTER_STRING_SHORT, true),
 					'userId' => $newuserid,
-					'editConsent' => $this->getInput('blogAddConsent') === self::EDIT_GROUP ? $this->getUser('role') : $this->getInput('blogAddConsent'),
+					'editConsent' => $this->getInput('blogAddConsent') === self::EDIT_ROLE ? $this->getUser('role') : $this->getInput('blogAddConsent'),
 					'commentMaxlength' => $this->getInput('blogAddCommentMaxlength'),
 					'commentApproved' => $this->getInput('blogAddCommentApproved', helper::FILTER_BOOLEAN),
 					'commentClose' => $this->getInput('blogAddCommentClose', helper::FILTER_BOOLEAN),
@@ -493,7 +493,7 @@ class blog extends common
 				( // Propriétaire
 					$this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent']) === self::EDIT_OWNER
 					and ($this->getData(['module', $this->getUrl(0), 'posts', $value, 'userId']) === $this->getUser('id')
-						or $this->getUser('role') === self::GROUP_ADMIN)
+						or $this->getUser('role') === self::ROLE_ADMIN)
 				)
 
 				or (
@@ -655,7 +655,7 @@ class blog extends common
 				$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 				$this->isPost()
 			) {
-				if ($this->getUser('role') === self::GROUP_ADMIN) {
+				if ($this->getUser('role') === self::ROLE_ADMIN) {
 					$newuserid = $this->getInput('blogEditUserId', helper::FILTER_STRING_SHORT, true);
 				} else {
 					$newuserid = $this->getUser('id');
@@ -683,7 +683,7 @@ class blog extends common
 						'publishedOn' => $this->getInput('blogEditPublishedOn', helper::FILTER_DATETIME, true),
 						'state' => $this->getInput('blogEditState', helper::FILTER_BOOLEAN),
 						'userId' => $newuserid,
-						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_GROUP ? $this->getUser('role') : $this->getInput('blogEditConsent'),
+						'editConsent' => $this->getInput('blogEditConsent') === self::EDIT_ROLE ? $this->getUser('role') : $this->getInput('blogEditConsent'),
 						'commentMaxlength' => $this->getInput('blogEditCommentMaxlength'),
 						'commentApproved' => $this->getInput('blogEditCommentApproved', helper::FILTER_BOOLEAN),
 						'commentClose' => $this->getInput('blogEditCommentClose', helper::FILTER_BOOLEAN),
@@ -707,7 +707,7 @@ class blog extends common
 			ksort(self::$users);
 			foreach (self::$users as $userId => &$userFirstname) {
 				// Les membres ne sont pas éditeurs, les exclure de la liste
-				if ($this->getData(['user', $userId, 'role']) < self::GROUP_EDITOR) {
+				if ($this->getData(['user', $userId, 'role']) < self::ROLE_EDITOR) {
 					unset(self::$users[$userId]);
 				}
 				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' . self::$roleEdits[$this->getData(['user', $userId, 'role'])] . ')';

@@ -18,10 +18,10 @@ class install extends common
 {
 
 	public static $actions = [
-		'index' => self::GROUP_VISITOR,
-		"postinstall" => self::GROUP_VISITOR,
-		'steps' => self::GROUP_ADMIN,
-		'update' => self::GROUP_ADMIN
+		'index' => self::ROLE_VISITOR,
+		"postinstall" => self::ROLE_VISITOR,
+		'steps' => self::ROLE_ADMIN,
+		'update' => self::ROLE_ADMIN
 	];
 
 	// Type de proxy
@@ -151,7 +151,7 @@ class install extends common
 					[
 						'firstname' => $userFirstname,
 						'forgot' => 0,
-						'role' => self::GROUP_ADMIN,
+						'role' => self::ROLE_ADMIN,
 						'profil' => 0,
 						'lastname' => $userLastname,
 						'pseudo' => 'Admin',

@@ -19,12 +19,12 @@ class slider extends common
 {
 
 	public static $actions = [
-		'config' => self::GROUP_MODERATOR,
-		'update' => self::GROUP_MODERATOR,
-		'theme' => self::GROUP_MODERATOR,
-		'delete' => self::GROUP_MODERATOR,
-		'dirs' => self::GROUP_MODERATOR,
-		'index' => self::GROUP_VISITOR
+		'config' => self::ROLE_MODERATOR,
+		'update' => self::ROLE_MODERATOR,
+		'theme' => self::ROLE_MODERATOR,
+		'delete' => self::ROLE_MODERATOR,
+		'dirs' => self::ROLE_MODERATOR,
+		'index' => self::ROLE_VISITOR
 	];
 
 	const VERSION = '7.3';

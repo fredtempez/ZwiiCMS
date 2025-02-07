@@ -17,21 +17,21 @@ class user extends common
 {
 
 	public static $actions = [
-		'add' => self::GROUP_ADMIN,
-		'delete' => self::GROUP_ADMIN,
-		'import' => self::GROUP_ADMIN,
-		'index' => self::GROUP_ADMIN,
-		'template' => self::GROUP_ADMIN,
-		'edit' => self::GROUP_MEMBER,
-		'logout' => self::GROUP_MEMBER,
-		'forgot' => self::GROUP_VISITOR,
-		'login' => self::GROUP_VISITOR,
-		'auth' => self::GROUP_VISITOR,
-		'reset' => self::GROUP_VISITOR,
-		'profil' => self::GROUP_ADMIN,
-		'profilEdit' => self::GROUP_ADMIN,
-		'profilAdd' => self::GROUP_ADMIN,
-		'profilDelete' => self::GROUP_ADMIN,
+		'add' => self::ROLE_ADMIN,
+		'delete' => self::ROLE_ADMIN,
+		'import' => self::ROLE_ADMIN,
+		'index' => self::ROLE_ADMIN,
+		'template' => self::ROLE_ADMIN,
+		'edit' => self::ROLE_MEMBER,
+		'logout' => self::ROLE_MEMBER,
+		'forgot' => self::ROLE_VISITOR,
+		'login' => self::ROLE_VISITOR,
+		'auth' => self::ROLE_VISITOR,
+		'reset' => self::ROLE_VISITOR,
+		'profil' => self::ROLE_ADMIN,
+		'profilEdit' => self::ROLE_ADMIN,
+		'profilAdd' => self::ROLE_ADMIN,
+		'profilDelete' => self::ROLE_ADMIN,
 	];
 
 	public static $users = [];
@@ -66,8 +66,8 @@ class user extends common
 	];
 
 	public static $roleProfils = [
-		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur',
+		self::ROLE_MEMBER => 'Membre',
+		self::ROLE_EDITOR => 'Éditeur',
 	];
 
 	public static $listModules = [];
@@ -174,12 +174,12 @@ class user extends common
 
 		// Profils disponibles
 		foreach ($this->getData(['profil']) as $profilId => $profilData) {
-			if ($profilId < self::GROUP_MEMBER) {
+			if ($profilId < self::ROLE_MEMBER) {
 				continue;
 			}
-			if ($profilId === self::GROUP_ADMIN) {
-				self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
-				self::$userProfilsComments[$profilId][self::GROUP_ADMIN] = $profilData['comment'];
+			if ($profilId === self::ROLE_ADMIN) {
+				self::$userProfils[$profilId][self::ROLE_ADMIN] = $profilData['name'];
+				self::$userProfilsComments[$profilId][self::ROLE_ADMIN] = $profilData['comment'];
 				continue;
 			}
 			foreach ($profilData as $key => $value) {
@@ -207,7 +207,7 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Role insuffisant
-			and ($this->getUrl('role') < self::GROUP_EDITOR)
+			and ($this->getUrl('role') < self::ROLE_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -254,10 +254,10 @@ class user extends common
 				and (
 						// Impossible de s'auto-éditer
 					($this->getUser('id') === $this->getUrl(2)
-						and $this->getUrl('role') <= self::GROUP_VISITOR
+						and $this->getUrl('role') <= self::ROLE_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('role') < self::GROUP_EDITOR)
+					or ($this->getUrl('role') < self::ROLE_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -273,7 +273,7 @@ class user extends common
 				) {
 					$oldPassword = $this->getData(['user', $this->getUrl(2), 'password']);
 					// Double vérification pour le mot de passe
-					if ($this->getUser('role') < self::GROUP_ADMIN) {
+					if ($this->getUser('role') < self::ROLE_ADMIN) {
 						if ($this->getInput('userEditNewPassword')) {
 							// L'ancien mot de passe est correct
 							if (password_verify(html_entity_decode($this->getInput('userEditOldPassword')), $this->getData(['user', $this->getUrl(2), 'password']))) {
@@ -308,7 +308,7 @@ class user extends common
 
 					// Modification du groupe
 					if (
-						$this->getUser('role') === self::GROUP_ADMIN
+						$this->getUser('role') === self::ROLE_ADMIN
 						and $this->getUrl(2) !== $this->getUser('id')
 					) {
 						$newGroup = $this->getInput('userEditGroup', helper::FILTER_INT, true);
@@ -316,7 +316,7 @@ class user extends common
 						$newGroup = $this->getData(['user', $this->getUrl(2), 'role']);
 					}
 					// Modification de nom Prénom
-					if ($this->getUser('role') === self::GROUP_ADMIN) {
+					if ($this->getUser('role') === self::ROLE_ADMIN) {
 						$newfirstname = $this->getInput('userEditFirstname', helper::FILTER_STRING_SHORT, true);
 						$newlastname = $this->getInput('userEditLastname', helper::FILTER_STRING_SHORT, true);
 					} else {
@@ -358,7 +358,7 @@ class user extends common
 						$redirect = helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl());
 					}
 					// Redirection si retour en arrière possible
-					elseif ($this->getUser('role') === self::GROUP_ADMIN) {
+					elseif ($this->getUser('role') === self::ROLE_ADMIN) {
 						$redirect = helper::baseUrl() . 'user';
 					}
 					// Redirection normale
@@ -383,12 +383,12 @@ class user extends common
 
 				// Profils disponibles
 				foreach ($this->getData(['profil']) as $profilId => $profilData) {
-					if ($profilId < self::GROUP_MEMBER) {
+					if ($profilId < self::ROLE_MEMBER) {
 						continue;
 					}
-					if ($profilId === self::GROUP_ADMIN) {
-						self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
-						self::$userProfilsComments[$profilId][self::GROUP_ADMIN] = $profilData['comment'];
+					if ($profilId === self::ROLE_ADMIN) {
+						self::$userProfils[$profilId][self::ROLE_ADMIN] = $profilData['name'];
+						self::$userProfilsComments[$profilId][self::ROLE_ADMIN] = $profilData['comment'];
 						continue;
 					}
 					foreach ($profilData as $key => $value) {
@@ -586,9 +586,9 @@ class user extends common
 		foreach ($this->getData(['profil']) as $roleId => $roleData) {
 			// Membres sans permissions spécifiques
 			if (
-				$roleId == self::GROUP_BANNED ||
-				$roleId == self::GROUP_VISITOR ||
-				$roleId == self::GROUP_ADMIN
+				$roleId == self::ROLE_BANNED ||
+				$roleId == self::ROLE_VISITOR ||
+				$roleId == self::ROLE_ADMIN
 			) {
 				self::$userGroups[$roleId] = [
 					$roleId,
@@ -606,8 +606,8 @@ class user extends common
 					])
 				];
 			} elseif (
-				$roleId == self::GROUP_MEMBER ||
-				$roleId == self::GROUP_EDITOR
+				$roleId == self::ROLE_MEMBER ||
+				$roleId == self::ROLE_EDITOR
 			) {
 				// Enumérer les sous rôles MEMBER et MODERATOR
 				foreach ($roleData as $profilId => $profilData) {
@@ -660,7 +660,7 @@ class user extends common
 			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilEditPath');
 			if (
-				$role < self::GROUP_MEMBER
+				$role < self::ROLE_MEMBER
 				&& $fileManager
 				&& empty($path)
 			) {
@@ -813,7 +813,7 @@ class user extends common
 			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilAddPath');
 			if (
-				$role < self::GROUP_MEMBER
+				$role < self::ROLE_MEMBER
 				&& $fileManager
 				&& empty($path)
 			) {
@@ -1046,7 +1046,7 @@ class user extends common
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
 					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
 					and password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password']))
-					and $this->getData(['user', $userId, 'role']) >= self::GROUP_MEMBER
+					and $this->getData(['user', $userId, 'role']) >= self::ROLE_MEMBER
 					and $captcha === true
 				) {
 
@@ -1060,7 +1060,7 @@ class user extends common
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 					if (
 						$this->getData(['config', 'maintenance'])
-						and $this->getData(['user', $userId, 'role']) < self::GROUP_ADMIN
+						and $this->getData(['user', $userId, 'role']) < self::ROLE_ADMIN
 					) {
 						$this->addOutput([
 							'notification' => helper::translate('Seul un administrateur peut se connecter lors d\'une maintenance'),
@@ -1414,7 +1414,7 @@ class user extends common
 						// Validation du groupe
 						$item['groupe'] = (int) $item['groupe'];
 						$item['profil'] = (int) $item['profil'];
-						$item['groupe'] = ($item['groupe'] >= self::GROUP_BANNED and $item['groupe'] <= self::GROUP_ADMIN)
+						$item['groupe'] = ($item['groupe'] >= self::ROLE_BANNED and $item['groupe'] <= self::ROLE_ADMIN)
 							? $item['groupe'] : 1;
 						// L'utilisateur existe
 						$userId = helper::filter($item['id'], helper::FILTER_ID);

@@ -17,7 +17,7 @@ class maintenance extends common
 {
 
 	public static $actions = [
-		'index' => self::GROUP_VISITOR
+		'index' => self::ROLE_VISITOR
 	];
 
 	/**

@@ -17,7 +17,7 @@ class dashboard extends common
 {
 
     public static $actions = [
-        'index' => self::GROUP_ADMIN,
+        'index' => self::ROLE_ADMIN,
     ];
 
 

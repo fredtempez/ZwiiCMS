@@ -24,13 +24,13 @@ class common
 	const DISPLAY_LAYOUT_BLANK = 3;
 	const DISPLAY_LAYOUT_MAIN = 4;
 	const DISPLAY_LAYOUT_LIGHT = 5;
-	const GROUP_BANNED = -1;
-	const GROUP_VISITOR = 0;
-	const GROUP_MEMBER = 1;
-	const GROUP_EDITOR = 2;
+	const ROLE_BANNED = -1;
+	const ROLE_VISITOR = 0;
+	const ROLE_MEMBER = 1;
+	const ROLE_EDITOR = 2;
 	// Role MODERATOR, compatibilité avec les anciens modules :
-	const GROUP_MODERATOR = 2;
-	const GROUP_ADMIN = 3;
+	const ROLE_MODERATOR = 2;
+	const ROLE_ADMIN = 3;
 	const SIGNATURE_ID = 1;
 	const SIGNATURE_PSEUDO = 2;
 	const SIGNATURE_FIRSTLASTNAME = 3;
@@ -150,28 +150,28 @@ class common
 		'view' => ''
 	];
 	public static $roles = [
-		self::GROUP_BANNED => 'Banni',
-		self::GROUP_VISITOR => 'Visiteur',
-		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur',
-		self::GROUP_ADMIN => 'Administrateur'
+		self::ROLE_BANNED => 'Banni',
+		self::ROLE_VISITOR => 'Visiteur',
+		self::ROLE_MEMBER => 'Membre',
+		self::ROLE_EDITOR => 'Éditeur',
+		self::ROLE_ADMIN => 'Administrateur'
 	];
 	public static $roleEdits = [
-		self::GROUP_BANNED => 'Banni',
-		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur',
-		self::GROUP_ADMIN => 'Administrateur'
+		self::ROLE_BANNED => 'Banni',
+		self::ROLE_MEMBER => 'Membre',
+		self::ROLE_EDITOR => 'Éditeur',
+		self::ROLE_ADMIN => 'Administrateur'
 	];
 	public static $roleNews = [
-		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur',
-		self::GROUP_ADMIN => 'Administrateur'
+		self::ROLE_MEMBER => 'Membre',
+		self::ROLE_EDITOR => 'Éditeur',
+		self::ROLE_ADMIN => 'Administrateur'
 	];
 	public static $rolePublics = [
-		self::GROUP_VISITOR => 'Visiteur',
-		self::GROUP_MEMBER => 'Membre',
-		self::GROUP_EDITOR => 'Éditeur',
-		self::GROUP_ADMIN => 'Administrateur'
+		self::ROLE_VISITOR => 'Visiteur',
+		self::ROLE_MEMBER => 'Membre',
+		self::ROLE_EDITOR => 'Éditeur',
+		self::ROLE_ADMIN => 'Administrateur'
 	];
 
 	//Langues de l'UI
@@ -813,7 +813,7 @@ class common
 				// Page parent
 				$this->getData(['page', $pageId, 'parentPageId']) === ""
 				// Ignore les pages dont l'utilisateur n'a pas accès
-				and ($this->getData(['page', $pageId, 'role']) === self::GROUP_VISITOR
+				and ($this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR
 					or ($this->isConnected() === true
 						//and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
 						// Modification qui tient compte du profil de la page
@@ -840,9 +840,9 @@ class common
 				// Ignore les pages dont l'utilisateur n'a pas accès
 				and (
 					(
-						$this->getData(['page', $pageId, 'role']) === self::GROUP_VISITOR
+						$this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR
 						and
-						$this->getData(['page', $parentId, 'role']) === self::GROUP_VISITOR
+						$this->getData(['page', $parentId, 'role']) === self::ROLE_VISITOR
 					)
 					or (
 						$this->isConnected() === true
@@ -1042,9 +1042,9 @@ class common
 	{
 
 		// Administrateur, toutes les permissions
-		if ($this->getUser('role') === self::GROUP_ADMIN) {
+		if ($this->getUser('role') === self::ROLE_ADMIN) {
 			return true;
-		} elseif ($this->getUser('role') <= self::GROUP_VISITOR) { // Role sans autorisation
+		} elseif ($this->getUser('role') <= self::ROLE_VISITOR) { // Role sans autorisation
 			return false;
 		} elseif (
 			// Role avec profil, consultation des autorisations sur deux clés

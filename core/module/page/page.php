@@ -18,12 +18,12 @@ class page extends common
 {
 
 	public static $actions = [
-		'add' => self::GROUP_EDITOR,
-		'delete' => self::GROUP_EDITOR,
-		'edit' => self::GROUP_EDITOR,
-		'duplicate' => self::GROUP_EDITOR,
-		'jsEditor' => self::GROUP_EDITOR,
-		'cssEditor' => self::GROUP_EDITOR,
+		'add' => self::ROLE_EDITOR,
+		'delete' => self::ROLE_EDITOR,
+		'edit' => self::ROLE_EDITOR,
+		'duplicate' => self::ROLE_EDITOR,
+		'jsEditor' => self::ROLE_EDITOR,
+		'cssEditor' => self::ROLE_EDITOR,
 	];
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
@@ -178,7 +178,7 @@ class page extends common
 					'parentPageId' => '',
 					'modulePosition' => 'bottom',
 					'position' => 0,
-					'role' => self::GROUP_VISITOR,
+					'role' => self::ROLE_VISITOR,
 					'targetBlank' => false,
 					'title' => $pageTitle,
 					'shortTitle' => $pageTitle,
@@ -632,11 +632,11 @@ class page extends common
 			// Profils installés
 			// Profils disponibles
 			foreach ($this->getData(['profil']) as $profilId => $profilData) {
-				if ($profilId < self::GROUP_MEMBER) {
+				if ($profilId < self::ROLE_MEMBER) {
 					continue;
 				}
-				if ($profilId === self::GROUP_ADMIN) {
-					self::$userProfils[$profilId][self::GROUP_ADMIN] = $profilData['name'];
+				if ($profilId === self::ROLE_ADMIN) {
+					self::$userProfils[$profilId][self::ROLE_ADMIN] = $profilData['name'];
 					continue;
 				}
 				foreach ($profilData as $key => $value) {

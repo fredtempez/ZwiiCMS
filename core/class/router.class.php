@@ -414,7 +414,7 @@ class core extends common
 		// Force la déconnexion des membres bannis ou d'une seconde session
 		if (
 			$this->isConnected() === true
-			and ($this->getUser('role') === common::GROUP_BANNED
+			and ($this->getUser('role') === common::ROLE_BANNED
 				or ($_SESSION['csrf'] !== $this->getData(['user', $this->getUser('id'), 'accessCsrf'])
 					and $this->getData(['config', 'connect', 'autoDisconnect']) === true)
 			)
@@ -429,7 +429,7 @@ class core extends common
 			and $this->getUrl(1) !== 'login'
 			and ($this->isConnected() === false
 				or ($this->isConnected() === true
-					and $this->getUser('role') < common::GROUP_ADMIN
+					and $this->getUser('role') < common::ROLE_ADMIN
 				)
 			)
 		) {
@@ -446,7 +446,7 @@ class core extends common
 		$access = null;
 		if ($this->getData(['page', $this->getUrl(0)]) !== null) {
 			if (
-				$this->getData(['page', $this->getUrl(0), 'role']) === common::GROUP_VISITOR
+				$this->getData(['page', $this->getUrl(0), 'role']) === common::ROLE_VISITOR
 				or ($this->isConnected() === true
 					// and $this->getUser('role') >= $this->getData(['page', $this->getUrl(0), 'role'])
 					// Modification qui tient compte du profil de la page
@@ -467,7 +467,7 @@ class core extends common
 					and $this->isConnected() === false
 				) or ($this->getData(['page', $this->getUrl(0), 'disable']) === true
 					and $this->isConnected() === true
-					and $this->getUser('role') < common::GROUP_EDITOR
+					and $this->getUser('role') < common::ROLE_EDITOR
 				)
 			) {
 				$access = false;
@@ -635,7 +635,7 @@ class core extends common
 					$output = $module->output;
 					// Check le groupe de l'utilisateur
 					if (
-						($module::$actions[$action] === common::GROUP_VISITOR
+						($module::$actions[$action] === common::ROLE_VISITOR
 							or ($this->isConnected() === true
 								and $this->getUser('role') >= $module::$actions[$action]
 								and $this->getUser('permission', $moduleId, $action)

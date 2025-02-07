@@ -18,15 +18,15 @@ class plugin extends common
 {
 
 	public static $actions = [
-		'index' => self::GROUP_ADMIN,
-		'delete' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN,
-		'store' => self::GROUP_ADMIN,
-		//'item' => self::GROUP_ADMIN,
+		'index' => self::ROLE_ADMIN,
+		'delete' => self::ROLE_ADMIN,
+		'save' => self::ROLE_ADMIN,
+		'store' => self::ROLE_ADMIN,
+		//'item' => self::ROLE_ADMIN,
 		// détail d'un objet
-		'upload' => self::GROUP_ADMIN,
+		'upload' => self::ROLE_ADMIN,
 		// Téléverser catalogue
-		'uploadItem' => self::GROUP_ADMIN // Téléverser par archive
+		'uploadItem' => self::ROLE_ADMIN // Téléverser par archive
 	];
 
 	// URL des modules

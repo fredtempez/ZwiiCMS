@@ -77,12 +77,12 @@
 								( // Propriétaire
 									($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === blog::EDIT_OWNER
 										and ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId']) === $this->getUser('id')
-											or $this->getUser('role') === self::GROUP_ADMIN)
+											or $this->getUser('role') === self::ROLE_ADMIN)
 									)
 									or (
 											// Role
-										($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === self::GROUP_ADMIN
-											or $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === self::GROUP_EDITOR)
+										($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === self::ROLE_ADMIN
+											or $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent']) === self::ROLE_EDITOR)
 										and $this->getUser('role') >= $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'editConsent'])
 									)
 									or (

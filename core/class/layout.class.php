@@ -353,7 +353,7 @@ class layout extends common
         }
         // Affichage de la barre de membre simple
         if (
-            $this->getUser('role') >= self::GROUP_MEMBER && $this->getUser('role') < self::GROUP_ADMIN
+            $this->getUser('role') >= self::ROLE_MEMBER && $this->getUser('role') < self::ROLE_ADMIN
             && $this->getData(['theme', 'footer', 'memberBar']) === true
         ) {
             $items .= '<span id="footerDisplayMemberAccount"';
@@ -514,11 +514,11 @@ class layout extends common
         }
         // Commandes pour les membres simples
         if (
-            $this->getUser('role') === self::GROUP_MEMBER
+            $this->getUser('role') === self::ROLE_MEMBER
             && $this->getData(['theme', 'menu', 'memberBar']) === true
         ) {
             if (
-                $this->getUser('role') >= self::GROUP_MEMBER &&
+                $this->getUser('role') >= self::ROLE_MEMBER &&
                 $this->getUser('permission', 'filemanager') === true
             ) {
                 $itemsRight .= '<li>' . template::ico('folder', [
@@ -591,7 +591,7 @@ class layout extends common
                     and $this->isConnected() === false
                 ) or ($this->getData(['page', $parentPageId, 'disable']) === true
                     and $this->isConnected() === true
-                    and $this->getUser('role') < self::GROUP_EDITOR
+                    and $this->getUser('role') < self::ROLE_EDITOR
                 )
             ) {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
@@ -657,7 +657,7 @@ class layout extends common
                         and $this->isConnected() === false
                     ) or ($this->getData(['page', $childKey, 'disable']) === true
                         and $this->isConnected() === true
-                        and $this->getUser('role') < self::GROUP_EDITOR
+                        and $this->getUser('role') < self::ROLE_EDITOR
                     )
                 ) {
                     $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
@@ -914,7 +914,7 @@ class layout extends common
             // Items de gauche
             $leftItems = '';
             // Sélecteur de langues
-            if ($this->getUser('role') >= self::GROUP_EDITOR) {
+            if ($this->getUser('role') >= self::ROLE_EDITOR) {
                 $leftItem = '';
                 foreach (self::$languages as $key => $value) {
                     if (is_dir(self::DATA_DIR . $key)) {
@@ -926,7 +926,7 @@ class layout extends common
                 $leftItems .= $leftItem;
                 $leftItems .= '</select></li>';
             }
-            if ($this->getUser('role') >= self::GROUP_ADMIN) {
+            if ($this->getUser('role') >= self::ROLE_ADMIN) {
                 $leftItems .= '<li>' . template::ico('flag', [
                     'help' => 'Langues',
                     'href' => helper::baseUrl() . 'language'
@@ -934,7 +934,7 @@ class layout extends common
             }
 
             // Liste des pages
-            if ($this->getUser('role') >= self::GROUP_EDITOR) {
+            if ($this->getUser('role') >= self::ROLE_EDITOR) {
                 $leftItems .= '<li><select id="barSelectPage">';
                 $leftItems .= '<option value="">' . helper::translate('Pages du site') . '</option>';
                 $leftItems .= '<optgroup label="' . helper::translate('Pages orphelines') . '">';
@@ -1055,7 +1055,7 @@ class layout extends common
             // Items de droite
             $rightItems = '';
             if (
-                $this->getUser('role') >= self::GROUP_EDITOR
+                $this->getUser('role') >= self::ROLE_EDITOR
                 && $this->getUser(
                     'permission',
                     'filemanager'
@@ -1067,7 +1067,7 @@ class layout extends common
                     'attr' => 'data-lity'
                 ]) . '</li>';
             }
-            if ($this->getUser('role') >= self::GROUP_ADMIN) {
+            if ($this->getUser('role') >= self::ROLE_ADMIN) {
                 $rightItems .= '<li>' . template::ico('brush', [
                     'help' => 'Thème',
                     'href' => helper::baseUrl() . 'theme'
@@ -1141,7 +1141,7 @@ class layout extends common
             }
             // Boutons depuis le groupe éditeur
             if (
-                $this->getUser('role') >= self::GROUP_EDITOR
+                $this->getUser('role') >= self::ROLE_EDITOR
                 && $this->getUser('permission', 'user', 'edit')
 
             ) {
@@ -1228,7 +1228,7 @@ class layout extends common
         $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
         if (
             $this->isConnected() === true
-            and $this->getUser('role') >= self::GROUP_EDITOR
+            and $this->getUser('role') >= self::ROLE_EDITOR
         ) {
             $vars .= 'var privateKey = ' . json_encode(md5_file(self::DATA_DIR . 'core.json')) . ';';
         }

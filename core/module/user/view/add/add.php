@@ -106,42 +106,42 @@
 				<div class="col6">
 					<?php echo template::select('userAddGroup', self::$roleNews, [
 						'label' => 'Rôle',
-						'selected' => self::GROUP_MEMBER
+						'selected' => self::ROLE_MEMBER
 					]); ?>
 				</div>
 				<div class="col6">
 					<div class="userAddGroupProfil displayNone"
-						id="userAddGroupProfil<?php echo self::GROUP_MEMBER; ?>">
-						<?php echo template::select('userAddProfil' . self::GROUP_MEMBER, user::$userProfils[self::GROUP_MEMBER], [
+						id="userAddGroupProfil<?php echo self::ROLE_MEMBER; ?>">
+						<?php echo template::select('userAddProfil' . self::ROLE_MEMBER, user::$userProfils[self::ROLE_MEMBER], [
 							'label' => 'Profil',
 						]); ?>
 					</div>
 					<div class="userAddGroupProfil displayNone"
-						id="userAddGroupProfil<?php echo self::GROUP_EDITOR; ?>">
-						<?php echo template::select('userAddProfil' . self::GROUP_EDITOR, user::$userProfils[self::GROUP_EDITOR], [
+						id="userAddGroupProfil<?php echo self::ROLE_EDITOR; ?>">
+						<?php echo template::select('userAddProfil' . self::ROLE_EDITOR, user::$userProfils[self::ROLE_EDITOR], [
 							'label' => 'Profil',
 						]); ?>
 					</div>
 				</div>
 			</div>
 			<div class="row">
-				<div id="userCommentProfil<?php echo self::GROUP_MEMBER; ?>"
+				<div id="userCommentProfil<?php echo self::ROLE_MEMBER; ?>"
 					class="col12 displayNone userCommentProfil">
-					<?php echo template::textarea('useraddProfilComment' . self::GROUP_MEMBER, [
-						"value" => implode("\n", user::$userProfilsComments[self::GROUP_MEMBER])
+					<?php echo template::textarea('useraddProfilComment' . self::ROLE_MEMBER, [
+						"value" => implode("\n", user::$userProfilsComments[self::ROLE_MEMBER])
 					]);
 					?>
 				</div>
-				<div id="userCommentProfil<?php echo self::GROUP_EDITOR; ?>"
+				<div id="userCommentProfil<?php echo self::ROLE_EDITOR; ?>"
 					class="col12 displayNone userCommentProfil">
-					<?php echo template::textarea('useraddProfilComment2' . self::GROUP_EDITOR, [
-						"value" => implode("\n", user::$userProfilsComments[self::GROUP_EDITOR])
+					<?php echo template::textarea('useraddProfilComment2' . self::ROLE_EDITOR, [
+						"value" => implode("\n", user::$userProfilsComments[self::ROLE_EDITOR])
 					]);
 					?>
 				</div>
-				<div id="userCommentProfil<?php echo self::GROUP_ADMIN; ?>" class="col12 displayNone userCommentProfil">
-					<?php echo template::textarea('useraddProfilComment' . self::GROUP_ADMIN, [
-						"value" => implode("\n", user::$userProfilsComments[self::GROUP_ADMIN])
+				<div id="userCommentProfil<?php echo self::ROLE_ADMIN; ?>" class="col12 displayNone userCommentProfil">
+					<?php echo template::textarea('useraddProfilComment' . self::ROLE_ADMIN, [
+						"value" => implode("\n", user::$userProfilsComments[self::ROLE_ADMIN])
 					]);
 					?>
 				</div>

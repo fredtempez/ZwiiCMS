@@ -18,23 +18,23 @@ class theme extends common
 {
 
 	public static $actions = [
-		'advanced' => self::GROUP_ADMIN,
-		'body' => self::GROUP_ADMIN,
-		'footer' => self::GROUP_ADMIN,
-		'header' => self::GROUP_ADMIN,
-		'index' => self::GROUP_ADMIN,
-		'menu' => self::GROUP_ADMIN,
-		'reset' => self::GROUP_ADMIN,
-		'site' => self::GROUP_ADMIN,
-		'admin' => self::GROUP_ADMIN,
-		'manage' => self::GROUP_ADMIN,
-		'export' => self::GROUP_ADMIN,
-		'import' => self::GROUP_ADMIN,
-		'save' => self::GROUP_ADMIN,
-		'font' => self::GROUP_ADMIN,
-		'fontAdd' => self::GROUP_ADMIN,
-		'fontEdit' => self::GROUP_ADMIN,
-		'fontDelete' => self::GROUP_ADMIN
+		'advanced' => self::ROLE_ADMIN,
+		'body' => self::ROLE_ADMIN,
+		'footer' => self::ROLE_ADMIN,
+		'header' => self::ROLE_ADMIN,
+		'index' => self::ROLE_ADMIN,
+		'menu' => self::ROLE_ADMIN,
+		'reset' => self::ROLE_ADMIN,
+		'site' => self::ROLE_ADMIN,
+		'admin' => self::ROLE_ADMIN,
+		'manage' => self::ROLE_ADMIN,
+		'export' => self::ROLE_ADMIN,
+		'import' => self::ROLE_ADMIN,
+		'save' => self::ROLE_ADMIN,
+		'font' => self::ROLE_ADMIN,
+		'fontAdd' => self::ROLE_ADMIN,
+		'fontEdit' => self::ROLE_ADMIN,
+		'fontDelete' => self::ROLE_ADMIN
 	];
 	public static $aligns = [
 		'left' => 'À gauche',
