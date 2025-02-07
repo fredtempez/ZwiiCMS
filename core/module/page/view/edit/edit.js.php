@@ -294,7 +294,7 @@ $( document ).ready(function() {
      *  Sélection de la  page de configuration à afficher
      */
 		 $("#pageEditContentButton").on("click", function () {
-			pageLayout = "locale";
+			pageLayout = "content";
 			$("#pageEditContentContainer").show();
 			$("#pageEditExtensionContainer").hide();
 			$("#pageEditPositionContainer").hide();
