@@ -104,7 +104,7 @@
 			</h4>
 			<div class="row">
 				<div class="col6">
-					<?php echo template::select('userAddGroup', self::$groupNews, [
+					<?php echo template::select('userAddGroup', self::$roleNews, [
 						'label' => 'Rôle',
 						'selected' => self::GROUP_MEMBER
 					]); ?>

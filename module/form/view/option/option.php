@@ -97,11 +97,11 @@
                 </div>
                 <?php
                 // Element 0 quand aucun membre a été sélectionné
-                $groupMembers = [''] + form::$groupNews;
+                $roleMembers = [''] + form::$roleNews;
                 ?>
                 <div class="row">
                     <div class="col4">
-                        <?php echo template::select('formOptionGroup', $groupMembers, [
+                        <?php echo template::select('formOptionGroup', $roleMembers, [
                             'label' => 'A tous les rôles depuis',
                             'selected' => $this->getData(['module', $this->getUrl(0), 'config', 'role']),
                         ]); ?>

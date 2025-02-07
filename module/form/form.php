@@ -454,19 +454,19 @@ class form extends common
 				'mail'
 			]);
 			$singlemail = $this->getData(['module', $this->getUrl(0), 'config', 'mail']);
-			$group = $this->getData(['module', $this->getUrl(0), 'config', 'role']);
+			$role = $this->getData(['module', $this->getUrl(0), 'config', 'role']);
 			// Verification si le mail peut être envoyé
 			if (
 				self::$inputNotices === [] && (
-					$group > 0 ||
+					$role > 0 ||
 					$singleuser !== '' ||
 					$singlemail !== '')
 			) {
 				// Utilisateurs dans le groupe
 				$to = [];
-				if ($group > 0) {
+				if ($role > 0) {
 					foreach ($this->getData(['user']) as $userId => $user) {
-						if ($user['role'] >= $group) {
+						if ($user['role'] >= $role) {
 							$to[] = $user['mail'];
 						}
 					}

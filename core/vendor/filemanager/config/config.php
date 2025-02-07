@@ -24,8 +24,8 @@ $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
 
 // Lecture les droits
 if (!is_null($u) && !is_null($g) && !is_null($userId)) {
-	$group = $u['user'][$userId]['role'];
-	switch ($group) {
+	$role = $u['user'][$userId]['role'];
+	switch ($role) {
 		case 3:
 			// Accès admin
 			$file['delete'] = true;
@@ -51,13 +51,13 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 		case 1:
 			// Accès contrôlés par le profil
 			$profil = $u['user'][$userId]['profil'];
-			if ($g['profil'][$group][$profil]['filemanager'] === false)
+			if ($g['profil'][$role][$profil]['filemanager'] === false)
 				exit('Accès interdit');
 			// lecture du profil
-			if (!is_null($profil) and $g['profil'][$group][$profil]['folder']['path']  !== '') {
-				$file = $g['profil'][$group][$profil]['file'];
-				$folder = $g['profil'][$group][$profil]['folder'];
-				$uploadDir = $g['profil'][$group][$profil]['folder']['path'];
+			if (!is_null($profil) and $g['profil'][$role][$profil]['folder']['path']  !== '') {
+				$file = $g['profil'][$role][$profil]['file'];
+				$folder = $g['profil'][$role][$profil]['folder'];
+				$uploadDir = $g['profil'][$role][$profil]['folder']['path'];
 				$currentPath = '../../../' . $uploadDir;
 				if (!is_dir($currentPath)) {
 					mkdir($currentPath);

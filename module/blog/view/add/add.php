@@ -128,7 +128,7 @@
 						<?php echo template::checkbox('blogAddCommentNotification', true, 'Notification par email'); ?>
 					</div>
 					<div class="col4 commentOptionsWrapper">
-						<?php echo template::select('blogAddCommentGroupNotification', blog::$groupNews); ?>
+						<?php echo template::select('blogAddCommentGroupNotification', blog::$roleNews); ?>
 					</div>
 				</div>
 			</div>

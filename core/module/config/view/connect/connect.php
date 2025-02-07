@@ -38,7 +38,7 @@
 						]); ?>
 					</div>
 					<div class="col3">
-						<?php echo template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$groupNews), [
+						<?php echo template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$roleNews), [
 							'label' => 'Validation par clé ⚠️',
 							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
 							'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le groupe sélectionné et les rôles supérieurs.'

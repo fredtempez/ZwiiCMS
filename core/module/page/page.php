@@ -509,16 +509,16 @@ class page extends common
 						}
 					}
 					// Détermine le groupe selon que la page est une barre ou une page standard
-					$group = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0;
+					$role = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0;
 
 					//Détermine le profil d'utilisateur en fonction du groupe sinon le groupe vaut 0
 					$profil = 0;
 					if (
 						$this->getinput('pageEditBlock') !== 'bar' ||
-						$group === 1 ||
-						$group === 2
+						$role === 1 ||
+						$role === 2
 					) {
-						$profil = $this->getInput('pageEditProfil' . $group, helper::FILTER_INT);
+						$profil = $this->getInput('pageEditProfil' . $role, helper::FILTER_INT);
 					}
 
 					// Modifie la page ou en crée une nouvelle si l'id a changé
@@ -538,7 +538,7 @@ class page extends common
 							'modulePosition' => $this->getInput('pageModulePosition'),
 							'parentPageId' => $this->getInput('pageEditParentPageId'),
 							'position' => $position,
-							'role' => $group,
+							'role' => $role,
 							'profil' => $profil,
 							'targetBlank' => $this->getInput('pageEditTargetBlank', helper::FILTER_BOOLEAN),
 							'title' => $this->getInput('pageEditTitle', helper::FILTER_STRING_SHORT),

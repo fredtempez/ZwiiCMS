@@ -65,7 +65,7 @@ class user extends common
 		'/site/file/source/'
 	];
 
-	public static $groupProfils = [
+	public static $roleProfils = [
 		self::GROUP_MEMBER => 'Membre',
 		self::GROUP_EDITOR => 'Éditeur',
 	];
@@ -109,10 +109,10 @@ class user extends common
 			$password = $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true);
 
 			// Profil
-			$group = $this->getInput('userAddGroup', helper::FILTER_INT, true);
+			$role = $this->getInput('userAddGroup', helper::FILTER_INT, true);
 			$profil = 0;
-			if ($group === 1 || $group === 2) {
-				$profil = $this->getInput('userAddProfil' . $group, helper::FILTER_INT);
+			if ($role === 1 || $role === 2) {
+				$profil = $this->getInput('userAddProfil' . $role, helper::FILTER_INT);
 			}
 
 			// Stockage des données
@@ -122,7 +122,7 @@ class user extends common
 				[
 					'firstname' => $userFirstname,
 					'forgot' => 0,
-					'role' => $group,
+					'role' => $role,
 					'profil' => $profil,
 					'lastname' => $userLastname,
 					'pseudo' => $pseudo,
@@ -457,8 +457,8 @@ class user extends common
 	{
 		// Liste des rôles et des profils
 		$usersGroups = $this->getData(['profil']);
-		foreach ($usersGroups as $groupId => $groupValue) {
-			switch ($groupId) {
+		foreach ($usersGroups as $roleId => $roleValue) {
+			switch ($roleId) {
 				case "-1":
 				case "0":
 					break;
@@ -468,10 +468,10 @@ class user extends common
 					break;
 				case "1":
 				case "2":
-					foreach ($groupValue as $profilId => $profilValue) {
+					foreach ($roleValue as $profilId => $profilValue) {
 						if ($profilId) {
-							self::$usersGroups[$groupId . $profilId] = sprintf(helper::translate('Rôle %s - Profil %s'), self::$groupPublics[$groupId], $profilValue['name']);
-							$profils[$groupId . $profilId] = 0;
+							self::$usersGroups[$roleId . $profilId] = sprintf(helper::translate('Rôle %s - Profil %s'), self::$rolePublics[$roleId], $profilValue['name']);
+							$profils[$roleId . $profilId] = 0;
 						}
 					}
 			}
@@ -497,13 +497,13 @@ class user extends common
 				// Filtres
 				if ($this->isPost()) {
 					// Role et profils
-					$group = (string) $this->getData(['user', $userId, 'role']);
+					$role = (string) $this->getData(['user', $userId, 'role']);
 					$profil = (string) $this->getData(['user', $userId, 'profil']);
 					$firstName = $this->getData(['user', $userId, 'firstname']);
 					$lastName = $this->getData(['user', $userId, 'lastname']);
 					if (
 						$this->getInput('userFilterGroup', helper::FILTER_INT) > 0
-						&& $this->getInput('userFilterGroup', helper::FILTER_STRING_SHORT) !== $group . $profil
+						&& $this->getInput('userFilterGroup', helper::FILTER_STRING_SHORT) !== $role . $profil
 					)
 						continue;
 					// Première lettre du prénom
@@ -526,9 +526,9 @@ class user extends common
 				self::$users[] = [
 					$userId,
 					sprintf('%s %s',$userLastNames, $this->getData(['user', $userId, 'firstname'])),
-					helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])]),
+					helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])]),
 					empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-					? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+					? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 					: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 					$this->getData(['user', $userId, 'tags']),
 					template::button('userEdit' . $userId, [
@@ -548,11 +548,11 @@ class user extends common
 		}
 
 		// Ajoute les effectifs aux profils du sélecteur
-		foreach (self::$usersGroups as $groupId => $groupValue) {
-			if ($groupId === 'all') {
+		foreach (self::$usersGroups as $roleId => $roleValue) {
+			if ($roleId === 'all') {
 				self::$usersGroups['all'] = self::$usersGroups['all'] . ' (' . array_sum($profils) . ')';
 			} else {
-				self::$usersGroups[$groupId] = self::$usersGroups[$groupId] . ' (' . $profils[$groupId] . ')';
+				self::$usersGroups[$roleId] = self::$usersGroups[$roleId] . ' (' . $profils[$roleId] . ')';
 			}
 		}
 
@@ -574,56 +574,56 @@ class user extends common
 
 		// Ne pas supprimer un profil utililsé
 		// recherche les membres du groupe 
-		$groups = helper::arrayColumn($this->getData(['user']), 'role');
-		$groups = array_keys($groups, $this->getUrl(2));
+		$roles = helper::arrayColumn($this->getData(['user']), 'role');
+		$roles = array_keys($roles, $this->getUrl(2));
 		$profilUsed = true;
 		// Stoppe si le profil est affecté
-		foreach ($groups as $userId) {
+		foreach ($roles as $userId) {
 			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
 				$profilUsed = false;
 			}
 		}
-		foreach ($this->getData(['profil']) as $groupId => $groupData) {
+		foreach ($this->getData(['profil']) as $roleId => $roleData) {
 			// Membres sans permissions spécifiques
 			if (
-				$groupId == self::GROUP_BANNED ||
-				$groupId == self::GROUP_VISITOR ||
-				$groupId == self::GROUP_ADMIN
+				$roleId == self::GROUP_BANNED ||
+				$roleId == self::GROUP_VISITOR ||
+				$roleId == self::GROUP_ADMIN
 			) {
-				self::$userGroups[$groupId] = [
-					$groupId,
-					helper::translate($groupData['name']),
-					nl2br(helper::translate($groupData['comment'])),
-					template::button('profilEdit' . $groupId, [
+				self::$userGroups[$roleId] = [
+					$roleId,
+					helper::translate($roleData['name']),
+					nl2br(helper::translate($roleData['comment'])),
+					template::button('profilEdit' . $roleId, [
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
-						'disabled' => $groupData['readonly'],
+						'disabled' => $roleData['readonly'],
 					]),
-					template::button('profilDelete' . $groupId, [
+					template::button('profilDelete' . $roleId, [
 						'value' => template::ico('trash'),
 						'help' => 'Supprimer',
-						'disabled' => $groupData['readonly'],
+						'disabled' => $roleData['readonly'],
 					])
 				];
 			} elseif (
-				$groupId == self::GROUP_MEMBER ||
-				$groupId == self::GROUP_EDITOR
+				$roleId == self::GROUP_MEMBER ||
+				$roleId == self::GROUP_EDITOR
 			) {
 				// Enumérer les sous rôles MEMBER et MODERATOR
-				foreach ($groupData as $profilId => $profilData) {
-					self::$userGroups[$groupId . '.' . $profilId] = [
-						$groupId . '-' . $profilId,
-						helper::translate(self::$groups[$groupId]) . '<br />Profil : ' . helper::translate($profilData['name']),
+				foreach ($roleData as $profilId => $profilData) {
+					self::$userGroups[$roleId . '.' . $profilId] = [
+						$roleId . '-' . $profilId,
+						helper::translate(self::$roles[$roleId]) . '<br />Profil : ' . helper::translate($profilData['name']),
 						nl2br(helper::translate($profilData['comment'])),
-						template::button('profilEdit' . $groupId . $profilId, [
-							'href' => helper::baseUrl() . 'user/profilEdit/' . $groupId . '/' . $profilId,
+						template::button('profilEdit' . $roleId . $profilId, [
+							'href' => helper::baseUrl() . 'user/profilEdit/' . $roleId . '/' . $profilId,
 							'value' => template::ico('pencil'),
 							'help' => 'Éditer',
 							'disabled' => $profilData['readonly'],
 						]),
-						template::button('profilDelete' . $groupId . $profilId, [
+						template::button('profilDelete' . $roleId . $profilId, [
 							'class' => 'profilDelete buttonRed',
-							'href' => helper::baseUrl() . 'user/profilDelete/' . $groupId . '/' . $profilId,
+							'href' => helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
 							'disabled' => $profilData['permanent'] && $profilUsed,
@@ -652,7 +652,7 @@ class user extends common
 		) {
 
 			// Effacer les données du numéro de profil ancien
-			$group = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
+			$role = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
@@ -660,7 +660,7 @@ class user extends common
 			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilEditPath');
 			if (
-				$group < self::GROUP_MEMBER
+				$role < self::GROUP_MEMBER
 				&& $fileManager
 				&& empty($path)
 			) {
@@ -669,9 +669,9 @@ class user extends common
 			// Effacer l'ancien profil si le rang a changé
 			if (
 				$profil !== $oldProfil &&
-				$this->deleteData(['profil', $group, $oldProfil])
+				$this->deleteData(['profil', $role, $oldProfil])
 			) {
-				$this->deleteData(['profil', $group, $oldProfil]);
+				$this->deleteData(['profil', $role, $oldProfil]);
 			}
 			// Données du formulaire
 			$data = [
@@ -731,7 +731,7 @@ class user extends common
 			//Sauvegarder le données
 			$this->setData([
 				'profil',
-				$group,
+				$role,
 				$profil,
 				$data
 			]);
@@ -807,13 +807,13 @@ class user extends common
 			$this->isPost()
 		) {
 			// Nombre de profils de ce groupe
-			$group = $this->getInput('profilAddGroup');
-			$profil = count($this->getData(['profil', $group]));
+			$role = $this->getInput('profilAddGroup');
+			$profil = count($this->getData(['profil', $role]));
 			// Gère le chemin
 			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilAddPath');
 			if (
-				$group < self::GROUP_MEMBER
+				$role < self::GROUP_MEMBER
 				&& $fileManager
 				&& empty($path)
 			) {
@@ -880,7 +880,7 @@ class user extends common
 				// Sauvegarder les données
 				$this->setData([
 					'profil',
-					$group,
+					$role,
 					$profil,
 					$data
 				]);
@@ -939,11 +939,11 @@ class user extends common
 	{
 		// Ne pas supprimer un profil utililsé
 		// recherche les membres du groupe 
-		$groups = helper::arrayColumn($this->getData(['user']), 'role');
-		$groups = array_keys($groups, $this->getUrl(2));
+		$roles = helper::arrayColumn($this->getData(['user']), 'role');
+		$roles = array_keys($roles, $this->getUrl(2));
 		$flag = true;
 		// Stoppe si le profil est affecté
-		foreach ($groups as $userId) {
+		foreach ($roles as $userId) {
 			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
 				$flag = false;
 			}
@@ -1426,9 +1426,9 @@ class user extends common
 								$userId,
 								$item['nom'],
 								$item['prenom'],
-								self::$groups[$item['groupe']],
+								self::$roles[$item['groupe']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								helper::filter($item['email'], helper::FILTER_MAIL),
@@ -1489,9 +1489,9 @@ class user extends common
 								$userId,
 								$item['nom'],
 								$item['prenom'],
-								self::$groups[$item['groupe']],
+								self::$roles[$item['groupe']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$groups[(int) $this->getData(['user', $userId, 'role'])])
+								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								$item['email'],

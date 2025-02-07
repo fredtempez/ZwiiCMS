@@ -149,25 +149,25 @@ class common
 		],
 		'view' => ''
 	];
-	public static $groups = [
+	public static $roles = [
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
 		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
-	public static $groupEdits = [
+	public static $roleEdits = [
 		self::GROUP_BANNED => 'Banni',
 		self::GROUP_MEMBER => 'Membre',
 		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
-	public static $groupNews = [
+	public static $roleNews = [
 		self::GROUP_MEMBER => 'Membre',
 		self::GROUP_EDITOR => 'Éditeur',
 		self::GROUP_ADMIN => 'Administrateur'
 	];
-	public static $groupPublics = [
+	public static $rolePublics = [
 		self::GROUP_VISITOR => 'Visiteur',
 		self::GROUP_MEMBER => 'Membre',
 		self::GROUP_EDITOR => 'Éditeur',

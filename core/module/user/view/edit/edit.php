@@ -126,7 +126,7 @@
 			<div class="row">
 				<div class="col12">
 					<?php if ($this->getUser('role') === self::GROUP_ADMIN): ?>
-						<?php echo template::select('userEditGroup', self::$groupEdits, [
+						<?php echo template::select('userEditGroup', self::$roleEdits, [
 							'disabled' => ($this->getUrl(2) === $this->getUser('id')),
 							'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre groupe.' : ''),
 							'label' => 'Rôle',

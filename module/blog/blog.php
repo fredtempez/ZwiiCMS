@@ -710,7 +710,7 @@ class blog extends common
 				if ($this->getData(['user', $userId, 'role']) < self::GROUP_EDITOR) {
 					unset(self::$users[$userId]);
 				}
-				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' . self::$groupEdits[$this->getData(['user', $userId, 'role'])] . ')';
+				$userFirstname = $userFirstname . ' ' . $this->getData(['user', $userId, 'lastname']) . ' (' . self::$roleEdits[$this->getData(['user', $userId, 'role'])] . ')';
 			}
 			unset($userFirstname);
 			// Valeurs en sortie

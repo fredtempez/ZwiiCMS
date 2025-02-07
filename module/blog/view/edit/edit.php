@@ -143,7 +143,7 @@
 					]); ?>
 				</div>
 				<div class="col4 commentOptionsWrapper">
-					<?php echo template::select('blogEditCommentGroupNotification', blog::$groupNews, [
+					<?php echo template::select('blogEditCommentGroupNotification', blog::$roleNews, [
 						'selected' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'commentGroupNotification']),
 					]); ?>
 				</div>
