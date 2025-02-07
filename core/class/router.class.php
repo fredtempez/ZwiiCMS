@@ -633,7 +633,7 @@ class core extends common
 				if (array_key_exists($action, $module::$actions)) {
 					$module->$action();
 					$output = $module->output;
-					// Check le groupe de l'utilisateur
+					// Check le rôle de l'utilisateur
 					if (
 						($module::$actions[$action] === common::ROLE_VISITOR
 							or ($this->isConnected() === true

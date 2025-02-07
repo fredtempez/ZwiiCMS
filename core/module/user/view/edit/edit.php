@@ -128,7 +128,7 @@
 					<?php if ($this->getUser('role') === self::ROLE_ADMIN): ?>
 						<?php echo template::select('userEditGroup', self::$roleEdits, [
 							'disabled' => ($this->getUrl(2) === $this->getUser('id')),
-							'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre groupe.' : ''),
+							'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre rôle.' : ''),
 							'label' => 'Rôle',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'role']),
 						]); ?>

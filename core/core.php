@@ -1035,7 +1035,7 @@ class common
 
 	/**
 	 * Retourne les permissions de l'utilisateur connecté
-	 * @param int $key Clé de la valeur du groupe
+	 * @param int $key Clé de la valeur du rôle
 	 * @return string|null
 	 */
 	public function getPermission($key1, $key2 = null)

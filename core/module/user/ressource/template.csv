@@ -1,4 +1,4 @@
-id;nom;prenom;email;groupe;profil;passe;tags
+id;nom;prenom;email;role;profil;passe;tags
 jm1;Membre1;Jean;jean.membre1@email.fr;1;1;jEan05;"adhérent"
 am2;Membre2;Albert;albert.membre2@email.fr;1;1;alBertAG;"adhérent"
 jrediteur;Editeur;Robert;robert.editeur@email.fr;2;1;roBert54;"trésorier"

@@ -17,7 +17,7 @@ date_default_timezone_set('Europe/Paris');
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
 setlocale(LC_CTYPE, $lang);
 
-/* Lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
+/* Lecture du rôle de l'utilisateur connecté pour attribuer les droits et les dossiers */
 $userId = $_COOKIE['ZWII_USER_ID'];
 $u = json_decode(file_get_contents('../../../site/data/user.json'), true);
 $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
@@ -71,7 +71,7 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 }
 
 
-/* Fin lecture du groupe de l'utilisateur connecté pour attribuer les droits et les dossiers */
+/* Fin lecture du rôle de l'utilisateur connecté pour attribuer les droits et les dossiers */
 
 /*
 |--------------------------------------------------------------------------

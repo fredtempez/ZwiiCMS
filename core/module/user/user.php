@@ -306,7 +306,7 @@ class user extends common
 						}
 					}
 
-					// Modification du groupe
+					// Modification du rôle
 					if (
 						$this->getUser('role') === self::ROLE_ADMIN
 						and $this->getUrl(2) !== $this->getUser('id')
@@ -573,7 +573,7 @@ class user extends common
 	{
 
 		// Ne pas supprimer un profil utililsé
-		// recherche les membres du groupe 
+		// recherche les membres du rôle 
 		$roles = helper::arrayColumn($this->getData(['user']), 'role');
 		$roles = array_keys($roles, $this->getUrl(2));
 		$profilUsed = true;
@@ -640,7 +640,7 @@ class user extends common
 	}
 
 	/**
-	 * Edition d'un groupe
+	 * Edition d'un rôle
 	 */
 	public function profilEdit()
 	{
@@ -806,7 +806,7 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-			// Nombre de profils de ce groupe
+			// Nombre de profils de ce rôle
 			$role = $this->getInput('profilAddGroup');
 			$profil = count($this->getData(['profil', $role]));
 			// Gère le chemin
@@ -938,7 +938,7 @@ class user extends common
 	public function profilDelete()
 	{
 		// Ne pas supprimer un profil utililsé
-		// recherche les membres du groupe 
+		// recherche les membres du rôle 
 		$roles = helper::arrayColumn($this->getData(['user']), 'role');
 		$roles = array_keys($roles, $this->getUrl(2));
 		$flag = true;
@@ -1041,7 +1041,7 @@ class user extends common
 					$this->setData(['user', $userId, 'connectTimeout', 0], false);
 				}
 				// Check la présence des variables et contrôle du blocage du compte si valeurs dépassées
-				// Vérification du mot de passe et du groupe
+				// Vérification du mot de passe et du rôle
 				if (
 					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
 					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
@@ -1397,7 +1397,7 @@ class user extends common
 						array_key_exists('id', $item)
 						and array_key_exists('prenom', $item)
 						and array_key_exists('nom', $item)
-						and array_key_exists('groupe', $item)
+						and array_key_exists('role', $item)
 						and array_key_exists('profil', $item)
 						and array_key_exists('email', $item)
 						and array_key_exists('passe', $item)
@@ -1406,16 +1406,16 @@ class user extends common
 						and isset($item['nom'])
 						and isset($item['prenom'])
 						and isset($item['email'])
-						and isset($item['groupe'])
+						and isset($item['role'])
 						and isset($item['profil'])
 						and isset($item['passe'])
 						and isset($item['tags'])
 					) {
-						// Validation du groupe
-						$item['groupe'] = (int) $item['groupe'];
+						// Validation du rôle
+						$item['role'] = (int) $item['role'];
 						$item['profil'] = (int) $item['profil'];
-						$item['groupe'] = ($item['groupe'] >= self::ROLE_BANNED and $item['groupe'] <= self::ROLE_ADMIN)
-							? $item['groupe'] : 1;
+						$item['role'] = ($item['role'] >= self::ROLE_BANNED and $item['role'] <= self::ROLE_ADMIN)
+							? $item['role'] : 1;
 						// L'utilisateur existe
 						$userId = helper::filter($item['id'], helper::FILTER_ID);
 						if ($this->getData(['user', $userId])) {
@@ -1426,7 +1426,7 @@ class user extends common
 								$userId,
 								$item['nom'],
 								$item['prenom'],
-								self::$roles[$item['groupe']],
+								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
 								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
@@ -1445,7 +1445,7 @@ class user extends common
 								[
 									'firstname' => $item['prenom'],
 									'forgot' => 0,
-									'role' => $item['groupe'],
+									'role' => $item['role'],
 									'profil' => $item['profil'],
 									'lastname' => $item['nom'],
 									'mail' => $item['email'],
@@ -1489,7 +1489,7 @@ class user extends common
 								$userId,
 								$item['nom'],
 								$item['prenom'],
-								self::$roles[$item['groupe']],
+								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
 								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
 								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),

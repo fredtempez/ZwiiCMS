@@ -1139,7 +1139,7 @@ class layout extends common
                     'href' => helper::baseUrl() . 'plugin'
                 ]) . '</li>';
             }
-            // Boutons depuis le groupe éditeur
+            // Boutons depuis le rôle éditeur
             if (
                 $this->getUser('role') >= self::ROLE_EDITOR
                 && $this->getUser('permission', 'user', 'edit')

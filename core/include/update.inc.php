@@ -312,7 +312,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 		if ($this->getData(['page', $parent, 'moduleId']) === 'blog') {
 			$articleIds = array_keys(helper::arrayColumn($this->getData(['module', $parent, 'posts']), 'publishedOn', 'SORT_DESC'));
 			foreach ($articleIds as $key => $article) {
-				// Droits les deux groupes
+				// Droits les deux rôles
 				$this->setData(['module', $parent, 'posts', $article, 'editConsent', 3]);
 				// Limite de taille 500
 				$this->setData(['module', $parent, 'posts', $article, 'commentMaxlength', '500']);
@@ -320,7 +320,7 @@ if ($this->getData(['core', 'dataVersion']) < 10400) {
 				$this->setData(['module', $parent, 'posts', $article, 'commentApproved', false]);
 				// pas de notification
 				$this->setData(['module', $parent, 'posts', $article, 'commentNotification', false]);
-				// groupe de notification
+				// rôle de notification
 				$this->setData(['module', $parent, 'posts', $article, 'commentGroupNotification', 3]);
 			}
 
@@ -1053,7 +1053,7 @@ if ($this->getData(['core', 'dataVersion']) < 13000) {
 		}
 	}
 
-	// Mise à jour des pages, le profil est mis à 0 pour les groupes sans profil et 1 pour es groupes avec profil
+	// Mise à jour des pages, le profil est mis à 0 pour les rôles sans profil et 1 pour es rôles avec profil
 	$currentlanguage = self::$siteContent;
 	foreach ($languages as $langId) {
 
