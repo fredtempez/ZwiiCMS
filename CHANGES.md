@@ -26,12 +26,20 @@
 **Développeurs :**
 - Nouvelle méthode de template *number()* pour créer un champ de saisie acceptant les propriétés min, max, step et pattern.
 - Nouvelle propriété *required* pour les template de saisie de texte obligatoire. Génération d'un repère sur le label du champ et interception du champ invalide par le navigateur qui affiche une popup.
+## Version 13.5.03
+**Corrections**
+- Mauvaise récupération du groupe de l'utilisateur, module de gestion des utilisateurs.
+- Petites corrections.
 
 ## Version 13.5.02
 **Correction**
 - La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans le journal de Zwii.
 
-## Versions 13.5.00
+## Version 13.5.01
+**Correction**
+- Configuration du site, le message de formulaire non soumis non affiché.
+
+## Version 13.5.00
 **Améliorations :**
 - Après un changement d'onglet dans la page de configuration, la page ne se recharge plus. Le dernier onglet affiché avant un submit est mémorisé dans les vues de l'utilisateur.
 - Réactivation de l'édition des dialogues des langues.

@@ -206,8 +206,8 @@ class user extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
-			// Role insuffisant
-			and ($this->getUrl('role') < self::ROLE_EDITOR)
+			// Groupe insuffisant
+			and ($this->getUser('group') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -1161,8 +1161,8 @@ class user extends common
 					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
 					$logStatus = $captcha === true ? helper::translate('Erreur de mot de passe') : helper::translate('Erreur de captcha');
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
-					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'], false)) {
-						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1], false);
+					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
+						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1]);
 					}
 					// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
 					if ($this->getdata(['user', $userId, 'connectFail']) == $this->getData(['config', 'connect', 'attempt'])) {
