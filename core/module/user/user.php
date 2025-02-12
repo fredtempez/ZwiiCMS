@@ -203,7 +203,7 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
-			and ($this->getUrl('group') < self::GROUP_EDITOR)
+			and ($this->getUser('group') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -250,10 +250,10 @@ class user extends common
 				and (
 						// Impossible de s'auto-éditer
 					($this->getUser('id') === $this->getUrl(2)
-						and $this->getUrl('group') <= self::GROUP_VISITOR
+						and $this->getUser('group') <= self::GROUP_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('group') < self::GROUP_EDITOR)
+					or ($this->getUser('group') < self::GROUP_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -1157,8 +1157,8 @@ class user extends common
 					$notification = helper::translate('Captcha, identifiant ou mot de passe incorrects');
 					$logStatus = $captcha === true ? helper::translate('Erreur de mot de passe') : helper::translate('Erreur de captcha');
 					// Cas 1 le nombre de connexions est inférieur aux tentatives autorisées : incrément compteur d'échec
-					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'], false)) {
-						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1], false);
+					if ($this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])) {
+						$this->setData(['user', $userId, 'connectFail', $this->getdata(['user', $userId, 'connectFail']) + 1]);
 					}
 					// Cas 2 la limite du nombre de connexion est atteinte : placer le timer
 					if ($this->getdata(['user', $userId, 'connectFail']) == $this->getData(['config', 'connect', 'attempt'])) {
@@ -1296,8 +1296,8 @@ class user extends common
 			$this->saveLog(
 				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2) .
 				' Compte : ' . $this->getData(['user', $this->getUrl(2)]) .
-				' Temps : ' . $this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time() .
-				' Clé : ' . $this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'forgot'])))
+				' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) + 86400 < time()) .
+				' Clé : ' . ($this->getUrl(3) !== md5(json_encode($this->getData(['user', $this->getUrl(2), 'forgot']))))
 			);
 			// Valeurs en sortie
 			$this->addOutput([

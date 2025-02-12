@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 13.5.03
+**Corrections**
+- Mauvaise récupération du groupe de l'utilisateur, module de gestion des utilisateurs.
+- Petites corrections.
+
 ## Version 13.5.02
 **Correction**
 - La réinitialisation du mot de passe ne fonctionnait pas. L'échec du changement de mot de passe est enregistré dans le journal de Zwii.
