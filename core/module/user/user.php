@@ -207,7 +207,7 @@ class user extends common
 			// L'utilisateur n'existe pas
 			$this->getData(['user', $this->getUrl(2)]) === null
 			// Groupe insuffisant
-			and ($this->getUser('group') < self::GROUP_EDITOR)
+			and ($this->getUser('role') < self::GROUP_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -254,10 +254,10 @@ class user extends common
 				and (
 						// Impossible de s'auto-éditer
 					($this->getUser('id') === $this->getUrl(2)
-						and $this->getUrl('role') <= self::ROLE_VISITOR
+						and $this->getUser('role') <= self::ROLE_VISITOR
 					)
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUrl('role') < self::ROLE_EDITOR)
+					or ($this->getUser('role') < self::ROLE_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
