@@ -11,3 +11,4 @@ sitemap.xml
 .gitignore
 core/module/config/tool/data.key
 site/i18n/*.json
+.gitattributes
