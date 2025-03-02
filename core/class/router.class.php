@@ -158,6 +158,10 @@ class core extends common
 				$marginBottomSmall = $margin;
 				$marginBottomLarge = $margin;
 			}
+			// Pied de page fixe 
+			if ($this->getData(['theme', 'footer', 'fixed']) === true) {
+				$css .= 'footer {position: fixed;bottom: 0;left: 0;width: 100%; z-index: 1000;}';
+			}
 			$css .= $this->getData(['theme', 'site', 'width']) === '100%'
 				? '@media (min-width: 769px) {#site{margin:0 auto ' . $marginBottomLarge . ' 0 !important;}}@media (max-width: 768px) {#site{margin:0 auto ' . $marginBottomSmall . ' 0 !important;}}#site.light{margin:5% auto !important;} body{margin:0 auto !important;}  #bar{margin:0 auto !important;} body > header{margin:0 auto !important;} body > nav {margin: 0 auto !important;} body > footer {margin:0 auto !important;}'
 				: '@media (min-width: 769px) {#site{margin: ' . $margin . ' auto ' . $marginBottomLarge . ' auto !important;}}@media (max-width: 768px) {#site{margin: ' . $margin . ' auto ' . $marginBottomSmall . ' auto !important;}}#site.light{margin: 5% auto !important;} body{margin:0px 10px;}  #bar{margin: 0 -10px;} body > header{margin: 0 -10px;} body > nav {margin: 0 -10px;} body > footer {margin: 0 -10px;} ';
@@ -804,7 +808,8 @@ class core extends common
 			http_response_code(404);
 			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
 			// Parcourir les espaces
-			foreach (common::$languages as $langId => $value) {;
+			foreach (common::$languages as $langId => $value) {
+				;
 				if (
 					// l'espace existe
 					is_dir(common::DATA_DIR . $langId) &&
@@ -854,25 +859,25 @@ class core extends common
 			]);
 		}
 		switch ($this->output['display']) {
-				// Layout brut
+			// Layout brut
 			case common::DISPLAY_RAW:
 				echo $this->output['content'];
 				break;
-				// Layout vide
+			// Layout vide
 			case common::DISPLAY_LAYOUT_BLANK:
 				require 'core/layout/blank.php';
 				break;
-				// Affichage en JSON
+			// Affichage en JSON
 			case common::DISPLAY_JSON:
 				header('Content-Type: application/json');
 				echo json_encode($this->output['content']);
 				break;
-				// RSS feed
+			// RSS feed
 			case common::DISPLAY_RSS:
 				header('Content-type: application/rss+xml; charset=UTF-8');
 				echo $this->output['content'];
 				break;
-				// Layout allégé
+			// Layout allégé
 			case common::DISPLAY_LAYOUT_LIGHT:
 				ob_start();
 				require 'core/layout/light.php';
@@ -883,7 +888,7 @@ class core extends common
 				$content = preg_replace('/[\t ]+/u', ' ', $content);
 				echo $content;
 				break;
-				// Layout principal
+			// Layout principal
 			case common::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				require 'core/layout/main.php';
