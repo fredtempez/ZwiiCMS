@@ -886,7 +886,7 @@ class template
         $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
         // Pas de tableau d'Id transmis, générer une numérotation
         if (empty($rowsId)) {
-            $rowsId = range(0, count($body));
+            $rowsId = range(0, count($cols));
         }
         // Entêtes
         if ($head) {
