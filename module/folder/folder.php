@@ -20,7 +20,7 @@ class folder extends common
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
 	public static $actions = [
-		'config' => self::GROUP_EDITOR,
+		'config' => self::ROLE_EDITOR,
 		'index' => self::ROLE_VISITOR,
 	];
 

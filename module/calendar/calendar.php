@@ -29,11 +29,11 @@ class calendar extends common
 	public static $classes = ['' => 'A définir'];
 
 	public static $actions = [
-		'config' => self::GROUP_EDITOR,
-		'delete' => self::GROUP_EDITOR,
-		'dirs' => self::GROUP_EDITOR,
-		'add' => self::GROUP_EDITOR,
-		'edit' => self::GROUP_EDITOR,
+		'config' => self::ROLE_EDITOR,
+		'delete' => self::ROLE_EDITOR,
+		'dirs' => self::ROLE_EDITOR,
+		'add' => self::ROLE_EDITOR,
+		'edit' => self::ROLE_EDITOR,
 		'index' => self::ROLE_VISITOR
 	];
 
