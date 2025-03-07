@@ -1,0 +1,154 @@
+.rowArticle {
+	margin-bottom: 10px !important;
+}
+
+.blogPicture {
+	float: none;
+	border: 1px;
+}
+
+.blogPicture img {
+	width: 100%;
+	height: auto;
+	/*
+	border:1px solid lightgray;
+	box-shadow: 1px 1px 5px darkgray;
+	*/
+}
+
+#sectionTitle {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+.blogArticlePicture {
+	height: auto;
+	border: 1px solid lightgray;
+	box-shadow: 1px 1px 5px;
+}
+
+.blogArticlePictureleft {
+	float: left;
+	margin: 15px 10px 5px 0;
+}
+
+.blogArticlePictureright {
+	float: right;
+	margin: 15px 0 5px 10px;
+}
+
+.blogPicture:hover {
+	opacity: .7;
+}
+
+.row:after {
+	content: " ";
+	display: table;
+	clear: both;
+}
+
+.blogComment {
+	padding-right: 10px;
+	float: right;
+}
+
+.blogTitle {
+	/*background-color: #ECEFF1;*/
+	padding: 0px;
+	margin-bottom: 5px;
+}
+
+.blogContent {
+	position: relative;
+	float: left;
+	margin-top: 5px;
+	width: 100%;
+}
+
+.blogDate,
+.blogEdit {
+	font-size: 0.8em;
+	font-style: italic;
+	/*
+	color: grey;
+	*/
+}
+
+@media (max-width: 768px) {
+	.blogContent {
+		display: none;
+	}
+
+	.blogPicture img {
+		width: 50%;
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+.pict20 {
+	width: 20%;
+}
+
+.pict30 {
+	width: 30%;
+}
+
+.pict40 {
+	width: 40%;
+}
+
+.pict50 {
+	width: 50%;
+}
+
+.pict100 {
+	width: 100%;
+	margin: 15px 0 20px 0;
+}
+
+
+/*
+* Flux RSS
+*/
+#rssFeed {
+	text-align: right;
+}
+
+#rssFeed p {
+	display: inline;
+	vertical-align: top;
+}
+
+.rowArticle,
+article {
+	position: relative;
+	/* Autres styles pour les articles coupés */
+}
+
+.readMoreContainer {
+	position: absolute;
+}
+
+.readMoreContainer,
+.readMoreModernContainer {
+	bottom: 0px;
+	width: 100%;
+	height: 45%;
+	background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #f6f6f6 100%, #f6f6f6);
+}
+
+
+.readMoreButton {
+	position: absolute;
+	width: 20%;
+	bottom: 0px;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	z-index: 99;
+	background: linear-gradient(180deg, hsla(0, 0%, 100%, 0) 0, #f6f6f6 100%, #f6f6f6);
+	/* Autres styles pour le bouton */
+}
