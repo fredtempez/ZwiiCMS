@@ -18,7 +18,7 @@
 class sondage extends common
 {
 
-	const VERSION = '1.4';
+	const VERSION = '1.5';
 	const REALNAME = 'Sondage';
 	const DELETE = true;
 	const UPDATE = '0.0';

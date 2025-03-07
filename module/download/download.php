@@ -15,7 +15,7 @@
 class download extends common
 {
 
-	const VERSION = '4.2';
+	const VERSION = '4.3';
 	const REALNAME = 'Téléchargement';
 	const DELETE = true;
 	const UPDATE = '0.0';

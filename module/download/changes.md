@@ -1,3 +1,5 @@
+# Version 4.3
+- Compatibilité Zwii 13.6
 # Version 4.2
 - Le sélecteur de fichier affiche par défaut le chemin vers le fichier présent dans le champ.
 # Version 4.1
