@@ -31,6 +31,16 @@ class common
 	// Role MODERATOR, compatibilité avec les anciens modules :
 	const ROLE_MODERATOR = 2;
 	const ROLE_ADMIN = 3;
+
+	// Compatibilité avec les anciens version de modules
+	const GROUP_BANNED = -1;
+	const GROUP_VISITOR = 0;
+	const GROUP_MEMBER = 1;
+	const GROUP_EDITOR = 2;
+	// Role MODERATOR, compatibilité avec les anciens modules :
+	const GROUP_MODERATOR = 2;
+	const GROUP_ADMIN = 3;
+	// -------------------------------------------------
 	const SIGNATURE_ID = 1;
 	const SIGNATURE_PSEUDO = 2;
 	const SIGNATURE_FIRSTLASTNAME = 3;
