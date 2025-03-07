@@ -1,0 +1,37 @@
+/**
+ * This file is part of Zwii.
+ *
+ * For full copyright and license information, please see the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @author Rémi Jean <remi.jean@outlook.com>
+ * @copyright Copyright (C) 2008-2018, Rémi Jean
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @copyright Copyright (C) 2018-2020, Frédéric Tempez
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @link http://zwiicms.com/
+ */
+
+.inputRowContainer1,
+.inputRowContainer2,
+.inputRowContainer4,
+.inputColContainer {
+    display: grid;
+    gap: 10px; /* Espacement entre les inputs */
+}
+
+/* En lignes */
+.inputRowContainer1 { 
+    grid-template-columns: repeat(1, 1fr); /* 3 colonnes de largeur égale */  
+}
+.inputRowContainer2 {
+    grid-template-columns: repeat(2, 1fr); /* 3 colonnes de largeur égale */
+}
+.inputRowContainer4 {
+    grid-template-columns: repeat(4, 1fr); /* 3 colonnes de largeur égale */
+}
+
+.inputColContainer {
+    grid-template-rows:  repeat(50px, auto); /* 3 rangées ajustées à la hauteur des contenus */
+
+}

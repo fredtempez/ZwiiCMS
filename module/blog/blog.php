@@ -497,7 +497,7 @@ class blog extends common
 				)
 
 				or (
-					// Role
+					// Rôle
 					$this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent']) !== self::EDIT_OWNER
 					and $this->getUser('role') >= $this->getData(['module', $this->getUrl(0), 'posts', $value, 'editConsent'])
 				)
