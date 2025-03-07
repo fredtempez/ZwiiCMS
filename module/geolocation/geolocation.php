@@ -16,7 +16,7 @@ class geolocation extends common
 {
 
 
-	const VERSION = '1.2';
+	const VERSION = '1.3';
 	const REALNAME = 'Géolocalisation';
 	const DATADIRECTORY = self::DATA_DIR . 'geolocation/';
 
