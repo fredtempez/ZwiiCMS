@@ -1,0 +1,8 @@
+[
+	"packages/core/main.css",
+	"packages/daygrid/main.css",
+	"packages/core/main.js",
+	"packages/interaction/main.js",
+	"packages/daygrid/main.js",
+	"packages/core/locales-all.js"
+]

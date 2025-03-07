@@ -1,0 +1,52 @@
+.galleryPicture,
+.galleryGalleryPicture {
+	display: block;
+	border: var(--thumbBorder) solid var(--thumbBorderColor);
+	height: var(--thumbHeight);
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	position: relative;
+	-webkit-transition: opacity .3s ease-out;
+	transition: opacity .3s ease-out;
+	border-radius: var(--thumbRadius);
+	box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-webkit-box-shadow: var(--thumbShadows) var(--thumbShadowsColor);
+	-moz-box-shadow:  var(--thumbShadows) var(--thumbShadowsColor);
+}
+.galleryPicture:hover,
+.galleryGalleryPicture:hover {
+	opacity: var(--thumbOpacity);
+}
+.galleryName,
+.galleryGalleryName {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	border-radius: 0 0 calc(var(--thumbRadius)/2) calc(var(--thumbRadius)/2);
+	padding: var(--legendHeight);
+	background: var(--legendBgColor);
+	color: var(--legendTextColor);
+	text-align: var(--legendAlign);
+}
+
+.galleryRow {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: var(--thumbAlign);
+}
+
+.colPicture {
+   width :  var(--thumbWidth);
+   max-width: 50%;
+   padding: var(--thumbMargin);
+ }
+
+ @media (max-width: 432px) {
+	.colPicture {
+		width: 90%;
+		max-width: 90%;
+		margin: 0.5em;
+	  }
+ }
