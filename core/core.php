@@ -72,7 +72,7 @@ class common
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures.
 	 */
-	const ZWII_UPDATE_CHANNEL = 'test';
+	const ZWII_UPDATE_CHANNEL = 'v13';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
