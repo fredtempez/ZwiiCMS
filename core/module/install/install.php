@@ -288,11 +288,11 @@ class install extends common
 					// Nettoyage des fichiers d'installation précédents
 					if ($success && file_exists(self::TEMP_DIR . 'update.tar.gz')) {
 						$success = unlink(self::TEMP_DIR . 'update.tar.gz');
-						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
+						$message = $success ? '' : 'Impossible d&#39;effacer la mise à jour précédente';
 					}
 					if ($success && file_exists(self::TEMP_DIR . 'update.tar')) {
 						$success = unlink(self::TEMP_DIR . 'update.tar');
-						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
+						$message = $success ? '' : 'Impossible d&#39;effacer la mise &#224; jour pr&#233;c&#233;dente';
 					}
 
 					// Check la réécriture d'URL avant d'écraser les fichiers
