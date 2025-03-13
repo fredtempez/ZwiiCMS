@@ -119,7 +119,7 @@ class install extends common
 				self::$i18nUI = $_SESSION['ZWII_UI'];
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 				// Stockage de la langue par défaut afin d'afficher le site dans cette langue lors de l'affichage de la bannière de connexion.
-				$this->setData(['config','defaultLanguageUI', self::$i18nUI], false);
+				$this->setData(['config', 'defaultLanguageUI', self::$i18nUI], false);
 
 				// par défaut le contenu est la langue d'installation
 				$_SESSION['ZWII_SITE_CONTENT'] = self::$i18nUI;
@@ -168,9 +168,9 @@ class install extends common
 					$userMail,
 					'Installation de votre site',
 					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Voici les détails de votre installation.<br><br>' .
-					'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
-					'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+						'Voici les détails de votre installation.<br><br>' .
+						'<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>' .
+						'<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null,
 					'no-reply@localhost'
 				);
@@ -272,15 +272,14 @@ class install extends common
 					 *  Le mode maintenance n'est pas activé
 					 *  Son état est sauvegardé pour être restauré après la mise à jour
 					 * */
-					if ($this->getData(['config', 'maintenance']) === false) {
-						// Activer le modemaintenance
-						$this->setData(['config', 'maintenance', true]);
-						// Laisser les fichiers se fermer
-						usleep(500000); // 500 milliseconds
-					} else {
-						// La présence de ce fichier un marqueur de maintenance permanente
+					if ($this->getData(['config', 'maintenance']) === true) {
+						// Mode permanent pour éviter la désactivation
 						touch(self::DATA_DIR . '.maintenance');
 					}
+					// Activer le mode maintenance et laisser les fichiers se fermer
+					$this->setData(['config', 'maintenance', true]);
+					usleep(500000); // 500 milliseconds
+
 					// Sauvegarde htaccess
 					if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 						$success = copy('.htaccess', '.htaccess' . '.bak');
@@ -294,6 +293,14 @@ class install extends common
 					if ($success && file_exists(self::TEMP_DIR . 'update.tar')) {
 						$success = unlink(self::TEMP_DIR . 'update.tar');
 						$message = $success ? '' : 'Impossible d\'effacer la mise à jour précédente';
+					}
+
+					// Check la réécriture d'URL avant d'écraser les fichiers
+					// Création du fichier de marqueur et l'effacer si présent
+					if (helper::checkRewrite()) {
+						touch(self::DATA_DIR . '.rewrite');
+					} elseif (file_exists(self::DATA_DIR . '.rewrite')) {
+						unlink(self::DATA_DIR . '.rewrite');
 					}
 					// Sauvegarde le message dans le journal
 					if (!empty($message)) {
@@ -346,11 +353,6 @@ class install extends common
 					$success = true;
 					$message = '';
 
-					// Check la réécriture d'URL avant d'écraser les fichiers
-					if (helper::checkRewrite()) {
-						touch(self::DATA_DIR . '.rewrite');
-					}
-
 					// Décompression et installation
 					try {
 						// Décompression dans le dossier de fichier temporaires
@@ -388,6 +390,13 @@ class install extends common
 				case 4:
 					$success = true;
 					$message = '';
+
+					// Restaure le mode maintenance si permanent
+					$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
+					// Dans tous les cas supprimer le drapeau de maintenance
+					if (file_exists(self::DATA_DIR . '.maintenance')) {
+						unlink(self::DATA_DIR . '.maintenance');
+					}
 
 					/**
 					 * Restaure le fichier htaccess
@@ -427,18 +436,6 @@ class install extends common
 							);
 							unlink(self::DATA_DIR . '.rewrite');
 						}
-					}
-
-					// Pas de maintenance permanente, on désactive la maintenance
-					/**
-					 * La présence du marqueur de maintenance .maintenance indique une maintenance permanente
-					 */
-
-					$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
-
-					// Dans tous les cas supprimer le drapeau de maintenance
-					if (file_exists(self::DATA_DIR . '.maintenance')) {
-						unlink(self::DATA_DIR . '.maintenance');
 					}
 
 					/**
@@ -508,5 +505,4 @@ class install extends common
 			]);
 		}
 	}
-
 }
