@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Versions 13.6.01
+- Hauteur des boutons InputFileDelete.
+
 ## Versions 13.6.00
 **Améliorations :**
 - Les groupes d'utilisateurs deviennent des rôles.
