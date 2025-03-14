@@ -39,7 +39,7 @@
 					</div>
 					<div class="col3">
 						<?php echo template::select('connectAuthMail', array_merge([0 => 'Aucune'], self::$roleNews), [
-							'label' => 'Validation par clé ⚠️',
+							'label' => 'Code de sécurité',
 							'selected' => $this->getData(['config', 'connect', 'mailAuth']),
 							'help' => 'La connexion est confirmée à l\'aide d\'une clé transmise par messagerie. Depuis le rôle sélectionné et les rôles supérieurs.'
 						]); ?>
