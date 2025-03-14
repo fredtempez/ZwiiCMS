@@ -1,6 +1,9 @@
 # Notes de mises à jour
 
 ## Versions 13.6.01
+- Traductions :
+  - Basculement dans la langue de l'interface lors de l'installation. Fonctionnalité désactivée lors de la mise en cache des sessions.
+  - Amléioration des traductions.
 - Hauteur des boutons InputFileDelete.
 - Evite un bouclage sur la page de connexion lorsque la page d'accueil n'est pas accessible suite à une incohérence dans la gestion des dossiers de langue.
 - Mise à jour automatique :
