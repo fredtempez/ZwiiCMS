@@ -53,10 +53,7 @@ class install extends common
 			$this->isPost()
 		) {
 			$lang = $this->getInput('installLanguage');
-			// Pour la suite  de l'installation
-			// setcookie('ZWII_UI', $lang, time() + 3600, helper::baseUrl(false, false), '', false, false);
-
-			$_SESSION['ZWII_UI'] = $this->getInput('installLanguage');
+			$this->setData(['config', 'defaultLanguageUI', $lang]);
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -97,12 +94,9 @@ class install extends common
 				// $this->getUser('permission', __CLASS__, __FUNCTION__) !== true &&
 				$this->isPost()
 			) {
-				$success = true;
-
 				// Double vérification pour le mot de passe
 				if ($this->getInput('installPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('installConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
 					self::$inputNotices['installConfirmPassword'] = 'Incorrect';
-					$success = false;
 				}
 				// Utilisateur
 				$userFirstname = $this->getInput('installFirstname', helper::FILTER_STRING_SHORT, true);
@@ -111,7 +105,7 @@ class install extends common
 				$userId = $this->getInput('installId', helper::FILTER_ID, true);
 
 				// Validation de la langue transmise
-				self::$i18nUI = $_SESSION['ZWII_UI'];
+				self::$i18nUI = $this->getData(['config', 'defaultLanguageUI']);
 				self::$i18nUI = array_key_exists(self::$i18nUI, self::$languages) ? self::$i18nUI : 'fr_FR';
 				// Stockage de la langue par défaut afin d'afficher le site dans cette langue lors de l'affichage de la bannière de connexion.
 				$this->setData(['config', 'defaultLanguageUI', self::$i18nUI], false);
@@ -221,6 +215,9 @@ class install extends common
 				// Fixe l'adresse from pour les envois d'email
 				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])], false);
 
+				// Force la sauvegarde
+				$this->saveDB('config');
+
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(),
@@ -228,8 +225,9 @@ class install extends common
 					'state' => true
 				]);
 			}
-			// Force la sauvegarde
-			$this->saveDB('config');
+
+			// Langue par défaut définie précédemment
+			self::$i18nUI = $this->getData(['config', 'defaultLanguageUI']);
 
 			// Valeurs en sortie
 			$this->addOutput([
