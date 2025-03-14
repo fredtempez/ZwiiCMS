@@ -144,7 +144,7 @@
                 </div>
 
                 <div class="col3">
-                    <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher dans le site', [
+                    <?php echo template::checkbox('themeFooterDisplaySearch', true, 'Rechercher', [
                         'checked' => $this->getData(['locale', 'searchPageId']) === 'none' ? false : $this->getData(['theme', 'footer', 'displaySearch']),
                         'disabled' => $this->getData(['locale', 'searchPageId']) === 'none' ? true : false,
                         'help' => 'Sélectionnez une page pour activer'
@@ -152,7 +152,7 @@
                 </div>
                 <div class="col3">
                     <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn(theme::$pagesList, 'title', 'SORT_ASC')), [
-                        'label' =>  helper::translate('Rechercher dans le site') . '&nbsp;' . template::flag('selected', '20px'),
+                        'label' =>  helper::translate('Page pour la recherche') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
                 </div>
