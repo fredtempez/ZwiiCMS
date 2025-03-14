@@ -2,6 +2,12 @@
 
 ## Versions 13.6.01
 - Hauteur des boutons InputFileDelete.
+- Evite un bouclage sur la page de connexion lorsque la page d'accueil n'est pas accessible suite à une incohérence dans la gestion des dossiers de langue.
+- Mise à jour automatique :
+  - Activation du mode maintenance modifié durant une mise à jour.
+  - Ajoute un avertissemeent sur la réécriture en cas de déconnexion.
+  - Mise au format HTML des messages d'erreur.
+  - Affiche l'erreur même si le message de déconnexion est levé.
 
 ## Versions 13.6.00
 **Améliorations :**
