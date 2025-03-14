@@ -308,7 +308,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $message
+						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 				break;
@@ -341,7 +341,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $message
+						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 				break;
@@ -379,7 +379,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $message,
+						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 				break;
@@ -456,7 +456,7 @@ class install extends common
 					'display' => self::DISPLAY_JSON,
 					'content' => [
 						'success' => $success,
-						'data' => $message
+						'data' => json_encode($message, JSON_UNESCAPED_UNICODE)
 					]
 				]);
 		}
