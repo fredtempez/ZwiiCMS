@@ -256,7 +256,6 @@ class language extends common
 					$value['version'],
 					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
-					'',
 					template::button('translateContentLanguageUIEdit' . $file, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
 						'value' => template::ico('pencil'),

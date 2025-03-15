@@ -22,10 +22,12 @@ $(document).ready((function () {
     $("#userFilterGroup, #userFilterFirstName, #userFilterLastName").change(function () {
         $("#userFilterUserForm").submit();
     });
-
+    // Transmettre la langue au script Datatables.net
+    var lang = getCookie('ZWII_UI');
+    var languageUrl = 'core/vendor/datatables/' + lang + '.json';
     $('#dataTables').DataTable({
         language: {
-            url: "core/vendor/datatables/french.json",
+            url: languageUrl
         },
         locale: 'fr',
         stateSave: true,

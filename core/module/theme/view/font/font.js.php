@@ -8,20 +8,24 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-$(".themeFontDelete").on("click", (function() {
-    var _this = $(this);
-    return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", (function() {
-        $(location).attr("href", _this.attr("href"))
-    }))
-}));
-$('#dataTables').DataTable({
-    language: {
-        url: "core/vendor/datatables/french.json",
-    },
-    locale: 'fr',
-    stateSave: true,
-    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
-    "columnDefs": [{
+$(document).ready((function () {
+    $(".themeFontDelete").on("click", (function () {
+        var _this = $(this);
+        return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", (function () {
+            $(location).attr("href", _this.attr("href"))
+        }))
+    }));
+    // Transmettre la langue au script Datatables.net
+    var lang = getCookie('ZWII_UI');
+    var languageUrl = 'core/vendor/datatables/' + lang + '.json';
+    $('#dataTables').DataTable({
+        language: {
+            url: languageUrl
+        },
+        locale: 'fr',
+        stateSave: true,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
+        "columnDefs": [{
             target: 5,
             orderable: false,
             searchable: false
@@ -31,5 +35,6 @@ $('#dataTables').DataTable({
             orderable: false,
             searchable: false
         }
-    ]
-});
+        ]
+    });
+}));
