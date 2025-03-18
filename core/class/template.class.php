@@ -859,68 +859,70 @@ class template
         );
     }
 
-    /**
-     * Crée un tableau
-     * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
-     * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
-     * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
-     * @param array $rowsId Id pour la numérotation des rows (format : [id colonne1, id colonne2, etc])
-     * @param array $attributes Attributs ($key => $value)
-     * @return string
-     */
-    public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $rowsId = [])
-    {
-        // Attributs par défaut
-        $attributes = array_merge([
-            'class' => '',
-            'classWrapper' => '',
-            'id' => ''
-        ], $attributes);
-        // Traduction de l'aide et de l'étiquette
-        foreach ($head as $value) {
-            $head[array_search($value, $head)] = helper::translate($value);
-        }
-        // Début du wrapper
-        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
-        // Début tableau
-        $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
-        // Pas de tableau d'Id transmis, générer une numérotation
-        if (empty($rowsId)) {
-            $rowsId = range(0, count($cols));
-        }
-        // Entêtes
-        if ($head) {
-            // Début des entêtes
-            $html .= '<thead>';
-            $html .= '<tr class="nodrag">';
-            $i = 0;
-            foreach ($head as $th) {
-                $html .= '<th id="' . $rowsId[$i] . '" class="col' . $cols[$i++] . '">' . $th . '</th>';
-            }
-            // Fin des entêtes
-            $html .= '</tr>';
-            $html .= '</thead>';
-        }
-        // Début contenu
-        $j = 0;
-        foreach ($body as $tr) {
-            // Id de ligne pour les tableaux drag and drop
-            $html .= '<tr>';
-            $i = 0;
-            foreach ($tr as $td) {
-                $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
-            }
-            $html .= '</tr>';
-        }
-        // Fin contenu
-        $html .= '</tbody>';
-        // Fin tableau
-        $html .= '</table>';
-        // Fin container
-        $html .= '</div>';
-        // Retourne le html
-        return $html;
+/**
+ * Crée un tableau
+ * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
+ * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
+ * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
+ * @param array $attributes Attributs ($key => $value)
+ * @param array $colsId Id pour les colonnes (format : [id colonne1, id colonne2, etc])
+ * @param array $rowsId Id pour les lignes (format : [id ligne1, id ligne2, etc])
+ * @return string
+ */
+public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $colsId = [], array $rowsId = [])
+{
+    // Attributs par défaut
+    $attributes = array_merge([
+        'class' => '',
+        'classWrapper' => '',
+        'id' => ''
+    ], $attributes);
+    // Traduction de l'aide et de l'étiquette
+    foreach ($head as $value) {
+        $head[array_search($value, $head)] = helper::translate($value);
     }
+    // Début du wrapper
+    $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
+    // Début tableau
+    $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
+    // Pas de tableau d'Id de colonnes transmis, générer une numérotation
+    if (empty($colsId)) {
+        $colsId = range(0, count($cols) - 1);
+    }
+    // Entêtes
+    if ($head) {
+        // Début des entêtes
+        $html .= '<thead>';
+        $html .= '<tr class="nodrag">';
+        $i = 0;
+        foreach ($head as $th) {
+            $html .= '<th id="' . $colsId[$i] . '" class="col' . $cols[$i++] . '">' . $th . '</th>';
+        }
+        // Fin des entêtes
+        $html .= '</tr>';
+        $html .= '</thead>';
+    }
+    // Début contenu
+    $html .= '<tbody>';
+    foreach ($body as $j => $tr) {
+        // Id de ligne pour les tableaux drag and drop
+        $rowId = isset($rowsId[$j]) ? $rowsId[$j] : '';
+        $html .= '<tr' . ($rowId ? ' id="' . $rowId . '"' : '') . '>';
+        $i = 0;
+        foreach ($tr as $td) {
+            $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
+        }
+        $html .= '</tr>';
+    }
+    // Fin contenu
+    $html .= '</tbody>';
+    // Fin tableau
+    $html .= '</table>';
+    // Fin container
+    $html .= '</div>';
+    // Retourne le html
+    return $html;
+}
 
     /**
      * Crée un champ texte court
