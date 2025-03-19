@@ -704,6 +704,7 @@
     "Erreur de captcha": "Error de captcha",
     "Clé de sécurité": "Clave de seguridad",
     "Message de test": "Mensaje de prueba",
-     "Clé d'authentification envoyée à votre adresse mail %s": "Clave de autenticación enviada a su dirección de correo electrónico %s",
-     "Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur": "El correo de restablecimiento no pudo ser enviado, contacte al administrador"
+    "Clé d'authentification envoyée à votre adresse mail %s": "Clave de autenticación enviada a su dirección de correo electrónico %s",
+    "Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur": "El correo de restablecimiento no pudo ser enviado, contacte al administrador",
+    "Alignement avec le contenu": "Alineación con el contenido"
 }

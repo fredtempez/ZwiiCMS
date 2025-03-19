@@ -152,7 +152,7 @@
                 </div>
                 <div class="col3">
                     <?php echo template::select('configSearchPageId', array_merge(['none' => 'Aucune'], helper::arrayColumn(theme::$pagesList, 'title', 'SORT_ASC')), [
-                        'label' =>  helper::translate('Page pour la recherche') . '&nbsp;' . template::flag('selected', '20px'),
+                        'label' =>  helper::translate('Page de recherche') . '&nbsp;' . template::flag('selected', '20px'),
                         'selected' => $this->getData(['locale', 'searchPageId'])
                     ]); ?>
                 </div>

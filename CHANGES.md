@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Versions 13.6.02
+- Traductions corrigées
+- Libellé dans le thème et le footer.
+
 ## Versions 13.6.01
 - Traductions :
   - Basculement dans la langue de l'interface lors de l'installation. Fonctionnalité désactivée lors de la mise en cache des sessions.
