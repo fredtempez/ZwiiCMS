@@ -12,36 +12,36 @@
  * @link http://zwiicms.fr/
  */
 
-$( document ).ready(function() {
+$(document).ready(function () {
 
 
 	/**
 	 * Tri de la galerie avec drag and drop
 	 */
 	$("#galleryTable").tableDnD({
-		onDrop: function(table, row) {
+		onDrop: function (table, row) {
 			$("#galleryConfigFilterResponse").val($.tableDnD.serialize());
 			sortGalleries();
 			location.reload();
 		},
 		// Supprime le tiret des séparateurs
-		serializeRegexp:  ""
+		serializeRegexp: ""
 	});
+
+	/**
+ 	* Tri dynamique des galeries
+ 	*/
+	function sortGalleries() {
+		var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortGalleries";
+		var data = $("#galleryConfigFilterResponse").val();
+		$.ajax({
+			type: "POST",
+			url: url,
+			data: {
+				response: data
+			}
+		});
+	}
 });
 
 
-/**
- * Tri dynamique des galeries
- */
-
-function sortGalleries() {
-	var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/sortGalleries";
-	var data = $("#galleryConfigFilterResponse").val();
-	$.ajax({
-		type: "POST",
-		url: url ,
-		data: {
-			response : data
-		}
-	});
-}

@@ -28,4 +28,5 @@ $( document ).ready(function() {
 	if ( $("#pictureContainer").hasClass("fullScreen") ) {
 		$('a#homePicture')[0].click();
 	}
+	
  });

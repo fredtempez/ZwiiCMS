@@ -1,3 +1,5 @@
+# Version 4.4
+- Numéro d'ordre des galleries.
 # Version 4.3
 - Remplacement du nom générique de classe dans les vues.
 # Version 4.2

@@ -19,8 +19,8 @@
 	</div>
 	<div class="row">
 		<div class="col12">
-			<?php if(gallery::$pictures): ?>
-				<?php echo template::table([1, 4, 1, 5, 1], gallery::$pictures, ['#','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], gallery::$picturesId ); ?>
+			<?php if(gallery::$pictures):?>
+				<?php echo template::table([1, 4, 1, 5, 1], gallery::$pictures, ['Position','Image', 'Couverture','Légende',''],['id' => 'galleryTable'], [], gallery::$picturesId); ?>
 				<?php echo template::hidden('galleryEditFormResponse'); ?>
 				<?php echo template::hidden('galleryEditSort',['value' => $this->getData(['module',  $this->getUrl(0), 'content', $this->getUrl(2), 'config', 'sort' ])]);?>
 				<?php echo template::hidden('galleryEditFormGalleryName',['value' => $this->getUrl(2)]); ?>
