@@ -1,6 +1,7 @@
 # Notes de mises à jour
 
 ## Versions 13.6.01
+### Corrections & améliorations du code
 - Traductions :
   - Basculement dans la langue de l'interface lors de l'installation. Fonctionnalité désactivée lors de la mise en cache des sessions.
   - Amélioration des traductions.
@@ -11,9 +12,8 @@
   - Ajoute un avertissement sur la réécriture en cas de déconnexion.
   - Mise au format HTML des messages d'erreur.
   - Affiche l'erreur même si le message de déconnexion est levé.
-### Corrections
-- Module Galerie 4.4, corrige le tri des galeries.
-- Helper : le template table bénéficie d'un nouveau paramètre qui permet de nommer les lignes du tableau, indispensable pour le scip de tri manuel des galeries et des images dans la galerie.
+- Module Gallery 4.4, corrige le tri manuel des galeries et des images dans une galerie
+- Helper : le template table bénéficie d'un nouveau paramètre qui permet de nommer les lignes du tableau, indispensable pour le script de tri manuel des galeries et des images dans la galerie.
 
 ## Versions 13.6.00
 **Améliorations :**
