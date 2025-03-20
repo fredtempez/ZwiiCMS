@@ -3,6 +3,7 @@
 ## Versions 13.6.02
 - Traductions corrigées
 - Libellé dans le thème et le footer.
+- Corrige le basculement en français de la langue par défaut après soumission de la configuration du site.
 
 ## Versions 13.6.01
 ### Corrections & améliorations du code

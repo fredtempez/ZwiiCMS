@@ -498,7 +498,8 @@ class config extends common
 						'showPassword' => $this->getInput('connectShowPassword', helper::FILTER_BOOLEAN),
 						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
 						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_INT),
-					]
+					],
+					"defaultLanguageUI" => $this->getData(['config', 'defaultLanguageUI']),
 				]
 			]);
 
