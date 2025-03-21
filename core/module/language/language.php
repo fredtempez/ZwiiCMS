@@ -257,12 +257,14 @@ class language extends common
 					helper::dateUTF8('%d/%m/%Y', $value['date'], self::$i18nUI),
 					//self::$i18nUI === $file ? helper::translate('Interface') : '',
 					'',
+					/*
 					template::button('translateContentLanguageUIEdit' . $file, [
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/edit/' . $file,
 						'value' => template::ico('pencil'),
 						'help' => 'Éditer',
 						'disabled' => 'fr_FR' === $file
-					]),
+					]),*/
+					'',
 					template::button('translateContentLanguageUIDownload' . $file, [
 						'class' => isset($storeUI[$file]['version']) && version_compare($installedUI[$file]['version'], $storeUI[$file]['version']) < 0 ? 'buttonGreen' : '',
 						'href' => helper::baseUrl() . $this->getUrl(0) . '/update/' . $file,
