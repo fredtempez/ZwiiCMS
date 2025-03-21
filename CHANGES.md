@@ -1,9 +1,10 @@
 # Notes de mises à jour
 
 ## Versions 13.6.02
-- Traductions corrigées
-- Libellé dans le thème et le footer.
-- Corrige le basculement en français de la langue par défaut après soumission de la configuration du site.
+Traductions :
+  - Corrige une régression dans le module de gestion des langues empêchant la modification des paramétres du site localisé.
+  - Corrige le basculement en français de la langue par défaut après soumission de la configuration du site.
+  - Libellés dans le thème et le footer.
 
 ## Versions 13.6.01
 ### Corrections & améliorations du code
