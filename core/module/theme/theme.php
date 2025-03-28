@@ -707,7 +707,7 @@ class theme extends common
 			$type === 'files' ? 'imported' : 'files';
 			$resource = $type === 'imported' ? $this->getInput('fontAddUrl', null) : $this->getInput('fontAddFile', null);
 			if (!empty($resource)) {
-				$fontId = $this->getInput('fontAddFontId', null, true);
+				$fontId = $this->getInput('fontAddFontId', helper::FILTER_ID, true);
 				$fontName = $this->getInput('fontAddFontName', null, true);
 				$fontFamilyName = $this->getInput('fontAddFontFamilyName', null, true);
 
@@ -781,7 +781,7 @@ class theme extends common
 		) {
 			// Type d'import en ligne ou local
 			$type = $this->getInput('fontEditUrl', helper::FILTER_BOOLEAN) ? 'imported' : 'files';
-			$fontId = $this->getInput('fontEditFontId', null, true);
+			$fontId = $this->getInput('fontEditFontId', helper::FILTER_ID, true);
 			$resource = $this->getData(['font', $type, $fontId, 'resource']);
 			$fontName = $this->getInput('fontEditFontName', null, true);
 			$fontFamilyName = $this->getInput('fontEditFontFamilyName', null, true);

@@ -43,7 +43,7 @@
 				<div class="col6">
 					<?php echo template::text('fontEditFontId', [
 						'autocomplete' => 'off',
-						'label' => 'Identifiant (sans espace ni majuscule)',
+						'label' => 'Identifiant',
 						'value' =>  $this->getUrl(3),
 						'readonly' => true
 					]); ?>

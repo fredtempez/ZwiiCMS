@@ -41,7 +41,7 @@
 				<div class="col6">
 					<?php echo template::text('fontAddFontId', [
 						'autocomplete' => 'off',
-						'label' => 'Identifiant (sans espace ni majuscule)',
+						'label' => 'Identifiant',
 						'placeholder' => 'big-marker-extrude'
 
 					]); ?>
