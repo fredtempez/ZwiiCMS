@@ -807,7 +807,7 @@ class user extends common
 			$this->isPost()
 		) {
 			// Nombre de profils de ce rôle
-			$role = $this->getInput('profilAddGroup');
+			$role = $this->getInput('profilAddRole', helper::FILTER_STRING_SHORT);
 			$profil = count($this->getData(['profil', $role]));
 			// Gère le chemin
 			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
