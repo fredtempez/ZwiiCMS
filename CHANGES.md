@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Versions 13.6.03
+- Changement de dépôt vers https://codeberg.org/fredtempez/
+- Corrige un bug dans la création d'un id de profil.
+
 ## Versions 13.6.02
 Traductions :
   - Corrige une régression dans le module de gestion des langues empêchant la modification des paramétres du site localisé.

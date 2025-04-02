@@ -64,7 +64,7 @@ class common
 	const ZWII_VERSION = '13.6.03';
 
 	// URL autoupdate
-	const ZWII_UPDATE_URL = 'https://forge.chapril.org/ZwiiCMS-Team/cms-update/raw/branch/master/';
+	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
 	/**
 	 * Branche de base pour la mise à jour

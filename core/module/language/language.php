@@ -17,7 +17,7 @@ class language extends common
 {
 
 	// URL langues de l'UI en ligne
-	const ZWII_UI_URL = 'https://forge.chapril.org/ZwiiCMS-Team/zwiicms-translations/raw/branch/master/v13/';
+	const ZWII_UI_URL = 'https://codeberg.org/fredtempez/zwiicms-translations/raw/branch/master/v13/';
 
 	public static $actions = [
 		'index' => self::ROLE_ADMIN,
