@@ -39,11 +39,10 @@
 				<?php echo helper::translate('Mise à jour terminée avec succès.'); ?>
 			</div>
 		</div>
-		<div class="col3 verticalAlignTop">
+		<div class="col1 offset2 verticalAlignTop">
 			<?php echo template::button('installUpdateEnd', [
-				'value' => 'Terminer',
+				'value' => template::ico('check'),
 				'href' => helper::baseUrl() . 'config',
-				'ico' => 'check',
 				'class' => 'disabled'
 			]); ?>
 		</div>

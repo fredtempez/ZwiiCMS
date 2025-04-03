@@ -1,5 +1,14 @@
 # Notes de mises à jour
 
+## Versions 13.6.04
+- Libellé bouton Terminer.
+
+## Versions 13.6.03
+Corrections : 
+- Bug de réinitalisation de mot de passe.
+- Petites corrections fichiers de langue.
+- Liens vers les dépôts de mise à jour.
+
 ## Versions 13.6.02
 Traductions :
   - Corrige une régression dans le module de gestion des langues empêchant la modification des paramétres du site localisé.
