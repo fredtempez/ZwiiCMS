@@ -747,4 +747,77 @@ class helper
 		return $decrypted;
 	}
 
+		/**
+	 * Scan le contenu d'un dossier et de ses sous-dossiers (pour la compatibilité avec le module galerie)
+	 * @param string $dir Dossier à scanner
+	 * @return array
+	 */
+	/**
+     * Recursively scans a directory and its subdirectories
+     * Used primarily by the gallery module to list all available directories
+     * 
+     * @param string $dir Base directory path to scan
+     * @return array     List of all directory paths found, where:
+     *                   - Each entry is a full path to a directory
+     *                   - Paths use forward slashes (/) as directory separators
+     *                   - Only directories are included (no files)
+     * 
+     * Example output:
+     * [
+     *   "site/file/source/gallery",
+     *   "site/file/source/gallery/2023",
+     *   "site/file/source/gallery/2023/summer"
+     * ]
+     */
+    public static function scanDir($dir)
+    {
+        return array_values(helper::getSubdirectories($dir));
+    }
+
+	/**
+     * Lists all subdirectories recursively in a given directory
+     * Used by user profiles to manage file access permissions in RFM (Responsive File Manager)
+     * 
+     * @param string $dir      Base directory path to scan
+     * @param string $basePath Current path for recursive calls (used internally)
+     * @return array          Associative array where:
+     *                       - keys are human-readable paths (e.g., "Folder/Subfolder")
+     *                       - values are actual filesystem paths (e.g., "site/file/source/folder/subfolder/")
+     * 
+     * Example output:
+     * [
+     *   "Documents" => "site/file/source/documents/",
+     *   "Documents/Reports" => "site/file/source/documents/reports/",
+     *   "Images" => "site/file/source/images/"
+     * ]
+     */
+    public static function getSubdirectories($dir, $basePath = '')
+    {
+        $subdirs = array();
+        // Open the specified directory
+        $dh = opendir($dir);
+        // Loop through all files and directories
+        while (($file = readdir($dh)) !== false) {
+            // Skip parent and current directory entries
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            // Build the complete file or directory path
+            $path = $dir . '/' . $file;
+            // Check if it's a directory
+            if (is_dir($path)) {
+                // Build the key and value for the associative array
+                $key = $basePath === '' ? ucfirst($file) : $basePath . '/' . $file;
+                $value = $path . '/';
+                // Add the key and value to the associative array
+                $subdirs[$key] = $value;
+                // Recursively call the function to add subdirectories
+                $subdirs = array_merge($subdirs, helper::getSubdirectories($path, $key));
+            }
+        }
+        // Close the directory handler
+        closedir($dh);
+        return $subdirs;
+    }
+
 }

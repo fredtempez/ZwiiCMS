@@ -15,7 +15,7 @@
  */
 class gallery extends common
 {
-	const VERSION = '4.4';
+	const VERSION = '4.5';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 	const SORT_ASC = 'SORT_ASC';
@@ -556,7 +556,7 @@ class gallery extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
-			'content' => galleriesHelper::scanDir(self::FILE_DIR . 'source')
+			'content' => helper::scanDir(self::FILE_DIR . 'source')
 		]);
 	}
 
@@ -1046,26 +1046,5 @@ class gallery extends common
 				'notification' => helper::translate('Action interdite')
 			]);
 		}
-	}
-}
-
-class galleriesHelper extends helper
-{
-	/**
-	 * Scan le contenu d'un dossier et de ses sous-dossiers
-	 * @param string $dir Dossier à scanner
-	 * @return array
-	 */
-	public static function scanDir($dir)
-	{
-		$dirContent = [];
-		$iterator = new DirectoryIterator($dir);
-		foreach ($iterator as $fileInfos) {
-			if ($fileInfos->isDot() === false and $fileInfos->isDir()) {
-				$dirContent[] = $dir . '/' . $fileInfos->getBasename();
-				$dirContent = array_merge($dirContent, self::scanDir($dir . '/' . $fileInfos->getBasename()));
-			}
-		}
-		return $dirContent;
 	}
 }

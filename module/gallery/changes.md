@@ -1,3 +1,5 @@
+# Version 4.5
+- Externalisation de la recherche de dossiers dans le helper. Ajout d'une méthode ppour obtenir un tableau associatif dossier -> chemin dossier.
 # Version 4.4
 - Numéro d'ordre des galleries.
 # Version 4.3

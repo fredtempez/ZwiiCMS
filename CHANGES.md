@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.6.04
+- Unification de la méthode d'affichage des dossiers dans le module gallery et geogallery.
+
 ## Versions 13.6.03
 - Changement de dépôt vers https://codeberg.org/fredtempez/
 - Corrige un bug dans la création d'un id de profil.

@@ -15,7 +15,7 @@
 class geogallery extends common
 {
 
-	const VERSION = '1.3';
+	const VERSION = '1.4';
 	const REALNAME = 'GéoGalerie';
 	const DATADIRECTORY = self::DATA_DIR . 'geogallery/';
 
@@ -213,7 +213,7 @@ class geogallery extends common
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
-			'content' => geogalleriesHelper::scanDir(self::FILE_DIR . 'source')
+			'content' => helper::scanDir(self::FILE_DIR . 'source')
 		]);
 	}
 
@@ -509,26 +509,4 @@ class geogallery extends common
 		$this->setData(['page', $this->getUrl(0), 'css', $cssContent]);
 	}
 
-}
-
-class geogalleriesHelper extends helper
-{
-
-	/**
-	 * Scan le contenu d'un dossier et de ses sous-dossiers
-	 * @param string $dir Dossier à scanner
-	 * @return array
-	 */
-	public static function scanDir($dir)
-	{
-		$dirContent = [];
-		$iterator = new DirectoryIterator($dir);
-		foreach ($iterator as $fileInfos) {
-			if ($fileInfos->isDot() === false and $fileInfos->isDir()) {
-				$dirContent[] = $dir . '/' . $fileInfos->getBasename();
-				$dirContent = array_merge($dirContent, self::scanDir($dir . '/' . $fileInfos->getBasename()));
-			}
-		}
-		return $dirContent;
-	}
 }

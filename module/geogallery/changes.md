@@ -1,3 +1,5 @@
+# Version 1.4
+- Externalisation de la recherche de dossiers dans le helper. Ajout d'une méthode ppour obtenir un tableau associatif dossier -> chemin dossier.
 # Version 1.3
 - Compatibilité ZwiICMS 13.6.00
 # Version 1.2
