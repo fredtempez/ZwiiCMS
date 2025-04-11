@@ -1,3 +1,5 @@
+# Version 4.5
+- Supprime une message de debogage.
 # Version 4.4
 - Numéro d'ordre des galleries.
 # Version 4.3

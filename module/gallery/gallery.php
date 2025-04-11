@@ -15,7 +15,7 @@
  */
 class gallery extends common
 {
-	const VERSION = '4.4';
+	const VERSION = '4.5';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 	const SORT_ASC = 'SORT_ASC';
@@ -354,8 +354,6 @@ class gallery extends common
 				'content',
 				$galleryName
 			]));
-			var_dump($data);
-			die();
 		}
 	}
 
