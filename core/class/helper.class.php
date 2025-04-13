@@ -2,13 +2,17 @@
 
 class helper
 {
-
-	/** Statut de la réécriture d'URL (pour éviter de lire le contenu du fichier .htaccess à chaque self::baseUrl()) */
+	/**
+	 * Statut de la réécriture d'URL (pour éviter de lire le contenu du fichier .htaccess à chaque self::baseUrl())
+	 */
 	public static $rewriteStatus = null;
 
-	/** Filtres personnalisés */
+	/**
+	 * Filtres personnalisés
+	 */
 	const FILTER_BOOLEAN = 1;
-	const FILTER_DATETIME = 2; // filtre pour le champ de formulaire A conserver pour la compatibilité
+
+	const FILTER_DATETIME = 2;  // filtre pour le champ de formulaire A conserver pour la compatibilité
 	const FILTER_FLOAT = 3;
 	const FILTER_ID = 4;
 	const FILTER_INT = 5;
@@ -16,31 +20,27 @@ class helper
 	const FILTER_PASSWORD = 7;
 	const FILTER_STRING_LONG = 8;
 	const FILTER_STRING_SHORT = 9;
-	const FILTER_TIMESTAMP = 10; // Saisie d'une date en locatime
+	const FILTER_TIMESTAMP = 10;  // Saisie d'une date en locatime
 	const FILTER_URL = 11;
-	const FILTER_DATE = 12; // filtre pour le champ de formulaire
-	const FILTER_TIME = 13; // filtre pour le champ de formulair
-	const FILTER_MONTH = 14; // filtre pour le champ de formulair
-	const FILTER_YEAR = 16; // filtre pour le champ de formulair
-
-
-
+	const FILTER_DATE = 12;  // filtre pour le champ de formulaire
+	const FILTER_TIME = 13;  // filtre pour le champ de formulair
+	const FILTER_MONTH = 14;  // filtre pour le champ de formulair
+	const FILTER_YEAR = 16;  // filtre pour le champ de formulair
 
 	/**
 	 * Traduire le message dans la langue déterminée
 	 */
-
 	public static function translate($text)
 	{
-
 		// La traduction existe déjà dans le core
+
 		/*
-						  if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
-						  $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
-						  $data = array_merge($dialogues,[$text =>  '']);
-						  file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
-						  }
-						  */
+		 * if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+		 * $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
+		 * $data = array_merge($dialogues,[$text =>  '']);
+		 * file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
+		 * }
+		 */
 		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
 	}
 
@@ -64,7 +64,7 @@ class helper
 			file_put_contents('site/i18n/' . $to . '.json', json_encode([]));
 		}
 		if (!empty($text)) {
-			//Lecture des données en ligne
+			// Lecture des données en ligne
 			$data = json_decode(file_get_contents('site/i18n/' . $to . '.json'), true);
 			// Mode traduction
 			if ($to !== 'fr_FR') {
@@ -84,10 +84,8 @@ class helper
 				$data = array_merge($data, [$text => '']);
 			}
 			file_put_contents('site/i18n/' . $to . '.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
-
 		}
 	}
-
 
 	/**
 	 * Récupérer l'adresse IP sans tenir compte du proxy
@@ -95,7 +93,6 @@ class helper
 	 * @return string IP adress
 	 * Cette fonction est utilisée par user
 	 */
-
 	public static function getIp($anon = 4)
 	{
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -120,7 +117,6 @@ class helper
 	 * @param string $url à récupérer
 	 * @return mixed données récupérées
 	 */
-
 	public static function getUrlContents($url)
 	{
 		// Ejecter free.fr
@@ -131,7 +127,7 @@ class helper
 			function_exists('file_get_contents') &&
 			ini_get('allow_url_fopen')
 		) {
-			$url_get_contents_data = @file_get_contents($url); // Masque un warning éventuel
+			$url_get_contents_data = @file_get_contents($url);  // Masque un warning éventuel
 		} elseif (function_exists('curl_version')) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_HEADER, 0);
@@ -144,7 +140,7 @@ class helper
 			function_exists('stream_get_contents') &&
 			ini_get('allow_url_fopen')
 		) {
-			$handle = fopen($url, "r");
+			$handle = fopen($url, 'r');
 			$url_get_contents_data = stream_get_contents($handle);
 		} else {
 			$url_get_contents_data = false;
@@ -186,30 +182,27 @@ class helper
 		return (helper::arrayColumn($array, $column, $sort));
 	}
 
-
-
 	/**
 	 * Génère un backup des données de site
 	 * @param string $folder dossier de sauvegarde
 	 * @param array $exclude dossier exclus
 	 * @return string nom du fichier de sauvegarde
 	 */
-
 	public static function autoBackup($folder, $filter = ['backup', 'tmp'])
 	{
 		// Création du nom de fichier ZIP
 		$baseName = str_replace('/', '', helper::baseUrl(false, false));
 		$baseName = empty($baseName) ? 'ZwiiCMS' : $baseName;
 		$fileName = $baseName . '-backup-' . date('Y-m-d-H-i-s') . '.zip';
-	
+
 		// Initialisation de l'archive ZIP
 		$zip = new ZipArchive();
 		if ($zip->open($folder . $fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
-			return false; // Retourne false si l'ouverture échoue
+			return false;  // Retourne false si l'ouverture échoue
 		}
-	
+
 		$directory = 'site/';
-	
+
 		// Récupération des fichiers et des dossiers
 		$files = new RecursiveIteratorIterator(
 			new RecursiveCallbackFilterIterator(
@@ -223,7 +216,7 @@ class helper
 				}
 			)
 		);
-	
+
 		// Ajout des fichiers à l'archive
 		foreach ($files as $file) {
 			if (!$file->isDir()) {
@@ -232,15 +225,12 @@ class helper
 				$zip->addFile($filePath, $relativePath);
 			}
 		}
-	
+
 		// Fermeture de l'archive ZIP
 		$zip->close();
-	
+
 		return $fileName;
 	}
-	
-
-
 
 	/**
 	 * Retourne la liste des modules installés dans un tableau composé
@@ -305,8 +295,6 @@ class helper
 		return ($modules);
 	}
 
-
-
 	/**
 	 * Retourne true si le protocole est en TLS
 	 * @return bool
@@ -314,15 +302,14 @@ class helper
 	public static function isHttps()
 	{
 		if (
-			(empty($_SERVER['HTTPS']) === false and $_SERVER['HTTPS'] !== 'off')
-			or $_SERVER['SERVER_PORT'] === 443
+			(empty($_SERVER['HTTPS']) === false and $_SERVER['HTTPS'] !== 'off') or
+			$_SERVER['SERVER_PORT'] === 443
 		) {
 			return true;
 		} else {
 			return false;
 		}
 	}
-
 
 	/**
 	 * Retourne l'URL de base du site
@@ -366,13 +353,14 @@ class helper
 		}
 		return self::$rewriteStatus;
 	}
-	
+
 	/**
 	 * Retourne vrai ou faux selon que le serveur est comptatible avec htaccess
 	 * @return bool
 	 */
-	public static function checkServerSoftware() {
-		return (stripos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false || stripos($_SERVER['SERVER_SOFTWARE'], 'LiteSpeed')  !== false);
+	public static function checkServerSoftware()
+	{
+		return (stripos($_SERVER['SERVER_SOFTWARE'], 'Apache') !== false || stripos($_SERVER['SERVER_SOFTWARE'], 'LiteSpeed') !== false);
 	}
 
 	/**
@@ -383,7 +371,6 @@ class helper
 	{
 		return (helper::getUrlContents(common::ZWII_UPDATE_URL . $channel . '/version'));
 	}
-
 
 	/**
 	 * Check si une nouvelle version de Zwii est disponible
@@ -399,7 +386,6 @@ class helper
 		return $update;
 	}
 
-
 	/**
 	 * Génère des variations d'une couleur
 	 * @param string $rgba Code rgba de la couleur
@@ -413,13 +399,13 @@ class helper
 			'normal' => 'rgba(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ',' . $rgba[3] . ')',
 			'darken' => 'rgba(' . max(0, $rgba[0] - 15) . ',' . max(0, $rgba[1] - 15) . ',' . max(0, $rgba[2] - 15) . ',' . $rgba[3] . ')',
 			'veryDarken' => 'rgba(' . max(0, $rgba[0] - 20) . ',' . max(0, $rgba[1] - 20) . ',' . max(0, $rgba[2] - 20) . ',' . $rgba[3] . ')',
-			'text' => self::relativeLuminanceW3C($rgba) > .22 ? "#222" : "#DDD",
+			'text' => self::relativeLuminanceW3C($rgba) > 0.22 ? '#222' : '#DDD',
 			'rgb' => 'rgb(' . $rgba[0] . ',' . $rgba[1] . ',' . $rgba[2] . ')',
-			'invert' => 'rgba (' .
-				($rgba[0] < 128 ? 255 : 0) . ',' .
-				($rgba[1] < 128 ? 255 : 0) . ',' .
-				($rgba[1] < 128 ? 255 : 0) . ',' .
-				($rgba[0] < 128 ? 255 : 0) . ')'
+			'invert' => 'rgba ('
+				. ($rgba[0] < 128 ? 255 : 0) . ','
+				. ($rgba[1] < 128 ? 255 : 0) . ','
+				. ($rgba[1] < 128 ? 255 : 0) . ','
+				. ($rgba[0] < 128 ? 255 : 0) . ')'
 		];
 	}
 
@@ -428,7 +414,7 @@ class helper
 	 * @param string $cookieKey Clé du cookie à supprimer
 	 */
 	public static function deleteCookie($cookieKey)
-	{		
+	{
 		setcookie($cookieKey, '', time() - 3600, helper::baseUrl(false, false), '', false, true);
 		unset($_COOKIE[$cookieKey]);
 	}
@@ -574,7 +560,7 @@ class helper
 	public static function minifyJs($js)
 	{
 		// Supprime les commentaires
-		$js = preg_replace('/\\/\\*[^*]*\\*+([^\\/][^*]*\\*+)*\\/|\s*(?<![\:\=])\/\/.*/', '', $js);
+		$js = preg_replace('/\/\*[^*]*\*+([^\/][^*]*\*+)*\/|\s*(?<![\:\=])\/\/.*/', '', $js);
 		// Supprime les tabulations, espaces, nouvelles lignes, etc...
 		$js = str_replace(["\r\n", "\r", "\t", "\n", '  ', '    ', '     '], '', $js);
 		$js = preg_replace(['(( )+\))', '(\)( )+)'], ')', $js);
@@ -640,10 +626,10 @@ class helper
 		$GsRGBA = $rgba[3] * $GsRGB + (1 - $rgba[3]);
 		$BsRGBA = $rgba[3] * $BsRGB + (1 - $rgba[3]);
 		// Calcul de la luminance
-		$R = ($RsRGBA <= .03928) ? $RsRGBA / 12.92 : pow(($RsRGBA + .055) / 1.055, 2.4);
-		$G = ($GsRGBA <= .03928) ? $GsRGBA / 12.92 : pow(($GsRGBA + .055) / 1.055, 2.4);
-		$B = ($BsRGBA <= .03928) ? $BsRGBA / 12.92 : pow(($BsRGBA + .055) / 1.055, 2.4);
-		return .2126 * $R + .7152 * $G + .0722 * $B;
+		$R = ($RsRGBA <= 0.03928) ? $RsRGBA / 12.92 : pow(($RsRGBA + 0.055) / 1.055, 2.4);
+		$G = ($GsRGBA <= 0.03928) ? $GsRGBA / 12.92 : pow(($GsRGBA + 0.055) / 1.055, 2.4);
+		$B = ($BsRGBA <= 0.03928) ? $BsRGBA / 12.92 : pow(($BsRGBA + 0.055) / 1.055, 2.4);
+		return 0.2126 * $R + 0.7152 * $G + 0.0722 * $B;
 	}
 
 	/**
@@ -694,34 +680,32 @@ class helper
 	public static function subword($text, $start, $length)
 	{
 		$text = trim($text);
-	
+
 		// Vérifier si la longueur du texte sans les balises dépasse la longueur souhaitée
 		if (mb_strlen(strip_tags($text)) > $length) {
 			// Utiliser mb_substr pour couper le texte
 			$text = mb_substr($text, $start, $length);
-			
+
 			// S'assurer que le texte ne se termine pas au milieu d'un mot
 			$lastSpace = mb_strrpos($text, ' ');
 			if ($lastSpace !== false) {
 				$text = mb_substr($text, 0, $lastSpace);
 			}
-	
+
 			// Fermer les balises HTML ouvertes
 			$dom = new DOMDocument();
 			@$dom->loadHTML('<div>' . $text . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 			$text = $dom->saveHTML();
-	
+
 			// Retirer la balise de conteneur ajoutée
 			$text = preg_replace('~^<div>(.*)</div>$~s', '$1', $text);
-	
+
 			// Ajouter des points de suspension si le texte a été coupé
 			$text .= '...';
 		}
-	
+
 		return $text;
 	}
-	
-	
 
 	/**
 	 * Cryptage
@@ -731,7 +715,7 @@ class helper
 	 */
 	public static function encrypt($string, $key)
 	{
-		$encrypted = openssl_encrypt($string, "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
+		$encrypted = openssl_encrypt($string, 'AES-256-CBC', $key, 0, substr(md5($key), 0, 16));
 		return base64_encode($encrypted);
 	}
 
@@ -743,81 +727,80 @@ class helper
 	 */
 	public static function decrypt($string, $key)
 	{
-		$decrypted = openssl_decrypt(base64_decode($string), "AES-256-CBC", $key, 0, substr(md5($key), 0, 16));
+		$decrypted = openssl_decrypt(base64_decode($string), 'AES-256-CBC', $key, 0, substr(md5($key), 0, 16));
 		return $decrypted;
 	}
 
-		/**
+	/**
 	 * Scan le contenu d'un dossier et de ses sous-dossiers (pour la compatibilité avec le module galerie)
 	 * @param string $dir Dossier à scanner
 	 * @return array
 	 */
-	/**
-     * Recursively scans a directory and its subdirectories
-     * Used primarily by the gallery module to list all available directories
-     * 
-     * @param string $dir Base directory path to scan
-     * @return array     List of all directory paths found, where:
-     *                   - Each entry is a full path to a directory
-     *                   - Paths use forward slashes (/) as directory separators
-     *                   - Only directories are included (no files)
-     * 
-     * Example output:
-     * [
-     *   "site/file/source/gallery",
-     *   "site/file/source/gallery/2023",
-     *   "site/file/source/gallery/2023/summer"
-     * ]
-     */
-    public static function scanDir($dir)
-    {
-        return array_values(helper::getSubdirectories($dir));
-    }
 
 	/**
-     * Lists all subdirectories recursively in a given directory
-     * Used by user profiles to manage file access permissions in RFM (Responsive File Manager)
-     * 
-     * @param string $dir      Base directory path to scan
-     * @param string $basePath Current path for recursive calls (used internally)
-     * @return array          Associative array where:
-     *                       - keys are human-readable paths (e.g., "Folder/Subfolder")
-     *                       - values are actual filesystem paths (e.g., "site/file/source/folder/subfolder/")
-     * 
-     * Example output:
-     * [
-     *   "Documents" => "site/file/source/documents/",
-     *   "Documents/Reports" => "site/file/source/documents/reports/",
-     *   "Images" => "site/file/source/images/"
-     * ]
-     */
-    public static function getSubdirectories($dir, $basePath = '')
-    {
-        $subdirs = array();
-        // Open the specified directory
-        $dh = opendir($dir);
-        // Loop through all files and directories
-        while (($file = readdir($dh)) !== false) {
-            // Skip parent and current directory entries
-            if ($file == '.' || $file == '..') {
-                continue;
-            }
-            // Build the complete file or directory path
-            $path = $dir . '/' . $file;
-            // Check if it's a directory
-            if (is_dir($path)) {
-                // Build the key and value for the associative array
-                $key = $basePath === '' ? ucfirst($file) : $basePath . '/' . $file;
-                $value = $path . '/';
-                // Add the key and value to the associative array
-                $subdirs[$key] = $value;
-                // Recursively call the function to add subdirectories
-                $subdirs = array_merge($subdirs, helper::getSubdirectories($path, $key));
-            }
-        }
-        // Close the directory handler
-        closedir($dh);
-        return $subdirs;
-    }
+	 * Recursively scans a directory and its subdirectories
+	 * Used primarily by the gallery module to list all available directories
+	 *
+	 * @param string $dir Base directory path to scan
+	 * @return array     List of all directory paths found, where:
+	 *                   - Each entry is a full path to a directory
+	 *                   - Paths use forward slashes (/) as directory separators
+	 *                   - Only directories are included (no files)
+	 *
+	 * Example output:
+	 * [
+	 *   "site/file/source/gallery",
+	 *   "site/file/source/gallery/2023",
+	 *   "site/file/source/gallery/2023/summer"
+	 * ]
+	 */
+	public static function scanDir($dir)
+	{
+		return array_values(helper::getSubdirectories($dir));
+	}
 
+	/**
+	 * Lists all subdirectories recursively in a given directory
+	 * Used by user profiles to manage file access permissions in RFM (Responsive File Manager)
+	 *
+	 * @param string $dir      Base directory path to scan
+	 * @param string $basePath Current path for recursive calls (used internally)
+	 * @return array          Associative array where:
+	 *                       - keys are human-readable paths (e.g., "Folder/Subfolder")
+	 *                       - values are actual filesystem paths (e.g., "site/file/source/folder/subfolder/")
+	 *
+	 * Example output:
+	 * [
+	 *   "Documents" => "site/file/source/documents/",
+	 *   "Documents/Reports" => "site/file/source/documents/reports/",
+	 *   "Images" => "site/file/source/images/"
+	 * ]
+	 */
+	public static function getSubdirectories($dir, $basePath = '')
+	{
+		$subdirs = array();
+
+		// Add the base directory itself
+		$dirName = basename($dir);
+		// Normalize path with single slashes
+		$subdirs[ucfirst($dirName)] = rtrim($dir, '/') . '/';
+
+		// Open the specified directory
+		$dh = opendir($dir);
+		while (($file = readdir($dh)) !== false) {
+			if ($file == '.' || $file == '..') {
+				continue;
+			}
+			$path = rtrim($dir, '/') . '/' . $file;
+			if (is_dir($path)) {
+				$key = $basePath === '' ? $file : $basePath . '/' . $file;
+				// Normalize path with single slashes
+				$value = rtrim($path, '/') . '/';
+				$subdirs[$key] = $value;
+				$subdirs = array_merge($subdirs, helper::getSubdirectories($path, $key));
+			}
+		}
+		closedir($dh);
+		return $subdirs;
+	}
 }
