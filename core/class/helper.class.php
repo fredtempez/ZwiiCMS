@@ -780,27 +780,39 @@ class helper
 	{
 		$subdirs = array();
 
-		// Add the base directory itself
-		$dirName = basename($dir);
-		// Normalize path with single slashes
-		$subdirs[ucfirst($dirName)] = rtrim($dir, '/') . '/';
+		// Get all directories first
+		$iterator = new RecursiveIteratorIterator(
+			new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+			RecursiveIteratorIterator::SELF_FIRST
+		);
 
-		// Open the specified directory
-		$dh = opendir($dir);
-		while (($file = readdir($dh)) !== false) {
-			if ($file == '.' || $file == '..') {
-				continue;
-			}
-			$path = rtrim($dir, '/') . '/' . $file;
-			if (is_dir($path)) {
-				$key = $basePath === '' ? $file : $basePath . '/' . $file;
-				// Normalize path with single slashes
-				$value = rtrim($path, '/') . '/';
-				$subdirs[$key] = $value;
-				$subdirs = array_merge($subdirs, helper::getSubdirectories($path, $key));
+		// Add the base directory
+		$subdirs['/'] = rtrim($dir, '/') . '/';
+
+		// Build the directory tree
+		foreach ($iterator as $file) {
+			if ($file->isDir()) {
+				$path = str_replace('\\', '/', $file->getPathname());
+				$relativePath = trim(str_replace($dir, '', $path), '/');
+				$key = empty($relativePath) ? '/' : '/' . $relativePath;
+				$subdirs[$key] = rtrim($path, '/') . '/';
 			}
 		}
-		closedir($dh);
+
+		// Sort by directory depth and name
+		uksort($subdirs, function ($a, $b) {
+			if ($a === '/')
+				return -1;
+			if ($b === '/')
+				return 1;
+			$depthA = substr_count($a, '/');
+			$depthB = substr_count($b, '/');
+			if ($depthA === $depthB) {
+				return strcasecmp($a, $b);
+			}
+			return $depthA - $depthB;
+		});
+
 		return $subdirs;
 	}
 }
