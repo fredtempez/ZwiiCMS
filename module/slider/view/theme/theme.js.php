@@ -17,25 +17,22 @@ var oldResult = [];
 var directoryDOM = $("#galleryEditDirectory");
 var directoryOldDOM = $("#galleryEditDirectoryOld");
 function dirs() {
-	$.ajax({
-		type: "POST",
-		url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
-		success: function(result) {
-			if($(result).not(oldResult).length !== 0 || $(oldResult).not(result).length !== 0) {
-				directoryDOM.empty();
-				for(var i = 0; i < result.length; i++) {
-					directoryDOM.append(function(i) {
-						var option = $("<option>").val(result[i]).text(result[i]);
-						if(directoryOldDOM.val() === result[i]) {
-							option.prop("selected", true);
-						}
-						return option;
-					}(i))
-				}
-				oldResult = result;
-			}
-		}
-	});
+    $.ajax({
+        type: "POST",
+        url: "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs",
+        dataType: "json",
+        success: function(result) {
+            directoryDOM.empty();
+            $.each(result, function(index, item) {
+                var option = $("<option>").val(item.path).text(item.name);
+                if(directoryOldDOM.val() === item.path) {
+                    option.prop("selected", true);
+                }
+                directoryDOM.append(option);
+            });
+            oldResult = result;
+        }
+    });
 }
 dirs();
 // Actualise la liste des dossiers toutes les trois secondes

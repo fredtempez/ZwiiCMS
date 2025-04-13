@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::ROLE_VISITOR
 	];
 
-	const VERSION = '7.3';
+	const VERSION = '8.0';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -310,10 +310,24 @@ class slider extends common
 	 */
 	public function dirs()
 	{
+		// Déterminer le $rootPath à explorer
+		$rootPath = $this->getUserPath();
+		// Liste des dossiers
+		$sharePath = helper::getSubdirectories($rootPath);
+		// Tri des dossiers sur la clé
+		ksort($sharePath);
+		$sharePath = array_flip($sharePath);
+		// Parcours des dossiers
+		foreach ($sharePath as $path => $name) {
+			$sharePath[$path] = [
+				'name' => $name,
+				'path' => $path
+			];
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
-			'content' => $this->scanSubDir(self::FILE_DIR . 'source')
+			'content' => array_values($sharePath)
 		]);
 	}
 

@@ -1,3 +1,5 @@
+# Version 8.0
+- Les dossiers proposés par le module sont ceux autotisés par le profil.
 # Version 7.3
 - Remplacement du nom générique de classe dans les vues.
 # Version 7.2

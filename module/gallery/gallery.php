@@ -15,7 +15,7 @@
  */
 class gallery extends common
 {
-	const VERSION = '4.5';
+	const VERSION = '5.0';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 	const SORT_ASC = 'SORT_ASC';
@@ -354,8 +354,6 @@ class gallery extends common
 				'content',
 				$galleryName
 			]));
-			var_dump($data);
-			die();
 		}
 	}
 
@@ -452,7 +450,7 @@ class gallery extends common
 						}
 					}
 
-					// Initialisatin des légends et du numéro d'ordre
+					// Initialisatin des légendes et du numéro d'ordre
 					// Supprimer le . pour éviter les conflits avec la classe dot
 					$fileNameId = str_replace('.', '', $fileInfos->getFilename());
 					// Le nom correspond à un fichier
@@ -553,10 +551,24 @@ class gallery extends common
 	 */
 	public function dirs()
 	{
+		// Déterminer le $rootPath à explorer
+		$rootPath = $this->getUserPath();
+		// Liste des dossiers
+		$sharePath = helper::getSubdirectories($rootPath);
+		// Tri des dossiers sur la clé
+		ksort($sharePath);
+		$sharePath = array_flip($sharePath);
+		// Parcours des dossiers
+		foreach ($sharePath as $path => $name) {
+			$sharePath[$path] = [
+				'name' => $name,
+				'path' => $path
+			];
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
-			'content' => helper::scanDir(self::FILE_DIR . 'source')
+			'content' => array_values($sharePath)
 		]);
 	}
 

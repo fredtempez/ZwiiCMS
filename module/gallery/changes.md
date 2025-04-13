@@ -1,5 +1,7 @@
+# Version 5.0
+- Les dossiers proposés par le module sont ceux autotisés par le profil.
 # Version 4.5
-- Externalisation de la recherche de dossiers dans le helper. Ajout d'une méthode ppour obtenir un tableau associatif dossier -> chemin dossier.
+- Supprime une message de debogage.
 # Version 4.4
 - Numéro d'ordre des galleries.
 # Version 4.3
