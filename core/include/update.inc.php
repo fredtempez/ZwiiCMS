@@ -1118,8 +1118,6 @@ if ($this->getData(['core', 'dataVersion']) < 13101) {
 	$this->setData(['core', 'dataVersion', 13101]);
 }
 
-// Version 1.21.00
-
 if (
 	$this->getData(['core', 'dataVersion']) < 13600
 ) {
@@ -1174,4 +1172,13 @@ if (
 		}
 	}
 	$this->setData(['core', 'dataVersion', 13600]);
+}
+
+if (
+	$this->getData(['core', 'dataVersion']) < 13604
+) {
+	if (file_exists('core/class/layout.class.php')) {
+		unlink('core/class/layout.class.php');
+	}
+	$this->setData(['core', 'dataVersion', 13604]);
 }

@@ -6,7 +6,7 @@ class autoload {
         require_once 'core/class/router.class.php';
         require_once 'core/class/helper.class.php';
         require_once 'core/class/template.class.php';
-        require_once 'core/class/layout.class.php';
+        require_once 'core/layout/layout.class.php';
         require_once 'core/class/sitemap/Runtime.class.php';
         require_once 'core/class/sitemap/FileSystem.class.php';
         require_once 'core/class/sitemap/SitemapGenerator.class.php';
