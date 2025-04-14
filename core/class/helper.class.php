@@ -776,43 +776,41 @@ class helper
 	 *   "Images" => "site/file/source/images/"
 	 * ]
 	 */
-	public static function getSubdirectories($dir, $basePath = '')
-	{
-		$subdirs = array();
+    public static function getSubdirectories($dir, $basePath = '')
+    {
+        $subdirs = array();
+        
+        // Get all directories first
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
+            RecursiveIteratorIterator::SELF_FIRST
+        );
 
-		// Get all directories first
-		$iterator = new RecursiveIteratorIterator(
-			new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS),
-			RecursiveIteratorIterator::SELF_FIRST
-		);
+        // Add the base directory
+        $subdirs['/'] = rtrim($dir, '/') . '/';
 
-		// Add the base directory
-		$subdirs['/'] = rtrim($dir, '/') . '/';
+        // Build the directory tree
+        foreach ($iterator as $file) {
+            if ($file->isDir()) {
+                $path = str_replace('\\', '/', $file->getPathname());
+                $relativePath = trim(str_replace($dir, '', $path), '/');
+                $key = empty($relativePath) ? '/' : '/' . $relativePath;
+                $subdirs[$key] = rtrim($path, '/') . '/';
+            }
+        }
 
-		// Build the directory tree
-		foreach ($iterator as $file) {
-			if ($file->isDir()) {
-				$path = str_replace('\\', '/', $file->getPathname());
-				$relativePath = trim(str_replace($dir, '', $path), '/');
-				$key = empty($relativePath) ? '/' : '/' . $relativePath;
-				$subdirs[$key] = rtrim($path, '/') . '/';
-			}
-		}
+        // Sort by directory depth and name
+        uksort($subdirs, function($a, $b) {
+            if ($a === '/') return -1;
+            if ($b === '/') return 1;
+            $depthA = substr_count($a, '/');
+            $depthB = substr_count($b, '/');
+            if ($depthA === $depthB) {
+                return strcasecmp($a, $b);
+            }
+            return $depthA - $depthB;
+        });
 
-		// Sort by directory depth and name
-		uksort($subdirs, function ($a, $b) {
-			if ($a === '/')
-				return -1;
-			if ($b === '/')
-				return 1;
-			$depthA = substr_count($a, '/');
-			$depthB = substr_count($b, '/');
-			if ($depthA === $depthB) {
-				return strcasecmp($a, $b);
-			}
-			return $depthA - $depthB;
-		});
-
-		return $subdirs;
-	}
+        return $subdirs;
+    }
 }
