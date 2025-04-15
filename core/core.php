@@ -1615,4 +1615,38 @@ function makeThumb($src, $dest, $desired_width)
 				return $this->getData(['user', $userId, 'firstname']);
 		}
 	}
+
+		/**
+	 * Retourne le chemin du dossier autorisé pour l'utilisateur selon son rôle et son profil
+	 *
+	 * @param string $userId L'identifiant de l'utilisateur
+	 * @return string Dossier autorisé
+	 *
+	 * Pour les administrateurs :
+	 * - Retourne un accès complet au répertoire source
+	 *
+	 * Pour les éditeurs :
+	 * - Retourne un accès basé sur les paramètres de leur profil
+	 * - En mode Campus : utilise homePath ou coursePath
+	 * - En mode CMS : utilise le chemin standard
+	 * - Retourne 'none' si aucun accès n'est accordé
+	 * - Sinon retourne un accès limité à leur espace de contenu
+	 */
+	public function getUserPath($userId = null)
+	{
+		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
+		$userId = $userId ?? $this->getUser('id');
+		// Vérifier si l'utilisateur est un administrateur
+		switch ($this->getData(['user', $userId, 'role'])) {
+			case self::ROLE_ADMIN:
+				return (self::FILE_DIR . 'source/');  // Correction de la syntaxe return
+			case self::ROLE_EDITOR:
+			case self::ROLE_MODERATOR:
+				$authorizePath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']);
+				return ($authorizePath === 'none' ? 'none' : self::FILE_DIR . 'source/' . self::$siteContent);
+			default:
+				return null;
+		}
+	}
+
 }
