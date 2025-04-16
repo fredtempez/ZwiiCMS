@@ -834,19 +834,19 @@ class gallery extends common
 						if ($fileInfos->isDot() === false and $fileInfos->isFile() and @getimagesize($fileInfos->getPathname())) {
 							self::$galleries[$galleryId] = $gallery;
 							// L'image de couverture est-elle supprimée ?
-							if (file_exists($gallery['config']['directory'] . '/' . $gallery['config']['homePicture'])) {
+							if (file_exists($gallery['config']['directory'] . $gallery['config']['homePicture'])) {
 								// Créer la miniature si manquante
-								if (!file_exists(str_replace('source', 'thumb', $gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))) {
+								if (!file_exists(str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))) {
 									$this->makeThumb(
-										$gallery['config']['directory'] . '/' . str_replace(self::THUMBS_SEPARATOR, '', $gallery['config']['homePicture']),
-										str_replace('source', 'thumb', $gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']),
+										$gallery['config']['directory'] . str_replace(self::THUMBS_SEPARATOR, '', $gallery['config']['homePicture']),
+										str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']),
 										self::THUMBS_WIDTH
 									);
 								}
 								// Définir l'image de couverture
-								self::$firstPictures[$galleryId] = file_exists(str_replace('source', 'thumb', $gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))
-									? str_replace('source', 'thumb', $gallery['config']['directory']) . '/' . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture'])
-									: str_replace('source', 'thumb', $gallery['config']['directory']) . '/' . strtolower($gallery['config']['homePicture']);
+								self::$firstPictures[$galleryId] = file_exists(str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))
+									? str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture'])
+									: str_replace('source', 'thumb', $gallery['config']['directory'])  . strtolower($gallery['config']['homePicture']);
 							} else {
 								// homePicture contient une image invalide, supprimée ou déplacée
 								// Définir l'image de couverture, première image disponible
