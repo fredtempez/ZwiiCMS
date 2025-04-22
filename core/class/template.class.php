@@ -416,6 +416,115 @@ class template
     }
 
     /**
+     * Crée un champ de dépôt de fichier (drag & drop ou sélection)
+     * @param string $nameId Nom et id du champ
+     * @param array $attributes Attributs ($key => $value)
+     * @return string
+     */
+    public static function upload($nameId, array $attributes = [])
+    {
+        // Attributs par défaut
+        $attributes = array_merge([
+            'before' => true,
+            'class' => '',
+            'classWrapper' => '',
+            'noDirty' => false,
+            'disabled' => false,
+            'accept' => '', // ex: 'image/*' ou '.jpg,.png,.pdf'
+            'help' => '',
+            'id' => $nameId,
+            'label' => '',
+            'maxlength' => '500',
+            'name' => $nameId,
+            'value' => '',
+            'required' => false,
+            'uploadText' => 'Sélectionner un fichier', // Texte pour le bouton d'upload
+            'placeholder' => 'Aucun fichier sélectionné' // Texte par défaut quand aucun fichier sélectionné
+        ], $attributes);
+
+        // Traduction des champs
+        $attributes['help'] = helper::translate($attributes['help']);
+        $attributes['value'] = helper::translate($attributes['value']);
+        $attributes['label'] = helper::translate($attributes['label']);
+        $attributes['uploadText'] = helper::translate($attributes['uploadText']);
+        $attributes['placeholder'] = helper::translate($attributes['placeholder']);
+
+        // Sauvegarde de la valeur si présente dans common::$inputBefore
+        if ($attributes['before'] && array_key_exists($attributes['id'], common::$inputBefore)) {
+            $attributes['value'] = common::$inputBefore[$attributes['id']];
+        }
+
+        // Gestion du champ requis
+        if (isset($attributes['required']) && $attributes['required']) {
+            $required = ' required-field';
+            $attributes['required'] = 'required';
+        }
+
+        // Début du wrapper
+        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="inputWrapper ' . $attributes['classWrapper'] . '">';
+
+        // Notice
+        $notice = '';
+        if (array_key_exists($attributes['id'], common::$inputNotices)) {
+            $notice = common::$inputNotices[$attributes['id']];
+            $attributes['class'] .= ' notice';
+        }
+        $html .= self::notice($attributes['id'], $notice);
+
+        // Label du champ (titre)
+        if ($attributes['label']) {
+            $html .= self::label($attributes['id'], $attributes['label'], [
+                'help' => $attributes['help'],
+                'class' => isset($required) ? $required : ''
+            ]);
+        }
+
+        // Champ input file caché avec label personnalisé
+        $html .= '<div class="fileUploadContainer">';
+
+        // Input file caché
+        $html .= sprintf(
+            '<input type="file" id="%s" name="%s" class="fileUpload %s" %s %s %s>',
+            $attributes['id'],
+            $attributes['name'],
+            $attributes['class'],
+            $attributes['accept'] ? 'accept="' . $attributes['accept'] . '"' : '',
+            $attributes['disabled'] ? 'disabled' : '',
+            isset($attributes['required']) ? 'required' : ''
+        );
+
+        // Label qui servira de bouton
+        $html .= sprintf(
+            '<label for="%s" class="fileUploadBtn">%s</label>',
+            $attributes['id'],
+            $attributes['uploadText']
+        );
+
+        // Affichage du nom de fichier
+        $html .= sprintf(
+            '<span id="%s-filename" class="fileUploadNameDisplay">%s</span>',
+            $attributes['id'],
+            $attributes['placeholder']
+        );
+
+        $html .= '</div>';
+
+        // Script pour mettre à jour le nom du fichier
+        $html .= "
+    <script>
+    document.getElementById('" . $attributes['id'] . "').addEventListener('change', function(e) {
+        var fileName = e.target.files[0] ? e.target.files[0].name : '" . $attributes['placeholder'] . "';
+        document.getElementById('" . $attributes['id'] . "-filename').textContent = fileName;
+    });
+    </script>";
+
+        // Fin du wrapper
+        $html .= '</div>';
+
+        return $html;
+    }
+
+    /**
      * Ferme un formulaire
      * @return string
      */
@@ -859,70 +968,70 @@ class template
         );
     }
 
-/**
- * Crée un tableau
- * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
- * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
- * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
- * @param array $attributes Attributs ($key => $value)
- * @param array $colsId Id pour les colonnes (format : [id colonne1, id colonne2, etc])
- * @param array $rowsId Id pour les lignes (format : [id ligne1, id ligne2, etc])
- * @return string
- */
-public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $colsId = [], array $rowsId = [])
-{
-    // Attributs par défaut
-    $attributes = array_merge([
-        'class' => '',
-        'classWrapper' => '',
-        'id' => ''
-    ], $attributes);
-    // Traduction de l'aide et de l'étiquette
-    foreach ($head as $value) {
-        $head[array_search($value, $head)] = helper::translate($value);
-    }
-    // Début du wrapper
-    $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
-    // Début tableau
-    $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
-    // Pas de tableau d'Id de colonnes transmis, générer une numérotation
-    if (empty($colsId)) {
-        $colsId = range(0, count($cols) - 1);
-    }
-    // Entêtes
-    if ($head) {
-        // Début des entêtes
-        $html .= '<thead>';
-        $html .= '<tr class="nodrag">';
-        $i = 0;
-        foreach ($head as $th) {
-            $html .= '<th id="' . $colsId[$i] . '" class="col' . $cols[$i++] . '">' . $th . '</th>';
+    /**
+     * Crée un tableau
+     * @param array $cols Cols des colonnes (format: [col colonne1, col colonne2, etc])
+     * @param array $body Contenu (format: [[contenu1, contenu2, etc], [contenu1, contenu2, etc]])
+     * @param array $head Entêtes (format : [[titre colonne1, titre colonne2, etc])
+     * @param array $attributes Attributs ($key => $value)
+     * @param array $colsId Id pour les colonnes (format : [id colonne1, id colonne2, etc])
+     * @param array $rowsId Id pour les lignes (format : [id ligne1, id ligne2, etc])
+     * @return string
+     */
+    public static function table(array $cols = [], array $body = [], array $head = [], array $attributes = [], array $colsId = [], array $rowsId = [])
+    {
+        // Attributs par défaut
+        $attributes = array_merge([
+            'class' => '',
+            'classWrapper' => '',
+            'id' => ''
+        ], $attributes);
+        // Traduction de l'aide et de l'étiquette
+        foreach ($head as $value) {
+            $head[array_search($value, $head)] = helper::translate($value);
         }
-        // Fin des entêtes
-        $html .= '</tr>';
-        $html .= '</thead>';
-    }
-    // Début contenu
-    $html .= '<tbody>';
-    foreach ($body as $j => $tr) {
-        // Id de ligne pour les tableaux drag and drop
-        $rowId = isset($rowsId[$j]) ? $rowsId[$j] : '';
-        $html .= '<tr' . ($rowId ? ' id="' . $rowId . '"' : '') . '>';
-        $i = 0;
-        foreach ($tr as $td) {
-            $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
+        // Début du wrapper
+        $html = '<div id="' . $attributes['id'] . 'Wrapper" class="tableWrapper ' . $attributes['classWrapper'] . '">';
+        // Début tableau
+        $html .= '<table id="' . $attributes['id'] . '" class="table ' . $attributes['class'] . '">';
+        // Pas de tableau d'Id de colonnes transmis, générer une numérotation
+        if (empty($colsId)) {
+            $colsId = range(0, count($cols) - 1);
         }
-        $html .= '</tr>';
+        // Entêtes
+        if ($head) {
+            // Début des entêtes
+            $html .= '<thead>';
+            $html .= '<tr class="nodrag">';
+            $i = 0;
+            foreach ($head as $th) {
+                $html .= '<th id="' . $colsId[$i] . '" class="col' . $cols[$i++] . '">' . $th . '</th>';
+            }
+            // Fin des entêtes
+            $html .= '</tr>';
+            $html .= '</thead>';
+        }
+        // Début contenu
+        $html .= '<tbody>';
+        foreach ($body as $j => $tr) {
+            // Id de ligne pour les tableaux drag and drop
+            $rowId = isset($rowsId[$j]) ? $rowsId[$j] : '';
+            $html .= '<tr' . ($rowId ? ' id="' . $rowId . '"' : '') . '>';
+            $i = 0;
+            foreach ($tr as $td) {
+                $html .= '<td class="col' . $cols[$i++] . '">' . $td . '</td>';
+            }
+            $html .= '</tr>';
+        }
+        // Fin contenu
+        $html .= '</tbody>';
+        // Fin tableau
+        $html .= '</table>';
+        // Fin container
+        $html .= '</div>';
+        // Retourne le html
+        return $html;
     }
-    // Fin contenu
-    $html .= '</tbody>';
-    // Fin tableau
-    $html .= '</table>';
-    // Fin container
-    $html .= '</div>';
-    // Retourne le html
-    return $html;
-}
 
     /**
      * Crée un champ texte court

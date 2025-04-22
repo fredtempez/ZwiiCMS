@@ -1182,6 +1182,7 @@ input[type='month'],
 input[type='week'],
 input[type='number'],
 .inputFile,
+.fileUploadNameDisplay,
 select,
 textarea {
     padding: 9px;
@@ -1208,6 +1209,7 @@ input[type='month']:hover,
 input[type='week']:hover,
 input[type='number']:hover,
 .inputFile:hover,
+.fileUploadNameDisplay.hover,
 select:hover,
 textarea:hover {
     border: 1px solid;
@@ -1223,6 +1225,7 @@ input[type='month'].notice,
 input[type='week'].notice,
 input[type='number'].notice,
 .inputFile.notice,
+.fileUploadNameDisplay.notice,
 select.notice,
 textarea.notice {
     border: 1px solid #E74C3C;
@@ -1239,6 +1242,7 @@ input[type='month'].notice:hover,
 input[type='week'].notice:hover,
 input[type='number'].notice:hover,
 .inputFile.notice:hover,
+.fileUploadNameDisplay.notice.hover,
 select.notice:hover,
 textarea.notice:hover {
     border: 1px solid #A82315;
@@ -1471,6 +1475,56 @@ input[type='checkbox']:disabled+label:before {
     padding: 0;
     /* À cause du padding ajouté aux selects */
 }
+
+/* Sélecteur input de fichier */
+.fileUploadContainer {
+    position: relative;
+    display: flex; /* Changé de inline-flex à flex */
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%; /* Pour s'étendre sur toute la largeur du .inputWrapper */
+}
+
+.fileUploadContainer input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 0.1px;
+    height: 0.1px;
+    z-index: -1;
+}
+
+.fileUploadBtn {
+    margin-top: 2px;
+    display: inline-block;
+    padding: 9px 12px;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
+}
+
+.fileUploadNameDisplay {
+    margin-left: 10px;
+    color: #6c757d;
+    flex-grow: 1; /* Pour s'étirer et prendre l'espace restant */
+    overflow: hidden; /* Empêche le débordement du texte */
+    text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
+    white-space: nowrap; /* Empêche le retour à la ligne */
+}
+
+.fileUploadContainer input[type="file"]:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.fileUploadContainer input[type="file"]:disabled + label {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
 
 
 /**
