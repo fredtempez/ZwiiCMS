@@ -24,8 +24,8 @@
 <?php echo template::formClose(); ?>
 <div class="row">
 	<div class="col12">
-		<?php if($module::$galleries): ?>
-		<?php echo template::table([5, 5, 1, 1], $module::$galleries, ['Nom', 'Dossier cible', '', ''], ['id' => 'galleryTable'],$module::$galleriesId); ?>
+		<?php if(geogallery::$galleries): ?>
+		<?php echo template::table([5, 5, 1, 1], geogallery::$galleries, ['Nom', 'Dossier cible', '', ''], ['id' => 'galleryTable']); ?>
 		<?php echo template::hidden('galleryConfigFilterResponse'); ?>
 		<?php else: ?>
 			<?php echo template::speech('Aucune galerie'); ?>

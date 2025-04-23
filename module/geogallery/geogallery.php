@@ -208,14 +208,32 @@ class geogallery extends common
 	/**
 	 * Liste des dossiers
 	 */
+	/**
+	 * Liste des dossiers
+	 */
 	public function dirs()
 	{
+		// Déterminer le $rootPath à explorer
+		$rootPath = $this->getUserPath();
+		// Liste des dossiers
+		$sharePath = helper::getSubdirectories($rootPath);
+		// Tri des dossiers sur la clé
+		ksort($sharePath);
+		$sharePath = array_flip($sharePath);
+		// Parcours des dossiers
+		foreach ($sharePath as $path => $name) {
+			$sharePath[$path] = [
+				'name' => $name,
+				'path' => $path
+			];
+		}
 		// Valeurs en sortie
 		$this->addOutput([
 			'display' => self::DISPLAY_JSON,
-			'content' => helper::scanDir(self::FILE_DIR . 'source')
+			'content' => array_values($sharePath)
 		]);
 	}
+
 
 	/**
 	 * Édition
@@ -431,23 +449,29 @@ class geogallery extends common
 	}
 
 
-	private function gps_decimal($coordinate, $hemisphere)
-	{
-		// Extrait les degrés, minutes et secondes et force la conversion en flottant
-		$degrees = count($coordinate) > 0 ? (float)$this->gps2Num($coordinate[0]) : 0.0;
-		$minutes = count($coordinate) > 1 ? (float)$this->gps2Num($coordinate[1]) : 0.0;
-		$seconds = count($coordinate) > 2 ? (float)$this->gps2Num($coordinate[2]) : 0.0;
-
-		// Convertit les degrés, minutes et secondes en décimal (assure le type flottant)
-		$decimal = $degrees + ($minutes / 60.0) + ($seconds / 3600.0);
-
-		// Si l'hémisphère est au Sud ou à l'Ouest, les coordonnées sont négatives
-		if ($hemisphere == 'S' || $hemisphere == 'W') {
-			$decimal *= -1.0; // Multiplie par -1.0 pour assurer le type flottant
+	private function gps_decimal($coord, $ref) {
+		if (!is_array($coord) || count($coord) < 3 || $coord[1] == 0 || $coord[2] == 0) {
+			return null;
 		}
 	
-		return $decimal;
+		list($degNum, $degDen) = explode('/', $coord[0]);
+		list($minNum, $minDen) = explode('/', $coord[1]);
+		list($secNum, $secDen) = explode('/', $coord[2]);
+	
+		// Évite toute division par zéro
+		if ($degDen == 0 || $minDen == 0 || $secDen == 0) {
+			return null;
+		}
+	
+		$degrees = $degNum / $degDen;
+		$minutes = $minNum / $minDen;
+		$seconds = $secNum / $secDen;
+	
+		$decimal = $degrees + ($minutes / 60) + ($seconds / 3600);
+	
+		return ($ref == 'S' || $ref == 'W') ? -$decimal : $decimal;
 	}
+	
 
 
 	private function gps2Num($coordPart)
