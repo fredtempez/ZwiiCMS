@@ -1,7 +1,8 @@
 # Notes de mises à jour
 
 ## Version 13.6.04
-- Unification de la méthode d'affichage des dossiers dans le module gallery et geogallery.
+- Unification de la méthode d'affichage des dossiers dans les modules gallery et geogallery.
+- Amélioration du module geogallery.
 - Implémentation d'une nouvelle méthode pour permettre de téléverser un fichier sans passer par le gestionnaire de fichiers. Cette méthode intéresse les développeurs de modules.
 
 ## Versions 13.6.03
