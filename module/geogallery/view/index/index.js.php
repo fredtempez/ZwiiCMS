@@ -15,7 +15,7 @@
 $(document).ready(function () {
 
   // Centrage de la carte et niveau de zoom
-  const jsonOptions = '<?php echo json_encode($module::$galleriesCenter); ?>';
+  const jsonOptions = '<?php echo json_encode(geogallery::$galleriesCenter); ?>';
   const objOptions = JSON.parse(jsonOptions);
 
 
@@ -29,20 +29,28 @@ $(document).ready(function () {
 
 
   // Les données PHP converties en JSON pour JavaScript
-  const json = '<?php echo json_encode($module::$galleries); ?>';
+  const json = '<?php echo json_encode(geogallery::$galleries); ?>';
   const obj = JSON.parse(json);
 
 
   // Ajouter les marqueurs à la carte
   obj.forEach(function (location) {
+    const decodedLabel = decodeHtmlEntities(location.label);
     const marker = L.marker([location.lat, location.long], {
-      title: location.label
+      title: decodedLabel
     });
     marker.addTo(map);
-    marker.bindPopup('<p>' + location.label + '</p><a href="' + location.img + '" data-lity><img src="' + location.thumb + '" alt="Thumbnail" class="thumbnail"></a>', {
+    marker.bindPopup('<p>' + decodedLabel + '</p><a href="' + location.img + '" data-lity><img src="' + location.thumb + '" alt="Thumbnail" class="thumbnail"></a>', {
       minWidth: 150,
       maxWidth: 150,
       minHeight: 150
     });
   });
+
+  // Function to decode HTML entities
+  function decodeHtmlEntities(encodedString) {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = encodedString;
+    return txt.value;
+  }
 });

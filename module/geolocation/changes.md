@@ -1,3 +1,6 @@
+# Version 1.4
+- Conformité de la syntaxe des variables de la classe.
+- Les accents des étiquettes sont correctement affichés dans les popup.
 # Version 1.3
 - Compatibilité ZwiICMS 13.6.00
 # Version 1.2

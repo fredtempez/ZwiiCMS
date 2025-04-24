@@ -13,13 +13,13 @@
 </div>
 <div class="row">
 	<div class="col12">
-		<?php if ($module::$pictures): ?>
-			<?php echo template::table([3, 4, 3, 1, 1], $module::$pictures, ['Image', 'Légende', 'Coordonnées', 'Position', 'Miniature'], ['id' => 'galleryTable'], $module::$picturesId); ?>
+		<?php if (geogallery::$pictures): ?>
+			<?php echo template::table([3, 4, 3, 1, 1], geogallery::$pictures, ['Image', 'Légende', 'Coordonnées', 'Position', 'Miniature'], ['id' => 'galleryTable'], geogallery::$picturesId); ?>
 		<?php else: ?>
 			<?php echo template::speech('Aucune image.'); ?>
 		<?php endif; ?>
 	</div>
 	<?php echo template::formClose(); ?>
 	<div class="moduleVersion">Version n°
-		<?php echo $module::VERSION; ?>
+		<?php echo geogallery::VERSION; ?>
 	</div>

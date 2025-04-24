@@ -15,7 +15,7 @@
 $(document).ready(function () {
 
     // Centrage de la carte et niveau de zoom
-    const jsonOptions = '<?php echo json_encode($module::$locationsCenter); ?>';
+    const jsonOptions = '<?php echo json_encode(geolocation::$locationsCenter); ?>';
     const objOptions = JSON.parse(jsonOptions);
 
     // Initialisation de la carte
@@ -28,7 +28,7 @@ $(document).ready(function () {
 
 
     // Les données PHP converties en JSON pour JavaScript
-    const json = '<?php echo json_encode($module::$locations); ?>';
+    const json = '<?php echo json_encode(geolocation::$locations); ?>';
     const obj = JSON.parse(json);
 
 

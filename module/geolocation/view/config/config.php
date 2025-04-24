@@ -31,6 +31,6 @@
 		<?php endif; ?>
 	</div>
 	<div class="moduleVersion">Version n°
-		<?php echo $module::VERSION; ?>
+		<?php echo geogallery::VERSION; ?>
 	</div>
 </div>

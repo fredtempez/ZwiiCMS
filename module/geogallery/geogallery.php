@@ -296,18 +296,19 @@ class geogallery extends common
 							);
 						}
 						// Obtenir les métadonnées EXIF de l'image
-						$exif = exif_read_data($fileInfos->getPath() . '/' . $fileInfos->getFilename());
-						$latitude = 'Donnée absente';
-						$longitude = 'Donnée absente';
-						// Vérifier si les données EXIF contiennent des informations de géolocalisation
-						if (!empty($exif['GPSLatitude']) || !empty($exif['GPSLongitude'])) {
-							// Coordonnées de latitude
-							$latitude = $this->gps_decimal($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
-
-							// Coordonnées de longitude
-							$longitude = $this->gps_decimal($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
+						$exif = @exif_read_data($fileInfos->getPath() . '/' . $fileInfos->getFilename());
+						$latitude = null;
+						$longitude = null;
+						
+						// Vérifier si les données EXIF sont valides et contiennent des informations de géolocalisation
+						if ($exif !== false && !empty($exif['GPSLatitude']) && !empty($exif['GPSLongitude']) && 
+						    !empty($exif['GPSLatitudeRef']) && !empty($exif['GPSLongitudeRef'])) {
+						    // Coordonnées de latitude
+						    $latitude = $this->gps_decimal($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
+						    // Coordonnées de longitude
+						    $longitude = $this->gps_decimal($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
 						}
-
+						
 						self::$pictures[str_replace('.', '', $fileInfos->getFilename())] = [
 							//$this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'position', str_replace('.', '', $fileInfos->getFilename())]) + 1,
 							$fileInfos->getFilename(),
@@ -372,25 +373,29 @@ class geogallery extends common
 								);
 							}
 
-							$exif = exif_read_data($fileInfos->getPath() . '/' . $fileInfos->getFilename());
+							$exif = @exif_read_data($fileInfos->getPath() . '/' . $fileInfos->getFilename());
 
-							// Vérifier si les données EXIF contiennent des informations de géolocalisation
-							if (!empty($exif['GPSLatitude']) || !empty($exif['GPSLongitude'])) {
-								// Coordonnées de latitude
-								$latitude = $this->gps_decimal($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
-
-								// Coordonnées de longitude
-								$longitude = $this->gps_decimal($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
-								// Coordonnées
-								self::$galleries[] = [
-									'lat' => $latitude,
-									'long' => $longitude,
-									'img' => $fileInfos->getPath() . '/' . strtolower($fileInfos->getFilename()),
-									'thumb' => str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()),
-									'label' => is_null($this->getData(['module', $this->getUrl(0), 'content', $gallery, 'legend', str_replace('.', '', $fileInfos->getFilename())]))
-										? ''
-										: $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'legend', str_replace('.', '', $fileInfos->getFilename())])
-								];
+							// Vérifier si les données EXIF sont valides et contiennent des informations de géolocalisation
+							if ($exif !== false && !empty($exif['GPSLatitude']) && !empty($exif['GPSLongitude']) && 
+							    !empty($exif['GPSLatitudeRef']) && !empty($exif['GPSLongitudeRef'])) {
+							    // Coordonnées de latitude
+							    $latitude = $this->gps_decimal($exif['GPSLatitude'], $exif['GPSLatitudeRef']);
+							    // Coordonnées de longitude
+							    $longitude = $this->gps_decimal($exif['GPSLongitude'], $exif['GPSLongitudeRef']);
+							}
+							
+							// Vérifier si les coordonnées sont valides
+							if ($latitude !== null && $longitude !== null) {
+							    // Coordonnées
+							    self::$galleries[] = [
+							        'lat' => $latitude,
+							        'long' => $longitude,
+							        'img' => $fileInfos->getPath() . '/' . strtolower($fileInfos->getFilename()),
+							        'thumb' => str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()),
+							        'label' => is_null($this->getData(['module', $this->getUrl(0), 'content', $gallery, 'legend', str_replace('.', '', $fileInfos->getFilename())]))
+							            ? ''
+							            : $this->getData(['module', $this->getUrl(0), 'content', $gallery, 'legend', str_replace('.', '', $fileInfos->getFilename())])
+							    ];
 							}
 						}
 					}

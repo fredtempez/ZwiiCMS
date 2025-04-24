@@ -15,7 +15,7 @@
 <div class="row">
     <div class="col12">
         <div class="moduleVersion">Version n°
-            <?php echo $module::VERSION; ?>
+            <?php echo geogallery::VERSION; ?>
         </div>
     </div>
 </div>
