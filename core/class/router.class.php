@@ -774,10 +774,6 @@ class core extends common
 							]);
 						}
 					}
-					// Erreur 403
-					else {
-						$access = false;
-					}
 				}
 			}
 		}

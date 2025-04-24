@@ -4,6 +4,7 @@
 - Unification de la méthode d'affichage des dossiers dans les modules gallery et geogallery. Désormais la liste des dossiers proposés est cohérente avec le dossier configuré dans le profil.
 - Amélioration du module geogallery.
 - Implémentation d'une nouvelle méthode pour permettre de téléverser un fichier sans passer par le gestionnaire de fichiers. Cette méthode intéresse les développeurs de modules.
+- Dissociation des permissions d'une page et de celles d'un module : l'accès restreint à une page de module ne génère plus d'erreur 403 sur la totalité de la page. Le contenu du module est simplement ignoré. Cette situation ne concerne que les développeurs dont les modules ont besoin d'un compte pour fonctionner comme le module upload, voir le tableau $actions dans la déclaration de la classe.
 
 ## Versions 13.6.03
 - Changement de dépôt vers https://codeberg.org/fredtempez/
