@@ -1499,7 +1499,6 @@ input[type='checkbox']:disabled+label:before {
     margin-top: 4px;
     display: inline-block;
     padding: 9px 12px;
-    background-color: #f8f9fa;
     border: 1px solid #ced4da;
     border-radius: 4px;
     cursor: pointer;
