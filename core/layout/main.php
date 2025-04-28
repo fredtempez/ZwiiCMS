@@ -2,8 +2,7 @@
 <html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
 
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="content-type" content="text/html;">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta meta="description=" content="ZwiiCMS le CMS multilingue sans base de données">
 	<meta name="generator" content="ZiiCMS https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
