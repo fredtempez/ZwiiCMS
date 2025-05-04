@@ -538,10 +538,16 @@ class template
      * @param string $id Id du formulaire
      * @return string
      */
-    public static function formOpen($id)
+    public static function formOpen($id, array $attributes = [])
     {
+        // Attributs par défaut
+        $attributes = array_merge([
+            'action' => '',
+            'name' => $id,
+            'enctype' => 'application/x-www-form-urlencoded'
+        ], $attributes);
         // Ouverture formulaire
-        $html = '<form id="' . $id . '" method="post">';
+        $html = '<form name="' . $attributes['name'] . '"  id="' . $id . '" method="post" enctype="' . $attributes['enctype'] . '">';
         // Stock le token CSRF
         $html .= self::hidden('csrf', [
             'value' => htmlentities($_SESSION['csrf'], ENT_QUOTES | ENT_HTML5, 'UTF-8')
