@@ -430,7 +430,7 @@ class template
             'classWrapper' => '',
             'noDirty' => false,
             'disabled' => false,
-            'accept' => '', // ex: 'image/*' ou '.jpg,.png,.pdf'
+            'accept' => '',  // ex: 'image/*' ou '.jpg,.png,.pdf'
             'help' => '',
             'id' => $nameId,
             'label' => '',
@@ -438,8 +438,9 @@ class template
             'name' => $nameId,
             'value' => '',
             'required' => false,
-            'uploadText' => 'Sélectionner un fichier', // Texte pour le bouton d'upload
-            'placeholder' => 'Aucun fichier sélectionné' // Texte par défaut quand aucun fichier sélectionné
+            'uploadText' => 'Sélectionner un fichier',  // Texte pour le bouton d'upload
+            'multiple' => false,  // Option pour activer la sélection multiple
+            'placeholder' => 'Aucun fichier sélectionné'
         ], $attributes);
 
         // Traduction des champs
@@ -484,13 +485,14 @@ class template
 
         // Input file caché
         $html .= sprintf(
-            '<input type="file" id="%s" name="%s" class="fileUpload %s" %s %s %s>',
+            '<input type="file" id="%s" name="%s[]" class="fileUpload %s" %s %s %s %s>',
             $attributes['id'],
             $attributes['name'],
             $attributes['class'],
             $attributes['accept'] ? 'accept="' . $attributes['accept'] . '"' : '',
             $attributes['disabled'] ? 'disabled' : '',
-            isset($attributes['required']) ? 'required' : ''
+            $attributes['required'] ? 'required' : '',
+            $attributes['multiple'] ? 'multiple' : ''  // Ajout de l'attribut multiple
         );
 
         // Label qui servira de bouton
@@ -511,12 +513,16 @@ class template
 
         // Script pour mettre à jour le nom du fichier
         $html .= "
-    <script>
-    document.getElementById('" . $attributes['id'] . "').addEventListener('change', function(e) {
-        var fileName = e.target.files[0] ? e.target.files[0].name : '" . $attributes['placeholder'] . "';
-        document.getElementById('" . $attributes['id'] . "-filename').textContent = fileName;
-    });
-    </script>";
+        <script>
+        document.getElementById('" . $attributes['id'] . "').addEventListener('change', function(e) {
+            var fileNames = [];
+            for(var i = 0; i < e.target.files.length; i++) {
+                fileNames.push(e.target.files[i].name);
+            }
+            var displayText = fileNames.length > 0 ? fileNames.join(', ') : '" . $attributes['placeholder'] . "';
+            document.getElementById('" . $attributes['id'] . "-filename').textContent = displayText;
+        });
+        </script>";
 
         // Fin du wrapper
         $html .= '</div>';
