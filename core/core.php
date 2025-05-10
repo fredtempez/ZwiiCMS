@@ -1642,10 +1642,13 @@ function makeThumb($src, $dest, $desired_width)
 				return (self::FILE_DIR . 'source/');  // Correction de la syntaxe return
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
-				$authorizePath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']);
-				return ($authorizePath === 'none' ? 'none' : self::FILE_DIR . 'source/' . self::$siteContent);
+				$profilKey = strpos(self::ZWII_UPDATE_URL, 'campus-update')
+					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
+					: 'path';
+				$authorizePath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
+				return ($authorizePath);
 			default:
-				return null;
+				return '';
 		}
 	}
 
