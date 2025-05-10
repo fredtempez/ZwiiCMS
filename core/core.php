@@ -1645,11 +1645,10 @@ function makeThumb($src, $dest, $desired_width)
 				$profilKey = strpos(self::ZWII_UPDATE_URL, 'campus-update')
 					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
 					: 'path';
-				$authorizePath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
-				return ($authorizePath);
+					$this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
 			default:
 				// retourne une chaine vide
-				return '';
+				return 'none';
 		}
 	}
 
