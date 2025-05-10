@@ -19,7 +19,6 @@ var listeRepOld = [];
 
 function listDir() {
     var url = "<?php echo helper::baseUrl() . $this->getUrl(0); ?>/dirs";
-    console.log(url);
     fetch(url)
         .then(res => res.json())
         .then(listeRep => {

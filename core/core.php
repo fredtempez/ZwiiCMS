@@ -1646,9 +1646,10 @@ function makeThumb($src, $dest, $desired_width)
 					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
 					: 'path';
 				$authorizePath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
-				return $authorizePath;
+				return ($authorizePath);
 			default:
-				return 'none';
+				// retourne une chaine vide
+				return '';
 		}
 	}
 

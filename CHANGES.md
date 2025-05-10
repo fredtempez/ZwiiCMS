@@ -1,5 +1,14 @@
 # Notes de mises à jour
 
+## Version 13.6.05
+- Encadrement des fenêtres "light", compatibilité CSS avec Safari
+- Optimisation et actualisation des directives htaccess
+
+### Corrections :
+- Fonctionnement de la méthode getUserPath, discrimination entre CMS et Campus.
+- Profils : chemin par défaut à l'installation, un slash en trop au début de chaîne.
+- Affiche un message lorsque l'utilisateur ne dispose des droits suffisants pour accéder à un partage dans le selecteur de dossiers.
+
 ## Version 13.6.04
 - Unification de la méthode d'affichage des dossiers dans les modules gallery et geogallery. Désormais la liste des dossiers proposés est cohérente avec le dossier configuré dans le profil.
 - Amélioration du module geogallery.
