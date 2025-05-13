@@ -3,6 +3,9 @@
 ## Version 13.6.05
 - Encadrement des fenêtres "light", compatibilité CSS avec Safari
 - Optimisation et actualisation des directives htaccess
+- Corrections : 
+  - Ajout d'un profil, impossible de valider.
+  - Geogallery 1.5 : format de la fenêtre d'ajout d'un profil.
 
 ### Corrections :
 - Fonctionnement de la méthode getUserPath, discrimination entre CMS et Campus.
