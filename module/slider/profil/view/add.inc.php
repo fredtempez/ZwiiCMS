@@ -15,7 +15,6 @@
                         'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'slider', 'delete'])
                     ]); ?>
                 </div>
-
             </div>
         </div>
     </div>
