@@ -15,6 +15,7 @@
                     <?php echo template::checkbox('profilAddGeogalleryDelete', true, 'Effacer une galerie'); ?>
                 </div>
             </div>
+            <div class="row">
                 <div class="col6">
                     <?php echo template::checkbox('profilAddGeogalleryTheme', true, 'Thème des galeries'); ?>
                 </div>
