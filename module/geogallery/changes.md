@@ -1,3 +1,5 @@
+# Version 1.5
+- Corrige un bug de présentation de la page d'ajout de profil.
 # Version 1.4
 - Externalisation de la recherche de dossiers dans le helper. Ajout d'une méthode ppour obtenir un tableau associatif dossier -> chemin dossier.
 - Ne transmet pas les id dans la table des galeries de la page de configuration.
