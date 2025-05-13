@@ -15,7 +15,7 @@
 class geogallery extends common
 {
 
-	const VERSION = '1.4';
+	const VERSION = '1.5';
 	const REALNAME = 'GéoGalerie';
 	const DATADIRECTORY = self::DATA_DIR . 'geogallery/';
 
