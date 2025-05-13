@@ -49,7 +49,7 @@ $(document).ready(function () {
     });
 
     // Désactive la gestion des pages pour les membres
-    $('#profilAddGroup').change(function () {
+    $('#profilAddRole').change(function () {
         ;
         if ($(this).val() === '1') {
             $('.containerPage').slideUp();

@@ -509,7 +509,7 @@ class page extends common
 						}
 					}
 					// Détermine le rôle selon que la page est une barre ou une page standard
-					$role = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditGroup', helper::FILTER_INT) : 0;
+					$role = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditRole', helper::FILTER_INT) : 0;
 
 					//Détermine le profil d'utilisateur en fonction du rôle sinon le rôle vaut 0
 					$profil = 0;

@@ -126,14 +126,14 @@
 			<div class="row">
 				<div class="col12">
 					<?php if ($this->getUser('role') === self::ROLE_ADMIN): ?>
-						<?php echo template::select('userEditGroup', self::$roleEdits, [
+						<?php echo template::select('userEditRole', self::$roleEdits, [
 							'disabled' => ($this->getUrl(2) === $this->getUser('id')),
 							'help' => ($this->getUrl(2) === $this->getUser('id') ? 'Impossible de modifier votre propre rôle.' : ''),
 							'label' => 'Rôle',
 							'selected' => $this->getData(['user', $this->getUrl(2), 'role']),
 						]); ?>
 					<?php else: ?>
-						<?php echo template::hidden('userEditGroup', [
+						<?php echo template::hidden('userEditRole', [
 							'value' => $this->getData(['user', $this->getUrl(2), 'role'])
 						]); ?>
 					<?php endif; ?>

@@ -39,12 +39,12 @@
                             </div>
                         </div>
                         <div class="col12">
-                            <?php echo template::text('profilEditDisplayGroup', [
+                            <?php echo template::text('profilEditDisplayRole', [
                                 'label' => 'Rôle associé',
                                 'value' => helper::translate(self::$roles[$this->getUrl(2)]),
                                 'disabled' => true
                             ]); ?>
-                            <?php echo template::hidden('profilEditGroup', [
+                            <?php echo template::hidden('profilEditRole', [
                                 'value' => $this->getUrl(2),
                             ]); ?>
                             <?php echo template::hidden('profilEditOldProfil', [

@@ -109,7 +109,7 @@ class user extends common
 			$password = $this->getInput('userAddPassword', helper::FILTER_PASSWORD, true);
 
 			// Profil
-			$role = $this->getInput('userAddGroup', helper::FILTER_INT, true);
+			$role = $this->getInput('userAddRole', helper::FILTER_INT, true);
 			$profil = 0;
 			if ($role === 1 || $role === 2) {
 				$profil = $this->getInput('userAddProfil' . $role, helper::FILTER_INT);
@@ -311,7 +311,7 @@ class user extends common
 						$this->getUser('role') === self::ROLE_ADMIN
 						and $this->getUrl(2) !== $this->getUser('id')
 					) {
-						$newGroup = $this->getInput('userEditGroup', helper::FILTER_INT, true);
+						$newGroup = $this->getInput('userEditRole', helper::FILTER_INT, true);
 					} else {
 						$newGroup = $this->getData(['user', $this->getUrl(2), 'role']);
 					}
@@ -502,8 +502,8 @@ class user extends common
 					$firstName = $this->getData(['user', $userId, 'firstname']);
 					$lastName = $this->getData(['user', $userId, 'lastname']);
 					if (
-						$this->getInput('userFilterGroup', helper::FILTER_INT) > 0
-						&& $this->getInput('userFilterGroup', helper::FILTER_STRING_SHORT) !== $role . $profil
+						$this->getInput('userFilterRole', helper::FILTER_INT) > 0
+						&& $this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
 					)
 						continue;
 					// Première lettre du prénom
@@ -652,7 +652,7 @@ class user extends common
 		) {
 
 			// Effacer les données du numéro de profil ancien
-			$role = $this->getInput('profilEditGroup', helper::FILTER_STRING_SHORT, true);
+			$role = $this->getInput('profilEditRole', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);

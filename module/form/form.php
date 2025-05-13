@@ -17,7 +17,7 @@
 class form extends common
 {
 
-	const VERSION = '4.6';
+	const VERSION = '4.7';
 	const REALNAME = 'Formulaire';
 	const DATADIRECTORY = ''; // Contenu localisé inclus par défaut (page.json et module.json)
 
@@ -185,7 +185,7 @@ class form extends common
 				[
 					'button' => $this->getInput('formOptionButton'),
 					'captcha' => $this->getInput('formOptionCaptcha', helper::FILTER_BOOLEAN),
-					'role' => $this->getInput('formOptionGroup', helper::FILTER_INT),
+					'role' => $this->getInput('formOptionRole', helper::FILTER_INT),
 					'user' => self::$listUsers[$this->getInput('formOptionUser', helper::FILTER_INT)],
 					'mail' => $this->getInput('formOptionMail'),
 					'pageId' => $this->getInput('formOptionPageIdToggle', helper::FILTER_BOOLEAN) === true ? $this->getInput('formOptionPageId', helper::FILTER_ID) : '',

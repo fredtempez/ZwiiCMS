@@ -23,7 +23,7 @@
 		]); ?>
 	</div>
 	<div class="col1">
-		<?php echo template::button('userGroup', [
+		<?php echo template::button('userRole', [
 			'href' => helper::baseUrl() . 'user/profil',
 			'value' => template::ico('lock'),
 			'help' => 'Profils'
@@ -41,9 +41,9 @@
 <?php echo template::formOpen('userFilterUserForm'); ?>
 <div class="row">
 	<div class="col3">
-		<?php echo template::select('userFilterGroup', user::$usersGroups, [
+		<?php echo template::select('userFilterRole', user::$usersGroups, [
 			'label' => 'Rôles / Profils',
-			'selected' => isset($_POST['userFilterGroup']) ? $_POST['userFilterGroup'] : 'all',
+			'selected' => isset($_POST['userFilterRole']) ? $_POST['userFilterRole'] : 'all',
 		]); ?>
 	</div>
 	<div class="col3">

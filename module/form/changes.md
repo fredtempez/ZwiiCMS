@@ -1,3 +1,5 @@
+# Version 4.7
+- Mise en conformité de nom de variable (Group en Role)
 # Version 4.6
 - Correction de syntaxe.
 # Version 4.5
