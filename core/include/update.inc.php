@@ -1173,7 +1173,7 @@ if (
 	}
 	$this->setData(['core', 'dataVersion', 13600]);
 }
-
+// Version 13.6.04
 if (
 	$this->getData(['core', 'dataVersion']) < 13604
 ) {
@@ -1181,4 +1181,22 @@ if (
 		unlink('core/class/layout.class.php');
 	}
 	$this->setData(['core', 'dataVersion', 13604]);
+}
+// Version 13.6.05
+if (
+	$this->getData(['core', 'dataVersion']) < 13605
+) {
+	$roles= array(1, 2);
+	foreach ($roles as $roleId => $roleValue) {
+		foreach ($this->getData(['profil', $roleValue]) as $profilId => $profilValue) {
+			$path = $this->getData(['profil', $roleValue, $profilId, 'folder', 'path']);
+			if (is_null($path) === false) {
+				$data = ltrim($path, '/');
+				$this->setData(['profil', $roleValue, $profilId, 'folder', 'path', $data], false);
+			}
+		}
+	}
+	$this->saveDb('profil');
+
+	$this->setData(['core', 'dataVersion', 13605]);
 }
