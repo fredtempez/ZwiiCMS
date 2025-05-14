@@ -56,9 +56,9 @@ $( document ).ready(function() {
 
 	// Changement de profil
 	$(".pageEditGroupProfil").hide();
-	$("#pageEditGroupProfil" + $("#pageEditGroup").val()).show();
+	$("#pageEditGroupProfil" + $("#pageEditRole").val()).show();
 
-	$("#pageEditGroup").on("change", function () {
+	$("#pageEditRole").on("change", function () {
 		$(".pageEditGroupProfil").hide();
 		$("#pageEditGroupProfil" + $(this).val()).show();
 	});

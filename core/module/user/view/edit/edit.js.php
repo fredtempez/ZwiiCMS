@@ -5,7 +5,7 @@
  *
  * @author Rémi Jean <remi.jean@outlook.com>
  * @copyright Copyright (C) 2008-2018, Rémi Jean
- * @author Frédéric Tempez <frederic.tempez@outlook.com>
+ * @author Frédéric Tempez <frederic.tempez@outlook.com>s
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
@@ -15,10 +15,10 @@
 $(document).ready(function () {
 	$(".userEditGroupProfil").hide();
 	$(".userCommentProfil").hide();
-	$("#userEditGroupProfil" + $("#userEditGroup").val()).show();
-	$("#userCommentProfil" + $("#userEditGroup").val()).show();
+	$("#userEditGroupProfil" + $("#userEditRole").val()).show();
+	$("#userCommentProfil" + $("#userEditRole").val()).show();
 
-	$("#userEditGroup").on("change", function () {
+	$("#userEditRole").on("change", function () {
 		$(".userEditGroupProfil").hide();
 		$(".userCommentProfil").hide();
 		$("#userEditGroupProfil" + $(this).val()).show();
