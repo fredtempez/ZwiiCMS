@@ -44,47 +44,6 @@
         </div>
     </div>
 </div>
-<div class="row containerPage">
-    <div class="col12">
-        <div class="block">
-            <h4>
-                <?php echo helper::translate('Permissions sur les pages'); ?>
-            </h4>
-            <div class="row">
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPageEdit', true, 'Éditer'); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Éditeur CSS'); ?>
-                </div>
-                <div class="col3">
-                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Éditeur JS'); ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="containerModule">
-    <?php foreach (user::$listModules as $moduleId): ?>
-        <?php if (file_exists('module/' . $moduleId . '/profil/view/add.inc.php')) {
-            include('module/' . $moduleId . '/profil/view/add.inc.php');
-        } ?>
-    <?php endforeach; ?>
-</div>
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -193,5 +152,46 @@
             </div>
         </div>
     </div>
+</div>
+<div class="row containerPage">
+    <div class="col12">
+        <div class="block">
+            <h4>
+                <?php echo helper::translate('Permissions sur les pages'); ?>
+            </h4>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageAdd', true, 'Ajouter'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageEdit', true, 'Éditer'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageDelete', true, 'Effacer'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageDuplicate', true, 'Dupliquer'); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPageModule', true, 'Module'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPagecssEditor', true, 'Éditeur CSS'); ?>
+                </div>
+                <div class="col3">
+                    <?php echo template::checkbox('profilAddPagejsEditor', true, 'Éditeur JS'); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="containerModule">
+    <?php foreach (user::$listModules as $moduleId): ?>
+        <?php if (file_exists('module/' . $moduleId . '/profil/view/add.inc.php')) {
+            include('module/' . $moduleId . '/profil/view/add.inc.php');
+        } ?>
+    <?php endforeach; ?>
 </div>
 <?php echo template::formClose(); ?>

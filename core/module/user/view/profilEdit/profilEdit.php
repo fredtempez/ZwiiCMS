@@ -63,63 +63,6 @@
         </div>
     </div>
 </div>
-<?php if ($this->getUrl(2) >= self::ROLE_EDITOR): ?>
-    <div class="row">
-        <div class="col12">
-            <div class="block">
-                <h4>
-                    <?php echo helper::translate('Permissions sur les pages'); ?>
-                </h4>
-                <div class="row">
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
-                        ]); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPageEdit', true, 'Éditer', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
-                        ]); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
-                        ]); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
-                        ]); ?>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
-                        ]); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Éditeur CSS', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
-                        ]); ?>
-                    </div>
-                    <div class="col3">
-                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Éditeur JS', [
-                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
-                        ]); ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="containerModule">
-        <?php foreach (user::$listModules as $moduleId): ?>
-            <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {
-                include('module/' . $moduleId . '/profil/view/edit.inc.php');
-            } ?>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -283,4 +226,61 @@
         </div>
     </div>
 </div>
+<?php if ($this->getUrl(2) >= self::ROLE_EDITOR): ?>
+    <div class="row">
+        <div class="col12">
+            <div class="block">
+                <h4>
+                    <?php echo helper::translate('Permissions sur les pages'); ?>
+                </h4>
+                <div class="row">
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageAdd', true, 'Ajouter', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'add'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageEdit', true, 'Éditer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'edit'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageDelete', true, 'Effacer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'delete'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageDuplicate', true, 'Dupliquer', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'duplicate'])
+                        ]); ?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPageModule', true, 'Module', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'module'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPagecssEditor', true, 'Éditeur CSS', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'cssEditor'])
+                        ]); ?>
+                    </div>
+                    <div class="col3">
+                        <?php echo template::checkbox('profilEditPagejsEditor', true, 'Éditeur JS', [
+                            'checked' => $this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'page', 'jsEditor'])
+                        ]); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="containerModule">
+        <?php foreach (user::$listModules as $moduleId): ?>
+            <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {
+                include('module/' . $moduleId . '/profil/view/edit.inc.php');
+            } ?>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
 <?php echo template::formClose(); ?>
