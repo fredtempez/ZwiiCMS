@@ -1,11 +1,16 @@
 # Notes de mises à jour
 
 ## Version 13.6.05
+Corrige des dysfonctionnements dans la gestion des profils et des dossiers partagés.
+- Format de la page d'ajout d'un profil incorrect (division non fermée).
+- Encore des variables notées Group eu lieu de Role.
+- Ajout d'un profil, impossible de valider.
+- Geogallery 1.5 : format de la fenêtre d'ajout d'un profil.
+- Optimisation et actualisation des directives htaccess.
 - Encadrement des fenêtres "light", compatibilité CSS avec Safari
-- Optimisation et actualisation des directives htaccess
-- Corrections : 
-  - Ajout d'un profil, impossible de valider.
-  - Geogallery 1.5 : format de la fenêtre d'ajout d'un profil.
+- Méthode getUserPath  : 
+    - Détection de la version du logiciel (CMS ou LMS) afin de lire les clés correctes de partage de dossiers.
+    - Renvoie "none" si pas d'autorisation, valeur stockée dans la BdD.
 
 ### Corrections :
 - Fonctionnement de la méthode getUserPath, discrimination entre CMS et Campus.
