@@ -27,8 +27,8 @@
                                         'label' => 'Nom du profil',
                                         'value' => helper::translate($this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name']))
                                     ]); ?>
-                                    </div>
-                                     <div class="col6">
+                                </div>
+                                <div class="col6">
                                     <?php echo template::select('profilEditProfil', user::$profils,  [
                                         'label' => 'Hiérarchie',
                                         'help' => 'Rang 9 > rang 1. Le profil de rang 1 n\'est pas modifiable.',
