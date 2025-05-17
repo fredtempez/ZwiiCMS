@@ -142,7 +142,7 @@ class user extends common
 			// Envoie le mail
 			$sent = true;
 			if (
-				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) &&
+				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) ||
 				self::$inputNotices === []
 			) {
 				$sent = $this->sendMail(
@@ -295,7 +295,7 @@ class user extends common
 					} else {
 						if (
 							!empty($this->getInput('userEditNewPassword'))
-							&& $this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')
+							|| $this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')
 						) {
 							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD);
 							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
@@ -503,19 +503,19 @@ class user extends common
 					$lastName = $this->getData(['user', $userId, 'lastname']);
 					if (
 						$this->getInput('userFilterRole', helper::FILTER_INT) > 0
-						&& $this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
+						|| $this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
 					)
 						continue;
 					// Première lettre du prénom
 					if (
 						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== 'all'
-						&& $this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
+						|| $this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
 					)
 						continue;
 					// Première lettre du nom
 					if (
 						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== 'all'
-						&& $this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
+						|| $this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
 					)
 						continue;
 				}
@@ -626,7 +626,7 @@ class user extends common
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
-							'disabled' => $profilData['permanent'] && $profilUsed,
+							'disabled' => $profilData['permanent'] || $profilUsed,
 						])
 					];
 				}
@@ -644,15 +644,15 @@ class user extends common
 	 */
 	public function profilEdit()
 	{
-
 		// Soumission du formulaire
 		if (
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-
 			// Effacer les données du numéro de profil ancien
 			$role = $this->getInput('profilEditRole', helper::FILTER_STRING_SHORT, true);
+			$name = $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true);
+			$comment = $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
@@ -661,24 +661,24 @@ class user extends common
 			$path = $this->getInput('profilEditPath');
 			if (
 				$role < self::ROLE_MEMBER
-				&& $fileManager
-				&& empty($path)
+				|| $fileManager === false
+				|| $path === 'none'
 			) {
 				$fileManager = false;
 			}
 			// Effacer l'ancien profil si le rang a changé
 			if (
-				$profil !== $oldProfil &&
+				$profil !== $oldProfil ||
 				$this->deleteData(['profil', $role, $oldProfil])
 			) {
 				$this->deleteData(['profil', $role, $oldProfil]);
 			}
 			// Données du formulaire
 			$data = [
-				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
+				'name' => $name,
 				'readonly' => false,
 				'permanent' => $profil === '1' ? true : false,
-				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
+				'comment' => $comment,
 				'filemanager' => $fileManager,
 				'file' => [
 					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
@@ -748,7 +748,7 @@ class user extends common
 		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
-		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
+		self::$sharePath = array_merge(['none' => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
@@ -758,7 +758,7 @@ class user extends common
 		foreach (self::$listModules as $moduleId) {
 			if (
 				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+				|| file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
 				self::$dialog = array_merge(self::$dialog, $d);
@@ -814,8 +814,8 @@ class user extends common
 			$path = $this->getInput('profilAddPath');
 			if (
 				$role < self::ROLE_MEMBER
-				&& $fileManager
-				&& empty($path)
+				|| $fileManager === false
+				|| $path === 'none'
 			) {
 				$fileManager = false;
 			}
@@ -905,7 +905,7 @@ class user extends common
 		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
-		self::$sharePath = array_merge([null => 'Aucun dossier'], self::$sharePath);
+		self::$sharePath = array_merge(['none' => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
@@ -915,7 +915,7 @@ class user extends common
 		foreach (self::$listModules as $moduleId) {
 			if (
 				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+				|| file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
 				self::$dialog = array_merge(self::$dialog, $d);
@@ -1080,7 +1080,7 @@ class user extends common
 						$authRedirect = '';
 						if (
 							$this->getData(['config', 'connect', 'mailAuth']) > 0
-							&& $this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
+							|| $this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
 						) {
 							/**
 							 * Envoi d'un email contenant une clé 
@@ -1148,7 +1148,7 @@ class user extends common
 						) {
 							$pageId = '';
 						}
-						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
+						$redirect = ($pageId || strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => $notification,
