@@ -1079,14 +1079,13 @@ class user extends common
 						// La page d'authentification est vide
 						$authRedirect = '';
 						if (
-							$this->getData(['config', 'connect', 'mailAuth']) > 0
-							|| $this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
+							$this->getData(['config', 'connect', 'mailAuth']) > 0	&&
+							$this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
 						) {
 							/**
 							 * Envoi d'un email contenant une clé 
 							 * Stockage de la clé dans le compte de l'utilisateur
 							 */
-
 							$sent = $this->sendMail(
 								$this->getData(['user', $userId, 'mail']),
 								'Validation de la connexion à votre compte',
