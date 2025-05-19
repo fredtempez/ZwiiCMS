@@ -27,9 +27,9 @@
                                         'label' => 'Nom du profil',
                                         'value' => helper::translate($this->getData(['profil', $this->getUrl(2), $this->getUrl(3), 'name']))
                                     ]); ?>
-                                    </div>
-                                     <div class="col6">
-                                    <?php echo template::select('profilEditProfil', user::$profils, [
+                                </div>
+                                <div class="col6">
+                                    <?php echo template::select('profilEditProfil', user::$profils,  [
                                         'label' => 'Hiérarchie',
                                         'help' => "Rang 9 > rang 1. Le profil de rang 1 n'est pas modifiable.",
                                         'selected' => $this->getUrl(3),
@@ -63,7 +63,6 @@
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col12">
         <div class="block">
@@ -279,7 +278,7 @@
     <div class="containerModule">
         <?php foreach (user::$listModules as $moduleId): ?>
             <?php if (file_exists('module/' . $moduleId . '/profil/view/edit.inc.php')) {
-                include ('module/' . $moduleId . '/profil/view/edit.inc.php');
+                include('module/' . $moduleId . '/profil/view/edit.inc.php');
             } ?>
         <?php endforeach; ?>
     </div>

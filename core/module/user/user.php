@@ -141,7 +141,7 @@ class user extends common
 			// Envoie le mail
 			$sent = true;
 			if (
-				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) &&
+				$this->getInput('userAddSendMail', helper::FILTER_BOOLEAN) ||
 				self::$inputNotices === []
 			) {
 				$sent = $this->sendMail(
@@ -617,7 +617,7 @@ class user extends common
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
-							'disabled' => $profilData['permanent'] && $profilUsed,
+							'disabled' => $profilData['permanent'] || $profilUsed,
 						])
 					];
 				}
@@ -642,6 +642,8 @@ class user extends common
 		) {
 			// Effacer les données du numéro de profil ancien
 			$role = $this->getInput('profilEditRole', helper::FILTER_STRING_SHORT, true);
+			$name = $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true);
+			$comment = $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
@@ -662,7 +664,7 @@ class user extends common
 
 			// Effacer l'ancien profil si le rang a changé
 			if (
-				$profil !== $oldProfil &&
+				$profil !== $oldProfil ||
 				$this->deleteData(['profil', $role, $oldProfil])
 			) {
 				$this->deleteData(['profil', $role, $oldProfil]);
@@ -670,10 +672,10 @@ class user extends common
 
 			// Données du formulaire
 			$data = [
-				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
+				'name' => $name,
 				'readonly' => false,
 				'permanent' => $profil === '1' ? true : false,
-				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
+				'comment' => $comment,
 				'filemanager' => $fileManager,
 				'file' => [
 					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
@@ -1139,7 +1141,7 @@ class user extends common
 						) {
 							$pageId = '';
 						}
-						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
+						$redirect = ($pageId || strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => $notification,

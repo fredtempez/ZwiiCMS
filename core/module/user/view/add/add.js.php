@@ -40,7 +40,7 @@ $(document).ready(function () {
 	/**
 	 * Droits des rôles
 	 */
-	$("#userAddGroup").on("change", function () {
+	$("#userAddRole").on("change", function () {
 		$(".userAddGroupProfil").hide();
 		$(".userCommentProfil").hide();
 		$("#userAddGroupProfil" + $(this).val()).show();
