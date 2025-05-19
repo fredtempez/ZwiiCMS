@@ -64,8 +64,7 @@
     </div>
 </div>
 
-<?php if ($this->getUrl(2) >= self::ROLE_EDITOR): ?>
-    <div class="row">
+<div class="row">
     <div class="col12">
         <div class="block">
             <h4>
@@ -228,6 +227,7 @@
         </div>
     </div>
 </div>
+<?php if ($this->getUrl(2) >= self::ROLE_EDITOR): ?>
     <div class="row">
         <div class="col12">
             <div class="block">
