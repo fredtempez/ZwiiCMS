@@ -425,18 +425,14 @@ class template
     {
         // Attributs par défaut
         $attributes = array_merge([
-            'before' => true,
             'class' => '',
             'classWrapper' => '',
-            'noDirty' => false,
             'disabled' => false,
             'accept' => '',  // ex: 'image/*' ou '.jpg,.png,.pdf'
             'help' => '',
             'id' => $nameId,
             'label' => '',
-            'maxlength' => '500',
             'name' => $nameId,
-            'value' => '',
             'required' => false,
             'uploadText' => 'Sélectionner un fichier',  // Texte pour le bouton d'upload
             'multiple' => false,  // Option pour activer la sélection multiple
