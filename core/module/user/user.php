@@ -642,8 +642,6 @@ class user extends common
 		) {
 			// Effacer les données du numéro de profil ancien
 			$role = $this->getInput('profilEditRole', helper::FILTER_STRING_SHORT, true);
-			$name = $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true);
-			$comment = $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true);
 			// Les profils 1 sont désactivés dans le formulaire
 			$profil = empty($this->getInput('profilEditProfil')) ? '1' : $this->getInput('profilEditProfil');
 			$oldProfil = $this->getInput('profilEditOldProfil', helper::FILTER_STRING_SHORT);
@@ -672,10 +670,10 @@ class user extends common
 
 			// Données du formulaire
 			$data = [
-				'name' => $name,
+				'name' => $this->getInput('profilEditName', helper::FILTER_STRING_SHORT, true),
 				'readonly' => false,
 				'permanent' => $profil === '1' ? true : false,
-				'comment' => $comment,
+				'comment' => $this->getInput('profilEditComment', helper::FILTER_STRING_SHORT, true),
 				'filemanager' => $fileManager,
 				'file' => [
 					'download' => $this->getInput('profilEditDownload', helper::FILTER_BOOLEAN),
