@@ -12,10 +12,8 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-
 class user extends common
 {
-
 	public static $actions = [
 		'add' => self::ROLE_ADMIN,
 		'delete' => self::ROLE_ADMIN,
@@ -36,7 +34,7 @@ class user extends common
 
 	public static $users = [];
 
-	//Paramètres pour choix de la signature
+	// Paramètres pour choix de la signature
 	public static $signature = [
 		self::SIGNATURE_ID => 'Identifiant',
 		self::SIGNATURE_PSEUDO => 'Pseudo',
@@ -49,6 +47,7 @@ class user extends common
 	public static $userGroups = [];
 
 	public static $userProfils = [];
+
 	public static $userProfilsComments = [];
 
 	public static $userLongtime = false;
@@ -148,10 +147,10 @@ class user extends common
 				$sent = $this->sendMail(
 					$userMail,
 					'Compte créé sur ' . $this->getData(['config', 'title']),
-					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>' .
-					'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-					'<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>' .
-					'<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
+					'Bonjour <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>'
+						. 'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>'
+						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('userAddId') . '<br>'
+						. '<small>Nous ne conservons pas les mots de passe, en conséquence nous vous conseillons de conserver ce message tant que vous ne vous êtes pas connecté. Vous pourrez modifier votre mot de passe après votre première connexion.</small>',
 					null,
 					$this->getData(['config', 'smtp', 'from'])
 				);
@@ -188,7 +187,6 @@ class user extends common
 			}
 		}
 
-
 		// Valeurs en sortie
 		$this->addOutput([
 			'title' => helper::translate('Nouvel utilisateur'),
@@ -205,9 +203,9 @@ class user extends common
 		if (
 			$this->getUser('permission', __CLASS__, __FUNCTION__) !== true ||
 			// L'utilisateur n'existe pas
-			$this->getData(['user', $this->getUrl(2)]) === null
+			$this->getData(['user', $this->getUrl(2)]) === null and
 			// Groupe insuffisant
-			and ($this->getUser('role') < self::ROLE_EDITOR)
+			($this->getUser('role') < self::ROLE_EDITOR)
 		) {
 			// Valeurs en sortie
 			$this->addOutput([
@@ -249,15 +247,14 @@ class user extends common
 		} else {
 			if (
 				// L'utilisateur n'existe pas
-				$this->getData(['user', $this->getUrl(2)]) === null
+				$this->getData(['user', $this->getUrl(2)]) === null and
 				// Droit d'édition
-				and (
-						// Impossible de s'auto-éditer
-					($this->getUser('id') === $this->getUrl(2)
-						and $this->getUser('role') <= self::ROLE_VISITOR
-					)
+				(
+					// Impossible de s'auto-éditer
+					($this->getUser('id') === $this->getUrl(2) and
+						$this->getUser('role') <= self::ROLE_VISITOR) or
 					// Impossible d'éditer un autre utilisateur
-					or ($this->getUser('role') < self::ROLE_EDITOR)
+					($this->getUser('role') < self::ROLE_EDITOR)
 				)
 			) {
 				// Valeurs en sortie
@@ -294,8 +291,8 @@ class user extends common
 						}
 					} else {
 						if (
-							!empty($this->getInput('userEditNewPassword'))
-							|| $this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')
+							!empty($this->getInput('userEditNewPassword')) &&
+							$this->getInput('userEditNewPassword') === $this->getInput('userEditConfirmPassword')
 						) {
 							$newPassword = $this->getInput('userEditNewPassword', helper::FILTER_PASSWORD);
 							// Déconnexion de l'utilisateur si il change le mot de passe de son propre compte
@@ -308,8 +305,8 @@ class user extends common
 
 					// Modification du rôle
 					if (
-						$this->getUser('role') === self::ROLE_ADMIN
-						and $this->getUrl(2) !== $this->getUser('id')
+						$this->getUser('role') === self::ROLE_ADMIN and
+						$this->getUrl(2) !== $this->getUser('id')
 					) {
 						$newGroup = $this->getInput('userEditRole', helper::FILTER_INT, true);
 					} else {
@@ -433,11 +430,10 @@ class user extends common
 					null,
 					$this->getData(['config', 'smtp', 'from'])
 				);
-
 			}
 			// Valeurs en sortie
 			$this->addOutput([
-				'notification' => $sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate('Le mail de réinitialisation ne peut pas être envoyé, contactez l\'administrateur'),
+				'notification' => $sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate("Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur"),
 				'state' => ($sent === true ? true : false),
 				'redirect' => helper::baseUrl()
 			]);
@@ -459,15 +455,15 @@ class user extends common
 		$usersGroups = $this->getData(['profil']);
 		foreach ($usersGroups as $roleId => $roleValue) {
 			switch ($roleId) {
-				case "-1":
-				case "0":
+				case '-1':
+				case '0':
 					break;
-				case "3":
+				case '3':
 					self::$usersGroups['30'] = 'Administrateur';
 					$profils['30'] = 0;
 					break;
-				case "1":
-				case "2":
+				case '1':
+				case '2':
 					foreach ($roleValue as $profilId => $profilValue) {
 						if ($profilId) {
 							self::$usersGroups[$roleId . $profilId] = sprintf(helper::translate('Rôle %s - Profil %s'), self::$rolePublics[$roleId], $profilValue['name']);
@@ -488,7 +484,6 @@ class user extends common
 		ksort($userIdsLastNames);
 		foreach ($userIdsLastNames as $userId => $userLastNames) {
 			if ($this->getData(['user', $userId, 'role'])) {
-
 				// Compte les rôles
 				if (isset($profils[$this->getData(['user', $userId, 'role']) . $this->getData(['user', $userId, 'profil'])])) {
 					$profils[$this->getData(['user', $userId, 'role']) . $this->getData(['user', $userId, 'profil'])]++;
@@ -502,34 +497,32 @@ class user extends common
 					$firstName = $this->getData(['user', $userId, 'firstname']);
 					$lastName = $this->getData(['user', $userId, 'lastname']);
 					if (
-						$this->getInput('userFilterRole', helper::FILTER_INT) > 0
-						|| $this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
+						$this->getInput('userFilterRole', helper::FILTER_INT) > 0 &&
+						$this->getInput('userFilterRole', helper::FILTER_STRING_SHORT) !== $role . $profil
 					)
 						continue;
 					// Première lettre du prénom
 					if (
-						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== 'all'
-						|| $this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
+						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== 'all' &&
+						$this->getInput('userFilterFirstName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($firstName, 0, 1))
 					)
 						continue;
 					// Première lettre du nom
 					if (
-						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== 'all'
-						|| $this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
+						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== 'all' &&
+						$this->getInput('userFilterLastName', helper::FILTER_STRING_SHORT) !== strtoupper(substr($lastName, 0, 1))
 					)
 						continue;
 				}
 
-
-
 				// Formatage de la liste
 				self::$users[] = [
 					$userId,
-					sprintf('%s %s',$userLastNames, $this->getData(['user', $userId, 'firstname'])),
+					sprintf('%s %s', $userLastNames, $this->getData(['user', $userId, 'firstname'])),
 					helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])]),
 					empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-					? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
-					: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
+						? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+						: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 					$this->getData(['user', $userId, 'tags']),
 					template::button('userEdit' . $userId, [
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
@@ -543,7 +536,6 @@ class user extends common
 						'help' => 'Supprimer'
 					])
 				];
-
 			}
 		}
 
@@ -571,9 +563,8 @@ class user extends common
 	 */
 	public function profil()
 	{
-
 		// Ne pas supprimer un profil utililsé
-		// recherche les membres du rôle 
+		// recherche les membres du rôle
 		$roles = helper::arrayColumn($this->getData(['user']), 'role');
 		$roles = array_keys($roles, $this->getUrl(2));
 		$profilUsed = true;
@@ -659,13 +650,18 @@ class user extends common
 			// Gère le chemin
 			$fileManager = $this->getInput('profilEditFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilEditPath');
+
+			// Empêche les roles 1 d'avoir accès au gestionnaire de fichiers
 			if (
 				$role < self::ROLE_MEMBER
-				|| $fileManager === false
-				|| $path === 'none'
 			) {
 				$fileManager = false;
 			}
+			// Données de path si accès interdit
+			if ($fileManager === false) {
+				$path = 'none';
+			}
+
 			// Effacer l'ancien profil si le rang a changé
 			if (
 				$profil !== $oldProfil ||
@@ -673,6 +669,7 @@ class user extends common
 			) {
 				$this->deleteData(['profil', $role, $oldProfil]);
 			}
+
 			// Données du formulaire
 			$data = [
 				'name' => $name,
@@ -699,7 +696,7 @@ class user extends common
 					'rename' => $this->getInput('profilEditFolderRename', helper::FILTER_BOOLEAN),
 					'copycut' => $this->getInput('profilEditFolderCopycut', helper::FILTER_BOOLEAN),
 					'chmod' => $this->getInput('profilEditFolderChmod', helper::FILTER_BOOLEAN),
-					'path' => preg_replace('/^\\./', '', $path), // Supprime le point pour préserver le chemin
+					'path' => preg_replace('/^\./', '', $path),  // Supprime le point pour préserver le chemin
 				],
 				'page' => [
 					'add' => $this->getInput('profilEditPageAdd', helper::FILTER_BOOLEAN),
@@ -720,7 +717,7 @@ class user extends common
 			if (is_array($dataModules)) {
 				foreach ($dataModules as $moduleId => $moduleValue) {
 					if (file_exists('module/' . $moduleId . '/profil/main/edit.inc.php')) {
-						include('module/' . $moduleId . '/profil/main/edit.inc.php');
+						include ('module/' . $moduleId . '/profil/main/edit.inc.php');
 						if (is_array($moduleData[$moduleId])) {
 							$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
 						}
@@ -728,7 +725,7 @@ class user extends common
 				}
 			}
 
-			//Sauvegarder le données
+			// Sauvegarder le données
 			$this->setData([
 				'profil',
 				$role,
@@ -748,7 +745,6 @@ class user extends common
 		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
-		self::$sharePath = array_merge(['none' => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
@@ -757,8 +753,8 @@ class user extends common
 		// Charge les dialogues du module pour afficher les traductions
 		foreach (self::$listModules as $moduleId) {
 			if (
-				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-				|| file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n') &&
+				file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
 				self::$dialog = array_merge(self::$dialog, $d);
@@ -775,7 +771,7 @@ class user extends common
 		 * Ne garder que la différence sauf le profil de l'utilisateur édité que l'on ajoute
 		 */
 		self::$profils = $this->getData(['profil', $this->getUrl(2)]);
-		// Supprime le profil utilisateur 
+		// Supprime le profil utilisateur
 		unset(self::$profils[$this->getUrl(3)]);
 		self::$profils = array_keys(self::$profils);
 		$p = range(1, self::MAX_PROFILS - 1);
@@ -798,7 +794,6 @@ class user extends common
 	/**
 	 * Ajouter un profil de permission
 	 */
-
 	public function profilAdd()
 	{
 		// Soumission du formulaire
@@ -812,12 +807,16 @@ class user extends common
 			// Gère le chemin
 			$fileManager = $this->getInput('profilAddFileManager', helper::FILTER_BOOLEAN);
 			$path = $this->getInput('profilAddPath');
+
+			// Sécurité supplémentaire pour interdire les fichiers
 			if (
 				$role < self::ROLE_MEMBER
-				|| $fileManager === false
-				|| $path === 'none'
 			) {
 				$fileManager = false;
+			}
+			// Données de path si accès interdit
+			if ($fileManager === false) {
+				$path = 'none';
 			}
 
 			if ($profil < self::MAX_PROFILS) {
@@ -848,7 +847,7 @@ class user extends common
 						'rename' => $this->getInput('profilAddFolderRename', helper::FILTER_BOOLEAN),
 						'copycut' => $this->getInput('profilAddFolderCopycut', helper::FILTER_BOOLEAN),
 						'chmod' => $this->getInput('profilAddFolderChmod', helper::FILTER_BOOLEAN),
-						'path' => preg_replace('/^\\./', '', $path), // Supprime le point pour préserver le chemin
+						'path' => preg_replace('/^\./', '', $path),  // Supprime le point pour préserver le chemin
 					],
 					'page' => [
 						'add' => $this->getInput('profilAddPageAdd', helper::FILTER_BOOLEAN),
@@ -869,7 +868,7 @@ class user extends common
 				if (is_array($dataModules)) {
 					foreach ($dataModules as $moduleId => $moduleValue) {
 						if (file_exists('module/' . $moduleId . '/profil/main/add.inc.php')) {
-							include('module/' . $moduleId . '/profil/main/add.inc.php');
+							include ('module/' . $moduleId . '/profil/main/add.inc.php');
 							if (is_array($moduleData[$moduleId])) {
 								$data = array_merge($data, [$moduleId => $moduleData[$moduleId]]);
 							}
@@ -891,7 +890,6 @@ class user extends common
 					'state' => true
 				]);
 			} else {
-
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl() . 'user/profil',
@@ -905,7 +903,6 @@ class user extends common
 		self::$sharePath = $this->getSubdirectories('site/file/source');
 		self::$sharePath = array_flip(self::$sharePath);
 		self::$sharePath = array_merge(['site/file/source/' => 'Tous les dossiers'], self::$sharePath);
-		self::$sharePath = array_merge(['none' => 'Aucun dossier'], self::$sharePath);
 
 		// Liste des modules installés
 		self::$listModules = helper::getModules();
@@ -914,8 +911,8 @@ class user extends common
 		// Charge les dialogues du module pour afficher les traductions
 		foreach (self::$listModules as $moduleId) {
 			if (
-				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-				|| file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n') &&
+				file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
 				self::$dialog = array_merge(self::$dialog, $d);
@@ -926,7 +923,7 @@ class user extends common
 
 		// Valeurs en sortie;
 		$this->addOutput([
-			'title' => "Ajouter un profil",
+			'title' => 'Ajouter un profil',
 			'view' => 'profilAdd'
 		]);
 	}
@@ -934,11 +931,10 @@ class user extends common
 	/**
 	 * Effacement de profil
 	 */
-
 	public function profilDelete()
 	{
 		// Ne pas supprimer un profil utililsé
-		// recherche les membres du rôle 
+		// recherche les membres du rôle
 		$roles = helper::arrayColumn($this->getData(['user']), 'role');
 		$roles = array_keys($roles, $this->getUrl(2));
 		$flag = true;
@@ -987,19 +983,17 @@ class user extends common
 			$notification = '';
 			// Check le captcha
 			if (
-				$this->getData(['config', 'connect', 'captcha'])
-				and password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult')) === false
+				$this->getData(['config', 'connect', 'captcha']) and
+				password_verify($this->getInput('userLoginCaptcha', helper::FILTER_INT), $this->getInput('userLoginCaptchaResult')) === false
 			) {
 				$captcha = false;
 			} else {
 				$captcha = true;
 			}
-			/**
-			 * Aucun compte existant
-			 */
+			/** Aucun compte existant */
 			if (!$this->getData(['user', $userId])) {
 				$logStatus = 'Compte inconnu';
-				//Stockage de l'IP
+				// Stockage de l'IP
 				$this->setData([
 					'blacklist',
 					$userId,
@@ -1012,8 +1006,8 @@ class user extends common
 				// Verrouillage des IP
 				$ipBlackList = helper::arrayColumn($this->getData(['blacklist']), 'ip');
 				if (
-					$this->getData(['blacklist', $userId, 'connectFail']) >= $this->getData(['config', 'connect', 'attempt'])
-					and in_array($this->getData(['blacklist', $userId, 'ip']), $ipBlackList)
+					$this->getData(['blacklist', $userId, 'connectFail']) >= $this->getData(['config', 'connect', 'attempt']) and
+					in_array($this->getData(['blacklist', $userId, 'ip']), $ipBlackList)
 				) {
 					$logStatus = 'Compte inconnu verrouillé';
 					// Valeurs en sortie
@@ -1028,14 +1022,15 @@ class user extends common
 						'notification' => helper::translate('Captcha, identifiant ou mot de passe incorrects')
 					]);
 				}
+
 				/**
 				 * Le compte existe
 				 */
 			} else {
 				// Cas 4 : le délai de  blocage est  dépassé et le compte est au max - Réinitialiser
 				if (
-					$this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time()
-					and $this->getData(['user', $userId, 'connectFail']) === $this->getData(['config', 'connect', 'attempt'])
+					$this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout']) < time() and
+					$this->getData(['user', $userId, 'connectFail']) === $this->getData(['config', 'connect', 'attempt'])
 				) {
 					$this->setData(['user', $userId, 'connectFail', 0], false);
 					$this->setData(['user', $userId, 'connectTimeout', 0], false);
@@ -1043,13 +1038,12 @@ class user extends common
 				// Check la présence des variables et contrôle du blocage du compte si valeurs dépassées
 				// Vérification du mot de passe et du rôle
 				if (
-					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time()
-					and $this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt'])
-					and password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password']))
-					and $this->getData(['user', $userId, 'role']) >= self::ROLE_MEMBER
-					and $captcha === true
+					($this->getData(['user', $userId, 'connectTimeout']) + $this->getData(['config', 'connect', 'timeout'])) < time() and
+					$this->getData(['user', $userId, 'connectFail']) < $this->getData(['config', 'connect', 'attempt']) and
+					password_verify(html_entity_decode($this->getInput('userLoginPassword', helper::FILTER_STRING_SHORT, true)), $this->getData(['user', $userId, 'password'])) and
+					$this->getData(['user', $userId, 'role']) >= self::ROLE_MEMBER and
+					$captcha === true
 				) {
-
 					// RAZ des compteurs de blocage
 					$this->setData(['user', $userId, 'connectFail', 0], false);
 					$this->setData(['user', $userId, 'connectTimeout', 0], false);
@@ -1059,18 +1053,18 @@ class user extends common
 
 					// Valeurs en sortie lorsque le site est en maintenance et que l'utilisateur n'est pas administrateur
 					if (
-						$this->getData(['config', 'maintenance'])
-						and $this->getData(['user', $userId, 'role']) < self::ROLE_ADMIN
+						$this->getData(['config', 'maintenance']) and
+						$this->getData(['user', $userId, 'role']) < self::ROLE_ADMIN
 					) {
 						$this->addOutput([
-							'notification' => helper::translate('Seul un administrateur peut se connecter lors d\'une maintenance'),
+							'notification' => helper::translate("Seul un administrateur peut se connecter lors d'une maintenance"),
 							'redirect' => helper::baseUrl(),
 							'state' => false
 						]);
 					} else {
 						/**
 						 * Le site n'est pas en maintenance
-						 * Double authentification en cas de saisie correcte 
+						 * Double authentification en cas de saisie correcte
 						 */
 						// Clé d'authenfication utilisée pour lier le compte au cookie au lieu de stocker le hash du mot de passe
 						$authKey = uniqid('', true) . bin2hex(random_bytes(8));
@@ -1079,18 +1073,18 @@ class user extends common
 						// La page d'authentification est vide
 						$authRedirect = '';
 						if (
-							$this->getData(['config', 'connect', 'mailAuth']) > 0	&&
+							$this->getData(['config', 'connect', 'mailAuth']) > 0 &&
 							$this->getData(['user', $userId, 'role']) >= $this->getData(['config', 'connect', 'mailAuth'])
 						) {
 							/**
-							 * Envoi d'un email contenant une clé 
+							 * Envoi d'un email contenant une clé
 							 * Stockage de la clé dans le compte de l'utilisateur
 							 */
 							$sent = $this->sendMail(
 								$this->getData(['user', $userId, 'mail']),
 								'Validation de la connexion à votre compte',
-								'<p>Clé de validation à saisir dans le formulaire de connexion :</p>' .
-								'<h1><center>' . $keyByMail . '</center></h1>',
+								'<p>Clé de validation à saisir dans le formulaire de connexion :</p>'
+									. '<h1><center>' . $keyByMail . '</center></h1>',
 								null,
 								$this->getData(['config', 'smtp', 'from'])
 							);
@@ -1098,18 +1092,18 @@ class user extends common
 							// L'email a été envoyé avec succès, redirection vers la page de double authentification
 							if ($sent === true) {
 								// Journalisation
-								$logStatus = helper::translate('Envoi du message d\'authentification');
+								$logStatus = helper::translate("Envoi du message d'authentification");
 								// Redirection vers la page d'authentification
 								$authRedirect = 'user/auth/';
 								// Stocker la clé envoyée par email
 								$this->setData(['user', $userId, 'authKey', $keyByMail]);
-								$notification = sprintf('Clé d\'authentification envoyée à votre adresse mail %s', $this->getData(['user', $userId, 'mail']));
+								$notification = sprintf("Clé d'authentification envoyée à votre adresse mail %s", $this->getData(['user', $userId, 'mail']));
 							} else {
 								// Impossible d'envoyer le message
 								// Double authentification désactivée
 								$this->setData(['config', 'connect', 'mailAuth', 0]);
 								$this->setData(['user', $userId, 'authKey', $authKey]);
-								// Journalisation 
+								// Journalisation
 								$this->saveLog($sent);
 								$notification = sprintf(helper::translate('Bienvenue %s %s'), $this->getData(['user', $userId, 'firstname']), $this->getData(['user', $userId, 'lastname']));
 							}
@@ -1120,12 +1114,12 @@ class user extends common
 						}
 
 						// Validité du cookie
-						$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime("+1 year") : 0;
+						$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime('+1 year') : 0;
 						switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
 							case false:
 								// Cookie de session
 								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
-								//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								// setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
 								// Connexion par clé
 								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
@@ -1133,7 +1127,7 @@ class user extends common
 							default:
 								// Cookie persistant
 								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-								//setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+								// setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
 
 								// Connexion par clé
 								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false));
@@ -1142,8 +1136,8 @@ class user extends common
 
 						$pageId = $this->getUrl(2);
 						if (
-							$this->getData(['config', 'page404']) === $pageId
-							|| $this->getData(['config', 'page403']) === $pageId
+							$this->getData(['config', 'page404']) === $pageId ||
+							$this->getData(['config', 'page403']) === $pageId
 						) {
 							$pageId = '';
 						}
@@ -1197,7 +1191,6 @@ class user extends common
 	}
 
 	/**
-	 * 
 	 * Validation de la connexion par email
 	 * @return void
 	 */
@@ -1217,7 +1210,6 @@ class user extends common
 				// La clé est valide ou le message n'ayant pas été expédié, la double authentification est désactivée
 				$targetKey === $inputKey || $this->getData(['config', 'connect', 'mailAuth', 0]) === 0
 			) {
-
 				// La fiche de l'utilisateur contient la clé d'authentification
 				$this->setData(['user', $this->getUser('id'), 'authKey', $this->getInput('ZWII_AUTH_KEY')]);
 				// Journalisation
@@ -1231,7 +1223,6 @@ class user extends common
 					'state' => true
 				]);
 			} else {
-
 				// Supprime la clé stockée et le temps limite
 				$this->deleteData(['user', $this->getUser('id'), 'authKey']);
 				// Réinitialiser le compteur de temps
@@ -1290,20 +1281,20 @@ class user extends common
 		// Accès refusé
 		if (
 			// L'utilisateur n'existe pas
-			$this->getData(['user', $this->getUrl(2)]) === null
+			$this->getData(['user', $this->getUrl(2)]) === null or
 			// Lien de réinitialisation trop vieux (24 heures)
-			or $this->getData(['user', $this->getUrl(2), 'forgot']) === null
-			or (int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time()
+			$this->getData(['user', $this->getUrl(2), 'forgot']) === null or
+			(int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() or
 			// Clé unique incorrecte
-			or $this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
+			$this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
 		) {
 			$this->saveLog(
-				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2) .
-				' Compte : ' . $this->getData(['user', $this->getUrl(2)]) .
-				' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) === null ? 'Clé manquante' : ((int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() ? 'Temps dépassé' : 'Temps valide')) .
-				' Clé : ' . ($this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot']) ? 'Clé invalide' : 'Clé valide')
+				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2)
+				. ' Compte : ' . $this->getData(['user', $this->getUrl(2)])
+				. ' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) === null ? 'Clé manquante' : ((int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() ? 'Temps dépassé' : 'Temps valide'))
+				. ' Clé : ' . ($this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot']) ? 'Clé invalide' : 'Clé valide')
 			);
-	
+
 			// Message d'erreur en cas de problème de réinitialisation de mot de passe
 			$message = $this->getData(['user', $this->getUrl(2)]) === null
 				? ' Utilisateur inconnu '
@@ -1317,7 +1308,7 @@ class user extends common
 			$message = $this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
 				? ' Clé invalide '
 				: $message;
-	
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'redirect' => helper::baseurl(),
@@ -1393,28 +1384,29 @@ class user extends common
 				foreach ($csv as $item) {
 					// Données valides
 					if (
-						array_key_exists('id', $item)
-						and array_key_exists('prenom', $item)
-						and array_key_exists('nom', $item)
-						and array_key_exists('role', $item)
-						and array_key_exists('profil', $item)
-						and array_key_exists('email', $item)
-						and array_key_exists('passe', $item)
-						and array_key_exists('tags', $item)
-						and isset($item['id'])
-						and isset($item['nom'])
-						and isset($item['prenom'])
-						and isset($item['email'])
-						and isset($item['role'])
-						and isset($item['profil'])
-						and isset($item['passe'])
-						and isset($item['tags'])
+						array_key_exists('id', $item) and
+						array_key_exists('prenom', $item) and
+						array_key_exists('nom', $item) and
+						array_key_exists('role', $item) and
+						array_key_exists('profil', $item) and
+						array_key_exists('email', $item) and
+						array_key_exists('passe', $item) and
+						array_key_exists('tags', $item) and
+						isset($item['id']) and
+						isset($item['nom']) and
+						isset($item['prenom']) and
+						isset($item['email']) and
+						isset($item['role']) and
+						isset($item['profil']) and
+						isset($item['passe']) and
+						isset($item['tags'])
 					) {
 						// Validation du rôle
 						$item['role'] = (int) $item['role'];
 						$item['profil'] = (int) $item['profil'];
 						$item['role'] = ($item['role'] >= self::ROLE_BANNED and $item['role'] <= self::ROLE_ADMIN)
-							? $item['role'] : 1;
+							? $item['role']
+							: 1;
 						// L'utilisateur existe
 						$userId = helper::filter($item['id'], helper::FILTER_ID);
 						if ($this->getData(['user', $userId])) {
@@ -1427,8 +1419,8 @@ class user extends common
 								$item['prenom'],
 								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
-								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
+									? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+									: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								helper::filter($item['email'], helper::FILTER_MAIL),
 								$item['tags'],
@@ -1453,11 +1445,11 @@ class user extends common
 									// Pseudo
 									'password' => helper::filter($item['passe'], helper::FILTER_PASSWORD),
 									// A modifier à la première connexion
-									"connectFail" => null,
-									"connectTimeout" => null,
-									"accessUrl" => null,
-									"accessTimer" => null,
-									"accessCsrf" => null,
+									'connectFail' => null,
+									'connectTimeout' => null,
+									'accessUrl' => null,
+									'accessTimer' => null,
+									'accessCsrf' => null,
 									'tags' => $item['tags']
 								]
 							], false);
@@ -1465,16 +1457,16 @@ class user extends common
 							$item['notification'] = $create ? template::ico('check') : template::ico('cancel');
 							// Envoi du mail
 							if (
-								$create
-								and $this->getInput('userImportNotification', helper::FILTER_BOOLEAN) === true
+								$create and
+								$this->getInput('userImportNotification', helper::FILTER_BOOLEAN) === true
 							) {
 								$sent = $this->sendMail(
 									$item['email'],
 									'Compte créé sur ' . $this->getData(['config', 'title']),
-									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>' .
-									'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>' .
-									'<strong>Identifiant du compte :</strong> ' . $userId . '<br>' .
-									'<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
+									'Bonjour <strong>' . $item['prenom'] . ' ' . $item['nom'] . '</strong>,<br><br>'
+										. 'Un administrateur vous a créé un compte sur le site ' . $this->getData(['config', 'title']) . '. Vous trouverez ci-dessous les détails de votre compte.<br><br>'
+										. '<strong>Identifiant du compte :</strong> ' . $userId . '<br>'
+										. '<small>Un mot de passe provisoire vous été attribué, à la première connexion cliquez sur Mot de passe Oublié.</small>',
 									null,
 									$this->getData(['config', 'smtp', 'from'])
 								);
@@ -1490,8 +1482,8 @@ class user extends common
 								$item['prenom'],
 								self::$roles[$item['role']],
 								empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-								? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
-								: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
+									? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+									: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
 								$item['prenom'],
 								$item['email'],
 								$item['tags'],
@@ -1499,7 +1491,6 @@ class user extends common
 							];
 						}
 					}
-
 				}
 				// Force la sauvegarde
 				$this->saveDB('user');
@@ -1517,14 +1508,14 @@ class user extends common
 		}
 		// Valeurs en sortie
 		$this->addOutput([
-			'title' => 'Importation d\'utilisateurs',
+			'title' => "Importation d'utilisateurs",
 			'view' => 'import',
 			'notification' => $notification,
 			'state' => $success
 		]);
 	}
 
-	/** 
+	/**
 	 * Télécharge un modèle
 	 */
 	public function template()
@@ -1541,7 +1532,6 @@ class user extends common
 			readfile($path . $file);
 			exit();
 		}
-
 	}
 
 	/**
@@ -1575,5 +1565,4 @@ class user extends common
 		closedir($dh);
 		return $subdirs;
 	}
-
 }
