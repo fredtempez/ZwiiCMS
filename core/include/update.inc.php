@@ -1186,6 +1186,7 @@ if (
 if (
 	$this->getData(['core', 'dataVersion']) < 13605
 ) {
+	// Renomme les chemins en supprimant les / au début des chemins de profil
 	$roles= array(1, 2);
 	foreach ($roles as $roleId => $roleValue) {
 		foreach ($this->getData(['profil', $roleValue]) as $profilId => $profilValue) {
@@ -1197,6 +1198,19 @@ if (
 		}
 	}
 	$this->saveDb('profil');
+
+	// Supprime le module folder
+	if (is_dir('core/module/folder')) {
+		$this->deleteDir('core/module/folder');	
+	}
+	// Parcourir les pages et modifier les modules folder en resource
+	$hierarchy = $this->getData(['page']);
+	foreach ($hierarchy as $parentKey => $parentValue) {
+		if ($this->getData(['page', $parentKey, 'moduleId']) === 'folder') {
+			$this->setData(['page', $parentKey, 'moduleId', 'resource'], false);
+		}
+	}
+	$this->saveDb('page');
 
 	$this->setData(['core', 'dataVersion', 13605]);
 }
