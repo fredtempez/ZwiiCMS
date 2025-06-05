@@ -564,16 +564,15 @@ class user extends common
 	public function profil()
 	{
 		// Ne pas supprimer un profil utililsé
-		// recherche les membres du rôle
-		$roles = helper::arrayColumn($this->getData(['user']), 'role');
-		$roles = array_keys($roles, $this->getUrl(2));
-		$profilUsed = true;
+		$profilUsed = false;
 		// Stoppe si le profil est affecté
-		foreach ($roles as $userId) {
+		foreach ($this->getData(['user']) as $userId) {
 			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
-				$profilUsed = false;
+				$profilUsed = true;
+				break;
 			}
 		}
+
 		foreach ($this->getData(['profil']) as $roleId => $roleData) {
 			// Membres sans permissions spécifiques
 			if (
@@ -601,7 +600,10 @@ class user extends common
 				$roleId == self::ROLE_EDITOR
 			) {
 				// Enumérer les sous rôles MEMBER et MODERATOR
+				var_dump($roleData);
 				foreach ($roleData as $profilId => $profilData) {
+					echo $profilId;
+					echo "_________________<p>";
 					self::$userGroups[$roleId . '.' . $profilId] = [
 						$roleId . '-' . $profilId,
 						helper::translate(self::$roles[$roleId]) . '<br />Profil : ' . helper::translate($profilData['name']),

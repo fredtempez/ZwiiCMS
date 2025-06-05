@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.6.06
+- Corrige un bug dans la gestion des droits de suppression des profils.
+
 ## Version 13.6.05
 Corrige des dysfonctionnements dans la gestion des profils et des dossiers partagés.
 - Format de la page d'ajout d'un profil incorrect (division non fermée).
