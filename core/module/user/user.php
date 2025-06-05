@@ -563,15 +563,6 @@ class user extends common
 	 */
 	public function profil()
 	{
-		// Ne pas supprimer un profil utililsé
-		$profilUsed = false;
-		// Stoppe si le profil est affecté
-		foreach ($this->getData(['user']) as $userId) {
-			if ((string) $this->getData(['user', $userId, 'profil']) === $this->getUrl(3)) {
-				$profilUsed = true;
-				break;
-			}
-		}
 
 		foreach ($this->getData(['profil']) as $roleId => $roleData) {
 			// Membres sans permissions spécifiques
@@ -599,11 +590,11 @@ class user extends common
 				$roleId == self::ROLE_MEMBER ||
 				$roleId == self::ROLE_EDITOR
 			) {
+				$profilInUse = $this->getData(['user']);
+				// Extrait les clés profils de $profilInUse
+				$profilInUse = array_column($profilInUse, 'profil');
 				// Enumérer les sous rôles MEMBER et MODERATOR
-				var_dump($roleData);
 				foreach ($roleData as $profilId => $profilData) {
-					echo $profilId;
-					echo "_________________<p>";
 					self::$userGroups[$roleId . '.' . $profilId] = [
 						$roleId . '-' . $profilId,
 						helper::translate(self::$roles[$roleId]) . '<br />Profil : ' . helper::translate($profilData['name']),
@@ -619,7 +610,7 @@ class user extends common
 							'href' => helper::baseUrl() . 'user/profilDelete/' . $roleId . '/' . $profilId,
 							'value' => template::ico('trash'),
 							'help' => 'Supprimer',
-							'disabled' => $profilData['permanent'] || $profilUsed,
+							'disabled' => $profilData['permanent'] || array_search($profilId, $profilInUse)	,
 						])
 					];
 				}
