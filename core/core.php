@@ -12,12 +12,8 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-
-
-
 class common
 {
-
 	const DISPLAY_RAW = 0;
 	const DISPLAY_JSON = 1;
 	const DISPLAY_RSS = 2;
@@ -31,7 +27,6 @@ class common
 	// Role MODERATOR, compatibilité avec les anciens modules :
 	const ROLE_MODERATOR = 2;
 	const ROLE_ADMIN = 3;
-
 	// Compatibilité avec les anciens version de modules
 	const GROUP_BANNED = -1;
 	const GROUP_VISITOR = 0;
@@ -52,17 +47,13 @@ class common
 	const TEMP_DIR = 'site/tmp/';
 	const I18N_DIR = 'site/i18n/';
 	const MODULE_DIR = 'module/';
-
 	// Miniatures de la galerie
 	const THUMBS_SEPARATOR = 'mini_';
 	const THUMBS_WIDTH = 640;
-
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
-
 	// Numéro de version
 	const ZWII_VERSION = '13.6.07';
-
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -76,54 +67,60 @@ class common
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
-
 	// Taille et rotation des journaux
 	const LOG_MAXSIZE = 4 * 1024 * 1024;
 	const LOG_MAXARCHIVE = 5;
 
 	public static $actions = [];
+
 	public static $coreModuleIds = [
-		"config",
-		"dashboard",
-		"install",
-		"language",
-		"maintenance",
-		"page",
-		"plugin",
-		"sitemap",
-		"theme",
-		"user"
+		'config',
+		'dashboard',
+		'install',
+		'language',
+		'maintenance',
+		'page',
+		'plugin',
+		'sitemap',
+		'theme',
+		'user'
 	];
+
 	public static $concurrentAccess = [
-		"config",
-		"edit",
-		"language",
-		"plugin",
-		"theme",
-		"user"
+		'config',
+		'edit',
+		'language',
+		'plugin',
+		'theme',
+		'user'
 	];
+
 	/*
-		  Cette variable est supprimée du test dans le routeur.
-		  public static $accessExclude = [
-			  'login',
-			  'logout',
-			  "maintenance",
-		  ];
-		  */
+	 * Cette variable est supprimée du test dans le routeur.
+	 * public static $accessExclude = [
+	 * 	'login',
+	 * 	'logout',
+	 * 	"maintenance",
+	 * ];
+	 */
 	private $data = [];
+
 	private $hierarchy = [
 		'all' => [],
 		'visible' => [],
 		'bar' => []
 	];
+
 	private $input = [
 		'_COOKIE' => [],
 		'_POST' => []
 	];
+
 	public static $inputBefore = [];
 	public static $inputNotices = [];
 	public static $importNotices = [];
 	public static $coreNotices = [];
+
 	public $output = [
 		'access' => true,
 		'content' => '',
@@ -154,11 +151,12 @@ class common
 			// 'codemirror', // Désactivé par défaut
 			'tippy',
 			'zwiico',
-			//'imagemap',
+			// 'imagemap',
 			'simplelightbox'
 		],
 		'view' => ''
 	];
+
 	public static $roles = [
 		self::ROLE_BANNED => 'Banni',
 		self::ROLE_VISITOR => 'Visiteur',
@@ -166,17 +164,20 @@ class common
 		self::ROLE_EDITOR => 'Éditeur',
 		self::ROLE_ADMIN => 'Administrateur'
 	];
+
 	public static $roleEdits = [
 		self::ROLE_BANNED => 'Banni',
 		self::ROLE_MEMBER => 'Membre',
 		self::ROLE_EDITOR => 'Éditeur',
 		self::ROLE_ADMIN => 'Administrateur'
 	];
+
 	public static $roleNews = [
 		self::ROLE_MEMBER => 'Membre',
 		self::ROLE_EDITOR => 'Éditeur',
 		self::ROLE_ADMIN => 'Administrateur'
 	];
+
 	public static $rolePublics = [
 		self::ROLE_VISITOR => 'Visiteur',
 		self::ROLE_MEMBER => 'Membre',
@@ -184,23 +185,24 @@ class common
 		self::ROLE_ADMIN => 'Administrateur'
 	];
 
-	//Langues de l'UI
+	// Langues de l'UI
 	// Langue de l'interface, tableau des dialogues
 	public static $dialog;
 	// Langue de l'interface sélectionnée
 	public static $i18nUI = 'fr_FR';
 	// Langues de contenu
 	public static $siteContent = 'fr_FR';
+
 	public static $languages = [
 		'az_AZ' => 'Azərbaycan dili',
 		'bg_BG' => 'български език',
-		//'ca' => 'Català, valencià',
-		//'cs' => 'čeština, český jazyk',
-		//'da' => 'Dansk',
+		// 'ca' => 'Català, valencià',
+		// 'cs' => 'čeština, český jazyk',
+		// 'da' => 'Dansk',
 		'de' => 'Deutsch',
 		'en_EN' => 'English',
 		'es' => 'Español',
-		//'fa' => 'فارسی',
+		// 'fa' => 'فارسی',
 		'fr_FR' => 'Français',
 		'he_IL' => 'Hebrew (Israel)',
 		'gr_GR' => 'Ελληνικά',
@@ -210,7 +212,7 @@ class common
 		'it' => 'Italiano',
 		'ja' => '日本',
 		'lt' => 'Lietuvių kalba',
-		//'mn_MN' => 'монгол',
+		// 'mn_MN' => 'монгол',
 		'nb_NO' => 'Norsk bokmål',
 		'nn_NO' => 'Norsk nynorsk',
 		'nl' => 'Nederlands, Vlaams',
@@ -227,10 +229,8 @@ class common
 		'uk_UA' => 'Yкраїнська мова',
 		'vi' => 'Tiếng Việt',
 		'zh_CN' => '中文 (Zhōngwén), 汉语, 漢語',
-
 		// source: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
 	];
-
 
 	// Zone de temps
 	public static $timezone;
@@ -263,17 +263,17 @@ class common
 		],
 		'arial-black' => [
 			'name' => 'Arial Black',
-			'font-family' => '\'Arial Black\', Gadget, sans-serif',
+			'font-family' => "'Arial Black', Gadget, sans-serif",
 			'resource' => 'websafe'
 		],
 		'courrier' => [
 			'name' => 'Courier',
-			'font-family' => 'Courier, \'Liberation Mono\', monospace',
+			'font-family' => "Courier, 'Liberation Mono', monospace",
 			'resource' => 'websafe'
 		],
 		'courrier-new' => [
 			'name' => 'Courier New',
-			'font-family' => '\'Courier New\', Courier, monospace',
+			'font-family' => "'Courier New', Courier, monospace",
 			'resource' => 'websafe'
 		],
 		'garamond' => [
@@ -293,7 +293,7 @@ class common
 		],
 		'lucida' => [
 			'name' => 'Lucida',
-			'font-family' => '\'Lucida Sans Unicode\', \'Lucida Grande\', sans-serif',
+			'font-family' => "'Lucida Sans Unicode', 'Lucida Grande', sans-serif",
 			'resource' => 'websafe'
 		],
 		'tahoma' => [
@@ -303,12 +303,12 @@ class common
 		],
 		'times-new-roman' => [
 			'name' => 'Times New Roman',
-			'font-family' => '\'Times New Roman\', \'Liberation Serif\', serif',
+			'font-family' => "'Times New Roman', 'Liberation Serif', serif",
 			'resource' => 'websafe'
 		],
 		'trebuchet' => [
 			'name' => 'Trebuchet',
-			'font-family' => '\'Trebuchet MS\', Arial, Helvetica, sans-serif',
+			'font-family' => "'Trebuchet MS', Arial, Helvetica, sans-serif",
 			'resource' => 'websafe'
 		],
 		'verdana' => [
@@ -424,7 +424,7 @@ class common
 			'domain' => '',
 			'secure' => false,
 			'httponly' => false,
-			'samesite' => 'Lax' // Vous pouvez aussi utiliser 'Strict' ou 'None'
+			'samesite' => 'Lax'  // Vous pouvez aussi utiliser 'Strict' ou 'None'
 		]);
 		// Construit la liste des pages parents/enfants
 		if ($this->hierarchy['all'] === []) {
@@ -451,8 +451,8 @@ class common
 		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
 			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
 			if (
-				is_dir(self::MODULE_DIR . $moduleId . '/i18n')
-				&& file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
+				is_dir(self::MODULE_DIR . $moduleId . '/i18n') &&
+				file_exists(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json')
 			) {
 				$d = json_decode(file_get_contents(self::MODULE_DIR . $moduleId . '/i18n/' . self::$i18nUI . '.json'), true);
 				self::$dialog = array_merge(self::$dialog, $d);
@@ -475,9 +475,9 @@ class common
 					'verify_peer' => false,
 					'verify_peer_name' => false,
 				),
-				"ssl" => array(
-					"verify_peer" => false,
-					"verify_peer_name" => false
+				'ssl' => array(
+					'verify_peer' => false,
+					'verify_peer_name' => false
 				)
 			);
 			stream_context_set_default($context);
@@ -499,10 +499,8 @@ class common
 		];
 
 		// Mise à jour des données core
-		include('core/include/update.inc.php');
+		include ('core/include/update.inc.php');
 	}
-
-
 
 	/**
 	 * Ajoute les valeurs en sortie
@@ -568,8 +566,8 @@ class common
 	{
 		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
 		if (
-			!empty(self::$inputNotices)
-			or empty($keys)
+			!empty(self::$inputNotices) or
+			empty($keys)
 		) {
 			return false;
 		}
@@ -625,11 +623,10 @@ class common
 	 */
 	public function getPage($page, $lang)
 	{
-
 		// Le nom de la ressource et le fichier de contenu sont définis :
 		if (
-			$this->getData(['page', $page, 'content']) !== ''
-			&& file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
+			$this->getData(['page', $page, 'content']) !== '' &&
+			file_exists(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']))
 		) {
 			return file_get_contents(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 		} else {
@@ -645,7 +642,6 @@ class common
 	 */
 	public function setPage($page, $value, $lang)
 	{
-
 		return $this->secure_file_put_contents(self::DATA_DIR . $lang . '/content/' . $page . '.html', $value);
 	}
 
@@ -659,7 +655,6 @@ class common
 	 */
 	function secure_file_put_contents($filename, $data, $flags = 0)
 	{
-
 		// Initialise le compteur de tentatives
 		$attempts = 0;
 
@@ -671,8 +666,8 @@ class common
 			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
-			//$now = \DateTime::createFromFormat('U.u', microtime(true));
-			//file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
+			// $now = \DateTime::createFromFormat('U.u', microtime(true));
+			// file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
 
 			// Vérifie si l'écriture a réussi
 			if ($write_result !== false && $write_result === $data_length) {
@@ -690,8 +685,6 @@ class common
 		return ($attempts < 5);
 	}
 
-
-
 	/**
 	 * Effacer les données de la page
 	 * @param string pageId
@@ -699,10 +692,8 @@ class common
 	 */
 	public function deletePage($page, $lang)
 	{
-
 		return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 	}
-
 
 	public function jsonDB($lang)
 	{
@@ -728,7 +719,7 @@ class common
 	public function initData($module, $lang, $sampleSite = false)
 	{
 		// Tableau avec les données vierges
-		require_once('core/module/install/ressource/defaultdata.php');
+		require_once ('core/module/install/ressource/defaultdata.php');
 
 		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
@@ -756,7 +747,7 @@ class common
 				} else {
 					// En_EN par défaut si le contenu localisé n'est pas traduit
 					$langDefault = array_key_exists($lang, init::$defaultDataI18n) === true ? $lang : 'default';
-					// Charger les données de cette langue 
+					// Charger les données de cette langue
 					$this->setData([$module, init::$defaultDataI18n[$langDefault][$module]]);
 					// Créer la page d'accueil, une seule page dans cette configuration
 					$pageId = init::$defaultDataI18n[$langDefault]['locale']['homePageId'];
@@ -781,7 +772,6 @@ class common
 		$db = (object) $this->dataFiles[$module];
 		$db->save();
 	}
-
 
 	/**
 	 * Accède à la liste des pages parents et de leurs enfants
@@ -812,25 +802,20 @@ class common
 	 * Fonction pour construire le tableau des pages
 	 * Appelée par le core uniquement
 	 */
-
 	private function buildHierarchy()
 	{
-
 		$pages = helper::arrayColumn($this->getData(['page']), 'position', 'SORT_ASC');
 		// Parents
 		foreach ($pages as $pageId => $pagePosition) {
 			if (
 				// Page parent
-				$this->getData(['page', $pageId, 'parentPageId']) === ""
+				$this->getData(['page', $pageId, 'parentPageId']) === '' and
 				// Ignore les pages dont l'utilisateur n'a pas accès
-				and ($this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR
-					or ($this->isConnected() === true
-						//and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
+				($this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR or
+					($this->isConnected() === true and
+						// and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
 						// Modification qui tient compte du profil de la page
-						and ($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
-
-					)
-				)
+						($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))))
 			) {
 				if ($pagePosition !== 0) {
 					$this->hierarchy['visible'][$pageId] = [];
@@ -843,24 +828,19 @@ class common
 		}
 		// Enfants
 		foreach ($pages as $pageId => $pagePosition) {
-
 			if (
 				// Page parent
-				$parentId = $this->getData(['page', $pageId, 'parentPageId'])
-				// Ignore les pages dont l'utilisateur n'a pas accès
-				and (
+				$parentId = $this->getData(['page', $pageId, 'parentPageId']) and
+					// Ignore les pages dont l'utilisateur n'a pas accès
 					(
-						$this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR
-						and
-						$this->getData(['page', $parentId, 'role']) === self::ROLE_VISITOR
+						(
+							$this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR and
+							$this->getData(['page', $parentId, 'role']) === self::ROLE_VISITOR
+						) or (
+							$this->isConnected() === true and
+							$this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')
+						) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
 					)
-					or (
-						$this->isConnected() === true
-						and
-						$this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil'])
-
-					)
-				)
 			) {
 				if ($pagePosition !== 0) {
 					$this->hierarchy['visible'][$parentId][] = $pageId;
@@ -875,7 +855,6 @@ class common
 
 	/**
 	 * Génère un fichier json avec la liste des pages
-	 *
 	 */
 	private function tinyMcePages()
 	{
@@ -890,12 +869,12 @@ class common
 				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
 				foreach ($childIds as $childId) {
 					$children[] = [
-						'title' => '↳' . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
+						'title' => '>' . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
 						'value' => $rewrite . $childId
 					];
 				}
 				// Traitement
-				if (empty($childIds)) {
+				if (empty($childIds && $this->getData(['page', $parentId, 'title']))) {
 					// Pas d'enfant, uniquement l'entrée du parent
 					$parents[] = [
 						'title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES),
@@ -942,7 +921,6 @@ class common
 		}
 	}
 
-
 	/**
 	 * Accède à une valeur des variables http (ordre de recherche en l'absence de type : _COOKIE, _POST)
 	 * @param string $key Clé de la valeur
@@ -964,8 +942,8 @@ class common
 				// Check de l'existence
 				// Également utile pour les checkbox qui ne retournent rien lorsqu'elles ne sont pas cochées
 				if (
-					array_key_exists($firstKey, $values)
-					and array_key_exists($secondKey, $values[$firstKey])
+					array_key_exists($firstKey, $values) and
+					array_key_exists($secondKey, $values[$firstKey])
 				) {
 					// Retourne la valeur filtrée
 					if ($filter) {
@@ -1050,27 +1028,26 @@ class common
 	 */
 	public function getPermission($key1, $key2 = null)
 	{
-
 		// Administrateur, toutes les permissions
 		if ($this->getUser('role') === self::ROLE_ADMIN) {
 			return true;
-		} elseif ($this->getUser('role') <= self::ROLE_VISITOR) { // Role sans autorisation
+		} elseif ($this->getUser('role') <= self::ROLE_VISITOR) {  // Role sans autorisation
 			return false;
 		} elseif (
 			// Role avec profil, consultation des autorisations sur deux clés
-			$key1
-			&& $key2
-			&& $this->user
-			&& $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1])
-			&& array_key_exists($key2, $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]))
+			$key1 &&
+			$key2 &&
+			$this->user &&
+			$this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]) &&
+			array_key_exists($key2, $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]))
 		) {
 			return $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1, $key2]);
 			// Role avec profil, consultation des autorisations sur une seule clé
 		} elseif (
-			$key1
-			&& $this->user
-			&& $this->getData(['profil', $this->user['role'], $this->user['profil']])
-			&& array_key_exists($key1, $this->getData(['profil', $this->user['role'], $this->user['profil']]))
+			$key1 &&
+			$this->user &&
+			$this->getData(['profil', $this->user['role'], $this->user['profil']]) &&
+			array_key_exists($key1, $this->getData(['profil', $this->user['role'], $this->user['profil']]))
 		) {
 			return $this->getData(['profil', $this->user['role'], $this->user['profil'], $key1]);
 		} else {
@@ -1091,9 +1068,9 @@ class common
 	public function isConnected()
 	{
 		return (
-			!empty($this->getUser('authKey'))
-			&&
-			$this->getUser('authKey') === $this->getInput('ZWII_AUTH_KEY'));
+			!empty($this->getUser('authKey')) &&
+			$this->getUser('authKey') === $this->getInput('ZWII_AUTH_KEY')
+		);
 	}
 
 	/**
@@ -1104,7 +1081,6 @@ class common
 	{
 		return ($this->checkCSRF() and $this->input['_POST'] !== []);
 	}
-
 
 	/**
 	 * Retourne une chemin localisé pour l'enregistrement des données
@@ -1127,7 +1103,6 @@ class common
 		return ($folder);
 	}
 
-
 	/**
 	 * Génère un fichier un fichier sitemap.xml
 	 * https://github.com/icamys/php-sitemap-generator
@@ -1135,19 +1110,18 @@ class common
 	 * Sinon contient id de la page à créer
 	 * @param string Valeurs possibles
 	 */
-
 	public function updateSitemap()
 	{
 		// Le drapeau prend true quand au moins une page est trouvée
 		$flag = false;
 
-		// Rafraîchit la liste des pages après une modification de pageId notamment 
+		// Rafraîchit la liste des pages après une modification de pageId notamment
 		$this->buildHierarchy();
 
 		// Actualise la liste des pages pour TinyMCE
 		$this->tinyMcePages();
 
-		//require_once 'core/vendor/sitemap/SitemapGenerator.php';	
+		// require_once 'core/vendor/sitemap/SitemapGenerator.php';
 
 		$timezone = $this->getData(['config', 'timezone']);
 		$outputDir = getcwd();
@@ -1163,12 +1137,11 @@ class common
 		// sitemap file name
 		$sitemap->setSitemapFileName('sitemap.xml');
 
-
 		// Set the sitemap index file name
 		$sitemap->setSitemapIndexFileName('sitemap-index.xml');
 
 		$datetime = new DateTime(date('c'));
-		$datetime->format(DateTime::ATOM); // Updated ISO8601
+		$datetime->format(DateTime::ATOM);  // Updated ISO8601
 
 		foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
 			// Exclure les barres et les pages non publiques et les pages masquées
@@ -1187,9 +1160,9 @@ class common
 			}
 			// Articles du blog
 			if (
-				$this->getData(['page', $parentPageId, 'moduleId']) === 'blog'
-				&& !empty($this->getData(['module', $parentPageId]))
-				&& $this->getData(['module', $parentPageId, 'posts'])
+				$this->getData(['page', $parentPageId, 'moduleId']) === 'blog' &&
+				!empty($this->getData(['module', $parentPageId])) &&
+				$this->getData(['module', $parentPageId, 'posts'])
 			) {
 				foreach ($this->getData(['module', $parentPageId, 'posts']) as $articleId => $article) {
 					if ($this->getData(['module', $parentPageId, 'posts', $articleId, 'state']) === true) {
@@ -1252,96 +1225,93 @@ class common
 		return (file_exists('sitemap.xml') && file_exists('robots.txt'));
 	}
 
+	/**
+	 * Crée une miniature à partir d'une image source.
+	 * Cette fonction prend en charge les formats raster (JPEG, PNG, GIF, WebP, AVIF) et vectoriels (SVG).
+	 * Pour les images vectorielles (SVG), aucune redimension n'est effectuée : une copie est réalisée.
+	 *
+	 * @param string $src Chemin de l'image source.
+	 * @param string $dest Chemin de l'image destination (avec le nom du fichier et l'extension).
+	 * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
+	 * @return bool True si l'opération a réussi, false sinon.
+	 */
+	function makeThumb($src, $dest, $desired_width)
+	{
+		// Vérifier l'existence du dossier de destination.
+		$fileInfo = pathinfo($dest);
+		if (!is_dir($fileInfo['dirname'])) {
+			mkdir($fileInfo['dirname'], 0755, true);
+		}
 
-/**
- * Crée une miniature à partir d'une image source.
- * Cette fonction prend en charge les formats raster (JPEG, PNG, GIF, WebP, AVIF) et vectoriels (SVG).
- * Pour les images vectorielles (SVG), aucune redimension n'est effectuée : une copie est réalisée.
- * 
- * @param string $src Chemin de l'image source.
- * @param string $dest Chemin de l'image destination (avec le nom du fichier et l'extension).
- * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
- * @return bool True si l'opération a réussi, false sinon.
- */
-function makeThumb($src, $dest, $desired_width)
-{
-    // Vérifier l'existence du dossier de destination.
-    $fileInfo = pathinfo($dest);
-    if (!is_dir($fileInfo['dirname'])) {
-        mkdir($fileInfo['dirname'], 0755, true);
-    }
+		$extension = strtolower($fileInfo['extension']);
+		$mime_type = mime_content_type($src);
 
-    $extension = strtolower($fileInfo['extension']);
-    $mime_type = mime_content_type($src);
+		// Gestion des fichiers SVG (copie simple sans redimensionnement)
+		if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
+			return copy($src, $dest);
+		}
 
-    // Gestion des fichiers SVG (copie simple sans redimensionnement)
-    if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
-        return copy($src, $dest);
-    }
+		// Chargement de l'image source selon le type
+		$source_image = '';
+		switch ($extension) {
+			case 'jpeg':
+			case 'jpg':
+				$source_image = imagecreatefromjpeg($src);
+				break;
+			case 'png':
+				$source_image = imagecreatefrompng($src);
+				break;
+			case 'gif':
+				$source_image = imagecreatefromgif($src);
+				break;
+			case 'webp':
+				$source_image = imagecreatefromwebp($src);
+				break;
+			case 'avif':
+				if (function_exists('imagecreatefromavif')) {
+					$source_image = imagecreatefromavif($src);
+				} else {
+					return false;  // AVIF non supporté
+				}
+				break;
+			default:
+				return false;  // Format non pris en charge
+		}
 
-    // Chargement de l'image source selon le type
-    $source_image = '';
-    switch ($extension) {
-        case 'jpeg':
-        case 'jpg':
-            $source_image = imagecreatefromjpeg($src);
-            break;
-        case 'png':
-            $source_image = imagecreatefrompng($src);
-            break;
-        case 'gif':
-            $source_image = imagecreatefromgif($src);
-            break;
-        case 'webp':
-            $source_image = imagecreatefromwebp($src);
-            break;
-        case 'avif':
-            if (function_exists('imagecreatefromavif')) {
-                $source_image = imagecreatefromavif($src);
-            } else {
-                return false; // AVIF non supporté
-            }
-            break;
-        default:
-            return false; // Format non pris en charge
-    }
+		// Image valide (formats raster uniquement)
+		if (is_resource($source_image) || (is_object($source_image) && $source_image instanceof GdImage)) {
+			$width = imagesx($source_image);
+			$height = imagesy($source_image);
 
-    // Image valide (formats raster uniquement)
-    if (is_resource($source_image) || (is_object($source_image) && $source_image instanceof GdImage)) {
-        $width = imagesx($source_image);
-        $height = imagesy($source_image);
+			// Calcul de la hauteur proportionnelle à la largeur demandée
+			$desired_height = floor($height * ($desired_width / $width));
 
-        // Calcul de la hauteur proportionnelle à la largeur demandée
-        $desired_height = floor($height * ($desired_width / $width));
+			// Création d'une nouvelle image virtuelle redimensionnée
+			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
 
-        // Création d'une nouvelle image virtuelle redimensionnée
-        $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
+			// Copie de l'image source dans l'image virtuelle avec redimensionnement
+			imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
 
-        // Copie de l'image source dans l'image virtuelle avec redimensionnement
-        imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
+			// Enregistrement de l'image redimensionnée au format approprié
+			switch ($mime_type) {
+				case 'image/jpeg':
+				case 'image/jpg':
+					return imagejpeg($virtual_image, $dest);
+				case 'image/png':
+					return imagepng($virtual_image, $dest);
+				case 'image/gif':
+					return imagegif($virtual_image, $dest);
+				case 'image/webp':
+					return imagewebp($virtual_image, $dest);
+				case 'image/avif':
+					if (function_exists('imageavif')) {
+						return imageavif($virtual_image, $dest);
+					}
+			}
+		}
 
-        // Enregistrement de l'image redimensionnée au format approprié
-        switch ($mime_type) {
-            case 'image/jpeg':
-            case 'image/jpg':
-                return imagejpeg($virtual_image, $dest);
-            case 'image/png':
-                return imagepng($virtual_image, $dest);
-            case 'image/gif':
-                return imagegif($virtual_image, $dest);
-            case 'image/webp':
-                return imagewebp($virtual_image, $dest);
-            case 'image/avif':
-                if (function_exists('imageavif')) {
-                    return imageavif($virtual_image, $dest);
-                }
-        }
-    }
-
-    return false; // En cas d'échec
-}
-
-
+		return false;  // En cas d'échec
+	}
 
 	/**
 	 * Envoi un mail
@@ -1363,7 +1333,7 @@ function makeThumb($src, $dest, $desired_width)
 		try {
 			// Paramètres SMTP perso
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
-				//$mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_CLIENT;
+				// $mail->SMTPDebug = PHPMailer\PHPMailer\SMTP::DEBUG_CLIENT;
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
 				$mail->SMTPSecure = false;
@@ -1422,8 +1392,6 @@ function makeThumb($src, $dest, $desired_width)
 		}
 	}
 
-
-
 	/**
 	 * Effacer un dossier non vide.
 	 * @param string URL du dossier à supprimer
@@ -1438,7 +1406,6 @@ function makeThumb($src, $dest, $desired_width)
 		}
 		return (rmdir($path));
 	}
-
 
 	/*
 	 * Copie récursive de dossiers
@@ -1458,10 +1425,9 @@ function makeThumb($src, $dest, $desired_width)
 
 		// Boucler dans le dossier source en l'absence d'échec de lecture écriture
 		while (
-			$success
-			and $file = readdir($dir)
+			$success and
+			$file = readdir($dir)
 		) {
-
 			if (($file != '.') && ($file != '..')) {
 				if (is_dir($src . '/' . $file)) {
 					// Appel récursif des sous-dossiers
@@ -1475,7 +1441,6 @@ function makeThumb($src, $dest, $desired_width)
 		}
 		return $success;
 	}
-
 
 	/**
 	 * Fonction de parcours des données de module
@@ -1509,7 +1474,7 @@ function makeThumb($src, $dest, $desired_width)
 	{
 		$zip = new ZipArchive();
 		$zip->open($fileName, ZipArchive::CREATE | ZipArchive::OVERWRITE);
-		//$directory = 'site/';
+		// $directory = 'site/';
 		$files = new RecursiveIteratorIterator(
 			new RecursiveCallbackFilterIterator(
 				new RecursiveDirectoryIterator(
@@ -1525,12 +1490,11 @@ function makeThumb($src, $dest, $desired_width)
 			if (!$file->isDir()) {
 				$filePath = $file->getRealPath();
 				$relativePath = substr($filePath, strlen(realpath($folder)) + 1);
-				$zip->addFile($filePath, str_replace("\\", "/", $relativePath));
+				$zip->addFile($filePath, str_replace('\\', '/', $relativePath));
 			}
 		}
 		$zip->close();
 	}
-
 
 	/**
 	 * Journalisation avec gestion de la taille maximale et compression
@@ -1546,8 +1510,8 @@ function makeThumb($src, $dest, $desired_width)
 		}
 
 		// Création de l'entrée de journal
-		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';' .
-			helper::dateUTF8('%H:%M', time(), self::$i18nUI) . ';';
+		$dataLog = helper::dateUTF8('%Y%m%d', time(), self::$i18nUI) . ';'
+			. helper::dateUTF8('%H:%M', time(), self::$i18nUI) . ';';
 		$dataLog .= helper::getIp($this->getData(['config', 'connect', 'anonymousIp'])) . ';';
 		$dataLog .= empty($this->getUser('id')) ? 'visitor;' : $this->getUser('id') . ';';
 		$dataLog .= $message ? $this->getUrl() . ';' . $message : $this->getUrl();
@@ -1573,7 +1537,7 @@ function makeThumb($src, $dest, $desired_width)
 
 			if (file_exists($oldFile)) {
 				if ($i == self::LOG_MAXARCHIVE - 1) {
-					unlink($oldFile); // Supprimer le plus ancien
+					unlink($oldFile);  // Supprimer le plus ancien
 				} else {
 					rename($oldFile, $newFile);
 				}
@@ -1616,7 +1580,7 @@ function makeThumb($src, $dest, $desired_width)
 		}
 	}
 
-		/**
+	/**
 	 * Retourne le chemin du dossier autorisé pour l'utilisateur selon son rôle et son profil
 	 *
 	 * @param string $userId L'identifiant de l'utilisateur
@@ -1651,5 +1615,4 @@ function makeThumb($src, $dest, $desired_width)
 				return 'none';
 		}
 	}
-
 }
