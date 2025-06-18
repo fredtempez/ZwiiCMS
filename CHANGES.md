@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.6.07
+- Améliore la classe gérant les entrées sorties.
+
 ## Version 13.6.06
 - Corrige un bug dans la gestion des droits de suppression des profils.
 

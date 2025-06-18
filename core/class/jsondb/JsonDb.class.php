@@ -182,9 +182,14 @@ class JsonDb extends \Prowebcraft\Dot
         $max_attempts = 5;
 
         for ($attempt = 0; $attempt < $max_attempts; $attempt++) {
-            $temp_file = $this->db . '.tmp' . uniqid();
+            $temp_file = $this->db . '-'. uniqid() . '.tmp' ;
 
             try {
+                // Ajouter un délai croissant entre les tentatives
+                if ($attempt > 0) {
+                    usleep($attempt * 100000); // Délai croissant : 0.1s, 0.2s, 0.3s...
+                }
+
                 $write_result = file_put_contents($temp_file, $encoded_data, LOCK_EX);
 
                 if ($write_result === $encoded_length) {
