@@ -1,3 +1,5 @@
+# Version 5.1
+- Renforcement des contrôles de la méthode add().
 # Version 5.0
 - Les dossiers proposés par le module sont ceux autotisés par le profil.
 # Version 4.5
