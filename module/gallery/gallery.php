@@ -15,7 +15,7 @@
  */
 class gallery extends common
 {
-	const VERSION = '5.0';
+	const VERSION = '5.01';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 	const SORT_ASC = 'SORT_ASC';
@@ -423,76 +423,85 @@ class gallery extends common
 	public function add()
 	{
 		// Soumission du formulaire d'ajout d'une galerie
-		if (
-			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
-			$this->isPost()
-		) {
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) === true && $this->isPost()) {
 			$galleryId = $this->getInput('galleryAddName', null, true);
 			$success = false;
 			if ($galleryId) {
 				$galleryId = helper::increment($this->getInput('galleryAddName', helper::FILTER_ID, true), (array) $this->getData(['module', $this->getUrl(0), 'content']));
 				$homePicture = '';
+				$legends = [];
+				$positions = [];
+				
 				// définir une vignette par défaut
 				$directory = $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true);
-				$iterator = new DirectoryIterator($directory);
-				$i = 0;
-				// Parcourir les images de la galerie pour produire les miniatures
-				// et compléter les données de la galerie : légende et postion si trie manuel.
-				foreach ($iterator as $fileInfos) {
-					if ($fileInfos->isDot() === false and $fileInfos->isFile() and @getimagesize($fileInfos->getPathname())) {
-						// Créer la miniature si manquante
-						if (!file_exists(str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))) {
-							$this->makeThumb(
-								$fileInfos->getPathname(),
-								str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()),
-								self::THUMBS_WIDTH
-							);
-						}
-					}
-
-					// Initialisatin des légendes et du numéro d'ordre
-					// Supprimer le . pour éviter les conflits avec la classe dot
-					$fileNameId = str_replace('.', '', $fileInfos->getFilename());
-					// Le nom correspond à un fichier
-					if (empty($fileNameId) === false) {
-						echo $i;
-						// Mise à zéro de la légende
-						$legends[$fileNameId] = '';
-						// Mise à zéro de la position
-						$positions[$fileNameId] = $i++;
-					}
-
-					// La première image de la galerie sera la vignette de miniature
-					if ($i === 1) {
-						$homePicture = strtolower($fileInfos->getFilename());
-					}
-				}
-
-				// Le dossier de la galerie est vide
-				if ($i > 0) {
-					$this->setData([
-						'module',
-						$this->getUrl(0),
-						'content',
-						$galleryId,
-						[
-							'config' => [
-								'name' => $this->getInput('galleryAddName'),
-								'directory' => $this->getInput('galleryAddDirectory', helper::FILTER_STRING_SHORT, true),
-								'homePicture' => $homePicture,
-								'sort' => $this->getInput('galleryAddSort'),
-								'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
-								'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
-								'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
-							],
-							'legend' => $legends,
-							'position' => $positions,
-						]
-					]);
-					$success = true;
-				} else {
-					self::$inputNotices['galleryAddDirectory'] = 'Le dossier sélectionné ne contient aucune image';
+				
+				// Vérifier si le répertoire existe et est accessible
+				if (!is_dir($directory) || !is_readable($directory)) {
+					self::$inputNotices['galleryAddDirectory'] = 'Le dossier est invalide ou inaccessible';
 					$success = false;
+				} else {
+					try {
+						$iterator = new DirectoryIterator($directory);
+						$i = 0;
+						// Parcourir les images de la galerie
+						foreach ($iterator as $fileInfos) {
+							if ($fileInfos->isDot() === false && $fileInfos->isFile() && @getimagesize($fileInfos->getPathname())) {
+								$thumbPath = str_replace('source', 'thumb', $fileInfos->getPath());
+								$cleanFileName = strtolower(preg_replace('/[^a-zA-Z0-9._-]/', '', $fileInfos->getFilename()));
+								
+								// Créer la miniature si manquante
+								if (!file_exists($thumbPath . '/' . self::THUMBS_SEPARATOR . $cleanFileName)) {
+									$this->makeThumb(
+										$fileInfos->getPathname(),
+										$thumbPath . '/' . self::THUMBS_SEPARATOR . $cleanFileName,
+										self::THUMBS_WIDTH
+									);
+								}
+								
+								// Initialisation des légendes et du numéro d'ordre
+								$fileNameId = str_replace('.', '', $fileInfos->getFilename());
+								if (!empty($fileNameId)) {
+									$legends[$fileNameId] = '';
+									$positions[$fileNameId] = $i++;
+									
+									// La première image sera la vignette
+									if ($i === 1) {
+										$homePicture = $cleanFileName;
+									}
+								}
+							}
+						}
+						
+						// Vérifier si le dossier contient des images
+						if ($i > 0) {
+							$this->setData([
+								'module',
+								$this->getUrl(0),
+								'content',
+								$galleryId,
+								[
+									'config' => [
+										'name' => $this->getInput('galleryAddName'),
+										'directory' => $directory,
+										'homePicture' => $homePicture,
+										'sort' => $this->getInput('galleryAddSort'),
+										'position' => count($this->getData(['module', $this->getUrl(0), 'content'])) + 1,
+										'fullScreen' => $this->getInput('galleryAddFullscreen', helper::FILTER_BOOLEAN),
+										'showPageContent' => $this->getInput('galleryAddShowPageContent', helper::FILTER_BOOLEAN)
+									],
+									'legend' => $legends,
+									'position' => $positions,
+								]
+							]);
+							$success = true;
+						} else {
+							self::$inputNotices['galleryAddDirectory'] = 'Le dossier sélectionné ne contient aucune image';
+							$success = false;
+						}
+					} catch (Exception $e) {
+						self::$inputNotices['galleryAddDirectory'] = 'Erreur lors de la lecture du dossier : ' . $e->getMessage();
+						$success = false;
+					}
 				}
 			}
 
