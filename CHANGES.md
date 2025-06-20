@@ -3,7 +3,7 @@
 ## Version 13.6.07
 - Améliore la classe gérant les entrées sorties.
 - Edition de page sauvegarde la position de l'onglet extension en édition du css et du js.
-- Corrige la persistence des données JS et CSS après renommage de la page
+- Corrige la persistance des données JS et CSS après renommage de la page.
 
 ## Version 13.6.06
 - Corrige un bug dans la gestion des droits de suppression des profils.
