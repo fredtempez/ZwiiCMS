@@ -13,10 +13,8 @@
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
-
 class page extends common
 {
-
 	public static $actions = [
 		'add' => self::ROLE_EDITOR,
 		'delete' => self::ROLE_EDITOR,
@@ -25,12 +23,15 @@ class page extends common
 		'jsEditor' => self::ROLE_EDITOR,
 		'cssEditor' => self::ROLE_EDITOR,
 	];
+
 	public static $pagesNoParentId = [
 		'' => 'Aucune'
 	];
+
 	public static $pagesBarId = [
 		'' => 'Aucune'
 	];
+
 	public static $moduleIds = [];
 
 	public static $typeMenu = [
@@ -38,12 +39,14 @@ class page extends common
 		'icon' => 'Icône',
 		'icontitle' => 'Icône avec bulle de texte'
 	];
+
 	// Position du module
 	public static $modulePosition = [
 		'bottom' => 'Après le contenu de la page',
 		'top' => 'Avant le contenu de la page',
-		'free' => 'À l\'emplacement du mot clé [MODULE] dans la page'
+		'free' => "À l'emplacement du mot clé [MODULE] dans la page"
 	];
+
 	public static $pageBlocks = [
 		'12' => 'Page standard',
 		'bar' => 'Barre latérale',
@@ -55,11 +58,13 @@ class page extends common
 		'2-7-3' => 'Barre 2/12 - page 7/12 - barre 3/12',
 		'3-7-2' => 'Barre 3/12 - page 7/12 - barre 2/12',
 	];
+
 	public static $displayMenu = [
 		'none' => 'Aucun menu',
 		'parents' => 'Le menu horizontal intégral',
 		'children' => 'Le sous-menu de la page parente'
 	];
+
 	public static $extraPosition = [
 		false => 'Menu standard',
 		true => 'Menu accessoire'
@@ -78,7 +83,6 @@ class page extends common
 		'top' => 'Haut de page',
 		'bottom' => 'Bas de page',
 	];
-
 
 	/**
 	 * Duplication
@@ -122,12 +126,13 @@ class page extends common
 			$notification = helper::translate('Page dupliquée');
 			// Duplication du module présent
 			if ($this->getData(['page', $page, 'moduleId'])) {
-				$data = $this->getData(['module', $page]);
+				$data = $this->getData(['module', $page], false);
 				$this->setData(['module', $pageId, $data], false);
 				$notification = helper::translate('Page et module dupliqués');
 			}
 			// Force la sauvegarde
 			$this->saveDB('page');
+			$this->saveDB('module');
 
 			// Valeurs en sortie
 			$this->addOutput([
@@ -137,7 +142,6 @@ class page extends common
 			]);
 		}
 	}
-
 
 	/**
 	 * Création
@@ -200,7 +204,7 @@ class page extends common
 			if (!is_dir(self::DATA_DIR . self::$siteContent . '/content')) {
 				mkdir(self::DATA_DIR . self::$siteContent . '/content', 0755);
 			}
-			//$this->secure_file_put_contents(self::DATA_DIR . self::$siteContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
+			// $this->secure_file_put_contents(self::DATA_DIR . self::$siteContent . '/content/' . $pageId . '.html', '<p>Contenu de votre nouvelle page.</p>');
 			$this->setPage($pageId, '<p>Contenu de votre nouvelle page.</p>', self::$siteContent);
 
 			$this->updateSitemap();
@@ -212,7 +216,6 @@ class page extends common
 				'state' => true
 			]);
 		}
-
 	}
 
 	/**
@@ -304,8 +307,8 @@ class page extends common
 			$moduleId = $this->getData(['page', $page, 'moduleId']);
 			$modulesData = helper::getModules();
 			if (
-				array_key_exists($moduleId, $modulesData)
-				&& is_dir($modulesData[$moduleId]['dataDirectory'] . $page)
+				array_key_exists($moduleId, $modulesData) &&
+				is_dir($modulesData[$moduleId]['dataDirectory'] . $page)
 			) {
 				$this->deleteDir($modulesData[$moduleId]['dataDirectory'] . $page);
 			}
@@ -328,13 +331,11 @@ class page extends common
 		}
 	}
 
-
 	/**
 	 * Édition
 	 */
 	public function edit()
 	{
-
 		// La session ne correspond pas au site ouvert dans cet onglet
 		if (
 			// Contrôle la présence de l'id de langue uniquement si l'id est fourni afin de ne pas bloquer les modules non mis à jour
@@ -364,6 +365,9 @@ class page extends common
 			) {
 				// Si le Title n'est pas vide, premier test pour positionner la notification du champ obligatoire
 				if ($this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '') {
+					// Sauvegarde les données CSS et JS
+					$css = $this->getData(['page', $this->getUrl(2), 'css']);
+					$js = $this->getData(['page', $this->getUrl(2), 'js']);
 					// Génére l'ID si le titre de la page a changé
 					if ($this->getInput('pageEditTitle') !== $this->getData(['page', $this->getUrl(2), 'title'])) {
 						$pageId = $this->getInput('pageEditTitle', helper::FILTER_ID, true);
@@ -444,10 +448,9 @@ class page extends common
 					$position = $this->getInput('pageEditPosition', helper::FILTER_INT);
 					$extraPosition = $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN);
 					foreach ($hierarchy as $hierarchyPageId) {
-
 						// Ne traite que les pages du menu sélectionné
 						if ($this->getData(['page', $hierarchyPageId, 'extraPosition']) === $extraPosition) {
-							// Ignore la page en cours de modification 
+							// Ignore la page en cours de modification
 							if ($hierarchyPageId === $this->getUrl(2)) {
 								continue;
 							}
@@ -467,8 +470,8 @@ class page extends common
 						$hideTitle = $this->getInput('pageEditHideTitle', helper::FILTER_BOOLEAN);
 					} else {
 						// Une barre ne peut pas avoir de barres
-						$barLeft = "";
-						$barRight = "";
+						$barLeft = '';
+						$barRight = '';
 						// Une barre est masquée
 						$position = 0;
 						$hideTitle = true;
@@ -510,7 +513,7 @@ class page extends common
 					// Détermine le rôle selon que la page est une barre ou une page standard
 					$role = $this->getinput('pageEditBlock') !== 'bar' ? $this->getInput('pageEditRole', helper::FILTER_INT) : 0;
 
-					//Détermine le profil d'utilisateur en fonction du rôle sinon le rôle vaut 0
+					// Détermine le profil d'utilisateur en fonction du rôle sinon le rôle vaut 0
 					$profil = 0;
 					if (
 						$this->getinput('pageEditBlock') !== 'bar' ||
@@ -553,14 +556,12 @@ class page extends common
 							'hideMenuHead' => $this->getinput('pageEditHideMenuHead', helper::FILTER_BOOLEAN),
 							'hideMenuChildren' => $this->getinput('pageEditHideMenuChildren', helper::FILTER_BOOLEAN),
 							'extraPosition' => $this->getinput('pageEditExtraPosition', helper::FILTER_BOOLEAN),
-							'css' => $this->getData(['page', $this->getUrl(2), 'css']) == null ? '' : $this->getData(['page', $this->getUrl(2), 'css']),
-							'js' => $this->getData(['page', $this->getUrl(2), 'js']) == null ? '' : $this->getData(['page', $this->getUrl(2), 'js']),
+							'css' => $css,
+							'js' => $js,
 						]
 					]);
 
-					/**
-					 * Sauvegarde l'onglet de l'utilisateur
-					 */
+					/** Sauvegarde l'onglet de l'utilisateur */
 					$this->setData([
 						'user',
 						$this->getUser('id'),
@@ -606,7 +607,7 @@ class page extends common
 			// Met à jour le sitemap
 			$this->updateSitemap();
 
-			// Création du sélecteur de modules	
+			// Création du sélecteur de modules
 			self::$moduleIds = [];
 			foreach (helper::getModules() as $key => $values) {
 				self::$moduleIds[$key] = $values['realName'] . ' (' . $key . ')';
@@ -671,6 +672,16 @@ class page extends common
 				'css',
 				$css
 			]);
+			/** Sauvegarde l'onglet de l'utilisateur */
+			$this->setData([
+				'user',
+				$this->getUser('id'),
+				'view',
+				[
+					'page' => 'extension',
+					'config' => $this->getData(['user', $this->getUser('id'), 'view', 'config']),
+				]
+			]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
@@ -706,6 +717,16 @@ class page extends common
 				'js',
 				$js
 			]);
+			/** Sauvegarde l'onglet de l'utilisateur */
+			$this->setData([
+				'user',
+				$this->getUser('id'),
+				'view',
+				[
+					'page' => 'extension',
+					'config' => $this->getData(['user', $this->getUser('id'), 'view', 'config']),
+				]
+			]);
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
@@ -725,16 +746,15 @@ class page extends common
 
 	/**
 	 * Retourne les informations sur les pages en omettant les clés CSS et JS qui occasionnent des bugs d'affichage dans l'éditeur de page
-	 * @return string tableau associatif des pages dans le menu 
+	 * @return string tableau associatif des pages dans le menu
 	 */
 	public function getPageInfo()
 	{
 		$p = $this->getData(['page']);
 		$d = array_map(function ($d) {
-			unset($d["css"], $d["js"]);
+			unset($d['css'], $d['js']);
 			return $d;
 		}, $p);
 		return json_encode($d);
 	}
-
 }
