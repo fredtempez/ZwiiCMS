@@ -19,6 +19,7 @@ class JsonDb extends \Prowebcraft\Dot
     protected $db = '';
     protected $data = null;
     protected $config = [];
+
     // Tentative d'écriture après échec
     const MAX_FILE_WRITE_ATTEMPTS = 5;
     // Délais entre deux tentaives
@@ -44,7 +45,6 @@ class JsonDb extends \Prowebcraft\Dot
         $this->loadData(true);
         return $this;
     }
-
 
     /**
      * Set value or array of values to path
@@ -111,14 +111,13 @@ class JsonDb extends \Prowebcraft\Dot
         return $this;
     }
 
-
     /**
      * Charge les données depuis un fichier JSON.
      *
      * @param bool $reload Force le rechargement des données si true
-     * 
+     *
      * @return array|null Les données chargées ou null si le fichier n'existe pas
-     * 
+     *
      * @throws \RuntimeException En cas d'erreur lors de la création de la sauvegarde
      * @throws \InvalidArgumentException Si le fichier contient des données JSON invalides
      */
@@ -128,7 +127,7 @@ class JsonDb extends \Prowebcraft\Dot
             $this->db = $this->config['dir'] . $this->config['name'];
 
             if (!file_exists($this->db)) {
-                return null; // Rebuild database managed by CMS
+                return null;  // Rebuild database managed by CMS
             }
 
             if ($this->config['backup']) {
@@ -159,51 +158,71 @@ class JsonDb extends \Prowebcraft\Dot
      * Charge les données depuis un fichier JSON.
      *
      * @param bool $reload Force le rechargement des données si true
-     * 
+     *
      * @return array|null Les données chargées ou null si le fichier n'existe pas
-     * 
+     *
      * @throws \RuntimeException En cas d'erreur lors de la création de la sauvegarde
      * @throws \InvalidArgumentException Si le fichier contient des données JSON invalides
      */
-
     public function save(): void
     {
         if ($this->data === null) {
             throw new \RuntimeException('Tentative de sauvegarde de données nulles');
         }
 
+        $dir = dirname($this->db);
+        if (!is_writable($dir)) {
+            throw new \RuntimeException("Le dossier $dir n'est pas accessible en écriture.");
+        }
+
         try {
             $encoded_data = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
-            throw new \RuntimeException('Erreur d\'encodage JSON : ' . $e->getMessage());
+            throw new \RuntimeException("Erreur d'encodage JSON : " . $e->getMessage());
         }
 
         $encoded_length = strlen($encoded_data);
         $max_attempts = 5;
 
         for ($attempt = 0; $attempt < $max_attempts; $attempt++) {
-            $temp_file = $this->db . '-'. uniqid() . '.tmp' ;
+            $temp_file = $dir . '/userdb_' . uniqid('', true) . '.tmp';
 
             try {
-                // Ajouter un délai croissant entre les tentatives
                 if ($attempt > 0) {
-                    usleep($attempt * 100000); // Délai croissant : 0.1s, 0.2s, 0.3s...
+                    usleep($attempt * 100000);
                 }
 
-                $write_result = file_put_contents($temp_file, $encoded_data, LOCK_EX);
+                // Écriture du fichier temporaire
+                $written = file_put_contents($temp_file, $encoded_data, LOCK_EX);
+                if ($written !== $encoded_length) {
+                    throw new \RuntimeException("Erreur d'écriture du fichier temporaire");
+                }
+                chmod($temp_file, 0644);
 
-                if ($write_result === $encoded_length) {
+                // STRATÉGIE SELON LE SYSTÈME
+                if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
+                    // Windows : copy + unlink
+                    if (file_exists($this->db)) {
+                        // S'assurer que le fichier cible n'est pas en lecture seule
+                        @chmod($this->db, 0666);
+                    }
+                    if (copy($temp_file, $this->db)) {
+                        unlink($temp_file);
+                        return;
+                    }
+                } else {
+                    // Linux/Unix : rename atomique
                     if (rename($temp_file, $this->db)) {
                         return;
                     }
                 }
 
-                error_log("Échec sauvegarde : longueur incorrecte ou renommage échoué (tentative " . ($attempt + 1) . ")");
+                error_log('Échec sauvegarde : écriture ou renommage/copie échoué (tentative ' . ($attempt + 1) . ')');
             } catch (\Exception $e) {
                 error_log('Erreur de sauvegarde : ' . $e->getMessage());
-
+            } finally {
                 if (file_exists($temp_file)) {
-                    unlink($temp_file);
+                    @unlink($temp_file);
                 }
             }
 
