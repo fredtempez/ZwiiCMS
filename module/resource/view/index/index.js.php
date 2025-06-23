@@ -23,13 +23,13 @@ $(document).ready(function () {
     });
 
     // Gérer le clic sur "Déplier"
-    $('#resourceexpand').click(function () {
+    $('#resourceExpand').click(function () {
         // Afficher tous les sous-éléments
         $('ul.sub-items').slideDown(); F
     });
 
     // Gérer le clic sur "Replier"
-    $('#resourcecollapse').click(function () {
+    $('#resourceCollapse').click(function () {
         // Cacher tous les sous-éléments
         $('ul.sub-items').slideUp();
     });

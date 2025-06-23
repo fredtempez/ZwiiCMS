@@ -1,3 +1,7 @@
+# Version 2.04
+- Corrige le dysfonctionnement des icônes de contrôle.
+# Version 2.03
+- Corrections de bugs divers
 # Version 2.02
 - Changement de nom de la classe désormais resource pour éviter les conflites avec les permissions du gestionnaire de fichiers.
 # Version 2.01

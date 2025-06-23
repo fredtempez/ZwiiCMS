@@ -13,7 +13,7 @@
  */
 class resource extends common
 {
-	const VERSION = '2.03';
+	const VERSION = '2.04';
 	const REALNAME = 'Partage';
 	const DATADIRECTORY = '';  // Contenu localisé inclus par défaut (page.json et module.json)
 
