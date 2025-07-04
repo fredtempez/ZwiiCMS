@@ -50,38 +50,40 @@ function protectModule() {
 
 
 /**
-* Paramètres par défaut au chargement
-*/
-$( document ).ready(function() {
+ * Initialisation de la variable pageLayout globale
+ */
+var pageLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
 
-	// Changement de profil
-	$(".pageEditGroupProfil").hide();
-	$("#pageEditGroupProfil" + $("#pageEditRole").val()).show();
+// Définir une valeur par défaut si pageLayout n'est pas défini
+if (!pageLayout || pageLayout === "") {
+    pageLayout = "content";
+}
+
+/**
+ * Paramètres par défaut au chargement
+ */
+$( document ).ready(function() {
+    // Changement de profil
+    $(".pageEditGroupProfil").hide();
+    $("#pageEditGroupProfil" + $("#pageEditRole").val()).show();
 
 	$("#pageEditRole").on("change", function () {
 		$(".pageEditGroupProfil").hide();
 		$("#pageEditGroupProfil" + $(this).val()).show();
 	});
 
-
 	/**
 	 * Sélection des onglets
 	 */
-	var pageLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'page']);?>";
-	// Non défini, valeur par défaut
-	if (pageLayout == "") {
-		 pageLayout = "content";
-	 }
-	 // Tout cacher
-	 $("#pageEditContentContainer").hide();
-	 $("#pageEditExtensionContainer").hide();
-	 $("#pageEditPositionContainer").hide();
-	 $("#pageEditLayoutContainer").hide();
-	 $("#pageEditPermissionContainer").hide();
-	 // Afficher la bonne tab
-	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Container").show();
-	 $("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Button").addClass("activeButton");
-
+	// Tout cacher
+	$("#pageEditContentContainer").hide();
+	$("#pageEditExtensionContainer").hide();
+	$("#pageEditPositionContainer").hide();
+	$("#pageEditLayoutContainer").hide();
+	$("#pageEditPermissionContainer").hide();
+	// Afficher la bonne tab
+	$("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Container").show();
+	$("#pageEdit" + capitalizeFirstLetter(pageLayout) + "Button").addClass("activeButton");
 
 	/*
 	* Enleve le menu fixe en édition de page
