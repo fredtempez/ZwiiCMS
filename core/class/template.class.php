@@ -421,18 +421,22 @@ class template
      * @param array $attributes Attributs ($key => $value)
      * @return string
      */
-    public static function upload($nameId, array $attributes = [])
+   public static function upload($nameId, array $attributes = [])
     {
         // Attributs par défaut
         $attributes = array_merge([
+            'before' => true,
             'class' => '',
             'classWrapper' => '',
+            'noDirty' => false,
             'disabled' => false,
             'accept' => '',  // ex: 'image/*' ou '.jpg,.png,.pdf'
             'help' => '',
             'id' => $nameId,
             'label' => '',
+            'maxlength' => '500',
             'name' => $nameId,
+            'value' => '',
             'required' => false,
             'uploadText' => 'Sélectionner un fichier',  // Texte pour le bouton d'upload
             'multiple' => false,  // Option pour activer la sélection multiple
