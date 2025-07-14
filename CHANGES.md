@@ -1,11 +1,12 @@
 # Notes de mises à jour
 
 ## Version 13.6.07
-- Améliore la classe gérant les entrées sorties, méthode save améliorée (verrou du fichier temporaire.
-- Edition de page sauvegarde la position de l'onglet extension en édition du css et du js.
+- Améliore la classe gérant les entrées sorties, méthode save améliorée (verrou du fichier temporaire).
+- Edition de page, sauvegarde la position de l'onglet extension en édition du css et du js.
+- Corrige l'icône de l'accès aux modules en édition de page.
 - Corrige la persistance des données JS et CSS après renommage de la page.
-- Module Gallery suppression d'un echo
-- Module resource, corrige l'inactivité des boutons de contrôle.
+- Module Gallery suppression d'un echo.
+- Module Resource, corrige l'inactivité des boutons de contrôle.
 
 ## Version 13.6.06
 - Corrige un bug dans la gestion des droits de suppression des profils.
