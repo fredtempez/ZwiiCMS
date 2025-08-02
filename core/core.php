@@ -564,6 +564,8 @@ class common
 	/**
 	 * Sauvegarde des données
 	 * @param array $keys Clé(s) des données
+	 * @param bool $save Indique si le fichier doit être sauvegardé après modification (par défaut true)
+	 * @return bool Succès de l'opération
 	 */
 	public function setData($keys = [], $save = true)
 	{
@@ -575,26 +577,46 @@ class common
 			return false;
 		}
 
+		// Validation des clés
+		if (!is_array($keys) || count($keys) < 2) {
+			return false;
+		}
+
 		// Empêcher la sauvegarde d'une donnée nulle.
 		if (gettype($keys[count($keys) - 1]) === NULL) {
 			return false;
 		}
 
+		// Vérifier que la base de données existe
+		if (!isset($this->dataFiles[$keys[0]])) {
+			return false;
+		}
+
 		// Initialisation du retour en cas d'erreur de descripteur
 		$success = false;
-		// Construire la requête dans la base inf à 1 retourner toute la base
-		if (count($keys) >= 1) {
-			// Descripteur de la base
-			$db = (object) $this->dataFiles[$keys[0]];
-			$query = $keys[0];
-			// Construire la requête
-			// Ne pas tenir compte du dernier élément qui une une value donc <
-			for ($i = 1; $i < count($keys) - 1; $i++) {
-				$query .= '.' . $keys[$i];
+		
+		try {
+			// Construire la requête dans la base inf à 1 retourner toute la base
+			if (count($keys) >= 1) {
+				// Descripteur de la base
+				$db = (object) $this->dataFiles[$keys[0]];
+				$query = $keys[0];
+				// Construire la requête
+				// Ne pas tenir compte du dernier élément qui une une value donc <
+				for ($i = 1; $i < count($keys) - 1; $i++) {
+					$query .= '.' . $keys[$i];
+				}
+				// Appliquer la modification, le dernier élément étant la donnée à sauvegarder
+				$success = is_object($db->set($query, $keys[count($keys) - 1], $save));
 			}
-			// Appliquer la modification, le dernier élément étant la donnée à sauvegarder
-			$success = is_object($db->set($query, $keys[count($keys) - 1], $save));
+		} catch (Exception $e) {
+			// Log de l'erreur si possible
+			if (method_exists($this, 'saveLog')) {
+				$this->saveLog('Erreur setData: ' . $e->getMessage() . ' pour les clés: ' . implode('.', $keys));
+			}
+			return false;
 		}
+		
 		return $success;
 	}
 
@@ -653,39 +675,53 @@ class common
 	 *
 	 * @param string $filename Le nom du fichier
 	 * @param string $data Les données à écrire dans le fichier
-	 * @param int $flags Les drapeaux optionnels à passer à la fonction $this->secure_file_put_contents
+	 * @param int $flags Les drapeaux optionnels à passer à la fonction file_put_contents
 	 * @return bool True si l'écriture a réussi, sinon false
 	 */
 	function secure_file_put_contents($filename, $data, $flags = 0)
 	{
+		// Validation des paramètres
+		if (empty($filename) || !is_string($filename)) {
+			return false;
+		}
+		
+		// Vérifier que le dossier parent existe et est accessible en écriture
+		$dir = dirname($filename);
+		if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+			return false;
+		}
+		
+		if (!is_writable($dir)) {
+			return false;
+		}
+
 		// Initialise le compteur de tentatives
 		$attempts = 0;
-
-		// Vérifie la longueur des données
-		$data_length = strlen($data);
+		$maxAttempts = 5;
 
 		// Effectue jusqu'à 5 tentatives d'écriture
-		while ($attempts < 5) {
+		while ($attempts < $maxAttempts) {
 			// Essaye d'écrire les données dans le fichier avec verrouillage exclusif
 			$write_result = file_put_contents($filename, $data, LOCK_EX | $flags);
 
-			// $now = \DateTime::createFromFormat('U.u', microtime(true));
-			// file_put_contents("tmplog.txt", '[SecurePut][' . $now->format('H:i:s.u') . ']--' . $filename . "\r\n", FILE_APPEND);
-
 			// Vérifie si l'écriture a réussi
-			if ($write_result !== false && $write_result === $data_length) {
-				// Sort de la boucle si l'écriture a réussi
-				break;
+			if ($write_result !== false) {
+				// Vérification supplémentaire : lire le fichier pour s'assurer de l'intégrité
+				$read_data = file_get_contents($filename);
+				if ($read_data === $data) {
+					return true;
+				}
 			}
 
 			// Incrémente le compteur de tentatives
 			$attempts++;
-			sleep(1);
+			
+			// Pause progressive entre les tentatives
+			usleep(100000 * $attempts); // 100ms, 200ms, 300ms, etc.
 		}
-
-		// Échec de l'écriture après plusieurs tentatives
-		// Etat de l'écriture
-		return ($attempts < 5);
+		
+		// État de l'écriture
+		return false;
 	}
 
 	/**
@@ -1321,9 +1357,47 @@ class common
 	 * @param string|array $to Destinataire
 	 * @param string $subject Sujet
 	 * @param string $content Contenu
+	 * @param string|null $replyTo Adresse de réponse
+	 * @param string $from Adresse d'expédition
+	 * @return bool|string True si succès, message d'erreur sinon
 	 */
 	public function sendMail($to, $subject, $content, $replyTo = null, $from = 'no-reply@localhost')
 	{
+		// Validation des paramètres
+		if (empty($to) || empty($subject) || empty($content)) {
+			return 'Paramètres manquants';
+		}
+		
+		// Validation des adresses email
+		$validateEmail = function($email) {
+			return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+		};
+		
+		// Validation des destinataires
+		if (is_array($to)) {
+			foreach ($to as $email) {
+				if (!$validateEmail($email)) {
+					return 'Adresse email invalide dans la liste des destinataires: ' . $email;
+				}
+			}
+		} else {
+			if (!$validateEmail($to)) {
+				return 'Adresse email destinataire invalide: ' . $to;
+			}
+		}
+		
+		// Validation de l'adresse de réponse
+		if ($replyTo !== null && !$validateEmail($replyTo)) {
+			return 'Adresse email de réponse invalide: ' . $replyTo;
+		}
+		
+		// Validation de l'adresse d'expédition
+		if (!$validateEmail($from)) {
+			// Utiliser une adresse par défaut sécurisée
+			$host = isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', $_SERVER['HTTP_HOST']) : 'localhost';
+			$from = 'no-reply@' . $host;
+		}
+
 		// Layout
 		ob_start();
 		include 'core/layout/mail.php';
@@ -1332,6 +1406,7 @@ class common
 		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
 		$mail->CharSet = 'UTF-8';
 		$mail->Encoding = 'base64';
+		
 		// Mail
 		try {
 			// Paramètres SMTP perso
@@ -1361,14 +1436,12 @@ class common
 				}
 			}
 
-			// Expéditeur
-			$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-			$from = $from ? $from : 'no-reply@' . $host;
-			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title'])));
+			// Expéditeur sécurisé
+			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title']), ENT_QUOTES, 'UTF-8'));
 
 			// répondre à
 			if (is_null($replyTo)) {
-				$mail->addReplyTo($from, html_entity_decode($this->getData(['locale', 'title'])));
+				$mail->addReplyTo($from, html_entity_decode($this->getData(['locale', 'title']), ENT_QUOTES, 'UTF-8'));
 			} else {
 				$mail->addReplyTo($replyTo);
 			}
@@ -1382,7 +1455,7 @@ class common
 				$mail->addAddress($to);
 			}
 			$mail->isHTML(true);
-			$mail->Subject = html_entity_decode($subject);
+			$mail->Subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
 			if ($mail->send()) {
