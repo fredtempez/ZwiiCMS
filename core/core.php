@@ -397,7 +397,10 @@ class common
 
 		// Récupère un utilisateur connecté
 		if ($this->user === []) {
-			$this->user = $this->getData(['user', $this->getInput('ZWII_USER_ID')]);
+			$userId = isset($_SESSION['ZWII_USER_ID']) ? $_SESSION['ZWII_USER_ID'] : null;
+			if ($userId) {
+				$this->user = $this->getData(['user', $userId]);
+			}
 		}
 
 		// Langue de l'administration si le user est connecté
@@ -499,7 +502,7 @@ class common
 		];
 
 		// Mise à jour des données core
-		include ('core/include/update.inc.php');
+		include('core/include/update.inc.php');
 	}
 
 	/**
@@ -719,7 +722,7 @@ class common
 	public function initData($module, $lang, $sampleSite = false)
 	{
 		// Tableau avec les données vierges
-		require_once ('core/module/install/ressource/defaultdata.php');
+		require_once('core/module/install/ressource/defaultdata.php');
 
 		if (!file_exists(self::DATA_DIR . $lang)) {
 			mkdir(self::DATA_DIR . $lang, 0755);
@@ -810,11 +813,11 @@ class common
 			if (
 				// Page parent
 				$this->getData(['page', $pageId, 'parentPageId']) === '' and
-				// Ignore les pages dont l'utilisateur n'a pas accès
+					// Ignore les pages dont l'utilisateur n'a pas accès
 				($this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR or
 					($this->isConnected() === true and
-						// and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
-						// Modification qui tient compte du profil de la page
+							// and $this->getUser('role') >= $this->getData(['page', $pageId, 'role'])
+							// Modification qui tient compte du profil de la page
 						($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))))
 			) {
 				if ($pagePosition !== 0) {
@@ -832,15 +835,15 @@ class common
 				// Page parent
 				$parentId = $this->getData(['page', $pageId, 'parentPageId']) and
 					// Ignore les pages dont l'utilisateur n'a pas accès
+				(
 					(
-						(
-							$this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR and
-							$this->getData(['page', $parentId, 'role']) === self::ROLE_VISITOR
-						) or (
-							$this->isConnected() === true and
-							$this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')
-						) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
-					)
+						$this->getData(['page', $pageId, 'role']) === self::ROLE_VISITOR and
+						$this->getData(['page', $parentId, 'role']) === self::ROLE_VISITOR
+					) or (
+						$this->isConnected() === true and
+						$this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')
+					) >= ($this->getData(['page', $pageId, 'role']) * self::MAX_PROFILS + $this->getData(['page', $pageId, 'profil']))
+				)
 			) {
 				if ($pagePosition !== 0) {
 					$this->hierarchy['visible'][$parentId][] = $pageId;
@@ -1011,7 +1014,7 @@ class common
 		if (is_array($this->user) === false) {
 			return false;
 		} elseif ($key === 'id') {
-			return $this->getInput('ZWII_USER_ID');
+			return isset($_SESSION['ZWII_USER_ID']) ? $_SESSION['ZWII_USER_ID'] : null;
 		} elseif ($key === 'permission') {
 			return $this->getPermission($perm1, $perm2);
 		} elseif (array_key_exists($key, $this->user)) {

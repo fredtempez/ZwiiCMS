@@ -1130,20 +1130,19 @@ class user extends common
 						$expire = $this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN) === true ? strtotime('+1 year') : 0;
 						switch ($this->getInput('userLoginLongTime', helper::FILTER_BOOLEAN)) {
 							case false:
-								// Cookie de session
-								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								 // Session classique : stocke l'ID utilisateur en session PHP
+								$_SESSION['ZWII_USER_ID'] = $userId;
 								// setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
-								// Connexion par clé
-								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								// Cookie d'authentification pour la reconnexion automatique
+								setcookie('ZWII_AUTH_KEY', $authKey, 0, helper::baseUrl(false, false), '', helper::isHttps(), true);
 								break;
 							default:
-								// Cookie persistant
-								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
-								// setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false));
+								 // Session classique : stocke l'ID utilisateur en session PHP
+								$_SESSION['ZWII_USER_ID'] = $userId;
 
-								// Connexion par clé
-								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false));
+								/// Cookie d'authentification persistant pour la reconnexion automatique
+								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 								break;
 						}
 
