@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.6.08
+- Corrige la vulnérabilité CWE-285: Improper Authorization
+
 ## Version 13.6.07
 - Améliore la classe gérant les entrées sorties, méthode save améliorée (verrou du fichier temporaire).
 - Edition de page, sauvegarde la position de l'onglet extension en édition du css et du js.
