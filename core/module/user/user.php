@@ -437,10 +437,10 @@ class user extends common
 			$userId = $this->getInput('userForgotId', helper::FILTER_ID, true);
 			$sent = false;
 			if ($this->getData(['user', $userId])) {
-				// Enregistre la date de la demande dans le compte utilisateur
-				$this->setData(['user', $userId, 'forgot', time()]);
 				// Crée un id unique pour la réinitialisation
-				$uniqId = md5(json_encode($this->getData(['user', $userId, 'forgot'])));
+				$uniqId = md5(json_encode($this->getData(['user', $userId, 'forgot']) . time() . $userId));
+				// Enregistre l'id unique et la date de la demande dans le compte utilisateur
+				$this->setData(['user', $userId, 'forgot', time() . '_' . $uniqId]);
 				// Envoi le mail
 				$sent = $this->sendMail(
 					$this->getData(['user', $userId, 'mail']),
@@ -448,7 +448,7 @@ class user extends common
 					'<p>Bonjour <strong>' . $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']) . '</strong>,</p>'
 					. '<p>Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.</p>'
 					. '<p><a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a></p>'
-					. "<p>Si nous n'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</p>",
+					. "<p>Si nous n'avons pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</p>",
 					null,
 					$this->getData(['config', 'smtp', 'from'])
 				);
@@ -1298,13 +1298,13 @@ class user extends common
 			$this->getData(['user', $this->getUrl(2), 'forgot']) === null or
 			(int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() or
 			// Clé unique incorrecte
-			$this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
+			$this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1]
 		) {
 			$this->saveLog(
 				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2)
 				. ' Compte : ' . $this->getData(['user', $this->getUrl(2)])
 				. ' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) === null ? 'Clé manquante' : ((int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() ? 'Temps dépassé' : 'Temps valide'))
-				. ' Clé : ' . ($this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot']) ? 'Clé invalide' : 'Clé valide')
+				. ' Clé : ' . ($this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1] ? 'Clé invalide' : 'Clé valide')
 			);
 
 			// Message d'erreur en cas de problème de réinitialisation de mot de passe
@@ -1317,7 +1317,7 @@ class user extends common
 			$message = (int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time()
 				? ' Temps dépassé '
 				: $message;
-			$message = $this->getUrl(3) !== $this->getData(['user', $this->getUrl(2), 'forgot'])
+			$message = $this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1]
 				? ' Clé invalide '
 				: $message;
 
