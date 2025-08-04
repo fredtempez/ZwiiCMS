@@ -1,7 +1,15 @@
 # Notes de mises à jour
 
 ## Version 13.6.08
-- Corrige la vulnérabilité CWE-285: Improper Authorization
+- Corrige la vulnérabilité CWE-285: Improper Authorization.
+- Suppression du cookie ZWII_USER_ID pour l'authentification
+Corrige le bug de reset du mot de passe.
+Améliore la sécurité et la robustesse des fonctions core :
+- secure_file_put_contents: validation paramètres et vérification intégrité
+- sendMail: validation emails et sécurisation entités HTML
+- genererIdAlphanum: remplacement str_shuffle par random_int sécurisé
+- setData: gestion exceptions et validation structure données
+
 
 ## Version 13.6.07
 - Améliore la classe gérant les entrées sorties, méthode save améliorée (verrou du fichier temporaire).
