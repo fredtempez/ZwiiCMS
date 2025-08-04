@@ -266,15 +266,6 @@ class install extends common
 				helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
 
 				/**
-				 * Sauvegarde dans la session l'id du user. 
-				 * Cette modification est nécessaire pour le gestionnaire de fichiers
-				 * car il utilise un cookie pour l'identification de l'utilisateur.
-				 * Le cookie de session est utilisé pour l'authentification
-				 * et le cookie de gestionnaire de fichiers pour l'identification.
-				 * */ 
-				$_SESSION['ZWII_USER_ID'] = $this->getUser('id');
-
-				/**
 				 * Le mode maintenance n'était pas activé
 				 *  Son état est sauvegardé pour être restauré après la mise à jour
 				 */
@@ -358,6 +349,7 @@ class install extends common
 			case 3:
 				$success = true;
 				$message = '';
+				
 
 				// Décompression et installation
 				try {
@@ -396,6 +388,16 @@ class install extends common
 			case 4:
 				$success = true;
 				$message = '';
+
+
+				/**
+				 * Sauvegarde dans la session l'id du user. 
+				 * Cette modification est nécessaire pour le gestionnaire de fichiers
+				 * car il utilise un cookie pour l'identification de l'utilisateur.
+				 * Le cookie de session est utilisé pour l'authentification
+				 * et le cookie de gestionnaire de fichiers pour l'identification.
+				 * */ 
+				$_SESSION['ZWII_USER_ID'] = $this->getUser('id');
 
 				// Restaure le mode maintenance si permanent
 				$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
