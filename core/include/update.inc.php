@@ -1214,12 +1214,3 @@ if (
 
 	$this->setData(['core', 'dataVersion', 13605]);
 }
-
-// Version 13.6.08
-if (
-	$this->getData(['core', 'dataVersion']) < 13608
-) {
-	// Le cookie de l'utilisateur est désormais le même que celui de la session
-	$_SESSION['ZWII_USER_ID'] = $this->getUser('id');	
-	$this->setData(['core', 'dataVersion', 13608]);
-}
