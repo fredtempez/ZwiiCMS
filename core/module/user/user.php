@@ -1132,7 +1132,8 @@ class user extends common
 							case false:
 								 // Session classique : stocke l'ID utilisateur en session PHP
 								$_SESSION['ZWII_USER_ID'] = $userId;
-								// setcookie('ZWII_USER_PASSWORD', $this->getData(['user', $userId, 'password']), $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
+								// Cookie de session pour le filemanager
+								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
 
 								// Cookie d'authentification pour la reconnexion automatique
 								setcookie('ZWII_AUTH_KEY', $authKey, 0, helper::baseUrl(false, false), '', helper::isHttps(), true);
@@ -1140,6 +1141,8 @@ class user extends common
 							default:
 								 // Session classique : stocke l'ID utilisateur en session PHP
 								$_SESSION['ZWII_USER_ID'] = $userId;
+								// Cookie persistant pour le filemanager
+								setcookie('ZWII_USER_ID', $userId, $expire, helper::baseUrl(false, false));
 
 								/// Cookie d'authentification persistant pour la reconnexion automatique
 								setcookie('ZWII_AUTH_KEY', $authKey, $expire, helper::baseUrl(false, false), '', helper::isHttps(), true);
