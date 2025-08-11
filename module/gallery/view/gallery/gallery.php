@@ -9,11 +9,15 @@
 <div id="pictureContainer" class="row galleryRow  <?php echo (gallery::$config['fullScreen']);?> ">
 <?php foreach(gallery::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
+		<?php 
+		$normalizedPicturePath = $this->getNormalizedFilePath($picture);
+		$normalizedThumbPath = $this->getNormalizedFilePath(gallery::$thumbs[$picture]);
+		?>
 		<a
-			href="<?php echo helper::baseUrl(false) . $picture; ?>"
+			href="<?php echo !empty($normalizedPicturePath) ? helper::baseUrl(false) . $normalizedPicturePath : '#'; ?>"
 			<?php  if ( strpos($picture, gallery::$config['homePicture']) > 1)  { echo 'id="homePicture"'; }	?>
 			class="galleryGalleryPicture"
-			style="background-image:url('<?php echo helper::baseUrl(false) . gallery::$thumbs[$picture]; ?>')"
+			style="background-image:url('<?php echo !empty($normalizedThumbPath) ? helper::baseUrl(false) . $normalizedThumbPath : ''; ?>')"
 			data-caption="<?php echo $legend; ?>"
 		>
 			<?php if($legend): ?>

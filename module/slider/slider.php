@@ -27,7 +27,7 @@ class slider extends common
 		'index' => self::ROLE_VISITOR
 	];
 
-	const VERSION = '8.0';
+	const VERSION = '8.1';
 	const REALNAME = 'Carrousel';
 	const DELETE = true;
 	const UPDATE = '0.0';

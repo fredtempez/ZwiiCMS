@@ -1,3 +1,5 @@
+# Version 5.2
+- Corrige le chemin des ressources insérés par des membres éditeurs.
 # Version 5.1
 - Renforcement des contrôles de la méthode add().
 # Version 5.0

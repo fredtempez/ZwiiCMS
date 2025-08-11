@@ -6,8 +6,11 @@
 					<?php if (!empty($options['uri'])): ?>
 						<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
 					<?php endif; ?>
+					<?php 
+					$normalizedPicturePath = $this->getNormalizedFilePath($picture);
+					?>
 					<li>
-						<img src="<?php echo helper::baseUrl(false) . $picture; ?>" alt="<?php echo $options['legend']; ?>">
+						<img src="<?php echo !empty($normalizedPicturePath) ? helper::baseUrl(false) . $normalizedPicturePath : ''; ?>" alt="<?php echo $options['legend']; ?>">
 						<?php if ($this->getData(['module', $this->getUrl(0), 'theme', 'caption']) === 'bottom'): ?>
 							<p class="caption"><?php echo $options['legend']; ?></p>
 						<?php endif; ?>
