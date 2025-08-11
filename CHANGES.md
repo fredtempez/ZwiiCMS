@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.6.09
+- Corrige un bug de chemin d'accès aux ressources publiées par des membres non administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
+
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
 - Suppression du cookie ZWII_USER_ID pour l'authentification

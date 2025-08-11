@@ -53,7 +53,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '13.6.08';
+	const ZWII_VERSION = '13.6.09';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -503,6 +503,8 @@ class common
 
 		// Mise à jour des données core
 		include('core/include/update.inc.php');
+
+
 	}
 
 	/**
@@ -1689,6 +1691,63 @@ class common
 			default:
 				// retourne une chaine vide
 				return 'none';
+		}
+	}
+
+	/**
+	 * Retourne le chemin normalisé d'un fichier en fonction du profil utilisateur
+	 * 
+	 * @param string $filePath Le chemin du fichier stocké en base (relatif depuis site/file/source/)
+	 * @param string $userId L'identifiant de l'utilisateur (optionnel)
+	 * @return string Le chemin normalisé du fichier
+	 * 
+	 * Cette fonction résout le problème où les chemins de fichiers peuvent avoir une racine incorrecte :
+	 * - Pour un admin : le chemin est complet depuis site/file/source/
+	 * - Pour un éditeur : le chemin doit être ajusté selon son profil
+	 * 
+	 * Utilisable pour tous types de fichiers : images, documents, thumbnails, etc.
+	 */
+	public function getNormalizedFilePath($filePath, $userId = null)
+	{
+		// Si pas de chemin de fichier, retourner vide
+		if (empty($filePath)) {
+			return '';
+		}
+
+		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
+		$userId = $userId ?? $this->getUser('id');
+		
+		// Vérifier si l'utilisateur est un administrateur
+		switch ($this->getData(['user', $userId, 'role'])) {
+			case self::ROLE_ADMIN:
+				// Pour un admin, le chemin est déjà complet depuis site/file/source/
+				return self::FILE_DIR . 'source/' . $filePath;
+				
+			case self::ROLE_EDITOR:
+			case self::ROLE_MODERATOR:
+				// Pour un éditeur, vérifier le profil
+				$profilKey = strpos(self::ZWII_UPDATE_URL, 'campus-update')
+					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
+					: 'path';
+				$userPath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
+				
+				// Si pas d'accès ou accès interdit
+				if (empty($userPath) || $userPath === 'none') {
+					return '';
+				}
+				
+				// Si le profil a un chemin spécifique, l'utiliser
+				if (!empty($userPath) && $userPath !== 'site/file/source/') {
+					// Construire le chemin complet avec le profil utilisateur
+					return $userPath . $filePath;
+				} else {
+					// Utiliser le chemin standard
+					return self::FILE_DIR . 'source/' . $filePath;
+				}
+				
+			default:
+				// Utilisateur sans droits
+				return '';
 		}
 	}
 }
