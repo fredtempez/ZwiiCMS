@@ -42,12 +42,12 @@
 						</div>
 					</div>
 					<div class="col6">
-						<?php if (
-							$this->getData(['config', 'seo', 'openGraphImage']) &&
-							file_exists(self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']))
-						): ?>
+						<?php 
+						$openGraphImagePath = $this->getData(['config', 'seo', 'openGraphImage']);
+						$normalizedOpenGraphImagePath = $this->getNormalizedFilePath($openGraphImagePath);
+						if (!empty($openGraphImagePath) && !empty($normalizedOpenGraphImagePath) && file_exists($normalizedOpenGraphImagePath)): ?>
 							<img
-								src="<?php echo self::FILE_DIR . 'source/' . $this->getData(['config', 'seo', 'openGraphImage']); ?>" />
+								src="<?php echo $normalizedOpenGraphImagePath; ?>" />
 						<?php endif; ?>
 					</div>
 				</div>

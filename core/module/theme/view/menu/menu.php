@@ -100,7 +100,11 @@
             </div>
             <div class="row">
                 <div id="themeMenuBurgerLogoId" class="col6 offset6 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
-                    <?php $imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'menu', 'burgerLogo'])) ? $this->getData(['theme', 'menu', 'burgerLogo']) : ""; ?>
+                    <?php 
+                    $imagePath = $this->getData(['theme', 'menu', 'burgerLogo']);
+                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+                    $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
+                    ?>
                     <?php echo template::file('themeMenuBurgerLogo', [
                         'help' => 'Sélectionner une image de dimensions adaptées',
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),

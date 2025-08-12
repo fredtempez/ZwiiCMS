@@ -145,7 +145,11 @@
             </h4>
             <div class="row">
                 <div class="col12">
-                    <?php $imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'header', 'image'])) ? $this->getData(['theme', 'header', 'image']) : ""; ?>
+                    <?php 
+                    $imagePath = $this->getData(['theme', 'header', 'image']);
+                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+                    $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
+                    ?>
                     <?php echo template::file('themeHeaderImage', [
                         'label' => 'Image',
                         'language' => $this->getData(['user', $this->getUser('id'), 'language']),

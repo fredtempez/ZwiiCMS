@@ -214,11 +214,11 @@ class download extends common
 				$thumbPath = $this->getNormalizedFilePath($this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
 				if (!empty($thumbPath)) {
 					$imageData = getimagesize($thumbPath);
-					$newsitem->addEnclosure(
+				$newsitem->addEnclosure(
 						helper::baseUrl(false) . $thumbPath,
-						$imageData[0] * $imageData[1],
-						$imageData['mime']
-					);
+					$imageData[0] * $imageData[1],
+					$imageData['mime']
+				);
 				}
 				$feeds->addItem($newsitem);
 			}

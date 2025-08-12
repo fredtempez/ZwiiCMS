@@ -55,7 +55,9 @@
 			<div class="row">
 				<div class="col12">
 					<?php
-					$imageFile = file_exists(self::FILE_DIR . 'source/' . $this->getData(['theme', 'body', 'image'])) ? $this->getData(['theme', 'body', 'image']) : "";
+					$imagePath = $this->getData(['theme', 'body', 'image']);
+					$normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+					$imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
 					echo template::file('themeBodyImage', [
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),
 						'label' => 'Arrière plan',
