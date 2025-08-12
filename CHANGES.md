@@ -1,6 +1,7 @@
 # Notes de mises à jour
 
-## Version 13.6.09
+## Version 13.7.00
+- Ajoute un cache au système de gestion des fichiers json.
 - Corrige un bug de chemin d'accès aux ressources publiées par des membres non administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
 
 ## Version 13.6.08
