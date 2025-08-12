@@ -255,6 +255,16 @@ class common
 		'profil' => '',
 	];
 
+	// Bases essentielles chargées au démarrage
+	private $essentialDataFiles = [
+		'config',
+		'user', 
+		'locale',
+		'page',
+		'module',
+		'core'
+	];
+
 	public static $fontsWebSafe = [
 		'arial' => [
 			'name' => 'Arial',
@@ -337,6 +347,13 @@ class common
 	/**
 	 * Constructeur commun
 	 */
+	/**
+	 * Constructeur optimisé avec lazy loading des bases JSON
+	 * Seules les bases essentielles sont chargées au démarrage :
+	 * - config, user, locale, page, module, core
+	 * Les autres bases (theme, font, admin, blacklist, language, profil)
+	 * sont chargées automatiquement à la demande via getData/setData
+	 */
 	public function __construct()
 	{
 		// Récupération du cache des propriétés
@@ -379,8 +396,8 @@ class common
 		// Localisation
 		\setlocale(LC_ALL, self::$siteContent . '.UTF8');
 
-		// Instanciation de la classe des entrées / sorties
-		$this->jsonDB(self::$siteContent);
+		// Instanciation de la classe des entrées / sorties (bases essentielles seulement)
+		$this->jsonDB(self::$siteContent, $this->essentialDataFiles);
 
 		// Installation fraîche, initialisation des modules
 		if ($this->user === []) {
@@ -486,14 +503,14 @@ class common
 			stream_context_set_default($context);
 		}
 
-		// Mise en cache des propriétés
+		// Mise en cache des propriétés (optimisé pour lazy loading)
 		$GLOBALS['common_cache'] = [
 			'input' => [
 				'_POST' => $this->input['_POST'],
 				'_COOKIE' => $this->input['_COOKIE'],
 			],
 			'siteContent' => self::$siteContent,
-			'dataFiles' => $this->dataFiles,
+			'dataFiles' => $this->dataFiles, // Contient seulement les bases essentielles chargées
 			'user' => $this->user,
 			'i18nUI' => self::$i18nUI,
 			'hierarchy' => $this->hierarchy,
@@ -550,7 +567,12 @@ class common
 	 */
 	public function deleteData($keys)
 	{
-		// Descripteur de la base
+		// Vérifier si la base est chargée, sinon la charger automatiquement
+		if (empty($this->dataFiles[$keys[0]])) {
+			$this->loadDataFile($keys[0]);
+		}
+		
+		// descripteur de la base
 		$db = (object) $this->dataFiles[$keys[0]];
 		// Initialisation de la requête par le nom de la base
 		$query = $keys[0];
@@ -589,8 +611,13 @@ class common
 			return false;
 		}
 
-		// Vérifier que la base de données existe
-		if (!isset($this->dataFiles[$keys[0]])) {
+		// Vérifier si la base est chargée, sinon la charger automatiquement
+		if (empty($this->dataFiles[$keys[0]])) {
+			$this->loadDataFile($keys[0]);
+		}
+		
+		// Vérifier que la base de données existe après tentative de chargement
+		if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
 			return false;
 		}
 
@@ -631,6 +658,11 @@ class common
 	{
 		// Eviter une requete vide
 		if (count($keys) >= 1) {
+			// Vérifier si la base est chargée, sinon la charger automatiquement
+			if (empty($this->dataFiles[$keys[0]])) {
+				$this->loadDataFile($keys[0]);
+			}
+			
 			// descripteur de la base
 			$db = (object) $this->dataFiles[$keys[0]];
 			$query = $keys[0];
@@ -736,17 +768,128 @@ class common
 		return unlink(self::DATA_DIR . $lang . '/content/' . $this->getData(['page', $page, 'content']));
 	}
 
-	public function jsonDB($lang)
+	public function jsonDB($lang, $dataFilesToLoad = null)
 	{
 		// Instanciation de la classe des entrées / sorties
-		// Récupère les descripteurs
-		foreach ($this->dataFiles as $keys => $value) {
-			// Constructeur  JsonDB;
-			$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
-				'name' => $keys . '.json',
-				'dir' => $this->dataPath($keys, $lang),
+		// Si aucune liste spécifiée, charger toutes les bases (comportement par défaut)
+		if ($dataFilesToLoad === null) {
+			$dataFilesToLoad = array_keys($this->dataFiles);
+		}
+		
+		// Récupère les descripteurs pour les bases spécifiées
+		foreach ($dataFilesToLoad as $keys) {
+			if (array_key_exists($keys, $this->dataFiles)) {
+				// Constructeur JsonDB
+				$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+					'name' => $keys . '.json',
+					'dir' => $this->dataPath($keys, $lang),
+					'backup' => file_exists('site/data/.backup')
+				]);
+			}
+		}
+	}
+
+	/**
+	 * Charge une base de données JSON spécifique à la demande
+	 * @param string $dataFile Nom de la base à charger
+	 * @param string $lang Langue (optionnel, utilise la langue courante par défaut)
+	 */
+	public function loadDataFile($dataFile, $lang = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+		
+		// Vérifier si la base existe et n'est pas déjà chargée
+		if (array_key_exists($dataFile, $this->dataFiles) && empty($this->dataFiles[$dataFile])) {
+			$this->dataFiles[$dataFile] = new \Prowebcraft\JsonDb([
+				'name' => $dataFile . '.json',
+				'dir' => $this->dataPath($dataFile, $lang),
 				'backup' => file_exists('site/data/.backup')
 			]);
+		}
+	}
+
+	/**
+	 * Vérifie si une base de données JSON est déjà chargée
+	 * @param string $dataFile Nom de la base à vérifier
+	 * @return bool True si la base est chargée, false sinon
+	 */
+	public function isDataFileLoaded($dataFile)
+	{
+		return array_key_exists($dataFile, $this->dataFiles) && !empty($this->dataFiles[$dataFile]);
+	}
+
+	/**
+	 * Charge toutes les bases de données JSON (pour compatibilité)
+	 * @param string $lang Langue à utiliser
+	 */
+	public function loadAllDataFiles($lang = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+		$this->jsonDB($lang);
+	}
+
+	/**
+	 * Charge les bases de données requises pour un module spécifique
+	 * @param string $moduleId ID du module
+	 * @param string $lang Langue (optionnel)
+	 */
+	public function loadModuleDataFiles($moduleId, $lang = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+		
+		// Bases communes requises par la plupart des modules
+		$moduleRequiredBases = ['theme', 'font'];
+		
+		// Bases spécifiques selon le module
+		switch ($moduleId) {
+			case 'user':
+			case 'config':
+				$moduleRequiredBases[] = 'admin';
+				$moduleRequiredBases[] = 'profil';
+				break;
+			case 'blog':
+			case 'news':
+				$moduleRequiredBases[] = 'blacklist';
+				break;
+			case 'language':
+				$moduleRequiredBases[] = 'language';
+				break;
+		}
+		
+		// Charger les bases requises qui ne sont pas encore chargées
+		foreach ($moduleRequiredBases as $dataFile) {
+			if (!$this->isDataFileLoaded($dataFile)) {
+				$this->loadDataFile($dataFile, $lang);
+			}
+		}
+	}
+
+	/**
+	 * Précharge intelligemment les bases selon le contexte de la requête
+	 * Appelé automatiquement lors de l'accès à une page avec module
+	 */
+	public function preloadContextualData()
+	{
+		// Si on accède à une page avec un module, précharger ses dépendances
+		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
+			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
+			$this->loadModuleDataFiles($moduleId);
+		}
+		
+		// Si on est dans l'administration, précharger les bases admin
+		if ($this->getUrl(0) === 'config' || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'theme') {
+			if (!$this->isDataFileLoaded('admin')) {
+				$this->loadDataFile('admin');
+			}
+			if (!$this->isDataFileLoaded('profil')) {
+				$this->loadDataFile('profil');
+			}
 		}
 	}
 
@@ -807,9 +950,15 @@ class common
 	 * Forçage de l'enregistrement
 	 * @param mixed $module
 	 * @return void
+	 * @throws Exception Si la base n'est pas chargée (erreur logique)
 	 */
 	public function saveDB($module): void
 	{
+		// Vérifier que la base est bien chargée (ne pas masquer les erreurs logiques)
+		if (empty($this->dataFiles[$module])) {
+			throw new Exception("Tentative de sauvegarde d'une base non chargée : $module. La base doit être chargée avant d'être sauvegardée.");
+		}
+		
 		$db = (object) $this->dataFiles[$module];
 		$db->save();
 	}
