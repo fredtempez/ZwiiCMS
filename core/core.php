@@ -1866,7 +1866,7 @@ class common
 		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
 		$userId = $userId ?? $this->getUser('id');
 		
-		// Vérifier si l'utilisateur est un administrateur
+		// Vérifier le rôle de l'utilisateur et déterminer le chemin approprié
 		switch ($this->getData(['user', $userId, 'role'])) {
 			case self::ROLE_ADMIN:
 				// Pour un admin, le chemin est déjà complet depuis site/file/source/
@@ -1875,9 +1875,8 @@ class common
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
 				// Pour un éditeur, vérifier le profil
-				$profilKey = strpos(self::ZWII_UPDATE_URL, 'campus-update')
-					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
-					: 'path';
+				// Dans ZwiiCMS, utiliser toujours 'path' (pas de distinction home/course)
+				$profilKey = 'path';
 				$userPath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
 				
 				// Si pas d'accès ou accès interdit
@@ -1894,8 +1893,13 @@ class common
 					return self::FILE_DIR . 'source/' . $filePath;
 				}
 				
+			case self::ROLE_MEMBER:
+			case self::ROLE_VISITOR:
+				// Pour les membres et visiteurs connectés, accès au chemin standard
+				return self::FILE_DIR . 'source/' . $filePath;
+				
 			default:
-				// Utilisateur sans droits
+				// Utilisateur non connecté ou rôle invalide
 				return '';
 		}
 	}
