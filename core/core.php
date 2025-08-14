@@ -1844,6 +1844,52 @@ class common
 	}
 
 	/**
+	 * Normalise les chemins dans un contenu HTML
+	 * @param string $content Le contenu HTML à normaliser
+	 * @param string|null $userId ID de l'utilisateur (optionnel)
+	 * @return string Le contenu avec les chemins normalisés
+	 */
+	public function normalizeContentPaths($content, $userId = null) {
+		if (empty($content)) {
+			return $content;
+		}
+
+		// Normaliser les liens href
+		$content = preg_replace_callback(
+			'/(<a[^>]+href=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
+			function($matches) use ($userId) {
+				$url = $matches[2];
+				if (!empty($url) && strpos($url, 'http') !== 0 && strpos($url, 'mailto:') !== 0 && strpos($url, '#') !== 0) {
+					$normalized = $this->getNormalizedFilePath($url, $userId);
+					if (!empty($normalized)) {
+						return $matches[1] . $normalized . $matches[3];
+					}
+				}
+				return $matches[0];
+			},
+			$content
+		);
+
+		// Normaliser les images src
+		$content = preg_replace_callback(
+			'/(<img[^>]+src=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
+			function($matches) use ($userId) {
+				$url = $matches[2];
+				if (!empty($url) && strpos($url, 'http') !== 0 && strpos($url, 'data:') !== 0) {
+					$normalized = $this->getNormalizedFilePath($url, $userId);
+					if (!empty($normalized)) {
+						return $matches[1] . $normalized . $matches[3];
+					}
+				}
+				return $matches[0];
+			},
+			$content
+		);
+
+		return $content;
+	}
+
+	/**
 	 * Retourne le chemin normalisé d'un fichier en fonction du profil utilisateur
 	 * 
 	 * @param string $filePath Le chemin du fichier stocké en base (relatif depuis site/file/source/)

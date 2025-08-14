@@ -126,9 +126,13 @@ class page extends common
 			$notification = helper::translate('Page dupliquée');
 			// Duplication du module présent
 			if ($this->getData(['page', $page, 'moduleId'])) {
-				$data = $this->getData(['module', $page], false);
-				$this->setData(['module', $pageId, $data], false);
-				$notification = helper::translate('Page et module dupliqués');
+				$data = $this->getData(['module', $page]);
+				if ($data !== null) {
+					$this->setData(['module', $pageId, $data], false);
+					$notification = helper::translate('Page et module dupliqués');
+				} else {
+					$notification = helper::translate('Page dupliquée (erreur lors de la copie du module)');
+				}
 			}
 			// Force la sauvegarde
 			$this->saveDB('page');
@@ -576,7 +580,15 @@ class page extends common
 					if (!is_dir(self::DATA_DIR . self::$siteContent . '/content')) {
 						mkdir(self::DATA_DIR . self::$siteContent . '/content', 0755);
 					}
-					$content = empty($this->getInput('pageEditContent', null)) ? '<p></p>' : str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null));
+					// Récupération et nettoyage du contenu
+					$content = empty($this->getInput('pageEditContent', null)) 
+						? '<p></p>' 
+						: str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null	));
+					
+					// Normalisation des chemins dans le contenu
+					$content = $this->normalizeContentPaths($content, $this->getUser('id'));
+					
+					// Sauvegarde du contenu
 					$this->setPage($pageId, $content, self::$siteContent);
 
 					// Met à jour le sitemap

@@ -54,16 +54,15 @@
 					</div>
 					<div class="row">
 						<div class="col12">
-							<?php 
-								$picturePath = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']);
-								$normalizedPath = $this->getNormalizedFilePath($picturePath);
-								if ($picturePath && !empty($normalizedPath) && file_exists($normalizedPath)
+							<?php if (
+								$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) &&
+								file_exists(self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))
 							): ?>
 								<?php $pictureSize = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']); ?>
 								<?php if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'hidePicture']) == false) {
 									echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picturePosition']) .
-										' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . $normalizedPath .
-										'" alt="' . $picturePath . '">';
+										' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) .
+										'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) . '">';
 								} ?>
 							<?php endif; ?>
 							<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']); ?>
@@ -131,11 +130,11 @@
 							$thumb = 'mini_' . $parts['basename'];
 							// Créer la miniature si manquante
 							if (!file_exists(self::FILE_DIR . 'thumb/' . $thumb)) {
-								// Utiliser la fonction normalisée pour le chemin source
-								$sourcePath = $this->getNormalizedFilePath($article['picture']);
-								if (!empty($sourcePath)) {
-									$this->makeThumb($sourcePath, self::FILE_DIR . 'thumb/' . $thumb, self::THUMBS_WIDTH);
-								}
+								$this->makeThumb(
+									self::FILE_DIR . 'source/' . $article['picture'],
+									self::FILE_DIR . 'thumb/' . $thumb,
+									self::THUMBS_WIDTH
+								);
 							}
 							?>
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">

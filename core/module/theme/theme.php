@@ -397,7 +397,7 @@ class theme extends common
 						'position' => $this->getInput('themeFooterPosition'),
 						'fixed' => $this->getInput('themeFooterFixed', helper::FILTER_BOOLEAN),
 						'socialsAlign' => $this->getInput('themeFooterSocialsAlign'),
-						'text' => $this->getInput('themeFooterText', null),
+						'text' => $this->normalizeContentPaths($this->getInput('themeFooterText', null), $this->getUser('id')),
 						'textAlign' => $this->getInput('themeFooterTextAlign'),
 						'textColor' => $this->getInput('themeFooterTextColor'),
 						'copyrightPosition' => $this->getInput('themeFooterCopyrightPosition'),

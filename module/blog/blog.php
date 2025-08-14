@@ -275,7 +275,7 @@ class blog extends common
 				'posts',
 				$articleId,
 				[
-					'content' => $this->getInput('blogAddContent', null),
+					'content' => $this->normalizeContentPaths($this->getInput('blogAddContent', null), $this->getUser('id')),
 					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT),
 					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
 					'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
@@ -675,7 +675,7 @@ class blog extends common
 					[
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
-						'content' => $this->getInput('blogEditContent', null),
+						'content' => $this->normalizeContentPaths($this->getInput('blogEditContent', null), $this->getUser('id')),
 						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT),
 						'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
 						'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),

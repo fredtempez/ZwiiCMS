@@ -180,7 +180,7 @@ class news extends common
 				'posts',
 				$newsId,
 				[
-					'content' => $this->getInput('newsAddContent', null),
+					'content' => $this->normalizeContentPaths($this->getInput('newsAddContent', null), $this->getUser('id')),
 					'publishedOn' => $publishedOn,
 					'publishedOff' => $publishedOff,
 					'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
@@ -439,7 +439,7 @@ class news extends common
 					'posts',
 					$newsId,
 					[
-						'content' => $this->getInput('newsEditContent', null),
+						'content' => $this->normalizeContentPaths($this->getInput('newsEditContent', null), $this->getUser('id')),
 						'publishedOn' => $publishedOn,
 						'publishedOff' => $publishedOff < $publishedOn ? '' : $publishedOff,
 						'state' => $this->getInput('newsEditState', helper::FILTER_BOOLEAN),
