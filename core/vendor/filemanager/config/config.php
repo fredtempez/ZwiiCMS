@@ -57,7 +57,7 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			if (!is_null($profil) and $g['profil'][$role][$profil]['folder']['path']  !== '') {
 				$file = $g['profil'][$role][$profil]['file'];
 				$folder = $g['profil'][$role][$profil]['folder'];
-				$uploadDir = $g['profil'][$role][$profil]['folder']['path'];
+				$uploadDir = '/' . $g['profil'][$role][$profil]['folder']['path'];
 				$currentPath = '../../../' . $uploadDir;
 				if (!is_dir($currentPath)) {
 					mkdir($currentPath);

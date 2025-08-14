@@ -258,7 +258,7 @@ class common
 	// Bases essentielles chargées au démarrage
 	private $essentialDataFiles = [
 		'config',
-		'user', 
+		'user',
 		'locale',
 		'page',
 		'module',
@@ -571,7 +571,7 @@ class common
 		if (empty($this->dataFiles[$keys[0]])) {
 			$this->loadDataFile($keys[0]);
 		}
-		
+
 		// descripteur de la base
 		$db = (object) $this->dataFiles[$keys[0]];
 		// Initialisation de la requête par le nom de la base
@@ -615,7 +615,7 @@ class common
 		if (empty($this->dataFiles[$keys[0]])) {
 			$this->loadDataFile($keys[0]);
 		}
-		
+
 		// Vérifier que la base de données existe après tentative de chargement
 		if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
 			return false;
@@ -623,7 +623,7 @@ class common
 
 		// Initialisation du retour en cas d'erreur de descripteur
 		$success = false;
-		
+
 		try {
 			// Construire la requête dans la base inf à 1 retourner toute la base
 			if (count($keys) >= 1) {
@@ -645,7 +645,7 @@ class common
 			}
 			return false;
 		}
-		
+
 		return $success;
 	}
 
@@ -662,7 +662,7 @@ class common
 			if (empty($this->dataFiles[$keys[0]])) {
 				$this->loadDataFile($keys[0]);
 			}
-			
+
 			// descripteur de la base
 			$db = (object) $this->dataFiles[$keys[0]];
 			$query = $keys[0];
@@ -718,13 +718,13 @@ class common
 		if (empty($filename) || !is_string($filename)) {
 			return false;
 		}
-		
+
 		// Vérifier que le dossier parent existe et est accessible en écriture
 		$dir = dirname($filename);
 		if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
 			return false;
 		}
-		
+
 		if (!is_writable($dir)) {
 			return false;
 		}
@@ -749,11 +749,11 @@ class common
 
 			// Incrémente le compteur de tentatives
 			$attempts++;
-			
+
 			// Pause progressive entre les tentatives
 			usleep(100000 * $attempts); // 100ms, 200ms, 300ms, etc.
 		}
-		
+
 		// État de l'écriture
 		return false;
 	}
@@ -775,7 +775,7 @@ class common
 		if ($dataFilesToLoad === null) {
 			$dataFilesToLoad = array_keys($this->dataFiles);
 		}
-		
+
 		// Récupère les descripteurs pour les bases spécifiées
 		foreach ($dataFilesToLoad as $keys) {
 			if (array_key_exists($keys, $this->dataFiles)) {
@@ -799,7 +799,7 @@ class common
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
-		
+
 		// Vérifier si la base existe et n'est pas déjà chargée
 		if (array_key_exists($dataFile, $this->dataFiles) && empty($this->dataFiles[$dataFile])) {
 			$this->dataFiles[$dataFile] = new \Prowebcraft\JsonDb([
@@ -842,10 +842,10 @@ class common
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
-		
+
 		// Bases communes requises par la plupart des modules
 		$moduleRequiredBases = ['theme', 'font'];
-		
+
 		// Bases spécifiques selon le module
 		switch ($moduleId) {
 			case 'user':
@@ -861,7 +861,7 @@ class common
 				$moduleRequiredBases[] = 'language';
 				break;
 		}
-		
+
 		// Charger les bases requises qui ne sont pas encore chargées
 		foreach ($moduleRequiredBases as $dataFile) {
 			if (!$this->isDataFileLoaded($dataFile)) {
@@ -881,7 +881,7 @@ class common
 			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
 			$this->loadModuleDataFiles($moduleId);
 		}
-		
+
 		// Si on est dans l'administration, précharger les bases admin
 		if ($this->getUrl(0) === 'config' || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'theme') {
 			if (!$this->isDataFileLoaded('admin')) {
@@ -958,7 +958,7 @@ class common
 		if (empty($this->dataFiles[$module])) {
 			throw new Exception("Tentative de sauvegarde d'une base non chargée : $module. La base doit être chargée avant d'être sauvegardée.");
 		}
-		
+
 		$db = (object) $this->dataFiles[$module];
 		$db->save();
 	}
@@ -1518,12 +1518,12 @@ class common
 		if (empty($to) || empty($subject) || empty($content)) {
 			return 'Paramètres manquants';
 		}
-		
+
 		// Validation des adresses email
-		$validateEmail = function($email) {
+		$validateEmail = function ($email) {
 			return filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
 		};
-		
+
 		// Validation des destinataires
 		if (is_array($to)) {
 			foreach ($to as $email) {
@@ -1536,12 +1536,12 @@ class common
 				return 'Adresse email destinataire invalide: ' . $to;
 			}
 		}
-		
+
 		// Validation de l'adresse de réponse
 		if ($replyTo !== null && !$validateEmail($replyTo)) {
 			return 'Adresse email de réponse invalide: ' . $replyTo;
 		}
-		
+
 		// Validation de l'adresse d'expédition
 		if (!$validateEmail($from)) {
 			// Utiliser une adresse par défaut sécurisée
@@ -1557,7 +1557,7 @@ class common
 		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
 		$mail->CharSet = 'UTF-8';
 		$mail->Encoding = 'base64';
-		
+
 		// Mail
 		try {
 			// Paramètres SMTP perso
@@ -1845,108 +1845,111 @@ class common
 
 	/**
 	 * Normalise les chemins dans un contenu HTML
+	 * 
+	 * Cette méthode traite le contenu HTML pour normaliser les chemins des ressources (images, liens, etc.)
+	 * en fonction du rôle de l'utilisateur. Elle est principalement utilisée lors de l'affichage
+	 * des contenus édités pour s'assurer que les chemins sont corrects selon les permissions.
+	 *
+	 * Fonctionnement :
+	 * 1. Nettoie les séquences de navigation (../) et normalise les séparateurs
+	 * 2. Traite les balises <a href> et <img src> pour corriger les chemins
+	 * 3. Utilise getNormalizedFilePath() pour générer les chemins finaux
+	 * 4. Gère les chemins absolus et relatifs de manière cohérente
+	 *
+	 * @param string $content Le contenu HTML à normaliser
+	 * @param string|null $userId ID de l'utilisateur (optionnel, utilise l'utilisateur courant si non spécifié)
+	 * @return string Le contenu avec les chemins normalisés
+	 */
+	/**
+	 * Normalise les chemins dans un contenu HTML
 	 * @param string $content Le contenu HTML à normaliser
 	 * @param string|null $userId ID de l'utilisateur (optionnel)
 	 * @return string Le contenu avec les chemins normalisés
 	 */
-	public function normalizeContentPaths($content, $userId = null) {
+	public function normalizeContentPaths($content, $userId = null)
+	{
 		if (empty($content)) {
 			return $content;
 		}
 
-		// Normaliser les liens href
-		$content = preg_replace_callback(
-			'/(<a[^>]+href=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
-			function($matches) use ($userId) {
-				$url = $matches[2];
-				if (!empty($url) && strpos($url, 'http') !== 0 && strpos($url, 'mailto:') !== 0 && strpos($url, '#') !== 0) {
-					$normalized = $this->getNormalizedFilePath($url, $userId);
-					if (!empty($normalized)) {
-						return $matches[1] . $normalized . $matches[3];
-					}
-				}
-				return $matches[0];
+		// Récupérer l'ID utilisateur si non fourni
+		$userId = $userId ?? $this->getUser('id');
+
+		// Nettoyer le contenu
+		$content = preg_replace(['#(?:^|/)\.{2}/#', '#/+#'], ['/', '/'], $content);
+
+		// Fonction de normalisation des URLs
+		$normalizeUrl = function($url) use ($userId) {
+			if (empty($url) || 
+				strpos($url, 'http') === 0 || 
+				strpos($url, 'data:') === 0 || 
+				strpos($url, 'mailto:') === 0 || 
+				$url[0] === '#') {
+				return $url;
+			}
+
+			// Nettoyer et normaliser le chemin
+			$path = preg_replace([
+				'#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#',
+				'#(^|/)\.{1,2}/#',
+				'#/+#',
+			], ['', '/', '/'], ltrim($url, '/'));
+
+			return $this->getNormalizedFilePath($path, $userId) ?: $url;
+		};
+
+		// Traiter les balises a et img en une seule passe
+		return preg_replace_callback(
+			'/(<a[^>]+href=[\'\"]|src=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
+			function($matches) use ($normalizeUrl) {
+				return $matches[1] . $normalizeUrl($matches[2]) . $matches[3];
 			},
 			$content
 		);
-
-		// Normaliser les images src
-		$content = preg_replace_callback(
-			'/(<img[^>]+src=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
-			function($matches) use ($userId) {
-				$url = $matches[2];
-				if (!empty($url) && strpos($url, 'http') !== 0 && strpos($url, 'data:') !== 0) {
-					$normalized = $this->getNormalizedFilePath($url, $userId);
-					if (!empty($normalized)) {
-						return $matches[1] . $normalized . $matches[3];
-					}
-				}
-				return $matches[0];
-			},
-			$content
-		);
-
-		return $content;
 	}
 
 	/**
-	 * Retourne le chemin normalisé d'un fichier en fonction du profil utilisateur
+	 * Retourne le chemin normalisé d'un fichier selon le rôle utilisateur
 	 * 
-	 * @param string $filePath Le chemin du fichier stocké en base (relatif depuis site/file/source/)
-	 * @param string $userId L'identifiant de l'utilisateur (optionnel)
-	 * @return string Le chemin normalisé du fichier
-	 * 
-	 * Cette fonction résout le problème où les chemins de fichiers peuvent avoir une racine incorrecte :
-	 * - Pour un admin : le chemin est complet depuis site/file/source/
-	 * - Pour un éditeur : le chemin doit être ajusté selon son profil
-	 * 
-	 * Utilisable pour tous types de fichiers : images, documents, thumbnails, etc.
+	 * @param string $filePath Chemin relatif du fichier (depuis site/file/source/)
+	 * @param string|null $userId ID utilisateur (optionnel)
+	 * @return string URL complète ou chaîne vide si accès refusé
 	 */
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
-		// Si pas de chemin de fichier, retourner vide
-		if (empty($filePath)) {
-			return '';
+		if (empty($filePath)) return '';
+
+		// Nettoyer le chemin
+		$filePath = preg_replace(['#(?:^|/)\.{2}/#', '#/+#', '#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#'], 
+			['/', '/', ''], 
+			ltrim($filePath, '/')
+		);
+
+		// Récupérer l'utilisateur et son rôle
+		$userId = $userId ?? $this->getUser('id');
+		$userRole = $this->getData(['user', $userId, 'role']);
+
+		// Vérifier les permissions selon le rôle
+		if (in_array($userRole, [self::ROLE_ADMIN, self::ROLE_EDITOR, self::ROLE_MODERATOR])) {
+			$profil = $this->getData([
+				'profil', 
+				$this->getUser('role'), 
+				$this->getUser('profil'), 
+				'folder', 
+				'path'
+			]);
+
+			// Vérifier l'accès
+			if (empty($profil) || $profil === 'none') {
+				return '';
+			}
+
+			// Construire l'URL complète
+			return helper::baseurl(false) . '/' . 
+				self::FILE_DIR . 'source/' . $filePath;
 		}
 
-		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
-		$userId = $userId ?? $this->getUser('id');
-		
-		// Vérifier le rôle de l'utilisateur et déterminer le chemin approprié
-		switch ($this->getData(['user', $userId, 'role'])) {
-			case self::ROLE_ADMIN:
-				// Pour un admin, le chemin est déjà complet depuis site/file/source/
-				return self::FILE_DIR . 'source/' . $filePath;
-				
-			case self::ROLE_EDITOR:
-			case self::ROLE_MODERATOR:
-				// Pour un éditeur, vérifier le profil
-				// Dans ZwiiCMS, utiliser toujours 'path' (pas de distinction home/course)
-				$profilKey = 'path';
-				$userPath = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
-				
-				// Si pas d'accès ou accès interdit
-				if (empty($userPath) || $userPath === 'none') {
-					return '';
-				}
-				
-				// Si le profil a un chemin spécifique, l'utiliser
-				if (!empty($userPath) && $userPath !== 'site/file/source/') {
-					// Construire le chemin complet avec le profil utilisateur
-					return $userPath . $filePath;
-				} else {
-					// Utiliser le chemin standard
-					return self::FILE_DIR . 'source/' . $filePath;
-				}
-				
-			case self::ROLE_MEMBER:
-			case self::ROLE_VISITOR:
-				// Pour les membres et visiteurs connectés, accès au chemin standard
-				return self::FILE_DIR . 'source/' . $filePath;
-				
-			default:
-				// Utilisateur non connecté ou rôle invalide
-				return '';
-		}
+		// Accès refusé pour les autres rôles
+		return '';
 	}
 }
