@@ -1214,3 +1214,19 @@ if (
 
 	$this->setData(['core', 'dataVersion', 13605]);
 }
+
+
+// Version 13.7.00
+if ($this->getData(['core', 'dataVersion']) < 13700) {
+
+    // Suppression des dossiers obsolètes
+    // phpmailer a été déplacé dans le dossier vendor, il faut donc le supprimer du dossier des classes
+    $dir = 'core/class/phpmailer';
+
+        if (is_dir($dir)) {
+            $this->deleteDir($dir);
+        }
+    
+    // Mise à jour du numéro de version
+    $this->setData(['core', 'dataVersion', 13700]);
+}
