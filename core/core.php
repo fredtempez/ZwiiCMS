@@ -1917,6 +1917,7 @@ class common
 	 */
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
+
 		if (empty($filePath)) return '';
 
 		// Nettoyer le chemin
@@ -1939,8 +1940,9 @@ class common
 				'path'
 			]);
 
+
 			// Vérifier l'accès
-			if (empty($profil) || $profil === 'none') {
+			if ($profil < self::ROLE_ADMIN && $profil === 'none') {
 				return '';
 			}
 
