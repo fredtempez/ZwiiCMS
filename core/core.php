@@ -63,7 +63,7 @@ class common
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures.
 	 */
-	const ZWII_UPDATE_CHANNEL = 'v14';
+	const ZWII_UPDATE_CHANNEL = 'v13';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
@@ -1947,8 +1947,7 @@ class common
 			}
 
 			// Construire l'URL complète
-			return helper::baseurl(false) . '/' . 
-				self::FILE_DIR . 'source/' . $filePath;
+			return helper::baseurl(false) . self::FILE_DIR . 'source/' . $filePath;
 		}
 
 		// Accès refusé pour les autres rôles
