@@ -31,7 +31,7 @@ setlocale(LC_CTYPE, $lang);
 
 /* Vérification de l'authentification */
 if (!isset($_COOKIE['ZWII_AUTH_KEY']) || !isset($_COOKIE['ZWII_USER_ID'])) {
-    die("Accès non autorisé - Authentification requise");
+    die(formatErrorMessage("Accès non autorisé - Authentification requise"));
 }
 
 // Chargement des données utilisateur
@@ -40,7 +40,7 @@ $userId = $_COOKIE['ZWII_USER_ID'];
 
 // Vérification de la clé d'authentification
 if (!isset($usersData['user'][$userId]) || $usersData['user'][$userId]['authKey'] !== $_COOKIE['ZWII_AUTH_KEY']) {
-    die("Authentification invalide");
+    die(formatErrorMessage("Authentification invalide"));
 }
 
 $u = $usersData;
