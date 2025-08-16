@@ -17,9 +17,23 @@ date_default_timezone_set('Europe/Paris');
 $lang = isset($_GET['lang']) ? $_GET['lang'] : 'en';
 setlocale(LC_CTYPE, $lang);
 
-/* Lecture du rôle de l'utilisateur connecté pour attribuer les droits et les dossiers */
+/* Vérification de l'authentification */
+if (!isset($_COOKIE['ZWII_AUTH_KEY']) || !isset($_COOKIE['ZWII_USER_ID'])) {
+    die("Accès non autorisé - Authentification requise");
+}
+
+// Chargement des données utilisateur
+$usersData = json_decode(file_get_contents('../../../site/data/user.json'), true);
 $userId = $_COOKIE['ZWII_USER_ID'];
-$u = json_decode(file_get_contents('../../../site/data/user.json'), true);
+
+// Vérification de la clé d'authentification
+if (!isset($usersData['user'][$userId]) || $usersData['user'][$userId]['authKey'] !== $_COOKIE['ZWII_AUTH_KEY']) {
+    die("Authentification invalide");
+}
+
+$u = $usersData;
+
+// Chargement des profils
 $g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
 
 // Lecture les droits
@@ -36,10 +50,8 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			$file['copycut'] = true;
 			$file['preview'] = true;
 			$file['edit'] = true;
-			$file['extract'] = true;
 			$file['download'] = true;
 			$file['chmod'] = true;
-			$folder['create'] = true;
 			$folder['create'] = true;
 			$folder['delete'] = true;
 			$folder['copycut'] = true;
@@ -68,6 +80,8 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			// Pas d'autorisation d'accès au gestionnaire de fichiers
 			exit('Accès interdit');
 	}
+} else {
+	die();
 }
 
 
