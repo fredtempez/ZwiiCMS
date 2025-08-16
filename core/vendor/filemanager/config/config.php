@@ -3,6 +3,18 @@ $version = "9.14.0";
 if (session_id() == '')
 	session_start();
 
+/**
+ * Formate un message d'erreur avec un style cohérent
+ * @param string $message Le message d'erreur à afficher
+ * @return string Le message formaté en HTML
+ */
+function formatErrorMessage($message) {
+    return sprintf(
+        '<div style="color: red; text-align: center; margin-top: 50px;"><h2>%s</h2></div>',
+        htmlspecialchars($message, ENT_QUOTES, 'UTF-8')
+    );
+}
+
 mb_internal_encoding('UTF-8');
 mb_http_output();
 mb_http_input();
@@ -64,7 +76,7 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			// Accès contrôlés par le profil
 			$profil = $u['user'][$userId]['profil'];
 			if ($g['profil'][$role][$profil]['filemanager'] === false)
-				exit('Accès interdit');
+					exit(formatErrorMessage('Accès interdit'));
 			// lecture du profil
 			if (!is_null($profil) and $g['profil'][$role][$profil]['folder']['path']  !== '') {
 				$file = $g['profil'][$role][$profil]['file'];
@@ -78,10 +90,10 @@ if (!is_null($u) && !is_null($g) && !is_null($userId)) {
 			}
 		default:
 			// Pas d'autorisation d'accès au gestionnaire de fichiers
-			exit('Accès interdit');
+			exit(formatErrorMessage('Accès interdit'));
 	}
 } else {
-	die();
+	die(formatErrorMessage('Erreur de configuration'));
 }
 
 
