@@ -8,7 +8,6 @@
 - Corrige un bug de chemin d'accès aux ressources publiées par des membres non administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
 - Sécurisation de l'accès au gestionnaire de fichiers.
 
-
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
 - Suppression du cookie ZWII_USER_ID pour l'authentification
@@ -18,7 +17,6 @@ Améliore la sécurité et la robustesse des fonctions core :
 - sendMail: validation emails et sécurisation entités HTML
 - genererIdAlphanum: remplacement str_shuffle par random_int sécurisé
 - setData: gestion exceptions et validation structure données
-
 
 ## Version 13.6.07
 - Améliore la classe gérant les entrées sorties, méthode save améliorée (verrou du fichier temporaire).
