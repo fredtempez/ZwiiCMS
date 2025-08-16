@@ -32,6 +32,8 @@ class journal extends common
      */
     public static $directories = [];
 
+    public static $datas = [];
+
     /**
      * Version du module.
      * @const string
@@ -62,13 +64,121 @@ class journal extends common
      */
     public function index()
     {
+        // Chemin vers le fichier journal.log
+        $logPath = self::DATA_DIR . 'journal.log';
+        $entries = []; // Tableau pour stocker les entrées du journal
+        $users = []; // Tableau pour stocker les utilisateurs uniques
 
-        
+        // Limite des pages à afficher, récupérée depuis la configuration ou par défaut à 20
+        $limitePages = $this->getData(['module', $this->getUrl(0), 'limite']) ?? 20;
+
+        // Filtres utilisateur définis dans la configuration (admin, visitor, tous)
+        $filtersEnabled = $this->getData(['module', $this->getUrl(0), 'filtres']) ?? ['admin', 'visitor', 'tous'];
+
+        // Vérifie si le fichier journal.log existe
+        if (is_file($logPath)) {
+            // Lit les lignes du fichier journal.log en ignorant les lignes vides
+            $lines = file($logPath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+            $pagesSeen = []; // Tableau pour suivre les pages déjà vues et éviter les doublons
+
+            // Parcourt les lignes du fichier à l'envers pour commencer par les plus récentes
+            foreach (array_reverse($lines) as $line) {
+                // Divise chaque ligne en parties en utilisant le délimiteur ";"
+                $parts = explode(';', $line);
+
+                // Vérifie que la ligne a le bon format (5 parties)
+                if (count($parts) === 5) {
+                    list($dateRaw, $time, $ip, $user, $page) = $parts;
+
+                    // Ignore les doublons de page
+                    if (isset($pagesSeen[$page])) {
+                        continue;
+                    }
+
+                    // Reformate la date de AAAAMMJJ à JJ/MM/AAAA
+                    $date = substr($dateRaw, 6, 2) . '/' . substr($dateRaw, 4, 2) . '/' . substr($dateRaw, 0, 4);
+
+                    // Ajoute l'entrée au tableau des entrées
+                    $entries[] = [
+                        'date' => $date,
+                        'time' => $time,
+                        'ip' => $ip,
+                        'user' => $user,
+                        'page' => $page
+                    ];
+
+                    // Normalisation de l'utilisateur pour la comparaison
+                    $lowerUser = strtolower($user);
+                    $addUser = false;
+
+                    // Vérifie si l'utilisateur doit être ajouté en fonction des filtres activés
+                    if (in_array('admin', $filtersEnabled) && $lowerUser === 'admin') {
+                        $addUser = true;
+                    } elseif (in_array('visitor', $filtersEnabled) && $lowerUser === 'visiteur') {
+                        $addUser = true;
+                    } elseif (in_array('tous', $filtersEnabled) && $lowerUser !== 'admin' && $lowerUser !== 'visiteur') {
+                        $addUser = true;
+                    }
+
+                    // Ajoute l'utilisateur au tableau des utilisateurs si nécessaire
+                    if ($addUser) {
+                        $users[$lowerUser] = $user;
+                    }
+
+                    // Marque la page comme vue
+                    $pagesSeen[$page] = true;
+
+                    // Arrête la boucle si le nombre maximum d'entrées est atteint
+                    if (count($entries) >= $limitePages) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Utilisateur sélectionné dans le formulaire, par défaut 'admin'
+        $defaultUser = $users['admin'] ?? '';
+        $filterUser = $this->getInput('filtreUtilisateur', helper::FILTER_STRING_SHORT, false) ?? $defaultUser;
+
+        // Filtre les entrées en fonction de l'utilisateur sélectionné
+        $filteredEntries = [];
+        if ($filterUser) {
+            foreach ($entries as $entry) {
+                if ($entry['user'] === $filterUser) {
+                    $filteredEntries[] = $entry;
+                }
+            }
+        } else {
+            $filteredEntries = $entries;
+        }
+
+        // Tri des utilisateurs avec priorité pour admin et visiteur
+        $priorite = ['admin', 'visiteur'];
+        uksort($users, function ($a, $b) use ($priorite) {
+            $pa = array_search($a, $priorite);
+            $pb = array_search($b, $priorite);
+            $pa = $pa === false ? PHP_INT_MAX : $pa;
+            $pb = $pb === false ? PHP_INT_MAX : $pb;
+            return $pa <=> $pb ?: strcasecmp($a, $b);
+        });
+
+        // Données transmises à la vue
+        self::$datas = [
+            'limitePages' => $limitePages,
+            'users' => $users,
+            'filterUser' => $filterUser,
+            'filteredEntries' => $filteredEntries,
+            'filtersEnabled' => $filtersEnabled
+        ];
+
+        // Préparation des données pour la vue
         $this->addOutput([
-            'showBarEditButton' => true, // Affiche le bouton d'édition dans la barre
-            'showPageContent' => true, // Affiche le contenu de la page
-            'title' => 'Journal des éditions', // Titre de la page
-            'view' => 'index' // Vue à afficher
+            'showBarEditButton' => true,
+            'showPageContent' => true,
+            'view' => 'index',
+            'vendor' => [
+                'tinymce'
+            ]
         ]);
     }
 
@@ -95,19 +205,27 @@ class journal extends common
             } else {
                 // Récupère les filtres sélectionnés
                 $filtres = [];
-                if ($this->getInput('journalFiltresAdmin')) $filtres[] = 'admin';
-                if ($this->getInput('journalFiltresVisitor')) $filtres[] = 'visitor';
-                if ($this->getInput('journalFiltresTous')) $filtres[] = 'tous';
+                if ($this->getInput('journalFiltresAdmin'))
+                    $filtres[] = 'admin';
+                if ($this->getInput('journalFiltresVisitor'))
+                    $filtres[] = 'visitor';
+                if ($this->getInput('journalFiltresTous'))
+                    $filtres[] = 'tous';
 
                 // Si aucun filtre n'est sélectionné, tous les filtres sont appliqués par défaut
-                if (empty($filtres)) $filtres = ['admin', 'visitor', 'tous'];
+                if (empty($filtres))
+                    $filtres = ['admin', 'visitor', 'tous'];
 
                 // Enregistre la configuration
-                $this->setData(['module', $this->getUrl(0), [
-                    'identifiant' => $this->getInput('journalIdentifiant'),
-                    'limite' => (int) $this->getInput('journalLimite'),
-                    'filtres' => $filtres
-                ]]);
+                $this->setData([
+                    'module',
+                    $this->getUrl(0),
+                    [
+                        'identifiant' => $this->getInput('journalIdentifiant'),
+                        'limite' => (int) $this->getInput('journalLimite'),
+                        'filtres' => $filtres
+                    ]
+                ]);
 
                 $notification = 'Configuration enregistrée';
             }
