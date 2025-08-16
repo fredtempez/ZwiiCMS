@@ -15,5 +15,9 @@ class autoload {
         require_once 'core/class/sitemap/FileSystem.class.php';
         require_once 'core/class/sitemap/Runtime.class.php';
         require_once 'core/class/strftime/php-8.1-strftime.class.php';
+        // Classe php mailer
+        require_once 'core/class/phpmailer/PHPMailer.class.php';
+        require_once 'core/class/phpmailer/Exception.class.php';
+        require_once 'core/class/phpmailer/SMTP.class.php';
     }
 }
