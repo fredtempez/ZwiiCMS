@@ -10,10 +10,8 @@
 						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $item['thumb']);
 						// Créer la miniature si manquante
 						if (!file_exists( self::FILE_DIR . 'thumb/' . $thumb) ) {
-							// Utiliser la fonction normalisée pour le chemin source
-							$sourcePath = $this->getNormalizedFilePath($item['thumb']);
-							if (!empty($sourcePath)) {
-								$this->makeThumb($sourcePath, self::FILE_DIR . 'thumb/' . $thumb, self::THUMBS_WIDTH);
+							if (!empty($item['thumb'])) {
+								$this->makeThumb($item['thumb'], self::FILE_DIR . 'thumb/' . $thumb, self::THUMBS_WIDTH);
 							}
 						}
 

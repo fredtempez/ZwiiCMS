@@ -782,7 +782,7 @@ class download extends common
 						'ressourceType' => $this->getInput('downloadEditRessourceType', helper::FILTER_STRING_SHORT),
 						'file' => $this->getInput('downloadEditFile', helper::FILTER_STRING_SHORT),
 						'url' => $this->getInput('downloadEditUrl', helper::FILTER_STRING_SHORT),
-						'thumb' => $this->getInput('downloadEditThumb', helper::FILTER_STRING_SHORT, true),
+						'thumb' => $this->normalizeContentPaths($this->getInput('downloadEditThumb', helper::FILTER_STRING_SHORT, true), $this->getUser('id')),
 						'version' => $this->getInput('downloadEditVersion', helper::FILTER_STRING_SHORT),
 						'versionDate' => $this->getInput('downloadEditversionDate', helper::FILTER_DATETIME),
 						'stats' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'stats']),
