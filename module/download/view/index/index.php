@@ -5,12 +5,20 @@
 				<div class="row rowitem">
 					<div class="col3 downloadLeft">
 						<?php // Déterminer le nom de la miniature
-								$thumb = $this->getThumb($item['thumb']); ?>
-						<?php if ($thumb): ?>
-							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>" class="downloadPicture">
-								<img src="<?php echo helper::baseUrl(false) . $thumb; ?>" alt="<?php echo $item['title']; ?>">
-							</a>
-						<?php endif; ?>
+						$thumb = $this->getThumb($item['thumb']); ?>
+
+						<?php // Créer la miniature si manquante
+						if (!file_exists($thumb)) {
+							$this->makeThumb(
+								$item['thumb'],  // Chemin complet du fichier source
+								null,                     // Chemin de destination généré automatiquement
+								self::THUMBS_WIDTH        // Largeur de la miniature
+							);
+						} ?>
+						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>" class="downloadPicture">
+							<img src="<?php echo helper::baseUrl(false) . $thumb; ?>" alt="<?php echo $item['title']; ?>">
+						</a>
+
 					</div>
 					<div class="col9 downloadRight">
 						<article>
