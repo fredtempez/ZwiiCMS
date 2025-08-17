@@ -1422,140 +1422,146 @@ class common
 	 * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
 	 * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
 	 */
-/**
- * Crée une miniature d'une image
- * @param string $src Chemin vers le fichier source
- * @param string|null $dest (Optionnel) Chemin où enregistrer la miniature. Si null, généré automatiquement.
- * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
- * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
- */
-function makeThumb($src, $dest = null, $desired_width = 200)
-{
-    // Vérifier si le fichier source existe
-    if (!file_exists($src)) {
-        error_log("Fichier source introuvable: $src");
-        return false;
-    }
+	/**
+	 * Crée une miniature d'une image
+	 * @param string $src Chemin vers le fichier source
+	 * @param string|null $dest (Optionnel) Chemin où enregistrer la miniature. Si null, généré automatiquement.
+	 * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
+	 * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
+	 */
+	public static function makeThumb($src, $dest = null, $desired_width = 200)
+	{
+		// Vérifier si le fichier source existe
+		if (!file_exists($src)) {
+			error_log("Fichier source introuvable: $src");
+			return false;
+		}
 
-    // Générer automatiquement le chemin de destination si non fourni
-    if ($dest === null) {
-        $srcInfo = pathinfo($src);
-        $destDir = str_replace('source', 'thumb', $srcInfo['dirname']);
-        if (!is_dir($destDir) && !mkdir($destDir, 0755, true)) {
-            error_log("Impossible de créer le répertoire de destination: $destDir");
-            return false;
-        }
-        $dest = $destDir . '/' . self::THUMBS_SEPARATOR . strtolower($srcInfo['basename']);
-    }
+		// Générer automatiquement le chemin de destination si non fourni
+		if ($dest === null) {
+			$srcInfo = pathinfo($src);
+			$destDir = str_replace('source', 'thumb', $srcInfo['dirname']);
+			if (!is_dir($destDir) && !mkdir($destDir, 0755, true)) {
+				error_log("Impossible de créer le répertoire de destination: $destDir");
+				return false;
+			}
+			$dest = $destDir . '/' . self::THUMBS_SEPARATOR . strtolower($srcInfo['basename']);
+		}
 
-    $fileInfo = pathinfo($dest);
-    $extension = strtolower($fileInfo['extension'] ?? '');
-    $mime_type = mime_content_type($src);
+		$fileInfo = pathinfo($dest);
+		$extension = strtolower($fileInfo['extension'] ?? '');
+		$mime_type = mime_content_type($src);
 
-    // Gestion des fichiers SVG (copie simple sans redimensionnement)
-    if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
-        return copy($src, $dest) ? $dest : false;
-    }
+		// Gestion des fichiers SVG (copie simple sans redimensionnement)
+		if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
+			return copy($src, $dest) ? $dest : false;
+		}
 
-    // Chargement de l'image source selon le type
-    $source_image = null;
-    try {
-        switch (strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
-            case 'jpeg':
-            case 'jpg':
-                $source_image = imagecreatefromjpeg($src);
-                break;
-            case 'png':
-                $source_image = imagecreatefrompng($src);
-                break;
-            case 'gif':
-                $source_image = imagecreatefromgif($src);
-                break;
-            case 'webp':
-                $source_image = imagecreatefromwebp($src);
-                break;
-            case 'avif':
-                if (function_exists('imagecreatefromavif')) {
-                    $source_image = imagecreatefromavif($src);
-                }
-                break;
-            default:
-                error_log("Format d'image non supporté: $src");
-                return false;
-        }
+		// Chargement de l'image source selon le type
+		$source_image = null;
+		try {
+			switch (strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
+				case 'jpeg':
+				case 'jpg':
+					$source_image = imagecreatefromjpeg($src);
+					break;
+				case 'png':
+					$source_image = imagecreatefrompng($src);
+					break;
+				case 'gif':
+					$source_image = imagecreatefromgif($src);
+					break;
+				case 'webp':
+					$source_image = imagecreatefromwebp($src);
+					break;
+				case 'avif':
+					if (function_exists('imagecreatefromavif')) {
+						$source_image = imagecreatefromavif($src);
+					}
+					break;
+				default:
+					error_log("Format d'image non supporté: $src");
+					return false;
+			}
 
-        if (!$source_image) {
-            error_log("Impossible de charger l'image source: $src");
-            return false;
-        }
+			if (!$source_image) {
+				error_log("Impossible de charger l'image source: $src");
+				return false;
+			}
 
-        $width = imagesx($source_image);
-        $height = imagesy($source_image);
-        $desired_height = floor($height * ($desired_width / $width));
+			$width = imagesx($source_image);
+			$height = imagesy($source_image);
+			$desired_height = floor($height * ($desired_width / $width));
 
-        // Création de la miniature
-        $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-        
-        // Gestion de la transparence pour les PNG et GIF
-        if (in_array($extension, ['png', 'gif'])) {
-            imagealphablending($virtual_image, false);
-            imagesavealpha($virtual_image, true);
-            $transparent = imagecolorallocatealpha($virtual_image, 255, 255, 255, 127);
-            imagefilledrectangle($virtual_image, 0, 0, $desired_width, $desired_height, $transparent);
-        }
+			// Création de la miniature
+			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
 
-        imagecopyresampled(
-            $virtual_image, $source_image, 
-            0, 0, 0, 0, 
-            $desired_width, $desired_height, 
-            $width, $height
-        );
+			// Gestion de la transparence pour les PNG et GIF
+			if (in_array($extension, ['png', 'gif'])) {
+				imagealphablending($virtual_image, false);
+				imagesavealpha($virtual_image, true);
+				$transparent = imagecolorallocatealpha($virtual_image, 255, 255, 255, 127);
+				imagefilledrectangle($virtual_image, 0, 0, $desired_width, $desired_height, $transparent);
+			}
 
-        // Sauvegarde de la miniature
-        $result = false;
-        switch ($mime_type) {
-            case 'image/jpeg':
-            case 'image/jpg':
-                $result = imagejpeg($virtual_image, $dest, 85);
-                break;
-            case 'image/png':
-                $result = imagepng($virtual_image, $dest, 8);
-                break;
-            case 'image/gif':
-                $result = imagegif($virtual_image, $dest);
-                break;
-            case 'image/webp':
-                $result = imagewebp($virtual_image, $dest, 85);
-                break;
-            case 'image/avif':
-                if (function_exists('imageavif')) {
-                    $result = imageavif($virtual_image, $dest, 60);
-                }
-                break;
-        }
+			imagecopyresampled(
+				$virtual_image,
+				$source_image,
+				0,
+				0,
+				0,
+				0,
+				$desired_width,
+				$desired_height,
+				$width,
+				$height
+			);
 
-        // Nettoyage
-        imagedestroy($virtual_image);
-        imagedestroy($source_image);
+			// Sauvegarde de la miniature
+			$result = false;
+			switch ($mime_type) {
+				case 'image/jpeg':
+				case 'image/jpg':
+					$result = imagejpeg($virtual_image, $dest, 85);
+					break;
+				case 'image/png':
+					$result = imagepng($virtual_image, $dest, 8);
+					break;
+				case 'image/gif':
+					$result = imagegif($virtual_image, $dest);
+					break;
+				case 'image/webp':
+					$result = imagewebp($virtual_image, $dest, 85);
+					break;
+				case 'image/avif':
+					if (function_exists('imageavif')) {
+						$result = imageavif($virtual_image, $dest, 60);
+					}
+					break;
+			}
 
-        if ($result && file_exists($dest)) {
-            return $dest;
-        }
-        
-        error_log("Échec de la sauvegarde de la miniature: $dest");
-        return false;
+			// Nettoyage
+			imagedestroy($virtual_image);
+			imagedestroy($source_image);
 
-    } catch (Exception $e) {
-        if (isset($source_image) && (is_resource($source_image) || $source_image instanceof GdImage)) {
-            imagedestroy($source_image);
-        }
-        if (isset($virtual_image) && (is_resource($virtual_image) || $virtual_image instanceof GdImage)) {
-            imagedestroy($virtual_image);
-        }
-        error_log("Erreur lors de la création de la miniature: " . $e->getMessage());
-        return false;
-    }
-}
+			if ($result && file_exists($dest)) {
+				return $dest;
+			}
+
+			error_log("Échec de la sauvegarde de la miniature: $dest");
+			return false;
+
+		} catch (Exception $e) {
+			if (isset($source_image) && (is_resource($source_image) || $source_image instanceof GdImage)) {
+				imagedestroy($source_image);
+			}
+			if (isset($virtual_image) && (is_resource($virtual_image) || $virtual_image instanceof GdImage)) {
+				imagedestroy($virtual_image);
+			}
+			error_log("Erreur lors de la création de la miniature: " . $e->getMessage());
+			return false;
+		}
+	}
 
 	/**
 	 * Génère le chemin d'une miniature à partir d'un chemin source
@@ -1572,15 +1578,15 @@ function makeThumb($src, $dest = null, $desired_width = 200)
 
 		// Récupérer les informations du chemin
 		$pathInfo = pathinfo($sourcePath);
-		
+
 		// Remplacer 'source' par 'thumb' dans le répertoire
 		$dirName = str_replace('source', 'thumb', $pathInfo['dirname']);
-		
+
 		// Construire le nouveau nom de fichier avec le préfixe
 		$filename = $pathInfo['filename'];
 		$extension = $pathInfo['extension'] ?? '';
 		$newFilename = $prefix . $filename . ($extension ? '.' . $extension : '');
-		
+
 		// Retourner le chemin complet de la miniature
 		return $dirName . '/' . $newFilename;
 	}
@@ -1958,12 +1964,14 @@ function makeThumb($src, $dest = null, $desired_width = 200)
 		$content = preg_replace(['#(?:^|/)\.{2}/#', '#/+#'], ['/', '/'], $content);
 
 		// Fonction de normalisation des URLs
-		$normalizeUrl = function($url) use ($userId) {
-			if (empty($url) || 
-				strpos($url, 'http') === 0 || 
-				strpos($url, 'data:') === 0 || 
-				strpos($url, 'mailto:') === 0 || 
-				$url[0] === '#') {
+		$normalizeUrl = function ($url) use ($userId) {
+			if (
+				empty($url) ||
+				strpos($url, 'http') === 0 ||
+				strpos($url, 'data:') === 0 ||
+				strpos($url, 'mailto:') === 0 ||
+				$url[0] === '#'
+			) {
 				return $url;
 			}
 
@@ -1980,7 +1988,7 @@ function makeThumb($src, $dest = null, $desired_width = 200)
 		// Traiter les balises a et img en une seule passe
 		return preg_replace_callback(
 			'/(<a[^>]+href=[\'\"]|src=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
-			function($matches) use ($normalizeUrl) {
+			function ($matches) use ($normalizeUrl) {
 				return $matches[1] . $normalizeUrl($matches[2]) . $matches[3];
 			},
 			$content
@@ -1997,7 +2005,8 @@ function makeThumb($src, $dest = null, $desired_width = 200)
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
 
-		if (empty($filePath)) return '';
+		if (empty($filePath))
+			return '';
 
 		// Nettoyer le chemin
 		//$filePath = preg_replace(['#(?:^|/)\.{2}/#', '#/+#', '#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#'], 
@@ -2012,7 +2021,7 @@ function makeThumb($src, $dest = null, $desired_width = 200)
 		// Construire l'URL complète
 		//return helper::baseurl(false) . self::FILE_DIR . 'source/' . $filePath;
 		return $userPath . $filePath;
-		
+
 
 	}
 }
