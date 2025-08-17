@@ -4,12 +4,11 @@
 			<div class="row">
 				<div class="col12">
 					<?php
-						$pictureSize =  $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'pictureSize']);
-						$parts = explode('/',$this->getData(['module', $this->getUrl(0), 'posts',$this->getUrl(1), 'thumb']));
-						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'thumb']));
-						echo '<img class="downloadItemPicture" src="' . helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb .
-							'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'thumb']) . '">';
-					?>
+						// Déterminer le nom de la miniature
+						$thumb = $this->getThumb($this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'thumb'])); ?>
+						<?php if ($thumb): ?>
+							<img class="downloadItemPicture" src="<?php echo $thumb; ?>" alt="<?php echo $thumb; ?>">
+						<?php endif; ?>
 				</div>
 			</div>
 		<?php endif; ?>

@@ -1,50 +1,42 @@
-<?php if($module::$items): ?>
+<?php if ($module::$items): ?>
 	<div class="row">
 		<div class="col12">
-			<?php foreach($module::$items as $itemId => $item): ?>
+			<?php foreach ($module::$items as $itemId => $item): ?>
 				<div class="row rowitem">
 					<div class="col3 downloadLeft">
-					<?php
-						// Déterminer le nom de la miniature
-						$parts = explode('/',$item['thumb']);
-						$thumb = str_replace ($parts[(count($parts)-1)],'mini_' . $parts[(count($parts)-1)], $item['thumb']);
-						// Créer la miniature si manquante
-						if (!file_exists( self::FILE_DIR . 'thumb/' . $thumb) ) {
-							if (!empty($item['thumb'])) {
-								$this->makeThumb($item['thumb'], self::FILE_DIR . 'thumb/' . $thumb, self::THUMBS_WIDTH);
-							}
-						}
-
-					?>
-						<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>" class="downloadPicture">
-							<img src="<?php echo helper::baseUrl(false) .  self::FILE_DIR . 'thumb/' . $thumb; ?>" alt="<?php echo $item['thumb']; ?>">
-						</a>
+						<?php // Déterminer le nom de la miniature
+								$thumb = $this->getThumb($item['thumb']); ?>
+						<?php if ($thumb): ?>
+							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>" class="downloadPicture">
+								<img src="<?php echo helper::baseUrl(false) . $thumb; ?>" alt="<?php echo $item['title']; ?>">
+							</a>
+						<?php endif; ?>
 					</div>
 					<div class="col9 downloadRight">
 						<article>
-						<h2 class="downloadTitle">
-							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>">
-								<?php echo $item['title']; ?>
-							</a>
-						</h2>
-						<div class="downloadComment">
-							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>#comment">
-								<?php if ($item['comment']): ?>
-									<?php echo count($item['comment']); ?>
-								<?php endif; ?>
-							</a>
-							<?php echo template::ico('comment', ['margin' => 'left']); ?>
-						</div>
-						<div class="downloadDate">
-							<i class="far fa-calendar-alt"></i>
-							<?php echo mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y - %H:%M',  $item['versionDate']), 'UTF-8', true)
-										? \PHP81_BC\strftime('%d %B %Y', $item['versionDate'])
-										: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $item['versionDate']));  ?>
-						</div>
-						<p class="downloadContent">
-							<?php echo helper::subword(strip_tags($item['content']), 0, 400); ?>...
-							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>">Lire la suite</a>
-						</p>
+							<h2 class="downloadTitle">
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>">
+									<?php echo $item['title']; ?>
+								</a>
+							</h2>
+							<div class="downloadComment">
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>#comment">
+									<?php if ($item['comment']): ?>
+										<?php echo count($item['comment']); ?>
+									<?php endif; ?>
+								</a>
+								<?php echo template::ico('comment', ['margin' => 'left']); ?>
+							</div>
+							<div class="downloadDate">
+								<i class="far fa-calendar-alt"></i>
+								<?php echo mb_detect_encoding(\PHP81_BC\strftime('%d %B %Y - %H:%M', $item['versionDate']), 'UTF-8', true)
+									? \PHP81_BC\strftime('%d %B %Y', $item['versionDate'])
+									: utf8_encode(\PHP81_BC\strftime('%d %B %Y', $item['versionDate'])); ?>
+							</div>
+							<p class="downloadContent">
+								<?php echo helper::subword(strip_tags($item['content']), 0, 400); ?>...
+								<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $itemId; ?>">Lire la suite</a>
+							</p>
 						</article>
 					</div>
 				</div>
@@ -52,12 +44,12 @@
 		</div>
 	</div>
 	<?php echo $module::$pages; ?>
-	<?php if ($this->getData(['module',$this->getUrl(0), 'config', 'feeds'])): ?>
+	<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'feeds'])): ?>
 		<div id="rssFeed">
 			<a type="application/rss+xml" href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/rss'; ?> ">
-				<img  src='module/download/ressource/feed-icon-16.gif' />
-				<?php 
-					echo '<p>' . $this->getData(['module',$this->getUrl(0), 'config', 'feedsLabel']) . '</p>' ;
+				<img src='module/download/ressource/feed-icon-16.gif' />
+				<?php
+				echo '<p>' . $this->getData(['module', $this->getUrl(0), 'config', 'feedsLabel']) . '</p>';
 				?>
 			</a>
 		</div>

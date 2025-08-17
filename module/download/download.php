@@ -214,11 +214,11 @@ class download extends common
 				$thumbPath = $this->getNormalizedFilePath($this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
 				if (!empty($thumbPath)) {
 					$imageData = getimagesize($thumbPath);
-				$newsitem->addEnclosure(
+					$newsitem->addEnclosure(
 						helper::baseUrl(false) . $thumbPath,
-					$imageData[0] * $imageData[1],
-					$imageData['mime']
-				);
+						$imageData[0] * $imageData[1],
+						$imageData['mime']
+					);
 				}
 				$feeds->addItem($newsitem);
 			}
@@ -282,9 +282,9 @@ class download extends common
 				[
 					'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
 					'content' => $this->getInput('downloadAddContent', null, true),
-					'thumb' =>  $this->getInput('downloadAddThumb', helper::FILTER_STRING_SHORT, true),
+					'thumb' => $this->getInput('downloadAddThumb', helper::FILTER_STRING_SHORT, true),
 					'ressourceType' => $this->getInput('downloadAddRessourceType', helper::FILTER_STRING_SHORT),
-					'file' =>  $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT),
+					'file' => $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT),
 					'url' => $this->getInput('downloadAddUrl', helper::FILTER_STRING_SHORT),
 					'version' => $this->getInput('downloadAddVersion', helper::FILTER_STRING_SHORT),
 					'versionDate' => $this->getInput('downloadAddversionDate', helper::FILTER_DATETIME),
@@ -770,6 +770,17 @@ class download extends common
 				if ($this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']) !== null) {
 					$path = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']) . '/';
 				}
+				// Image 
+				$picture = $this->getNormalizedFilePath($this->getInput('downloadEditThumb', helper::FILTER_STRING_SHORT, true), $this->getUser('id'));
+				// Créer la miniature si manquante
+				if (!file_exists(self::FILE_DIR . 'thumb/' . $picture)) {
+					$this->makeThumb(
+						$picture,  // Chemin complet du fichier source
+						null,                     // Chemin de destination généré automatiquement
+						self::THUMBS_WIDTH        // Largeur de la miniature
+					);
+				}
+
 				// Sauvegarder la fiche
 				$this->setData([
 					'module',
@@ -782,7 +793,7 @@ class download extends common
 						'ressourceType' => $this->getInput('downloadEditRessourceType', helper::FILTER_STRING_SHORT),
 						'file' => $this->getInput('downloadEditFile', helper::FILTER_STRING_SHORT),
 						'url' => $this->getInput('downloadEditUrl', helper::FILTER_STRING_SHORT),
-						'thumb' => $this->normalizeContentPaths($this->getInput('downloadEditThumb', helper::FILTER_STRING_SHORT, true), $this->getUser('id')),
+						'thumb' => $picture,
 						'version' => $this->getInput('downloadEditVersion', helper::FILTER_STRING_SHORT),
 						'versionDate' => $this->getInput('downloadEditversionDate', helper::FILTER_DATETIME),
 						'stats' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'stats']),
@@ -801,7 +812,8 @@ class download extends common
 						'commentGroupNotification' => $this->getInput('downloadEditCommentGroupNotification', helper::FILTER_INT)
 					]
 				]);
-				// Supprime l'ancien item
+
+				// Changement de nom, supprime l'ancien item
 				if ($itemId !== $this->getUrl(2)) {
 					$this->deleteData(['module', $this->getUrl(0), 'posts', $this->getUrl(2)]);
 				}
@@ -1062,10 +1074,10 @@ class download extends common
 			if (!empty($fileName) && file_exists($fileName)) {
 				// Initialisation des statistiques si nécessaire
 				$stats = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'stats']) ?: [];
-				
+
 				// Création de l'ID de statistique
 				$statId = helper::increment(uniqid(), $stats);
-				
+
 				// Enregistrement de la statistique
 				$this->setData([
 					'module',

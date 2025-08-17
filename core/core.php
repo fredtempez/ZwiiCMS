@@ -1416,91 +1416,173 @@ class common
 	}
 
 	/**
-	 * Crée une miniature à partir d'une image source.
-	 * Cette fonction prend en charge les formats raster (JPEG, PNG, GIF, WebP, AVIF) et vectoriels (SVG).
-	 * Pour les images vectorielles (SVG), aucune redimension n'est effectuée : une copie est réalisée.
-	 *
-	 * @param string $src Chemin de l'image source.
-	 * @param string $dest Chemin de l'image destination (avec le nom du fichier et l'extension).
+	 * Crée une miniature d'une image
+	 * @param string $src Chemin vers le fichier source
+	 * @param string|null $dest (Optionnel) Chemin où enregistrer la miniature. Si null, généré automatiquement.
 	 * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
-	 * @return bool True si l'opération a réussi, false sinon.
+	 * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
 	 */
-	function makeThumb($src, $dest, $desired_width)
+/**
+ * Crée une miniature d'une image
+ * @param string $src Chemin vers le fichier source
+ * @param string|null $dest (Optionnel) Chemin où enregistrer la miniature. Si null, généré automatiquement.
+ * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
+ * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
+ */
+function makeThumb($src, $dest = null, $desired_width = 200)
+{
+    // Vérifier si le fichier source existe
+    if (!file_exists($src)) {
+        error_log("Fichier source introuvable: $src");
+        return false;
+    }
+
+    // Générer automatiquement le chemin de destination si non fourni
+    if ($dest === null) {
+        $srcInfo = pathinfo($src);
+        $destDir = str_replace('source', 'thumb', $srcInfo['dirname']);
+        if (!is_dir($destDir) && !mkdir($destDir, 0755, true)) {
+            error_log("Impossible de créer le répertoire de destination: $destDir");
+            return false;
+        }
+        $dest = $destDir . '/' . self::THUMBS_SEPARATOR . strtolower($srcInfo['basename']);
+    }
+
+    $fileInfo = pathinfo($dest);
+    $extension = strtolower($fileInfo['extension'] ?? '');
+    $mime_type = mime_content_type($src);
+
+    // Gestion des fichiers SVG (copie simple sans redimensionnement)
+    if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
+        return copy($src, $dest) ? $dest : false;
+    }
+
+    // Chargement de l'image source selon le type
+    $source_image = null;
+    try {
+        switch (strtolower(pathinfo($src, PATHINFO_EXTENSION))) {
+            case 'jpeg':
+            case 'jpg':
+                $source_image = imagecreatefromjpeg($src);
+                break;
+            case 'png':
+                $source_image = imagecreatefrompng($src);
+                break;
+            case 'gif':
+                $source_image = imagecreatefromgif($src);
+                break;
+            case 'webp':
+                $source_image = imagecreatefromwebp($src);
+                break;
+            case 'avif':
+                if (function_exists('imagecreatefromavif')) {
+                    $source_image = imagecreatefromavif($src);
+                }
+                break;
+            default:
+                error_log("Format d'image non supporté: $src");
+                return false;
+        }
+
+        if (!$source_image) {
+            error_log("Impossible de charger l'image source: $src");
+            return false;
+        }
+
+        $width = imagesx($source_image);
+        $height = imagesy($source_image);
+        $desired_height = floor($height * ($desired_width / $width));
+
+        // Création de la miniature
+        $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
+        
+        // Gestion de la transparence pour les PNG et GIF
+        if (in_array($extension, ['png', 'gif'])) {
+            imagealphablending($virtual_image, false);
+            imagesavealpha($virtual_image, true);
+            $transparent = imagecolorallocatealpha($virtual_image, 255, 255, 255, 127);
+            imagefilledrectangle($virtual_image, 0, 0, $desired_width, $desired_height, $transparent);
+        }
+
+        imagecopyresampled(
+            $virtual_image, $source_image, 
+            0, 0, 0, 0, 
+            $desired_width, $desired_height, 
+            $width, $height
+        );
+
+        // Sauvegarde de la miniature
+        $result = false;
+        switch ($mime_type) {
+            case 'image/jpeg':
+            case 'image/jpg':
+                $result = imagejpeg($virtual_image, $dest, 85);
+                break;
+            case 'image/png':
+                $result = imagepng($virtual_image, $dest, 8);
+                break;
+            case 'image/gif':
+                $result = imagegif($virtual_image, $dest);
+                break;
+            case 'image/webp':
+                $result = imagewebp($virtual_image, $dest, 85);
+                break;
+            case 'image/avif':
+                if (function_exists('imageavif')) {
+                    $result = imageavif($virtual_image, $dest, 60);
+                }
+                break;
+        }
+
+        // Nettoyage
+        imagedestroy($virtual_image);
+        imagedestroy($source_image);
+
+        if ($result && file_exists($dest)) {
+            return $dest;
+        }
+        
+        error_log("Échec de la sauvegarde de la miniature: $dest");
+        return false;
+
+    } catch (Exception $e) {
+        if (isset($source_image) && (is_resource($source_image) || $source_image instanceof GdImage)) {
+            imagedestroy($source_image);
+        }
+        if (isset($virtual_image) && (is_resource($virtual_image) || $virtual_image instanceof GdImage)) {
+            imagedestroy($virtual_image);
+        }
+        error_log("Erreur lors de la création de la miniature: " . $e->getMessage());
+        return false;
+    }
+}
+
+	/**
+	 * Génère le chemin d'une miniature à partir d'un chemin source
+	 * @param string $sourcePath Chemin vers le fichier source
+	 * @param string $prefix Préfixe à ajouter au nom du fichier (par défaut: 'mini_')
+	 * @return string Chemin de la miniature
+	 */
+	public static function getThumb($sourcePath, $prefix = 'mini_')
 	{
-		// Vérifier l'existence du dossier de destination.
-		$fileInfo = pathinfo($dest);
-		if (!is_dir($fileInfo['dirname'])) {
-			mkdir($fileInfo['dirname'], 0755, true);
+		// Vérifier si le chemin source est vide
+		if (empty($sourcePath)) {
+			return '';
 		}
 
-		$extension = strtolower($fileInfo['extension']);
-		$mime_type = mime_content_type($src);
-
-		// Gestion des fichiers SVG (copie simple sans redimensionnement)
-		if ($extension === 'svg' || $mime_type === 'image/svg+xml') {
-			return copy($src, $dest);
-		}
-
-		// Chargement de l'image source selon le type
-		$source_image = '';
-		switch ($extension) {
-			case 'jpeg':
-			case 'jpg':
-				$source_image = imagecreatefromjpeg($src);
-				break;
-			case 'png':
-				$source_image = imagecreatefrompng($src);
-				break;
-			case 'gif':
-				$source_image = imagecreatefromgif($src);
-				break;
-			case 'webp':
-				$source_image = imagecreatefromwebp($src);
-				break;
-			case 'avif':
-				if (function_exists('imagecreatefromavif')) {
-					$source_image = imagecreatefromavif($src);
-				} else {
-					return false;  // AVIF non supporté
-				}
-				break;
-			default:
-				return false;  // Format non pris en charge
-		}
-
-		// Image valide (formats raster uniquement)
-		if (is_resource($source_image) || (is_object($source_image) && $source_image instanceof GdImage)) {
-			$width = imagesx($source_image);
-			$height = imagesy($source_image);
-
-			// Calcul de la hauteur proportionnelle à la largeur demandée
-			$desired_height = floor($height * ($desired_width / $width));
-
-			// Création d'une nouvelle image virtuelle redimensionnée
-			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-
-			// Copie de l'image source dans l'image virtuelle avec redimensionnement
-			imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
-
-			// Enregistrement de l'image redimensionnée au format approprié
-			switch ($mime_type) {
-				case 'image/jpeg':
-				case 'image/jpg':
-					return imagejpeg($virtual_image, $dest);
-				case 'image/png':
-					return imagepng($virtual_image, $dest);
-				case 'image/gif':
-					return imagegif($virtual_image, $dest);
-				case 'image/webp':
-					return imagewebp($virtual_image, $dest);
-				case 'image/avif':
-					if (function_exists('imageavif')) {
-						return imageavif($virtual_image, $dest);
-					}
-			}
-		}
-
-		return false;  // En cas d'échec
+		// Récupérer les informations du chemin
+		$pathInfo = pathinfo($sourcePath);
+		
+		// Remplacer 'source' par 'thumb' dans le répertoire
+		$dirName = str_replace('source', 'thumb', $pathInfo['dirname']);
+		
+		// Construire le nouveau nom de fichier avec le préfixe
+		$filename = $pathInfo['filename'];
+		$extension = $pathInfo['extension'] ?? '';
+		$newFilename = $prefix . $filename . ($extension ? '.' . $extension : '');
+		
+		// Retourner le chemin complet de la miniature
+		return $dirName . '/' . $newFilename;
 	}
 
 	/**
@@ -1833,10 +1915,7 @@ class common
 				return (self::FILE_DIR . 'source/');  // Correction de la syntaxe return
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
-				$profilKey = strpos(self::ZWII_UPDATE_URL, 'campus-update')
-					? (self::$siteContent === 'home' ? 'homePath' : 'coursePath')
-					: 'path';
-				return $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', $profilKey]);
+				return $this->getPermission('folder', 'path');
 			default:
 				// retourne une chaine vide
 				return 'none';
@@ -1921,36 +2000,19 @@ class common
 		if (empty($filePath)) return '';
 
 		// Nettoyer le chemin
-		$filePath = preg_replace(['#(?:^|/)\.{2}/#', '#/+#', '#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#'], 
-			['/', '/', ''], 
-			ltrim($filePath, '/')
-		);
+		//$filePath = preg_replace(['#(?:^|/)\.{2}/#', '#/+#', '#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#'], 
+		//	['/', '/', ''], 
+		//	ltrim($filePath, '/')
+		//);
 
 		// Récupérer l'utilisateur et son rôle
 		$userId = $userId ?? $this->getUser('id');
-		$userRole = $this->getData(['user', $userId, 'role']);
+		$userPath = $this->getUserPath($userId);
 
-		// Vérifier les permissions selon le rôle
-		if (in_array($userRole, [self::ROLE_ADMIN, self::ROLE_EDITOR, self::ROLE_MODERATOR])) {
-			$profil = $this->getData([
-				'profil', 
-				$this->getUser('role'), 
-				$this->getUser('profil'), 
-				'folder', 
-				'path'
-			]);
+		// Construire l'URL complète
+		//return helper::baseurl(false) . self::FILE_DIR . 'source/' . $filePath;
+		return $userPath . $filePath;
+		
 
-
-			// Vérifier l'accès
-			if ($profil < self::ROLE_ADMIN && $profil === 'none') {
-				return '';
-			}
-
-			// Construire l'URL complète
-			return helper::baseurl(false) . self::FILE_DIR . 'source/' . $filePath;
-		}
-
-		// Accès refusé pour les autres rôles
-		return '';
 	}
 }
