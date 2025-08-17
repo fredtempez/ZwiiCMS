@@ -4,9 +4,10 @@
 ### Optimisations
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
-### Corrections de failles de sécurité
+### Corrections et failles de sécurité
 - Corrige un bug de chemin d'accès aux ressources publiées par des membres non administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
 - Sécurisation de l'accès au gestionnaire de fichiers.
+- Les miniatures générées par le gestionnaire de fichier sont correctement préfixées (mini_)
 
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
