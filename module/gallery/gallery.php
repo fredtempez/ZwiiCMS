@@ -453,7 +453,7 @@ class gallery extends common
 								if (!file_exists($thumbPath . '/' . self::THUMBS_SEPARATOR . $cleanFileName)) {
 									$this->makeThumb(
 										$fileInfos->getPathname(),
-										$thumbPath . '/' . self::THUMBS_SEPARATOR . $cleanFileName,
+										null,  // Chemin de destination généré automatiquement
 										self::THUMBS_WIDTH
 									);
 								}
@@ -647,10 +647,11 @@ class gallery extends common
 				foreach ($iterator as $fileInfos) {
 					if ($fileInfos->isDot() === false and $fileInfos->isFile() and @getimagesize($fileInfos->getPathname())) {
 						// Créer la miniature RFM si manquante
-						if (!file_exists(str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . strtolower($fileInfos->getFilename()))) {
+						$thumbPath = $this->getThumb($fileInfos->getPathname());
+						if (!file_exists($thumbPath)) {
 							$this->makeThumb(
 								$fileInfos->getPathname(),
-								str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . strtolower($fileInfos->getFilename()),
+								null,  // Chemin de destination généré automatiquement
 								122
 							);
 						}
@@ -664,7 +665,7 @@ class gallery extends common
 							template::text('legend[' . $fileInfos->getFilename() . ']', [
 								'value' => $this->getData(['module', $this->getUrl(0), 'content', $this->getUrl(2), 'legend', str_replace('.', '', $fileInfos->getFilename())])
 							]),
-							'<a href="' . str_replace('source', 'thumb', $directory) . '/' . self::THUMBS_SEPARATOR . $fileInfos->getFilename() . '" rel="data-lity" data-lity=""><img src="' . str_replace('source', 'thumb', $directory) . '/' . $fileInfos->getFilename() . '"></a>'
+							'<a href="' . $this->getThumb($fileInfos->getPathname(), '') . '" rel="data-lity" data-lity=""><img src="' . $this->getThumb($fileInfos->getPathname()) . '"></a>'
 						];
 						self::$picturesId[str_replace('.', '', $fileInfos->getFilename())] = str_replace('.', '', $fileInfos->getFilename());
 					}
@@ -773,7 +774,7 @@ class gallery extends common
 							if (!file_exists(str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))) {
 								$this->makeThumb(
 									$fileInfos->getPathname(),
-									str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()),
+									null,  // Chemin de destination généré automatiquement
 									self::THUMBS_WIDTH
 								);
 							}
@@ -848,7 +849,7 @@ class gallery extends common
 								if (!file_exists(str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))) {
 									$this->makeThumb(
 										$gallery['config']['directory'] . str_replace(self::THUMBS_SEPARATOR, '', $gallery['config']['homePicture']),
-										str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']),
+										null,  // Chemin de destination généré automatiquement
 										self::THUMBS_WIDTH
 									);
 								}
@@ -861,7 +862,7 @@ class gallery extends common
 								// Définir l'image de couverture, première image disponible
 								$this->makeThumb(
 									$fileInfos->getPath() . '/' . $fileInfos->getFilename(),
-									str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()),
+									null,  // Chemin de destination généré automatiquement
 									self::THUMBS_WIDTH
 								);
 								self::$firstPictures[$galleryId] = file_exists(str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))

@@ -10,14 +10,19 @@
 <?php foreach(gallery::$pictures as $picture => $legend): ?>
 	<div class="colPicture">
 		<?php 
-		$normalizedPicturePath = $this->getNormalizedFilePath($picture);
-		$normalizedThumbPath = $this->getNormalizedFilePath(gallery::$thumbs[$picture]);
+
+		// Générer le chemin de la miniature
+		$thumbPath = $this->getThumb($picture);
+		
+		// Construire les URLs complètes
+		$imageUrl = helper::baseUrl(false) . ltrim($picture, '/');
+		$thumbUrl = helper::baseUrl(false) . ltrim($thumbPath, '/');
 		?>
 		<a
-			href="<?php echo !empty($normalizedPicturePath) ? helper::baseUrl(false) . $normalizedPicturePath : '#'; ?>"
-			<?php  if ( strpos($picture, gallery::$config['homePicture']) > 1)  { echo 'id="homePicture"'; }	?>
+			href="<?php echo $picture; ?>"
+			<?php if (strpos($picture, gallery::$config['homePicture']) !== false) { echo 'id="homePicture"'; } ?>
 			class="galleryGalleryPicture"
-			style="background-image:url('<?php echo !empty($normalizedThumbPath) ? helper::baseUrl(false) . $normalizedThumbPath : ''; ?>')"
+			style="background-image:url('<?php echo $thumbUrl; ?>')"
 			data-caption="<?php echo $legend; ?>"
 		>
 			<?php if($legend): ?>
