@@ -238,7 +238,6 @@ class download extends common
 	public function add()
 	{
 		// Soumission du formulaire
-		// Soumission du formulaire
 		if (
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
@@ -271,7 +270,16 @@ class download extends common
 				$storeId = helper::increment($storeId, $itemsId);
 			}
 
-
+			// Image 
+			$picture = $this->getNormalizedFilePath($this->getInput('downloadAddThumb', helper::FILTER_STRING_SHORT, true), $this->getUser('id'));
+			// Créer la miniature si manquante
+			if (!file_exists(self::FILE_DIR . 'thumb/' . $picture)) {
+				$this->makeThumb(
+					$picture,  // Chemin complet du fichier source
+					null,                     // Chemin de destination généré automatiquement
+					self::THUMBS_WIDTH        // Largeur de la miniature
+				);
+			}
 
 			// Crée l'item
 			$this->setData([
@@ -282,7 +290,7 @@ class download extends common
 				[
 					'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
 					'content' => $this->getInput('downloadAddContent', null, true),
-					'thumb' => $this->getInput('downloadAddThumb', helper::FILTER_STRING_SHORT, true),
+					'thumb' => $picture,
 					'ressourceType' => $this->getInput('downloadAddRessourceType', helper::FILTER_STRING_SHORT),
 					'file' => $this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT),
 					'url' => $this->getInput('downloadAddUrl', helper::FILTER_STRING_SHORT),
@@ -755,7 +763,6 @@ class download extends common
 				// Liste de toutes les Id valides
 				$itemsId = [];
 				foreach ($this->getData(['module', $this->getUrl(0), 'posts']) as $key => $values) {
-
 					if (
 						is_null($this->getData(['module', $this->getUrl(0), 'posts', $key, 'id'])) === false
 						&& $this->getData(['module', $this->getUrl(0), 'posts', $key, 'id']) !== $this->getInput('downloadEditIdOld', helper::FILTER_STRING_SHORT)
@@ -764,12 +771,9 @@ class download extends common
 					}
 
 				}
+				// Id pour le store
 				$storeId = helper::increment($storeId, $itemsId);
-				// Complète le chemin pour les profils non administrateurs
-				$path = '';
-				if ($this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']) !== null) {
-					$path = $this->getData(['profil', $this->getUser('role'), $this->getUser('profil'), 'folder', 'path']) . '/';
-				}
+
 				// Image 
 				$picture = $this->getNormalizedFilePath($this->getInput('downloadEditThumb', helper::FILTER_STRING_SHORT, true), $this->getUser('id'));
 				// Créer la miniature si manquante
@@ -780,7 +784,6 @@ class download extends common
 						self::THUMBS_WIDTH        // Largeur de la miniature
 					);
 				}
-
 				// Sauvegarder la fiche
 				$this->setData([
 					'module',
