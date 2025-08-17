@@ -1429,7 +1429,7 @@ class common
  * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
  * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
  */
-function makeThumb($src, $dest = null, $desired_width = 200)
+public static function makeThumb($src, $dest = null, $desired_width = 200)
 {
     // Vérifier si le fichier source existe
     if (!file_exists($src)) {
