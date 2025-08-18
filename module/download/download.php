@@ -1072,7 +1072,7 @@ class download extends common
 		else {
 			// Utiliser la fonction normalisée pour obtenir le chemin complet du fichier
 			$fileName = $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'file']);
-			$fileName = self::FILE_DIR . 'source/' . $fileName;
+			$fileName= $this->getNormalizedFilePath($fileName, $this->getUser('id'));
 
 			if (!empty($fileName) && file_exists($fileName)) {
 				// Initialisation des statistiques si nécessaire

@@ -1911,8 +1911,7 @@ public static function makeThumb($src, $dest = null, $desired_width = 200)
 		$userId = $userId ?? $this->getUser('id');
 		// Vérifier si l'utilisateur est un administrateur
 		switch ($this->getData(['user', $userId, 'role'])) {
-			case self::ROLE_ADMIN:
-				return (self::FILE_DIR . 'source/');  // Correction de la syntaxe return
+			case self::ROLE_ADMIN:				return self::FILE_DIR . 'source/';  // Correction de la syntaxe return
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
 				return $this->getPermission('folder', 'path');
@@ -1967,14 +1966,7 @@ public static function makeThumb($src, $dest = null, $desired_width = 200)
 				return $url;
 			}
 
-			// Nettoyer et normaliser le chemin
-			$path = preg_replace([
-				'#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#',
-				'#(^|/)\.{1,2}/#',
-				'#/+#',
-			], ['', '/', '/'], ltrim($url, '/'));
-
-			return $this->getNormalizedFilePath($path, $userId) ?: $url;
+			return $this->getNormalizedFilePath($url, $userId) ?: $url;
 		};
 
 		// Traiter les balises a et img en une seule passe
@@ -1997,22 +1989,26 @@ public static function makeThumb($src, $dest = null, $desired_width = 200)
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
 
-		if (empty($filePath)) return '';
-
-		// Nettoyer le chemin
-		//$filePath = preg_replace(['#(?:^|/)\.{2}/#', '#/+#', '#^' . preg_quote(ltrim(self::FILE_DIR . 'source/', '/'), '#') . '#'], 
-		//	['/', '/', ''], 
-		//	ltrim($filePath, '/')
-		//);
+		// Contrôle de la saisie et des accès de l'utilisateur
+		// Pas de chemin  ou pas d'accès au filemanager
+		if (empty($filePath ||
+			is_null($userId) ||
+			$this->getUserPath($userId) === 'none' ||
+			$this->getPermission( 'folder', 'path') === null
+			)) return null;
 
 		// Récupérer l'utilisateur et son rôle
 		$userId = $userId ?? $this->getUser('id');
 		$userPath = $this->getUserPath($userId);
-
-		// Construire l'URL complète
-		//return helper::baseurl(false) . self::FILE_DIR . 'source/' . $filePath;
-		return $userPath . $filePath;
 		
+		// Si le chemin commence déjà par 'site/file/source/', on le retourne tel quel
+		if (strpos($filePath, 'site/file/source/') === 0) {
+			return $filePath;
+		}
+		
+		// Sinon, on ajoute le chemin de l'utilisateur au début du chemin du fichier
+		return $userPath . ltrim($filePath, '/');
+
 
 	}
 }
