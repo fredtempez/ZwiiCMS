@@ -192,8 +192,8 @@ class slider extends common
 			$this->isPost()
 		) {
 
-			$inputs['legends'] = $this->getInput('legends', null);
-			$inputs['uri'] = $this->getInput('sliderHref', null);
+			$inputs['legends'] = $this->getInput('legends', helper::FILTER_STRING_SHORT);
+			$inputs['uri'] = $this->getInput('sliderHref', helper::FILTER_STRING_SHORT);
 
 			// Supprime les points devant les extensions des clés à cause du système de BDD
 			foreach ($inputs as $keyinputs => $valuesinputs) {
@@ -238,7 +238,7 @@ class slider extends common
 								? ''
 								: $this->getData(['module', $this->getUrl(0), 'uri', str_replace('.', '', $fileInfos->getFilename())])
 						]),
-						'<a href="' . str_replace('source', 'thumb', $directory) . '/' . self::THUMBS_SEPARATOR . $fileInfos->getFilename() . '" rel="data-lity" data-lity=""><img src="' . str_replace('source', 'thumb', $directory) . '/' . $fileInfos->getFilename() . '"></a>'
+						'<a href="' . str_replace('source', 'thumb', $directory) . self::THUMBS_SEPARATOR . $fileInfos->getFilename() . '" rel="data-lity" data-lity=""><img src="' . str_replace('source', 'thumb', $directory) . self::THUMBS_SEPARATOR  . $fileInfos->getFilename() . '"></a>'
 					];
 				}
 			}

@@ -3,20 +3,22 @@
 		<div class="rslides_container">
 			<ul class="rslides" id="sliders">
 				<?php foreach (slider::$pictures as $picture => $options): ?>
-					<?php if (!empty($options['uri'])): ?>
-						<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
-					<?php endif; ?>
 					<?php 
-					$normalizedPicturePath = $this->getNormalizedFilePath($picture);
-					?>
-					<li>
-						<img src="<?php echo !empty($normalizedPicturePath) ? helper::baseUrl(false) . $normalizedPicturePath : ''; ?>" alt="<?php echo $options['legend']; ?>">
-						<?php if ($this->getData(['module', $this->getUrl(0), 'theme', 'caption']) === 'bottom'): ?>
-							<p class="caption"><?php echo $options['legend']; ?></p>
+					// Get normalized file path with user context
+					$normalizedPicturePath = $this->getNormalizedFilePath($picture, $this->getUser('id'));
+					if ($normalizedPicturePath): ?>
+						<?php if (!empty($options['uri'])): ?>
+							<a href="<?php echo helper::baseUrl() . $options['uri']; ?>">
 						<?php endif; ?>
-					</li>
-					<?php if (!empty($options['uri'])): ?>
-						</a>
+						<li>
+							<img src="<?php echo helper::baseUrl(false) . $normalizedPicturePath; ?>" alt="<?php echo htmlspecialchars($options['legend'] ?? ''); ?>">
+							<?php if ($this->getData(['module', $this->getUrl(0), 'theme', 'caption']) === 'bottom' && !empty($options['legend'])): ?>
+								<p class="caption"><?php echo htmlspecialchars($options['legend']); ?></p>
+							<?php endif; ?>
+						</li>
+						<?php if (!empty($options['uri'])): ?>
+							</a>
+						<?php endif; ?>
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</ul>
