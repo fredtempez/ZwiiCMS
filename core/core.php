@@ -1450,11 +1450,25 @@ class common
 	}
 
 	/**
-	 * Crée une miniature d'une image
-	 * @param string $src Chemin vers le fichier source
-	 * @param string|null $dest (Optionnel) Chemin où enregistrer la miniature. Si null, généré automatiquement.
-	 * @param int $desired_width Largeur demandée pour la miniature (ignorée pour les SVG).
-	 * @return string|bool Chemin de la miniature si succès, false en cas d'échec.
+	 * Crée une miniature d'une image avec gestion de plusieurs formats (JPEG, PNG, GIF, WebP, AVIF, SVG)
+	 * La fonction gère automatiquement la transparence pour les formats PNG et GIF
+	 * 
+	 * Exemple d'utilisation :
+	 * // Création d'une miniature de 300px de large
+	 * $thumbPath = $core->makeThumb('chemin/vers/image.jpg', null, 300);
+	 * 
+	 * @param string $src Chemin absolu vers le fichier image source
+	 * @param string|null $dest (Optionnel) Chemin complet où enregistrer la miniature.
+	 *                        Si null, généré automatiquement dans un dossier 'thumb' parallèle au dossier source.
+	 * @param int $desired_width Largeur souhaitée pour la miniature en pixels.
+	 *                         La hauteur est calculée proportionnellement.
+	 *                         Ignorée pour les fichiers SVG qui sont simplement copiés.
+	 * 
+	 * @return string|bool Chemin complet de la miniature créée en cas de succès,
+	 *                    false en cas d'échec (fichier source inexistant, erreur de traitement, etc.)
+	 * 
+	 * @throws Exception En cas d'erreur lors du traitement de l'image
+	 * @since 1.0.0
 	 */
 	public static function makeThumb($src, $dest = null, $desired_width = 200)
 	{
