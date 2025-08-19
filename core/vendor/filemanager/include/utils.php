@@ -1255,7 +1255,7 @@ function debugger($input, $trace = false, $halt = false)
 
     echo "<br>----- DEBUG DUMP -----";
     echo "<pre>";
-    //var_dump($input);
+    var_dump($input);
     echo "</pre>";
 
     if ($trace) {
@@ -1267,7 +1267,7 @@ function debugger($input, $trace = false, $halt = false)
 
         echo "<br>-----STACK TRACE-----";
         echo "<pre>";
-        //var_dump($debug);
+        var_dump($debug);
         echo "</pre>";
     }
 
