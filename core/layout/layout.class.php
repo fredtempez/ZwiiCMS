@@ -1020,6 +1020,7 @@ class layout extends common
                         and $this->geturl(1) !== 'edit'
                         and $this->getData(['page', $this->getUrl(0), 'moduleId'])
                         and class_exists($this->getData(['page', $this->getUrl(0), 'moduleId'])) === true
+                        and $this->getPermission($this->getData(['page', $this->getUrl(0), 'moduleId']), 'config') === true
                     ) {
                         $leftItems .= '<li>' . template::ico('gear', [
                             'href' => helper::baseUrl() . $this->getUrl(0) . '/config',
