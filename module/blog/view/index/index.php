@@ -11,6 +11,7 @@
 <?php if (blog::$articles): ?>
 	<article id="article">
 		<?php foreach (blog::$articles as $articleId => $article): ?>
+			<!--Mise en forme moderne -->
 			<?php if ($this->getData(['module', $this->getUrl(0), 'config', 'layout']) === true): ?>
 				<div class="readMoreModernContainer">
 					<div class="row">
@@ -54,15 +55,16 @@
 					</div>
 					<div class="row">
 						<div class="col12">
+							<?php $picture  = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']); ?>
+							
 							<?php if (
-								$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) &&
-								file_exists(self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))
+								$picture &&
+								file_exists($picture)
 							): ?>
 								<?php $pictureSize = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']) === null ? '100' : $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'pictureSize']); ?>
-								<?php if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'hidePicture']) == false) {
+								<?php if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'hidePicture']) === false) {
 									echo '<img class="blogArticlePicture blogArticlePicture' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picturePosition']) .
-										' pict' . $pictureSize . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) .
-										'" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']) . '">';
+										' pict' . $pictureSize . '" src="' . $picture .'" alt="' . $picture . '">';
 								} ?>
 							<?php endif; ?>
 							<?php echo $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']); ?>
@@ -117,28 +119,28 @@
 						</div>
 					</div>
 				</div>
+			<!--Mise en forme moderne -->
 			<?php else: ?>
-				<div class="row">
+				<div class="row">	
 					<?php if (
 						$article['picture'] &&
-						file_exists(self::FILE_DIR . 'source/' . $article['picture'])
+						file_exists($article['picture'])
 					): ?>
 						<div class="col3">
 							<?php
 							// Déterminer le nom de la miniature
-							$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
-							$thumb = 'mini_' . $parts['basename'];
+							$thumb = $this->getThumb($article['picture']);						
 							// Créer la miniature si manquante
-							if (!file_exists(self::FILE_DIR . 'thumb/' . $thumb)) {
+							if (!file_exists($thumb)) {
 								$this->makeThumb(
-									self::FILE_DIR . 'source/' . $article['picture'],
-									self::FILE_DIR . 'thumb/' . $thumb,
+									$article['picture'],
+									null,
 									self::THUMBS_WIDTH
 								);
 							}
 							?>
 							<a href="<?php echo helper::baseUrl() . $this->getUrl(0) . '/' . $articleId; ?>" class="blogPicture">
-								<img src="<?php echo helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb; ?>"
+								<img src="<?php echo  $thumb; ?>"
 									alt="<?php echo $article['picture']; ?>">
 							</a>
 						</div>

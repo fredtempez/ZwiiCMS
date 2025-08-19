@@ -276,7 +276,7 @@ class blog extends common
 				$articleId,
 				[
 					'content' => $this->normalizeContentPaths($this->getInput('blogAddContent', null), $this->getUser('id')),
-					'picture' => $this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT),
+					'picture' => $this->getNormalizedFilePath($this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT),$this->getUser('id')),
 					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
 					'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
 					'picturePosition' => $this->getInput('blogAddPicturePosition', helper::FILTER_STRING_SHORT),
@@ -676,7 +676,7 @@ class blog extends common
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
 						'content' => $this->normalizeContentPaths($this->getInput('blogEditContent', null), $this->getUser('id')),
-						'picture' => $this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT),
+						'picture' => $this->getNormalizedFilePath($this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT), $this->getUser('id')),
 						'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
 						'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
 						'picturePosition' => $this->getInput('blogEditPicturePosition', helper::FILTER_STRING_SHORT),
