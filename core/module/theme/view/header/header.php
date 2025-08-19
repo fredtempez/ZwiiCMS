@@ -147,7 +147,7 @@
                 <div class="col12">
                     <?php 
                     $imagePath = $this->getData(['theme', 'header', 'image']);
-                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
                     $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
                     ?>
                     <?php echo template::file('themeHeaderImage', [

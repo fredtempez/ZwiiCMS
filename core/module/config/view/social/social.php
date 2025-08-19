@@ -44,7 +44,7 @@
 					<div class="col6">
 						<?php 
 						$openGraphImagePath = $this->getData(['config', 'seo', 'openGraphImage']);
-						$normalizedOpenGraphImagePath = $this->getNormalizedFilePath($openGraphImagePath);
+						$normalizedOpenGraphImagePath = $this->getNormalizedFilePath($openGraphImagePath, $this->getUser('id'));
 						if (!empty($openGraphImagePath) && !empty($normalizedOpenGraphImagePath) && file_exists($normalizedOpenGraphImagePath)): ?>
 							<img
 								src="<?php echo $normalizedOpenGraphImagePath; ?>" />

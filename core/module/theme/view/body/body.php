@@ -56,7 +56,7 @@
 				<div class="col12">
 					<?php
 					$imagePath = $this->getData(['theme', 'body', 'image']);
-					$normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+					$normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
 					$imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
 					echo template::file('themeBodyImage', [
 						'language' => $this->getData(['user', $this->getUser('id'), 'language']),

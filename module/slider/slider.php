@@ -311,7 +311,7 @@ class slider extends common
 	public function dirs()
 	{
 		// Déterminer le $rootPath à explorer
-		$rootPath = $this->getUserPath();
+		$rootPath = $this->getUserPath($this->getUser('id'));
 		// Liste des dossiers
 		$sharePath = helper::getSubdirectories($rootPath);
 		// Tri des dossiers sur la clé

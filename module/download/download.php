@@ -211,7 +211,7 @@ class download extends common
 				$newsitem->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $itemId);
 				$newsitem->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'versionDate'])));
 				// Utiliser la fonction normalisée pour obtenir le chemin complet du thumbnail
-				$thumbPath = $this->getNormalizedFilePath($this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
+				$thumbPath = $this->getNormalizedFilePath($this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']), $this->getUser('id'));
 				if (!empty($thumbPath)) {
 					$imageData = getimagesize($thumbPath);
 					$newsitem->addEnclosure(

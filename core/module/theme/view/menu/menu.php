@@ -102,7 +102,7 @@
                 <div id="themeMenuBurgerLogoId" class="col6 offset6 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
                     <?php 
                     $imagePath = $this->getData(['theme', 'menu', 'burgerLogo']);
-                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath);
+                    $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
                     $imageFile = !empty($normalizedImagePath) && file_exists($normalizedImagePath) ? $imagePath : "";
                     ?>
                     <?php echo template::file('themeMenuBurgerLogo', [
