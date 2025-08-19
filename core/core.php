@@ -1190,11 +1190,28 @@ class common
 	}
 
 	/**
-	 * Accède à l'utilisateur connecté
-	 * @param string $key Clé de la valeur
-	 * @param mixed $perm1
-	 * @param mixed $perm2
-	 * @return string|null
+	 * Récupère les informations de l'utilisateur connecté ou vérifie ses permissions
+	 * 
+	 * @param string $key Clé de la propriété utilisateur à récupérer. Valeurs spéciales :
+	 *                   - 'id' : Retourne l'ID de l'utilisateur depuis la session
+	 *                   - 'permission' : Vérifie une permission (utilise $perm1 et $perm2)
+	 *                   - Autre clé : Propriété de l'utilisateur (ex: 'role', 'pseudo', 'mail'...)
+	 * @param mixed $perm1 Premier paramètre de permission (obligatoire si $key = 'permission')
+	 * @param mixed $perm2 Second paramètre de permission optionnel
+	 * @return mixed Retourne :
+	 *               - string|int|array pour les propriétés utilisateur
+	 *               - bool pour les vérifications de permission
+	 *               - null si l'utilisateur n'est pas connecté ou la propriété n'existe pas
+	 * 
+	 * @example 
+	 * // Récupérer l'ID de l'utilisateur
+	 * $userId = $this->getUser('id');
+	 * 
+	 * // Vérifier une permission
+	 * $canEdit = $this->getUser('permission', 'page', 'edit');
+	 * 
+	 * // Récupérer une propriété utilisateur
+	 * $userRole = $this->getUser('role');
 	 */
 	public function getUser($key, $perm1 = null, $perm2 = null)
 	{
@@ -1212,9 +1229,26 @@ class common
 	}
 
 	/**
-	 * Retourne les permissions de l'utilisateur connecté
-	 * @param int $key Clé de la valeur du rôle
-	 * @return string|null
+	 * Vérifie les permissions d'un utilisateur selon son rôle et son profil
+	 * 
+	 * @param string|object $key1 Clé de permission (peut être une classe de module ou une catégorie de permission)
+	 * @param string|null $key2 Sous-clé de permission optionnelle (action spécifique ou sous-catégorie)
+	 * @return mixed Retourne :
+	 *               - true si l'utilisateur est administrateur
+	 *               - false si le rôle n'a pas la permission ou si l'utilisateur est un visiteur
+	 *               - La valeur de la permission spécifiée si elle existe dans le profil
+	 *               - false dans tous les autres cas
+	 * 
+	 * @example 
+	 * // Vérifie si l'utilisateur a la permission d'ajouter un article dans le module blog
+	 * $hasPermission = $this->getPermission('blog', 'add');
+	 * 
+	 * // Vérifie si l'utilisateur a une permission spécifique
+	 * $canEdit = $this->getPermission('page', 'edit');
+	 * 
+	 * // Vérifie une permission sur un module instancié
+	 * $module = new blog();
+	 * $canConfigure = $this->getPermission($module, 'config');
 	 */
 	public function getPermission($key1, $key2 = null)
 	{
@@ -1909,9 +1943,11 @@ public static function makeThumb($src, $dest = null, $desired_width = 200)
 	{
 		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
 		$userId = $userId ?? $this->getUser('id');
+		
 		// Vérifier si l'utilisateur est un administrateur
 		switch ($this->getData(['user', $userId, 'role'])) {
-			case self::ROLE_ADMIN:				return self::FILE_DIR . 'source/';  // Correction de la syntaxe return
+			case self::ROLE_ADMIN:				
+				return self::FILE_DIR . 'source/';
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
 				return $this->getPermission('folder', 'path');
@@ -1988,17 +2024,16 @@ public static function makeThumb($src, $dest = null, $desired_width = 200)
 	 */
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
+		// Récupérer l'ID utilisateur si non fourni
+		$userId = $userId ?? $this->getUser('id');
 
 		// Contrôle de la saisie et des accès de l'utilisateur
 		// Pas de chemin  ou pas d'accès au filemanager
 		if (empty($filePath ||
-			is_null($userId) ||
-			$this->getUserPath($userId) === 'none' ||
-			$this->getPermission( 'folder', 'path') === null
+			$this->getUserPath($userId) === 'none'
 			)) return null;
 
 		// Récupérer l'utilisateur et son rôle
-		$userId = $userId ?? $this->getUser('id');
 		$userPath = $this->getUserPath($userId);
 		
 		// Si le chemin commence déjà par 'site/file/source/', on le retourne tel quel
