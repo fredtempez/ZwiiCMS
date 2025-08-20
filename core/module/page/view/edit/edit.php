@@ -225,13 +225,15 @@
 							'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']), page::$moduleIds) ? page::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 						]); ?>
 					</div>
+					<?php if ($this->getPermission($this->getData(['page', $this->getUrl(2), 'moduleId']), 'config')):?>
 					<div class="col2 verticalAlignBottom">
 						<?php echo template::button('pageEditModuleConfig', [
-							'disabled' => (bool) $this->getData(['page', $this->getUrl(2), 'moduleId']) === false,
 							'uniqueSubmission' => true,
-							'value' => template::ico('gear')
+							'value' => template::ico('gear'),
+							'disabled' => empty($this->getData(['page', $this->getUrl(2), 'moduleId'])) ,
 						]); ?>
-					</div>
+					</div> 
+					<?php endif;?>
 				</div>
 				<div class="row">
 					<div class="col12">
