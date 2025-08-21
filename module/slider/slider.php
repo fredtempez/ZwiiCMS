@@ -404,6 +404,25 @@ class slider extends common
 		$galleryId = $this->getUrl(0);
 		$directory = $this->getData(['module', $galleryId, 'directory']);
 
+		// Initialise un thème absent
+		if (is_null($this->getData(['module', $galleryId, 'theme']))) {
+		    $this->setData([
+		        'module', 
+		        $galleryId, 
+		        'theme', 
+		        [
+		            'pager' => true,
+		            'auto' => true,
+		            'maxWidth' => 1280,
+		            'speed' => 1000,
+		            'timeout' => 3000,
+		            'namespace' => 'centered-btns',
+		            'sort' => 'dsc',
+		            'caption' => 'bottom'
+		        ]
+		    ]);
+		}
+
 		// Images de la galerie
 		if ($directory && is_dir($directory)) {
 			$iterator = new DirectoryIterator($directory);

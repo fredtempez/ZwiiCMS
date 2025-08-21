@@ -1,5 +1,6 @@
 # Version 8.1
 - Corrige le chemin des ressources insérés par des membres éditeurs.
+- Initialise un thème absent.
 # Version 8.0
 - Les dossiers proposés par le module sont ceux autotisés par le profil.
 # Version 7.3
