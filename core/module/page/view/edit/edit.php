@@ -225,7 +225,7 @@
 							'value' => array_key_exists($this->getData(['page', $this->getUrl(2), 'moduleId']), page::$moduleIds) ? page::$moduleIds[$this->getData(['page', $this->getUrl(2), 'moduleId'])] : ucfirst($this->getData(['page', $this->getUrl(2), 'moduleId']))
 						]); ?>
 					</div>
-					<?php if ($this->getPermission($this->getData(['page', $this->getUrl(2), 'moduleId']), 'config')):?>
+					<?php if ($this->getUser('permission',$this->getData(['page', $this->getUrl(2), 'moduleId']), 'config')):?>
 					<div class="col2 verticalAlignBottom">
 						<?php echo template::button('pageEditModuleConfig', [
 							'uniqueSubmission' => true,
