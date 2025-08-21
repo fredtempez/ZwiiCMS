@@ -192,8 +192,8 @@ class slider extends common
 			$this->isPost()
 		) {
 
-			$inputs['legends'] = $this->getInput('legends', helper::FILTER_STRING_SHORT);
-			$inputs['uri'] = $this->getInput('sliderHref', helper::FILTER_STRING_SHORT);
+			$inputs['legends'] = $this->getInput('legends');
+			$inputs['uri'] = $this->getInput('sliderHref');
 
 			// Supprime les points devant les extensions des clés à cause du système de BDD
 			foreach ($inputs as $keyinputs => $valuesinputs) {
