@@ -5,8 +5,15 @@
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
 ### Corrections de failles de sécurité
-- Corrige un bug de chemin d'accès aux ressources publiées par des membres non administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
+- Corrige un bug de chemin d'accès aux ressources publiées par des membres non-administrateurs grâce à une nouvelle méthode getNormalizedFilePath livrée dans core.
 - Sécurisation de l'accès au gestionnaire de fichiers.
+- Normalisation des chemins lors de l'insertion de ressources pour les membres non-administrateurs ne disposant pas d'un accès complet aux fichiers :
+  - Dans les pages, les images, les modules, etc.
+  - Dans les champs de saisie d'image.
+- Renforcement des contrôles de permissions sur les modules :
+  - Les modules ne sont plus affichés dans la page de configuration des pages sans permission.
+  - Le bouton Module ne s'affiche plus dans la barre d'administration lorsque le profil n'a pas la permission de configurer le module de la page.
+- Les pages n'étant pas accessibles à certains rôles ne sont plus visibles dans la barre de menu, dans les menus des sous pages.
 
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
