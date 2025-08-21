@@ -622,7 +622,10 @@ class page extends common
 			// Création du sélecteur de modules
 			self::$moduleIds = [];
 			foreach (helper::getModules() as $key => $values) {
-				self::$moduleIds[$key] = $values['realName'] . ' (' . $key . ')';
+				// Ne présenter que les modules autorisés par le profil
+				if ($this->getUser('permission', $key, 'config') === true) {
+					self::$moduleIds[$key] = $values['realName'] . ' (' . $key . ')';
+				}
 			}
 			self::$moduleIds = array_merge(['' => 'Aucun'], self::$moduleIds);
 
