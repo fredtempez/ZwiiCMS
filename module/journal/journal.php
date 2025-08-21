@@ -23,7 +23,8 @@ class journal extends common
      */
     public static $actions = [
         'index' => self::GROUP_VISITOR, // Accessible par les visiteurs
-        'config' => self::GROUP_ADMIN   // Accessible uniquement par les administrateurs
+        'config' => self::GROUP_ADMIN,   // Accessible uniquement par les administrateurs
+        'reset' => self::GROUP_ADMIN,   // Accessible uniquement par les administrateurs
     ];
 
     /**
@@ -188,47 +189,34 @@ class journal extends common
      */
     public function config()
     {
-        $logPath = self::DATA_DIR . 'journal.log'; // Chemin vers le fichier journal.log
 
-        // Vérifie si la requête est de type POST
         if ($this->isPost()) {
-            $action = $this->getInput('action');
+            // Récupère les filtres sélectionnés
+            $filtres = [];
+            if ($this->getInput('journalFiltresAdmin'))
+                $filtres[] = 'admin';
+            if ($this->getInput('journalFiltresVisitor'))
+                $filtres[] = 'visitor';
+            if ($this->getInput('journalFiltresTous'))
+                $filtres[] = 'tous';
 
-            // Si l'action est de réinitialiser le journal
-            if ($action === 'resetLog') {
-                if (file_exists($logPath)) {
-                    file_put_contents($logPath, ''); // Vide le fichier journal.log
-                    $notification = 'Fichier journal.log vidé';
-                } else {
-                    $notification = 'Fichier journal.log introuvable';
-                }
-            } else {
-                // Récupère les filtres sélectionnés
-                $filtres = [];
-                if ($this->getInput('journalFiltresAdmin'))
-                    $filtres[] = 'admin';
-                if ($this->getInput('journalFiltresVisitor'))
-                    $filtres[] = 'visitor';
-                if ($this->getInput('journalFiltresTous'))
-                    $filtres[] = 'tous';
+            // Si aucun filtre n'est sélectionné, tous les filtres sont appliqués par défaut
+            if (empty($filtres))
+                $filtres = ['admin', 'visitor', 'tous'];
 
-                // Si aucun filtre n'est sélectionné, tous les filtres sont appliqués par défaut
-                if (empty($filtres))
-                    $filtres = ['admin', 'visitor', 'tous'];
+            // Enregistre la configuration
+            $this->setData([
+                'module',
+                $this->getUrl(0),
+                [
+                    'identifiant' => $this->getInput('journalIdentifiant'),
+                    'limite' => (int) $this->getInput('journalLimite'),
+                    'filtres' => $filtres
+                ]
+            ]);
 
-                // Enregistre la configuration
-                $this->setData([
-                    'module',
-                    $this->getUrl(0),
-                    [
-                        'identifiant' => $this->getInput('journalIdentifiant'),
-                        'limite' => (int) $this->getInput('journalLimite'),
-                        'filtres' => $filtres
-                    ]
-                ]);
+            $notification = 'Configuration enregistrée';
 
-                $notification = 'Configuration enregistrée';
-            }
 
             // Redirige vers la page de configuration avec une notification
             $this->addOutput([
@@ -248,4 +236,28 @@ class journal extends common
             'filtres' => $filtres
         ]);
     }
+
+    public function reset()
+    {
+
+        $logPath = self::DATA_DIR . 'journal.log';
+
+        if (file_exists($logPath)) {
+            file_put_contents($logPath, ''); // Vide le fichier journal.log
+            $notification = 'Fichier journal.log vidé';
+            $state = true;
+        } else {
+            $notification = 'Fichier journal.log introuvable';
+            $state = false;
+        }
+
+        // Affiche la vue de configuration
+        $this->addOutput([
+            'title' => 'Configuration du journal',
+            'view' => 'config',
+            'notification' => $notification,
+            'state' => true
+        ]);
+    }
+
 }
