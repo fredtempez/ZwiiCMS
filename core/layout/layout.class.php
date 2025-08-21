@@ -570,8 +570,13 @@ class layout extends common
         $items = '';
         $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
         foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+            // Ne pas afficher les pages du rôle supérieur
+            if (
+                $this->getData(['page', $parentPageId, 'role']) > $this->getUser('role')
+            ) {
+                continue;
+            }
             // Menu extra ou standard
-
             if (
                     // Absence de la position extra, la page est toujours affichée à gauche.
                 ($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true)
@@ -629,6 +634,12 @@ class layout extends common
             $totalChild = 0;
             $disableChild = 0;
             foreach ($childrenPageIds as $childKey) {
+                // Ne pas décompter les pages de rôle supérieur
+                if (
+                    $this->getData(['page', $childKey, 'role']) > $this->getUser('role')
+                ) {
+                    continue;
+                }
                 $totalChild += 1;
             }
             if (
@@ -647,6 +658,12 @@ class layout extends common
             }
             $items .= '<ul class="navSub">';
             foreach ($childrenPageIds as $childKey) {
+                // Ne pas afficher les pages de rôle supérieur
+                if (
+                    $this->getData(['page', $childKey, 'role']) > $this->getUser('role')
+                ) {
+                    continue;
+                }
                 // Propriétés de l'item
                 $active = ($childKey === $currentPageId) ? 'active ' : '';
                 $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
