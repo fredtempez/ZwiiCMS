@@ -90,10 +90,7 @@ class blog extends common
 		100 => '100 signes',
 		250 => '250 signes',
 		500 => '500 signes',
-		750 => '750 signes',
-		1000 => '1000 signes',
-		1500 => '1500 signes',
-		2000 => '2000 signes',
+		750 => '750 signes'
 	];
 
 	public static $articlesLenght = [

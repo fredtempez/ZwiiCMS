@@ -1,9 +1,5 @@
 # Notes de mises à jour
 
-## Version 13.6.09
-- Supprime le mode maintenance lors de la mise à jour.
-- Augmente la dimension maximale des commentaires de blog.
-
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
 - Suppression du cookie ZWII_USER_ID pour l'authentification
