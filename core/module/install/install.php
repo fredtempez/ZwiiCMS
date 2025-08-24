@@ -265,18 +265,6 @@ class install extends common
 				// Backup du dossier Data
 				helper::autoBackup(self::BACKUP_DIR, ['backup', 'tmp', 'file']);
 
-				/**
-				 * Le mode maintenance n'était pas activé
-				 *  Son état est sauvegardé pour être restauré après la mise à jour
-				 */
-				if ($this->getData(['config', 'maintenance']) === true) {
-					// Mode permanent pour éviter la désactivation
-					touch(self::DATA_DIR . '.maintenance');
-				}
-				// Activer le mode maintenance et laisser les fichiers se fermer
-				$this->setData(['config', 'maintenance', true]);
-				usleep(500000);  // 500 milliseconds
-
 				// Sauvegarde htaccess
 				if ($this->getData(['config', 'autoUpdateHtaccess'])) {
 					$success = copy('.htaccess', '.htaccess' . '.bak');
@@ -398,13 +386,6 @@ class install extends common
 				 * et le cookie de gestionnaire de fichiers pour l'identification.
 				 * */ 
 				$_SESSION['ZWII_USER_ID'] = $this->getUser('id');
-
-				// Restaure le mode maintenance si permanent
-				$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
-				// Dans tous les cas supprimer le drapeau de maintenance
-				if (file_exists(self::DATA_DIR . '.maintenance')) {
-					unlink(self::DATA_DIR . '.maintenance');
-				}
 
 				/** Restaure le fichier htaccess */
 				// Recopie htaccess
