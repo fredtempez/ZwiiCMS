@@ -15,6 +15,10 @@
   - Le bouton Module ne s'affiche plus dans la barre d'administration lorsque le profil n'a pas la permission de configurer le module de la page.
 - Les pages n'étant pas accessibles à certains rôles ne sont plus visibles dans la barre de menu, dans les menus des sous pages.
 
+## Version 13.6.09
+- Supprime le mode maintenance lors de la mise à jour.
+- Augmente la dimension maximale des commentaires de blog.
+
 ## Version 13.6.08
 - Corrige la vulnérabilité CWE-285: Improper Authorization.
 - Suppression du cookie ZWII_USER_ID pour l'authentification
