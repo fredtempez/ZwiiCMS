@@ -389,28 +389,35 @@ class install extends common
 				$success = true;
 				$message = '';
 
-
-				/**
-				 * Sauvegarde dans la session l'id du user. 
-				 * Cette modification est nécessaire pour le gestionnaire de fichiers
-				 * car il utilise un cookie pour l'identification de l'utilisateur.
-				 * Le cookie de session est utilisé pour l'authentification
-				 * et le cookie de gestionnaire de fichiers pour l'identification.
-				 * */ 
-				$_SESSION['ZWII_USER_ID'] = $this->getUser('id');
-
-				// Restaure le mode maintenance si permanent
-				$this->setData(['config', 'maintenance', file_exists(self::DATA_DIR . '.maintenance')]);
+				// Gestion directe du fichier config.json
+				$configFile = self::DATA_DIR . 'config.json';
+				if (file_exists($configFile)) {
+					$config = json_decode(file_get_contents($configFile), true);
+					if (json_last_error() === JSON_ERROR_NONE) {
+						// Mise à jour de l'état de maintenance
+						$config['config']['maintenance'] = file_exists(self::DATA_DIR . '.maintenance');
+						file_put_contents(
+							$configFile,
+							json_encode($config['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+						);
+					}
+				}
 				// Dans tous les cas supprimer le drapeau de maintenance
 				if (file_exists(self::DATA_DIR . '.maintenance')) {
 					unlink(self::DATA_DIR . '.maintenance');
 				}
 
 				/** Restaure le fichier htaccess */
-				// Recopie htaccess
-				if (
-					$this->getData(['config', 'autoUpdateHtaccess']) === true
-				) {
+				// Lecture directe de la configuration pour autoUpdateHtaccess
+				$autoUpdateHtaccess = false;
+				if (file_exists($configFile)) {
+					$config = json_decode(file_get_contents($configFile), true);
+					if (json_last_error() === JSON_ERROR_NONE && isset($config['config']['autoUpdateHtaccess'])) {
+						$autoUpdateHtaccess = (bool)$config['config']['autoUpdateHtaccess'];
+					}
+				}
+				// Recopie htaccess si nécessaire
+				if ($autoUpdateHtaccess) {
 					// L'écraser avec le backup
 					$success = copy('.htaccess.bak', '.htaccess');
 					if ($success === false) {
