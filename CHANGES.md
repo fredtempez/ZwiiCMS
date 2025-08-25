@@ -1,12 +1,10 @@
 # Notes de mises à jour
 
 ### Optimisations
-
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
 
 ### Corrections de failles de sécurité :
-
 - Sécurisation de l'accès au gestionnaire de fichiers.
 - Corrige un bug de chemin d'accès aux ressources publiées par des membres non-administrateurs :
   - Normalisation des chemins lors de l'insertion de ressources pour les membres non-administrateurs ne disposant pas d'un accès complet aux fichiers :
