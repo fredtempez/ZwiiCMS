@@ -4,13 +4,13 @@
 			<?php foreach ($module::$items as $itemId => $item): ?>
 				<div class="row rowitem">
 					<div class="col3 downloadLeft">
-						<?php // Déterminer le nom de la miniature
-						$thumb = $this->getThumb($item['thumb']); ?>
-
-						<?php // Créer la miniature si manquante
-						if (!file_exists($thumb)) {
+						<!-- Déterminer le nom de la miniature -->
+						<?php $thumb = $this->getNormalizedFilePath($item['thumb']); ?>
+						<?php $thumb = $this->getThumb($thumb); ?>
+						<!-- Créer la miniature si manquante -->
+						<?php if (!file_exists(filename: $thumb)) {
 							$this->makeThumb(
-								$item['thumb'],  // Chemin complet du fichier source
+								$thumb,         			  // Chemin complet du fichier source
 								null,                     // Chemin de destination généré automatiquement
 								self::THUMBS_WIDTH        // Largeur de la miniature
 							);
