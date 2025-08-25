@@ -1,3 +1,5 @@
+# Version 8.3
+- Augemente la dimension des commentaires des articles de blog.
 # Version 8.2
 - Remplacement du nom générique de classe dans les vues.
 # Version 8.1
