@@ -389,6 +389,8 @@ class install extends common
 				$success = true;
 				$message = '';
 
+				// Désactiver le mode maintenance 
+				// -------------------------------
 				// Gestion directe du fichier config.json
 				$configFile = self::DATA_DIR . 'config.json';
 				if (file_exists($configFile)) {
@@ -398,7 +400,7 @@ class install extends common
 						$config['config']['maintenance'] = file_exists(self::DATA_DIR . '.maintenance');
 						file_put_contents(
 							$configFile,
-							json_encode($config['config'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+							json_encode($config, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
 						);
 					}
 				}
@@ -413,7 +415,7 @@ class install extends common
 				if (file_exists($configFile)) {
 					$config = json_decode(file_get_contents($configFile), true);
 					if (json_last_error() === JSON_ERROR_NONE && isset($config['config']['autoUpdateHtaccess'])) {
-						$autoUpdateHtaccess = (bool)$config['config']['autoUpdateHtaccess'];
+						$autoUpdateHtaccess = (bool)$config['autoUpdateHtaccess'];
 					}
 				}
 				// Recopie htaccess si nécessaire
