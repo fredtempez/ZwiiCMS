@@ -415,7 +415,7 @@ class install extends common
 				if (file_exists($configFile)) {
 					$config = json_decode(file_get_contents($configFile), true);
 					if (json_last_error() === JSON_ERROR_NONE && isset($config['config']['autoUpdateHtaccess'])) {
-						$autoUpdateHtaccess = (bool)$config['autoUpdateHtaccess'];
+						$autoUpdateHtaccess = (bool)$config['config']['autoUpdateHtaccess'];
 					}
 				}
 				// Recopie htaccess si nécessaire
