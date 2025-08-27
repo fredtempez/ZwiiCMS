@@ -46,6 +46,7 @@
 .zwiico-right-big:before { content: '\e82b'; } /* '' */
 .zwiico-up-dir:before { content: '\e82c'; } /* '' */
 .zwiico-right-dir:before { content: '\e82d'; } /* '' */
+.zwiico-chart-line:before { content: '\e82e'; } /* '' */
 .zwiico-spin:before { content: '\e831'; } /* '' */
 .zwiico-twitter:before { content: '\f099'; } /* '' */
 .zwiico-facebook:before { content: '\f09a'; } /* '' */
