@@ -1,13 +1,83 @@
-.dataTables_length {
-    margin-bottom: 10px;
-    width: 250px;
+/* Ajustement du sélecteur de pagination */
+.top {
+    display: flex !important;
+    flex-wrap: wrap; /* Permet un retour à la ligne si l’espace est limité */
+    justify-content: space-between; /* Ajustez selon votre besoin */
+    align-items: center;
+    gap: 15px;
 }
 
-.dataTables_length label {
-    float: left;
+.dt-length,
+.dt-search {
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    max-width: 100%;
 }
 
-.dataTables_length select {
+.dt-length label {
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.dt-length select {
     margin-left: 5px;
+    width: 150px;
+    min-width: 80px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Bouton de commande */
+.dt-button {
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Moins d’espace entre les boutons */
+    flex-wrap: wrap; /* Permet un retour à la ligne si l'espace est limité */
+    margin: 0 auto;
+    max-width: 100%;
+    width: inherit;
+}
+
+.dt-button button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+/* Ajustement du tableau */
+.dataTable {
+    width: 100% !important; /* Empêche le changement de taille */
+    border-collapse: collapse;
+}
+
+.dataTable th, .dataTable td {
+    padding: 10px;
+    text-align: left;
+}
+
+/* Boutons de pagination */
+.dt-paging {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.dt-paging button {
+    display: inline-flex;
     width: 80px;
+}
+
+
+.bottom nav{
+    background-color: inherit;
 }
