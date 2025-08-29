@@ -1,8 +1,10 @@
 # Notes de mises à jour
 
-### Optimisations
+### Optimisations et améliorations
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
+- Complète la bibliothèque d'icônes.
+- Ajoute des options au script Datatables.
 
 ### Corrections de failles de sécurité :
 - Sécurisation de l'accès au gestionnaire de fichiers.
@@ -11,7 +13,7 @@
   - Dans les pages, les images, les modules, etc.
   - Dans les champs de saisie d'image.
 
-Renforcement des contrôles de permissions sur les modules et sur les pages :
+## Renforcement des contrôles de permissions sur les modules et sur les pages :
 
   - Les modules ne sont plus affichés dans la page de configuration des pages sans permission.
   - Le bouton Module ne s'affiche plus dans la barre d'administration lorsque le profil n'a pas la permission de configurer le module de la page.
