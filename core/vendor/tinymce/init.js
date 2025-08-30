@@ -129,7 +129,7 @@ tinymce.init({
 	// Active l'onglet avancé lors de l'ajout d'une image
 	image_advtab: true,
 	// Urls relatives
-	relative_urls: true,    // Utiliser des URLs relatives
+	relative_urls: false,    // Utiliser des URLs relatives
 	remove_script_host: false,  // Conserver le script host (domaine)
 	convert_urls: true,    // Convertir automatiquement les URLs
 	// Url de base

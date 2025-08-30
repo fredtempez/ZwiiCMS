@@ -8,10 +8,8 @@
 
 ### Corrections de failles de sécurité :
 - Sécurisation de l'accès au gestionnaire de fichiers.
-- Corrige un bug de chemin d'accès aux ressources publiées par des membres non-administrateurs :
-  - Normalisation des chemins lors de l'insertion de ressources pour les membres non-administrateurs ne disposant pas d'un accès complet aux fichiers :
-  - Dans les pages, les images, les modules, etc.
-  - Dans les champs de saisie d'image.
+- Corrige un bug de chemin d'accès aux ressources publiées par des membres non-administrateurs dans les champs de saisie d'image.
+- Supprime la normalisation des chemins dans le contenu des pages, la normalisation des chemins est effectuée par l'insertion d'URL absolues plutôt que relative dans TinyMCE.
 
 ## Renforcement des contrôles de permissions sur les modules et sur les pages :
 

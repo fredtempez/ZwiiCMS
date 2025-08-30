@@ -584,10 +584,7 @@ class page extends common
 					$content = empty($this->getInput('pageEditContent', null)) 
 						? '<p></p>' 
 						: str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null	));
-					
-					// Normalisation des chemins dans le contenu
-					$content = $this->normalizeContentPaths($content, $this->getUser('id'));
-					
+									
 					// Sauvegarde du contenu
 					$this->setPage($pageId, $content, self::$siteContent);
 

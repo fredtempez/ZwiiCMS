@@ -1965,64 +1965,6 @@ class common
 	}
 
 	/**
-	 * Normalise les chemins dans un contenu HTML
-	 * 
-	 * Cette méthode traite le contenu HTML pour normaliser les chemins des ressources (images, liens, etc.)
-	 * en fonction du rôle de l'utilisateur. Elle est principalement utilisée lors de l'affichage
-	 * des contenus édités pour s'assurer que les chemins sont corrects selon les permissions.
-	 *
-	 * Fonctionnement :
-	 * 1. Nettoie les séquences de navigation (../) et normalise les séparateurs
-	 * 2. Traite les balises <a href> et <img src> pour corriger les chemins
-	 * 3. Utilise getNormalizedFilePath() pour générer les chemins finaux
-	 * 4. Gère les chemins absolus et relatifs de manière cohérente
-	 *
-	 * @param string $content Le contenu HTML à normaliser
-	 * @param string|null $userId ID de l'utilisateur (optionnel, utilise l'utilisateur courant si non spécifié)
-	 * @return string Le contenu avec les chemins normalisés
-	 */
-	/**
-	 * Normalise les chemins dans un contenu HTML
-	 * @param string $content Le contenu HTML à normaliser
-	 * @param string|null $userId ID de l'utilisateur (optionnel)
-	 * @return string Le contenu avec les chemins normalisés
-	 */
-	public function normalizeContentPaths($content, $userId = null)
-	{
-		if (empty($content)) {
-			return $content;
-		}
-
-		// Récupérer l'ID utilisateur si non fourni
-		$userId = $userId ?? $this->getUser('id');
-
-		// Nettoyer le contenu
-		$content = preg_replace(['#(?:^|/)\.{2}/#', '#/+#'], ['/', '/'], $content);
-
-		// Fonction de normalisation des URLs
-		$normalizeUrl = function($url) use ($userId) {
-			if (empty($url) || 
-				strpos($url, 'http') === 0 || 
-				strpos($url, 'data:') === 0 || 
-				strpos($url, 'mailto:') === 0 || 
-				$url[0] === '#') {
-				return $url;
-			}
-
-			return $this->getNormalizedFilePath($url, $userId) ?: $url;
-		};
-
-		// Traiter les balises a et img en une seule passe
-		return preg_replace_callback(
-			'/(<a[^>]+href=[\'\"]|src=[\'\"])([^\'\"]+)([\'\"][^>]*>)/i',
-			function($matches) use ($normalizeUrl) {
-				return $matches[1] . $normalizeUrl($matches[2]) . $matches[3];
-			},
-			$content
-		);
-	}
-
-	/**
 	 * Retourne le chemin normalisé d'un fichier selon le rôle utilisateur
 	 * 
 	 * @param string $filePath Chemin relatif du fichier (depuis site/file/source/)
@@ -2031,6 +1973,7 @@ class common
 	 */
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
+	
 		// Récupérer l'ID utilisateur si non fourni
 		$userId = $userId ?? $this->getUser('id');
 
