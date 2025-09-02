@@ -1,3 +1,5 @@
+# Version 6.2
+- Normalisation des chemins vers les ressourceS.
 # Version 6.1
 - Remplacement du nom générique de classe dans les vues.
 # Version 6.0

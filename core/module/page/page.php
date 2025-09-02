@@ -583,7 +583,7 @@ class page extends common
 					// Récupération et nettoyage du contenu
 					$content = empty($this->getInput('pageEditContent', null)) 
 						? '<p></p>' 
-						: str_replace('<p></p>', '<p>&nbsp;</p>', $this->getInput('pageEditContent', null	));
+						: str_replace('<p></p>', '<p>&nbsp;</p>', $this->getRelativePath($this->getInput('pageEditContent', null)));
 									
 					// Sauvegarde du contenu
 					$this->setPage($pageId, $content, self::$siteContent);

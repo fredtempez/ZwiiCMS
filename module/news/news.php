@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '6.1';
+	const VERSION = '6.2';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -180,7 +180,7 @@ class news extends common
 				'posts',
 				$newsId,
 				[
-					'content' => $this->getInput('newsAddContent', null),
+					'content' => $this->getRelativePath($this->getInput('newsAddContent', null)),
 					'publishedOn' => $publishedOn,
 					'publishedOff' => $publishedOff,
 					'state' => $this->getInput('newsAddState', helper::FILTER_BOOLEAN),
@@ -439,7 +439,7 @@ class news extends common
 					'posts',
 					$newsId,
 					[
-						'content' =>$this->getInput('newsEditContent', null),
+						'content' => $this->getRelativePath($this->getInput('newsEditContent', null)),
 						'publishedOn' => $publishedOn,
 						'publishedOff' => $publishedOff < $publishedOn ? '' : $publishedOff,
 						'state' => $this->getInput('newsEditState', helper::FILTER_BOOLEAN),

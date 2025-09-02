@@ -1996,4 +1996,11 @@ class common
 
 
 	}
+
+	/**
+	 * Retourne un chemin relatif depuis la racine du site sans la baseUrl
+	 */
+	public function getRelativePath($path) {
+		return str_replace(helper::baseUrl(false), '', $path);
+	}
 }

@@ -275,7 +275,7 @@ class blog extends common
 				'posts',
 				$articleId,
 				[
-					'content' => $this->getInput('blogAddContent', null),
+					'content' => $this->getRelativePath($this->getInput('blogAddContent', null)),
 					'picture' => $this->getNormalizedFilePath($this->getInput('blogAddPicture', helper::FILTER_STRING_SHORT),$this->getUser('id')),
 					'hidePicture' => $this->getInput('blogAddHidePicture', helper::FILTER_BOOLEAN),
 					'pictureSize' => $this->getInput('blogAddPictureSize', helper::FILTER_STRING_SHORT),
@@ -675,7 +675,7 @@ class blog extends common
 					[
 						'title' => $this->getInput('blogEditTitle', helper::FILTER_STRING_SHORT, true),
 						'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
-						'content' => $this->getInput('blogEditContent', null),
+						'content' => $this->getRelativePath($this->getInput('blogEditContent', null)),
 						'picture' => $this->getNormalizedFilePath($this->getInput('blogEditPicture', helper::FILTER_STRING_SHORT), $this->getUser('id')),
 						'hidePicture' => $this->getInput('blogEditHidePicture', helper::FILTER_BOOLEAN),
 						'pictureSize' => $this->getInput('blogEditPictureSize', helper::FILTER_STRING_SHORT),
@@ -772,7 +772,7 @@ class blog extends common
 							$commentId,
 							[
 								'author' => $this->getInput('blogArticleAuthor', helper::FILTER_STRING_SHORT, empty($this->getInput('blogArticleUserId')) ? TRUE : FALSE),
-								'content' => $content,
+								'content' => $this->getRelativePath($content),
 								'createdOn' => time(),
 								'userId' => $this->getInput('blogArticleUserId'),
 								'approval' => !$this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(1), 'commentApproved']) // true commentaire publié false en attente de publication
