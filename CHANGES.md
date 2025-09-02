@@ -10,6 +10,7 @@
 - Sécurisation de l'accès au gestionnaire de fichiers.
 - Corrige un bug de chemin d'accès aux ressources publiées par des membres non-administrateurs dans les champs de saisie d'image.
 - Supprime la normalisation des chemins dans le contenu des pages, la normalisation des chemins est effectuée par l'insertion d'URL absolues plutôt que relative dans TinyMCE.
+- Réécriture de la méthode de troncage des articles.
 - Corrige un warning dans la fenêtre d'installation.
 
 ## Renforcement des contrôles de permissions sur les modules et sur les pages :

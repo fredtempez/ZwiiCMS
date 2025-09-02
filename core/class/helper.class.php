@@ -679,32 +679,98 @@ class helper
 	 */
 	public static function subword($text, $start, $length)
 	{
+		// Nettoyage rapide
 		$text = trim($text);
+		if ($length <= 0) { return ''; }
 
-		// Vérifier si la longueur du texte sans les balises dépasse la longueur souhaitée
-		if (mb_strlen(strip_tags($text)) > $length) {
-			// Utiliser mb_substr pour couper le texte
-			$text = mb_substr($text, $start, $length);
+		// Fonctions grapheme_* si dispo (meilleure gestion des emojis)
+		$g_len  = function($s){ return function_exists('grapheme_strlen') ? grapheme_strlen($s) : mb_strlen($s); };
+		$g_sub  = function($s,$a,$l=null){
+			if (function_exists('grapheme_substr')) return grapheme_substr($s,$a,$l);
+			return $l===null ? mb_substr($s,$a) : mb_substr($s,$a,$l);
+		};
 
-			// S'assurer que le texte ne se termine pas au milieu d'un mot
-			$lastSpace = mb_strrpos($text, ' ');
-			if ($lastSpace !== false) {
-				$text = mb_substr($text, 0, $lastSpace);
+		// Texte sans balises pour le calcul de la longueur
+		$plain = trim(html_entity_decode(strip_tags($text), ENT_QUOTES, 'UTF-8'));
+		$plainLen = $g_len($plain);
+		if ($start >= $plainLen) { return ''; }
+		$target = min($length, max(0, $plainLen - $start));
+		if ($target <= 0) { return ''; }
+
+		// Tokeniser en tags et texte
+		$tokens = preg_split('/(<[^>]+>)/u', $text, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+		$selfClosing = ['br','img','hr','input','meta','link','source','area','base','col','embed','param','track','wbr'];
+		$openStack = [];
+		$out = '';
+		$count = 0; // nombre de graphèmes ajoutés (après start)
+		$skipped = 0; // graphèmes sautés pour atteindre $start
+		$lastWordSafeOutLen = 0; // position sûre (fin de mot) dans $out
+
+		foreach ($tokens as $tok) {
+			if ($tok === '') { continue; }
+			if ($tok[0] === '<') {
+				// C'est un tag: copier tel quel et gérer la pile
+				$out .= $tok;
+				if (preg_match('/^<\s*\/\s*([a-z0-9]+)/i', $tok, $m)) {
+					// Tag fermant
+					$tn = strtolower($m[1]);
+					while (!empty($openStack)) { $top = array_pop($openStack); if ($top === $tn) break; }
+				} elseif (preg_match('/^<\s*([a-z0-9]+)/i', $tok, $m)) {
+					$tn = strtolower($m[1]);
+					$self = (in_array($tn, $selfClosing, true) || preg_match('/\/\s*>$/', $tok));
+					if (!$self) { $openStack[] = $tn; }
+				}
+				continue;
 			}
 
-			// Fermer les balises HTML ouvertes
-			$dom = new DOMDocument();
-			@$dom->loadHTML('<div>' . $text . '</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-			$text = $dom->saveHTML();
-
-			// Retirer la balise de conteneur ajoutée
-			$text = preg_replace('~^<div>(.*)</div>$~s', '$1', $text);
-
-			// Ajouter des points de suspension si le texte a été coupé
-			$text .= '...';
+			// Segment texte: on doit peut-être sauter puis prendre une portion
+			$seg = $tok;
+			$segLen = $g_len($seg);
+			if ($skipped < $start) {
+				$needSkip = min($segLen, $start - $skipped);
+				$seg = $g_sub($seg, $needSkip);
+				$segLen = $g_len($seg);
+				$skipped += $needSkip;
+				if ($segLen <= 0) { continue; }
+			}
+			$remain = $target - $count;
+			if ($remain <= 0) { break; }
+			if ($segLen > $remain) {
+				$take = $g_sub($seg, 0, $remain);
+				$out .= $take;
+				$count += $g_len($take);
+				// point sûr de coupe (dernier espace)
+				$spacePos = mb_strrpos($take, ' ');
+				if ($spacePos !== false) {
+					$lastWordSafeOutLen = strlen($out) - strlen(mb_substr($take, $spacePos));
+				}
+				break;
+			}
+			$out .= $seg;
+			$count += $segLen;
+			$spacePos = mb_strrpos($seg, ' ');
+			if ($spacePos !== false) {
+				$lastWordSafeOutLen = strlen($out) - strlen(mb_substr($seg, $spacePos));
+			}
 		}
 
-		return $text;
+		// Ne pas couper au milieu d'un mot si possible
+		if ($lastWordSafeOutLen > 0 && $count >= $target) {
+			$out = substr($out, 0, $lastWordSafeOutLen);
+		}
+
+		// Fermer les balises ouvertes
+		while (!empty($openStack)) { $out .= '</' . array_pop($openStack) . '>'; }
+
+		// Nettoyage des espaces
+		$out = preg_replace('/\s+/u', ' ', trim($out));
+
+		// Ajouter des points de suspension si on a tronqué
+		if ($start + $count < $plainLen) {
+			$out = rtrim($out, '.,;:!? ') . '...';
+		}
+
+		return $out;
 	}
 
 	/**
