@@ -1,5 +1,7 @@
 # Version 8.3
-- Augemente la dimension des commentaires des articles de blog.
+- Augmente la dimension des commentaires des articles de blog.
+- Supprime l'effet de dégradé.
+- Corrige les chemins vers les ressources selon le rôle du rédacteur.
 # Version 8.2
 - Remplacement du nom générique de classe dans les vues.
 # Version 8.1
