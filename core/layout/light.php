@@ -12,13 +12,36 @@
 	<?php $layout->showVendor(); ?>
 	<?php $layout->showStyle(); ?>
 	<?php $layout->showFonts(); ?>
-	<?php if (file_exists(self::DATA_DIR . 'font/font.css')): ?>
-		<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>font/font.css?<?php echo md5_file(self::DATA_DIR . 'font/font.css'); ?>">
+	<?php 
+	// Préchargement des polices si elles existent
+	if (file_exists(self::DATA_DIR . 'font/font.css')): 
+		$fontCssPath = helper::baseUrl(false) . self::DATA_DIR . 'font/font.css?' . md5_file(self::DATA_DIR . 'font/font.css');
+	?>
+		<link rel="preload" href="<?php echo $fontCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+		<noscript><link rel="stylesheet" href="<?php echo $fontCssPath; ?>"></noscript>
 	<?php endif; ?>
-	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/common.css">
-	<link rel="stylesheet" href="<?php echo helper::baseUrl(false); ?>core/layout/light.css">
-	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>theme.css?<?php echo md5_file(self::DATA_DIR . 'theme.css'); ?>">
-	<link rel="stylesheet" href="<?php echo helper::baseUrl(false) . self::DATA_DIR; ?>custom.css?<?php echo md5_file(self::DATA_DIR . 'custom.css'); ?>">
+	
+	<?php 
+	// Préchargement des CSS principaux
+	$commonCssPath = helper::baseUrl(false) . 'core/layout/common.css';
+	$lightCssPath = helper::baseUrl(false) . 'core/layout/light.css';
+	$themeCssPath = helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
+	$customCssPath = helper::baseUrl(false) . self::DATA_DIR . 'custom.css?' . md5_file(self::DATA_DIR . 'custom.css');
+	?>
+	
+	<!-- Préchargement des CSS critiques -->
+	<link rel="preload" href="<?php echo $commonCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="<?php echo $commonCssPath; ?>"></noscript>
+	
+	<link rel="preload" href="<?php echo $lightCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="<?php echo $lightCssPath; ?>"></noscript>
+	
+	<!-- CSS non critiques chargés en différé -->
+	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="<?php echo $themeCssPath; ?>"></noscript>
+	
+	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<noscript><link rel="stylesheet" href="<?php echo $customCssPath; ?>"></noscript>
 </head>
 
 <body>
