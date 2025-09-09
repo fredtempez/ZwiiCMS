@@ -182,7 +182,9 @@ class download extends common
 		// En-tête
 		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']));
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
+		// Définir une description par défaut si vide
+		$description = $this->getData(['page', $this->getUrl(0), 'metaDescription']);
+		$feeds->setDescription(empty($description) ? 'Téléchargements disponibles' : $description);
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
