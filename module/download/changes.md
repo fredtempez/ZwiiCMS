@@ -1,5 +1,6 @@
 # Version 5.1
-- Fournit une fonction de normalisation du chemin pour les membres non admins
+- Fournit une fonction de normalisation du chemin pour les membres non admins.
+- Mise à jour du gestionnaire de flux.
 # Version 5.0
 - Correction de bugs
 - Suppression du champ date de publication.
