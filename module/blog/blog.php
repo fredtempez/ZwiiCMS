@@ -219,7 +219,7 @@ class blog extends common
 				$newsArticle->addElementArray([
 					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']),
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $articleId,
-					'description' => '<img src="' . helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb
+					'description' => '<img src="' . $thumb
 						. '" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
 						. '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
 						. '" />' .
