@@ -210,8 +210,8 @@ class blog extends common
 		foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 			if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
 				// Miniature
-				$parts = pathinfo($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']));
-				$thumb = 'mini_' . $parts['basename'];
+				$picture = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']);
+				$thumb = $this->getThumb($picture);
 				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
 				// Signature de l'article
@@ -229,9 +229,9 @@ class blog extends common
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $articleId);
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
 				if (file_exists($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))) {
-					$imageData = getimagesize(helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb);
+					$imageData = getimagesize($thumb);
 					$newsArticle->addEnclosure(
-						helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb,
+						$thumb,
 						$imageData[0] * $imageData[1],
 						$imageData['mime']
 					);
