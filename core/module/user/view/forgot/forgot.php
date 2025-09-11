@@ -1,6 +1,6 @@
 <?php echo template::formOpen('userForgotForm'); ?>
 <?php echo template::text('userForgotId', [
-	'label' => 'Identifiant'
+	'label' => 'Votre identifiant ou votre email'
 ]); ?>
 <div class="row">
 	<div class="col2">

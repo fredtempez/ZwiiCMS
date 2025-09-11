@@ -434,9 +434,25 @@ class user extends common
 		if (
 			$this->isPost()
 		) {
-			$userId = $this->getInput('userForgotId', helper::FILTER_ID, true);
+			$input = $this->getInput('userForgotId', helper::FILTER_STRING_SHORT, true);
 			$sent = false;
-			if ($this->getData(['user', $userId])) {
+			$userId = null;
+
+			// Si l'input est un email, on cherche l'utilisateur correspondant
+			if (filter_var($input, FILTER_VALIDATE_EMAIL)) {
+				foreach ($this->getData(['user']) as $id => $userData) {
+					if (isset($userData['mail']) && strtolower($userData['mail']) === strtolower($input)) {
+						$userId = $id;
+						break;
+					}
+				}
+			}
+			// Sinon on considère que c'est un ID
+			else {
+				$userId = ltrim($input, '_');
+			}
+			// Envoie de l'email
+			if ($userId && $this->getData(['user', $userId])) {
 				// Crée un id unique pour la réinitialisation
 				$uniqId = md5(json_encode($this->getData(['user', $userId, 'forgot']) . time() . $userId));
 				// Enregistre l'id unique et la date de la demande dans le compte utilisateur
@@ -453,6 +469,7 @@ class user extends common
 					$this->getData(['config', 'smtp', 'from'])
 				);
 			}
+
 			// Valeurs en sortie
 			$this->addOutput([
 				'notification' => $sent === true ? helper::translate('Un mail a été envoyé pour confirmer la réinitialisation') : helper::translate("Le mail de réinitialisation ne peut pas être envoyé, contactez l'administrateur"),
