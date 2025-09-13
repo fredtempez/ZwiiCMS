@@ -195,7 +195,7 @@ class download extends common
 			if ($itemIdsUpdateOn <= time() and $itemIdsStates[$itemId]) {
 				// Miniature
 				$parts = explode('/', $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
-				$thumb = str_replace($parts[(count($parts) - 1)], 'mini_' . $parts[(count($parts) - 1)], $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
+				$thumb = str_replace($parts[(count($parts) - 1)], self::THUMBS_SEPARATOR . $parts[(count($parts) - 1)], $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
 				// Créer les items du flux
 				$newsitem = $feeds->createNewItem();
 				// Signature de l'item

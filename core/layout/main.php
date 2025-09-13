@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
-
+<html class="no-js" prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta meta="description=" content="ZwiiCMS le CMS multilingue sans base de données">
@@ -29,16 +28,22 @@
 	$customCssPath = helper::baseUrl(false) . self::DATA_DIR . 'custom.css?' . md5_file(self::DATA_DIR . 'custom.css');
 	?>
 	
-	<!-- Préchargement des CSS critiques -->
-	<link rel="preload" href="<?php echo $commonCssPath; ?>" as="style" onload="this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="<?php echo $commonCssPath; ?>"></noscript>
+	<!-- CSS critique chargé de manière synchrone -->
+	<link rel="stylesheet" href="<?php echo $commonCssPath; ?>">
 	
 	<!-- CSS non critiques chargés en différé -->
-	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $themeCssPath; ?>"></noscript>
 	
-	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $customCssPath; ?>"></noscript>
+	
+	<style>
+	/* Prévention du FOUC */
+	body { visibility: hidden; opacity: 0; transition: opacity 0.15s ease-in; }
+	body.ready { visibility: visible; opacity: 1; }
+	</style>
+	<script>document.documentElement.classList.remove('no-js');</script>
 	<!-- Détection RSS -->
 	<?php if (
 		($this->getData(['page', $this->getUrl(0), 'moduleId']) === 'blog'

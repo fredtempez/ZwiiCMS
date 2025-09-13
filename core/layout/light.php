@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
+<html class="no-js" prefix="og: http://ogp.me/ns#" lang="<?php echo substr(self::$siteContent, 0, 2); ?>">
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -30,18 +30,23 @@
 	?>
 	
 	<!-- Préchargement des CSS critiques -->
-	<link rel="preload" href="<?php echo $commonCssPath; ?>" as="style" onload="this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="<?php echo $commonCssPath; ?>"></noscript>
-	
-	<link rel="preload" href="<?php echo $lightCssPath; ?>" as="style" onload="this.rel='stylesheet'">
-	<noscript><link rel="stylesheet" href="<?php echo $lightCssPath; ?>"></noscript>
+	<!-- CSS critique chargé de manière synchrone -->
+	<link rel="stylesheet" href="<?php echo $commonCssPath; ?>">
+	<link rel="stylesheet" href="<?php echo $lightCssPath; ?>">
 	
 	<!-- CSS non critiques chargés en différé -->
-	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $themeCssPath; ?>"></noscript>
 	
-	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.rel='stylesheet'">
+	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $customCssPath; ?>"></noscript>
+	
+	<style>
+	/* Prévention du FOUC */
+	body { visibility: hidden; opacity: 0; transition: opacity 0.15s ease-in; }
+	body.ready { visibility: visible; opacity: 1; }
+	</style>
+	<script>document.documentElement.classList.remove('no-js');</script>
 </head>
 
 <body>

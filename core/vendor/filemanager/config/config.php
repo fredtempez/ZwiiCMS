@@ -621,7 +621,7 @@ $config = array(
 	//activate or not the creation of one or more image resized with fixed path from filemanager folder
 	'fixed_path_from_filemanager' => array('../../../site/file/thumb/'),
 	//fixed path of the image folder from the current position on upload folder
-	'fixed_image_creation_name_to_prepend' => array('mini_'),
+	'fixed_image_creation_name_to_prepend' => array(self::THUMBS_SEPARATOR),
 	//name to prepend on filename
 	'fixed_image_creation_to_append' => array(''),
 	//name to appendon filename

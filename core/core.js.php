@@ -144,6 +144,11 @@ core.noticeRemove = function (id) {
 /**
  * Scripts à exécuter en premier
  */
+// Prévention du FOUC (Flash of Unstyled Content)
+core.preventFouc = function() {
+    document.body.classList.add('ready');
+};
+
 core.start = function () {
     /**
      * Remonter en haut au clic sur le bouton
@@ -423,6 +428,13 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+
+// Masquer le contenu jusqu'au chargement complet
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', core.preventFouc);
+} else {
+    core.preventFouc();
+}
 
 $(document).ready(function () {
     /**

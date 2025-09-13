@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 13.7.01
+### Corrections
+- Correction de la méthode de préchargement des feuilles de style pour éviter l'effet FOUC.
+
 ## Version 13.7.00
 ### Optimisations et améliorations
 - Optimisation des classes de base de données.

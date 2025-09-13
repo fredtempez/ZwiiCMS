@@ -53,7 +53,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '13.7.00';
+	const ZWII_VERSION = '13.7.01';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -1601,10 +1601,10 @@ class common
 	/**
 	 * Génère le chemin d'une miniature à partir d'un chemin source
 	 * @param string $sourcePath Chemin vers le fichier source
-	 * @param string $prefix Préfixe à ajouter au nom du fichier (par défaut: 'mini_')
+	 * @param string $prefix Préfixe à ajouter au nom du fichier (par défaut: self::THUMBS_SEPARATOR)
 	 * @return string Chemin de la miniature
 	 */
-	public static function getThumb($sourcePath, $prefix = 'mini_')
+	public static function getThumb($sourcePath, $prefix = self::THUMBS_SEPARATOR)
 	{
 		// Vérifier si le chemin source est vide
 		if (empty($sourcePath)) {
