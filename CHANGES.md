@@ -1,10 +1,12 @@
 # Notes de mises à jour
 
+## Versiob 13.7.00
 ### Optimisations et améliorations
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
 - Complète la bibliothèque d'icônes.
 - Ajoute des options au script Datatables.
+- Possibilité de réinitialiser le mot de passe depuis l'adresse email.
 
 ### Corrections de failles de sécurité :
 - Sécurisation de l'accès au gestionnaire de fichiers.
@@ -12,6 +14,7 @@
 - Supprime la normalisation des chemins dans le contenu des pages, la normalisation des chemins est effectuée par l'insertion d'URL absolues plutôt que relative dans TinyMCE.
 - Réécriture de la méthode de troncage des articles.
 - Corrige un warning dans la fenêtre d'installation.
+- Corrige des bugs dans la génération des flux RSS des modules Download et Blog.
 
 ## Renforcement des contrôles de permissions sur les modules et sur les pages :
 
