@@ -230,8 +230,6 @@ class config extends common
 				'access' => false
 			]);
 		} else {
-			// Sauvegarde la tabulation
-			$this->saveTabState('social');
 
 			// Mettre à jour le site map
 			$successSitemap = $this->updateSitemap();
@@ -517,16 +515,8 @@ class config extends common
 			]);
 
 			// Sauvegarde la position des onglets de la vue de l'utilisateur courant
-			$this->setData([
-				'user',
-				$this->getUser('id'),
-				'view',
-				[
-					'config' => $this->getInput('containerSelected'),
-					'page' => $this->getData(['user', $this->getUser('id'), 'view', 'page']),
-				]
-			]);
-
+			$this->saveTabState($this->getInput('containerSelected', helper::FILTER_STRING_SHORT));
+			
 			// Efface les fichiers de backup lorsque l'option est désactivée
 			if ($this->getInput('configFileBackup', helper::FILTER_BOOLEAN) === false) {
 				$path = realpath('site/data');
@@ -994,10 +984,8 @@ class config extends common
 			'user',
 			$this->getUser('id'),
 			'view',
-			[
-				'config' => $input,
-				'page' => $this->getData(['user', $this->getUser('id'), 'view', 'page']),
-			]
+			'config', 
+			$input
 		]);
 	}
 }

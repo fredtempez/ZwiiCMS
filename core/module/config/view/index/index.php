@@ -38,7 +38,11 @@
 </div>
 
 <!-- Champ caché pour transmettre l'onglet-->
-<?php echo template::hidden('containerSelected'); ?>
+<?php echo template::hidden( 'containerSelected',
+    ['value' => $this->getData(['user', $this->getUser('id'), 'view', 'config'])]
+);
+?>
+
 
 <!-- Pages de formulaires -->
 <?php include('core/module/config/view/setup/setup.php') ?>

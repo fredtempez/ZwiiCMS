@@ -66,11 +66,12 @@ $(document).ready(function () {
         $("#connectCaptchaStrong").prop("checked", false);
     }
 
-	let configLayout = "<?php echo $this->getData(['user', $this->getUser('id'), 'view', 'config']);?>";
-	// Non défini, valeur par défaut
-	if (configLayout == "") {
+	// Récupérer la valeur du champ caché containerSelected
+	let configLayout = $('input[name="containerSelected"]').val();
+    // Si non défini, valeur par défaut
+	if (!configLayout) {
         configLayout = "setup"; 
-	 }
+	}
 
     $("#socialContainer").hide();
     $("#connectContainer").hide();

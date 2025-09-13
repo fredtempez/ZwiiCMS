@@ -3,6 +3,7 @@
 ## Version 13.7.01
 ### Corrections
 - Correction de la méthode de préchargement des feuilles de style pour éviter l'effet FOUC.
+- Correction de la récupération de la position des onglets de la vue Config pour l'utilisateur courant.
 
 ## Version 13.7.00
 ### Optimisations et améliorations
