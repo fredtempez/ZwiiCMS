@@ -1,6 +1,6 @@
 # Notes de mises à jour
 
-## Versiob 13.7.00
+## Version 13.7.00
 ### Optimisations et améliorations
 - Optimisation des classes de base de données.
 - Ajoute un cache au système de gestion des fichiers json.
