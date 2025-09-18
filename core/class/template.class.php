@@ -387,7 +387,7 @@ class template
                 '&lang=' . $attributes['language'] .
                 '&field_id=' . $attributes['id'] .
                 '&type=' . $attributes['type'] .
-                '&akey=' . md5_file(core::DATA_DIR . 'core.json') .
+                '&akey=' . md5_file(common::DATA_DIR . 'core.json') .
                 // Ajoute le nom du dossier si la variable est passée
                 (empty($attributes['folder']) ? '&fldr=/' : '&fldr=' . $attributes['folder']) .
                 ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
@@ -1124,20 +1124,20 @@ class template
      *
      * @param string $nameId     Identifiant unique du champ, utilisé pour name et id
      * @param array  $attributes Tableau des attributs du champ avec les clés suivantes :
-     *     @type boolean $before        Active la récupération des données précédentes en cas d'erreur (défaut: true)
-     *     @type string  $class        Classes CSS additionnelles pour l'input (défaut: '')
-     *     @type string  $classWrapper Classes CSS additionnelles pour le wrapper (défaut: '')
-     *     @type boolean $noDirty      Désactive le marquage dirty du champ (défaut: false)
-     *     @type boolean $disabled     Désactive le champ (défaut: false)
-     *     @type string  $help         Texte d'aide affiché sous le label (défaut: '')
-     *     @type string  $label        Texte du label (défaut: '')
-     *     @type string  $placeholder  Texte de placeholder (défaut: '')
-     *     @type boolean $readonly     Rend le champ en lecture seule (défaut: false)
-     *     @type mixed   $value        Valeur initiale du champ (défaut: '')
-     *     @type number  $min          Valeur minimum autorisée (défaut: null)
-     *     @type number  $max          Valeur maximum autorisée (défaut: null)
-     *     @type number  $step         Pas d'incrémentation (ex: 1 pour entiers, 0.01 pour prix) (défaut: null)
-     *     @type string  $pattern      Expression régulière de validation (défaut: null)
+     *     @var boolean $before        Active la récupération des données précédentes en cas d'erreur (défaut: true)
+     *     @var string  $class        Classes CSS additionnelles pour l'input (défaut: '')
+     *     @var string  $classWrapper Classes CSS additionnelles pour le wrapper (défaut: '')
+     *     @var boolean $noDirty      Désactive le marquage dirty du champ (défaut: false)
+     *     @var boolean $disabled     Désactive le champ (défaut: false)
+     *     @var string  $help         Texte d'aide affiché sous le label (défaut: '')
+     *     @var string  $label        Texte du label (défaut: '')
+     *     @var string  $placeholder  Texte de placeholder (défaut: '')
+     *     @var boolean $readonly     Rend le champ en lecture seule (défaut: false)
+     *     @var mixed   $value        Valeur initiale du champ (défaut: '')
+     *     @var number  $min          Valeur minimum autorisée (défaut: null)
+     *     @var number  $max          Valeur maximum autorisée (défaut: null)
+     *     @var number  $step         Pas d'incrémentation (ex: 1 pour entiers, 0.01 pour prix) (défaut: null)
+     *     @var string  $pattern      Expression régulière de validation (défaut: null)
      *
      * @return string Code HTML du champ number complet
      */

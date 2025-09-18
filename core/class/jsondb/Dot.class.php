@@ -10,7 +10,7 @@ use ArrayAccess;
  * This class provides dot notation access to arrays, so it's easy to handle
  * multidimensional data in a clean way.
  */
-class Dot implements \ArrayAccess, \Iterator, \Countable
+class Dot implements ArrayAccess, \Iterator, \Countable
 {
 
     /** @var array Data */
