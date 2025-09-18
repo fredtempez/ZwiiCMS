@@ -783,9 +783,31 @@ class core extends common
 			header('Location:' . helper::baseUrl() . 'user/login/');
 			exit();
 		}
+		// Redirection vers la page de connexion si la page nécessite une authentification et que l'utilisateur n'est pas connecté
+		if ($access === null) {
+			// Envoyer vers la page de connexion
+			if (
+				// Vérifie si la redirection après connexion est activée dans la configuration
+				$this->getData(['config', 'connect', 'redirectLogin']) ===  true
+				// Vérifie que l'utilisateur n'est pas connecté
+				&& $this->isConnected() === false
+				// Vérifie que l'URL actuelle n'est pas déjà sur le contrôleur 'user'
+				&& $this->getUrl(0) !== 'user' 
+				// Vérifie que l'URL actuelle n'est pas sur l'action 'login'
+				&& $this->getUrl(1) !== 'login'
+				// Vérifie que la page actuelle nécessite une authentification (est dans la liste des accès concurrents)
+				&& in_array($this->getUrl(0), self::$concurrentAccess)
+			){
+				http_response_code(302);
+				header('Location:' . helper::baseUrl() . 'user/login/');
+				exit();
+			}
+		}
+		// Page protégée
 		if ($access === false) {
-			http_response_code(403);
+			// Redirections 403 classiques
 			if ($accessInfo['userName']) {
+				http_response_code(403);
 				$this->addOutput([
 					'title' => 'Accès verrouillé',
 					'content' => template::speech('<p>' . sprintf(helper::translate('La page %s est ouverte par l\'utilisateur %s</p><p><a style="color:inherit" href="javascript:history.back()">%s</a></p>'), $accessInfo['pageId'], $accessInfo['userName'], helper::translate('Retour')))
@@ -796,8 +818,10 @@ class core extends common
 					$this->getData(['locale', 'page403']) !== 'none'
 					and $this->getData(['page', $this->getData(['locale', 'page403'])])
 				) {
+					http_response_code(302);
 					header('Location:' . helper::baseUrl() . $this->getData(['locale', 'page403']));
 				} else {
+					http_response_code(403);
 					$this->addOutput([
 						'title' => 'Accès interdit',
 						'content' => template::speech('<p>' . helper::translate('Vous n\'êtes pas autorisé à consulter cette page (erreur 403)') . '</p><p><a style="color:inherit" href="javascript:history.back()">' . helper::translate('Retour') . '</a></p>')
