@@ -649,7 +649,7 @@ class template
         switch ($langId) {
             case '':
                 break;
-            case array_key_exists($langId, core::$languages):
+            case array_key_exists($langId, common::$languages):
                 $lang = $langId;
                 break;
             case 'selected':
