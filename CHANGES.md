@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 13.8.00
+## Modifications 
+- La méthode ico() admet un nouveau paramètre disabled. Cette propriété désactive le lien href, l'icône n'est donc plus cliquable.
+
 ## Version 13.7.01
 ### Corrections
 - Correction de la méthode de préchargement des feuilles de style pour éviter l'effet FOUC.

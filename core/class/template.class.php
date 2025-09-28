@@ -382,16 +382,16 @@ class template
         $html .= sprintf(
             '<a
                 href="' .
-                helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
-                '?relative_url=1' .
-                '&lang=' . $attributes['language'] .
-                '&field_id=' . $attributes['id'] .
-                '&type=' . $attributes['type'] .
-                '&akey=' . md5_file(common::DATA_DIR . 'core.json') .
+            helper::baseUrl(false) . 'core/vendor/filemanager/dialog.php' .
+            '?relative_url=1' .
+            '&lang=' . $attributes['language'] .
+            '&field_id=' . $attributes['id'] .
+            '&type=' . $attributes['type'] .
+            '&akey=' . md5_file(common::DATA_DIR . 'core.json') .
                 // Ajoute le nom du dossier si la variable est passée
-                (empty($attributes['folder']) ? '&fldr=/' : '&fldr=' . $attributes['folder']) .
-                ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
-                . '"
+            (empty($attributes['folder']) ? '&fldr=/' : '&fldr=' . $attributes['folder']) .
+            ($attributes['extensions'] ? '&extensions=' . $attributes['extensions'] : '')
+            . '"
                 class="inputFile %s %s"
                 %s
                 data-lity
@@ -421,7 +421,7 @@ class template
      * @param array $attributes Attributs ($key => $value)
      * @return string
      */
-   public static function upload($nameId, array $attributes = [])
+    public static function upload($nameId, array $attributes = [])
     {
         // Attributs par défaut
         $attributes = array_merge([
@@ -626,12 +626,13 @@ class template
             'attr' => '',
             'help' => '',
             'id' => '',
+            'disabled' => false,
         ], $attributes);
         // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
         // Contenu de l'icône
         $alt = $attributes['help'] ? $attributes['help'] : $ico;
-        $item = $attributes['href'] ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" alt="' . $alt . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
+        $item = $attributes['href'] && $attributes['disabled'] === false ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" alt="' . $alt . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
         $item .= '<span class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
         return $item;
