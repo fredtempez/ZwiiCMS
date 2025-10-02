@@ -3,6 +3,7 @@
 ## Version 13.8.00
 ## Modifications 
 - La méthode ico() admet un nouveau paramètre disabled. Cette propriété désactive le lien href, l'icône n'est donc plus cliquable.
+- Optimise la recherche d'un accès concurrent et accélère l'affichage des pages.
 
 ## Version 13.7.01
 ### Corrections

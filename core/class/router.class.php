@@ -498,27 +498,31 @@ class core extends common
 		 * - Une partie de l'URL fait partie  de la liste de filtrage (édition d'un module etc..)
 		 * - L'édition est ouverte depuis un temps dépassé, on considère que la page est restée ouverte et qu'elle ne sera pas validée
 		 */
+		// Récupérer les données utilisateurs une seule fois
+		$usersData = $this->getData(['user']) ?: [];
 		$accessInfo['userName'] = '';
 		$accessInfo['pageId'] = '';
-		if (
-			is_array($this->getData(['user']))
-			&& empty($this->getData(['user'])) === false
-		) {
-			foreach ($this->getData(['user']) as $userId => $userIds) {
-				if (!is_null($this->getData(['user', $userId, 'accessUrl']))) {
-					$t = explode('/', $this->getData(['user', $userId, 'accessUrl']));
+
+		// Vérifier si l'utilisateur est connecté et que ce n'est pas une page de cours/swap
+		if (!empty($usersData) && $this->getUser('id')) {
+			$currentUrl = $this->getUrl();
+			$currentTime = time();
+			$currentUserId = $this->getUser('id');
+			
+			foreach ($usersData as $userId => $userData) {
+				if (!isset($userData['accessUrl']) || $userId === $currentUserId) {
+					continue;
 				}
-				if (
-					$this->getUser('id') &&
-					$userId !== $this->getUser('id') &&
-					$this->getData(['user', $userId, 'accessUrl']) === $this->getUrl() &&
-					array_intersect($t, common::$concurrentAccess) &&
-					//array_intersect($t, common::$accessExclude) !== false &&
-					time() < $this->getData(['user', $userId, 'accessTimer']) + common::ACCESS_TIMER
-				) {
+				
+				$urlParts = explode('/', $userData['accessUrl']);
+				$isConcurrentAccess = !empty(array_intersect($urlParts, common::$concurrentAccess));
+				$isAccessTimerValid = $currentTime < ($userData['accessTimer'] ?? 0) + common::ACCESS_TIMER;
+				
+				if ($userData['accessUrl'] === $currentUrl && $isConcurrentAccess && $isAccessTimerValid) {
 					$access = false;
-					$accessInfo['userName'] = $this->getData(['user', $userId, 'lastname']) . ' ' . $this->getData(['user', $userId, 'firstname']);
-					$accessInfo['pageId'] = end($t);
+					$accessInfo['userName'] = ($userData['lastname'] ?? '') . ' ' . ($userData['firstname'] ?? '');
+					$accessInfo['pageId'] = end($urlParts);
+					break; // On sort dès qu'on trouve un accès concurrent
 				}
 			}
 		}
