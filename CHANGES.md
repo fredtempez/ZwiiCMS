@@ -1,7 +1,8 @@
 # Notes de mises à jour
 
 ## Version 13.8.01
-### Correction
+Optimisation de l'effacité de la méthode récupérant l'id de l'utilisateur.
+### Corrections
 - Corrige la rotation des fichiers de journalisation.
 - Petites corrections dans le script gérant les upload du gestionnaire de fichiers.
 

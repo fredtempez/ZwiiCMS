@@ -1215,10 +1215,12 @@ class common
 	 */
 	public function getUser($key, $perm1 = null, $perm2 = null)
 	{
-		if (is_array($this->user) === false) {
+		if ($this->isConnected() === false) {
+			return false;
+		} elseif (is_array($this->user) === false) {
 			return false;
 		} elseif ($key === 'id') {
-			return isset($_SESSION['ZWII_USER_ID']) ? $_SESSION['ZWII_USER_ID'] : false;
+			return $_SESSION['ZWII_USER_ID'] ?? false;
 		} elseif ($key === 'permission') {
 			return $this->getPermission($perm1, $perm2);
 		} elseif (array_key_exists($key, $this->user)) {
