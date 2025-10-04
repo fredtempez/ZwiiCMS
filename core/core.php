@@ -1218,7 +1218,7 @@ class common
 		if (is_array($this->user) === false) {
 			return false;
 		} elseif ($key === 'id') {
-			return isset($_SESSION['ZWII_USER_ID']) ? $_SESSION['ZWII_USER_ID'] : null;
+			return isset($_SESSION['ZWII_USER_ID']) ? $_SESSION['ZWII_USER_ID'] : false;
 		} elseif ($key === 'permission') {
 			return $this->getPermission($perm1, $perm2);
 		} elseif (array_key_exists($key, $this->user)) {
