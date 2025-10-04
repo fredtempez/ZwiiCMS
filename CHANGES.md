@@ -1,7 +1,12 @@
 # Notes de mises à jour
 
+## Version 13.8.01
+### Correction
+- Corrige la rotation des fichiers de journalisation.
+- Petites corrections dans le script gérant les upload du gestionnaire de fichiers.
+
 ## Version 13.8.00
-## Modifications 
+### Modifications 
 - La méthode ico() admet un nouveau paramètre disabled. Cette propriété désactive le lien href, l'icône n'est donc plus cliquable.
 - Optimise la recherche d'un accès concurrent et accélère l'affichage des pages.
 
