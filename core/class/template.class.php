@@ -603,16 +603,32 @@ class template
     }
 
     /**
-     * Crée un icône
-     * @Array :
-     * @param string $ico Classe de l'icône
-     * @param string $margin Ajoute un margin autour de l'icône (choix : left, right, all)
-     * @param bool $animate Ajoute une animation à l'icône
-     * @param string $fontSize Taille de la police
-     * @param string $href lien vers une url
-     * @param string $help popup d'aide
-     * @param string $id de l'élement
-     * @return string
+     * Crée une icône avec des fonctionnalités avancées
+     * 
+     * @param string $ico Classe de l'icône (sans le préfixe 'zwiico-')
+     * @param array $attributes Tableau d'attributs optionnels :
+     *   - string  $margin   Marge autour de l'icône ('left', 'right', 'all' ou '')
+     *   - bool    $animate  Active l'animation de rotation de l'icône
+     *   - string  $fontSize Taille de l'icône (ex: '1em', '16px')
+     *   - string  $href     Lien URL (transforme l'icône en lien cliquable)
+     *   - string  $help     Texte d'aide affiché au survol (attribut title)
+     *   - string  $id       ID HTML de l'élément
+     *   - string  $class    Classes CSS supplémentaires à ajouter à l'icône
+     *   - bool    $disabled Désactive le lien si true
+     *   - string  $attr     Attributs HTML supplémentaires à ajouter à la balise
+     * 
+     * @return string Code HTML de l'icône
+     * 
+     * @example
+     * // Icône simple
+     * echo template::ico('user');
+     * 
+     * // Icône avec lien et aide
+     * echo template::ico('edit', [
+     *     'href' => 'edit/123',
+     *     'help' => 'Modifier',
+     *     'class' => 'text-primary'
+     * ]);
      */
     // public static function ico($ico, $margin = '', $animate = false, $fontSize = '1em') {
     public static function ico($ico, array $attributes = [])
@@ -627,13 +643,18 @@ class template
             'help' => '',
             'id' => '',
             'disabled' => false,
+            'class' => '',
         ], $attributes);
         // Traduction de l'aide
         $attributes['help'] = helper::translate($attributes['help']);
         // Contenu de l'icône
         $alt = $attributes['help'] ? $attributes['help'] : $ico;
         $item = $attributes['href'] && $attributes['disabled'] === false ? '<a id="' . $attributes['id'] . '" data-tippy-content="' . $attributes['help'] . '" alt="' . $alt . '" href="' . $attributes['href'] . '" ' . $attributes['attr'] . ' >' : '';
-        $item .= '<span class="zwiico-' . $ico . ($attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '') . ($attributes['animate'] ? ' animate-spin' : '') . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
+        $class = 'zwiico-' . $ico;
+        $class .= $attributes['margin'] ? ' zwiico-margin-' . $attributes['margin'] : '';
+        $class .= $attributes['animate'] ? ' animate-spin' : '';
+        $class .= $attributes['class'] ? ' ' . $attributes['class'] : '';
+        $item .= '<span class="' . trim($class) . '" style="font-size:' . $attributes['fontSize'] . '"><!----></span>';
         $item .= ($attributes['href']) ? '</a>' : '';
         return $item;
     }
