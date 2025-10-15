@@ -1293,10 +1293,12 @@ class common
 	 */
 	public function isConnected()
 	{
-		return (
-			!empty($this->getUser('authKey')) &&
-			$this->getUser('authKey') === $this->getInput('ZWII_AUTH_KEY')
-		);
+		// Vérifie d'abord si l'utilisateur est chargé et a une clé d'authentification
+		if (is_array($this->user) === false || empty($this->user['authKey'])) {
+			return false;
+		}
+		// Vérifie que la clé d'authentification correspond
+		return $this->user['authKey'] === $this->getInput('ZWII_AUTH_KEY');
 	}
 
 	/**
