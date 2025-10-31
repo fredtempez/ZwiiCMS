@@ -16,7 +16,7 @@
 class blog extends common
 {
 
-	const VERSION = '8.3';
+	const VERSION = '8.4';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -195,11 +195,12 @@ class blog extends common
 		date_default_timezone_set('UTC');
 		$feeds = new \FeedWriter\RSS2();
 
-		// En-tête
-		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']) : '');
+		// En-tête avec nettoyage du contenu
+		$pageTitle = $this->getData(['page', $this->getUrl(0), 'title']);
+		$feeds->setTitle($pageTitle ? helper::cleanRssText($pageTitle) : '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		if ($this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
-			$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
+		if ($metaDescription = $this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
+			$feeds->setDescription(helper::cleanRssText($metaDescription));
 		}
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
@@ -209,21 +210,28 @@ class blog extends common
 		$articleIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach ($articleIdsPublishedOns as $articleId => $articlePublishedOn) {
 			if ($articlePublishedOn <= time() and $articleIdsStates[$articleId]) {
+				// Récupération des données de l'article
+				$articleData = $this->getData(['module', $this->getUrl(0), 'posts', $articleId]);
+				$articleTitle = helper::cleanRssText($articleData['title']);
+				
 				// Miniature
-				$picture = $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']);
-				$thumb = $this->getThumb($picture);
+				$thumb = $this->getThumb($articleData['picture']);
+				
 				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
+				
 				// Signature de l'article
-				$author = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'userId']));
+				$author = $this->signature(helper::cleanRssText($articleData['userId'], true));
+				
+				// Construction du contenu avec nettoyage des données
 				$newsArticle->addElementArray([
-					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title']),
+					'title' => $articleTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $articleId,
 					'description' => '<img src="' . $thumb
-						. '" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
-						. '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'title'])
-						. '" />' .
-						$this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'content']),
+						. '" alt="' . helper::cleanRssText($articleTitle, true)
+						. '" title="' . helper::cleanRssText($articleTitle, true)
+						. '" />' . 
+						helper::cleanRssText($articleData['content']),
 				]);
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $articleId);

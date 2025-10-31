@@ -15,7 +15,7 @@
 class download extends common
 {
 
-	const VERSION = '5.1';
+	const VERSION = '5.2';
 	const REALNAME = 'Ressources';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -179,12 +179,13 @@ class download extends common
 		date_default_timezone_set('UTC');
 		$feeds = new \FeedWriter\RSS2();
 
-		// En-tête
-		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']));
+		// En-tête avec nettoyage du contenu
+		$pageTitle = $this->getData(['page', $this->getUrl(0), 'title']);
+		$feeds->setTitle($pageTitle ? helper::cleanRssText($pageTitle) : '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
 		// Définir une description par défaut si vide
 		$description = $this->getData(['page', $this->getUrl(0), 'metaDescription']);
-		$feeds->setDescription(empty($description) ? 'Téléchargements disponibles' : $description);
+		$feeds->setDescription($description ? helper::cleanRssText($description) : 'Téléchargements disponibles');
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
@@ -193,21 +194,29 @@ class download extends common
 		$itemIdsStates = helper::arrayCollumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach ($itemIdsUpdateOns as $itemId => $itemIdsUpdateOn) {
 			if ($itemIdsUpdateOn <= time() and $itemIdsStates[$itemId]) {
+				// Récupération des données de l'item
+				$itemData = $this->getData(['module', $this->getUrl(0), 'posts', $itemId]);
+				$itemTitle = helper::cleanRssText($itemData['title']);
+				
 				// Miniature
-				$parts = explode('/', $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
-				$thumb = str_replace($parts[(count($parts) - 1)], self::THUMBS_SEPARATOR . $parts[(count($parts) - 1)], $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'thumb']));
+				$parts = explode('/', $itemData['thumb']);
+				$thumb = str_replace($parts[(count($parts) - 1)], self::THUMBS_SEPARATOR . $parts[(count($parts) - 1)], $itemData['thumb']);
+				
 				// Créer les items du flux
 				$newsitem = $feeds->createNewItem();
+				
 				// Signature de l'item
-				$author = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'userId']));
+				$author = $this->signature(helper::cleanRssText($itemData['userId'], true));
+				
+				// Construction du contenu avec nettoyage des données
 				$newsitem->addElementArray([
-					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'title']),
+					'title' => $itemTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $itemId,
 					'description' => '<img src="' . helper::baseUrl() . self::FILE_DIR . 'thumb/' . $thumb
-						. '" alt="' . $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'title'])
-						. '" title="' . $this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'title'])
+						. '" alt="' . helper::cleanRssText($itemTitle, true)
+						. '" title="' . helper::cleanRssText($itemTitle, true)
 						. '" />' .
-						$this->getData(['module', $this->getUrl(0), 'posts', $itemId, 'content']),
+						helper::cleanRssText($itemData['content']),
 				]);
 				$newsitem->setAuthor($author, 'no@mail.com');
 				$newsitem->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $itemId);

@@ -16,7 +16,7 @@
 class news extends common
 {
 
-	const VERSION = '6.2';
+	const VERSION = '6.3';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -123,13 +123,13 @@ class news extends common
 
 		$feeds = new \FeedWriter\RSS2();
 
-		// En-tête
-		$feeds->setTitle($this->getData(['page', $this->getUrl(0), 'title']) ? $this->getData(['page', $this->getUrl(0), 'title']) : '');
+		// En-tête avec nettoyage du contenu
+		$pageTitle = $this->getData(['page', $this->getUrl(0), 'title']);
+		$feeds->setTitle($pageTitle ? helper::cleanRssText($pageTitle) : '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
-		if ($this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
-			$feeds->setDescription($this->getData(['page', $this->getUrl(0), 'metaDescription']));
+		if ($metaDescription = $this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
+			$feeds->setDescription(helper::cleanRssText($metaDescription));
 		}
-		;
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
 		$feeds->addGenerator();
@@ -138,12 +138,19 @@ class news extends common
 		$newsIdsStates = helper::arrayColumn($this->getData(['module', $this->getUrl(0), 'posts']), 'state', 'SORT_DESC');
 		foreach ($newsIdsPublishedOns as $newsId => $newsPublishedOn) {
 			if ($newsPublishedOn <= time() and $newsIdsStates[$newsId]) {
+				// Récupération des données de l'article
+				$articleData = $this->getData(['module', $this->getUrl(0), 'posts', $newsId]);
+				$articleTitle = helper::cleanRssText($articleData['title']);
+				
+				// Création de l'article avec nettoyage des données
 				$newsArticle = $feeds->createNewItem();
-				$author = $this->signature($this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'userId']));
+				$author = $this->signature(helper::cleanRssText($articleData['userId'], true));
+				
+				// Construction du contenu avec nettoyage des données
 				$newsArticle->addElementArray([
-					'title' => $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'title']),
+					'title' => $articleTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
-					'description' => $this->getData(['module', $this->getUrl(0), 'posts', $newsId, 'content'])
+					'description' => helper::cleanRssText($articleData['content'])
 				]);
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId);

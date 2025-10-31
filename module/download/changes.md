@@ -1,3 +1,5 @@
+# Version 5.2
+- Corrige la génération du flux RSS au format UTF-8.
 # Version 5.1
 - Fournit une fonction de normalisation du chemin pour les membres non admins.
 - Mise à jour du gestionnaire de flux.

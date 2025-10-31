@@ -1,3 +1,5 @@
+# Version 8.4
+- Corrige la génération du flux RSS au format UTF-8.
 # Version 8.3
 - Augmente la dimension des commentaires des articles de blog.
 - Supprime l'effet de dégradé.

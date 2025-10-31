@@ -2,6 +2,7 @@
 
 class helper
 {
+
 	/**
 	 * Statut de la réécriture d'URL (pour éviter de lire le contenu du fichier .htaccess à chaque self::baseUrl())
 	 */
@@ -880,5 +881,24 @@ class helper
 		});
 
 		return $subdirs;
+	}
+
+	/**
+	 * Nettoie une chaîne de texte pour l'affichage dans un flux RSS
+	 * @param string $text Texte à nettoyer
+	 * @param bool $isAttribute Indique si le texte est destiné à un attribut HTML (ajoute htmlspecialchars)
+	 * @return string Texte nettoyé et encodé correctement
+	 */
+	public static function cleanRssText($text, $isAttribute = false)
+	{
+		// Décoder les entités HTML
+		$cleanText = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+		
+		// Si c'est pour un attribut HTML, échapper les caractères spéciaux
+		if ($isAttribute) {
+			$cleanText = htmlspecialchars($cleanText, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+		}
+		
+		return $cleanText;
 	}
 }

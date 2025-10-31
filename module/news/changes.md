@@ -1,3 +1,5 @@
+# Version 6.3
+- Corrige la génération du flux RSS au format UTF-8.
 # Version 6.2
 - Normalisation des chemins vers les ressourceS.
 # Version 6.1

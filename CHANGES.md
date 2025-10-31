@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+# Version 13.8.02
+- Fournit une méthode cleanRssText pour nettoyer les sorties de texte pour les flux RSS.
+
 ## Version 13.8.01
 Optimisation de l'efficacité de la méthode récupérant l'id de l'utilisateur.
 ### Corrections
