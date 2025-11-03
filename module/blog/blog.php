@@ -236,7 +236,8 @@ class blog extends common
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $articleId);
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
-				if (file_exists($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))) {
+				if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture'])
+					&& file_exists($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))) {
 					$imageData = getimagesize($thumb);
 					$newsArticle->addEnclosure(
 						$thumb,
