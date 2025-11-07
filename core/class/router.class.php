@@ -181,7 +181,7 @@ class core extends common
 			$css .= 'h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover{color:' . $colors['darken'] . '}';
 			// Les blocs
 			$colors = helper::colorVariants($this->getData(['theme', 'block', 'backgroundColor']));
-			$css .= '.block {border: 1px solid ' . $this->getdata(['theme', 'block', 'borderColor']) . ';}.block h4 {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
+			$css .= '.block {border: 1px solid ' . $this->getData(['theme', 'block', 'borderColor']) . ';}.block h4 {background-color:' . $colors['normal'] . ';color:' . $colors['text'] . ';}';
 
 			// Bannière
 
