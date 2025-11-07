@@ -1,13 +1,13 @@
 # Notes de mises à jour
 
-# Version 13.8.02
-- Fournit une méthode cleanRssText pour nettoyer les sorties de texte pour les flux RSS.
 
 ## Version 13.8.01
-Optimisation de l'efficacité de la méthode récupérant l'id de l'utilisateur.
+- Optimisation de l'efficacité de la méthode récupérant l'id de l'utilisateur.
+- Fournit une méthode cleanRssText pour nettoyer les sorties de texte pour les flux RSS.
 ### Corrections
 - Corrige la rotation des fichiers de journalisation.
-- Petites corrections dans le script gérant les upload du gestionnaire de fichiers.
+- Corrige la lecture de la réécriture dans la configuration occasionnant une erreur fatale sous Nginx.
+- Petites corrections dans le script gérant les téléversements du gestionnaire de fichiers.
 
 ## Version 13.8.00
 ### Modifications 
