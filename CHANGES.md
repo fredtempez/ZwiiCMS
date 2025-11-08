@@ -5,6 +5,7 @@
   - Optimisation de l'efficacité de la méthode récupérant l'id de l'utilisateur.
   - Fournit une méthode cleanRssText pour nettoyer les sorties de texte pour les flux RSS.
   - Nouvelles largeur de sites dans le thème.
+  - Optimisation du routeur.
   ### Corrections
   - Corrige la rotation des fichiers de journalisation.
   - Corrige la lecture de la réécriture dans la configuration occasionnant une erreur fatale sous Nginx.
