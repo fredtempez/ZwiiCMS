@@ -33,41 +33,48 @@ class core extends common
 			// Date de la dernière suppression
 			$this->setData(['core', 'lastClearTmp', $lastClearTmp]);
 		}
-		// Backup automatique des données
+		// Gestion des sauvegardes automatiques
 		$lastBackup = mktime(0, 0, 0);
-		if (
-			$this->getData(['config', 'autoBackup'])
-			and $lastBackup > $this->getData(['core', 'lastBackup']) + 86400
-			and $this->getData(['user']) // Pas de backup pendant l'installation
+		if ($this->getData(['config', 'autoBackup']) && 
+		    $lastBackup > $this->getData(['core', 'lastBackup']) + 86400 && 
+		    $this->getData(['user']) // Pas de backup pendant l'installation
 		) {
-			// Copie des fichier de données
-			helper::autoBackup(common::BACKUP_DIR, ['backup', 'tmp', 'file']);
-			// Date du dernier backup
-			$this->setData(['core', 'lastBackup', $lastBackup]);
-			// Supprime les backups de plus de 30 jours
-			$iterator = new DirectoryIterator(common::BACKUP_DIR);
-			foreach ($iterator as $fileInfos) {
-				if (
-					$fileInfos->isFile()
-					and $fileInfos->getBasename() !== '.htaccess'
-					and $fileInfos->getMTime() + (86400 * 30) < time()
-				) {
-					@unlink($fileInfos->getPathname());
-				}
-			}
+		    // Effectuer la sauvegarde
+		    if (helper::autoBackup(common::BACKUP_DIR, ['backup', 'tmp', 'file'])) {
+		        $this->setData(['core', 'lastBackup', $lastBackup]);
+		        
+		        // Nettoyage des anciennes sauvegardes (plus de 30 jours)
+		        $iterator = new DirectoryIterator(common::BACKUP_DIR);
+		        $now = time();
+		        foreach ($iterator as $file) {
+		            if ($file->isFile() && 
+		                $file->getBasename() !== '.htaccess' && 
+		                $file->getMTime() + (86400 * 30) < $now
+		            ) {
+		                @unlink($file->getPathname());
+		            }
+		        }
+		    }
 		}
 
-		// Crée le fichier de personnalisation avancée
-		if (file_exists(common::DATA_DIR . 'custom.css') === false) {
-			$this->secure_file_put_contents(common::DATA_DIR . 'custom.css', file_get_contents('core/module/theme/resource/custom.css'));
-			chmod(common::DATA_DIR . 'custom.css', 0755);
+		// Initialisation des fichiers CSS nécessaires
+		$cssFiles = [
+		    'custom.css' => 'core/module/theme/resource/custom.css',
+		    'theme.css' => '',
+		    'admin.css' => ''
+		];
+
+		foreach ($cssFiles as $file => $source) {
+		    $filePath = common::DATA_DIR . $file;
+		    if (!file_exists($filePath)) {
+		        $content = $source ? @file_get_contents($source) : '';
+		        if ($content !== false || $source === '') {
+		            if ($this->secure_file_put_contents($filePath, $content)) {
+		                chmod($filePath, 0755);
+		            }
+		        }
+		    }
 		}
-		// Crée le fichier de personnalisation
-		if (file_exists(common::DATA_DIR . 'theme.css') === false) {
-			$this->secure_file_put_contents(common::DATA_DIR . 'theme.css', '');
-			chmod(common::DATA_DIR . 'theme.css', 0755);
-		}
-		// Crée le fichier de personnalisation de l'administration
 		if (file_exists(common::DATA_DIR . 'admin.css') === false) {
 			$this->secure_file_put_contents(common::DATA_DIR . 'admin.css', '');
 			chmod(common::DATA_DIR . 'admin.css', 0755);
