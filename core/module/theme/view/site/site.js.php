@@ -14,16 +14,37 @@
 /**
  * Aperçu en direct
  */
-$("input, select").on("change",function() {
-
-	/**
-	* Option de marge si la taille n'est pas fluide
-	*/
-	if ($('#themeSiteWidth').val() === '100%') {
-		$("#themeSiteMarginWrapper").prop("checked", true);
-		$("#themeSiteMarginWrapper").hide();
-	} else {
-		$("#themeSiteMarginWrapper").show();
-	}
-
+$(document).ready(function() {
+    // Fonction pour mettre à jour la largeur
+    function updateWidth() {
+        var width = $('#themeSiteWidth').val();
+        var margin = $('#themeSiteMargin').is(':checked');
+        
+        // Appliquer la largeur au conteneur #site
+        $('#site').css({
+            'max-width': width,
+            'margin': margin ? '0 auto' : '0',
+            'transition': 'all 0.3s ease-in-out'
+        });
+    }
+    
+    // Appliquer les valeurs initiales
+    updateWidth();
+    
+    // Au changement de largeur
+    $('#themeSiteWidth').on('change', function() {
+        // Gestion de la marge automatique pour 100%
+        if ($(this).val() === '100%') {
+            $('#themeSiteMargin').prop('checked', true);
+            $('#themeSiteMarginWrapper').hide();
+        } else {
+            $('#themeSiteMarginWrapper').show();
+        }
+        
+        updateWidth();
+    });
+    
+    // Au changement de la case à cocher de marge
+    $('#themeSiteMargin').on('change', updateWidth);
 });
+
