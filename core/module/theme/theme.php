@@ -211,10 +211,13 @@ class theme extends common
 		'capitalize' => 'Majuscule à chaque mot'
 	];
 	public static $siteWidths = [
-		'750px' => '750 pixels',
-		'960px' => '960 pixels',
-		'1170px' => '1170 pixels',
-		'100%' => '100%',
+		'750px' => '750 pixels (Mobile)',
+		'960px' => '960 pixels (Tablette)',
+		'1140px' => '1140 pixels (Petit bureau)',
+		'1170px' => '1170 pixels (Bureau standard)',
+		'1280px' => '1280 pixels (Grand écran)',
+		'1400px' => '1400 pixels (Très grand écran)',
+		'100%' => '100% (Pleine largeur)',
 	];
 	public static $headerWide = [
 		'auto auto' => 'Automatique',
