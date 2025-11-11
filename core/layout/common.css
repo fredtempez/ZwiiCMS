@@ -448,17 +448,18 @@ td>.col12 {
     margin-left: 5px;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 960px) {
     #bar #barLeft {
         float: left;
+        font-size: 16px;
     }
     #bar #barRight {
         float: right;
-        font-size: 12px;
+        font-size: 16px;
     }
 }
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 959px) {
     #bar {
         text-align: center;
         padding: 0 1;
@@ -477,7 +478,7 @@ td>.col12 {
     }
     #bar #barLeft,
     #bar #barRight {
-        font-size: 1.6em;
+        font-size: 35px;
     }
     #bar #displayUsername {
         display: none;
