@@ -1,4 +1,5 @@
 <?php echo template::formOpen('themeHeaderForm'); ?>
+<div id="zwii_site_content" data-variable="<?php echo htmlspecialchars(isset($_SESSION['ZWII_SITE_CONTENT']) ? $_SESSION['ZWII_SITE_CONTENT'] : 'home'); ?>"></div>
 <div class="row">
     <div class="col1">
         <?php echo template::button('themeHeaderBack', [
