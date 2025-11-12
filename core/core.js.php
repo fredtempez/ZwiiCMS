@@ -155,6 +155,19 @@ core.toggleAdminBar = function() {
     const bar = document.getElementById('bar');
     if (!bar) return;
 
+    // Lecture de la configuration de la barre
+    var isPermanent = "<?php echo $this->getData(['config','timerBar']) ? 'true' : 'false';";
+
+    // Si la barre est permanente, on l'affiche tout de suite
+    if (isPermanent === 'true') {
+        bar.style.display = 'block';
+        bar.setAttribute('class', 'visible');
+        return; // On sort de la fonction car pas besoin du reste du code
+    }
+    
+    // Si on arrive ici, la barre est escamotable
+    var timerBar = 800; // 0.8 seconde par défaut
+
     // Afficher la barre (elle est masquée par défaut en CSS)
     bar.style.display = 'block';
     

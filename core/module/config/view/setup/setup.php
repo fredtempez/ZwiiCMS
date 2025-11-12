@@ -34,13 +34,19 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col6">
+					<div class="col4">
+						<?php echo template::checkbox('configTimerBar', true, 'Barre d\'administration fixe', [
+							'checked' => $this->getData(['config', 'timerBar']),
+							'help' => 'La barre d\'administration est escamotable et apparaît en déplaçant le curseur en haut de l\'écran'
+						]); ?>
+					</div>
+					<div class="col4">
 						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 							'checked' => $this->getData(['config', 'cookieConsent']),
 							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
 						]); ?>
 					</div>
-					<div class="col6">
+					<div class="col4">
 						<?php echo template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
 							'checked' => helper::checkRewrite(),
 							'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',

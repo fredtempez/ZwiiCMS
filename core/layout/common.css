@@ -277,7 +277,7 @@ td>.col12 {
     transform: translateX(-50%);
     max-width: 500px;
     width: 100%;
-    z-index: 20;
+    z-index: 1100;
     text-align: center;
     animation: notificationBounce .5s;
     top: 30px;
