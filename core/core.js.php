@@ -148,6 +148,7 @@ core.noticeRemove = function (id) {
 core.preventFouc = function() {
     document.body.classList.add('ready');
 };
+
 /**
  * Gère l'affichage de la barre d'administration en fonction de la position de la souris
  */
@@ -156,7 +157,8 @@ core.toggleAdminBar = function() {
     if (!bar) return;
 
     // Lecture de la configuration de la barre
-    var isPermanent = "<?php echo $this->getData(['config','timerBar']) ? 'true' : 'false';";
+
+    var isPermanent = "<?php echo $this->getData(['config','timerBar']) ? 'true' : 'false'; ?>";
 
     // Si la barre est permanente, on l'affiche tout de suite
     if (isPermanent === 'true') {
@@ -176,7 +178,7 @@ core.toggleAdminBar = function() {
         bar.setAttribute('class', 'visible');
         setTimeout(() => {
             bar.removeAttribute('class');
-        }, 800); // La barre reste visible pendant 0.8 seconde
+        }, timerBar); // La barre reste visible pendant 0.8 seconde
     }, 500); // Délai de 0.5 seconde avant de commencer l'animation
     
     // Zone sensible en haut de l'écran (20 premiers pixels)
@@ -219,6 +221,7 @@ core.toggleAdminBar = function() {
         }
     });
 };
+
 
 core.start = function () {
     // Initialiser le basculement de la barre d'administration
