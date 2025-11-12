@@ -160,9 +160,9 @@ core.toggleAdminBar = function() {
     
     // Animation d'introduction au chargement (plus courte)
     setTimeout(() => {
-        bar.classList.add('visible');
+        bar.setAttribute('class', 'visible');
         setTimeout(() => {
-            bar.classList.remove('visible');
+            bar.removeAttribute('class');
         }, 800); // La barre reste visible pendant 0.8 seconde
     }, 500); // Délai de 0.5 seconde avant de commencer l'animation
     
@@ -177,7 +177,7 @@ core.toggleAdminBar = function() {
         
         if (e.clientY <= SENSITIVE_AREA_HEIGHT) {
             if (!isInSensitiveArea) {
-                bar.classList.add('visible');
+                bar.setAttribute('class', 'visible');
                 isInSensitiveArea = true;
             }
         } else {
@@ -185,7 +185,7 @@ core.toggleAdminBar = function() {
                 // Délai avant de cacher la barre quand la souris quitte la zone
                 hideTimeout = setTimeout(() => {
                     if (!bar.matches(':hover')) {
-                        bar.classList.remove('visible');
+                        bar.removeAttribute('class');
                         isInSensitiveArea = false;
                     }
                 }, 500); // Délai de 500ms avant de cacher
@@ -201,7 +201,7 @@ core.toggleAdminBar = function() {
     bar.addEventListener('mouseleave', (e) => {
         // Ne pas cacher si on est toujours dans la zone sensible
         if (e.clientY > SENSITIVE_AREA_HEIGHT) {
-            bar.classList.remove('visible');
+            bar.removeAttribute('class');
             isInSensitiveArea = false;
         }
     });
