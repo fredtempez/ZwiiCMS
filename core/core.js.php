@@ -148,8 +148,68 @@ core.noticeRemove = function (id) {
 core.preventFouc = function() {
     document.body.classList.add('ready');
 };
+/**
+ * Gère l'affichage de la barre d'administration en fonction de la position de la souris
+ */
+core.toggleAdminBar = function() {
+    const bar = document.getElementById('bar');
+    if (!bar) return;
+
+    // Afficher la barre (elle est masquée par défaut en CSS)
+    bar.style.display = 'block';
+    
+    // Animation d'introduction au chargement (plus courte)
+    setTimeout(() => {
+        bar.classList.add('visible');
+        setTimeout(() => {
+            bar.classList.remove('visible');
+        }, 800); // La barre reste visible pendant 0.8 seconde
+    }, 500); // Délai de 0.5 seconde avant de commencer l'animation
+    
+    // Zone sensible en haut de l'écran (20 premiers pixels)
+    const SENSITIVE_AREA_HEIGHT = 20;
+    let isInSensitiveArea = false;
+    let hideTimeout;
+
+    // Afficher la barre quand la souris entre dans la zone sensible
+    document.addEventListener('mousemove', (e) => {
+        clearTimeout(hideTimeout);
+        
+        if (e.clientY <= SENSITIVE_AREA_HEIGHT) {
+            if (!isInSensitiveArea) {
+                bar.classList.add('visible');
+                isInSensitiveArea = true;
+            }
+        } else {
+            if (isInSensitiveArea) {
+                // Délai avant de cacher la barre quand la souris quitte la zone
+                hideTimeout = setTimeout(() => {
+                    if (!bar.matches(':hover')) {
+                        bar.classList.remove('visible');
+                        isInSensitiveArea = false;
+                    }
+                }, 500); // Délai de 500ms avant de cacher
+            }
+        }
+    });
+
+    // Gérer le survol de la barre pour éviter qu'elle ne disparaisse trop tôt
+    bar.addEventListener('mouseenter', () => {
+        clearTimeout(hideTimeout);
+    });
+
+    bar.addEventListener('mouseleave', (e) => {
+        // Ne pas cacher si on est toujours dans la zone sensible
+        if (e.clientY > SENSITIVE_AREA_HEIGHT) {
+            bar.classList.remove('visible');
+            isInSensitiveArea = false;
+        }
+    });
+};
 
 core.start = function () {
+    // Initialiser le basculement de la barre d'administration
+    core.toggleAdminBar();
     /**
      * Remonter en haut au clic sur le bouton
      */

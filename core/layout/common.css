@@ -388,17 +388,26 @@ td>.col12 {
 /* Barre de membre */
 
 #bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
     background: #212223;
     padding-left: 5px;
-    /* Pour éviter que le select touche le bord lorsque la fenêtre est redimensionnée */
     margin: 0;
-    /*-10px;*/
-    text-align: right;
-    position: -webkit-sticky;
-    /* Safari */
-    position: sticky;
-    top: 0;
-    z-index: 19;
+    /* Masquée par défaut avec transform pour l'animation */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    /* S'assure que la barre n'affecte pas le flux du document */
+    pointer-events: none;
+}
+
+#bar.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
 }
 
 
