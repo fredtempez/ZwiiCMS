@@ -160,10 +160,11 @@ core.toggleAdminBar = function() {
 
     var isPermanent = "<?php echo $this->getData(['config','timerBar']) ? 'true' : 'false'; ?>";
 
-    // Si la barre est permanente, on l'affiche tout de suite
+    // Si la barre est permanente, on l'affiche en mode fixe
     if (isPermanent === 'true') {
         bar.style.display = 'block';
-        bar.setAttribute('class', 'visible');
+        bar.setAttribute('class', 'fixed');
+        document.body.classList.add('bar-fixed');
         return; // On sort de la fonction car pas besoin du reste du code
     }
     

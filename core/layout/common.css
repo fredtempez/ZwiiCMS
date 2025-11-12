@@ -410,6 +410,31 @@ td>.col12 {
     pointer-events: auto;
 }
 
+/* Style pour la barre en mode fixe */
+#bar.fixed {
+    position: fixed;
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Ajoute un padding au body uniquement quand la barre est en mode fixe */
+body.bar-fixed {
+    padding-top: 45px;
+}
+
+/* S'assure que la bannière reste au-dessus de la barre */
+body.bar-fixed header {
+    position: relative;
+    z-index: 1001; /* Supérieur au z-index de la barre (1000) */
+}
+
+/* S'assure que le contenu de la bannière reste au-dessus */
+body.bar-fixed header * {
+    position: relative;
+    z-index: 1002;
+}
+
 
 /* fin barre pour les membres */
 
