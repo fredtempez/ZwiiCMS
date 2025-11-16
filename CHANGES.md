@@ -1,7 +1,9 @@
 # Notes de mises à jour
 
-## Version 13.9.01
-Dimension optimisée des icônes de la barre d'administration sur les petits écrans.
+## Version 13.10.00
+- Barre d'administration escamotable, une option permet de la garder fixe.
+- Animation de l'aperçu de changement de largeur du site d'administration.
+- Dimension optimisée des icônes de la barre d'administration sur les petits écrans.
 
 ## Version 13.9.00
 - Optimisation de l'efficacité de la méthode récupérant l'id de l'utilisateur.
