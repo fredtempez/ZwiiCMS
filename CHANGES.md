@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.10.01
+- Edition d'une page, l'id de la page ajoutée ne peut pas être un nom réservé du core.
+
 ## Version 13.10.00
 - Barre d'administration escamotable, une option permet de la garder fixe.
 - Animation de l'aperçu de changement de largeur du site d'administration.

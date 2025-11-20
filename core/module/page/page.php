@@ -170,6 +170,9 @@ class page extends common
 		} else {
 			$pageTitle = 'Nouvelle page';
 			$pageId = helper::increment(helper::filter($pageTitle, helper::FILTER_ID), $this->getData(['page']));
+			// Un id de page ne pas être identique à un nom réservé du core
+			$pageId = helper::increment($pageId, self::$coreModuleIds);
+			$pageId = helper::increment($pageId, self::$moduleIds);
 			$this->setData([
 				'page',
 				$pageId,
@@ -386,6 +389,7 @@ class page extends common
 					if ($pageId !== $this->getUrl(2)) {
 						// Incrémente le nouvel id de la page
 						$pageId = helper::increment($pageId, $this->getData(['page']));
+						// Un id de page ne pas être identique à un nom réservé du core
 						$pageId = helper::increment($pageId, self::$coreModuleIds);
 						$pageId = helper::increment($pageId, self::$moduleIds);
 						// Met à jour les enfants
@@ -581,10 +585,10 @@ class page extends common
 						mkdir(self::DATA_DIR . self::$siteContent . '/content', 0755);
 					}
 					// Récupération et nettoyage du contenu
-					$content = empty($this->getInput('pageEditContent', null)) 
-						? '<p></p>' 
+					$content = empty($this->getInput('pageEditContent', null))
+						? '<p></p>'
 						: str_replace('<p></p>', '<p>&nbsp;</p>', $this->getRelativePath($this->getInput('pageEditContent', null)));
-									
+
 					// Sauvegarde du contenu
 					$this->setPage($pageId, $content, self::$siteContent);
 
