@@ -29,7 +29,11 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave supercode  fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
+	plugins: "advlist anchor autolink autoresize autosave supercode fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
+	// Hauteur minimale de l'éditeur (en pixels)
+	min_height: 300,
+	// Hauteur maximale de l'éditeur (en pixels)
+	max_height: 600,
 	// Contenu du menu
 	menu: {
 		file: { title: 'File', items: 'newdocument restoredraft' },
@@ -49,7 +53,6 @@ tinymce.init({
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
-	max_height: 600,
 	// supercode
 	supercode: {
 		// Apparence
