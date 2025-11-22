@@ -22,13 +22,14 @@ tinymce.init({
 			if (ed.id === 'themeHeaderText') {
 				$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
 			}
-
 		});
 	},
+	// Supprimer la promotion TinyMCE
+	promotion: false,
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave codemirror contextmenu colorpicker fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template textcolor visualblocks nonbreaking emoticons charmap textpattern",
+	plugins: "advlist anchor autolink autoresize autosave codemirror  fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
 	// Contenu du menu
 	menu: {
 		file: { title: 'File', items: 'newdocument restoredraft' },
@@ -135,10 +136,21 @@ tinymce.init({
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
-	filemanager_access_key: privateKey,
-	external_filemanager_path: baseUrl + "core/vendor/filemanager/",
-	external_plugins: {
-		"filemanager": baseUrl + "core/vendor/filemanager/plugin.min.js"
+	file_picker_callback: function(callback, value, meta) {
+		// Déterminer le type de fichier (image, media, fichier)
+		const type = meta.filetype === 'image' ? 1 : (meta.filetype === 'media' ? 3 : 2);
+		
+		tinymce.activeEditor.windowManager.openUrl({
+			title: 'Sélectionner un fichier',
+			url: `${baseUrl}core/vendor/filemanager/dialog.php?type=${type}&lang=${getCookie('ZWII_UI')}&akey=${privateKey}`,
+			onMessage: function(api, data) {
+				if (data.mceAction === 'select') {
+					callback(data.filepath, {alt: data.filename});
+					api.close();
+				}
+			}
+		});
+		return false;
 	},
 	// Contenu du bouton insérer
 	insert_button_items: "anchor hr table",
@@ -289,7 +301,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
+	plugins: "advlist anchor autolink autoresize autosave hr lists paste searchreplace tabfocus template textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	// Titre des images

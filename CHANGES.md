@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.11.00
+- Mise à jour TinyMCE v5.10.3 vers v6.8.6
+
 ## Version 13.10.01
 - Edition d'une page, l'id de la page ajoutée ne peut pas être un nom réservé du core.
 
