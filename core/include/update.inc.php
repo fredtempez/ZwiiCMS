@@ -1187,7 +1187,7 @@ if (
 	$this->getData(['core', 'dataVersion']) < 13605
 ) {
 	// Renomme les chemins en supprimant les / au début des chemins de profil
-	$roles= array(1, 2);
+	$roles = array(1, 2);
 	foreach ($roles as $roleId => $roleValue) {
 		foreach ($this->getData(['profil', $roleValue]) as $profilId => $profilValue) {
 			$path = $this->getData(['profil', $roleValue, $profilId, 'folder', 'path']);
@@ -1201,7 +1201,7 @@ if (
 
 	// Supprime le module folder
 	if (is_dir('core/module/folder')) {
-		$this->deleteDir('core/module/folder');	
+		$this->deleteDir('core/module/folder');
 	}
 	// Parcourir les pages et modifier les modules folder en resource
 	$hierarchy = $this->getData(['page']);
@@ -1213,4 +1213,44 @@ if (
 	$this->saveDb('page');
 
 	$this->setData(['core', 'dataVersion', 13605]);
+}
+
+// Version 13.11.00
+if (
+	$this->getData(['core', 'dataVersion']) < 131100
+) {
+	// Liste des dossiers de plugin TinyMCE à supprimer
+	$pluginsToDelete = [
+		'code',
+		'codemirror',
+		'codesample',
+		'directionality',
+		'help',
+		'importcss',
+		'insertdatetime',
+		'pagebreak',
+		'preview',
+		'quickbars',
+		'save',
+		'visualchars',
+		'wordcount'
+	];
+
+	// Initialisation
+	$basePath = 'core/vendor/tinymce/plugins/';
+
+	// Suppression des dossiers
+	foreach ($pluginsToDelete as $plugin) {
+		$dir = $basePath . $plugin;
+		if (is_dir($dir)) {
+			$this->deleteDir($dir);
+		}
+	}
+
+	// Suppprimer le dossier vendor/codemirror
+	if (is_dir('core/vendor/codemirror')) {
+		$this->deleteDir('core/vendor/codemirror');
+	}
+
+	$this->setData(['core', 'dataVersion', 131100]);
 }
