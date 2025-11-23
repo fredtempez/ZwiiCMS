@@ -34,6 +34,8 @@ tinymce.init({
 	min_height: 300,
 	// Hauteur maximale de l'éditeur (en pixels)
 	max_height: 600,
+	// Désactiver le redimensionnement de l'éditeur
+	resize: false,
 	// Contenu du menu
 	menu: {
 		file: { title: 'File', items: 'newdocument restoredraft' },
