@@ -423,17 +423,6 @@ body.bar-fixed {
     padding-top: 45px;
 }
 
-/* S'assure que la bannière reste au-dessus de la barre */
-body.bar-fixed header {
-    position: relative;
-    z-index: 1001; /* Supérieur au z-index de la barre (1000) */
-}
-
-/* S'assure que le contenu de la bannière reste au-dessus */
-body.bar-fixed header * {
-    position: relative;
-    z-index: 1002;
-}
 
 
 /* fin barre pour les membres */
@@ -540,11 +529,10 @@ body.bar-fixed header * {
 
 @media screen and (min-width:768px) {
     body>header {
-        margin: 0;
-        /*-10px;*/
+        margin: 0px -10px 0px -10px;
     }
     header {
-        margin: 0;
+        margin: 0px -10px 0px -10px;
     }
 }
 
