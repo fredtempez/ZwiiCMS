@@ -22,6 +22,7 @@ tinymce.init({
 			if (ed.id === 'themeHeaderText') {
 				$("#featureContent").html(tinyMCE.get('themeHeaderText').getContent());
 			}
+
 		});
 	},
 	// Supprimer la promotion TinyMCE
@@ -29,7 +30,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave supercode fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
+	plugins: "advlist anchor autolink autoresize autosave supercode  fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
 	// Hauteur minimale de l'éditeur (en pixels)
 	min_height: 300,
 	// Hauteur maximale de l'éditeur (en pixels)
@@ -51,14 +52,16 @@ tinymce.init({
 	toolbar: [
 		"bold italic underline forecolor backcolor |  h1 h2 h3 | | bullist numlist | alignleft aligncenter alignright alignjustify |  outdent indent removeformat | link image media |fullscreen",
 	],
+	// Barre sticky
 	toolbar_sticky: true,
+	// Taille des polices
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
 	// supercode
 	supercode: {
 		// Apparence
-		theme: 'dracula',       // Thème sombre populaire
+		theme: 'xcode',       // Thème sombre populaire
 		fontSize: 14,           // Taille de texte confortable
 		fontFamily: 'Consolas, "Courier New", monospace',
 
@@ -71,7 +74,7 @@ tinymce.init({
 		language: 'html',
 
 		// Personnalisation de la fenêtre (optionnel)
-		modalPrimaryColor: '#6d7b89ff',
+		modalPrimaryColor: '#ffffffff',
 		debug: false            // Désactive les logs dans la console
 	},
 	// Cibles de la target
@@ -131,21 +134,10 @@ tinymce.init({
 	// Url de base
 	document_base_url: baseUrl,
 	// Gestionnaire de fichiers
-	file_picker_callback: function (callback, value, meta) {
-		// Déterminer le type de fichier (image, media, fichier)
-		const type = meta.filetype === 'image' ? 1 : (meta.filetype === 'media' ? 3 : 2);
-
-		tinymce.activeEditor.windowManager.openUrl({
-			title: 'Sélectionner un fichier',
-			url: `${baseUrl}core/vendor/filemanager/dialog.php?type=${type}&lang=${getCookie('ZWII_UI')}&akey=${privateKey}`,
-			onMessage: function (api, data) {
-				if (data.mceAction === 'select') {
-					callback(data.filepath, { alt: data.filename });
-					api.close();
-				}
-			}
-		});
-		return false;
+	filemanager_access_key: privateKey,
+	external_filemanager_path: baseUrl + "core/vendor/filemanager/",
+	external_plugins: {
+		"filemanager": baseUrl + "core/vendor/filemanager/plugin.min.js"
 	},
 	// Contenu du bouton insérer
 	insert_button_items: "anchor hr table",
@@ -218,26 +210,26 @@ tinymce.init({
 		}
 	],
 	textpattern_patterns: [
-		{ start: '*', end: '*', format: 'italic' },
-		{ start: '**', end: '**', format: 'bold' },
-		{ start: '#', format: 'h1' },
-		{ start: '##', format: 'h2' },
-		{ start: '###', format: 'h3' },
-		{ start: '####', format: 'h4' },
-		{ start: '#####', format: 'h5' },
-		{ start: '######', format: 'h6' },
-		{ start: '1. ', cmd: 'InsertOrderedList' },
-		{ start: '* ', cmd: 'InsertUnorderedList' },
-		{ start: '- ', cmd: 'InsertUnorderedList' },
-		{ start: '* ', cmd: 'InsertUnorderedList' },
-		{ start: '- ', cmd: 'InsertUnorderedList' },
-		{ start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
-		{ start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
-		{ start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
-		{ start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
-		{ start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } },
-		{ start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } }
-	]
+		{start: '*', end: '*', format: 'italic'},
+		{start: '**', end: '**', format: 'bold'},
+		{start: '#', format: 'h1'},
+		{start: '##', format: 'h2'},
+		{start: '###', format: 'h3'},
+		{start: '####', format: 'h4'},
+		{start: '#####', format: 'h5'},
+		{start: '######', format: 'h6'},
+		{start: '1. ', cmd: 'InsertOrderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
+		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
+	  ]
 });
 
 
@@ -336,26 +328,26 @@ tinymce.init({
 	document_base_url: baseUrl,
 	max_height: 200,
 	textpattern_patterns: [
-		{ start: '*', end: '*', format: 'italic' },
-		{ start: '**', end: '**', format: 'bold' },
-		{ start: '#', format: 'h1' },
-		{ start: '##', format: 'h2' },
-		{ start: '###', format: 'h3' },
-		{ start: '####', format: 'h4' },
-		{ start: '#####', format: 'h5' },
-		{ start: '######', format: 'h6' },
-		{ start: '1. ', cmd: 'InsertOrderedList' },
-		{ start: '* ', cmd: 'InsertUnorderedList' },
-		{ start: '- ', cmd: 'InsertUnorderedList' },
-		{ start: '* ', cmd: 'InsertUnorderedList' },
-		{ start: '- ', cmd: 'InsertUnorderedList' },
-		{ start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
-		{ start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
-		{ start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
-		{ start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
-		{ start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } },
-		{ start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } }
-	]
+		{start: '*', end: '*', format: 'italic'},
+		{start: '**', end: '**', format: 'bold'},
+		{start: '#', format: 'h1'},
+		{start: '##', format: 'h2'},
+		{start: '###', format: 'h3'},
+		{start: '####', format: 'h4'},
+		{start: '#####', format: 'h5'},
+		{start: '######', format: 'h6'},
+		{start: '1. ', cmd: 'InsertOrderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '* ', cmd: 'InsertUnorderedList'},
+		{start: '- ', cmd: 'InsertUnorderedList'},
+		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
+		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
+		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
+		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
+	  ]
 });
 
 
