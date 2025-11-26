@@ -1221,17 +1221,28 @@ if (
 ) {
 	// Liste des dossiers de plugin TinyMCE à supprimer
 	$pluginsToDelete = [
+		'accordion',
+		'bbcode',
 		'code',
 		'codemirror',
 		'codesample',
+		'colorpicker',
+		'contextmenu',
 		'directionality',
+		'fullpage',
 		'help',
 		'importcss',
 		'insertdatetime',
+		'legacyoutput',
+		'noneditable',
 		'pagebreak',
 		'preview',
+		'print',
 		'quickbars',
 		'save',
+		'spellchecker',
+		'textcolor',
+		'toc',
 		'visualchars',
 		'wordcount'
 	];
