@@ -157,19 +157,23 @@ core.toggleAdminBar = function() {
     if (!bar) return;
 
     // Lecture de la configuration de la barre
-
-    var isPermanent = "<?php echo $this->getData(['config','timerBar']) ? 'true' : 'false'; ?>";
-
-    // Si la barre est permanente, on l'affiche en mode fixe
-    if (isPermanent === 'true') {
+    var timerConfig = "<?php echo $this->getData(['config','timerBar']); ?>";
+    
+    // Si la configuration est 'false', la barre est fixe
+    if (timerConfig === 'false') {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
         document.body.classList.add('bar-fixed');
         return; // On sort de la fonction car pas besoin du reste du code
     }
     
-    // Si on arrive ici, la barre est escamotable
-    var timerBar = 800; // 0.8 seconde par défaut
+    // Définition du timer en fonction de la configuration
+    var timerBar = 800; // Valeur par défaut
+    if (timerConfig === '1600') {
+        timerBar = 1600;
+    } else if (timerConfig === '3200') {
+        timerBar = 3200;
+    }
 
     // Afficher la barre (elle est masquée par défaut en CSS)
     bar.style.display = 'block';
@@ -194,6 +198,11 @@ core.toggleAdminBar = function() {
         if (e.clientY <= SENSITIVE_AREA_HEIGHT) {
             if (!isInSensitiveArea) {
                 bar.setAttribute('class', 'visible');
+                // Cacher automatiquement après le temps défini
+                hideTimeout = setTimeout(() => {
+                    bar.removeAttribute('class');
+                    isInSensitiveArea = false;
+                }, timerBar);
                 isInSensitiveArea = true;
             }
         } else {

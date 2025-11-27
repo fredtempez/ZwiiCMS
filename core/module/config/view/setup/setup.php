@@ -5,7 +5,7 @@
 				<h4><?php echo helper::translate('Paramètres'); ?>
 				</h4>
 				<div class="row">
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::file('configFavicon', [
 							'type' => 1,
 							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
@@ -15,7 +15,7 @@
 							'folder' => $this->getData(['config', 'favicon']) ? dirname($this->getData(['config', 'favicon'])) : ''
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::file('configFaviconDark', [
 							'type' => 1,
 							'language' => $this->getData(['user', $this->getUser('id'), 'language']),
@@ -25,28 +25,30 @@
 							'folder' => $this->getData(['config', 'faviconDark']) ? dirname($this->getData(['config', 'faviconDark'])) : ''
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col3">
 						<?php echo template::select('configTimezone', config::$timezones, [
 							'label' => 'Fuseau horaire',
 							'selected' => $this->getData(['config', 'timezone']),
 							'help' => 'Le fuseau horaire est utile au bon référencement'
 						]); ?>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col4">
-						<?php echo template::checkbox('configTimerBar', true, 'Barre d\'administration fixe', [
-							'checked' => $this->getData(['config', 'timerBar']),
-							'help' => 'La barre d\'administration est escamotable et apparaît en déplaçant le curseur en haut de l\'écran'
+					<div class="col3">
+						<?php echo template::select('configTimerBar', config::$timerBar, [
+							'label' => 'Barre d\'administration',
+							'selected' => $this->getData(['config', 'timerBar']),
+							'help' => 'Ce paramètre définit la permanence de la barre d\'administration en haut de l\'écran',
 						]); ?>
 					</div>
-					<div class="col4">
+				</div>
+				<div class="row">
+
+					<div class="col6">
 						<?php echo template::checkbox('configCookieConsent', true, 'Message de consentement aux cookies', [
 							'checked' => $this->getData(['config', 'cookieConsent']),
 							'help' => 'Activation obligatoire selon les lois françaises sauf si vous utilisez votre propre système de consentement.'
 						]); ?>
 					</div>
-					<div class="col4">
+					<div class="col6">
 						<?php echo template::checkbox('configRewrite', true, 'Apache URL intelligentes', [
 							'checked' => helper::checkRewrite(),
 							'help' => 'Supprime le point d\'interrogation dans les URL, l\'option est indisponible avec les autres serveurs Web',

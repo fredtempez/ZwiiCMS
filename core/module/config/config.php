@@ -203,6 +203,12 @@ class config extends common
 		604800 => '7',
 		1209600 => '14',
 	];
+	public static $timerBar =[
+    '800' => 'Escamotable (0.8s)',
+    '1600' => 'Escamotable (1.6s)',
+    '3200' => 'Escamotable (3.2s)',
+   	'false' => 'Fixe'
+	];
 
 	// Langue traduite courante
 	public static $i18nSite = 'fr_FR';
@@ -464,7 +470,7 @@ class config extends common
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
-					'timerBar' => $this->getInput('configTimerBar', helper::FILTER_BOOLEAN),
+					'timerBar' => $this->getInput('configTimerBar', helper::FILTER_STRING_SHORT),
 					'cookieConsent' => $this->getInput('configCookieConsent', helper::FILTER_BOOLEAN),
 					'proxyType' => $this->getInput('configProxyType'),
 					'proxyUrl' => $this->getInput('configProxyUrl'),
