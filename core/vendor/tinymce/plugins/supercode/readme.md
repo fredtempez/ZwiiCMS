@@ -1,1 +1,0 @@
-https://github.com/prathamVaidya/supercode-tinymce-plugin

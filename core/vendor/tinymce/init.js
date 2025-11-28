@@ -25,23 +25,15 @@ tinymce.init({
 
 		});
 	},
-	// Supprimer la promotion TinyMCE
-	promotion: false,
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave supercode  fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
-	// Hauteur minimale de l'éditeur (en pixels)
-	min_height: 300,
-	// Hauteur maximale de l'éditeur (en pixels)
-	max_height: 600,
-	// Désactiver le redimensionnement de l'éditeur
-	resize: false,
+	plugins: "advlist anchor autolink autoresize autosave codemirror fullscreen hr image imagetools link lists media paste searchreplace tabfocus table template visualblocks nonbreaking emoticons charmap textpattern",
 	// Contenu du menu
 	menu: {
 		file: { title: 'File', items: 'newdocument restoredraft' },
 		edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
-		view: { title: 'View', items: 'supercode | visualaid visualblocks | fullscreen' },
+		view: { title: 'View', items: 'code | visualaid visualblocks | fullscreen' },
 		insert: { title: 'Insert', items: 'image link media pageembed template inserttable | charmap emoticons hr | nonbreaking anchor' },
 		//format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | removeformat' },
 		tools: { title: 'Tools', items: '' },
@@ -52,30 +44,39 @@ tinymce.init({
 	toolbar: [
 		"bold italic underline forecolor backcolor |  h1 h2 h3 | | bullist numlist | alignleft aligncenter alignright alignjustify |  outdent indent removeformat | link image media |fullscreen",
 	],
-	// Barre sticky
 	toolbar_sticky: true,
-	// Taille des polices
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
 	theme: "silver",
-	// supercode
-	supercode: {
-		// Apparence
-		theme: 'xcode',       // Thème sombre populaire
-		fontSize: 14,           // Taille de texte confortable
-		fontFamily: 'Consolas, "Courier New", monospace',
-
-		// Comportement
-		wrap: true,             // Évite le scroll horizontal infini
-		autocomplete: true,     // Aide à la saisie
-		shortcut: true,         // Ouvre le code avec Ctrl+Space
-
-		// Langage par défaut (souvent HTML ou PHP selon vos besoins)
-		language: 'html',
-
-		// Personnalisation de la fenêtre (optionnel)
-		modalPrimaryColor: '#ffffffff',
-		debug: false            // Désactive les logs dans la console
+	max_height: 600,
+	// CodeMirror
+	codemirror: {
+		indentOnInit: true, // Whether or not to indent code on init.
+		path: 'codemirror', // Path to CodeMirror distribution
+		saveCursorPosition: false,    // Insert caret marker
+		config: {           // CodeMirror config object
+			fullscreen: true,
+			/*mode: 'application/x-httpd-php',*/
+			lineNumbers: true,
+			indentUnit: 4,
+			mode: "htmlmixed"
+		},
+		jsFiles: [
+			'mode/php/php.js',
+			'mode/css/css.js',
+			'mode/htmlmixed/htmlmixed.js',
+			'mode/htmlembedded/htmlembedded.js',
+			'mode/javascript/javascript.js',
+			'mode/xml/xml.js',
+			'addon/search/searchcursor.js',
+			'addon/search/search.js',
+		],
+		/*
+		cssFiles: [
+			'theme/cobalt.css',
+		],*/
+		width: 800,         // Default value is 800
+		height: 500       // Default value is 550
 	},
 	// Cibles de la target
 	target_list: [
@@ -288,7 +289,7 @@ tinymce.init({
 	// Langue
 	language: getCookie('ZWII_UI') === null ? "fr_FR" : getCookie('ZWII_UI'),
 	// Plugins
-	plugins: "advlist anchor autolink autoresize autosave hr lists paste searchreplace tabfocus template textpattern",
+	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
 	// Titre des images
