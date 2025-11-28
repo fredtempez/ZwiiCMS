@@ -228,7 +228,7 @@ function submit()
 	doc.replaceSelection(cc);
 
 	var pos = codemirror.getCursor(),
-		curLineHTML = doc.getLine(pos.line);
+  curLineHTML = doc.getLine(pos.line);
 
 	if (findDepth(curLineHTML, cc) !== 0) {
 		// Cursor is inside a <tag>, don't set cursor:
@@ -237,17 +237,29 @@ function submit()
 	}
 
 	// Submit HTML to TinyMCE:
-    // [FIX] Cursor position inside JS, style or &nbps;
-    // Workaround to fix cursor position if inside script tag
-    var code = codemirror.getValue();
-    if(code.search(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi) !== -1 || code.search(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi) !== -1)
-    {
-    	editor.setContent(codemirror.getValue().replace(cc, ''));
-    }
-    else
-    {
-        editor.setContent(codemirror.getValue().replace(cc, '<span id="CmCaReT"></span>'));
-    }
+  // [FIX] Cursor position inside JS, style or &nbps;
+  // Workaround to fix cursor position if inside script tag
+  var code = codemirror.getValue();
+
+  /* Regex to check if inside script or style tags */
+  var ccScript = new RegExp("<script(.*?)>(.*?)" + cc + "(.*?)<\/script>", "ms");
+  var ccStyle = new RegExp("<style(.*?)>(.*?)" + cc + "(.*?)<\/style>", "ms");
+
+  /* Regex to check if in beginning or end or if between < & > */
+  var ccLocationCheck = new RegExp("<[^>]*(" + cc + ").*>|^(" + cc + ")|(" + cc + ")$");
+
+  if (
+    code.search(ccScript) !== -1 ||
+    code.search(ccStyle) !== -1 ||
+    code.search(ccLocationCheck) !== -1
+  )
+  {
+    editor.setContent(code.replace(cc, ''));
+  }
+  else
+  {
+      editor.setContent(code.replace(cc, '<span id="CmCaReT"></span>'));
+  }
 
 	editor.isNotDirty = !isDirty;
 	if (isDirty) {
@@ -262,6 +274,19 @@ function submit()
 		editor.dom.remove(el);
 	}
 }
+
+document.onkeydown = function (evt)
+{
+    evt = evt || window.event;
+    var isEscape = false;
+    if ("key" in evt)
+        isEscape = (evt.key === "Escape" || evt.key === "Esc");
+    else
+        isEscape = (evt.keyCode === 27);
+
+    if (isEscape)
+        tinymce.activeEditor.windowManager.close();
+};
 
 </script>
         <style type="text/css">

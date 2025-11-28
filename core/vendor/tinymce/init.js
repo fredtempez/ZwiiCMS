@@ -50,35 +50,36 @@ tinymce.init({
 	theme: "silver",
 	max_height: 600,
 	// CodeMirror
-	codemirror: {
-		indentOnInit: true, // Whether or not to indent code on init.
-		path: 'codemirror', // Path to CodeMirror distribution
-		config: {           // CodeMirror config object
-			mode: 'application/x-httpd-php', // ou 'htmlmixed', 'javascript', etc.
-			theme: 'base16-dark',                 // Thème sombre (nécessite le css du thème)
-			lineNumbers: true,                // Afficher les numéros de ligne
-			lineWrapping: true,               // Retour à la ligne automatique
-			indentUnit: 4,                    // Taille de l'indentation
-			smartIndent: true,
-			matchBrackets: true,              // Surbrillance des parenthèses correspondantes
-			autoCloseTags: true               // Fermeture auto des balises HTML
+		// CodeMirror
+		codemirror: {
+			indentOnInit: true, // Whether or not to indent code on init.
+			path: 'codemirror', // Path to CodeMirror distribution
+			config: {           // CodeMirror config object
+				mode: 'application/x-httpd-php', // ou 'htmlmixed', 'javascript', etc.
+				theme: 'base16-dark',                 // Thème sombre (nécessite le css du thème)
+				lineNumbers: true,                // Afficher les numéros de ligne
+				lineWrapping: true,               // Retour à la ligne automatique
+				indentOnInit: true,				// Identation auto
+				smartIndent: true,
+				matchBrackets: true,              // Surbrillance des parenthèses correspondantes
+				autoCloseTags: true               // Fermeture auto des balises HTML
+			},
+			jsFiles: [
+				'mode/php/php.js',
+				'mode/css/css.js',
+				'mode/htmlmixed/htmlmixed.js',
+				'mode/htmlembedded/htmlembedded.js',
+				'mode/javascript/javascript.js',
+				'mode/xml/xml.js',
+				'addon/search/searchcursor.js',
+				'addon/search/search.js',
+			],
+			cssFiles: [
+				'theme/base16-dark.css',
+			],
+			width: 1200,    // Largeur en pixels
+			height: 700,    // Hauteur en pixels
 		},
-		jsFiles: [
-			'mode/php/php.js',
-			'mode/css/css.js',
-			'mode/htmlmixed/htmlmixed.js',
-			'mode/htmlembedded/htmlembedded.js',
-			'mode/javascript/javascript.js',
-			'mode/xml/xml.js',
-			'addon/search/searchcursor.js',
-			'addon/search/search.js',
-		],
-		cssFiles: [
-			'theme/base16-dark.css',
-		],
-		width: 1200,    // Largeur en pixels
-		height: 700,    // Hauteur en pixels
-	},
 	// Cibles de la target
 	target_list: [
 		{ title: 'None', value: '' },
