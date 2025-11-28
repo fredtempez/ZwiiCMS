@@ -53,13 +53,15 @@ tinymce.init({
 	codemirror: {
 		indentOnInit: true, // Whether or not to indent code on init.
 		path: 'codemirror', // Path to CodeMirror distribution
-		saveCursorPosition: false,    // Insert caret marker
 		config: {           // CodeMirror config object
-			fullscreen: true,
-			/*mode: 'application/x-httpd-php',*/
-			lineNumbers: true,
-			indentUnit: 4,
-			mode: "htmlmixed"
+			mode: 'application/x-httpd-php', // ou 'htmlmixed', 'javascript', etc.
+			theme: 'base16-dark',                 // Thème sombre (nécessite le css du thème)
+			lineNumbers: true,                // Afficher les numéros de ligne
+			lineWrapping: true,               // Retour à la ligne automatique
+			indentUnit: 4,                    // Taille de l'indentation
+			smartIndent: true,
+			matchBrackets: true,              // Surbrillance des parenthèses correspondantes
+			autoCloseTags: true               // Fermeture auto des balises HTML
 		},
 		jsFiles: [
 			'mode/php/php.js',
@@ -71,12 +73,11 @@ tinymce.init({
 			'addon/search/searchcursor.js',
 			'addon/search/search.js',
 		],
-		/*
 		cssFiles: [
-			'theme/cobalt.css',
-		],*/
-		width: 800,         // Default value is 800
-		height: 500       // Default value is 550
+			'theme/base16-dark.css',
+		],
+		width: 1200,    // Largeur en pixels
+		height: 700,    // Hauteur en pixels
 	},
 	// Cibles de la target
 	target_list: [
@@ -211,26 +212,26 @@ tinymce.init({
 		}
 	],
 	textpattern_patterns: [
-		{start: '*', end: '*', format: 'italic'},
-		{start: '**', end: '**', format: 'bold'},
-		{start: '#', format: 'h1'},
-		{start: '##', format: 'h2'},
-		{start: '###', format: 'h3'},
-		{start: '####', format: 'h4'},
-		{start: '#####', format: 'h5'},
-		{start: '######', format: 'h6'},
-		{start: '1. ', cmd: 'InsertOrderedList'},
-		{start: '* ', cmd: 'InsertUnorderedList'},
-		{start: '- ', cmd: 'InsertUnorderedList'},
-		{start: '* ', cmd: 'InsertUnorderedList'},
-		{start: '- ', cmd: 'InsertUnorderedList'},
-		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
-		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
-		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
-		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
-		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
-		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
-	  ]
+		{ start: '*', end: '*', format: 'italic' },
+		{ start: '**', end: '**', format: 'bold' },
+		{ start: '#', format: 'h1' },
+		{ start: '##', format: 'h2' },
+		{ start: '###', format: 'h3' },
+		{ start: '####', format: 'h4' },
+		{ start: '#####', format: 'h5' },
+		{ start: '######', format: 'h6' },
+		{ start: '1. ', cmd: 'InsertOrderedList' },
+		{ start: '* ', cmd: 'InsertUnorderedList' },
+		{ start: '- ', cmd: 'InsertUnorderedList' },
+		{ start: '* ', cmd: 'InsertUnorderedList' },
+		{ start: '- ', cmd: 'InsertUnorderedList' },
+		{ start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
+		{ start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
+		{ start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
+		{ start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
+		{ start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } },
+		{ start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } }
+	]
 });
 
 
@@ -329,26 +330,26 @@ tinymce.init({
 	document_base_url: baseUrl,
 	max_height: 200,
 	textpattern_patterns: [
-		{start: '*', end: '*', format: 'italic'},
-		{start: '**', end: '**', format: 'bold'},
-		{start: '#', format: 'h1'},
-		{start: '##', format: 'h2'},
-		{start: '###', format: 'h3'},
-		{start: '####', format: 'h4'},
-		{start: '#####', format: 'h5'},
-		{start: '######', format: 'h6'},
-		{start: '1. ', cmd: 'InsertOrderedList'},
-		{start: '* ', cmd: 'InsertUnorderedList'},
-		{start: '- ', cmd: 'InsertUnorderedList'},
-		{start: '* ', cmd: 'InsertUnorderedList'},
-		{start: '- ', cmd: 'InsertUnorderedList'},
-		{start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
-		{start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' }},
-		{start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
-		{start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' }},
-		{start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }},
-		{start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' }}
-	  ]
+		{ start: '*', end: '*', format: 'italic' },
+		{ start: '**', end: '**', format: 'bold' },
+		{ start: '#', format: 'h1' },
+		{ start: '##', format: 'h2' },
+		{ start: '###', format: 'h3' },
+		{ start: '####', format: 'h4' },
+		{ start: '#####', format: 'h5' },
+		{ start: '######', format: 'h6' },
+		{ start: '1. ', cmd: 'InsertOrderedList' },
+		{ start: '* ', cmd: 'InsertUnorderedList' },
+		{ start: '- ', cmd: 'InsertUnorderedList' },
+		{ start: '* ', cmd: 'InsertUnorderedList' },
+		{ start: '- ', cmd: 'InsertUnorderedList' },
+		{ start: '1. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
+		{ start: '1) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'decimal' } },
+		{ start: 'a. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
+		{ start: 'a) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-alpha' } },
+		{ start: 'i. ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } },
+		{ start: 'i) ', cmd: 'InsertOrderedList', value: { 'list-style-type': 'lower-roman' } }
+	]
 });
 
 

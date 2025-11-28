@@ -1223,7 +1223,8 @@ if (
 	$pluginsToDelete = [
 			'colorîcker',
 			'contextmenu',
-			'textcolor'
+			'textcolor',
+			'code'
 	];
 
 	// Initialisation
