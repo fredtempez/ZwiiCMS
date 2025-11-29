@@ -157,23 +157,19 @@ core.toggleAdminBar = function() {
     if (!bar) return;
 
     // Lecture de la configuration de la barre
-    var timerConfig = "<?php echo $this->getData(['config','timerBar']); ?>";
-    
-    // Si la configuration est 'false', la barre est fixe
-    if (timerConfig === 'false') {
+    var timerBarValue = "<?php echo $this->getData(['config','timerBar']); ?>";
+
+    // Si la barre est en mode fixe
+    if (timerBarValue === 'false') {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
         document.body.classList.add('bar-fixed');
         return; // On sort de la fonction car pas besoin du reste du code
     }
     
-    // Définition du timer en fonction de la configuration
-    var timerBar = 800; // Valeur par défaut
-    if (timerConfig === '1600') {
-        timerBar = 1600;
-    } else if (timerConfig === '3200') {
-        timerBar = 3200;
-    }
+    // Si on arrive ici, la barre est escamotable
+    // On utilise la valeur configurée ou 800ms par défaut
+    var timerBar = timerBarValue ? parseInt(timerBarValue) : 800;
 
     // Afficher la barre (elle est masquée par défaut en CSS)
     bar.style.display = 'block';
@@ -183,7 +179,7 @@ core.toggleAdminBar = function() {
         bar.setAttribute('class', 'visible');
         setTimeout(() => {
             bar.removeAttribute('class');
-        }, timerBar); // La barre reste visible pendant 0.8 seconde
+        }, timerBar); // La barre reste visible pendant le délai configuré
     }, 500); // Délai de 0.5 seconde avant de commencer l'animation
     
     // Zone sensible en haut de l'écran (20 premiers pixels)
@@ -198,11 +194,6 @@ core.toggleAdminBar = function() {
         if (e.clientY <= SENSITIVE_AREA_HEIGHT) {
             if (!isInSensitiveArea) {
                 bar.setAttribute('class', 'visible');
-                // Cacher automatiquement après le temps défini
-                hideTimeout = setTimeout(() => {
-                    bar.removeAttribute('class');
-                    isInSensitiveArea = false;
-                }, timerBar);
                 isInSensitiveArea = true;
             }
         } else {
@@ -213,7 +204,7 @@ core.toggleAdminBar = function() {
                         bar.removeAttribute('class');
                         isInSensitiveArea = false;
                     }
-                }, 500); // Délai de 500ms avant de cacher
+                }, timerBar / 2); // Délai proportionnel au temps de visibilité
             }
         }
     });
@@ -226,8 +217,11 @@ core.toggleAdminBar = function() {
     bar.addEventListener('mouseleave', (e) => {
         // Ne pas cacher si on est toujours dans la zone sensible
         if (e.clientY > SENSITIVE_AREA_HEIGHT) {
-            bar.removeAttribute('class');
-            isInSensitiveArea = false;
+            // Utiliser un délai avant de masquer la barre
+            hideTimeout = setTimeout(() => {
+                bar.removeAttribute('class');
+                isInSensitiveArea = false;
+            }, timerBar / 2);
         }
     });
 };
