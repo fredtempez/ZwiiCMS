@@ -402,7 +402,7 @@ body.bar-fixed {
     color: #111112;
     font-size: 1em;
     background-color: rgba(255, 255, 255, 1);
-    padding: 8px;
+    padding: 5px;
     margin-left: 5px;
 }
 
@@ -1596,11 +1596,13 @@ th.col12 {
 @media screen and (min-width: 960px) {
     #bar #barLeft {
         float: left;
-        /*font-size: 16px;*/
+        font-size: 16px;
+        margin-left: 20px;
     }
     #bar #barRight {
         float: right;
-        /*font-size: 16px;*/
+        font-size: 16px;
+        margin-right: 20px;
     }
 }
 
@@ -1711,6 +1713,13 @@ th.col12 {
     .siteContainer {
         display: flex;
         flex-direction: column;
+    }
+
+    .siteContainer #barLeft {
+        font-size: 12px;
+    }
+    .siteContainer #barRight {
+        font-size: 12px;
     }
 
     .siteContainer > #contentLeft { order: 1; }

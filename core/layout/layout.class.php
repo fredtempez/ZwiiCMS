@@ -1175,7 +1175,7 @@ class layout extends common
                 'id' => 'barLogout'
             ]) . '</li>';
             // Barre de membre
-            echo '<div id="bar"><div class="container"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div></div>';
+            echo '<div id="bar"><ul id="barLeft">' . $leftItems . '</ul><ul id="barRight">' . $rightItems . '</ul></div>';
         }
     }
 
