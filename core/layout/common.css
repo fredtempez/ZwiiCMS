@@ -28,55 +28,6 @@ body {
     /*min-height: 100vh;*/
 }
 
-@media screen and (min-width: 769px) {
-    body {
-        /*margin:0px 10px;*/
-        margin: 0;
-    }
-}
-
-
-/**
-* Petits écrans inférieurs à 768px de largeur, on supprime les marges
-*/
-
-@media screen and (max-width: 768px) {
-    body {
-        margin: 0px;
-    }
-    /*
-	#site {
-		margin: 0px auto;
-	}
-*/
-    body>header {
-        margin: 0px 0px;
-    }
-    .tippy-tooltip {
-        font-size: .8rem !important;
-    }
-    section {
-        padding: 5px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .siteContainer {
-        display: flex;
-        flex-direction: column;
-    }
-    .siteContainer>#contentLeft {
-        order: 1;
-    }
-    .siteContainer>#contentRight {
-        order: 3;
-    }
-    .siteContainer>#contentSite {
-        order: 2;
-    }
-}
-
-
 /**
  * Éléments spécifiques
  */
@@ -250,22 +201,6 @@ td>.col11,
 td>.col12 {
     padding: 0 !important;
 }
-
-
-/* Tableau sur les écrans de petites tailles */
-
-@media screen and (max-width: 768px) {
-    .table thead {
-        font-size: 0.8em;
-    }
-}
-
-@media screen and (max-width: 668px) {
-    .table thead {
-        display: none;
-    }
-}
-
 
 /* Notifications */
 
@@ -471,43 +406,6 @@ body.bar-fixed {
     margin-left: 5px;
 }
 
-@media screen and (min-width: 960px) {
-    #bar #barLeft {
-        float: left;
-        font-size: 16px;
-    }
-    #bar #barRight {
-        float: right;
-        font-size: 16px;
-    }
-}
-
-@media screen and (max-width: 959px) {
-    #bar {
-        text-align: center;
-        padding: 0 1;
-        margin: 0 1;
-    }
-    #bar ul {
-        height: auto;
-    }
-    #bar select {
-        width: 95%;
-        margin: 10px;
-        text-align-last: center;
-    }
-    #bar #barLeft {
-        float: none;
-    }
-    #bar #barLeft,
-    #bar #barRight {
-        font-size: 35px;
-    }
-    #bar #displayUsername {
-        display: none;
-    }
-}
-
 
 /* Site */
 
@@ -527,14 +425,6 @@ body.bar-fixed {
 
 /* Bannière */
 
-@media screen and (min-width:768px) {
-    body>header {
-        margin: 0px -10px 0px -10px;
-    }
-    header {
-        margin: 0px -10px 0px -10px;
-    }
-}
 
 header {
     position: relative;
@@ -682,51 +572,6 @@ nav::before {
     display: flex;
 }
 
-@media screen and (min-width: 769px) {
-    nav #menu {
-        display: block;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    body>nav {
-        margin: 0;
-    }
-    nav #toggle,
-    nav #menuLeft {
-        display: block;
-        float: none;
-    }
-    nav #menuLeft {
-        flex-direction: column;
-        float: none;
-    }
-    nav #menuRight {
-        font-size: 2em;
-    }
-    nav #menu {
-        display: none;
-        text-align: left;
-    }
-    nav li {
-        display: block;
-    }
-    nav li ul {
-        z-index: 1;
-        opacity: 1;
-        position: static;
-        min-width: inherit;
-        width: auto;
-    }
-    /* Taille du menu hamburger */
-    nav .zwiico-menu {
-        font-size: 1.5em;
-    }
-    nav .zwiico-cancel {
-        font-size: 1.5em;
-    }
-}
-
 
 /* Barre de navigation fixe quand le menu est en-dehors du site */
 
@@ -775,31 +620,6 @@ li .menuSideChild {
 
 .i18nFlagSelected {
     width: 100%;
-}
-
-
-/*
-* Position du bloc dans le site sur les petits écrans
-*/
-
-@media screen and (max-width:1024px) {
-    .i18nFlag {
-        width: 100%;
-        padding: 5px;
-    }
-    .i18nFlagSelected {
-        width: 130%;
-        padding: 5px;
-    }
-}
-
-
-/* Corps */
-
-@media screen and (min-width:768px) {
-    section {
-        padding: 20px;
-    }
 }
 
 section {
@@ -897,24 +717,6 @@ footer #footerbody>div {
 #footerDisplaySearch,
 #footerZwiiCMS {
     font-size: inherit;
-}
-
-
-/* Conserve le pied de page sur une ligne */
-
-@media screen and (max-width: 768px) {
-    body>footer {
-        margin: 0;
-    }
-    footer .col4 {
-        width: 100%;
-    }
-    #footerCopyright,
-    #footerText,
-    #footerSocials {
-        display: flex;
-        justify-content: center;
-    }
 }
 
 footer #footerSocials span {
@@ -1597,78 +1399,6 @@ input[type='checkbox']:disabled+label:before {
     display: inline-block;
 }
 
-@media screen and (min-width: 769px) {
-    .col1 {
-        width: 8.33333333%;
-    }
-    .col2 {
-        width: 16.66666667%;
-    }
-    .col3 {
-        width: 25%;
-    }
-    .col4 {
-        width: 33.33333333%;
-    }
-    .col5 {
-        width: 41.66666667%;
-    }
-    .col6 {
-        width: 50%;
-    }
-    .col7 {
-        width: 58.33333333%;
-    }
-    .col8 {
-        width: 66.66666667%;
-    }
-    .col9 {
-        width: 75%;
-    }
-    .col10 {
-        width: 83.33333333%;
-    }
-    .col11 {
-        width: 91.66666667%;
-    }
-    .col12 {
-        width: 100%;
-    }
-    .offset1 {
-        margin-left: 8.33333333%;
-    }
-    .offset2 {
-        margin-left: 16.66666667%;
-    }
-    .offset3 {
-        margin-left: 25%;
-    }
-    .offset4 {
-        margin-left: 33.33333333%;
-    }
-    .offset5 {
-        margin-left: 41.66666667%;
-    }
-    .offset6 {
-        margin-left: 50%;
-    }
-    .offset7 {
-        margin-left: 58.33333333%;
-    }
-    .offset8 {
-        margin-left: 66.66666667%;
-    }
-    .offset9 {
-        margin-left: 75%;
-    }
-    .offset10 {
-        margin-left: 83.33333333%;
-    }
-    .offset11 {
-        margin-left: 91.66666667%;
-    }
-}
-
 
 /**
  * Grille pour tableau
@@ -1765,21 +1495,6 @@ th.col12 {
 }
 
 
-/* Tableau sur les écrans de très petites tailles */
-
-@media screen and (max-width: 480px) {
-    .table tr {
-        display: block;
-        margin-bottom: 10px;
-    }
-    .table td {
-        display: block;
-        text-align: right;
-        width: auto;
-    }
-}
-
-
 /**
  * Classes rapides
  */
@@ -1873,42 +1588,214 @@ th.col12 {
 }
 
 
-/*
-* Couleur des icônes + et -
-*/
+/* =========================================
+   MEDIA QUERIES
+   ========================================= */
 
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-    color: #D8890B;
-    font-size: 1.3em !important;
+/* --- Écrans Larges / Spécificités Barre (>= 960px) --- */
+@media screen and (min-width: 960px) {
+    #bar #barLeft {
+        float: left;
+        /*font-size: 16px;*/
+    }
+    #bar #barRight {
+        float: right;
+        /*font-size: 16px;*/
+    }
 }
 
-.zwiico-minus-circled,
-.zwiico-plus-circled {
-    transition: all 1s ease;
+/* --- Tablettes et Écrans Moyens (< 960px) --- */
+@media screen and (max-width: 959px) {
+    #bar {
+        text-align: center;
+        padding: 0 1px;
+        margin: 0 1px;
+    }
+    #bar ul {
+        height: auto;
+    }
+    #bar select {
+        width: 95%;
+        margin: 10px;
+        text-align-last: center;
+    }
+    #bar #barLeft {
+        float: none;
+    }
+    #bar #barLeft,
+    #bar #barRight {
+        font-size: 35px;
+    }
+    #bar #displayUsername {
+        display: none;
+    }
 }
 
-.zwiico-minus-circled:hover,
-.zwiico-plus-circled:hover {
-    -webkit-transform: scale(1.25);
-    /* Safari et Chrome */
-    -moz-transform: scale(1.25);
-    /* Firefox */
-    -ms-transform: scale(1.25);
-    /* Internet Explorer 9 */
-    -o-transform: scale(1.25);
-    /* Opera */
-    transform: scale(1.25);
+/* --- Ajustements intermédiaires (<= 1024px) --- */
+@media screen and (max-width: 1024px) {
+    .i18nFlag {
+        width: 100%;
+        padding: 5px;
+    }
+    .i18nFlagSelected {
+        width: 130%;
+        padding: 5px;
+    }
 }
 
+/* --- DESKTOP : Styles pour écrans > 768px --- */
+@media screen and (min-width: 769px) {
+    body {
+        margin: 0;
+    }
+    
+    /* Header & Section */
+    body > header, 
+    header {
+        margin: 0 -10px;
+    }
+    section {
+        padding: 20px;
+    }
 
-/* Bannière masquable en petit écran*/
+    /* Menu */
+    nav #menu {
+        display: block;
+    }
 
+    /* Grille (Grid System) */
+    .col1 { width: 8.33333333%; }
+    .col2 { width: 16.66666667%; }
+    .col3 { width: 25%; }
+    .col4 { width: 33.33333333%; }
+    .col5 { width: 41.66666667%; }
+    .col6 { width: 50%; }
+    .col7 { width: 58.33333333%; }
+    .col8 { width: 66.66666667%; }
+    .col9 { width: 75%; }
+    .col10 { width: 83.33333333%; }
+    .col11 { width: 91.66666667%; }
+    .col12 { width: 100%; }
+
+    /* Offsets */
+    .offset1 { margin-left: 8.33333333%; }
+    .offset2 { margin-left: 16.66666667%; }
+    .offset3 { margin-left: 25%; }
+    .offset4 { margin-left: 33.33333333%; }
+    .offset5 { margin-left: 41.66666667%; }
+    .offset6 { margin-left: 50%; }
+    .offset7 { margin-left: 58.33333333%; }
+    .offset8 { margin-left: 66.66666667%; }
+    .offset9 { margin-left: 75%; }
+    .offset10 { margin-left: 83.33333333%; }
+    .offset11 { margin-left: 91.66666667%; }
+}
+
+/* --- MOBILE & TABLETTES : Styles pour écrans <= 768px --- */
 @media screen and (max-width: 768px) {
+    /* Global */
+    body {
+        margin: 0;
+    }
+    body > header {
+        margin: 0;
+    }
+    .tippy-tooltip {
+        font-size: .8rem !important;
+    }
+    section {
+        padding: 5px;
+    }
+    
+    /* Layout */
+    .siteContainer {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .siteContainer > #contentLeft { order: 1; }
+    .siteContainer > #contentRight { order: 3; }
+    .siteContainer > #contentSite { order: 2; }
+
+    /* Tables */
+    .table thead {
+        font-size: 0.8em;
+    }
+
+    /* Menu / Nav */
+    body > nav {
+        margin: 0;
+    }
+    nav #toggle,
+    nav #menuLeft {
+        display: block;
+        float: none;
+    }
+    nav #menuLeft {
+        flex-direction: column;
+    }
+    nav #menuRight {
+        font-size: 2em;
+    }
+    nav #menu {
+        display: none;
+        text-align: left;
+    }
+    nav li {
+        display: block;
+    }
+    nav li ul {
+        z-index: 1;
+        opacity: 1;
+        position: static;
+        min-width: inherit;
+        width: auto;
+    }
+    nav .zwiico-menu,
+    nav .zwiico-cancel {
+        font-size: 1.5em;
+    }
+
+    /* Footer */
+    body > footer {
+        margin: 0;
+    }
+    footer .col4 {
+        width: 100%;
+    }
+    #footerCopyright,
+    #footerText,
+    #footerSocials {
+        display: flex;
+        justify-content: center;
+    }
+
+    /* Banner / Header Image */
     .bannerDisplay {
         display: none;
     }
     header {
         background-size: cover !important;
+    }
+}
+
+/* --- Petites Tablettes / Gros Mobiles (<= 668px) --- */
+@media screen and (max-width: 668px) {
+    .table thead {
+        display: none;
+    }
+}
+
+/* --- Mobiles (<= 480px) --- */
+@media screen and (max-width: 480px) {
+    /* Responsive Table stacking */
+    .table tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .table td {
+        display: block;
+        text-align: right;
+        width: auto;
     }
 }
