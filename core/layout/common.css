@@ -28,6 +28,11 @@ body {
     /*min-height: 100vh;*/
 }
 
+
+
+
+
+
 /**
  * Éléments spécifiques
  */
@@ -69,7 +74,7 @@ h3 {
     font-size: 1.4em;
 }
 
-h4 {
+h4, details {
     font-size: 1.0em;
 }
 
@@ -112,7 +117,8 @@ h4,
 p,
 hr,
 ul,
-ol {
+ol,
+details {
     margin: 15px 0;
 }
 
@@ -201,6 +207,9 @@ td>.col11,
 td>.col12 {
     padding: 0 !important;
 }
+
+
+
 
 /* Notifications */
 
@@ -382,7 +391,7 @@ body.bar-fixed {
 
 #bar a {
     display: inline-block;
-    padding: 0 12px;
+    padding: 0 10px;
     color: #FFF;
     transition: background-color .3s ease-out;
 }
@@ -407,6 +416,8 @@ body.bar-fixed {
 }
 
 
+
+
 /* Site */
 
 #site {
@@ -421,9 +432,6 @@ body.bar-fixed {
 	}
 }#barSelectPage
 */
-
-
-/* Bannière */
 
 
 header {
@@ -472,6 +480,8 @@ body > nav {
 
 /* Items du menu */
 
+
+
 nav a>img {
     margin: -4px 0;
     vertical-align: middle;
@@ -508,6 +518,7 @@ nav ul {
 nav li {
     display: inline-block;
     position: relative;
+    align-self: center;
 }
 
 nav li ul {
@@ -550,6 +561,7 @@ nav a:hover {
 
 #menuLeft {
     display: inline-flex;
+    float: left;
 }
 
 #menuRight {
@@ -622,6 +634,8 @@ li .menuSideChild {
     width: 100%;
 }
 
+
+
 section {
     /*min-height: 100%;*/
     min-height: 65vh;
@@ -681,10 +695,50 @@ footer {
     padding: inherit;
 }
 
-#footersiteRight,
-#footersiteLeft,
-#footersiteCenter,
-#footerbodyRight,
+.footerbodyFixed#bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+#bar.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#barToggle {
+    display: none; /* On cache le bouton car il n'est plus nécessaire */
+}
+
+/* Animation pour la zone sensible en haut de l'écran */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    z-index: 1001;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+body:hover::before {
+    opacity: 1;
+}
+
 #footerbodyLeft,
 #footerbodyCenter {
     vertical-align: middle;
@@ -718,6 +772,9 @@ footer #footerbody>div {
 #footerZwiiCMS {
     font-size: inherit;
 }
+
+
+
 
 footer #footerSocials span {
     color: #FFF;
@@ -941,7 +998,7 @@ footer #footerSocials .zwiico-twitch:hover {
     margin-bottom: 0;
 }
 
-.block h4 {
+.block h4, details {
     margin: -20px -20px 10px -20px;
     padding: 10px;
     /*	background: #ECEFF1;*/
@@ -1034,7 +1091,7 @@ input[type='month']:hover,
 input[type='week']:hover,
 input[type='number']:hover,
 .inputFile:hover,
-.fileUploadNameDisplay.hover,
+.fileUploadNameDisplay:hover,
 select:hover,
 textarea:hover {
     border: 1px solid;
@@ -1288,19 +1345,6 @@ input[type='checkbox']:checked:active+label:before {
 input[type='checkbox']:disabled+label:before {
     background: #F6F7F8 !important;
 }
-
-
-/* Sélecteur de date */
-
-.datepicker {
-    cursor: text;
-}
-
-.pika-select {
-    padding: 0;
-    /* À cause du padding ajouté aux selects */
-}
-
 /* Sélecteur input de fichier */
 .fileUploadContainer {
     position: relative;
@@ -1337,6 +1381,7 @@ input[type='checkbox']:disabled+label:before {
     overflow: hidden; /* Empêche le débordement du texte */
     text-overflow: ellipsis; /* Ajoute des points de suspension si le texte est trop long */
     white-space: nowrap; /* Empêche le retour à la ligne */
+    border-radius: 4px;
 }
 
 .fileUploadContainer input[type="file"]:focus + label {
@@ -1349,6 +1394,17 @@ input[type='checkbox']:disabled+label:before {
     cursor: not-allowed;
 }
 
+
+/* Sélecteur de date */
+
+.datepicker {
+    cursor: text;
+}
+
+.pika-select {
+    padding: 0;
+    /* À cause du padding ajouté aux selects */
+}
 
 
 /**
@@ -1398,6 +1454,7 @@ input[type='checkbox']:disabled+label:before {
     min-height: 1px;
     display: inline-block;
 }
+
 
 
 /**
@@ -1495,6 +1552,8 @@ th.col12 {
 }
 
 
+
+
 /**
  * Classes rapides
  */
@@ -1588,11 +1647,30 @@ th.col12 {
 }
 
 
+
+
+
+/** Etiquettes des groupes */
+
+.groupTitleLabel {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.8em;
+    margin: 1px;
+}
+
+@media screen and (min-width: 769px) {
+    body {
+        /*margin:0px 10px;*/
+        margin: 0;
+    }
+}
 /* =========================================
-   MEDIA QUERIES
+   MEDIA QUERIES OPTIMISÉES
    ========================================= */
 
-/* --- Écrans Larges / Spécificités Barre (>= 960px) --- */
+/* --- 1. Barre d'administration : Desktop (>= 960px) --- */
 @media screen and (min-width: 960px) {
     #bar #barLeft {
         float: left;
@@ -1606,7 +1684,7 @@ th.col12 {
     }
 }
 
-/* --- Tablettes et Écrans Moyens (< 960px) --- */
+/* --- 2. Barre d'administration : Tablettes/Mobiles (< 960px) --- */
 @media screen and (max-width: 959px) {
     #bar {
         text-align: center;
@@ -1618,22 +1696,23 @@ th.col12 {
     }
     #bar select {
         width: 95%;
-        margin: 10px;
+        margin: 5px;
         text-align-last: center;
     }
     #bar #barLeft {
         float: none;
     }
+    /* CORRECTION ICI : Taille réduite à 16px au lieu de 35px */
     #bar #barLeft,
     #bar #barRight {
-        font-size: 35px;
+        font-size: 16px; 
     }
     #bar #displayUsername {
         display: none;
     }
 }
 
-/* --- Ajustements intermédiaires (<= 1024px) --- */
+/* --- 3. Ajustements intermédiaires (<= 1024px) --- */
 @media screen and (max-width: 1024px) {
     .i18nFlag {
         width: 100%;
@@ -1645,13 +1724,13 @@ th.col12 {
     }
 }
 
-/* --- DESKTOP : Styles pour écrans > 768px --- */
+/* --- 4. DESKTOP : Styles pour écrans > 768px --- */
 @media screen and (min-width: 769px) {
     body {
         margin: 0;
     }
     
-    /* Header & Section */
+    /* Layout & Header */
     body > header, 
     header {
         margin: 0 -10px;
@@ -1665,7 +1744,7 @@ th.col12 {
         display: block;
     }
 
-    /* Grille (Grid System) */
+    /* Système de Grille (Grid) - Uniquement sur Desktop */
     .col1 { width: 8.33333333%; }
     .col2 { width: 16.66666667%; }
     .col3 { width: 25%; }
@@ -1693,9 +1772,9 @@ th.col12 {
     .offset11 { margin-left: 91.66666667%; }
 }
 
-/* --- MOBILE & TABLETTES : Styles pour écrans <= 768px --- */
+/* --- 5. MOBILE & TABLETTES : Styles pour écrans <= 768px --- */
 @media screen and (max-width: 768px) {
-    /* Global */
+    /* Global Reset */
     body {
         margin: 0;
     }
@@ -1709,29 +1788,21 @@ th.col12 {
         padding: 5px;
     }
     
-    /* Layout */
+    /* Structure Flexbox Mobile */
     .siteContainer {
         display: flex;
         flex-direction: column;
     }
-
-    .siteContainer #barLeft {
-        font-size: 12px;
-    }
-    .siteContainer #barRight {
-        font-size: 12px;
-    }
-
     .siteContainer > #contentLeft { order: 1; }
     .siteContainer > #contentRight { order: 3; }
     .siteContainer > #contentSite { order: 2; }
 
-    /* Tables */
+    /* Tableaux */
     .table thead {
         font-size: 0.8em;
     }
 
-    /* Menu / Nav */
+    /* Menu / Navigation */
     body > nav {
         margin: 0;
     }
@@ -1779,7 +1850,7 @@ th.col12 {
         justify-content: center;
     }
 
-    /* Banner / Header Image */
+    /* Masquer la bannière complexe */
     .bannerDisplay {
         display: none;
     }
@@ -1788,16 +1859,16 @@ th.col12 {
     }
 }
 
-/* --- Petites Tablettes / Gros Mobiles (<= 668px) --- */
+/* --- 6. Petites Tablettes / Gros Mobiles (<= 668px) --- */
 @media screen and (max-width: 668px) {
     .table thead {
         display: none;
     }
 }
 
-/* --- Mobiles (<= 480px) --- */
+/* --- 7. Mobiles (<= 480px) --- */
 @media screen and (max-width: 480px) {
-    /* Responsive Table stacking */
+    /* Empilement des cellules de tableau */
     .table tr {
         display: block;
         margin-bottom: 10px;
