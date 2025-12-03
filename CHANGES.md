@@ -1,5 +1,7 @@
 # Notes de mises à jour
 
+## Version 13.11.01
+
 ## Version 13.11.00
 - Mise à jour de l'éditeur TinyMCE 5.10.9
 - Nettoyage des plugins TyniMCE inutiles.
