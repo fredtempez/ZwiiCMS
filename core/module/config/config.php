@@ -451,12 +451,17 @@ class config extends common
 			$this->getUser('permission', __CLASS__, __FUNCTION__) === true &&
 			$this->isPost()
 		) {
-			// Basculement en mise à jour auto,  remise à 0 du compteur
-			if (
-				$this->getData(['config', 'autoUpdate']) === false &&
-				$this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN) === true
-			) {
-				$this->setData(['core', 'lastAutoUpdate', 0]);
+			// Traitement des changements liés à la mise à jour automatique
+			$isAutoUpdateEnabled = $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN);
+
+			if ($isAutoUpdateEnabled) {
+				// Si la mise à jour auto vient d'être activée, on réinitialise le compteur
+				if ($this->getData(['config', 'autoUpdate']) === false) {
+					$this->setData(['core', 'lastAutoUpdate', 0]);
+				}
+			} else {
+				// Si la mise à jour auto est désactivée, on masque le statut de mise à jour disponible
+				$this->setData(['core', 'updateAvailable', false]);
 			}
 
 			// Sauvegarder la configuration
@@ -466,7 +471,7 @@ class config extends common
 					'favicon' => $this->getInput('configFavicon'),
 					'faviconDark' => $this->getInput('configFaviconDark'),
 					'timezone' => $this->getInput('configTimezone', helper::FILTER_STRING_SHORT, true),
-					'autoUpdate' => $this->getInput('configAutoUpdate', helper::FILTER_BOOLEAN),
+					'autoUpdate' => $isAutoUpdateEnabled,
 					'autoUpdateHtaccess' => $this->getInput('configAutoUpdateHtaccess', helper::FILTER_BOOLEAN),
 					'autoBackup' => $this->getInput('configAutoBackup', helper::FILTER_BOOLEAN),
 					'maintenance' => $this->getInput('configMaintenance', helper::FILTER_BOOLEAN),
