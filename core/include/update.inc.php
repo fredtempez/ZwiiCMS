@@ -1238,10 +1238,5 @@ if (
 		}
 	}
 
-	// Suppprimer le dossier vendor/codemirror
-	if (is_dir('core/vendor/codemirror')) {
-		$this->deleteDir('core/vendor/codemirror');
-	}
-
 	$this->setData(['core', 'dataVersion', 131100]);
 }
