@@ -8,6 +8,9 @@ BY : une attribution doit être donnée au créateur.
 ND : aucune dérivée ou adaptation de l’œuvre n’est autorisée.
 CC : la licence n’est pas transférable.
 
+## Version 13.11.01
+Restaurer code mirror pour l'édition JS et CSS
+
 ## Version 13.11.00
 - Mise à jour de l'éditeur TinyMCE 5.10.9
 - Nettoyage des plugins TyniMCE inutiles.
