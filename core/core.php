@@ -9,7 +9,9 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
+ * @copyright Copyright (C) 2026, Frédéric Tempez
+ * @license CC Attribution-NoDerivatives 4.0 International 
  * @link http://zwiicms.fr/
  */
 class common
@@ -53,7 +55,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '13.11.01';
+	const ZWII_VERSION = '14.00.00';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -63,7 +65,7 @@ class common
 	 * La branche v13 est maintenue afin de télécharger un correctif permettant d'installer
 	 * les version supérieures.
 	 */
-	const ZWII_UPDATE_CHANNEL = 'v13';
+	const ZWII_UPDATE_CHANNEL = 'v14';
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;

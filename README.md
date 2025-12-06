@@ -1,4 +1,4 @@
-# ZwiiCMS 13.11.01
+# ZwiiCMS 14.00.00
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge.
 
@@ -13,9 +13,10 @@ ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/).
 
 ## License
 
-This work is licensed under the Attribution-Noncommercial-No Derivative Works 4.0 International License.
-
-To view a copy of this license, visit <http://creativecommons.org/licenses/by-nc-nd/4.0/> or write to Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+This license allows users to copy and distribute the material in any medium or format in an unadapted form, and only if attribution is given to the creator. The license allows commercial use. CC BY-ND includes the following elements:
+- BY: attribution must be given to the creator.
+- ND: no derivatives or adaptations of the work are permitted.
+- CC: the license is not transferable.
 
 ## Downloading ZwiiCMS
 

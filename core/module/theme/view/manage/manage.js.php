@@ -7,7 +7,11 @@
  * @copyright Copyright (C) 2008-2018, Rémi Jean
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
- * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International
+ * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
+ * @copyright Copyright (C) 2026, Frédéric Tempez
+ * @license CC Attribution-NoDerivatives 4.0 International 
+ * @copyright Copyright (C) 2026, Frédéric Tempez
+ * @license CC Attribution-NoDerivatives 4.0 International
  * @link http://zwiicms.fr/
  */
 $("#configManageReset").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine le thème du site ?",(function(){$(location).attr("href",_this.attr("href"))}))}));

@@ -1,6 +1,12 @@
 # Notes de mises à jour
 
-## Version 13.11.01
+## Version 14.00.00
+- Amélioration de l'animation de la barre d'administration.
+- Changement de licence autorisant les usages commerciaux.
+- Cette licence permet aux utilisateurs de copier et de distribuer le matériel dans n'importe quel support ou format en forme non adaptée, et uniquement si une attribution est donnée au créateur. La licence permet l'utilisation commerciale. CC BY-ND comprend les éléments suivants:
+BY : une attribution doit être donnée au créateur.
+ND : aucune dérivée ou adaptation de l’œuvre n’est autorisée.
+CC : la licence n’est pas transférable.
 
 ## Version 13.11.00
 - Mise à jour de l'éditeur TinyMCE 5.10.9
