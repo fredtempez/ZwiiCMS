@@ -1,6 +1,13 @@
 # Notes de mises à jour
 
+## Version 13.11.02
+- Corrige le bug d'alignement du menu.
+
 ## Version 13.11.01
+- Uniformisation de la feuille de style avec ZwiiCMS.
+- Regroupement et optimisation des média queries.
+- La barre d'administration occupe la largeur de l'écran pour la compatibilité avec les média queries
+- Réinstallation de codemirror comme éditeur de code pour la configuration et les pages.
 
 ## Version 13.11.00
 - Mise à jour de l'éditeur TinyMCE 5.10.9

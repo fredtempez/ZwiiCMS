@@ -561,7 +561,6 @@ nav a:hover {
 
 #menuLeft {
     display: inline-flex;
-    float: left;
 }
 
 #menuRight {
@@ -582,6 +581,12 @@ nav::before {
     content: " ";
     clear: left;
     display: flex;
+}
+
+@media screen and (min-width: 769px) {
+    nav #menu {
+        display: block;
+    }
 }
 
 
@@ -1813,6 +1818,7 @@ th.col12 {
     }
     nav #menuLeft {
         flex-direction: column;
+        float: none;
     }
     nav #menuRight {
         font-size: 2em;
