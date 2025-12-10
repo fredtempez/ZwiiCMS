@@ -559,24 +559,39 @@ class user extends common
 				}
 
 				// Formatage de la liste
-				self::$users[] = [
-					$userId,
+					self::$users[] = [
+					// Nom
 					sprintf('%s %s', $userLastNames, $this->getData(['user', $userId, 'firstname'])),
-					helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])]),
-					empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
-					? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
-					: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']),
+					// Email
+					$this->getData(['user', $userId, 'mail']),
+					// Rôle et Profil
+					helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+					. '/'
+					. (empty($this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name']))
+						? helper::translate(self::$roles[(int) $this->getData(['user', $userId, 'role'])])
+						: $this->getData(['profil', $this->getData(['user', $userId, 'role']), $this->getData(['user', $userId, 'profil']), 'name'])),
+					// Tags
 					$this->getData(['user', $userId, 'tags']),
-					template::button('userEdit' . $userId, [
+					// Dernière connexion
+					is_null($this->getData(['user', $userId, 'accessTimer']))
+					? ''
+					: $this->getData(['user', $userId, 'accessTimer']),
+					// Bouton Edit
+					template::ico('pencil', [
+						'id' => 'userEdit' . $userId,
 						'href' => helper::baseUrl() . 'user/edit/' . $userId,
 						'value' => template::ico('pencil'),
-						'help' => 'Éditer'
-					]),
-					template::button('userDelete' . $userId, [
-						'class' => 'userDelete buttonRed',
+						'margin' => 'right',
+						'help' => 'Éditer',
+						'fontSize' => '18px',
+					])
+					// Bouton supprimée concaténé
+					. template::ico('trash', [
+						'id' => 'userDelete' . $userId,
+						'class' => 'userDelete icoTextRed',
 						'href' => helper::baseUrl() . 'user/delete/' . $userId,
-						'value' => template::ico('trash'),
-						'help' => 'Supprimer'
+						'help' => 'Supprimer',
+						'fontSize' => '18px',
 					])
 				];
 			}

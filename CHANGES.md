@@ -8,6 +8,9 @@ BY : une attribution doit être donnée au créateur.
 ND : aucune dérivée ou adaptation de l’œuvre n’est autorisée.
 CC : la licence n’est pas transférable.
 
+## Version 13.11.03
+- Corrige un bug empêchant la gestion des comptes des utilisateurs.
+
 ## Version 13.11.02
 - Corrige le bug d'alignement du menu.
 
