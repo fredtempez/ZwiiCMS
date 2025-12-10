@@ -63,7 +63,7 @@ $(document).ready((function () {
         ],
         columnDefs: [
             {
-                targets: 5,
+                targets: 4,
                 type: 'timestamp-custom',
                 render: function (data, type, row) {
                     if (type === 'display') {
@@ -79,7 +79,7 @@ $(document).ready((function () {
                 }
             },
             {
-                targets: 6,
+                targets: 5,
                 searchable: false,
                 orderable: false,
             }

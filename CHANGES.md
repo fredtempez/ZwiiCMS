@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 13.11.03
+- Corrige un bug empêchant la gestion des comptes des utilisateurs.
+
 ## Version 13.11.02
 - Corrige le bug d'alignement du menu.
 
