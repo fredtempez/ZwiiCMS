@@ -1,6 +1,7 @@
 # Notes de mises à jour
 
 ## Version 14.00.00
+- Optimisation de l'organisation du routeur, de la génération des feuilles de style.
 - Amélioration de l'animation de la barre d'administration.
 - Changement de licence autorisant les usages commerciaux.
 - Cette licence permet aux utilisateurs de copier et de distribuer le matériel dans n'importe quel support ou format en forme non adaptée, et uniquement si une attribution est donnée au créateur. La licence permet l'utilisation commerciale. CC BY-ND comprend les éléments suivants:
