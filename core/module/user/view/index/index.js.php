@@ -20,13 +20,7 @@ $(document).ready((function () {
     // Vider le localStorage au chargement de la page
     localStorage.setItem('checkboxState', JSON.stringify({}));
 
-    // Confirmation de suppression
-    $(".userDelete").on("click", (function () {
-        var _this = $(this);
-        return message = "<?php echo helper::translate('Confirmer la suppression de cet utilisateur');?>", core.confirm(message, (function () {
-            $(location).attr("href", _this.attr("href"))
-        }))
-    }));
+    // Confirmation de suppression - gérée dans drawCallback de DataTables
 
     $("#userFilterGroup, #userFilterFirstName, #userFilterLastName").change(function () {
         $("#userFilterUserForm").submit();
@@ -65,6 +59,19 @@ $(document).ready((function () {
                 titleAttr: 'Imprimer ou générer un PDF',
             }
         ],
+        drawCallback: function () {
+            // Attacher l'événement aux boutons de suppression après chaque redraw
+            $('.userDelete').off('click').on('click', function (e) {
+                e.preventDefault();
+                var _this = $(this);
+                var href = _this.attr('href') || _this.data('href') || _this.closest('a').attr('href');
+                var message = "<?php echo helper::translate('Confirmer la suppression de cet utilisateur');?>";
+                core.confirm(message, function () {
+                    window.location.href = href;
+                });
+                return false;
+            });
+        },
         columnDefs: [
             {
                 targets: 4,

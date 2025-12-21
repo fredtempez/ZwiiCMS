@@ -13,15 +13,7 @@
 
 $(document).ready(function () {
 
-	/**
-	 * Confirmation de suppression
-	 */
-	$(".downloadConfigDelete").on("click", function () {
-		var _this = $(this);
-		return core.confirm("Êtes-vous sûr de vouloir supprimer cet item ?", function () {
-			$(location).attr("href", _this.attr("href"));
-		});
-	});
+	// Confirmation de suppression - gérée dans drawCallback de DataTables
 
 	$('#dataTables').DataTable({
 		language: {
@@ -48,6 +40,18 @@ $(document).ready(function () {
 				titleAttr: 'Imprimer ou générer un PDF',
 			}
 		],
+		drawCallback: function () {
+			// Attacher l'événement aux boutons de suppression après chaque redraw
+			$('.downloadConfigDelete').off('click').on('click', function (e) {
+				e.preventDefault();
+				var _this = $(this);
+				var href = _this.attr('href') || _this.data('href') || _this.closest('a').attr('href');
+				core.confirm("Êtes-vous sûr de vouloir supprimer cet item ?", function () {
+					window.location.href = href;
+				});
+				return false;
+			});
+		},
 		dom: '<"top"lBf>rt<"bottom"p>',
 		"lengthMenu": [[10, 25, 50, 100, 200, -1], [10, 25, 50, 100, 200, "Tout"]],
 		"columnDefs": [

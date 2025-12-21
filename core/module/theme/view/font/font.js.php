@@ -13,12 +13,8 @@
  * @link http://zwiicms.fr/
  */
 $(document).ready((function () {
-    $(".themeFontDelete").on("click", (function () {
-        var _this = $(this);
-        return core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", (function () {
-            $(location).attr("href", _this.attr("href"))
-        }))
-    }));
+    // Confirmation de suppression - gérée dans drawCallback de DataTables
+    
     // Transmettre la langue au script Datatables.net
     var lang = getCookie('ZWII_UI');
     var languageUrl = 'core/vendor/datatables/' + lang + '.json';
@@ -28,6 +24,18 @@ $(document).ready((function () {
         },
         stateSave: true,
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
+        drawCallback: function () {
+            // Attacher l'événement aux boutons de suppression après chaque redraw
+            $('.themeFontDelete').off('click').on('click', function (e) {
+                e.preventDefault();
+                var _this = $(this);
+                var href = _this.attr('href') || _this.data('href') || _this.closest('a').attr('href');
+                core.confirm("Êtes-vous sûr de vouloir supprimer cette fonte ?", function () {
+                    window.location.href = href;
+                });
+                return false;
+            });
+        },
         "columnDefs": [{
             target: 5,
             orderable: false,
