@@ -1716,6 +1716,11 @@ class common
 				}
 			}
 
+			// Configuration du mailer par défaut si SMTP n'est pas activé
+			if (!$this->getdata(['config', 'smtp', 'enable'])) {
+				$mail->isMail();
+			}
+
 			// Expéditeur sécurisé
 			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title']), ENT_QUOTES, 'UTF-8'));
 
