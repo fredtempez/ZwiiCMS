@@ -1,3 +1,5 @@
+# Version 8.5
+- Corrige les chemins des images dans le flux RSS avec le préfixe de base URL.
 # Version 8.4
 - Corrige la génération du flux RSS au format UTF-8.
 # Version 8.3

@@ -19,7 +19,7 @@
 class download extends common
 {
 
-	const VERSION = '5.2';
+	const VERSION = '5.3';
 	const REALNAME = 'Ressources';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -205,6 +205,7 @@ class download extends common
 				// Miniature
 				$parts = explode('/', $itemData['thumb']);
 				$thumb = str_replace($parts[(count($parts) - 1)], self::THUMBS_SEPARATOR . $parts[(count($parts) - 1)], $itemData['thumb']);
+				$thumbUrl = helper::baseUrl(false) . self::FILE_DIR . 'thumb/' . $thumb;
 				
 				// Créer les items du flux
 				$newsitem = $feeds->createNewItem();
@@ -216,7 +217,7 @@ class download extends common
 				$newsitem->addElementArray([
 					'title' => $itemTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $itemId,
-					'description' => '<img src="' . helper::baseUrl() . self::FILE_DIR . 'thumb/' . $thumb
+					'description' => '<img src="' . $thumbUrl
 						. '" alt="' . helper::cleanRssText($itemTitle, true)
 						. '" title="' . helper::cleanRssText($itemTitle, true)
 						. '" />' .
@@ -305,7 +306,7 @@ class download extends common
 				$itemId,
 				[
 					'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
-					'content' => $this->getRelativePath($this->getInput('downloadAddContent', null, true)),
+					'content' => $this->getRelativePath($this->getInput('downloadAddContent', helper::FILTER_STRING_SHORT, true)),
 					'thumb' => $picture,
 					'ressourceType' => $this->getInput('downloadAddRessourceType', helper::FILTER_STRING_SHORT),
 					'file' => $this->getNormalizedFilePath($this->getInput('downloadAddFile', helper::FILTER_STRING_SHORT), $this->getUser('id')),
@@ -810,7 +811,7 @@ class download extends common
 					$itemId,
 					[
 						'comment' => $this->getData(['module', $this->getUrl(0), 'posts', $this->getUrl(2), 'comment']),
-						'content' => $this->getRelativePath($this->getInput('downloadEditContent', null)),
+						'content' => $this->getRelativePath($this->getInput('downloadEditContent', helper::FILTER_STRING_SHORT)),
 						'ressourceType' => $this->getInput('downloadEditRessourceType', helper::FILTER_STRING_SHORT),
 						'file' => $this->getNormalizedFilePath($this->getInput('downloadEditFile', helper::FILTER_STRING_SHORT), $this->getUser('id')),
 						'url' => $this->getInput('downloadEditUrl', helper::FILTER_STRING_SHORT),

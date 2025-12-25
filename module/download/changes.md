@@ -1,3 +1,5 @@
+# Version 5.3
+- Corrige les chemins des images dans le flux RSS avec le préfixe de base URL.
 # Version 5.2
 - Corrige la génération du flux RSS au format UTF-8.
 # Version 5.1

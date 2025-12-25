@@ -20,7 +20,7 @@
 class blog extends common
 {
 
-	const VERSION = '8.4';
+	const VERSION = '8.5';
 	const REALNAME = 'Blog';
 	const DELETE = true;
 	const UPDATE = '0.0';
@@ -219,7 +219,7 @@ class blog extends common
 				$articleTitle = helper::cleanRssText($articleData['title']);
 				
 				// Miniature
-				$thumb = $this->getThumb($articleData['picture']);
+				$thumb = helper::baseUrl(false) . $this->getThumb($articleData['picture']);
 				
 				// Créer les articles du flux
 				$newsArticle = $feeds->createNewItem();
@@ -242,9 +242,10 @@ class blog extends common
 				$newsArticle->setDate(date('r', $this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'publishedOn'])));
 				if ($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture'])
 					&& file_exists($this->getData(['module', $this->getUrl(0), 'posts', $articleId, 'picture']))) {
-					$imageData = getimagesize($thumb);
+					$thumbPath = $this->getThumb($articleData['picture']);
+					$imageData = getimagesize($thumbPath);
 					$newsArticle->addEnclosure(
-						$thumb,
+						helper::baseUrl(false) . $thumbPath,
 						$imageData[0] * $imageData[1],
 						$imageData['mime']
 					);
