@@ -69,8 +69,8 @@ class common
 
 	// Valeurs possibles multiple de 10, 10 autorise 9 profils, 100 autorise 99 profils
 	const MAX_PROFILS = 10;
-	// Taille et rotation des journaux
-	const LOG_MAXSIZE = 4 * 1024 * 1024;
+	// Taille et rotation des journaux 1 Go
+	const LOG_MAXSIZE = 1024 * 1024;
 	const LOG_MAXARCHIVE = 5;
 
 	public static $actions = [];
