@@ -8,10 +8,8 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International
+ * @Copyright (C) 2026, Frédéric Tempez
+ * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
 $("#themeAdvancedCss").on("change keydown keyup",(function(){$("#themePreview").remove(),$("<style>").attr("type","text/css").attr("id","themePreview").text($(this).val()).appendTo("head")})),$("#themeAdvancedReset").on("click",(function(){var _this=$(this);return core.confirm("Êtes-vous sûr de vouloir réinitialiser à son état d'origine la personnalisation avancée ?",(function(){$(location).attr("href",_this.attr("href"))}))}));

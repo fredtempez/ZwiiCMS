@@ -8,10 +8,8 @@
  * @author Frédéric Tempez <frederic.tempez@outlook.com>
  * @copyright Copyright (C) 2018-2025, Frédéric Tempez
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International
+ * @Copyright (C) 2026, Frédéric Tempez
+ * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  */
 $("<a>").addClass("themeOverlay").attr({id:"themeOverlayBody",href:"<?php echo helper::baseUrl(); ?>theme/body"}).appendTo("body"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayHeader",href:"<?php echo helper::baseUrl(); ?>theme/header"}).appendTo("header"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayMenu",href:"<?php echo helper::baseUrl(); ?>theme/menu"}).appendTo("nav"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlaySite",href:"<?php echo helper::baseUrl(); ?>theme/site"}).appendTo("#site"),$("<a>").addClass("themeOverlay themeOverlayHideBackground").attr({id:"themeOverlaySection",href:"<?php echo helper::baseUrl(); ?>theme/site"}).appendTo("section"),$("<a>").addClass("themeOverlay").attr({id:"themeOverlayFooter",href:"<?php echo helper::baseUrl(); ?>theme/footer"}).appendTo("footer"),$("#themeShowAll").on("click",(function(){$("header.displayNone, nav.displayNone, footer.displayNone").slideToggle()})),$("section").on("mouseover",(function(){$("#themeOverlaySite:not(.themeOverlayTriggerHover)").addClass("themeOverlayTriggerHover")})).on("mouseleave",(function(){$("#themeOverlaySite.themeOverlayTriggerHover").removeClass("themeOverlayTriggerHover")}));

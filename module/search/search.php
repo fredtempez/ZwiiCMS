@@ -13,10 +13,8 @@
  * @author Sylvain Lelièvre <lelievresylvain@free.fr>
  * @copyright Copyright (C) 2020-2021, Sylvain Lelièvre
  * @license CC Attribution-NonCommercial-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International 
- * @copyright Copyright (C) 2026, Frédéric Tempez
- * @license CC Attribution-NoDerivatives 4.0 International
+ * @Copyright (C) 2026, Frédéric Tempez
+ * @Licensed under the GNU General Public License v3.0 or later.
  * @link http://zwiicms.fr/
  *
  */
