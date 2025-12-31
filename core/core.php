@@ -1934,78 +1934,107 @@ class common
 	 * Gère la rotation et la compression des fichiers journaux
      * @return bool True si la rotation a réussi, false sinon
      */
-    private function rotateLogFile(): bool
-    {
-        $logFile = self::DATA_DIR . 'journal.log';
+	private function rotateLogFile(): bool
+	{
+		$logFile = self::DATA_DIR . 'journal.log';
+		
+		// 1. Vérifications préliminaires
+		if (!is_readable($logFile) || !is_writable(dirname($logFile))) {
+			trigger_error('Fichier journal inaccessible ou dossier non inscriptible', E_USER_WARNING);
+			return false;
+		}
+		
+		// 2. Vérifier si rotation nécessaire (taille minimale)
+		if (filesize($logFile) < 1024) { // < 1KB
+			return true; // Pas besoin de rotation
+		}
+		
+		// 3. Verrouillage du fichier pour éviter les race conditions
+		$lockFile = fopen($logFile, 'r');
+		if (!flock($lockFile, LOCK_EX | LOCK_NB)) {
+			fclose($lockFile);
+			trigger_error('Fichier journal déjà utilisé par un autre processus', E_USER_WARNING);
+			return false;
+		}
+		
+		$tempFile = null;
+		try {
+			// 4. Décaler d'abord les anciennes archives
+			for ($i = self::LOG_MAXARCHIVE - 1; $i > 0; $i--) {
+				$oldFile = self::DATA_DIR . 'journal-' . $i . '.log.gz';
+				$newFile = self::DATA_DIR . 'journal-' . ($i + 1) . '.log.gz';
 
-        // Vérifier si le fichier source existe et est accessible en lecture
-        if (!is_readable($logFile)) {
-            trigger_error('Impossible de lire le fichier journal pour la rotation', E_USER_WARNING);
-            return false;
-        }
+				// Si le fichier existe, le déplacer ou le supprimer
+				if (file_exists($oldFile)) {
+					if ($i >= self::LOG_MAXARCHIVE - 1) {
+						if (!unlink($oldFile)) {
+							trigger_error('Impossible de supprimer l\'ancienne archive: ' . $oldFile, E_USER_WARNING);
+						}
+					} else if (!rename($oldFile, $newFile)) {
+						trigger_error(sprintf('Échec du déplacement de %s vers %s', $oldFile, $newFile), E_USER_WARNING);
+					}
+				}
+			}
 
-        try {
-            // 1. Décaler d'abord les anciennes archives
-            for ($i = self::LOG_MAXARCHIVE - 1; $i > 0; $i--) {
-                $oldFile = self::DATA_DIR . 'journal-' . $i . '.log.gz';
-                $newFile = self::DATA_DIR . 'journal-' . ($i + 1) . '.log.gz';
+			// 5. Créer une copie temporaire pour la compression
+			$tempFile = tempnam(sys_get_temp_dir(), 'zwii_log_');
+			if (!copy($logFile, $tempFile)) {
+				throw new \RuntimeException('Échec de la copie temporaire du journal');
+			}
 
-                // Si le fichier existe, le déplacer ou le supprimer
-                if (file_exists($oldFile)) {
-                    if ($i >= self::LOG_MAXARCHIVE - 1) {
-                        @unlink($oldFile);  // Supprimer le plus ancien
-                    } else if (!@rename($oldFile, $newFile)) {
-                        trigger_error(sprintf('Échec du déplacement de %s vers %s', $oldFile, $newFile), E_USER_WARNING);
-                    }
-                }
-            }
+			// 6. Compresser L'ANCIEN contenu (sécurisé - AVANT de vider le fichier)
+			$gzFile = self::DATA_DIR . 'journal-1.log.gz';
+			$gz = @gzopen($gzFile, 'w9');
+			if ($gz === false) {
+				throw new \RuntimeException('Impossible d\'ouvrir le fichier de destination pour la compression');
+			}
 
-            // 2. Créer une copie temporaire pour la compression
-            $tempFile = tempnam(sys_get_temp_dir(), 'zwii_log_');
-            if (!copy($logFile, $tempFile)) {
-                throw new \RuntimeException('Échec de la copie temporaire du journal');
-            }
+			$source = fopen($tempFile, 'r');
+			if ($source === false) {
+				gzclose($gz);
+				throw new \RuntimeException('Impossible de lire le fichier source pour la compression');
+			}
 
-            // 3. Vider le fichier journal principal
-            if (file_put_contents($logFile, '') === false) {
-                throw new \RuntimeException('Impossible de vider le fichier journal');
-            }
+			// Utiliser stream_copy_to_stream pour de meilleures performances
+			stream_copy_to_stream($source, $gz);
 
-            // 4. Compresser l'ancien contenu
-            $gzFile = self::DATA_DIR . 'journal-1.log.gz';
-            $gz = @gzopen($gzFile, 'w9');
-            if ($gz === false) {
-                throw new \RuntimeException('Impossible d\'ouvrir le fichier de destination pour la compression');
-            }
+			fclose($source);
+			gzclose($gz);
 
-            $source = fopen($tempFile, 'r');
-            if ($source === false) {
-                gzclose($gz);
-                throw new \RuntimeException('Impossible de lire le fichier source pour la compression');
-            }
+			// 7. Vérifier le succès de la compression AVANT de vider le fichier
+			if (!file_exists($gzFile) || filesize($gzFile) === 0) {
+				throw new \RuntimeException('La compression du journal a échoué');
+			}
 
-            while (!feof($source)) {
-                gzwrite($gz, fread($source, 8192));
-            }
+			// 8. SEULEMENT MAINTENANT vider le fichier journal principal (sécurisé)
+			if (file_put_contents($logFile, '') === false) {
+				throw new \RuntimeException('Impossible de vider le fichier journal');
+			}
 
-            fclose($source);
-            gzclose($gz);
+			// 9. Nettoyer le fichier temporaire
+			@unlink($tempFile);
+			$tempFile = null;
 
-            // Nettoyer le fichier temporaire
-            @unlink($tempFile);
+			// 10. Libérer le verrou
+			flock($lockFile, LOCK_UN);
+			fclose($lockFile);
 
-            // Vérifier que le fichier compressé a été créé
-            if (!file_exists($gzFile) || filesize($gzFile) === 0) {
-                throw new \RuntimeException('La compression du journal a échoué');
-            }
+			return true;
 
-            return true;
-
-        } catch (\Exception $e) {
-            trigger_error('Erreur lors de la rotation du journal: ' . $e->getMessage(), E_USER_WARNING);
-            return false;
-        }
-    }
+		} catch (\Exception $e) {
+			// Nettoyer en cas d'erreur
+			if ($tempFile) {
+				@unlink($tempFile);
+			}
+			if (isset($lockFile)) {
+				flock($lockFile, LOCK_UN);
+				fclose($lockFile);
+			}
+			
+			trigger_error('Erreur lors de la rotation du journal: ' . $e->getMessage(), E_USER_WARNING);
+			return false;
+		}
+	}
 
 	/**
 	 * Retourne la signature d'un utilisateur
