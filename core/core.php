@@ -257,15 +257,24 @@ class common
 		'profil' => '',
 	];
 
-	// Bases essentielles chargées au démarrage
+	// Bases essentielles chargées au démarrage (optimisé avec JsonDb cache)
 	private $essentialDataFiles = [
 		'config',
-		'user',
+		'user', 
 		'locale',
-		'page',
-		'module',
-		'core'
+		'core'     // Données système critiques
 	];
+	
+	// Fichiers chargés on-demand (avec cache automatique)
+	private $onDemandDataFiles = [
+		'page', 'module',                // Contenu
+		'theme', 'font', 'language',     // Personnalisation
+		'profil', 'admin',               // Administration
+		'blacklist'                      // Sécurité
+	];
+
+	// Configuration JsonDb améliorée
+	private $jsonDbConfig = null;
 
 	public static $fontsWebSafe = [
 		'arial' => [
@@ -772,7 +781,7 @@ class common
 
 	public function jsonDB($lang, $dataFilesToLoad = null)
 	{
-		// Instanciation de la classe des entrées / sorties
+		// Instanciation de la classe des entrées / sorties avec JsonDb amélioré
 		// Si aucune liste spécifiée, charger toutes les bases (comportement par défaut)
 		if ($dataFilesToLoad === null) {
 			$dataFilesToLoad = array_keys($this->dataFiles);
@@ -781,12 +790,30 @@ class common
 		// Récupère les descripteurs pour les bases spécifiées
 		foreach ($dataFilesToLoad as $keys) {
 			if (array_key_exists($keys, $this->dataFiles)) {
-				// Constructeur JsonDB
-				$this->dataFiles[$keys] = new \Prowebcraft\JsonDb([
+				// Configuration de base
+				$config = [
 					'name' => $keys . '.json',
 					'dir' => $this->dataPath($keys, $lang),
-					'backup' => file_exists('site/data/.backup')
-				]);
+					'backup' => file_exists('site/data/.backup'),
+					'update' => false,
+				];
+				
+				// Fusionner avec la configuration JsonDb globale si définie
+				if (isset($this->jsonDbConfig)) {
+					$config = array_merge($config, $this->jsonDbConfig);
+				} else {
+					// Configuration par défaut si aucune configuration globale
+					$config = array_merge($config, [
+						'cache' => true,
+						'cacheTTL' => 3600,
+						'compression' => false,
+						'encryption' => false,
+						'encryptionKey' => null
+					]);
+				}
+
+				// Utilisation de la classe JsonDb améliorée
+				$this->dataFiles[$keys] = new \Prowebcraft\JsonDb($config);
 			}
 		}
 	}
@@ -803,12 +830,31 @@ class common
 		}
 
 		// Vérifier si la base existe et n'est pas déjà chargée
-		if (array_key_exists($dataFile, $this->dataFiles) && empty($this->dataFiles[$dataFile])) {
-			$this->dataFiles[$dataFile] = new \Prowebcraft\JsonDb([
+		if (!array_key_exists($dataFile, $this->dataFiles) || empty($this->dataFiles[$dataFile])) {
+			// Configuration de base
+			$config = [
 				'name' => $dataFile . '.json',
 				'dir' => $this->dataPath($dataFile, $lang),
-				'backup' => file_exists('site/data/.backup')
-			]);
+				'backup' => file_exists('site/data/.backup'),
+				'update' => false,
+			];
+			
+			// Fusionner avec la configuration JsonDb globale si définie
+			if (isset($this->jsonDbConfig)) {
+				$config = array_merge($config, $this->jsonDbConfig);
+			} else {
+				// Configuration par défaut si aucune configuration globale
+				$config = array_merge($config, [
+					'cache' => true,
+					'cacheTTL' => 3600,
+					'compression' => false,
+					'encryption' => false,
+					'encryptionKey' => null
+				]);
+			}
+
+			// Utilisation de la classe JsonDb améliorée
+			$this->dataFiles[$dataFile] = new \Prowebcraft\JsonDb($config);
 		}
 	}
 
@@ -2052,5 +2098,96 @@ class common
 	 */
 	public function getRelativePath($path) {
 		return str_replace(helper::baseUrl(false), '', $path);
+	}
+
+	// =====================================================================
+	// MÉTHODES DE CONFIGURATION JSONDB AMÉLIORÉ
+	// =====================================================================
+
+	/**
+	 * Configure les options avancées pour les bases de données JSON
+	 * @param array $options Options de configuration
+	 */
+	public function configureJsonDb($options = [])
+	{
+		// Options par défaut
+		$defaultOptions = [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,
+			'encryption' => false,
+			'encryptionKey' => null
+		];
+		
+		// Fusionner avec les options fournies
+		$this->jsonDbConfig = array_merge($defaultOptions, $options);
+	}
+	
+	/**
+	 * Retourne la configuration actuelle de JsonDb
+	 * @return array Configuration actuelle
+	 */
+	public function getJsonDbConfig()
+	{
+		return $this->jsonDbConfig ?? [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,
+			'encryption' => false,
+			'encryptionKey' => null
+		];
+	}
+
+	/**
+	 * Active la compression pour toutes les futures bases de données
+	 * @param bool $enabled État de la compression
+	 */
+	public function enableJsonDbCompression($enabled = true)
+	{
+		$this->configureJsonDb(['compression' => $enabled]);
+	}
+	
+	/**
+	 * Active le chiffrement pour toutes les futures bases de données
+	 * @param string $key Clé de chiffrement (32 caractères minimum)
+	 */
+	public function enableJsonDbEncryption($key)
+	{
+		if (strlen($key) < 32) {
+			throw new \InvalidArgumentException('La clé de chiffrement doit faire au moins 32 caractères');
+		}
+		$this->configureJsonDb(['encryption' => true, 'encryptionKey' => $key]);
+	}
+	
+	/**
+	 * Configure le cache pour toutes les futures bases de données
+	 * @param bool $enabled État du cache
+	 * @param int $ttl Durée de vie en secondes
+	 */
+	public function configureJsonDbCache($enabled = true, $ttl = 3600)
+	{
+		$this->configureJsonDb([
+			'cache' => $enabled,
+			'cacheTTL' => $ttl
+		]);
+	}
+
+	/**
+	 * Retourne les statistiques du cache pour une base de données spécifique
+	 * @param string $module Nom de la base de données
+	 * @return array|null Statistiques ou null si non disponible
+	 */
+	public function getJsonDbCacheStats($module)
+	{
+		if (!isset($this->dataFiles[$module])) {
+			return null;
+		}
+		
+		$db = $this->dataFiles[$module];
+		if (method_exists($db, 'getDetailedCacheStats')) {
+			return $db->getDetailedCacheStats();
+		}
+		
+		return null;
 	}
 }

@@ -2,10 +2,11 @@
 
 ## Version 14.00.00
 ### Améliorations
+- Base de données JsonDB améliorée, gestion d'erreur et d'un cache. Livraison d'une documentation.
 - Optimisation de l'organisation du routeur, de la génération des feuilles de style.
 - Amélioration de l'animation de la barre d'administration.
 - Configuration du mailer par défaut si SMTP n'est pas activé
-- Changement de licence autorisant les usages commerciaux. Cette licence permet aux utilisateurs de copier et de distribuer le matériel dans n'importe quel support ou format en forme non adaptée, et uniquement si une attribution est donnée au créateur. La licence permet l'utilisation commerciale. CC BY-ND comprend les éléments suivants:
+- Changement de licence autorisant les usages commerciaux. Cette licence permet aux utilisateurs de copier et de distribuer le matériel dans n'importe quel support ou format en forme non adaptée, et uniquement si attribution est donnée au créateur. La licence permet l'utilisation commerciale. CC BY-ND comprend les éléments suivants:
 BY : une attribution doit être donnée au créateur.
 ND : aucune dérivée ou adaptation de l’œuvre n’est autorisée.
 CC : la licence n’est pas transférable.

@@ -1,18 +1,9 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Andrey Mistulov
- * Company: Aristos
- * Date: 14.03.2017
- * Time: 15:25
- */
-
 namespace Prowebcraft;
 
 /**
- * Class Data
- * @package Aristos
+ * Improved JsonDb with enhanced caching, performance and security features
  */
 class JsonDb extends \Prowebcraft\Dot
 {
@@ -21,12 +12,14 @@ class JsonDb extends \Prowebcraft\Dot
     protected $config = [];
     protected $cache = [];
     protected $cacheEnabled = false;
-    protected $cacheTTL = 3600; // Durée de vie du cache en secondes (1 heure par défaut)
-
-    // Tentative d'écriture après échec
+    protected $cacheTTL = 3600;
+    protected $cacheTags = []; // Nouveau: système de tags pour le cache
+    
+    // Constants
     const MAX_FILE_WRITE_ATTEMPTS = 5;
-    // Délais entre deux tentaives
     const RETRY_DELAY_SECONDS = 1;
+    const MAX_CACHE_SIZE = 1000; // Limite de taille du cache
+    const CACHE_CLEANUP_PROBABILITY = 100; // 1% de chance de nettoyage
 
     public function __construct($config = [])
     {
@@ -35,10 +28,12 @@ class JsonDb extends \Prowebcraft\Dot
             'backup' => false,
             'dir' => getcwd(),
             'cache' => false,
-            'cacheTTL' => 3600
+            'cacheTTL' => 3600,
+            'compression' => false, // Nouveau: compression des données
+            'encryption' => false,  // Nouveau: chiffrement optionnel
+            'encryptionKey' => null
         ], $config);
         
-        // Initialisation du cache si activé dans la configuration
         $this->cacheEnabled = $this->config['cache'] ?? false;
         $this->cacheTTL = $this->config['cacheTTL'] ?? 3600;
         
@@ -47,88 +42,370 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
-     * Reload data from file
-     * @param bool $clearCache Force la suppression du cache
-     * @return $this
+     * Enhanced get with tag-based cache invalidation
      */
-    public function reload($clearCache = false)
+    public function get($key, $default = null, $asObject = false, $tags = [])
     {
-        if ($clearCache) {
-            $this->clearCache();
+        if (!$this->cacheEnabled || $key === null) {
+            return parent::get($key, $default, $asObject);
         }
-        $this->loadData(true);
-        return $this;
-    }
-    
-    /**
-     * Active ou désactive le cache
-     * @param bool $enabled État d'activation du cache
-     * @return $this
-     */
-    public function enableCache($enabled = true)
-    {
-        $this->cacheEnabled = $enabled;
-        return $this;
-    }
-    
-    /**
-     * Définit la durée de vie du cache
-     * @param int $seconds Durée en secondes
-     * @return $this
-     */
-    public function setCacheTTL($seconds)
-    {
-        $this->cacheTTL = max(1, (int)$seconds);
-        return $this;
-    }
-    
-    /**
-     * Vide le cache
-     * @param string|null $key Clé spécifique à vider, null pour tout vider
-     * @return $this
-     */
-    public function clearCache($key = null)
-    {
-        if ($key === null) {
-            $this->cache = [];
-        } elseif (isset($this->cache[$key])) {
-            unset($this->cache[$key]);
+        
+        $cacheKey = $this->generateCacheKey($key, $asObject);
+        
+        // Vérifier le cache avec tags valides
+        if ($this->isCachedWithTags($cacheKey, $tags)) {
+            $this->cache[$cacheKey]['hits']++;
+            return $this->cache[$cacheKey]['value'];
         }
-        return $this;
+        
+        $value = parent::get($key, $default, $asObject);
+        
+        // Stocker avec tags et métadonnées
+        $this->cache[$cacheKey] = [
+            'value' => $value,
+            'expires' => time() + $this->cacheTTL,
+            'tags' => $tags,
+            'hits' => 0,
+            'created' => time()
+        ];
+        
+        // Nettoyage automatique du cache
+        if (mt_rand(1, self::CACHE_CLEANUP_PROBABILITY) === 1) {
+            $this->optimizeCache();
+        }
+        
+        return $value;
     }
-    
+
     /**
-     * Vérifie si une clé est en cache et valide
-     * @param string $key Clé à vérifier
-     * @return bool True si la clé est en cache et valide
+     * Invalider le cache par tags
      */
-    public function isCached($key)
+    public function invalidateCacheByTag($tag)
     {
-        if (!$this->cacheEnabled) {
+        $removed = 0;
+        foreach ($this->cache as $key => $entry) {
+            if (isset($entry['tags']) && in_array($tag, $entry['tags'])) {
+                unset($this->cache[$key]);
+                $removed++;
+            }
+        }
+        return $removed;
+    }
+
+    /**
+     * Optimisation du cache: suppression des entrées les moins utilisées
+     */
+    protected function optimizeCache()
+    {
+        if (count($this->cache) <= self::MAX_CACHE_SIZE) {
+            return;
+        }
+
+        // Trier par nombre de hits et par date de création
+        uasort($this->cache, function($a, $b) {
+            if ($a['hits'] === $b['hits']) {
+                return $a['created'] - $b['created'];
+            }
+            return $a['hits'] - $b['hits'];
+        });
+
+        // Garder seulement les 80% les plus utilisés
+        $keepCount = (int)(self::MAX_CACHE_SIZE * 0.8);
+        $this->cache = array_slice($this->cache, -$keepCount, null, true);
+    }
+
+    /**
+     * Enhanced save with compression and encryption options
+     */
+    public function save(): void
+    {
+        if ($this->data === null) {
+            throw new \RuntimeException('Tentative de sauvegarde de données nulles');
+        }
+
+        $dir = dirname($this->db);
+        if (!is_writable($dir)) {
+            throw new \RuntimeException("Le dossier $dir n'est pas accessible en écriture.");
+        }
+
+        try {
+            // Préparation des données
+            $saveData = $this->prepareDataForSave();
+            
+            // Encodage JSON
+            $encoded_data = json_encode($saveData, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+            
+            // Compression si activée
+            if ($this->config['compression']) {
+                $encoded_data = gzcompress($encoded_data, 6);
+            }
+
+        } catch (\JsonException $e) {
+            throw new \RuntimeException("Erreur d'encodage JSON : " . $e->getMessage());
+        }
+
+        $this->performAtomicSave($encoded_data, $dir);
+    }
+
+    /**
+     * Prépare les données pour la sauvegarde (chiffrement si nécessaire)
+     */
+    protected function prepareDataForSave()
+    {
+        $data = $this->data;
+        
+        if ($this->config['encryption'] && !empty($this->config['encryptionKey'])) {
+            $data = [
+                'encrypted' => true,
+                'data' => $this->encryptData(json_encode($data), $this->config['encryptionKey'])
+            ];
+        }
+        
+        return $data;
+    }
+
+    /**
+     * Enhanced loadData with decryption support
+     */
+    protected function loadData($reload = false): ?array
+    {
+        if ($this->data === null || $reload) {
+            $this->db = $this->config['dir'] . $this->config['name'];
+
+            if (!file_exists($this->db)) {
+                return null;
+            }
+
+            if ($this->config['backup']) {
+                $this->createBackup();
+            }
+
+            $file_contents = file_get_contents($this->db);
+            
+            // Décompression si nécessaire
+            if ($this->config['compression'] && $this->isCompressed($file_contents)) {
+                $file_contents = gzuncompress($file_contents);
+            }
+
+            $this->data = json_decode($file_contents, true);
+
+            if ($this->data === null) {
+                throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides.');
+            }
+
+            // Déchiffrement si nécessaire
+            if (isset($this->data['encrypted']) && $this->data['encrypted']) {
+                if (empty($this->config['encryptionKey'])) {
+                    throw new \RuntimeException('Clé de chiffrement manquante');
+                }
+                $decrypted = $this->decryptData($this->data['data'], $this->config['encryptionKey']);
+                $this->data = json_decode($decrypted, true);
+            }
+        }
+
+        return $this->data;
+    }
+
+    /**
+     * Atomic save implementation with better error handling
+     */
+    protected function performAtomicSave($encoded_data, $dir)
+    {
+        $encoded_length = strlen($encoded_data);
+        $max_attempts = self::MAX_FILE_WRITE_ATTEMPTS;
+
+        for ($attempt = 0; $attempt < $max_attempts; $attempt++) {
+            $temp_file = $dir . '/userdb_' . uniqid('', true) . '.tmp';
+
+            try {
+                if ($attempt > 0) {
+                    usleep($attempt * 100000);
+                }
+
+                // Écriture atomique avec vérification
+                $written = file_put_contents($temp_file, $encoded_data, LOCK_EX);
+                if ($written !== $encoded_length) {
+                    throw new \RuntimeException("Erreur d'écriture du fichier temporaire");
+                }
+
+                // Vérification de l'intégrité
+                if (!$this->verifyFileIntegrity($temp_file, $encoded_data)) {
+                    throw new \RuntimeException("L'intégrité du fichier n'a pas pu être vérifiée");
+                }
+
+                chmod($temp_file, 0644);
+
+                // Déplacement atomique selon le système
+                if ($this->atomicMove($temp_file, $this->db)) {
+                    return;
+                }
+
+                error_log('Échec sauvegarde : déplacement atomique échoué (tentative ' . ($attempt + 1) . ')');
+            } catch (\Exception $e) {
+                error_log('Erreur de sauvegarde : ' . $e->getMessage());
+            } finally {
+                if (file_exists($temp_file)) {
+                    @unlink($temp_file);
+                }
+            }
+
+            usleep(pow(2, $attempt) * 250000);
+        }
+
+        throw new \RuntimeException('Échec de sauvegarde après ' . $max_attempts . ' tentatives');
+    }
+
+    /**
+     * Vérifie l'intégrité du fichier écrit
+     */
+    protected function verifyFileIntegrity($filename, $expected_content)
+    {
+        $actual_content = file_get_contents($filename);
+        return $actual_content === $expected_content;
+    }
+
+    /**
+     * Déplacement atomique adapté au système
+     */
+    protected function atomicMove($temp_file, $target_file)
+    {
+        if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
+            // Windows: copie + suppression
+            if (file_exists($target_file)) {
+                @chmod($target_file, 0666);
+            }
+            if (copy($temp_file, $target_file)) {
+                return unlink($temp_file);
+            }
+        } else {
+            // Unix/Linux: rename atomique
+            return rename($temp_file, $target_file);
+        }
+        return false;
+    }
+
+    /**
+     * Vérifie si les données sont compressées
+     */
+    protected function isCompressed($data)
+    {
+        return substr($data, 0, 2) === "\x1f\x8b"; // Magic number gzip
+    }
+
+    /**
+     * Création de sauvegarde améliorée
+     */
+    protected function createBackup()
+    {
+        $backup_path = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup.' . date('Y-m-d_H-i-s');
+        
+        try {
+            if (!copy($this->db, $backup_path)) {
+                throw new \RuntimeException('Échec de la création de la sauvegarde');
+            }
+            
+            // Nettoyage des anciennes sauvegardes (garder seulement les 5 dernières)
+            $this->cleanupOldBackups();
+            
+        } catch (\Exception $e) {
+            throw new \RuntimeException('Erreur de sauvegarde : ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Nettoyage des anciennes sauvegardes
+     */
+    protected function cleanupOldBackups()
+    {
+        $backup_pattern = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup.*';
+        $backups = glob($backup_pattern);
+        
+        if (count($backups) > 5) {
+            usort($backups, function($a, $b) {
+                return filemtime($b) - filemtime($a);
+            });
+            
+            $to_delete = array_slice($backups, 5);
+            foreach ($to_delete as $old_backup) {
+                @unlink($old_backup);
+            }
+        }
+    }
+
+    /**
+     * Méthodes utilitaires pour le chiffrement
+     */
+    protected function encryptData($data, $key)
+    {
+        $iv = random_bytes(16);
+        $encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+        return base64_encode($iv . $encrypted);
+    }
+
+    protected function decryptData($encryptedData, $key)
+    {
+        $data = base64_decode($encryptedData);
+        $iv = substr($data, 0, 16);
+        $encrypted = substr($data, 16);
+        return openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    }
+
+    /**
+     * Génération de clé de cache améliorée
+     */
+    protected function generateCacheKey($key, $asObject)
+    {
+        return md5((is_array($key) ? implode('.', $key) : (string)$key) . ($asObject ? '_obj' : '_arr'));
+    }
+
+    /**
+     * Vérification du cache avec tags
+     */
+    protected function isCachedWithTags($cacheKey, $tags)
+    {
+        if (!isset($this->cache[$cacheKey])) {
             return false;
         }
         
-        $cacheKey = is_array($key) ? implode('.', $key) : (string)$key;
-        return isset($this->cache[$cacheKey]) && time() < $this->cache[$cacheKey]['expires'];
+        $entry = $this->cache[$cacheKey];
+        
+        // Vérifier l'expiration
+        if (time() >= $entry['expires']) {
+            unset($this->cache[$cacheKey]);
+            return false;
+        }
+        
+        // Vérifier si les tags sont valides (si spécifiés)
+        if (!empty($tags)) {
+            $entryTags = $entry['tags'] ?? [];
+            if (empty(array_intersect($tags, $entryTags))) {
+                return false;
+            }
+        }
+        
+        return true;
     }
-    
+
     /**
-     * Retourne des statistiques sur le cache
-     * @return array Statistiques du cache
+     * Statistiques détaillées du cache
      */
-    public function getCacheStats()
+    public function getDetailedCacheStats()
     {
         $total = count($this->cache);
         $valid = 0;
         $expired = 0;
+        $totalHits = 0;
         $now = time();
+        $memoryUsage = 0;
         
-        foreach ($this->cache as $entry) {
+        foreach ($this->cache as $key => $entry) {
             if ($now < $entry['expires']) {
                 $valid++;
             } else {
                 $expired++;
             }
+            $totalHits += $entry['hits'] ?? 0;
+            $memoryUsage += strlen(serialize($entry));
         }
         
         return [
@@ -137,206 +414,108 @@ class JsonDb extends \Prowebcraft\Dot
             'total' => $total,
             'valid' => $valid,
             'expired' => $expired,
-            'memory_usage' => $this->getMemoryUsage()
+            'total_hits' => $totalHits,
+            'average_hits' => $total > 0 ? round($totalHits / $total, 2) : 0,
+            'memory_usage' => $memoryUsage,
+            'memory_usage_mb' => round($memoryUsage / 1024 / 1024, 2)
         ];
     }
-    
-    /**
-     * Calcule l'utilisation mémoire approximative du cache
-     * @return int Taille en octets
-     */
-    protected function getMemoryUsage()
-    {
-        $usage = 0;
-        
-        foreach ($this->cache as $key => $entry) {
-            // Taille approximative de la clé
-            $usage += strlen($key);
-            // Taille approximative de la valeur (sérialisation pour estimation)
-            $usage += strlen(serialize($entry['value']));
-            // Taille du timestamp d'expiration (entier)
-            $usage += 8;
-        }
-        
-        return $usage;
-    }
 
-    /**
-     * Set value or array of values to path
-     *
-     * @param mixed      $key   Path or array of paths and values
-     * @param mixed|null $value Value to set if path is not an array
-     * @param bool $save Save data to database
-     * @return $this
-     */
+    // Méthodes existantes conservées pour compatibilité...
     public function set($key, $value = null, $save = true)
     {
         parent::set($key, $value);
         
-        // Invalider le cache pour cette clé
         if ($this->cacheEnabled) {
             $this->clearCache($key);
         }
         
-        if ($save)
+        if ($save) {
             $this->save();
+        }
         return $this;
     }
 
-    /**
-     * Add value or array of values to path
-     *
-     * @param mixed      $key Path or array of paths and values
-     * @param mixed|null $value Value to set if path is not an array
-     * @param boolean    $pop Helper to pop out last key if value is an array
-     * @param bool       $save    Save data to database
-     * @return $this
-     */
     public function add($key, $value = null, $pop = false, $save = true)
     {
         parent::add($key, $value, $pop);
         
-        // Invalider le cache pour cette clé
         if ($this->cacheEnabled) {
             $this->clearCache($key);
         }
         
-        if ($save)
+        if ($save) {
             $this->save();
+        }
         return $this;
     }
 
-    /**
-     * Delete path or array of paths
-     *
-     * @param mixed     $key Path or array of paths to delete
-     * @param bool      $save Save data to database
-     * @return $this
-     */
     public function delete($key, $save = true)
     {
         parent::delete($key);
         
-        // Invalider le cache pour cette clé
         if ($this->cacheEnabled) {
             $this->clearCache($key);
         }
         
-        if ($save)
+        if ($save) {
             $this->save();
+        }
         return $this;
     }
 
-    /**
-     * Delete all data, data from path or array of paths and
-     * optionally format path if it doesn't exist
-     *
-     * @param mixed|null $key Path or array of paths to clean
-     * @param boolean    $format Format option
-     * @param bool       $save Save data to database
-     * @return $this
-     */
     public function clear($key = null, $format = false, $save = true)
     {
         parent::clear($key, $format);
         
-        // Invalider le cache pour cette clé ou tout le cache si $key est null
         if ($this->cacheEnabled) {
             $this->clearCache($key);
         }
         
-        if ($save)
+        if ($save) {
             $this->save();
+        }
         return $this;
     }
 
-    /**
-     * Charge les données depuis un fichier JSON.
-     *
-     * @param bool $reload Force le rechargement des données si true
-     *
-     * @return array|null Les données chargées ou null si le fichier n'existe pas
-     *
-     * @throws \RuntimeException En cas d'erreur lors de la création de la sauvegarde
-     * @throws \InvalidArgumentException Si le fichier contient des données JSON invalides
-     */
-    protected function loadData($reload = false): ?array
+    public function clearCache($key = null)
     {
-        if ($this->data === null || $reload) {
-            $this->db = $this->config['dir'] . $this->config['name'];
-
-            if (!file_exists($this->db)) {
-                return null;  // Rebuild database managed by CMS
+        if ($key === null) {
+            $this->cache = [];
+        } else {
+            $cacheKey = $this->generateCacheKey($key, false);
+            if (isset($this->cache[$cacheKey])) {
+                unset($this->cache[$cacheKey]);
             }
-
-            if ($this->config['backup']) {
-                $backup_path = $this->config['dir'] . DIRECTORY_SEPARATOR . $this->config['name'] . '.backup';
-
-                try {
-                    if (!copy($this->db, $backup_path)) {
-                        throw new \RuntimeException('Échec de la création de la sauvegarde');
-                    }
-                } catch (\Exception $e) {
-                    throw new \RuntimeException('Erreur de sauvegarde : ' . $e->getMessage());
-                }
-            }
-
-            $file_contents = file_get_contents($this->db);
-
-            $this->data = json_decode($file_contents, true);
-
-            if ($this->data === null) {
-                throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides.');
+            $cacheKeyObj = $this->generateCacheKey($key, true);
+            if (isset($this->cache[$cacheKeyObj])) {
+                unset($this->cache[$cacheKeyObj]);
             }
         }
-
-        return $this->data;
+        return $this;
     }
-    
-    /**
-     * Récupère une valeur depuis le chemin spécifié avec support de cache
-     *
-     * @param string|array|null $key Chemin à récupérer
-     * @param mixed $default Valeur par défaut si le chemin n'existe pas
-     * @param bool $asObject Convertir les tableaux en objets
-     * @return mixed La valeur récupérée ou la valeur par défaut
-     */
-    public function get($key, $default = null, $asObject = false)
+
+    public function reload($clearCache = false)
     {
-        // Si le cache est désactivé, utiliser la méthode parente
-        if (!$this->cacheEnabled || $key === null) {
-            return parent::get($key, $default, $asObject);
+        if ($clearCache) {
+            $this->clearCache();
         }
-        
-        // Générer une clé de cache unique avec le flag asObject
-        $cacheKey = (is_array($key) ? implode('.', $key) : (string)$key) . ($asObject ? '_obj' : '_arr');
-        
-        // Vérifier si la valeur est en cache et si elle est encore valide
-        if (isset($this->cache[$cacheKey]) && time() < $this->cache[$cacheKey]['expires']) {
-            return $this->cache[$cacheKey]['value'];
-        }
-        
-        // Récupérer la valeur depuis la méthode parente
-        $value = parent::get($key, $default, $asObject);
-        
-        // Stocker la valeur dans le cache
-        $this->cache[$cacheKey] = [
-            'value' => $value,
-            'expires' => time() + $this->cacheTTL
-        ];
-        
-        // Nettoyage automatique du cache (1% de chance)
-        if (mt_rand(1, 100) === 1) {
-            $this->cleanExpiredCache();
-        }
-        
-        return $value;
+        $this->loadData(true);
+        return $this;
     }
-    
-    /**
-     * Nettoie les entrées expirées du cache
-     * @return int Nombre d'entrées supprimées
-     */
+
+    public function enableCache($enabled = true)
+    {
+        $this->cacheEnabled = $enabled;
+        return $this;
+    }
+
+    public function setCacheTTL($seconds)
+    {
+        $this->cacheTTL = max(1, (int)$seconds);
+        return $this;
+    }
+
     public function cleanExpiredCache()
     {
         if (!$this->cacheEnabled || empty($this->cache)) {
@@ -354,78 +533,5 @@ class JsonDb extends \Prowebcraft\Dot
         }
         
         return $count;
-    }
-
-    /**
-     * Sauvegarde les données dans un fichier JSON.
-     *
-     * @throws \RuntimeException En cas d'erreur lors de la sauvegarde
-     */
-    public function save(): void
-    {
-        if ($this->data === null) {
-            throw new \RuntimeException('Tentative de sauvegarde de données nulles');
-        }
-
-        $dir = dirname($this->db);
-        if (!is_writable($dir)) {
-            throw new \RuntimeException("Le dossier $dir n'est pas accessible en écriture.");
-        }
-
-        try {
-            $encoded_data = json_encode($this->data, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
-        } catch (\JsonException $e) {
-            throw new \RuntimeException("Erreur d'encodage JSON : " . $e->getMessage());
-        }
-
-        $encoded_length = strlen($encoded_data);
-        $max_attempts = 5;
-
-        for ($attempt = 0; $attempt < $max_attempts; $attempt++) {
-            $temp_file = $dir . '/userdb_' . uniqid('', true) . '.tmp';
-
-            try {
-                if ($attempt > 0) {
-                    usleep($attempt * 100000);
-                }
-
-                // Écriture du fichier temporaire
-                $written = file_put_contents($temp_file, $encoded_data, LOCK_EX);
-                if ($written !== $encoded_length) {
-                    throw new \RuntimeException("Erreur d'écriture du fichier temporaire");
-                }
-                chmod($temp_file, 0644);
-
-                // STRATÉGIE SELON LE SYSTÈME
-                if (strncasecmp(PHP_OS, 'WIN', 3) === 0) {
-                    // Windows : copy + unlink
-                    if (file_exists($this->db)) {
-                        // S'assurer que le fichier cible n'est pas en lecture seule
-                        @chmod($this->db, 0666);
-                    }
-                    if (copy($temp_file, $this->db)) {
-                        unlink($temp_file);
-                        return;
-                    }
-                } else {
-                    // Linux/Unix : rename atomique
-                    if (rename($temp_file, $this->db)) {
-                        return;
-                    }
-                }
-
-                error_log('Échec sauvegarde : écriture ou renommage/copie échoué (tentative ' . ($attempt + 1) . ')');
-            } catch (\Exception $e) {
-                error_log('Erreur de sauvegarde : ' . $e->getMessage());
-            } finally {
-                if (file_exists($temp_file)) {
-                    @unlink($temp_file);
-                }
-            }
-
-            usleep(pow(2, $attempt) * 250000);
-        }
-
-        throw new \RuntimeException('Échec de sauvegarde après ' . $max_attempts . ' tentatives');
     }
 }

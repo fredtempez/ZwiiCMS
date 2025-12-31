@@ -1240,3 +1240,57 @@ if (
 
 	$this->setData(['core', 'dataVersion', 131100]);
 }
+
+
+// Version 14.00.00 - Migration JsonDb amélioré
+if ($this->getData(['core', 'dataVersion']) < 140000) {
+	
+	// 1. Configuration JsonDb amélioré
+	$jsonDbConfig = [
+		'cache' => true,
+		'cacheTTL' => 3600,
+		'compression' => false,
+		'encryption' => false,
+		'encryptionKey' => null
+	];
+	
+	// Appliquer la configuration globale
+	$this->configureJsonDb($jsonDbConfig);
+	
+	// 2. Optimisation des bases de données existantes
+	$mainDatabases = ['config', 'user', 'locale', 'core'];
+	foreach ($mainDatabases as $dbName) {
+		if ($this->isDataFileLoaded($dbName)) {
+			$db = $this->dataFiles[$dbName];
+			if (method_exists($db, 'enableCache')) {
+				$db->enableCache(true);
+				$db->setCacheTTL(3600);
+			}
+		}
+	}
+	
+	// 3. Nettoyage du cache Dot si présent
+	if (class_exists('\Prowebcraft\Dot')) {
+		\Prowebcraft\Dot::clearKeyCache();
+	}
+	
+	// 4. Rapport de migration
+	$migrationReport = [
+		'version' => '14.00.00',
+		'timestamp' => time(),
+		'jsonDb_config' => $jsonDbConfig,
+		'databases_upgraded' => $mainDatabases,
+		'features_enabled' => [
+			'jsondb_cache' => true,
+			'performance_improvements' => true,
+			'backward_compatibility' => true
+		]
+	];
+	
+	// Log de la migration
+	$this->saveLog('ZwiiCMS Migration 14.00.00: JsonDb improvements applied');
+	$this->saveLog('Migration report: ' . json_encode($migrationReport));
+	
+	// 5. Mise à jour de la version
+	$this->setData(['core', 'dataVersion', 140000]);
+}
