@@ -34,8 +34,29 @@ if (!isset($_COOKIE['ZWII_AUTH_KEY']) || !isset($_COOKIE['ZWII_USER_ID'])) {
     die(formatErrorMessage("Accès non autorisé - Authentification requise"));
 }
 
-// Chargement des données utilisateur
-$usersData = json_decode(file_get_contents('../../../site/data/user.json'), true);
+// Fonction universelle pour lire user.json (compressé ou non)
+function readUserJsonFile($filePath) {
+    $content = file_get_contents($filePath);
+    
+    if ($content === false) {
+        return null;
+    }
+    
+    // Détecter automatiquement si le fichier est compressé
+    $isCompressed = (substr($content, 0, 2) === "\x78\x9c" ||  // ZLIB default
+                     substr($content, 0, 2) === "\x78\xda" ||  // ZLIB best
+                     substr($content, 0, 2) === "\x78\x5e");   // ZLIB fast
+    
+    // Décompresser seulement si nécessaire
+    if ($isCompressed) {
+        $content = gzuncompress($content);
+    }
+    
+    return json_decode($content, true);
+}
+
+// Chargement des données utilisateur avec gestion de compression
+$usersData = readUserJsonFile('../../../site/data/user.json');
 $userId = $_COOKIE['ZWII_USER_ID'];
 
 // Vérification de la clé d'authentification
@@ -45,8 +66,8 @@ if (!isset($usersData['user'][$userId]) || $usersData['user'][$userId]['authKey'
 
 $u = $usersData;
 
-// Chargement des profils
-$g = json_decode(file_get_contents('../../../site/data/profil.json'), true);
+// Chargement des profils avec gestion de compression
+$g = readUserJsonFile('../../../site/data/profil.json');
 
 // Lecture les droits
 if (!is_null($u) && !is_null($g) && !is_null($userId)) {

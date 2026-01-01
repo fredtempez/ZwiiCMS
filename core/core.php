@@ -276,6 +276,53 @@ class common
 	// Configuration JsonDb améliorée
 	private $jsonDbConfig = null;
 
+	// Configuration spécifique par base de données
+	private $dataFilesConfig = [
+		// Bases sensibles : jamais compressées
+		'config' => [
+			'cache' => true,
+			'cacheTTL' => 7200,        // Cache long (config peu modifiée)
+			'compression' => false,    // Jamais compressé
+			'encryption' => false
+		],
+		'core' => [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,    // Jamais compressé
+			'encryption' => false
+		],
+		
+		// Bases utilisateurs : compression recommandée
+		'user' => [
+			'cache' => true,
+			'cacheTTL' => 1800,        // Cache plus court (modifications fréquentes)
+			'compression' => true,     // Compression activée (données utilisateurs volumineuses)
+			'encryption' => false
+		],
+		
+		// Bases de contenu : compression recommandée
+		'page' => [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => true,     // Contenu volumineux
+			'encryption' => false
+		],
+		'module' => [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => true,     // Modules peuvent être gros
+			'encryption' => false
+		],
+		'theme' => [
+			'cache' => true,
+			'cacheTTL' => 7200,        // Thème peu modifié
+			'compression' => true,     // Fichiers de thème
+			'encryption' => false
+		],
+		
+		// Autres bases : configuration par défaut
+	];
+
 	public static $fontsWebSafe = [
 		'arial' => [
 			'name' => 'Arial',
@@ -787,6 +834,15 @@ class common
 			$dataFilesToLoad = array_keys($this->dataFiles);
 		}
 
+		// Configuration par défaut globale
+		$defaultConfig = [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,
+			'encryption' => false,
+			'encryptionKey' => null
+		];
+
 		// Récupère les descripteurs pour les bases spécifiées
 		foreach ($dataFilesToLoad as $keys) {
 			if (array_key_exists($keys, $this->dataFiles)) {
@@ -798,18 +854,12 @@ class common
 					'update' => false,
 				];
 				
-				// Fusionner avec la configuration JsonDb globale si définie
-				if (isset($this->jsonDbConfig)) {
-					$config = array_merge($config, $this->jsonDbConfig);
+				// Fusion avec configuration spécifique si existe
+				if (isset($this->dataFilesConfig[$keys])) {
+					$config = array_merge($config, $defaultConfig, $this->dataFilesConfig[$keys]);
 				} else {
-					// Configuration par défaut si aucune configuration globale
-					$config = array_merge($config, [
-						'cache' => true,
-						'cacheTTL' => 3600,
-						'compression' => false,
-						'encryption' => false,
-						'encryptionKey' => null
-					]);
+					// Sinon utiliser la configuration globale par défaut
+					$config = array_merge($config, $defaultConfig);
 				}
 
 				// Utilisation de la classe JsonDb améliorée
@@ -2150,6 +2200,81 @@ class common
 		
 		// Fusionner avec les options fournies
 		$this->jsonDbConfig = array_merge($defaultOptions, $options);
+	}
+
+	/**
+	 * Configure une base de données spécifique
+	 * @param string $module Nom de la base
+	 * @param array $options Options de configuration
+	 */
+	public function configureDataFile($module, $options = [])
+	{
+		if (!isset($this->dataFilesConfig[$module])) {
+			$this->dataFilesConfig[$module] = [];
+		}
+		
+		// Fusionner avec la configuration par défaut
+		$defaultConfig = [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,
+			'encryption' => false
+		];
+		
+		$this->dataFilesConfig[$module] = array_merge($defaultConfig, $this->dataFilesConfig[$module], $options);
+	}
+
+	/**
+	 * Configure un groupe de bases de données
+	 * @param array $modules Liste des modules
+	 * @param array $options Options de configuration
+	 */
+	public function configureDataFilesGroup($modules, $options = [])
+	{
+		foreach ($modules as $module) {
+			$this->configureDataFile($module, $options);
+		}
+	}
+
+	/**
+	 * Retourne la configuration actuelle d'une base de données
+	 * @param string $module Nom de la base
+	 * @return array Configuration
+	 */
+	public function getDataFileConfig($module)
+	{
+		$defaultConfig = [
+			'cache' => true,
+			'cacheTTL' => 3600,
+			'compression' => false,
+			'encryption' => false
+		];
+		
+		return array_merge($defaultConfig, $this->dataFilesConfig[$module] ?? []);
+	}
+
+	/**
+	 * Active/désactive la compression pour une base spécifique
+	 * @param string $module Nom de la base
+	 * @param bool $enabled État de la compression
+	 */
+	public function setDataFileCompression($module, $enabled = true)
+	{
+		$this->configureDataFile($module, ['compression' => $enabled]);
+	}
+
+	/**
+	 * Configure le cache pour une base spécifique
+	 * @param string $module Nom de la base
+	 * @param bool $enabled État du cache
+	 * @param int $ttl Durée de vie du cache
+	 */
+	public function setDataFileCache($module, $enabled = true, $ttl = 3600)
+	{
+		$this->configureDataFile($module, [
+			'cache' => $enabled,
+			'cacheTTL' => $ttl
+		]);
 	}
 	
 	/**

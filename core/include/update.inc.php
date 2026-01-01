@@ -1257,40 +1257,105 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	// Appliquer la configuration globale
 	$this->configureJsonDb($jsonDbConfig);
 	
-	// 2. Optimisation des bases de données existantes
+	// 2. Configuration granulaire par base de données
+	$granularConfig = [
+		// Bases sensibles : jamais compressées
+		'sensitive' => [
+			'modules' => ['config', 'core'],
+			'config' => [
+				'cache' => true,
+				'cacheTTL' => 7200,        // Cache long (config peu modifiée)
+				'compression' => false,    // Jamais compressé
+				'encryption' => false
+			]
+		],
+		
+		// Bases utilisateurs : compression recommandée
+		'user' => [
+			'modules' => ['user'],
+			'config' => [
+				'cache' => true,
+				'cacheTTL' => 1800,        // Cache court (modifications fréquentes)
+				'compression' => true,     // Compression activée
+				'encryption' => false
+			]
+		],
+		
+		// Bases de contenu : compression recommandée
+		'content' => [
+			'modules' => ['page', 'module', 'theme'],
+			'config' => [
+				'cache' => true,
+				'cacheTTL' => 3600,
+				'compression' => true,     // Compression activée
+				'encryption' => false
+			]
+		]
+	];
+	
+	// 3. Appliquer la configuration granulaire
+	foreach ($granularConfig as $category => $config) {
+		foreach ($config['modules'] as $module) {
+			$this->configureDataFile($module, $config['config']);
+		}
+	}
+	
+	// 4. Optimisation des bases de données existantes
 	$mainDatabases = ['config', 'user', 'locale', 'core'];
 	foreach ($mainDatabases as $dbName) {
 		if ($this->isDataFileLoaded($dbName)) {
 			$db = $this->dataFiles[$dbName];
-			if (method_exists($db, 'enableCache')) {
-				$db->enableCache(true);
-				$db->setCacheTTL(3600);
+			// Forcer la réécriture avec la nouvelle configuration
+			if (method_exists($db, 'forceRecompress')) {
+				$db->forceRecompress();
 			}
 		}
 	}
 	
-	// 3. Nettoyage du cache Dot si présent
+	// 5. Forcer la reconversion des bases utilisateurs et de contenu si nécessaire
+	$modulesToConvert = array_merge(
+		$granularConfig['user']['modules'],
+		$granularConfig['content']['modules']
+	);
+	
+	foreach ($modulesToConvert as $module) {
+		if ($this->isDataFileLoaded($module)) {
+			$db = $this->dataFiles[$module];
+			// Forcer la réécriture avec la nouvelle configuration
+			if (method_exists($db, 'forceRecompress')) {
+				$db->forceRecompress();
+			}
+		}
+	}
+	
+	// 6. Nettoyage du cache Dot si présent
 	if (class_exists('\Prowebcraft\Dot')) {
 		\Prowebcraft\Dot::clearKeyCache();
 	}
 	
-	// 4. Rapport de migration
+	// 7. Rapport de migration complet
 	$migrationReport = [
 		'version' => '14.00.00',
 		'timestamp' => time(),
 		'jsonDb_config' => $jsonDbConfig,
+		'granular_config' => $granularConfig,
 		'databases_upgraded' => $mainDatabases,
+		'modules_converted' => $modulesToConvert,
 		'features_enabled' => [
 			'jsondb_cache' => true,
+			'granular_configuration' => true,
+			'user_compression' => true,
+			'content_compression' => true,
+			'sensitive_protection' => true,
 			'performance_improvements' => true,
 			'backward_compatibility' => true
 		]
 	];
 	
 	// Log de la migration
-	$this->saveLog('ZwiiCMS Migration 14.00.00: JsonDb improvements applied');
+	$this->saveLog('ZwiiCMS Migration 14.00.00: JsonDb improvements and granular configuration applied');
 	$this->saveLog('Migration report: ' . json_encode($migrationReport));
 	
-	// 5. Mise à jour de la version
+	// 8. Mise à jour de la version
 	$this->setData(['core', 'dataVersion', 140000]);
 }
