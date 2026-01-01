@@ -421,6 +421,57 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 - **Mêmes comportements** : Résultats attendus identiques
 - **Nouvelles fonctionnalités** : Optionnelles et non-intrusives
 
+### Gestion avancée de la compression
+
+#### Détection automatique du format
+
+JsonDb amélioré gère automatiquement les changements de configuration de compression à la volée :
+
+```php
+// Scénario 1 : Fichier compressé existant + compression désactivée
+$db = new JsonDb([
+    'name' => 'data.json',
+    'compression' => false  // Le fichier était compressé précédemment
+]);
+// Résultat : Décompression automatique, reconversion lors de la prochaine écriture
+
+// Scénario 2 : Fichier non compressé existant + compression activée  
+$db = new JsonDb([
+    'name' => 'data.json',
+    'compression' => true   // Le fichier n'était pas compressé
+]);
+// Résultat : Compression automatique lors de la prochaine écriture
+```
+
+#### Conversion transparente
+
+- **Détection automatique** : Reconnaissance des formats compressés et non compressés
+- **Conversion à la volée** : Pas d'intervention manuelle requise
+- **Transition sans erreur** : Changement de configuration sans `InvalidArgumentException`
+- **Auto-récupération** : Fichices convertis automatiquement lors des écritures
+
+#### Formats supportés
+
+```php
+// Magic numbers ZLIB détectés automatiquement
+"\x78\x9c" // Compression par défaut (niveau 6)
+"\x78\xda" // Compression maximale (niveau 9)  
+"\x78\x5e" // Compression minimale (niveau 1)
+```
+
+#### Résolution des problèmes courants
+
+```php
+// Problème : "Le fichier contient des données invalides"
+// Solution : La détection automatique gère les formats mixtes
+
+// Problème : Changement de configuration provoque des erreurs
+// Solution : Conversion transparente lors des prochaines écritures
+
+// Problème : Fichiers existants avec format différent
+// Solution : Détection et conversion automatiques
+```
+
 ---
 
 ## Performance et optimisation
@@ -671,6 +722,45 @@ Active le chiffrement avec une clé.
 #### `setBackupEnabled($enabled)`
 
 Active/désactive les sauvegardes automatiques.
+
+### Méthodes de configuration (ZwiiCMS)
+
+#### `configureJsonDb($options = [])`
+
+Configure les options globales pour les instances JsonDb.
+
+**Paramètres :**
+- `$options` : Tableau d'options (cache, compression, encryption, etc.)
+
+**Exemple :**
+```php
+$this->configureJsonDb([
+    'cache' => true,
+    'cacheTTL' => 3600,
+    'compression' => false,
+    'encryption' => false
+]);
+```
+
+#### `getJsonDbConfig()`
+
+Retourne la configuration JsonDb actuelle.
+
+#### `enableJsonDbCompression($enabled = true)`
+
+Active/désactive la compression pour toutes les bases de données.
+
+#### `enableJsonDbEncryption($key)`
+
+Active le chiffrement avec une clé spécifique.
+
+#### `configureJsonDbCache($enabled = true, $ttl = 3600)`
+
+Configure le cache avec durée de vie personnalisée.
+
+#### `getJsonDbCacheStats($module)`
+
+Retourne les statistiques de cache pour une base de données spécifique.
 
 ---
 

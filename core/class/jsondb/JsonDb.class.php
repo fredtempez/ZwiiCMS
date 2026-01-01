@@ -14,6 +14,7 @@ class JsonDb extends \Prowebcraft\Dot
     protected $cacheEnabled = false;
     protected $cacheTTL = 3600;
     protected $cacheTags = []; // Nouveau: système de tags pour le cache
+    protected $needsRecompression = false; // Gestion du changement de format
     
     // Constants
     const MAX_FILE_WRITE_ATTEMPTS = 5;
@@ -135,10 +136,11 @@ class JsonDb extends \Prowebcraft\Dot
             // Encodage JSON
             $encoded_data = json_encode($saveData, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
             
-            // Compression si activée
+            // Compression selon la configuration actuelle (gère les reconversions)
             if ($this->config['compression']) {
                 $encoded_data = gzcompress($encoded_data, 6);
             }
+            // Si needsRecompression est true, le fichier sera réécrit dans le bon format automatiquement
 
         } catch (\JsonException $e) {
             throw new \RuntimeException("Erreur d'encodage JSON : " . $e->getMessage());
@@ -182,9 +184,30 @@ class JsonDb extends \Prowebcraft\Dot
 
             $file_contents = file_get_contents($this->db);
             
-            // Décompression si nécessaire
-            if ($this->config['compression'] && $this->isCompressed($file_contents)) {
+            // Gestion automatique de la compression (détection et conversion)
+            if ($this->isCompressed($file_contents)) {
+                // Le fichier est compressé, le décompresser
                 $file_contents = gzuncompress($file_contents);
+                
+                // Si la compression n'est plus activée, marquer pour reconversion
+                if (!$this->config['compression']) {
+                    $this->needsRecompression = true;
+                }
+            } else {
+                // Le fichier n'est pas compressé
+                
+                // Si la compression est activée, vérifier si le contenu est valide JSON
+                if ($this->config['compression']) {
+                    $test_data = json_decode($file_contents, true);
+                    if ($test_data === null) {
+                        // Le fichier n'est pas du JSON valide, essayer de décompresser
+                        try {
+                            $file_contents = gzuncompress($file_contents);
+                        } catch (\Exception $e) {
+                            // Échec de la décompression, garder le contenu original
+                        }
+                    }
+                }
             }
 
             $this->data = json_decode($file_contents, true);
@@ -289,7 +312,7 @@ class JsonDb extends \Prowebcraft\Dot
      */
     protected function isCompressed($data)
     {
-        return substr($data, 0, 2) === "\x1f\x8b"; // Magic number gzip
+        return substr($data, 0, 2) === "\x78\x9c" || substr($data, 0, 2) === "\x78\xda" || substr($data, 0, 2) === "\x78\x5e"; // Magic numbers ZLIB
     }
 
     /**
