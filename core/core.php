@@ -276,53 +276,6 @@ class common
 	// Configuration JsonDb améliorée
 	private $jsonDbConfig = null;
 
-	// Configuration spécifique par base de données
-	private $dataFilesConfig = [
-		// Bases sensibles : jamais compressées
-		'config' => [
-			'cache' => true,
-			'cacheTTL' => 7200,        // Cache long (config peu modifiée)
-			'compression' => false,    // Jamais compressé
-			'encryption' => false
-		],
-		'core' => [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,    // Jamais compressé
-			'encryption' => false
-		],
-		
-		// Bases utilisateurs : compression recommandée
-		'user' => [
-			'cache' => true,
-			'cacheTTL' => 1800,        // Cache plus court (modifications fréquentes)
-			'compression' => true,     // Compression activée (données utilisateurs volumineuses)
-			'encryption' => false
-		],
-		
-		// Bases de contenu : compression recommandée
-		'page' => [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => true,     // Contenu volumineux
-			'encryption' => false
-		],
-		'module' => [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => true,     // Modules peuvent être gros
-			'encryption' => false
-		],
-		'theme' => [
-			'cache' => true,
-			'cacheTTL' => 7200,        // Thème peu modifié
-			'compression' => true,     // Fichiers de thème
-			'encryption' => false
-		],
-		
-		// Autres bases : configuration par défaut
-	];
-
 	public static $fontsWebSafe = [
 		'arial' => [
 			'name' => 'Arial',
@@ -855,8 +808,9 @@ class common
 				];
 				
 				// Fusion avec configuration spécifique si existe
-				if (isset($this->dataFilesConfig[$keys])) {
-					$config = array_merge($config, $defaultConfig, $this->dataFilesConfig[$keys]);
+				$dataFilesConfig = $this->getDataFilesConfig();
+				if (isset($dataFilesConfig[$keys])) {
+					$config = array_merge($config, $defaultConfig, $dataFilesConfig[$keys]);
 				} else {
 					// Sinon utiliser la configuration globale par défaut
 					$config = array_merge($config, $defaultConfig);
@@ -989,6 +943,27 @@ class common
 				$this->loadDataFile('profil');
 			}
 		}
+	}
+
+	/**
+	 * Retourne la configuration des bases de données
+	 * Priorité : config.json > defaultdata.php
+	 * @return array Configuration des bases de données
+	 */
+	private function getDataFilesConfig()
+	{
+		// 1. Essayer de lire depuis config.json (priorité 1)
+		$configPath = self::DATA_DIR . 'config.json';
+		if (file_exists($configPath)) {
+			$configData = json_decode(file_get_contents($configPath), true);
+			if (isset($configData['config']['database'])) {
+				return $configData['config']['database'];
+			}
+		}
+		
+		// 2. Sinon, utiliser la configuration par défaut depuis defaultdata.php (priorité 2)
+		require_once('core/module/install/ressource/defaultdata.php');
+		return init::$dataFilesConfig ?? [];
 	}
 
 	/**
@@ -2209,8 +2184,11 @@ class common
 	 */
 	public function configureDataFile($module, $options = [])
 	{
-		if (!isset($this->dataFilesConfig[$module])) {
-			$this->dataFilesConfig[$module] = [];
+		// Récupérer la configuration depuis getDataFilesConfig()
+		$dataFilesConfig = $this->getDataFilesConfig();
+		
+		if (!isset($dataFilesConfig[$module])) {
+			$dataFilesConfig[$module] = [];
 		}
 		
 		// Fusionner avec la configuration par défaut
@@ -2221,7 +2199,8 @@ class common
 			'encryption' => false
 		];
 		
-		$this->dataFilesConfig[$module] = array_merge($defaultConfig, $this->dataFilesConfig[$module], $options);
+		// Mettre à jour la configuration (note: cette méthode modifie une copie locale)
+		$dataFilesConfig[$module] = array_merge($defaultConfig, $dataFilesConfig[$module], $options);
 	}
 
 	/**
@@ -2250,7 +2229,10 @@ class common
 			'encryption' => false
 		];
 		
-		return array_merge($defaultConfig, $this->dataFilesConfig[$module] ?? []);
+		// Récupérer la configuration depuis getDataFilesConfig()
+		$dataFilesConfig = $this->getDataFilesConfig();
+		
+		return array_merge($defaultConfig, $dataFilesConfig[$module] ?? []);
 	}
 
 	/**

@@ -26,7 +26,7 @@ class init extends common
 			'proxyType' => 'tcp://',
 			'smtp' => [
 				'enable' => false,
-				'from'=> 'no-reply@localhost'
+				'from' => 'no-reply@localhost'
 			],
 			'seo' => [
 				'robots' => true,
@@ -43,7 +43,52 @@ class init extends common
 				'autoDisconnect' => true,
 				'showPassword' => true,
 				'redirectLogin' => true
+			],
+			'database' => [
+				'config' => [
+					'cache' => true,
+					'cacheTTL' => 7200,        // Cache long (config peu modifiée)
+					'compression' => false,    // Jamais compressé
+					'encryption' => false
+				],
+				'core' => [
+					'cache' => true,
+					'cacheTTL' => 3600,
+					'compression' => false,    // Jamais compressé
+					'encryption' => false
+				],
+
+				// Bases utilisateurs : compression recommandée
+				'user' => [
+					'cache' => true,
+					'cacheTTL' => 1800,        // Cache plus court (modifications fréquentes)
+					'compression' => true,     // Compression activée (données utilisateurs volumineuses)
+					'encryption' => false
+				],
+
+				// Bases de contenu : compression recommandée
+				'page' => [
+					'cache' => true,
+					'cacheTTL' => 3600,
+					'compression' => true,     // Contenu volumineux
+					'encryption' => false
+				],
+				'module' => [
+					'cache' => true,
+					'cacheTTL' => 3600,
+					'compression' => true,     // Modules peuvent être gros
+					'encryption' => false
+				],
+				'theme' => [
+					'cache' => true,
+					'cacheTTL' => 7200,        // Thème peu modifié
+					'compression' => true,     // Fichiers de thème
+					'encryption' => false
+				],
+
+				// Autres bases : configuration par défaut
 			]
+
 		],
 		'core' => [
 			'dataVersion' => 13605,

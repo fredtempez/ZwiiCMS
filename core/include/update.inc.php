@@ -1245,6 +1245,22 @@ if (
 // Version 14.00.00 - Migration JsonDb amélioré
 if ($this->getData(['core', 'dataVersion']) < 140000) {
 	
+	// Fonction pour récupérer la configuration des bases de données (même logique que core.php)
+	function getMigrationDataFilesConfig() {
+		// 1. Essayer de lire depuis config.json (priorité 1)
+		$configPath = 'site/data/config.json';
+		if (file_exists($configPath)) {
+			$configData = json_decode(file_get_contents($configPath), true);
+			if (isset($configData['config']['database'])) {
+				return $configData['config']['database'];
+			}
+		}
+		
+		// 2. Sinon, utiliser la configuration par défaut depuis defaultdata.php (priorité 2)
+		require_once('core/module/install/ressource/defaultdata.php');
+		return init::$dataFilesConfig ?? [];
+	}
+	
 	// 1. Configuration JsonDb amélioré
 	$jsonDbConfig = [
 		'cache' => true,
@@ -1257,67 +1273,24 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	// Appliquer la configuration globale
 	$this->configureJsonDb($jsonDbConfig);
 	
-	// 2. Configuration granulaire par base de données
-	$granularConfig = [
-		// Bases sensibles : jamais compressées
-		'sensitive' => [
-			'modules' => ['config', 'core'],
-			'config' => [
-				'cache' => true,
-				'cacheTTL' => 7200,        // Cache long (config peu modifiée)
-				'compression' => false,    // Jamais compressé
-				'encryption' => false
-			]
-		],
-		
-		// Bases utilisateurs : compression recommandée
-		'user' => [
-			'modules' => ['user'],
-			'config' => [
-				'cache' => true,
-				'cacheTTL' => 1800,        // Cache court (modifications fréquentes)
-				'compression' => true,     // Compression activée
-				'encryption' => false
-			]
-		],
-		
-		// Bases de contenu : compression recommandée
-		'content' => [
-			'modules' => ['page', 'module', 'theme'],
-			'config' => [
-				'cache' => true,
-				'cacheTTL' => 3600,
-				'compression' => true,     // Compression activée
-				'encryption' => false
-			]
-		]
-	];
+	// 2. Récupérer la configuration granulaire depuis config.json ou defaultdata.php
+	$dataFilesConfig = getMigrationDataFilesConfig();
 	
-	// 3. Appliquer la configuration granulaire
-	foreach ($granularConfig as $category => $config) {
-		foreach ($config['modules'] as $module) {
-			$this->configureDataFile($module, $config['config']);
-		}
-	}
-	
-	// 4. Optimisation des bases de données existantes
-	$mainDatabases = ['config', 'user', 'locale', 'core'];
+	// 3. Appliquer la configuration granulaire aux bases existantes
+	$mainDatabases = ['config', 'core', 'user'];
 	foreach ($mainDatabases as $dbName) {
 		if ($this->isDataFileLoaded($dbName)) {
+			// Forcer le rechargement avec la nouvelle configuration
 			$db = $this->dataFiles[$dbName];
-			// Forcer la réécriture avec la nouvelle configuration
-			if (method_exists($db, 'forceRecompress')) {
-				$db->forceRecompress();
+			if (method_exists($db, 'enableCache')) {
+				$db->enableCache(true);
+				$db->setCacheTTL(3600);
 			}
 		}
 	}
 	
-	// 5. Forcer la reconversion des bases utilisateurs et de contenu si nécessaire
-	$modulesToConvert = array_merge(
-		$granularConfig['user']['modules'],
-		$granularConfig['content']['modules']
-	);
-	
+	// 4. Forcer la reconversion des bases utilisateurs et de contenu si nécessaire
+	$modulesToConvert = ['user', 'page', 'module', 'theme'];
 	foreach ($modulesToConvert as $module) {
 		if ($this->isDataFileLoaded($module)) {
 			$db = $this->dataFiles[$module];
@@ -1328,17 +1301,17 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 		}
 	}
 	
-	// 6. Nettoyage du cache Dot si présent
+	// 5. Nettoyage du cache Dot si présent
 	if (class_exists('\Prowebcraft\Dot')) {
 		\Prowebcraft\Dot::clearKeyCache();
 	}
 	
-	// 7. Rapport de migration complet
+	// 6. Rapport de migration complet
 	$migrationReport = [
 		'version' => '14.00.00',
 		'timestamp' => time(),
 		'jsonDb_config' => $jsonDbConfig,
-		'granular_config' => $granularConfig,
+		'dataFiles_config' => $dataFilesConfig,
 		'databases_upgraded' => $mainDatabases,
 		'modules_converted' => $modulesToConvert,
 		'features_enabled' => [
@@ -1356,6 +1329,6 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	$this->saveLog('ZwiiCMS Migration 14.00.00: JsonDb improvements and granular configuration applied');
 	$this->saveLog('Migration report: ' . json_encode($migrationReport));
 	
-	// 8. Mise à jour de la version
+	// Mettre à jour la version des données
 	$this->setData(['core', 'dataVersion', 140000]);
 }
