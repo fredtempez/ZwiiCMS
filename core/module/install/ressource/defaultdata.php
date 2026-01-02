@@ -49,13 +49,15 @@ class init extends common
 					'cache' => true,
 					'cacheTTL' => 7200,        // Cache long (config peu modifiée)
 					'compression' => false,    // Jamais compressé
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 				'core' => [
 					'cache' => true,
 					'cacheTTL' => 3600,
 					'compression' => false,    // Jamais compressé
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 
 				// Bases utilisateurs : compression recommandée
@@ -63,7 +65,8 @@ class init extends common
 					'cache' => true,
 					'cacheTTL' => 1800,        // Cache plus court (modifications fréquentes)
 					'compression' => true,     // Compression activée (données utilisateurs volumineuses)
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 
 				// Bases de contenu : compression recommandée
@@ -71,19 +74,22 @@ class init extends common
 					'cache' => true,
 					'cacheTTL' => 3600,
 					'compression' => true,     // Contenu volumineux
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 				'module' => [
 					'cache' => true,
 					'cacheTTL' => 3600,
 					'compression' => true,     // Modules peuvent être gros
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 				'theme' => [
 					'cache' => true,
 					'cacheTTL' => 7200,        // Thème peu modifié
 					'compression' => true,     // Fichiers de thème
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => ''
 				],
 
 				// Autres bases : configuration par défaut

@@ -189,16 +189,33 @@
 				</h4>
 				<div class="row textAlignCenter">
 					<div class="col12">
-						<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img
-								alt="Licence Creative Commons" style="border-width:0"
-								src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
-						<p>Cette œuvre est mise à disposition selon les termes de la <a rel="license"
-								href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Licence Creative Commons
-								Attribution - Pas d&#39;Utilisation Commerciale - Pas de Modification 4.0
-								International.</a></p>
-						<p>Pour voir une copie de cette licence, visitez
-							http://creativecommons.org/licenses/by-nc-nd/4.0/ ou écrivez à Creative Commons, PO Box
-							1866, Mountain View, CA 94042, USA.</p>
+						<p>
+						<p></p><strong>ZwiiCMS</strong> is a trademark of Zwii project.
+						The name "Zwiicms", logo and associated visual identity
+						cannot be used to designate, promote
+						or distribute a modified version of software
+						without explicit authorization from project holder.
+						Any modified version or fork must use a distinct name
+						and not suggest an official affiliation with zwiicms project.
+						Forks and redistributions must clearly mention
+						the origin of zwiicms project in their documentation,
+						their official website or their distribution channels,
+						and cannot be limited to the sole preservation
+						of author mentions in source files.</p>
+						<p><strong>ZwiiCMS</strong> est une marque déposée du projet Zwii.
+							Le nom "Zwiicms", le logo et l'identité visuelle associée
+							ne peuvent être utilisés pour désigner, promouvoir
+							ou distribuer une version modifiée du logiciel
+							sans autorisation explicite du détenteur du projet.
+							Toute version modifiée ou fork doit utiliser un nom distinct
+							et ne pas suggérer une affiliation officielle avec le projet zwiicms.
+							Les forks et redistributions doivent mentionner clairement
+							l'origine du projet zwiicms dans leur documentation,
+							leur site web officiel ou leurs canaux de distribution,
+							et ne peuvent se limiter à la seule préservation
+							des mentions d'auteur dans les fichiers sources.</p>
+						<p><a href="https://www.gnu.org/licenses/gpl-3.0.html">GNU General Public License v3.0</a>
+						</p>
 					</div>
 				</div>
 			</div>
