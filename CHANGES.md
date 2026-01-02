@@ -1,6 +1,6 @@
 # Notes de mises à jour
 
-## Version 14.00.00
+## Version 14.0.00
 ### Améliorations
 - Base de données JsonDB améliorée, configuration des bases avec option de compression et de cryptage, gestion d'erreur et d'un cache. Livraison d'une documentation.
 - Méthode de rotation des journaux améliorée.
