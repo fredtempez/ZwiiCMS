@@ -641,6 +641,7 @@ class config extends common
 			// Mettre à jour la structure des bases après la sauvegarde
 			// Comparer et appliquer les changements de configuration
 			foreach ($newDatabaseConfig as $dbName => $newConfig) {
+
 				$oldConfig = $oldDatabaseConfig[$dbName] ?? [];
 				
 				// Vérifier si la configuration a changé
@@ -676,18 +677,15 @@ class config extends common
 					if ($oldConfig['encryption'] !== $newConfig['encryption'] || 
 						$oldConfig['encryptionKey'] !== $newConfig['encryptionKey']) {
 						if ($newConfig['encryption'] && !empty($newConfig['encryptionKey'])) {
-							// Activer le chiffrement
-							if (method_exists($db, 'enableEncryption')) {
-								$db->enableEncryption(true);
-								$db->setEncryptionKey($newConfig['encryptionKey']);
-								$db->forceReencrypt(); // Rechiffrer toutes les données
-							}
+							// Activer le chiffrement - mettre à jour la configuration et recharger
+							$db->config['encryption'] = true;
+							$db->config['encryptionKey'] = $newConfig['encryptionKey'];
+							$db->reload(true); // Recharger les données et forcer la réécriture avec nouveau chiffrement
 						} else {
-							// Désactiver le chiffrement
-							if (method_exists($db, 'enableEncryption')) {
-								$db->enableEncryption(false);
-								$db->forceReencrypt(); // Déchiffrer toutes les données
-							}
+							// Désactiver le chiffrement - mettre à jour la configuration et recharger
+							$db->config['encryption'] = false;
+							$db->config['encryptionKey'] = null;
+							$db->reload(true); // Recharger les données et forcer la réécriture sans chiffrement
 						}
 					}
 					
