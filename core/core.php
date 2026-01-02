@@ -849,12 +849,17 @@ class common
 			} else {
 				// Configuration par défaut si aucune configuration globale
 				$config = array_merge($config, [
-					'cache' => true,
-					'cacheTTL' => 3600,
-					'compression' => false,
+					'cache' => false,             // Pas de cache par défaut
+					'cacheTTL' => 300,           // 5 minutes si activé
+					'compression' => false,       // Pas de compression par défaut
 					'encryption' => false,
 					'encryptionKey' => null
 				]);
+			}
+
+			// Désactiver l'encryption si la clé est vide
+			if (isset($config['encryption']) && $config['encryption'] && empty($config['encryptionKey'])) {
+				$config['encryption'] = false;
 			}
 
 			// Utilisation de la classe JsonDb améliorée

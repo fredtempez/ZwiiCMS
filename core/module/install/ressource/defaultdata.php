@@ -45,54 +45,82 @@ class init extends common
 				'redirectLogin' => true
 			],
 			'database' => [
+				// Bases sensibles : pas de cache, jamais compressées
 				'config' => [
-					'cache' => true,
-					'cacheTTL' => 7200,        // Cache long (config peu modifiée)
-					'compression' => false,    // Jamais compressé
+					'cache' => false,             // Pas de cache pour la config
+					'cacheTTL' => 300,           // 5 minutes si activé
+					'compression' => false,     // Jamais compressé
 					'encryption' => false,
 					'encryptionKey' => ''
 				],
 				'core' => [
-					'cache' => true,
-					'cacheTTL' => 3600,
-					'compression' => false,    // Jamais compressé
+					'cache' => false,             // Pas de cache pour le core
+					'cacheTTL' => 300,           // 5 minutes si activé
+					'compression' => false,     // Jamais compressé
 					'encryption' => false,
 					'encryptionKey' => ''
 				],
 
-				// Bases utilisateurs : compression recommandée
+				// Bases utilisateurs : cache court, compression activée
 				'user' => [
 					'cache' => true,
-					'cacheTTL' => 1800,        // Cache plus court (modifications fréquentes)
-					'compression' => true,     // Compression activée (données utilisateurs volumineuses)
+					'cacheTTL' => 300,           // 5 minutes (modifications fréquentes)
+					'compression' => true,      // Compression activée
 					'encryption' => false,
 					'encryptionKey' => ''
 				],
 
-				// Bases de contenu : compression recommandée
+				// Bases de contenu : cache modéré, compression pour les gros fichiers
 				'page' => [
 					'cache' => true,
-					'cacheTTL' => 3600,
-					'compression' => true,     // Contenu volumineux
+					'cacheTTL' => 1800,          // 30 minutes (contenu modéré)
+					'compression' => true,       // Contenu volumineux
 					'encryption' => false,
 					'encryptionKey' => ''
 				],
 				'module' => [
 					'cache' => true,
-					'cacheTTL' => 3600,
-					'compression' => true,     // Modules peuvent être gros
+					'cacheTTL' => 1800,          // 30 minutes
+					'compression' => true,       // Modules peuvent être gros
 					'encryption' => false,
 					'encryptionKey' => ''
 				],
 				'theme' => [
 					'cache' => true,
-					'cacheTTL' => 7200,        // Thème peu modifié
-					'compression' => true,     // Fichiers de thème
-					'encryption' => false,
-					'encryptionKey' => ''
+					'cacheTTL' => 3600,          // 1 heure (thème peu modifié)
+					'compression' => true,       // Fichiers de thème
+					'encryption' => false
 				],
-
-				// Autres bases : configuration par défaut
+				'font' => [
+					'cache' => true,
+					'cacheTTL' => 3600,          // 1 heure (polices peu modifiées)
+					'compression' => true,       // Polices peuvent être volumineuses
+					'encryption' => false
+				],
+				'language' => [
+					'cache' => true,
+					'cacheTTL' => 3600,          // 1 heure (traductions stables)
+					'compression' => false,       // Fichiers de traduction généralement petits
+					'encryption' => false
+				],
+				'admin' => [
+					'cache' => false,             // Pas de cache pour les logs admin
+					'cacheTTL' => 300,           // 5 minutes si activé
+					'compression' => false,       // Logs doivent rester accessibles
+					'encryption' => false
+				],
+				'blacklist' => [
+					'cache' => false,             // Pas de cache pour la sécurité
+					'cacheTTL' => 300,           // 5 minutes si activé
+					'compression' => false,       // Sécurité avant performance
+					'encryption' => false
+				],
+				'profil' => [
+					'cache' => true,
+					'cacheTTL' => 600,           // 10 minutes (modifications fréquentes)
+					'compression' => true,       // Profils détaillés
+					'encryption' => false
+				]
 			]
 
 		],

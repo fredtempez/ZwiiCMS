@@ -151,4 +151,64 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col12">
+			<div class="block">
+				<h4><?php echo helper::translate('Bases de données'); ?>
+				</h4>
+				<?php 
+				$databases = config::$databaseInputs;
+				$dbNames = array_keys($databases);
+				$dbCount = count($dbNames);
+				$columnsPerRow = 4;
+				
+				for ($i = 0; $i < $dbCount; $i += $columnsPerRow): ?>
+					<div class="row">
+						<?php for ($j = $i; $j < min($i + $columnsPerRow, $dbCount); $j++): 
+							$dbName = $dbNames[$j];
+							$inputs = $databases[$dbName];
+						?>
+							<div class="col3">
+								<div class="block">
+									<h4><?php echo $dbName . '.json'; ?></h4>
+									<div class="row">
+										<div class="col12">
+											<?php echo $inputs['cache']; ?>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col12">
+											<?php echo $inputs['cacheTTL']; ?>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col12">
+											<?php echo $inputs['compression']; ?>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col12">
+											<?php echo $inputs['encryption']; ?>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col12">
+											<?php echo $inputs['encryptionKey']; ?>
+										</div>
+									</div>
+								</div>
+							</div>
+						<?php endfor; ?>
+					</div>
+					<?php if ($i + $columnsPerRow < $dbCount): ?>
+						<div class="row">
+							<div class="col12">
+								<hr>
+							</div>
+						</div>
+					<?php endif; ?>
+				<?php endfor; ?>
+			</div>
+		</div>
+	</div>
 </div>

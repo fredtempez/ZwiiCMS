@@ -222,6 +222,23 @@ class config extends common
 
 	public static $imageOpenGraph = [];
 
+	// Configuration des bases de données
+	public static $databaseInputs = [];
+
+	// Options de cache TTL
+	public static $cacheTTL = [
+		300 => '5 minutes',
+		600 => '10 minutes',
+		900 => '15 minutes',
+		1800 => '30 minutes',
+		3600 => '1 heure',
+		7200 => '2 heures',
+		14400 => '4 heures',
+		28800 => '8 heures',
+		43200 => '12 heures',
+		86400 => '24 heures'
+	];
+
 	/**
 	 * Génére les fichiers pour les crawlers
 	 * Sitemap compressé et non compressé
@@ -466,6 +483,36 @@ class config extends common
 				$this->setData(['core', 'updateAvailable', false]);
 			}
 
+			// Récupérer l'ancienne configuration AVANT la sauvegarde
+			$oldDatabaseConfig = $this->getData(['config', 'database']);
+			
+			// Récupérer la nouvelle configuration depuis les inputs
+			$newDatabaseConfig = [];
+			$databases = ['config', 'core', 'user', 'page', 'module', 'theme', 'font', 'language', 'admin', 'blacklist', 'profil'];
+			
+			foreach ($databases as $dbName) {
+				$encryption = $this->getInput('database' . ucfirst($dbName) . 'Encryption', helper::FILTER_BOOLEAN);
+				$encryptionKey = $this->getInput('database' . ucfirst($dbName) . 'EncryptionKey', helper::FILTER_STRING_SHORT);
+				
+				// Si le chiffrement est activé mais aucune clé n'est fournie, générer une clé aléatoire
+				if ($encryption && empty($encryptionKey)) {
+					$encryptionKey = bin2hex(random_bytes(16)); // 32 caractères hexadécimaux
+				}
+				
+				// Désactiver le chiffrement si la clé est vide
+				if ($encryption && empty($encryptionKey)) {
+					$encryption = false;
+				}
+				
+				$newDatabaseConfig[$dbName] = [
+					'cache' => $this->getInput('database' . ucfirst($dbName) . 'Cache', helper::FILTER_BOOLEAN),
+					'cacheTTL' => $this->getInput('database' . ucfirst($dbName) . 'CacheTTL', helper::FILTER_INT),
+					'compression' => $this->getInput('database' . ucfirst($dbName) . 'Compression', helper::FILTER_BOOLEAN),
+					'encryption' => $encryption,
+					'encryptionKey' => $encryptionKey
+				];
+			}
+
 			// Sauvegarder la configuration
 			$this->setData([
 				'config',
@@ -524,6 +571,7 @@ class config extends common
 						'redirectLogin' => $this->getInput('connectRedirectLogin', helper::FILTER_BOOLEAN),
 						'mailAuth' => $this->getInput('connectAuthMail', helper::FILTER_INT),
 					],
+					'database' => $newDatabaseConfig,
 					'defaultLanguageUI' => $this->getData(['config', 'defaultLanguageUI']),
 				]
 			]);
@@ -589,6 +637,86 @@ class config extends common
 					helper::$rewriteStatus = false;
 				}
 			}
+			
+			// Mettre à jour la structure des bases après la sauvegarde
+			// Comparer et appliquer les changements de configuration
+			foreach ($newDatabaseConfig as $dbName => $newConfig) {
+				$oldConfig = $oldDatabaseConfig[$dbName] ?? [];
+				
+				// Vérifier si la configuration a changé
+				$configChanged = (
+					$oldConfig['compression'] !== $newConfig['compression'] ||
+					$oldConfig['encryption'] !== $newConfig['encryption'] ||
+					$oldConfig['encryptionKey'] !== $newConfig['encryptionKey'] ||
+					$oldConfig['cache'] !== $newConfig['cache'] ||
+					$oldConfig['cacheTTL'] !== $newConfig['cacheTTL']
+				);
+				
+				if ($configChanged && $this->isDataFileLoaded($dbName)) {
+					$db = $this->dataFiles[$dbName];
+					
+					// Gérer le changement de compression
+					if ($oldConfig['compression'] !== $newConfig['compression']) {
+						if ($newConfig['compression']) {
+							// Activer la compression
+							if (method_exists($db, 'enableCompression')) {
+								$db->enableCompression(true);
+								$db->forceRecompress(); // Recompresser toutes les données
+							}
+						} else {
+							// Désactiver la compression
+							if (method_exists($db, 'enableCompression')) {
+								$db->enableCompression(false);
+								$db->forceRecompress(); // Décompresser toutes les données
+							}
+						}
+					}
+					
+					// Gérer le changement de chiffrement
+					if ($oldConfig['encryption'] !== $newConfig['encryption'] || 
+						$oldConfig['encryptionKey'] !== $newConfig['encryptionKey']) {
+						if ($newConfig['encryption'] && !empty($newConfig['encryptionKey'])) {
+							// Activer le chiffrement
+							if (method_exists($db, 'enableEncryption')) {
+								$db->enableEncryption(true);
+								$db->setEncryptionKey($newConfig['encryptionKey']);
+								$db->forceReencrypt(); // Rechiffrer toutes les données
+							}
+						} else {
+							// Désactiver le chiffrement
+							if (method_exists($db, 'enableEncryption')) {
+								$db->enableEncryption(false);
+								$db->forceReencrypt(); // Déchiffrer toutes les données
+							}
+						}
+					}
+					
+					// Gérer le changement de cache
+					if ($oldConfig['cache'] !== $newConfig['cache']) {
+						if (method_exists($db, 'enableCache')) {
+							$db->enableCache($newConfig['cache']);
+						}
+					}
+					
+					// Gérer le changement de TTL du cache
+					if ($oldConfig['cacheTTL'] !== $newConfig['cacheTTL']) {
+						if (method_exists($db, 'setCacheTTL')) {
+							$db->setCacheTTL($newConfig['cacheTTL']);
+						}
+					}
+					
+					// Nettoyer le cache pour cette base
+					if (method_exists($db, 'clearCache')) {
+						$db->clearCache();
+					}
+				}
+			}
+			
+			// Nettoyer le cache global Dot si présent
+			if (class_exists('\Prowebcraft\Dot')) {
+				\Prowebcraft\Dot::clearKeyCache();
+			}
+
 			// Générer robots.txt et sitemap
 			$this->siteMap();
 			// Valeurs en sortie
@@ -621,6 +749,39 @@ class config extends common
 		// Sélecteur de délais, compléter avec la traduction en jours
 		foreach (self::$updateDelay as $key => $value) {
 			self::$updateDelay[$key] = $key === 86400 ? $value . ' ' . helper::translate('jour') : $value . ' ' . helper::translate('jours');
+		}
+
+		// Générer les éléments du formulaire pour les bases de données
+		$dataFilesConfig = $this->getData(['config', 'database']);
+		foreach ($dataFilesConfig as $dbName => $config) {
+			$dbNameCapitalized = ucfirst($dbName);
+			self::$databaseInputs[$dbName] = [
+				'cache' => template::checkbox('database' . $dbNameCapitalized . 'Cache', 1, 'Cache', [
+					'label' => 'Cache',
+					'help' => 'Activer le cache pour cette base',
+					'checked' => $config['cache'] ?? false
+				]),
+				'cacheTTL' => template::select('database' . $dbNameCapitalized . 'CacheTTL', self::$cacheTTL, [
+					'checked' => $config['cacheTTL'] ?? 3600,
+					'label' => 'Durée du cache (TTL)',
+					'help' => 'Durée de vie du cache en secondes'
+				]),
+				'compression' => template::checkbox('database' . $dbNameCapitalized . 'Compression', 1, 'Compression', [
+					'label' => 'Compression',
+					'help' => 'Compresser les données de cette base',
+					'checked' => $config['compression'] ?? false
+				]),
+				'encryption' => template::checkbox('database' . $dbNameCapitalized . 'Encryption', 1, 'Chiffrement', [
+					'label' => 'Chiffrement',
+					'help' => 'Chiffrer les données de cette base',
+					'checked' => $config['encryption'] ?? false
+				]),
+				'encryptionKey' => template::text('database' . $dbNameCapitalized . 'EncryptionKey', [
+					'value' => $config['encryptionKey'] ?? '',
+					'label' => 'Clé de chiffrement',
+					'help' => 'Clé pour le chiffrement des données'
+				])
+			];
 		}
 
 		// Paramètres de l'image OpenGraph
