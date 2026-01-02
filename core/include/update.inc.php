@@ -1242,91 +1242,37 @@ if (
 }
 
 
-// Version 14.00.00 - Migration JsonDb amélioré
+// Version 14.00.00 - Installation configuration database depuis defaultData
 if ($this->getData(['core', 'dataVersion']) < 140000) {
 	
-	// Fonction pour récupérer la configuration des bases de données (même logique que core.php)
-	function getMigrationDataFilesConfig() {
-		// 1. Essayer de lire depuis config.json (priorité 1)
-		$configPath = 'site/data/config.json';
-		if (file_exists($configPath)) {
-			$configData = json_decode(file_get_contents($configPath), true);
-			if (isset($configData['config']['database'])) {
-				return $configData['config']['database'];
-			}
-		}
-		
-		// 2. Sinon, utiliser la configuration par défaut depuis defaultdata.php (priorité 2)
-		require_once('core/module/install/ressource/defaultdata.php');
-		return init::$dataFilesConfig ?? [];
-	}
+	// Installation de la configuration database depuis defaultData
 	
-	// 1. Configuration JsonDb amélioré
-	$jsonDbConfig = [
-		'cache' => true,
-		'cacheTTL' => 3600,
-		'compression' => false,
-		'encryption' => false,
-		'encryptionKey' => null
-	];
+	// 1. Charger defaultData pour obtenir la configuration database
+	require_once('core/module/install/ressource/defaultdata.php');
+	$databaseConfig = init::$defaultData['config']['database'] ?? [];
 	
-	// Appliquer la configuration globale
-	$this->configureJsonDb($jsonDbConfig);
+	// 2. Installer la configuration database dans config.json
+	$this->setData(['config', 'database', $databaseConfig]);
 	
-	// 2. Récupérer la configuration granulaire depuis config.json ou defaultdata.php
-	$dataFilesConfig = getMigrationDataFilesConfig();
-	
-	// 3. Appliquer la configuration granulaire aux bases existantes
-	$mainDatabases = ['config', 'core', 'user'];
-	foreach ($mainDatabases as $dbName) {
-		if ($this->isDataFileLoaded($dbName)) {
-			// Forcer le rechargement avec la nouvelle configuration
-			$db = $this->dataFiles[$dbName];
-			if (method_exists($db, 'enableCache')) {
-				$db->enableCache(true);
-				$db->setCacheTTL(3600);
-			}
-		}
-	}
-	
-	// 4. Forcer la reconversion des bases utilisateurs et de contenu si nécessaire
-	$modulesToConvert = ['user', 'page', 'module', 'theme'];
-	foreach ($modulesToConvert as $module) {
-		if ($this->isDataFileLoaded($module)) {
-			$db = $this->dataFiles[$module];
-			// Forcer la réécriture avec la nouvelle configuration
-			if (method_exists($db, 'forceRecompress')) {
-				$db->forceRecompress();
-			}
-		}
-	}
-	
-	// 5. Nettoyage du cache Dot si présent
+	// 3. Nettoyage du cache Dot si présent
 	if (class_exists('\Prowebcraft\Dot')) {
 		\Prowebcraft\Dot::clearKeyCache();
 	}
 	
-	// 6. Rapport de migration complet
+	// 4. Rapport de migration
 	$migrationReport = [
-		'version' => '14.0.00',
+		'version' => '14.00.00',
 		'timestamp' => time(),
-		'jsonDb_config' => $jsonDbConfig,
-		'dataFiles_config' => $dataFilesConfig,
-		'databases_upgraded' => $mainDatabases,
-		'modules_converted' => $modulesToConvert,
+		'database_config_installed' => true,
+		'databases_configured' => array_keys($databaseConfig),
 		'features_enabled' => [
-			'jsondb_cache' => true,
-			'granular_configuration' => true,
-			'user_compression' => true,
-			'content_compression' => true,
-			'sensitive_protection' => true,
-			'performance_improvements' => true,
-			'backward_compatibility' => true
+			'granular_database_config' => true,
+			'dot_cache_cleanup' => true
 		]
 	];
 	
-	// Log de la migration
-	$this->saveLog('ZwiiCMS Migration 14.00.00: JsonDb improvements and granular configuration applied');
+	// 5. Sauvegarder le rapport de migration pour diagnostic
+	$this->saveLog('ZwiiCMS Migration 14.00.00: Database configuration installed from defaultData');
 	$this->saveLog('Migration report: ' . json_encode($migrationReport));
 	
 	// Mettre à jour la version des données
