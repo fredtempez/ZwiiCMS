@@ -2,7 +2,7 @@
 
 ## Version 14.00.00
 ### Améliorations
-- Base de données JsonDB améliorée, gestion d'erreur et d'un cache. Livraison d'une documentation.
+- Base de données JsonDB améliorée, configuration des bases avec option de compression et de cryptage, gestion d'erreur et d'un cache. Livraison d'une documentation.
 - Méthode de rotation des journaux améliorée.
 - Optimisation de l'organisation du routeur, de la génération des feuilles de style.
 - Amélioration de l'animation de la barre d'administration.
