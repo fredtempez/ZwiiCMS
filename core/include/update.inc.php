@@ -1308,7 +1308,7 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	
 	// 6. Rapport de migration complet
 	$migrationReport = [
-		'version' => '14.00.00',
+		'version' => '14.0.00',
 		'timestamp' => time(),
 		'jsonDb_config' => $jsonDbConfig,
 		'dataFiles_config' => $dataFilesConfig,
