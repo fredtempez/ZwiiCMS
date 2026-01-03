@@ -158,9 +158,12 @@
 				</h4>
 				<?php 
 				$databases = config::$databaseInputs;
+				// Exclure les bases critiques pour la sécurité
+				$excludedDatabases = ['config', 'core'];
+				$databases = array_diff_key($databases, array_flip($excludedDatabases));
 				$dbNames = array_keys($databases);
 				$dbCount = count($dbNames);
-				$columnsPerRow = 4;
+				$columnsPerRow = 3;
 				
 				for ($i = 0; $i < $dbCount; $i += $columnsPerRow): ?>
 					<div class="row">
@@ -168,37 +171,43 @@
 							$dbName = $dbNames[$j];
 							$inputs = $databases[$dbName];
 						?>
-							<div class="col3">
+							<div class="col4">
 								<div class="block">
 									<h4><?php echo $dbName . '.json'; ?></h4>
 									<div class="row">
 										<div class="col12">
-											<?php echo $inputs['cache']; ?>
+											<div class="row">
+												<div class="col6">
+													<?php echo $inputs['minify']; ?>
+												</div>
+												<div class="col6">
+													<?php echo $inputs['compression']; ?>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col12">
-											<?php echo $inputs['cacheTTL']; ?>
+											<div class="row">
+												<div class="col5">
+													<?php echo $inputs['cache']; ?>
+												</div>
+												<div class="col7">
+													<?php echo $inputs['cacheTTL']; ?>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col12">
-											<?php echo $inputs['minify']; ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col12">
-											<?php echo $inputs['compression']; ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col12">
-											<?php echo $inputs['encryption']; ?>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col12">
-											<?php echo $inputs['encryptionKey']; ?>
+											<div class="row">
+												<div class="col5">
+													<?php echo $inputs['encryption']; ?>
+												</div>
+												<div class="col7">
+													<?php echo $inputs['encryptionKey']; ?>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
