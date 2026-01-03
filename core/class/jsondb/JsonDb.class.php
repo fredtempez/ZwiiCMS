@@ -32,7 +32,8 @@ class JsonDb extends \Prowebcraft\Dot
             'cacheTTL' => 3600,
             'compression' => false, // Nouveau: compression des données
             'encryption' => false,  // Nouveau: chiffrement optionnel
-            'encryptionKey' => null
+            'encryptionKey' => null,
+            'minify' => false     // Nouveau: minification JSON (suppression espaces)
         ], $config);
         
         $this->cacheEnabled = $this->config['cache'] ?? false;
@@ -133,8 +134,13 @@ class JsonDb extends \Prowebcraft\Dot
             // Préparation des données
             $saveData = $this->prepareDataForSave();
             
-            // Encodage JSON
-            $encoded_data = json_encode($saveData, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+            // Si les données sont déjà une chaîne JSON (non chiffrée), les utiliser directement
+            // Si elles sont chiffrées (tableau), les encoder en JSON
+            if (is_string($saveData)) {
+                $encoded_data = $saveData;
+            } else {
+                $encoded_data = json_encode($saveData, JSON_UNESCAPED_UNICODE | JSON_FORCE_OBJECT | JSON_THROW_ON_ERROR);
+            }
             
             // Compression selon la configuration actuelle (gère les reconversions)
             if ($this->config['compression']) {
@@ -156,11 +162,23 @@ class JsonDb extends \Prowebcraft\Dot
     {
         $data = $this->data;
         
+        // Préparer les données pour le JSON
+        if ($this->config['minify']) {
+            // Minifier le JSON si activé
+            $jsonString = json_encode($data);
+            $jsonString = $this->minifyJson($jsonString);
+        } else {
+            // Format pretty print quand minify est désactivé
+            $jsonString = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }
+        
         if ($this->config['encryption'] && !empty($this->config['encryptionKey'])) {
             $data = [
                 'encrypted' => true,
-                'data' => $this->encryptData(json_encode($data), $this->config['encryptionKey'])
+                'data' => $this->encryptData($jsonString, $this->config['encryptionKey'])
             ];
+        } else {
+            $data = $jsonString;
         }
         
         return $data;
@@ -213,7 +231,17 @@ class JsonDb extends \Prowebcraft\Dot
             $this->data = json_decode($file_contents, true);
 
             if ($this->data === null) {
-                throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides.');
+                // Essayer de réparer les données si possible
+                $file_contents = trim($file_contents);
+                if (substr($file_contents, 0, 1) === '"' && substr($file_contents, -1) === '"') {
+                    // Le contenu semble être une chaîne JSON échappée
+                    $unescaped = stripslashes(substr($file_contents, 1, -1));
+                    $this->data = json_decode($unescaped, true);
+                }
+                
+                if ($this->data === null) {
+                    throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides. Contenu: ' . substr($file_contents, 0, 200));
+                }
             }
 
             // Déchiffrement si nécessaire
@@ -223,9 +251,18 @@ class JsonDb extends \Prowebcraft\Dot
                 }
                 $decrypted = $this->decryptData($this->data['data'], $this->config['encryptionKey']);
                 $this->data = json_decode($decrypted, true);
+                
+                if ($this->data === null) {
+                    throw new \InvalidArgumentException('Le déchiffrement a produit des données invalides.');
+                }
             }
         }
-
+        
+        // Validation finale : s'assurer que this->data est bien un tableau
+        if ($this->data !== null && !is_array($this->data)) {
+            throw new \InvalidArgumentException('Type de données invalide dans ' . $this->db . '. Attendu: array, reçu: ' . gettype($this->data));
+        }
+        
         return $this->data;
     }
 
@@ -410,6 +447,15 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
+     * Minifie une chaîne JSON (supprime les espaces inutiles)
+     */
+    protected function minifyJson($json)
+    {
+        // Supprimer les espaces et retours à la ligne inutiles
+        return preg_replace(['/\s+/', '/^\s+|\s+$/'], [' ', ''], $json);
+    }
+
+    /**
      * Gère le changement d'état (compression, chiffrement, cache) selon la configuration
      * @param array $newConfig Nouvelle configuration
      */
@@ -423,13 +469,14 @@ class JsonDb extends \Prowebcraft\Dot
             $this->config['encryption'] !== ($newConfig['encryption'] ?? $this->config['encryption']) ||
             $this->config['encryptionKey'] !== ($newConfig['encryptionKey'] ?? $this->config['encryptionKey']) ||
             $this->config['cache'] !== ($newConfig['cache'] ?? $this->config['cache']) ||
-            $this->config['cacheTTL'] !== ($newConfig['cacheTTL'] ?? $this->config['cacheTTL'])
+            $this->config['cacheTTL'] !== ($newConfig['cacheTTL'] ?? $this->config['cacheTTL']) ||
+            $this->config['minify'] !== ($newConfig['minify'] ?? $this->config['minify'])
         ) {
             $configChanged = true;
         }
         
         if ($configChanged) {
-            // Mettre à jour la configuration
+            // Mettre à jour la configuration locale
             $this->config = array_merge($this->config, $newConfig);
             
             // Forcer le rechargement des données
@@ -438,6 +485,15 @@ class JsonDb extends \Prowebcraft\Dot
             // Forcer la réécriture avec nouvelle configuration
             $this->save();
         }
+    }
+    
+    /**
+     * Met à jour la configuration depuis un tableau externe (ex: config.json)
+     * @param array $config Configuration à appliquer
+     */
+    public function updateConfig($config)
+    {
+        $this->config = array_merge($this->config, $config);
     }
 
     /**

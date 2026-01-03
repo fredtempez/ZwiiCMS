@@ -506,7 +506,8 @@ class config extends common
 					'cacheTTL' => $this->getInput('database' . ucfirst($dbName) . 'CacheTTL', helper::FILTER_INT),
 					'compression' => $this->getInput('database' . ucfirst($dbName) . 'Compression', helper::FILTER_BOOLEAN),
 					'encryption' => $encryption,
-					'encryptionKey' => $encryptionKey
+					'encryptionKey' => $encryptionKey,
+					'minify' => $this->getInput('database' . ucfirst($dbName) . 'Minify', helper::FILTER_BOOLEAN)
 				];
 			}
 
@@ -635,6 +636,13 @@ class config extends common
 				}
 			}
 			
+			// Synchroniser la configuration de toutes les instances JsonDb existantes
+			foreach ($this->dataFiles as $dbName => $db) {
+				if ($db && method_exists($db, 'updateConfig')) {
+					$db->updateConfig($newDatabaseConfig[$dbName] ?? []);
+				}
+			}
+			
 			// Mettre à jour la structure des bases après la sauvegarde
 			// Comparer et appliquer les changements de configuration
 			foreach ($newDatabaseConfig as $dbName => $newConfig) {
@@ -647,7 +655,8 @@ class config extends common
 					$oldConfig['encryption'] !== $newConfig['encryption'] ||
 					$oldConfig['encryptionKey'] !== $newConfig['encryptionKey'] ||
 					$oldConfig['cache'] !== $newConfig['cache'] ||
-					$oldConfig['cacheTTL'] !== $newConfig['cacheTTL']
+					$oldConfig['cacheTTL'] !== $newConfig['cacheTTL'] ||
+					$oldConfig['minify'] !== $newConfig['minify']
 				);
 				
 				if ($configChanged) {
@@ -723,6 +732,11 @@ class config extends common
 					'label' => 'Compression',
 					'help' => 'Compresser les données de cette base',
 					'checked' => $config['compression'] ?? false
+				]),
+				'minify' => template::checkbox('database' . $dbNameCapitalized . 'Minify', 1, 'Minification', [
+					'label' => 'Minification',
+					'help' => 'Supprimer les espaces inutiles dans le JSON',
+					'checked' => $config['minify'] ?? false
 				]),
 				'encryption' => template::checkbox('database' . $dbNameCapitalized . 'Encryption', 1, 'Chiffrement', [
 					'label' => 'Chiffrement',

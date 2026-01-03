@@ -51,14 +51,16 @@ class init extends common
 					'cacheTTL' => 300,           // 5 minutes si activé
 					'compression' => false,     // Jamais compressé
 					'encryption' => false,
-					'encryptionKey' => ''
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée pour réduire la taille
 				],
 				'core' => [
 					'cache' => false,             // Pas de cache pour le core
 					'cacheTTL' => 300,           // 5 minutes si activé
 					'compression' => false,     // Jamais compressé
 					'encryption' => false,
-					'encryptionKey' => ''
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée pour réduire la taille
 				],
 
 				// Bases utilisateurs : cache court, compression activée
@@ -67,7 +69,8 @@ class init extends common
 					'cacheTTL' => 300,           // 5 minutes (modifications fréquentes)
 					'compression' => true,      // Compression activée
 					'encryption' => false,
-					'encryptionKey' => ''
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 
 				// Bases de contenu : cache modéré, compression pour les gros fichiers
@@ -76,53 +79,66 @@ class init extends common
 					'cacheTTL' => 1800,          // 30 minutes (contenu modéré)
 					'compression' => true,       // Contenu volumineux
 					'encryption' => false,
-					'encryptionKey' => ''
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'module' => [
 					'cache' => true,
 					'cacheTTL' => 1800,          // 30 minutes
 					'compression' => true,       // Modules peuvent être gros
 					'encryption' => false,
-					'encryptionKey' => ''
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'theme' => [
 					'cache' => true,
 					'cacheTTL' => 3600,          // 1 heure (thème peu modifié)
 					'compression' => true,       // Fichiers de thème
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'font' => [
 					'cache' => true,
 					'cacheTTL' => 3600,          // 1 heure (polices peu modifiées)
 					'compression' => true,       // Polices peuvent être volumineuses
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'language' => [
 					'cache' => true,
 					'cacheTTL' => 3600,          // 1 heure (traductions stables)
 					'compression' => false,       // Fichiers de traduction généralement petits
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'admin' => [
 					'cache' => false,             // Pas de cache pour les logs admin
 					'cacheTTL' => 300,           // 5 minutes si activé
 					'compression' => false,       // Logs doivent rester accessibles
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'blacklist' => [
 					'cache' => false,             // Pas de cache pour la sécurité
 					'cacheTTL' => 300,           // 5 minutes si activé
 					'compression' => false,       // Sécurité avant performance
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				],
 				'profil' => [
 					'cache' => true,
 					'cacheTTL' => 600,           // 10 minutes (modifications fréquentes)
 					'compression' => true,       // Profils détaillés
-					'encryption' => false
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				]
 			]
-
 		],
 		'core' => [
 			'dataVersion' => 140000,

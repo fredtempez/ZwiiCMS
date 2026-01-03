@@ -2175,7 +2175,8 @@ class common
 			'cacheTTL' => 3600,
 			'compression' => false,
 			'encryption' => false,
-			'encryptionKey' => null
+			'encryptionKey' => null,
+			'minify' => false
 		];
 		
 		// Fusionner avec les options fournies
@@ -2201,7 +2202,8 @@ class common
 			'cache' => true,
 			'cacheTTL' => 3600,
 			'compression' => false,
-			'encryption' => false
+			'encryption' => false,
+			'minify' => false
 		];
 		
 		// Mettre à jour la configuration (note: cette méthode modifie une copie locale)

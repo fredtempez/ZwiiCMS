@@ -183,6 +183,11 @@
 									</div>
 									<div class="row">
 										<div class="col12">
+											<?php echo $inputs['minify']; ?>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col12">
 											<?php echo $inputs['compression']; ?>
 										</div>
 									</div>
