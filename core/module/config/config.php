@@ -717,36 +717,46 @@ class config extends common
 		$dataFilesConfig = $this->getData(['config', 'database']);
 		foreach ($dataFilesConfig as $dbName => $config) {
 			$dbNameCapitalized = ucfirst($dbName);
+			// Vérifier si c'est une base critique
+			$criticalDatabases = ['config', 'core'];
+			$isCritical = in_array($dbName, $criticalDatabases);
+				
 			self::$databaseInputs[$dbName] = [
 				'cache' => template::checkbox('database' . $dbNameCapitalized . 'Cache', 1, 'Cache', [
 					'label' => 'Cache',
 					'help' => 'Activer le cache pour cette base',
-					'checked' => $config['cache'] ?? false
+					'checked' => $config['cache'] ?? false,
+					'disabled' => $isCritical
 				]),
 				'cacheTTL' => template::select('database' . $dbNameCapitalized . 'CacheTTL', self::$cacheTTL, [
 					'checked' => $config['cacheTTL'] ?? 3600,
 					'label' => 'Durée du cache (TTL)',
-					'help' => 'Durée de vie du cache en secondes'
+					'help' => 'Durée de vie du cache en secondes',
+					'disabled' => $isCritical
 				]),
 				'compression' => template::checkbox('database' . $dbNameCapitalized . 'Compression', 1, 'Compression', [
 					'label' => 'Compression',
 					'help' => 'Compresser les données de cette base',
-					'checked' => $config['compression'] ?? false
+					'checked' => $config['compression'] ?? false,
+					'disabled' => $isCritical
 				]),
 				'minify' => template::checkbox('database' . $dbNameCapitalized . 'Minify', 1, 'Minification', [
 					'label' => 'Minification',
 					'help' => 'Supprimer les espaces inutiles dans le JSON',
 					'checked' => $config['minify'] ?? false
+					// La minification reste active même pour les bases critiques
 				]),
 				'encryption' => template::checkbox('database' . $dbNameCapitalized . 'Encryption', 1, 'Chiffrement', [
 					'label' => 'Chiffrement',
 					'help' => 'Chiffrer les données de cette base',
-					'checked' => $config['encryption'] ?? false
+					'checked' => $config['encryption'] ?? false,
+					'disabled' => $isCritical
 				]),
 				'encryptionKey' => template::text('database' . $dbNameCapitalized . 'EncryptionKey', [
 					'value' => $config['encryptionKey'] ?? '',
 					'label' => 'Clé de chiffrement',
-					'help' => 'Clé pour le chiffrement des données'
+					'help' => 'Clé pour le chiffrement des données',
+					'disabled' => $isCritical
 				])
 			];
 		}

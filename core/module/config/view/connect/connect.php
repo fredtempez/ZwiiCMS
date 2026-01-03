@@ -158,9 +158,8 @@
 				</h4>
 				<?php 
 				$databases = config::$databaseInputs;
-				// Exclure les bases critiques pour la sécurité
-				$excludedDatabases = ['config', 'core'];
-				$databases = array_diff_key($databases, array_flip($excludedDatabases));
+				// Trier alphabétiquement sur les noms des bases
+				ksort($databases);
 				$dbNames = array_keys($databases);
 				$dbCount = count($dbNames);
 				$columnsPerRow = 3;
