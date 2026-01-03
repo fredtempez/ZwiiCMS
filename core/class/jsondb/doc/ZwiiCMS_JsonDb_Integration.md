@@ -16,11 +16,33 @@ $config = [
     'cache' => true,        // Activé par défaut
     'cacheTTL' => 3600,    // 1 heure
     'compression' => false, // Compatible avec l'existant
-    'encryption' => false   // Compatible avec l'existant
+    'encryption' => false,  // Compatible avec l'existant
+    'minify' => false     // Nouveau: minification JSON
 ];
 ```
 
-### 2. Stratégie de Chargement Optimisée
+### 2. Minification JSON
+
+Nouvelle fonctionnalité pour réduire la taille des fichiers JSON de 20-40% :
+
+```php
+// Activer la minification pour toutes les bases
+$this->configureJsonDb([
+    'minify' => true  // Supprime les espaces inutiles
+]);
+
+// Configuration par base dans l'interface d'administration
+'database' => [
+    'config' => [
+        'minify' => true,    // Activé pour config.json
+        'cache' => false,    // Désactivé pour sécurité
+        'compression' => false,
+        'encryption' => false
+    ]
+]
+```
+
+### 3. Stratégie de Chargement Optimisée
 
 Les bases de données sont maintenant divisées en deux catégories :
 
@@ -139,6 +161,48 @@ if ($this->getData(['core', 'dataVersion']) < 150000) {
     
     $this->setData(['core', 'dataVersion', 150000]);
 }
+```
+
+## 🖥️ Interface d'Administration
+
+### Configuration des Bases de Données
+
+ZwiiCMS fournit une interface complète pour configurer chaque base de données :
+
+**Accès :** `Administration > Configuration > Bases de données`
+
+#### Fonctionnalités de l'interface
+
+- **Affichage par carte** : 3 bases par ligne avec disposition responsive
+- **Tri alphabétique** : Bases ordonnées automatiquement
+- **Configuration individuelle** : Options spécifiques par base
+- **Protection des bases critiques** : config.json et core.json limitées
+
+#### Options disponibles
+
+| Option | Description | Bases critiques | Autres bases |
+|---------|-------------|-----------------|---------------|
+| **Minification** | Supprime les espaces inutiles | ✅ Activable | ✅ Activable |
+| **Compression** | Compresse les données | ❌ Désactivée | ✅ Activable |
+| **Cache** | Met en cache les données | ❌ Désactivé | ✅ Activable |
+| **Cache TTL** | Durée de vie du cache | ❌ Désactivé | ✅ Configurable |
+| **Chiffrement** | Chiffre les données | ❌ Désactivé | ✅ Activable |
+| **Clé de chiffrement** | Clé AES-256 | ❌ Désactivée | ✅ Configurable |
+
+#### Configuration recommandée
+
+```php
+// Pour config.json et core.json (bases critiques)
+'minify' => true,     // Réduction de taille
+'cache' => false,      // Sécurité
+'compression' => false, // Stabilité
+'encryption' => false // Fiabilité
+
+// Pour les autres bases (user, page, module, etc.)
+'minify' => true,     // Performance
+'cache' => true,       // Vitesse
+'compression' => true, // Espace disque
+'encryption' => false  // Optionnel selon besoins
 ```
 
 ## 🛠️ Utilisation Pratique

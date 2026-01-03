@@ -729,7 +729,7 @@ class config extends common
 					'disabled' => $isCritical
 				]),
 				'cacheTTL' => template::select('database' . $dbNameCapitalized . 'CacheTTL', self::$cacheTTL, [
-					'checked' => $config['cacheTTL'] ?? 3600,
+					'selected' => $config['cacheTTL'] ?? 3600,
 					'label' => 'Durée du cache (TTL)',
 					'help' => 'Durée de vie du cache en secondes',
 					'disabled' => $isCritical
