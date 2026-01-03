@@ -242,7 +242,7 @@ class common
 
 	// Descripteur de données Entrées / Sorties
 	// Liste ici tous les fichiers de données
-	private $dataFiles = [
+	protected $dataFiles = [
 		'admin' => '',
 		'blacklist' => '',
 		'config' => '',

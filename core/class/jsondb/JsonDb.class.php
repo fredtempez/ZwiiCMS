@@ -410,6 +410,37 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
+     * Gère le changement d'état (compression, chiffrement, cache) selon la configuration
+     * @param array $newConfig Nouvelle configuration
+     */
+    public function applyConfigChanges($newConfig)
+    {
+        $configChanged = false;
+        
+        // Vérifier les changements de configuration
+        if (
+            $this->config['compression'] !== ($newConfig['compression'] ?? $this->config['compression']) ||
+            $this->config['encryption'] !== ($newConfig['encryption'] ?? $this->config['encryption']) ||
+            $this->config['encryptionKey'] !== ($newConfig['encryptionKey'] ?? $this->config['encryptionKey']) ||
+            $this->config['cache'] !== ($newConfig['cache'] ?? $this->config['cache']) ||
+            $this->config['cacheTTL'] !== ($newConfig['cacheTTL'] ?? $this->config['cacheTTL'])
+        ) {
+            $configChanged = true;
+        }
+        
+        if ($configChanged) {
+            // Mettre à jour la configuration
+            $this->config = array_merge($this->config, $newConfig);
+            
+            // Forcer le rechargement des données
+            $this->reload(true);
+            
+            // Forcer la réécriture avec nouvelle configuration
+            $this->save();
+        }
+    }
+
+    /**
      * Statistiques détaillées du cache
      */
     public function getDetailedCacheStats()

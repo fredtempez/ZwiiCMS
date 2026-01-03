@@ -486,9 +486,8 @@ class config extends common
 			
 			// Récupérer la nouvelle configuration depuis les inputs
 			$newDatabaseConfig = [];
-			$databases = ['config', 'core', 'user', 'page', 'module', 'theme', 'font', 'language', 'admin', 'blacklist', 'profil'];
 			
-			foreach ($databases as $dbName) {
+			foreach (array_keys($this->dataFiles) as $dbName) {
 				$encryption = $this->getInput('database' . ucfirst($dbName) . 'Encryption', helper::FILTER_BOOLEAN);
 				$encryptionKey = $this->getInput('database' . ucfirst($dbName) . 'EncryptionKey', helper::FILTER_STRING_SHORT);
 				
@@ -651,59 +650,17 @@ class config extends common
 					$oldConfig['cacheTTL'] !== $newConfig['cacheTTL']
 				);
 				
-				if ($configChanged && $this->isDataFileLoaded($dbName)) {
-					$db = $this->dataFiles[$dbName];
-					
-					// Gérer le changement de compression
-					if ($oldConfig['compression'] !== $newConfig['compression']) {
-						if ($newConfig['compression']) {
-							// Activer la compression
-							if (method_exists($db, 'enableCompression')) {
-								$db->enableCompression(true);
-								$db->forceRecompress(); // Recompresser toutes les données
-							}
-						} else {
-							// Désactiver la compression
-							if (method_exists($db, 'enableCompression')) {
-								$db->enableCompression(false);
-								$db->forceRecompress(); // Décompresser toutes les données
-							}
-						}
+				if ($configChanged) {
+					// Forcer le chargement de la base si elle n'est pas déjà chargée
+					if (!$this->isDataFileLoaded($dbName)) {
+						$this->getData([$dbName]);
 					}
 					
-					// Gérer le changement de chiffrement
-					if ($oldConfig['encryption'] !== $newConfig['encryption'] || 
-						$oldConfig['encryptionKey'] !== $newConfig['encryptionKey']) {
-						if ($newConfig['encryption'] && !empty($newConfig['encryptionKey'])) {
-							// Activer le chiffrement - mettre à jour la configuration et recharger
-							$db->config['encryption'] = true;
-							$db->config['encryptionKey'] = $newConfig['encryptionKey'];
-							$db->reload(true); // Recharger les données et forcer la réécriture avec nouveau chiffrement
-						} else {
-							// Désactiver le chiffrement - mettre à jour la configuration et recharger
-							$db->config['encryption'] = false;
-							$db->config['encryptionKey'] = null;
-							$db->reload(true); // Recharger les données et forcer la réécriture sans chiffrement
-						}
-					}
-					
-					// Gérer le changement de cache
-					if ($oldConfig['cache'] !== $newConfig['cache']) {
-						if (method_exists($db, 'enableCache')) {
-							$db->enableCache($newConfig['cache']);
-						}
-					}
-					
-					// Gérer le changement de TTL du cache
-					if ($oldConfig['cacheTTL'] !== $newConfig['cacheTTL']) {
-						if (method_exists($db, 'setCacheTTL')) {
-							$db->setCacheTTL($newConfig['cacheTTL']);
-						}
-					}
-					
-					// Nettoyer le cache pour cette base
-					if (method_exists($db, 'clearCache')) {
-						$db->clearCache();
+					if ($this->isDataFileLoaded($dbName)) {
+						$db = $this->dataFiles[$dbName];
+						
+						// Appliquer tous les changements de configuration avec la nouvelle méthode
+						$db->applyConfigChanges($newConfig);
 					}
 				}
 			}
