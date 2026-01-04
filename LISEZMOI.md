@@ -1,4 +1,4 @@
-# ZwiiCMS 14.00.00
+# 🚀 ZwiiCMS 14.00.00
 
 Zwii est un CMS sans base de données (flat-file) qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation. Conçu pour la simplicité et la performance, ZwiiCMS offre une solution complète pour la gestion de contenu web moderne.
 
@@ -6,27 +6,27 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 [Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Version initiale](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
 
-## Configuration recommandée
+## ⚙️ Configuration recommandée
 
 * PHP 7.2 ou plus (recommandé PHP 8.0+ pour de meilleures performances)
 * Support de .htaccess (pour la réécriture d'URL et la sécurité)
 * Espace disque : minimum 50 Mo
 * Navigateurs modernes : Chrome, Firefox, Safari, Edge
 
-## Licence
+## 📄 Licence
 
 Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International.
 
 Pour voir une copie de cette licence, visitez <http://creativecommons.org/licenses/by-nc-nd/4.0/> ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
 
-## Téléchargement de ZwiiCMS
+## 📥 Téléchargement de ZwiiCMS
 
 Pour télécharger la dernière version publiée, rendez-vous :
 * sur [la page des mises à jour](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases) pour accéder à toutes les versions
 * ou sur [la page de téléchargement du site](https://zwiicms.fr/telechargement) pour la version stable
 * Mises à jour automatiques intégrées depuis le panneau d'administration
 
-## Installation
+## 🛠️ Installation
 
 Décompressez l'archive de Zwii et téléversez son contenu à la racine de votre serveur ou dans un sous-répertoire. C'est tout !
 
@@ -38,7 +38,7 @@ Vous trouverez de plus amples explications, en particulier pour une installation
 * Configuration de sécurité automatique
 * Responsive design dès l'installation
 
-## Procédures de mise à jour
+## 🔄 Procédures de mise à jour
 
 A l'occasion de l'installation d'une version majeure, il est recommandé de réaliser une copie de sauvegarde.
 
@@ -50,21 +50,21 @@ A l'occasion de l'installation d'une version majeure, il est recommandé de réa
 * Gestion avancée des profils utilisateurs
 * Support multilingue étendu
 
-### Automatique
+### 🤖 Automatique
 
 * Connectez-vous à votre site en tant qu'administrateur.
 * Si une mise à jour est disponible, une notification s'affiche dans la barre d'administration.
 * Cliquez sur le bouton "Mettre à jour" et suivez les instructions.
 * Le système vérifie automatiquement les mises à jour toutes les 24 heures.
 
-### Manuelle
+### ✋ Manuelle
 
 * Sauvegardez l'intégralité de votre site, spécialement le répertoire "site" contenant toutes vos données.
 * Décompressez la nouvelle version sur votre ordinateur.
 * Transférez son contenu sur votre serveur en activant le remplacement des fichiers (sauf le dossier "site").
 * Vérifiez que les permissions des fichiers sont correctes (755 pour les dossiers, 644 pour les fichiers).
 
-## Arborescence générale
+## 🌳 Arborescence générale
 
 *Légende : [R] Répertoire - [F] Fichier*
 

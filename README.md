@@ -1,4 +1,4 @@
-# ZwiiCMS 14.00.00
+# 🚀 ZwiiCMS 14.00.00
 
 Zwii is a database-less (flat-file) CMS that allows you to easily create and manage a web site without any programming knowledge. Designed for simplicity and performance, ZwiiCMS offers a complete solution for modern web content management.
 
@@ -6,14 +6,14 @@ ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/).
 
 [Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
 
-## Recommended configuration
+## ⚙️ Recommended configuration
 
 * PHP 7.2 or higher (PHP 8.0+ recommended for better performance)
 * .htaccess support (for URL rewriting and security)
 * Disk space: minimum 50 MB
 * Modern browsers: Chrome, Firefox, Safari, Edge
 
-## License
+## 📄 License
 
 Zwiicms - CMS open source
 Copyright (C) 2026 Frederic Tempez
@@ -31,14 +31,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-## Downloading ZwiiCMS
+## 📥 Downloading ZwiiCMS
 
 To download the latest released version, go to:
 * [the Updates page](https://forge.chapril.org/ZwiiCMS-Team/ZwiiCMS/releases) to access all versions
 * or at [the site download page](https://zwiicms.fr/download) for stable version
 * Automatic updates integrated in administration panel
 
-## Installation
+## 🛠️ Installation
 
 Unzip the Zwii archive and upload its contents to the root of your server or to a subdirectory. That's all!
 
@@ -50,7 +50,7 @@ You will find more explanations, in particular for an installation at Free, in t
 * Automatic security configuration
 * Responsive design from installation
 
-## Update procedures
+## 🔄 Update procedures
 
 When installing a major version, it is recommended to make a backup copy.
 
@@ -62,21 +62,21 @@ When installing a major version, it is recommended to make a backup copy.
 * Advanced user profile management
 * Extended multilingual support
 
-### Automatic
+### 🤖 Automatic
 
 * Connect to your site as administrator.
 * If an update is available, a notification appears in the administration bar.
 * Click on "Update" button and follow the instructions.
 * The system automatically checks for updates every 24 hours.
 
-### Manual
+### ✋ Manual
 
 * Save your entire site, especially the "site" directory containing all your data.
 * Unzip the new version on your computer.
 * Transfer its content to your server by activating the file replacement (except the "site" folder).
 * Check that file permissions are correct (755 for folders, 644 for files).
 
-## General tree structure
+## 🌳 General tree structure
 
 *Legend: [D] Directory - [FILE] File*
 
