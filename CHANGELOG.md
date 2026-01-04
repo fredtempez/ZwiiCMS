@@ -2,7 +2,7 @@
 
 ## Version 14.00.00
 
-### 🚀 Enhanced JsonDB Database
+### Enhanced JsonDB Database
 
 - **JSON Minification**: New feature reducing file size by 20-40% by removing unnecessary spaces
 - **Smart Cache with Tags**: High-performance caching system with selective invalidation, 3-5x faster for frequent reads
@@ -14,7 +14,7 @@
 - **Improved Backups**: Automatic version management and corruption detection
 - **Complete Documentation**: Delivery of detailed documentation (JsonDb_Complete_Documentation.md and ZwiiCMS_JsonDb_Integration.md)
 
-### 🛠️ System Improvements
+### System Improvements
 
 - **Enhanced Log Rotation Method**: Optimized log management with automatic rotation
 - **Router Optimization**: Code reorganization for better performance
@@ -22,7 +22,7 @@
 - **Improved Administration Bar Animation**: Smoother and more modern transitions
 - **Default Mailer Configuration**: Automatic setup if SMTP is not enabled
 
-### 🎨 User Interface
+### User Interface
 
 - **Database Configuration**: New responsive interface with modern cards
 - **Alphabetical Sorting**: Databases automatically ordered
@@ -30,7 +30,7 @@
 - **Visual Protection**: Disabled options grayed out for critical databases
 - **Optimized Layout**: 3 cards per row with responsive layout
 
-### 🔧 Fixes and Optimizations
+### Fixes and Optimizations
 
 - **Default Configuration**: Optimized values in defaultdata.php for each database type
 - **100% Compatibility**: All existing modules work without modification
