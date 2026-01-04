@@ -4,7 +4,7 @@ Zwii is a database-less (flat-file) CMS that allows you to easily create and man
 
 ZwiiCMS was created by a talented developer, [Rémi Jean](https://remijean.fr/). It is now maintained by Frédéric Tempez, who continues to evolve the project with new features and constant improvements.
 
-[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS)
+[Site](http://zwiicms.fr/) - [Forum](http://forum.zwiicms.com/) - [Initial version](https://github.com/remijean/ZwiiCMS/) - [GitHub](https://github.com/fredtempez/ZwiiCMS) - [Release Notes](CHANGELOG.md) - [Notes de version](CHANGES.md)
 
 ## ⚙️ Recommended configuration
 
@@ -30,6 +30,11 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+## 📋 Release Notes
+
+* **English** : [CHANGELOG.md](CHANGELOG.md) - Release notes in English
+* **Français** : [CHANGES.md](CHANGES.md) - Notes de version en français
 
 ## 📥 Downloading ZwiiCMS
 
