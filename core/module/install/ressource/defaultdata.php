@@ -382,16 +382,16 @@ class init extends common
 		'blacklist' => [],
 		'language' => [
 			"fr_FR" => [
-				"version" => 13603,
-				"date" => 1743151891
+				"version" => 140000,
+				"date" => 1767539023
 			],
 			"es" => [
-				"version" => 13603,
-				"date" => 1743151891
+				"version" => 140000,
+				"date" => 1767539023
 			],
 			"en_EN" => [
-				"version" => 13603,
-				"date" => 1743151891
+				"version" => 140000,
+				"date" => 1767539023
 			]
 		],
 		'profil' => [
