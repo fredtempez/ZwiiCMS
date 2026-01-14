@@ -65,7 +65,7 @@ class init extends common
 
 				// Bases utilisateurs : cache court, compression activée
 				'user' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 300,           // 5 minutes (modifications fréquentes)
 					'compression' => true,      // Compression activée
 					'encryption' => false,
@@ -75,7 +75,7 @@ class init extends common
 
 				// Bases de contenu : cache modéré, compression pour les gros fichiers
 				'page' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 1800,          // 30 minutes (contenu modéré)
 					'compression' => true,       // Contenu volumineux
 					'encryption' => false,
@@ -83,7 +83,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'module' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 1800,          // 30 minutes
 					'compression' => true,       // Modules peuvent être gros
 					'encryption' => false,
@@ -91,7 +91,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'theme' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 3600,          // 1 heure (thème peu modifié)
 					'compression' => true,       // Fichiers de thème
 					'encryption' => false,
@@ -99,7 +99,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'font' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 3600,          // 1 heure (polices peu modifiées)
 					'compression' => true,       // Polices peuvent être volumineuses
 					'encryption' => false,
@@ -107,7 +107,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'language' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 3600,          // 1 heure (traductions stables)
 					'compression' => false,       // Fichiers de traduction généralement petits
 					'encryption' => false,
@@ -131,7 +131,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'profil' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 600,           // 10 minutes (modifications fréquentes)
 					'compression' => true,       // Profils détaillés
 					'encryption' => false,
@@ -139,7 +139,7 @@ class init extends common
 					'minify' => true             // Minification activée
 				],
 				'locale' => [
-					'cache' => true,
+					'cache' => false,
 					'cacheTTL' => 600,           // 10 minutes (modifications fréquentes)
 					'compression' => true,       // Profils détaillés
 					'encryption' => false,

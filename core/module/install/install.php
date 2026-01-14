@@ -214,6 +214,26 @@ class install extends common
 				// Créer la base de données des langues
 				$this->copyDir('core/module/install/ressource/i18n', self::I18N_DIR);
 
+				// Appliquer la configuration des bases de données depuis defaultdata.php
+				require_once('core/module/install/ressource/defaultdata.php');
+				$databaseConfig = init::$defaultData['config']['database'] ?? [];
+				
+				// Initialiser les bases de données avec leur configuration
+				foreach ($databaseConfig as $dbName => $config) {
+					// Charger la base si ce n'est pas déjà fait
+					if (!$this->isDataFileLoaded($dbName)) {
+						$this->loadDataFile($dbName);
+					}
+					
+					// Appliquer la configuration à la base de données
+					if ($this->isDataFileLoaded($dbName)) {
+						$db = $this->dataFiles[$dbName];
+						if (method_exists($db, 'applyConfigChanges')) {
+							$db->applyConfigChanges($config);
+						}
+					}
+				}
+
 				// Fixe l'adresse from pour les envois d'email
 				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])], false);
 
