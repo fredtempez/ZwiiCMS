@@ -137,6 +137,14 @@ class init extends common
 					'encryption' => false,
 					'encryptionKey' => '',
 					'minify' => true             // Minification activée
+				],
+				'locale' => [
+					'cache' => true,
+					'cacheTTL' => 600,           // 10 minutes (modifications fréquentes)
+					'compression' => true,       // Profils détaillés
+					'encryption' => false,
+					'encryptionKey' => '',
+					'minify' => true             // Minification activée
 				]
 			]
 		],
@@ -340,7 +348,7 @@ class init extends common
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
 				'shadow' => '0px 0px 0px',
-				'width' => '960px'
+				'width' => '1400px'
 			],
 			'block' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',

@@ -856,6 +856,12 @@ class common
 					'encryptionKey' => null
 				]);
 			}
+			
+			// Fusionner avec la configuration spécifique à la base de données
+			$dataFilesConfig = $this->getDataFilesConfig();
+			if (isset($dataFilesConfig[$dataFile])) {
+				$config = array_merge($config, $dataFilesConfig[$dataFile]);
+			}
 
 			// Désactiver l'encryption si la clé est vide
 			if (isset($config['encryption']) && $config['encryption'] && empty($config['encryptionKey'])) {
