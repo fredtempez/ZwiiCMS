@@ -52,18 +52,21 @@ private $essentialDataFiles = [
     'config',  // Configuration principale
     'user',    // Authentification
     'locale',  // Langues et localisation
-    'core'     // Données système critiques
+    'core',     // Données système critiques
+    'page', 'module',      // Contenu du site
 ];
 ```
 
 #### Bases On-Demand (chargement avec cache)
 ```php
 private $onDemandDataFiles = [
-    'page', 'module',      // Contenu du site
     'theme', 'font', 'language',  // Personnalisation
     'profil', 'admin',     // Administration
     'blacklist'            // Sécurité
 ];
+```
+
+
 ```
 
 ### 3. Nouvelles Méthodes de Configuration

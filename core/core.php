@@ -262,16 +262,11 @@ class common
 		'config',
 		'user', 
 		'locale',
-		'core'     // Données système critiques
+		'core', 
+		'page',
+		'module'
 	];
 	
-	// Fichiers chargés on-demand (avec cache automatique)
-	private $onDemandDataFiles = [
-		'page', 'module',                // Contenu
-		'theme', 'font', 'language',     // Personnalisation
-		'profil', 'admin',               // Administration
-		'blacklist'                      // Sécurité
-	];
 
 	// Configuration JsonDb améliorée
 	private $jsonDbConfig = null;

@@ -348,7 +348,7 @@ class init extends common
 				'backgroundColor' => 'rgba(255, 255, 255, 1)',
 				'radius' => '0px',
 				'shadow' => '0px 0px 0px',
-				'width' => '1400px'
+				'width' => '1280px'
 			],
 			'block' => [
 				'backgroundColor' => 'rgba(236, 239, 241, 1)',
@@ -385,7 +385,7 @@ class init extends common
 			'backgroundColorButtonHelp' => 'rgba(255, 153, 0, 1)',
 			'backgroundBlockColor' => 'rgba(236, 239, 241, 1)',
 			'borderBlockColor' => 'rgba(190, 202, 209, 1)',
-			'width' => '960px'
+			'width' => '1280px'
 		],
 		'blacklist' => [],
 		'language' => [
