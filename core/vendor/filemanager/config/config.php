@@ -34,29 +34,12 @@ if (!isset($_COOKIE['ZWII_AUTH_KEY']) || !isset($_COOKIE['ZWII_USER_ID'])) {
     die(formatErrorMessage("Accès non autorisé - Authentification requise"));
 }
 
-// Fonction universelle pour lire user.json (compressé ou non)
-function readUserJsonFile($filePath) {
-    $content = file_get_contents($filePath);
-    
-    if ($content === false) {
-        return null;
-    }
-    
-    // Détecter automatiquement si le fichier est compressé
-    $isCompressed = (substr($content, 0, 2) === "\x78\x9c" ||  // ZLIB default
-                     substr($content, 0, 2) === "\x78\xda" ||  // ZLIB best
-                     substr($content, 0, 2) === "\x78\x5e");   // ZLIB fast
-    
-    // Décompresser seulement si nécessaire
-    if ($isCompressed) {
-        $content = gzuncompress($content);
-    }
-    
-    return json_decode($content, true);
-}
+// Inclure les fonctions utilitaires pour la lecture JsonDb
+require_once __DIR__ . '/filemanager_utils.php';
 
 // Chargement des données utilisateur avec gestion de compression
 $usersData = readUserJsonFile('../../../site/data/user.json');
+
 $userId = $_COOKIE['ZWII_USER_ID'];
 
 // Vérification de la clé d'authentification
