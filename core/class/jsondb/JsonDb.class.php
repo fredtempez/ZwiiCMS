@@ -476,15 +476,15 @@ class JsonDb extends \Prowebcraft\Dot
         }
         
         if ($configChanged) {
-            // Mettre à jour la configuration locale
+            // CORRECTION : D'abord recharger les données (décryptage) avec l'ANCIENNE config/clé
+            $this->reload(true);
+
+            // Ensuite, appliquer la NOUVELLE configuration (ex: chiffrement désactivé, clé vide)
             $this->config = array_merge($this->config, $newConfig);
             
-            // Forcer le rechargement des données
-            $this->reload(true);
-            
-            // Forcer la réécriture avec nouvelle configuration
+            // Enfin, sauvegarder avec le nouveau format
             $this->save();
-        }
+    }
     }
     
     /**

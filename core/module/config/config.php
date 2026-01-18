@@ -496,11 +496,6 @@ class config extends common
 					$encryptionKey = bin2hex(random_bytes(16)); // 32 caractères hexadécimaux
 				}
 				
-				// Désactiver le chiffrement si la clé est vide
-				if ($encryption && empty($encryptionKey)) {
-					$encryption = false;
-				}
-				
 				$newDatabaseConfig[$dbName] = [
 					'cache' => $this->getInput('database' . ucfirst($dbName) . 'Cache', helper::FILTER_BOOLEAN),
 					'cacheTTL' => $this->getInput('database' . ucfirst($dbName) . 'CacheTTL', helper::FILTER_INT),
@@ -510,7 +505,7 @@ class config extends common
 					'minify' => $this->getInput('database' . ucfirst($dbName) . 'Minify', helper::FILTER_BOOLEAN)
 				];
 			}
-
+			
 			// Sauvegarder la configuration
 			$this->setData([
 				'config',
@@ -635,18 +630,11 @@ class config extends common
 					helper::$rewriteStatus = false;
 				}
 			}
-			
-			// Synchroniser la configuration de toutes les instances JsonDb existantes
-			foreach ($this->dataFiles as $dbName => $db) {
-				if ($db && method_exists($db, 'updateConfig')) {
-					$db->updateConfig($newDatabaseConfig[$dbName] ?? []);
-				}
-			}
+		
 			
 			// Mettre à jour la structure des bases après la sauvegarde
-			// Comparer et appliquer les changements de configuration
+			// Comparer et appliquer les changements de configuration	
 			foreach ($newDatabaseConfig as $dbName => $newConfig) {
-
 				$oldConfig = $oldDatabaseConfig[$dbName] ?? [];
 				
 				// Vérifier si la configuration a changé
@@ -673,7 +661,7 @@ class config extends common
 					}
 				}
 			}
-			
+	
 			// Nettoyer le cache global Dot si présent
 			if (class_exists('\Prowebcraft\Dot')) {
 				\Prowebcraft\Dot::clearKeyCache();
@@ -756,7 +744,7 @@ class config extends common
 					'value' => $config['encryptionKey'] ?? '',
 					'label' => 'Clé de chiffrement',
 					'help' => 'Clé pour le chiffrement des données',
-					'disabled' => $isCritical
+					'disabled' => $isCritical || ($config['encryption'] && $config['encryptionKey'])
 				])
 			];
 		}
