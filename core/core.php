@@ -591,69 +591,78 @@ class common
 		return is_object($success);
 	}
 
-	/**
-	 * Sauvegarde des données
-	 * @param array $keys Clé(s) des données
-	 * @param bool $save Indique si le fichier doit être sauvegardé après modification (par défaut true)
-	 * @return bool Succès de l'opération
-	 */
-	public function setData($keys = [], $save = true)
-	{
-		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-		if (
-			!empty(self::$inputNotices) or
-			empty($keys)
-		) {
-			return false;
-		}
+/**
+     * Sauvegarde des données
+     * @param array $keys Clé(s) des données (les premiers éléments sont le chemin, le dernier est la valeur)
+     * @param bool|null $save Stratégie de sauvegarde :
+     * - null (défaut) : Utilise la configuration actuelle de JsonDb (sauvegarde immédiate par défaut, sauf si setAutoSave(false) a été appelé).
+     * - true : Force la sauvegarde immédiate.
+     * - false : Empêche la sauvegarde immédiate (pour les traitements par lots).
+     * @return bool Succès de l'opération
+     */
+    public function setData($keys = [], $save = null)
+    {
+        // Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+        if (
+            !empty(self::$inputNotices) or
+            empty($keys)
+        ) {
+            return false;
+        }
 
-		// Validation des clés
-		if (!is_array($keys) || count($keys) < 2) {
-			return false;
-		}
+        // Validation des clés
+        if (!is_array($keys) || count($keys) < 2) {
+            return false;
+        }
 
-		// Empêcher la sauvegarde d'une donnée nulle.
-		if (gettype($keys[count($keys) - 1]) === NULL) {
-			return false;
-		}
+        // Empêcher la sauvegarde d'une donnée nulle.
+        if (gettype($keys[count($keys) - 1]) === NULL) {
+            return false;
+        }
 
-		// Vérifier si la base est chargée, sinon la charger automatiquement
-		if (empty($this->dataFiles[$keys[0]])) {
-			$this->loadDataFile($keys[0]);
-		}
+        // Vérifier si la base est chargée, sinon la charger automatiquement
+        if (empty($this->dataFiles[$keys[0]])) {
+            $this->loadDataFile($keys[0]);
+        }
 
-		// Vérifier que la base de données existe après tentative de chargement
-		if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
-			return false;
-		}
+        // Vérifier que la base de données existe après tentative de chargement
+        if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
+            return false;
+        }
 
-		// Initialisation du retour en cas d'erreur de descripteur
-		$success = false;
+        // Initialisation du retour en cas d'erreur de descripteur
+        $success = false;
 
-		try {
-			// Construire la requête dans la base inf à 1 retourner toute la base
-			if (count($keys) >= 1) {
-				// Descripteur de la base
-				$db = (object) $this->dataFiles[$keys[0]];
-				$query = $keys[0];
-				// Construire la requête
-				// Ne pas tenir compte du dernier élément qui une une value donc <
-				for ($i = 1; $i < count($keys) - 1; $i++) {
-					$query .= '.' . $keys[$i];
-				}
-				// Appliquer la modification, le dernier élément étant la donnée à sauvegarder
-				$success = is_object($db->set($query, $keys[count($keys) - 1], $save));
-			}
-		} catch (Exception $e) {
-			// Log de l'erreur si possible
-			if (method_exists($this, 'saveLog')) {
-				$this->saveLog('Erreur setData: ' . $e->getMessage() . ' pour les clés: ' . implode('.', $keys));
-			}
-			return false;
-		}
+        try {
+            // Construire la requête dans la base si au moins 1 clé
+            if (count($keys) >= 1) {
+                // Descripteur de la base
+                $db = (object) $this->dataFiles[$keys[0]];
+                
+                // La première clé est le nom du module/fichier
+                $query = $keys[0];
+                
+                // Construire la requête (notation par points)
+                // On boucle jusqu'à l'avant-dernier élément (le dernier étant la valeur)
+                for ($i = 1; $i < count($keys) - 1; $i++) {
+                    $query .= '.' . $keys[$i];
+                }
+                
+                // Appliquer la modification
+                // $save étant null par défaut, c'est JsonDb qui décidera s'il faut écrire sur le disque
+                // en fonction de son état interne (setAutoSave)
+                $success = $db->set($query, $keys[count($keys) - 1], $save);
+            }
+        } catch (Exception $e) {
+            // Log de l'erreur si possible
+            if (method_exists($this, 'saveLog')) {
+                $this->saveLog('Erreur setData: ' . $e->getMessage() . ' pour les clés: ' . implode('.', $keys));
+            }
+            return false;
+        }
 
-		return $success;
-	}
+        return $success;
+    }
 
 	/**
 	 * Accède aux données
@@ -1133,14 +1142,17 @@ class common
 		// Boucle de recherche des pages actives
 		foreach ($this->getHierarchy(null, false, false) as $parentId => $childIds) {
 			$children = [];
-			// Exclure les barres
-			if ($this->getData(['page', $parentId, 'block']) !== 'bar') {
+			// Vérifier que la page parent existe
+			if ($this->getData(['page', $parentId]) && $this->getData(['page', $parentId, 'block']) !== 'bar') {
 				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
 				foreach ($childIds as $childId) {
-					$children[] = [
-						'title' => '>' . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
-						'value' => $rewrite . $childId
-					];
+					// Vérifier que la page enfant existe
+					if ($this->getData(['page', $childId])) {
+						$children[] = [
+							'title' => '>' . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
+							'value' => $rewrite . $childId
+						];
+					}
 				}
 				// Traitement
 				if (empty($childIds && $this->getData(['page', $parentId, 'title']))) {

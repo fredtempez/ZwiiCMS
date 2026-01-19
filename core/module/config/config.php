@@ -744,7 +744,7 @@ class config extends common
 					'value' => $config['encryptionKey'] ?? '',
 					'label' => 'Clé de chiffrement',
 					'help' => 'Clé pour le chiffrement des données',
-					'disabled' => $isCritical || ($config['encryption'] && $config['encryptionKey'])
+					'disabled' => $isCritical || $config['encryption'] 
 				])
 			];
 		}
