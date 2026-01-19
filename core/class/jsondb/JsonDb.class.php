@@ -3,32 +3,25 @@
 namespace Prowebcraft;
 
 /**
- * Improved JsonDb with enhanced caching, performance and security features.
+ * JsonDb - Flat file JSON Database
  * Optimized Version:
+ * - Removed internal caching (using direct memory access)
  * - Batch saving support (autoSave toggle)
- * - Optimized cache key generation
- * - Safer data loading
+ * - Secure atomic writes
  */
 class JsonDb extends \Prowebcraft\Dot
 {
     protected $db = '';
     protected $data = null;
     protected $config = [];
-    protected $cache = [];
-    protected $cacheEnabled = false;
-    protected $cacheTTL = 3600;
-    protected $cacheTags = [];
     protected $needsRecompression = false;
 
-    // --- OPTIMISATION A : Gestion de la sauvegarde automatique ---
-    /** @var bool Active la sauvegarde automatique par défaut (true pour rétrocompatibilité) */
+    // Active la sauvegarde automatique par défaut (true pour rétrocompatibilité)
     protected $autoSave = true;
 
     // Constants
     const MAX_FILE_WRITE_ATTEMPTS = 5;
     const RETRY_DELAY_SECONDS = 1;
-    const MAX_CACHE_SIZE = 1000;
-    const CACHE_CLEANUP_PROBABILITY = 100;
 
     public function __construct($config = [])
     {
@@ -36,16 +29,11 @@ class JsonDb extends \Prowebcraft\Dot
             'name' => 'data.json',
             'backup' => false,
             'dir' => getcwd(),
-            'cache' => false,
-            'cacheTTL' => 3600,
-            'compression' => false,
-            'encryption' => false,
+            'compression' => false, // Compression GZIP
+            'encryption' => false,  // Chiffrement OpenSSL
             'encryptionKey' => null,
-            'minify' => false
+            'minify' => false       // Minification JSON
         ], $config);
-
-        $this->cacheEnabled = $this->config['cache'] ?? false;
-        $this->cacheTTL = $this->config['cacheTTL'] ?? 3600;
 
         $this->loadData();
         parent::__construct();
@@ -73,127 +61,69 @@ class JsonDb extends \Prowebcraft\Dot
         return $requestedSave ?? $this->autoSave;
     }
 
+    // --- MÉTHODES D'ÉCRITURE OPTIMISÉES ---
+
     /**
-     * Enhanced get with tag-based cache invalidation
+     * @param mixed $key
+     * @param mixed $value
+     * @param bool|null $save null = auto, true = force, false = defer
      */
-    public function get($key, $default = null, $asObject = false, $tags = [])
-    {
-        if (!$this->cacheEnabled || $key === null) {
-            return parent::get($key, $default, $asObject);
-        }
-
-        $cacheKey = $this->generateCacheKey($key, $asObject);
-
-        if ($this->isCachedWithTags($cacheKey, $tags)) {
-            $this->cache[$cacheKey]['hits']++;
-            return $this->cache[$cacheKey]['value'];
-        }
-
-        $value = parent::get($key, $default, $asObject);
-
-        $this->cache[$cacheKey] = [
-            'value' => $value,
-            'expires' => time() + $this->cacheTTL,
-            'tags' => $tags,
-            'hits' => 0,
-            'created' => time()
-        ];
-
-        if (mt_rand(1, self::CACHE_CLEANUP_PROBABILITY) === 1) {
-            $this->optimizeCache();
-        }
-
-        return $value;
-    }
-
-    // --- SURCHARGE DES MÉTHODES D'ÉCRITURE AVEC OPTIMISATION BATCH ---
-
     public function set($key, $value = null, $save = null)
     {
         parent::set($key, $value);
 
-        if ($this->cacheEnabled) {
-            $this->clearCache($key);
-        }
-
         if ($this->shouldSave($save)) {
             $this->save();
         }
         return $this;
     }
 
+    /**
+     * @param mixed $key
+     * @param mixed $value
+     * @param bool $pop
+     * @param bool|null $save null = auto, true = force, false = defer
+     */
     public function add($key, $value = null, $pop = false, $save = null)
     {
         parent::add($key, $value, $pop);
 
-        if ($this->cacheEnabled) {
-            $this->clearCache($key);
-        }
-
         if ($this->shouldSave($save)) {
             $this->save();
         }
         return $this;
     }
 
+    /**
+     * @param mixed $key
+     * @param bool|null $save null = auto, true = force, false = defer
+     */
     public function delete($key, $save = null)
     {
         parent::delete($key);
 
-        if ($this->cacheEnabled) {
-            $this->clearCache($key);
-        }
-
         if ($this->shouldSave($save)) {
             $this->save();
         }
         return $this;
     }
 
+    /**
+     * @param mixed $key
+     * @param bool $format
+     * @param bool|null $save null = auto, true = force, false = defer
+     */
     public function clear($key = null, $format = false, $save = null)
     {
         parent::clear($key, $format);
 
-        if ($this->cacheEnabled) {
-            $this->clearCache($key);
-        }
-
         if ($this->shouldSave($save)) {
             $this->save();
         }
         return $this;
     }
 
-    // --- FIN DES MÉTHODES D'ÉCRITURE ---
-
-    public function invalidateCacheByTag($tag)
-    {
-        $removed = 0;
-        foreach ($this->cache as $key => $entry) {
-            if (isset($entry['tags']) && in_array($tag, $entry['tags'])) {
-                unset($this->cache[$key]);
-                $removed++;
-            }
-        }
-        return $removed;
-    }
-
-    protected function optimizeCache()
-    {
-        if (count($this->cache) <= self::MAX_CACHE_SIZE) {
-            return;
-        }
-
-        uasort($this->cache, function ($a, $b) {
-            if ($a['hits'] === $b['hits']) {
-                return $a['created'] - $b['created'];
-            }
-            return $a['hits'] - $b['hits'];
-        });
-
-        $keepCount = (int) (self::MAX_CACHE_SIZE * 0.8);
-        $this->cache = array_slice($this->cache, -$keepCount, null, true);
-    }
+    // --- GESTION DES FICHIERS ET SAUVEGARDE ---
 
     public function save(): void
     {
@@ -264,6 +194,7 @@ class JsonDb extends \Prowebcraft\Dot
 
             $file_contents = file_get_contents($this->db);
 
+            // Gestion de la compression
             if ($this->isCompressed($file_contents)) {
                 $file_contents = gzuncompress($file_contents);
                 if (!$this->config['compression']) {
@@ -276,7 +207,7 @@ class JsonDb extends \Prowebcraft\Dot
                         try {
                             $file_contents = gzuncompress($file_contents);
                         } catch (\Exception $e) {
-                            // Échec silencieux
+                            // Échec silencieux, contenu non compressé
                         }
                     }
                 }
@@ -284,20 +215,17 @@ class JsonDb extends \Prowebcraft\Dot
 
             $this->data = json_decode($file_contents, true);
 
-            // --- OPTIMISATION C : Suppression du correctif dangereux "stripslashes" ---
-            // Si $this->data est null ici, c'est que le fichier est vraiment corrompu
-            // ou mal formaté, le "hack" des guillemets a été retiré par sécurité.
-
+            // Validation des données
             if ($this->data === null) {
-                // Tentative minimale de nettoyage (espaces blancs) avant erreur
                 $file_contents = trim($file_contents);
                 if (empty($file_contents)) {
-                   $this->data = []; // Fichier vide = tableau vide
+                   $this->data = [];
                 } else {
-                   throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides. Contenu: ' . substr($file_contents, 0, 200));
+                   throw new \InvalidArgumentException('Le fichier ' . $this->db . ' contient des données invalides.');
                 }
             }
 
+            // Gestion du déchiffrement
             if (isset($this->data['encrypted']) && $this->data['encrypted']) {
                 if (empty($this->config['encryptionKey'])) {
                     throw new \RuntimeException('Clé de chiffrement manquante');
@@ -312,7 +240,7 @@ class JsonDb extends \Prowebcraft\Dot
         }
 
         if ($this->data !== null && !is_array($this->data)) {
-            throw new \InvalidArgumentException('Type de données invalide dans ' . $this->db . '. Attendu: array, reçu: ' . gettype($this->data));
+            throw new \InvalidArgumentException('Type de données invalide dans ' . $this->db);
         }
 
         return $this->data;
@@ -433,46 +361,6 @@ class JsonDb extends \Prowebcraft\Dot
         return openssl_decrypt($encrypted, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
     }
 
-    /**
-     * --- OPTIMISATION B : Génération de clé de cache améliorée ---
-     * Évite le coût du MD5 pour les clés simples.
-     */
-    protected function generateCacheKey($key, $asObject)
-    {
-        $suffix = $asObject ? '_obj' : '_arr';
-        
-        // Si c'est une chaîne simple et courte, on l'utilise directement (plus rapide que MD5)
-        if (is_string($key) && strlen($key) < 64) {
-            return $key . $suffix;
-        }
-
-        // Sinon (tableau ou chaîne très longue), on hache pour garder une clé courte
-        return md5((is_array($key) ? implode('.', $key) : (string) $key) . $suffix);
-    }
-
-    protected function isCachedWithTags($cacheKey, $tags)
-    {
-        if (!isset($this->cache[$cacheKey])) {
-            return false;
-        }
-
-        $entry = $this->cache[$cacheKey];
-
-        if (time() >= $entry['expires']) {
-            unset($this->cache[$cacheKey]);
-            return false;
-        }
-
-        if (!empty($tags)) {
-            $entryTags = $entry['tags'] ?? [];
-            if (empty(array_intersect($tags, $entryTags))) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     protected function minifyJson($json)
     {
         return preg_replace(['/\s+/', '/^\s+|\s+$/'], [' ', ''], $json);
@@ -486,15 +374,13 @@ class JsonDb extends \Prowebcraft\Dot
             $this->config['compression'] !== ($newConfig['compression'] ?? $this->config['compression']) ||
             $this->config['encryption'] !== ($newConfig['encryption'] ?? $this->config['encryption']) ||
             $this->config['encryptionKey'] !== ($newConfig['encryptionKey'] ?? $this->config['encryptionKey']) ||
-            $this->config['cache'] !== ($newConfig['cache'] ?? $this->config['cache']) ||
-            $this->config['cacheTTL'] !== ($newConfig['cacheTTL'] ?? $this->config['cacheTTL']) ||
             $this->config['minify'] !== ($newConfig['minify'] ?? $this->config['minify'])
         ) {
             $configChanged = true;
         }
 
         if ($configChanged) {
-            $this->reload(true);
+            $this->reload();
             $this->config = array_merge($this->config, $newConfig);
             $this->save();
         }
@@ -505,92 +391,12 @@ class JsonDb extends \Prowebcraft\Dot
         $this->config = array_merge($this->config, $config);
     }
 
-    public function getDetailedCacheStats()
+    /**
+     * Recharger les données depuis le disque
+     */
+    public function reload()
     {
-        $total = count($this->cache);
-        $valid = 0;
-        $expired = 0;
-        $totalHits = 0;
-        $now = time();
-        $memoryUsage = 0;
-
-        foreach ($this->cache as $key => $entry) {
-            if ($now < $entry['expires']) {
-                $valid++;
-            } else {
-                $expired++;
-            }
-            $totalHits += $entry['hits'] ?? 0;
-            $memoryUsage += strlen(serialize($entry));
-        }
-
-        return [
-            'enabled' => $this->cacheEnabled,
-            'ttl' => $this->cacheTTL,
-            'total' => $total,
-            'valid' => $valid,
-            'expired' => $expired,
-            'total_hits' => $totalHits,
-            'average_hits' => $total > 0 ? round($totalHits / $total, 2) : 0,
-            'memory_usage' => $memoryUsage,
-            'memory_usage_mb' => round($memoryUsage / 1024 / 1024, 2)
-        ];
-    }
-
-    public function clearCache($key = null)
-    {
-        if ($key === null) {
-            $this->cache = [];
-        } else {
-            $cacheKey = $this->generateCacheKey($key, false);
-            if (isset($this->cache[$cacheKey])) {
-                unset($this->cache[$cacheKey]);
-            }
-            $cacheKeyObj = $this->generateCacheKey($key, true);
-            if (isset($this->cache[$cacheKeyObj])) {
-                unset($this->cache[$cacheKeyObj]);
-            }
-        }
-        return $this;
-    }
-
-    public function reload($clearCache = false)
-    {
-        if ($clearCache) {
-            $this->clearCache();
-        }
         $this->loadData(true);
         return $this;
-    }
-
-    public function enableCache($enabled = true)
-    {
-        $this->cacheEnabled = $enabled;
-        return $this;
-    }
-
-    public function setCacheTTL($seconds)
-    {
-        $this->cacheTTL = max(1, (int) $seconds);
-        return $this;
-    }
-
-    public function cleanExpiredCache()
-    {
-        if (!$this->cacheEnabled || empty($this->cache)) {
-            return 0;
-        }
-
-        $count = 0;
-        $now = time();
-
-        foreach ($this->cache as $key => $entry) {
-            if ($now >= $entry['expires']) {
-                unset($this->cache[$key]);
-                $count++;
-            }
-        }
-
-        return $count;
     }
 }

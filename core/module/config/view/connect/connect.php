@@ -188,22 +188,10 @@
 									<div class="row">
 										<div class="col12">
 											<div class="row">
-												<div class="col5">
-													<?php echo $inputs['cache']; ?>
-												</div>
-												<div class="col7">
-													<?php echo $inputs['cacheTTL']; ?>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col12">
-											<div class="row">
-												<div class="col5">
+												<div class="col6">
 													<?php echo $inputs['encryption']; ?>
 												</div>
-												<div class="col7">
+												<div class="col6">
 													<?php echo $inputs['encryptionKey']; ?>
 												</div>
 											</div>

@@ -225,18 +225,6 @@ class config extends common
 	// Configuration des bases de données
 	public static $databaseInputs = [];
 
-	// Options de cache TTL
-	public static $cacheTTL = [
-		60 => '1 minute',
-		120 => '2 minutes',
-		300 => '5 minutes',
-		600 => '10 minutes',
-		900 => '15 minutes',
-		1800 => '30 minutes',
-		3600 => '1 heure',
-		7200 => '2 heures',
-	];
-
 	/**
 	 * Génére les fichiers pour les crawlers
 	 * Sitemap compressé et non compressé
@@ -497,8 +485,6 @@ class config extends common
 				}
 				
 				$newDatabaseConfig[$dbName] = [
-					'cache' => $this->getInput('database' . ucfirst($dbName) . 'Cache', helper::FILTER_BOOLEAN),
-					'cacheTTL' => $this->getInput('database' . ucfirst($dbName) . 'CacheTTL', helper::FILTER_INT),
 					'compression' => $this->getInput('database' . ucfirst($dbName) . 'Compression', helper::FILTER_BOOLEAN),
 					'encryption' => $encryption,
 					'encryptionKey' => $encryptionKey,
@@ -642,8 +628,6 @@ class config extends common
 					$oldConfig['compression'] !== $newConfig['compression'] ||
 					$oldConfig['encryption'] !== $newConfig['encryption'] ||
 					$oldConfig['encryptionKey'] !== $newConfig['encryptionKey'] ||
-					$oldConfig['cache'] !== $newConfig['cache'] ||
-					$oldConfig['cacheTTL'] !== $newConfig['cacheTTL'] ||
 					$oldConfig['minify'] !== $newConfig['minify']
 				);
 				
@@ -660,11 +644,6 @@ class config extends common
 						$db->applyConfigChanges($newConfig);
 					}
 				}
-			}
-	
-			// Nettoyer le cache global Dot si présent
-			if (class_exists('\Prowebcraft\Dot')) {
-				\Prowebcraft\Dot::clearKeyCache();
 			}
 
 			// Générer robots.txt et sitemap
@@ -710,18 +689,6 @@ class config extends common
 			$isCritical = in_array($dbName, $criticalDatabases);
 				
 			self::$databaseInputs[$dbName] = [
-				'cache' => template::checkbox('database' . $dbNameCapitalized . 'Cache', 1, 'Cache', [
-					'label' => 'Cache',
-					'help' => 'Activer le cache pour cette base',
-					'checked' => $config['cache'] ?? false,
-					'disabled' => $isCritical
-				]),
-				'cacheTTL' => template::select('database' . $dbNameCapitalized . 'CacheTTL', self::$cacheTTL, [
-					'selected' => $config['cacheTTL'] ?? 3600,
-					'label' => 'Durée du cache (TTL)',
-					'help' => 'Durée de vie du cache en secondes',
-					'disabled' => $isCritical
-				]),
 				'compression' => template::checkbox('database' . $dbNameCapitalized . 'Compression', 1, 'Compression', [
 					'label' => 'Compression',
 					'help' => 'Compresser les données de cette base',
