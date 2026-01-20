@@ -4,6 +4,7 @@
 
 ### 🚀 Base de données JsonDB améliorée
 
+- **APCu Cache** : activation par défaut du cache si installé sur le serveur Web.
 - **Minification JSON** : Nouvelle fonctionnalité réduisant la taille des fichiers de 20-40% en supprimant les espaces inutiles
 - **Cache intelligent avec tags** : Système de cache performant avec invalidation sélective, 3-5x plus rapide pour les lectures fréquentes
 - **Compression gzip** : Réduction de 50-70% de l'espace disque avec compression automatique des données
