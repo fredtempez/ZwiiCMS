@@ -271,6 +271,14 @@ class common
 	// Configuration JsonDb améliorée
 	private $jsonDbConfig = null;
 
+	// Configuration par défaut pour toutes les bases JsonDb
+	private const JSONDB_DEFAULT_CONFIG = [
+		'minification' => false,
+		'compression' => false,
+		'encryption' => false,
+		'encryptionKey' => ''
+	];
+
 	public static $fontsWebSafe = [
 		'arial' => [
 			'name' => 'Arial',
@@ -792,13 +800,7 @@ class common
 		}
 
 		// Configuration par défaut globale
-		$defaultConfig = [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,
-			'encryption' => false,
-			'encryptionKey' => null
-		];
+		$defaultConfig = self::JSONDB_DEFAULT_CONFIG;
 
 		// Récupère les descripteurs pour les bases spécifiées
 		foreach ($dataFilesToLoad as $keys) {
@@ -852,13 +854,7 @@ class common
 				$config = array_merge($config, $this->jsonDbConfig);
 			} else {
 				// Configuration par défaut si aucune configuration globale
-				$config = array_merge($config, [
-					'cache' => false,             // Pas de cache par défaut
-					'cacheTTL' => 300,           // 5 minutes si activé
-					'compression' => false,       // Pas de compression par défaut
-					'encryption' => false,
-					'encryptionKey' => null
-				]);
+				$config = array_merge($config, self::JSONDB_DEFAULT_CONFIG);
 			}
 			
 			// Fusionner avec la configuration spécifique à la base de données
@@ -887,18 +883,7 @@ class common
 		return array_key_exists($dataFile, $this->dataFiles) && !empty($this->dataFiles[$dataFile]);
 	}
 
-	/**
-	 * Charge toutes les bases de données JSON (pour compatibilité)
-	 * @param string $lang Langue à utiliser
-	 */
-	public function loadAllDataFiles($lang = null)
-	{
-		if ($lang === null) {
-			$lang = self::$siteContent;
-		}
-		$this->jsonDB($lang);
-	}
-
+	
 	/**
 	 * Charge les bases de données requises pour un module spécifique
 	 * @param string $moduleId ID du module
@@ -937,29 +922,7 @@ class common
 		}
 	}
 
-	/**
-	 * Précharge intelligemment les bases selon le contexte de la requête
-	 * Appelé automatiquement lors de l'accès à une page avec module
-	 */
-	public function preloadContextualData()
-	{
-		// Si on accède à une page avec un module, précharger ses dépendances
-		if ($this->getData(['page', $this->getUrl(0), 'moduleId'])) {
-			$moduleId = $this->getData(['page', $this->getUrl(0), 'moduleId']);
-			$this->loadModuleDataFiles($moduleId);
-		}
-
-		// Si on est dans l'administration, précharger les bases admin
-		if ($this->getUrl(0) === 'config' || $this->getUrl(0) === 'user' || $this->getUrl(0) === 'theme') {
-			if (!$this->isDataFileLoaded('admin')) {
-				$this->loadDataFile('admin');
-			}
-			if (!$this->isDataFileLoaded('profil')) {
-				$this->loadDataFile('profil');
-			}
-		}
-	}
-
+	
 	/**
 	 * Retourne la configuration des bases de données
 	 * Priorité : config.json > defaultdata.php
@@ -2172,178 +2135,4 @@ class common
 		return str_replace(helper::baseUrl(false), '', $path);
 	}
 
-	// =====================================================================
-	// MÉTHODES DE CONFIGURATION JSONDB AMÉLIORÉ
-	// =====================================================================
-
-	/**
-	 * Configure les options avancées pour les bases de données JSON
-	 * @param array $options Options de configuration
-	 */
-	public function configureJsonDb($options = [])
-	{
-		// Options par défaut
-		$defaultOptions = [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,
-			'encryption' => false,
-			'encryptionKey' => null,
-			'minify' => false
-		];
-		
-		// Fusionner avec les options fournies
-		$this->jsonDbConfig = array_merge($defaultOptions, $options);
 	}
-
-	/**
-	 * Configure une base de données spécifique
-	 * @param string $module Nom de la base
-	 * @param array $options Options de configuration
-	 */
-	public function configureDataFile($module, $options = [])
-	{
-		// Récupérer la configuration depuis getDataFilesConfig()
-		$dataFilesConfig = $this->getDataFilesConfig();
-		
-		if (!isset($dataFilesConfig[$module])) {
-			$dataFilesConfig[$module] = [];
-		}
-		
-		// Fusionner avec la configuration par défaut
-		$defaultConfig = [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,
-			'encryption' => false,
-			'minify' => false
-		];
-		
-		// Mettre à jour la configuration (note: cette méthode modifie une copie locale)
-		$dataFilesConfig[$module] = array_merge($defaultConfig, $dataFilesConfig[$module], $options);
-	}
-
-	/**
-	 * Configure un groupe de bases de données
-	 * @param array $modules Liste des modules
-	 * @param array $options Options de configuration
-	 */
-	public function configureDataFilesGroup($modules, $options = [])
-	{
-		foreach ($modules as $module) {
-			$this->configureDataFile($module, $options);
-		}
-	}
-
-	/**
-	 * Retourne la configuration actuelle d'une base de données
-	 * @param string $module Nom de la base
-	 * @return array Configuration
-	 */
-	public function getDataFileConfig($module)
-	{
-		$defaultConfig = [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,
-			'encryption' => false
-		];
-		
-		// Récupérer la configuration depuis getDataFilesConfig()
-		$dataFilesConfig = $this->getDataFilesConfig();
-		
-		return array_merge($defaultConfig, $dataFilesConfig[$module] ?? []);
-	}
-
-	/**
-	 * Active/désactive la compression pour une base spécifique
-	 * @param string $module Nom de la base
-	 * @param bool $enabled État de la compression
-	 */
-	public function setDataFileCompression($module, $enabled = true)
-	{
-		$this->configureDataFile($module, ['compression' => $enabled]);
-	}
-
-	/**
-	 * Configure le cache pour une base spécifique
-	 * @param string $module Nom de la base
-	 * @param bool $enabled État du cache
-	 * @param int $ttl Durée de vie du cache
-	 */
-	public function setDataFileCache($module, $enabled = true, $ttl = 3600)
-	{
-		$this->configureDataFile($module, [
-			'cache' => $enabled,
-			'cacheTTL' => $ttl
-		]);
-	}
-	
-	/**
-	 * Retourne la configuration actuelle de JsonDb
-	 * @return array Configuration actuelle
-	 */
-	public function getJsonDbConfig()
-	{
-		return $this->jsonDbConfig ?? [
-			'cache' => true,
-			'cacheTTL' => 3600,
-			'compression' => false,
-			'encryption' => false,
-			'encryptionKey' => null
-		];
-	}
-
-	/**
-	 * Active la compression pour toutes les futures bases de données
-	 * @param bool $enabled État de la compression
-	 */
-	public function enableJsonDbCompression($enabled = true)
-	{
-		$this->configureJsonDb(['compression' => $enabled]);
-	}
-	
-	/**
-	 * Active le chiffrement pour toutes les futures bases de données
-	 * @param string $key Clé de chiffrement (32 caractères minimum)
-	 */
-	public function enableJsonDbEncryption($key)
-	{
-		if (strlen($key) < 32) {
-			throw new \InvalidArgumentException('La clé de chiffrement doit faire au moins 32 caractères');
-		}
-		$this->configureJsonDb(['encryption' => true, 'encryptionKey' => $key]);
-	}
-	
-	/**
-	 * Configure le cache pour toutes les futures bases de données
-	 * @param bool $enabled État du cache
-	 * @param int $ttl Durée de vie en secondes
-	 */
-	public function configureJsonDbCache($enabled = true, $ttl = 3600)
-	{
-		$this->configureJsonDb([
-			'cache' => $enabled,
-			'cacheTTL' => $ttl
-		]);
-	}
-
-	/**
-	 * Retourne les statistiques du cache pour une base de données spécifique
-	 * @param string $module Nom de la base de données
-	 * @return array|null Statistiques ou null si non disponible
-	 */
-	public function getJsonDbCacheStats($module)
-	{
-		if (!isset($this->dataFiles[$module])) {
-			return null;
-		}
-		
-		$db = $this->dataFiles[$module];
-		if (method_exists($db, 'getDetailedCacheStats')) {
-			return $db->getDetailedCacheStats();
-		}
-		
-		return null;
-	}
-}
