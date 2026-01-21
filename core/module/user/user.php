@@ -1190,7 +1190,7 @@ class user extends common
 						) {
 							$pageId = '';
 						}
-						$redirect = ($pageId || strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
+						$redirect = ($pageId && strpos($pageId, 'user_reset') !== 0) ? helper::baseUrl() . $authRedirect . str_replace('_', '/', str_replace('__', '#', $pageId)) : helper::baseUrl() . $authRedirect;
 						// Valeurs en sortie
 						$this->addOutput([
 							'notification' => $notification,
