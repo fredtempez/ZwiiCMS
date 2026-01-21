@@ -110,8 +110,17 @@ class plugin extends common
 		/**
 		 * Désarchivage
 		 */
+		// Vérifier que le fichier existe et n'est pas vide
+		if (!file_exists($moduleFileName) || filesize($moduleFileName) === 0) {
+			return ([
+				'success' => false,
+				'notification' => helper::translate('Le fichier ZIP est vide ou inexistant')
+			]);
+		}
+		
 		$zip = new ZipArchive();
-		if ($zip->open($moduleFileName) === true) {
+		$zipResult = $zip->open($moduleFileName);
+		if ($zipResult === true) {
 
 			//Création du dossier temporaire et extraction
 			if (!is_dir(self::TEMP_DIR . $tempFolder)) {
@@ -250,10 +259,27 @@ class plugin extends common
 
 			}
 		} else {
-			// Message de retour
+			// Message de retour avec détails sur l'erreur
+			$errorMessages = [
+				ZipArchive::ER_EXISTS => "Le fichier existe déjà",
+				ZipArchive::ER_INCONS => "Archive inconsistante",
+				ZipArchive::ER_INVAL => "Argument invalide",
+				ZipArchive::ER_MEMORY => "Erreur de mémoire",
+				ZipArchive::ER_NOENT => "Fichier non trouvé",
+				ZipArchive::ER_NOZIP => "Ce n'est pas une archive ZIP",
+				ZipArchive::ER_OPEN => "Impossible d'ouvrir le fichier",
+				ZipArchive::ER_READ => "Erreur de lecture",
+				ZipArchive::ER_SEEK => "Erreur de positionnement"
+			];
+			
+			$errorMessage = isset($errorMessages[$zipResult]) ? $errorMessages[$zipResult] : "Erreur inconnue (code: $zipResult)";
+			
 			return ([
 				'success' => false,
-				'notification' => helper::translate('Impossible d\'ouvrir l\'archive')
+				'notification' => sprintf(helper::translate('Impossible d\'ouvrir l\'archive : %s. Fichier : %s. Taille : %s octets.'), 
+					$errorMessage, 
+					basename($moduleFileName), 
+					file_exists($moduleFileName) ? filesize($moduleFileName) : 'fichier inexistant')
 			]);
 		}
 	}
@@ -273,7 +299,16 @@ class plugin extends common
 			$checkValidMaj = $this->getInput('configModulesCheck', helper::FILTER_BOOLEAN);
 			$zipFilename = $this->getInput('configModulesInstallation', helper::FILTER_STRING_SHORT);
 			if ($zipFilename !== '') {
-				$state = $this->install(self::FILE_DIR . 'source/' . $zipFilename, $checkValidMaj);
+				$fullPath = self::FILE_DIR . 'source/' . $zipFilename;
+				// Vérifier que le fichier existe et n'est pas vide
+				if (!file_exists($fullPath) || filesize($fullPath) === 0) {
+					$state = [
+						'success' => false,
+						'notification' => helper::translate('Le fichier ZIP sélectionné est vide ou inexistant')
+					];
+				} else {
+					$state = $this->install($fullPath, $checkValidMaj);
+				}
 			}
 			$this->addOutput([
 				'redirect' => helper::baseUrl() . 'plugin',
@@ -307,23 +342,69 @@ class plugin extends common
 			// Url du module à télécharger
 			$moduleFilePath = $store[$moduleName]['file'];
 			// Télécharger le fichier
-			$moduleData = helper::getUrlContents(self::BASEURL_STORE . self::FILE_DIR . 'source/' . $moduleFilePath);
+			$moduleData = helper::getUrlContents(self::BASEURL_STORE . $moduleFilePath);
+			
+			// Vérifier si le téléchargement a réussi
+			if ($moduleData === false || empty($moduleData)) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'plugin/store',
+					'notification' => helper::translate('Erreur de téléchargement du module depuis le store'),
+					'state' => false
+				]);
+				return;
+			}
+			
 			// Extraire de l'arborescence
 			$d = explode('/', $moduleFilePath);
 			$moduleFile = $d[count($d) - 1];
-			// Créer le dossier modules
-			if (!is_dir(self::FILE_DIR . 'source/modules')) {
-				mkdir(self::FILE_DIR . 'source/modules', 0755);
+			
+			// Créer le dossier temporaire si nécessaire
+			if (!is_dir(self::TEMP_DIR)) {
+				mkdir(self::TEMP_DIR, 0755);
 			}
-			// Sauver les données du fichiers
-			$this->secure_file_put_contents(self::FILE_DIR . 'source/modules/' . $moduleFile, $moduleData);
+			
+			// Sauver les données du fichier dans le dossier temporaire
+			$tempFilePath = self::TEMP_DIR . $moduleFile;
+			$saved = $this->secure_file_put_contents($tempFilePath, $moduleData);
+			
+			// Vérifier si la sauvegarde a réussi
+			if (!$saved || !file_exists($tempFilePath) || filesize($tempFilePath) === 0) {
+				// Valeurs en sortie
+				$this->addOutput([
+					'redirect' => helper::baseUrl() . 'plugin/store',
+					'notification' => helper::translate('Erreur de sauvegarde du fichier module'),
+					'state' => false
+				]);
+				return;
+			}
+			
+			// Vérifier que le fichier est bien une archive ZIP (vérification des magic numbers)
+			$fileHandle = fopen($tempFilePath, 'rb');
+			if ($fileHandle) {
+				$magicBytes = fread($fileHandle, 4);
+				fclose($fileHandle);
+				
+				// Les archives ZIP commencent par PK (0x504B)
+				if ($magicBytes !== false && strlen($magicBytes) >= 2 && substr($magicBytes, 0, 2) !== "PK") {
+					// Supprimer le fichier invalide
+					unlink($tempFilePath);
+					// Valeurs en sortie
+					$this->addOutput([
+						'redirect' => helper::baseUrl() . 'plugin/store',
+						'notification' => helper::translate('Le fichier téléchargé n\'est pas une archive ZIP valide'),
+						'state' => false
+					]);
+					return;
+				}
+			}
 
-			// Installation directe
-			if (file_exists(self::FILE_DIR . 'source/modules/' . $moduleFile)) {
-				$r = $this->install(self::FILE_DIR . 'source/modules/' . $moduleFile, false);
-			} else {
-				$r['notification'] = helper::translate('Erreur inconnue, le module n\'est pas installé');
-				$r['success'] = false;
+			// Installation directe depuis le fichier temporaire
+			$r = $this->install($tempFilePath, false);
+			
+			// Supprimer le fichier temporaire après installation
+			if (file_exists($tempFilePath)) {
+				unlink($tempFilePath);
 			}
 			// Valeurs en sortie
 			$this->addOutput([
@@ -636,7 +717,7 @@ class plugin extends common
 					exit();
 			}
 			// Nettoyage
-			unlink(self::TEMP_DIR . $fileName);
+			unlink($tmpFolder . $fileName);
 			$this->deleteDir($tmpFolder);
 		}
 	}

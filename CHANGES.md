@@ -38,6 +38,7 @@
 - **Migration automatique** : Processus transparent de mise à jour des configurations
 - **Flux RSS** : Corrige les chemins des images dans le flux RSS avec le préfixe de base URL des modules Download et Blog.
 - **Tables intelligentes** : Corrige les erreurs de confirmation (effacement) dans les tables intelligentes.
+- **Gestion des modules améliorée** : Corrige le téléchargement depuis le store (URL, validation ZIP, nettoyage temporaire, messages d'erreur détaillés)
 
 ### 📄 Documentation
 
