@@ -18,7 +18,7 @@
 class news extends common
 {
 
-	const VERSION = '6.3';
+	const VERSION = '6.4';
 	const REALNAME = 'News';
 	const DATADIRECTORY = self::DATA_DIR . 'news/';
 
@@ -130,7 +130,33 @@ class news extends common
 		$feeds->setTitle($pageTitle ? helper::cleanRssText($pageTitle) : '');
 		$feeds->setLink(helper::baseUrl() . $this->getUrl(0));
 		if ($metaDescription = $this->getData(['page', $this->getUrl(0), 'metaDescription'])) {
-			$feeds->setDescription(helper::cleanRssText($metaDescription));
+			// Channel description should be plain text for best interoperability
+			$feeds->setDescription(trim(strip_tags(helper::cleanRssText($metaDescription))));
+		} else {
+			// Fallback: use page title or base URL so the channel has a description (plain text)
+			$fallbackDesc = $pageTitle ? $pageTitle : helper::baseUrl(false);
+			$feeds->setDescription(trim(strip_tags(helper::cleanRssText($fallbackDesc))));
+		}
+		// Add content namespace for full HTML content (use FeedWriter API)
+		if (method_exists($feeds, 'addNamespace')) {
+			$feeds->addNamespace('content', 'http://purl.org/rss/1.0/modules/content/');
+		} else {
+			$feeds->setChannelElement('xmlns:content', 'http://purl.org/rss/1.0/modules/content/');
+		}
+		// Determine atom:self based on current request URI when possible
+		$scheme = helper::isHttps() ? 'https://' : 'http://';
+		if (!empty($_SERVER['HTTP_HOST']) && isset($_SERVER['REQUEST_URI'])) {
+			// Use the actual request URI so atom:link matches the document location
+			$selfHref = $scheme . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+		} else {
+			// Fallback to the canonical feed URL
+			$selfHref = helper::baseUrl(false) . $this->getUrl(0) . '/rss';
+		}
+		// Use FeedWriter API to add atom:self properly
+		if (method_exists($feeds, 'setSelfLink')) {
+			$feeds->setSelfLink($selfHref);
+		} else {
+			$feeds->setAtomLink($selfHref, 'self', $feeds->getMIMEType());
 		}
 		$feeds->setChannelElement('language', 'fr-FR');
 		$feeds->setDate(date('r', time()));
@@ -149,10 +175,14 @@ class news extends common
 				$author = $this->signature(helper::cleanRssText($articleData['userId'], true));
 				
 				// Construction du contenu avec nettoyage des données
+				// description: plain text (no HTML) for validators; content:encoded holds full HTML
+				$plainDesc = trim(strip_tags(helper::cleanRssText($articleData['content'])));
+				$fullHtml = helper::cleanRssText($articleData['content']);
 				$newsArticle->addElementArray([
 					'title' => $articleTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
-					'description' => helper::cleanRssText($articleData['content'])
+					'description' => $plainDesc,
+					'content:encoded' => '<![CDATA[' . $fullHtml . ']]>'
 				]);
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId);

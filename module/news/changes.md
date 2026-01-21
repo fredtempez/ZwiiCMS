@@ -1,3 +1,5 @@
+# Version 6.4
+- Corrige la génération du flux RSS, nettoyage des liens contenus dans la description.
 # Version 6.3
 - Corrige la génération du flux RSS au format UTF-8.
 # Version 6.2

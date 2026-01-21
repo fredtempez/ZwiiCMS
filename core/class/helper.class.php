@@ -893,12 +893,32 @@ class helper
 	{
 		// Décoder les entités HTML
 		$cleanText = html_entity_decode($text, ENT_QUOTES | ENT_HTML5, 'UTF-8');
-		
+
 		// Si c'est pour un attribut HTML, échapper les caractères spéciaux
 		if ($isAttribute) {
 			$cleanText = htmlspecialchars($cleanText, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			return $cleanText;
 		}
-		
+
+		// Convertir les URLs relatives (href/src) en URLs absolues pour une meilleure compatibilité RSS
+		$base = rtrim(self::baseUrl(false), '/');
+		$cleanText = preg_replace_callback('#(href|src)=("|\')([^"\']+)("|\')#i', function ($m) use ($base) {
+			$attr = $m[1];
+			$quote = $m[2];
+			$url = $m[3];
+			// Ne pas toucher les URLs déjà absolues ou protocol-relative ou anchors ou mailto/tel
+			if (preg_match('#^(https?:|//|mailto:|tel:)#i', $url) || strpos($url, '#') === 0) {
+				return $m[0];
+			}
+			// URLs absolues à partir de la racine
+			if (strpos($url, '/') === 0) {
+				$abs = $base . $url;
+			} else {
+				$abs = $base . '/' . ltrim($url, '/');
+			}
+			return $attr . '=' . $quote . $abs . $quote;
+		}, $cleanText);
+
 		return $cleanText;
 	}
 }

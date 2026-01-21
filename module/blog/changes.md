@@ -1,3 +1,5 @@
+# Version 8.6
+- Corrige la génération du flux RSS, nettoyage des liens contenus dans la description.
 # Version 8.5
 - Corrige les chemins des images dans le flux RSS avec le préfixe de base URL.
 # Version 8.4
