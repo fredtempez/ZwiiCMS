@@ -176,13 +176,19 @@ class news extends common
 				
 				// Construction du contenu avec nettoyage des données
 				// description: plain text (no HTML) for validators; content:encoded holds full HTML
-				$plainDesc = trim(strip_tags(helper::cleanRssText($articleData['content'])));
+				$contentText = trim(strip_tags(helper::cleanRssText($articleData['content'])));
+				// Limiter la description à 300 caractères pour un résumé clair
+				if (strlen($contentText) > 300) {
+					$plainDesc = substr($contentText, 0, 297) . '...';
+				} else {
+					$plainDesc = $contentText;
+				}
 				$fullHtml = helper::cleanRssText($articleData['content']);
 				$newsArticle->addElementArray([
 					'title' => $articleTitle,
 					'link' => helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId,
 					'description' => $plainDesc,
-					'content:encoded' => '<![CDATA[' . $fullHtml . ']]>'
+					'content:encoded' => $fullHtml
 				]);
 				$newsArticle->setAuthor($author, 'no@mail.com');
 				$newsArticle->setId(helper::baseUrl() . $this->getUrl(0) . '/' . $newsId . '#' . $newsId);
