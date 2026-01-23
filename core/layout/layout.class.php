@@ -648,8 +648,13 @@ class layout extends common
             $items .= $this->getMenuLabel($childKey);
             
             // Vérifier s'il y a des enfants pour ce nœud
-            $hierarchy = $this->getHierarchy();
-            $grandChildren = (isset($hierarchy[$childKey])) ? $hierarchy[$childKey] : [];
+            // Chercher tous les enfants directs de ce nœud en parcourant toutes les pages
+            $grandChildren = [];
+            foreach ($this->getData(['page']) as $pageId => $pageData) {
+                if ($pageData['parentPageId'] === $childKey) {
+                    $grandChildren[] = $pageId;
+                }
+            }
             $hasChildren = !empty($grandChildren) && $this->getData(['page', $childKey, 'hideMenuChildren']) === false;
             
             // Afficher l'icône de déroulement si enfants visibles
@@ -999,6 +1004,21 @@ class layout extends common
                         $orpheline = false;
                         $leftItems .= '<optgroup label="' . helper::translate('Pages dans le menu') . '">';
                     }
+                    // Exclure les barres latérales de cette boucle
+                    if ($this->getData(['page', $parentPageId, 'block']) === 'bar') {
+                        continue;
+                    }
+                    // Exclure les pages qui sont déjà des enfants d'autres pages
+                    $isChild = false;
+                    foreach ($this->getHierarchy(null, false) as $potentialParentId => $potentialChildren) {
+                        if (in_array($parentPageId, $potentialChildren)) {
+                            $isChild = true;
+                            break;
+                        }
+                    }
+                    if ($isChild) {
+                        continue;
+                    }
                     // Exclure les barres
                     if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
                         $leftItems .= '<option value="' .
@@ -1011,18 +1031,9 @@ class layout extends common
                             '">' .
                             $this->getData(['page', $parentPageId, 'shortTitle']) .
                             '</option>';
-                        foreach ($childrenPageIds as $childKey) {
-                            $leftItems .= '<option value="' .
-                                helper::baseUrl() .
-                                $childKey . '"' .
-                                ($childKey === $currentPageId ? ' selected' : false) .
-                                ' class="' .
-                                ($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '') .
-                                ($this->getData(['page', $childKey, 'position']) === 0 ? ' pageHidden' : '') .
-                                '">&nbsp;&nbsp;&nbsp;&nbsp;' .
-                                $this->getData(['page', $childKey, 'shortTitle']) .
-                                '</option>';
-                        }
+                        
+                        // Afficher les enfants avec indentation hiérarchique
+                        $this->addChildrenToSelect($leftItems, $childrenPageIds, $currentPageId, 1);
                     }
                 }
                 $leftItems .= '</optgroup' >
@@ -1030,6 +1041,8 @@ class layout extends common
                     $leftItems .= '<optgroup label="' . helper::translate('Barres latérales') . '">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
                     $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
+                    
+                    // Pour les barres latérales, afficher les enfants avec simple indentation (pas de récursion)
                     foreach ($childrenPageIds as $childKey) {
                         $leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'shortTitle']) . '</option>';
                     }
@@ -1409,5 +1422,48 @@ class layout extends common
         }
         $items .= '</div></div></div>';
         echo $items;
+    }
+
+    /**
+     * Ajoute récursivement les enfants au sélecteur de pages
+     * @param string &$leftItems Référence au HTML du sélecteur
+     * @param array $childrenPageIds IDs des enfants
+     * @param string $currentPageId ID de la page courante
+     * @param int $depth Profondeur actuelle pour l'indentation
+     */
+    private function addChildrenToSelect(&$leftItems, $childrenPageIds, $currentPageId, $depth = 1)
+    {
+        $maxDepth = $this->getData(['theme', 'menu', 'depth']) ?? 3;
+        
+        if ($depth >= $maxDepth) {
+            return;
+        }
+        
+        foreach ($childrenPageIds as $childKey) {
+            // Récupérer les enfants directement en cherchant les pages avec ce parent
+            $grandChildren = [];
+            foreach ($this->getData(['page']) as $pageId => $pageData) {
+                if ($pageData['parentPageId'] === $childKey) {
+                    $grandChildren[] = $pageId;
+                }
+            }
+            
+            $leftItems .= '<option value="'
+                . helper::baseUrl()
+                . $childKey . '"'
+                . ($childKey === $currentPageId ? ' selected' : false)
+                . ' class="'
+                . ($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '')
+                . ($this->getData(['page', $childKey, 'position']) === 0 ? 'pageHidden' : '')
+                . '">'
+                . str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $depth)
+                . $this->getData(['page', $childKey, 'shortTitle'])
+                . '</option>';
+            
+            // Récursion pour les enfants de cet enfant
+            if (!empty($grandChildren)) {
+                $this->addChildrenToSelect($leftItems, $grandChildren, $currentPageId, $depth + 1);
+            }
+        }
     }
 }

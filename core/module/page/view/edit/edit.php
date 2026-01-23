@@ -126,16 +126,12 @@
 							]); ?>
 						</div>
 						<div class="col4">
-							<?php if ($this->getHierarchy($this->getUrl(2), false)): ?>
-								<?php echo template::hidden('pageEditParentPageId', [
-									'value' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
-								]); ?>
-							<?php else: ?>
-								<?php echo template::select('pageEditParentPageId', page::$pagesNoParentId, [
-									'label' => 'Page parent',
-									'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId'])
-								]); ?>
-							<?php endif; ?>
+							<?php echo template::select('pageEditParentPageId', page::$hierarchicalPageOptions, [
+								'label' => 'Page parent',
+								'selected' => $this->getData(['page', $this->getUrl(2), 'parentPageId']),
+								'help' => 'Sélectionnez une page parent. Les pages sont affichées hiérarchiquement selon la profondeur configurée dans le thème.',
+								'class' => 'parentSelect'
+							]); ?>
 						</div>
 						<div class="col4">
 							<?php echo template::select('pageEditExtraPosition', page::$extraPosition, [

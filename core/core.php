@@ -1102,41 +1102,26 @@ class common
 		// Sauve la liste des pages pour TinyMCE
 		$parents = [];
 		$rewrite = (helper::checkRewrite()) ? '' : '?';
-		// Boucle de recherche des pages actives
-		foreach ($this->getHierarchy(null, false, false) as $parentId => $childIds) {
-			$children = [];
-			// Vérifier que la page parent existe
+
+		// Boucle de recherche des pages actives avec hiérarchie
+		foreach ($this->getHierarchy() as $parentId => $childIds) {
+			// Ne traiter que les pages racines (parentPageId vide)
+			if ($this->getData(['page', $parentId, 'parentPageId']) !== '') {
+				continue;
+			}
+
 			if ($this->getData(['page', $parentId]) && $this->getData(['page', $parentId, 'block']) !== 'bar') {
-				// Boucler sur les enfants et récupérer le tableau children avec la liste des enfants
-				foreach ($childIds as $childId) {
-					// Vérifier que la page enfant existe
-					if ($this->getData(['page', $childId])) {
-						$children[] = [
-							'title' => '>' . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
-							'value' => $rewrite . $childId
-						];
-					}
-				}
-				// Traitement
-				if (empty($childIds && $this->getData(['page', $parentId, 'title']))) {
-					// Pas d'enfant, uniquement l'entrée du parent
-					$parents[] = [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES),
-						'value' => $rewrite . $parentId
-					];
-				} else {
-					// Des enfants, on ajoute la page parent en premier
-					array_unshift($children, [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES),
-						'value' => $rewrite . $parentId
-					]);
-					// puis on ajoute les enfants au parent
-					$parents[] = [
-						'title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES),
-						'value' => $rewrite . $parentId,
-						'menu' => $children
-					];
-				}
+				// Ajouter la page parent
+				$pageEntry = [
+					'title' => html_entity_decode($this->getData(['page', $parentId, 'title']), ENT_QUOTES),
+					'value' => $rewrite . $parentId,
+					'menu' => []
+				];
+
+				// Ajouter les enfants récursivement
+				$this->addTinyMceChildren($pageEntry['menu'], $childIds, $rewrite, 1);
+
+				$parents[] = $pageEntry;
 			}
 		}
 		// Sitemap et Search
@@ -2133,6 +2118,61 @@ class common
 	 */
 	public function getRelativePath($path) {
 		return str_replace(helper::baseUrl(false), '', $path);
+	}
+
+	/**
+	 * Ajoute récursivement les enfants pour TinyMCE
+	 * @param array &$menu Référence au menu à construire
+	 * @param array $childrenPageIds IDs des enfants
+	 * @param string $rewrite URL rewrite
+	 * @param int $depth Profondeur actuelle
+	 */
+	private function addTinyMceChildren(&$menu, $childrenPageIds, $rewrite, $depth = 1)
+	{
+		$maxDepth = 3; // Profondeur maximale pour TinyMCE
+
+		if ($depth >= $maxDepth) {
+			return;
+		}
+
+		foreach ($childrenPageIds as $childId) {
+			// Vérifier que la page enfant existe
+			if ($this->getData(['page', $childId])) {
+				// Vérifier si cette page n'est pas déjà dans le menu pour éviter les doublons
+				$alreadyExists = false;
+				foreach ($menu as $existingItem) {
+					if ($existingItem['value'] === $rewrite . $childId) {
+						$alreadyExists = true;
+						break;
+					}
+				}
+				if ($alreadyExists) {
+					continue;
+				}
+
+				$indent = str_repeat('── ', $depth);
+				$childEntry = [
+					'title' => $indent . html_entity_decode($this->getData(['page', $childId, 'title']), ENT_QUOTES),
+					'value' => $rewrite . $childId,
+					'menu' => []
+				];
+
+// Récupérer les enfants de cette page en cherchant les pages avec ce parent
+			$grandChildren = [];
+			foreach ($this->getData(['page']) as $pageId => $pageData) {
+				if ($pageData['parentPageId'] === $childId) {
+					$grandChildren[] = $pageId;
+				}
+			}
+
+				// Ajouter les enfants récursivement
+				if (!empty($grandChildren)) {
+					$this->addTinyMceChildren($childEntry['menu'], $grandChildren, $rewrite, $depth + 1);
+				}
+
+				$menu[] = $childEntry;
+			}
+		}
 	}
 
 	}

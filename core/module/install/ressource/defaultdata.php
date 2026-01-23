@@ -318,6 +318,7 @@ class init extends common
 				'memberBar' => false,
 				'burgerLogo' => '',
 				'burgerContent' => 'title',
+				'depth' => 3,
 				'width' => 'container'
 			],
 			'site' => [

@@ -24,6 +24,7 @@ class page extends common
 		'duplicate' => self::ROLE_EDITOR,
 		'jsEditor' => self::ROLE_EDITOR,
 		'cssEditor' => self::ROLE_EDITOR,
+		'getParentOptions' => self::ROLE_EDITOR,
 	];
 
 	public static $pagesNoParentId = [
@@ -35,6 +36,8 @@ class page extends common
 	];
 
 	public static $moduleIds = [];
+
+	public static $hierarchicalPageOptions = [];
 
 	public static $typeMenu = [
 		'text' => 'Texte',
@@ -371,6 +374,19 @@ class page extends common
 			) {
 				// Si le Title n'est pas vide, premier test pour positionner la notification du champ obligatoire
 				if ($this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '') {
+					// Validation de la profondeur du menu
+					$parentPageId = $this->getInput('pageEditParentPageId');
+					$maxDepth = $this->getData(['theme', 'menu', 'depth']) ?? 3;
+
+					if ($parentPageId && $this->calculatePageDepth($parentPageId) >= $maxDepth) {
+						// Valeurs en sortie
+						$this->addOutput([
+							'notification' => 'Profondeur maximale du menu atteinte (' . $maxDepth . ' niveaux). Sélectionnez une page parent moins profonde.',
+							'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2)
+						]);
+						return;
+					}
+
 					// Sauvegarde les données CSS et JS
 					$css = $this->getData(['page', $this->getUrl(2), 'css']);
 					$js = $this->getData(['page', $this->getUrl(2), 'js']);
@@ -644,6 +660,8 @@ class page extends common
 					self::$pagesBarId[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
 				}
 			}
+			// Options hiérarchiques pour le sélecteur de page parent
+			self::$hierarchicalPageOptions = $this->buildHierarchicalPageOptions($this->getUrl(2));
 			// Profils installés
 			// Profils disponibles
 			foreach ($this->getData(['profil']) as $profilId => $profilData) {
@@ -771,5 +789,134 @@ class page extends common
 			return $d;
 		}, $p);
 		return json_encode($d);
+	}
+
+	/**
+	 * Construit les options hiérarchiques pour le sélecteur de page parent
+	 * @param string $excludePageId Page à exclure (généralement la page en cours d'édition)
+	 * @param int $currentDepth Profondeur actuelle pour la récursion
+	 * @param int $maxDepth Profondeur maximale autorisée
+	 * @return array Options formatées pour le select
+	 */
+	public function buildHierarchicalPageOptions($excludePageId = null, $currentDepth = 0, $maxDepth = null)
+	{
+		$maxDepth = $maxDepth ?? $this->getData(['theme', 'menu', 'depth']) ?? 3;
+		$options = ['' => 'Aucune'];
+		$pages = $this->getHierarchy();
+
+		$this->addPageOptionsRecursive($options, $pages, '', $excludePageId, $currentDepth, $maxDepth);
+
+		return $options;
+	}
+
+	/**
+	 * Ajoute récursivement les options de pages à la liste
+	 * @param array &$options Référence au tableau d'options
+	 * @param array $hierarchy Structure hiérarchique des pages
+	 * @param string $parentId ID de la page parent
+	 * @param string $excludePageId Page à exclure
+	 * @param int $currentDepth Profondeur actuelle
+	 * @param int $maxDepth Profondeur maximale
+	 */
+	private function addPageOptionsRecursive(&$options, $hierarchy, $parentId = '', $excludePageId = null, $currentDepth = 0, $maxDepth = 3)
+	{
+		if ($currentDepth >= $maxDepth) return;
+
+		// Si parentId est vide, on parcourt les clés du tableau (pages racines)
+		if ($parentId === '') {
+			foreach ($hierarchy as $rootPageId => $children) {
+				if ($rootPageId === $excludePageId) continue;
+
+				// Vérifier les permissions
+				if (!$this->canViewPage($rootPageId)) continue;
+
+				// Indentation visuelle selon la profondeur
+				$indent = str_repeat('── ', $currentDepth);
+				$title = $indent . $this->getData(['page', $rootPageId, 'title']);
+
+				$options[$rootPageId] = $title;
+
+				// Récursion pour les enfants
+				$this->addPageOptionsRecursive($options, $hierarchy, $rootPageId, $excludePageId, $currentDepth + 1, $maxDepth);
+			}
+		} else {
+			// Si parentId n'est pas vide, on cherche les enfants directs de ce parent
+			$childrenPageIds = [];
+			foreach ($this->getData(['page']) as $pageId => $pageData) {
+				if ($pageData['parentPageId'] === $parentId) {
+					$childrenPageIds[] = $pageId;
+				}
+			}
+
+			foreach ($childrenPageIds as $pageId) {
+				if ($pageId === $excludePageId) continue;
+
+				// Vérifier les permissions
+				if (!$this->canViewPage($pageId)) continue;
+
+				// Indentation visuelle selon la profondeur
+				$indent = str_repeat('── ', $currentDepth);
+				$title = $indent . $this->getData(['page', $pageId, 'title']);
+
+				$options[$pageId] = $title;
+
+				// Récursion pour les enfants
+				$this->addPageOptionsRecursive($options, $hierarchy, $pageId, $excludePageId, $currentDepth + 1, $maxDepth);
+			}
+		}
+	}
+
+	/**
+	 * Vérifie si l'utilisateur peut voir la page
+	 * @param string $pageId ID de la page
+	 * @return bool
+	 */
+	private function canViewPage($pageId)
+	{
+		$pageRole = $this->getData(['page', $pageId, 'role']);
+		$pageProfil = $this->getData(['page', $pageId, 'profil']);
+
+		// Page publique ou utilisateur connecté avec permissions suffisantes
+		return $pageRole === self::ROLE_VISITOR || (
+			$this->isConnected() && 
+			($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($pageRole * self::MAX_PROFILS + $pageProfil)
+		);
+	}
+
+	/**
+	 * Calcule la profondeur d'une page dans la hiérarchie
+	 * @param string $pageId ID de la page
+	 * @param int $currentDepth Profondeur actuelle pour la récursion
+	 * @return int Profondeur de la page
+	 */
+	private function calculatePageDepth($pageId, $currentDepth = 0)
+	{
+		if ($pageId === '' || $currentDepth >= 10) return $currentDepth; // Protection contre boucle infinie
+
+		$parentPageId = $this->getData(['page', $pageId, 'parentPageId']);
+		return $this->calculatePageDepth($parentPageId, $currentDepth + 1);
+	}
+
+	/**
+	 * Retourne les options hiérarchiques pour le sélecteur de parent (AJAX)
+	 */
+	public function getParentOptions()
+	{
+		// Vérifier les permissions
+		if ($this->getUser('permission', __CLASS__, __FUNCTION__) !== true) {
+			// Valeurs en sortie
+			$this->addOutput([
+				'access' => false
+			]);
+			return;
+		}
+
+		$excludePageId = $this->getInput('excludePageId');
+		$options = $this->buildHierarchicalPageOptions($excludePageId);
+
+		// Valeurs en sortie JSON pour AJAX
+		$this->addOutput([
+			'content' => json_encode($options)
+		]);
 	}
 }

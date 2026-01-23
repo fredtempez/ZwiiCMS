@@ -589,6 +589,19 @@ pageEditHideTitleDOM.on("change", function() {
  */
 var pageEditParentPageIdDOM = $("#pageEditParentPageId");
 pageEditParentPageIdDOM.on("change", function() {
+	var parentSelected = $(this).val();
+	var maxDepth = <?php echo $this->getData(['theme', 'menu', 'depth']) ?? 3; ?>;
+
+	// Calculer la profondeur actuelle
+	var currentDepth = calculatePageDepth(parentSelected);
+
+	// Valider la profondeur
+	if (currentDepth >= maxDepth) {
+		$(this).val(""); // Réinitialiser
+		core.alert("Profondeur maximale du menu atteinte (" + maxDepth + " niveaux). Sélectionnez une page parent moins profonde.");
+		return false;
+	}
+
 	if ($(this).val() === "" &&
 		!$('input[name=pageEditHideTitle]').is(':checked') ) {
 			$("#pageEditbreadCrumbWrapper").removeClass("disabled");
@@ -733,6 +746,63 @@ function buildPagesList(extraPosition) {
 	// Sélectionne la bonne position
 	positionDOM.val(positionSelected);
 };
+
+// Nouvelle fonction pour calculer la profondeur
+function calculatePageDepth(pageId) {
+	var hierarchy = <?php echo json_encode($this->getHierarchy()); ?>;
+
+	function findDepth(currentId, currentDepth) {
+		if (currentId === "") return currentDepth;
+
+		for (var parentId in hierarchy) {
+			if (hierarchy[parentId].includes(currentId)) {
+				return findDepth(parentId, currentDepth + 1);
+			}
+		}
+		return currentDepth;
+	}
+
+	return findDepth(pageId, 0);
+}
+
+// Fonction pour recharger les options du sélecteur parent
+function refreshParentOptions(excludePageId) {
+	$.ajax({
+		url: "<?php echo helper::baseUrl(); ?>page/getParentOptions",
+		type: "POST",
+		data: {
+			excludePageId: excludePageId || ""
+		},
+		success: function(response) {
+			try {
+				var options = JSON.parse(response);
+				var select = $("#pageEditParentPageId");
+				var currentValue = select.val();
+
+				// Vider le select
+				select.empty();
+
+				// Ajouter les nouvelles options
+				$.each(options, function(value, text) {
+					select.append($('<option></option>').val(value).text(text));
+				});
+
+				// Restaurer la sélection précédente
+				select.val(currentValue);
+
+				// Déclencher le change pour valider la profondeur
+				select.trigger("change");
+			} catch (e) {
+				console.error("Erreur lors du rechargement des options:", e);
+			}
+		},
+		error: function(xhr, status, error) {
+			console.error("Erreur AJAX:", error);
+		}
+	});
+}
+
+
 
 // Define function to capitalize the first letter of a string
 function capitalizeFirstLetter(string) {

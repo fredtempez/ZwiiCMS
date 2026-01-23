@@ -443,7 +443,13 @@ core.start = function () {
                 $("header").height($(window).width() / ratio);
             }
         }
-    }).trigger("resize");
+    });
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', core.preventFouc);
+} else {
+    core.preventFouc();
 
 
 

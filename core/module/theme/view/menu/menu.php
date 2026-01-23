@@ -99,7 +99,14 @@
                 </div>
             </div>
             <div class="row">
-                <div id="themeMenuBurgerLogoId" class="col6 offset6 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
+                <div class="col3">
+                    <?php echo template::select('themeMenuDepth', theme::$menuDepths, [
+                        'label' => 'Profondeur du menu',
+                        'selected' => $this->getData(['theme', 'menu', 'depth']) ?? 2,
+                        'help' => 'Nombre de niveaux de menu autorisés (1-5). Nécessite des pages avec des parents pour utiliser plusieurs niveaux.'
+                    ]); ?>
+                </div>
+                <div id="themeMenuBurgerLogoId" class="col3 offset3 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">>
                     <?php 
                     $imagePath = $this->getData(['theme', 'menu', 'burgerLogo']);
                     $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));

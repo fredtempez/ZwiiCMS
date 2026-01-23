@@ -135,6 +135,13 @@ class theme extends common
 		'bottom center' => 'En bas au centre',
 		'bottom right' => 'En bas à droite'
 	];
+	public static $menuDepths = [
+		1 => '1 niveau (pas de sous-menu)',
+		2 => '2 niveaux (actuel)',
+		3 => '3 niveaux',
+		4 => '4 niveaux',
+		5 => '5 niveaux'
+	];
 	public static $menuFontSizes = [
 		'.8em' => '80%',
 		'.9em' => '90%',
@@ -602,7 +609,8 @@ class theme extends common
 					'burgerTitle' => $this->getInput('themeMenuBurgerTitle', helper::FILTER_BOOLEAN),
 					'memberBar' => $this->getInput('themeMenuMemberBar', helper::FILTER_BOOLEAN),
 					'burgerLogo' => $this->getInput('themeMenuBurgerLogo'),
-					'burgerContent' => $this->getInput('themeMenuBurgerContent')
+					'burgerContent' => $this->getInput('themeMenuBurgerContent'),
+					'depth' => $this->getInput('themeMenuDepth', helper::FILTER_INT)
 				]
 			]);
 			// Valeurs en sortie
