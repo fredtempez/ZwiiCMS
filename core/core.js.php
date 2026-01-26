@@ -546,6 +546,73 @@ $(document).ready(function () {
     });
 
     /**
+     * Gestion des sous-menus multi-niveaux
+     * Affiche uniquement le sous-menu de l'élément survolé pour chaque niveau
+     */
+    
+    // Fonction pour afficher/masquer les sous-menus de manière contrôlée
+    function setupMultiLevelMenu() {
+        // Masquer tous les sous-menus au démarrage (sauf si le CSS le fait déjà)
+        $('.navSubmenu1, .navSubmenu2, .navSubmenu3, .navSubmenu4').css('display', 'none');
+        
+        // Gestion du survol pour les éléments avec enfants (navParent)
+        $('nav li.navParent').on('mouseenter', function(e) {
+            var $li = $(this);
+            
+            // Trouver le sous-menu direct de cet élément
+            var $submenu = $li.children('ul[class*="navSubmenu"]');
+            
+            if ($submenu.length > 0) {
+                // Masquer les sous-menus des frères au même niveau
+                $li.siblings('li.navParent').children('ul[class*="navSubmenu"]').css('display', 'none');
+                
+                // Afficher le sous-menu de cet élément
+                $submenu.css('display', 'block');
+            }
+            
+            e.stopPropagation();
+        });
+        
+        // Quand on quitte un élément parent
+        $('nav li.navParent').on('mouseleave', function(e) {
+            var $li = $(this);
+            var $submenu = $li.children('ul[class*="navSubmenu"]');
+            
+            // Vérifier si la souris va vers le sous-menu
+            setTimeout(function() {
+                if (!$submenu.is(':hover') && !$li.is(':hover')) {
+                    $submenu.css('display', 'none');
+                    // Masquer aussi tous les sous-menus enfants
+                    $submenu.find('ul[class*="navSubmenu"]').css('display', 'none');
+                }
+            }, 100);
+        });
+        
+        // Maintenir le sous-menu visible quand on le survole
+        $('ul[class*="navSubmenu"]').on('mouseenter', function(e) {
+            $(this).css('display', 'block');
+            e.stopPropagation();
+        });
+        
+        // Quand on quitte un sous-menu
+        $('ul[class*="navSubmenu"]').on('mouseleave', function(e) {
+            var $submenu = $(this);
+            var $parentLi = $submenu.parent('li');
+            
+            setTimeout(function() {
+                if (!$submenu.is(':hover') && !$parentLi.is(':hover')) {
+                    $submenu.css('display', 'none');
+                    // Masquer aussi tous les sous-menus enfants
+                    $submenu.find('ul[class*="navSubmenu"]').css('display', 'none');
+                }
+            }, 100);
+        });
+    }
+    
+    // Initialiser le menu multi-niveaux
+    setupMultiLevelMenu();
+
+    /**
      * Chargement paresseux des images et des iframes
      */
     $("img").attr("loading", "lazy");

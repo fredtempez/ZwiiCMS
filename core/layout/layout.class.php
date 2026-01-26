@@ -628,8 +628,33 @@ class layout extends common
             $active = ($childKey === $currentPageId) ? 'active ' : '';
             $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
             
+            // Vérifier s'il y a des enfants pour ce nœud en parcourant toutes les pages
+            $grandChildren = [];
+            $allPages = $this->getData(['page']);
+            if (is_array($allPages)) {
+                // Créer un tableau temporaire avec les enfants et leur position
+                $tempChildren = [];
+                foreach ($allPages as $pageId => $pageData) {
+                    // Si cette page a comme parent $childKey, c'est un enfant
+                    if (isset($pageData['parentPageId']) && $pageData['parentPageId'] === $childKey) {
+                        // Vérifier les droits d'accès
+                        if ($pageData['role'] <= $this->getUser('role')) {
+                            $position = isset($pageData['position']) ? $pageData['position'] : 0;
+                            $tempChildren[$pageId] = $position;
+                        }
+                    }
+                }
+                // Trier par position
+                asort($tempChildren);
+                $grandChildren = array_keys($tempChildren);
+            }
+            $hasChildren = !empty($grandChildren) && $this->getData(['page', $childKey, 'hideMenuChildren']) === false;
+            
+            // Classe CSS pour indiquer la présence d'enfants et la profondeur
+            $itemClass = 'navDepth' . $depth . ($hasChildren ? ' navParent' : '');
+            
             // Mise en page du sous-item
-            $items .= '<li id="' . $childKey . '">';
+            $items .= '<li id="' . $childKey . '" class="' . $itemClass . '">';
             
             if (
                 ($this->getData(['page', $childKey, 'disable']) === true and
@@ -638,24 +663,14 @@ class layout extends common
                     $this->getUser('role') < self::ROLE_EDITOR)
             ) {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
-                $items .= '<a href="' . $pageUrl . '">';
+                $items .= '<a class="navLevel' . $depth . '" href="' . $pageUrl . '">';
             } else {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false) : helper::baseUrl() . $childKey;
-                $items .= '<a class="' . $active . ' ' . $parentId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
+                $items .= '<a class="' . $active . 'navLevel' . $depth . ' ' . $parentId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
             }
 
             // Type de menu (texte, icône, etc.)
             $items .= $this->getMenuLabel($childKey);
-            
-            // Vérifier s'il y a des enfants pour ce nœud
-            // Chercher tous les enfants directs de ce nœud en parcourant toutes les pages
-            $grandChildren = [];
-            foreach ($this->getData(['page']) as $pageId => $pageData) {
-                if ($pageData['parentPageId'] === $childKey) {
-                    $grandChildren[] = $pageId;
-                }
-            }
-            $hasChildren = !empty($grandChildren) && $this->getData(['page', $childKey, 'hideMenuChildren']) === false;
             
             // Afficher l'icône de déroulement si enfants visibles
             if ($hasChildren) {
@@ -666,9 +681,10 @@ class layout extends common
             
             // Récursion pour les enfants de ce nœud
             if ($hasChildren && $depth < $maxDepth) {
-                $cssClass = 'navSub' . ($depth > 1 ? ' navSub-' . $depth : '');
+                $nextDepth = $depth + 1;
+                $cssClass = 'navSub navSubmenu' . $nextDepth;
                 $items .= '<ul class="' . $cssClass . '">';
-                $items .= $this->buildChildrenRecursive($grandChildren, $depth + 1, $maxDepth, $childKey, $currentPageId);
+                $items .= $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
                 $items .= '</ul>';
             }
             
@@ -699,9 +715,8 @@ class layout extends common
             }
             // Menu extra ou standard
             if (
-                    // Absence de la position extra, la page est toujours affichée à gauche.
-                ($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true)
-                &&
+                // Absence de la position extra, la page est toujours affichée à gauche.
+                ($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true) &&
                 $this->getData(['page', $parentPageId, 'extraPosition']) !== $extra
             ) {
                 continue;
@@ -713,12 +728,10 @@ class layout extends common
             $items .= '<li id="' . $parentPageId . '">';
 
             if (
-                ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->isConnected() === false
-                ) or ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->isConnected() === true
-                    and $this->getUser('role') < self::ROLE_EDITOR
-                )
+                ($this->getData(['page', $parentPageId, 'disable']) === true and
+                    $this->isConnected() === false) or ($this->getData(['page', $parentPageId, 'disable']) === true and
+                    $this->isConnected() === true and
+                    $this->getUser('role') < self::ROLE_EDITOR)
             ) {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
                 $items .= '<a href="' . $pageUrl . '">';
@@ -747,13 +760,24 @@ class layout extends common
             }
             // ------------------------------------------------
             $items .= '</a>';
+            
+            // Ajouter la classe navDepth0 et navParent si l'élément a des enfants
+            if ($hasVisibleChildren && $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === false) {
+                // Ajouter les classes au <li> parent déjà créé en modifiant la chaîne
+                $items = preg_replace(
+                    '/<li id="' . preg_quote($parentPageId, '/') . '">/',
+                    '<li id="' . $parentPageId . '" class="navDepth0 navParent">',
+                    $items
+                );
+            }
+            
             if (
                 $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === true ||
                 empty($childrenPageIds)
             ) {
                 continue;
             }
-            $items .= '<ul class="navSub">';
+            $items .= '<ul class="navSub navSubmenu1">';
             // Récursion pour les enfants
             $items .= $this->buildChildrenRecursive($childrenPageIds, 1, $maxDepth, $parentPageId, $currentPageId);
             $items .= '</ul>';

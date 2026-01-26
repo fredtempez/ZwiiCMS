@@ -330,8 +330,35 @@ class core extends common
 			
 			$css .= 'nav #burgerText { color: ' . $menuColors['text'] . '; }';
 			$css .= 'nav .navSub a { background-color: var(--submenu-bg); }';
-			$css .= 'nav .navMain a.active { border-radius: ' . $this->getData(['theme', 'menu', 'radius']) . '; }';
-			$css .= '#menu { text-align: ' . $this->getData(['theme', 'menu', 'textAlign']) . '; }';
+            
+            // Styles pour les sous-menus multi-niveaux
+            $subMenuColors = helper::colorVariants($this->getData(['theme', 'menu', 'backgroundColorSub']));
+            // Niveau 1
+            $css .= 'nav .navSubmenu1 { display: none; position: absolute; width: 200px; z-index: 1000; opacity: 1; transition: .3s ease-out; padding-left: 10px; }';
+            $css .= 'nav .navLevel1 { padding-left: 15px; background-color: ' . $subMenuColors['normal'] . '; }';
+            $css .= 'nav .navLevel1:hover { background-color: ' . $subMenuColors['darken'] . '; }';
+            
+            // Niveau 2
+            $subMenuColors2 = helper::colorVariants($subMenuColors['darken']);
+            $css .= 'nav .navSubmenu2 { display: none; position: absolute; left: 100%; top: 0; width: 200px; z-index: 1001; margin-left: 0; padding-left: 10px; }';
+            $css .= 'nav .navLevel2 { padding-left: 15px; background-color: ' . $subMenuColors2['normal'] . '; }';
+            $css .= 'nav .navLevel2:hover { background-color: ' . $subMenuColors2['darken'] . '; }';
+            
+            // Niveau 3
+            $subMenuColors3 = helper::colorVariants($subMenuColors2['darken']);
+            $css .= 'nav .navSubmenu3 { display: none; position: absolute; left: 100%; top: 0; width: 200px; z-index: 1002; margin-left: 0; padding-left: 10px; }';
+            $css .= 'nav .navLevel3 { padding-left: 15px; background-color: ' . $subMenuColors3['normal'] . '; }';
+            $css .= 'nav .navLevel3:hover { background-color: ' . $subMenuColors3['darken'] . '; }';
+            
+            // Niveau 4
+            $subMenuColors4 = helper::colorVariants($subMenuColors3['darken']);
+            $css .= 'nav .navSubmenu4 { display: none; position: absolute; left: 100%; top: 0; width: 200px; z-index: 1003; margin-left: 0; padding-left: 10px; }';
+            $css .= 'nav .navLevel4 { padding-left: 15px; background-color: ' . $subMenuColors4['normal'] . '; }';
+            $css .= 'nav .navLevel4:hover { background-color: ' . $subMenuColors4['darken'] . '; }';
+            
+            // Indicateur visuel pour les items avec enfants
+            $css .= 'nav .navParent > a::after { content: " ▶"; font-size: 0.7em; opacity: 0.6; margin-left: 5px; }';
+            
 
 			$paddingNav = ($this->getData(['theme', 'menu', 'position']) === 'site-first' || $this->getData(['theme', 'menu', 'position']) === 'site-second') ? '10px 10px 0 10px' : '0 10px';
 			$css .= ($this->getData(['theme', 'menu', 'margin'])) ? 'nav { padding: ' . $paddingNav . '; }' : 'nav { margin: 0; }';
