@@ -682,7 +682,7 @@ class layout extends common
             // Récursion pour les enfants de ce nœud
             if ($hasChildren && $depth < $maxDepth) {
                 $nextDepth = $depth + 1;
-                $cssClass = 'navSub navSubmenu' . $nextDepth;
+                $cssClass = 'navSub navSubmenu' . $depth;
                 $items .= '<ul class="' . $cssClass . '">';
                 $items .= $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
                 $items .= '</ul>';
