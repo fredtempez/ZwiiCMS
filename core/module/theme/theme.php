@@ -136,8 +136,8 @@ class theme extends common
 		'bottom right' => 'En bas à droite'
 	];
 	public static $menuDepths = [
-		1 => '1 niveau (pas de sous-menu)',
-		2 => '2 niveaux (actuel)',
+		1 => '1 niveau',
+		2 => '2 niveaux',
 		3 => '3 niveaux',
 		4 => '4 niveaux',
 		5 => '5 niveaux'

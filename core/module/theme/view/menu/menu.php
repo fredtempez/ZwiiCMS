@@ -91,14 +91,6 @@
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
                     ]); ?>
                 </div>
-                <div class="col6">
-                    <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
-                        'label' => 'Menu burger dans écran réduit',
-                        'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
-                    ]); ?>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col3">
                     <?php echo template::select('themeMenuDepth', theme::$menuDepths, [
                         'label' => 'Profondeur du menu',
@@ -106,7 +98,16 @@
                         'help' => 'Nombre de niveaux de menu autorisés (1-5). Nécessite des pages avec des parents pour utiliser plusieurs niveaux.'
                     ]); ?>
                 </div>
-                <div id="themeMenuBurgerLogoId" class="col3 offset3 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">>
+                <div class="col3">
+                    <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
+                        'label' => 'Menu burger dans écran réduit',
+                        'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
+                    ]); ?>
+                </div>
+            </div>
+            <div class="row">
+
+                <div id="themeMenuBurgerLogoId" class="col10 offset1 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
                     <?php 
                     $imagePath = $this->getData(['theme', 'menu', 'burgerLogo']);
                     $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
