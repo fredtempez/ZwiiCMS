@@ -340,10 +340,6 @@ class core extends common
 				$css .= 'nav .navLevel' . $level . ' { padding-left: 15px; background-color: ' . $colors['normal'] . '; }';
 				$css .= 'nav .navLevel' . $level . ':hover { background-color: ' . $colors['hover'] . '; }';
 			}
-            
-            // Indicateur visuel pour les items avec enfants
-            $css .= 'nav .navParent > a::after { content: " ▶"; font-size: 0.7em; opacity: 0.6; margin-left: 5px; }';
-            
 
 			$paddingNav = ($this->getData(['theme', 'menu', 'position']) === 'site-first' || $this->getData(['theme', 'menu', 'position']) === 'site-second') ? '10px 10px 0 10px' : '0 10px';
 			$css .= ($this->getData(['theme', 'menu', 'margin'])) ? 'nav { padding: ' . $paddingNav . '; }' : 'nav { margin: 0; }';
