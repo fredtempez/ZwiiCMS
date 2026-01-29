@@ -465,8 +465,8 @@ class user extends common
 					'Réinitialisation de votre mot de passe',
 					'<p>Bonjour <strong>' . $this->getData(['user', $userId, 'firstname']) . ' ' . $this->getData(['user', $userId, 'lastname']) . '</strong>,</p>'
 					. '<p>Vous avez demandé à changer le mot de passe lié à votre compte. Vous trouverez ci-dessous un lien vous permettant de modifier celui-ci.</p>'
-					. '<p><a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a></p>'
-					. '<p>Si vous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</p>',
+										. '<p>Si vous n\'avez pas demandé à réinitialiser votre mot de passe, veuillez ignorer ce mail.</p>'
+					. '<p><a href="' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '" target="_blank">' . helper::baseUrl() . 'user/reset/' . $userId . '/' . $uniqId . '</a></p>',
 					null,
 					$this->getData(['config', 'smtp', 'from'])
 				);
