@@ -842,7 +842,7 @@ class page extends common
 			}
 			
 			// Indentation visuelle selon la profondeur
-			$indent = '└' . str_repeat('-', $depth) . ' ';
+			$indent = '&#9492;' . str_repeat('&#9472;', $depth - 1) . ' ';
 			
 			// Marquer la page en cours d'édition
 			if ($childKey === $excludePageId) {
