@@ -334,9 +334,13 @@ class core extends common
             // Générer les styles pour les sous-menus multi-niveaux
 			$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 			foreach ($levelColors as $level => $colors) {
-				$zIndex = 999 + $level;
-				$position = $level === 1 ? 'absolute' : 'absolute; left: 50%; top: 0';
-				$css .= 'nav li ul.navSubmenu' . $level . ' { display: none; position: ' . $position . '; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; }';
+				$zIndex = 999 + ($level * 10);
+				if ($level === 1) {
+					$css .= 'nav > ul > li > ul.navSubmenu1, .navDepth0 > ul.navSubmenu1 { display: none; position: absolute; top: 100%; left: 0; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
+				} else {
+					$parentDepth = $level - 1;
+					$css .= '.navDepth' . $parentDepth . ' > ul.navSubmenu' . $level . ' { display: none; position: absolute; top: 20px; left: 50%; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
+				}
 				$css .= 'nav .navLevel' . $level . ' { padding-left: 15px; background-color: ' . $colors['normal'] . '; }';
 				$css .= 'nav .navLevel' . $level . ':hover { background-color: ' . $colors['hover'] . '; }';
 			}

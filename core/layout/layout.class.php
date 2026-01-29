@@ -692,7 +692,7 @@ class layout extends common
                 $childrenHtml = $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
                 // Générer le <ul> seulement s'il y a du contenu
                 if (!empty($childrenHtml)) {
-                    $cssClass = 'navSub navSubmenu' . $depth;
+                    $cssClass = 'navSub navSubmenu' . $nextDepth;
                     $items .= '<ul class="' . $cssClass . '">';
                     $items .= $childrenHtml;
                     $items .= '</ul>';
