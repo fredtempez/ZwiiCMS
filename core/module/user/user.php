@@ -1327,81 +1327,107 @@ class user extends common
 	 */
 	public function reset()
 	{
-		// Accès refusé
-		if (
-			// L'utilisateur n'existe pas
-			$this->getData(['user', $this->getUrl(2)]) === null or
-			// Lien de réinitialisation trop vieux (24 heures)
-			$this->getData(['user', $this->getUrl(2), 'forgot']) === null or
-			(int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() or
-			// Clé unique incorrecte
-			$this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1]
-		) {
-			$this->saveLog(
-				' Erreur de réinitialisation de mot de passe ' . $this->getUrl(2)
-				. ' Compte : ' . $this->getData(['user', $this->getUrl(2)])
-				. ' Temps : ' . ($this->getData(['user', $this->getUrl(2), 'forgot']) === null ? 'Clé manquante' : ((int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time() ? 'Temps dépassé' : 'Temps valide'))
-				. ' Clé : ' . ($this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1] ? 'Clé invalide' : 'Clé valide')
-			);
-
-			// Message d'erreur en cas de problème de réinitialisation de mot de passe
-			$message = $this->getData(['user', $this->getUrl(2)]) === null
-				? ' Utilisateur inconnu '
-				: '';
-			$message = $this->getData(['user', $this->getUrl(2), 'forgot']) === null
-				? ' Clé manquante '
-				: $message;
-			$message = (int) explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[0] + 86400 < time()
-				? ' Temps dépassé '
-				: $message;
-			$message = $this->getUrl(3) !== explode('_', $this->getData(['user', $this->getUrl(2), 'forgot']))[1]
-				? ' Clé invalide '
-				: $message;
-
-			// Valeurs en sortie
+		// Nettoyer les paramètres URL (protection contre caractères invisibles des webmails)
+		$userId = trim(urldecode($this->getUrl(2)));
+		$urlKey = trim(urldecode($this->getUrl(3)));
+		
+		// Récupérer les données utilisateur une seule fois
+		$userData = $this->getData(['user', $userId]);
+		$forgotData = $userData ? $this->getData(['user', $userId, 'forgot']) : null;
+		
+		// Validation : l'utilisateur doit exister
+		if ($userData === null) {
+			$this->saveLog('Reset - Erreur : Utilisateur inconnu [' . $userId . ']');
 			$this->addOutput([
-				'redirect' => helper::baseurl(),
-				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . $message,
+				'redirect' => helper::baseUrl(),
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Utilisateur inconnu',
 				'state' => false
 			]);
+			return;
 		}
-		// Accès autorisé
-		else {
-			// Soumission du formulaire
-			if ($this->isPost()) {
-				// Double vérification pour le mot de passe
-				if ($this->getInput('userResetNewPassword')) {
-					// La confirmation ne correspond pas au mot de passe
-					if ($this->getInput('userResetNewPassword', helper::FILTER_STRING_SHORT, true) !== $this->getInput('userResetConfirmPassword', helper::FILTER_STRING_SHORT, true)) {
-						$newPassword = $this->getData(['user', $this->getUrl(2), 'password']);
-						self::$inputNotices['userResetConfirmPassword'] = 'Incorrect';
-					} else {
-						$newPassword = $this->getInput('userResetNewPassword', helper::FILTER_PASSWORD, true);
-					}
-					// Modifie le mot de passe
-					$this->setData(['user', $this->getUrl(2), 'password', $newPassword], false);
-					// Réinitialise la date de la demande
-					$this->setData(['user', $this->getUrl(2), 'forgot', 0], false);
-					// Réinitialise le blocage
-					$this->setData(['user', $this->getUrl(2), 'connectFail', 0], false);
-					$this->setData(['user', $this->getUrl(2), 'connectTimeout', 0], false);
-					// Sauvegarde la base manuellement
+		
+		// Validation : le format de forgot doit être valide (timestamp_key)
+		if (!is_string($forgotData) || strpos($forgotData, '_') === false) {
+			$this->saveLog('Reset - Erreur : Format invalide pour [' . $userId . '] - Data: ' . var_export($forgotData, true));
+			$this->addOutput([
+				'redirect' => helper::baseUrl(),
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé manquante ou invalide',
+				'state' => false
+			]);
+			return;
+		}
+		
+		// Parser le format timestamp_key
+		$forgotParts = explode('_', $forgotData, 2);
+		$timestamp = (int) $forgotParts[0];
+		$storedKey = $forgotParts[1];
+		
+		// Validation : le lien ne doit pas être expiré (24 heures)
+		$isExpired = ($timestamp + 86400) < time();
+		if ($isExpired) {
+			$this->saveLog('Reset - Erreur : Lien expiré pour [' . $userId . '] - Timestamp: ' . $timestamp . ' - Age: ' . (time() - $timestamp) . 's');
+			$this->addOutput([
+				'redirect' => helper::baseUrl(),
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Lien expiré (24h maximum)',
+				'state' => false
+			]);
+			return;
+		}
+		
+		// Validation : la clé doit correspondre
+		if ($urlKey !== $storedKey) {
+			$this->saveLog('Reset - Erreur : Clé invalide pour [' . $userId . '] - Attendu: [' . $storedKey . '] - Reçu: [' . $urlKey . '] - Longueurs: ' . strlen($storedKey) . '/' . strlen($urlKey));
+			$this->addOutput([
+				'redirect' => helper::baseUrl(),
+				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé invalide',
+				'state' => false
+			]);
+			return;
+		}
+		
+		// Validation réussie - Log succès
+		$this->saveLog('Reset - Accès autorisé pour [' . $userId . ']');
+		
+		// Soumission du formulaire
+		if ($this->isPost()) {
+			$newPasswordInput = $this->getInput('userResetNewPassword', helper::FILTER_STRING_SHORT, true);
+			$confirmPasswordInput = $this->getInput('userResetConfirmPassword', helper::FILTER_STRING_SHORT, true);
+			
+			if ($newPasswordInput) {
+				// Vérifier que les deux mots de passe correspondent
+				if ($newPasswordInput !== $confirmPasswordInput) {
+					self::$inputNotices['userResetConfirmPassword'] = 'Incorrect';
+				} else {
+					// Hasher et enregistrer le nouveau mot de passe
+					$newPassword = $this->getInput('userResetNewPassword', helper::FILTER_PASSWORD, true);
+					$this->setData(['user', $userId, 'password', $newPassword], false);
+					// Réinitialiser la demande de reset
+					$this->setData(['user', $userId, 'forgot', 0], false);
+					// Débloquer le compte
+					$this->setData(['user', $userId, 'connectFail', 0], false);
+					$this->setData(['user', $userId, 'connectTimeout', 0], false);
+					// Sauvegarder
 					$this->saveDB('user');
-					// Valeurs en sortie
+					
+					$this->saveLog('Reset - Mot de passe modifié avec succès pour [' . $userId . ']');
+					
+					// Rediriger vers la page de login
 					$this->addOutput([
 						'notification' => helper::translate('Nouveau mot de passe enregistré'),
-						'redirect' => helper::baseUrl() . 'user/login/' . str_replace('/', '_', $this->getUrl()),
+						'redirect' => helper::baseUrl() . 'user/login',
 						'state' => true
 					]);
+					return;
 				}
 			}
-			// Valeurs en sortie
-			$this->addOutput([
-				'title' => helper::translate('Réinitialisation du mot de passe'),
-				'view' => 'reset',
-				'display' => self::DISPLAY_LAYOUT_LIGHT,
-			]);
 		}
+		
+		// Afficher le formulaire
+		$this->addOutput([
+			'title' => helper::translate('Réinitialisation du mot de passe'),
+			'view' => 'reset',
+			'display' => self::DISPLAY_LAYOUT_LIGHT,
+		]);
 	}
 
 	/**
