@@ -73,6 +73,9 @@ class common
 	const LOG_MAXSIZE = 1024 * 1024;
 	const LOG_MAXARCHIVE = 5;
 
+	// Profondeur des menus
+	const MENU_DEPTH = 5;
+
 	public static $actions = [];
 
 	public static $coreModuleIds = [

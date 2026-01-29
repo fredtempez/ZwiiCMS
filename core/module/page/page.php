@@ -374,18 +374,6 @@ class page extends common
 			) {
 				// Si le Title n'est pas vide, premier test pour positionner la notification du champ obligatoire
 				if ($this->getInput('pageEditTitle', helper::FILTER_ID, true) !== null && $this->getInput('pageEditTitle') !== '') {
-					// Validation de la profondeur du menu
-					$parentPageId = $this->getInput('pageEditParentPageId');
-					$maxDepth = $this->getData(['theme', 'menu', 'depth']) ?? 3;
-
-					if ($parentPageId && $this->calculatePageDepth($parentPageId) >= $maxDepth) {
-						// Valeurs en sortie
-						$this->addOutput([
-							'notification' => 'Profondeur maximale du menu atteinte (' . $maxDepth . ' niveaux). Sélectionnez une page parent moins profonde.',
-							'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2)
-						]);
-						return;
-					}
 
 					// Sauvegarde les données CSS et JS
 					$css = $this->getData(['page', $this->getUrl(2), 'css']);
@@ -800,7 +788,7 @@ class page extends common
 	 */
 	public function buildHierarchicalPageOptions($excludePageId = null, $currentDepth = 0, $maxDepth = null)
 	{
-		$maxDepth = $maxDepth ?? $this->getData(['theme', 'menu', 'depth']) ?? 3;
+		$maxDepth = $maxDepth ?? self::MENU_DEPTH;
 		$options = ['' => 'Aucune'];
 		$pages = $this->getHierarchy();
 
@@ -818,8 +806,9 @@ class page extends common
 	 * @param int $currentDepth Profondeur actuelle
 	 * @param int $maxDepth Profondeur maximale
 	 */
-	private function addPageOptionsRecursive(&$options, $hierarchy, $parentId = '', $excludePageId = null, $currentDepth = 0, $maxDepth = 3)
+	private function addPageOptionsRecursive(&$options, $hierarchy, $parentId = '', $excludePageId = null, $currentDepth = 0, $maxDepth = self::MENU_DEPTH)
 	{
+		// Une page au niveau maxDepth ne peut pas être parente car ses enfants dépasseraient la limite
 		if ($currentDepth >= $maxDepth) return;
 
 		// Si parentId est vide, on parcourt les clés du tableau (pages racines)

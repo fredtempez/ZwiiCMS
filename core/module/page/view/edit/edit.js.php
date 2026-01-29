@@ -590,17 +590,6 @@ pageEditHideTitleDOM.on("change", function() {
 var pageEditParentPageIdDOM = $("#pageEditParentPageId");
 pageEditParentPageIdDOM.on("change", function() {
 	var parentSelected = $(this).val();
-	var maxDepth = <?php echo $this->getData(['theme', 'menu', 'depth']) ?? 3; ?>;
-
-	// Calculer la profondeur actuelle
-	var currentDepth = calculatePageDepth(parentSelected);
-
-	// Valider la profondeur
-	if (currentDepth >= maxDepth) {
-		$(this).val(""); // Réinitialiser
-		core.alert("Profondeur maximale du menu atteinte (" + maxDepth + " niveaux). Sélectionnez une page parent moins profonde.");
-		return false;
-	}
 
 	if ($(this).val() === "" &&
 		!$('input[name=pageEditHideTitle]').is(':checked') ) {

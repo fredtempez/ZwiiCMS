@@ -1278,13 +1278,3 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	// Mettre à jour la version des données
 	$this->setData(['core', 'dataVersion', 140000]);
 }
-// Version 14.01.00
-if (
-	$this->getData(['core', 'dataVersion']) < 40100
-) {
-    // Nouvelle option de profondeur de menu
-    $this->setData(['theme', 'menu', 'depth', 4]);
-
-    // Mettre à jour la version des données
-	$this->setData(['core', 'dataVersion', 40100]);
-}

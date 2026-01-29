@@ -648,7 +648,14 @@ class layout extends common
                 asort($tempChildren);
                 $grandChildren = array_keys($tempChildren);
             }
-            $hasChildren = !empty($grandChildren) && $this->getData(['page', $childKey, 'hideMenuChildren']) === false;
+            
+            // Un élément a des enfants affichables seulement si :
+            // 1. Il a des enfants visibles
+            // 2. Les enfants ne sont pas cachés
+            // 3. On n'a pas atteint la profondeur maximale (depth + 1 <= maxDepth)
+            $hasChildren = !empty($grandChildren) 
+                && $this->getData(['page', $childKey, 'hideMenuChildren']) === false
+                && ($depth + 1 <= $maxDepth);
             
             // Classe CSS pour indiquer la présence d'enfants et la profondeur
             $itemClass = 'navDepth' . $depth . ($hasChildren ? ' navParent' : '');
@@ -675,12 +682,16 @@ class layout extends common
             $items .= '</a>';
             
             // Récursion pour les enfants de ce nœud
-            if ($hasChildren && $depth < $maxDepth) {
+            if ($hasChildren) {
                 $nextDepth = $depth + 1;
-                $cssClass = 'navSub navSubmenu' . $depth;
-                $items .= '<ul class="' . $cssClass . '">';
-                $items .= $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
-                $items .= '</ul>';
+                $childrenHtml = $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
+                // Générer le <ul> seulement s'il y a du contenu
+                if (!empty($childrenHtml)) {
+                    $cssClass = 'navSub navSubmenu' . $depth;
+                    $items .= '<ul class="' . $cssClass . '">';
+                    $items .= $childrenHtml;
+                    $items .= '</ul>';
+                }
             }
             
             $items .= '</li>';
@@ -693,7 +704,7 @@ class layout extends common
     {
         $items = '';
         $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
-        $maxDepth = $this->getData(['theme', 'menu', 'depth']) ?? 3;
+        $maxDepth = self::MENU_DEPTH;
 
         foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
              // Vérifier que c'est vraiment une page parente (parentPageId vide)
@@ -772,10 +783,14 @@ class layout extends common
             ) {
                 continue;
             }
-            $items .= '<ul class="navSub navSubmenu1">';
             // Récursion pour les enfants
-            $items .= $this->buildChildrenRecursive($childrenPageIds, 1, $maxDepth, $parentPageId, $currentPageId);
-            $items .= '</ul>';
+            $childrenHtml = $this->buildChildrenRecursive($childrenPageIds, 1, $maxDepth, $parentPageId, $currentPageId);
+            // Générer le <ul> seulement s'il y a du contenu
+            if (!empty($childrenHtml)) {
+                $items .= '<ul class="navSub navSubmenu1">';
+                $items .= $childrenHtml;
+                $items .= '</ul>';
+            }
         }
         return ($items);
     }
@@ -1452,7 +1467,7 @@ class layout extends common
      */
     private function addChildrenToSelect(&$leftItems, $childrenPageIds, $currentPageId, $depth = 1)
     {
-        $maxDepth = $this->getData(['theme', 'menu', 'depth']) ?? 3;
+        $maxDepth = self::MENU_DEPTH;
         
         if ($depth >= $maxDepth) {
             return;

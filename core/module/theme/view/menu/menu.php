@@ -86,19 +86,12 @@
                         'checked' => $this->getData(['theme', 'menu', 'loginLink'])
                     ]); ?>
                 </div>
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
                     ]); ?>
                 </div>
-                <div class="col3">
-                    <?php echo template::select('themeMenuDepth', theme::$menuDepths, [
-                        'label' => 'Profondeur du menu',
-                        'selected' => $this->getData(['theme', 'menu', 'depth']) ?? 2,
-                        'help' => 'Nombre de niveaux de menu autorisés (1-5). Nécessite des pages avec des parents pour utiliser plusieurs niveaux.'
-                    ]); ?>
-                </div>
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
                         'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
