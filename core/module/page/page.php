@@ -790,9 +790,31 @@ class page extends common
 	{
 		$maxDepth = $maxDepth ?? self::MENU_DEPTH;
 		$options = ['' => 'Aucune'];
-		$pages = $this->getHierarchy();
+		$hierarchy = $this->getHierarchy();
 
-		$this->addPageOptionsRecursive($options, $pages, '', $excludePageId, $currentDepth, $maxDepth);
+		// Parcourir la hiérarchie comme formatMenu le fait
+		foreach ($hierarchy as $parentPageId => $childrenPageIds) {
+			// Vérifier que c'est vraiment une page parente (parentPageId vide)
+			if ($this->getData(['page', $parentPageId, 'parentPageId']) !== '') {
+				continue;
+			}
+			// Ne pas afficher les pages du rôle supérieur
+			if ($this->getData(['page', $parentPageId, 'role']) > $this->getUser('role')) {
+				continue;
+			}
+			
+			// Ajouter la page racine
+			if ($parentPageId === $excludePageId) {
+				$options[$parentPageId] = '[' . $this->getData(['page', $parentPageId, 'title']) . ']';
+			} else {
+				$options[$parentPageId] = $this->getData(['page', $parentPageId, 'title']);
+			}
+			
+			// Appeler la récursion pour les enfants comme formatMenu le fait
+			if (!empty($childrenPageIds)) {
+				$this->addPageOptionsRecursive($options, $childrenPageIds, 1, $maxDepth, $excludePageId, $hierarchy);
+			}
+		}
 
 		return $options;
 	}
@@ -806,51 +828,52 @@ class page extends common
 	 * @param int $currentDepth Profondeur actuelle
 	 * @param int $maxDepth Profondeur maximale
 	 */
-	private function addPageOptionsRecursive(&$options, $hierarchy, $parentId = '', $excludePageId = null, $currentDepth = 0, $maxDepth = self::MENU_DEPTH)
+	private function addPageOptionsRecursive(&$options, $childrenPageIds, $depth, $maxDepth, $excludePageId, $hierarchy)
 	{
-		// Une page au niveau maxDepth ne peut pas être parente car ses enfants dépasseraient la limite
-		if ($currentDepth >= $maxDepth) return;
-
-		// Si parentId est vide, on parcourt les clés du tableau (pages racines)
-		if ($parentId === '') {
-			foreach ($hierarchy as $rootPageId => $children) {
-				if ($rootPageId === $excludePageId) continue;
-
-				// Vérifier les permissions
-				if (!$this->canViewPage($rootPageId)) continue;
-
-				// Indentation visuelle selon la profondeur
-				$indent = str_repeat('── ', $currentDepth);
-				$title = $indent . $this->getData(['page', $rootPageId, 'title']);
-
-				$options[$rootPageId] = $title;
-
-				// Récursion pour les enfants
-				$this->addPageOptionsRecursive($options, $hierarchy, $rootPageId, $excludePageId, $currentDepth + 1, $maxDepth);
+		// Arrêter la récursion si profondeur max atteinte (même logique que buildChildrenRecursive)
+		if ($depth >= $maxDepth) {
+			return;
+		}
+		
+		foreach ($childrenPageIds as $childKey) {
+			// Ne pas afficher les pages de rôle supérieur (même logique que buildChildrenRecursive)
+			if ($this->getData(['page', $childKey, 'role']) > $this->getUser('role')) {
+				continue;
 			}
-		} else {
-			// Si parentId n'est pas vide, on cherche les enfants directs de ce parent
-			$childrenPageIds = [];
-			foreach ($this->getData(['page']) as $pageId => $pageData) {
-				if ($pageData['parentPageId'] === $parentId) {
-					$childrenPageIds[] = $pageId;
+			
+			// Indentation visuelle selon la profondeur
+			$indent = '└' . str_repeat('-', $depth) . ' ';
+			
+			// Marquer la page en cours d'édition
+			if ($childKey === $excludePageId) {
+				$title = $indent . '[' . $this->getData(['page', $childKey, 'title']) . ']';
+			} else {
+				$title = $indent . $this->getData(['page', $childKey, 'title']);
+			}
+			
+			$options[$childKey] = $title;
+			
+			// Vérifier s'il y a des enfants (même logique que buildChildrenRecursive)
+			$grandChildren = [];
+			$allPages = $this->getData(['page']);
+			if (is_array($allPages)) {
+				$tempChildren = [];
+				foreach ($allPages as $pageId => $pageData) {
+					if (isset($pageData['parentPageId']) && $pageData['parentPageId'] === $childKey) {
+						if ($pageData['role'] <= $this->getUser('role')) {
+							$position = isset($pageData['position']) ? $pageData['position'] : 0;
+							$tempChildren[$pageId] = $position;
+						}
+					}
 				}
+				asort($tempChildren);
+				$grandChildren = array_keys($tempChildren);
 			}
-
-			foreach ($childrenPageIds as $pageId) {
-				if ($pageId === $excludePageId) continue;
-
-				// Vérifier les permissions
-				if (!$this->canViewPage($pageId)) continue;
-
-				// Indentation visuelle selon la profondeur
-				$indent = str_repeat('── ', $currentDepth);
-				$title = $indent . $this->getData(['page', $pageId, 'title']);
-
-				$options[$pageId] = $title;
-
-				// Récursion pour les enfants
-				$this->addPageOptionsRecursive($options, $hierarchy, $pageId, $excludePageId, $currentDepth + 1, $maxDepth);
+			
+			// Récursion si enfants et profondeur permise
+			if (!empty($grandChildren) && ($depth + 1 <= $maxDepth)) {
+				$nextDepth = $depth + 1;
+				$this->addPageOptionsRecursive($options, $grandChildren, $nextDepth, $maxDepth, $excludePageId, $hierarchy);
 			}
 		}
 	}

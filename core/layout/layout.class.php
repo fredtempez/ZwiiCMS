@@ -1490,7 +1490,7 @@ class layout extends common
                 . ($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '')
                 . ($this->getData(['page', $childKey, 'position']) === 0 ? 'pageHidden' : '')
                 . '">'
-                . str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $depth)
+                . '└' . str_repeat('-', $depth) . ' '
                 . $this->getData(['page', $childKey, 'shortTitle'])
                 . '</option>';
             
