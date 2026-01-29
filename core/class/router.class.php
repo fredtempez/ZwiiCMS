@@ -335,8 +335,8 @@ class core extends common
 			$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 			foreach ($levelColors as $level => $colors) {
 				$zIndex = 999 + $level;
-				$position = $level === 1 ? 'absolute' : 'absolute; left: 100%; top: 0';
-				$css .= 'nav .navSubmenu' . $level . ' { display: none; position: ' . $position . '; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; }';
+				$position = $level === 1 ? 'absolute' : 'absolute; left: 50%; top: 0';
+				$css .= 'nav li ul.navSubmenu' . $level . ' { display: none; position: ' . $position . '; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; }';
 				$css .= 'nav .navLevel' . $level . ' { padding-left: 15px; background-color: ' . $colors['normal'] . '; }';
 				$css .= 'nav .navLevel' . $level . ':hover { background-color: ' . $colors['hover'] . '; }';
 			}

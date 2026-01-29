@@ -679,6 +679,11 @@ class layout extends common
             // Type de menu (texte, icône, etc.)
             $items .= $this->getMenuLabel($childKey);
             
+            // Afficher l'icône de déroulement si enfants visibles
+            if ($hasChildren) {
+                $items .= template::ico('down', ['margin' => 'left']);
+            }
+            
             $items .= '</a>';
             
             // Récursion pour les enfants de ce nœud
