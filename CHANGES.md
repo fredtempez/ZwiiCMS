@@ -7,6 +7,19 @@
 - **Navigation hiérarchique** : Support des sous-menus jusqu'à 4 niveaux de profondeur pour une organisation plus flexible du contenu
 
 ### 🛠️ Corrections
+- **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe.
+- **Validation des dates** : Ajout d'une validation robuste du format de date dans le filtre FILTER_DATETIME
+  - Correction automatique des années avec plus de 4 chiffres (ex: 20026 → 2026)
+  - Validation du format ISO 8601 (YYYY-MM-DDTHH:MM)
+  - Gestion des exceptions pour éviter les erreurs fatales lors du parsing de dates invalides
+  - Retour cohérent (null) en cas de format invalide
+
+## Version 14.01.00
+
+### 🚀 Améliorations
+- **Navigation hiérarchique** : Support des sous-menus jusqu'à 4 niveaux de profondeur pour une organisation plus flexible du contenu
+
+### 🛠️ Corrections
 - **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe
 
 ## Version 14.00.00
