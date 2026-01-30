@@ -681,7 +681,9 @@ class layout extends common
             
             // Afficher l'icône de déroulement si enfants visibles
             if ($hasChildren) {
-                $items .= template::ico('down', ['margin' => 'left']);
+                // Niveau 1 : flèche vers le bas, niveaux suivants : flèche vers la droite
+                $icon = ($depth <= 0) ? 'down' : 'right-dir';
+                $items .= template::ico($icon, ['margin' => 'left']);
             }
             
             $items .= '</a>';

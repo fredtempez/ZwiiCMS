@@ -332,16 +332,22 @@ class core extends common
 			$css .= 'nav .navSub a { background-color: var(--submenu-bg); }';
             
             // Générer les styles pour les sous-menus multi-niveaux
+			// Propriétés communes à tous les sous-menus
+			$css .= '[class*="navSubmenu"] { display: none; position: absolute; width: 200px; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
+			$css .= '[class*="navLevel"] { padding-left: 15px; }';
+			// Propriétés communes aux sous-menus de niveau 2 et supérieur
+			$css .= '.navDepth1 > ul[class*="navSubmenu"], .navDepth2 > ul[class*="navSubmenu"], .navDepth3 > ul[class*="navSubmenu"], .navDepth4 > ul[class*="navSubmenu"] { top: 20px; left: 50%; }';
+			
 			$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 			foreach ($levelColors as $level => $colors) {
 				$zIndex = 999 + ($level * 10);
 				if ($level === 1) {
-					$css .= 'nav > ul > li > ul.navSubmenu1, .navDepth0 > ul.navSubmenu1 { display: none; position: absolute; top: 100%; left: 0; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
+					$css .= 'nav > ul > li > ul.navSubmenu1, .navDepth0 > ul.navSubmenu1 { top: 100%; left: 0; z-index: ' . $zIndex . '; }';
 				} else {
 					$parentDepth = $level - 1;
-					$css .= '.navDepth' . $parentDepth . ' > ul.navSubmenu' . $level . ' { display: none; position: absolute; top: 20px; left: 50%; width: 200px; z-index: ' . $zIndex . '; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
+					$css .= '.navDepth' . $parentDepth . ' > ul.navSubmenu' . $level . ' { z-index: ' . $zIndex . '; }';
 				}
-				$css .= 'nav .navLevel' . $level . ' { padding-left: 15px; background-color: ' . $colors['normal'] . '; }';
+				$css .= 'nav .navLevel' . $level . ' { background-color: ' . $colors['normal'] . '; }';
 				$css .= 'nav .navLevel' . $level . ':hover { background-color: ' . $colors['hover'] . '; }';
 			}
 
