@@ -467,9 +467,26 @@ class helper
 				break;
 			case self::FILTER_DATETIME:
 				$timezone = new DateTimeZone(core::$timezone);
-				$date = new DateTime($text);
-				$date->setTimezone($timezone);
-				$text = (int) $date->format('U');
+				if ($text) {
+					// Validation et nettoyage du format de date
+					// Détecte et corrige les années avec plus de 4 chiffres (ex: 20026 -> 2026)
+					$text = preg_replace('/^(\d{5,})(-\d{2}-\d{2}T\d{2}:\d{2})/', substr('$1', 0, 4) . '$2', $text);
+					
+					// Validation du format datetime (ISO 8601 basique: YYYY-MM-DDTHH:MM ou YYYY-MM-DDTHH:MM:SS)
+					if (!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/', $text)) {
+						// Format invalide, retourne null
+						$text = null;
+					} else {
+						try {
+							$date = new DateTime($text);
+							$date->setTimezone($timezone);
+							$text = (int) $date->format('U');
+						} catch (Exception $e) {
+							// En cas d'erreur de parsing (date invalide), retourne null
+							$text = null;
+						}
+					}
+				}
 				break;
 			case self::FILTER_FLOAT:
 				$text = str_replace(',', '.', $text);  // Remplacer les virgules par des points
