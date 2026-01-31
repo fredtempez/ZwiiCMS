@@ -161,7 +161,15 @@ core.toggleAdminBar = function() {
     // Lecture de la configuration de la barre
     var timerBarValue = "<?php echo $this->getData(['config','timerBar']); ?>";
 
-    // Si la barre est en mode fixe
+    // Sur mobile (≤767px), forcer le mode fixe (pas de souris pour déclencher l'escamotable)
+    if (window.innerWidth <= 767) {
+        bar.style.display = 'block';
+        bar.setAttribute('class', 'fixed');
+        document.body.classList.add('bar-fixed');
+        return;
+    }
+
+    // Si la barre est en mode fixe (configuration utilisateur)
     if (timerBarValue === 'false') {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
@@ -232,6 +240,19 @@ core.toggleAdminBar = function() {
 core.start = function () {
     // Initialiser le basculement de la barre d'administration
     core.toggleAdminBar();
+    
+    // Gérer le changement d'orientation/taille d'écran pour réappliquer la logique de la barre
+    window.addEventListener('resize', function() {
+        // Supprimer les classes existantes
+        const bar = document.getElementById('bar');
+        if (bar) {
+            document.body.classList.remove('bar-fixed');
+            bar.removeAttribute('class');
+            // Réinitialiser la barre
+            core.toggleAdminBar();
+        }
+    });
+    
     /**
      * Remonter en haut au clic sur le bouton
      */
