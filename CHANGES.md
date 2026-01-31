@@ -29,14 +29,6 @@
   - Retour cohérent (null) en cas de format invalide
 - **Barre d'administration** : Correction du positionnement à 768px (padding-top appliqué correctement dans tous les breakpoints)
 
-## Version 14.01.00
-
-### 🚀 Améliorations
-- **Navigation hiérarchique** : Support des sous-menus jusqu'à 4 niveaux de profondeur pour une organisation plus flexible du contenu
-
-### 🛠️ Corrections
-- **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe
-
 ## Version 14.00.00
 
 ### 🚀 Base de données JsonDB améliorée
