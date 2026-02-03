@@ -1,6 +1,5 @@
 # Notes de mises à jour
 
-
 ## Version 14.01.00
 
 ### 🚀 Améliorations
@@ -21,6 +20,8 @@
   - Media queries consolidées et cohérentes
 
 ### 🛠️ Corrections
+- **Déconnexion intempestive** : Corrige la déconnexion automatique causée par des liens vers des ressources inexistantes (images, CSS, JS, etc.)
+  - Les ressources statiques 404 retournent maintenant une erreur Apache directe sans passer par le routeur PHP
 - **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe.
 - **Validation des dates** : Ajout d'une validation robuste du format de date dans le filtre FILTER_DATETIME
   - Correction automatique des années avec plus de 4 chiffres (ex: 20026 → 2026)
