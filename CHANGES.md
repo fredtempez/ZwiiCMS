@@ -20,6 +20,10 @@
   - Media queries consolidées et cohérentes
 
 ### 🛠️ Corrections
+#### ⛽️ Gestion des plugins 
+- Corrige le chargement des plugins depuis le store en ligne. 
+- Corrige la méthode de récupération des données de pages dans la gestion des extensions pour la rendre compatible avec le cryptage des bases.
+#### 🔧 Autres corrections
 - **Déconnexion intempestive** : Corrige la déconnexion automatique causée par des liens vers des ressources inexistantes (images, CSS, JS, etc.)
   - Les ressources statiques 404 retournent maintenant une erreur Apache directe sans passer par le routeur PHP
 - **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe.
