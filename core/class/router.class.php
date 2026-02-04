@@ -331,13 +331,6 @@ class core extends common
 			$css .= 'nav #burgerText { color: ' . $menuColors['text'] . '; }';
 			$css .= 'nav .navSub a { background-color: var(--submenu-bg); }';
             
-            // Générer les styles pour les sous-menus multi-niveaux
-			// Propriétés communes à tous les sous-menus
-			$css .= '[class*="navSubmenu"] { display: none; position: absolute; width: 200px; margin-left: 0; padding-left: 0; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }';
-			$css .= '[class*="navLevel"] { padding-left: 15px; }';
-			// Propriétés communes aux sous-menus de niveau 2 et supérieur
-			$css .= '.navDepth1 > ul[class*="navSubmenu"], .navDepth2 > ul[class*="navSubmenu"], .navDepth3 > ul[class*="navSubmenu"], .navDepth4 > ul[class*="navSubmenu"] { top: 20px; left: 50%; }';
-			
 			$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 			foreach ($levelColors as $level => $colors) {
 				$zIndex = 999 + ($level * 10);

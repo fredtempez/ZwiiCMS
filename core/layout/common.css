@@ -585,6 +585,28 @@ nav::before {
     display: flex;
 }
 
+/* Sous-menus multi-niveaux (règles génériques, hors thème) */
+[class*="navSubmenu"] {
+    display: none;
+    position: absolute;
+    width: 200px;
+    margin-left: 0;
+    padding-left: 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+[class*="navLevel"] {
+    padding-left: 15px;
+}
+
+.navDepth1 > ul[class*="navSubmenu"],
+.navDepth2 > ul[class*="navSubmenu"],
+.navDepth3 > ul[class*="navSubmenu"],
+.navDepth4 > ul[class*="navSubmenu"] {
+    top: 20px;
+    left: 50%;
+}
+
 @media screen and (min-width: 769px) {
     nav #menu {
         display: block;
@@ -1667,12 +1689,6 @@ th.col12 {
     margin: 1px;
 }
 
-@media screen and (min-width: 769px) {
-    body {
-        margin: 0;
-    }
-}
-
 /* =========================================
    MEDIA QUERIES SIMPLIFIÉES - 3 BREAKPOINTS
    ========================================= */
@@ -1896,6 +1912,38 @@ th.col12 {
     nav .zwiico-cancel {
         font-size: 1.5em;
     }
+
+    /* Sous-menus multi-niveaux en mode mobile */
+    nav [class*="navSubmenu"],
+    nav .navSub {
+        position: static;
+        width: 100%;
+        left: 0;
+        top: auto;
+        box-shadow: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    nav li.navParent {
+        position: relative;
+    }
+
+    nav [class*="navSubmenu"] a,
+    nav .navSub a {
+        display: block;
+        width: 100%;
+    }
+
+    nav #menu .navLevel1 { padding-left: 15px; }
+    nav #menu .navLevel2 { padding-left: 30px; }
+    nav #menu .navLevel3 { padding-left: 45px; }
+    nav #menu .navLevel4 { padding-left: 60px; }
+
+    nav #menu .navLevel1 > a { padding-left: 15px; }
+    nav #menu .navLevel2 > a { padding-left: 30px; }
+    nav #menu .navLevel3 > a { padding-left: 45px; }
+    nav #menu .navLevel4 > a { padding-left: 60px; }
 
     /* Footer */
     body > footer {

@@ -348,6 +348,43 @@ core.start = function () {
     });
 
 
+    /**
+     * Ouverture des sous-menus en mode burger (tap au lieu du survol)
+     */
+    function bindBurgerSubmenus() {
+        var isMobile = $(window).width() <= 768;
+        var parentLinks = $("nav li.navParent > a");
+
+        parentLinks.off(".burgerSub");
+
+        if (isMobile) {
+            // Tout replier par défaut en affichage burger
+            $("nav .navSub, nav ul[class*='navSubmenu']").hide();
+
+            parentLinks.on("click.burgerSub", function (e) {
+                var $link = $(this);
+                var $submenu = $link.siblings(".navSub, ul[class*='navSubmenu']");
+
+                if ($submenu.length) {
+                    e.preventDefault();
+
+                    // Replier les autres sous-menus du même niveau
+                    $link.parent("li").siblings("li.navParent").children(".navSub, ul[class*='navSubmenu']").slideUp();
+
+                    // Ouvrir/fermer le sous-menu ciblé
+                    $submenu.slideToggle();
+                }
+            });
+        } else {
+            // Nettoyage de l'état inline lors du retour en affichage desktop
+            $("nav .navSub, nav ul[class*='navSubmenu']").removeAttr("style");
+        }
+    }
+
+    bindBurgerSubmenus();
+    $(window).on("resize", bindBurgerSubmenus);
+
+
 
     /**
      * Choix de page dans la barre de membre
@@ -550,6 +587,7 @@ $(document).ready(function () {
      * Affiche le sous-menu quand il est sticky
      */
     $("nav").mouseenter(function () {
+        if ($(window).width() <= 768) { return; }
         $("#navfixedlogout .navSub").css({
             'pointer-events': 'auto'
         });
@@ -558,6 +596,7 @@ $(document).ready(function () {
         });
     });
     $("nav").mouseleave(function () {
+        if ($(window).width() <= 768) { return; }
         $("#navfixedlogout .navSub").css({
             'pointer-events': 'none'
         });
@@ -578,6 +617,7 @@ $(document).ready(function () {
         
         // Gestion du survol pour les éléments avec enfants (navParent)
         $('nav li.navParent').on('mouseenter', function(e) {
+            if ($(window).width() <= 768) { return; }
             var $li = $(this);
             
             // Trouver le sous-menu direct de cet élément
@@ -596,6 +636,7 @@ $(document).ready(function () {
         
         // Quand on quitte un élément parent
         $('nav li.navParent').on('mouseleave', function(e) {
+            if ($(window).width() <= 768) { return; }
             var $li = $(this);
             var $submenu = $li.children('ul[class*="navSubmenu"]');
             
@@ -611,12 +652,14 @@ $(document).ready(function () {
         
         // Maintenir le sous-menu visible quand on le survole
         $('ul[class*="navSubmenu"]').on('mouseenter', function(e) {
+            if ($(window).width() <= 768) { return; }
             $(this).css('display', 'block');
             e.stopPropagation();
         });
         
         // Quand on quitte un sous-menu
         $('ul[class*="navSubmenu"]').on('mouseleave', function(e) {
+            if ($(window).width() <= 768) { return; }
             var $submenu = $(this);
             var $parentLi = $submenu.parent('li');
             
