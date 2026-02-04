@@ -263,13 +263,13 @@ class common
 	// Bases essentielles chargées au démarrage (optimisé avec JsonDb cache)
 	private $essentialDataFiles = [
 		'config',
-		'user', 
+		'user',
 		'locale',
-		'core', 
+		'core',
 		'page',
 		'module'
 	];
-	
+
 
 	// Configuration JsonDb améliorée
 	private $jsonDbConfig = null;
@@ -602,78 +602,78 @@ class common
 		return is_object($success);
 	}
 
-/**
-     * Sauvegarde des données
-     * @param array $keys Clé(s) des données (les premiers éléments sont le chemin, le dernier est la valeur)
-     * @param bool|null $save Stratégie de sauvegarde :
-     * - null (défaut) : Utilise la configuration actuelle de JsonDb (sauvegarde immédiate par défaut, sauf si setAutoSave(false) a été appelé).
-     * - true : Force la sauvegarde immédiate.
-     * - false : Empêche la sauvegarde immédiate (pour les traitements par lots).
-     * @return bool Succès de l'opération
-     */
-    public function setData($keys = [], $save = null)
-    {
-        // Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
-        if (
-            !empty(self::$inputNotices) or
-            empty($keys)
-        ) {
-            return false;
-        }
+	/**
+	 * Sauvegarde des données
+	 * @param array $keys Clé(s) des données (les premiers éléments sont le chemin, le dernier est la valeur)
+	 * @param bool|null $save Stratégie de sauvegarde :
+	 * - null (défaut) : Utilise la configuration actuelle de JsonDb (sauvegarde immédiate par défaut, sauf si setAutoSave(false) a été appelé).
+	 * - true : Force la sauvegarde immédiate.
+	 * - false : Empêche la sauvegarde immédiate (pour les traitements par lots).
+	 * @return bool Succès de l'opération
+	 */
+	public function setData($keys = [], $save = null)
+	{
+		// Pas d'enregistrement lorsqu'une notice est présente ou tableau transmis vide
+		if (
+			!empty(self::$inputNotices) or
+			empty($keys)
+		) {
+			return false;
+		}
 
-        // Validation des clés
-        if (!is_array($keys) || count($keys) < 2) {
-            return false;
-        }
+		// Validation des clés
+		if (!is_array($keys) || count($keys) < 2) {
+			return false;
+		}
 
-        // Empêcher la sauvegarde d'une donnée nulle.
-        if (gettype($keys[count($keys) - 1]) === NULL) {
-            return false;
-        }
+		// Empêcher la sauvegarde d'une donnée nulle.
+		if (gettype($keys[count($keys) - 1]) === NULL) {
+			return false;
+		}
 
-        // Vérifier si la base est chargée, sinon la charger automatiquement
-        if (empty($this->dataFiles[$keys[0]])) {
-            $this->loadDataFile($keys[0]);
-        }
+		// Vérifier si la base est chargée, sinon la charger automatiquement
+		if (empty($this->dataFiles[$keys[0]])) {
+			$this->loadDataFile($keys[0]);
+		}
 
-        // Vérifier que la base de données existe après tentative de chargement
-        if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
-            return false;
-        }
+		// Vérifier que la base de données existe après tentative de chargement
+		if (!isset($this->dataFiles[$keys[0]]) || empty($this->dataFiles[$keys[0]])) {
+			return false;
+		}
 
-        // Initialisation du retour en cas d'erreur de descripteur
-        $success = false;
+		// Initialisation du retour en cas d'erreur de descripteur
+		$success = false;
 
-        try {
-            // Construire la requête dans la base si au moins 1 clé
-            if (count($keys) >= 1) {
-                // Descripteur de la base
-                $db = (object) $this->dataFiles[$keys[0]];
-                
-                // La première clé est le nom du module/fichier
-                $query = $keys[0];
-                
-                // Construire la requête (notation par points)
-                // On boucle jusqu'à l'avant-dernier élément (le dernier étant la valeur)
-                for ($i = 1; $i < count($keys) - 1; $i++) {
-                    $query .= '.' . $keys[$i];
-                }
-                
-                // Appliquer la modification
-                // $save étant null par défaut, c'est JsonDb qui décidera s'il faut écrire sur le disque
-                // en fonction de son état interne (setAutoSave)
-                $success = $db->set($query, $keys[count($keys) - 1], $save);
-            }
-        } catch (Exception $e) {
-            // Log de l'erreur si possible
-            if (method_exists($this, 'saveLog')) {
-                $this->saveLog('Erreur setData: ' . $e->getMessage() . ' pour les clés: ' . implode('.', $keys));
-            }
-            return false;
-        }
+		try {
+			// Construire la requête dans la base si au moins 1 clé
+			if (count($keys) >= 1) {
+				// Descripteur de la base
+				$db = (object) $this->dataFiles[$keys[0]];
 
-        return $success;
-    }
+				// La première clé est le nom du module/fichier
+				$query = $keys[0];
+
+				// Construire la requête (notation par points)
+				// On boucle jusqu'à l'avant-dernier élément (le dernier étant la valeur)
+				for ($i = 1; $i < count($keys) - 1; $i++) {
+					$query .= '.' . $keys[$i];
+				}
+
+				// Appliquer la modification
+				// $save étant null par défaut, c'est JsonDb qui décidera s'il faut écrire sur le disque
+				// en fonction de son état interne (setAutoSave)
+				$success = $db->set($query, $keys[count($keys) - 1], $save);
+			}
+		} catch (Exception $e) {
+			// Log de l'erreur si possible
+			if (method_exists($this, 'saveLog')) {
+				$this->saveLog('Erreur setData: ' . $e->getMessage() . ' pour les clés: ' . implode('.', $keys));
+			}
+			return false;
+		}
+
+		return $success;
+	}
 
 	/**
 	 * Accède aux données
@@ -815,7 +815,7 @@ class common
 					'backup' => file_exists('site/data/.backup'),
 					'update' => false,
 				];
-				
+
 				// Fusion avec configuration spécifique si existe
 				$dataFilesConfig = $this->getDataFilesConfig();
 				if (isset($dataFilesConfig[$keys])) {
@@ -851,7 +851,7 @@ class common
 				'backup' => file_exists('site/data/.backup'),
 				'update' => false,
 			];
-			
+
 			// Fusionner avec la configuration JsonDb globale si définie
 			if (isset($this->jsonDbConfig)) {
 				$config = array_merge($config, $this->jsonDbConfig);
@@ -859,7 +859,7 @@ class common
 				// Configuration par défaut si aucune configuration globale
 				$config = array_merge($config, self::JSONDB_DEFAULT_CONFIG);
 			}
-			
+
 			// Fusionner avec la configuration spécifique à la base de données
 			$dataFilesConfig = $this->getDataFilesConfig();
 			if (isset($dataFilesConfig[$dataFile])) {
@@ -886,7 +886,7 @@ class common
 		return array_key_exists($dataFile, $this->dataFiles) && !empty($this->dataFiles[$dataFile]);
 	}
 
-	
+
 	/**
 	 * Charge les bases de données requises pour un module spécifique
 	 * @param string $moduleId ID du module
@@ -925,7 +925,7 @@ class common
 		}
 	}
 
-	
+
 	/**
 	 * Retourne la configuration des bases de données
 	 * Priorité : config.json > defaultdata.php
@@ -941,7 +941,7 @@ class common
 				return $configData['config']['database'];
 			}
 		}
-		
+
 		// 2. Sinon, utiliser la configuration par défaut depuis defaultdata.php (priorité 2)
 		require_once('core/module/install/ressource/defaultdata.php');
 		return init::$dataFilesConfig ?? [];
@@ -1582,7 +1582,7 @@ class common
 
 			// Création de la miniature
 			$virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-			
+
 			// Gestion de la transparence pour les PNG et GIF
 			if (in_array($extension, ['png', 'gif'])) {
 				imagealphablending($virtual_image, false);
@@ -1592,10 +1592,16 @@ class common
 			}
 
 			imagecopyresampled(
-				$virtual_image, $source_image, 
-				0, 0, 0, 0, 
-				$desired_width, $desired_height, 
-				$width, $height
+				$virtual_image,
+				$source_image,
+				0,
+				0,
+				0,
+				0,
+				$desired_width,
+				$desired_height,
+				$width,
+				$height
 			);
 
 			// Sauvegarde de la miniature
@@ -1628,7 +1634,7 @@ class common
 			if ($result && file_exists($dest)) {
 				return $dest;
 			}
-			
+
 			error_log("Échec de la sauvegarde de la miniature: $dest");
 			return false;
 
@@ -1659,15 +1665,15 @@ class common
 
 		// Récupérer les informations du chemin
 		$pathInfo = pathinfo($sourcePath);
-		
+
 		// Remplacer 'source' par 'thumb' dans le répertoire
 		$dirName = str_replace('source', 'thumb', $pathInfo['dirname']);
-		
+
 		// Construire le nouveau nom de fichier avec le préfixe
 		$filename = $pathInfo['filename'];
 		$extension = $pathInfo['extension'] ?? '';
 		$newFilename = $prefix . $filename . ($extension ? '.' . $extension : '');
-		
+
 		// Retourner le chemin complet de la miniature
 		return $dirName . '/' . $newFilename;
 	}
@@ -1926,23 +1932,23 @@ class common
 
 	/**
 	 * Gère la rotation et la compression des fichiers journaux
-     * @return bool True si la rotation a réussi, false sinon
-     */
+	 * @return bool True si la rotation a réussi, false sinon
+	 */
 	private function rotateLogFile(): bool
 	{
 		$logFile = self::DATA_DIR . 'journal.log';
-		
+
 		// 1. Vérifications préliminaires
 		if (!is_readable($logFile) || !is_writable(dirname($logFile))) {
 			trigger_error('Fichier journal inaccessible ou dossier non inscriptible', E_USER_WARNING);
 			return false;
 		}
-		
+
 		// 2. Vérifier si rotation nécessaire (taille minimale)
 		if (filesize($logFile) < 1024) { // < 1KB
 			return true; // Pas besoin de rotation
 		}
-		
+
 		// 3. Verrouillage du fichier pour éviter les race conditions
 		$lockFile = fopen($logFile, 'r');
 		if (!flock($lockFile, LOCK_EX | LOCK_NB)) {
@@ -1950,7 +1956,7 @@ class common
 			trigger_error('Fichier journal déjà utilisé par un autre processus', E_USER_WARNING);
 			return false;
 		}
-		
+
 		$tempFile = null;
 		try {
 			// 4. Décaler d'abord les anciennes archives
@@ -2024,7 +2030,7 @@ class common
 				flock($lockFile, LOCK_UN);
 				fclose($lockFile);
 			}
-			
+
 			trigger_error('Erreur lors de la rotation du journal: ' . $e->getMessage(), E_USER_WARNING);
 			return false;
 		}
@@ -2069,10 +2075,10 @@ class common
 	{
 		// Si aucun userId n'est fourni, utiliser l'id de l'utilisateur courant
 		$userId = $userId ?? $this->getUser('id');
-		
+
 		// Vérifier si l'utilisateur est un administrateur
 		switch ($this->getData(['user', $userId, 'role'])) {
-			case self::ROLE_ADMIN:				
+			case self::ROLE_ADMIN:
 				return self::FILE_DIR . 'source/';
 			case self::ROLE_EDITOR:
 			case self::ROLE_MODERATOR:
@@ -2092,24 +2098,28 @@ class common
 	 */
 	public function getNormalizedFilePath($filePath, $userId = null)
 	{
-	
+
 		// Récupérer l'ID utilisateur si non fourni
 		$userId = $userId ?? $this->getUser('id');
 
 		// Contrôle de la saisie et des accès de l'utilisateur
 		// Pas de chemin  ou pas d'accès au filemanager
-		if (empty($filePath ||
+		if (
+			empty(
+			$filePath ||
 			$this->getUserPath($userId) === 'none'
-			)) return null;
+		)
+		)
+			return null;
 
 		// Récupérer l'utilisateur et son rôle
 		$userPath = $this->getUserPath($userId);
-		
+
 		// Si le chemin commence déjà par 'site/file/source/', on le retourne tel quel
 		if (strpos($filePath, 'site/file/source/') === 0) {
 			return $filePath;
 		}
-		
+
 		// Sinon, on ajoute le chemin de l'utilisateur au début du chemin du fichier
 		return $userPath . ltrim($filePath, '/');
 
@@ -2119,7 +2129,8 @@ class common
 	/**
 	 * Retourne un chemin relatif depuis la racine du site sans la baseUrl
 	 */
-	public function getRelativePath($path) {
+	public function getRelativePath($path)
+	{
 		return str_replace(helper::baseUrl(false), '', $path);
 	}
 
@@ -2160,13 +2171,13 @@ class common
 					'menu' => []
 				];
 
-// Récupérer les enfants de cette page en cherchant les pages avec ce parent
-			$grandChildren = [];
-			foreach ($this->getData(['page']) as $pageId => $pageData) {
-				if ($pageData['parentPageId'] === $childId) {
-					$grandChildren[] = $pageId;
+				// Récupérer les enfants de cette page en cherchant les pages avec ce parent
+				$grandChildren = [];
+				foreach ($this->getData(['page']) as $pageId => $pageData) {
+					if ($pageData['parentPageId'] === $childId) {
+						$grandChildren[] = $pageId;
+					}
 				}
-			}
 
 				// Ajouter les enfants récursivement
 				if (!empty($grandChildren)) {
@@ -2178,4 +2189,4 @@ class common
 		}
 	}
 
-	}
+}

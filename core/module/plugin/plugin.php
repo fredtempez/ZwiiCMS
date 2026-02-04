@@ -531,17 +531,23 @@ class plugin extends common
 
 		foreach ($i18nSites as $keyi18n => $valuei18n) {
 
-			// Clés moduleIds dans les pages de la langue
-			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/page.json'), true);
+			// Clés moduleIds dans les pages de la langue (lecture via JsonDb avec langue ciblée)
+			$this->loadDataFile('page', $keyi18n);
+			$pageDb = $this->dataFiles['page'] ?? null;
+			$pagesList = [];
+			if ($pageDb) {
+				$pageData = $pageDb->get('page');
+				$pagesList = is_array($pageData) ? $pageData : [];
+			}
 
 			// Extraire les clés des modules
-			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pages['page'], 'moduleId', 'SORT_DESC'), 'strlen');
+			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pagesList, 'moduleId', 'SORT_DESC'), 'strlen');
 
 			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
-				if (!empty($value)) {
+				if (!empty($value) && isset($pagesList[$key])) {
 					$pagesInfos[$keyi18n][$key]['pageId'] = $key;
-					$pagesInfos[$keyi18n][$key]['title'] = $pages['page'][$key]['title'];
+					$pagesInfos[$keyi18n][$key]['title'] = $pagesList[$key]['title'] ?? '';
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
 				}
 			}

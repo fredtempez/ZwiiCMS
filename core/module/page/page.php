@@ -879,23 +879,6 @@ class page extends common
 	}
 
 	/**
-	 * Vérifie si l'utilisateur peut voir la page
-	 * @param string $pageId ID de la page
-	 * @return bool
-	 */
-	private function canViewPage($pageId)
-	{
-		$pageRole = $this->getData(['page', $pageId, 'role']);
-		$pageProfil = $this->getData(['page', $pageId, 'profil']);
-
-		// Page publique ou utilisateur connecté avec permissions suffisantes
-		return $pageRole === self::ROLE_VISITOR || (
-			$this->isConnected() && 
-			($this->getUser('role') * self::MAX_PROFILS + $this->getUser('profil')) >= ($pageRole * self::MAX_PROFILS + $pageProfil)
-		);
-	}
-
-	/**
 	 * Calcule la profondeur d'une page dans la hiérarchie
 	 * @param string $pageId ID de la page
 	 * @param int $currentDepth Profondeur actuelle pour la récursion
