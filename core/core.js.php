@@ -585,25 +585,11 @@ if (document.readyState === 'loading') {
 $(document).ready(function () {
     /**
      * Affiche le sous-menu quand il est sticky
+     * Les sous-menus doivent rester interactifs même quand on quitte la barre principale
      */
-    $("nav").mouseenter(function () {
-        if ($(window).width() <= 768) { return; }
-        $("#navfixedlogout .navSub").css({
-            'pointer-events': 'auto'
-        });
-        $("#navfixedconnected .navSub").css({
-            'pointer-events': 'auto'
-        });
-    });
-    $("nav").mouseleave(function () {
-        if ($(window).width() <= 768) { return; }
-        $("#navfixedlogout .navSub").css({
-            'pointer-events': 'none'
-        });
-        $("#navfixedconnected .navSub").css({
-            'pointer-events': 'none'
-        });
-    });
+    if ($(window).width() > 768) {
+        $("#navfixedlogout .navSub, #navfixedconnected .navSub").css({ 'pointer-events': 'auto' });
+    }
 
     /**
      * Gestion des sous-menus multi-niveaux

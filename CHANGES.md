@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 14.01.01
+- Corrige un problème empêchant la sélection du survol du sous-menu quand le menu est hors du site (en haut de la page).
+
 ## Version 14.01.00
 
 ### 🚀 Améliorations

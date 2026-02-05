@@ -634,9 +634,8 @@ nav::before {
 
 #navfixedconnected .navSub,
 #navfixedlogout .navSub {
-    pointer-events: none;
+    pointer-events: auto;
 }
-
 
 /* Menu vertical */
 
