@@ -11,6 +11,41 @@ class layout extends common
     }
 
     /**
+     * Génère le label d'un item de menu selon son type
+     * @param string $pageId ID de la page
+     * @return string Label HTML
+     */
+    private function getMenuLabel($pageId)
+    {
+        switch ($this->getData(['page', $pageId, 'typeMenu'])) {
+            case '':
+                return $this->getData(['page', $pageId, 'shortTitle']);
+            case 'text':
+                return $this->getData(['page', $pageId, 'shortTitle']);
+            case 'icon':
+                if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />';
+                } else {
+                    return $this->getData(['page', $pageId, 'shortTitle']);
+                }
+            case 'icontitle':
+                if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" data-tippy-content="' . $this->getData(['page', $pageId, 'shortTitle']) . '"/>';
+                } else {
+                    return $this->getData(['page', $pageId, 'shortTitle']);
+                }
+            case 'icontext':
+                if ($this->getData(['page', $pageId, 'iconUrl']) != '') {
+                    return '<img alt="' . $this->getData(['page', $pageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $pageId, 'iconUrl']) . '" />' . $this->getData(['page', $pageId, 'shortTitle']);
+                } else {
+                    return $this->getData(['page', $pageId, 'shortTitle']);
+                }
+            default:
+                return $this->getData(['page', $pageId, 'shortTitle']);
+        }
+    }
+
+    /**
      * Affiche le consentement aux cookies
      */
     public function showCookies()
@@ -565,11 +600,125 @@ class layout extends common
      * Elle permet de générer le menu selon qu'il s'agisse du menu principal ou du petit menu
      *  @param $menu bool false pour le menu principal, true pour le petit menu
      */
+    /**
+     * Construit récursivement les enfants d'un menu
+     * @param array $childrenPageIds IDs des enfants
+     * @param int $depth Profondeur actuelle (commence à 1)
+     * @param int $maxDepth Profondeur maximale
+     * @param string $parentId ID du parent pour la classe CSS
+     * @param string $currentPageId ID de la page courante
+     * @return string HTML du menu
+     */
+    private function buildChildrenRecursive($childrenPageIds, $depth, $maxDepth, $parentId, $currentPageId)
+    {
+        $items = '';
+        
+        // Arrêter la récursion si profondeur max atteinte
+        if ($depth >= $maxDepth) {
+            return $items;
+        }
+        
+        foreach ($childrenPageIds as $childKey) {
+            // Ne pas afficher les pages de rôle supérieur
+            if ($this->getData(['page', $childKey, 'role']) > $this->getUser('role')) {
+                continue;
+            }
+            
+            // Propriétés de l'item
+            $active = ($childKey === $currentPageId) ? 'active ' : '';
+            $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
+            
+            // Vérifier s'il y a des enfants pour ce nœud en parcourant toutes les pages
+            $grandChildren = [];
+            $allPages = $this->getData(['page']);
+            if (is_array($allPages)) {
+                // Créer un tableau temporaire avec les enfants et leur position
+                $tempChildren = [];
+                foreach ($allPages as $pageId => $pageData) {
+                    // Si cette page a comme parent $childKey, c'est un enfant
+                    if (isset($pageData['parentPageId']) && $pageData['parentPageId'] === $childKey) {
+                        // Vérifier les droits d'accès
+                        if ($pageData['role'] <= $this->getUser('role')) {
+                            $position = isset($pageData['position']) ? $pageData['position'] : 0;
+                            $tempChildren[$pageId] = $position;
+                        }
+                    }
+                }
+                // Trier par position
+                asort($tempChildren);
+                $grandChildren = array_keys($tempChildren);
+            }
+            
+            // Un élément a des enfants affichables seulement si :
+            // 1. Il a des enfants visibles
+            // 2. Les enfants ne sont pas cachés
+            // 3. On n'a pas atteint la profondeur maximale (depth + 1 <= maxDepth)
+            $hasChildren = !empty($grandChildren) 
+                && $this->getData(['page', $childKey, 'hideMenuChildren']) === false
+                && ($depth + 1 <= $maxDepth);
+            
+            // Classe CSS pour indiquer la présence d'enfants et la profondeur
+            $itemClass = 'navDepth' . $depth . ($hasChildren ? ' navParent' : '');
+            
+            // Mise en page du sous-item
+            $items .= '<li id="' . $childKey . '" class="' . $itemClass . '">';
+            
+            if (
+                ($this->getData(['page', $childKey, 'disable']) === true and
+                    $this->isConnected() === false) or ($this->getData(['page', $childKey, 'disable']) === true and
+                    $this->isConnected() === true and
+                    $this->getUser('role') < self::ROLE_EDITOR)
+            ) {
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
+                $items .= '<a class="navLevel' . $depth . '" href="' . $pageUrl . '">';
+            } else {
+                $pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false) : helper::baseUrl() . $childKey;
+                $items .= '<a class="' . $active . 'navLevel' . $depth . ' ' . $parentId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
+            }
+
+            // Type de menu (texte, icône, etc.)
+            $items .= $this->getMenuLabel($childKey);
+            
+            // Afficher l'icône de déroulement si enfants visibles
+            if ($hasChildren) {
+                // Indicateur systématiquement orienté vers le bas
+                $items .= template::ico('down', ['margin' => 'left']);
+            }
+            
+            $items .= '</a>';
+            
+            // Récursion pour les enfants de ce nœud
+            if ($hasChildren) {
+                $nextDepth = $depth + 1;
+                $childrenHtml = $this->buildChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $childKey, $currentPageId);
+                // Générer le <ul> seulement s'il y a du contenu
+                if (!empty($childrenHtml)) {
+                    $cssClass = 'navSub navSubmenu' . $nextDepth;
+                    $items .= '<ul class="' . $cssClass . '">';
+                    $items .= $childrenHtml;
+                    $items .= '</ul>';
+                }
+            }
+            
+            $items .= '</li>';
+        }
+        
+        return $items;
+    }
+
     private function formatMenu($extra = false)
     {
         $items = '';
         $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
+        $maxDepth = self::MENU_DEPTH;
+
         foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
+             // Vérifier que c'est vraiment une page parente (parentPageId vide)
+            if (
+                $this->getData(['page', $parentPageId, 'parentPageId']) !== ''
+            ) {
+                continue;
+            }
             // Ne pas afficher les pages du rôle supérieur
             if (
                 $this->getData(['page', $parentPageId, 'role']) > $this->getUser('role')
@@ -578,9 +727,8 @@ class layout extends common
             }
             // Menu extra ou standard
             if (
-                    // Absence de la position extra, la page est toujours affichée à gauche.
-                ($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true)
-                &&
+                // Absence de la position extra, la page est toujours affichée à gauche.
+                ($this->getData(['page', $parentPageId, 'extraPosition']) !== NULL || $extra === true) &&
                 $this->getData(['page', $parentPageId, 'extraPosition']) !== $extra
             ) {
                 continue;
@@ -592,12 +740,10 @@ class layout extends common
             $items .= '<li id="' . $parentPageId . '">';
 
             if (
-                ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->isConnected() === false
-                ) or ($this->getData(['page', $parentPageId, 'disable']) === true
-                    and $this->isConnected() === true
-                    and $this->getUser('role') < self::ROLE_EDITOR
-                )
+                ($this->getData(['page', $parentPageId, 'disable']) === true and
+                    $this->isConnected() === false) or ($this->getData(['page', $parentPageId, 'disable']) === true and
+                    $this->isConnected() === true and
+                    $this->getUser('role') < self::ROLE_EDITOR)
             ) {
                 $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
                 $items .= '<a href="' . $pageUrl . '">';
@@ -606,118 +752,51 @@ class layout extends common
                 $items .= '<a class="' . $active . '" href="' . $pageUrl . '"' . $targetBlank . '>';
             }
 
-            switch ($this->getData(['page', $parentPageId, 'typeMenu'])) {
-                case '':
-                    $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
-                    break;
-                case 'text':
-                    $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
-                    break;
-                case 'icon':
-                    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-                        $items .= '<img alt="' . $this->getData(['page', $parentPageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $parentPageId, 'iconUrl']) . '" />';
-                    } else {
-                        $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
-                    }
-                    break;
-                case 'icontitle':
-                    if ($this->getData(['page', $parentPageId, 'iconUrl']) != "") {
-                        $items .= '<img alt="' . $this->getData(['page', $parentPageId, 'titlshortTitlee']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $parentPageId, 'iconUrl']) . '" data-tippy-content="';
-                        $items .= $this->getData(['page', $parentPageId, 'shortTitle']) . '"/>';
-                    } else {
-                        $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
-                    }
-                    break;
-            }
-            // Cas où les pages enfants enfant sont toutes masquées dans le menu
-            // ne pas afficher de symbole lorsqu'il n'y a rien à afficher
-            $totalChild = 0;
-            $disableChild = 0;
+            // Type de menu (texte, icône, etc.)
+            $items .= $this->getMenuLabel($parentPageId);
+            // Vérifier s'il y a au moins un enfant visible et si les enfants ne sont pas cachés
+            $hasVisibleChildren = false;
             foreach ($childrenPageIds as $childKey) {
-                // Ne pas décompter les pages de rôle supérieur
-                if (
-                    $this->getData(['page', $childKey, 'role']) > $this->getUser('role')
-                ) {
-                    continue;
+                // Vérifier si l'enfant est accessible pour l'utilisateur
+                if ($this->getData(['page', $childKey, 'role']) <= $this->getUser('role')) {
+                    $hasVisibleChildren = true;
+                    break;
                 }
-                $totalChild += 1;
             }
+            // Afficher l'icône de déroulement si enfants visibles
             if (
-                $childrenPageIds && $disableChild !== $totalChild &&
+                $hasVisibleChildren &&
                 $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === false
             ) {
                 $items .= template::ico('down', ['margin' => 'left']);
             }
             // ------------------------------------------------
             $items .= '</a>';
+            
+            // Ajouter la classe navDepth0 et navParent si l'élément a des enfants
+            if ($hasVisibleChildren && $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === false) {
+                // Ajouter les classes au <li> parent déjà créé en modifiant la chaîne
+                $items = preg_replace(
+                    '/<li id="' . preg_quote($parentPageId, '/') . '">/',
+                    '<li id="' . $parentPageId . '" class="navDepth0 navParent">',
+                    $items
+                );
+            }
+            
             if (
                 $this->getdata(['page', $parentPageId, 'hideMenuChildren']) === true ||
                 empty($childrenPageIds)
             ) {
                 continue;
             }
-            $items .= '<ul class="navSub">';
-            foreach ($childrenPageIds as $childKey) {
-                // Ne pas afficher les pages de rôle supérieur
-                if (
-                    $this->getData(['page', $childKey, 'role']) > $this->getUser('role')
-                ) {
-                    continue;
-                }
-                // Propriétés de l'item
-                $active = ($childKey === $currentPageId) ? 'active ' : '';
-                $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-                // Mise en page du sous-item
-                $items .= '<li id=' . $childKey . '>';
-                if (
-                    ($this->getData(['page', $childKey, 'disable']) === true
-                        and $this->isConnected() === false
-                    ) or ($this->getData(['page', $childKey, 'disable']) === true
-                        and $this->isConnected() === true
-                        and $this->getUser('role') < self::ROLE_EDITOR
-                    )
-                ) {
-                    $pageUrl = ($this->getData(['locale', 'homePageId']) === $this->getUrl(0)) ? helper::baseUrl(false) : helper::baseUrl() . $this->getUrl(0);
-                    $items .= '<a href="' . $pageUrl . '">';
-                } else {
-                    $pageUrl = ($this->getData(['locale', 'homePageId']) === $childKey) ? helper::baseUrl(false) : helper::baseUrl() . $childKey;
-                    $items .= '<a class="' . $active . ' ' . $parentPageId . '" href="' . $pageUrl . '"' . $targetBlank . '>';
-                }
-
-                switch ($this->getData(['page', $childKey, 'typeMenu'])) {
-                    case '':
-                        $items .= $this->getData(['page', $childKey, 'shortTitle']);
-                        break;
-                    case 'text':
-                        $items .= $this->getData(['page', $childKey, 'shortTitle']);
-                        break;
-                    case 'icon':
-                        if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-                            $items .= '<img alt="' . $this->getData(['page', $parentPageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $childKey, 'iconUrl']) . '" />';
-                        } else {
-                            $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
-                        }
-                        break;
-                    case 'icontitle':
-                        if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-                            $items .= '<img alt="' . $this->getData(['page', $parentPageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $childKey, 'iconUrl']) . '" data-tippy-content="';
-                            $items .= $this->getData(['page', $childKey, 'shortTitle']) . '"/>';
-                        } else {
-                            $items .= $this->getData(['page', $childKey, 'shortTitle']);
-                        }
-                        break;
-                    case 'icontext':
-                        if ($this->getData(['page', $childKey, 'iconUrl']) != "") {
-                            $items .= '<img alt="' . $this->getData(['page', $parentPageId, 'shortTitle']) . '" src="' . helper::baseUrl(false) . self::FILE_DIR . 'source/' . $this->getData(['page', $childKey, 'iconUrl']) . '" />';
-                            $items .= $this->getData(['page', $childKey, 'shortTitle']);
-                        } else {
-                            $items .= $this->getData(['page', $childKey, 'shortTitle']);
-                        }
-                        break;
-                }
-                $items .= '</a></li>';
+            // Récursion pour les enfants
+            $childrenHtml = $this->buildChildrenRecursive($childrenPageIds, 1, $maxDepth, $parentPageId, $currentPageId);
+            // Générer le <ul> seulement s'il y a du contenu
+            if (!empty($childrenHtml)) {
+                $items .= '<ul class="navSub navSubmenu1">';
+                $items .= $childrenHtml;
+                $items .= '</ul>';
             }
-            $items .= '</ul>';
         }
         return ($items);
     }
@@ -736,8 +815,7 @@ class layout extends common
         $currentPageId = $this->getData(['page', $this->getUrl(0)]) ? $this->getUrl(0) : $this->getUrl(2);
         // Nom de la page parente
         $currentParentPageId = $this->getData(['page', $currentPageId, 'parentPageId']);
-        // Détermine si on affiche uniquement le parent et les enfants
-        // Filtre contient le nom de la page parente
+        $maxDepth = self::MENU_DEPTH;
 
         if ($onlyChildren === true) {
             if (empty($currentParentPageId)) {
@@ -752,6 +830,10 @@ class layout extends common
         foreach ($this->getHierarchy() as $parentPageId => $childrenPageIds) {
             // Ne pas afficher les entrées masquées
             if ($this->getData(['page', $parentPageId, 'hideMenuSide']) === true) {
+                continue;
+            }
+            // Ne pas afficher les pages avec position 0 (pages orphelines)
+            if ($this->getData(['page', $parentPageId, 'position']) === 0) {
                 continue;
             }
             // Filtre actif et nom de la page parente courante différente, on sort de la boucle
@@ -776,37 +858,18 @@ class layout extends common
                 $items .= $this->getData(['page', $parentPageId, 'shortTitle']);
                 $items .= '</a>';
             }
-            $itemsChildren = '';
-            foreach ($childrenPageIds as $childKey) {
-                // Passer les entrées masquées
-                if ($this->getData(['page', $childKey, 'hideMenuSide']) === true) {
-                    continue;
+            
+            // Appeler la méthode récursive pour les enfants
+            if (!empty($childrenPageIds)) {
+                $itemsChildren = $this->buildMenuSideChildrenRecursive($childrenPageIds, 1, $maxDepth, $currentPageId);
+                if (!empty($itemsChildren)) {
+                    $items .= '<ul class="menuSideChild">';
+                    $items .= $itemsChildren;
+                    $items .= '</ul>';
                 }
-
-                // Propriétés de l'item
-                $active = ($childKey === $currentPageId) ? ' class="active"' : '';
-                $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
-                // Mise en page du sous-item
-                $itemsChildren .= '<li class="menuSideChild">';
-
-                if (
-                    $this->getData(['page', $childKey, 'disable']) === true
-                    and $this->isConnected() === false
-                ) {
-                    $itemsChildren .= '<a href="' . $this->getUrl(1) . '">';
-                } else {
-                    $itemsChildren .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>';
-                }
-
-                $itemsChildren .= $this->getData(['page', $childKey, 'shortTitle']);
-                $itemsChildren .= '</a></li>';
             }
-            // Concatène les items enfants
-            if (!empty($itemsChildren)) {
-                $items .= '<ul class="menuSideChild">';
-                $items .= $itemsChildren;
-                $items .= '</ul>';
-            } else {
+            
+            if ($onlyChildren === false && empty($childrenPageIds)) {
                 $items .= '</li>';
             }
         }
@@ -817,7 +880,92 @@ class layout extends common
         echo $items;
     }
 
+    /**
+     * Construit récursivement les enfants du menu latéral
+     * @param array $childrenPageIds IDs des enfants
+     * @param int $depth Profondeur actuelle (commence à 1)
+     * @param int $maxDepth Profondeur maximale
+     * @param string $currentPageId ID de la page courante
+     * @return string HTML du menu
+     */
+    private function buildMenuSideChildrenRecursive($childrenPageIds, $depth, $maxDepth, $currentPageId)
+    {
+        $items = '';
+        
+        // Arrêter la récursion si profondeur max atteinte
+        if ($depth >= $maxDepth) {
+            return $items;
+        }
+        
+        foreach ($childrenPageIds as $childKey) {
+            // Passer les entrées masquées
+            if ($this->getData(['page', $childKey, 'hideMenuSide']) === true) {
+                continue;
+            }
+            // Ne pas afficher les pages avec position 0 (pages orphelines)
+            if ($this->getData(['page', $childKey, 'position']) === 0) {
+                continue;
+            }
 
+            // Propriétés de l'item
+            $active = ($childKey === $currentPageId) ? ' class="active"' : '';
+            $targetBlank = $this->getData(['page', $childKey, 'targetBlank']) ? ' target="_blank"' : '';
+            
+            // Vérifier s'il y a des enfants pour ce nœud
+            $grandChildren = [];
+            $allPages = $this->getData(['page']);
+            if (is_array($allPages)) {
+                $tempChildren = [];
+                foreach ($allPages as $pageId => $pageData) {
+                    if (isset($pageData['parentPageId']) && $pageData['parentPageId'] === $childKey) {
+                        // Ne pas ajouter les pages masquées dans le menu latéral
+                        if (isset($pageData['hideMenuSide']) && $pageData['hideMenuSide'] === true) {
+                            continue;
+                        }
+                        // Ne pas ajouter les pages avec position 0
+                        $position = isset($pageData['position']) ? $pageData['position'] : 0;
+                        if ($position === 0) {
+                            continue;
+                        }
+                        $tempChildren[$pageId] = $position;
+                    }
+                }
+                asort($tempChildren);
+                $grandChildren = array_keys($tempChildren);
+            }
+            
+            // Mise en page du sous-item avec indentation
+            $indent = '&#9492; ';
+            $items .= '<li class="menuSideChild">';
+
+            if (
+                $this->getData(['page', $childKey, 'disable']) === true
+                and $this->isConnected() === false
+            ) {
+                $items .= '<a href="' . $this->getUrl(1) . '">' . $indent;
+            } else {
+                $items .= '<a href="' . helper::baseUrl() . $childKey . '"' . $targetBlank . $active . '>' . $indent;
+            }
+
+            $items .= $this->getData(['page', $childKey, 'shortTitle']);
+            $items .= '</a>';
+            
+            // Récursion pour les enfants de ce nœud
+            if (!empty($grandChildren) && ($depth + 1 <= $maxDepth)) {
+                $nextDepth = $depth + 1;
+                $childrenHtml = $this->buildMenuSideChildrenRecursive($grandChildren, $nextDepth, $maxDepth, $currentPageId);
+                if (!empty($childrenHtml)) {
+                    $items .= '<ul class="menuSideChild">';
+                    $items .= $childrenHtml;
+                    $items .= '</ul>';
+                }
+            }
+            
+            $items .= '</li>';
+        }
+        
+        return $items;
+    }
 
     /**
      * Affiche le meta titre
@@ -965,6 +1113,21 @@ class layout extends common
                         $orpheline = false;
                         $leftItems .= '<optgroup label="' . helper::translate('Pages dans le menu') . '">';
                     }
+                    // Exclure les barres latérales de cette boucle
+                    if ($this->getData(['page', $parentPageId, 'block']) === 'bar') {
+                        continue;
+                    }
+                    // Exclure les pages qui sont déjà des enfants d'autres pages
+                    $isChild = false;
+                    foreach ($this->getHierarchy(null, false) as $potentialParentId => $potentialChildren) {
+                        if (in_array($parentPageId, $potentialChildren)) {
+                            $isChild = true;
+                            break;
+                        }
+                    }
+                    if ($isChild) {
+                        continue;
+                    }
                     // Exclure les barres
                     if ($this->getData(['page', $parentPageId, 'block']) !== 'bar') {
                         $leftItems .= '<option value="' .
@@ -977,18 +1140,9 @@ class layout extends common
                             '">' .
                             $this->getData(['page', $parentPageId, 'shortTitle']) .
                             '</option>';
-                        foreach ($childrenPageIds as $childKey) {
-                            $leftItems .= '<option value="' .
-                                helper::baseUrl() .
-                                $childKey . '"' .
-                                ($childKey === $currentPageId ? ' selected' : false) .
-                                ' class="' .
-                                ($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '') .
-                                ($this->getData(['page', $childKey, 'position']) === 0 ? ' pageHidden' : '') .
-                                '">&nbsp;&nbsp;&nbsp;&nbsp;' .
-                                $this->getData(['page', $childKey, 'shortTitle']) .
-                                '</option>';
-                        }
+                        
+                        // Afficher les enfants avec indentation hiérarchique
+                        $this->addChildrenToSelect($leftItems, $childrenPageIds, $currentPageId, 1);
                     }
                 }
                 $leftItems .= '</optgroup' >
@@ -996,6 +1150,8 @@ class layout extends common
                     $leftItems .= '<optgroup label="' . helper::translate('Barres latérales') . '">';
                 foreach ($this->getHierarchy(null, false, true) as $parentPageId => $childrenPageIds) {
                     $leftItems .= '<option value="' . helper::baseUrl() . $parentPageId . '"' . ($parentPageId === $currentPageId ? ' selected' : false) . '>' . $this->getData(['page', $parentPageId, 'shortTitle']) . '</option>';
+                    
+                    // Pour les barres latérales, afficher les enfants avec simple indentation (pas de récursion)
                     foreach ($childrenPageIds as $childKey) {
                         $leftItems .= '<option value="' . helper::baseUrl() . $childKey . '"' . ($childKey === $currentPageId ? ' selected' : false) . '>&nbsp;&nbsp;&nbsp;&nbsp;' . $this->getData(['page', $childKey, 'shortTitle']) . '</option>';
                     }
@@ -1375,5 +1531,48 @@ class layout extends common
         }
         $items .= '</div></div></div>';
         echo $items;
+    }
+
+    /**
+     * Ajoute récursivement les enfants au sélecteur de pages
+     * @param string &$leftItems Référence au HTML du sélecteur
+     * @param array $childrenPageIds IDs des enfants
+     * @param string $currentPageId ID de la page courante
+     * @param int $depth Profondeur actuelle pour l'indentation
+     */
+    private function addChildrenToSelect(&$leftItems, $childrenPageIds, $currentPageId, $depth = 1)
+    {
+        $maxDepth = self::MENU_DEPTH;
+        
+        if ($depth >= $maxDepth) {
+            return;
+        }
+        
+        foreach ($childrenPageIds as $childKey) {
+            // Récupérer les enfants directement en cherchant les pages avec ce parent
+            $grandChildren = [];
+            foreach ($this->getData(['page']) as $pageId => $pageData) {
+                if ($pageData['parentPageId'] === $childKey) {
+                    $grandChildren[] = $pageId;
+                }
+            }
+            
+            $leftItems .= '<option value="'
+                . helper::baseUrl()
+                . $childKey . '"'
+                . ($childKey === $currentPageId ? ' selected' : false)
+                . ' class="'
+                . ($this->getData(['page', $childKey, 'disable']) === true ? 'pageInactive' : '')
+                . ($this->getData(['page', $childKey, 'position']) === 0 ? 'pageHidden' : '')
+                . '">'
+                . str_repeat('&nbsp;', ($depth - 1) * 4) . '&#9492; '
+                . $this->getData(['page', $childKey, 'shortTitle'])
+                . '</option>';
+            
+            // Récursion pour les enfants de cet enfant
+            if (!empty($grandChildren)) {
+                $this->addChildrenToSelect($leftItems, $grandChildren, $currentPageId, $depth + 1);
+            }
+        }
     }
 }

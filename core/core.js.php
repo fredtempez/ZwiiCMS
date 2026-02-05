@@ -161,7 +161,15 @@ core.toggleAdminBar = function() {
     // Lecture de la configuration de la barre
     var timerBarValue = "<?php echo $this->getData(['config','timerBar']); ?>";
 
-    // Si la barre est en mode fixe
+    // Sur mobile (≤767px), forcer le mode fixe (pas de souris pour déclencher l'escamotable)
+    if (window.innerWidth <= 767) {
+        bar.style.display = 'block';
+        bar.setAttribute('class', 'fixed');
+        document.body.classList.add('bar-fixed');
+        return;
+    }
+
+    // Si la barre est en mode fixe (configuration utilisateur)
     if (timerBarValue === 'false') {
         bar.style.display = 'block';
         bar.setAttribute('class', 'fixed');
@@ -232,6 +240,19 @@ core.toggleAdminBar = function() {
 core.start = function () {
     // Initialiser le basculement de la barre d'administration
     core.toggleAdminBar();
+    
+    // Gérer le changement d'orientation/taille d'écran pour réappliquer la logique de la barre
+    window.addEventListener('resize', function() {
+        // Supprimer les classes existantes
+        const bar = document.getElementById('bar');
+        if (bar) {
+            document.body.classList.remove('bar-fixed');
+            bar.removeAttribute('class');
+            // Réinitialiser la barre
+            core.toggleAdminBar();
+        }
+    });
+    
     /**
      * Remonter en haut au clic sur le bouton
      */
@@ -325,6 +346,43 @@ core.start = function () {
             menuDOM.css("display", "");
         }
     });
+
+
+    /**
+     * Ouverture des sous-menus en mode burger (tap au lieu du survol)
+     */
+    function bindBurgerSubmenus() {
+        var isMobile = $(window).width() <= 768;
+        var parentLinks = $("nav li.navParent > a");
+
+        parentLinks.off(".burgerSub");
+
+        if (isMobile) {
+            // Tout replier par défaut en affichage burger
+            $("nav .navSub, nav ul[class*='navSubmenu']").hide();
+
+            parentLinks.on("click.burgerSub", function (e) {
+                var $link = $(this);
+                var $submenu = $link.siblings(".navSub, ul[class*='navSubmenu']");
+
+                if ($submenu.length) {
+                    e.preventDefault();
+
+                    // Replier les autres sous-menus du même niveau
+                    $link.parent("li").siblings("li.navParent").children(".navSub, ul[class*='navSubmenu']").slideUp();
+
+                    // Ouvrir/fermer le sous-menu ciblé
+                    $submenu.slideToggle();
+                }
+            });
+        } else {
+            // Nettoyage de l'état inline lors du retour en affichage desktop
+            $("nav .navSub, nav ul[class*='navSubmenu']").removeAttr("style");
+        }
+    }
+
+    bindBurgerSubmenus();
+    $(window).on("resize", bindBurgerSubmenus);
 
 
 
@@ -443,7 +501,13 @@ core.start = function () {
                 $("header").height($(window).width() / ratio);
             }
         }
-    }).trigger("resize");
+    });
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', core.preventFouc);
+} else {
+    core.preventFouc();
 
 
 
@@ -523,6 +587,7 @@ $(document).ready(function () {
      * Affiche le sous-menu quand il est sticky
      */
     $("nav").mouseenter(function () {
+        if ($(window).width() <= 768) { return; }
         $("#navfixedlogout .navSub").css({
             'pointer-events': 'auto'
         });
@@ -531,6 +596,7 @@ $(document).ready(function () {
         });
     });
     $("nav").mouseleave(function () {
+        if ($(window).width() <= 768) { return; }
         $("#navfixedlogout .navSub").css({
             'pointer-events': 'none'
         });
@@ -538,6 +604,77 @@ $(document).ready(function () {
             'pointer-events': 'none'
         });
     });
+
+    /**
+     * Gestion des sous-menus multi-niveaux
+     * Affiche uniquement le sous-menu de l'élément survolé pour chaque niveau
+     */
+    
+    // Fonction pour afficher/masquer les sous-menus de manière contrôlée
+    function setupMultiLevelMenu() {
+        // Masquer tous les sous-menus au démarrage (sauf si le CSS le fait déjà)
+        $('.navSubmenu1, .navSubmenu2, .navSubmenu3, .navSubmenu4').css('display', 'none');
+        
+        // Gestion du survol pour les éléments avec enfants (navParent)
+        $('nav li.navParent').on('mouseenter', function(e) {
+            if ($(window).width() <= 768) { return; }
+            var $li = $(this);
+            
+            // Trouver le sous-menu direct de cet élément
+            var $submenu = $li.children('ul[class*="navSubmenu"]');
+            
+            if ($submenu.length > 0) {
+                // Masquer les sous-menus des frères au même niveau
+                $li.siblings('li.navParent').children('ul[class*="navSubmenu"]').css('display', 'none');
+                
+                // Afficher le sous-menu de cet élément
+                $submenu.css('display', 'block');
+            }
+            
+            e.stopPropagation();
+        });
+        
+        // Quand on quitte un élément parent
+        $('nav li.navParent').on('mouseleave', function(e) {
+            if ($(window).width() <= 768) { return; }
+            var $li = $(this);
+            var $submenu = $li.children('ul[class*="navSubmenu"]');
+            
+            // Vérifier si la souris va vers le sous-menu
+            setTimeout(function() {
+                if (!$submenu.is(':hover') && !$li.is(':hover')) {
+                    $submenu.css('display', 'none');
+                    // Masquer aussi tous les sous-menus enfants
+                    $submenu.find('ul[class*="navSubmenu"]').css('display', 'none');
+                }
+            }, 100);
+        });
+        
+        // Maintenir le sous-menu visible quand on le survole
+        $('ul[class*="navSubmenu"]').on('mouseenter', function(e) {
+            if ($(window).width() <= 768) { return; }
+            $(this).css('display', 'block');
+            e.stopPropagation();
+        });
+        
+        // Quand on quitte un sous-menu
+        $('ul[class*="navSubmenu"]').on('mouseleave', function(e) {
+            if ($(window).width() <= 768) { return; }
+            var $submenu = $(this);
+            var $parentLi = $submenu.parent('li');
+            
+            setTimeout(function() {
+                if (!$submenu.is(':hover') && !$parentLi.is(':hover')) {
+                    $submenu.css('display', 'none');
+                    // Masquer aussi tous les sous-menus enfants
+                    $submenu.find('ul[class*="navSubmenu"]').css('display', 'none');
+                }
+            }, 100);
+        });
+    }
+    
+    // Initialiser le menu multi-niveaux
+    setupMultiLevelMenu();
 
     /**
      * Chargement paresseux des images et des iframes

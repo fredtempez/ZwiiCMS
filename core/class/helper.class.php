@@ -411,6 +411,38 @@ class helper
 	}
 
 	/**
+	 * Génère des variations progressives de couleur pour les menus multi-niveaux
+	 * @param string $rgba Couleur de base au format rgba(r, g, b, a)
+	 * @param int $levels Nombre de niveaux à générer
+	 * @param int $step Décroissance par niveau (défaut: 15)
+	 * @return array Tableau de couleurs [niveau => ['normal' => rgba, 'hover' => rgba]]
+	 */
+	public static function colorLevels($rgba, $levels = 4, $step = 15)
+	{
+		preg_match('#\(+(.*)\)+#', $rgba, $matches);
+		$components = explode(', ', $matches[1]);
+		$r = (int)$components[0];
+		$g = (int)$components[1];
+		$b = (int)$components[2];
+		$a = $components[3];
+		
+		$colors = [];
+		for ($i = 1; $i <= $levels; $i++) {
+			$offset = ($i - 1) * $step;
+			$rLevel = max(0, $r - $offset);
+			$gLevel = max(0, $g - $offset);
+			$bLevel = max(0, $b - $offset);
+			
+			$colors[$i] = [
+				'normal' => 'rgba(' . $rLevel . ', ' . $gLevel . ', ' . $bLevel . ', ' . $a . ')',
+				'hover' => 'rgba(' . max(0, $rLevel - $step) . ', ' . max(0, $gLevel - $step) . ', ' . max(0, $bLevel - $step) . ', ' . $a . ')'
+			];
+		}
+		
+		return $colors;
+	}
+
+	/**
 	 * Supprime un cookie
 	 * @param string $cookieKey Clé du cookie à supprimer
 	 */
@@ -435,9 +467,26 @@ class helper
 				break;
 			case self::FILTER_DATETIME:
 				$timezone = new DateTimeZone(core::$timezone);
-				$date = new DateTime($text);
-				$date->setTimezone($timezone);
-				$text = (int) $date->format('U');
+				if ($text) {
+					// Validation et nettoyage du format de date
+					// Détecte et corrige les années avec plus de 4 chiffres (ex: 20026 -> 2026)
+					$text = preg_replace('/^(\d{5,})(-\d{2}-\d{2}T\d{2}:\d{2})/', substr('$1', 0, 4) . '$2', $text);
+					
+					// Validation du format datetime (ISO 8601 basique: YYYY-MM-DDTHH:MM ou YYYY-MM-DDTHH:MM:SS)
+					if (!preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?$/', $text)) {
+						// Format invalide, retourne null
+						$text = null;
+					} else {
+						try {
+							$date = new DateTime($text);
+							$date->setTimezone($timezone);
+							$text = (int) $date->format('U');
+						} catch (Exception $e) {
+							// En cas d'erreur de parsing (date invalide), retourne null
+							$text = null;
+						}
+					}
+				}
 				break;
 			case self::FILTER_FLOAT:
 				$text = str_replace(',', '.', $text);  // Remplacer les virgules par des points

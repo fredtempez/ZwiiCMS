@@ -586,6 +586,13 @@ class config extends common
 						. '<IfModule mod_rewrite.c>' . PHP_EOL
 						. "\tRewriteEngine on" . PHP_EOL
 						. "\tRewriteBase " . helper::baseUrl(false, false) . PHP_EOL
+						. "\t" . PHP_EOL
+						. "\t# Ne pas rediriger les requêtes vers des ressources statiques inexistantes" . PHP_EOL
+						. "\t# Retourne directement une 404 Apache pour éviter de passer par PHP" . PHP_EOL
+						. "\tRewriteCond %{REQUEST_URI} \\.(jpg|jpeg|png|gif|webp|svg|css|js|woff|woff2|ttf|eot|pdf|zip|mp4|webm|mp3|ogg)\$ [NC]" . PHP_EOL
+						. "\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL
+						. "\tRewriteRule ^ - [R=404,L]" . PHP_EOL
+						. "\t" . PHP_EOL
 						. "\tRewriteCond %{REQUEST_FILENAME} !-f" . PHP_EOL
 						. "\tRewriteCond %{REQUEST_FILENAME} !-d" . PHP_EOL
 						. "\tRewriteRule ^(.*)\$ index.php?\$1 [L]" . PHP_EOL

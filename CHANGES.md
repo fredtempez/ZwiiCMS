@@ -1,5 +1,39 @@
 # Notes de mises à jour
 
+## Version 14.01.00
+
+### 🚀 Améliorations
+- **Navigation hiérarchique** : Support des sous-menus jusqu'à 4 niveaux de profondeur pour une organisation plus flexible du contenu
+  - Icônes de sous-menus optimisées : flèche vers la droite (►) au lieu de vers le bas (▼) pour les niveaux 2+
+  - Affichage hiérarchique amélioré dans le sélecteur de pages : espaces d'indentation + caractère coin (└) au lieu de tirets
+  - Largeur du sélecteur de pages augmentée à 220px pour une meilleure lisibilité
+- **Responsive design optimisé** :
+  - Simplification des breakpoints : 3 breakpoints standards au lieu de 7+ fragmentés
+    - Mobile : ≤767px
+    - Tablette : 768px - 1097px  
+    - Desktop : ≥1098px
+  - Barre d'administration adaptative : mode fixe automatique sur mobile/tactile (pas de souris pour déclencher l'escamotable)
+  - Gestion du changement d'orientation d'écran (portrait/paysage) avec réinitialisation automatique
+  - Bannière header visible sur tous les écrans (suppression de la règle de masquage mobile)
+- **CSS optimisé** :
+  - Factorisation des propriétés CSS communes pour les sous-menus (réduction de la taille du fichier généré)
+  - Media queries consolidées et cohérentes
+
+### 🛠️ Corrections
+#### ⛽️ Gestion des plugins 
+- Corrige le chargement des plugins depuis le store en ligne. 
+- Corrige la méthode de récupération des données de pages dans la gestion des extensions pour la rendre compatible avec le cryptage des bases.
+#### 🔧 Autres corrections
+- **Déconnexion intempestive** : Corrige la déconnexion automatique causée par des liens vers des ressources inexistantes (images, CSS, JS, etc.)
+  - Les ressources statiques 404 retournent maintenant une erreur Apache directe sans passer par le routeur PHP
+- **Restauration de mot de passe** : Corrige un problème de compatibilité avec certains webmails lors de la réinitialisation du mot de passe.
+- **Validation des dates** : Ajout d'une validation robuste du format de date dans le filtre FILTER_DATETIME
+  - Correction automatique des années avec plus de 4 chiffres (ex: 20026 → 2026)
+  - Validation du format ISO 8601 (YYYY-MM-DDTHH:MM)
+  - Gestion des exceptions pour éviter les erreurs fatales lors du parsing de dates invalides
+  - Retour cohérent (null) en cas de format invalide
+- **Barre d'administration** : Correction du positionnement à 768px (padding-top appliqué correctement dans tous les breakpoints)
+
 ## Version 14.00.00
 
 ### 🚀 Base de données JsonDB améliorée

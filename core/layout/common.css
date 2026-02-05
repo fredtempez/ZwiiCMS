@@ -408,13 +408,13 @@ body.bar-fixed {
 }
 
 #bar select {
-    width: 150px;
+    width: 220px;
     border: 0;
     color: #111112;
     font-size: 1em;
     background-color: rgba(255, 255, 255, 1);
     padding: 5px;
-    margin-left: 5px;
+    margin: 5px;
 }
 
 
@@ -583,6 +583,28 @@ nav::before {
     content: " ";
     clear: left;
     display: flex;
+}
+
+/* Sous-menus multi-niveaux (règles génériques, hors thème) */
+[class*="navSubmenu"] {
+    display: none;
+    position: absolute;
+    width: 200px;
+    margin-left: 0;
+    padding-left: 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+}
+
+[class*="navLevel"] {
+    padding-left: 15px;
+}
+
+.navDepth1 > ul[class*="navSubmenu"],
+.navDepth2 > ul[class*="navSubmenu"],
+.navDepth3 > ul[class*="navSubmenu"],
+.navDepth4 > ul[class*="navSubmenu"] {
+    top: 20px;
+    left: 50%;
 }
 
 @media screen and (min-width: 769px) {
@@ -1667,18 +1689,17 @@ th.col12 {
     margin: 1px;
 }
 
-@media screen and (min-width: 769px) {
-    body {
-        /*margin:0px 10px;*/
-        margin: 0;
-    }
-}
 /* =========================================
-   MEDIA QUERIES OPTIMISÉES
+   MEDIA QUERIES SIMPLIFIÉES - 3 BREAKPOINTS
    ========================================= */
 
-/* --- 1. Barre d'administration : Desktop (>= 960px) --- */
-@media screen and (min-width: 960px) {
+/* --- 1. DESKTOP : Écrans >= 1098px --- */
+@media screen and (min-width: 1098px) {
+    body {
+        margin: 0;
+    }
+    
+    /* Barre d'administration */
     #bar #barLeft {
         float: left;
         font-size: 16px;
@@ -1688,53 +1709,6 @@ th.col12 {
         float: right;
         font-size: 16px;
         margin-right: 20px;
-    }
-}
-
-/* --- 2. Barre d'administration : Tablettes/Mobiles (< 960px) --- */
-@media screen and (max-width: 959px) {
-    #bar {
-        text-align: center;
-        padding: 0 1px;
-        margin: 0 1px;
-    }
-    #bar ul {
-        height: auto;
-    }
-    #bar select {
-        width: 95%;
-        margin: 5px;
-        text-align-last: center;
-    }
-    #bar #barLeft {
-        float: none;
-    }
-    /* CORRECTION ICI : Taille réduite à 16px au lieu de 35px */
-    #bar #barLeft,
-    #bar #barRight {
-        font-size: 16px; 
-    }
-    #bar #displayUsername {
-        display: none;
-    }
-}
-
-/* --- 3. Ajustements intermédiaires (<= 1024px) --- */
-@media screen and (max-width: 1024px) {
-    .i18nFlag {
-        width: 100%;
-        padding: 5px;
-    }
-    .i18nFlagSelected {
-        width: 130%;
-        padding: 5px;
-    }
-}
-
-/* --- 4. DESKTOP : Styles pour écrans > 768px --- */
-@media screen and (min-width: 769px) {
-    body {
-        margin: 0;
     }
     
     /* Layout & Header */
@@ -1751,7 +1725,7 @@ th.col12 {
         display: block;
     }
 
-    /* Système de Grille (Grid) - Uniquement sur Desktop */
+    /* Système de Grille (Grid) */
     .col1 { width: 8.33333333%; }
     .col2 { width: 16.66666667%; }
     .col3 { width: 25%; }
@@ -1779,8 +1753,67 @@ th.col12 {
     .offset11 { margin-left: 91.66666667%; }
 }
 
-/* --- 5. MOBILE & TABLETTES : Styles pour écrans <= 768px --- */
-@media screen and (max-width: 768px) {
+/* --- 2. TABLETTE : Écrans 768px - 1097px --- */
+@media screen and (min-width: 768px) and (max-width: 1097px) {
+    /* Assure que le body a le padding nécessaire pour la barre fixe */
+    body.bar-fixed {
+        padding-top: 45px;
+    }
+    
+    /* Barre d'administration centrée */
+    #bar {
+        text-align: center;
+        padding: 0 1px;
+        margin: 0 1px;
+    }
+    #bar ul {
+        height: auto;
+    }
+    #bar select {
+        max-width: 220px;
+        margin: 5px;
+        text-align-last: center;
+    }
+    #bar #barLeft,
+    #bar #barRight {
+        float: none;
+        font-size: 16px;
+    }
+    #bar #displayUsername {
+        display: none;
+    }
+    
+    /* Layout & Header */
+    body > header, 
+    header {
+        margin: 0 -10px;
+    }
+    section {
+        padding: 15px;
+    }
+
+    /* Menu */
+    nav #menu {
+        display: block;
+    }
+
+    /* Grille simplifiée pour tablette */
+    .col1 { width: 8.33333333%; }
+    .col2 { width: 16.66666667%; }
+    .col3 { width: 25%; }
+    .col4 { width: 33.33333333%; }
+    .col5 { width: 41.66666667%; }
+    .col6 { width: 50%; }
+    .col7 { width: 58.33333333%; }
+    .col8 { width: 66.66666667%; }
+    .col9 { width: 75%; }
+    .col10 { width: 83.33333333%; }
+    .col11 { width: 91.66666667%; }
+    .col12 { width: 100%; }
+}
+
+/* --- 3. MOBILE : Écrans <= 767px --- */
+@media screen and (max-width: 767px) {
     /* Global Reset */
     body {
         margin: 0;
@@ -1788,14 +1821,41 @@ th.col12 {
     body > header {
         margin: 0;
     }
+    
+    /* Barre d'administration */
+    #bar {
+        text-align: center;
+        padding: 0 1px;
+        margin: 0 1px;
+    }
+    #bar ul {
+        height: auto;
+    }
+    #bar select {
+        max-width: 220px;
+        margin: 5px;
+        text-align-last: center;
+    }
+    #bar #barLeft,
+    #bar #barRight {
+        float: none;
+        font-size: 16px;
+    }
+    #bar #displayUsername {
+        display: none;
+    }
+    
+    /* Tooltips */
     .tippy-tooltip {
         font-size: .8rem !important;
     }
+    
+    /* Section */
     section {
         padding: 5px;
     }
     
-    /* Structure Flexbox Mobile */
+    /* Structure Flexbox Mobile - Empilement des containers */
     .siteContainer {
         display: flex;
         flex-direction: column;
@@ -1806,7 +1866,16 @@ th.col12 {
 
     /* Tableaux */
     .table thead {
-        font-size: 0.8em;
+        display: none;
+    }
+    .table tr {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .table td {
+        display: block;
+        text-align: right;
+        width: auto;
     }
 
     /* Menu / Navigation */
@@ -1844,6 +1913,62 @@ th.col12 {
         font-size: 1.5em;
     }
 
+    /* Sous-menus multi-niveaux en mode mobile */
+    nav [class*="navSubmenu"],
+    nav .navSub {
+        position: static;
+        width: 100%;
+        left: 0;
+        top: auto;
+        box-shadow: none;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    nav li.navParent {
+        position: relative;
+    }
+
+    nav [class*="navSubmenu"] a,
+    nav .navSub a {
+        display: block;
+        width: 100%;
+    }
+
+    nav #menu .navLevel1 { 
+        padding-left: 15px; 
+        margin-left: 15px;
+    }
+    nav #menu .navLevel2 { 
+        padding-left: 30px; 
+        margin-left: 30px;
+    }
+    nav #menu .navLevel3 { 
+        padding-left: 45px; 
+        margin-left: 45px;
+    }
+    nav #menu .navLevel4 { 
+        padding-left: 60px; 
+        margin-left: 60px;
+    }
+
+    nav #menu .navLevel1 > a {  
+        padding-left: 15px; 
+        margin-left: 15px;
+    }
+    nav #menu .navLevel2 > a { 
+        padding-left: 30px; 
+        margin-left: 30px;
+    }
+    nav #menu .navLevel3 > a { 
+        padding-left: 45px; 
+        margin-left: 45px;
+    }
+    nav #menu .navLevel4 > a { 
+        padding-left: 60px; 
+        margin-left: 60px;
+    }
+
     /* Footer */
     body > footer {
         margin: 0;
@@ -1858,32 +1983,7 @@ th.col12 {
         justify-content: center;
     }
 
-    /* Masquer la bannière complexe */
-    .bannerDisplay {
-        display: none;
-    }
     header {
         background-size: cover !important;
-    }
-}
-
-/* --- 6. Petites Tablettes / Gros Mobiles (<= 668px) --- */
-@media screen and (max-width: 668px) {
-    .table thead {
-        display: none;
-    }
-}
-
-/* --- 7. Mobiles (<= 480px) --- */
-@media screen and (max-width: 480px) {
-    /* Empilement des cellules de tableau */
-    .table tr {
-        display: block;
-        margin-bottom: 10px;
-    }
-    .table td {
-        display: block;
-        text-align: right;
-        width: auto;
     }
 }

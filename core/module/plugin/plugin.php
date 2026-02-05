@@ -128,6 +128,10 @@ class plugin extends common
 			}
 			$zip->extractTo(self::TEMP_DIR . $tempFolder);
 
+			// Racine d'extraction et éventuel sous-dossier de module
+			$archiveRoot = self::TEMP_DIR . $tempFolder;
+			$moduleBaseDir = $archiveRoot;
+
 			/**
 			 * Lecture du descripteur de ressource
 			 * $module ['name'] = id du module, correspond à la classe
@@ -138,8 +142,18 @@ class plugin extends common
 			 * 		'download" => 'module/download'
 			 */
 
-			if (file_exists(self::TEMP_DIR . $tempFolder . 'enum.json')) {
-				$module = json_decode(file_get_contents(self::TEMP_DIR . $tempFolder . 'enum.json'), true);
+			$enumPath = $moduleBaseDir . 'enum.json';
+			if (!file_exists($enumPath)) {
+				// Chercher un enum.json dans un sous-dossier de premier niveau
+				$nestedEnum = glob($archiveRoot . '*/enum.json');
+				if (!empty($nestedEnum)) {
+					$enumPath = $nestedEnum[0];
+					$moduleBaseDir = dirname($enumPath) . '/';
+				}
+			}
+
+			if (file_exists($enumPath)) {
+				$module = json_decode(file_get_contents($enumPath), true);
 			} else {
 				// Message de retour
 				$this->deleteDir(self::TEMP_DIR . $tempFolder);
@@ -149,13 +163,20 @@ class plugin extends common
 					'notification' => helper::translate('Archive invalide, le descripteur est absent')
 				]);
 			}
+			// Déterminer la racine effective du module (archive plate ou sous-dossier déjà détecté via enum.json)
+			$expectedFlat = $moduleBaseDir . $module['name'] . '.php';
+			$expectedNested = $moduleBaseDir . $module['name'] . '/' . $module['name'] . '.php';
+			if (!file_exists($expectedFlat) && file_exists($expectedNested)) {
+				$moduleBaseDir = $moduleBaseDir . $module['name'] . '/';
+			}
+
 			/**
 			 * Validation des informations du descripteur
 			 */
 			if (isset($module['dirs'])) {
 				foreach ($module['dirs'] as $src => $dest) {
-					// Vérification de la présence des dossier décrits
-					if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
+					// Vérification de la présence des dossier décrits (à partir de la racine détectée)
+					if (!is_dir($moduleBaseDir . $src)) {
 						// Message de retour
 						$this->deleteDir(self::TEMP_DIR . $tempFolder);
 						$zip->close();
@@ -180,7 +201,7 @@ class plugin extends common
 			/**
 			 * Validation de la présence du fichier de base du module
 			 */
-			if (!file_exists(self::TEMP_DIR . $tempFolder . $module['name'] . '.php')) {
+			if (!file_exists($moduleBaseDir . $module['name'] . '.php')) {
 				// Message de retour
 				$this->deleteDir(self::TEMP_DIR . $tempFolder);
 				$zip->close();
@@ -227,15 +248,15 @@ class plugin extends common
 
 			// Installation ou mise à jour du module valides
 			if ($installOk) {
-				// Copie du module
-				$success = $this->copyDir(self::TEMP_DIR . $tempFolder, self::MODULE_DIR . $module['name']);
+				// Copie du module depuis la racine détectée
+				$success = $this->copyDir($moduleBaseDir, self::MODULE_DIR . $module['name']);
 				// Copie récursive des dossiers externes
 				if (is_array($module['dataDirectory'])) {
 					foreach ($module['dataDirectory'] as $src => $dest) {
-						if (!is_dir(self::TEMP_DIR . $tempFolder . $src)) {
-							mkdir(self::TEMP_DIR . $tempFolder . $src);
+						if (!is_dir($moduleBaseDir . $src)) {
+							mkdir($moduleBaseDir . $src);
 						}
-						$success = $success || $this->copyDir(self::TEMP_DIR . $tempFolder . $src, $dest);
+						$success = $success || $this->copyDir($moduleBaseDir . $src, $dest);
 					}
 				}
 				// Message de retour
@@ -531,17 +552,23 @@ class plugin extends common
 
 		foreach ($i18nSites as $keyi18n => $valuei18n) {
 
-			// Clés moduleIds dans les pages de la langue
-			$pages = json_decode(file_get_contents(self::DATA_DIR . $keyi18n . '/page.json'), true);
+			// Clés moduleIds dans les pages de la langue (lecture via JsonDb avec langue ciblée)
+			$this->loadDataFile('page', $keyi18n);
+			$pageDb = $this->dataFiles['page'] ?? null;
+			$pagesList = [];
+			if ($pageDb) {
+				$pageData = $pageDb->get('page');
+				$pagesList = is_array($pageData) ? $pageData : [];
+			}
 
 			// Extraire les clés des modules
-			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pages['page'], 'moduleId', 'SORT_DESC'), 'strlen');
+			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pagesList, 'moduleId', 'SORT_DESC'), 'strlen');
 
 			// Générer la liste des pages avec module de la langue par défaut
 			foreach ($pagesModules[$keyi18n] as $key => $value) {
-				if (!empty($value)) {
+				if (!empty($value) && isset($pagesList[$key])) {
 					$pagesInfos[$keyi18n][$key]['pageId'] = $key;
-					$pagesInfos[$keyi18n][$key]['title'] = $pages['page'][$key]['title'];
+					$pagesInfos[$keyi18n][$key]['title'] = $pagesList[$key]['title'] ?? '';
 					$pagesInfos[$keyi18n][$key]['moduleId'] = $value;
 				}
 			}

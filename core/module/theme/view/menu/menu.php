@@ -86,12 +86,12 @@
                         'checked' => $this->getData(['theme', 'menu', 'loginLink'])
                     ]); ?>
                 </div>
-                <div class="col3">
+                <div class="col4">
                     <?php echo template::checkbox('themeMenuMemberBar', true, 'Barre de membre', [
                         'checked' =>  $this->getData(['theme', 'menu', 'memberBar']),
                     ]); ?>
                 </div>
-                <div class="col6">
+                <div class="col4">
                     <?php echo template::select('themeMenuBurgerContent', theme::$burgerContent, [
                         'label' => 'Menu burger dans écran réduit',
                         'selected' => $this->getData(['theme', 'menu', 'burgerContent']),
@@ -99,7 +99,8 @@
                 </div>
             </div>
             <div class="row">
-                <div id="themeMenuBurgerLogoId" class="col6 offset6 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
+
+                <div id="themeMenuBurgerLogoId" class="col10 offset1 <?php if ($this->getData(['theme', 'menu', 'burgerContent']) !== 'logo') echo 'displayNone'; ?>">
                     <?php 
                     $imagePath = $this->getData(['theme', 'menu', 'burgerLogo']);
                     $normalizedImagePath = $this->getNormalizedFilePath($imagePath, $this->getUser('id'));
