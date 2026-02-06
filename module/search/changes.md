@@ -1,3 +1,8 @@
+# Version 4.0
+- Tri des résultats par fraîcheur (timestamp contenu ou publishedOn) puis par nombre d'occurrences.
+- Liens de résultats encodés via baseUrl(true) pour supporter les caractères spéciaux.
+- Vérification des droits sur les sous-pages avec leur propre rôle et blocage, et prise en charge des correspondances en début de contenu.
+
 # Version 3.3
 - Remplacement du nom générique de classe dans les vues.
 # Version 3.2

@@ -1,4 +1,4 @@
-# 🚀 ZwiiCMS 14.1.01
+# 🚀 ZwiiCMS 14.1.02
 
 # Français 🇫🇷
 

@@ -1,5 +1,8 @@
 # Notes de mises à jour
 
+## Version 14.01.02
+- Optimisation du module de recherche (search version 4.0) ; vérification des droits sur les sous-pages avec leur propre rôle et blocage, et prise en charge des correspondances en début de contenu.
+
 ## Version 14.01.01
 ### 🚀 Améliorations
 - Après le changement des paramètres d'une base de données (minification, compression et cryptage), les modifications sont appliquées et visibles immédiatement.

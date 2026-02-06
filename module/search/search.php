@@ -22,7 +22,7 @@
 class search extends common
 {
 
-	const VERSION = '3.3';
+	const VERSION = '4.0';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
@@ -182,10 +182,9 @@ class search extends common
 			$this->isPost()
 		) {
 			//Initialisations variables
-			$success = true;
 			$result = [];
-			$notification = '';
-			$total = '';
+			$r = [];
+
 
 			// Récupération du mot clef passé par le formulaire de ...view/index.php, avec caractères accentués
 			self::$motclef = $this->getInput('searchMotphraseclef');
@@ -208,6 +207,8 @@ class search extends common
 
 			if ($motclef !== '') {
 				foreach ($this->getHierarchy(null, false, null) as $parentId => $childIds) {
+					$contentPath = self::DATA_DIR . self::$siteContent . '/content/' . $this->getData(['page', $parentId, 'content']);
+					$timestamp = file_exists($contentPath) ? filemtime($contentPath) : 0;
 					if (
 						$this->getData(['page', $parentId, 'disable']) === false &&
 						$this->getUser('role') >= $this->getData(['page', $parentId, 'role']) &&
@@ -219,18 +220,20 @@ class search extends common
 						$content = $this->getPage($parentId, self::$siteContent);
 						$content = $titre . ' ' . $content;
 						// Pages sauf pages filles et articles de blog
-						$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
+						$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier, $timestamp);
 						if (is_array($tempData)) {
 							$result[] = $tempData;
 						}
 					}
 
 					foreach ($childIds as $childId) {
+						$contentChildPath = self::DATA_DIR . self::$siteContent . '/content/' . $this->getData(['page', $childId, 'content']);
+						$timestampChild = file_exists($contentChildPath) ? filemtime($contentChildPath) : 0;
 						// Sous page
 						if (
 							$this->getData(['page', $childId, 'disable']) === false &&
-							$this->getUser('role') >= $this->getData(['page', $parentId, 'role']) &&
-							$this->getData(['page', $parentId, 'block']) !== 'bar'
+							$this->getUser('role') >= $this->getData(['page', $childId, 'role']) &&
+							$this->getData(['page', $childId, 'block']) !== 'bar'
 						) {
 							$url = $childId;
 							$titre = $this->getData(['page', $childId, 'title']);
@@ -238,7 +241,7 @@ class search extends common
 							$content = $this->getPage($childId, self::$siteContent);
 							$content = $titre . ' ' . $content;
 							//Pages filles
-							$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier);
+							$tempData = $this->occurrence($url, $titre, $content, $motclef, self::$motentier, $timestampChild);
 							if (is_array($tempData)) {
 								$result[] = $tempData;
 							}
@@ -251,8 +254,9 @@ class search extends common
 									$url = $childId . '/' . $articleId;
 									$titre = $article['title'];
 									$contenu = ' ' . $titre . ' ' . $article['content'];
+									$articleTimestamp = isset($article['publishedOn']) ? (int)$article['publishedOn'] : 0;
 									// Articles de sous-page de type blog
-									$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+									$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier, $articleTimestamp);
 									if (is_array($tempData)) {
 										$result[] = $tempData;
 									}
@@ -269,7 +273,8 @@ class search extends common
 								$url = $parentId . '/' . $articleId;
 								$titre = $article['title'];
 								$contenu = ' ' . $titre . ' ' . $article['content'];
-								$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier);
+								$articleTimestamp = isset($article['publishedOn']) ? (int)$article['publishedOn'] : 0;
+								$tempData = $this->occurrence($url, $titre, $contenu, $motclef, self::$motentier, $articleTimestamp);
 								if (is_array($tempData)) {
 									$result[] = $tempData;
 								}
@@ -283,8 +288,12 @@ class search extends common
 					self::$resultError = helper::translate('Avez-vous pensé aux accents ?');
 				} else {
 					self::$resultError = '';
-					//self::$resultTitle = sprintf(' %s',helper::translate('Résultat de votre recherche'));
-					rsort($result);
+					usort($result, function ($a, $b) {
+						if ($a['timestamp'] === $b['timestamp']) {
+							return $b['matches'] <=> $a['matches'];
+						}
+						return $b['timestamp'] <=> $a['timestamp'];
+					});
 					foreach ($result as $key => $value) {
 						$r[] = $value['preview'];
 					}
@@ -315,7 +324,7 @@ class search extends common
 
 	// Fonction de recherche des occurrences dans $contenu
 	// Renvoie le résultat sous forme de chaîne
-	private function occurrence($url, $titre, $contenu, $motclef, $motentier)
+	private function occurrence($url, $titre, $contenu, $motclef, $motentier, $timestamp = 0)
 	{
 		// Nettoyage de $contenu : on enlève tout ce qui est inclus entre < et >
 		$contenu = preg_replace('/<[^>]*>/', ' ', $contenu);
@@ -339,8 +348,8 @@ class search extends common
 		// Rechercher
 		$valid = preg_match_all($keywords, $contenu, $matches, PREG_OFFSET_CAPTURE);
 		if ($valid > 0) {
-			if (($matches[0][0][1]) > 0) {
-				$resultat = sprintf('<h2><a  href="./?%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $url, $titre, count($matches[0]));
+			if (($matches[0][0][1]) >= 0) {
+				$resultat = sprintf('<h2><a  href="%s" target="_blank" rel="noopener">%s (%s)</a></h2>', $this->buildEncodedUrl($url), $titre, count($matches[0]));
 				// Création de l'aperçu
 				// Eviter de découper avec une valeur négative
 				$d = $matches[0][0][1] - 50 < 0 ? 1 : $matches[0][0][1] - 50;
@@ -356,9 +365,18 @@ class search extends common
 				//}
 				return ([
 					'matches' => count($matches[0]),
-					'preview' => $resultat
+					'preview' => $resultat,
+					'timestamp' => $timestamp
 				]);
 			}
 		}
+	}
+
+	// Construit une URL encodée à partir d'un identifiant de page/article
+	private function buildEncodedUrl($url)
+	{
+		$parts = explode('/', $url);
+		$encodedParts = array_map('rawurlencode', $parts);
+		return helper::baseUrl(true) . '?' . implode('/', $encodedParts);
 	}
 }
