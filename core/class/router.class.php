@@ -330,6 +330,10 @@ class core extends common
 			
 			$css .= 'nav #burgerText { color: ' . $menuColors['text'] . '; }';
 			$css .= 'nav .navSub a { background-color: var(--submenu-bg); }';
+
+			$css .= 'nav .navMain a.active { border-radius: ' . $this->getData(['theme', 'menu', 'radius']) . '; }';
+			$css .= '#menu { text-align: ' . $this->getData(['theme', 'menu', 'textAlign']) . '; }';
+
             
 			$levelColors = helper::colorLevels($this->getData(['theme', 'menu', 'backgroundColorSub']), 4, 15);
 			foreach ($levelColors as $level => $colors) {
