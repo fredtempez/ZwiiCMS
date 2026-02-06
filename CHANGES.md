@@ -2,6 +2,7 @@
 
 ## Version 14.01.01
 - Corrige un problème empêchant la sélection du survol du sous-menu quand le menu est hors du site (en haut de la page).
+- Corrige l'absence d'alignement des entrées du menu.
 
 ## Version 14.01.00
 
