@@ -1,7 +1,10 @@
 # Notes de mises à jour
 
 ## Version 14.01.02
+### 🚀 Améliorations
 - Optimisation du module de recherche (search version 4.0) ; vérification des droits sur les sous-pages avec leur propre rôle et blocage, et prise en charge des correspondances en début de contenu.
+### 🛠️ Corrections
+- Corrige une erreur d'écriture des données d'identité d'un site localisé dans une langue étrangère.
 
 ## Version 14.01.01
 ### 🚀 Améliorations

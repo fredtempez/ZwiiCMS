@@ -429,8 +429,8 @@ class language extends common
 				// Enregistrer les données par lecture directe du formulaire
 				$this->setData(['locale', $data['locale']]);
 			} else {
-				// Sauver sur le disque
-				$this->secure_file_put_contents(self::DATA_DIR . $lang . '/locale.json', $data);
+				// Écriture via JsonDb avec la config (compression/chiffrement) de la base locale ciblée
+				$this->saveDataFile('locale', $data['locale'], $lang);
 			}
 
 			// Valeurs en sortie

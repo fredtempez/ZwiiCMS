@@ -877,6 +877,27 @@ class common
 	}
 
 	/**
+	 * Sauvegarde une base JSON en respectant la configuration (compression, chiffrement)
+	 * @param string $dataFile Nom de la base à sauvegarder
+	 * @param mixed $data Données à écrire (placées à la racine de la base)
+	 * @param string|null $lang Langue (optionnel, langue courante par défaut)
+	 * @return bool Succès de l'écriture
+	 */
+	public function saveDataFile($dataFile, $data, $lang = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+
+		// Charger la base avec la config adaptée si besoin
+		$this->loadDataFile($dataFile, $lang);
+
+		$db = (object) $this->dataFiles[$dataFile];
+		$db->set($dataFile, $data);
+		return $db->save();
+	}
+
+	/**
 	 * Vérifie si une base de données JSON est déjà chargée
 	 * @param string $dataFile Nom de la base à vérifier
 	 * @return bool True si la base est chargée, false sinon
