@@ -1,8 +1,13 @@
 # Notes de mises à jour
 
 ## Version 14.01.01
+### 🚀 Améliorations
+- Après le changement des paramètres d'une base de données (minification, compression et cryptage), les modifications sont appliquées et visibles immédiatement.
+
+### 🛠️ Corrections
 - Corrige un problème empêchant la sélection du survol du sous-menu quand le menu est hors du site (en haut de la page).
 - Corrige l'absence d'alignement des entrées du menu.
+
 
 ## Version 14.01.00
 

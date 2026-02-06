@@ -650,6 +650,9 @@ class config extends common
 						// Appliquer tous les changements de configuration avec la nouvelle méthode
 						$db->applyConfigChanges($newConfig);
 					}
+
+					// Force une sauvegarde immédiate de la base pour appliquer les changements de configuration
+					$this->saveDb($dbName);
 				}
 			}
 
