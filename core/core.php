@@ -586,6 +586,7 @@ class common
 	{
 		// Vérifier si la base est chargée, sinon la charger automatiquement
 		if (empty($this->dataFiles[$keys[0]])) {
+			// Charge la base ciblée avant suppression pour éviter un descripteur vide
 			$this->loadDataFile($keys[0]);
 		}
 
@@ -633,6 +634,7 @@ class common
 
 		// Vérifier si la base est chargée, sinon la charger automatiquement
 		if (empty($this->dataFiles[$keys[0]])) {
+			// Charge la base concernée pour disposer du descripteur avant écriture
 			$this->loadDataFile($keys[0]);
 		}
 
@@ -686,6 +688,7 @@ class common
 		if (count($keys) >= 1) {
 			// Vérifier si la base est chargée, sinon la charger automatiquement
 			if (empty($this->dataFiles[$keys[0]])) {
+				// Charge la base demandée avant lecture pour accéder aux données
 				$this->loadDataFile($keys[0]);
 			}
 
@@ -832,12 +835,13 @@ class common
 	}
 
 	/**
-	 * Charge une base de données JSON spécifique à la demande
+	 * Charge (ou instancie si absent) une base JsonDb dans le cache partagé, en appliquant la configuration globale + spécifique (compression/chiffrement) pour la langue cible.
 	 * @param string $dataFile Nom de la base à charger
 	 * @param string $lang Langue (optionnel, utilise la langue courante par défaut)
 	 */
 	private function loadDataFile($dataFile, $lang = null)
 	{
+		// Instancie la JsonDb ciblée et la garde en cache partagé pour les lectures/écritures classiques
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
@@ -877,20 +881,22 @@ class common
 	}
 
 	/**
-	 * Charge une base JSON dans le cache partagé (API protégée pour les modules)
+	 * Assure qu'une base est présente dans le cache partagé en passant par loadDataFile, pour les modules qui n'ont pas accès à la méthode privée.
 	 * @param string $dataFile Nom de la base
 	 * @param string $lang Langue (optionnel)
 	 */
 	protected function ensureDataFileLoaded($dataFile, $lang = null)
 	{
+		// Expose le chargement cache aux modules sans ouvrir l'accès direct à loadDataFile
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
+		// Charge la base demandée dans le cache partagé pour les appels module
 		$this->loadDataFile($dataFile, $lang);
 	}
 
 	/**
-	 * Lit une base JsonDb sans utiliser le cache partagé
+	 * Lit une base JsonDb dans une instance éphémère (hors cache partagé) avec la configuration complète, et retourne la clé demandée (racine par défaut).
 	 * @param string $dataFile Nom de la base
 	 * @param string $lang Langue/chemin (optionnel)
 	 * @param string|array|null $query Clé à lire (string notation point ou tableau). Par défaut, la racine porte le nom de la base.
@@ -898,6 +904,7 @@ class common
 	 */
 	public function fetchDataFile($dataFile, $lang = null, $query = null)
 	{
+		// Lit une base isolée (nouvelle instance) pour éviter de polluer le cache partagé
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
@@ -938,7 +945,7 @@ class common
 	}
 
 	/**
-	 * Sauvegarde une base JSON en respectant la configuration (compression, chiffrement)
+	 * Écrit des données à la racine d'une base et persiste via JsonDb en appliquant la configuration et la langue ciblée (compression/chiffrement inclus).
 	 * @param string $dataFile Nom de la base à sauvegarder
 	 * @param mixed $data Données à écrire (placées à la racine de la base)
 	 * @param string|null $lang Langue (optionnel, langue courante par défaut)
@@ -946,11 +953,13 @@ class common
 	 */
 	public function saveDataFile($dataFile, $data, $lang = null)
 	{
+		// Force un chargement avec la bonne config puis écrit et persiste la base ciblée
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
 
 		// Charger la base avec la config adaptée si besoin
+		// Charge/initialise la base pour appliquer la config (compression/chiffrement) avant sauvegarde
 		$this->loadDataFile($dataFile, $lang);
 
 		$db = (object) $this->dataFiles[$dataFile];
@@ -959,23 +968,25 @@ class common
 	}
 
 	/**
-	 * Vérifie si une base de données JSON est déjà chargée
+	 * Indique si le descripteur JsonDb d'une base est déjà instancié dans le cache partagé.
 	 * @param string $dataFile Nom de la base à vérifier
 	 * @return bool True si la base est chargée, false sinon
 	 */
 	public function isDataFileLoaded($dataFile)
 	{
+		// Indique si le descripteur JsonDb est déjà en cache partagé
 		return array_key_exists($dataFile, $this->dataFiles) && !empty($this->dataFiles[$dataFile]);
 	}
 
 
 	/**
-	 * Charge les bases de données requises pour un module spécifique
+	 * Précharge les bases nécessaires à un module (communes + spécifiques) pour la langue donnée, sans recharger celles déjà présentes en cache.
 	 * @param string $moduleId ID du module
 	 * @param string $lang Langue (optionnel)
 	 */
 	public function loadModuleDataFiles($moduleId, $lang = null)
 	{
+		// Précharge les bases nécessaires à un module (avec fallback sur la langue courante)
 		if ($lang === null) {
 			$lang = self::$siteContent;
 		}
@@ -1002,6 +1013,7 @@ class common
 		// Charger les bases requises qui ne sont pas encore chargées
 		foreach ($moduleRequiredBases as $dataFile) {
 			if (!$this->isDataFileLoaded($dataFile)) {
+				// Précharge la base requise pour le module afin d'éviter des accès paresseux plus loin
 				$this->loadDataFile($dataFile, $lang);
 			}
 		}
@@ -1009,12 +1021,12 @@ class common
 
 
 	/**
-	 * Retourne la configuration des bases de données
-	 * Priorité : config.json > defaultdata.php
+	 * Construit la configuration par base en priorisant config.json, sinon les valeurs par défaut de l'install (defaultdata.php).
 	 * @return array Configuration des bases de données
 	 */
 	private function getDataFilesConfig()
 	{
+		// Construit la config par base (priorité config.json, sinon défauts d'install)
 		// 1. Essayer de lire depuis config.json (priorité 1)
 		$configPath = self::DATA_DIR . 'config.json';
 		if (file_exists($configPath)) {
