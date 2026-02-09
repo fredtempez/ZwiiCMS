@@ -448,8 +448,9 @@ class language extends common
 		if ($lang === self::$siteContent) {
 			self::$locales[$lang]['locale'] = $this->getData(['locale']);
 		} else {
-			// Lire les locales sans passer par les méthodes
-			self::$locales[$lang] = json_decode(file_get_contents(self::DATA_DIR . $lang . '/locale.json'), true);
+			// Lire les locales via JsonDb pour respecter la configuration de la base ciblée
+			$localeData = $this->fetchDataFile('locale', $lang, 'locale');
+			self::$locales[$lang]['locale'] = is_array($localeData) ? $localeData : [];
 		}
 
 		// Générer la liste des pages disponibles

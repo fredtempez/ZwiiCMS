@@ -1043,12 +1043,12 @@ class core extends common
 					is_dir(common::DATA_DIR . $langId) &&
 					file_exists(common::DATA_DIR . $langId . '/page.json')
 				) {
-					// Lire les données des pages
-					$pagesId = json_decode(file_get_contents(common::DATA_DIR . $langId . '/page.json'), true);
+					// Lire les données des pages en respectant la configuration de JsonDb
+					$pagesId = $this->fetchDataFile('page', $langId, 'page');
 					if (
 						// La page existe
-						is_array($pagesId['page']) &&
-						array_key_exists($this->getUrl(0), $pagesId['page'])
+						is_array($pagesId) &&
+						array_key_exists($this->getUrl(0), $pagesId)
 					) {
 						// Basculer
 						$_SESSION['ZWII_SITE_CONTENT'] = $langId;
