@@ -55,7 +55,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '14.1.02';
+	const ZWII_VERSION = '14.1.03';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -836,11 +836,8 @@ class common
 	 * @param string $dataFile Nom de la base à charger
 	 * @param string $lang Langue (optionnel, utilise la langue courante par défaut)
 	 */
-	public function loadDataFile($dataFile, $lang = null)
+	public function loadDataFile($dataFile, $lang = self::$siteContent)
 	{
-		if ($lang === null) {
-			$lang = self::$siteContent;
-		}
 
 		// Vérifier si la base existe et n'est pas déjà chargée
 		if (!array_key_exists($dataFile, $this->dataFiles) || empty($this->dataFiles[$dataFile])) {

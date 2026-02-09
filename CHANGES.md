@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 14.01.03
+### 🚀 Améliorations
+- Supprime la substitution des fontes Google vers CdnFont devenue inutile et pouvant occasionner des erreurs avec le nouveau système de base de données.
+
 ## Version 14.01.02
 ### 🚀 Améliorations
 - Optimisation du module de recherche (search version 4.0) ; vérification des droits sur les sous-pages avec leur propre rôle et blocage, et prise en charge des correspondances en début de contenu.

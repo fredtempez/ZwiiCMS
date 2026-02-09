@@ -1071,28 +1071,7 @@ class theme extends common
 					if (!empty($modele)) {
 						// traiter l'archive
 						$success = $zip->extractTo('.');
-
-						// Substitution des fontes Google
-						if ($modele = 'theme') {
-							$c = $this->subFont(self::DATA_DIR . 'theme.json');
-							// Un remplacement nécessite la régénération de la feuille de style
-							if (
-								$c > 0
-								and file_exists(self::DATA_DIR . 'theme.css')
-							) {
-								unlink(self::DATA_DIR . 'theme.css');
-							}
-						}
-						if ($modele = 'admin') {
-							$c = $this->subFont(self::DATA_DIR . 'admin.json');
-							// Un remplacement nécessite la régénération de la feuille de style
-							if (
-								$c > 0
-								and file_exists(self::DATA_DIR . 'admin.css')
-							) {
-								unlink(self::DATA_DIR . 'admin.css');
-							}
-						}
+ 
 
 						// traitement d'erreur
 						$notification = $success ? helper::translate('Thème importé') : helper::translate('Erreur lors de l\'extraction, vérifiez les permissions');
@@ -1250,60 +1229,6 @@ class theme extends common
 		return ($zipFilename);
 	}
 
-	/**
-	 * Substitution des fontes de Google Fonts vers CdnFont grâce à un tableau de conversion
-	 * Cette fonction est utilisée par l'import.
-	 * @param string $file, nom du fichier json à convertir
-	 * @return int nombre de substitution effectuées
-	 */
-	private function subFont($file)
-	{
-		// Tableau de substitution des fontes
-		$fonts = [
-			'Abril+Fatface' => 'abril-fatface',
-			'Arimo' => 'arimo',
-			'Arvo' => 'arvo',
-			'Berkshire+Swash' => 'berkshire-swash',
-			'Cabin' => 'genera',
-			'Dancing+Script' => 'dancing-script',
-			'Droid+Sans' => 'droid-sans-2',
-			'Droid+Serif' => 'droid-serif-2',
-			'Fira+Sans' => 'fira-sans',
-			'Inconsolata' => 'inconsolata-2',
-			'Indie+Flower' => 'indie-flower',
-			'Josefin+Slab' => 'josefin-sans-std',
-			'Lobster' => 'lobster-2',
-			'Lora' => 'lora',
-			'Lato' => 'lato',
-			'Marvel' => 'montserrat-ace',
-			'Old+Standard+TT' => 'old-standard-tt-3',
-			'Open+Sans' => 'open-sans',
-			// Corriger l'erreur de nom de police installée par défaut, il manquait un O en majuscule
-			'open+Sans' => 'open-sans',
-			'Oswald' => 'oswald-4',
-			'PT+Mono' => 'pt-mono',
-			'PT+Serif' => 'pt-serif',
-			'Raleway' => 'raleway-5',
-			'Rancho' => 'rancho',
-			'Roboto' => 'Roboto',
-			'Signika' => 'signika',
-			'Ubuntu' => 'ubuntu',
-			'Vollkorn' => 'vollkorn'
-		];
-
-		$data = file_get_contents($file);
-		$count = 0;
-		foreach ($fonts as $oldId => $newId) {
-			$data = str_replace($oldId, $newId, $data, $c);
-			$count = $count + (int) $c;
-		}
-		// Sauvegarder la chaîne modifiée
-		if ($count > 0) {
-			$this->secure_file_put_contents($file, $data);
-		}
-		// Retourner le nombre d'occurrences
-		return ($count);
-	}
 
 
 	// Retourne un tableau simple des fonts installées idfont avec le nom
