@@ -222,7 +222,7 @@ class install extends common
 				foreach ($databaseConfig as $dbName => $config) {
 					// Charger la base si ce n'est pas déjà fait
 					if (!$this->isDataFileLoaded($dbName)) {
-						$this->loadDataFile($dbName);
+						$this->ensureDataFileLoaded($dbName);
 					}
 					
 					// Appliquer la configuration à la base de données

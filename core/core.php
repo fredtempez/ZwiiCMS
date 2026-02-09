@@ -836,8 +836,11 @@ class common
 	 * @param string $dataFile Nom de la base à charger
 	 * @param string $lang Langue (optionnel, utilise la langue courante par défaut)
 	 */
-	public function loadDataFile($dataFile, $lang = self::$siteContent)
+	private function loadDataFile($dataFile, $lang = null)
 	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
 
 		// Vérifier si la base existe et n'est pas déjà chargée
 		if (!array_key_exists($dataFile, $this->dataFiles) || empty($this->dataFiles[$dataFile])) {
@@ -871,6 +874,67 @@ class common
 			// Utilisation de la classe JsonDb améliorée
 			$this->dataFiles[$dataFile] = new \Prowebcraft\JsonDb($config);
 		}
+	}
+
+	/**
+	 * Charge une base JSON dans le cache partagé (API protégée pour les modules)
+	 * @param string $dataFile Nom de la base
+	 * @param string $lang Langue (optionnel)
+	 */
+	protected function ensureDataFileLoaded($dataFile, $lang = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+		$this->loadDataFile($dataFile, $lang);
+	}
+
+	/**
+	 * Lit une base JsonDb sans utiliser le cache partagé
+	 * @param string $dataFile Nom de la base
+	 * @param string $lang Langue/chemin (optionnel)
+	 * @param string|array|null $query Clé à lire (string notation point ou tableau). Par défaut, la racine porte le nom de la base.
+	 * @return mixed Données lues ou null si absentes
+	 */
+	public function fetchDataFile($dataFile, $lang = null, $query = null)
+	{
+		if ($lang === null) {
+			$lang = self::$siteContent;
+		}
+		$config = [
+			'name' => $dataFile . '.json',
+			'dir' => $this->dataPath($dataFile, $lang),
+			'backup' => file_exists('site/data/.backup'),
+			'update' => false,
+		];
+
+		$config = isset($this->jsonDbConfig)
+			? array_merge($config, $this->jsonDbConfig)
+			: array_merge($config, self::JSONDB_DEFAULT_CONFIG);
+
+		$dataFilesConfig = $this->getDataFilesConfig();
+		if (isset($dataFilesConfig[$dataFile])) {
+			$config = array_merge($config, $dataFilesConfig[$dataFile]);
+		}
+
+		if (isset($config['encryption']) && $config['encryption'] && empty($config['encryptionKey'])) {
+			$config['encryption'] = false;
+		}
+
+		$db = new \Prowebcraft\JsonDb($config);
+
+		if ($query === null) {
+			$target = $dataFile;
+		} elseif (is_array($query)) {
+			$target = $dataFile;
+			foreach ($query as $segment) {
+				$target .= '.' . $segment;
+			}
+		} else {
+			$target = $query;
+		}
+
+		return $db->get($target);
 	}
 
 	/**

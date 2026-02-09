@@ -552,14 +552,9 @@ class plugin extends common
 
 		foreach ($i18nSites as $keyi18n => $valuei18n) {
 
-			// Clés moduleIds dans les pages de la langue (lecture via JsonDb avec langue ciblée)
-			$this->loadDataFile('page', $keyi18n);
-			$pageDb = $this->dataFiles['page'] ?? null;
-			$pagesList = [];
-			if ($pageDb) {
-				$pageData = $pageDb->get('page');
-				$pagesList = is_array($pageData) ? $pageData : [];
-			}
+			// Clés moduleIds dans les pages de la langue (lecture ciblée sans polluer le cache)
+			$pagesList = $this->fetchDataFile('page', $keyi18n, 'page');
+			$pagesList = is_array($pagesList) ? $pagesList : [];
 
 			// Extraire les clés des modules
 			$pagesModules[$keyi18n] = array_filter(helper::arrayColumn($pagesList, 'moduleId', 'SORT_DESC'), 'strlen');
