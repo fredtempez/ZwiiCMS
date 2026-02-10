@@ -2,7 +2,15 @@
 
 ## Version 14.01.03
 ### 🚀 Améliorations
+- Le double tap sur une entrée de menu contenant des sous-pages ouvre la page correspondante dans le menu déplié des smartphones et des tablettes.
+- Ajoute un guide complet sur JsonDb : méthodes clés, procédures lecture/écriture et bonnes pratiques.
+
+### 🛠️ Corrections
 - Supprime la substitution des fontes Google vers CdnFont devenue inutile et pouvant occasionner des erreurs avec le nouveau système de base de données.
+L'accès des bases depuis les méthodes file_get_contents et file_put_contents n'est maintenant plus prise en charge. Désormais, on utilise des méthodes intégrées qui permettent d'accèder aux données en tenant compte de la configuration des bases de données. Ces méthodes sont accessibles via l'objet JsonDb, et sont utilisées pour lire des bases non chargées dans le contexte par exemple, de la mise à jour d'une base de données. :- 
+  - Lecture des données harmonisée via fetchDataFile (pages, locales) pour respecter la configuration JsonDb et limiter les accès directs.
+  - Refactor de la gestion des fichiers de données : ensureDataFileLoaded remplace loadDataFile et ajout de fetchDataFile pour des lectures ciblées sans cache partagé.
+
 
 ## Version 14.01.02
 ### 🚀 Améliorations

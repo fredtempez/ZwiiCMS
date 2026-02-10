@@ -366,13 +366,26 @@ core.start = function () {
                 var $submenu = $link.siblings(".navSub, ul[class*='navSubmenu']");
 
                 if ($submenu.length) {
-                    e.preventDefault();
+                    var isOpen = $submenu.is(":visible");
+                    var alreadyPrimed = $link.data("submenu-primed") === true;
 
-                    // Replier les autres sous-menus du même niveau
+                    // Fermer les autres sous-menus et retirer leur etat primed
+                    $link.parent("li").siblings("li.navParent").children("a").removeData("submenu-primed");
                     $link.parent("li").siblings("li.navParent").children(".navSub, ul[class*='navSubmenu']").slideUp();
 
-                    // Ouvrir/fermer le sous-menu ciblé
-                    $submenu.slideToggle();
+                    // Premier clic sur mobile : on ouvre le sous-menu
+                    if (!isOpen) {
+                        e.preventDefault();
+                        $link.data("submenu-primed", true);
+                        $submenu.slideDown();
+                    } else if (alreadyPrimed) {
+                        // Deuxieme clic quand le sous-menu est ouvert : navigation autorisee
+                        $link.removeData("submenu-primed");
+                    } else {
+                        // Sous-menu deja ouvert par un autre geste, on evite la navigation accidentelle
+                        e.preventDefault();
+                        $link.data("submenu-primed", true);
+                    }
                 }
             });
         } else {
