@@ -159,6 +159,15 @@ class gallery extends common
 	public static $formOptionSelect = '';
 
 	/**
+	 * Constructeur : initialise les données du module dès l'instanciation.
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		$this->update();
+	}
+
+	/**
 	 * Mise à jour du module
 	 * Appelée par les fonctions index et config
 	 */
@@ -364,9 +373,6 @@ class gallery extends common
 	 */
 	public function config()
 	{
-		// Mise à jour des données de module
-		$this->update();
-
 		// Affichage de la galerie triée
 		$g = $this->getData(['module', $this->getUrl(0), 'content']);
 		$p = helper::arrayColumn(helper::arrayColumn($g, 'config'), 'position');
@@ -724,8 +730,6 @@ class gallery extends common
 	 */
 	public function index()
 	{
-		// Mise à jour des données de module
-		$this->update();
 		// Une seule galerie, bifurquer sur celle-ci
 		$gallery = $this->getData(['module', $this->getUrl(0), 'config', 'showUniqueGallery']) === true &&
 			count($this->getData(['module', $this->getUrl(0), 'content'])) === 1
