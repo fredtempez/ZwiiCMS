@@ -1862,7 +1862,17 @@ class common
 			}
 
 			// Expéditeur sécurisé
-			$mail->setFrom($from, html_entity_decode($this->getData(['locale', 'title']), ENT_QUOTES, 'UTF-8'));
+			$senderAddress = $from;
+			// Aligne l'expéditeur sur le compte SMTP authentifié pour éviter les rejets (ex: smtp.free.fr)
+			if (
+				$this->getData(['config', 'smtp', 'enable'])
+				&& $this->getData(['config', 'smtp', 'auth'])
+				&& filter_var($this->getData(['config', 'smtp', 'username']), FILTER_VALIDATE_EMAIL)
+			) {
+				$senderAddress = $this->getData(['config', 'smtp', 'username']);
+			}
+			$mail->setFrom($senderAddress, html_entity_decode($this->getData(['locale', 'title']), ENT_QUOTES, 'UTF-8'));
+			$mail->Sender = $senderAddress; // Return-Path
 
 			// répondre à
 			if (is_null($replyTo)) {
