@@ -1401,6 +1401,17 @@ class layout extends common
         // Variables partagées
         $vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
         $vars .= 'var baseUrlQs = ' . json_encode(helper::baseUrl()) . ';';
+        // Liste des fontes disponibles pour TinyMCE (nom=font-family)
+        $fontFormats = [];
+        foreach (['websafe', 'imported', 'files'] as $typeFont) {
+            $fontsSource = $this->getData(['font', $typeFont]);
+            if (is_array($fontsSource)) {
+                foreach ($fontsSource as $fontValue) {
+                    $fontFormats[] = $fontValue['name'] . '=' . $fontValue['font-family'];
+                }
+            }
+        }
+        $vars .= 'var tinymceFontFormats = ' . json_encode(implode(';', $fontFormats)) . ';';
         if (
             $this->isConnected() === true
             and $this->getUser('role') >= self::ROLE_EDITOR

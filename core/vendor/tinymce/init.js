@@ -10,6 +10,10 @@
 if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
+// Formats de polices disponibles (complétés dynamiquement depuis PHP)
+var defaultFontFormats = "Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats";
+var extraFontFormats = (typeof tinymceFontFormats !== "undefined" && tinymceFontFormats) ? tinymceFontFormats + ";" : "";
+
 tinymce.init({
 	// Classe où appliquer l'éditeur
 	selector: ".editorWysiwyg",
@@ -47,6 +51,7 @@ tinymce.init({
 	toolbar_sticky: true,
 	fontsize_formats:
 		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
+	font_formats: extraFontFormats + defaultFontFormats,
 	theme: "silver",
 	max_height: 600,
 	// CodeMirror
@@ -101,6 +106,7 @@ tinymce.init({
 	content_css: [
 		baseUrl + "core/layout/common.css",
 		baseUrl + "core/vendor/tinymce/content.css",
+		baseUrl + "site/data/font/font.css",
 		baseUrl + "site/data/theme.css",
 		baseUrl + "site/data/custom.css"
 	],
@@ -294,6 +300,7 @@ tinymce.init({
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
+	font_formats: extraFontFormats + defaultFontFormats,
 	// Titre des images
 	image_title: true,
 	// Pages internes
@@ -304,6 +311,7 @@ tinymce.init({
 	content_css: [
 		baseUrl + "core/layout/common.css",
 		baseUrl + "core/vendor/tinymce/content.css",
+		baseUrl + "site/data/font/font.css",
 		baseUrl + "site/data/theme.css",
 		baseUrl + "site/data/custom.css"
 	],

@@ -255,6 +255,7 @@ class core extends common
 			
 			// TinyMCE & Textes
 			$css .= 'div.mce-edit-area { font-family: var(--font-' . $this->getData(['theme', 'text', 'font']) . '); }';
+			$css .= '.mce-content-body { font-family: var(--font-' . $this->getData(['theme', 'text', 'font']) . '); color: var(--text-color); background-color: var(--site-bg); font-size: var(--font-size); }';
 			$css .= '.editorWysiwyg, .editorWysiwygComment { background-color: var(--site-bg); }';
 			$css .= 'span.mce-text { background-color: unset !important; }';
 			$css .= 'body, .row > div { font-size: var(--font-size); }';

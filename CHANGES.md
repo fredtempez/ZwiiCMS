@@ -4,6 +4,7 @@
 ### 🚀 Améliorations
 - Le double tap sur une entrée de menu contenant des sous-pages ouvre la page correspondante dans le menu déplié des smartphones et des tablettes.
 - Ajoute un guide complet sur JsonDb : méthodes clés, procédures lecture/écriture et bonnes pratiques.
+- TinyMCE applique désormais la police du thème et expose toutes les fontes installées dans la liste des polices de l'éditeur.
 
 ### 🛠️ Corrections
 - Supprime la substitution des fontes Google vers CdnFont devenue inutile et pouvant occasionner des erreurs avec le nouveau système de base de données.

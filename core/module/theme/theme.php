@@ -1283,6 +1283,8 @@ class theme extends common
 		 */
 		$gf = false;
 		$fileContent = '<!-- Fontes personnalisées -->';
+		// Import @font-face/@import utilisable par les iframes (TinyMCE)
+		$fileContentCssImports = '';
 		if (!empty($this->getData(['font', 'imported']))) {
 			foreach ($this->getData(['font', 'imported']) as $fontId => $fontValue) {
 				if (
@@ -1292,6 +1294,8 @@ class theme extends common
 					//Pré chargement à revoir
 					//$fileContent .= '<link rel="preload" href="' . $fontValue['resource'] . '" crossorigin="anonymous" as="style">';
 					$fileContent .= '<link href="' . $fontValue['resource'] . '" rel="stylesheet">';
+					// Import direct pour les contextes qui ne chargent pas font.html (ex: iframe TinyMCE)
+					$fileContentCssImports .= '@import url("' . $fontValue['resource'] . '");';
 					// Pré connect pour api.google
 					$gf = strpos($fontValue['resource'], 'fonts.googleapis.com') === false ? $gf || false : $gf || true;
 				}
@@ -1328,6 +1332,9 @@ class theme extends common
 				}
 			}
 		}
+
+		// Préfixe le CSS généré par les @import des fontes en ligne
+		$fileContentCss = $fileContentCssImports . $fileContentCss;
 
 		// Enregistre la personnalisation
 		$this->secure_file_put_contents(self::DATA_DIR . 'font/font.html', $fileContent);
