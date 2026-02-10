@@ -17,7 +17,7 @@
  */
 class gallery extends common
 {
-	const VERSION = '5.2';
+	const VERSION = '6.0';
 	const REALNAME = 'Galerie';
 	const DATADIRECTORY = self::DATA_DIR . 'gallery/';
 	const SORT_ASC = 'SORT_ASC';
@@ -840,41 +840,57 @@ class gallery extends common
 			}
 			// Construire le tableau
 			foreach ((array) $galleries as $galleryId => $gallery) {
-				if (is_dir($gallery['config']['directory'])) {
-					$iterator = new DirectoryIterator($gallery['config']['directory']);
+				$galleryDir = rtrim($gallery['config']['directory'], '/');
+				$homePicture = ltrim($gallery['config']['homePicture'], '/');
+				if (!is_dir($galleryDir)) {
+					continue;
+				}
+
+				$coverPath = '';
+				$homePicturePath = $homePicture ? $galleryDir . '/' . $homePicture : '';
+
+				if ($homePicturePath && is_file($homePicturePath) && @getimagesize($homePicturePath)) {
+					$coverPath = $homePicturePath;
+				} else {
+					$iterator = new DirectoryIterator($galleryDir);
 					foreach ($iterator as $fileInfos) {
-						if ($fileInfos->isDot() === false and $fileInfos->isFile() and @getimagesize($fileInfos->getPathname())) {
-							self::$galleries[$galleryId] = $gallery;
-							// L'image de couverture est-elle supprimée ?
-							if (file_exists($gallery['config']['directory'] . $gallery['config']['homePicture'])) {
-								// Créer la miniature si manquante
-								if (!file_exists(str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))) {
-									$this->makeThumb(
-										$gallery['config']['directory'] . str_replace(self::THUMBS_SEPARATOR, '', $gallery['config']['homePicture']),
-										null,  // Chemin de destination généré automatiquement
-										self::THUMBS_WIDTH
-									);
-								}
-								// Définir l'image de couverture
-								self::$firstPictures[$galleryId] = file_exists(str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture']))
-									? str_replace('source', 'thumb', $gallery['config']['directory'])  . self::THUMBS_SEPARATOR . strtolower($gallery['config']['homePicture'])
-									: str_replace('source', 'thumb', $gallery['config']['directory'])  . strtolower($gallery['config']['homePicture']);
-							} else {
-								// homePicture contient une image invalide, supprimée ou déplacée
-								// Définir l'image de couverture, première image disponible
-								$this->makeThumb(
-									$fileInfos->getPath() . '/' . $fileInfos->getFilename(),
-									null,  // Chemin de destination généré automatiquement
-									self::THUMBS_WIDTH
-								);
-								self::$firstPictures[$galleryId] = file_exists(str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))
-									? str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename())
-									: str_replace('source', 'thumb', $fileInfos->getPath()) . '/' . strtolower($fileInfos->getFilename());
-							}
+						if ($fileInfos->isDot() || !$fileInfos->isFile()) {
+							continue;
 						}
-						continue (1);
+						if (!@getimagesize($fileInfos->getPathname())) {
+							continue;
+						}
+						$coverPath = $fileInfos->getPathname();
+						break; // Première image trouvée, pas besoin de parcourir tout le dossier
 					}
 				}
+
+				if (!$coverPath) {
+					continue;
+				}
+
+				$thumbDir = str_replace('source', 'thumb', dirname($coverPath));
+				$thumbBaseName = strtolower(basename($coverPath));
+				$expectedThumb = $thumbDir . '/' . self::THUMBS_SEPARATOR . $thumbBaseName;
+				$fallbackThumb = $thumbDir . '/' . $thumbBaseName;
+
+				// Créer le dossier des miniatures si besoin pour éviter les chemins cassés
+				if (!is_dir($thumbDir)) {
+					mkdir($thumbDir, 0755, true);
+				}
+
+				if (!file_exists($expectedThumb)) {
+					$this->makeThumb(
+						$coverPath,
+						null,
+						self::THUMBS_WIDTH
+					);
+				}
+
+				self::$galleries[$galleryId] = $gallery;
+				self::$firstPictures[$galleryId] = file_exists($expectedThumb)
+					? $expectedThumb
+					: (file_exists($fallbackThumb) ? $fallbackThumb : $coverPath);
 			}
 			// Valeurs en sortie
 			$this->addOutput([

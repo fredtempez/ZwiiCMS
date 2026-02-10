@@ -1,3 +1,5 @@
+# Version 6.0
+- Réécriture de la méthode générant l'index des galeries et l'affichage d'une galerie.
 # Version 5.2
 - Corrige le chemin des ressources insérés par des membres éditeurs.
 # Version 5.1
