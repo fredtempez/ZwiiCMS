@@ -347,6 +347,43 @@ core.start = function () {
         }
     });
 
+    /**
+     * Normalise la casse des champs avec data-case
+     */
+    $("[data-case]").on("input change", function () {
+        var field = $(this);
+        var mode = (field.data("case") || "").toString();
+        if (!mode) {
+            return;
+        }
+        var value = field.val();
+        var normalized = value;
+
+        switch (mode) {
+            case "upper":
+                normalized = value.toUpperCase();
+                break;
+            case "sentence":
+                normalized = value.toLowerCase().replace(/(^\s*\w|[\.\!\?]\s+\w)/g, function (match) {
+                    return match.toUpperCase();
+                });
+                break;
+            case "title":
+                normalized = value.toLowerCase().replace(/\b\w+/g, function (word) {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                });
+                break;
+            case "lower":
+            default:
+                normalized = value.toLowerCase();
+                break;
+        }
+
+        if (normalized !== value) {
+            field.val(normalized);
+        }
+    });
+
 
     /**
      * Ouverture des sous-menus en mode burger (tap au lieu du survol)

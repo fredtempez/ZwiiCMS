@@ -726,7 +726,22 @@ class template
     /**
      * Crée un champ mail
      * @param string $nameId Nom et id du champ
-     * @param array $attributes Attributs ($key => $value)
+     * @param array $attributes Attributs ($key => $value) :
+     *  - autocomplete : on|off (defaut on)
+     *  - before : bool, recharge la valeur precedente si disponible (defaut true)
+     *  - case : lower|upper|sentence|title pour normaliser la saisie (optionnel)
+     *  - class : classes CSS additionnelles sur l'input
+     *  - classWrapper : classes CSS additionnelles sur le wrapper
+     *  - noDirty : bool, desactive le marquage dirty
+     *  - disabled : bool, desactive l'input
+     *  - help : texte d'aide (traduit)
+     *  - id : id de l'input (defaut $nameId)
+     *  - label : libelle (traduit)
+     *  - name : name de l'input (defaut $nameId)
+     *  - placeholder : placeholder eventuel
+     *  - readonly : bool, lecture seule
+     *  - value : valeur initiale
+     *  - required : bool, ajoute required et l'asterisque sur le label
      * @return string
      */
     public static function mail($nameId, array $attributes = [])
@@ -735,6 +750,7 @@ class template
         $attributes = array_merge([
             'autocomplete' => 'on',
             'before' => true,
+            'case' => '',
             'class' => '',
             'classWrapper' => '',
             'noDirty' => false,
@@ -753,6 +769,14 @@ class template
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        // Casse optionnelle
+        if (!empty($attributes['case'])) {
+            $attributes['case'] = in_array($attributes['case'], ['lower', 'upper', 'sentence', 'title'], true) ? $attributes['case'] : '';
+            if ($attributes['case'] !== '') {
+                $attributes['data-case'] = $attributes['case'];
+            }
+            unset($attributes['case']);
+        }
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];
@@ -1070,7 +1094,23 @@ class template
     /**
      * Crée un champ texte court
      * @param string $nameId Nom et id du champ
-     * @param array $attributes Attributs ($key => $value)
+     * @param array $attributes Attributs ($key => $value) :
+     *  - autocomplete : on|off (defaut on)
+     *  - before : bool, recharge la valeur precedente si disponible (defaut true)
+     *  - case : lower|upper|sentence|title pour appliquer une normalisation cote JS (facultatif)
+     *  - class : classes CSS additionnelles sur l'input
+     *  - classWrapper : classes CSS additionnelles sur le wrapper
+     *  - noDirty : bool, desactive le marquage dirty
+     *  - disabled : bool, desactive l'input
+     *  - help : texte d'aide (traduit)
+     *  - id : id de l'input (defaut $nameId)
+     *  - label : libelle (traduit)
+     *  - name : name de l'input (defaut $nameId)
+     *  - placeholder : placeholder eventuel
+     *  - readonly : bool, lecture seule
+     *  - value : valeur initiale
+     *  - type : type d'input (defaut text)
+     *  - required : bool, ajoute required et l'asterisque sur le label
      * @return string
      */
     public static function text($nameId, array $attributes = [])
@@ -1079,6 +1119,7 @@ class template
         $attributes = array_merge([
             'autocomplete' => 'on',
             'before' => true,
+            'case' => '',
             'class' => '',
             'classWrapper' => '',
             'noDirty' => false,
@@ -1098,6 +1139,14 @@ class template
         $attributes['label'] = helper::translate($attributes['label']);
         $attributes['help'] = helper::translate($attributes['help']);
         //$attributes['placeholder'] = helper::translate($attributes['placeholder']);
+        // Casse optionnelle
+        if (!empty($attributes['case'])) {
+            $attributes['case'] = in_array($attributes['case'], ['lower', 'upper', 'sentence', 'title'], true) ? $attributes['case'] : '';
+            if ($attributes['case'] !== '') {
+                $attributes['data-case'] = $attributes['case'];
+            }
+            unset($attributes['case']);
+        }
         // Sauvegarde des données en cas d'erreur
         if ($attributes['before'] and array_key_exists($attributes['id'], common::$inputBefore)) {
             $attributes['value'] = common::$inputBefore[$attributes['id']];

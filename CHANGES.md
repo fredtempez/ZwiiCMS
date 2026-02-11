@@ -7,6 +7,7 @@
 - TinyMCE applique désormais la police du thème et expose toutes les fontes installées dans la liste des polices de l'éditeur.
 - Amélioration de la gestion de l'expéditeur d'e-mail : alignement sur le compte SMTP authentifié pour éviter les rejets.
 - Le module Galerie passe en version 6.0, le temps de chargement est optimisé.
+- Intéresse les développeurs : les méthodes input du template text et mail accueille un nouveau champ case qui peut prendre les valeurs suivantes ower|upper|sentence|title pour normaliser la saisie (optionnel).
 
 ### 🛠️ Corrections
 - Evite les fuites de cache entre sous-domaines d'un même domaine.
