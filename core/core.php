@@ -279,7 +279,8 @@ class common
 		'minification' => false,
 		'compression' => false,
 		'encryption' => false,
-		'encryptionKey' => ''
+		'encryptionKey' => '',
+		'cachePrefix' => null  // Préfixe de cache pour éviter les collisions entre sites
 	];
 
 	public static $fontsWebSafe = [
@@ -412,6 +413,12 @@ class common
 
 		// Localisation
 		\setlocale(LC_ALL, self::$siteContent . '.UTF8');
+
+		// Configuration automatique du cachePrefix pour éviter les collisions entre sites
+		$hostname = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'default';
+		$this->jsonDbConfig = [
+			'cachePrefix' => $hostname
+		];
 
 		// Instanciation de la classe des entrées / sorties (bases essentielles seulement)
 		$this->jsonDB(self::$siteContent, $this->essentialDataFiles);

@@ -45,7 +45,8 @@ class JsonDb extends \Prowebcraft\Dot
             'compression' => false, // Compression GZIP
             'encryption' => false,  // Chiffrement OpenSSL
             'encryptionKey' => null,
-            'minify' => false       // Minification JSON
+            'minify' => false,      // Minification JSON
+            'cachePrefix' => null    // Préfixe de cache personnalisé pour éviter les collisions
         ], $config);
 
         // Initialisation du chemin
@@ -332,12 +333,21 @@ class JsonDb extends \Prowebcraft\Dot
     }
 
     /**
-     * Génère une clé unique pour le cache basée sur le chemin du fichier.
+     * Génère une clé unique pour le cache basée sur le chemin du fichier et l'identifiant du site.
      * @return string
      */
     protected function getCacheKey()
     {
-        return 'zwii_jdb_' . md5($this->db);
+        // Utilise le préfixe personnalisé si défini, sinon génère automatiquement
+        if (!empty($this->config['cachePrefix'])) {
+            $siteIdentifier = $this->config['cachePrefix'];
+        } else {
+            // Fallback automatique : hostname + chemin pour éviter les collisions entre sous-domaines
+            $siteIdentifier = $_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? 'default';
+        }
+        
+        $basePath = $this->db;
+        return 'zwii_jdb_' . md5($basePath . '|' . $siteIdentifier);
     }
 
     /**
