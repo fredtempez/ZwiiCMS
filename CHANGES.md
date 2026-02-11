@@ -6,6 +6,7 @@
 - Ajoute un guide complet sur JsonDb : méthodes clés, procédures lecture/écriture et bonnes pratiques.
 - TinyMCE applique désormais la police du thème et expose toutes les fontes installées dans la liste des polices de l'éditeur.
 - Amélioration de la gestion de l'expéditeur d'e-mail : alignement sur le compte SMTP authentifié pour éviter les rejets.
+- Le module Galerie passe en version 6.0, le temps de chargement est optimisé.
 
 ### 🛠️ Corrections
 - Evite les fuites de cache entre sous-domaines d'un même domaine.
