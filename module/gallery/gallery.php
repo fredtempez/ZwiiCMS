@@ -785,9 +785,10 @@ class gallery extends common
 								);
 							}
 							// Définir la Miniature
-							self::$thumbs[$directory . '/' . $fileInfos->getFilename()] = file_exists(str_replace('source', 'thumb', $directory) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))
-								? str_replace('source', 'thumb', $directory) . '/' . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename())
-								: str_replace('source', 'thumb', $directory) . '/' . strtolower($fileInfos->getFilename());
+							$thumbDir = rtrim(str_replace('source', 'thumb', $directory), '/') . '/';
+							self::$thumbs[$directory . '/' . $fileInfos->getFilename()] = file_exists($thumbDir . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename()))
+								? $thumbDir . self::THUMBS_SEPARATOR . strtolower($fileInfos->getFilename())
+								: $thumbDir . strtolower($fileInfos->getFilename());
 						}
 					}
 					// Tri des images

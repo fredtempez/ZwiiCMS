@@ -11,12 +11,10 @@
 	<div class="colPicture">
 		<?php 
 
-		// Générer ou régénérer la miniature si elle manque
-		$thumbPath = $this->getThumb($picture);
-		if ($thumbPath && !file_exists($thumbPath)) {
-			$this->makeThumb($picture, null, self::THUMBS_WIDTH);
-		}
-		$thumbPath = ($thumbPath && file_exists($thumbPath)) ? $thumbPath : $picture;
+		// Utiliser la miniature générée par la classe, sinon retomber sur le calcul standard
+		$thumbPath = isset(gallery::$thumbs[$picture]) ? gallery::$thumbs[$picture] : $this->getThumb($picture);
+		// Ne jamais pointer vers l'image originale : on conserve le chemin de miniature même si le fichier manque
+		$thumbPath = $thumbPath ?: $this->getThumb($picture);
 		
 		// Construire les URLs complètes
 		$imageUrl = helper::baseUrl(false) . ltrim($picture, '/');
