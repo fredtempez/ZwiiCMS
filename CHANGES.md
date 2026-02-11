@@ -8,8 +8,9 @@
 - Amélioration de la gestion de l'expéditeur d'e-mail : alignement sur le compte SMTP authentifié pour éviter les rejets.
 
 ### 🛠️ Corrections
+- Evite les fuites de cache entre sous-domaines d'un même domaine.
 - Supprime la substitution des fontes Google vers CdnFont devenue inutile et pouvant occasionner des erreurs avec le nouveau système de base de données.
-L'accès des bases depuis les méthodes file_get_contents et file_put_contents n'est maintenant plus prise en charge. Désormais, on utilise des méthodes intégrées qui permettent d'accèder aux données en tenant compte de la configuration des bases de données. Ces méthodes sont accessibles via l'objet JsonDb, et sont utilisées pour lire des bases non chargées dans le contexte par exemple, de la mise à jour d'une base de données. :- 
+- L'accès des bases depuis les méthodes file_get_contents et file_put_contents n'est maintenant plus prise en charge. Désormais, on utilise des méthodes intégrées qui permettent d'accèder aux données en tenant compte de la configuration des bases de données. Ces méthodes sont accessibles via l'objet JsonDb, et sont utilisées pour lire des bases non chargées dans le contexte par exemple, de la mise à jour d'une base de données :
   - Lecture des données harmonisée via fetchDataFile (pages, locales) pour respecter la configuration JsonDb et limiter les accès directs.
   - Refactor de la gestion des fichiers de données : ensureDataFileLoaded remplace loadDataFile et ajout de fetchDataFile pour des lectures ciblées sans cache partagé.
 
