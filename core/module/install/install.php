@@ -155,7 +155,7 @@ class install extends common
 
 				// Envoie le mail
 				// Sent contient true si réussite sinon code erreur d'envoi en clair
-				$this->sendMail(
+				$sent = $this->sendMail(
 					$userMail,
 					'Installation de votre site',
 					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>'
@@ -243,8 +243,8 @@ class install extends common
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(),
-					'notification' => helper::translate('Installation terminée'),
-					'state' => true
+					'notification' => helper::translate('Installation terminée') . ($sent === false ? ' ' . helper::translate('Message non envoyé') : ''),
+					'state' => $sent === true ? true : false,
 				]);
 			}
 
