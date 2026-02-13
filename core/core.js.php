@@ -369,8 +369,8 @@ core.start = function () {
                 });
                 break;
             case "title":
-                normalized = value.toLowerCase().replace(/\b\w+/g, function (word) {
-                    return word.charAt(0).toUpperCase() + word.slice(1);
+                normalized = value.toLowerCase().replace(/(^|\s)[a-zàâäéèêëïîôöùûüÿç]/g, function (match) {
+                    return match.toUpperCase();
                 });
                 break;
             case "lower":

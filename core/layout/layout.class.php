@@ -1396,7 +1396,7 @@ class layout extends common
     /**
      * Affiche l'import des librairies
      */
-    public function showVendor()
+    public function showVendor(): void
     {
         // Variables partagées
         $vars = 'var baseUrl = ' . json_encode(helper::baseUrl(false)) . ';';
