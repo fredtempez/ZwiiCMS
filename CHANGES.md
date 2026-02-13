@@ -1,5 +1,11 @@
 # Notes de mises à jour
 
+## Version 14.01.04
+### 🚀 Amélioration
+- Simplication de la méthode sendmail, écriture des erreurs d'envoi dans le journal pour débogage.
+### 🛠️ Correction
+- Corrige le changement de casse sur les inputs en mode Title lorsque la chaîne contient un caractère accentué.
+
 ## Version 14.01.03
 ### 🚀 Améliorations
 - Le double tap sur une entrée de menu contenant des sous-pages ouvre la page correspondante dans le menu déplié des smartphones et des tablettes.

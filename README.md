@@ -1,4 +1,4 @@
-# 🚀 ZwiiCMS 14.1.03
+# 🚀 ZwiiCMS 14.1.04 - test
 
 # Français 🇫🇷
 
@@ -17,9 +17,9 @@ ZwiiCMS a été créé par un développeur de talent, [Rémi Jean](https://remij
 
 ## 📄 Licence
 
-Cette œuvre est mise à disposition sous licence Attribution - Pas d'utilisation Commerciale - Pas de Modification 4.0 International.
+Ce programme est distribué sous licence GNU General Public License version 3 (GPL v3).
 
-Pour voir une copie de cette licence, visitez <http://creativecommons.org/licenses/by-nc-nd/4.0/> ou écrivez à Creative Commons, PO Box 1866, Mountain View, CA 94042, USA.
+Pour plus d'informations sur la GPL v3, consultez le fichier [LICENSE](LICENSE) ou visitez <https://www.gnu.org/licenses/gpl-3.0.html>.
 
 ## 📋 Notes de version
 
