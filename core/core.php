@@ -1869,10 +1869,19 @@ class common
 			$mail->Sender = $senderEmail; // Définit le Return-Path pour l'alignement SPF (crucial chez OVH)
 
 			// 6. Gestion du Reply-to (Adresse de réponse)
+			// Contrôle du domaine du Reply-To
 			if (is_null($replyTo)) {
 				$mail->addReplyTo($senderEmail);
 			} else {
-				$mail->addReplyTo($replyTo);
+				// Vérifie si le Reply-To est du même domaine que l'expéditeur
+				$replyToDomain = substr(strrchr($replyTo, '@'), 1);
+				$senderDomain = substr(strrchr($senderEmail, '@'), 1);
+				if ($replyToDomain === $senderDomain) {
+					$mail->addReplyTo($replyTo);
+				} else {
+					// Remplace par une adresse du domaine expéditeur
+					$mail->addReplyTo($senderEmail);
+				}
 			}
 
 			// 7. Ajout des destinataires
