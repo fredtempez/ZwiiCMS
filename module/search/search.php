@@ -22,7 +22,7 @@
 class search extends common
 {
 
-	const VERSION = '4.0';
+	const VERSION = '4.1';
 	const REALNAME = 'Recherche';
 	const DATADIRECTORY = self::DATA_DIR . 'search/';
 
@@ -266,8 +266,11 @@ class search extends common
 					}
 
 					// Articles d'un blog ou de news
-					if ($this->getData(['module', $parentId, 'posts'])) {
-
+					if (
+						$this->getData(['module', $parentId, 'posts']) &&
+						$this->getData(['page', $parentId, 'disable']) === false &&
+						$this->getUser('role') >= $this->getData(['page', $parentId, 'role'])
+					) {
 						foreach ($this->getData(['module', $parentId, 'posts']) as $articleId => $article) {
 							if ($this->getData(['module', $parentId, 'posts', $articleId, 'state']) === true) {
 								$url = $parentId . '/' . $articleId;
