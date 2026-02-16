@@ -1810,108 +1810,81 @@ class common
 		}
 		$destinatairesStr = implode(', ', $destinatairesValides);
 
-		// 3. Préparation du Layout HTML
-		ob_start();
-		include 'core/layout/mail.php';
-		$layout = ob_get_clean();
+		       // 3. Préparation du Layout HTML
+		       ob_start();
+		       include 'core/layout/mail.php';
+		       $layout = ob_get_clean();
 
-		$mail = new PHPMailer\PHPMailer\PHPMailer(true);
-		$mail->CharSet = 'UTF-8';
-		$mail->setLanguage(substr(self::$i18nUI, 0, 2), 'core/class/phpmailer/i18n/');
+		       $mail = new PHPMailer\PHPMailer\PHPMailer(true);
+		       $mail->CharSet = 'UTF-8';
+		       // Langue par défaut : en, ou fr si configuré
+		       if ($this->getData(['config', 'i18n', 'langAdmin']) === 'fr') {
+			       $mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
+		       } else {
+			       $mail->setLanguage('en');
+		       }
 
-		try {
-			// 4. Configuration du mode d'envoi (SMTP ou MAIL)
-			if ($this->getdata(['config', 'smtp', 'enable'])) {
-				$mail->isSMTP();
-				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
-				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
-
-				if ($this->getData(['config', 'smtp', 'auth'])) {
-					$mail->SMTPAuth = true;
-					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'password']), $this->getData(['config', 'smtp', 'host']));
-
-					$secure = $this->getData(['config', 'smtp', 'secure']);
-					if ($secure === 'ssl') {
-						$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMTPS;
-					} elseif ($secure === 'tls') {
-						$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-					}
-				}
-			} else {
-				$mail->isMail();
-			}
-
-			// 5. Détermination de l'expéditeur (Alignement Domaine)
-			// Stratégie : On évite les sous-domaines type zwiitest.argoat.eu pour rester sur le domaine racine
-			$senderEmail = '';
-
-			if ($this->getdata(['config', 'smtp', 'enable']) && $this->getData(['config', 'smtp', 'auth'])) {
-				// Priorité : l'email utilisé pour s'authentifier au SMTP (ex: noreply@argoat.eu)
-				$senderEmail = $this->getData(['config', 'smtp', 'username']);
-			}
-
-			if (empty($senderEmail) || !filter_var($senderEmail, FILTER_VALIDATE_EMAIL)) {
-				// Repli : Nettoyage du HOST pour extraire le domaine racine
-				$host = isset($_SERVER['HTTP_HOST']) ? str_replace('www.', '', $_SERVER['HTTP_HOST']) : 'argoat.eu';
-				$parts = explode('.', $host);
-				if (count($parts) >= 2) {
-					// On prend les deux derniers segments (ex: argoat.eu)
-					$domain = implode('.', array_slice($parts, -2));
-					$senderEmail = 'no-reply@' . $domain;
-				} else {
-					$senderEmail = 'no-reply@' . $host;
-				}
-			}
-
-			// Configuration de l'identité de l'expéditeur
-			$mail->setFrom($senderEmail, html_entity_decode($this->getData(['config', 'title']), ENT_QUOTES, 'UTF-8'));
-			$mail->Sender = $senderEmail; // Définit le Return-Path pour l'alignement SPF (crucial chez OVH)
-
-			// 6. Gestion du Reply-to (Adresse de réponse)
-			// Contrôle du domaine du Reply-To
-			if (is_null($replyTo)) {
-				$mail->addReplyTo($senderEmail);
-			} else {
-				// Vérifie si le Reply-To est du même domaine que l'expéditeur
-				$replyToDomain = substr(strrchr($replyTo, '@'), 1);
-				$senderDomain = substr(strrchr($senderEmail, '@'), 1);
-				if ($replyToDomain === $senderDomain) {
-					$mail->addReplyTo($replyTo);
-				} else {
-					// Remplace par une adresse du domaine expéditeur
-					$mail->addReplyTo($senderEmail);
-				}
-			}
-
-			// 7. Ajout des destinataires
-			foreach ($destinatairesValides as $userMail) {
-				$mail->addAddress($userMail);
-			}
-
-			// 8. Contenu du message
-			$mail->isHTML(true);
-			$mail->Subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
-			$mail->Body = $layout;
-			$mail->AltBody = strip_tags($content);
-
-			// 9. Envoi et journalisation
-			if ($mail->send()) {
-				return true;
-			}
-
-			$this->saveLog("Échec envoi mail | Dest: $destinatairesStr | Erreur: " . $mail->ErrorInfo);
-			return $mail->ErrorInfo;
-
-		} catch (PHPMailer\PHPMailer\Exception $e) {
-			$method = $this->getdata(['config', 'smtp', 'enable']) ? 'SMTP' : 'MAIL';
-			$this->saveLog("ERREUR MAIL [$method] | Dest: $destinatairesStr | Erreur: " . $e->getMessage());
-			return $e->getMessage();
-
-		} catch (Exception $e) {
-			$this->saveLog("EXCEPTION GÉNÉRALE MAIL | Erreur : " . $e->getMessage());
-			return $e->getMessage();
-		}
+		       try {
+			       // 4. Configuration du mode d'envoi (SMTP ou fallback mail)
+			       if ($this->getdata(['config','smtp','enable'])) {
+				       $mail->isSMTP();
+				       $mail->SMTPAutoTLS = false;
+				       $mail->Host = $this->getdata(['config','smtp','host']);
+				       $mail->Port = (int) $this->getdata(['config','smtp','port']);
+				       if ($this->getData(['config','smtp','auth'])) {
+					       $mail->Username = $this->getData(['config','smtp','username']);
+					       $mail->Password = helper::decrypt($this->getData(['config','smtp','username']),$this->getData(['config','smtp','password']));
+					       $mail->SMTPAuth = $this->getData(['config','smtp','auth']);
+					       $mail->SMTPSecure = $this->getData(['config','smtp','secure']);
+					       $mail->setFrom($this->getData(['config','smtp','username']));
+					       if (is_null($replyTo)) {
+						       $mail->addReplyTo($this->getData(['config','smtp','username']));
+					       } else {
+						       $mail->addReplyTo($replyTo);
+					       }
+				       }
+			       } else {
+				       if(null !== $this->getData(['config', 'mailDomainName']) &&  $this->getData(['config', 'mailDomainName']) !==''){
+					       $host = $this->getData(['config', 'mailDomainName']);
+				       } else {
+					       $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+				       }
+				       $mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
+				       if (is_null($replyTo)) {
+					       $mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
+				       } else {
+					       $mail->addReplyTo($replyTo);
+				       }
+			       }
+			       // Ajout des destinataires
+			       if(is_array($to)) {
+				       foreach($to as $userMail) {
+					       $mail->addAddress($userMail);
+				       }
+			       } else {
+				       $mail->addAddress($to);
+			       }
+			       $mail->isHTML(true);
+			       $mail->Subject = $subject;
+			       $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@'.$host.'>');
+			       $mail->Body = $layout;
+			       $mail->AltBody = strip_tags($content);
+			       // Gestion pièce jointe (optionnelle)
+			       if(isset($file_name) && $file_name !== '') {
+				       $mail->addAttachment(self::FILE_DIR.'uploads/'.$file_name);
+			       }
+			       if($mail->send()) {
+				       return true;
+			       } else {
+				       return $mail->ErrorInfo;
+			       }
+		       } catch (Exception $e) {
+			       $this->saveLog('Erreur mail : ' . $e->getMessage());
+			       return $e->getMessage();
+		       } catch (\Exception $e) {
+			       $this->saveLog('Erreur mail : ' . $e->getMessage());
+			       return $e->getMessage();
+		       }
 	}
 
 	/**
