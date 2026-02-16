@@ -1844,17 +1844,24 @@ class common
 					}
 				}
 			} else {
-				if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
-					$host = $this->getData(['config', 'mailDomainName']);
-				} else {
-					$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				}
-				$mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
-				if (is_null($replyTo)) {
-					$mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
-				} else {
-					$mail->addReplyTo($replyTo);
-				}
+				   if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
+					   $host = $this->getData(['config', 'mailDomainName']);
+				   } else {
+					   // Extraire le domaine principal sans sous-domaine
+					   $hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+					   $hostPartsCount = count($hostParts);
+					   if ($hostPartsCount >= 2) {
+						   $host = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
+					   } else {
+						   $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+					   }
+				   }
+				   $mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
+				   if (is_null($replyTo)) {
+					   $mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
+				   } else {
+					   $mail->addReplyTo($replyTo);
+				   }
 			}
 			// Ajout des destinataires
 			if (is_array($to)) {
@@ -1866,7 +1873,7 @@ class common
 			}
 			$mail->isHTML(true);
 			$mail->Subject = $subject;
-			$mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $host . '>');
+			   $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $host . '>');
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
 			// Gestion pièce jointe (optionnelle)
