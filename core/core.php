@@ -1810,81 +1810,81 @@ class common
 		}
 		$destinatairesStr = implode(', ', $destinatairesValides);
 
-		       // 3. Préparation du Layout HTML
-		       ob_start();
-		       include 'core/layout/mail.php';
-		       $layout = ob_get_clean();
+		// 3. Préparation du Layout HTML
+		ob_start();
+		include 'core/layout/mail.php';
+		$layout = ob_get_clean();
 
-		       $mail = new PHPMailer\PHPMailer\PHPMailer(true);
-		       $mail->CharSet = 'UTF-8';
-		       // Langue par défaut : en, ou fr si configuré
-		       if ($this->getData(['config', 'i18n', 'langAdmin']) === 'fr') {
-			       $mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
-		       } else {
-			       $mail->setLanguage('en');
-		       }
+		$mail = new PHPMailer\PHPMailer\PHPMailer(true);
+		$mail->CharSet = 'UTF-8';
+		// Langue par défaut : en, ou fr si configuré
+		if ($this->getData(['config', 'i18n', 'langAdmin']) === 'fr') {
+			$mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
+		} else {
+			$mail->setLanguage('en');
+		}
 
-		       try {
-			       // 4. Configuration du mode d'envoi (SMTP ou fallback mail)
-			       if ($this->getdata(['config','smtp','enable'])) {
-				       $mail->isSMTP();
-				       $mail->SMTPAutoTLS = false;
-				       $mail->Host = $this->getdata(['config','smtp','host']);
-				       $mail->Port = (int) $this->getdata(['config','smtp','port']);
-				       if ($this->getData(['config','smtp','auth'])) {
-					       $mail->Username = $this->getData(['config','smtp','username']);
-					       $mail->Password = helper::decrypt($this->getData(['config','smtp','username']),$this->getData(['config','smtp','password']));
-					       $mail->SMTPAuth = $this->getData(['config','smtp','auth']);
-					       $mail->SMTPSecure = $this->getData(['config','smtp','secure']);
-					       $mail->setFrom($this->getData(['config','smtp','username']));
-					       if (is_null($replyTo)) {
-						       $mail->addReplyTo($this->getData(['config','smtp','username']));
-					       } else {
-						       $mail->addReplyTo($replyTo);
-					       }
-				       }
-			       } else {
-				       if(null !== $this->getData(['config', 'mailDomainName']) &&  $this->getData(['config', 'mailDomainName']) !==''){
-					       $host = $this->getData(['config', 'mailDomainName']);
-				       } else {
-					       $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-				       }
-				       $mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
-				       if (is_null($replyTo)) {
-					       $mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
-				       } else {
-					       $mail->addReplyTo($replyTo);
-				       }
-			       }
-			       // Ajout des destinataires
-			       if(is_array($to)) {
-				       foreach($to as $userMail) {
-					       $mail->addAddress($userMail);
-				       }
-			       } else {
-				       $mail->addAddress($to);
-			       }
-			       $mail->isHTML(true);
-			       $mail->Subject = $subject;
-			       $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@'.$host.'>');
-			       $mail->Body = $layout;
-			       $mail->AltBody = strip_tags($content);
-			       // Gestion pièce jointe (optionnelle)
-			       if(isset($file_name) && $file_name !== '') {
-				       $mail->addAttachment(self::FILE_DIR.'uploads/'.$file_name);
-			       }
-			       if($mail->send()) {
-				       return true;
-			       } else {
-				       return $mail->ErrorInfo;
-			       }
-		       } catch (Exception $e) {
-			       $this->saveLog('Erreur mail : ' . $e->getMessage());
-			       return $e->getMessage();
-		       } catch (\Exception $e) {
-			       $this->saveLog('Erreur mail : ' . $e->getMessage());
-			       return $e->getMessage();
-		       }
+		try {
+			// 4. Configuration du mode d'envoi (SMTP ou fallback mail)
+			if ($this->getdata(['config', 'smtp', 'enable'])) {
+				$mail->isSMTP();
+				$mail->SMTPAutoTLS = false;
+				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
+				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
+				if ($this->getData(['config', 'smtp', 'auth'])) {
+					$mail->Username = $this->getData(['config', 'smtp', 'username']);
+					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
+					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
+					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
+					$mail->setFrom($this->getData(['config', 'smtp', 'username']));
+					if (is_null($replyTo)) {
+						$mail->addReplyTo($this->getData(['config', 'smtp', 'username']));
+					} else {
+						$mail->addReplyTo($replyTo);
+					}
+				}
+			} else {
+				if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
+					$host = $this->getData(['config', 'mailDomainName']);
+				} else {
+					$host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+				}
+				$mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
+				if (is_null($replyTo)) {
+					$mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
+				} else {
+					$mail->addReplyTo($replyTo);
+				}
+			}
+			// Ajout des destinataires
+			if (is_array($to)) {
+				foreach ($to as $userMail) {
+					$mail->addAddress($userMail);
+				}
+			} else {
+				$mail->addAddress($to);
+			}
+			$mail->isHTML(true);
+			$mail->Subject = $subject;
+			$mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $host . '>');
+			$mail->Body = $layout;
+			$mail->AltBody = strip_tags($content);
+			// Gestion pièce jointe (optionnelle)
+			if (isset($file_name) && $file_name !== '') {
+				$mail->addAttachment(self::FILE_DIR . 'uploads/' . $file_name);
+			}
+			if ($mail->send()) {
+				return true;
+			} else {
+				return $mail->ErrorInfo;
+			}
+		} catch (Exception $e) {
+			$this->saveLog('Erreur mail : ' . $e->getMessage());
+			return $e->getMessage();
+		} catch (\Exception $e) {
+			$this->saveLog('Erreur mail : ' . $e->getMessage());
+			return $e->getMessage();
+		}
 	}
 
 	/**
