@@ -1,10 +1,13 @@
 # Notes de mises à jour
 
 ## Version 14.01.04
-### 🚀 Amélioration
-- Simplication de la méthode sendmail, écriture des erreurs d'envoi dans le journal pour débogage.
-### 🛠️ Correction
+### 🚀 Améliorations
+- Nouvelle méthode d'envoi d'email (sendmail)
+- Augemente les hauteurs de police dans le thème.
+- Le module de recherche exclut les articles de blog et de news des pages dont la permission n'autorise pas l'accès.
+### 🛠️ Corrections
 - Corrige le changement de casse sur les inputs en mode Title lorsque la chaîne contient un caractère accentué.
+- Hauteur de police définie dans le thème non appliquée.
 
 ## Version 14.01.03
 ### 🚀 Améliorations

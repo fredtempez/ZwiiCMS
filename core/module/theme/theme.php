@@ -194,11 +194,19 @@ class theme extends common
 		'1px 1px 50px' => 'Très importante'
 	];
 	public static $siteFontSizes = [
+		'8px' => '8 pixels',
+		'9px' => '9 pixels',
+		'10px' => '10 pixels',
+		'11px' => '11 pixels',
 		'12px' => '12 pixels',
 		'13px' => '13 pixels',
 		'14px' => '14 pixels',
 		'15px' => '15 pixels',
-		'16px' => '16 pixels'
+		'16px' => '16 pixels',
+		'17px' => '17 pixels',
+		'18px' => '18 pixels',
+		'19px' => '19 pixels',
+		'20px' => '20 pixels',
 	];
 	public static $bodySizes = [
 		'auto' => 'Automatique',

@@ -242,7 +242,9 @@ class core extends common
 			// --- STYLES UTILISANT LES VARIABLES ---
 			
 			$css .= 'body { font-family: var(--font-' . $this->getData(['theme', 'text', 'font']) . '); }';
-			
+			$css .= 'body, .row > div { font-size: var(--font-size); }';
+			$css .= 'body { color: var(--text-color); }';
+
 			if ($img = $this->getData(['theme', 'body', 'image'])) {
 				$css .= 'html { background-image: url("../file/source/' . $img . '"); background-position: ' . $this->getData(['theme', 'body', 'imagePosition']) . '; background-attachment: ' . $this->getData(['theme', 'body', 'imageAttachment']) . '; background-size: ' . $this->getData(['theme', 'body', 'imageSize']) . '; background-repeat: ' . $this->getData(['theme', 'body', 'imageRepeat']) . '; }';
 				$css .= 'body { background-color: rgba(0,0,0,0); }';
@@ -258,8 +260,6 @@ class core extends common
 			$css .= '.mce-content-body { font-family: var(--font-' . $this->getData(['theme', 'text', 'font']) . '); color: var(--text-color); background-color: var(--site-bg); font-size: var(--font-size); }';
 			$css .= '.editorWysiwyg, .editorWysiwygComment { background-color: var(--site-bg); }';
 			$css .= 'span.mce-text { background-color: unset !important; }';
-			$css .= 'body, .row > div { font-size: var(--font-size); }';
-			$css .= 'body { color: var(--text-color); }';
 			
 			$inputs = 'input[type=password],input[type=email],input[type=text],input[type=date],input[type=time],input[type=week],input[type=month],input[type=datetime-local],input[type=number],input[type=file],.inputFile,select,textarea';
 			$css .= $inputs . ' { color: var(--text-color); background-color: var(--site-bg); }';
