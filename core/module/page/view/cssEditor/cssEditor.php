@@ -1,4 +1,5 @@
 <?php echo template::formOpen('pageCssEditorForm'); ?>
+<input type="hidden" name="returnUrl" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent; ?>">
 <div class="row">
 	<div class="col1">
 		<?php echo template::button('pageCssEditorBack', [

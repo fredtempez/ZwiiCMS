@@ -704,9 +704,10 @@ class page extends common
 				]
 			]);
 			// Valeurs en sortie
+			$returnUrl = $this->getInput('returnUrl', helper::FILTER_STRING_LONG) ?: helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent;
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent,
+				'redirect' => $returnUrl,
 				'state' => true
 			]);
 		}
@@ -749,9 +750,10 @@ class page extends common
 				]
 			]);
 			// Valeurs en sortie
+			$returnUrl = $this->getInput('returnUrl', helper::FILTER_STRING_LONG) ?: helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent;
 			$this->addOutput([
 				'notification' => helper::translate('Modifications enregistrées'),
-				'redirect' => helper::baseUrl() . 'page/edit/' . $this->getUrl(2) . '/' . self::$siteContent,
+				'redirect' => $returnUrl,
 				'state' => true
 			]);
 		}
