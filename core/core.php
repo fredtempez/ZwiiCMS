@@ -1395,7 +1395,7 @@ class common
 	 * $module = new blog();
 	 * $canConfigure = $this->getPermission($module, 'config');
 	 */
-	public function getPermission($key1, $key2 = null)
+	private function getPermission($key1, $key2 = null)
 	{
 		// Administrateur, toutes les permissions
 		if ($this->getUser('role') === self::ROLE_ADMIN) {
