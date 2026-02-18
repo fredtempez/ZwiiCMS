@@ -250,10 +250,10 @@ if (empty($items)) {
         echo '<td>' . $item['title'] . '</td>';
         echo '<td>' . helper::dateUTF8('%d/%m/%Y', $item['createdOn']) . '</td>';
         echo '<td>';
-        if ($this->getPermission('monModule', 'edit')) {
+        if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR) {
             echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/edit/' . $id . '" class="button">Éditer</a> ';
         }
-        if ($this->getPermission('monModule', 'delete')) {
+        if ($this->isConnected() && $this->getUser('role') >= common::ROLE_ADMIN) {
             echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/delete/' . $id . '" class="button buttonRed">Supprimer</a>';
         }
         echo '</td>';
@@ -263,7 +263,7 @@ if (empty($items)) {
     echo '</tbody></table></div>';
 }
 
-if ($this->getPermission('monModule', 'add')) {
+if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR) {
     echo '<a href="' . helper::baseUrl() . $this->getUrl(0) . '/add" class="button">Ajouter un élément</a>';
 }
 
