@@ -1076,7 +1076,7 @@ class config extends common
 			'<strong>' . $this->getUser('firstname') . ' ' . $this->getUser('lastname') . '</strong>,<br><br>'
 				. '<h4>' . helper::translate('Il semblerait que votre messagerie fonctionne correctement !') . '</h4>',
 			null,
-			'no-reply@localhost'
+			$this->getData(['config', 'smtp', 'from'])
 		);
 		if ($sent !== true) {
 			// Désactivation de l'authentification par email

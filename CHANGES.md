@@ -1,5 +1,10 @@
 # Notes de mises à jour
 
+## Version 14.01.06
+### 🚀 Améliorations
+- Méthode envoi d'un mail de test avec l'adresse spécifiée dans la configuration.
+- Méthode SMTP améliorée tenant compte du sender spécifié dans la configuration.
+
 ## Version 14.01.05
 ### 🚀 Améliorations
 - Compatibilité des boutons de retour des éditeurs jsEditor et cssEditor lors de l'appel depuis un module (ex: calendrier).
