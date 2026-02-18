@@ -585,7 +585,7 @@ $images = $this->getData(['module', $this->getUrl(0), 'images']);
     <div class="col12">
         <h2>Galerie</h2>
         
-        <?php if ($this->getPermission('galerie', 'add')): ?>
+        <?php if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR): ?>
             <a href="<?php echo helper::baseUrl() . $this->getUrl(0); ?>/add" class="button">
                 Ajouter une image
             </a>
@@ -604,12 +604,12 @@ $images = $this->getData(['module', $this->getUrl(0), 'images']);
                             
                             <h4><?php echo $image['title']; ?></h4>
                             
-                            <?php if ($this->getPermission('galerie', 'edit')): ?>
+                            <?php if ($this->isConnected() && $this->getUser('role') >= common::ROLE_EDITOR): ?>
                                 <a href="<?php echo helper::baseUrl() . $this->getUrl(0); ?>/edit/<?php echo $id; ?>" 
                                    class="button">Éditer</a>
                             <?php endif; ?>
                             
-                            <?php if ($this->getPermission('galerie', 'delete')): ?>
+                            <?php if ($this->isConnected() && $this->getUser('role') >= common::ROLE_ADMIN): ?>
                                 <a href="<?php echo helper::baseUrl() . $this->getUrl(0); ?>/delete/<?php echo $id; ?>" 
                                    class="button buttonRed">Supprimer</a>
                             <?php endif; ?>
