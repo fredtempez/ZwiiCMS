@@ -55,7 +55,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '14.1.04';
+	const ZWII_VERSION = '14.1.05';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -1788,7 +1788,7 @@ class common
 	 * @param string $from Adresse d'expédition
 	 * @return bool|string True si succès, message d'erreur sinon
 	 */
-	public function sendMail($to, $subject, $content, $replyTo = null, $from = 'no-reply@localhost'): bool|string
+	public function sendMail($to, $subject, $content, $replyTo = null, $from = 'no-reply@localhost')
 	{
 		// 1. Validation de sécurité des paramètres
 		if (empty($to) || empty($subject) || empty($content)) {
