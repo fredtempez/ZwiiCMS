@@ -1,5 +1,11 @@
 # Notes de mises à jour
 
+## Version 14.01.05
+### 🚀 Améliorations
+- Compatibilité des boutons de retour des éditeurs jsEditor et cssEditor lors de l'appel depuis un module (ex: calendrier).
+- Mise à jour des fichiers de documentation.
+- Retrocompatibilité php 7.2 de la fonction sendMail.
+
 ## Version 14.01.04
 ### 🚀 Améliorations
 - Nouvelle méthode d'envoi d'email (sendmail)
