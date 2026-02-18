@@ -99,19 +99,15 @@ $this->saveDB('config');
 
 ### `getUser($key, $perm1 = null, $perm2 = null)`
 
-Récupère les informations de l'utilisateur connecté ou vérifie ses permissions.
+Récupère les informations de l'utilisateur connecté.
 
 **Paramètres :**
 - `$key` (string) : Clé de la propriété utilisateur
   - `'id'` : Retourne l'ID de l'utilisateur depuis la session
-  - `'permission'` : Vérifie une permission (utilise $perm1 et $perm2)
   - Autre clé : Propriété de l'utilisateur (ex: 'role', 'pseudo', 'mail')
-- `$perm1` (mixed) : Premier paramètre de permission (obligatoire si $key = 'permission')
-- `$perm2` (mixed) : Second paramètre de permission optionnel
 
 **Retour :** mixed
 - string|int|array pour les propriétés utilisateur
-- bool pour les vérifications de permission
 - null si l'utilisateur n'est pas connecté
 
 **Exemple :**
@@ -124,36 +120,6 @@ $role = $this->getUser('role');
 
 // Récupérer le pseudo
 $pseudo = $this->getUser('pseudo');
-
-// Vérifier une permission
-$canEdit = $this->getUser('permission', 'page', 'edit');
-```
-
-### `getPermission($key1, $key2 = null)`
-
-Vérifie les permissions d'un utilisateur selon son rôle et son profil.
-
-**Paramètres :**
-- `$key1` (string|object) : Clé de permission (classe de module ou catégorie)
-- `$key2` (string|null) : Sous-clé de permission optionnelle
-
-**Retour :** mixed
-- `true` si l'utilisateur est administrateur
-- `false` si le rôle n'a pas la permission
-- La valeur de la permission si elle existe dans le profil
-- `false` dans tous les autres cas
-
-**Exemple :**
-```php
-// Vérifier si l'utilisateur peut éditer une page
-$canEditPage = $this->getPermission('page', 'edit');
-
-// Vérifier si l'utilisateur peut ajouter un article blog
-$canAddBlog = $this->getPermission('blog', 'add');
-
-// Vérifier avec un objet module
-$blogModule = new blog();
-$canConfigure = $this->getPermission($blogModule, 'config');
 ```
 
 ### `isConnected()`
@@ -713,8 +679,8 @@ common::MAX_PROFILS = 10;                    // Nombre maximum de profils
 ```php
 class monModule {
     public function index() {
-        // Vérifier les permissions
-        if (!$this->getPermission('monModule', 'view')) {
+        // Vérifier si l'utilisateur est connecté et a le bon rôle
+        if (!$this->isConnected() || $this->getUser('role') < common::ROLE_EDITOR) {
             return 'Accès refusé';
         }
         

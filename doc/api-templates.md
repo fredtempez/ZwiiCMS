@@ -175,8 +175,8 @@ class monModule extends common {
     ];
 
     public function index() {
-        // Vérifier les permissions
-        if (!$this->getPermission('monModule', 'view')) {
+        // Vérifier si l'utilisateur est connecté et a le bon rôle
+        if (!$this->isConnected() || $this->getUser('role') < common::ROLE_MEMBER) {
             return 'Accès refusé';
         }
 
