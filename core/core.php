@@ -1844,21 +1844,62 @@ class common
 					}
 				}
 			} else {
-				   if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
-					   $host = $this->getData(['config', 'mailDomainName']);
-				   } else {
-					   // Extraire le domaine principal sans sous-domaine
-					   $hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
-					   $hostPartsCount = count($hostParts);
-					   if ($hostPartsCount >= 2) {
-						   $host = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
+				   // Utiliser l'adresse from spécifiée ou extraire le domaine
+				   if ($from !== 'no-reply@localhost') {
+					   // Valider et utiliser l'adresse from spécifiée
+					   if (filter_var($from, FILTER_VALIDATE_EMAIL)) {
+						   // Vérifier si le domaine de l'adresse from correspond au domaine du serveur
+						   $fromDomain = substr(strrchr($from, "@"), 1);
+						   $serverDomain = $this->getData(['config', 'mailDomainName']) ?: 
+										   (function() {
+											   $parts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+											   $count = count($parts);
+											   return $count >= 2 ? $parts[$count - 2] . '.' . $parts[$count - 1] : $_SERVER['HTTP_HOST'];
+										   })();
+						   
+						   // Si le domaine correspond ou si la validation de domaine est désactivée, utiliser l'adresse spécifiée
+						   if ($fromDomain === $serverDomain || $this->getData(['config', 'smtp', 'enable'])) {
+							   $fromAddress = $from;
+							   $fromName = $this->getData(['locale', 'title']);
+						   } else {
+							   // Domaine différent : utiliser l'adresse par défaut pour éviter les problèmes de deliverabilité
+							   $this->saveLog("sendMail: Adresse from '$from' avec domaine '$fromDomain' ne correspond pas au domaine serveur '$serverDomain'. Utilisation de l'adresse par défaut.");
+							   $fromAddress = 'no-reply@' . $serverDomain;
+							   $fromName = $this->getData(['locale', 'title']);
+						   }
 					   } else {
-						   $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+						   // Adresse invalide : utiliser l'adresse par défaut
+						   $this->saveLog("sendMail: Adresse from '$from' invalide. Utilisation de l'adresse par défaut.");
+						   $serverDomain = $this->getData(['config', 'mailDomainName']) ?: 
+										   (function() {
+											   $parts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+											   $count = count($parts);
+											   return $count >= 2 ? $parts[$count - 2] . '.' . $parts[$count - 1] : $_SERVER['HTTP_HOST'];
+										   })();
+						   $fromAddress = 'no-reply@' . $serverDomain;
+						   $fromName = $this->getData(['locale', 'title']);
 					   }
+				   } else {
+					   // Comportement par défaut : extraire le domaine principal sans sous-domaine
+					   if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
+						   $host = $this->getData(['config', 'mailDomainName']);
+					   } else {
+						   $hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+						   $hostPartsCount = count($hostParts);
+						   if ($hostPartsCount >= 2) {
+							   $host = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
+						   } else {
+							   $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
+						   }
+					   }
+					   $fromAddress = 'no-reply@' . $host;
+					   $fromName = $this->getData(['locale', 'title']);
+					   $serverDomain = $host;
 				   }
-				   $mail->setFrom('no-reply@' . $host, $this->getData(['locale', 'title']));
+				   $mail->setFrom($fromAddress, $fromName);
 				   if (is_null($replyTo)) {
-					   $mail->addReplyTo('no-reply@' . $host, $this->getData(['locale', 'title']));
+					   $replyAddress = strpos($fromAddress, 'no-reply@') === 0 ? $fromAddress : 'no-reply@' . $serverDomain;
+					   $mail->addReplyTo($replyAddress, $fromName);
 				   } else {
 					   $mail->addReplyTo($replyTo);
 				   }
@@ -1873,7 +1914,7 @@ class common
 			}
 			$mail->isHTML(true);
 			$mail->Subject = $subject;
-			   $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $host . '>');
+			   $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $serverDomain . '>');
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
 			// Gestion pièce jointe (optionnelle)
