@@ -1810,7 +1810,10 @@ class common
 		}
 		$destinatairesStr = implode(', ', $destinatairesValides);
 
-		// 3. Préparation du Layout HTML
+		// 3. Corriger et valider l'adresse from
+		$from = $this->getCorrectedSmtpFrom($from);
+
+		// 4. Préparation du Layout HTML
 		ob_start();
 		include 'core/layout/mail.php';
 		$layout = ob_get_clean();
@@ -1825,7 +1828,7 @@ class common
 		}
 
 		try {
-			// 4. Configuration du mode d'envoi (SMTP ou fallback mail)
+			// 5. Configuration du mode d'envoi (SMTP ou fallback mail)
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
 				$mail->isSMTP();
 				$mail->SMTPAutoTLS = false;
@@ -1836,73 +1839,33 @@ class common
 					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
 					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
 					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-					$mail->setFrom($this->getData(['config', 'smtp', 'username']));
+					$mail->setFrom($this->getData(['config', 'smtp', 'from']));
 					if (is_null($replyTo)) {
-						$mail->addReplyTo($this->getData(['config', 'smtp', 'username']));
+						$mail->addReplyTo($this->getData(['config', 'smtp', 'from']));
+					} else {
+						$mail->addReplyTo($replyTo);
+					}
+				} else {
+					// SMTP sans authentification : utiliser from corrigé
+					$mail->setFrom($from);
+					if (is_null($replyTo)) {
+						$mail->addReplyTo($from);
 					} else {
 						$mail->addReplyTo($replyTo);
 					}
 				}
 			} else {
-				   // Utiliser l'adresse from spécifiée ou extraire le domaine
-				   if ($from !== 'no-reply@localhost') {
-					   // Valider et utiliser l'adresse from spécifiée
-					   if (filter_var($from, FILTER_VALIDATE_EMAIL)) {
-						   // Vérifier si le domaine de l'adresse from correspond au domaine du serveur
-						   $fromDomain = substr(strrchr($from, "@"), 1);
-						   $serverDomain = $this->getData(['config', 'mailDomainName']) ?: 
-										   (function() {
-											   $parts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
-											   $count = count($parts);
-											   return $count >= 2 ? $parts[$count - 2] . '.' . $parts[$count - 1] : $_SERVER['HTTP_HOST'];
-										   })();
-						   
-						   // Si le domaine correspond ou si la validation de domaine est désactivée, utiliser l'adresse spécifiée
-						   if ($fromDomain === $serverDomain || $this->getData(['config', 'smtp', 'enable'])) {
-							   $fromAddress = $from;
-							   $fromName = $this->getData(['locale', 'title']);
-						   } else {
-							   // Domaine différent : utiliser l'adresse par défaut pour éviter les problèmes de deliverabilité
-							   $this->saveLog("sendMail: Adresse from '$from' avec domaine '$fromDomain' ne correspond pas au domaine serveur '$serverDomain'. Utilisation de l'adresse par défaut.");
-							   $fromAddress = 'no-reply@' . $serverDomain;
-							   $fromName = $this->getData(['locale', 'title']);
-						   }
-					   } else {
-						   // Adresse invalide : utiliser l'adresse par défaut
-						   $this->saveLog("sendMail: Adresse from '$from' invalide. Utilisation de l'adresse par défaut.");
-						   $serverDomain = $this->getData(['config', 'mailDomainName']) ?: 
-										   (function() {
-											   $parts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
-											   $count = count($parts);
-											   return $count >= 2 ? $parts[$count - 2] . '.' . $parts[$count - 1] : $_SERVER['HTTP_HOST'];
-										   })();
-						   $fromAddress = 'no-reply@' . $serverDomain;
-						   $fromName = $this->getData(['locale', 'title']);
-					   }
-				   } else {
-					   // Comportement par défaut : extraire le domaine principal sans sous-domaine
-					   if (null !== $this->getData(['config', 'mailDomainName']) && $this->getData(['config', 'mailDomainName']) !== '') {
-						   $host = $this->getData(['config', 'mailDomainName']);
-					   } else {
-						   $hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
-						   $hostPartsCount = count($hostParts);
-						   if ($hostPartsCount >= 2) {
-							   $host = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
-						   } else {
-							   $host = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-						   }
-					   }
-					   $fromAddress = 'no-reply@' . $host;
-					   $fromName = $this->getData(['locale', 'title']);
-					   $serverDomain = $host;
-				   }
-				   $mail->setFrom($fromAddress, $fromName);
-				   if (is_null($replyTo)) {
-					   $replyAddress = strpos($fromAddress, 'no-reply@') === 0 ? $fromAddress : 'no-reply@' . $serverDomain;
-					   $mail->addReplyTo($replyAddress, $fromName);
-				   } else {
-					   $mail->addReplyTo($replyTo);
-				   }
+				// Mode sans SMTP : utiliser l'adresse from corrigée
+				$fromName = $this->getData(['locale', 'title']);
+				$mail->setFrom($from, $fromName);
+				
+				// Configurer replyTo
+				if (is_null($replyTo)) {
+					$replyAddress = strpos($from, 'no-reply@') === 0 ? $from : 'no-reply@' . parse_url($this->getData(['locale', 'baseUrl']), PHP_URL_HOST);
+					$mail->addReplyTo($replyAddress, $fromName);
+				} else {
+					$mail->addReplyTo($replyTo);
+				}
 			}
 			// Ajout des destinataires
 			if (is_array($to)) {
@@ -1933,6 +1896,51 @@ class common
 			$this->saveLog('Erreur mail : ' . $e->getMessage());
 			return $e->getMessage();
 		}
+	}
+
+	/**
+	 * Corrige l'adresse email smtpFrom pour correspondre au domaine du site
+	 * @param string $smtpFrom Adresse email saisie
+	 * @return string Adresse email avec le domaine corrigé
+	 */
+	protected function getCorrectedSmtpFrom($smtpFrom)
+	{
+		// Si l'email est vide ou invalide, retourner tel quel
+		if (empty($smtpFrom) || !filter_var($smtpFrom, FILTER_VALIDATE_EMAIL)) {
+			return $smtpFrom;
+		}
+
+		// Extraire le domaine du site (sans sous-domaine)
+		$hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+		$hostPartsCount = count($hostParts);
+		
+		if ($hostPartsCount >= 2) {
+			$siteDomain = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
+		} else {
+			$siteDomain = $_SERVER['HTTP_HOST'];
+		}
+
+		// Pour localhost, ne pas modifier
+		if ($siteDomain === 'localhost' || strpos($siteDomain, '127.0.0.1') !== false) {
+			return $smtpFrom;
+		}
+
+		// Extraire les parties de l'email
+		$emailParts = explode('@', $smtpFrom);
+		if (count($emailParts) !== 2) {
+			return $smtpFrom;
+		}
+
+		$localPart = $emailParts[0];
+		$emailDomain = $emailParts[1];
+
+		// Si le domaine est déjà correct, retourner tel quel
+		if ($emailDomain === $siteDomain || $emailDomain === 'www.' . $siteDomain) {
+			return $smtpFrom;
+		}
+
+		// Remplacer le domaine par le domaine du site
+		return $localPart . '@' . $siteDomain;
 	}
 
 	/**

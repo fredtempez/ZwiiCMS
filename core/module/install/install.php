@@ -154,6 +154,12 @@ class install extends common
 				]);
 
 				// Envoie le mail
+				// Extraire le domaine principal sans sous-domaine
+				$hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+				$hostPartsCount = count($hostParts);
+				$serverDomain = $hostPartsCount >= 2 ? $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1] : $_SERVER['HTTP_HOST'];
+				$smtpFrom = 'no-reply@' . $serverDomain;
+				
 				// Sent contient true si réussite sinon code erreur d'envoi en clair
 				$sent = $this->sendMail(
 					$userMail,
@@ -163,7 +169,7 @@ class install extends common
 						. '<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>'
 						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null,
-					'no-reply@localhost'
+					$smtpFrom
 				);
 
 				// Nettoyage fr par défaut
@@ -234,11 +240,9 @@ class install extends common
 					}
 				}
 
-				// Fixe l'adresse from pour les envois d'email
-				$this->setData(['config', 'smtp', 'from', 'no-reply@' . str_replace('www.', '', $_SERVER['HTTP_HOST'])], false);
+				// Fixe l'adresse from pour les envois d'email avec le domaine principal
+				$this->setData(['config', 'smtp', 'from', $smtpFrom], false);
 
-				// Force la sauvegarde
-				$this->saveDB('config');
 
 				// Valeurs en sortie
 				$this->addOutput([
