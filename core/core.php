@@ -1920,9 +1920,17 @@ class common
 			$siteDomain = $_SERVER['HTTP_HOST'];
 		}
 
-		// Pour localhost, ne pas modifier
+		// Pour localhost, ne pas modifier SEULEMENT si le domaine de l'email est déjà localhost
 		if ($siteDomain === 'localhost' || strpos($siteDomain, '127.0.0.1') !== false) {
-			return $smtpFrom;
+			// Vérifier si l'email a déjà un domaine localhost
+			$emailParts = explode('@', $smtpFrom);
+			if (count($emailParts) === 2) {
+				$emailDomain = $emailParts[1];
+				if ($emailDomain === 'localhost' || strpos($emailDomain, '127.0.0.1') !== false) {
+					return $smtpFrom; // Garder tel quel si déjà localhost
+				}
+			}
+			// Sinon, corriger quand même pour localhost
 		}
 
 		// Extraire les parties de l'email

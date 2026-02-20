@@ -41,7 +41,8 @@
 						<?php echo template::text('smtpFrom', [
 							'label' => 'Expéditeur',
 							'placeholder' => 'no-reply@host',
-							'value' => $this->getData(['config', 'smtp', 'from']),
+							'value' => $this->getCorrectedSmtpFrom($this->getData(['config', 'smtp', 'from'])),
+							'help' => 'Le domaine de l\'adresse email doit correspondre au domaine du site pour éviter les problèmes de spam. La correction est automatique.'
 						]); ?>
 					</div>
 					<div class="row">
