@@ -1,5 +1,9 @@
 # Notes de mises à jour
 
+## Version 14.01.06
+### 🚀 Améliorations
+- **TinyMCE** : Synchronisation automatique des tailles de police avec le thème (lecture CSS, génération proportionnelle, tri alphabétique des polices)
+
 ## Version 14.01.05
 ### 🚀 Améliorations
 - Compatibilité des boutons de retour des éditeurs jsEditor et cssEditor lors de l'appel depuis un module (ex: calendrier).
