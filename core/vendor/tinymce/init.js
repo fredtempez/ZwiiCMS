@@ -10,9 +10,52 @@
 if (typeof (privateKey) == 'undefined') {
 	var privateKey = null;
 };
-// Formats de polices disponibles (complétés dynamiquement depuis PHP)
+// Formats de polices disponibles
 var defaultFontFormats = "Andale Mono=andale mono,times;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;Wingdings=wingdings,zapf dingbats";
-var extraFontFormats = (typeof tinymceFontFormats !== "undefined" && tinymceFontFormats) ? tinymceFontFormats + ";" : "";
+var extraFontFormats = (typeof tinymceFontFormats !== "undefined" && tinymceFontFormats) ? tinymceFontFormats : "";
+
+// Fusion et tri alphabétique des polices
+function getSortedFontFormats() {
+	var defaultList = defaultFontFormats.split(';');
+	var extraList = extraFontFormats ? extraFontFormats.split(';') : [];
+	var allFonts = defaultList.concat(extraList).filter(function(f) { return f.trim() !== ''; });
+	allFonts.sort(function(a, b) {
+		var nameA = a.split('=')[0].toLowerCase();
+		var nameB = b.split('=')[0].toLowerCase();
+		return nameA.localeCompare(nameB);
+	});
+	return allFonts.join(';');
+}
+
+// Lecture de la taille de police du thème depuis theme.css via AJAX
+var themeFontSizePx = 10; // Valeur par défaut
+(function() {
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', baseUrl + 'site/data/theme.css', false); // Synchrone pour disponibilité immédiate
+	xhr.send();
+	if (xhr.status === 200) {
+		var cssContent = xhr.responseText;
+		var match = cssContent.match(/--font-size:\s*([^;]+);/);
+		if (match) {
+			var size = parseInt(match[1]);
+			if (size) {
+				themeFontSizePx = size;
+			}
+		}
+	}
+})();
+
+// Génération des tailles autour de la conversion px->pt (4 avant, 4 après)
+var defaultSizePt = Math.round(themeFontSizePx * 0.75);
+var themeFontSizeFormats = [];
+for (var i = -4; i <= 4; i++) {
+	var size = defaultSizePt + i;
+	if (size >= 6 && size <= 72) {
+		themeFontSizeFormats.push(size + 'pt');
+	}
+}
+themeFontSizeFormats = themeFontSizeFormats.join(' ');
+var defaultSizePtStr = defaultSizePt + 'pt';
 
 tinymce.init({
 	// Classe où appliquer l'éditeur
@@ -49,10 +92,10 @@ tinymce.init({
 		"bold italic underline forecolor backcolor |  h1 h2 h3 | | bullist numlist | alignleft aligncenter alignright alignjustify |  outdent indent removeformat | link image media |fullscreen",
 	],
 	toolbar_sticky: true,
-	fontsize_formats:
-		"8pt 9pt 10pt 11pt 12pt 14pt 18pt 24pt 30pt 36pt 48pt 60pt 72pt 96pt",
-	font_formats: extraFontFormats + defaultFontFormats,
-	theme: "silver",
+	font_formats: getSortedFontFormats(),
+	fontsize_formats: themeFontSizeFormats,
+	fontsize_default: defaultSizePtStr,
+	content_style: 'body { font-size: ' + themeFontSizePx + 'px; }',
 	max_height: 600,
 	// CodeMirror
 		// CodeMirror
@@ -300,7 +343,10 @@ tinymce.init({
 	plugins: "advlist anchor autolink autoresize autosave colorpicker contextmenu hr lists paste searchreplace tabfocus template textcolor textpattern",
 	// Contenu de la barre d'outils
 	toolbar: "bold italic forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist",
-	font_formats: extraFontFormats + defaultFontFormats,
+	font_formats: getSortedFontFormats(),
+	fontsize_formats: themeFontSizeFormats,
+	fontsize_default: defaultSizePtStr,
+	content_style: 'body { font-size: ' + themeFontSizePx + 'px; }',
 	// Titre des images
 	image_title: true,
 	// Pages internes

@@ -4,6 +4,7 @@
 ### 🚀 Améliorations
 - Méthode envoi d'un mail de test avec l'adresse spécifiée dans la configuration.
 - Méthode SMTP améliorée tenant compte du sender spécifié dans la configuration.
+- **TinyMCE** : Synchronisation automatique des tailles de police avec le thème (lecture CSS, génération proportionnelle, tri alphabétique des polices)
 
 ## Version 14.01.05
 ### 🚀 Améliorations

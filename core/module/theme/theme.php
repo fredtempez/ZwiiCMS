@@ -194,8 +194,6 @@ class theme extends common
 		'1px 1px 50px' => 'Très importante'
 	];
 	public static $siteFontSizes = [
-		'8px' => '8 pixels',
-		'9px' => '9 pixels',
 		'10px' => '10 pixels',
 		'11px' => '11 pixels',
 		'12px' => '12 pixels',
