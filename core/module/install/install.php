@@ -154,11 +154,6 @@ class install extends common
 				]);
 
 				// Envoie le mail
-				// Extraire le domaine principal sans sous-domaine
-				$hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
-				$hostPartsCount = count($hostParts);
-				$serverDomain = $hostPartsCount >= 2 ? $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1] : $_SERVER['HTTP_HOST'];
-				$smtpFrom = 'no-reply@' . $serverDomain;
 				
 				// Sent contient true si réussite sinon code erreur d'envoi en clair
 				$sent = $this->sendMail(
@@ -169,7 +164,7 @@ class install extends common
 						. '<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>'
 						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
 					null,
-					$smtpFrom
+					null
 				);
 
 				// Nettoyage fr par défaut

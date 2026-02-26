@@ -1788,113 +1788,88 @@ class common
 	 * @param string $from Adresse d'expédition
 	 * @return bool|string True si succès, message d'erreur sinon
 	 */
-	public function sendMail($to, $subject, $content, $replyTo = null, $from = 'no-reply@localhost')
+	public function sendMail($to, $subject, $content, $replyTo = null, $from = null)
 	{
-		// 1. Validation de sécurité des paramètres
+		// 1. Initialisation des variables par défaut
+		$serverName = $this->getData(['locale', 'title']) ?? 'Mon Site';
+		$serverEmail = $this->getData(['config', 'smtp', 'from']); // L'email configuré officiellement
+		$serverDomain = parse_url($this->getData(['locale', 'baseUrl']), PHP_URL_HOST);
+
+		// Si $from n'est pas fourni, on prend l'email du compte SMTP
+		$from = $from ?? $serverEmail;
+
+		// 2. Validation de sécurité
 		if (empty($to) || empty($subject) || empty($content)) {
 			$this->saveLog("Échec sendMail : Paramètres manquants.");
 			return 'Paramètres manquants';
 		}
 
-		// 2. Normalisation et validation des destinataires
-		$destinatairesArray = is_array($to) ? $to : explode(',', $to);
-		$destinatairesValides = [];
-		foreach ($destinatairesArray as $email) {
-			$email = trim($email);
-			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-				$destinatairesValides[] = $email;
-			} else {
-				$this->saveLog("Échec sendMail : Format email invalide ($email).");
-				return 'Format email invalide: ' . $email;
-			}
-		}
-		$destinatairesStr = implode(', ', $destinatairesValides);
-
-		// 3. Corriger et valider l'adresse from
-		$from = $this->getCorrectedSmtpFrom($from);
-
-		// 4. Préparation du Layout HTML
+		// 3. Préparation du Layout HTML
 		ob_start();
 		include 'core/layout/mail.php';
 		$layout = ob_get_clean();
 
 		$mail = new PHPMailer\PHPMailer\PHPMailer(true);
 		$mail->CharSet = 'UTF-8';
-		// Langue par défaut : en, ou fr si configuré
-		if ($this->getData(['config', 'i18n', 'langAdmin']) === 'fr') {
-			$mail->setLanguage('fr', 'core/class/phpmailer/phpmailer.lang-fr.php');
-		} else {
-			$mail->setLanguage('en');
-		}
 
 		try {
-			// 5. Configuration du mode d'envoi (SMTP ou fallback mail)
+			// 4. Configuration SMTP Robuste
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
 				$mail->isSMTP();
-				$mail->SMTPAutoTLS = false;
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
-				if ($this->getData(['config', 'smtp', 'auth'])) {
+				$mail->SMTPAuth = (bool) $this->getData(['config', 'smtp', 'auth']);
+
+				// Gmail/Free exigent TLS sur le port 587
+				$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+				$mail->SMTPAutoTLS = true;
+
+				if ($mail->SMTPAuth) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($this->getData(['config', 'smtp', 'username']), $this->getData(['config', 'smtp', 'password']));
-					$mail->SMTPAuth = $this->getData(['config', 'smtp', 'auth']);
-					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-					$mail->setFrom($this->getData(['config', 'smtp', 'from']));
-					if (is_null($replyTo)) {
-						$mail->addReplyTo($this->getData(['config', 'smtp', 'from']));
-					} else {
-						$mail->addReplyTo($replyTo);
-					}
-				} else {
-					// SMTP sans authentification : utiliser from corrigé
-					$mail->setFrom($from);
-					if (is_null($replyTo)) {
-						$mail->addReplyTo($from);
-					} else {
-						$mail->addReplyTo($replyTo);
-					}
-				}
-			} else {
-				// Mode sans SMTP : utiliser l'adresse from corrigée
-				$fromName = $this->getData(['locale', 'title']);
-				$mail->setFrom($from, $fromName);
-				
-				// Configurer replyTo
-				if (is_null($replyTo)) {
-					$replyAddress = strpos($from, 'no-reply@') === 0 ? $from : 'no-reply@' . parse_url($this->getData(['locale', 'baseUrl']), PHP_URL_HOST);
-					$mail->addReplyTo($replyAddress, $fromName);
-				} else {
-					$mail->addReplyTo($replyTo);
+					$mail->Password = helper::decrypt($mail->Username, $this->getData(['config', 'smtp', 'password']));
 				}
 			}
-			// Ajout des destinataires
-			if (is_array($to)) {
-				foreach ($to as $userMail) {
-					$mail->addAddress($userMail);
+
+			// 5. Identité de l'expéditeur (Crucial pour Gmail)
+			// Le 'setFrom' doit être une adresse liée à votre domaine, pas 'localhost'
+			$mail->setFrom($serverEmail, $serverName);
+			$mail->addReplyTo($replyTo ?? $serverEmail, $serverName);
+
+			// Return-Path : l'adresse vers laquelle les erreurs de livraison sont renvoyées
+			$mail->Sender = $serverEmail;
+
+			// 6. Destinataires
+			$destinatairesArray = is_array($to) ? $to : explode(',', $to);
+			foreach ($destinatairesArray as $email) {
+				$cleanEmail = trim($email);
+				if (filter_var($cleanEmail, FILTER_VALIDATE_EMAIL)) {
+					$mail->addAddress($cleanEmail);
 				}
-			} else {
-				$mail->addAddress($to);
 			}
+
+			// 7. Contenu
 			$mail->isHTML(true);
 			$mail->Subject = $subject;
-			   $mail->addCustomHeader('List-Unsubscribe', '<mailto:no-reply@' . $serverDomain . '>');
 			$mail->Body = $layout;
 			$mail->AltBody = strip_tags($content);
-			// Gestion pièce jointe (optionnelle)
-			if (isset($file_name) && $file_name !== '') {
-				$mail->addAttachment(self::FILE_DIR . 'uploads/' . $file_name);
+
+			// 8. Headers Anti-Spam (RFC compliance)
+			$mail->addCustomHeader('List-Unsubscribe', '<mailto:' . $serverEmail . '?subject=unsubscribe>');
+			$mail->XMailer = ' '; // On cache la version de PHPMailer pour la sécurité
+
+			// 9. Pièce jointe
+			if (!empty($file_name)) {
+				$filePath = self::FILE_DIR . 'uploads/' . $file_name;
+				if (file_exists($filePath)) {
+					$mail->addAttachment($filePath);
+				}
 			}
-			if ($mail->send()) {
-				return true;
-			} else {
-				return $mail->ErrorInfo;
-			}
+
+			return $mail->send();
+
 		} catch (Exception $e) {
-			$this->saveLog('Erreur mail : ' . $e->getMessage());
-			return $e->getMessage();
-		} catch (\Exception $e) {
-			$this->saveLog('Erreur mail : ' . $e->getMessage());
-			return $e->getMessage();
+			$this->saveLog('Erreur PHPMailer : ' . $mail->ErrorInfo);
+			return $mail->ErrorInfo;
 		}
 	}
 
@@ -1913,7 +1888,7 @@ class common
 		// Extraire le domaine du site (sans sous-domaine)
 		$hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
 		$hostPartsCount = count($hostParts);
-		
+
 		if ($hostPartsCount >= 2) {
 			$siteDomain = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
 		} else {
