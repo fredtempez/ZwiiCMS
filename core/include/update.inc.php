@@ -1278,3 +1278,20 @@ if ($this->getData(['core', 'dataVersion']) < 140000) {
 	// Mettre à jour la version des données
 	$this->setData(['core', 'dataVersion', 140000]);
 }
+
+
+// Version 14.1.06
+if ($this->getData(['core', 'dataVersion']) < 140106) {
+
+	// Normalisation de l'adresse from
+	$from = $this->getData(['config', 'smtp', 'from']);
+
+	// Normalisation du domaine
+	$from = $this->getCorrectedSmtpFrom($from);
+
+	// Sauvegarde
+	$this->setData(['config', 'smtp', 'from', $from]);
+
+	// Mettre à jour la version des données
+	$this->setData(['core', 'dataVersion', 140106]);
+}
