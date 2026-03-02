@@ -1285,7 +1285,7 @@ class user extends common
 				session_destroy();
 
 				// Journalisation
-				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'));
+				$this->saveLog('Erreur de vérification de la clé envoyée par email ' . $this->getUser('id'), true);
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => $redirect,
@@ -1337,7 +1337,7 @@ class user extends common
 		
 		// Validation : l'utilisateur doit exister
 		if ($userData === null) {
-			$this->saveLog('Reset - Erreur : Utilisateur inconnu [' . $userId . ']');
+			$this->saveLog('Reset - Erreur : Utilisateur inconnu [' . $userId . ']', true);
 			$this->addOutput([
 				'redirect' => helper::baseUrl(),
 				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Utilisateur inconnu',
@@ -1348,7 +1348,7 @@ class user extends common
 		
 		// Validation : le format de forgot doit être valide (timestamp_key)
 		if (!is_string($forgotData) || strpos($forgotData, '_') === false) {
-			$this->saveLog('Reset - Erreur : Format invalide pour [' . $userId . '] - Data: ' . var_export($forgotData, true));
+			$this->saveLog('Reset - Erreur : Format invalide pour [' . $userId . '] - Data: ' . var_export($forgotData, true), true);
 			$this->addOutput([
 				'redirect' => helper::baseUrl(),
 				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé manquante ou invalide',
@@ -1365,7 +1365,7 @@ class user extends common
 		// Validation : le lien ne doit pas être expiré (24 heures)
 		$isExpired = ($timestamp + 86400) < time();
 		if ($isExpired) {
-			$this->saveLog('Reset - Erreur : Lien expiré pour [' . $userId . '] - Timestamp: ' . $timestamp . ' - Age: ' . (time() - $timestamp) . 's');
+			$this->saveLog('Reset - Erreur : Lien expiré pour [' . $userId . '] - Timestamp: ' . $timestamp . ' - Age: ' . (time() - $timestamp) . 's', true);
 			$this->addOutput([
 				'redirect' => helper::baseUrl(),
 				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Lien expiré (24h maximum)',
@@ -1376,7 +1376,7 @@ class user extends common
 		
 		// Validation : la clé doit correspondre
 		if ($urlKey !== $storedKey) {
-			$this->saveLog('Reset - Erreur : Clé invalide pour [' . $userId . '] - Attendu: [' . $storedKey . '] - Reçu: [' . $urlKey . '] - Longueurs: ' . strlen($storedKey) . '/' . strlen($urlKey));
+			$this->saveLog('Reset - Erreur : Clé invalide pour [' . $userId . '] - Attendu: [' . $storedKey . '] - Reçu: [' . $urlKey . '] - Longueurs: ' . strlen($storedKey) . '/' . strlen($urlKey), true);
 			$this->addOutput([
 				'redirect' => helper::baseUrl(),
 				'notification' => helper::translate('Impossible de réinitialiser le mot de passe de ce compte !') . ' Clé invalide',

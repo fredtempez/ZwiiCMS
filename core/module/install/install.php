@@ -153,20 +153,6 @@ class install extends common
 					]
 				]);
 
-				// Envoie le mail
-				
-				// Sent contient true si réussite sinon code erreur d'envoi en clair
-				$sent = $this->sendMail(
-					$userMail,
-					'Installation de votre site',
-					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>'
-						. 'Voici les détails de votre installation.<br><br>'
-						. '<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>'
-						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
-					null,
-					null
-				);
-
 				// Nettoyage fr par défaut
 				if (
 					$_SESSION['ZWII_SITE_CONTENT'] !== 'fr_FR'
@@ -174,11 +160,6 @@ class install extends common
 					if (is_dir(self::DATA_DIR . 'fr_FR'))
 						$this->deleteDir(self::DATA_DIR . 'fr_FR');
 				}
-
-				// Sauvegarder la configuration du Proxy
-				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')], false);
-				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')], false);
-				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)], false);
 
 				// Images exemples livrées dans tous les cas
 				try {
@@ -234,15 +215,37 @@ class install extends common
 						}
 					}
 				}
-
+				
+				// Sauvegarder la configuration du Proxy
+				$this->setData(['config', 'proxyType', $this->getInput('installProxyType')], false);
+				$this->setData(['config', 'proxyUrl', $this->getInput('installProxyUrl')], false);
+				$this->setData(['config', 'proxyPort', $this->getInput('installProxyPort', helper::FILTER_INT)], false);
 				// Fixe l'adresse from pour les envois d'email avec le domaine principal
-				$this->setData(['config', 'smtp', 'from', $smtpFrom], false);
+				$smtpFrom = $this->getCorrectedSmtpFrom('no-reply@' . parse_url(helper::baseUrl(false), PHP_URL_HOST));
+				$this->setData(['config', 'smtp', 'from', $smtpFrom]);
 
+				// Envoie le mail
+				// Sent contient true si réussite sinon code erreur d'envoi en clair
+				$sent = $this->sendMail(
+					$userMail,
+					'Installation de votre site',
+					'Bonjour' . ' <strong>' . $userFirstname . ' ' . $userLastname . '</strong>,<br><br>'
+						. 'Voici les détails de votre installation.<br><br>'
+						. '<strong>URL du site :</strong> <a href="' . helper::baseUrl(false) . '" target="_blank">' . helper::baseUrl(false) . '</a><br>'
+						. '<strong>Identifiant du compte :</strong> ' . $this->getInput('installId') . '<br>',
+					$userMail,
+					$smtpFrom
+				);
+
+				// Notification
+				$notification = $sent === true 
+							? helper::translate('Installation terminée') 
+							: helper::translate('Installation terminée') . '<br>' . helper::translate('Message non envoyé') . '<br>' . $sent;
 
 				// Valeurs en sortie
 				$this->addOutput([
 					'redirect' => helper::baseUrl(),
-					'notification' => helper::translate('Installation terminée') . ($sent === false ? ' ' . helper::translate('Message non envoyé') : ''),
+					'notification' => $notification,
 					'state' => $sent === true ? true : false,
 				]);
 			}

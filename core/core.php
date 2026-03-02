@@ -55,7 +55,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '14.1.06';
+	const ZWII_VERSION = '14.1.06-smtp2';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -1788,19 +1788,18 @@ class common
 	 * @param string $from Adresse d'expédition
 	 * @return bool|string True si succès, message d'erreur sinon
 	 */
-	public function sendMail($to, $subject, $content, $replyTo = null, $from = null)
+	public function sendMail($to, $subject, $content, $replyTo = null, $serverEmail = null)
 	{
 		// 1. Initialisation des variables par défaut
-		$serverName = $this->getData(['locale', 'title']) ?? 'Mon Site';
-		$serverEmail = $this->getData(['config', 'smtp', 'from']); // L'email configuré officiellement
-		$serverDomain = parse_url($this->getData(['locale', 'baseUrl']), PHP_URL_HOST);
+		$serverName = $this->getData(['locale', 'title']);
+		$serverDomain = parse_url(helper::baseUrl(false), PHP_URL_HOST);
 
 		// Si $from n'est pas fourni, on prend l'email du compte SMTP
 		$from = $from ?? $serverEmail;
 
 		// 2. Validation de sécurité
 		if (empty($to) || empty($subject) || empty($content)) {
-			$this->saveLog("Échec sendMail : Paramètres manquants.");
+			$this->saveLog('Échec sendMail : Paramètres manquants.', true);
 			return 'Paramètres manquants';
 		}
 
@@ -1868,7 +1867,7 @@ class common
 			return $mail->send();
 
 		} catch (Exception $e) {
-			$this->saveLog('Erreur PHPMailer : ' . $mail->ErrorInfo);
+			$this->saveLog('Erreur PHPMailer : ' . $mail->ErrorInfo, true);
 			return $mail->ErrorInfo;
 		}
 	}
@@ -1885,27 +1884,19 @@ class common
 			return $smtpFrom;
 		}
 
-		// Extraire le domaine du site (sans sous-domaine)
-		$hostParts = explode('.', str_replace('www.', '', $_SERVER['HTTP_HOST']));
+		// Extraire le domaine du site (sans sous-domaine) - méthode plus fiable
+		$baseUrl = helper::baseUrl(false);
+		$parsedUrl = parse_url($baseUrl);
+		$hostname = $parsedUrl['host'] ?? $_SERVER['HTTP_HOST'];
+		
+		// Extraire le domaine sans sous-domaine
+		$hostParts = explode('.', str_replace('www.', '', $hostname));
 		$hostPartsCount = count($hostParts);
 
 		if ($hostPartsCount >= 2) {
 			$siteDomain = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
 		} else {
-			$siteDomain = $_SERVER['HTTP_HOST'];
-		}
-
-		// Pour localhost, ne pas modifier SEULEMENT si le domaine de l'email est déjà localhost
-		if ($siteDomain === 'localhost' || strpos($siteDomain, '127.0.0.1') !== false) {
-			// Vérifier si l'email a déjà un domaine localhost
-			$emailParts = explode('@', $smtpFrom);
-			if (count($emailParts) === 2) {
-				$emailDomain = $emailParts[1];
-				if ($emailDomain === 'localhost' || strpos($emailDomain, '127.0.0.1') !== false) {
-					return $smtpFrom; // Garder tel quel si déjà localhost
-				}
-			}
-			// Sinon, corriger quand même pour localhost
+			$siteDomain = $hostname;
 		}
 
 		// Extraire les parties de l'email
@@ -1913,9 +1904,15 @@ class common
 		if (count($emailParts) !== 2) {
 			return $smtpFrom;
 		}
-
 		$localPart = $emailParts[0];
 		$emailDomain = $emailParts[1];
+
+		// Si l'email a un domaine localhost mais que le site est en ligne, corriger
+		if (($emailDomain === 'localhost' || strpos($emailDomain, '127.0.0.1') !== false) && 
+			($siteDomain !== 'localhost' && strpos($siteDomain, '127.0.0.1') === false)) {
+			// Remplacer localhost par le domaine du site
+			return $localPart . '@' . $siteDomain;
+		}
 
 		// Si le domaine est déjà correct, retourner tel quel
 		if ($emailDomain === $siteDomain || $emailDomain === 'www.' . $siteDomain) {
@@ -2033,7 +2030,7 @@ class common
 	/**
 	 * Journalisation avec gestion de la taille maximale et compression
 	 */
-	public function saveLog($message = '')
+	public function saveLog($message = '', $force = false)
 	{
 		// Chemin du fichier journal
 		$logFile = self::DATA_DIR . 'journal.log';
@@ -2052,7 +2049,9 @@ class common
 		$dataLog .= PHP_EOL;
 
 		// Écriture dans le fichier si la journalisation est activée
-		if ($this->getData(['config', 'connect', 'log'])) {
+		if ($this->getData(['config', 'connect', 'log'])
+			|| $force
+		) {
 			file_put_contents($logFile, $dataLog, FILE_APPEND);
 		}
 	}
