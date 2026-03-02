@@ -1788,14 +1788,11 @@ class common
 	 * @param string $from Adresse d'expédition
 	 * @return bool|string True si succès, message d'erreur sinon
 	 */
-	public function sendMail($to, $subject, $content, $replyTo = null, $serverEmail = null)
+	public function sendMail($to, $subject, $content, $replyTo = null, $serverEmail = null, $file_name = null)
 	{
 		// 1. Initialisation des variables par défaut
 		$serverName = $this->getData(['locale', 'title']);
 		$serverDomain = parse_url(helper::baseUrl(false), PHP_URL_HOST);
-
-		// Si $from n'est pas fourni, on prend l'email du compte SMTP
-		$from = $from ?? $serverEmail;
 
 		// 2. Validation de sécurité
 		if (empty($to) || empty($subject) || empty($content)) {
@@ -1816,12 +1813,18 @@ class common
 			if ($this->getdata(['config', 'smtp', 'enable'])) {
 				$mail->isSMTP();
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
-				$mail->Port = (int) $this->getdata(['config', 'smtp', 'port']);
+				$smtpPort = (int) $this->getdata(['config', 'smtp', 'port']);
+				$mail->Port = $smtpPort;
 				$mail->SMTPAuth = (bool) $this->getData(['config', 'smtp', 'auth']);
 
-				// Gmail/Free exigent TLS sur le port 587
-				$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-				$mail->SMTPAutoTLS = true;
+				// Port 465 → SSL implicite, autres (587, 25…) → STARTTLS
+				if ($smtpPort === 465) {
+					$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMIME;
+					$mail->SMTPAutoTLS = false;
+				} else {
+					$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
+					$mail->SMTPAutoTLS = true;
+				}
 
 				if ($mail->SMTPAuth) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
@@ -1870,6 +1873,71 @@ class common
 			$this->saveLog('Erreur PHPMailer : ' . $mail->ErrorInfo, true);
 			return $mail->ErrorInfo;
 		}
+	}
+
+	/**
+	 * Retourne la clé privée DKIM (PEM).
+	 * Si les fichiers n'existent pas, génère une paire RSA 2048 bits via openssl
+	 * et la stocke dans site/data/dkim_private.pem et site/data/dkim_public.pem.
+	 * @return string|false Clé privée PEM ou false si openssl indisponible
+	 */
+	public function getOrCreateDkimKey()
+	{
+		if (!function_exists('openssl_pkey_new')) {
+			return false;
+		}
+
+		$privateFile = self::DATA_DIR . 'dkim_private.pem';
+		$publicFile  = self::DATA_DIR . 'dkim_public.pem';
+
+		if (file_exists($privateFile)) {
+			return file_get_contents($privateFile);
+		}
+
+		// Génération d'une paire RSA 2048 bits
+		$res = openssl_pkey_new([
+			'digest_alg'       => 'sha256',
+			'private_key_bits' => 2048,
+			'private_key_type' => OPENSSL_KEYTYPE_RSA,
+		]);
+
+		if (!$res) {
+			return false;
+		}
+
+		openssl_pkey_export($res, $privateKeyPem);
+		$publicKeyDetails = openssl_pkey_get_details($res);
+		$publicKeyPem = $publicKeyDetails['key'];
+
+		file_put_contents($privateFile, $privateKeyPem);
+		file_put_contents($publicFile, $publicKeyPem);
+		chmod($privateFile, 0600); // Lecture restreinte au propriétaire
+
+		return $privateKeyPem;
+	}
+
+	/**
+	 * Retourne la valeur à publier dans l'enregistrement DNS TXT pour DKIM.
+	 * Entrée DNS : zwii._domainkey.<votre-domaine>
+	 * Valeur     : v=DKIM1; k=rsa; p=<clé publique base64>
+	 * @return string|false Valeur DNS ou false si pas de clé
+	 */
+	public function getDkimDnsRecord()
+	{
+		$publicFile = self::DATA_DIR . 'dkim_public.pem';
+
+		if (!file_exists($publicFile)) {
+			$this->getOrCreateDkimKey();
+		}
+
+		if (!file_exists($publicFile)) {
+			return false;
+		}
+
+		$publicKeyPem = file_get_contents($publicFile);
+		// Extraire uniquement la partie base64 (sans header/footer PEM)
+		$b64 = preg_replace('/-----.*?-----|\s+/', '', $publicKeyPem);
+		return 'v=DKIM1; k=rsa; p=' . $b64;
 	}
 
 	/**
