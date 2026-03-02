@@ -1817,14 +1817,9 @@ class common
 				$mail->Port = $smtpPort;
 				$mail->SMTPAuth = (bool) $this->getData(['config', 'smtp', 'auth']);
 
-				// Port 465 → SSL implicite, autres (587, 25…) → STARTTLS
-				if ($smtpPort === 465) {
-					$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_SMIME;
-					$mail->SMTPAutoTLS = false;
-				} else {
-					$mail->SMTPSecure = PHPMailer\PHPMailer\PHPMailer::ENCRYPTION_STARTTLS;
-					$mail->SMTPAutoTLS = true;
-				}
+				// Chiffrement depuis la configuration (ssl, tls ou vide)
+				$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
+				$mail->SMTPAutoTLS = false;
 
 				if ($mail->SMTPAuth) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
