@@ -1819,11 +1819,15 @@ class common
 
 				// Chiffrement depuis la configuration (ssl, tls ou vide)
 				$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-				$mail->SMTPAutoTLS = false;
 
 				if ($mail->SMTPAuth) {
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
-					$mail->Password = helper::decrypt($mail->Username, $this->getData(['config', 'smtp', 'password']));
+					$storedPassword = $this->getData(['config', 'smtp', 'password']);
+					$smtpHost = $this->getData(['config', 'smtp', 'host']);
+					
+					// Déchiffrer le password avec le host comme clé (voir config.php ligne 533)
+					$mail->Password  = helper::decrypt($storedPassword, $smtpHost);
+				
 				}
 			}
 
@@ -1833,7 +1837,10 @@ class common
 			$mail->addReplyTo($replyTo ?? $serverEmail, $serverName);
 
 			// Return-Path : l'adresse vers laquelle les erreurs de livraison sont renvoyées
-			$mail->Sender = $serverEmail;
+			// Valider l'email avant d'assigner pour éviter "Invalid address (Sender)" 
+			if (filter_var($serverEmail, FILTER_VALIDATE_EMAIL)) {
+				$mail->Sender = $serverEmail;
+			}
 
 			// 6. Destinataires
 			$destinatairesArray = is_array($to) ? $to : explode(',', $to);
@@ -1862,11 +1869,16 @@ class common
 				}
 			}
 
-			return $mail->send();
+			// 10. Envoi avec capture d'erreur explicite
+			$sendResult = $mail->send();
+			if (!$sendResult) {
+				$this->saveLog('SMTP Send failed: ' . $mail->ErrorInfo, true);
+			}
+			return $sendResult;
 
 		} catch (Exception $e) {
 			$this->saveLog('Erreur PHPMailer : ' . $mail->ErrorInfo, true);
-			return $mail->ErrorInfo;
+			return false;
 		}
 	}
 
