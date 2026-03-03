@@ -55,7 +55,7 @@ class common
 	// Contrôle d'édition temps maxi en secondes avant déconnexion 30 minutes
 	const ACCESS_TIMER = 1800;
 	// Numéro de version
-	const ZWII_VERSION = '14.1.06-smtp3';
+	const ZWII_VERSION = '14.1.06-smtp4';
 	// URL autoupdate
 	const ZWII_UPDATE_URL = 'https://codeberg.org/fredtempez/cms-update/raw/branch/master/';
 
@@ -1810,17 +1810,16 @@ class common
 
 		try {
 			// 4. Configuration SMTP Robuste
-			if ($this->getdata(['config', 'smtp', 'enable'])) {
+			if ($this->getdata(['config', 'smtp', 'enable']) === true) {
 				$mail->isSMTP();
 				$mail->Host = $this->getdata(['config', 'smtp', 'host']);
 				$smtpPort = (int) $this->getdata(['config', 'smtp', 'port']);
 				$mail->Port = $smtpPort;
 				$mail->SMTPAuth = (bool) $this->getData(['config', 'smtp', 'auth']);
 
-				// Chiffrement depuis la configuration (ssl, tls ou vide)
-				$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
-
 				if ($mail->SMTPAuth) {
+					// Chiffrement depuis la configuration (ssl, tls ou vide)
+					$mail->SMTPSecure = $this->getData(['config', 'smtp', 'secure']);
 					$mail->Username = $this->getData(['config', 'smtp', 'username']);
 					$storedPassword = $this->getData(['config', 'smtp', 'password']);
 					$smtpHost = $this->getData(['config', 'smtp', 'host']);
