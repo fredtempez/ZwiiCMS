@@ -1870,70 +1870,6 @@ class common
 		}
 	}
 
-	/**
-	 * Retourne la clé privée DKIM (PEM).
-	 * Si les fichiers n'existent pas, génère une paire RSA 2048 bits via openssl
-	 * et la stocke dans site/data/dkim_private.pem et site/data/dkim_public.pem.
-	 * @return string|false Clé privée PEM ou false si openssl indisponible
-	 */
-	public function getOrCreateDkimKey()
-	{
-		if (!function_exists('openssl_pkey_new')) {
-			return false;
-		}
-
-		$privateFile = self::DATA_DIR . 'dkim_private.pem';
-		$publicFile  = self::DATA_DIR . 'dkim_public.pem';
-
-		if (file_exists($privateFile)) {
-			return file_get_contents($privateFile);
-		}
-
-		// Génération d'une paire RSA 2048 bits
-		$res = openssl_pkey_new([
-			'digest_alg'       => 'sha256',
-			'private_key_bits' => 2048,
-			'private_key_type' => OPENSSL_KEYTYPE_RSA,
-		]);
-
-		if (!$res) {
-			return false;
-		}
-
-		openssl_pkey_export($res, $privateKeyPem);
-		$publicKeyDetails = openssl_pkey_get_details($res);
-		$publicKeyPem = $publicKeyDetails['key'];
-
-		file_put_contents($privateFile, $privateKeyPem);
-		file_put_contents($publicFile, $publicKeyPem);
-		chmod($privateFile, 0600); // Lecture restreinte au propriétaire
-
-		return $privateKeyPem;
-	}
-
-	/**
-	 * Retourne la valeur à publier dans l'enregistrement DNS TXT pour DKIM.
-	 * Entrée DNS : zwii._domainkey.<votre-domaine>
-	 * Valeur     : v=DKIM1; k=rsa; p=<clé publique base64>
-	 * @return string|false Valeur DNS ou false si pas de clé
-	 */
-	public function getDkimDnsRecord()
-	{
-		$publicFile = self::DATA_DIR . 'dkim_public.pem';
-
-		if (!file_exists($publicFile)) {
-			$this->getOrCreateDkimKey();
-		}
-
-		if (!file_exists($publicFile)) {
-			return false;
-		}
-
-		$publicKeyPem = file_get_contents($publicFile);
-		// Extraire uniquement la partie base64 (sans header/footer PEM)
-		$b64 = preg_replace('/-----.*?-----|\s+/', '', $publicKeyPem);
-		return 'v=DKIM1; k=rsa; p=' . $b64;
-	}
 
 	/**
 	 * Corrige l'adresse email smtpFrom pour correspondre au domaine du site
@@ -1947,17 +1883,24 @@ class common
 			return $smtpFrom;
 		}
 
-		// Extraire le domaine du site (sans sous-domaine) - méthode plus fiable
+		// Extraire le domaine du site
 		$baseUrl = helper::baseUrl(false);
 		$parsedUrl = parse_url($baseUrl);
-		$hostname = $parsedUrl['host'] ?? $_SERVER['HTTP_HOST'];
-		
-		// Extraire le domaine sans sous-domaine
-		$hostParts = explode('.', str_replace('www.', '', $hostname));
-		$hostPartsCount = count($hostParts);
+		$hostname = isset($parsedUrl['host']) ? $parsedUrl['host'] : (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '');
 
-		if ($hostPartsCount >= 2) {
-			$siteDomain = $hostParts[$hostPartsCount - 2] . '.' . $hostParts[$hostPartsCount - 1];
+		if (empty($hostname)) {
+			return $smtpFrom;
+		}
+
+		// Normalisation
+		$hostname = strtolower($hostname);
+		$hostname = preg_replace('#^www\.#', '', $hostname);
+
+		// Extraction du domaine principal
+		$hostParts = explode('.', $hostname);
+
+		if (count($hostParts) >= 2) {
+			$siteDomain = implode('.', array_slice($hostParts, -2));
 		} else {
 			$siteDomain = $hostname;
 		}
@@ -1967,22 +1910,27 @@ class common
 		if (count($emailParts) !== 2) {
 			return $smtpFrom;
 		}
-		$localPart = $emailParts[0];
-		$emailDomain = $emailParts[1];
 
-		// Si l'email a un domaine localhost mais que le site est en ligne, corriger
-		if (($emailDomain === 'localhost' || strpos($emailDomain, '127.0.0.1') !== false) && 
-			($siteDomain !== 'localhost' && strpos($siteDomain, '127.0.0.1') === false)) {
-			// Remplacer localhost par le domaine du site
+		$localPart = $emailParts[0];
+		$emailDomain = strtolower($emailParts[1]);
+
+		// Correction localhost -> domaine réel
+		if (
+			($emailDomain === 'localhost' || strpos($emailDomain, '127.0.0.1') !== false) &&
+			($siteDomain !== 'localhost' && strpos($siteDomain, '127.0.0.1') === false)
+		) {
 			return $localPart . '@' . $siteDomain;
 		}
 
-		// Si le domaine est déjà correct, retourner tel quel
-		if ($emailDomain === $siteDomain || $emailDomain === 'www.' . $siteDomain) {
+		// Si déjà correct (insensible à la casse)
+		if (
+			strcasecmp($emailDomain, $siteDomain) === 0 ||
+			strcasecmp($emailDomain, 'www.' . $siteDomain) === 0
+		) {
 			return $smtpFrom;
 		}
 
-		// Remplacer le domaine par le domaine du site
+		// Remplacer le domaine
 		return $localPart . '@' . $siteDomain;
 	}
 
@@ -2112,7 +2060,8 @@ class common
 		$dataLog .= PHP_EOL;
 
 		// Écriture dans le fichier si la journalisation est activée
-		if ($this->getData(['config', 'connect', 'log'])
+		if (
+			$this->getData(['config', 'connect', 'log'])
 			|| $force
 		) {
 			file_put_contents($logFile, $dataLog, FILE_APPEND);
