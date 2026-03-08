@@ -1,0 +1,9 @@
+# Exclure le dossier doc des archives git
+doc/ export-ignore
+doc/* export-ignore
+doc/** export-ignore
+
+# Autres exclusions éventuelles
+.git export-ignore
+.gitignore export-ignore
+node_modules/ export-ignore
