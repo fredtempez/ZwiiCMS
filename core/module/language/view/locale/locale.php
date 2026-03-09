@@ -15,11 +15,6 @@
     <div class="col12">
         <div class="block">
             <h4><?php echo helper::translate('Identité du site'); ?>
-                <!--<span id="localeHelpButton" class="helpDisplayButton" title="Cliquer pour consulter l'aide en ligne">
-                    <a href="https://doc.zwiicms.fr/localisation-et-identite" target="_blank">
-                        <?php //echo template::ico('help', ['margin' => 'left']); ?>
-                    </a>
-                </span>-->
             </h4>
             <div class="row">
                 <div class="col12">

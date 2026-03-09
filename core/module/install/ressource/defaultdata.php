@@ -743,6 +743,7 @@ class init extends common
 				'searchPageLabel' => 'Rechercher',
 				'sitemapPageLabel' => 'Plan du site',
 				'legalPageLabel' => 'Mentions légales',
+				'poweredPageLabel' => 'Motorisé par ZwiiCMS',
 				'metaDescription' => 'Zwii est un CMS sans base de données qui permet de créer et gérer facilement un site web sans aucune connaissance en programmation.',
 				'title' => 'Votre site en quelques clics !',
 				'cookies' => [
