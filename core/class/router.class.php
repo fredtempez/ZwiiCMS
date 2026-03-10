@@ -968,11 +968,13 @@ class core extends common
 							]);
 						}
 
+						// Titre de la vue
 						if ($output['title'] !== null) {
 							$this->addOutput([
 								'title' => $output['title']
 							]);
 						}
+						
 						// Affiche le bouton d'édition de la page dans la barre de membre
 						if ($output['showBarEditButton']) {
 							$this->addOutput([

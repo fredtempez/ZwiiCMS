@@ -1,5 +1,7 @@
 # Notes de mises à jour
 
+## Version 14.01.07
+
 ## Version 14.01.06
 ### 🚀 Améliorations
 - Méthode SMTP améliorée tenant compte du sender spécifié dans la configuration.
