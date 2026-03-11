@@ -77,38 +77,11 @@ class core extends common
 	 */
 	private function manageCss()
 	{
-		// Initialisation des fichiers physiques
-		$this->initCssFiles();
-
 		// Génération du CSS du thème (Variables CSS)
 		$this->buildThemeCss();
 
 		// Génération du CSS de l'administration (Variables CSS)
 		$this->buildAdminCss();
-	}
-
-	/**
-	 * Crée les fichiers CSS de base s'ils n'existent pas
-	 */
-	private function initCssFiles()
-	{
-		$cssFiles = [
-			'custom.css' => 'core/module/theme/resource/custom.css',
-			'theme.css' => '',
-			'admin.css' => ''
-		];
-
-		foreach ($cssFiles as $file => $source) {
-			$filePath = common::DATA_DIR . $file;
-			if (!file_exists($filePath)) {
-				$content = $source ? @file_get_contents($source) : '';
-				if ($content !== false || $source === '') {
-					if ($this->secure_file_put_contents($filePath, $content)) {
-						chmod($filePath, 0755);
-					}
-				}
-			}
-		}
 	}
 
 	/**

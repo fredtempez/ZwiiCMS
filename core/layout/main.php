@@ -25,7 +25,14 @@
 	// Préchargement des CSS principaux
 	$commonCssPath = helper::baseUrl(false) . 'core/layout/common.css?' . md5_file('core/layout/common.css');
 	$themeCssPath = helper::baseUrl(false) . self::DATA_DIR . 'theme.css?' . md5_file(self::DATA_DIR . 'theme.css');
-	$customCssPath = helper::baseUrl(false) . self::DATA_DIR . 'custom.css?' . md5_file(self::DATA_DIR . 'custom.css');
+	
+	// Gestion de custom.css qui peut ne pas exister
+	$customCssFile = self::DATA_DIR . 'custom.css';
+	if (file_exists($customCssFile)) {
+		$customCssPath = helper::baseUrl(false) . $customCssFile . '?' . md5_file($customCssFile);
+	} else {
+		$customCssPath = ''; // Pas de custom.css
+	}
 	?>
 	
 	<!-- CSS critique chargé de manière synchrone -->
@@ -35,8 +42,10 @@
 	<link rel="preload" href="<?php echo $themeCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $themeCssPath; ?>"></noscript>
 	
+	<?php if (!empty($customCssPath)): ?>
 	<link rel="preload" href="<?php echo $customCssPath; ?>" as="style" onload="this.onload=null;this.rel='stylesheet'">
 	<noscript><link rel="stylesheet" href="<?php echo $customCssPath; ?>"></noscript>
+	<?php endif; ?>
 	
 	<style>
 	/* Prévention du FOUC */
