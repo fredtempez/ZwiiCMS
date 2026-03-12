@@ -1,6 +1,10 @@
 # Notes de mises à jour
 
-## Version 14.01.07
+## Version 14.02.00
+### 🚀 Améliorations
+- Réorganisation structurelle du script router.class.php, les méthodes liées à la création des feuilles de style depuis le fichier json sont incluses dans une classe dédiée.
+### 🛠️ Corrections
+- Données d'identité manquante dans la configuration par défaut.
 
 ## Version 14.01.06
 ### 🚀 Améliorations
