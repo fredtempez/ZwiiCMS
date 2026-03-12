@@ -82,6 +82,11 @@ class Autoloader
             return self::requireFile($namespaceMap[$className]);
         }
 
+        // Cas spécial pour le namespace PHP81_BC (strftime)
+        if (strpos($className, 'PHP81_BC\\') === 0) {
+            return self::requireFile('core/class/strftime/php-8.1-strftime.class.php');
+        }
+
         return false;
     }
 
@@ -120,7 +125,7 @@ class Autoloader
         }
         
         // Précharger les classes namespace essentielles
-        $namespaceEssential = ['Prowebcraft\\Dot', 'Prowebcraft\\JsonDb'];
+        $namespaceEssential = ['Prowebcraft\\Dot', 'Prowebcraft\\JsonDb', 'PHP81_BC\\strftime'];
         foreach ($namespaceEssential as $class) {
             self::load($class);
         }

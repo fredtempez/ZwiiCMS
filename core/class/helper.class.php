@@ -52,7 +52,6 @@ class helper
 	 */
 	public static function dateUTF8($format, $date, $locale = 'fr_FR')
 	{
-		require_once 'core/class/strftime/php-8.1-strftime.class.php';
 		return mb_convert_encoding(\PHP81_BC\strftime($format, $date, $locale), 'UTF-8', mb_list_encodings());
 	}
 
