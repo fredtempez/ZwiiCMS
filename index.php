@@ -68,7 +68,7 @@ setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french');
 /**
  * NOUVEAU: Chargement unifié des classes avec le nouvel autoloader corrigé
  */
-require 'core/class/autoloader.class.php';
+require 'core/class/autoloader.php';
 Autoloader::register();
 Autoloader::preloadEssentialClasses();
 
