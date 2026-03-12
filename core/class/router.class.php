@@ -103,28 +103,7 @@ class core extends common
 
 	}
 
-	/**
-	 * Auto-chargement des classes
-	 * @param string $className Nom de la classe à charger
-	 */
-	public static function autoload($className)
-	{
-
-		$classPath = strtolower($className) . '/' . strtolower($className) . '.php';
-		// Module du coeur
-		if (is_readable('core/module/' . $classPath)) {
-			require 'core/module/' . $classPath;
-		}
-		// Module
-		elseif (is_readable(common::MODULE_DIR . $classPath)) {
-			require common::MODULE_DIR . $classPath;
-		}
-		// Librairie
-		elseif (is_readable('core/vendor/' . $classPath)) {
-			require 'core/vendor/' . $classPath;
-		}
-	}
-
+	
 	/**
 	 * Routage des modules
 	 */

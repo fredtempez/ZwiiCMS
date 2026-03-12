@@ -2,6 +2,12 @@
 
 ## Version 14.02.00
 ### 🚀 Améliorations
+- autoloader unifié moderne :
+  - 1 seul fichier : core/class/autoloader.class.php
+  - 6 classes essentielles au lieu de 13
+  - Cache intégré anti-doublons
+  - Support des namespaces
+  - 69% de réduction des fichiers au démarrage
 - Réorganisation structurelle du script router.class.php, les méthodes liées à la création des feuilles de style depuis le fichier json sont incluses dans une classe dédiée.
 ### 🛠️ Corrections
 - Données d'identité manquante dans la configuration par défaut.

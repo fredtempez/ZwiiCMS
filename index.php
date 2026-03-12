@@ -16,7 +16,7 @@
  * @link http://zwiicms.fr/
  */
 
- /**
+/**
  * Initialisation de Zwii
  */
 // Remplace la directive htaccess
@@ -45,7 +45,6 @@ session_set_cookie_params([
     'samesite' => 'Lax' // Ou 'Strict' ou 'None' selon tes besoins
 ]);
 
-
 // Démarre la session
 session_start();
 
@@ -56,26 +55,25 @@ include_once('core/include/checkup.php');
 include_once('core/include/pre-update.php');
 
 /*
- *Localisation par défaut 
+*Localisation par défaut 
 
- * Locales :
- * french : free.fr
- * fr_FR : XAMPP Macos
- * fr_FR.utf8 : la majorité
+* Locales :
+* french : free.fr
+* fr_FR : XAMPP Macos
+* fr_FR.utf8 : la majorité
 */
 date_default_timezone_set('Europe/Paris');
 setlocale (LC_ALL, 'fr_FR.UTF8', 'fr_FR', 'french');
 
 /**
- * Chargement des classes
+ * NOUVEAU: Chargement unifié des classes avec le nouvel autoloader corrigé
  */
-require 'core/class/autoload.php';
-autoload::autoloader();
+require 'core/class/autoloader.class.php';
+Autoloader::register();
+Autoloader::preloadEssentialClasses();
 
 /**
  * Chargement du coeur
  */
-$core = new core;
-spl_autoload_register('core::autoload');
+$core = new core();
 echo $core->router();
-
