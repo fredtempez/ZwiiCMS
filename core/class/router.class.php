@@ -12,9 +12,20 @@ class core extends common
 		// 1. Initialisation Système (CSRF, Timezone, Nettoyage, Backup)
 		$this->initSystem();
 
-		// 2. Gestion des thèmes et CSS (déléguée à theme)
+		// 2. Régénère les feuilles de style absentes
+		$assetsToRegenerate = [
+			common::DATA_DIR . 'theme.css' => 'buildThemeCss',
+			common::DATA_DIR . 'admin.css' => 'buildAdminCss'
+		];
+		
 		require_once 'core/class/asset.class.php';
-		new asset();
+		$asset = new asset();
+		foreach ($assetsToRegenerate as $file => $method) {
+			if ($this->generateAsset(common::DATA_DIR . $file)) {
+				$asset->$method($file);
+			}
+		}
+
 	}
 
 	/**
@@ -71,6 +82,25 @@ class core extends common
 				}
 			}
 		}
+	}
+
+	/**
+	 * Cette méthode détermin si une feuille de style mérite d'être reconstituée
+	 * après une modification de la base json associée.
+	 * @param mixed $themeCssPath
+	 * @return bool
+	 */
+	private function generateAsset($themeCssPath)
+	{
+
+		$currentThemeContent = file_exists($themeCssPath) ? file_get_contents($themeCssPath) : '';
+		$themeCssVersion = preg_split('/\*+/', $currentThemeContent);
+		$themeConfigHash = md5(json_encode(self::getData(['theme'])));
+
+		$themeNeedsRegen = empty($themeCssVersion[1]) or $themeCssVersion[1] !== $themeConfigHash;
+
+		return ($themeNeedsRegen);
+
 	}
 
 	/**
@@ -474,7 +504,7 @@ class core extends common
 								'title' => $output['title']
 							]);
 						}
-						
+
 						// Affiche le bouton d'édition de la page dans la barre de membre
 						if ($output['showBarEditButton']) {
 							$this->addOutput([
@@ -496,7 +526,7 @@ class core extends common
 			// Envoyer vers la page de connexion
 			if (
 				// Vérifie si la redirection après connexion est activée dans la configuration
-				$this->getData(['config', 'connect', 'redirectLogin']) ===  true
+				$this->getData(['config', 'connect', 'redirectLogin']) === true
 				// Vérifie que l'utilisateur n'est pas connecté
 				&& $this->isConnected() === false
 				// Vérifie que l'URL actuelle n'est pas déjà sur le contrôleur 'user'
@@ -540,7 +570,8 @@ class core extends common
 			http_response_code(404);
 			// Pour éviter une 404, bascule dans l'espace correct si la page existe dans cette langue.
 			// Parcourir les espaces
-			foreach (common::$languages as $langId => $value) {;
+			foreach (common::$languages as $langId => $value) {
+				;
 				if (
 					// l'espace existe
 					is_dir(common::DATA_DIR . $langId) &&
@@ -590,25 +621,25 @@ class core extends common
 			]);
 		}
 		switch ($this->output['display']) {
-				// Layout brut
+			// Layout brut
 			case common::DISPLAY_RAW:
 				echo $this->output['content'];
 				break;
-				// Layout vide
+			// Layout vide
 			case common::DISPLAY_LAYOUT_BLANK:
 				require 'core/layout/blank.php';
 				break;
-				// Affichage en JSON
+			// Affichage en JSON
 			case common::DISPLAY_JSON:
 				header('Content-Type: application/json');
 				echo json_encode($this->output['content']);
 				break;
-				// RSS feed
+			// RSS feed
 			case common::DISPLAY_RSS:
 				header('Content-type: application/rss+xml; charset=UTF-8');
 				echo $this->output['content'];
 				break;
-				// Layout allégé
+			// Layout allégé
 			case common::DISPLAY_LAYOUT_LIGHT:
 				ob_start();
 				require 'core/layout/light.php';
@@ -619,7 +650,7 @@ class core extends common
 				$content = preg_replace('/[\t ]+/u', ' ', $content);
 				echo $content;
 				break;
-				// Layout principal
+			// Layout principal
 			case common::DISPLAY_LAYOUT_MAIN:
 				ob_start();
 				require 'core/layout/main.php';
