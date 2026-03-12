@@ -3,7 +3,7 @@
 ## Version 14.02.00
 ### 🚀 Améliorations
 - Autoloader unifié moderne :
-  - 1 seul fichier : core/class/autoloader.class.php
+  - 1 seul fichier : core/class/autoloader.php
   - 6 classes essentielles au lieu de 13
   - Cache intégré anti-doublons
   - Support des namespaces
