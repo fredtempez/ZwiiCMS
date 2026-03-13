@@ -4,7 +4,7 @@ class layout extends common
 
     private $core;
 
-    public function __construct(core $core)
+    public function __construct(Router $core)
     {
         parent::__construct();
         $this->core = $core;

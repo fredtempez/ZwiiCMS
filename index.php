@@ -75,5 +75,5 @@ Autoloader::preloadEssentialClasses();
 /**
  * Chargement du coeur
  */
-$core = new core();
+$core = new Router();
 echo $core->router();

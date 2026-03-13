@@ -13,6 +13,7 @@ class Autoloader
         'common' => 'core/core.php',
         'core' => 'core/class/router.class.php',
         'router' => 'core/class/router.class.php',
+        'Router' => 'core/class/router.class.php',
         'helper' => 'core/class/helper.class.php',
         'template' => 'core/class/template.class.php',
         'layout' => 'core/layout/layout.class.php',

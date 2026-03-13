@@ -36,13 +36,13 @@ class helper
 		// La traduction existe déjà dans le core
 
 		/*
-		 * if (array_key_exists($text, core::$dialog) === false && !empty($text)) {
+		 * if (array_key_exists($text, Router::$dialog) === false && !empty($text)) {
 		 * $dialogues = json_decode(file_get_contents('core/module/install/ressource/i18n/fr_FR.json' ), true);
 		 * $data = array_merge($dialogues,[$text =>  '']);
 		 * file_put_contents ('core/module/install/ressource/i18n/fr_FR.json', json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT), LOCK_EX);
 		 * }
 		 */
-		return (array_key_exists($text, core::$dialog) && !empty(core::$dialog[$text]) ? core::$dialog[$text] : $text);
+		return (array_key_exists($text, Router::$dialog) && !empty(Router::$dialog[$text]) ? Router::$dialog[$text] : $text);
 	}
 
 	/**
@@ -465,7 +465,7 @@ class helper
 				$text = (bool) $text;
 				break;
 			case self::FILTER_DATETIME:
-				$timezone = new DateTimeZone(core::$timezone);
+				$timezone = new DateTimeZone(Router::$timezone);
 				if ($text) {
 					// Validation et nettoyage du format de date
 					// Détecte et corrige les années avec plus de 4 chiffres (ex: 20026 -> 2026)

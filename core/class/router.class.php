@@ -1,6 +1,6 @@
 <?php
 
-class core extends common
+class Router extends common
 {
 	/**
 	 * Constructeur du coeur
@@ -95,7 +95,7 @@ class core extends common
 
 		$currentThemeContent = file_exists($themeCssPath) ? file_get_contents($themeCssPath) : '';
 		$themeCssVersion = preg_split('/\*+/', $currentThemeContent);
-		$themeConfigHash = md5(json_encode(self::getData(['theme'])));
+		$themeConfigHash = md5(json_encode($this->getData(['theme'])));
 
 		$themeNeedsRegen = empty($themeCssVersion[1]) or $themeCssVersion[1] !== $themeConfigHash;
 
@@ -513,7 +513,7 @@ class core extends common
 				// Vérifie que l'URL actuelle n'est pas sur l'action 'login'
 				&& $this->getUrl(1) !== 'login'
 				// Vérifie que la page actuelle nécessite une authentification (est dans la liste des accès concurrents)
-				&& in_array($this->getUrl(0), self::$concurrentAccess)
+				&& in_array($this->getUrl(0), parent::$concurrentAccess)
 			) {
 				http_response_code(302);
 				header('Location:' . helper::baseUrl() . 'user/login/');
@@ -632,6 +632,8 @@ class core extends common
 			// Layout principal
 			case common::DISPLAY_LAYOUT_MAIN:
 				ob_start();
+				// Rendre layout disponible pour le template
+				$layout = new layout($this);
 				require 'core/layout/main.php';
 				$content = ob_get_clean();
 				// Convertit la chaîne en UTF-8 pour conserver les caractères accentués
