@@ -1,0 +1,57 @@
+🔍 Structure des Méthodes (44 méthodes au total)
+# Data
+📊 Gestion des Données (10 méthodes)
+getData($keys = []) - Lecture de données
+setData($keys = [], $save = null) - Écriture de données
+deleteData($keys) - Suppression de données
+jsonDB($lang, $dataFilesToLoad = null) - Initialisation BDD JSON
+loadDataFile($dataFile, $lang = null) - Chargement fichier de données
+fetchDataFile($dataFile, $lang = null, $query = null) - Recherche dans fichier
+saveDataFile($dataFile, $data, $lang = null) - Sauvegarde fichier
+isDataFileLoaded($dataFile) - Vérification chargement
+loadModuleDataFiles($moduleId, $lang = null) - Chargement modules
+initData($module, $lang, $sampleSite = false) - Initialisation données
+📄 Gestion des Pages (4 méthodes)
+getPage($page, $lang) - Lecture page
+setPage($page, $value, $lang) - Écriture page
+deletePage($page, $lang) - Suppression page
+getHierarchy($parentId = null, $onlyVisible = true, $onlyBlock = false) - Hiérarchie
+👤 Gestion Utilisateurs (3 méthodes)
+getUser($key, $perm1 = null, $perm2 = null) - Infos utilisateur
+isConnected() - Vérification connexion
+signature($userId) - Signature utilisateur
+
+🌐 Gestion URLs/Requêtes (3 méthodes)
+getUrl($key = null) - Récupération URL
+isPost() - Vérification méthode POST
+getInput($key, $filter = helper::FILTER_STRING_SHORT, $required = false) - Input filtré
+📤 Gestion Sortie (2 méthodes)
+addOutput($output) - Ajout sortie
+addRequiredInputNotices($key) - Notices validation
+🔒 Sécurité (1 méthode)
+checkCSRF() - Vérification CSRF
+📧 Email (2 méthodes)
+sendMail($to, $subject, $content, $replyTo = null, $serverEmail = null, $file_name = null) - Envoi email
+getCorrectedSmtpFrom($smtpFrom) - Correction SMTP
+📁 Système de Fichiers (5 méthodes)
+dataPath($id, $lang) - Chemin données
+deleteDir($path) - Suppression répertoire
+copyDir($src, $dst) - Copie répertoire
+makeZip($fileName, $folder, $filter = []) - Création ZIP
+getRelativePath($path) - Chemin relatif
+📝 Logging (2 méthodes)
+saveLog($message = '', $force = false) - Sauvegarde log
+rotateLogFile() - Rotation logs
+🗂️ Utilitaires (8 méthodes)
+__construct() - Constructeur
+ensureDataFileLoaded($dataFile, $lang = null) - Chargement garanti
+getDataFilesConfig() - Configuration fichiers
+saveDB($module) - Sauvegarde BDD
+buildHierarchy() - Construction hiérarchie
+tinyMcePages() - Pages TinyMCE
+getPermission($key1, $key2 = null) - Permissions
+getUserPath($userId = null) - Chemin utilisateur
+getNormalizedFilePath($filePath, $userId = null) - Chemin normalisé
+updateSitemap() - Mise à jour sitemap
+recursive_array_replace($find, $replace, $array, &$count) - Remplacement récursif
+addTinyMceChildren(&$menu, $childrenPageIds, $rewrite, $depth = 1) - Menu TinyMCE
