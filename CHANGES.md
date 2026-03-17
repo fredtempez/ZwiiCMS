@@ -6,8 +6,11 @@
   - 1 seul fichier : core/class/autoloader.php
   - 6 classes essentielles au lieu de 13
   - Cache intégré anti-doublons
-  - Support des namespaces
   - 69% de réduction des fichiers au démarrage
+- Namespaces PSR-4 :
+  - Namespace `Zwii\Cms` pour toutes les classes core
+  - Classes renommées en PascalCase (Asset, Helper, Template, Layout)
+  - Compatibilité ascendante avec les anciens noms (helper::, template::, etc.)
 - Réorganisation structurelle du script router.class.php, les méthodes liées à la création des feuilles de style depuis le fichier json sont incluses dans une classe dédiée.
 ### 🛠️ Corrections
 - Données d'identité manquante dans la configuration par défaut.
