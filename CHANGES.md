@@ -11,6 +11,7 @@
   - Namespace `Zwii\Cms` pour toutes les classes core
   - Classes renommées en PascalCase (Asset, Helper, Template, Layout)
   - Compatibilité ascendante avec les anciens noms (helper::, template::, etc.)
+  - Factorisation des méthodes de core en traits.
 - Réorganisation structurelle du script router.class.php, les méthodes liées à la création des feuilles de style depuis le fichier json sont incluses dans une classe dédiée.
 ### 🛠️ Corrections
 - Données d'identité manquante dans la configuration par défaut.

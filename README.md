@@ -74,16 +74,37 @@ A l'occasion de l'installation d'une version majeure, il est recommandé de réa
 
 *Légende : [R] Répertoire - [F] Fichier*
 
-**Structure optimisée pour la version 14 :**
+**Structure optimisée pour la version 14.2 :**
 
 ```text
 [R] core                   Cœur du système
-  [R] class                Classes PHP du framework
+  [R] class                Classes PHP du framework (namespace Zwii\Cms)
+    [F] autoloader.php     Autoloader PSR-4 unifié
+    [F] asset.class.php    Gestion des assets CSS/JS
+    [F] helper.class.php   Méthodes utilitaires statiques
+    [F] router.class.php   Routeur principal
+    [F] template.class.php Génération des templates
+    [R] jsondb             Base de données JSON
+    [R] phpmailer          Envoi d'emails
+    [R] sitemap            Génération sitemap
+    [R] strftime           Compatibilité dates PHP 8.1+
+  [R] trait                Traits PHP (répartition fonctionnelle)
+    [F] Data.trait.php     Gestion des données JSON
+    [F] InputOutput.trait.php  Entrées/sorties fichiers
+    [F] PageContent.trait.php  Contenu des pages
+    [F] Security.trait.php     Sécurité et CSRF
+    [F] Tools.trait.php        Outils divers
+    [F] UserPermission.trait.php  Permissions utilisateurs
   [R] layout               Mise en page et templates
+    [F] layout.class.php   Classe Layout (génération HTML)
+    [F] main.php           Template principal
+    [F] light.php          Template allégé
+    [F] blank.php          Template vide
+    [F] mail.php           Template email
   [R] module               Modules du cœur (page, config, etc.)
   [R] vendor               Librairies extérieures (TinyMCE, etc.)
-  [F] core.js.php          Cœur javascript (nouveau système de cache)
-  [F] core.php             Cœur PHP avec améliorations v14
+  [F] core.js.php          Cœur JavaScript
+  [F] core.php             Cœur PHP (namespace Zwii\Cms)
 
 [R] module                 Modules de page
   [R] blog                 Blog avec flux RSS et commentaires
@@ -224,17 +245,38 @@ When installing a major version, it is recommended to make a backup copy.
 
 *Legend: [D] Directory - [FILE] File*
 
-**Optimized structure for version 14:**
+**Optimized structure for version 14.2:**
 
 ````
 text
 [DIR] core                   Core of the system
-  [DIR] class                PHP framework classes
+  [DIR] class                PHP framework classes (namespace Zwii\Cms)
+    [FILE] autoloader.php    Unified PSR-4 autoloader
+    [FILE] asset.class.php   CSS/JS asset management
+    [FILE] helper.class.php  Static utility methods
+    [FILE] router.class.php  Main router
+    [FILE] template.class.php Template generation
+    [DIR] jsondb             JSON database
+    [DIR] phpmailer          Email sending
+    [DIR] sitemap            Sitemap generation
+    [DIR] strftime           Date compatibility PHP 8.1+
+  [DIR] trait                PHP traits (functional distribution)
+    [FILE] Data.trait.php    JSON data management
+    [FILE] InputOutput.trait.php  File I/O
+    [FILE] PageContent.trait.php  Page content
+    [FILE] Security.trait.php     Security and CSRF
+    [FILE] Tools.trait.php        Various tools
+    [FILE] UserPermission.trait.php  User permissions
   [DIR] layout               Layout and templates
+    [FILE] layout.class.php  Layout class (HTML generation)
+    [FILE] main.php          Main template
+    [FILE] light.php         Light template
+    [FILE] blank.php         Blank template
+    [FILE] mail.php          Email template
   [DIR] module               Core modules (page, config, etc.)
   [DIR] vendor               External libraries (TinyMCE, etc.)
-  [FILE] core.js.php         JavaScript core (new cache system)
-  [FILE] core.php            PHP core with v14 improvements
+  [FILE] core.js.php         JavaScript core
+  [FILE] core.php            PHP core (namespace Zwii\Cms)
 
 [DIR] module                 Page modules
   [DIR] blog                 Blog with RSS feed and comments
